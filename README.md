@@ -139,6 +139,39 @@ PYTHONPATH=. python benchmarks/risk_aware_observer_benchmark.py
 - `reports/risk_aware_observer_benchmark.json`
 - `reports/risk_aware_observer_benchmark.md`
 
+## LOFO-F1 для отбора правил
+
+Добавлен быстрый метод **Leave-One-Rule-Out F1 importance** для KAFN-подобных аддитивных правил. Он оценивает важность правила напрямую через падение F1 на валидации:
+
+```text
+z_without_r = z_full - H_val[:, r] * theta[r]
+importance_r = F1_full - F1_without_r
+```
+
+Переобучение не требуется: вклад правила просто вычитается из уже посчитанных логитов. Это делает метод дешёвым, но более привязанным к целевой метрике, чем эвристика `|theta_r| * mean(|H[:, r]|)`.
+
+Запуск demo:
+
+```bash
+make lofo-f1-demo
+# или
+PYTHONPATH=. python benchmarks/lofo_f1_rule_pruning_demo.py
+```
+
+Отчёты:
+
+- `reports/lofo_f1_rule_pruning.json`
+- `reports/lofo_f1_rule_pruning.md`
+
+Минимальный API:
+
+```python
+from fuzzyxai.rules import lofo_f1_importance, select_top_rules_by_lofo_f1
+
+importance = lofo_f1_importance(H_val, theta, y_val, bias=bias, rule_names=rule_names)
+selected = select_top_rules_by_lofo_f1(importance, budget=25)
+```
+
 ## Проверка воспроизводимости
 
 Запуск всех тестов:
@@ -167,7 +200,7 @@ PYTHONPATH=. python examples/thesis_demo.py
 Ожидаемый статус:
 
 ```text
-43 passed
+47 passed
 thesis validation: PASS
 thesis demo: PASS
 ```
@@ -186,6 +219,7 @@ thesis demo: PASS
 - `reports/operator_comparison_benchmark.md`: сравнение “без оператора / с оператором”.
 - `reports/risk_aware_observer_benchmark.md`: benchmark риск-ориентированного наблюдателя.
 - `reports/full_demo/index.html`: полный сценарий “данные -> модель -> глава 2 -> глава 3 -> наблюдатель”.
+- `reports/lofo_f1_rule_pruning.md`: demo быстрого LOFO-F1 отбора правил.
 
 ## Минимальный пример API
 
@@ -215,6 +249,7 @@ fuzzyxai/
   selection/     построение профиля, совместимость, Парето-выбор
   calibration/   калибровка beta и кросс-валидация
   risk/          Risk-Aware Observer: неопределённость, политика, метрики
+  rules/         LOFO-F1 и стабильный отбор правил
   visual/        Plotly-графики функций принадлежности и композиции
   demo/          детерминированные demo-данные и сборщики примеров
 apps/
@@ -232,6 +267,7 @@ benchmarks/
   breast_cancer_benchmark.py
   operator_comparison_benchmark.py
   risk_aware_observer_benchmark.py
+  lofo_f1_rule_pruning_demo.py
 tests/
   pytest-проверки ядра и логики GUI
 ```

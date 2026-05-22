@@ -21,6 +21,8 @@ __all__ = [
 ]
 from .api import FuzzyXAIPipeline, ExplanationResult
 from .risk import RiskAction, RiskDecision, RiskPolicy, RiskAwareModel
+from .rules import bootstrap_lofo_f1_importance, lofo_f1_importance, select_top_rules_by_lofo_f1
 
 __all__ += ['FuzzyXAIPipeline', 'ExplanationResult']
 __all__ += ['RiskAction', 'RiskDecision', 'RiskPolicy', 'RiskAwareModel']
+__all__ += ['lofo_f1_importance', 'bootstrap_lofo_f1_importance', 'select_top_rules_by_lofo_f1']

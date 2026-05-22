@@ -2,7 +2,7 @@ PYTHON ?= python
 PYTHONPATH := .
 PORT ?= 8085
 
-.PHONY: install test risk-test demo dashboard proof thesis full-demo benchmark operator-benchmark risk-benchmark clean
+.PHONY: install test risk-test demo dashboard proof thesis full-demo benchmark operator-benchmark risk-benchmark lofo-f1-demo clean
 
 install:
 	$(PYTHON) -m pip install -r requirements.txt
@@ -34,12 +34,17 @@ benchmark:
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) benchmarks/breast_cancer_benchmark.py
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) benchmarks/operator_comparison_benchmark.py
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) benchmarks/risk_aware_observer_benchmark.py
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) benchmarks/lofo_f1_rule_pruning_demo.py
 
 operator-benchmark:
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) benchmarks/operator_comparison_benchmark.py
 
 risk-benchmark:
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) benchmarks/risk_aware_observer_benchmark.py
+
+lofo-f1-demo:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) benchmarks/lofo_f1_rule_pruning_demo.py
+	@echo "LOFO-F1 report: reports/lofo_f1_rule_pruning.md"
 
 clean:
 	find . -type d -name __pycache__ -prune -exec rm -rf {} +

@@ -52,6 +52,14 @@
 | Benchmark наблюдателя | `benchmarks/risk_aware_observer_benchmark.py` | `tests/test_risk_aware_benchmark.py` |
 | GUI-раздел наблюдателя | `apps/defense_demo.py` | `tests/test_defense_demo.py` |
 
+## LOFO-F1 Rule Pruning
+
+| Компонент | Реализация | Проверка |
+|---|---|---|
+| Leave-One-Rule-Out F1 importance | `fuzzyxai/rules/lofo_f1.py` | `tests/test_lofo_f1_rule_pruning.py` |
+| Bootstrap-стабилизация top-B | `bootstrap_lofo_f1_importance` | `tests/test_lofo_f1_rule_pruning.py` |
+| Сравнение с Budget-Prune | `benchmarks/lofo_f1_rule_pruning_demo.py` | `reports/lofo_f1_rule_pruning.md` |
+
 ## Финальные артефакты проверки
 
 - Численный маршрут главы 2 (`mu`, `H`, `d_E`, композиция, `L`, `I`, `D_ij`) -> `proofs/validate_thesis_examples.py` -> `reports/thesis_validation.json`.
@@ -59,3 +67,4 @@
 - Сквозная defense demo -> `examples/thesis_demo.py` -> `reports/thesis_demo_report.json` и `reports/thesis_demo_composition_graph.html`.
 - Risk-Aware Observer benchmark -> `benchmarks/risk_aware_observer_benchmark.py` -> `reports/risk_aware_observer_benchmark.json` и `reports/risk_aware_observer_benchmark.md`.
 - Полная демонстрация -> `full_pipeline_demo.py` -> `reports/full_demo/index.html`, `reports/full_demo/full_pipeline_report.json`.
+- LOFO-F1 rule pruning -> `benchmarks/lofo_f1_rule_pruning_demo.py` -> `reports/lofo_f1_rule_pruning.json` и `reports/lofo_f1_rule_pruning.md`.

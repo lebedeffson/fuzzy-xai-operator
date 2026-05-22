@@ -1,0 +1,324 @@
+{
+  "method": "LOFO-F1 / Leave-One-Rule-Out F1 importance",
+  "formula": "z_without_r = z_full - H_val[:, r] * theta[r]; importance_r = F1_full - F1_without_r",
+  "dataset": {
+    "type": "synthetic KAFN activation matrix",
+    "samples": 900,
+    "rules": 96,
+    "budget": 12
+  },
+  "baseline": {
+    "f1_full": 0.989487
+  },
+  "top_rules": {
+    "lofo_f1": [
+      "r_000",
+      "r_002",
+      "r_003",
+      "r_005",
+      "r_001",
+      "r_004",
+      "r_012",
+      "r_026",
+      "r_070",
+      "r_085",
+      "r_066",
+      "r_011"
+    ],
+    "budget_prune": [
+      "r_000",
+      "r_002",
+      "r_001",
+      "r_003",
+      "r_004",
+      "r_005",
+      "r_073",
+      "r_031",
+      "r_013",
+      "r_066",
+      "r_006",
+      "r_072"
+    ],
+    "bootstrap_lofo_f1": [
+      "r_000",
+      "r_002",
+      "r_003",
+      "r_005",
+      "r_001",
+      "r_004",
+      "r_012",
+      "r_026",
+      "r_070",
+      "r_085",
+      "r_066",
+      "r_013"
+    ]
+  },
+  "subset_quality": {
+    "lofo_f1_top_budget_f1": 0.989461,
+    "budget_prune_top_budget_f1": 0.984069,
+    "bootstrap_lofo_top_budget_f1": 0.989487
+  },
+  "stability_proxy": {
+    "jaccard_lofo_vs_bootstrap_lofo": 0.846154,
+    "jaccard_lofo_vs_budget_prune": 0.411765
+  },
+  "recovery": {
+    "true_useful_rules": [
+      "r_000",
+      "r_001",
+      "r_002",
+      "r_003",
+      "r_004",
+      "r_005"
+    ],
+    "lofo_hits": 6,
+    "budget_prune_hits": 6,
+    "bootstrap_lofo_hits": 6
+  },
+  "lofo_table": [
+    {
+      "rank": 1,
+      "rule": "r_000",
+      "delta_f1": 0.1599,
+      "f1_without": 0.829587,
+      "theta": 3.493528,
+      "mean_abs_activation": 0.317589
+    },
+    {
+      "rank": 2,
+      "rule": "r_002",
+      "delta_f1": 0.093596,
+      "f1_without": 0.89589,
+      "theta": 3.000576,
+      "mean_abs_activation": 0.307034
+    },
+    {
+      "rank": 3,
+      "rule": "r_003",
+      "delta_f1": 0.070532,
+      "f1_without": 0.918955,
+      "theta": 2.389831,
+      "mean_abs_activation": 0.319572
+    },
+    {
+      "rank": 4,
+      "rule": "r_005",
+      "delta_f1": 0.057036,
+      "f1_without": 0.93245,
+      "theta": 2.05963,
+      "mean_abs_activation": 0.311274
+    },
+    {
+      "rank": 5,
+      "rule": "r_001",
+      "delta_f1": 0.039575,
+      "f1_without": 0.949912,
+      "theta": -2.697317,
+      "mean_abs_activation": 0.307556
+    },
+    {
+      "rank": 6,
+      "rule": "r_004",
+      "delta_f1": 0.032242,
+      "f1_without": 0.957245,
+      "theta": -2.145011,
+      "mean_abs_activation": 0.302306
+    },
+    {
+      "rank": 7,
+      "rule": "r_012",
+      "delta_f1": 0.001222,
+      "f1_without": 0.988264,
+      "theta": -0.030532,
+      "mean_abs_activation": 0.313354
+    },
+    {
+      "rank": 8,
+      "rule": "r_026",
+      "delta_f1": 0.001222,
+      "f1_without": 0.988264,
+      "theta": -0.024691,
+      "mean_abs_activation": 0.303088
+    },
+    {
+      "rank": 9,
+      "rule": "r_070",
+      "delta_f1": 0.001222,
+      "f1_without": 0.988264,
+      "theta": -0.016809,
+      "mean_abs_activation": 0.301685
+    },
+    {
+      "rank": 10,
+      "rule": "r_085",
+      "delta_f1": 0.001208,
+      "f1_without": 0.988279,
+      "theta": -0.047896,
+      "mean_abs_activation": 0.309738
+    },
+    {
+      "rank": 11,
+      "rule": "r_066",
+      "delta_f1": 0.001193,
+      "f1_without": 0.988293,
+      "theta": -0.097212,
+      "mean_abs_activation": 0.310084
+    },
+    {
+      "rank": 12,
+      "rule": "r_011",
+      "delta_f1": 0.000612,
+      "f1_without": 0.988875,
+      "theta": -0.015973,
+      "mean_abs_activation": 0.308425
+    },
+    {
+      "rank": 13,
+      "rule": "r_054",
+      "delta_f1": 0.000598,
+      "f1_without": 0.988889,
+      "theta": -0.027505,
+      "mean_abs_activation": 0.315099
+    },
+    {
+      "rank": 14,
+      "rule": "r_030",
+      "delta_f1": 0.000598,
+      "f1_without": 0.988889,
+      "theta": -0.044799,
+      "mean_abs_activation": 0.314559
+    },
+    {
+      "rank": 15,
+      "rule": "r_018",
+      "delta_f1": 0.000598,
+      "f1_without": 0.988889,
+      "theta": -0.03832,
+      "mean_abs_activation": 0.313582
+    }
+  ],
+  "bootstrap_table": [
+    {
+      "rank": 1,
+      "rule": "r_000",
+      "mean_delta_f1": 0.160101,
+      "std_delta_f1": 0.010216,
+      "top_frequency": 1.0,
+      "mean_rank": 1.0
+    },
+    {
+      "rank": 2,
+      "rule": "r_002",
+      "mean_delta_f1": 0.092002,
+      "std_delta_f1": 0.006741,
+      "top_frequency": 1.0,
+      "mean_rank": 2.0
+    },
+    {
+      "rank": 3,
+      "rule": "r_003",
+      "mean_delta_f1": 0.069628,
+      "std_delta_f1": 0.007559,
+      "top_frequency": 1.0,
+      "mean_rank": 3.075
+    },
+    {
+      "rank": 4,
+      "rule": "r_005",
+      "mean_delta_f1": 0.057076,
+      "std_delta_f1": 0.007901,
+      "top_frequency": 1.0,
+      "mean_rank": 3.925
+    },
+    {
+      "rank": 5,
+      "rule": "r_001",
+      "mean_delta_f1": 0.038971,
+      "std_delta_f1": 0.005565,
+      "top_frequency": 1.0,
+      "mean_rank": 5.0
+    },
+    {
+      "rank": 6,
+      "rule": "r_004",
+      "mean_delta_f1": 0.031644,
+      "std_delta_f1": 0.004686,
+      "top_frequency": 1.0,
+      "mean_rank": 6.0
+    },
+    {
+      "rank": 7,
+      "rule": "r_012",
+      "mean_delta_f1": 0.001268,
+      "std_delta_f1": 0.000835,
+      "top_frequency": 0.75,
+      "mean_rank": 11.925
+    },
+    {
+      "rank": 8,
+      "rule": "r_026",
+      "mean_delta_f1": 0.001268,
+      "std_delta_f1": 0.000835,
+      "top_frequency": 0.625,
+      "mean_rank": 15.375
+    },
+    {
+      "rank": 9,
+      "rule": "r_070",
+      "mean_delta_f1": 0.001268,
+      "std_delta_f1": 0.000835,
+      "top_frequency": 0.6,
+      "mean_rank": 15.725
+    },
+    {
+      "rank": 10,
+      "rule": "r_085",
+      "mean_delta_f1": 0.001159,
+      "std_delta_f1": 0.001157,
+      "top_frequency": 0.55,
+      "mean_rank": 22.1
+    },
+    {
+      "rank": 11,
+      "rule": "r_066",
+      "mean_delta_f1": 0.000945,
+      "std_delta_f1": 0.001254,
+      "top_frequency": 0.375,
+      "mean_rank": 34.4
+    },
+    {
+      "rank": 12,
+      "rule": "r_013",
+      "mean_delta_f1": 0.000263,
+      "std_delta_f1": 0.001283,
+      "top_frequency": 0.35,
+      "mean_rank": 41.7
+    },
+    {
+      "rank": 13,
+      "rule": "r_007",
+      "mean_delta_f1": 5.9e-05,
+      "std_delta_f1": 0.000803,
+      "top_frequency": 0.275,
+      "mean_rank": 41.5
+    },
+    {
+      "rank": 14,
+      "rule": "r_011",
+      "mean_delta_f1": 0.00061,
+      "std_delta_f1": 0.000625,
+      "top_frequency": 0.25,
+      "mean_rank": 27.45
+    },
+    {
+      "rank": 15,
+      "rule": "r_088",
+      "mean_delta_f1": -6.3e-05,
+      "std_delta_f1": 0.000889,
+      "top_frequency": 0.225,
+      "mean_rank": 44.4
+    }
+  ],
+  "conclusion": "LOFO-F1 ranks rules by real validation F1 drop without retraining; bootstrap aggregation turns it into a stable top-B selector."
+}
