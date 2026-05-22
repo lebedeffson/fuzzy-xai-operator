@@ -52,6 +52,8 @@ The demo has one workflow:
 
 The conflict switch intentionally breaks the interface between components. In that mode the system shows `D_ij` instead of hiding the inconsistency.
 
+The GUI is designed for a non-specialist demonstration: it shows the route `data -> ExplainPlan -> E_k -> A_k^F -> D_ij / I(E_G)`, the current input case, membership functions, target distribution, selected representation, and the model-to-decision consistency check. Use the presentation switch for projector-friendly sizing, the help button for a short guided tour, and the print button for a browser PDF export.
+
 ## Technical Dashboard
 
 The broader NiceGUI dashboard is still available for debugging and extended experiments:

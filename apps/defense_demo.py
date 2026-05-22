@@ -46,6 +46,7 @@ STATE: Dict[str, Any] = {
     'feature': 'risk_score',
     'conflict': False,
     'mode': 'audit',
+    'presentation': False,
     'plan': None,
     'explanation': None,
     'composition': None,
@@ -142,8 +143,33 @@ def apply_style() -> None:
         .fx-step {
           border-left: 4px solid var(--blue); padding-left: 10px;
         }
+        .fx-route {
+          display: grid; grid-template-columns: repeat(5, minmax(0, 1fr));
+          gap: 8px;
+        }
+        .fx-route-item {
+          background: #ffffff; border: 1px solid var(--line);
+          border-radius: 8px; padding: 10px;
+        }
+        .fx-route-item strong { display: block; font-size: 13px; }
+        .fx-route-item span { display: block; font-size: 12px; color: var(--muted); }
+        .fx-case {
+          background: linear-gradient(135deg, #f8fafc, #eef6ff);
+          border: 1px solid #cfe0f7; border-radius: 8px; padding: 12px;
+        }
+        .fx-presentation .fx-panel { padding: 24px; }
+        .fx-presentation .fx-title { font-size: 1.08em; }
+        .fx-presentation .fx-muted,
+        .fx-presentation .text-sm,
+        .fx-presentation .text-xs { font-size: 15px; }
         .q-table th, .q-table td { font-size: 12px; }
         .js-plotly-plot .plotly .main-svg { border-radius: 8px; }
+        @media print {
+          .fx-topbar { position: static; }
+          .q-btn, .q-field, .q-toggle { display: none !important; }
+          body { background: #ffffff; }
+          .fx-panel { break-inside: avoid; box-shadow: none; }
+        }
         </style>
         """
     )
@@ -186,6 +212,43 @@ def quantile_rows() -> list[dict[str, Any]]:
             'right': round(float(spec.get('c', q.get('max', 0.0))), 4) if 'c' in spec else '',
         })
     return rows
+
+
+def current_case_row() -> dict[str, Any]:
+    df = STATE['df']
+    if 'risk_score' not in df.columns:
+        return df.iloc[0].to_dict()
+    idx = (df['risk_score'].astype(float) - float(STATE['risk'])).abs().idxmin()
+    return df.loc[idx].to_dict()
+
+
+def target_distribution_figure() -> go.Figure:
+    df = STATE['df']
+    fig = go.Figure()
+    if 'target' in df.columns:
+        counts = df['target'].value_counts().sort_index()
+        labels = [f'class {idx}' for idx in counts.index]
+        fig.add_trace(go.Bar(
+            x=labels,
+            y=counts.values,
+            marker_color=['#7aa2f7', '#0f9f6e'][:len(counts)],
+            text=[str(v) for v in counts.values],
+            textposition='outside',
+        ))
+    fig.update_layout(
+        title='Баланс классов в demo-данных',
+        xaxis_title='класс',
+        yaxis_title='объектов',
+        height=250,
+        margin=dict(l=42, r=16, t=54, b=38),
+        plot_bgcolor='#ffffff',
+        paper_bgcolor='#ffffff',
+        font=dict(family='Arial, sans-serif', color='#16202a'),
+        showlegend=False,
+    )
+    fig.update_yaxes(showgrid=True, gridcolor='#edf1f6', rangemode='tozero')
+    fig.update_xaxes(showgrid=False)
+    return fig
 
 
 def membership_bar() -> go.Figure:
@@ -287,6 +350,7 @@ def summary_report() -> dict[str, Any]:
     return {
         'risk': STATE['risk'],
         'mode': STATE['mode'],
+        'case': current_case_row(),
         'selected_class': expl['report']['selected_class'],
         'reduction_loss_delta': expl['report']['reduction_loss'],
         'uncertainty': expl['report']['uncertainty'],
@@ -306,6 +370,37 @@ def download_report() -> None:
     ui.download(path.read_bytes(), 'defense_demo_report.json')
 
 
+def print_report() -> None:
+    ui.run_javascript('window.print()')
+
+
+def tour_dialog() -> None:
+    with ui.dialog() as dialog, ui.card().classes('w-[760px] max-w-full'):
+        ui.label('Экскурсия по демо').classes('text-xl fx-title')
+        ui.markdown(
+            '1. **Данные -> термы**: числовой признак превращается в low / medium / high.\n\n'
+            '2. **Кейс -> объяснение**: система выбирает класс представления из главы 3 и строит `E_k`.\n\n'
+            '3. **Модель -> решение**: оператор из главы 2 проверяет, согласованы ли компоненты.\n\n'
+            '4. Включи **показать конфликт**: появится `D_ij`, то есть найдено место разрыва объяснимости.'
+        )
+        with ui.row().classes('justify-end w-full'):
+            ui.button('Закрыть', on_click=dialog.close).props('color=primary')
+    dialog.open()
+
+
+def route_strip() -> None:
+    with ui.element('div').classes('fx-route w-full'):
+        for title, caption in [
+            ('Данные', 'sample medical table'),
+            ('ExplainPlan', 'термы и веса'),
+            ('E_k', 'объяснение кейса'),
+            ('A_k^F', 'класс главы 3'),
+            ('D_ij / I(E_G)', 'проверка цепочки'),
+        ]:
+            with ui.element('div').classes('fx-route-item'):
+                ui.html(f'<strong>{title}</strong><span>{caption}</span>')
+
+
 def controls(on_change) -> None:
     df = STATE['df']
     with ui.element('div').classes('fx-topbar w-full'):
@@ -316,19 +411,25 @@ def controls(on_change) -> None:
             mode = ui.select(['audit', 'user'], value=STATE['mode'], label='режим').classes('w-36')
             feature = ui.select(feature_options(), value=STATE['feature'], label='признак').classes('w-48')
             conflict = ui.switch('показать конфликт', value=STATE['conflict'])
+            presentation = ui.switch('презентация', value=STATE['presentation'])
 
             def sync() -> None:
                 STATE['risk'] = float(risk.value)
                 STATE['mode'] = str(mode.value)
                 STATE['feature'] = str(feature.value)
                 STATE['conflict'] = bool(conflict.value)
+                STATE['presentation'] = bool(presentation.value)
                 build_plan_from_state()
                 recompute()
                 feature.options = feature_options()
                 feature.update()
                 on_change()
 
+            for control in (risk, mode, feature, conflict, presentation):
+                control.on_value_change(lambda e: safe(sync, where='recompute'))
             ui.button(icon='refresh', on_click=lambda: safe(sync, where='recompute')).props('flat round color=primary')
+            ui.button(icon='help_outline', on_click=tour_dialog).props('flat round')
+            ui.button(icon='print', on_click=print_report).props('flat round')
             ui.button(icon='download', on_click=download_report).props('flat round')
             ui.label(f'{len(df)} rows').classes('text-sm fx-muted ml-auto')
 
@@ -345,12 +446,22 @@ def plan_section() -> None:
             ('Сейчас показан', STATE['feature'], ''),
         ])
         ui.plotly(explainplan_membership_figure(plan, STATE['feature'], df=STATE['df'])).classes('w-full')
-        rows = quantile_rows()
-        if rows:
-            ui.table(
-                columns=[{'name': k, 'label': k, 'field': k} for k in ['term', 'shape', 'left', 'center', 'right']],
-                rows=rows,
-            ).classes('w-full q-table')
+        with ui.row().classes('w-full gap-3'):
+            with ui.column().classes('w-full'):
+                ui.plotly(target_distribution_figure()).classes('w-full')
+            with ui.column().classes('w-full'):
+                rows = quantile_rows()
+                if rows:
+                    ui.table(
+                        columns=[
+                            {'name': 'term', 'label': 'терм', 'field': 'term'},
+                            {'name': 'shape', 'label': 'форма', 'field': 'shape'},
+                            {'name': 'left', 'label': 'лево', 'field': 'left'},
+                            {'name': 'center', 'label': 'центр', 'field': 'center'},
+                            {'name': 'right', 'label': 'право', 'field': 'right'},
+                        ],
+                        rows=rows,
+                    ).classes('w-full q-table')
 
 
 def explanation_section() -> None:
@@ -361,6 +472,13 @@ def explanation_section() -> None:
         ui.label('2. Объяснение одного кейса').classes('text-lg fx-title fx-step')
         with ui.element('div').classes('fx-note w-full'):
             ui.label('Система выбирает класс нечёткого представления и строит объект объяснения: риск, правила, неопределённость, потеря редукции.').classes('text-sm')
+        case = current_case_row()
+        with ui.element('div').classes('fx-case w-full'):
+            ui.label('Входной кейс').classes('text-sm fx-muted')
+            with ui.row().classes('w-full gap-2'):
+                for key in ['age', 'pressure', 'marker', 'risk_score']:
+                    if key in case:
+                        metric(key, round(float(case[key]), 3), '')
         row_metrics([
             ('Представление', report['selected_class'], readable_class_name(report['selected_class'])),
             ('Неопределённость', round(obj.uncertainty, 4), 'меньше значит увереннее'),
@@ -468,8 +586,10 @@ def page() -> None:
 
     def redraw() -> None:
         body.clear()
+        body.classes(replace='fx-shell w-full gap-4 pb-6' + (' fx-presentation' if STATE.get('presentation') else ''))
         with body:
             controls(redraw)
+            route_strip()
             with ui.row().classes('w-full gap-4 items-start'):
                 with ui.column().classes('w-full xl:w-[49%] gap-4'):
                     plan_section()
