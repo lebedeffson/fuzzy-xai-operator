@@ -51,6 +51,7 @@ The demo has one workflow:
 3. The model risk is converted into linguistic terms: low, medium, high.
 4. The case is explained as `E_k` with selected representation class `A_k^F`.
 5. The system checks whether the risk model and decision module are semantically aligned.
+6. A separate benchmark block compares the same idea on `sklearn breast_cancer` with `RandomForestClassifier`: model-only output versus model plus the fuzzy system operator.
 
 The conflict switch intentionally breaks the interface between components. In that mode the system shows `D_ij` instead of hiding the inconsistency.
 
@@ -63,6 +64,7 @@ Key visual explainers in the defense demo:
 - `A_k^F` layer chart: interval uncertainty, expert disagreement, and `T/I/F` conflict are shown as separate visible layers.
 - Chapter-3 selection chart: candidate representation classes are plotted by cognitive complexity and expected reduction loss; the selected class is highlighted.
 - Composition story graph: model and decision module are connected by a disagreement arrow; conflict mode turns it into diagnostic state `D_ij`.
+- With/without operator benchmark: shows that the baseline model provides risk and feature importance, while the operator adds `gamma`, `I(E_G)`, and `D_ij` conflict detection.
 
 ## Technical Dashboard
 
@@ -98,7 +100,7 @@ PYTHONPATH=. python examples/thesis_demo.py
 Current expected status:
 
 ```text
-24 passed
+25 passed
 thesis validation: PASS
 thesis demo: PASS
 ```

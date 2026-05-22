@@ -41,3 +41,15 @@ def test_defense_demo_uses_sklearn_model_risk():
     assert report["features"] == ["age", "pressure", "marker"]
     assert 0 <= report["risk"] <= 1
     assert abs(case["risk_score"] - report["risk"]) < 1e-9
+
+
+def test_operator_benchmark_compares_with_and_without_operator():
+    defense_demo.STATE["operator_benchmark"] = None
+    report = defense_demo.operator_benchmark_report()
+    assert report["dataset"] == "sklearn breast_cancer"
+    assert report["model"] == "RandomForestClassifier"
+    assert report["accuracy"] > 0.8
+    assert report["roc_auc"] > 0.9
+    assert report["without_operator"]["detects_term_conflict"] is False
+    assert report["with_operator"]["detects_term_conflict"] is True
+    assert len(defense_demo.operator_added_value_figure().data) == 2

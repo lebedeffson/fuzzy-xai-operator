@@ -21,14 +21,18 @@ try:
     import pandas as pd
     import plotly.graph_objects as go
     from nicegui import ui
+    from sklearn.datasets import load_breast_cancer
+    from sklearn.ensemble import RandomForestClassifier
     from sklearn.linear_model import LogisticRegression
-    from sklearn.metrics import accuracy_score
+    from sklearn.metrics import accuracy_score, roc_auc_score
+    from sklearn.model_selection import train_test_split
     from sklearn.pipeline import make_pipeline
     from sklearn.preprocessing import StandardScaler
 except Exception as exc:  # pragma: no cover
     raise SystemExit('Install requirements.txt first: pandas, plotly, nicegui, scikit-learn are required.') from exc
 
 from fuzzyxai.core.plan_builder import build_explain_plan_from_dataframe
+from fuzzyxai import Rule, SystemOperator, Trace, compose, interpretability_index, interpretability_loss
 from fuzzyxai.demo.synthetic import (
     build_demo_composition,
     build_demo_explanation,
@@ -57,6 +61,7 @@ STATE: Dict[str, Any] = {
     'plan': None,
     'explanation': None,
     'composition': None,
+    'operator_benchmark': None,
 }
 
 MODEL_FEATURES = ['age', 'pressure', 'marker']
@@ -179,7 +184,7 @@ def apply_style() -> None:
           border-left: 4px solid var(--blue); padding-left: 10px;
         }
         .fx-route {
-          display: grid; grid-template-columns: repeat(6, minmax(0, 1fr));
+          display: grid; grid-template-columns: repeat(7, minmax(0, 1fr));
           gap: 8px;
         }
         .fx-route-item {
@@ -334,6 +339,213 @@ def model_pipeline_figure() -> go.Figure:
         plot_bgcolor='#ffffff',
         paper_bgcolor='#ffffff',
         font=dict(family='Arial, sans-serif', color='#16202a'),
+    )
+    return fig
+
+
+def operator_benchmark_report() -> dict[str, Any]:
+    """Open medical benchmark: model alone vs model plus chapter-2 operator."""
+    cached = STATE.get('operator_benchmark')
+    if cached is not None:
+        return cached
+
+    data = load_breast_cancer(as_frame=True)
+    x = data.data
+    y_malignant = (data.target == 0).astype(int)
+    x_train, x_test, y_train, y_test = train_test_split(
+        x, y_malignant, test_size=0.25, random_state=42, stratify=y_malignant
+    )
+    model = RandomForestClassifier(n_estimators=140, max_depth=5, random_state=42)
+    model.fit(x_train, y_train)
+    scores = model.predict_proba(x_test)[:, 1]
+    pred = (scores >= 0.5).astype(int)
+    accuracy = float(accuracy_score(y_test, pred))
+    auc = float(roc_auc_score(y_test, scores))
+
+    case_pos = int(min(range(len(scores)), key=lambda idx: abs(float(scores[idx]) - 0.72)))
+    case_risk = float(scores[case_pos])
+    case_values = x_test.iloc[case_pos].to_dict()
+    importances = sorted(
+        [
+            {'feature': str(feature), 'importance': float(value), 'value': float(case_values[feature])}
+            for feature, value in zip(x.columns, model.feature_importances_)
+        ],
+        key=lambda row: row['importance'],
+        reverse=True,
+    )[:8]
+
+    plan_df = x_train.copy()
+    plan_df['target'] = list(y_train)
+    plan = build_explain_plan_from_dataframe(plan_df, target='target', mode='audit').with_reduction_weight(0.10)
+    op = SystemOperator(plan)
+    model_rules = [
+        Rule('rf_high_malignancy', {'risk': 'high'}, 'urgent_review'),
+        Rule('rf_medium_malignancy', {'risk': 'medium'}, 'additional_screening'),
+    ]
+    decision_rules = [Rule('decision_high_risk', {'risk': 'high'}, 'send_to_oncologist')]
+    e_model = op.explain_scalar_risk(
+        case_risk,
+        model_rules,
+        Trace('breast-cancer-rf-model', 'v1', '2026-05-22', source='sklearn_breast_cancer', checksum='rf'),
+        model_uncertainty=1.0 - max(case_risk, 1.0 - case_risk),
+        trace_uncertainty=0.01,
+    )
+    e_decision = op.explain_scalar_risk(
+        min(1.0, case_risk + 0.03),
+        decision_rules,
+        Trace('breast-cancer-decision', 'v1', '2026-05-22', source='clinical-protocol-demo', checksum='decision'),
+        model_uncertainty=0.08,
+        trace_uncertainty=0.01,
+    )
+    composed = compose(e_model, e_decision, plan.beta)
+    gamma = None
+    index = None
+    if not hasattr(composed, 'code'):
+        gamma = float(composed.metadata.get('gamma', 0.0))
+        loss = interpretability_loss(0.30, 0.33, 0.16, 0.03, composed.uncertainty, plan.lambda_, composed.reduction_loss, 0.10)
+        index = float(interpretability_index(loss))
+    diagnostic = compose(e_model, e_decision.copy_with(terms={'approve', 'deny'}), plan.beta)
+
+    report = {
+        'dataset': 'sklearn breast_cancer',
+        'n_samples': int(len(x)),
+        'n_features': int(x.shape[1]),
+        'model': 'RandomForestClassifier',
+        'accuracy': accuracy,
+        'roc_auc': auc,
+        'case_risk': case_risk,
+        'case_true_malignant': int(y_test.iloc[case_pos]),
+        'top_importances': importances,
+        'without_operator': {
+            'shows_risk': True,
+            'shows_feature_importance': True,
+            'semantic_gamma': None,
+            'interpretability_index': None,
+            'detects_term_conflict': False,
+            'verdict': 'локальная модель есть, проверки цепочки нет',
+        },
+        'with_operator': {
+            'shows_risk': True,
+            'shows_feature_importance': True,
+            'semantic_gamma': gamma,
+            'interpretability_index': index,
+            'detects_term_conflict': getattr(diagnostic, 'code', None) == 'D_ij',
+            'diagnostic': getattr(diagnostic, 'code', None),
+            'verdict': 'появляется композиция объяснений и диагностика D_ij',
+        },
+    }
+    STATE['operator_benchmark'] = report
+    return report
+
+
+def benchmark_quality_figure() -> go.Figure:
+    report = operator_benchmark_report()
+    fig = go.Figure()
+    fig.add_trace(go.Bar(
+        x=['accuracy', 'ROC-AUC'],
+        y=[report['accuracy'], report['roc_auc']],
+        marker_color=['#2563eb', '#0f9f6e'],
+        text=[f"{report['accuracy']:.3f}", f"{report['roc_auc']:.3f}"],
+        textposition='outside',
+    ))
+    fig.update_layout(
+        title='Нормальная модель на открытом медицинском датасете',
+        yaxis=dict(range=[0, 1.08], title='score', showgrid=True, gridcolor='#edf1f6'),
+        xaxis=dict(showgrid=False),
+        height=280,
+        margin=dict(l=42, r=20, t=56, b=40),
+        plot_bgcolor='#ffffff',
+        paper_bgcolor='#ffffff',
+        font=dict(family='Arial, sans-serif', color='#16202a'),
+        showlegend=False,
+    )
+    return fig
+
+
+def benchmark_importance_figure() -> go.Figure:
+    rows = operator_benchmark_report()['top_importances']
+    fig = go.Figure()
+    fig.add_trace(go.Bar(
+        x=[row['importance'] for row in rows],
+        y=[row['feature'] for row in rows],
+        orientation='h',
+        marker_color='#7aa2f7',
+        text=[f"{row['importance']:.3f}" for row in rows],
+        textposition='outside',
+    ))
+    fig.update_layout(
+        title='Что показывает модель без оператора',
+        xaxis_title='global feature importance',
+        yaxis_title='признак',
+        height=330,
+        margin=dict(l=150, r=24, t=56, b=42),
+        plot_bgcolor='#ffffff',
+        paper_bgcolor='#ffffff',
+        font=dict(family='Arial, sans-serif', color='#16202a'),
+        showlegend=False,
+    )
+    fig.update_xaxes(showgrid=True, gridcolor='#edf1f6', zeroline=False)
+    fig.update_yaxes(showgrid=False, autorange='reversed')
+    return fig
+
+
+def operator_added_value_figure() -> go.Figure:
+    report = operator_benchmark_report()
+    without = report['without_operator']
+    with_op = report['with_operator']
+    fig = go.Figure()
+    labels = ['risk', 'feature importance', 'gamma', 'I(E_G)', 'D_ij conflict']
+    fig.add_trace(go.Bar(
+        name='без оператора',
+        x=labels,
+        y=[1, 1, 0, 0, 0],
+        marker_color='#94a3b8',
+        text=['есть', 'есть', 'нет', 'нет', 'нет'],
+        textposition='outside',
+    ))
+    fig.add_trace(go.Bar(
+        name='с оператором',
+        x=labels,
+        y=[
+            1,
+            1,
+            1 if with_op['semantic_gamma'] is not None else 0,
+            1 if with_op['interpretability_index'] is not None else 0,
+            1 if with_op['detects_term_conflict'] else 0,
+        ],
+        marker_color='#0f9f6e',
+        text=[
+            'есть',
+            'есть',
+            f"{with_op['semantic_gamma']:.3f}" if with_op['semantic_gamma'] is not None else 'нет',
+            f"{with_op['interpretability_index']:.3f}" if with_op['interpretability_index'] is not None else 'нет',
+            with_op['diagnostic'] or 'нет',
+        ],
+        textposition='outside',
+    ))
+    fig.update_layout(
+        title='Что добавляет нечёткий системный оператор',
+        yaxis=dict(range=[0, 1.18], visible=False),
+        xaxis=dict(showgrid=False),
+        barmode='group',
+        height=330,
+        margin=dict(l=24, r=24, t=56, b=60),
+        plot_bgcolor='#ffffff',
+        paper_bgcolor='#ffffff',
+        font=dict(family='Arial, sans-serif', color='#16202a'),
+        legend=dict(orientation='h', yanchor='bottom', y=-0.30, x=0),
+    )
+    fig.add_annotation(
+        x=0.02,
+        y=0.98,
+        xref='paper',
+        yref='paper',
+        text=f"Без оператора: {without['verdict']}<br>С оператором: {with_op['verdict']}",
+        showarrow=False,
+        align='left',
+        bgcolor='rgba(255,255,255,0.9)',
+        bordercolor='#d9dee7',
+        font=dict(size=12, color='#334155'),
     )
     return fig
 
@@ -687,6 +899,7 @@ def route_strip() -> None:
             ('E_k', 'объяснение кейса'),
             ('A_k^F', 'класс главы 3'),
             ('D_ij / I(E_G)', 'проверка цепочки'),
+            ('Benchmark', 'with / without operator'),
         ]:
             with ui.element('div').classes('fx-route-item'):
                 ui.html(f'<strong>{title}</strong><span>{caption}</span>')
@@ -887,6 +1100,61 @@ def composition_section() -> None:
             ).classes('w-full')
 
 
+def benchmark_section() -> None:
+    report = operator_benchmark_report()
+    without = report['without_operator']
+    with_op = report['with_operator']
+    with ui.element('section').classes('fx-panel w-full'):
+        ui.label('4. Проверка на нормальном датасете: без оператора и с оператором').classes('text-lg fx-title fx-step')
+        with ui.element('div').classes('fx-note w-full'):
+            ui.label('Датасет: sklearn breast_cancer. Модель: RandomForestClassifier. Без оператора есть риск и важности признаков; с оператором добавляются gamma, I(E_G) и диагностика D_ij при разрыве терминов.').classes('text-sm')
+        row_metrics([
+            ('Датасет', report['dataset'], f"{report['n_samples']} объектов, {report['n_features']} признаков"),
+            ('Модель', report['model'], 'RandomForest'),
+            ('Accuracy', round(report['accuracy'], 4), 'test split'),
+            ('ROC-AUC', round(report['roc_auc'], 4), 'test split'),
+            ('Риск кейса', round(report['case_risk'], 4), 'malignancy probability'),
+        ])
+        with ui.row().classes('w-full gap-3'):
+            with ui.column().classes('w-full'):
+                ui.plotly(benchmark_quality_figure()).classes('w-full')
+            with ui.column().classes('w-full'):
+                ui.plotly(benchmark_importance_figure()).classes('w-full')
+        ui.plotly(operator_added_value_figure()).classes('w-full')
+        rows = [
+            {
+                'mode': 'без оператора',
+                'risk': 'есть',
+                'feature_importance': 'есть',
+                'gamma': 'нет',
+                'I_EG': 'нет',
+                'D_ij': 'нет',
+                'meaning': without['verdict'],
+            },
+            {
+                'mode': 'с оператором',
+                'risk': 'есть',
+                'feature_importance': 'есть',
+                'gamma': None if with_op['semantic_gamma'] is None else round(with_op['semantic_gamma'], 4),
+                'I_EG': None if with_op['interpretability_index'] is None else round(with_op['interpretability_index'], 4),
+                'D_ij': with_op['diagnostic'],
+                'meaning': with_op['verdict'],
+            },
+        ]
+        ui.table(
+            columns=[
+                {'name': 'mode', 'label': 'режим', 'field': 'mode'},
+                {'name': 'risk', 'label': 'risk', 'field': 'risk'},
+                {'name': 'feature_importance', 'label': 'важности', 'field': 'feature_importance'},
+                {'name': 'gamma', 'label': 'gamma', 'field': 'gamma'},
+                {'name': 'I_EG', 'label': 'I(E_G)', 'field': 'I_EG'},
+                {'name': 'D_ij', 'label': 'D_ij', 'field': 'D_ij'},
+                {'name': 'meaning', 'label': 'смысл', 'field': 'meaning'},
+            ],
+            rows=rows,
+        ).classes('w-full q-table')
+
+
 def advanced_section() -> None:
     with ui.expansion('Технические детали и отчёт').classes('w-full'):
         profile = set(STATE['explanation']['profile'])
@@ -929,6 +1197,7 @@ def page() -> None:
                 with ui.column().classes('w-full xl:w-[49%] gap-4'):
                     explanation_section()
             composition_section()
+            benchmark_section()
             advanced_section()
 
     redraw()
