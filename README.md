@@ -154,6 +154,11 @@ tests/
 
 See `CHAPTER_MAPPING.md` for a direct mapping between dissertation objects and implementation files.
 
+For presentation and implementation explanation, see:
+
+- `PRESENTATION.md`: defense script and what to say while showing the GUI.
+- `IMPLEMENTATION_SUMMARY.md`: technical summary of what is implemented and where.
+
 ## Scientific Scope
 
 This repository is a dissertation reproducibility layer, not a certified clinical system. The medical-like benchmark is a technical proof of concept. Full domain validation, expert review, and regulated deployment are outside this prototype.
