@@ -84,12 +84,16 @@ python apps/nicegui_dashboard.py --port 8080
 
 ```bash
 PYTHONPATH=. pytest -q
+# или
+make test
 ```
 
 Запуск proof-скриптов и регенерация отчётов:
 
 ```bash
 PYTHONPATH=. python proofs/run_all_proofs.py
+# или
+make proof
 ```
 
 Финальная проверка диссертационных примеров:
@@ -102,7 +106,7 @@ PYTHONPATH=. python examples/thesis_demo.py
 Ожидаемый статус:
 
 ```text
-25 passed
+26 passed
 thesis validation: PASS
 thesis demo: PASS
 ```
@@ -172,6 +176,7 @@ tests/
 
 - `PRESENTATION.md`: сценарий защиты и что говорить при показе GUI.
 - `IMPLEMENTATION_SUMMARY.md`: техническое описание того, что реализовано и где лежит.
+- `ROADMAP_RU.md`: перспективные направления и план доведения прототипа до реальной разработки.
 
 ## Научные ограничения
 
