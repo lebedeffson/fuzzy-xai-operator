@@ -54,6 +54,13 @@ The conflict switch intentionally breaks the interface between components. In th
 
 The GUI is designed for a non-specialist demonstration: it shows the route `data -> ExplainPlan -> E_k -> A_k^F -> D_ij / I(E_G)`, the current input case, membership functions, target distribution, selected representation, and the model-to-decision consistency check. Use the presentation switch for projector-friendly sizing, the help button for a short guided tour, and the print button for a browser PDF export.
 
+Key visual explainers in the defense demo:
+
+- Current-case marker on the membership functions: the viewer sees where the selected patient/risk falls on `low`, `medium`, and `high`.
+- `A_k^F` layer chart: interval uncertainty, expert disagreement, and `T/I/F` conflict are shown as separate visible layers.
+- Chapter-3 selection chart: candidate representation classes are plotted by cognitive complexity and expected reduction loss; the selected class is highlighted.
+- Composition story graph: model and decision module are connected by a disagreement arrow; conflict mode turns it into diagnostic state `D_ij`.
+
 ## Technical Dashboard
 
 The broader NiceGUI dashboard is still available for debugging and extended experiments:
@@ -88,7 +95,7 @@ PYTHONPATH=. python examples/thesis_demo.py
 Current expected status:
 
 ```text
-22 passed
+23 passed
 thesis validation: PASS
 thesis demo: PASS
 ```

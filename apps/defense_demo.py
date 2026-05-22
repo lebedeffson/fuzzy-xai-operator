@@ -222,6 +222,39 @@ def current_case_row() -> dict[str, Any]:
     return df.loc[idx].to_dict()
 
 
+def selected_feature_value() -> float | None:
+    case = current_case_row()
+    value = case.get(STATE['feature'])
+    try:
+        return float(value)
+    except (TypeError, ValueError):
+        return None
+
+
+def plan_membership_demo_figure() -> go.Figure:
+    """ExplainPlan curves plus the current case marker."""
+    fig = explainplan_membership_figure(STATE['plan'], STATE['feature'], df=STATE['df'])
+    value = selected_feature_value()
+    if value is None:
+        return fig
+    fig.add_vline(x=value, line_width=3, line_dash='dash', line_color='#16202a')
+    fig.add_annotation(
+        x=value,
+        y=1.03,
+        xref='x',
+        yref='paper',
+        text=f'текущий кейс: {value:.3g}',
+        showarrow=True,
+        arrowhead=2,
+        ax=44,
+        ay=-38,
+        bgcolor='#ffffff',
+        bordercolor='#16202a',
+        font=dict(color='#16202a', size=12),
+    )
+    return fig
+
+
 def target_distribution_figure() -> go.Figure:
     df = STATE['df']
     fig = go.Figure()
@@ -275,6 +308,146 @@ def membership_bar() -> go.Figure:
         plot_bgcolor='#ffffff',
         paper_bgcolor='#ffffff',
         font=dict(family='Arial, sans-serif', color='#16202a'),
+    )
+    return fig
+
+
+def representation_layers_figure(expl: Mapping[str, Any]) -> go.Figure:
+    """Show chapter-3 representation as visible uncertainty layers."""
+    rep = expl['representation']
+    risk = float(expl['report']['risk'])
+    if not hasattr(rep, 'levels'):
+        return representation_figure(rep, title='A_k^F: представление неопределенности')
+
+    fig = go.Figure()
+    level_names = ['Интервал', 'Эксперты', 'Конфликт']
+    for idx, level in enumerate(rep.levels):
+        label = level_names[idx] if idx < len(level_names) else f'Уровень {idx + 1}'
+        try:
+            value = level.membership(risk)
+        except Exception:
+            continue
+        cls_name = getattr(level, 'class_name', type(level).__name__)
+        if cls_name == 'FI':
+            lo, hi = float(value[0]), float(value[1])
+            fig.add_trace(go.Scatter(
+                x=[lo, hi],
+                y=[label, label],
+                mode='lines+markers+text',
+                text=[f'{lo:.2f}', f'{hi:.2f}'],
+                textposition='top center',
+                name='интервал уверенности',
+                line=dict(width=12, color='#2563eb'),
+                marker=dict(size=13, color='#2563eb', line=dict(color='white', width=1)),
+                hovertemplate='интервал: %{x:.3f}<extra></extra>',
+            ))
+        elif cls_name == 'FH':
+            values = [float(v) for v in value]
+            fig.add_trace(go.Scatter(
+                x=values,
+                y=[label] * len(values),
+                mode='markers+text',
+                text=[f'эксперт {i + 1}' for i in range(len(values))],
+                textposition='top center',
+                name='экспертные оценки',
+                marker=dict(size=17, color='#c47b00', line=dict(color='white', width=1)),
+                hovertemplate='оценка=%{x:.3f}<extra></extra>',
+            ))
+        elif cls_name in {'FNsrc', 'FN'}:
+            t, ind, f = (float(v) for v in value)
+            fig.add_trace(go.Bar(
+                x=[t, ind, f],
+                y=['T: поддержка', 'I: неопределенность', 'F: возражение'],
+                orientation='h',
+                name='нейтрософский слой',
+                marker_color=['#0f9f6e', '#c47b00', '#d83a3a'],
+                text=[f'{v:.2f}' for v in (t, ind, f)],
+                textposition='outside',
+                hovertemplate='%{y}: %{x:.3f}<extra></extra>',
+            ))
+
+    fig.update_layout(
+        title='A_k^F: из чего состоит выбранное представление',
+        xaxis_title='степень / оценка',
+        yaxis_title='слой',
+        xaxis=dict(range=[0, 1.08], showgrid=True, gridcolor='#edf1f6', zeroline=False),
+        yaxis=dict(showgrid=False),
+        height=330,
+        margin=dict(l=126, r=24, t=56, b=40),
+        plot_bgcolor='#ffffff',
+        paper_bgcolor='#ffffff',
+        font=dict(family='Arial, sans-serif', color='#16202a'),
+        showlegend=False,
+    )
+    fig.add_annotation(
+        x=0.5,
+        y=-0.22,
+        xref='paper',
+        yref='paper',
+        text='Интервал = разброс риска; эксперты = разные мнения; T/I/F = поддержка, неопределенность и конфликт.',
+        showarrow=False,
+        font=dict(size=12, color='#637083'),
+    )
+    return fig
+
+
+def selection_figure() -> go.Figure:
+    """Visual explanation of the chapter-3 class selection."""
+    expl = STATE['explanation']
+    profile = set(expl['profile'])
+    selected_name = expl['report']['selected_class']
+    candidates = default_candidates()
+    front = {c.name for c in pareto_front([c for c in candidates if c.covers(profile)])}
+
+    fig = go.Figure()
+    for candidate in candidates:
+        covers = candidate.covers(profile)
+        selected = candidate.name == selected_name
+        color = '#0f9f6e' if selected else ('#2563eb' if covers else '#94a3b8')
+        symbol = 'star' if selected else ('circle' if candidate.name in front else 'circle-open')
+        fig.add_trace(go.Scatter(
+            x=[candidate.cognitive_complexity],
+            y=[candidate.expected_reduction_loss],
+            mode='markers+text',
+            text=[candidate.name],
+            textposition='top center',
+            name=candidate.name,
+            marker=dict(
+                size=22 + 18 * float(candidate.computational_complexity),
+                color=color,
+                symbol=symbol,
+                line=dict(color='white', width=1.5),
+            ),
+            hovertemplate=(
+                f'{candidate.name}<br>'
+                f'покрывает профиль: {covers}<br>'
+                'C_cog=%{x}<br>Delta=%{y}<extra></extra>'
+            ),
+            showlegend=False,
+        ))
+    fig.update_layout(
+        title='Почему выбран именно этот класс из главы 3',
+        xaxis_title='когнитивная сложность: проще левее',
+        yaxis_title='ожидаемая потеря: лучше ниже',
+        height=320,
+        margin=dict(l=58, r=18, t=56, b=50),
+        plot_bgcolor='#ffffff',
+        paper_bgcolor='#ffffff',
+        font=dict(family='Arial, sans-serif', color='#16202a'),
+    )
+    fig.update_xaxes(showgrid=True, gridcolor='#edf1f6', zeroline=False)
+    fig.update_yaxes(showgrid=True, gridcolor='#edf1f6', zeroline=False)
+    fig.add_annotation(
+        x=0.02,
+        y=0.98,
+        xref='paper',
+        yref='paper',
+        text='Зеленая звезда = выбранный минимум: достаточно выразительно, но не перегружено.',
+        showarrow=False,
+        align='left',
+        bgcolor='rgba(255,255,255,0.88)',
+        bordercolor='#d9dee7',
+        font=dict(size=12, color='#334155'),
     )
     return fig
 
@@ -445,7 +618,7 @@ def plan_section() -> None:
             ('Числовых признаков', len(plan.metadata.get('numeric_features', [])), ''),
             ('Сейчас показан', STATE['feature'], ''),
         ])
-        ui.plotly(explainplan_membership_figure(plan, STATE['feature'], df=STATE['df'])).classes('w-full')
+        ui.plotly(plan_membership_demo_figure()).classes('w-full')
         with ui.row().classes('w-full gap-3'):
             with ui.column().classes('w-full'):
                 ui.plotly(target_distribution_figure()).classes('w-full')
@@ -488,7 +661,8 @@ def explanation_section() -> None:
             with ui.column().classes('w-full'):
                 ui.plotly(membership_bar()).classes('w-full')
             with ui.column().classes('w-full'):
-                ui.plotly(representation_figure(expl['representation'], title='Представление неопределенности')).classes('w-full')
+                ui.plotly(representation_layers_figure(expl)).classes('w-full')
+        ui.plotly(selection_figure()).classes('w-full')
         rules = [
             {
                 'rule': r.name,
