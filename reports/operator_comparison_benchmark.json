@@ -1,0 +1,88 @@
+{
+  "benchmark": "operator comparison on sklearn breast_cancer",
+  "dataset": {
+    "name": "sklearn breast_cancer",
+    "samples": 569,
+    "features": 30,
+    "target": "malignant risk, derived from sklearn target == 0"
+  },
+  "model": {
+    "name": "RandomForestClassifier",
+    "n_estimators": 140,
+    "max_depth": 5,
+    "accuracy": 0.965035,
+    "roc_auc": 0.99434,
+    "top_feature_importances": [
+      {
+        "feature": "worst area",
+        "importance": 0.135892
+      },
+      {
+        "feature": "worst perimeter",
+        "importance": 0.135061
+      },
+      {
+        "feature": "worst concave points",
+        "importance": 0.105901
+      },
+      {
+        "feature": "mean concave points",
+        "importance": 0.101148
+      },
+      {
+        "feature": "worst radius",
+        "importance": 0.09025
+      },
+      {
+        "feature": "mean radius",
+        "importance": 0.06832
+      },
+      {
+        "feature": "mean perimeter",
+        "importance": 0.068292
+      },
+      {
+        "feature": "mean concavity",
+        "importance": 0.040909
+      },
+      {
+        "feature": "mean area",
+        "importance": 0.040515
+      },
+      {
+        "feature": "worst concavity",
+        "importance": 0.028075
+      }
+    ]
+  },
+  "without_operator": {
+    "available": [
+      "risk_score",
+      "accuracy",
+      "roc_auc",
+      "feature_importance"
+    ],
+    "missing": [
+      "semantic_gamma",
+      "interpretability_index",
+      "D_ij_conflict_detection"
+    ],
+    "claim": "Модель объясняет риск локально, но не проверяет согласованность цепочки model -> decision."
+  },
+  "with_operator": {
+    "available": [
+      "risk_score",
+      "E_k",
+      "A_k^F",
+      "semantic_gamma",
+      "interpretability_index",
+      "D_ij_conflict_detection"
+    ],
+    "checked_cases": 50,
+    "mean_gamma": 0.172724,
+    "mean_interpretability_index": 0.764437,
+    "conflict_detection_rate": 1.0,
+    "claim": "Оператор добавляет проверку семантической совместимости и диагностирует разрыв терминов."
+  },
+  "conclusion": "FuzzyXAI не повышает accuracy модели напрямую. Его вклад — проверка объяснительной цепочки: gamma, I(E_G), D_ij и воспроизводимый trace."
+}

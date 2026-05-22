@@ -106,7 +106,7 @@ PYTHONPATH=. python examples/thesis_demo.py
 Ожидаемый статус:
 
 ```text
-26 passed
+28 passed
 thesis validation: PASS
 thesis demo: PASS
 ```
@@ -122,6 +122,7 @@ thesis demo: PASS
 - `reports/thesis_demo_composition_graph.html`: интерактивный граф композиции.
 - `reports/chapter2_calibration_report.json`: отчёт калибровки весов `beta`.
 - `reports/breast_cancer_benchmark.md`: краткий benchmark на медицинском датасете.
+- `reports/operator_comparison_benchmark.md`: сравнение “без оператора / с оператором”.
 
 ## Минимальный пример API
 

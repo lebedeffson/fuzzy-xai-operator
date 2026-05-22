@@ -60,7 +60,7 @@ Baseline без оператора:
 
 Минимальный готовый benchmark уже есть в `apps/defense_demo.py` на `sklearn breast_cancer` и `RandomForestClassifier`.
 
-Следующий шаг: вынести это в отдельный воспроизводимый benchmark-скрипт с несколькими моделями и искусственными типами разрыва.
+Отдельный воспроизводимый скрипт добавлен: `benchmarks/operator_comparison_benchmark.py`. Он генерирует `reports/operator_comparison_benchmark.json` и `reports/operator_comparison_benchmark.md`.
 
 ### 3. Библиотека в стиле scikit-learn
 

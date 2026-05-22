@@ -2,7 +2,7 @@ PYTHON ?= python
 PYTHONPATH := .
 PORT ?= 8085
 
-.PHONY: install test demo dashboard proof thesis benchmark clean
+.PHONY: install test demo dashboard proof thesis benchmark operator-benchmark clean
 
 install:
 	$(PYTHON) -m pip install -r requirements.txt
@@ -25,6 +25,10 @@ thesis:
 
 benchmark:
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) benchmarks/breast_cancer_benchmark.py
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) benchmarks/operator_comparison_benchmark.py
+
+operator-benchmark:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) benchmarks/operator_comparison_benchmark.py
 
 clean:
 	find . -type d -name __pycache__ -prune -exec rm -rf {} +
