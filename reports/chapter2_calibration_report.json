@@ -1,0 +1,84 @@
+{
+  "folds": [
+    {
+      "n_train": 60,
+      "n_test": 15,
+      "mse_base": 0.0021269439320846144,
+      "mse_calibrated": 0.0007523546810898446,
+      "spearman_calibrated": 0.9214285714285713,
+      "beta": {
+        "repr": 0.32315511577056655,
+        "rules": 0.21354730965832094,
+        "activations": 0.11833546017419044,
+        "uncertainty": 0.18271872144193463,
+        "trace": 0.10856430901882386,
+        "reduction": 0.0536790839361636
+      }
+    },
+    {
+      "n_train": 60,
+      "n_test": 15,
+      "mse_base": 0.0026574356844763806,
+      "mse_calibrated": 0.00031413226297003605,
+      "spearman_calibrated": 0.9678571428571429,
+      "beta": {
+        "repr": 0.3288297802357315,
+        "rules": 0.21300444261047918,
+        "activations": 0.12625211312999238,
+        "uncertainty": 0.17972427353032958,
+        "trace": 0.10381884055180829,
+        "reduction": 0.048370549941659055
+      }
+    },
+    {
+      "n_train": 60,
+      "n_test": 15,
+      "mse_base": 0.0038621479119476227,
+      "mse_calibrated": 0.0009577664051891108,
+      "spearman_calibrated": 0.9285714285714284,
+      "beta": {
+        "repr": 0.33025056842842626,
+        "rules": 0.1973895169728871,
+        "activations": 0.14763520488546725,
+        "uncertainty": 0.17011954017525158,
+        "trace": 0.0938702755572188,
+        "reduction": 0.06073489398074904
+      }
+    },
+    {
+      "n_train": 60,
+      "n_test": 15,
+      "mse_base": 0.0025775348948300953,
+      "mse_calibrated": 0.000308483848575682,
+      "spearman_calibrated": 0.9714285714285713,
+      "beta": {
+        "repr": 0.3257033350608721,
+        "rules": 0.20769642177657988,
+        "activations": 0.1325610517022157,
+        "uncertainty": 0.17529256702153947,
+        "trace": 0.0980441330457521,
+        "reduction": 0.060702491393040715
+      }
+    },
+    {
+      "n_train": 60,
+      "n_test": 15,
+      "mse_base": 0.0028809765344991888,
+      "mse_calibrated": 0.0006487692335544192,
+      "spearman_calibrated": 0.8964285714285712,
+      "beta": {
+        "repr": 0.314794516518286,
+        "rules": 0.220919264997939,
+        "activations": 0.1372362685707089,
+        "uncertainty": 0.17940332231799042,
+        "trace": 0.09928983164339089,
+        "reduction": 0.04835679595168487
+      }
+    }
+  ],
+  "mean_mse_base": 0.00282100779156758,
+  "mean_mse_calibrated": 0.0005963012862758185,
+  "mean_spearman_calibrated": 0.937142857142857,
+  "chapter": 2,
+  "purpose": "cross-validated calibration of beta weights for d_E"
+}

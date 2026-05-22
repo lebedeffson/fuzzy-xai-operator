@@ -1,0 +1,4 @@
+digraph ExplanationComposition {
+  rankdir=LR;
+  model -> decision [label="gamma=0.36108\norange", color=orange, penwidth=2];
+}

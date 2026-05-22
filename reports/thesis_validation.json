@@ -1,0 +1,248 @@
+{
+  "status": "PASS",
+  "total_checks": 20,
+  "failed_checks": 0,
+  "chapters": {
+    "chapter2": {
+      "checks": [
+        {
+          "name": "chapter2.risk",
+          "expected": 0.72,
+          "actual": 0.72,
+          "tolerance": 1e-06,
+          "passed": true,
+          "note": ""
+        },
+        {
+          "name": "chapter2.mu_low",
+          "expected": 0.0,
+          "actual": 0.0,
+          "tolerance": 1e-06,
+          "passed": true,
+          "note": ""
+        },
+        {
+          "name": "chapter2.mu_medium",
+          "expected": 0.12,
+          "actual": 0.1200000000000001,
+          "tolerance": 1e-09,
+          "passed": true,
+          "note": ""
+        },
+        {
+          "name": "chapter2.mu_high",
+          "expected": 0.88,
+          "actual": 0.8799999999999999,
+          "tolerance": 1e-09,
+          "passed": true,
+          "note": ""
+        },
+        {
+          "name": "chapter2.entropy_H",
+          "expected": 0.342207,
+          "actual": 0.34220694731338347,
+          "tolerance": 5e-06,
+          "passed": true,
+          "note": ""
+        },
+        {
+          "name": "chapter2.gamma_d_E",
+          "expected": 0.36108,
+          "actual": 0.36108,
+          "tolerance": 5e-06,
+          "passed": true,
+          "note": ""
+        },
+        {
+          "name": "chapter2.composed_uncertainty",
+          "expected": 0.449813,
+          "actual": 0.44981320960000015,
+          "tolerance": 5e-06,
+          "passed": true,
+          "note": ""
+        },
+        {
+          "name": "chapter2.loss_L",
+          "expected": 0.284404,
+          "actual": 0.2844040313826768,
+          "tolerance": 5e-06,
+          "passed": true,
+          "note": ""
+        },
+        {
+          "name": "chapter2.index_I",
+          "expected": 0.752463,
+          "actual": 0.7524625647909534,
+          "tolerance": 5e-06,
+          "passed": true,
+          "note": ""
+        },
+        {
+          "name": "chapter2.diagnostic_code",
+          "expected": "D_ij",
+          "actual": "D_ij",
+          "tolerance": null,
+          "passed": true,
+          "note": ""
+        }
+      ],
+      "computed": {
+        "risk": 0.72,
+        "memberships": {
+          "low": 0.0,
+          "medium": 0.12,
+          "high": 0.88
+        },
+        "entropy_H": 0.342207,
+        "gamma_d_E": 0.36108,
+        "composed_uncertainty": 0.449813,
+        "loss_L": 0.284404,
+        "index_I": 0.752463,
+        "diagnostic_code": "D_ij"
+      }
+    },
+    "chapter3": {
+      "checks": [
+        {
+          "name": "chapter3.profile",
+          "expected": [
+            "u_conf",
+            "u_exp",
+            "u_int",
+            "u_ling",
+            "u_multi",
+            "u_num",
+            "u_trace"
+          ],
+          "actual": [
+            "u_conf",
+            "u_exp",
+            "u_int",
+            "u_ling",
+            "u_multi",
+            "u_num",
+            "u_trace"
+          ],
+          "tolerance": null,
+          "passed": true,
+          "note": ""
+        },
+        {
+          "name": "chapter3.selected_class",
+          "expected": "FML-audit",
+          "actual": "FML-audit",
+          "tolerance": null,
+          "passed": true,
+          "note": ""
+        },
+        {
+          "name": "chapter3.delta_interval",
+          "expected": 0.04,
+          "actual": 0.03999999999999998,
+          "tolerance": 1e-09,
+          "passed": true,
+          "note": ""
+        },
+        {
+          "name": "chapter3.delta_hesitant",
+          "expected": 0.085,
+          "actual": 0.08500000000000008,
+          "tolerance": 1e-09,
+          "passed": true,
+          "note": ""
+        },
+        {
+          "name": "chapter3.delta_neutrosophic",
+          "expected": 0.26,
+          "actual": 0.26000000000000006,
+          "tolerance": 1e-09,
+          "passed": true,
+          "note": ""
+        },
+        {
+          "name": "chapter3.delta_multilevel",
+          "expected": 0.20125,
+          "actual": 0.20125000000000007,
+          "tolerance": 1e-09,
+          "passed": true,
+          "note": ""
+        },
+        {
+          "name": "chapter3.extended_d_E",
+          "expected": 0.163045,
+          "actual": 0.16304500000000002,
+          "tolerance": 5e-06,
+          "passed": true,
+          "note": ""
+        },
+        {
+          "name": "chapter3.composition_result",
+          "expected": "ExplanationObject",
+          "actual": "ExplanationObject",
+          "tolerance": null,
+          "passed": true,
+          "note": ""
+        },
+        {
+          "name": "chapter3.diagnostic_choice_code",
+          "expected": "D_choice",
+          "actual": "D_choice",
+          "tolerance": null,
+          "passed": true,
+          "note": ""
+        },
+        {
+          "name": "chapter3.diagnostic_missing",
+          "expected": [
+            "u_ethical"
+          ],
+          "actual": [
+            "u_ethical"
+          ],
+          "tolerance": null,
+          "passed": true,
+          "note": ""
+        }
+      ],
+      "computed": {
+        "profile": [
+          "u_conf",
+          "u_exp",
+          "u_int",
+          "u_ling",
+          "u_multi",
+          "u_num",
+          "u_trace"
+        ],
+        "selected_class": "FML-audit",
+        "reductions": {
+          "IntervalFS_to_F0_delta": 0.04,
+          "HesitantFS_to_F0_delta": 0.085,
+          "NeutrosophicFS_to_F0_delta": 0.26,
+          "MultiLevelFS_to_F0_delta": 0.20125
+        },
+        "extended_d_E_with_delta": 0.163045,
+        "composition_result": "ExplanationObject",
+        "diagnostic_choice_code": "D_choice",
+        "diagnostic_choice_context": {
+          "missing": [
+            "u_ethical"
+          ],
+          "action": "extend hierarchy or relax profile"
+        },
+        "u_time_u_cf_multilevel_levels": [
+          [
+            "u_cf",
+            "u_ling",
+            "u_time",
+            "u_trace"
+          ],
+          [
+            "u_num"
+          ]
+        ]
+      }
+    }
+  },
+  "failed": []
+}

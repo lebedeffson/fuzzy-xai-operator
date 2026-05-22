@@ -1,0 +1,39 @@
+:root {
+  --fx-bg: #0f172a;
+  --fx-card: #111827;
+  --fx-accent: #4f46e5;
+  --fx-accent2: #06b6d4;
+  --fx-good: #22c55e;
+  --fx-warn: #f59e0b;
+  --fx-bad: #ef4444;
+}
+.fx-hero {
+  background: linear-gradient(135deg, #111827 0%, #1e1b4b 52%, #164e63 100%);
+  color: white;
+  border-radius: 22px;
+  padding: 28px;
+  box-shadow: 0 20px 50px rgba(15, 23, 42, 0.28);
+}
+.fx-card {
+  border-radius: 18px;
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.10);
+  border: 1px solid rgba(148, 163, 184, 0.20);
+}
+.fx-chip {
+  border-radius: 999px;
+  padding: 4px 10px;
+  background: #eef2ff;
+  color: #312e81;
+  font-size: 12px;
+  font-weight: 650;
+}
+.fx-muted { color: #64748b; }
+.fx-title { font-weight: 800; letter-spacing: -0.02em; }
+.fx-code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  background: #0f172a;
+  color: #e2e8f0;
+  border-radius: 12px;
+  padding: 12px;
+  white-space: pre-wrap;
+}

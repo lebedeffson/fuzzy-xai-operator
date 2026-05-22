@@ -1,0 +1,27 @@
+{
+  "benchmark": "sklearn breast_cancer proof-of-concept",
+  "purpose": "minimal open medical-like benchmark for dissertation chapters 2 and 3",
+  "n_train": 426,
+  "n_test": 143,
+  "results": [
+    {
+      "model": "logistic_regression",
+      "accuracy": 0.986014,
+      "roc_auc": 0.997694,
+      "fit_time_sec": 0.004219,
+      "mean_I_on_50_cases": 0.793479,
+      "diagnostic_rate_on_50_cases": 0.0,
+      "explain_time_50_cases_sec": 0.003232
+    },
+    {
+      "model": "random_forest",
+      "accuracy": 0.951049,
+      "roc_auc": 0.994444,
+      "fit_time_sec": 0.096701,
+      "mean_I_on_50_cases": 0.793833,
+      "diagnostic_rate_on_50_cases": 0.0,
+      "explain_time_50_cases_sec": 0.002625
+    }
+  ],
+  "limitations": "This is not a clinical validation. It is a reproducible technical benchmark before chapter 5 experiments."
+}

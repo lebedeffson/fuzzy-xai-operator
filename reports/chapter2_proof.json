@@ -1,0 +1,52 @@
+{
+  "chapter": 2,
+  "risk": 0.72,
+  "memberships": {
+    "low": 0.0,
+    "medium": 0.1200000000000001,
+    "high": 0.8799999999999999
+  },
+  "entropy_H": 0.342207,
+  "gamma_d_E": 0.36108,
+  "composed_uncertainty": 0.449813,
+  "loss_L": 0.284404,
+  "index_I": 0.752463,
+  "diagnostic_code": "D_ij",
+  "diagnostic_reason": "no common linguistic terms for composition",
+  "calibrated_beta": {
+    "repr": 0.289757,
+    "rules": 0.509148,
+    "activations": 0.031226,
+    "uncertainty": 0.0,
+    "trace": 0.16987,
+    "reduction": 0.0
+  },
+  "calibration_prediction_example": 0.136626,
+  "edge_report": [
+    {
+      "source": "model",
+      "target": "decision",
+      "gamma": 0.36108,
+      "severity": "orange",
+      "left_terms": [
+        "high",
+        "low",
+        "medium"
+      ],
+      "right_terms": [
+        "high",
+        "low",
+        "medium"
+      ],
+      "left_active_rules": [
+        "r_high_check",
+        "r_medium_watch"
+      ],
+      "right_active_rules": [
+        "r_decision_high"
+      ],
+      "left_delta": 0.0,
+      "right_delta": 0.0
+    }
+  ]
+}

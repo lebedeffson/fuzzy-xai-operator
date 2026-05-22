@@ -1,0 +1,117 @@
+{
+  "chapter": 3,
+  "route": "metadata -> P_sit -> Pareto -> F* -> A_k^F -> Pi/Delta -> E_k^ext -> d_E^ext -> composition",
+  "profile": [
+    "u_conf",
+    "u_exp",
+    "u_int",
+    "u_ling",
+    "u_multi",
+    "u_num",
+    "u_trace"
+  ],
+  "selected_class": "FML-audit",
+  "reduction_policy": "canonical",
+  "Delta_k": 0.20125,
+  "d_E_ext": 0.486445,
+  "composition_result": "ExplanationObject",
+  "L_ext": 0.324923,
+  "I_ext": 0.722583,
+  "diagnostic_choice": "D_choice",
+  "diagnostic_missing": [
+    "u_ethical"
+  ],
+  "temporal_cf_levels": [
+    [
+      "u_cf",
+      "u_ling",
+      "u_time",
+      "u_trace"
+    ],
+    [
+      "u_num"
+    ]
+  ],
+  "candidates": [
+    {
+      "name": "F0",
+      "coverage": [
+        "u_ling",
+        "u_num"
+      ],
+      "cognitive_complexity": 0.1,
+      "computational_complexity": 0.03,
+      "expected_reduction_loss": 0.42,
+      "factory": null
+    },
+    {
+      "name": "FI",
+      "coverage": [
+        "u_int",
+        "u_ling",
+        "u_num"
+      ],
+      "cognitive_complexity": 0.22,
+      "computational_complexity": 0.05,
+      "expected_reduction_loss": 0.3,
+      "factory": null
+    },
+    {
+      "name": "FH",
+      "coverage": [
+        "u_exp",
+        "u_ling",
+        "u_num"
+      ],
+      "cognitive_complexity": 0.3,
+      "computational_complexity": 0.81,
+      "expected_reduction_loss": 0.25,
+      "factory": null
+    },
+    {
+      "name": "FNsrc",
+      "coverage": [
+        "u_conf",
+        "u_if",
+        "u_ling",
+        "u_num",
+        "u_trace"
+      ],
+      "cognitive_complexity": 0.42,
+      "computational_complexity": 0.09,
+      "expected_reduction_loss": 0.18,
+      "factory": null
+    },
+    {
+      "name": "FML-user",
+      "coverage": [
+        "u_conf",
+        "u_exp",
+        "u_int",
+        "u_ling",
+        "u_multi",
+        "u_num"
+      ],
+      "cognitive_complexity": 0.6,
+      "computational_complexity": 0.99,
+      "expected_reduction_loss": 0.08,
+      "factory": null
+    },
+    {
+      "name": "FML-audit",
+      "coverage": [
+        "u_conf",
+        "u_exp",
+        "u_int",
+        "u_ling",
+        "u_multi",
+        "u_num",
+        "u_trace"
+      ],
+      "cognitive_complexity": 0.68,
+      "computational_complexity": 1.0,
+      "expected_reduction_loss": 0.04,
+      "factory": null
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "package": "fuzzyxai_doctoral_core_v8_gui_fixed",
+  "ran": [
+    "proofs/chapter2_operator_proof.py",
+    "proofs/chapter2_calibration_proof.py",
+    "proofs/chapter3_hierarchy_proof.py",
+    "examples/chapter3_end_to_end.py",
+    "proofs/validate_thesis_examples.py",
+    "examples/thesis_demo.py",
+    "benchmarks/breast_cancer_benchmark.py"
+  ],
+  "reports": [
+    "breast_cancer_benchmark.json",
+    "chapter2_calibration_report.json",
+    "chapter2_proof.json",
+    "chapter3_end_to_end_report.json",
+    "chapter3_proof.json",
+    "proof_summary.json",
+    "thesis_demo_report.json",
+    "thesis_validation.json"
+  ]
+}
