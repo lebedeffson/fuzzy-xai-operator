@@ -20,5 +20,7 @@ __all__ = [
     'reduce_to_f0','reduction_loss','build_profile','Candidate','select_minimal_sufficient','pareto_front'
 ]
 from .api import FuzzyXAIPipeline, ExplanationResult
+from .risk import RiskAction, RiskDecision, RiskPolicy, RiskAwareModel
 
 __all__ += ['FuzzyXAIPipeline', 'ExplanationResult']
+__all__ += ['RiskAction', 'RiskDecision', 'RiskPolicy', 'RiskAwareModel']

@@ -1,0 +1,95 @@
+{
+  "benchmark": "risk-aware observer on sklearn breast_cancer",
+  "dataset": {
+    "name": "sklearn breast_cancer",
+    "samples": 569,
+    "features": 30
+  },
+  "model": {
+    "name": "RandomForestClassifier",
+    "accuracy_base": 0.965035,
+    "roc_auc": 0.99434
+  },
+  "policy": {
+    "theta_mid": 0.34,
+    "theta_high": 0.62,
+    "block_on_diagnostic": true,
+    "risk_weights": {
+      "predicted_risk": 0.3,
+      "uncertainty": 0.25,
+      "reduction_loss": 0.15,
+      "interpretability_gap": 0.2,
+      "diagnostic": 0.1
+    }
+  },
+  "observer_metrics": {
+    "accepted_accuracy": 0.972477,
+    "coverage": 0.762238,
+    "defer_rate": 0.0,
+    "request_rate": 0.118881,
+    "block_rate": 0.0,
+    "expected_cost_before": 0.174825,
+    "expected_cost_after": 0.108462,
+    "risk_reduction": 0.066364,
+    "mean_interpretability": 0.798902,
+    "diagnostic_rate": 0.0,
+    "action_counts": {
+      "accept": 109,
+      "lower_confidence": 17,
+      "request_more_data": 17
+    },
+    "forced_conflict_action": "block"
+  },
+  "sample_cases": [
+    {
+      "predicted_risk": 0.94896,
+      "uncertainty": 0.234183,
+      "risk_score": 0.377481,
+      "action": "lower_confidence",
+      "corrected_confidence": 0.395102,
+      "interpretability_index": 0.828765,
+      "reason": "medium risk: accept only with lower confidence"
+    },
+    {
+      "predicted_risk": 0.020822,
+      "uncertainty": 0.114714,
+      "risk_score": 0.076949,
+      "action": "accept",
+      "corrected_confidence": 0.645464,
+      "interpretability_index": 0.789882,
+      "reason": "risk score below theta_mid"
+    },
+    {
+      "predicted_risk": 0.900999,
+      "uncertainty": 0.385476,
+      "risk_score": 0.403404,
+      "action": "lower_confidence",
+      "corrected_confidence": 0.299281,
+      "interpretability_index": 0.816321,
+      "reason": "medium risk: accept only with lower confidence"
+    },
+    {
+      "predicted_risk": 0.006151,
+      "uncertainty": 0.04151,
+      "risk_score": 0.053086,
+      "action": "accept",
+      "corrected_confidence": 0.722171,
+      "interpretability_index": 0.795686,
+      "reason": "risk score below theta_mid"
+    },
+    {
+      "predicted_risk": 0.357179,
+      "uncertainty": 0.872528,
+      "risk_score": 0.375023,
+      "action": "request_more_data",
+      "corrected_confidence": 0.059855,
+      "interpretability_index": 0.751315,
+      "reason": "medium risk with elevated uncertainty"
+    }
+  ],
+  "success_criteria": {
+    "risk_reduction_positive": true,
+    "forced_conflict_safe_action": true
+  },
+  "conclusion": "Наблюдатель не меняет RandomForest, а управляет допустимостью автоматического применения прогноза через риск, неопределённость, интерпретируемость и D_ij."
+}

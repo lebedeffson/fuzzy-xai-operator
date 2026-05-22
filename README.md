@@ -78,6 +78,31 @@ python apps/nicegui_dashboard.py --port 8080
 
 Его стоит использовать для загрузки CSV, синтеза `FML`, просмотра отчётов, экспорта сессий и проверки примеров диссертации. Для презентации лучше использовать `apps/defense_demo.py`.
 
+## Risk-Aware Observer
+
+Добавлен риск-ориентированный наблюдатель модели. Он не меняет модель, а работает как decision gate поверх неё: получает `predict_proba`, оценивает неопределённость, строит `E_k`, учитывает `I(E)`, `Delta`, диагностические состояния и выбирает безопасное действие.
+
+Действия наблюдателя:
+
+- `accept`: принять прогноз автоматически.
+- `lower_confidence`: сохранить класс, но понизить уверенность.
+- `request_more_data`: запросить дополнительные данные.
+- `defer_to_human`: передать эксперту.
+- `block`: заблокировать автоматическое решение при диагностическом разрыве.
+
+Запуск benchmark:
+
+```bash
+make risk-benchmark
+# или
+PYTHONPATH=. python benchmarks/risk_aware_observer_benchmark.py
+```
+
+Отчёты:
+
+- `reports/risk_aware_observer_benchmark.json`
+- `reports/risk_aware_observer_benchmark.md`
+
 ## Проверка воспроизводимости
 
 Запуск всех тестов:
@@ -106,7 +131,7 @@ PYTHONPATH=. python examples/thesis_demo.py
 Ожидаемый статус:
 
 ```text
-28 passed
+41 passed
 thesis validation: PASS
 thesis demo: PASS
 ```
@@ -123,6 +148,7 @@ thesis demo: PASS
 - `reports/chapter2_calibration_report.json`: отчёт калибровки весов `beta`.
 - `reports/breast_cancer_benchmark.md`: краткий benchmark на медицинском датасете.
 - `reports/operator_comparison_benchmark.md`: сравнение “без оператора / с оператором”.
+- `reports/risk_aware_observer_benchmark.md`: benchmark риск-ориентированного наблюдателя.
 
 ## Минимальный пример API
 
@@ -151,6 +177,7 @@ fuzzyxai/
   hierarchy/     F0, interval, hesitant, neutrosophic, multilevel классы
   selection/     построение профиля, совместимость, Парето-выбор
   calibration/   калибровка beta и кросс-валидация
+  risk/          Risk-Aware Observer: неопределённость, политика, метрики
   visual/        Plotly-графики функций принадлежности и композиции
   demo/          детерминированные demo-данные и сборщики примеров
 apps/
@@ -165,6 +192,8 @@ examples/
   thesis_demo.py
 benchmarks/
   breast_cancer_benchmark.py
+  operator_comparison_benchmark.py
+  risk_aware_observer_benchmark.py
 tests/
   pytest-проверки ядра и логики GUI
 ```

@@ -44,6 +44,7 @@ from fuzzyxai.demo.synthetic import (
 from fuzzyxai.selection.pareto_selector import pareto_front, select_minimal_sufficient
 from fuzzyxai.visual.composition_graph import edge_report
 from fuzzyxai.visual.representation_plots import explainplan_membership_figure, representation_figure
+from benchmarks.risk_aware_observer_benchmark import build_risk_aware_observer_report
 
 REPORTS = ROOT / 'reports'
 REPORTS.mkdir(exist_ok=True)
@@ -63,6 +64,7 @@ STATE: Dict[str, Any] = {
     'explanation': None,
     'composition': None,
     'operator_benchmark': None,
+    'risk_observer_benchmark': None,
 }
 
 MODEL_FEATURES = ['age', 'pressure', 'marker']
@@ -185,7 +187,7 @@ def apply_style() -> None:
           border-left: 4px solid var(--blue); padding-left: 10px;
         }
         .fx-route {
-          display: grid; grid-template-columns: repeat(7, minmax(0, 1fr));
+          display: grid; grid-template-columns: repeat(8, minmax(0, 1fr));
           gap: 8px;
         }
         .fx-route-item {
@@ -548,6 +550,70 @@ def operator_added_value_figure() -> go.Figure:
         bordercolor='#d9dee7',
         font=dict(size=12, color='#334155'),
     )
+    return fig
+
+
+def risk_observer_report() -> dict[str, Any]:
+    cached = STATE.get('risk_observer_benchmark')
+    if cached is None:
+        cached = build_risk_aware_observer_report(write=False)
+        STATE['risk_observer_benchmark'] = cached
+    return cached
+
+
+def risk_observer_cost_figure() -> go.Figure:
+    metrics = risk_observer_report()['observer_metrics']
+    fig = go.Figure()
+    fig.add_trace(go.Bar(
+        x=['до наблюдателя', 'после наблюдателя'],
+        y=[metrics['expected_cost_before'], metrics['expected_cost_after']],
+        marker_color=['#d83a3a', '#0f9f6e'],
+        text=[f"{metrics['expected_cost_before']:.3f}", f"{metrics['expected_cost_after']:.3f}"],
+        textposition='outside',
+    ))
+    fig.update_layout(
+        title='Ожидаемая стоимость решения',
+        yaxis=dict(title='expected cost', rangemode='tozero', showgrid=True, gridcolor='#edf1f6'),
+        xaxis=dict(showgrid=False),
+        height=300,
+        margin=dict(l=52, r=24, t=56, b=42),
+        plot_bgcolor='#ffffff',
+        paper_bgcolor='#ffffff',
+        font=dict(family='Arial, sans-serif', color='#16202a'),
+        showlegend=False,
+    )
+    return fig
+
+
+def risk_observer_actions_figure() -> go.Figure:
+    counts = risk_observer_report()['observer_metrics']['action_counts']
+    colors = {
+        'accept': '#0f9f6e',
+        'lower_confidence': '#7aa2f7',
+        'request_more_data': '#c47b00',
+        'defer_to_human': '#d83a3a',
+        'block': '#7f1d1d',
+    }
+    fig = go.Figure()
+    fig.add_trace(go.Bar(
+        x=list(counts.keys()),
+        y=list(counts.values()),
+        marker_color=[colors.get(key, '#94a3b8') for key in counts],
+        text=[str(v) for v in counts.values()],
+        textposition='outside',
+    ))
+    fig.update_layout(
+        title='Какие действия выбрал наблюдатель',
+        xaxis_title='действие',
+        yaxis_title='кейсов',
+        height=300,
+        margin=dict(l=52, r=24, t=56, b=42),
+        plot_bgcolor='#ffffff',
+        paper_bgcolor='#ffffff',
+        font=dict(family='Arial, sans-serif', color='#16202a'),
+        showlegend=False,
+    )
+    fig.update_yaxes(showgrid=True, gridcolor='#edf1f6', rangemode='tozero')
     return fig
 
 
@@ -957,6 +1023,7 @@ def route_strip() -> None:
             ('A_k^F', 'класс главы 3'),
             ('D_ij / I(E_G)', 'проверка цепочки'),
             ('Benchmark', 'with / without operator'),
+            ('Observer', 'risk-aware gate'),
         ]:
             with ui.element('div').classes('fx-route-item'):
                 ui.html(f'<strong>{title}</strong><span>{caption}</span>')
@@ -1236,6 +1303,53 @@ def benchmark_section() -> None:
         ).classes('w-full q-table')
 
 
+def risk_observer_section() -> None:
+    report = risk_observer_report()
+    metrics = report['observer_metrics']
+    policy = report['policy']
+    with ui.element('section').classes('fx-panel w-full'):
+        ui.label('5. Risk-Aware Observer: управление применением прогноза').classes('text-lg fx-title fx-step')
+        with ui.element('div').classes('fx-note w-full'):
+            ui.label('Наблюдатель не меняет модель. Он берёт прогноз, неопределённость, I(E), D_ij и выбирает безопасное действие: accept, lower_confidence, request_more_data, defer_to_human или block.').classes('text-sm')
+        row_metrics([
+            ('theta_mid', policy['theta_mid'], 'средний риск'),
+            ('theta_high', policy['theta_high'], 'высокий риск'),
+            ('Accepted accuracy', metrics['accepted_accuracy'], 'только auto-accept'),
+            ('Coverage', metrics['coverage'], 'доля auto-accept'),
+            ('Risk reduction', metrics['risk_reduction'], 'стоимость до минус после'),
+            ('Forced conflict', metrics['forced_conflict_action'], 'D_ij -> safe action'),
+        ])
+        with ui.row().classes('w-full gap-3'):
+            with ui.column().classes('w-full'):
+                ui.plotly(risk_observer_cost_figure()).classes('w-full')
+            with ui.column().classes('w-full'):
+                ui.plotly(risk_observer_actions_figure()).classes('w-full')
+        rows = [
+            {
+                'case': idx + 1,
+                'risk': case['predicted_risk'],
+                'uncertainty': case['uncertainty'],
+                'rho': case['risk_score'],
+                'action': case['action'],
+                'corrected_confidence': case['corrected_confidence'],
+                'reason': case['reason'],
+            }
+            for idx, case in enumerate(report['sample_cases'])
+        ]
+        ui.table(
+            columns=[
+                {'name': 'case', 'label': 'кейс', 'field': 'case'},
+                {'name': 'risk', 'label': 'risk', 'field': 'risk'},
+                {'name': 'uncertainty', 'label': 'u', 'field': 'uncertainty'},
+                {'name': 'rho', 'label': 'rho', 'field': 'rho'},
+                {'name': 'action', 'label': 'действие', 'field': 'action'},
+                {'name': 'corrected_confidence', 'label': 'conf_corr', 'field': 'corrected_confidence'},
+                {'name': 'reason', 'label': 'причина', 'field': 'reason'},
+            ],
+            rows=rows,
+        ).classes('w-full q-table')
+
+
 def advanced_section() -> None:
     with ui.expansion('Технические детали и отчёт').classes('w-full'):
         profile = set(STATE['explanation']['profile'])
@@ -1279,6 +1393,7 @@ def page() -> None:
                     explanation_section()
             composition_section()
             benchmark_section()
+            risk_observer_section()
             advanced_section()
 
     redraw()

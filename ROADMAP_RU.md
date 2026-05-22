@@ -209,6 +209,21 @@ print(result.report)
 
 Первый шаг уже добавлен: `Makefile` с командами `make test`, `make demo`, `make proof`, `make thesis`, `make benchmark`.
 
+### 11. Risk-Aware Observer
+
+Суть: перейти от пассивного объяснения к управлению допустимостью автоматического применения прогноза.
+
+Что добавлено в первой версии:
+
+- `fuzzyxai/risk/uncertainty.py`: entropy и margin uncertainty;
+- `fuzzyxai/risk/decision_policy.py`: пороговая политика безопасного действия;
+- `fuzzyxai/risk/risk_aware_model.py`: обёртка над моделью с `predict_proba`;
+- `fuzzyxai/risk/metrics.py`: coverage, accepted accuracy, expected cost, risk reduction;
+- `benchmarks/risk_aware_observer_benchmark.py`: проверка на `sklearn breast_cancer`;
+- раздел `Risk-Aware Observer` в defense GUI.
+
+Научная формула: модель даёт прогноз, оператор строит объяснение, наблюдатель оценивает риск применения и выбирает безопасное действие.
+
 ## MVP на ближайший этап
 
 Цель MVP: показать не просто GUI, а законченный исследовательский продукт.
