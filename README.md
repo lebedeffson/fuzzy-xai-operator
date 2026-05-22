@@ -1,103 +1,105 @@
 # FuzzyXAI Doctoral Core
 
-Executable research prototype for dissertation chapters 2 and 3.
+Исполняемый исследовательский прототип для глав 2 и 3 докторской диссертации.
 
-The project demonstrates a systemic fuzzy-logic operator for compositional explainability and a hierarchy of fuzzy uncertainty representations. It is built as a reproducible software contour: the mathematical objects can be constructed, reduced, compared, composed, calibrated, visualized, and checked by proof scripts.
+Проект показывает системный оператор нечёткой логики для композиционной объяснимости и иерархию нечётких представлений неопределённости. Это не просто набор формул: математические объекты можно построить, редуцировать, сравнить, скомпоновать, откалибровать, визуализировать и проверить воспроизводимыми скриптами.
 
-## What Is Implemented
+## Что реализовано
 
-Chapter 2: systemic explainability operator
+Глава 2: системный оператор объяснимости
 
-- `ExplanationObject`: explanation object `E_k`.
-- `ExplainPlan`: reproducible configuration of terms, weights, thresholds, and metadata.
-- `SystemOperator`: scalar-risk demo implementation of the operator.
-- `compose`: composition of explanation objects with diagnostic state `D_ij`.
-- `semantic_disagreement`: semantic disagreement `d_E` and extended disagreement with reduction loss.
-- `interpretability_loss` and `interpretability_index`: `L(E)` and `I(E_G)`.
-- Beta weight calibration and cross-validation reports.
-- Visual composition diagnostics.
+- `ExplanationObject`: объект объяснения `E_k`.
+- `ExplainPlan`: воспроизводимая конфигурация термов, весов, порогов и метаданных.
+- `SystemOperator`: реализация оператора для скалярного риска.
+- `compose`: композиция объектов объяснения с диагностическим состоянием `D_ij`.
+- `semantic_disagreement`: семантическое рассогласование `d_E` и расширенное рассогласование с потерей редукции.
+- `interpretability_loss` и `interpretability_index`: `L(E)` и `I(E_G)`.
+- Калибровка весов `beta` и отчёты кросс-валидации.
+- Визуальная диагностика композиции объяснений.
 
-Chapter 3: fuzzy representation hierarchy
+Глава 3: иерархия нечётких представлений
 
-- `F0`: classical fuzzy representation.
-- `IntervalFS`: interval fuzzy representation.
-- `HesitantFS`: multiple expert values.
-- `NeutrosophicFS`: truth, indeterminacy, falsity with source awareness.
-- `MultiLevelFS`: multilevel representation.
-- Reductions to `F0` and reduction loss `Delta`.
-- Situation profile `P_sit`.
-- Pareto selector for minimally sufficient representation class.
-- Choice diagnostic `D_choice`.
+- `F0`: классическое нечёткое представление.
+- `IntervalFS`: интервальное нечёткое представление.
+- `HesitantFS`: несколько экспертных оценок.
+- `NeutrosophicFS`: истинность, неопределённость и ложность с учётом источников.
+- `MultiLevelFS`: многоуровневое представление.
+- Редукции к `F0` и потеря редукции `Delta`.
+- Ситуационный профиль `P_sit`.
+- Парето-выбор минимально достаточного класса представления.
+- Диагностика выбора `D_choice`.
 
-## Main Demo
+## Главная демо
 
-Run the focused GUI for a defense-style demonstration:
+Запуск GUI для показа на защите:
 
 ```bash
 pip install -r requirements.txt
 python apps/defense_demo.py --port 8085
 ```
 
-Open:
+Открыть в браузере:
 
 ```text
 http://localhost:8085
 ```
 
-The demo has one workflow:
+Сценарий демо:
 
-1. A real sklearn `LogisticRegression` model is trained on `age`, `pressure`, and `marker`.
-2. The selected case is passed through the model and receives `risk_score = predict_proba(...)`.
-3. The model risk is converted into linguistic terms: low, medium, high.
-4. The case is explained as `E_k` with selected representation class `A_k^F`.
-5. The system checks whether the risk model and decision module are semantically aligned.
-6. A separate benchmark block compares the same idea on `sklearn breast_cancer` with `RandomForestClassifier`: model-only output versus model plus the fuzzy system operator.
+1. Обучается реальная модель `sklearn LogisticRegression` по признакам `age`, `pressure`, `marker`.
+2. Выбранный кейс проходит через модель и получает `risk_score = predict_proba(...)`.
+3. Риск модели переводится в лингвистические термы: `low`, `medium`, `high`.
+4. Для кейса строится объяснение `E_k` и выбирается класс представления `A_k^F`.
+5. Система проверяет, согласованы ли модель риска и модуль принятия решения.
+6. Отдельный benchmark-блок сравнивает режимы на `sklearn breast_cancer` с `RandomForestClassifier`: только модель против модели с нечётким системным оператором.
 
-The conflict switch intentionally breaks the interface between components. In that mode the system shows `D_ij` instead of hiding the inconsistency.
+Переключатель конфликта специально ломает интерфейс между компонентами. В этом режиме система показывает `D_ij`, а не скрывает рассогласование красивым, но неверным отчётом.
 
-The GUI is designed for a non-specialist demonstration: it shows the route `model -> risk_score -> ExplainPlan -> E_k -> A_k^F -> D_ij / I(E_G)`, the current input case, model feature contributions, membership functions, target distribution, selected representation, and the model-to-decision consistency check. Use the presentation switch for projector-friendly sizing, the help button for a short guided tour, and the print button for a browser PDF export.
+GUI рассчитан на показ неспециалисту. Он показывает маршрут `model -> risk_score -> ExplainPlan -> E_k -> A_k^F -> D_ij / I(E_G)`, текущий кейс, вклад признаков модели, функции принадлежности, распределение классов, выбранное представление и проверку согласованности между моделью и решающим модулем.
 
-Key visual explainers in the defense demo:
+Для показа на проекторе есть переключатель презентационного режима. Кнопка справки открывает короткую экскурсию. Кнопка печати позволяет сохранить страницу как PDF через браузер.
 
-- Current-case marker on the membership functions: the viewer sees where the selected patient/risk falls on `low`, `medium`, and `high`.
-- Model contribution chart: the viewer sees which input features pushed the predicted risk up or down.
-- `A_k^F` layer chart: interval uncertainty, expert disagreement, and `T/I/F` conflict are shown as separate visible layers.
-- Chapter-3 selection chart: candidate representation classes are plotted by cognitive complexity and expected reduction loss; the selected class is highlighted.
-- Composition story graph: model and decision module are connected by a disagreement arrow; conflict mode turns it into diagnostic state `D_ij`.
-- With/without operator benchmark: shows that the baseline model provides risk and feature importance, while the operator adds `gamma`, `I(E_G)`, and `D_ij` conflict detection.
+Ключевые визуальные блоки:
 
-## Technical Dashboard
+- Метка текущего кейса на функциях принадлежности: видно, куда попал риск пациента относительно `low`, `medium`, `high`.
+- Граф вкладов модели: видно, какие признаки подняли или снизили предсказанный риск.
+- Граф `A_k^F` по слоям: отдельно показаны интервальная неопределённость, экспертные оценки и конфликт `T/I/F`.
+- Граф выбора класса из главы 3: кандидаты расположены по когнитивной сложности и ожидаемой потере редукции, выбранный класс подсвечен.
+- Граф композиции: модель и модуль решения соединены стрелкой рассогласования; конфликтный режим приводит к `D_ij`.
+- Benchmark “без оператора / с оператором”: baseline-модель даёт риск и важности признаков, а оператор добавляет `gamma`, `I(E_G)` и обнаружение конфликта `D_ij`.
 
-The broader NiceGUI dashboard is still available for debugging and extended experiments:
+## Технический dashboard
+
+Расширенный NiceGUI dashboard остаётся доступен для отладки и экспериментов:
 
 ```bash
 python apps/nicegui_dashboard.py --port 8080
 ```
 
-Use it when you need CSV upload, FML synthesis, report inspection, session export, or thesis validation from a GUI. For presentation, prefer `apps/defense_demo.py`.
+Его стоит использовать для загрузки CSV, синтеза `FML`, просмотра отчётов, экспорта сессий и проверки примеров диссертации. Для презентации лучше использовать `apps/defense_demo.py`.
 
-## Reproducibility Checks
+## Проверка воспроизводимости
 
-Run all tests:
+Запуск всех тестов:
 
 ```bash
 PYTHONPATH=. pytest -q
 ```
 
-Run proof scripts and regenerate reports:
+Запуск proof-скриптов и регенерация отчётов:
 
 ```bash
 PYTHONPATH=. python proofs/run_all_proofs.py
 ```
 
-Run final thesis validation:
+Финальная проверка диссертационных примеров:
 
 ```bash
 PYTHONPATH=. python proofs/validate_thesis_examples.py
 PYTHONPATH=. python examples/thesis_demo.py
 ```
 
-Current expected status:
+Ожидаемый статус:
 
 ```text
 25 passed
@@ -105,19 +107,19 @@ thesis validation: PASS
 thesis demo: PASS
 ```
 
-## Reports
+## Отчёты
 
-Generated artifacts are saved in `reports/`.
+Сгенерированные артефакты сохраняются в `reports/`.
 
-Important files:
+Важные файлы:
 
-- `reports/thesis_validation.md`: numerical validation for chapter examples.
-- `reports/thesis_demo_report.md`: end-to-end route report.
-- `reports/thesis_demo_composition_graph.html`: interactive composition graph.
-- `reports/chapter2_calibration_report.json`: beta calibration report.
-- `reports/breast_cancer_benchmark.md`: minimal medical-like benchmark summary.
+- `reports/thesis_validation.md`: численная проверка примеров из глав.
+- `reports/thesis_demo_report.md`: сквозной отчёт по маршруту демо.
+- `reports/thesis_demo_composition_graph.html`: интерактивный граф композиции.
+- `reports/chapter2_calibration_report.json`: отчёт калибровки весов `beta`.
+- `reports/breast_cancer_benchmark.md`: краткий benchmark на медицинском датасете.
 
-## Minimal API Example
+## Минимальный пример API
 
 ```python
 from fuzzyxai import FuzzyXAIPipeline
@@ -136,19 +138,19 @@ result = pipe.explain_scalar_risk(
 print(result.report)
 ```
 
-## Project Structure
+## Структура проекта
 
 ```text
 fuzzyxai/
-  core/          explanation objects, operator, composition, distances
-  hierarchy/     F0, interval, hesitant, neutrosophic, multilevel classes
-  selection/     profile builder, compatibility, Pareto selector
-  calibration/   beta calibration and cross-validation
-  visual/        Plotly figures for membership functions and composition
-  demo/          deterministic synthetic data and demo builders
+  core/          объекты объяснения, оператор, композиция, расстояния
+  hierarchy/     F0, interval, hesitant, neutrosophic, multilevel классы
+  selection/     построение профиля, совместимость, Парето-выбор
+  calibration/   калибровка beta и кросс-валидация
+  visual/        Plotly-графики функций принадлежности и композиции
+  demo/          детерминированные demo-данные и сборщики примеров
 apps/
-  defense_demo.py       main presentation GUI
-  nicegui_dashboard.py  extended technical dashboard
+  defense_demo.py       главный GUI для презентации
+  nicegui_dashboard.py  расширенный технический dashboard
 proofs/
   chapter2_operator_proof.py
   chapter2_calibration_proof.py
@@ -159,18 +161,18 @@ examples/
 benchmarks/
   breast_cancer_benchmark.py
 tests/
-  pytest checks for core behavior and GUI demo logic
+  pytest-проверки ядра и логики GUI
 ```
 
-## Chapter Mapping
+## Связь с главами
 
-See `CHAPTER_MAPPING.md` for a direct mapping between dissertation objects and implementation files.
+Файл `CHAPTER_MAPPING.md` показывает прямое соответствие между объектами диссертации и файлами реализации.
 
-For presentation and implementation explanation, see:
+Для подготовки к презентации смотри:
 
-- `PRESENTATION.md`: defense script and what to say while showing the GUI.
-- `IMPLEMENTATION_SUMMARY.md`: technical summary of what is implemented and where.
+- `PRESENTATION.md`: сценарий защиты и что говорить при показе GUI.
+- `IMPLEMENTATION_SUMMARY.md`: техническое описание того, что реализовано и где лежит.
 
-## Scientific Scope
+## Научные ограничения
 
-This repository is a dissertation reproducibility layer, not a certified clinical system. The medical-like benchmark is a technical proof of concept. Full domain validation, expert review, and regulated deployment are outside this prototype.
+Репозиторий является воспроизводимым исследовательским прототипом для диссертации, а не сертифицированной клинической системой. Медицинский benchmark используется как техническая проверка применимости. Полная доменная валидация, экспертная оценка и регулируемое внедрение находятся вне рамок этого прототипа.
