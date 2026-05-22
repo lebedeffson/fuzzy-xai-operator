@@ -26,11 +26,21 @@ def test_defense_demo_visual_explainers_are_not_empty():
     layers = defense_demo.representation_layers_figure(defense_demo.STATE["explanation"])
     selection = defense_demo.selection_figure()
     model = defense_demo.model_contribution_figure()
+    breakdown = defense_demo.composition_breakdown_figure(defense_demo.STATE["composition"])
     assert len(membership.data) >= 3
     assert membership.layout.shapes
     assert len(layers.data) >= 3
     assert len(selection.data) >= 3
     assert len(model.data) >= 1
+    assert len(breakdown.data) >= 1
+
+
+def test_composition_breakdown_explains_gamma_parts():
+    defense_demo.build_plan_from_state()
+    defense_demo.recompute()
+    rows = defense_demo.composition_breakdown_rows(defense_demo.STATE["composition"])
+    assert {row["part"] for row in rows} >= {"активные правила", "след tau", "неопределённость"}
+    assert all("contribution" in row for row in rows)
 
 
 def test_defense_demo_uses_sklearn_model_risk():

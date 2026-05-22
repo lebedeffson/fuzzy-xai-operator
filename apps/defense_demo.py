@@ -33,6 +33,7 @@ except Exception as exc:  # pragma: no cover
 
 from fuzzyxai.core.plan_builder import build_explain_plan_from_dataframe
 from fuzzyxai import Rule, SystemOperator, Trace, compose, interpretability_index, interpretability_loss
+from fuzzyxai.core.trust_evaluator import activation_distance, jaccard_distance, representation_distance, trace_distance
 from fuzzyxai.demo.synthetic import (
     build_demo_composition,
     build_demo_explanation,
@@ -843,6 +844,62 @@ def composition_story_figure(comp: Mapping[str, Any], rows: list[dict[str, Any]]
     return fig
 
 
+def composition_breakdown_rows(comp: Mapping[str, Any]) -> list[dict[str, Any]]:
+    """Explain which parts of gamma made the model-to-decision edge risky."""
+    if not comp.get('edges'):
+        return []
+    _, left, _, right = comp['edges'][0]
+    beta = comp['plan'].beta
+    pieces = [
+        ('repr', 'представления A^F', representation_distance(left, right), 'похожи ли выбранные нечёткие представления'),
+        ('rules', 'активные правила', jaccard_distance(left.active_rules, right.active_rules), 'совпадает ли логика правил'),
+        ('activations', 'активации правил', activation_distance(left, right), 'насколько похожи численные степени срабатывания'),
+        ('uncertainty', 'неопределённость', abs(left.uncertainty - right.uncertainty), 'одинаково ли уверены компоненты'),
+        ('trace', 'след tau', trace_distance(left.trace.as_dict(), right.trace.as_dict()), 'один ли источник, версия и параметры'),
+        ('reduction', 'потеря редукции', min(1.0, left.reduction_loss + right.reduction_loss), 'сколько потеряно при упрощении'),
+    ]
+    rows = []
+    for key, label, raw, meaning in pieces:
+        weight = float(beta.get(key, 0.0))
+        rows.append({
+            'part': label,
+            'weight': round(weight, 4),
+            'distance': round(float(raw), 4),
+            'contribution': round(weight * float(raw), 4),
+            'meaning': meaning,
+        })
+    rows.sort(key=lambda row: row['contribution'], reverse=True)
+    return rows
+
+
+def composition_breakdown_figure(comp: Mapping[str, Any]) -> go.Figure:
+    rows = composition_breakdown_rows(comp)
+    fig = go.Figure()
+    fig.add_trace(go.Bar(
+        x=[row['contribution'] for row in rows],
+        y=[row['part'] for row in rows],
+        orientation='h',
+        marker_color=['#d83a3a' if row['contribution'] >= 0.12 else '#c47b00' if row['contribution'] >= 0.05 else '#0f9f6e' for row in rows],
+        text=[f"{row['contribution']:.3f}" for row in rows],
+        textposition='outside',
+        hovertemplate='%{y}<br>вклад=%{x:.4f}<extra></extra>',
+    ))
+    fig.update_layout(
+        title='Из чего складывается рассогласование gamma',
+        xaxis_title='beta_i * distance_i',
+        yaxis_title='компонент',
+        height=320,
+        margin=dict(l=132, r=24, t=56, b=42),
+        plot_bgcolor='#ffffff',
+        paper_bgcolor='#ffffff',
+        font=dict(family='Arial, sans-serif', color='#16202a'),
+        showlegend=False,
+    )
+    fig.update_xaxes(showgrid=True, gridcolor='#edf1f6', zeroline=False)
+    fig.update_yaxes(showgrid=False, autorange='reversed')
+    return fig
+
+
 def summary_report() -> dict[str, Any]:
     expl = STATE['explanation']
     comp = STATE['composition']
@@ -1064,7 +1121,15 @@ def composition_section() -> None:
     with ui.element('section').classes('fx-panel w-full'):
         ui.label('3. Проверка цепочки: модель -> решение').classes('text-lg fx-title fx-step')
         with ui.element('div').classes('fx-note w-full'):
-            ui.label('Это главный смысл главы 2: объяснение проверяется не только внутри модели, а между компонентами системы.').classes('text-sm')
+            ui.markdown(
+                '**Что здесь проверяется.** Модель риска выдаёт объяснение `E_model`: термы, правила, активации, неопределённость и след `tau`. '
+                'Модуль решения строит своё объяснение `E_decision`. Оператор главы 2 не спрашивает “правильный ли прогноз”, '
+                'а проверяет другое: можно ли безопасно склеить эти два объяснения в одну цепочку.'
+            ).classes('text-sm')
+            ui.markdown(
+                '`gamma` показывает семантическое рассогласование ребра `model -> decision`: 0 значит компоненты говорят на одном языке, 1 значит объяснения плохо совместимы. '
+                '`I(E_G)` показывает итоговую интерпретируемость всей цепочки. `D_ij` появляется, если общий язык разрушен, например термы слева и справа несовместимы.'
+            ).classes('text-sm')
         if diagnostic:
             with ui.element('div').classes('fx-status-bad w-full'):
                 ui.label('Остановлено: компоненты используют несовместимые термы.').classes('text-base fx-title')
@@ -1084,7 +1149,23 @@ def composition_section() -> None:
                 ('Потеря', round(float(comp['loss']), 4), 'интерпретируемость'),
                 ('Индекс', round(float(comp['index']), 4), 'чем выше, тем лучше'),
             ])
-        ui.plotly(composition_story_figure(comp, rows)).classes('w-full')
+        with ui.row().classes('w-full gap-3'):
+            with ui.column().classes('w-full'):
+                ui.plotly(composition_story_figure(comp, rows)).classes('w-full')
+            with ui.column().classes('w-full'):
+                ui.plotly(composition_breakdown_figure(comp)).classes('w-full')
+        breakdown = composition_breakdown_rows(comp)
+        if breakdown:
+            ui.table(
+                columns=[
+                    {'name': 'part', 'label': 'что сравниваем', 'field': 'part'},
+                    {'name': 'weight', 'label': 'вес beta', 'field': 'weight'},
+                    {'name': 'distance', 'label': 'расстояние', 'field': 'distance'},
+                    {'name': 'contribution', 'label': 'вклад в gamma', 'field': 'contribution'},
+                    {'name': 'meaning', 'label': 'смысл', 'field': 'meaning'},
+                ],
+                rows=breakdown,
+            ).classes('w-full q-table')
         safe_rows = [{k: ', '.join(v) if isinstance(v, list) else v for k, v in row.items()} for row in rows]
         if safe_rows:
             ui.table(
