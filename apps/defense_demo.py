@@ -201,6 +201,18 @@ def apply_style() -> None:
           background: linear-gradient(135deg, #f8fafc, #eef6ff);
           border: 1px solid #cfe0f7; border-radius: 8px; padding: 12px;
         }
+        .fx-hero {
+          background: linear-gradient(135deg, #0f172a 0%, #164e63 52%, #f8fafc 52%, #ffffff 100%);
+          color: #ffffff; border: none; overflow: hidden;
+        }
+        .fx-hero .fx-note { background: rgba(255,255,255,0.10); border-color: rgba(255,255,255,0.22); color: #e2e8f0; }
+        .fx-stage-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+        .fx-stage-card {
+          background: #ffffff; color: #16202a; border: 1px solid #d9dee7;
+          border-radius: 10px; padding: 12px; min-height: 112px;
+        }
+        .fx-stage-card strong { display: block; color: #0f172a; }
+        .fx-stage-card span { display: block; color: #637083; font-size: 12px; margin-top: 4px; }
         .fx-presentation .fx-panel { padding: 24px; }
         .fx-presentation .fx-title { font-size: 1.08em; }
         .fx-presentation .fx-muted,
@@ -213,6 +225,10 @@ def apply_style() -> None:
           .q-btn, .q-field, .q-toggle { display: none !important; }
           body { background: #ffffff; }
           .fx-panel { break-inside: avoid; box-shadow: none; }
+        }
+        @media (max-width: 900px) {
+          .fx-stage-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+          .fx-route { grid-template-columns: repeat(2, minmax(0, 1fr)); }
         }
         </style>
         """
@@ -559,6 +575,16 @@ def risk_observer_report() -> dict[str, Any]:
     if cached is None:
         cached = build_risk_aware_observer_report(write=False)
         STATE['risk_observer_benchmark'] = cached
+    return cached
+
+
+def full_pipeline_report() -> dict[str, Any]:
+    cached = STATE.get('full_pipeline_report')
+    if cached is None:
+        from full_pipeline_demo import run_full_pipeline
+
+        cached = run_full_pipeline(open_browser=False)
+        STATE['full_pipeline_report'] = cached
     return cached
 
 
@@ -1352,51 +1378,71 @@ def risk_observer_section() -> None:
 
 
 def full_pipeline_section() -> None:
-    with ui.element('section').classes('fx-panel w-full'):
-        ui.label('6. Полная демонстрация: вход -> модель -> оператор -> наблюдатель').classes('text-lg fx-title fx-step')
+    report = full_pipeline_report()
+    risk = report['risk_observer']
+    with ui.element('section').classes('fx-panel fx-hero w-full'):
+        ui.label('Главный отчёт: полный цикл FuzzyXAI').classes('text-2xl fx-title')
         with ui.element('div').classes('fx-note w-full'):
-            ui.label('Этот блок собирает один отчёт по всей цепочке: данные, обучение, прогноз, глава 2, глава 3, композиция, Risk-Aware Observer и итоговое действие.').classes('text-sm')
+            ui.label('Одна страница показывает всю работу: данные -> модель -> оператор главы 2 -> представление главы 3 -> композиция -> риск-ориентированный наблюдатель -> безопасное действие.').classes('text-sm')
 
-        result_area = ui.column().classes('w-full gap-2')
+        row_metrics([
+            ('Status', report['status'], 'сквозной сценарий'),
+            ('risk_score', round(report['case']['risk_score'], 4), 'выбранный кейс'),
+            ('A_k^F', report['chapter3']['selected_class'], 'выбор главы 3'),
+            ('Delta', round(report['chapter3']['reduction_loss'], 4), 'потеря редукции'),
+            ('I(E_G)', round(report['composition']['index'], 4), 'индекс цепочки'),
+            ('Risk reduction', risk['risk_reduction'], 'breast_cancer benchmark'),
+        ])
 
-        def generate() -> None:
-            try:
-                from full_pipeline_demo import OUT, run_full_pipeline
+        with ui.element('div').classes('fx-stage-grid w-full'):
+            for stage in report['stages']:
+                with ui.element('div').classes('fx-stage-card'):
+                    ui.html(f"<strong>{stage['id']}. {stage['name']}</strong>")
+                    ui.label(stage['output']).classes('text-sm')
+                    ui.html(f"<span>{stage['meaning']}</span>")
 
-                report = run_full_pipeline(open_browser=False)
-                STATE['full_pipeline_report'] = report
-                result_area.clear()
-                with result_area:
-                    row_metrics([
-                        ('Status', report['status'], 'сквозной сценарий'),
-                        ('I(E_G)', round(report['composition']['index'], 4), 'индекс цепочки'),
-                        ('Risk reduction', report['risk_observer']['risk_reduction'], 'benchmark'),
-                        ('HTML', 'index.html', 'reports/full_demo'),
-                    ])
-                    with ui.row().classes('gap-2'):
-                        ui.button(
-                            'Скачать HTML-отчёт',
-                            on_click=lambda: ui.download((OUT / 'index.html').read_bytes(), 'full_pipeline_demo.html'),
-                        )
-                        ui.button(
-                            'Скачать JSON',
-                            on_click=lambda: ui.download((OUT / 'full_pipeline_report.json').read_bytes(), 'full_pipeline_report.json'),
-                        ).props('outline')
-                ui.notify('Полная демонстрация собрана: reports/full_demo/index.html', type='positive')
-            except Exception as exc:  # pragma: no cover
-                ui.notify(f'Full demo failed: {exc}', type='negative', timeout=7000)
-                (REPORTS / 'defense_demo_last_error.txt').write_text(traceback.format_exc(), encoding='utf-8')
-
-        ui.button('Собрать полный отчёт', on_click=generate).props('color=primary')
-        cached = STATE.get('full_pipeline_report')
-        if cached:
-            with result_area:
+        with ui.row().classes('w-full gap-3 items-start'):
+            with ui.column().classes('w-full xl:w-[49%] gap-2'):
+                ui.label('Что произошло с кейсом').classes('text-lg fx-title')
+                case_rows = [{'feature': key, 'value': round(float(value), 4)} for key, value in report['case']['values'].items()]
+                case_rows.append({'feature': 'risk_score', 'value': round(report['case']['risk_score'], 4)})
+                ui.table(
+                    columns=[
+                        {'name': 'feature', 'label': 'поле', 'field': 'feature'},
+                        {'name': 'value', 'label': 'значение', 'field': 'value'},
+                    ],
+                    rows=case_rows,
+                ).classes('w-full q-table')
+                ui.label(f"Профиль ситуации: {', '.join(report['chapter3']['profile'])}").classes('text-sm')
+                ui.label(f"Редукция: {report['chapter3']['reduction_policy']}").classes('text-sm')
+            with ui.column().classes('w-full xl:w-[49%] gap-2'):
+                ui.label('Итог наблюдателя').classes('text-lg fx-title')
                 row_metrics([
-                    ('Status', cached['status'], 'сквозной сценарий'),
-                    ('I(E_G)', round(cached['composition']['index'], 4), 'индекс цепочки'),
-                    ('Risk reduction', cached['risk_observer']['risk_reduction'], 'benchmark'),
+                    ('Accepted accuracy', risk['accepted_accuracy'], 'принятые автоматически'),
+                    ('Coverage', risk['coverage'], 'доля auto-accept'),
+                    ('Cost before', risk['cost_before'], 'до gate'),
+                    ('Cost after', risk['cost_after'], 'после gate'),
                 ])
+                first = risk['sample_actions'][0]
+                ui.label(f"Пример действия: {first['action']} при rho={first['risk_score']} и uncertainty={first['uncertainty']}").classes('text-sm')
 
+        with ui.row().classes('gap-2'):
+            from full_pipeline_demo import OUT
+
+            def rebuild() -> None:
+                STATE['full_pipeline_report'] = None
+                safe(lambda: full_pipeline_report(), where='full pipeline rebuild')
+                ui.notify('Отчёт пересобран: reports/full_demo/index.html', type='positive')
+
+            ui.button('Пересобрать отчёт', on_click=rebuild).props('color=primary')
+            ui.button(
+                'Скачать HTML',
+                on_click=lambda: ui.download((OUT / 'index.html').read_bytes(), 'full_pipeline_demo.html'),
+            )
+            ui.button(
+                'Скачать JSON',
+                on_click=lambda: ui.download((OUT / 'full_pipeline_report.json').read_bytes(), 'full_pipeline_report.json'),
+            ).props('outline')
 
 def advanced_section() -> None:
     with ui.expansion('Технические детали и отчёт').classes('w-full'):
@@ -1432,6 +1478,7 @@ def page() -> None:
         body.classes(replace='fx-shell w-full gap-4 pb-6' + (' fx-presentation' if STATE.get('presentation') else ''))
         with body:
             controls(redraw)
+            full_pipeline_section()
             route_strip()
             model_section()
             with ui.row().classes('w-full gap-4 items-start'):
@@ -1442,7 +1489,6 @@ def page() -> None:
             composition_section()
             benchmark_section()
             risk_observer_section()
-            full_pipeline_section()
             advanced_section()
 
     redraw()

@@ -102,7 +102,7 @@ reports/full_demo/index.html
 - `reports/full_demo/03_representation.html`
 - `reports/full_demo/04_composition_graph.html`
 
-В GUI `apps/defense_demo.py` есть блок **Полная демонстрация**: он собирает этот же отчёт кнопкой и даёт скачать HTML/JSON.
+В GUI `apps/defense_demo.py` этот отчёт показан прямо на главной странице первым блоком. Оттуда же можно пересобрать отчёт и скачать HTML/JSON.
 
 ## Технический dashboard
 
@@ -167,7 +167,7 @@ PYTHONPATH=. python examples/thesis_demo.py
 Ожидаемый статус:
 
 ```text
-42 passed
+43 passed
 thesis validation: PASS
 thesis demo: PASS
 ```

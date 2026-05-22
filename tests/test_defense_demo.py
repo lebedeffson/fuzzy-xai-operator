@@ -63,3 +63,12 @@ def test_operator_benchmark_compares_with_and_without_operator():
     assert report["without_operator"]["detects_term_conflict"] is False
     assert report["with_operator"]["detects_term_conflict"] is True
     assert len(defense_demo.operator_added_value_figure().data) == 2
+
+
+def test_defense_demo_has_full_pipeline_report_for_home_page():
+    defense_demo.STATE["full_pipeline_report"] = None
+    report = defense_demo.full_pipeline_report()
+    assert report["status"] == "PASS"
+    assert report["composition"]["index"] > 0
+    assert report["risk_observer"]["risk_reduction"] > 0
+    assert report["stages"][0]["id"] == "D"
