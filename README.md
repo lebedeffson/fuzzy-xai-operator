@@ -46,17 +46,20 @@ http://localhost:8085
 
 The demo has one workflow:
 
-1. Data are converted into linguistic terms: low, medium, high.
-2. One case is explained as `E_k` with selected representation class `A_k^F`.
-3. The system checks whether the risk model and decision module are semantically aligned.
+1. A real sklearn `LogisticRegression` model is trained on `age`, `pressure`, and `marker`.
+2. The selected case is passed through the model and receives `risk_score = predict_proba(...)`.
+3. The model risk is converted into linguistic terms: low, medium, high.
+4. The case is explained as `E_k` with selected representation class `A_k^F`.
+5. The system checks whether the risk model and decision module are semantically aligned.
 
 The conflict switch intentionally breaks the interface between components. In that mode the system shows `D_ij` instead of hiding the inconsistency.
 
-The GUI is designed for a non-specialist demonstration: it shows the route `data -> ExplainPlan -> E_k -> A_k^F -> D_ij / I(E_G)`, the current input case, membership functions, target distribution, selected representation, and the model-to-decision consistency check. Use the presentation switch for projector-friendly sizing, the help button for a short guided tour, and the print button for a browser PDF export.
+The GUI is designed for a non-specialist demonstration: it shows the route `model -> risk_score -> ExplainPlan -> E_k -> A_k^F -> D_ij / I(E_G)`, the current input case, model feature contributions, membership functions, target distribution, selected representation, and the model-to-decision consistency check. Use the presentation switch for projector-friendly sizing, the help button for a short guided tour, and the print button for a browser PDF export.
 
 Key visual explainers in the defense demo:
 
 - Current-case marker on the membership functions: the viewer sees where the selected patient/risk falls on `low`, `medium`, and `high`.
+- Model contribution chart: the viewer sees which input features pushed the predicted risk up or down.
 - `A_k^F` layer chart: interval uncertainty, expert disagreement, and `T/I/F` conflict are shown as separate visible layers.
 - Chapter-3 selection chart: candidate representation classes are plotted by cognitive complexity and expected reduction loss; the selected class is highlighted.
 - Composition story graph: model and decision module are connected by a disagreement arrow; conflict mode turns it into diagnostic state `D_ij`.
@@ -95,7 +98,7 @@ PYTHONPATH=. python examples/thesis_demo.py
 Current expected status:
 
 ```text
-23 passed
+24 passed
 thesis validation: PASS
 thesis demo: PASS
 ```

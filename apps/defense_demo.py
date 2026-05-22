@@ -21,8 +21,12 @@ try:
     import pandas as pd
     import plotly.graph_objects as go
     from nicegui import ui
+    from sklearn.linear_model import LogisticRegression
+    from sklearn.metrics import accuracy_score
+    from sklearn.pipeline import make_pipeline
+    from sklearn.preprocessing import StandardScaler
 except Exception as exc:  # pragma: no cover
-    raise SystemExit('Install requirements.txt first: pandas, plotly, nicegui are required.') from exc
+    raise SystemExit('Install requirements.txt first: pandas, plotly, nicegui, scikit-learn are required.') from exc
 
 from fuzzyxai.core.plan_builder import build_explain_plan_from_dataframe
 from fuzzyxai.demo.synthetic import (
@@ -42,18 +46,49 @@ REPORTS.mkdir(exist_ok=True)
 
 STATE: Dict[str, Any] = {
     'df': sample_dataframe(),
+    'case_index': 2,
     'risk': 0.72,
     'feature': 'risk_score',
     'conflict': False,
     'mode': 'audit',
     'presentation': False,
+    'model': None,
+    'model_report': None,
     'plan': None,
     'explanation': None,
     'composition': None,
 }
 
+MODEL_FEATURES = ['age', 'pressure', 'marker']
+
+
+def fit_model_from_state() -> None:
+    """Train a small real sklearn model and write its risk back into the demo table."""
+    df = STATE['df'].copy()
+    features = [name for name in MODEL_FEATURES if name in df.columns]
+    target = 'target' if 'target' in df.columns else df.columns[-1]
+    model = make_pipeline(StandardScaler(), LogisticRegression(max_iter=1000, random_state=42))
+    model.fit(df[features], df[target])
+    risks = model.predict_proba(df[features])[:, 1]
+    df['risk_score'] = risks
+    pred = (risks >= 0.5).astype(int)
+    case_index = int(max(0, min(int(STATE.get('case_index', 0)), len(df) - 1)))
+    STATE['case_index'] = case_index
+    STATE['risk'] = float(risks[case_index])
+    STATE['df'] = df
+    STATE['model'] = model
+    STATE['model_report'] = {
+        'features': features,
+        'target': target,
+        'accuracy': float(accuracy_score(df[target], pred)),
+        'case_index': case_index,
+        'risk': float(risks[case_index]),
+        'prediction': int(pred[case_index]),
+    }
+
 
 def build_plan_from_state() -> None:
+    fit_model_from_state()
     df = STATE['df']
     target = 'target' if 'target' in df.columns else df.columns[-1]
     STATE['plan'] = build_explain_plan_from_dataframe(df, target=target, mode=STATE['mode']).with_reduction_weight(0.10)
@@ -144,7 +179,7 @@ def apply_style() -> None:
           border-left: 4px solid var(--blue); padding-left: 10px;
         }
         .fx-route {
-          display: grid; grid-template-columns: repeat(5, minmax(0, 1fr));
+          display: grid; grid-template-columns: repeat(6, minmax(0, 1fr));
           gap: 8px;
         }
         .fx-route-item {
@@ -216,10 +251,91 @@ def quantile_rows() -> list[dict[str, Any]]:
 
 def current_case_row() -> dict[str, Any]:
     df = STATE['df']
-    if 'risk_score' not in df.columns:
-        return df.iloc[0].to_dict()
-    idx = (df['risk_score'].astype(float) - float(STATE['risk'])).abs().idxmin()
-    return df.loc[idx].to_dict()
+    idx = int(max(0, min(int(STATE.get('case_index', 0)), len(df) - 1)))
+    return df.iloc[idx].to_dict()
+
+
+def model_contributions() -> list[dict[str, Any]]:
+    model = STATE.get('model')
+    report = STATE.get('model_report') or {}
+    if model is None:
+        return []
+    features = list(report.get('features', MODEL_FEATURES))
+    case = current_case_row()
+    x = pd.DataFrame([{feature: case[feature] for feature in features}])
+    scaler = model.named_steps['standardscaler']
+    clf = model.named_steps['logisticregression']
+    z = scaler.transform(x)[0]
+    coefs = clf.coef_[0]
+    rows = []
+    for feature, raw, scaled, coef in zip(features, [case[f] for f in features], z, coefs):
+        rows.append({
+            'feature': feature,
+            'value': float(raw),
+            'coef': float(coef),
+            'contribution': float(coef * scaled),
+        })
+    rows.sort(key=lambda row: abs(row['contribution']), reverse=True)
+    return rows
+
+
+def model_contribution_figure() -> go.Figure:
+    rows = model_contributions()
+    colors = ['#d83a3a' if row['contribution'] >= 0 else '#0f9f6e' for row in rows]
+    fig = go.Figure()
+    fig.add_trace(go.Bar(
+        x=[row['contribution'] for row in rows],
+        y=[row['feature'] for row in rows],
+        orientation='h',
+        marker_color=colors,
+        text=[f"{row['contribution']:+.2f}" for row in rows],
+        textposition='outside',
+        hovertemplate='%{y}<br>вклад=%{x:.3f}<extra></extra>',
+    ))
+    fig.add_vline(x=0, line_width=1, line_color='#64748b')
+    fig.update_layout(
+        title='Как модель получила риск для выбранного кейса',
+        xaxis_title='вклад в logit: вправо риск выше, влево ниже',
+        yaxis_title='признак',
+        height=300,
+        margin=dict(l=86, r=28, t=56, b=42),
+        plot_bgcolor='#ffffff',
+        paper_bgcolor='#ffffff',
+        font=dict(family='Arial, sans-serif', color='#16202a'),
+        showlegend=False,
+    )
+    fig.update_xaxes(showgrid=True, gridcolor='#edf1f6', zeroline=False)
+    fig.update_yaxes(showgrid=False, autorange='reversed')
+    return fig
+
+
+def model_pipeline_figure() -> go.Figure:
+    report = STATE.get('model_report') or {}
+    risk = float(report.get('risk', STATE['risk']))
+    fig = go.Figure()
+    boxes = [
+        (0.05, 0.24, 'Признаки пациента', '<br>'.join(report.get('features', MODEL_FEATURES))),
+        (0.38, 0.57, 'LogisticRegression', f"accuracy={report.get('accuracy', 0):.2f}"),
+        (0.72, 0.94, 'risk_score', f'{risk:.3f}'),
+    ]
+    for x0, x1, title, caption in boxes:
+        fig.add_shape(type='rect', x0=x0, y0=0.30, x1=x1, y1=0.78, line=dict(color='#cbd5e1'), fillcolor='#ffffff')
+        fig.add_annotation(x=(x0 + x1) / 2, y=0.64, text=f'<b>{title}</b>', showarrow=False, font=dict(size=15))
+        fig.add_annotation(x=(x0 + x1) / 2, y=0.47, text=caption, showarrow=False, font=dict(size=12, color='#637083'))
+    for x0, x1 in [(0.25, 0.37), (0.58, 0.71)]:
+        fig.add_annotation(x=x1, y=0.54, ax=x0, ay=0.54, xref='x', yref='y', axref='x', ayref='y', showarrow=True, arrowhead=3, arrowwidth=4, arrowcolor='#2563eb')
+    fig.add_annotation(x=0.83, y=0.17, text='Этот риск дальше идёт в ExplainPlan, E_k, A_k^F и оператор композиции.', showarrow=False, font=dict(size=12, color='#334155'))
+    fig.update_layout(
+        title='Сквозной контур: модель -> риск -> оператор',
+        xaxis=dict(visible=False, range=[0, 1]),
+        yaxis=dict(visible=False, range=[0, 1]),
+        height=260,
+        margin=dict(l=16, r=16, t=54, b=16),
+        plot_bgcolor='#ffffff',
+        paper_bgcolor='#ffffff',
+        font=dict(family='Arial, sans-serif', color='#16202a'),
+    )
+    return fig
 
 
 def selected_feature_value() -> float | None:
@@ -523,6 +639,7 @@ def summary_report() -> dict[str, Any]:
     return {
         'risk': STATE['risk'],
         'mode': STATE['mode'],
+        'model': STATE.get('model_report'),
         'case': current_case_row(),
         'selected_class': expl['report']['selected_class'],
         'reduction_loss_delta': expl['report']['reduction_loss'],
@@ -564,6 +681,7 @@ def tour_dialog() -> None:
 def route_strip() -> None:
     with ui.element('div').classes('fx-route w-full'):
         for title, caption in [
+            ('Модель', 'age/pressure/marker -> risk'),
             ('Данные', 'sample medical table'),
             ('ExplainPlan', 'термы и веса'),
             ('E_k', 'объяснение кейса'),
@@ -580,14 +698,15 @@ def controls(on_change) -> None:
         with ui.row().classes('fx-shell w-full items-center gap-3 p-3'):
             ui.label('FuzzyXAI: демонстрация глав 2-3').classes('text-lg fx-title')
             ui.label('Главы 2-3').classes('fx-chip')
-            risk = ui.slider(min=0.0, max=1.0, value=STATE['risk'], step=0.01).props('label-always').classes('w-56')
+            ui.label('кейс').classes('text-sm fx-muted')
+            case = ui.slider(min=0, max=max(0, len(df) - 1), value=STATE['case_index'], step=1).props('label-always').classes('w-44')
             mode = ui.select(['audit', 'user'], value=STATE['mode'], label='режим').classes('w-36')
             feature = ui.select(feature_options(), value=STATE['feature'], label='признак').classes('w-48')
             conflict = ui.switch('показать конфликт', value=STATE['conflict'])
             presentation = ui.switch('презентация', value=STATE['presentation'])
 
             def sync() -> None:
-                STATE['risk'] = float(risk.value)
+                STATE['case_index'] = int(case.value)
                 STATE['mode'] = str(mode.value)
                 STATE['feature'] = str(feature.value)
                 STATE['conflict'] = bool(conflict.value)
@@ -598,13 +717,52 @@ def controls(on_change) -> None:
                 feature.update()
                 on_change()
 
-            for control in (risk, mode, feature, conflict, presentation):
+            for control in (case, mode, feature, conflict, presentation):
                 control.on_value_change(lambda e: safe(sync, where='recompute'))
             ui.button(icon='refresh', on_click=lambda: safe(sync, where='recompute')).props('flat round color=primary')
             ui.button(icon='help_outline', on_click=tour_dialog).props('flat round')
             ui.button(icon='print', on_click=print_report).props('flat round')
             ui.button(icon='download', on_click=download_report).props('flat round')
             ui.label(f'{len(df)} rows').classes('text-sm fx-muted ml-auto')
+
+
+def model_section() -> None:
+    report = STATE.get('model_report') or {}
+    case = current_case_row()
+    with ui.element('section').classes('fx-panel w-full'):
+        ui.label('0. Реальная модель, а не абстракция').classes('text-lg fx-title fx-step')
+        with ui.element('div').classes('fx-note w-full'):
+            ui.label('Сначала обучается sklearn LogisticRegression. Она берёт age, pressure, marker и выдаёт risk_score. Уже этот риск разбирается оператором глав 2-3.').classes('text-sm')
+        row_metrics([
+            ('Модель', 'LogisticRegression', 'sklearn pipeline'),
+            ('Кейс', report.get('case_index'), 'выбирается сверху'),
+            ('Риск модели', round(float(report.get('risk', STATE['risk'])), 4), 'predict_proba'),
+            ('Класс', report.get('prediction'), 'threshold 0.5'),
+            ('Accuracy', round(float(report.get('accuracy', 0.0)), 3), 'на demo-таблице'),
+        ])
+        with ui.row().classes('w-full gap-3'):
+            with ui.column().classes('w-full'):
+                ui.plotly(model_pipeline_figure()).classes('w-full')
+            with ui.column().classes('w-full'):
+                ui.plotly(model_contribution_figure()).classes('w-full')
+        rows = [
+            {
+                'feature': row['feature'],
+                'value': round(row['value'], 4),
+                'model_coef': round(row['coef'], 4),
+                'contribution': round(row['contribution'], 4),
+            }
+            for row in model_contributions()
+        ]
+        ui.table(
+            columns=[
+                {'name': 'feature', 'label': 'признак', 'field': 'feature'},
+                {'name': 'value', 'label': 'значение кейса', 'field': 'value'},
+                {'name': 'model_coef', 'label': 'коэф. модели', 'field': 'model_coef'},
+                {'name': 'contribution', 'label': 'вклад', 'field': 'contribution'},
+            ],
+            rows=rows,
+        ).classes('w-full q-table')
 
 
 def plan_section() -> None:
@@ -644,7 +802,7 @@ def explanation_section() -> None:
     with ui.element('section').classes('fx-panel w-full'):
         ui.label('2. Объяснение одного кейса').classes('text-lg fx-title fx-step')
         with ui.element('div').classes('fx-note w-full'):
-            ui.label('Система выбирает класс нечёткого представления и строит объект объяснения: риск, правила, неопределённость, потеря редукции.').classes('text-sm')
+            ui.label('Берём risk_score из модели выше. Затем оператор строит E_k: термы, правила, неопределённость, потеря редукции и класс представления из главы 3.').classes('text-sm')
         case = current_case_row()
         with ui.element('div').classes('fx-case w-full'):
             ui.label('Входной кейс').classes('text-sm fx-muted')
@@ -764,6 +922,7 @@ def page() -> None:
         with body:
             controls(redraw)
             route_strip()
+            model_section()
             with ui.row().classes('w-full gap-4 items-start'):
                 with ui.column().classes('w-full xl:w-[49%] gap-4'):
                     plan_section()
