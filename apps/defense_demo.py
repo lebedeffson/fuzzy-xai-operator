@@ -65,6 +65,7 @@ STATE: Dict[str, Any] = {
     'composition': None,
     'operator_benchmark': None,
     'risk_observer_benchmark': None,
+    'full_pipeline_report': None,
 }
 
 MODEL_FEATURES = ['age', 'pressure', 'marker']
@@ -1350,6 +1351,53 @@ def risk_observer_section() -> None:
         ).classes('w-full q-table')
 
 
+def full_pipeline_section() -> None:
+    with ui.element('section').classes('fx-panel w-full'):
+        ui.label('6. Полная демонстрация: вход -> модель -> оператор -> наблюдатель').classes('text-lg fx-title fx-step')
+        with ui.element('div').classes('fx-note w-full'):
+            ui.label('Этот блок собирает один отчёт по всей цепочке: данные, обучение, прогноз, глава 2, глава 3, композиция, Risk-Aware Observer и итоговое действие.').classes('text-sm')
+
+        result_area = ui.column().classes('w-full gap-2')
+
+        def generate() -> None:
+            try:
+                from full_pipeline_demo import OUT, run_full_pipeline
+
+                report = run_full_pipeline(open_browser=False)
+                STATE['full_pipeline_report'] = report
+                result_area.clear()
+                with result_area:
+                    row_metrics([
+                        ('Status', report['status'], 'сквозной сценарий'),
+                        ('I(E_G)', round(report['composition']['index'], 4), 'индекс цепочки'),
+                        ('Risk reduction', report['risk_observer']['risk_reduction'], 'benchmark'),
+                        ('HTML', 'index.html', 'reports/full_demo'),
+                    ])
+                    with ui.row().classes('gap-2'):
+                        ui.button(
+                            'Скачать HTML-отчёт',
+                            on_click=lambda: ui.download((OUT / 'index.html').read_bytes(), 'full_pipeline_demo.html'),
+                        )
+                        ui.button(
+                            'Скачать JSON',
+                            on_click=lambda: ui.download((OUT / 'full_pipeline_report.json').read_bytes(), 'full_pipeline_report.json'),
+                        ).props('outline')
+                ui.notify('Полная демонстрация собрана: reports/full_demo/index.html', type='positive')
+            except Exception as exc:  # pragma: no cover
+                ui.notify(f'Full demo failed: {exc}', type='negative', timeout=7000)
+                (REPORTS / 'defense_demo_last_error.txt').write_text(traceback.format_exc(), encoding='utf-8')
+
+        ui.button('Собрать полный отчёт', on_click=generate).props('color=primary')
+        cached = STATE.get('full_pipeline_report')
+        if cached:
+            with result_area:
+                row_metrics([
+                    ('Status', cached['status'], 'сквозной сценарий'),
+                    ('I(E_G)', round(cached['composition']['index'], 4), 'индекс цепочки'),
+                    ('Risk reduction', cached['risk_observer']['risk_reduction'], 'benchmark'),
+                ])
+
+
 def advanced_section() -> None:
     with ui.expansion('Технические детали и отчёт').classes('w-full'):
         profile = set(STATE['explanation']['profile'])
@@ -1394,6 +1442,7 @@ def page() -> None:
             composition_section()
             benchmark_section()
             risk_observer_section()
+            full_pipeline_section()
             advanced_section()
 
     redraw()

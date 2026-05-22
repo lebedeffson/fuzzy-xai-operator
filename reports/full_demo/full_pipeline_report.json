@@ -1,0 +1,389 @@
+{
+  "title": "FuzzyXAI full input-to-output observer pipeline",
+  "status": "PASS",
+  "formula": "D -> F -> T -> M(x) -> XAI(x) -> A(x) -> R(x) -> B;  E_G = E_B ⊙ E_R ⊙ E_A ⊙ E_X ⊙ E_M ⊙ E_T ⊙ E_F ⊙ E_D",
+  "data": {
+    "n_rows": 12,
+    "features": [
+      "age",
+      "pressure",
+      "marker"
+    ],
+    "target": "target",
+    "missing_rate": 0.0
+  },
+  "model": {
+    "name": "sklearn Pipeline(StandardScaler, LogisticRegression)",
+    "train_accuracy": 1.0
+  },
+  "case": {
+    "case_index": 2,
+    "values": {
+      "age": 60.0,
+      "pressure": 147.0,
+      "marker": 4.8
+    },
+    "risk_score": 0.9248513831502072,
+    "prediction": 1,
+    "memberships": {
+      "low": 0.0,
+      "medium": 0.0,
+      "high": 1.0
+    }
+  },
+  "chapter3": {
+    "metadata": {
+      "has_intervals": true,
+      "num_experts": 2,
+      "source_conflict": true,
+      "requires_audit": true,
+      "counterfactual_instability": false,
+      "multi_level": true,
+      "source": "synthetic-gui-demo"
+    },
+    "profile": [
+      "u_conf",
+      "u_exp",
+      "u_int",
+      "u_ling",
+      "u_multi",
+      "u_num",
+      "u_trace"
+    ],
+    "selected_class": "FML-audit",
+    "representation": "FML",
+    "reduction_loss": 0.19625000000000004,
+    "reduction_policy": "canonical"
+  },
+  "stages": [
+    {
+      "id": "D",
+      "name": "Данные",
+      "operator": "Ω_D",
+      "output": "data_quality=1.000",
+      "meaning": "проверка полноты и трассируемости входной таблицы"
+    },
+    {
+      "id": "F",
+      "name": "Data mining / признаки",
+      "operator": "Ω_F",
+      "output": "top_feature_signal=0.503",
+      "meaning": "какой признак сильнее всего влияет на риск"
+    },
+    {
+      "id": "T",
+      "name": "Обучение",
+      "operator": "Ω_T",
+      "output": "train_accuracy=1.000",
+      "meaning": "наблюдение качества обучения"
+    },
+    {
+      "id": "M",
+      "name": "Прогноз модели",
+      "operator": "Ω_M",
+      "output": "risk_score=0.9249",
+      "meaning": "перевод прогноза в E_M и термы low/medium/high"
+    },
+    {
+      "id": "X",
+      "name": "Локальное объяснение",
+      "operator": "Ω_X",
+      "output": "top_contribution=0.503",
+      "meaning": "наблюдение вклада признаков"
+    },
+    {
+      "id": "A",
+      "name": "Решающий модуль",
+      "operator": "Ω_A",
+      "output": "high risk -> send_to_check",
+      "meaning": "проверка совместимости правила решения с моделью"
+    },
+    {
+      "id": "R",
+      "name": "Модуль риска",
+      "operator": "Ω_R",
+      "output": "lower_confidence",
+      "meaning": "выбор безопасного действия"
+    },
+    {
+      "id": "B",
+      "name": "Обратная связь",
+      "operator": "Ω_B",
+      "output": "case saved",
+      "meaning": "сохранение кейса для калибровки"
+    }
+  ],
+  "composition": {
+    "edges": [
+      {
+        "source": "Data",
+        "target": "Features",
+        "gamma": 0.324286,
+        "severity": "orange",
+        "left_terms": [
+          "high",
+          "low",
+          "medium"
+        ],
+        "right_terms": [
+          "high",
+          "low",
+          "medium"
+        ],
+        "left_active_rules": [
+          "E_D_data_high"
+        ],
+        "right_active_rules": [
+          "E_F_features_medium"
+        ],
+        "left_delta": 0.0,
+        "right_delta": 0.0
+      },
+      {
+        "source": "Features",
+        "target": "Training",
+        "gamma": 0.324286,
+        "severity": "orange",
+        "left_terms": [
+          "high",
+          "low",
+          "medium"
+        ],
+        "right_terms": [
+          "high",
+          "low",
+          "medium"
+        ],
+        "left_active_rules": [
+          "E_F_features_medium"
+        ],
+        "right_active_rules": [
+          "E_T_training_high"
+        ],
+        "left_delta": 0.0,
+        "right_delta": 0.0
+      },
+      {
+        "source": "Training",
+        "target": "Model",
+        "gamma": 0.453419,
+        "severity": "red",
+        "left_terms": [
+          "high",
+          "low",
+          "medium"
+        ],
+        "right_terms": [
+          "high",
+          "low",
+          "medium"
+        ],
+        "left_active_rules": [
+          "E_T_training_high"
+        ],
+        "right_active_rules": [
+          "r_high_check"
+        ],
+        "left_delta": 0.0,
+        "right_delta": 0.19625000000000004
+      },
+      {
+        "source": "Model",
+        "target": "XAI",
+        "gamma": 0.453419,
+        "severity": "red",
+        "left_terms": [
+          "high",
+          "low",
+          "medium"
+        ],
+        "right_terms": [
+          "high",
+          "low",
+          "medium"
+        ],
+        "left_active_rules": [
+          "r_high_check"
+        ],
+        "right_active_rules": [
+          "E_X_xai_high"
+        ],
+        "left_delta": 0.19625000000000004,
+        "right_delta": 0.0
+      },
+      {
+        "source": "XAI",
+        "target": "Decision",
+        "gamma": 0.33228,
+        "severity": "orange",
+        "left_terms": [
+          "high",
+          "low",
+          "medium"
+        ],
+        "right_terms": [
+          "high",
+          "low",
+          "medium"
+        ],
+        "left_active_rules": [
+          "E_X_xai_high"
+        ],
+        "right_active_rules": [
+          "r_decision_high"
+        ],
+        "left_delta": 0.0,
+        "right_delta": 0.0
+      },
+      {
+        "source": "Decision",
+        "target": "Risk gate",
+        "gamma": 0.345813,
+        "severity": "orange",
+        "left_terms": [
+          "high",
+          "low",
+          "medium"
+        ],
+        "right_terms": [
+          "high",
+          "low",
+          "medium"
+        ],
+        "left_active_rules": [
+          "r_decision_high"
+        ],
+        "right_active_rules": [
+          "E_R_risk_gate_high",
+          "E_R_risk_gate_medium"
+        ],
+        "left_delta": 0.0,
+        "right_delta": 0.0
+      },
+      {
+        "source": "Risk gate",
+        "target": "Feedback",
+        "gamma": 0.315,
+        "severity": "orange",
+        "left_terms": [
+          "high",
+          "low",
+          "medium"
+        ],
+        "right_terms": [
+          "high",
+          "low",
+          "medium"
+        ],
+        "left_active_rules": [
+          "E_R_risk_gate_high",
+          "E_R_risk_gate_medium"
+        ],
+        "right_active_rules": [
+          "E_B_feedback_high",
+          "E_B_feedback_medium"
+        ],
+        "left_delta": 0.0,
+        "right_delta": 0.0
+      }
+    ],
+    "loss": 0.35528518720929514,
+    "index": 0.7009735060221911,
+    "diagnostics": [],
+    "forced_diagnostic": {
+      "code": "D_ij",
+      "reason": "no common linguistic terms for composition",
+      "severity": "critical",
+      "context": {
+        "left_terms": [
+          "high",
+          "low",
+          "medium"
+        ],
+        "right_terms": [
+          "allow",
+          "deny"
+        ]
+      }
+    },
+    "forced_diagnostic_action": "block"
+  },
+  "risk_observer": {
+    "theta_mid": 0.34,
+    "theta_high": 0.62,
+    "dataset": "sklearn breast_cancer",
+    "n_train": null,
+    "n_test": null,
+    "model": "RandomForestClassifier",
+    "accuracy_base": 0.965035,
+    "roc_auc": 0.99434,
+    "accepted_accuracy": 0.972477,
+    "coverage": 0.762238,
+    "defer_rate": 0.0,
+    "cost_before": 0.174825,
+    "cost_after": 0.108462,
+    "risk_reduction": 0.066364,
+    "forced_diagnostic_action": "block",
+    "sample_actions": [
+      {
+        "idx": 0,
+        "predicted_risk": 0.94896,
+        "uncertainty": 0.234183,
+        "risk_score": 0.377481,
+        "action": "lower_confidence",
+        "corrected_confidence": 0.395102,
+        "interpretability_index": 0.828765,
+        "reason": "medium risk: accept only with lower confidence"
+      },
+      {
+        "idx": 1,
+        "predicted_risk": 0.020822,
+        "uncertainty": 0.114714,
+        "risk_score": 0.076949,
+        "action": "accept",
+        "corrected_confidence": 0.645464,
+        "interpretability_index": 0.789882,
+        "reason": "risk score below theta_mid"
+      },
+      {
+        "idx": 2,
+        "predicted_risk": 0.900999,
+        "uncertainty": 0.385476,
+        "risk_score": 0.403404,
+        "action": "lower_confidence",
+        "corrected_confidence": 0.299281,
+        "interpretability_index": 0.816321,
+        "reason": "medium risk: accept only with lower confidence"
+      },
+      {
+        "idx": 3,
+        "predicted_risk": 0.006151,
+        "uncertainty": 0.04151,
+        "risk_score": 0.053086,
+        "action": "accept",
+        "corrected_confidence": 0.722171,
+        "interpretability_index": 0.795686,
+        "reason": "risk score below theta_mid"
+      },
+      {
+        "idx": 4,
+        "predicted_risk": 0.357179,
+        "uncertainty": 0.872528,
+        "risk_score": 0.375023,
+        "action": "request_more_data",
+        "corrected_confidence": 0.059855,
+        "interpretability_index": 0.751315,
+        "reason": "medium risk with elevated uncertainty"
+      }
+    ]
+  },
+  "artifacts": {
+    "membership_html": "01_memberships.html",
+    "feature_html": "02_feature_contributions.html",
+    "representation_html": "03_representation.html",
+    "composition_html": "04_composition_graph.html",
+    "index_html": "reports/full_demo/index.html",
+    "json": "reports/full_demo/full_pipeline_report.json",
+    "markdown": "reports/full_demo/full_pipeline_report.md"
+  }
+}

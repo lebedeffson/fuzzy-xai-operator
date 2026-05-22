@@ -2,7 +2,7 @@ PYTHON ?= python
 PYTHONPATH := .
 PORT ?= 8085
 
-.PHONY: install test risk-test demo dashboard proof thesis benchmark operator-benchmark risk-benchmark clean
+.PHONY: install test risk-test demo dashboard proof thesis full-demo benchmark operator-benchmark risk-benchmark clean
 
 install:
 	$(PYTHON) -m pip install -r requirements.txt
@@ -25,6 +25,10 @@ proof:
 thesis:
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) proofs/validate_thesis_examples.py
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) examples/thesis_demo.py
+
+full-demo:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) full_pipeline_demo.py
+	@echo "Full pipeline report: reports/full_demo/index.html"
 
 benchmark:
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) benchmarks/breast_cancer_benchmark.py

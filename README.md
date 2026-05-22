@@ -68,6 +68,42 @@ GUI рассчитан на показ неспециалисту. Он пока
 - Граф композиции: модель и модуль решения соединены стрелкой рассогласования; конфликтный режим приводит к `D_ij`.
 - Benchmark “без оператора / с оператором”: baseline-модель даёт риск и важности признаков, а оператор добавляет `gamma`, `I(E_G)` и обнаружение конфликта `D_ij`.
 
+## Полная демонстрация
+
+Сквозной сценарий для презентации всей логики одной командой:
+
+```bash
+make full-demo
+# или
+PYTHONPATH=. python full_pipeline_demo.py --open
+```
+
+Что показывает отчёт:
+
+- загрузка медицинских demo-данных и обучение `LogisticRegression`;
+- разбор одного кейса: признаки -> `risk_score` -> термы `low/medium/high`;
+- системный оператор главы 2: `E_k`, композиция этапов, `gamma`, `D_ij`, `I(E_G)`;
+- глава 3: профиль ситуации `P_sit`, выбор класса `A_k^F`, потеря редукции `Delta`;
+- Risk-Aware Observer: итоговое действие `accept/lower_confidence/request_more_data/defer_to_human/block`;
+- benchmark на `sklearn breast_cancer`, где видно снижение ожидаемой стоимости риска.
+
+Главный файл отчёта:
+
+```text
+reports/full_demo/index.html
+```
+
+Также сохраняются:
+
+- `reports/full_demo/full_pipeline_report.json`
+- `reports/full_demo/full_pipeline_report.md`
+- `reports/full_demo/01_memberships.html`
+- `reports/full_demo/02_feature_contributions.html`
+- `reports/full_demo/03_representation.html`
+- `reports/full_demo/04_composition_graph.html`
+
+В GUI `apps/defense_demo.py` есть блок **Полная демонстрация**: он собирает этот же отчёт кнопкой и даёт скачать HTML/JSON.
+
 ## Технический dashboard
 
 Расширенный NiceGUI dashboard остаётся доступен для отладки и экспериментов:
@@ -131,7 +167,7 @@ PYTHONPATH=. python examples/thesis_demo.py
 Ожидаемый статус:
 
 ```text
-41 passed
+42 passed
 thesis validation: PASS
 thesis demo: PASS
 ```
@@ -149,6 +185,7 @@ thesis demo: PASS
 - `reports/breast_cancer_benchmark.md`: краткий benchmark на медицинском датасете.
 - `reports/operator_comparison_benchmark.md`: сравнение “без оператора / с оператором”.
 - `reports/risk_aware_observer_benchmark.md`: benchmark риск-ориентированного наблюдателя.
+- `reports/full_demo/index.html`: полный сценарий “данные -> модель -> глава 2 -> глава 3 -> наблюдатель”.
 
 ## Минимальный пример API
 
@@ -190,6 +227,7 @@ proofs/
   validate_thesis_examples.py
 examples/
   thesis_demo.py
+full_pipeline_demo.py
 benchmarks/
   breast_cancer_benchmark.py
   operator_comparison_benchmark.py

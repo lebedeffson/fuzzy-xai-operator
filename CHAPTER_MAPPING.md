@@ -39,6 +39,7 @@
 | Потеря редукции в `d_E_ext` | `semantic_disagreement(... beta['reduction'])` | `reports/chapter3_end_to_end_report.json` |
 | Композиция расширенных объектов | `compose(e_ext, e_dec, beta)` | `examples/chapter3_end_to_end.py` |
 | Сравнение “без оператора / с оператором” | `benchmarks/operator_comparison_benchmark.py` | `tests/test_operator_comparison_benchmark.py` |
+| Полный маршрут “данные -> модель -> глава 2 -> глава 3 -> наблюдатель” | `full_pipeline_demo.py` | `tests/test_full_pipeline_demo.py` |
 
 ## Risk-Aware Observer
 
@@ -57,3 +58,4 @@
 - Численный маршрут главы 3 (`P_sit`, выбор класса, редукции, `Delta`, `d_E_ext`, `D_choice`) -> `proofs/validate_thesis_examples.py` -> `reports/thesis_validation.json`.
 - Сквозная defense demo -> `examples/thesis_demo.py` -> `reports/thesis_demo_report.json` и `reports/thesis_demo_composition_graph.html`.
 - Risk-Aware Observer benchmark -> `benchmarks/risk_aware_observer_benchmark.py` -> `reports/risk_aware_observer_benchmark.json` и `reports/risk_aware_observer_benchmark.md`.
+- Полная демонстрация -> `full_pipeline_demo.py` -> `reports/full_demo/index.html`, `reports/full_demo/full_pipeline_report.json`.
