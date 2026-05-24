@@ -4,9 +4,7 @@ from dataclasses import dataclass, field
 from enum import Enum
 from typing import Mapping, Sequence
 
-
-def _clip01(value: float) -> float:
-    return max(0.0, min(1.0, float(value)))
+from .risk_function import clip01 as _clip01, compute_application_risk
 
 
 class RiskAction(Enum):
@@ -47,16 +45,14 @@ class RiskPolicy:
         reduction_loss: float,
         diagnostics: Sequence[str] | None = None,
     ) -> float:
-        diagnostics = list(diagnostics or [])
-        weights = self.risk_weights
-        score = (
-            float(weights.get('predicted_risk', 0.0)) * _clip01(predicted_risk)
-            + float(weights.get('uncertainty', 0.0)) * _clip01(uncertainty)
-            + float(weights.get('reduction_loss', 0.0)) * _clip01(reduction_loss)
-            + float(weights.get('interpretability_gap', 0.0)) * _clip01(1.0 - interpretability)
-            + float(weights.get('diagnostic', 0.0)) * (1.0 if diagnostics else 0.0)
-        )
-        return _clip01(score)
+        return compute_application_risk(
+            predicted_risk,
+            uncertainty,
+            interpretability,
+            reduction_loss,
+            diagnostics,
+            self.risk_weights,
+        ).rho
 
     def choose(
         self,

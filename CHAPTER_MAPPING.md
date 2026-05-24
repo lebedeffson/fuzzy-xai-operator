@@ -57,8 +57,10 @@
 | Компонент | Реализация | Проверка |
 |---|---|---|
 | Расширенный объект `E_M^ext` над прогнозным интерфейсом | `fuzzyxai/risk/observer_pipeline.py` | `tests/test_full_observer_pipeline.py` |
-| Риск автоматического применения `rho(x)` | `RiskPolicy.risk_score` | `tests/test_full_observer_pipeline.py` |
+| Риск автоматического применения `rho(x)` | `fuzzyxai/risk/risk_function.py` | `tests/test_risk_function.py` |
+| Оптимальная политика через ожидаемую стоимость | `choose_min_expected_cost` | `tests/test_risk_function.py` |
 | Композиция `E_D o E_R o E_M^ext` | `ObserverPipeline.explain_case` | `reports/full_observer_pipeline/full_observer_pipeline.md` |
+| Математическое описание слоя | `docs/RISK_AWARE_XAI_OBSERVER_MATH_RU.md` | code-review + tests |
 | Исполняемый сценарий наблюдателя | `full_observer_pipeline.py` | `make full-observer` |
 
 ## LOFO-F1 Rule Pruning
@@ -79,3 +81,4 @@
 - LOFO-F1 rule pruning -> `benchmarks/lofo_f1_rule_pruning_demo.py` -> `reports/lofo_f1_rule_pruning.json` и `reports/lofo_f1_rule_pruning.md`.
 
 - Full observer pipeline -> `full_observer_pipeline.py` -> `reports/full_observer_pipeline/full_observer_pipeline.json`, `reports/full_observer_pipeline/full_observer_pipeline.md`.
+- Risk-aware observer math -> `docs/RISK_AWARE_XAI_OBSERVER_MATH_RU.md` -> `fuzzyxai/risk/risk_function.py`, `tests/test_risk_function.py`.

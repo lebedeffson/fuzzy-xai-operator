@@ -119,7 +119,7 @@ python apps/nicegui_dashboard.py --port 8080
 
 Новый слой над главами 2-3: системный оператор используется как внешний наблюдающий контур над моделью с прогнозным интерфейсом. Он не меняет параметры модели, а строит `E_M^ext`, выбирает `A_M^F`, считает неопределённость, `Delta`, `I(E_G)`, диагностические разрывы и риск автоматического применения прогноза.
 
-Ключевая функция риска:
+Ключевая функция риска вынесена в `fuzzyxai/risk/risk_function.py` и совпадает с математической записью:
 
 ```text
 rho = w_p*rho_p + w_u*u_M + w_I*(1 - I(E_G)) + w_Delta*Delta_M + w_D*1[D != empty]
@@ -141,8 +141,9 @@ make full-observer
 PYTHONPATH=. python full_observer_pipeline.py --open
 ```
 
-Отчёты:
+Отчёты и математическое описание:
 
+- `docs/RISK_AWARE_XAI_OBSERVER_MATH_RU.md`
 - `reports/full_observer_pipeline/full_observer_pipeline.json`
 - `reports/full_observer_pipeline/full_observer_pipeline.md`
 - `reports/full_observer_pipeline/full_observer_pipeline.html`
@@ -150,10 +151,13 @@ PYTHONPATH=. python full_observer_pipeline.py --open
 Минимальный API:
 
 ```python
-from fuzzyxai.risk import build_full_observer_pipeline_report
+from fuzzyxai.risk import build_full_observer_pipeline_report, compute_application_risk
 
 report = build_full_observer_pipeline_report()
 print(report["with_observer"]["safe_action"])
+
+rho = compute_application_risk(0.72, 0.31, 0.84, 0.09, []).rho
+print(rho)
 ```
 
 ## Risk-Aware Observer
@@ -242,7 +246,7 @@ PYTHONPATH=. python examples/thesis_demo.py
 Ожидаемый статус:
 
 ```text
-49 passed
+53 passed
 thesis validation: PASS
 thesis demo: PASS
 ```
@@ -290,7 +294,7 @@ fuzzyxai/
   hierarchy/     F0, interval, hesitant, neutrosophic, multilevel классы
   selection/     построение профиля, совместимость, Парето-выбор
   calibration/   калибровка beta и кросс-валидация
-  risk/          Risk-Aware Observer: неопределённость, политика, метрики, observer pipeline
+  risk/          Risk-Aware Observer: неопределённость, rho(x), политика, метрики, observer pipeline
   rules/         LOFO-F1 и стабильный отбор правил
   visual/        Plotly-графики функций принадлежности и композиции
   demo/          детерминированные demo-данные и сборщики примеров
