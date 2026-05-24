@@ -16,7 +16,7 @@
 | Breast Cancer Wisconsin по прямой ссылке | готово | `examples/dataset_observer_demo.py --url ...breast_cancer_data.csv` |
 | `E_R` и `E_A` в observer report | готово | `tests/test_dataset_observer_representation_integration.py` |
 | Formal proof report | готово | `proofs/formal_theorem_checks.py` |
-| Категориально-гомотопическое приложение | готово | `tests/test_expl_category_laws.py`, `tests/test_presheaf_functoriality.py`, `tests/test_explanation_path_types.py` |
+| Категориально-гомотопическое приложение | готово | `make category-hott-test`, `reports/category_hott/category_hott_checks.md` |
 
 ## Что осталось как следующий слой
 

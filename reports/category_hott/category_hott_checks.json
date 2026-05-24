@@ -1,0 +1,87 @@
+{
+  "status": "PASS",
+  "checks": [
+    {
+      "name": "category identities",
+      "status": "PASS"
+    },
+    {
+      "name": "category composition",
+      "status": "PASS"
+    },
+    {
+      "name": "presheaf functoriality",
+      "status": "PASS"
+    },
+    {
+      "name": "topos descriptor",
+      "status": "PASS"
+    },
+    {
+      "name": "path certificate",
+      "status": "PASS"
+    },
+    {
+      "name": "rupture certificate",
+      "status": "PASS"
+    },
+    {
+      "name": "temporal drift path",
+      "status": "PASS"
+    }
+  ],
+  "objects": [
+    "E_model",
+    "E_risk",
+    "E_action"
+  ],
+  "morphisms": [
+    {
+      "source": "E_model",
+      "target": "E_risk",
+      "gamma": 0.18,
+      "valid": true
+    },
+    {
+      "source": "E_risk",
+      "target": "E_action",
+      "gamma": 0.12,
+      "valid": true
+    }
+  ],
+  "paths": [
+    {
+      "source": "E_model",
+      "target": "E_action",
+      "length": 2,
+      "gamma_total": 0.3,
+      "delta_total": 0.0,
+      "trace": [
+        "E_model",
+        "E_risk",
+        "E_risk",
+        "E_action"
+      ],
+      "valid": true
+    }
+  ],
+  "ruptures": [
+    {
+      "source": "E_model",
+      "target": "E_action",
+      "reason": "morphism violates gamma_max or category constraints",
+      "gamma": 0.9,
+      "gamma_max": 0.5,
+      "diagnostic_code": "D_ij"
+    }
+  ],
+  "presheaf_contexts": {
+    "RiskContext": [
+      "risk_context"
+    ],
+    "AuditContext": [
+      "full_trace",
+      "hash_verified"
+    ]
+  }
+}

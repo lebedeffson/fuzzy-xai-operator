@@ -82,12 +82,15 @@
 | Компонент | Реализация | Проверка |
 |---|---|---|
 | Категория успешных объяснительных согласований `Expl` | `fuzzyxai/category/expl_category.py` | `tests/test_expl_category_laws.py` |
+| Морфизмы объяснений | `fuzzyxai/category/morphism.py` | `tests/test_expl_category_laws.py` |
 | Диагностическая граница `Expl_D` | `fuzzyxai/category/diagnostic_completion.py` | `tests/test_diagnostic_completion.py` |
 | Предпучок контекстов `Set^{Expl^op}` | `fuzzyxai/category/presheaf.py` | `tests/test_presheaf_functoriality.py` |
 | Дескриптор топоса контекстов | `fuzzyxai/category/context_topos.py` | `tests/test_presheaf_functoriality.py` |
 | Тип пути согласования `Path_Expl` | `fuzzyxai/hott/path_type.py` | `tests/test_explanation_path_types.py` |
 | Тип разрыва `Rupture` | `fuzzyxai/hott/rupture_type.py` | `tests/test_explanation_path_types.py` |
 | Временной дрейф объяснений | `fuzzyxai/hott/drift_path.py` | `tests/test_temporal_drift_paths.py` |
+| Сертификаты путей и разрывов | `fuzzyxai/hott/path_certificates.py` | `tests/test_context_topos_smoke.py` |
+| Category/HoTT proof report | `proofs/category_hott_checks.py` | `reports/category_hott/category_hott_checks.md` |
 | Математическое приложение | `docs/CATEGORICAL_HOTT_EXTENSION_RU.md` | category/hott tests |
 
 ## Финальные артефакты проверки
@@ -107,3 +110,4 @@
 - Formal theorem checks -> `proofs/formal_theorem_checks.py` -> `reports/formal_theorems/formal_theorem_checks.md`.
 - Implementation inventory -> `docs/IMPLEMENTATION_INVENTORY_VNEXT_RU.md`.
 - Categorical/HoTT appendix -> `docs/CATEGORICAL_HOTT_EXTENSION_RU.md`, `fuzzyxai/category/`, `fuzzyxai/hott/`.
+- Category/HoTT report -> `proofs/category_hott_checks.py` -> `reports/category_hott/category_hott_checks.md`.
