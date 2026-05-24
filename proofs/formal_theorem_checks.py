@@ -34,13 +34,15 @@ def main() -> int:
         status = 'PASS' if proc.returncode == 0 else 'FAIL'
         if proc.returncode != 0:
             overall = proc.returncode
-        rows.append({
+        row = {
             'theorem': theorem,
             'code_check': test_file,
             'status': status,
-            'stdout': proc.stdout.strip(),
-            'stderr': proc.stderr.strip(),
-        })
+        }
+        if proc.returncode != 0:
+            row['stdout'] = proc.stdout.strip()
+            row['stderr'] = proc.stderr.strip()
+        rows.append(row)
         print(f'{theorem}: {status}')
 
     report = {'status': 'PASS' if overall == 0 else 'FAIL', 'checks': rows}

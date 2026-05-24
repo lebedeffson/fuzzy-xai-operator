@@ -65,6 +65,8 @@
 | Математическое описание слоя | `docs/RISK_AWARE_XAI_OBSERVER_MATH_RU.md` | code-review + tests |
 | Слой датасетов и профиля | `fuzzyxai/data/` | `tests/test_dataset_data_layer.py` |
 | Dataset observer pipeline | `fuzzyxai/pipelines/dataset_observer_pipeline.py` | `tests/test_dataset_observer_pipeline.py`, `tests/test_dataset_observer_pipeline_correctness.py` |
+| Выбор `A_M^F` в dataset pipeline | `fuzzyxai/risk/representation_selection.py` | `tests/test_dataset_observer_representation_integration.py` |
+| Объекты `E_R`, `E_A` в отчёте | `fuzzyxai/risk/risk_aware_model.py` | `tests/test_dataset_observer_representation_integration.py` |
 | Исполняемый сценарий наблюдателя | `full_observer_pipeline.py` | `make full-observer` |
 
 ## LOFO-F1 Rule Pruning
@@ -90,3 +92,4 @@
 - Formal theorem pack -> `docs/FORMAL_THEOREMS_CH2_CH3_RU.md`.
 - vNext TZ -> `docs/TZ_MATH_RISK_AWARE_OBSERVER_VNEXT_RU.md`.
 - Formal theorem checks -> `proofs/formal_theorem_checks.py` -> `reports/formal_theorems/formal_theorem_checks.md`.
+- Implementation inventory -> `docs/IMPLEMENTATION_INVENTORY_VNEXT_RU.md`.

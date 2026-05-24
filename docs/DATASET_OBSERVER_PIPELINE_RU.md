@@ -5,7 +5,7 @@
 Базовая цепочка:
 
 ```text
-dataset -> data profile -> model -> E_M^ext -> I_pre -> rho(x) -> action -> report
+dataset -> data profile -> A_M^F -> model -> E_M^ext -> I_pre -> rho(x) -> E_R -> E_A -> action/report
 ```
 
 ## Источники
@@ -19,10 +19,11 @@ dataset -> data profile -> model -> E_M^ext -> I_pre -> rho(x) -> action -> repo
 
 1. `DatasetRecord` сохраняет происхождение набора данных.
 2. `DatasetProfile` определяет строки, столбцы, числовые/категориальные признаки, пропуски, интервальные пары, экспертные и source-колонки.
-3. По профилю выводятся типы неопределённости: `u_num`, `u_ling`, `u_int`, `u_expert`, `u_conf`, `u_trace`.
-4. Обучается базовая модель `RandomForest` или `LogisticRegression`.
-5. `RiskAwareModel` строит объяснение прогноза, считает `I_pre`, `rho(x)` и безопасное действие.
-6. Сохраняется отчёт в `reports/dataset_observer/`.
+3. По профилю выводятся типы неопределённости: `u_num`, `u_ling`, `u_int`, `u_exp`, `u_conf`, `u_trace`, `u_multi`.
+4. Селектор выбирает минимально достаточное представление `A_M^F`: `F0`, `FI`, `FH`, `FNsrc` или `FML-audit`.
+5. Обучается базовая модель `RandomForest` или `LogisticRegression`.
+6. `RiskAwareModel` строит `E_M^ext`, `E_R`, `E_A`, считает `I_pre`, `rho(x)` и безопасное действие.
+7. Сохраняется отчёт в `reports/dataset_observer/`.
 
 ## Запуск
 

@@ -265,7 +265,7 @@ PYTHONPATH=. python examples/thesis_demo.py
 Ожидаемый статус:
 
 ```text
-91 passed
+93 passed
 thesis validation: PASS
 thesis demo: PASS
 ```
@@ -352,6 +352,7 @@ tests/
 - `ROADMAP_RU.md`: перспективные направления и план доведения прототипа до реальной разработки.
 - `docs/FORMAL_THEOREMS_CH2_CH3_RU.md`: шесть формальных теорем для усиления глав 2 и 3.
 - `docs/TZ_MATH_RISK_AWARE_OBSERVER_VNEXT_RU.md`: vNext ТЗ для математики, наблюдателя, тестов и proof-отчётов.
+- `docs/IMPLEMENTATION_INVENTORY_VNEXT_RU.md`: инвентаризация готового и оставшихся задач.
 
 ## Научные ограничения
 

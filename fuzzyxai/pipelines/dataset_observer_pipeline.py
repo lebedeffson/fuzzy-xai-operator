@@ -16,6 +16,7 @@ from sklearn.preprocessing import LabelEncoder
 from fuzzyxai import ExplainPlan
 from fuzzyxai.data import DatasetRecord, guess_target_column, infer_dataset_profile, split_features_target
 from fuzzyxai.risk import RiskAwareModel, RiskPolicy
+from fuzzyxai.risk.representation_selection import profile_from_dataset_profile, select_risk_representation
 
 
 @dataclass(frozen=True)
@@ -83,6 +84,9 @@ class DatasetObserverPipeline:
             roc_auc = float(roc_auc_score(y_test, proba[:, 1]))
 
         plan = ExplainPlan.from_data(x_train, y_train, mode=self.mode).with_reduction_weight(0.10)
+        xai_profile = profile_from_dataset_profile(profile)
+        preview_risk = float(proba[max(0, min(int(case_index), len(x_test) - 1)), 1]) if proba is not None and proba.shape[1] > 1 else 0.0
+        representation_selection = select_risk_representation(preview_risk, xai_profile, mode=self.mode)
         positive_class = 1 if len(y_encoder.classes_) > 1 else 0
         observer = RiskAwareModel(
             model,
@@ -92,7 +96,11 @@ class DatasetObserverPipeline:
         )
         case_index = max(0, min(int(case_index), len(x_test) - 1))
         case = x_test.iloc[[case_index]]
-        observer_row = observer.predict_with_risk(case, metadata={'source': record.source})[0]
+        observer_row = observer.predict_with_risk(case, metadata={
+            'source': record.source,
+            'mode': self.mode,
+            'xai_profile': sorted(xai_profile),
+        })[0]
         case_prediction = {
             'raw_prediction_encoded': int(pred[case_index]) if hasattr(pred[case_index], 'item') else pred[case_index],
             'raw_prediction_label': str(y_encoder.inverse_transform([int(pred[case_index])])[0]),
@@ -111,6 +119,8 @@ class DatasetObserverPipeline:
             trace={
                 'dataset': record.as_trace(),
                 'profile': profile.as_dict(),
+                'xai_profile': sorted(xai_profile),
+                'representation_selection': representation_selection.as_dict(),
                 'model': self.model_name,
                 'mode': self.mode,
                 'target_classes': [str(c) for c in y_encoder.classes_],
@@ -128,10 +138,24 @@ def _json_safe_observer_row(row: dict[str, Any]) -> dict[str, Any]:
         if isinstance(value, (str, int, float, bool)) or value is None:
             safe[key] = value
         elif isinstance(value, list):
-            safe[key] = [v.item() if hasattr(v, 'item') else v for v in value]
+            safe[key] = [_json_safe_value(v) for v in value]
+        elif isinstance(value, dict):
+            safe[key] = {str(k): _json_safe_value(v) for k, v in value.items()}
         else:
             safe[key] = str(value)
     return safe
+
+
+def _json_safe_value(value: Any) -> Any:
+    if isinstance(value, (str, int, float, bool)) or value is None:
+        return value
+    if hasattr(value, 'item'):
+        return value.item()
+    if isinstance(value, list):
+        return [_json_safe_value(v) for v in value]
+    if isinstance(value, dict):
+        return {str(k): _json_safe_value(v) for k, v in value.items()}
+    return str(value)
 
 
 def write_dataset_observer_report(result: DatasetObserverResult, out_dir: str | Path = 'reports/dataset_observer') -> dict[str, str]:
@@ -160,6 +184,8 @@ def render_dataset_observer_markdown(data: dict[str, Any]) -> str:
         f"Numeric columns: `{len(profile['numeric_columns'])}`; categorical columns: `{len(profile['categorical_columns'])}`",
         f"Missing rate: `{profile['missing_rate']:.6f}`",
         f"Suggested uncertainty types: `{', '.join(profile['suggested_uncertainty_types'])}`",
+        f"Selected representation: `{obs['selected_representation']}` / `{obs['representation_class']}`",
+        f"Selection reason: {obs['representation_selection']['reason']}",
         '',
         '## Model',
         '',
@@ -171,10 +197,13 @@ def render_dataset_observer_markdown(data: dict[str, Any]) -> str:
         '',
         f"- predicted_risk: `{obs['predicted_risk']:.6f}`",
         f"- uncertainty: `{obs['uncertainty']:.6f}`",
+        f"- E_M^ext representation: `{obs['selected_representation']}`",
+        f"- Delta_M: `{obs['reduction_loss']:.6f}`",
         f"- I_pre: `{obs['pre_interpretability']:.6f}`",
         f"- rho: `{obs['application_risk']:.6f}`",
         f"- action: `{obs['action']}`",
         f"- reason: {obs['reason']}",
+        f"- explanation route: `{' -> '.join(obs['composition_route'])}`",
         '',
     ]
     return '\n'.join(lines)
@@ -187,7 +216,7 @@ def render_dataset_observer_html(data: dict[str, Any]) -> str:
     return f"""<!doctype html><html lang="ru"><head><meta charset="utf-8"><title>Dataset observer</title>
 <style>body{{font-family:Arial,sans-serif;max-width:980px;margin:32px auto;color:#172033;line-height:1.45}}.card{{border:1px solid #d9e2ec;border-radius:14px;padding:18px;margin:16px 0}}.kpi{{display:inline-block;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:12px;margin:6px;min-width:145px}}.kpi b{{display:block;font-size:22px;color:#0f766e}}</style></head><body>
 <h1>Dataset Observer</h1>
-<div class="card"><h2>Dataset</h2><p><b>{esc(data['dataset_record']['dataset_name'])}</b> from <code>{esc(data['dataset_record']['source'])}</code></p><p>rows={profile['n_rows']}, columns={profile['n_columns']}, target=<code>{esc(data['target_column'])}</code></p><p>uncertainty: <code>{esc(', '.join(profile['suggested_uncertainty_types']))}</code></p></div>
+<div class="card"><h2>Dataset</h2><p><b>{esc(data['dataset_record']['dataset_name'])}</b> from <code>{esc(data['dataset_record']['source'])}</code></p><p>rows={profile['n_rows']}, columns={profile['n_columns']}, target=<code>{esc(data['target_column'])}</code></p><p>uncertainty: <code>{esc(', '.join(profile['suggested_uncertainty_types']))}</code></p><p>A_M^F: <b>{esc(str(obs['selected_representation']))}</b> / {esc(str(obs['representation_class']))}</p><p>{esc(str(obs['representation_selection']['reason']))}</p></div>
 <div class="card"><h2>Model</h2><div class="kpi">accuracy<b>{data['accuracy']:.4f}</b></div><div class="kpi">roc_auc<b>{data['roc_auc'] if data['roc_auc'] is not None else 'n/a'}</b></div></div>
-<div class="card"><h2>Observer</h2><div class="kpi">risk<b>{obs['predicted_risk']:.4f}</b></div><div class="kpi">u_M<b>{obs['uncertainty']:.4f}</b></div><div class="kpi">I_pre<b>{obs['pre_interpretability']:.4f}</b></div><div class="kpi">rho<b>{obs['application_risk']:.4f}</b></div><div class="kpi">action<b>{esc(obs['action'])}</b></div><p>{esc(obs['reason'])}</p></div>
+<div class="card"><h2>Observer</h2><div class="kpi">risk<b>{obs['predicted_risk']:.4f}</b></div><div class="kpi">u_M<b>{obs['uncertainty']:.4f}</b></div><div class="kpi">Delta<b>{obs['reduction_loss']:.4f}</b></div><div class="kpi">I_pre<b>{obs['pre_interpretability']:.4f}</b></div><div class="kpi">rho<b>{obs['application_risk']:.4f}</b></div><div class="kpi">action<b>{esc(obs['action'])}</b></div><p>{esc(obs['reason'])}</p><p><code>{esc(' -> '.join(obs['composition_route']))}</code></p></div>
 </body></html>"""

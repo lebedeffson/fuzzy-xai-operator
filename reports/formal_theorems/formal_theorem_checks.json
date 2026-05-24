@@ -4,65 +4,47 @@
     {
       "theorem": "2.1 partial composition",
       "code_check": "tests/test_composition_well_defined.py",
-      "status": "PASS",
-      "stdout": "....                                                                     [100%]\n4 passed in 0.61s",
-      "stderr": ""
+      "status": "PASS"
     },
     {
       "theorem": "2.2 d_E pseudometric",
       "code_check": "tests/test_semantic_disagreement_pseudometric.py",
-      "status": "PASS",
-      "stdout": "...                                                                      [100%]\n3 passed in 0.64s",
-      "stderr": ""
+      "status": "PASS"
     },
     {
       "theorem": "2.3 chain loss bound",
       "code_check": "tests/test_chain_loss_bound.py",
-      "status": "PASS",
-      "stdout": "...                                                                      [100%]\n3 passed in 0.65s",
-      "stderr": ""
+      "status": "PASS"
     },
     {
       "theorem": "3.1 coverage/minimality",
       "code_check": "tests/test_operational_coverage_minimality.py",
-      "status": "PASS",
-      "stdout": ".....                                                                    [100%]\n5 passed in 0.65s",
-      "stderr": ""
+      "status": "PASS"
     },
     {
       "theorem": "3.2 reduction approximation",
       "code_check": "tests/test_reduction_approximation_theorem.py",
-      "status": "PASS",
-      "stdout": ".....                                                                    [100%]\n5 passed in 0.64s",
-      "stderr": ""
+      "status": "PASS"
     },
     {
       "theorem": "3.3 FML termination",
       "code_check": "tests/test_multilevel_reduction_termination.py",
-      "status": "PASS",
-      "stdout": "....                                                                     [100%]\n4 passed in 0.64s",
-      "stderr": ""
+      "status": "PASS"
     },
     {
       "theorem": "4.1 no cyclic risk",
       "code_check": "tests/test_observer_no_cyclic_dependency.py",
-      "status": "PASS",
-      "stdout": "...                                                                      [100%]\n3 passed in 0.62s",
-      "stderr": ""
+      "status": "PASS"
     },
     {
       "theorem": "4.2 expected cost",
       "code_check": "tests/test_expected_cost_optimality.py",
-      "status": "PASS",
-      "stdout": "...                                                                      [100%]\n3 passed in 0.63s",
-      "stderr": ""
+      "status": "PASS"
     },
     {
       "theorem": "4.3 dataset pipeline",
       "code_check": "tests/test_dataset_observer_pipeline_correctness.py",
-      "status": "PASS",
-      "stdout": "...                                                                      [100%]\n3 passed in 0.75s",
-      "stderr": ""
+      "status": "PASS"
     }
   ]
 }
