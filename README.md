@@ -272,7 +272,7 @@ PYTHONPATH=. python examples/thesis_demo.py
 Ожидаемый статус:
 
 ```text
-96 passed
+104 passed
 thesis validation: PASS
 thesis demo: PASS
 ```
@@ -319,6 +319,8 @@ print(result.report)
 ```text
 fuzzyxai/
   core/          объекты объяснения, оператор, композиция, расстояния
+  category/      Expl, диагностическое расширение, предпучки контекстов
+  hott/          Path_Expl, Rupture, temporal drift certificates
   hierarchy/     F0, interval, hesitant, neutrosophic, multilevel классы
   selection/     построение профиля, совместимость, Парето-выбор
   calibration/   калибровка beta и кросс-валидация
@@ -357,6 +359,7 @@ tests/
 - `PRESENTATION.md`: сценарий защиты и что говорить при показе GUI.
 - `IMPLEMENTATION_SUMMARY.md`: техническое описание того, что реализовано и где лежит.
 - `ROADMAP_RU.md`: перспективные направления и план доведения прототипа до реальной разработки.
+- `docs/CATEGORICAL_HOTT_EXTENSION_RU.md`: приложение с категориально-гомотопической интерпретацией.
 - `docs/FORMAL_THEOREMS_CH2_CH3_RU.md`: шесть формальных теорем для усиления глав 2 и 3.
 - `docs/TZ_MATH_RISK_AWARE_OBSERVER_VNEXT_RU.md`: vNext ТЗ для математики, наблюдателя, тестов и proof-отчётов.
 - `docs/IMPLEMENTATION_INVENTORY_VNEXT_RU.md`: инвентаризация готового и оставшихся задач.

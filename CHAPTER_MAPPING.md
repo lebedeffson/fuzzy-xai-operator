@@ -77,6 +77,19 @@
 | Bootstrap-стабилизация top-B | `bootstrap_lofo_f1_importance` | `tests/test_lofo_f1_rule_pruning.py` |
 | Сравнение с Budget-Prune | `benchmarks/lofo_f1_rule_pruning_demo.py` | `reports/lofo_f1_rule_pruning.md` |
 
+## Категориально-гомотопическое приложение
+
+| Компонент | Реализация | Проверка |
+|---|---|---|
+| Категория успешных объяснительных согласований `Expl` | `fuzzyxai/category/expl_category.py` | `tests/test_expl_category_laws.py` |
+| Диагностическая граница `Expl_D` | `fuzzyxai/category/diagnostic_completion.py` | `tests/test_diagnostic_completion.py` |
+| Предпучок контекстов `Set^{Expl^op}` | `fuzzyxai/category/presheaf.py` | `tests/test_presheaf_functoriality.py` |
+| Дескриптор топоса контекстов | `fuzzyxai/category/context_topos.py` | `tests/test_presheaf_functoriality.py` |
+| Тип пути согласования `Path_Expl` | `fuzzyxai/hott/path_type.py` | `tests/test_explanation_path_types.py` |
+| Тип разрыва `Rupture` | `fuzzyxai/hott/rupture_type.py` | `tests/test_explanation_path_types.py` |
+| Временной дрейф объяснений | `fuzzyxai/hott/drift_path.py` | `tests/test_temporal_drift_paths.py` |
+| Математическое приложение | `docs/CATEGORICAL_HOTT_EXTENSION_RU.md` | category/hott tests |
+
 ## Финальные артефакты проверки
 
 - Численный маршрут главы 2 (`mu`, `H`, `d_E`, композиция, `L`, `I`, `D_ij`) -> `proofs/validate_thesis_examples.py` -> `reports/thesis_validation.json`.
@@ -93,3 +106,4 @@
 - vNext TZ -> `docs/TZ_MATH_RISK_AWARE_OBSERVER_VNEXT_RU.md`.
 - Formal theorem checks -> `proofs/formal_theorem_checks.py` -> `reports/formal_theorems/formal_theorem_checks.md`.
 - Implementation inventory -> `docs/IMPLEMENTATION_INVENTORY_VNEXT_RU.md`.
+- Categorical/HoTT appendix -> `docs/CATEGORICAL_HOTT_EXTENSION_RU.md`, `fuzzyxai/category/`, `fuzzyxai/hott/`.

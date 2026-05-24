@@ -16,6 +16,7 @@
 | Breast Cancer Wisconsin по прямой ссылке | готово | `examples/dataset_observer_demo.py --url ...breast_cancer_data.csv` |
 | `E_R` и `E_A` в observer report | готово | `tests/test_dataset_observer_representation_integration.py` |
 | Formal proof report | готово | `proofs/formal_theorem_checks.py` |
+| Категориально-гомотопическое приложение | готово | `tests/test_expl_category_laws.py`, `tests/test_presheaf_functoriality.py`, `tests/test_explanation_path_types.py` |
 
 ## Что осталось как следующий слой
 
@@ -35,4 +36,5 @@ Dataset -> P_data -> M(x) -> E_M^ext -> A_M^F -> I_pre -> rho(x) -> E_R -> E_A -
 глава 2: композиция объяснений
 глава 3: тип неопределённости
 observer: риск применения прогноза
+appendix: Expl -> Set^{Expl^op} -> Path_Expl -> Rupture
 ```
