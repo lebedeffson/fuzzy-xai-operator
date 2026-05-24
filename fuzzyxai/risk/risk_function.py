@@ -33,6 +33,7 @@ def normalize_risk_weights(weights: Mapping[str, float] | None = None) -> dict[s
 class ApplicationRiskBreakdown:
     predicted_risk: float
     uncertainty: float
+    pre_interpretability: float
     interpretability_gap: float
     reduction_loss: float
     diagnostic: float
@@ -43,6 +44,7 @@ class ApplicationRiskBreakdown:
         return {
             'predicted_risk': self.predicted_risk,
             'uncertainty': self.uncertainty,
+            'pre_interpretability': self.pre_interpretability,
             'interpretability_gap': self.interpretability_gap,
             'reduction_loss': self.reduction_loss,
             'diagnostic': self.diagnostic,
@@ -54,23 +56,35 @@ class ApplicationRiskBreakdown:
 def compute_application_risk(
     predicted_risk: float,
     uncertainty: float,
-    interpretability: float,
-    reduction_loss: float,
+    pre_interpretability: float | None = None,
+    reduction_loss: float = 0.0,
     diagnostics: Sequence[str] | None = None,
     weights: Mapping[str, float] | None = None,
+    *,
+    interpretability: float | None = None,
 ) -> ApplicationRiskBreakdown:
-    """Compute rho(x): risk of automatic use of a model prediction."""
+    """Compute rho(x) from the pre-risk explanation state.
+
+    `pre_interpretability` is I_pre, not I_final. The final composition index is
+    reported after the action explanation is built and must not feed this score.
+    The `interpretability` keyword is kept as a backwards-compatible alias.
+    """
+    if pre_interpretability is None:
+        if interpretability is None:
+            raise TypeError('pre_interpretability is required')
+        pre_interpretability = interpretability
     diagnostics = list(diagnostics or [])
     w = normalize_risk_weights(weights)
+    pre_i = clip01(pre_interpretability)
     components = {
         'predicted_risk': clip01(predicted_risk),
         'uncertainty': clip01(uncertainty),
-        'interpretability_gap': clip01(1.0 - clip01(interpretability)),
+        'interpretability_gap': clip01(1.0 - pre_i),
         'reduction_loss': clip01(reduction_loss),
         'diagnostic': 1.0 if diagnostics else 0.0,
     }
     rho = clip01(sum(w[key] * components[key] for key in components))
-    return ApplicationRiskBreakdown(weights=w, rho=rho, **components)
+    return ApplicationRiskBreakdown(weights=w, rho=rho, pre_interpretability=pre_i, **components)
 
 
 def expected_action_costs(proba: Sequence[float], cost_matrix: Mapping[str, Sequence[float]]) -> dict[str, float]:

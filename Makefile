@@ -2,7 +2,7 @@ PYTHON ?= python
 PYTHONPATH := .
 PORT ?= 8085
 
-.PHONY: install test risk-test demo dashboard proof thesis full-demo full-observer benchmark operator-benchmark risk-benchmark lofo-f1-demo clean
+.PHONY: install test risk-test demo dashboard proof thesis full-demo full-observer dataset-observer benchmark operator-benchmark risk-benchmark lofo-f1-demo clean
 
 install:
 	$(PYTHON) -m pip install -r requirements.txt
@@ -33,6 +33,10 @@ full-demo:
 full-observer:
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) full_observer_pipeline.py
 	@echo "Full observer report: reports/full_observer_pipeline/full_observer_pipeline.html"
+
+dataset-observer:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) examples/dataset_observer_demo.py --sample breast_cancer
+	@echo "Dataset observer report: reports/dataset_observer/dataset_observer_report.html"
 
 benchmark:
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) benchmarks/breast_cancer_benchmark.py

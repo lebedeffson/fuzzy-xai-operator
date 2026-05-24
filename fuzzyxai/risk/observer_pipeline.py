@@ -30,12 +30,34 @@ class ObserverPipelineConfig:
     force_conflict: bool = False
 
 
+@dataclass(frozen=True)
+class ObserverStage:
+    name: str
+    metrics: dict[str, Any]
+    diagnostics: list[str]
+
+
+@dataclass(frozen=True)
+class ObserverPipelineResult:
+    raw_prediction: Any
+    risk_score: float
+    uncertainty: float
+    selected_representation: str
+    reduction_loss: float
+    pre_interpretability: float
+    application_risk: float
+    safe_action: str
+    final_interpretability: float
+    diagnostics: list[str]
+    trace: dict[str, Any]
+
+
 class ObserverPipeline:
     """Executable risk-aware XAI observer over a probabilistic model.
 
     The observer does not modify the model. It consumes a prediction interface,
-    builds E_M^ext, composes it with risk and decision explanations, then chooses
-    a safe action through RiskPolicy.
+    builds E_M^ext, computes I_pre, chooses an action, then audits
+    the final Model -> RiskModule -> Action composition.
     """
 
     def __init__(self, model, plan: ExplainPlan, policy: RiskPolicy | None = None, config: ObserverPipelineConfig | None = None) -> None:
@@ -65,44 +87,70 @@ class ObserverPipeline:
         e_model.representation = representation
         e_model.reduction_loss = float(reduction.delta)
 
-        provisional_i = _interpretability_for(e_model, self.plan, reduction_loss=float(reduction.delta))
-        provisional_rho = self.policy.risk_score(risk, uncertainty, provisional_i, float(reduction.delta), [])
-        e_risk = self._risk_explanation(provisional_rho)
+        pre_diagnostics = list(metadata.get('diagnostics', []) or [])
+        pre_interpretability = _interpretability_for(e_model, self.plan, reduction_loss=float(reduction.delta))
+        application_risk = self.policy.risk_score(risk, uncertainty, pre_interpretability, float(reduction.delta), pre_diagnostics)
+        decision = self.policy.choose_from_risk(
+            application_risk,
+            uncertainty,
+            risk,
+            pre_interpretability,
+            float(reduction.delta),
+            pre_diagnostics,
+        )
+        e_risk = self._risk_explanation(application_risk)
+        e_action = self._action_explanation(decision.action.value, risk)
+        if self.config.force_conflict:
+            e_action = e_action.copy_with(terms={'allow', 'deny'})
 
         comp_mr = compose(e_model, e_risk, self.plan.beta, allow_missing_terms=True)
-        diagnostics = []
+        diagnostics = list(pre_diagnostics)
         if hasattr(comp_mr, 'code'):
             diagnostics.append(getattr(comp_mr, 'code'))
-            composed_for_index = e_model
-        else:
-            composed_for_index = comp_mr
 
-        i_eg = _interpretability_for(composed_for_index, self.plan, reduction_loss=float(getattr(composed_for_index, 'reduction_loss', reduction.delta)))
-        decision = self.policy.choose(risk, uncertainty, i_eg, float(reduction.delta), diagnostics)
-        e_decision = self._decision_explanation(decision.action.value, risk)
-        if self.config.force_conflict:
-            e_decision = e_decision.copy_with(terms={'allow', 'deny'})
-
-        comp_rd = compose(e_risk, e_decision, self.plan.beta, allow_missing_terms=not self.config.force_conflict)
-        if hasattr(comp_rd, 'code'):
-            diagnostics.append(getattr(comp_rd, 'code'))
-            decision = self.policy.choose(risk, uncertainty, i_eg, float(reduction.delta), diagnostics)
-            final_comp = comp_rd
+        comp_ra = compose(e_risk, e_action, self.plan.beta, allow_missing_terms=not self.config.force_conflict)
+        if hasattr(comp_ra, 'code'):
+            diagnostics.append(getattr(comp_ra, 'code'))
+            decision = self.policy.choose_from_risk(
+                application_risk,
+                uncertainty,
+                risk,
+                pre_interpretability,
+                float(reduction.delta),
+                diagnostics,
+            )
+            e_action = self._action_explanation(decision.action.value, risk)
+            final_comp = comp_ra
         elif not hasattr(comp_mr, 'code'):
-            final_comp = compose(comp_mr, e_decision, self.plan.beta, allow_missing_terms=True)
+            final_comp = compose(comp_mr, e_action, self.plan.beta, allow_missing_terms=True)
             if hasattr(final_comp, 'code'):
                 diagnostics.append(getattr(final_comp, 'code'))
+                decision = self.policy.choose_from_risk(
+                    application_risk,
+                    uncertainty,
+                    risk,
+                    pre_interpretability,
+                    float(reduction.delta),
+                    diagnostics,
+                )
+                e_action = self._action_explanation(decision.action.value, risk)
         else:
-            final_comp = comp_rd
+            final_comp = comp_ra
 
-        if not diagnostics and not hasattr(final_comp, 'code'):
-            i_eg = _interpretability_for(final_comp, self.plan, reduction_loss=float(getattr(final_comp, 'reduction_loss', reduction.delta)))
-            decision = self.policy.choose(risk, uncertainty, i_eg, float(reduction.delta), diagnostics)
+        if hasattr(final_comp, 'code'):
+            final_interpretability = pre_interpretability
+        else:
+            final_interpretability = _interpretability_for(final_comp, self.plan, reduction_loss=float(getattr(final_comp, 'reduction_loss', reduction.delta)))
 
         rho = float(decision.risk_score)
-        edges = [('Model', e_model, 'RiskModule', e_risk), ('RiskModule', e_risk, 'Decision', e_decision)]
+        edges = [('Model', e_model, 'RiskModule', e_risk), ('RiskModule', e_risk, 'Action', e_action)]
         edge_rows = edge_report(edges, self.plan.beta)
         gamma_values = [float(row['gamma']) for row in edge_rows]
+        stages = [
+            ObserverStage('model_explanation', {'I_pre': float(pre_interpretability), 'Delta_M': float(reduction.delta)}, pre_diagnostics),
+            ObserverStage('risk_function', {'rho': float(application_risk)}, pre_diagnostics),
+            ObserverStage('final_composition', {'I_final': float(final_interpretability)}, diagnostics),
+        ]
 
         return {
             'raw_prediction': int(prediction) if np.asarray(prediction).ndim == 0 else str(prediction),
@@ -124,13 +172,18 @@ class ObserverPipeline:
             'Delta': float(reduction.delta),
             'reduction_policy': reduction.policy,
             'gamma': gamma_values,
-            'I_EG': float(i_eg),
+            'I_pre': float(pre_interpretability),
+            'I_final': float(final_interpretability),
+            'I_EG': float(final_interpretability),
+            'pre_diagnostic_state': pre_diagnostics,
             'diagnostic_state': diagnostics,
+            'application_risk': float(application_risk),
             'risk_value': rho,
             'safe_action': decision.action.value,
             'human_readable_reason': decision.reason,
             'corrected_confidence': float(decision.corrected_confidence),
             'composition_edges': edge_rows,
+            'stages': [{'name': s.name, 'metrics': s.metrics, 'diagnostics': s.diagnostics} for s in stages],
         }
 
     def _model_explanation(self, risk: float, uncertainty: float):
@@ -160,12 +213,12 @@ class ObserverPipeline:
             trace_uncertainty=0.01,
         )
 
-    def _decision_explanation(self, action: str, risk: float):
-        rules = [Rule(f'decision_{action}', {'risk': 'high' if risk >= 0.65 else 'medium' if risk >= 0.35 else 'low'}, action)]
+    def _action_explanation(self, action: str, risk: float):
+        rules = [Rule(f'action_{action}', {'risk': 'high' if risk >= 0.65 else 'medium' if risk >= 0.35 else 'low'}, action)]
         return self.operator.explain_scalar_risk(
             risk,
             rules,
-            Trace('E_D_decision', 'v1', 'runtime', source='observer-action', checksum=action),
+            Trace('E_A_action', 'v1', 'runtime', source='observer-action', checksum=action),
             model_uncertainty=0.03,
             trace_uncertainty=0.01,
         )
@@ -202,14 +255,14 @@ def build_full_observer_pipeline_report(config: ObserverPipelineConfig | None = 
         'raw_prediction': result['raw_prediction'],
         'risk_score': result['risk_score'],
         'available_information': ['raw_prediction', 'risk_score', 'raw_proba'],
-        'limitation': 'без наблюдателя нет E_M^ext, Delta, gamma, I(E_G), D_ij и безопасного действия',
+        'limitation': 'без наблюдателя нет E_M^ext, Delta, I_pre, rho(x), I_final, D_ij и безопасного действия',
     }
     report = {
         'title': 'Risk-aware XAI observer as an active layer over chapters 2 and 3',
         'status': 'PASS',
         'thesis_layer': 'active risk-oriented observer over a predictive interface',
         'claim': 'observer does not modify model parameters; it determines the admissible mode of prediction use',
-        'route': ['data', 'model prediction', 'E_M_ext', 'A_M^F', 'E_R', 'E_D', 'E_G', 'RiskPolicy', 'safe_action'],
+        'route': ['data', 'model prediction', 'E_M_ext', 'A_M^F', 'E_pre', 'I_pre', 'rho', 'safe_action', 'E_A', 'E_G', 'I_final'],
         'data': {'rows': int(len(df)), 'features': feature_cols, 'target': config.target_col},
         'case': {'index': case_index, 'values': {k: float(v) for k, v in case.iloc[0].to_dict().items()}},
         'model': {'name': 'sklearn Pipeline(StandardScaler, LogisticRegression)', 'interface': 'predict_proba'},
@@ -218,8 +271,8 @@ def build_full_observer_pipeline_report(config: ObserverPipelineConfig | None = 
         'math': {
             'model_interface': 'M(x)=p(x), r_M(x)=p_1(x)',
             'extended_explanation': 'E_M^ext=<L_M,A_M^F,R_M,alpha_M,u_M,tau_M,Delta_M>',
-            'risk': 'rho=w_p*rho_p+w_u*u_M+w_I*(1-I(E_G))+w_Delta*Delta_M+w_D*1[D!=empty]',
-            'composition': 'E_G=E_D o E_R o E_M^ext',
+            'risk': 'rho=w_p*rho_p+w_u*u_M+w_I*(1-I_pre)+w_Delta*Delta_M+w_D*1[D_pre!=empty]',
+            'composition': 'E_G=E_A o E_R o E_M^ext',
         },
     }
     return report
@@ -260,15 +313,16 @@ def render_observer_markdown(report: dict[str, Any]) -> str:
         f"- uncertainty u_M(x): `{obs['uncertainty']:.6f}`",
         f"- selected A_M^F: `{obs['selected_representation']}` / `{obs['representation_class']}`",
         f"- Delta_M: `{obs['Delta']:.6f}`",
-        f"- I(E_G): `{obs['I_EG']:.6f}`",
-        f"- rho(x): `{obs['risk_value']:.6f}`",
+        f"- I_pre: `{obs['I_pre']:.6f}`",
+        f"- rho(x): `{obs['application_risk']:.6f}`",
+        f"- I_final: `{obs['I_final']:.6f}`",
         f"- safe action: `{obs['safe_action']}`",
         f"- reason: {obs['human_readable_reason']}",
         '',
         '## Without / with observer',
         '',
         '- Without observer: model probability only.',
-        '- With observer: E_M^ext, uncertainty, Delta, gamma, I(E_G), diagnostics and safe action.',
+        '- With observer: E_M^ext, uncertainty, Delta, I_pre, rho(x), I_final, diagnostics and safe action.',
         '',
         '## Composition edges',
         '',
@@ -294,6 +348,6 @@ def render_observer_html(report: dict[str, Any]) -> str:
 <div class="card"><h2>Route</h2><p><code>{esc(' -> '.join(report['route']))}</code></p></div>
 <div class="card"><h2>Case</h2><table><tr><th>feature</th><th>value</th></tr>{case_rows}</table></div>
 <div class="card"><h2>Observer output</h2>
-<div class="kpi">risk_score<b>{obs['risk_score']:.4f}</b></div><div class="kpi">u_M<b>{obs['uncertainty']:.4f}</b></div><div class="kpi">A_M^F<b>{esc(obs['selected_representation'])}</b></div><div class="kpi">Delta<b>{obs['Delta']:.4f}</b></div><div class="kpi">I(E_G)<b>{obs['I_EG']:.4f}</b></div><div class="kpi">rho<b>{obs['risk_value']:.4f}</b></div><div class="kpi">action<b>{esc(obs['safe_action'])}</b></div><p>{esc(obs['human_readable_reason'])}</p></div>
+<div class="kpi">risk_score<b>{obs['risk_score']:.4f}</b></div><div class="kpi">u_M<b>{obs['uncertainty']:.4f}</b></div><div class="kpi">A_M^F<b>{esc(obs['selected_representation'])}</b></div><div class="kpi">Delta<b>{obs['Delta']:.4f}</b></div><div class="kpi">I_pre<b>{obs['I_pre']:.4f}</b></div><div class="kpi">rho<b>{obs['application_risk']:.4f}</b></div><div class="kpi">I_final<b>{obs['I_final']:.4f}</b></div><div class="kpi">action<b>{esc(obs['safe_action'])}</b></div><p>{esc(obs['human_readable_reason'])}</p></div>
 <div class="card"><h2>Composition</h2><table><tr><th>source</th><th>target</th><th>gamma</th><th>severity</th></tr>{edge_rows}</table></div>
 </body></html>"""

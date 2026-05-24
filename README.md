@@ -117,12 +117,12 @@ python apps/nicegui_dashboard.py --port 8080
 
 ## Risk-Aware XAI Observer
 
-Новый слой над главами 2-3: системный оператор используется как внешний наблюдающий контур над моделью с прогнозным интерфейсом. Он не меняет параметры модели, а строит `E_M^ext`, выбирает `A_M^F`, считает неопределённость, `Delta`, `I(E_G)`, диагностические разрывы и риск автоматического применения прогноза.
+Новый слой над главами 2-3: системный оператор используется как внешний наблюдающий контур над моделью с прогнозным интерфейсом. Он не меняет параметры модели, а строит `E_M^ext`, выбирает `A_M^F`, считает неопределённость, `Delta`, предварительный индекс `I_pre`, риск автоматического применения `rho(x)`, действие и финальный индекс `I_final`.
 
 Ключевая функция риска вынесена в `fuzzyxai/risk/risk_function.py` и совпадает с математической записью:
 
 ```text
-rho = w_p*rho_p + w_u*u_M + w_I*(1 - I(E_G)) + w_Delta*Delta_M + w_D*1[D != empty]
+rho = w_p*rho_p + w_u*u_M + w_I*(1 - I_pre) + w_Delta*Delta_M + w_D*1[D_pre != empty]
 ```
 
 Действия наблюдателя:
@@ -144,6 +144,7 @@ PYTHONPATH=. python full_observer_pipeline.py --open
 Отчёты и математическое описание:
 
 - `docs/RISK_AWARE_XAI_OBSERVER_MATH_RU.md`
+- `docs/DATASET_OBSERVER_PIPELINE_RU.md`
 - `reports/full_observer_pipeline/full_observer_pipeline.json`
 - `reports/full_observer_pipeline/full_observer_pipeline.md`
 - `reports/full_observer_pipeline/full_observer_pipeline.html`
@@ -160,9 +161,26 @@ rho = compute_application_risk(0.72, 0.31, 0.84, 0.09, []).rho
 print(rho)
 ```
 
+## Dataset Observer
+
+Слой для реальных табличных датасетов: локальный CSV/XLSX/JSON/Parquet, прямая ссылка на файл из реестра или sample `breast_cancer`. Он строит профиль данных, обучает модель и прогоняет кейс через наблюдатель.
+
+```bash
+make dataset-observer
+# или
+PYTHONPATH=. python examples/dataset_observer_demo.py --sample breast_cancer
+PYTHONPATH=. python examples/dataset_observer_demo.py --file data/my_dataset.csv --target target
+```
+
+Отчёты:
+
+- `reports/dataset_observer/dataset_observer_report.json`
+- `reports/dataset_observer/dataset_observer_report.md`
+- `reports/dataset_observer/dataset_observer_report.html`
+
 ## Risk-Aware Observer
 
-Добавлен риск-ориентированный наблюдатель модели. Он не меняет модель, а работает как decision gate поверх неё: получает `predict_proba`, оценивает неопределённость, строит `E_k`, учитывает `I(E)`, `Delta`, диагностические состояния и выбирает безопасное действие.
+Добавлен риск-ориентированный наблюдатель модели. Он не меняет модель, а работает как decision gate поверх неё: получает `predict_proba`, оценивает неопределённость, строит `E_k`, учитывает `I_pre`, `Delta`, диагностические состояния, считает `rho(x)` и выбирает безопасное действие.
 
 Действия наблюдателя:
 
@@ -246,7 +264,7 @@ PYTHONPATH=. python examples/thesis_demo.py
 Ожидаемый статус:
 
 ```text
-53 passed
+58 passed
 thesis validation: PASS
 thesis demo: PASS
 ```
@@ -265,6 +283,7 @@ thesis demo: PASS
 - `reports/operator_comparison_benchmark.md`: сравнение “без оператора / с оператором”.
 - `reports/risk_aware_observer_benchmark.md`: benchmark риск-ориентированного наблюдателя.
 - `reports/full_demo/index.html`: полный сценарий “данные -> модель -> глава 2 -> глава 3 -> наблюдатель”.
+- `reports/dataset_observer/dataset_observer_report.md`: прогон наблюдателя на табличном датасете.
 - `reports/lofo_f1_rule_pruning.md`: demo быстрого LOFO-F1 отбора правил.
 
 ## Минимальный пример API
@@ -294,6 +313,8 @@ fuzzyxai/
   hierarchy/     F0, interval, hesitant, neutrosophic, multilevel классы
   selection/     построение профиля, совместимость, Парето-выбор
   calibration/   калибровка beta и кросс-валидация
+  data/          загрузка датасетов, CIT/local adapters, профиль данных
+  pipelines/     dataset observer pipeline
   risk/          Risk-Aware Observer: неопределённость, rho(x), политика, метрики, observer pipeline
   rules/         LOFO-F1 и стабильный отбор правил
   visual/        Plotly-графики функций принадлежности и композиции

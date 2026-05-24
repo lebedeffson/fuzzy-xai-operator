@@ -41,14 +41,14 @@ class RiskPolicy:
         self,
         predicted_risk: float,
         uncertainty: float,
-        interpretability: float,
+        pre_interpretability: float,
         reduction_loss: float,
         diagnostics: Sequence[str] | None = None,
     ) -> float:
         return compute_application_risk(
             predicted_risk,
             uncertainty,
-            interpretability,
+            pre_interpretability,
             reduction_loss,
             diagnostics,
             self.risk_weights,
@@ -58,20 +58,34 @@ class RiskPolicy:
         self,
         predicted_risk: float,
         uncertainty: float,
-        interpretability: float,
+        pre_interpretability: float,
         reduction_loss: float,
         diagnostics: Sequence[str] | None = None,
     ) -> RiskDecision:
+        rho = self.risk_score(predicted_risk, uncertainty, pre_interpretability, reduction_loss, diagnostics)
+        return self.choose_from_risk(rho, uncertainty, predicted_risk, pre_interpretability, reduction_loss, diagnostics)
+
+    def choose_from_risk(
+        self,
+        application_risk: float,
+        uncertainty: float,
+        predicted_risk: float,
+        pre_interpretability: float = 1.0,
+        reduction_loss: float = 0.0,
+        diagnostics: Sequence[str] | None = None,
+    ) -> RiskDecision:
         diagnostics = list(diagnostics or [])
+        rho = _clip01(application_risk)
         if diagnostics and self.block_on_diagnostic:
             return RiskDecision(RiskAction.BLOCK, 1.0, 0.0, 'diagnostic state blocks automatic decision', diagnostics)
 
-        rho = self.risk_score(predicted_risk, uncertainty, interpretability, reduction_loss, diagnostics)
-        corrected = _clip01((1.0 - uncertainty) * (1.0 - rho) * interpretability * (1.0 - reduction_loss))
+        corrected = _clip01((1.0 - uncertainty) * (1.0 - rho) * pre_interpretability * (1.0 - reduction_loss))
         if rho >= self.theta_high:
             return RiskDecision(RiskAction.DEFER_TO_HUMAN, rho, corrected, 'risk score exceeds theta_high', diagnostics)
         if rho >= self.theta_mid:
             if uncertainty >= 0.45:
                 return RiskDecision(RiskAction.REQUEST_MORE_DATA, rho, corrected, 'medium risk with elevated uncertainty', diagnostics)
             return RiskDecision(RiskAction.LOWER_CONFIDENCE, rho, corrected, 'medium risk: accept only with lower confidence', diagnostics)
+        if uncertainty >= 0.45 and predicted_risk >= self.theta_mid:
+            return RiskDecision(RiskAction.LOWER_CONFIDENCE, rho, corrected, 'low application risk but elevated model uncertainty', diagnostics)
         return RiskDecision(RiskAction.ACCEPT, rho, corrected, 'risk score below theta_mid', diagnostics)

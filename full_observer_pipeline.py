@@ -20,8 +20,9 @@ def main() -> int:
     print(json.dumps({
         'status': report['status'],
         'safe_action': report['with_observer']['safe_action'],
-        'risk_value': report['with_observer']['risk_value'],
-        'I_EG': report['with_observer']['I_EG'],
+        'application_risk': report['with_observer']['application_risk'],
+        'I_pre': report['with_observer']['I_pre'],
+        'I_final': report['with_observer']['I_final'],
         **paths,
     }, ensure_ascii=False, indent=2))
     return 0

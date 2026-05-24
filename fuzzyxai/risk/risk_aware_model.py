@@ -89,8 +89,8 @@ class RiskAwareModel:
                 trace_uncertainty=0.01,
             )
             loss = interpretability_loss(0.30, 0.33, 0.16, 0.03, explanation.uncertainty, self.plan.lambda_, explanation.reduction_loss, 0.10)
-            index = interpretability_index(loss)
-            decision = self.policy.choose(float(risk), float(uncertainty[idx]), float(index), float(explanation.reduction_loss), diagnostics)
+            pre_index = interpretability_index(loss)
+            decision = self.policy.choose(float(risk), float(uncertainty[idx]), float(pre_index), float(explanation.reduction_loss), diagnostics)
             outputs.append({
                 'raw_prediction': raw_pred[idx].item() if hasattr(raw_pred[idx], 'item') else raw_pred[idx],
                 'raw_proba': [float(v) for v in proba[idx]],
@@ -101,7 +101,10 @@ class RiskAwareModel:
                 'confidence': float(confidence[idx]),
                 'selected_representation': getattr(explanation.representation, 'class_name', type(explanation.representation).__name__),
                 'reduction_loss': float(explanation.reduction_loss),
-                'interpretability_index': float(index),
+                'pre_interpretability': float(pre_index),
+                'final_interpretability': float(pre_index),
+                'interpretability_index': float(pre_index),
+                'application_risk': float(decision.risk_score),
                 'risk_score': float(decision.risk_score),
                 'action': decision.action.value,
                 'corrected_confidence': float(decision.corrected_confidence),

@@ -8,11 +8,13 @@
     "model prediction",
     "E_M_ext",
     "A_M^F",
-    "E_R",
-    "E_D",
+    "E_pre",
+    "I_pre",
+    "rho",
+    "safe_action",
+    "E_A",
     "E_G",
-    "RiskPolicy",
-    "safe_action"
+    "I_final"
   ],
   "data": {
     "rows": 12,
@@ -43,7 +45,7 @@
       "risk_score",
       "raw_proba"
     ],
-    "limitation": "без наблюдателя нет E_M^ext, Delta, gamma, I(E_G), D_ij и безопасного действия"
+    "limitation": "без наблюдателя нет E_M^ext, Delta, I_pre, rho(x), I_final, D_ij и безопасного действия"
   },
   "with_observer": {
     "raw_prediction": 1,
@@ -85,12 +87,16 @@
       0.443873,
       0.350401
     ],
+    "I_pre": 0.801337225204397,
+    "I_final": 0.7078779094343393,
     "I_EG": 0.7078779094343393,
+    "pre_diagnostic_state": [],
     "diagnostic_state": [],
-    "risk_value": 0.4439383712149111,
+    "application_risk": 0.4252465080608996,
+    "risk_value": 0.4252465080608996,
     "safe_action": "lower_confidence",
     "human_readable_reason": "medium risk: accept only with lower confidence",
-    "corrected_confidence": 0.21688013357541583,
+    "corrected_confidence": 0.25376716115605635,
     "composition_edges": [
       {
         "source": "Model",
@@ -119,7 +125,7 @@
       },
       {
         "source": "RiskModule",
-        "target": "Decision",
+        "target": "Action",
         "gamma": 0.350401,
         "severity": "orange",
         "left_terms": [
@@ -137,17 +143,41 @@
           "risk_gate_medium"
         ],
         "right_active_rules": [
-          "decision_lower_confidence"
+          "action_lower_confidence"
         ],
         "left_delta": 0.0,
         "right_delta": 0.0
+      }
+    ],
+    "stages": [
+      {
+        "name": "model_explanation",
+        "metrics": {
+          "I_pre": 0.801337225204397,
+          "Delta_M": 0.19625000000000004
+        },
+        "diagnostics": []
+      },
+      {
+        "name": "risk_function",
+        "metrics": {
+          "rho": 0.4252465080608996
+        },
+        "diagnostics": []
+      },
+      {
+        "name": "final_composition",
+        "metrics": {
+          "I_final": 0.7078779094343393
+        },
+        "diagnostics": []
       }
     ]
   },
   "math": {
     "model_interface": "M(x)=p(x), r_M(x)=p_1(x)",
     "extended_explanation": "E_M^ext=<L_M,A_M^F,R_M,alpha_M,u_M,tau_M,Delta_M>",
-    "risk": "rho=w_p*rho_p+w_u*u_M+w_I*(1-I(E_G))+w_Delta*Delta_M+w_D*1[D!=empty]",
-    "composition": "E_G=E_D o E_R o E_M^ext"
+    "risk": "rho=w_p*rho_p+w_u*u_M+w_I*(1-I_pre)+w_Delta*Delta_M+w_D*1[D_pre!=empty]",
+    "composition": "E_G=E_A o E_R o E_M^ext"
   }
 }

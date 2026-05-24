@@ -1,0 +1,175 @@
+{
+  "dataset_record": {
+    "dataset_name": "sklearn_breast_cancer",
+    "source": "sklearn.datasets",
+    "url": null,
+    "local_path": null,
+    "file_format": null,
+    "target_column": "risk_target",
+    "task_type": "binary_classification",
+    "description": "Breast cancer diagnostic tabular sample; risk_target=1 means malignant.",
+    "metadata": {
+      "sample": "breast_cancer"
+    }
+  },
+  "target_column": "risk_target",
+  "dataset_profile": {
+    "n_rows": 569,
+    "n_columns": 31,
+    "numeric_columns": [
+      "mean radius",
+      "mean texture",
+      "mean perimeter",
+      "mean area",
+      "mean smoothness",
+      "mean compactness",
+      "mean concavity",
+      "mean concave points",
+      "mean symmetry",
+      "mean fractal dimension",
+      "radius error",
+      "texture error",
+      "perimeter error",
+      "area error",
+      "smoothness error",
+      "compactness error",
+      "concavity error",
+      "concave points error",
+      "symmetry error",
+      "fractal dimension error",
+      "worst radius",
+      "worst texture",
+      "worst perimeter",
+      "worst area",
+      "worst smoothness",
+      "worst compactness",
+      "worst concavity",
+      "worst concave points",
+      "worst symmetry",
+      "worst fractal dimension",
+      "risk_target"
+    ],
+    "categorical_columns": [],
+    "missing_rate": 0.0,
+    "has_intervals": false,
+    "has_multiple_experts": false,
+    "has_source_conflict": false,
+    "requires_audit": true,
+    "suggested_uncertainty_types": [
+      "u_num",
+      "u_trace"
+    ],
+    "metadata": {
+      "expert_columns": [],
+      "source_columns": []
+    }
+  },
+  "model_name": "random_forest",
+  "accuracy": 0.972027972027972,
+  "roc_auc": 0.9949685534591195,
+  "case_index": 0,
+  "case_prediction": {
+    "raw_prediction_encoded": 1,
+    "raw_prediction_label": "1",
+    "raw_proba": [
+      0.0669398907103825,
+      0.9330601092896175
+    ]
+  },
+  "observer_result": {
+    "raw_prediction": 1,
+    "raw_proba": [
+      0.0669398907103825,
+      0.9330601092896175
+    ],
+    "predicted_risk": 0.9330601092896175,
+    "uncertainty": 0.2882430465356551,
+    "entropy_uncertainty": 0.35439873158489366,
+    "margin_uncertainty": 0.13387978142076506,
+    "confidence": 0.7117569534643449,
+    "selected_representation": "F0",
+    "reduction_loss": 0.0,
+    "pre_interpretability": 0.8242970597348839,
+    "final_interpretability": 0.8242970597348839,
+    "interpretability_index": 0.8242970597348839,
+    "application_risk": 0.3871193824738222,
+    "risk_score": 0.3871193824738222,
+    "action": "lower_confidence",
+    "corrected_confidence": 0.35957654592614946,
+    "reason": "medium risk: accept only with lower confidence",
+    "diagnostics": []
+  },
+  "trace": {
+    "dataset": {
+      "dataset_name": "sklearn_breast_cancer",
+      "source": "sklearn.datasets",
+      "url": null,
+      "local_path": null,
+      "file_format": null,
+      "target_column": "risk_target",
+      "task_type": "binary_classification",
+      "description": "Breast cancer diagnostic tabular sample; risk_target=1 means malignant.",
+      "metadata": {
+        "sample": "breast_cancer"
+      }
+    },
+    "profile": {
+      "n_rows": 569,
+      "n_columns": 31,
+      "numeric_columns": [
+        "mean radius",
+        "mean texture",
+        "mean perimeter",
+        "mean area",
+        "mean smoothness",
+        "mean compactness",
+        "mean concavity",
+        "mean concave points",
+        "mean symmetry",
+        "mean fractal dimension",
+        "radius error",
+        "texture error",
+        "perimeter error",
+        "area error",
+        "smoothness error",
+        "compactness error",
+        "concavity error",
+        "concave points error",
+        "symmetry error",
+        "fractal dimension error",
+        "worst radius",
+        "worst texture",
+        "worst perimeter",
+        "worst area",
+        "worst smoothness",
+        "worst compactness",
+        "worst concavity",
+        "worst concave points",
+        "worst symmetry",
+        "worst fractal dimension",
+        "risk_target"
+      ],
+      "categorical_columns": [],
+      "missing_rate": 0.0,
+      "has_intervals": false,
+      "has_multiple_experts": false,
+      "has_source_conflict": false,
+      "requires_audit": true,
+      "suggested_uncertainty_types": [
+        "u_num",
+        "u_trace"
+      ],
+      "metadata": {
+        "expert_columns": [],
+        "source_columns": []
+      }
+    },
+    "model": "random_forest",
+    "mode": "audit",
+    "target_classes": [
+      "0",
+      "1"
+    ],
+    "route": "dataset -> profile -> model -> E_M_ext -> I_pre -> rho -> action"
+  }
+}

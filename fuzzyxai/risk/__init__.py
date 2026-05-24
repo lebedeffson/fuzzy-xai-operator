@@ -9,12 +9,20 @@ from .risk_function import (
 )
 from .decision_policy import RiskAction, RiskDecision, RiskPolicy
 from .risk_aware_model import RiskAwareModel
-from .observer_pipeline import ObserverPipeline, ObserverPipelineConfig, build_full_observer_pipeline_report, write_full_observer_pipeline_report
+from .observer_pipeline import (
+    ObserverPipeline,
+    ObserverPipelineConfig,
+    ObserverPipelineResult,
+    ObserverStage,
+    build_full_observer_pipeline_report,
+    write_full_observer_pipeline_report,
+)
 
 __all__ = [
     'entropy_uncertainty', 'margin_uncertainty', 'confidence_from_uncertainty', 'ensemble_variance',
     'ApplicationRiskBreakdown', 'DEFAULT_RISK_WEIGHTS', 'compute_application_risk',
     'normalize_risk_weights', 'expected_action_costs', 'choose_min_expected_cost',
     'RiskAction', 'RiskDecision', 'RiskPolicy', 'RiskAwareModel',
-    'ObserverPipeline', 'ObserverPipelineConfig', 'build_full_observer_pipeline_report', 'write_full_observer_pipeline_report',
+    'ObserverPipeline', 'ObserverPipelineConfig', 'ObserverPipelineResult', 'ObserverStage',
+    'build_full_observer_pipeline_report', 'write_full_observer_pipeline_report',
 ]
