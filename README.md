@@ -265,6 +265,9 @@ make chapter2-breast-cancer-demo
 make chapter5-experiments
 make chapter5-demo
 make chapter5-latex
+make full-pipeline
+make figures
+make full-experiments
 ```
 
 Финальная проверка диссертационных примеров:
@@ -277,7 +280,7 @@ PYTHONPATH=. python examples/thesis_demo.py
 Ожидаемый статус:
 
 ```text
-116 passed
+119 passed
 thesis validation: PASS
 thesis demo: PASS
 ```
@@ -287,6 +290,8 @@ thesis demo: PASS
 Глава 5: `reports/chapter5/chapter5_experiments.md`, `chapter5_demo.json`, CSV/LaTeX-таблицы и `sensitivity_w_R.html`.
 
 Глава 2 (real-data): `reports/chapter2/chapter2_breast_cancer_summary.md`, `reports/chapter2/i_pre_distribution.html`.
+
+Сквозной full-pipeline (demo для защиты): `reports/full_pipeline/predictions.csv`, `reports/full_pipeline/summary.md`.
 
 
 Сгенерированные артефакты сохраняются в `reports/`.

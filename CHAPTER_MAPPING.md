@@ -110,7 +110,9 @@
 | Breast Cancer validation | `breast_cancer_validation` | `reports/chapter5/breast_cancer_validation.csv` |
 | Контекстная логика топоса | `context_logic_table` | `reports/chapter5/context_logic.csv` |
 | Calibrated observer demo | `experiments/chapter5_demo.py` | `reports/chapter5/chapter5_demo.json` |
-| LaTeX-таблицы главы 5 | `experiments/export_chapter5_latex.py` | `reports/chapter5/latex/` |
+| LaTeX-таблицы главы 5 | `experiments/export_chapter5_latex.py` | `reports/chapter5/latex_tables/` |
+| Сквозной full pipeline на breast cancer | `experiments/full_pipeline_demo.py` | `reports/full_pipeline/predictions.csv`, `reports/full_pipeline/summary.md` |
+| Автогенерация графиков для диссертации | `experiments/generate_figures.py` | `reports/figures/` |
 | Загрузка калиброванных весов | `fuzzyxai/risk/risk_observer_config.py` | `tests/test_calibrated_observer_report_consistency.py` |
 | Chapter 2 real-data `I_pre` demo | `experiments/chapter2_breast_cancer_demo.py`, `fuzzyxai/data/breast_cancer_adapter.py`, `fuzzyxai/trust/trust_evaluator.py` | `tests/test_chapter2_breast_cancer_demo_smoke.py` |
 

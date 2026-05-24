@@ -1,0 +1,17 @@
+{
+  "dataset": "sklearn_breast_cancer",
+  "n_test": 143,
+  "n_evaluated": 143,
+  "model_accuracy": 0.951048951048951,
+  "model_roc_auc": 0.9937106918238994,
+  "mean_I_pre": 0.8438229499555998,
+  "mean_rho": 0.2798585078193709,
+  "rupture_rate": 0.24475524475524477,
+  "actions": {
+    "accept": 72,
+    "defer_to_human": 49,
+    "request_more_data": 8,
+    "lower_confidence": 14
+  },
+  "route": "model -> explanation -> I_pre -> risk_module -> composition -> observer"
+}

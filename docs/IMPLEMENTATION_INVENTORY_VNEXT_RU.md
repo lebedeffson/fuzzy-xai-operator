@@ -21,6 +21,7 @@
 | Эксперименты главы 5 | готово | `make chapter5-experiments`, `reports/chapter5/chapter5_experiments.md` |
 | Калиброванные веса observer + demo + LaTeX | готово | `make chapter5-demo`, `make chapter5-latex`, `tests/test_calibrated_observer_report_consistency.py` |
 | Глава 2 на real data (breast cancer, `I_pre`) | готово | `make chapter2-breast-cancer-demo`, `tests/test_chapter2_breast_cancer_demo_smoke.py` |
+| Сквозной full pipeline и figures | готово | `make full-pipeline`, `make figures`, `tests/test_full_pipeline_experiment_smoke.py` |
 
 ## Что осталось как следующий слой
 
