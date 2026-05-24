@@ -14,6 +14,7 @@
 | Диагностика `D_ij` | `fuzzyxai/core/diagnostics.py` | `tests/test_composition.py` |
 | Калибровка `beta` | `fuzzyxai/calibration/` | `proofs/chapter2_calibration_proof.py` |
 | Визуализация композиции | `fuzzyxai/visual/` | `apps/defense_demo.py` |
+| Формальные теоремы главы 2 | `docs/FORMAL_THEOREMS_CH2_CH3_RU.md` | theorem review |
 
 ## Глава 3
 
@@ -30,6 +31,7 @@
 | Парето-выбор класса | `fuzzyxai/selection/pareto_selector.py` | `tests/test_selector.py` |
 | Диагностика выбора `D_choice` | `fuzzyxai/selection/choice_diagnostic.py` | `reports/chapter3_end_to_end_report.json` |
 | Совместимость и FML-синтез | `fuzzyxai/selection/compatibility.py` | `reports/chapter3_end_to_end_report.json` |
+| Формальные теоремы главы 3 | `docs/FORMAL_THEOREMS_CH2_CH3_RU.md` | theorem review |
 
 ## Сквозная связь глав 2 и 3
 
@@ -85,3 +87,4 @@
 - Full observer pipeline -> `full_observer_pipeline.py` -> `reports/full_observer_pipeline/full_observer_pipeline.json`, `reports/full_observer_pipeline/full_observer_pipeline.md`.
 - Risk-aware observer math -> `docs/RISK_AWARE_XAI_OBSERVER_MATH_RU.md` -> `fuzzyxai/risk/risk_function.py`, `tests/test_risk_function.py`.
 - Dataset observer -> `examples/dataset_observer_demo.py` -> `reports/dataset_observer/dataset_observer_report.html`.
+- Formal theorem pack -> `docs/FORMAL_THEOREMS_CH2_CH3_RU.md`.
