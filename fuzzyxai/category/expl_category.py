@@ -14,6 +14,9 @@ class ExplanationCategoryObject:
     key: str
     explanation: ExplanationObject
 
+    def __hash__(self) -> int:
+        return hash(self.key)
+
 
 @dataclass(frozen=True)
 class ExplanationMorphism:
@@ -31,6 +34,9 @@ class ExplanationMorphism:
     def signature(self) -> str:
         return f'{self.source.key}->{self.target.key}:{self.name}'
 
+    def __hash__(self) -> int:
+        return hash(self.signature)
+
 
 class ExplanationCategory:
     """Small category of successful explanation alignments for one ExplainPlan.
@@ -44,19 +50,38 @@ class ExplanationCategory:
         if gamma_max is not None:
             self.beta['gamma_max'] = float(gamma_max)
         self.gamma_max = self.beta.get('gamma_max')
+        self._objects: dict[str, ExplanationCategoryObject] = {}
+        self._morphisms: dict[str, ExplanationMorphism] = {}
 
     def object(self, key: str, explanation: ExplanationObject) -> ExplanationCategoryObject:
-        return ExplanationCategoryObject(key=key, explanation=explanation)
+        obj = ExplanationCategoryObject(key=key, explanation=explanation)
+        self._objects[key] = obj
+        return obj
+
+    def objects(self) -> list[ExplanationCategoryObject]:
+        return list(self._objects.values())
+
+    def morphisms(self) -> list[ExplanationMorphism]:
+        return list(self._morphisms.values())
+
+    def hom(self, source: ExplanationCategoryObject, target: ExplanationCategoryObject) -> list[ExplanationMorphism]:
+        if source.key == target.key:
+            self.identity(source)
+        return [m for m in self._morphisms.values() if m.source.key == source.key and m.target.key == target.key]
+
+    def _remember_morphism(self, morphism: ExplanationMorphism) -> ExplanationMorphism:
+        self._morphisms[morphism.signature] = morphism
+        return morphism
 
     def identity(self, obj: ExplanationCategoryObject) -> ExplanationMorphism:
-        return ExplanationMorphism(
+        return self._remember_morphism(ExplanationMorphism(
             source=obj,
             target=obj,
             name=f'id_{obj.key}',
             gamma=0.0,
             delta=0.0,
             trace=(f'id:{obj.key}',),
-        )
+        ))
 
     def is_valid_morphism(self, morphism: ExplanationMorphism) -> bool:
         if morphism.gamma < 0 or morphism.delta < 0:
@@ -87,7 +112,7 @@ class ExplanationCategory:
         )
         if not self.is_valid_morphism(morphism):
             raise ValueError('morphism violates gamma_max or category constraints')
-        return morphism
+        return self._remember_morphism(morphism)
 
     def compose(self, first: ExplanationMorphism, second: ExplanationMorphism) -> ExplanationMorphism:
         """Return second o first for A --first--> B --second--> C."""
@@ -106,4 +131,4 @@ class ExplanationCategory:
         )
         if not self.is_valid_morphism(composed):
             raise ValueError('composed morphism violates gamma_max or category constraints')
-        return composed
+        return self._remember_morphism(composed)

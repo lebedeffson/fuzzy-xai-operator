@@ -16,6 +16,10 @@ class ExplanationPresheaf:
     contexts: dict[str, set[Any]] = field(default_factory=dict)
     restrictions: dict[str, ContextMap] = field(default_factory=dict)
 
+    def __call__(self, obj: ExplanationCategoryObject | str) -> set[Any]:
+        key = obj if isinstance(obj, str) else obj.key
+        return self.contexts.get(key, set())
+
     def add_contexts(self, obj: ExplanationCategoryObject, values: Iterable[Any]) -> None:
         self.contexts[obj.key] = set(values)
 

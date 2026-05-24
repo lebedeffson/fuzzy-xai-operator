@@ -3,7 +3,16 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from fuzzyxai.category import ContextPresheaf, ExplanationCategory, PresheafToposDescriptor, try_make_morphism
+from fuzzyxai.category import (
+    ContextPresheaf,
+    ExplanationCategory,
+    PresheafToposDescriptor,
+    RepresentablePresheaf,
+    RiskContext,
+    auto_accept_subpresheaf,
+    try_make_morphism,
+    yoneda_element_count,
+)
 from fuzzyxai.core.explanation_object import ExplanationObject, Rule, Trace
 from fuzzyxai.hierarchy.f0 import F0
 from fuzzyxai.hott import ExplanationPath, RuptureType, build_temporal_drift_path, certify_path, certify_rupture
@@ -39,6 +48,16 @@ def run_checks() -> dict:
     presheaf.set_restriction(mr, lambda _: 'model_context')
     presheaf.set_restriction(ra, lambda _: 'risk_context')
     presheaf.set_restriction(ma, lambda _: 'model_context')
+    risk_context = RiskContext(
+        cat,
+        {
+            e_model: {'accept', 'lower_confidence'},
+            e_risk: {'request_more_data', 'defer_to_human'},
+            e_action: {'lower_confidence'},
+        },
+    )
+    auto_accept = auto_accept_subpresheaf(risk_context)
+    y_action = RepresentablePresheaf(cat, e_action)
 
     rupture_result = try_make_morphism(cat, e_model, e_action, name='bad_jump', gamma=0.9)
     rupture = RuptureType.from_diagnostic(
@@ -54,6 +73,8 @@ def run_checks() -> dict:
         ('category identities', cat.identity(e_model).source == e_model),
         ('category composition', ma.source == e_model and ma.target == e_action),
         ('presheaf functoriality', presheaf.check_contravariant_composition(mr, ra, ma)),
+        ('auto-accept subpresheaf', auto_accept.is_subobject_of(risk_context) and bool(auto_accept(e_model))),
+        ('yoneda representable', ma in y_action(e_model) and yoneda_element_count(risk_context, e_action) == 1),
         ('topos descriptor', PresheafToposDescriptor().contains(presheaf)),
         ('path certificate', certify_path(path, gamma_max=0.5).valid),
         ('rupture certificate', certify_rupture(rupture).diagnostic_code == 'D_ij'),
@@ -70,9 +91,11 @@ def run_checks() -> dict:
         'paths': [certify_path(path, gamma_max=0.5).as_dict()],
         'ruptures': [certify_rupture(rupture).as_dict()],
         'presheaf_contexts': {
-            'RiskContext': sorted(presheaf.contexts[e_risk.key]),
+            'RiskContext': sorted(risk_context.contexts[e_risk.key]),
+            'AutoAccept': sorted(auto_accept.contexts[e_model.key]),
             'AuditContext': ['full_trace', 'hash_verified'],
         },
+        'yoneda': {'represented': e_action.key, 'from_model_to_action': len(y_action(e_model))},
     }
 
 
@@ -88,6 +111,13 @@ def write_reports(report: dict, out_dir: str | Path = 'reports/category_hott') -
     lines.extend(f"- `{p['source']} -> {p['target']}` length={p['length']} gamma={p['gamma_total']}" for p in report['paths'])
     lines.extend(['', '## Ruptures', ''])
     lines.extend(f"- `{r['source']} -> {r['target']}` reason={r['reason']} gamma={r['gamma']} gamma_max={r['gamma_max']}" for r in report['ruptures'])
+    lines.extend(['', '## Context presheaves', ''])
+    lines.extend(f"- `{name}`: {', '.join(values)}" for name, values in report['presheaf_contexts'].items())
+    lines.extend(['', '## Yoneda', ''])
+    lines.append(
+        f"- `y({report['yoneda']['represented']})`: "
+        f"{report['yoneda']['from_model_to_action']} route(s) from `E_model`"
+    )
     md_path.write_text('\n'.join(lines), encoding='utf-8')
     return {'json': str(json_path), 'markdown': str(md_path)}
 

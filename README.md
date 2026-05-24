@@ -273,7 +273,7 @@ PYTHONPATH=. python examples/thesis_demo.py
 Ожидаемый статус:
 
 ```text
-105 passed
+109 passed
 thesis validation: PASS
 thesis demo: PASS
 ```

@@ -17,6 +17,7 @@
 | `E_R` и `E_A` в observer report | готово | `tests/test_dataset_observer_representation_integration.py` |
 | Formal proof report | готово | `proofs/formal_theorem_checks.py` |
 | Категориально-гомотопическое приложение | готово | `make category-hott-test`, `reports/category_hott/category_hott_checks.md` |
+| Предпучки `Risk/Audit/User/Trace`, `AutoAccept`, Йонеда | готово | `tests/test_subpresheaf.py`, `tests/test_yoneda.py`, `tests/test_risk_context_acceptance.py` |
 
 ## Что осталось как следующий слой
 

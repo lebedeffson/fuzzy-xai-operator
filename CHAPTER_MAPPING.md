@@ -85,7 +85,11 @@
 | Морфизмы объяснений | `fuzzyxai/category/morphism.py` | `tests/test_expl_category_laws.py` |
 | Диагностическая граница `Expl_D` | `fuzzyxai/category/diagnostic_completion.py` | `tests/test_diagnostic_completion.py` |
 | Предпучок контекстов `Set^{Expl^op}` | `fuzzyxai/category/presheaf.py` | `tests/test_presheaf_functoriality.py` |
+| Конкретные контексты `Risk/Audit/User/Trace` | `fuzzyxai/category/context_topos.py` | `tests/test_context_topos_smoke.py` |
+| Подпредпучок `AutoAccept` | `fuzzyxai/category/subpresheaf.py` | `tests/test_subpresheaf.py` |
+| Представимый предпучок Йонеды `y(E)` | `fuzzyxai/category/yoneda.py` | `tests/test_yoneda.py` |
 | Дескриптор топоса контекстов | `fuzzyxai/category/context_topos.py` | `tests/test_presheaf_functoriality.py` |
+| Контекстная проверка auto-accept | `fuzzyxai/risk/context_acceptance.py` | `tests/test_risk_context_acceptance.py` |
 | Тип пути согласования `Path_Expl` | `fuzzyxai/hott/path_type.py` | `tests/test_explanation_path_types.py` |
 | Тип разрыва `Rupture` | `fuzzyxai/hott/rupture_type.py` | `tests/test_explanation_path_types.py` |
 | Временной дрейф объяснений | `fuzzyxai/hott/drift_path.py` | `tests/test_temporal_drift_paths.py` |

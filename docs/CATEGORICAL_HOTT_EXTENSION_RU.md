@@ -105,6 +105,31 @@ T_{ij}:E_i\to E_j\sqcup\mathfrak D.
 
 Код: `fuzzyxai/category/presheaf.py`, `fuzzyxai/category/context_topos.py`.
 
+В реализации добавлены конкретные предпучки контекстов:
+
+| Предпучок | Код | Значение |
+|---|---|---|
+| `RiskContext` | `fuzzyxai/category/context_topos.py` | допустимые действия наблюдателя |
+| `AuditContext` | `fuzzyxai/category/context_topos.py` | уровни аудита и trace |
+| `UserContext` | `fuzzyxai/category/context_topos.py` | пользовательские режимы представления |
+| `TraceContext` | `fuzzyxai/category/context_topos.py` | требования к трассировке |
+
+Подпредпучок `AutoAccept` реализован как `Subpresheaf`:
+
+\[
+AutoAccept(E)\subseteq RiskContext(E).
+\]
+
+Он содержит только действия `accept` и `lower_confidence`. Поэтому проверка автоматического применения становится контекстной: прогноз можно применять автоматически только если `AutoAccept(E)` непуст.
+
+Для аудита добавлен представимый предпучок Йонеды:
+
+\[
+y(E)=Hom_{\mathsf{Expl}}(-,E).
+\]
+
+Он задаёт множество допустимых объяснительных предысторий, ведущих к объекту `E`.
+
 ## 6. Контекстная логика
 
 Топосный слой не заменяет нечёткую логику. Он описывает, где объяснение применимо:

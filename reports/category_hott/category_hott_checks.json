@@ -14,6 +14,14 @@
       "status": "PASS"
     },
     {
+      "name": "auto-accept subpresheaf",
+      "status": "PASS"
+    },
+    {
+      "name": "yoneda representable",
+      "status": "PASS"
+    },
+    {
       "name": "topos descriptor",
       "status": "PASS"
     },
@@ -77,11 +85,20 @@
   ],
   "presheaf_contexts": {
     "RiskContext": [
-      "risk_context"
+      "defer_to_human",
+      "request_more_data"
+    ],
+    "AutoAccept": [
+      "accept",
+      "lower_confidence"
     ],
     "AuditContext": [
       "full_trace",
       "hash_verified"
     ]
+  },
+  "yoneda": {
+    "represented": "E_action",
+    "from_model_to_action": 1
   }
 }
