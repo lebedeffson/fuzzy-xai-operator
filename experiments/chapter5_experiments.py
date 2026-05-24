@@ -19,7 +19,7 @@ from sklearn.model_selection import train_test_split
 from fuzzyxai.category import ExplanationCategory, RiskContext, auto_accept_subpresheaf
 from fuzzyxai.core.explanation_object import ExplanationObject, Rule, Trace
 from fuzzyxai.hierarchy.f0 import F0
-from fuzzyxai.risk import RiskPolicy, compute_application_risk
+from fuzzyxai.risk import RiskPolicy, compute_application_risk, load_calibrated_risk_weights
 
 ACTIONS = ['accept', 'lower_confidence', 'request_more_data', 'defer_to_human', 'block']
 WEIGHT_KEYS = ['predicted_risk', 'uncertainty', 'interpretability_gap', 'reduction_loss', 'diagnostic']
@@ -293,10 +293,15 @@ def main() -> None:
     parser.add_argument('--timing-n', type=int, default=1000)
     parser.add_argument('--seed', type=int, default=42)
     parser.add_argument('--out-dir', default='reports/chapter5')
+    parser.add_argument('--weights-json', default=None, help='Optional chapter5_experiments.json with calibrated weights')
     args = parser.parse_args()
 
     calibration = calibrate_weights()
-    weights = calibration['weights']
+    if args.weights_json:
+        weights = load_calibrated_risk_weights(args.weights_json)
+        calibration = {**calibration, 'weights': weights, 'source': args.weights_json}
+    else:
+        weights = calibration['weights']
     tables = {
         'scenarios_s0_s6': scenario_table(weights),
         'baseline_comparison': baseline_comparison(weights, args.n_per_scenario, args.seed),

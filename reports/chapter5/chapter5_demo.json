@@ -1,0 +1,31 @@
+{
+  "weights": {
+    "predicted_risk": 0.7,
+    "uncertainty": 0.05,
+    "reduction_loss": 0.05,
+    "interpretability_gap": 0.05,
+    "diagnostic": 0.15
+  },
+  "cases": [
+    {
+      "scenario": "S4",
+      "uncertainty_type": "rupture",
+      "representation": "F_N_src",
+      "rupture": true,
+      "rho": 0.4385,
+      "expected_action": "block",
+      "actual_action": "block",
+      "match": true
+    },
+    {
+      "scenario": "S0",
+      "uncertainty_type": "none",
+      "representation": "F0",
+      "rupture": false,
+      "rho": 0.09399999999999999,
+      "expected_action": "accept",
+      "actual_action": "accept",
+      "match": true
+    }
+  ]
+}

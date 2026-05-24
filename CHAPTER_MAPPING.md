@@ -108,6 +108,9 @@
 | Вычислительная сложность | `timing_table` | `reports/chapter5/timing_complexity.csv` |
 | Breast Cancer validation | `breast_cancer_validation` | `reports/chapter5/breast_cancer_validation.csv` |
 | Контекстная логика топоса | `context_logic_table` | `reports/chapter5/context_logic.csv` |
+| Calibrated observer demo | `experiments/chapter5_demo.py` | `reports/chapter5/chapter5_demo.json` |
+| LaTeX-таблицы главы 5 | `experiments/export_chapter5_latex.py` | `reports/chapter5/latex/` |
+| Загрузка калиброванных весов | `fuzzyxai/risk/risk_observer_config.py` | `tests/test_calibrated_observer_report_consistency.py` |
 
 ## Финальные артефакты проверки
 

@@ -8,6 +8,7 @@ from .risk_function import (
     normalize_risk_weights,
 )
 from .decision_policy import RiskAction, RiskDecision, RiskPolicy
+from .risk_observer_config import attach_risk_weights_to_plan, load_calibrated_risk_weights, policy_from_calibration, weights_from_explain_plan
 from .risk_aware_model import RiskAwareModel
 from .representation_selection import (
     RepresentationSelection,
@@ -29,6 +30,7 @@ __all__ = [
     'ApplicationRiskBreakdown', 'DEFAULT_RISK_WEIGHTS', 'compute_application_risk',
     'normalize_risk_weights', 'expected_action_costs', 'choose_min_expected_cost',
     'RiskAction', 'RiskDecision', 'RiskPolicy', 'RiskAwareModel',
+    'attach_risk_weights_to_plan', 'load_calibrated_risk_weights', 'policy_from_calibration', 'weights_from_explain_plan',
     'RepresentationSelection', 'default_representation_candidates',
     'profile_from_dataset_profile', 'select_risk_representation',
     'ObserverPipeline', 'ObserverPipelineConfig', 'ObserverPipelineResult', 'ObserverStage',
