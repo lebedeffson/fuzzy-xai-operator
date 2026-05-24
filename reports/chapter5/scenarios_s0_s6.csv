@@ -1,0 +1,8 @@
+scenario,z,uncertainty_type,representation,predicted_risk,uncertainty,i_pre,delta,rupture,expected_action,rho,actual_action,match
+S0,-1.2,none,F0,0.12,0.1,0.92,0.02,False,accept,0.09399999999999999,accept,True
+S1,0.1,model_margin,F0,0.4,0.52,0.86,0.04,False,lower_confidence,0.31499999999999995,lower_confidence,True
+S2,0.4,interval,F_int,0.45,0.3,0.74,0.42,False,request_more_data,0.364,lower_confidence,False
+S3,0.8,trace_gap,F_H,0.58,0.34,0.42,0.18,False,defer_to_human,0.46099999999999997,lower_confidence,False
+S4,0.2,rupture,F_N_src,0.33,0.4,0.55,0.3,True,block,0.4385,block,True
+S5,1.9,high_risk,F0,0.88,0.3,0.65,0.1,False,defer_to_human,0.6535,defer_to_human,True
+S6,1.4,multi_source_conflict,FML-audit,0.62,0.72,0.6,0.38,True,block,0.659,block,True

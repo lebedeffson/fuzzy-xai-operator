@@ -97,6 +97,18 @@
 | Category/HoTT proof report | `proofs/category_hott_checks.py` | `reports/category_hott/category_hott_checks.md` |
 | Математическое приложение | `docs/CATEGORICAL_HOTT_EXTENSION_RU.md` | category/hott tests |
 
+## Эксперименты главы 5
+
+| Эксперимент | Реализация | Проверка/отчёт |
+|---|---|---|
+| Сценарии S0-S6 | `experiments/chapter5_experiments.py` | `reports/chapter5/scenarios_s0_s6.csv` |
+| Калибровка весов риска | `calibrate_weights` | `reports/chapter5/chapter5_experiments.md` |
+| Сравнение baseline | `baseline_comparison` | `reports/chapter5/baseline_comparison.csv` |
+| Чувствительность | `sensitivity` | `reports/chapter5/sensitivity_w_R.html` |
+| Вычислительная сложность | `timing_table` | `reports/chapter5/timing_complexity.csv` |
+| Breast Cancer validation | `breast_cancer_validation` | `reports/chapter5/breast_cancer_validation.csv` |
+| Контекстная логика топоса | `context_logic_table` | `reports/chapter5/context_logic.csv` |
+
 ## Финальные артефакты проверки
 
 - Численный маршрут главы 2 (`mu`, `H`, `d_E`, композиция, `L`, `I`, `D_ij`) -> `proofs/validate_thesis_examples.py` -> `reports/thesis_validation.json`.

@@ -1,0 +1,297 @@
+{
+  "calibration": {
+    "weights": {
+      "predicted_risk": 0.7,
+      "uncertainty": 0.05,
+      "interpretability_gap": 0.05,
+      "reduction_loss": 0.05,
+      "diagnostic": 0.15
+    },
+    "accuracy": 0.7142857142857143,
+    "mse": 0.07903621428571429
+  },
+  "tables": {
+    "scenarios_s0_s6": [
+      {
+        "scenario": "S0",
+        "z": -1.2,
+        "uncertainty_type": "none",
+        "representation": "F0",
+        "predicted_risk": 0.12,
+        "uncertainty": 0.1,
+        "i_pre": 0.92,
+        "delta": 0.02,
+        "rupture": false,
+        "expected_action": "accept",
+        "rho": 0.09399999999999999,
+        "actual_action": "accept",
+        "match": true
+      },
+      {
+        "scenario": "S1",
+        "z": 0.1,
+        "uncertainty_type": "model_margin",
+        "representation": "F0",
+        "predicted_risk": 0.4,
+        "uncertainty": 0.52,
+        "i_pre": 0.86,
+        "delta": 0.04,
+        "rupture": false,
+        "expected_action": "lower_confidence",
+        "rho": 0.31499999999999995,
+        "actual_action": "lower_confidence",
+        "match": true
+      },
+      {
+        "scenario": "S2",
+        "z": 0.4,
+        "uncertainty_type": "interval",
+        "representation": "F_int",
+        "predicted_risk": 0.45,
+        "uncertainty": 0.3,
+        "i_pre": 0.74,
+        "delta": 0.42,
+        "rupture": false,
+        "expected_action": "request_more_data",
+        "rho": 0.364,
+        "actual_action": "lower_confidence",
+        "match": false
+      },
+      {
+        "scenario": "S3",
+        "z": 0.8,
+        "uncertainty_type": "trace_gap",
+        "representation": "F_H",
+        "predicted_risk": 0.58,
+        "uncertainty": 0.34,
+        "i_pre": 0.42,
+        "delta": 0.18,
+        "rupture": false,
+        "expected_action": "defer_to_human",
+        "rho": 0.46099999999999997,
+        "actual_action": "lower_confidence",
+        "match": false
+      },
+      {
+        "scenario": "S4",
+        "z": 0.2,
+        "uncertainty_type": "rupture",
+        "representation": "F_N_src",
+        "predicted_risk": 0.33,
+        "uncertainty": 0.4,
+        "i_pre": 0.55,
+        "delta": 0.3,
+        "rupture": true,
+        "expected_action": "block",
+        "rho": 0.4385,
+        "actual_action": "block",
+        "match": true
+      },
+      {
+        "scenario": "S5",
+        "z": 1.9,
+        "uncertainty_type": "high_risk",
+        "representation": "F0",
+        "predicted_risk": 0.88,
+        "uncertainty": 0.3,
+        "i_pre": 0.65,
+        "delta": 0.1,
+        "rupture": false,
+        "expected_action": "defer_to_human",
+        "rho": 0.6535,
+        "actual_action": "defer_to_human",
+        "match": true
+      },
+      {
+        "scenario": "S6",
+        "z": 1.4,
+        "uncertainty_type": "multi_source_conflict",
+        "representation": "FML-audit",
+        "predicted_risk": 0.62,
+        "uncertainty": 0.72,
+        "i_pre": 0.6,
+        "delta": 0.38,
+        "rupture": true,
+        "expected_action": "block",
+        "rho": 0.659,
+        "actual_action": "block",
+        "match": true
+      }
+    ],
+    "baseline_comparison": [
+      {
+        "mode": "risk_threshold",
+        "accuracy": 0.4127142857142857,
+        "false_blocks": 0,
+        "missed_ruptures": 1963,
+        "n": 7000
+      },
+      {
+        "mode": "fuzzy_operator",
+        "accuracy": 0.252,
+        "false_blocks": 0,
+        "missed_ruptures": 1992,
+        "n": 7000
+      },
+      {
+        "mode": "observer_no_topos",
+        "accuracy": 0.3191428571428571,
+        "false_blocks": 0,
+        "missed_ruptures": 1000,
+        "n": 7000
+      },
+      {
+        "mode": "full_fuzzyxai",
+        "accuracy": 0.6128571428571429,
+        "false_blocks": 0,
+        "missed_ruptures": 0,
+        "n": 7000
+      }
+    ],
+    "timing_complexity": [
+      {
+        "config": "predict_only",
+        "n": 1000,
+        "mean_ms": 4.5755994506180286e-05,
+        "total_s": 4.5755994506180286e-05
+      },
+      {
+        "config": "operator_F0",
+        "n": 1000,
+        "mean_ms": 0.00523436299408786,
+        "total_s": 0.00523436299408786
+      },
+      {
+        "config": "select_F_int",
+        "n": 1000,
+        "mean_ms": 0.005292511981679127,
+        "total_s": 0.005292511981679127
+      },
+      {
+        "config": "select_F_H",
+        "n": 1000,
+        "mean_ms": 0.005002797988709062,
+        "total_s": 0.005002797988709062
+      },
+      {
+        "config": "select_F_N_src",
+        "n": 1000,
+        "mean_ms": 0.005040849995566532,
+        "total_s": 0.005040849995566532
+      },
+      {
+        "config": "FML_audit",
+        "n": 1000,
+        "mean_ms": 0.005045808007707819,
+        "total_s": 0.005045808007707819
+      }
+    ],
+    "breast_cancer_validation": [
+      {
+        "dataset": "sklearn_breast_cancer",
+        "n_test": 143,
+        "model_accuracy": 0.951048951048951,
+        "model_roc_auc": 0.9937106918238994,
+        "observer_action_accuracy": 0.8881118881118881,
+        "simulated_expert_rule": "risk>=0.75 defer; risk>=0.35 or uncertainty>=0.45 lower; ambiguous high-uncertainty cases block"
+      }
+    ],
+    "context_logic": [
+      {
+        "object": "E_model",
+        "RiskContext": [
+          "accept",
+          "block",
+          "lower_confidence"
+        ],
+        "AutoAccept": [
+          "accept",
+          "lower_confidence"
+        ],
+        "restricted_from_E_risk_block": "block"
+      },
+      {
+        "object": "E_risk",
+        "RiskContext": [
+          "block",
+          "request_more_data"
+        ],
+        "AutoAccept": [],
+        "restricted_from_E_risk_block": "-"
+      }
+    ]
+  },
+  "sensitivity": {
+    "w_R": [
+      {
+        "w_R": 0.1,
+        "accuracy": 0.6322857142857143,
+        "block_rate": 0.2857142857142857
+      },
+      {
+        "w_R": 0.15,
+        "accuracy": 0.6064285714285714,
+        "block_rate": 0.2857142857142857
+      },
+      {
+        "w_R": 0.2,
+        "accuracy": 0.5652857142857143,
+        "block_rate": 0.2857142857142857
+      },
+      {
+        "w_R": 0.25,
+        "accuracy": 0.5484285714285714,
+        "block_rate": 0.2857142857142857
+      },
+      {
+        "w_R": 0.3,
+        "accuracy": 0.548,
+        "block_rate": 0.2857142857142857
+      }
+    ],
+    "theta_high": [
+      {
+        "theta_high": 0.6,
+        "accuracy": 0.6652857142857143,
+        "block_rate": 0.2857142857142857
+      },
+      {
+        "theta_high": 0.7,
+        "accuracy": 0.5415714285714286,
+        "block_rate": 0.2857142857142857
+      },
+      {
+        "theta_high": 0.8,
+        "accuracy": 0.5285714285714286,
+        "block_rate": 0.2857142857142857
+      },
+      {
+        "theta_high": 0.9,
+        "accuracy": 0.5285714285714286,
+        "block_rate": 0.2857142857142857
+      }
+    ],
+    "noise": [
+      {
+        "noise_amp": 0.0,
+        "mean_abs_delta_I": 0.0,
+        "action_change_rate": 0.0
+      },
+      {
+        "noise_amp": 0.02,
+        "mean_abs_delta_I": 0.009867343934207944,
+        "action_change_rate": 0.0017142857142857142
+      },
+      {
+        "noise_amp": 0.05,
+        "mean_abs_delta_I": 0.024545337848884897,
+        "action_change_rate": 0.005142857142857143
+      },
+      {
+        "noise_amp": 0.1,
+        "mean_abs_delta_I": 0.048689861371010286,
+        "action_change_rate": 0.01042857142857143
+      }
+    ]
+  }
+}

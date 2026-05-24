@@ -261,6 +261,7 @@ PYTHONPATH=. python proofs/run_all_proofs.py
 make proof
 make formal-proof
 make category-hott-test
+make chapter5-experiments
 ```
 
 Финальная проверка диссертационных примеров:
@@ -273,12 +274,15 @@ PYTHONPATH=. python examples/thesis_demo.py
 Ожидаемый статус:
 
 ```text
-109 passed
+110 passed
 thesis validation: PASS
 thesis demo: PASS
 ```
 
 ## Отчёты
+
+Глава 5: `reports/chapter5/chapter5_experiments.md`, CSV-таблицы и `sensitivity_w_R.html`.
+
 
 Сгенерированные артефакты сохраняются в `reports/`.
 

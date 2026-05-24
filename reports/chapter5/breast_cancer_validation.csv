@@ -1,0 +1,2 @@
+dataset,n_test,model_accuracy,model_roc_auc,observer_action_accuracy,simulated_expert_rule
+sklearn_breast_cancer,143,0.951048951048951,0.9937106918238994,0.8881118881118881,risk>=0.75 defer; risk>=0.35 or uncertainty>=0.45 lower; ambiguous high-uncertainty cases block

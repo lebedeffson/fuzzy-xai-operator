@@ -1,0 +1,5 @@
+mode,accuracy,false_blocks,missed_ruptures,n
+risk_threshold,0.4127142857142857,0,1963,7000
+fuzzy_operator,0.252,0,1992,7000
+observer_no_topos,0.3191428571428571,0,1000,7000
+full_fuzzyxai,0.6128571428571429,0,0,7000

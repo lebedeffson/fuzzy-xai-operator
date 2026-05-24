@@ -18,6 +18,7 @@
 | Formal proof report | готово | `proofs/formal_theorem_checks.py` |
 | Категориально-гомотопическое приложение | готово | `make category-hott-test`, `reports/category_hott/category_hott_checks.md` |
 | Предпучки `Risk/Audit/User/Trace`, `AutoAccept`, Йонеда | готово | `tests/test_subpresheaf.py`, `tests/test_yoneda.py`, `tests/test_risk_context_acceptance.py` |
+| Эксперименты главы 5 | готово | `make chapter5-experiments`, `reports/chapter5/chapter5_experiments.md` |
 
 ## Что осталось как следующий слой
 
