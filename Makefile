@@ -1,8 +1,8 @@
-PYTHON ?= python
+PYTHON ?= $(shell if [ -x /home/lebedeffson/Code/venv/bin/python ]; then echo /home/lebedeffson/Code/venv/bin/python; else echo python; fi)
 PYTHONPATH := .
 PORT ?= 8085
 
-.PHONY: install test risk-test demo dashboard proof thesis full-demo full-observer dataset-observer benchmark operator-benchmark risk-benchmark lofo-f1-demo clean
+.PHONY: install test risk-test demo dashboard proof formal-proof thesis full-demo full-observer dataset-observer benchmark operator-benchmark risk-benchmark lofo-f1-demo clean
 
 install:
 	$(PYTHON) -m pip install -r requirements.txt
@@ -21,6 +21,9 @@ dashboard:
 
 proof:
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) proofs/run_all_proofs.py
+
+formal-proof:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) proofs/formal_theorem_checks.py
 
 thesis:
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) proofs/validate_thesis_examples.py

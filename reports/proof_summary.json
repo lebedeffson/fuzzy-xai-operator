@@ -7,6 +7,7 @@
     "examples/chapter3_end_to_end.py",
     "proofs/validate_thesis_examples.py",
     "examples/thesis_demo.py",
+    "proofs/formal_theorem_checks.py",
     "benchmarks/breast_cancer_benchmark.py"
   ],
   "reports": [
@@ -15,7 +16,11 @@
     "chapter2_proof.json",
     "chapter3_end_to_end_report.json",
     "chapter3_proof.json",
+    "formal_theorems/formal_theorem_checks.json",
+    "lofo_f1_rule_pruning.json",
+    "operator_comparison_benchmark.json",
     "proof_summary.json",
+    "risk_aware_observer_benchmark.json",
     "thesis_demo_report.json",
     "thesis_validation.json"
   ]

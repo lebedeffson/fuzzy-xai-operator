@@ -252,6 +252,7 @@ make test
 PYTHONPATH=. python proofs/run_all_proofs.py
 # или
 make proof
+make formal-proof
 ```
 
 Финальная проверка диссертационных примеров:
@@ -264,7 +265,7 @@ PYTHONPATH=. python examples/thesis_demo.py
 Ожидаемый статус:
 
 ```text
-58 passed
+91 passed
 thesis validation: PASS
 thesis demo: PASS
 ```
@@ -284,6 +285,7 @@ thesis demo: PASS
 - `reports/risk_aware_observer_benchmark.md`: benchmark риск-ориентированного наблюдателя.
 - `reports/full_demo/index.html`: полный сценарий “данные -> модель -> глава 2 -> глава 3 -> наблюдатель”.
 - `reports/dataset_observer/dataset_observer_report.md`: прогон наблюдателя на табличном датасете.
+- `reports/formal_theorems/formal_theorem_checks.md`: проверка формальных теорем.
 - `reports/lofo_f1_rule_pruning.md`: demo быстрого LOFO-F1 отбора правил.
 
 ## Минимальный пример API
@@ -349,6 +351,7 @@ tests/
 - `IMPLEMENTATION_SUMMARY.md`: техническое описание того, что реализовано и где лежит.
 - `ROADMAP_RU.md`: перспективные направления и план доведения прототипа до реальной разработки.
 - `docs/FORMAL_THEOREMS_CH2_CH3_RU.md`: шесть формальных теорем для усиления глав 2 и 3.
+- `docs/TZ_MATH_RISK_AWARE_OBSERVER_VNEXT_RU.md`: vNext ТЗ для математики, наблюдателя, тестов и proof-отчётов.
 
 ## Научные ограничения
 

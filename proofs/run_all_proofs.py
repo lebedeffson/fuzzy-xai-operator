@@ -16,6 +16,7 @@ scripts = [
     ROOT / 'examples' / 'chapter3_end_to_end.py',
     ROOT / 'proofs' / 'validate_thesis_examples.py',
     ROOT / 'examples' / 'thesis_demo.py',
+    ROOT / 'proofs' / 'formal_theorem_checks.py',
 ]
 
 ran = []
@@ -36,7 +37,7 @@ except Exception as exc:
 summary = {
     'package': 'fuzzyxai_doctoral_core_v8_gui_fixed',
     'ran': ran,
-    'reports': sorted(p.name for p in OUT.glob('*.json')),
+    'reports': sorted(str(p.relative_to(OUT)) for p in OUT.rglob('*.json')),
 }
 (OUT / 'proof_summary.json').write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding='utf-8')
 md = ['# FuzzyXAI proof summary', '', 'Executed scripts:']

@@ -14,7 +14,7 @@
 | Диагностика `D_ij` | `fuzzyxai/core/diagnostics.py` | `tests/test_composition.py` |
 | Калибровка `beta` | `fuzzyxai/calibration/` | `proofs/chapter2_calibration_proof.py` |
 | Визуализация композиции | `fuzzyxai/visual/` | `apps/defense_demo.py` |
-| Формальные теоремы главы 2 | `docs/FORMAL_THEOREMS_CH2_CH3_RU.md` | theorem review |
+| Формальные теоремы главы 2 | `docs/FORMAL_THEOREMS_CH2_CH3_RU.md` | `proofs/formal_theorem_checks.py` |
 
 ## Глава 3
 
@@ -31,7 +31,7 @@
 | Парето-выбор класса | `fuzzyxai/selection/pareto_selector.py` | `tests/test_selector.py` |
 | Диагностика выбора `D_choice` | `fuzzyxai/selection/choice_diagnostic.py` | `reports/chapter3_end_to_end_report.json` |
 | Совместимость и FML-синтез | `fuzzyxai/selection/compatibility.py` | `reports/chapter3_end_to_end_report.json` |
-| Формальные теоремы главы 3 | `docs/FORMAL_THEOREMS_CH2_CH3_RU.md` | theorem review |
+| Формальные теоремы главы 3 | `docs/FORMAL_THEOREMS_CH2_CH3_RU.md` | `proofs/formal_theorem_checks.py` |
 
 ## Сквозная связь глав 2 и 3
 
@@ -64,7 +64,7 @@
 | Композиция `E_A o E_R o E_M^ext` | `ObserverPipeline.explain_case` | `reports/full_observer_pipeline/full_observer_pipeline.md` |
 | Математическое описание слоя | `docs/RISK_AWARE_XAI_OBSERVER_MATH_RU.md` | code-review + tests |
 | Слой датасетов и профиля | `fuzzyxai/data/` | `tests/test_dataset_data_layer.py` |
-| Dataset observer pipeline | `fuzzyxai/pipelines/dataset_observer_pipeline.py` | `tests/test_dataset_observer_pipeline.py` |
+| Dataset observer pipeline | `fuzzyxai/pipelines/dataset_observer_pipeline.py` | `tests/test_dataset_observer_pipeline.py`, `tests/test_dataset_observer_pipeline_correctness.py` |
 | Исполняемый сценарий наблюдателя | `full_observer_pipeline.py` | `make full-observer` |
 
 ## LOFO-F1 Rule Pruning
@@ -88,3 +88,5 @@
 - Risk-aware observer math -> `docs/RISK_AWARE_XAI_OBSERVER_MATH_RU.md` -> `fuzzyxai/risk/risk_function.py`, `tests/test_risk_function.py`.
 - Dataset observer -> `examples/dataset_observer_demo.py` -> `reports/dataset_observer/dataset_observer_report.html`.
 - Formal theorem pack -> `docs/FORMAL_THEOREMS_CH2_CH3_RU.md`.
+- vNext TZ -> `docs/TZ_MATH_RISK_AWARE_OBSERVER_VNEXT_RU.md`.
+- Formal theorem checks -> `proofs/formal_theorem_checks.py` -> `reports/formal_theorems/formal_theorem_checks.md`.

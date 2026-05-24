@@ -17,6 +17,11 @@ def compose(left: ExplanationObject, right: ExplanationObject, beta: Mapping[str
             'left_terms': sorted(left.terms), 'right_terms': sorted(right.terms)
         })
     gamma = semantic_disagreement(left, right, beta)
+    gamma_max = beta.get('gamma_max')
+    if gamma_max is not None and gamma > float(gamma_max):
+        return DiagnosticState('D_ij', 'semantic disagreement exceeds gamma_max', 'critical', {
+            'gamma': gamma, 'gamma_max': float(gamma_max)
+        })
     uncertainty = probabilistic_t_conorm(left.uncertainty, right.uncertainty, gamma)
     rule_names = {r.name for r in left.rules}
     rules = list(left.rules) + [r for r in right.rules if r.name not in rule_names]
