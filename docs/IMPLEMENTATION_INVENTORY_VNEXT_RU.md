@@ -13,12 +13,13 @@
 | Risk-Aware Observer | готово | `tests/test_risk_aware_model.py`, `tests/test_observer_no_cyclic_dependency.py` |
 | Dataset observer pipeline | готово | `tests/test_dataset_observer_pipeline.py` |
 | Выбор `A_M^F` в dataset pipeline | готово | `tests/test_dataset_observer_representation_integration.py` |
+| Breast Cancer Wisconsin по прямой ссылке | готово | `examples/dataset_observer_demo.py --url ...breast_cancer_data.csv` |
 | `E_R` и `E_A` в observer report | готово | `tests/test_dataset_observer_representation_integration.py` |
 | Formal proof report | готово | `proofs/formal_theorem_checks.py` |
 
 ## Что осталось как следующий слой
 
-1. Реальные скачанные CIT-датасеты: сейчас поддержаны локальный файл и прямая ссылка, но не выбран конкретный большой набор для репозитория.
+1. Реальные скачанные CIT-датасеты: сейчас поддержаны локальный файл, GitHub/raw CSV и прямая ссылка, но не выбран конкретный большой набор для репозитория.
 2. Отдельный PyTorch-demo: нужен без обязательной зависимости `torch` в базовом `requirements.txt`, лучше через optional example.
 3. GUI-экран Dataset Observer: backend и отчёты готовы, интерфейс можно усилить отдельным проходом.
 

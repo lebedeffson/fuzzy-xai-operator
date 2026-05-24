@@ -18,14 +18,22 @@ def load_table_dataset(path: str | Path, **kwargs) -> pd.DataFrame:
     path = Path(path)
     fmt = infer_file_format(path)
     if fmt == 'csv':
-        return pd.read_csv(path, **kwargs)
+        return _clean_loaded_table(pd.read_csv(path, **kwargs))
     if fmt in {'xlsx', 'xls'}:
-        return pd.read_excel(path, **kwargs)
+        return _clean_loaded_table(pd.read_excel(path, **kwargs))
     if fmt == 'json':
-        return pd.read_json(path, **kwargs)
+        return _clean_loaded_table(pd.read_json(path, **kwargs))
     if fmt == 'parquet':
-        return pd.read_parquet(path, **kwargs)
+        return _clean_loaded_table(pd.read_parquet(path, **kwargs))
     raise ValueError(f'Unsupported format: {fmt}')
+
+
+def _clean_loaded_table(df: pd.DataFrame) -> pd.DataFrame:
+    """Drop parser artifacts such as a trailing empty CSV column."""
+    artifact_cols = [c for c in df.columns if str(c).startswith('Unnamed:') and df[c].isna().all()]
+    if artifact_cols:
+        return df.drop(columns=artifact_cols)
+    return df
 
 
 def split_features_target(df: pd.DataFrame, target_column: str) -> tuple[pd.DataFrame, pd.Series]:

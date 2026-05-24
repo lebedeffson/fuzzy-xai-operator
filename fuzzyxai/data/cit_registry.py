@@ -39,22 +39,32 @@ class CITRegistryDatasetClient:
             metadata={'load_mode': 'local_file'},
         )
 
-    def download_file(self, url: str, *, name: str | None = None, target_column: str | None = None) -> DatasetRecord:
+    @staticmethod
+    def normalize_direct_url(url: str) -> str:
+        """Accept direct file URLs and common GitHub blob links."""
         parsed = urlparse(url)
+        if parsed.netloc == 'github.com' and '/blob/' in parsed.path:
+            owner_repo, _, file_path = parsed.path.lstrip('/').partition('/blob/')
+            return f'https://raw.githubusercontent.com/{owner_repo}/{file_path}'
+        return url
+
+    def download_file(self, url: str, *, name: str | None = None, target_column: str | None = None) -> DatasetRecord:
+        normalized_url = self.normalize_direct_url(url)
+        parsed = urlparse(normalized_url)
         filename = Path(parsed.path).name or 'dataset.csv'
         local_path = self.cache_dir / filename
-        request = Request(url, headers={'User-Agent': 'fuzzyxai-dataset-observer/1.0'})
+        request = Request(normalized_url, headers={'User-Agent': 'fuzzyxai-dataset-observer/1.0'})
         with urlopen(request, timeout=60) as response:
             local_path.write_bytes(response.read())
         fmt = infer_file_format(local_path)
         return DatasetRecord(
             name=name or local_path.stem,
-            source='registry.cit.gov.ru',
+            source=parsed.netloc or 'direct-url',
             local_path=local_path,
-            url=url,
+            url=normalized_url,
             file_format=fmt,
             target_column=target_column,
-            metadata={'load_mode': 'direct_url'},
+            metadata={'load_mode': 'direct_url', 'original_url': url},
         )
 
     def load_dataframe(self, record: DatasetRecord):

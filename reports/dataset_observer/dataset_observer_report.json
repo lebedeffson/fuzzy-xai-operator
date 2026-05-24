@@ -54,10 +54,9 @@
     "has_intervals": false,
     "has_multiple_experts": false,
     "has_source_conflict": false,
-    "requires_audit": true,
+    "requires_audit": false,
     "suggested_uncertainty_types": [
-      "u_num",
-      "u_trace"
+      "u_num"
     ],
     "metadata": {
       "expert_columns": [],
@@ -87,28 +86,27 @@
     "entropy_uncertainty": 0.35439873158489366,
     "margin_uncertainty": 0.13387978142076506,
     "confidence": 0.7117569534643449,
-    "selected_representation": "FML-audit",
-    "representation_class": "FML",
+    "selected_representation": "F0",
+    "representation_class": "F0",
     "representation_selection": {
       "profile": [
         "u_ling",
-        "u_num",
-        "u_trace"
+        "u_num"
       ],
-      "selected_class": "FML-audit",
-      "representation_class": "FML",
-      "reduction_loss": 0.09,
+      "selected_class": "F0",
+      "representation_class": "F0",
+      "reduction_loss": 0.0,
       "reduction_policy": "canonical",
-      "reason": "multi-level/audit profile requires preserving several uncertainty types"
+      "reason": "numeric/linguistic uncertainty is covered by classical fuzzy representation"
     },
-    "reduction_loss": 0.09,
-    "pre_interpretability": 0.8169116703010336,
-    "final_interpretability": 0.8169116703010336,
-    "interpretability_index": 0.8169116703010336,
-    "application_risk": 0.40209646036059227,
-    "risk_score": 0.40209646036059227,
+    "reduction_loss": 0.0,
+    "pre_interpretability": 0.8242970597348839,
+    "final_interpretability": 0.8242970597348839,
+    "interpretability_index": 0.8242970597348839,
+    "application_risk": 0.3871193824738222,
+    "risk_score": 0.3871193824738222,
     "action": "lower_confidence",
-    "corrected_confidence": 0.31635837482266144,
+    "corrected_confidence": 0.35957654592614946,
     "reason": "medium risk: accept only with lower confidence",
     "diagnostics": [],
     "E_model_ext": {
@@ -122,8 +120,8 @@
       ],
       "uncertainty": 0.14612152326782754,
       "trace": "risk-aware-model-0",
-      "representation_class": "FML",
-      "reduction_loss": 0.09
+      "representation_class": "F0",
+      "reduction_loss": 0.0
     },
     "E_R": {
       "terms": [
@@ -135,7 +133,7 @@
         "rho_low",
         "rho_medium"
       ],
-      "uncertainty": 0.13448424756728927,
+      "uncertainty": 0.15245674103141332,
       "trace": "risk-module-0",
       "representation_class": "F0",
       "reduction_loss": 0.0
@@ -215,10 +213,9 @@
       "has_intervals": false,
       "has_multiple_experts": false,
       "has_source_conflict": false,
-      "requires_audit": true,
+      "requires_audit": false,
       "suggested_uncertainty_types": [
-        "u_num",
-        "u_trace"
+        "u_num"
       ],
       "metadata": {
         "expert_columns": [],
@@ -227,23 +224,22 @@
     },
     "xai_profile": [
       "u_ling",
-      "u_num",
-      "u_trace"
+      "u_num"
     ],
     "representation_selection": {
       "profile": [
         "u_ling",
-        "u_num",
-        "u_trace"
+        "u_num"
       ],
-      "selected_class": "FML-audit",
-      "representation_class": "FML",
-      "reduction_loss": 0.09,
+      "selected_class": "F0",
+      "representation_class": "F0",
+      "reduction_loss": 0.0,
       "reduction_policy": "canonical",
-      "reason": "multi-level/audit profile requires preserving several uncertainty types"
+      "reason": "numeric/linguistic uncertainty is covered by classical fuzzy representation"
     },
     "model": "random_forest",
-    "mode": "audit",
+    "mode": "user",
+    "excluded_metadata_columns": [],
     "target_classes": [
       "0",
       "1"

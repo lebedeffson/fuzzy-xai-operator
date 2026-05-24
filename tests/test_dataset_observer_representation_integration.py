@@ -30,10 +30,24 @@ def test_dataset_profile_selects_multilevel_representation():
 
 def test_dataset_observer_report_contains_selected_representation_and_objects():
     record = DatasetRecord('rich', 'unit-test', target_column='target')
-    result = DatasetObserverPipeline().run(record, _rich_uncertainty_df(), case_index=0)
+    result = DatasetObserverPipeline(mode='audit').run(record, _rich_uncertainty_df(), case_index=0)
     obs = result.observer_result
     assert obs['selected_representation'] == 'FML-audit'
     assert obs['composition_route'] == ['E_M_ext', 'E_R', 'E_A']
     assert obs['E_model_ext']['representation_class'] == obs['representation_class']
     assert obs['E_R']['trace'].startswith('risk-module')
     assert obs['E_A']['trace'].startswith('action')
+
+
+def test_plain_dataset_defaults_to_f0_representation():
+    df = pd.DataFrame({
+        'age': [30, 44, 52, 61, 73, 39, 48, 57, 69, 35, 42, 66],
+        'pressure': [110, 126, 140, 155, 168, 118, 133, 149, 172, 121, 136, 160],
+        'marker': [0.10, 0.20, 0.45, 0.71, 0.90, 0.18, 0.38, 0.63, 0.88, 0.22, 0.41, 0.80],
+        'target': [0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1],
+    })
+    record = DatasetRecord('plain', 'unit-test', target_column='target')
+    result = DatasetObserverPipeline().run(record, df, case_index=0)
+    assert result.trace['mode'] == 'user'
+    assert result.observer_result['selected_representation'] == 'F0'
+    assert result.observer_result['representation_class'] == 'F0'

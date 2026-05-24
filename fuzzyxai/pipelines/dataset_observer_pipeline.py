@@ -41,7 +41,7 @@ class DatasetObserverResult:
 
 
 class DatasetObserverPipeline:
-    def __init__(self, model_name: str = 'random_forest', mode: str = 'audit', random_state: int = 42) -> None:
+    def __init__(self, model_name: str = 'random_forest', mode: str = 'user', random_state: int = 42) -> None:
         self.model_name = model_name
         self.mode = mode
         self.random_state = random_state
@@ -60,7 +60,12 @@ class DatasetObserverPipeline:
 
         profile = infer_dataset_profile(df, requires_audit=(self.mode == 'audit'))
         x_raw, y_raw = split_features_target(df, target_column)
-        x_model = pd.get_dummies(x_raw, dummy_na=True)
+        excluded_metadata_columns = [
+            c for c in x_raw.columns
+            if str(c).lower().startswith(('expert_', 'source_'))
+        ]
+        x_for_model = x_raw.drop(columns=excluded_metadata_columns) if excluded_metadata_columns else x_raw
+        x_model = pd.get_dummies(x_for_model, dummy_na=True)
         y_encoder = LabelEncoder()
         y = pd.Series(y_encoder.fit_transform(y_raw), index=y_raw.index, name=target_column)
         if y.nunique() < 2:
@@ -123,6 +128,7 @@ class DatasetObserverPipeline:
                 'representation_selection': representation_selection.as_dict(),
                 'model': self.model_name,
                 'mode': self.mode,
+                'excluded_metadata_columns': excluded_metadata_columns,
                 'target_classes': [str(c) for c in y_encoder.classes_],
                 'route': 'dataset -> profile -> model -> E_M_ext -> I_pre -> rho -> action',
             },

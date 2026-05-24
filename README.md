@@ -170,6 +170,13 @@ make dataset-observer
 # или
 PYTHONPATH=. python examples/dataset_observer_demo.py --sample breast_cancer
 PYTHONPATH=. python examples/dataset_observer_demo.py --file data/my_dataset.csv --target target
+PYTHONPATH=. python examples/dataset_observer_demo.py --url https://raw.githubusercontent.com/Sheikh-talha01/Datasets/main/breast_cancer_data.csv
+```
+
+Для обычного Breast Cancer CSV без специальных метаданных селектор выбирает `F0`. Чтобы показать интервалы, экспертов и конфликт источников на том же файле, можно включить демонстрационные флаги:
+
+```bash
+PYTHONPATH=. python examples/dataset_observer_demo.py --url https://raw.githubusercontent.com/Sheikh-talha01/Datasets/main/breast_cancer_data.csv --simulate-intervals --simulate-experts --simulate-conflict --mode audit
 ```
 
 Отчёты:
@@ -265,7 +272,7 @@ PYTHONPATH=. python examples/thesis_demo.py
 Ожидаемый статус:
 
 ```text
-93 passed
+96 passed
 thesis validation: PASS
 thesis demo: PASS
 ```

@@ -31,6 +31,8 @@ dataset -> data profile -> A_M^F -> model -> E_M^ext -> I_pre -> rho(x) -> E_R -
 PYTHONPATH=. python examples/dataset_observer_demo.py --sample breast_cancer
 ```
 
+По умолчанию используется режим `--mode user`: если в датасете нет интервальных, экспертных или конфликтных метаданных, выбирается `A_M^F = F0`.
+
 Локальный файл:
 
 ```bash
@@ -42,6 +44,25 @@ PYTHONPATH=. python examples/dataset_observer_demo.py --file data/my_dataset.csv
 ```bash
 PYTHONPATH=. python examples/dataset_observer_demo.py --url "https://example.org/dataset.csv" --target target
 ```
+
+Проверка на Breast Cancer Wisconsin CSV:
+
+```bash
+PYTHONPATH=. python examples/dataset_observer_demo.py \
+  --url https://raw.githubusercontent.com/Sheikh-talha01/Datasets/main/breast_cancer_data.csv
+```
+
+Ожидаемый смысл отчёта: `diagnosis` определяется как целевая колонка, а выбранное представление остаётся `F0`, потому что специальных метаданных неопределённости нет.
+
+Для демонстрации более сложных представлений без большого CIT-архива можно искусственно добавить метаданные:
+
+```bash
+PYTHONPATH=. python examples/dataset_observer_demo.py \
+  --url https://raw.githubusercontent.com/Sheikh-talha01/Datasets/main/breast_cancer_data.csv \
+  --simulate-intervals --simulate-experts --simulate-conflict --mode audit
+```
+
+Такой запуск добавляет `*_min/*_max`, `expert_*` и `source_*` поля, поэтому селектор главы 3 выбирает многоуровневое представление.
 
 ## Соответствие диссертации
 

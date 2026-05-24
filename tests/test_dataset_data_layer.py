@@ -50,6 +50,19 @@ def test_cit_client_wraps_local_file(tmp_path):
     assert record.as_trace()['target_column'] == 'label'
 
 
+def test_loader_drops_trailing_empty_unnamed_column(tmp_path):
+    path = tmp_path / 'wdbc_like.csv'
+    path.write_text('id,diagnosis,x,\n1,M,0.2,\n2,B,0.1,\n', encoding='utf-8')
+    df = load_table_dataset(path)
+    assert list(df.columns) == ['id', 'diagnosis', 'x']
+    assert guess_target_column(df) == 'diagnosis'
+
+
+def test_cit_client_normalizes_github_blob_url():
+    url = 'https://github.com/org/repo/blob/main/data/table.csv'
+    assert CITRegistryDatasetClient.normalize_direct_url(url) == 'https://raw.githubusercontent.com/org/repo/main/data/table.csv'
+
+
 def test_unsupported_dataset_format_is_rejected(tmp_path):
     path = tmp_path / 'bad.txt'
     path.write_text('x')
