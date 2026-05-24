@@ -261,6 +261,7 @@ PYTHONPATH=. python proofs/run_all_proofs.py
 make proof
 make formal-proof
 make category-hott-test
+make chapter2-breast-cancer-demo
 make chapter5-experiments
 make chapter5-demo
 make chapter5-latex
@@ -276,7 +277,7 @@ PYTHONPATH=. python examples/thesis_demo.py
 Ожидаемый статус:
 
 ```text
-113 passed
+116 passed
 thesis validation: PASS
 thesis demo: PASS
 ```
@@ -284,6 +285,8 @@ thesis demo: PASS
 ## Отчёты
 
 Глава 5: `reports/chapter5/chapter5_experiments.md`, `chapter5_demo.json`, CSV/LaTeX-таблицы и `sensitivity_w_R.html`.
+
+Глава 2 (real-data): `reports/chapter2/chapter2_breast_cancer_summary.md`, `reports/chapter2/i_pre_distribution.html`.
 
 
 Сгенерированные артефакты сохраняются в `reports/`.

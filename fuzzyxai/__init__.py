@@ -20,11 +20,13 @@ __all__ = [
     'reduce_to_f0','reduction_loss','build_profile','Candidate','select_minimal_sufficient','pareto_front'
 ]
 from .api import FuzzyXAIPipeline, ExplanationResult
-from .risk import RiskAction, RiskDecision, RiskPolicy, RiskAwareModel
+from .risk import RiskAction, RiskDecision, RiskPolicy, RiskAwareModel, RiskAwareObserver
 from .data import DatasetRecord, infer_dataset_profile
 from .rules import bootstrap_lofo_f1_importance, lofo_f1_importance, select_top_rules_by_lofo_f1
+from .trust import compute_interpretability_index
 
 __all__ += ['FuzzyXAIPipeline', 'ExplanationResult']
-__all__ += ['RiskAction', 'RiskDecision', 'RiskPolicy', 'RiskAwareModel']
+__all__ += ['RiskAction', 'RiskDecision', 'RiskPolicy', 'RiskAwareModel', 'RiskAwareObserver']
 __all__ += ['DatasetRecord', 'infer_dataset_profile']
 __all__ += ['lofo_f1_importance', 'bootstrap_lofo_f1_importance', 'select_top_rules_by_lofo_f1']
+__all__ += ['compute_interpretability_index']

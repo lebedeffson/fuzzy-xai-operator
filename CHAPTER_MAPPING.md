@@ -68,6 +68,7 @@
 | Выбор `A_M^F` в dataset pipeline | `fuzzyxai/risk/representation_selection.py` | `tests/test_dataset_observer_representation_integration.py` |
 | Объекты `E_R`, `E_A` в отчёте | `fuzzyxai/risk/risk_aware_model.py` | `tests/test_dataset_observer_representation_integration.py` |
 | Исполняемый сценарий наблюдателя | `full_observer_pipeline.py` | `make full-observer` |
+| Пороговый наблюдатель с калибровкой | `fuzzyxai/risk/risk_observer.py`, `risk_observer_config.py` | `tests/test_risk_observer_thresholds.py` |
 
 ## LOFO-F1 Rule Pruning
 
@@ -111,6 +112,7 @@
 | Calibrated observer demo | `experiments/chapter5_demo.py` | `reports/chapter5/chapter5_demo.json` |
 | LaTeX-таблицы главы 5 | `experiments/export_chapter5_latex.py` | `reports/chapter5/latex/` |
 | Загрузка калиброванных весов | `fuzzyxai/risk/risk_observer_config.py` | `tests/test_calibrated_observer_report_consistency.py` |
+| Chapter 2 real-data `I_pre` demo | `experiments/chapter2_breast_cancer_demo.py`, `fuzzyxai/data/breast_cancer_adapter.py`, `fuzzyxai/trust/trust_evaluator.py` | `tests/test_chapter2_breast_cancer_demo_smoke.py` |
 
 ## Финальные артефакты проверки
 
@@ -130,3 +132,4 @@
 - Implementation inventory -> `docs/IMPLEMENTATION_INVENTORY_VNEXT_RU.md`.
 - Categorical/HoTT appendix -> `docs/CATEGORICAL_HOTT_EXTENSION_RU.md`, `fuzzyxai/category/`, `fuzzyxai/hott/`.
 - Category/HoTT report -> `proofs/category_hott_checks.py` -> `reports/category_hott/category_hott_checks.md`.
+- Chapter 2 real-data demo -> `experiments/chapter2_breast_cancer_demo.py` -> `reports/chapter2/chapter2_breast_cancer_summary.md`, `reports/chapter2/i_pre_distribution.html`.

@@ -10,11 +10,33 @@ from .decision_policy import RiskPolicy
 from .risk_function import normalize_risk_weights
 
 DEFAULT_CALIBRATED_WEIGHTS_PATH = Path('reports/chapter5/chapter5_experiments.json')
+DEFAULT_THRESHOLDS = (0.10, 0.25, 0.50, 0.75)
 
 
 def load_calibrated_risk_weights(path: str | Path = DEFAULT_CALIBRATED_WEIGHTS_PATH) -> dict[str, float]:
     data = json.loads(Path(path).read_text(encoding='utf-8'))
     return normalize_risk_weights(data['calibration']['weights'])
+
+
+def load_thresholds(
+    plan: ExplainPlan | None = None,
+    path: str | Path = DEFAULT_CALIBRATED_WEIGHTS_PATH,
+) -> tuple[float, float, float, float]:
+    if plan is not None and isinstance(plan.metadata, dict):
+        raw = plan.metadata.get('thresholds')
+        if isinstance(raw, (list, tuple)) and len(raw) == 4:
+            vals = tuple(float(v) for v in raw)
+            return vals if list(vals) == sorted(vals) else DEFAULT_THRESHOLDS
+    try:
+        data = json.loads(Path(path).read_text(encoding='utf-8'))
+        raw = data.get('calibration', {}).get('thresholds')
+        if isinstance(raw, (list, tuple)) and len(raw) == 4:
+            vals = tuple(float(v) for v in raw)
+            if list(vals) == sorted(vals):
+                return vals
+    except Exception:
+        pass
+    return DEFAULT_THRESHOLDS
 
 
 def weights_from_explain_plan(plan: ExplainPlan, fallback: Mapping[str, float] | None = None) -> dict[str, float]:

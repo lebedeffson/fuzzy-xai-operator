@@ -1,0 +1,11 @@
+{
+  "dataset": "sklearn_breast_cancer",
+  "n_test": 143,
+  "n_evaluated": 143,
+  "model_accuracy": 0.951048951048951,
+  "model_roc_auc": 0.9937106918238994,
+  "i_pre_mean": 0.8438229499555998,
+  "i_pre_median": 0.877933761300908,
+  "i_pre_q05": 0.6643054946509654,
+  "i_pre_q95": 0.9027789296592628
+}
