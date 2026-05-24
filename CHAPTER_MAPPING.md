@@ -52,6 +52,15 @@
 | Benchmark наблюдателя | `benchmarks/risk_aware_observer_benchmark.py` | `tests/test_risk_aware_benchmark.py` |
 | GUI-раздел наблюдателя | `apps/defense_demo.py` | `tests/test_defense_demo.py` |
 
+## Active Risk-Aware XAI Observer
+
+| Компонент | Реализация | Проверка |
+|---|---|---|
+| Расширенный объект `E_M^ext` над прогнозным интерфейсом | `fuzzyxai/risk/observer_pipeline.py` | `tests/test_full_observer_pipeline.py` |
+| Риск автоматического применения `rho(x)` | `RiskPolicy.risk_score` | `tests/test_full_observer_pipeline.py` |
+| Композиция `E_D o E_R o E_M^ext` | `ObserverPipeline.explain_case` | `reports/full_observer_pipeline/full_observer_pipeline.md` |
+| Исполняемый сценарий наблюдателя | `full_observer_pipeline.py` | `make full-observer` |
+
 ## LOFO-F1 Rule Pruning
 
 | Компонент | Реализация | Проверка |
@@ -68,3 +77,5 @@
 - Risk-Aware Observer benchmark -> `benchmarks/risk_aware_observer_benchmark.py` -> `reports/risk_aware_observer_benchmark.json` и `reports/risk_aware_observer_benchmark.md`.
 - Полная демонстрация -> `full_pipeline_demo.py` -> `reports/full_demo/index.html`, `reports/full_demo/full_pipeline_report.json`.
 - LOFO-F1 rule pruning -> `benchmarks/lofo_f1_rule_pruning_demo.py` -> `reports/lofo_f1_rule_pruning.json` и `reports/lofo_f1_rule_pruning.md`.
+
+- Full observer pipeline -> `full_observer_pipeline.py` -> `reports/full_observer_pipeline/full_observer_pipeline.json`, `reports/full_observer_pipeline/full_observer_pipeline.md`.

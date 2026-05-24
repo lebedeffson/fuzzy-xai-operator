@@ -1,0 +1,10 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><title>Full observer pipeline</title>
+<style>body{font-family:Arial,sans-serif;max-width:1080px;margin:32px auto;color:#172033;line-height:1.45}.card{border:1px solid #d9e2ec;border-radius:14px;padding:18px;margin:16px 0}.kpi{display:inline-block;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:12px;margin:6px;min-width:150px}.kpi b{display:block;font-size:22px;color:#0f766e}table{border-collapse:collapse;width:100%}td,th{border:1px solid #d9e2ec;padding:8px}th{background:#f1f5f9}</style></head>
+<body><h1>Risk-aware XAI observer</h1><p>observer does not modify model parameters; it determines the admissible mode of prediction use</p>
+<div class="card"><h2>Route</h2><p><code>data -&gt; model prediction -&gt; E_M_ext -&gt; A_M^F -&gt; E_R -&gt; E_D -&gt; E_G -&gt; RiskPolicy -&gt; safe_action</code></p></div>
+<div class="card"><h2>Case</h2><table><tr><th>feature</th><th>value</th></tr><tr><td>age</td><td>60.0000</td></tr><tr><td>pressure</td><td>147.0000</td></tr><tr><td>marker</td><td>4.8000</td></tr></table></div>
+<div class="card"><h2>Observer output</h2>
+<div class="kpi">risk_score<b>0.9249</b></div><div class="kpi">u_M<b>0.3145</b></div><div class="kpi">A_M^F<b>FML-audit</b></div><div class="kpi">Delta<b>0.1963</b></div><div class="kpi">I(E_G)<b>0.7079</b></div><div class="kpi">rho<b>0.4439</b></div><div class="kpi">action<b>lower_confidence</b></div><p>medium risk: accept only with lower confidence</p></div>
+<div class="card"><h2>Composition</h2><table><tr><th>source</th><th>target</th><th>gamma</th><th>severity</th></tr><tr><td>Model</td><td>RiskModule</td><td>0.4439</td><td>orange</td></tr><tr><td>RiskModule</td><td>Decision</td><td>0.3504</td><td>orange</td></tr></table></div>
+</body></html>

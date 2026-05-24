@@ -114,6 +114,48 @@ python apps/nicegui_dashboard.py --port 8080
 
 Его стоит использовать для загрузки CSV, синтеза `FML`, просмотра отчётов, экспорта сессий и проверки примеров диссертации. Для презентации лучше использовать `apps/defense_demo.py`.
 
+
+## Risk-Aware XAI Observer
+
+Новый слой над главами 2-3: системный оператор используется как внешний наблюдающий контур над моделью с прогнозным интерфейсом. Он не меняет параметры модели, а строит `E_M^ext`, выбирает `A_M^F`, считает неопределённость, `Delta`, `I(E_G)`, диагностические разрывы и риск автоматического применения прогноза.
+
+Ключевая функция риска:
+
+```text
+rho = w_p*rho_p + w_u*u_M + w_I*(1 - I(E_G)) + w_Delta*Delta_M + w_D*1[D != empty]
+```
+
+Действия наблюдателя:
+
+- `accept`
+- `lower_confidence`
+- `request_more_data`
+- `defer_to_human`
+- `block`
+
+Запуск центрального контура:
+
+```bash
+make full-observer
+# или
+PYTHONPATH=. python full_observer_pipeline.py --open
+```
+
+Отчёты:
+
+- `reports/full_observer_pipeline/full_observer_pipeline.json`
+- `reports/full_observer_pipeline/full_observer_pipeline.md`
+- `reports/full_observer_pipeline/full_observer_pipeline.html`
+
+Минимальный API:
+
+```python
+from fuzzyxai.risk import build_full_observer_pipeline_report
+
+report = build_full_observer_pipeline_report()
+print(report["with_observer"]["safe_action"])
+```
+
 ## Risk-Aware Observer
 
 Добавлен риск-ориентированный наблюдатель модели. Он не меняет модель, а работает как decision gate поверх неё: получает `predict_proba`, оценивает неопределённость, строит `E_k`, учитывает `I(E)`, `Delta`, диагностические состояния и выбирает безопасное действие.
@@ -200,7 +242,7 @@ PYTHONPATH=. python examples/thesis_demo.py
 Ожидаемый статус:
 
 ```text
-47 passed
+49 passed
 thesis validation: PASS
 thesis demo: PASS
 ```
@@ -248,7 +290,7 @@ fuzzyxai/
   hierarchy/     F0, interval, hesitant, neutrosophic, multilevel классы
   selection/     построение профиля, совместимость, Парето-выбор
   calibration/   калибровка beta и кросс-валидация
-  risk/          Risk-Aware Observer: неопределённость, политика, метрики
+  risk/          Risk-Aware Observer: неопределённость, политика, метрики, observer pipeline
   rules/         LOFO-F1 и стабильный отбор правил
   visual/        Plotly-графики функций принадлежности и композиции
   demo/          детерминированные demo-данные и сборщики примеров

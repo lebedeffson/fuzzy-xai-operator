@@ -1,0 +1,153 @@
+{
+  "title": "Risk-aware XAI observer as an active layer over chapters 2 and 3",
+  "status": "PASS",
+  "thesis_layer": "active risk-oriented observer over a predictive interface",
+  "claim": "observer does not modify model parameters; it determines the admissible mode of prediction use",
+  "route": [
+    "data",
+    "model prediction",
+    "E_M_ext",
+    "A_M^F",
+    "E_R",
+    "E_D",
+    "E_G",
+    "RiskPolicy",
+    "safe_action"
+  ],
+  "data": {
+    "rows": 12,
+    "features": [
+      "age",
+      "pressure",
+      "marker"
+    ],
+    "target": "target"
+  },
+  "case": {
+    "index": 2,
+    "values": {
+      "age": 60.0,
+      "pressure": 147.0,
+      "marker": 4.8
+    }
+  },
+  "model": {
+    "name": "sklearn Pipeline(StandardScaler, LogisticRegression)",
+    "interface": "predict_proba"
+  },
+  "without_observer": {
+    "raw_prediction": 1,
+    "risk_score": 0.9248513831502072,
+    "available_information": [
+      "raw_prediction",
+      "risk_score",
+      "raw_proba"
+    ],
+    "limitation": "без наблюдателя нет E_M^ext, Delta, gamma, I(E_G), D_ij и безопасного действия"
+  },
+  "with_observer": {
+    "raw_prediction": 1,
+    "raw_proba": [
+      0.0751486168497928,
+      0.9248513831502072
+    ],
+    "risk_score": 0.9248513831502072,
+    "uncertainty": 0.31448415262686724,
+    "entropy_uncertainty": 0.3848499750242737,
+    "margin_uncertainty": 0.1502972336995856,
+    "confidence": 0.6855158473731328,
+    "E_model_ext": {
+      "terms": [
+        "high",
+        "low",
+        "medium"
+      ],
+      "active_rules": [
+        "model_high_risk"
+      ],
+      "uncertainty": 0.15924207631343362,
+      "trace": "E_M_model"
+    },
+    "selected_representation": "FML-audit",
+    "representation_class": "FML",
+    "profile": [
+      "u_conf",
+      "u_exp",
+      "u_int",
+      "u_ling",
+      "u_multi",
+      "u_num",
+      "u_trace"
+    ],
+    "Delta": 0.19625000000000004,
+    "reduction_policy": "canonical",
+    "gamma": [
+      0.443873,
+      0.350401
+    ],
+    "I_EG": 0.7078779094343393,
+    "diagnostic_state": [],
+    "risk_value": 0.4439383712149111,
+    "safe_action": "lower_confidence",
+    "human_readable_reason": "medium risk: accept only with lower confidence",
+    "corrected_confidence": 0.21688013357541583,
+    "composition_edges": [
+      {
+        "source": "Model",
+        "target": "RiskModule",
+        "gamma": 0.443873,
+        "severity": "orange",
+        "left_terms": [
+          "high",
+          "low",
+          "medium"
+        ],
+        "right_terms": [
+          "high",
+          "low",
+          "medium"
+        ],
+        "left_active_rules": [
+          "model_high_risk"
+        ],
+        "right_active_rules": [
+          "risk_gate_low",
+          "risk_gate_medium"
+        ],
+        "left_delta": 0.19625000000000004,
+        "right_delta": 0.0
+      },
+      {
+        "source": "RiskModule",
+        "target": "Decision",
+        "gamma": 0.350401,
+        "severity": "orange",
+        "left_terms": [
+          "high",
+          "low",
+          "medium"
+        ],
+        "right_terms": [
+          "high",
+          "low",
+          "medium"
+        ],
+        "left_active_rules": [
+          "risk_gate_low",
+          "risk_gate_medium"
+        ],
+        "right_active_rules": [
+          "decision_lower_confidence"
+        ],
+        "left_delta": 0.0,
+        "right_delta": 0.0
+      }
+    ]
+  },
+  "math": {
+    "model_interface": "M(x)=p(x), r_M(x)=p_1(x)",
+    "extended_explanation": "E_M^ext=<L_M,A_M^F,R_M,alpha_M,u_M,tau_M,Delta_M>",
+    "risk": "rho=w_p*rho_p+w_u*u_M+w_I*(1-I(E_G))+w_Delta*Delta_M+w_D*1[D!=empty]",
+    "composition": "E_G=E_D o E_R o E_M^ext"
+  }
+}
