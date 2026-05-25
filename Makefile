@@ -2,7 +2,7 @@ PYTHON ?= $(shell if [ -x /home/lebedeffson/Code/venv/bin/python ]; then echo /h
 PYTHONPATH := .
 PORT ?= 8085
 
-.PHONY: install test risk-test category-hott-test chapter2-breast-cancer-demo chapter5-experiments chapter5-demo chapter5-latex full-pipeline figures full-experiments demo dashboard proof formal-proof thesis full-demo full-observer dataset-observer benchmark operator-benchmark risk-benchmark lofo-f1-demo clean
+.PHONY: install test risk-test category-hott-test chapter2-breast-cancer-demo chapter5-experiments chapter5-demo chapter5-latex web-demo full-pipeline figures full-experiments demo dashboard proof formal-proof thesis full-demo full-observer dataset-observer benchmark operator-benchmark risk-benchmark lofo-f1-demo clean
 
 install:
 	$(PYTHON) -m pip install -r requirements.txt
@@ -28,6 +28,9 @@ chapter5-demo:
 
 chapter5-latex:
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) experiments/export_chapter5_latex.py
+
+web-demo:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) apps/chapter5_web_demo.py --port $(PORT)
 
 full-pipeline:
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) experiments/full_pipeline_demo.py --out-dir reports/full_pipeline

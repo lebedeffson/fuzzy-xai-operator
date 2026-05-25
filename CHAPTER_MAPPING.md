@@ -53,6 +53,7 @@
 | Метрики покрытия, стоимости и риска | `fuzzyxai/risk/metrics.py` | `tests/test_risk_metrics.py` |
 | Benchmark наблюдателя | `benchmarks/risk_aware_observer_benchmark.py` | `tests/test_risk_aware_benchmark.py` |
 | GUI-раздел наблюдателя | `apps/defense_demo.py` | `tests/test_defense_demo.py` |
+| Web demo главы 5 | `apps/chapter5_web_demo.py` | `tests/test_chapter5_web_demo_smoke.py` |
 
 ## Active Risk-Aware XAI Observer
 

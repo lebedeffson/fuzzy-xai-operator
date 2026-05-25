@@ -265,6 +265,7 @@ make chapter2-breast-cancer-demo
 make chapter5-experiments
 make chapter5-demo
 make chapter5-latex
+make web-demo
 make full-pipeline
 make figures
 make full-experiments
@@ -280,7 +281,7 @@ PYTHONPATH=. python examples/thesis_demo.py
 Ожидаемый статус:
 
 ```text
-119 passed
+120 passed
 thesis validation: PASS
 thesis demo: PASS
 ```
