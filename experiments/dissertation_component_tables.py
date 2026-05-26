@@ -12,6 +12,26 @@ from fuzzyxai.datasets import list_dataset_modes, load_dataset_mode
 ROOT = Path(__file__).resolve().parents[1]
 
 
+def _fmt(v: Any) -> str:
+    if v is None:
+        return 'N/A'
+    if isinstance(v, float):
+        if v != v:
+            return 'NaN'
+        return f'{v:.6f}'.rstrip('0').rstrip('.')
+    return str(v)
+
+
+def _tex_escape(text: str) -> str:
+    return (
+        text.replace('\\', '\\textbackslash{}')
+        .replace('_', '\\_')
+        .replace('%', '\\%')
+        .replace('&', '\\&')
+        .replace('#', '\\#')
+    )
+
+
 def _load_dataset_rows() -> list[dict[str, Any]]:
     rows: list[dict[str, Any]] = []
     for spec in list_dataset_modes():
@@ -154,15 +174,39 @@ def _md_table(headers: list[str], rows: list[list[Any]]) -> str:
     return '\n'.join(out)
 
 
+def _latex_table(headers: list[str], rows: list[list[Any]], caption: str, label: str) -> str:
+    col_spec = '|'.join(['l'] * len(headers))
+    out = [
+        '\\begin{table}[h]',
+        '\\centering',
+        f'\\caption{{{_tex_escape(caption)}}}',
+        f'\\label{{{_tex_escape(label)}}}',
+        f'\\begin{{tabular}}{{|{col_spec}|}}',
+        '\\hline',
+        ' & '.join(_tex_escape(h) for h in headers) + ' \\\\',
+        '\\hline',
+    ]
+    for row in rows:
+        out.append(' & '.join(_tex_escape(str(x)) for x in row) + ' \\\\')
+        out.append('\\hline')
+    out += ['\\end{tabular}', '\\end{table}', '']
+    return '\n'.join(out)
+
+
 def generate(out_dir: Path) -> dict[str, Any]:
     out_dir.mkdir(parents=True, exist_ok=True)
     dataset_rows = _load_dataset_rows()
     component_rows = _component_rows()
     case_rows = _case_rows()
+    quantitative_keys = {'breast_cancer', 'diabetes_binary', 'wine_risk', 'synthetic_ruptures'}
+    quantitative_rows = [r for r in dataset_rows if r['dataset_mode'] in quantitative_keys]
+    registry_rows = [r for r in dataset_rows if r['dataset_mode'].startswith('registry_')]
 
     payload = {
         'components': component_rows,
         'datasets': dataset_rows,
+        'quantitative_datasets': quantitative_rows,
+        'registry_datasets': registry_rows,
         'observer_cases': case_rows,
         'policy': [
             {'condition': 'chi_R^crit(x)=1', 'action': 'block', 'meaning': 'критический разрыв'},
@@ -189,32 +233,70 @@ def generate(out_dir: Path) -> dict[str, Any]:
     md_lines += ['', '## 2) Датасеты и готовность', '']
     md_lines.append(
         _md_table(
-            ['Dataset mode', 'Domain', 'Status', 'Rows', 'What validates'],
-            [
-                [r['dataset_mode'], r['domain'], r['status'], r['rows'] if r['rows'] is not None else '-', r['validates']]
-                for r in dataset_rows
-            ],
-        )
-    )
-    md_lines += ['', '## 3) Метрики по датасетам (benchmark)', '']
-    md_lines.append(
-        _md_table(
-            ['Dataset', 'Acc', 'ROC AUC', 'Observer action acc', 'mean_I_pre', 'mean_rho', 'rupture_rate'],
+            ['Dataset mode', 'Domain', 'Rows', 'Status', 'Pipeline', 'What validates'],
             [
                 [
                     r['dataset_mode'],
-                    (r['summary'] or {}).get('model_accuracy', '-'),
-                    (r['summary'] or {}).get('model_roc_auc', '-'),
-                    (r['summary'] or {}).get('observer_action_accuracy', '-'),
-                    (r['summary'] or {}).get('mean_I_pre', '-'),
-                    (r['summary'] or {}).get('mean_rho', '-'),
-                    (r['summary'] or {}).get('rupture_rate', '-'),
+                    r['domain'],
+                    r['rows'] if r['rows'] is not None else '-',
+                    r['status'],
+                    _fmt((r['summary'] or {}).get('pipeline_completed', None)),
+                    r['validates'],
                 ]
                 for r in dataset_rows
             ],
         )
     )
-    md_lines += ['', '## 4) Кейсы наблюдателя по слоям', '']
+    md_lines += ['', '## 3) Количественная проверка (встроенные режимы)', '']
+    md_lines.append(
+        _md_table(
+            [
+                'Dataset',
+                'Acc',
+                'ROC AUC',
+                'Observer action acc',
+                'Observer proxy acc',
+                'Rupture rate',
+                'Crit rupture rate',
+                'positive_rate',
+                'score_std',
+                'Note',
+            ],
+            [
+                [
+                    r['dataset_mode'],
+                    _fmt((r['summary'] or {}).get('model_accuracy', None)),
+                    _fmt((r['summary'] or {}).get('model_roc_auc', None)),
+                    _fmt((r['summary'] or {}).get('observer_action_accuracy', None)),
+                    _fmt((r['summary'] or {}).get('observer_action_proxy_accuracy', None)),
+                    _fmt((r['summary'] or {}).get('rupture_rate', None)),
+                    _fmt((r['summary'] or {}).get('critical_rupture_rate', None)),
+                    _fmt((r['summary'] or {}).get('positive_rate', None)),
+                    _fmt((r['summary'] or {}).get('score_std', None)),
+                    str((r['summary'] or {}).get('notes', '-')),
+                ]
+                for r in quantitative_rows
+            ],
+        )
+    )
+    md_lines += ['', '## 4) Registry-режимы: readiness и ограничения интерпретации', '']
+    md_lines.append(
+        _md_table(
+            ['Dataset', 'Pipeline', 'Observer action acc applicable', 'Observer action acc', 'ROC reason', 'Limitation'],
+            [
+                [
+                    r['dataset_mode'],
+                    _fmt((r['summary'] or {}).get('pipeline_completed', None)),
+                    _fmt((r['summary'] or {}).get('observer_action_accuracy_applicable', None)),
+                    _fmt((r['summary'] or {}).get('observer_action_accuracy', None)),
+                    _fmt((r['summary'] or {}).get('reason_if_roc_auc_nan_or_05', None)),
+                    _fmt((r['summary'] or {}).get('notes', None)),
+                ]
+                for r in registry_rows
+            ],
+        )
+    )
+    md_lines += ['', '## 5) Кейсы наблюдателя по слоям', '']
     md_lines.append(
         _md_table(
             ['Scenario', 'predicted_risk', 'uncertainty', 'selected_class', 'Delta', 'I_pre', 'rho', 'chi_R', 'chi_R_crit', 'action'],
@@ -224,7 +306,7 @@ def generate(out_dir: Path) -> dict[str, Any]:
             ],
         )
     )
-    md_lines += ['', '## 5) Пороговая политика', '']
+    md_lines += ['', '## 6) Пороговая политика', '']
     md_lines.append(
         _md_table(
             ['Условие', 'Действие', 'Пояснение'],
@@ -235,6 +317,46 @@ def generate(out_dir: Path) -> dict[str, Any]:
     md_lines.append('Примечание: для MosMed оригинальный архив ~104.9GB, в локальном контуре используется малый табличный аудит-слепок.')
 
     (out_dir / 'dissertation_component_tables.md').write_text('\n'.join(md_lines), encoding='utf-8')
+
+    readiness_tex_headers = ['Mode', 'Domain', 'Rows', 'Status', 'Pipeline', 'Validates']
+    readiness_tex_rows = [
+        [
+            r['dataset_mode'],
+            r['domain'],
+            r['rows'] if r['rows'] is not None else '-',
+            r['status'],
+            _fmt((r['summary'] or {}).get('pipeline_completed', None)),
+            r['validates'],
+        ]
+        for r in dataset_rows
+    ]
+    quantitative_tex_headers = ['Dataset', 'Acc', 'ROC AUC', 'Proxy acc', 'Rupture', 'Crit rupture', 'positive_rate', 'note']
+    quantitative_tex_rows = [
+        [
+            r['dataset_mode'],
+            _fmt((r['summary'] or {}).get('model_accuracy', None)),
+            _fmt((r['summary'] or {}).get('model_roc_auc', None)),
+            _fmt((r['summary'] or {}).get('observer_action_proxy_accuracy', None)),
+            _fmt((r['summary'] or {}).get('rupture_rate', None)),
+            _fmt((r['summary'] or {}).get('critical_rupture_rate', None)),
+            _fmt((r['summary'] or {}).get('positive_rate', None)),
+            _fmt((r['summary'] or {}).get('reason_if_roc_auc_nan_or_05', None)),
+        ]
+        for r in quantitative_rows
+    ]
+    (out_dir / 'dissertation_table_readiness.tex').write_text(
+        _latex_table(readiness_tex_headers, readiness_tex_rows, 'Dataset readiness modes', 'tab:dataset_readiness'),
+        encoding='utf-8',
+    )
+    (out_dir / 'dissertation_table_quantitative.tex').write_text(
+        _latex_table(
+            quantitative_tex_headers,
+            quantitative_tex_rows,
+            'Quantitative validation on built-in datasets',
+            'tab:dataset_quantitative',
+        ),
+        encoding='utf-8',
+    )
     return payload
 
 

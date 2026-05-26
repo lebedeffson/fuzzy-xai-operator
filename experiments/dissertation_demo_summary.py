@@ -11,6 +11,12 @@ from experiments.real_reduction_example import generate_real_reduction_example
 from fuzzyxai.datasets import list_dataset_modes, load_dataset_mode
 
 
+def _fmt(v: Any) -> str:
+    if v is None:
+        return 'N/A'
+    return str(v)
+
+
 def _dataset_mode_status() -> list[dict[str, Any]]:
     rows: list[dict[str, Any]] = []
     for spec in list_dataset_modes():
@@ -82,6 +88,34 @@ def generate_summary(*, out_dir: str | Path = 'reports') -> dict[str, Any]:
 
     md_lines += [
         '',
+        '## Quantitative validation (built-in modes)',
+        '',
+        '| dataset | acc | roc_auc | observer_action_acc | observer_proxy_acc | rupture_rate |',
+        '|---|---:|---:|---:|---:|---:|',
+    ]
+    for key in ['breast_cancer', 'diabetes_binary', 'wine_risk', 'synthetic_ruptures']:
+        row = benchmark.get(key, {})
+        md_lines.append(
+            f"| {key} | {_fmt(row.get('model_accuracy'))} | {_fmt(row.get('model_roc_auc'))} | "
+            f"{_fmt(row.get('observer_action_accuracy'))} | {_fmt(row.get('observer_action_proxy_accuracy'))} | {_fmt(row.get('rupture_rate'))} |"
+        )
+
+    md_lines += [
+        '',
+        '## Registry modes (readiness and limitations)',
+        '',
+        '| dataset | pipeline_completed | observer_action_acc_applicable | observer_action_acc | note |',
+        '|---|---:|---:|---:|---|',
+    ]
+    for key in ['registry_programs', 'registry_mosmed_doctor_analysis', 'registry_steel_ir']:
+        row = benchmark.get(key, {})
+        md_lines.append(
+            f"| {key} | {_fmt(row.get('pipeline_completed'))} | {_fmt(row.get('observer_action_accuracy_applicable'))} | "
+            f"{_fmt(row.get('observer_action_accuracy'))} | {_fmt(row.get('notes'))} |"
+        )
+
+    md_lines += [
+        '',
         '## Real reduction example',
         '',
         f"- object: `{real_reduction['object']}`",
@@ -93,6 +127,7 @@ def generate_summary(*, out_dir: str | Path = 'reports') -> dict[str, Any]:
         '',
         '- Registry modes may remain `MISSING` until local files are connected.',
         '- Benchmark timing is prototype-level per object and excludes I/O.',
+        '- `observer_action_accuracy` is `N/A` when expert action labels are absent.',
     ]
     md_path.write_text('\n'.join(md_lines), encoding='utf-8')
     return summary

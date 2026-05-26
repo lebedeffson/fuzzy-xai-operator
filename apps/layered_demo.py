@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+import json
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -184,6 +185,16 @@ def _dataset_status_rows() -> list[dict[str, str]]:
             }
         )
     return rows
+
+
+def _load_benchmark_summary(dataset_mode: str) -> dict[str, Any] | None:
+    p = ROOT / f'reports/datasets/{dataset_mode}/summary.json'
+    if not p.exists():
+        return None
+    try:
+        return json.loads(p.read_text(encoding='utf-8'))
+    except Exception:
+        return None
 
 
 def _explain_block(
@@ -499,13 +510,29 @@ def run_ui(port: int = 8096) -> None:  # pragma: no cover
                         try:
                             pipeline = DatasetObserverPipeline(model_name='random_forest', mode='audit')
                             ds_result = pipeline.run(record, df, case_index=0)
+                            summary = _load_benchmark_summary(mode_key) or {}
+                            obs_acc = summary.get('observer_action_accuracy')
+                            obs_acc_txt = _num(obs_acc) if obs_acc is not None else 'N/A'
+                            proxy_acc_txt = _num(summary.get('observer_action_proxy_accuracy'))
+                            applicability = summary.get('observer_action_accuracy_applicable')
+                            applicability_txt = 'yes' if applicability else 'no'
+                            limitation = summary.get('notes', 'summary not generated yet')
+                            read_hint = (
+                                'registry mode: оцениваем readiness/pipeline_completed и ограничения интерпретации.'
+                                if mode_key.startswith('registry_')
+                                else 'built-in mode: смотрим acc/roc_auc/rupture_rate, proxy action consistency и риск.'
+                            )
                             mode_preview.content = (
                                 f"**Dataset mode check:** `{mode_key}`  \n"
                                 f"Domain: `{record.metadata.get('domain', 'n/a')}`  \n"
+                                f"Pipeline status: `completed`  \n"
                                 f"Action: `{ds_result.observer_result['action']}`, "
                                 f"rho=`{_num(ds_result.observer_result['application_risk'])}`, "
                                 f"repr=`{ds_result.observer_result['selected_representation']}`  \n"
-                                f"Observer accuracy: `{_num(ds_result.observer_action_accuracy)}`"
+                                f"Observer action acc: `{obs_acc_txt}` (applicable=`{applicability_txt}`)  \n"
+                                f"Observer proxy acc: `{proxy_acc_txt}`  \n"
+                                f"How to read: {read_hint}  \n"
+                                f"Limitation: {limitation}"
                             )
                         except Exception as exc:
                             mode_preview.content = (
@@ -813,6 +840,12 @@ def run_ui(port: int = 8096) -> None:  # pragma: no cover
                             rows=reports.baseline.to_dict(orient='records'),
                             pagination=10,
                         ).classes('w-full')
+                    ui.markdown(
+                        '**Как читать benchmark:**  \n'
+                        '- built-in наборы: интерпретируем `accuracy/roc_auc`, `rupture_rate`, `observer_proxy_accuracy`;  \n'
+                        '- registry наборы: основной результат это `READY/pipeline_completed` и ограничения предметной разметки;  \n'
+                        '- `observer_action_accuracy = N/A` означает отсутствие экспертных action-labels, а не провал метода.'
+                    )
 
                     _explain_block(
                         ui,

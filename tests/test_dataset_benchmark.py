@@ -19,3 +19,17 @@ def test_dataset_benchmark_writes_required_files(tmp_path) -> None:
         'action_distribution', 'selected_representation_distribution', 'notes',
     ]:
         assert key in payload
+
+
+def test_registry_programs_observer_accuracy_not_applicable(tmp_path) -> None:
+    summary = run_benchmark('registry_programs', out_root=tmp_path)
+    assert summary['status'] == 'READY'
+    assert summary['observer_action_accuracy_applicable'] is False
+    assert summary['observer_action_accuracy'] is None
+    assert 'no expert action labels' in str(summary['observer_action_accuracy_reason']).lower()
+
+
+def test_synthetic_ruptures_has_nonzero_rupture_rate(tmp_path) -> None:
+    summary = run_benchmark('synthetic_ruptures', out_root=tmp_path)
+    assert summary['status'] == 'READY'
+    assert float(summary['rupture_rate']) > 0.0

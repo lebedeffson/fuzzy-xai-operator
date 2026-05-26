@@ -1,0 +1,24 @@
+\begin{table}[h]
+\centering
+\caption{Dataset readiness modes}
+\label{tab:dataset\_readiness}
+\begin{tabular}{|l|l|l|l|l|l|}
+\hline
+Mode & Domain & Rows & Status & Pipeline & Validates \\
+\hline
+breast\_cancer & medical & 569 & READY & True & Medical risk baseline: probability + observer action policy. \\
+\hline
+diabetes\_binary & medical & 442 & READY & True & Borderline medical uncertainty: lower\_confidence/request\_more\_data behavior. \\
+\hline
+wine\_risk & general & 178 & READY & True & Cross-domain robustness check beyond one medical dataset. \\
+\hline
+synthetic\_ruptures & controlled & 900 & READY & True & Controlled rupture generation for Expl/HoTT and safe-action diagnostics. \\
+\hline
+registry\_programs & tabular\_text & 10007 & READY & True & Text+tabular explainability/ranking scenario from CIT registry. \\
+\hline
+registry\_mosmed\_doctor\_analysis & medical\_audit & 10 & READY & True & Medical audit scenario: doctor/model decision alignment. \\
+\hline
+registry\_steel\_ir & industrial\_cv & 8080 & READY & True & Industrial control scenario: transfer beyond medical domain. \\
+\hline
+\end{tabular}
+\end{table}
