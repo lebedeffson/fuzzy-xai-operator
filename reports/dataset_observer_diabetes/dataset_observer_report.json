@@ -1,0 +1,212 @@
+{
+  "dataset_record": {
+    "dataset_name": "sklearn_diabetes_binary",
+    "source": "sklearn.datasets",
+    "url": null,
+    "local_path": null,
+    "file_format": null,
+    "target_column": "risk_target",
+    "task_type": "binary_classification",
+    "description": "Diabetes progression transformed to binary risk using median target threshold.",
+    "metadata": {
+      "sample": "diabetes_binary",
+      "binarization": "target>=median(140.5000)"
+    }
+  },
+  "target_column": "risk_target",
+  "dataset_profile": {
+    "n_rows": 442,
+    "n_columns": 11,
+    "numeric_columns": [
+      "age",
+      "sex",
+      "bmi",
+      "bp",
+      "s1",
+      "s2",
+      "s3",
+      "s4",
+      "s5",
+      "s6",
+      "risk_target"
+    ],
+    "categorical_columns": [],
+    "missing_rate": 0.0,
+    "has_intervals": false,
+    "has_multiple_experts": false,
+    "has_source_conflict": false,
+    "requires_audit": false,
+    "suggested_uncertainty_types": [
+      "u_num"
+    ],
+    "metadata": {
+      "expert_columns": [],
+      "source_columns": []
+    }
+  },
+  "model_name": "logistic_regression",
+  "accuracy": 0.7747747747747747,
+  "roc_auc": 0.8340909090909091,
+  "case_index": 2,
+  "case_prediction": {
+    "raw_prediction_encoded": 1,
+    "raw_prediction_label": "1",
+    "raw_proba": [
+      0.4478968057782744,
+      0.5521031942217256
+    ]
+  },
+  "observer_result": {
+    "raw_prediction": 1,
+    "raw_proba": [
+      0.4478968057782744,
+      0.5521031942217256
+    ],
+    "predicted_risk": 0.5521031942217256,
+    "uncertainty": 0.9632449520609012,
+    "entropy_uncertainty": 0.9921526694199094,
+    "margin_uncertainty": 0.8957936115565488,
+    "confidence": 0.036755047939098784,
+    "selected_representation": "F0",
+    "representation_class": "F0",
+    "representation_selection": {
+      "profile": [
+        "u_ling",
+        "u_num"
+      ],
+      "selected_class": "F0",
+      "representation_class": "F0",
+      "reduction_loss": 0.0,
+      "reduction_policy": "canonical",
+      "reason": "numeric/linguistic uncertainty is covered by classical fuzzy representation"
+    },
+    "reduction_loss": 0.0,
+    "pre_interpretability": 0.7609183181121467,
+    "final_interpretability": 0.7609183181121467,
+    "interpretability_index": 0.7609183181121467,
+    "application_risk": 0.4542585326593136,
+    "risk_score": 0.4542585326593136,
+    "action": "request_more_data",
+    "corrected_confidence": 0.015263073200706936,
+    "reason": "medium risk with elevated uncertainty",
+    "diagnostics": [],
+    "E_model_ext": {
+      "terms": [
+        "high",
+        "low",
+        "medium"
+      ],
+      "active_rules": [
+        "risk_high",
+        "risk_medium"
+      ],
+      "uncertainty": 0.5461463090965213,
+      "trace": "risk-aware-model-0",
+      "representation_class": "F0",
+      "reduction_loss": 0.0
+    },
+    "E_R": {
+      "terms": [
+        "high",
+        "low",
+        "medium"
+      ],
+      "active_rules": [
+        "rho_low",
+        "rho_medium"
+      ],
+      "uncertainty": 0.07188976080882369,
+      "trace": "risk-module-0",
+      "representation_class": "F0",
+      "reduction_loss": 0.0
+    },
+    "E_A": {
+      "terms": [
+        "high",
+        "low",
+        "medium"
+      ],
+      "active_rules": [
+        "action_request_more_data"
+      ],
+      "uncertainty": 0.07452383306607072,
+      "trace": "action-0",
+      "representation_class": "F0",
+      "reduction_loss": 0.0
+    },
+    "composition_route": [
+      "E_M_ext",
+      "E_R",
+      "E_A"
+    ]
+  },
+  "trace": {
+    "dataset": {
+      "dataset_name": "sklearn_diabetes_binary",
+      "source": "sklearn.datasets",
+      "url": null,
+      "local_path": null,
+      "file_format": null,
+      "target_column": "risk_target",
+      "task_type": "binary_classification",
+      "description": "Diabetes progression transformed to binary risk using median target threshold.",
+      "metadata": {
+        "sample": "diabetes_binary",
+        "binarization": "target>=median(140.5000)"
+      }
+    },
+    "profile": {
+      "n_rows": 442,
+      "n_columns": 11,
+      "numeric_columns": [
+        "age",
+        "sex",
+        "bmi",
+        "bp",
+        "s1",
+        "s2",
+        "s3",
+        "s4",
+        "s5",
+        "s6",
+        "risk_target"
+      ],
+      "categorical_columns": [],
+      "missing_rate": 0.0,
+      "has_intervals": false,
+      "has_multiple_experts": false,
+      "has_source_conflict": false,
+      "requires_audit": false,
+      "suggested_uncertainty_types": [
+        "u_num"
+      ],
+      "metadata": {
+        "expert_columns": [],
+        "source_columns": []
+      }
+    },
+    "xai_profile": [
+      "u_ling",
+      "u_num"
+    ],
+    "representation_selection": {
+      "profile": [
+        "u_ling",
+        "u_num"
+      ],
+      "selected_class": "F0",
+      "representation_class": "F0",
+      "reduction_loss": 0.0,
+      "reduction_policy": "canonical",
+      "reason": "numeric/linguistic uncertainty is covered by classical fuzzy representation"
+    },
+    "model": "logistic_regression",
+    "mode": "user",
+    "excluded_metadata_columns": [],
+    "target_classes": [
+      "0",
+      "1"
+    ],
+    "route": "dataset -> profile -> model -> E_M_ext -> I_pre -> rho -> action"
+  }
+}

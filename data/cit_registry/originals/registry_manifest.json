@@ -1,0 +1,38 @@
+{
+  "registry_programs": {
+    "uuid": "3e7061cf-3ece-4510-a115-1fc61c369ebf",
+    "title": "Датасет зарегистрированных программ для ЭВМ",
+    "downloads_count": 3,
+    "files": [
+      {
+        "name": "Датасет_программы_для_ЭВМ.xlsx",
+        "file_size": 6214427,
+        "extension": ".xlsx"
+      }
+    ]
+  },
+  "registry_mosmed_doctor_analysis": {
+    "uuid": "c444e643-91be-423f-99bd-abcb63b8f410",
+    "title": "MosMedData КТ с признаками рака легкого тип VIII",
+    "downloads_count": 1,
+    "files": [
+      {
+        "name": "CT_LUNGCANCER_500.7z",
+        "file_size": 104919818353,
+        "extension": ".7z"
+      }
+    ]
+  },
+  "registry_steel_ir": {
+    "uuid": "99eb99d2-cad4-4c47-a017-2ae927018478",
+    "title": "Индустриальные ИК-снимки выпуска стали",
+    "downloads_count": 4,
+    "files": [
+      {
+        "name": "dataset.zip",
+        "file_size": 56393579,
+        "extension": ".zip"
+      }
+    ]
+  }
+}

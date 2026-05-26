@@ -1,0 +1,69 @@
+{
+  "dataset": "breast_cancer",
+  "dataset_card": {
+    "name": "Breast Cancer Wisconsin",
+    "source": "sklearn / UCI",
+    "license": "UCI dataset terms (via sklearn)",
+    "domain": "medicine",
+    "shape": [
+      569,
+      31
+    ],
+    "features": [
+      "mean radius",
+      "mean texture",
+      "mean perimeter",
+      "mean area",
+      "mean smoothness",
+      "mean compactness",
+      "mean concavity",
+      "mean concave points",
+      "mean symmetry",
+      "mean fractal dimension",
+      "radius error",
+      "texture error",
+      "perimeter error",
+      "area error",
+      "smoothness error",
+      "compactness error",
+      "concavity error",
+      "concave points error",
+      "symmetry error",
+      "fractal dimension error",
+      "worst radius",
+      "worst texture",
+      "worst perimeter",
+      "worst area",
+      "worst smoothness",
+      "worst compactness",
+      "worst concavity",
+      "worst concave points",
+      "worst symmetry",
+      "worst fractal dimension"
+    ],
+    "target": "risk_target",
+    "missing_values": 0.0,
+    "label_description": "target=risk_target",
+    "fallback": false
+  },
+  "quality": {
+    "accuracy": 0.972027972027972,
+    "roc_auc": 0.9949685534591195,
+    "observer_action": "lower_confidence"
+  },
+  "interpretability": {
+    "I_pre": 0.8169116703010336,
+    "I_final": 0.8169116703010336,
+    "rho": 0.40209646036059227
+  },
+  "timing": {
+    "pipeline_seconds": 0.15252878200044506,
+    "rows": 569,
+    "features_after_preprocess": 30
+  },
+  "reports": {
+    "json": "reports/dataset_benchmark/breast_cancer/dataset_observer_report.json",
+    "markdown": "reports/dataset_benchmark/breast_cancer/dataset_observer_report.md",
+    "html": "reports/dataset_benchmark/breast_cancer/dataset_observer_report.html"
+  }
+}

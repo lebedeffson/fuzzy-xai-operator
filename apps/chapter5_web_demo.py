@@ -20,7 +20,7 @@ from fuzzyxai.core.explain_plan import ExplainPlan
 from fuzzyxai.core.explanation_object import ExplanationObject, Rule, Trace
 from fuzzyxai.data.breast_cancer_adapter import build_explanation_for_prediction
 from fuzzyxai.hierarchy.f0 import F0
-from fuzzyxai.risk import RiskAwareObserver
+from fuzzyxai.risk import RiskAwareObserver, compute_application_risk
 from fuzzyxai.trust import compute_interpretability_index
 
 
@@ -139,6 +139,14 @@ def evaluate_vector(backend: DemoBackend, vector: np.ndarray, sample_id: str = '
         reduction_loss=float(e_model.reduction_loss),
         diagnostics=diagnostics,
     )
+    risk_breakdown = compute_application_risk(
+        predicted_risk=p_malignant,
+        uncertainty=uncertainty,
+        pre_interpretability=float(i_pre),
+        reduction_loss=float(e_model.reduction_loss),
+        diagnostics=diagnostics,
+        weights=backend.observer.weights,
+    ).as_dict()
     e_action = _action_explanation(sample_id, decision.action, decision.rho)
     comp_ra = compose(e_risk, e_action, beta, allow_missing_terms=True)
     if isinstance(comp_ra, DiagnosticState):
@@ -146,6 +154,12 @@ def evaluate_vector(backend: DemoBackend, vector: np.ndarray, sample_id: str = '
         diagnostics.append(comp_ra.code)
     else:
         gamma_ra = float(comp_ra.metadata.get('gamma', 0.0))
+
+    # Safety override: any critical rupture forbids auto action escalation.
+    final_action = 'block' if has_rupture else str(decision.action)
+    final_rho = max(float(decision.rho), 0.80) if has_rupture else float(decision.rho)
+    if final_action != str(decision.action):
+        e_action = _action_explanation(sample_id, final_action, final_rho)
 
     cat = ExplanationCategory(gamma_max=0.45)
     o_model = cat.object('E_model', e_model)
@@ -156,7 +170,7 @@ def evaluate_vector(backend: DemoBackend, vector: np.ndarray, sample_id: str = '
         {
             o_model: {'accept', 'lower_confidence', 'request_more_data', 'defer_to_human', 'block'},
             o_risk: {'lower_confidence', 'request_more_data', 'defer_to_human', 'block'},
-            o_action: {decision.action},
+            o_action: {final_action},
         },
     )
     auto_accept = auto_accept_subpresheaf(risk_context)
@@ -175,14 +189,15 @@ def evaluate_vector(backend: DemoBackend, vector: np.ndarray, sample_id: str = '
         'prob_benign': float(proba[1]),
         'uncertainty': uncertainty,
         'I_pre': float(i_pre),
-        'rho': float(decision.rho),
-        'action': str(decision.action),
+        'rho': final_rho,
+        'action': final_action,
         'rupture': bool(has_rupture),
         'diagnostics': diagnostics,
         'gamma_model_risk': gamma_mr,
         'gamma_risk_action': gamma_ra,
         'risk_weights': dict(backend.observer.weights),
         'thresholds': tuple(float(v) for v in backend.observer.thresholds),
+        'risk_breakdown': risk_breakdown,
         'contexts': context_rows,
     }
 
@@ -290,5 +305,5 @@ def main() -> None:
     run_ui(port=args.port)
 
 
-if __name__ == '__main__':
+if __name__ in {'__main__', '__mp_main__'}:
     main()

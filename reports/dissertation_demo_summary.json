@@ -1,0 +1,349 @@
+{
+  "dataset_modes": [
+    {
+      "dataset_mode": "breast_cancer",
+      "status": "READY",
+      "rows": 569,
+      "domain": "medical",
+      "notes": ""
+    },
+    {
+      "dataset_mode": "diabetes_binary",
+      "status": "READY",
+      "rows": 442,
+      "domain": "medical",
+      "notes": ""
+    },
+    {
+      "dataset_mode": "wine_risk",
+      "status": "READY",
+      "rows": 178,
+      "domain": "general",
+      "notes": ""
+    },
+    {
+      "dataset_mode": "synthetic_ruptures",
+      "status": "READY",
+      "rows": 900,
+      "domain": "controlled",
+      "notes": ""
+    },
+    {
+      "dataset_mode": "registry_programs",
+      "status": "READY",
+      "rows": 10007,
+      "domain": "tabular_text",
+      "notes": ""
+    },
+    {
+      "dataset_mode": "registry_mosmed_doctor_analysis",
+      "status": "READY",
+      "rows": 10,
+      "domain": "medical_audit",
+      "notes": ""
+    },
+    {
+      "dataset_mode": "registry_steel_ir",
+      "status": "READY",
+      "rows": 8080,
+      "domain": "industrial_cv",
+      "notes": ""
+    }
+  ],
+  "benchmark_summaries": {
+    "breast_cancer": {
+      "dataset": "breast_cancer",
+      "status": "READY",
+      "n": 569,
+      "domain": "medical",
+      "model_accuracy": 0.972027972027972,
+      "model_roc_auc": 0.9949685534591195,
+      "observer_action_accuracy": 0.5594405594405595,
+      "mean_I_pre": 0.7935691880178595,
+      "mean_rho": 0.2076536833161616,
+      "rupture_rate": 0.0,
+      "action_distribution": {
+        "lower_confidence": 36,
+        "accept": 90,
+        "request_more_data": 17
+      },
+      "selected_representation_distribution": {
+        "FML-audit": 143
+      },
+      "notes": "Prototype measurements per object; no I/O timing."
+    },
+    "diabetes_binary": {
+      "dataset": "diabetes_binary",
+      "status": "READY",
+      "n": 442,
+      "domain": "medical",
+      "model_accuracy": 0.7567567567567568,
+      "model_roc_auc": 0.8298701298701298,
+      "observer_action_accuracy": 0.0990990990990991,
+      "mean_I_pre": 0.765687631853013,
+      "mean_rho": 0.38605707865721867,
+      "rupture_rate": 0.0,
+      "action_distribution": {
+        "request_more_data": 66,
+        "lower_confidence": 13,
+        "accept": 32
+      },
+      "selected_representation_distribution": {
+        "FML-audit": 111
+      },
+      "notes": "Prototype measurements per object; no I/O timing."
+    },
+    "wine_risk": {
+      "dataset": "wine_risk",
+      "status": "READY",
+      "n": 178,
+      "domain": "general",
+      "model_accuracy": 0.9777777777777777,
+      "model_roc_auc": 1.0,
+      "observer_action_accuracy": 0.6222222222222222,
+      "mean_I_pre": 0.7902422015533586,
+      "mean_rho": 0.192412638958542,
+      "rupture_rate": 0.0,
+      "action_distribution": {
+        "accept": 30,
+        "lower_confidence": 8,
+        "request_more_data": 7
+      },
+      "selected_representation_distribution": {
+        "FML-audit": 45
+      },
+      "notes": "Prototype measurements per object; no I/O timing."
+    },
+    "synthetic_ruptures": {
+      "dataset": "synthetic_ruptures",
+      "status": "READY",
+      "n": 900,
+      "domain": "controlled",
+      "model_accuracy": 0.9511111111111111,
+      "model_roc_auc": 0.9955908289241623,
+      "observer_action_accuracy": 0.3022222222222222,
+      "mean_I_pre": 0.7728543248175938,
+      "mean_rho": 0.3172559460867956,
+      "rupture_rate": 0.0,
+      "action_distribution": {
+        "accept": 104,
+        "request_more_data": 78,
+        "lower_confidence": 43
+      },
+      "selected_representation_distribution": {
+        "FML-audit": 225
+      },
+      "notes": "Prototype measurements per object; no I/O timing."
+    },
+    "registry_programs": {
+      "dataset": "registry_programs",
+      "status": "READY",
+      "n": 10007,
+      "domain": "tabular_text",
+      "model_accuracy": 0.5011990407673861,
+      "model_roc_auc": 0.4948539968984046,
+      "observer_action_accuracy": 0.0,
+      "mean_I_pre": 0.7605362825571323,
+      "mean_rho": 0.46119131706650957,
+      "rupture_rate": 0.0,
+      "action_distribution": {
+        "request_more_data": 2502
+      },
+      "selected_representation_distribution": {
+        "FML-audit": 2502
+      },
+      "notes": "Prototype measurements per object; no I/O timing."
+    },
+    "registry_mosmed_doctor_analysis": {
+      "dataset": "registry_mosmed_doctor_analysis",
+      "status": "READY",
+      "n": 10,
+      "domain": "medical_audit",
+      "model_accuracy": 1.0,
+      "model_roc_auc": NaN,
+      "observer_action_accuracy": 0.6666666666666666,
+      "mean_I_pre": 0.7607764309603002,
+      "mean_rho": 0.19313492184381179,
+      "rupture_rate": 0.0,
+      "action_distribution": {
+        "accept": 3
+      },
+      "selected_representation_distribution": {
+        "FML-audit": 3
+      },
+      "notes": "Prototype measurements per object; no I/O timing."
+    },
+    "registry_steel_ir": {
+      "dataset": "registry_steel_ir",
+      "status": "READY",
+      "n": 8080,
+      "domain": "industrial_cv",
+      "model_accuracy": 0.9920792079207921,
+      "model_roc_auc": 0.5,
+      "observer_action_accuracy": 1.0,
+      "mean_I_pre": 0.7893476847952753,
+      "mean_rho": 0.06749594132621858,
+      "rupture_rate": 0.0,
+      "action_distribution": {
+        "accept": 2020
+      },
+      "selected_representation_distribution": {
+        "FML-audit": 2020
+      },
+      "notes": "Prototype measurements per object; no I/O timing."
+    }
+  },
+  "real_reduction_example": {
+    "object": "sample_113",
+    "P(malignant)": 0.7035770563720608,
+    "selected_features": [
+      "symmetry error",
+      "concave points error",
+      "mean fractal dimension",
+      "worst fractal dimension",
+      "mean texture"
+    ],
+    "F0": {
+      "mu": 0.703577
+    },
+    "F_int": {
+      "low": 0.635577,
+      "high": 0.771577
+    },
+    "F_H": {
+      "values": [
+        0.703577,
+        0.489955
+      ]
+    },
+    "F_N_src": {
+      "truth": 0.703577,
+      "indeterminacy": 0.213622,
+      "falsity": 0.082801
+    },
+    "selected_class": "F_N_src",
+    "Delta": 0.106811,
+    "Delta_by_class": {
+      "F0": 0.42,
+      "F_int": 0.0,
+      "F_H": 0.213622,
+      "F_N_src": 0.106811
+    },
+    "I_pre": 0.6743235322764167,
+    "rho": 0.8,
+    "action": "block",
+    "chi_Auto": false,
+    "chi_R": 1,
+    "chi_R_crit": 1
+  },
+  "category_topos_checks": {
+    "status": "PASS",
+    "checks": [
+      {
+        "name": "category identities",
+        "status": "PASS"
+      },
+      {
+        "name": "category composition",
+        "status": "PASS"
+      },
+      {
+        "name": "presheaf functoriality",
+        "status": "PASS"
+      },
+      {
+        "name": "auto-accept subpresheaf",
+        "status": "PASS"
+      },
+      {
+        "name": "yoneda representable",
+        "status": "PASS"
+      },
+      {
+        "name": "topos descriptor",
+        "status": "PASS"
+      },
+      {
+        "name": "path certificate",
+        "status": "PASS"
+      },
+      {
+        "name": "rupture certificate",
+        "status": "PASS"
+      },
+      {
+        "name": "temporal drift path",
+        "status": "PASS"
+      }
+    ],
+    "objects": [
+      "E_model",
+      "E_risk",
+      "E_action"
+    ],
+    "morphisms": [
+      {
+        "source": "E_model",
+        "target": "E_risk",
+        "gamma": 0.18,
+        "valid": true
+      },
+      {
+        "source": "E_risk",
+        "target": "E_action",
+        "gamma": 0.12,
+        "valid": true
+      }
+    ],
+    "paths": [
+      {
+        "source": "E_model",
+        "target": "E_action",
+        "length": 2,
+        "gamma_total": 0.3,
+        "delta_total": 0.0,
+        "trace": [
+          "E_model",
+          "E_risk",
+          "E_risk",
+          "E_action"
+        ],
+        "valid": true
+      }
+    ],
+    "ruptures": [
+      {
+        "source": "E_model",
+        "target": "E_action",
+        "reason": "morphism violates gamma_max or category constraints",
+        "gamma": 0.9,
+        "gamma_max": 0.5,
+        "diagnostic_code": "D_ij"
+      }
+    ],
+    "presheaf_contexts": {
+      "RiskContext": [
+        "defer_to_human",
+        "request_more_data"
+      ],
+      "AutoAccept": [
+        "accept",
+        "lower_confidence"
+      ],
+      "AuditContext": [
+        "full_trace",
+        "hash_verified"
+      ]
+    },
+    "yoneda": {
+      "represented": "E_action",
+      "from_model_to_action": 1
+    }
+  },
+  "gui_smoke": {
+    "layered_demo_script": "apps/layered_demo.py",
+    "unified_demo_script": "apps/unified_demo.py",
+    "status": "available"
+  },
+  "test_status": "run `PYTHONPATH=. pytest` to refresh in current environment"
+}

@@ -185,6 +185,47 @@ PYTHONPATH=. python examples/dataset_observer_demo.py --url https://raw.githubus
 - `reports/dataset_observer/dataset_observer_report.md`
 - `reports/dataset_observer/dataset_observer_report.html`
 
+## Layered demo и dataset modes
+
+`apps/layered_demo.py` — основной режим для защиты: один кейс проходит все слои
+
+`Input -> Model -> Omega -> Expl -> Fuzzy -> Topos -> Observer -> Action`.
+
+Запуск:
+
+```bash
+make layered-demo PORT=8096
+```
+
+Проверка режимов датасетов:
+
+```bash
+make dataset-modes-check
+```
+
+Запуск real-data validation (CITR/RIKORD/RuCCoD, с прозрачным fallback при отсутствии локальных файлов):
+
+```bash
+make real-data-validation
+```
+
+Бенчмарк одного датасета:
+
+```bash
+make benchmark-dataset DATASET=breast_cancer
+make benchmark-dataset DATASET=rikord
+```
+
+Документация по набору: `docs/datasets.md`.
+
+Режимы:
+
+- built-in: `breast_cancer`, `diabetes_binary`, `wine_risk`, `synthetic_ruptures`
+- registry: `registry_programs`, `registry_mosmed_doctor_analysis`, `registry_steel_ir`
+
+Для registry-режимов статус `MISSING` означает, что локальный файл ещё не загружен.
+Инструкция по путям: `docs/REGISTRY_DATASETS_SETUP_RU.md`.
+
 ## Risk-Aware Observer
 
 Добавлен риск-ориентированный наблюдатель модели. Он не меняет модель, а работает как decision gate поверх неё: получает `predict_proba`, оценивает неопределённость, строит `E_k`, учитывает `I_pre`, `Delta`, диагностические состояния, считает `rho(x)` и выбирает безопасное действие.
@@ -266,6 +307,7 @@ make chapter5-experiments
 make chapter5-demo
 make chapter5-latex
 make web-demo
+make unified-demo
 make full-pipeline
 make figures
 make full-experiments

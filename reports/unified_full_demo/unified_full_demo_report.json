@@ -1,0 +1,173 @@
+{
+  "meta": {
+    "dataset": "sklearn_breast_cancer",
+    "seed": 42,
+    "sample_index": 0,
+    "timestamp_utc": "2026-05-25T12:38:23.158070+00:00",
+    "route": "data -> model -> E_model -> Expl/HoTT/topos -> rho -> action"
+  },
+  "model": {
+    "true_y": 1,
+    "pred_y": 1,
+    "prob_malignant": 0.015348643429035023,
+    "uncertainty": 0.03069728685807016
+  },
+  "interpretability": {
+    "I_pre": 0.877933761300908,
+    "reduction_loss": 0.0
+  },
+  "risk": {
+    "weights": {
+      "predicted_risk": 0.7,
+      "uncertainty": 0.05,
+      "reduction_loss": 0.05,
+      "interpretability_gap": 0.05,
+      "diagnostic": 0.15
+    },
+    "thresholds": [
+      0.1,
+      0.25,
+      0.5,
+      0.75
+    ],
+    "breakdown": {
+      "predicted_risk": 0.015348643429035023,
+      "uncertainty": 0.03069728685807016,
+      "pre_interpretability": 0.877933761300908,
+      "interpretability_gap": 0.12206623869909194,
+      "reduction_loss": 0.0,
+      "diagnostic": 0.0,
+      "weights": {
+        "predicted_risk": 0.7,
+        "uncertainty": 0.05,
+        "reduction_loss": 0.05,
+        "interpretability_gap": 0.05,
+        "diagnostic": 0.15
+      },
+      "rho": 0.018382226678182623
+    },
+    "rho": 0.018382226678182623,
+    "action": "accept",
+    "reason": "threshold policy"
+  },
+  "category": {
+    "gamma_max": 0.45,
+    "objects": [
+      "E_model",
+      "E_risk",
+      "E_action"
+    ],
+    "morphisms": [
+      "E_model->E_risk:T_model_risk",
+      "E_risk->E_action:T_risk_action",
+      "E_model->E_model:id_E_model",
+      "E_risk->E_risk:id_E_risk",
+      "E_action->E_action:id_E_action"
+    ],
+    "model_to_risk_success": true,
+    "risk_to_action_success": true
+  },
+  "hott": {
+    "path_model_risk": {
+      "source": "E_model",
+      "target": "E_risk",
+      "gamma_total": 0.3538342346509665,
+      "delta_total": 0.0,
+      "trace": [
+        "E_model",
+        "E_risk"
+      ],
+      "morphisms": [
+        "E_model->E_risk:T_model_risk"
+      ]
+    },
+    "path_risk_action": {
+      "source": "E_risk",
+      "target": "E_action",
+      "gamma_total": 0.37363737242543055,
+      "delta_total": 0.0,
+      "trace": [
+        "E_risk",
+        "E_action"
+      ],
+      "morphisms": [
+        "E_risk->E_action:T_risk_action"
+      ]
+    },
+    "path_full": {
+      "source": "E_model",
+      "target": "E_action",
+      "gamma_total": 0.727471607076397,
+      "delta_total": 0.0,
+      "trace": [
+        "E_model",
+        "E_risk",
+        "E_risk",
+        "E_action"
+      ],
+      "morphisms": [
+        "E_model->E_risk:T_model_risk",
+        "E_risk->E_action:T_risk_action"
+      ]
+    },
+    "rupture_model_risk": null,
+    "rupture_risk_action": null
+  },
+  "topos": {
+    "descriptor": {
+      "base_category": "Expl",
+      "notation": "Set^{Expl^op}",
+      "role": "topos of explanation contexts"
+    },
+    "risk_context": {
+      "E_model": [
+        "accept",
+        "block",
+        "defer_to_human",
+        "lower_confidence",
+        "request_more_data"
+      ],
+      "E_risk": [
+        "block",
+        "defer_to_human",
+        "lower_confidence",
+        "request_more_data"
+      ],
+      "E_action": [
+        "accept"
+      ]
+    },
+    "auto_accept": {
+      "E_model": [
+        "accept",
+        "lower_confidence"
+      ],
+      "E_risk": [
+        "lower_confidence"
+      ],
+      "E_action": [
+        "accept"
+      ]
+    },
+    "audit_context": {
+      "E_model": [
+        "checksum",
+        "trace_id",
+        "trace_version"
+      ],
+      "E_risk": [
+        "trace_id",
+        "trace_version"
+      ],
+      "E_action": [
+        "trace_id"
+      ]
+    },
+    "restricted_context_model_from_risk": [
+      "block",
+      "defer_to_human",
+      "lower_confidence",
+      "request_more_data"
+    ]
+  }
+}

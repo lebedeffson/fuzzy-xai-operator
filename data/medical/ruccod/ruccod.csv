@@ -1,0 +1,1056 @@
+note_text,icd_code,risk_target
+severe,nan,0
+severe,nan,0
+severe,"T90.5, J15.9, I11.9",0
+severe,nan,0
+severe,"T90.5, J15.9, I11.9",0
+severe,"T90.5, J15.9, I11.9",0
+severe,nan,0
+severe,nan,0
+severe,"T90.5, J15.9, I11.9",0
+severe,nan,0
+severe,"T90.5, J15.9, I11.9",0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,"T90.5, J15.9, I11.9",0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,"T90.5, G93.6",0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,"T90.5, G93.6, G93.4",0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,"T90.5, G93.6, G93.4",0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,"T90.5, G93.6, G93.4",0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,"T90.5, G93.6, R13, G93.4",0
+severe,"T90.5, G93.6, G93.4",0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,"T90.5, G93.6, J15.9, G93.4",0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,"T90.5, G93.6, J15.9, G93.4",0
+severe,nan,0
+severe,"T88.8, I69.0, J18.9, G91.0, I11.9",0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,"T88.8, I69.0, J18.9, G91.0, I11.9",0
+severe,"T88.8, I69.0, J18.9, G91.0, I11.9",0
+severe,"T88.8, I69.0, J18.9, G91.0, I11.9",0
+severe,nan,0
+severe,"T88.8, I69.0, J18.9, G91.0, I11.9",0
+severe,nan,0
+severe,"T88.8, I69.0, J18.9, G91.0, I11.9",0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,"T88.8, I69.0, J18.9, G91.0, I11.9",0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,"T88.8, I69.0, J18.9, G91.0, I11.9",0
+severe,nan,0
+severe,nan,0
+severe,"T88.8, I69.0, J18.9, G91.0, I11.9",0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,T90.5,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,"T90.5, T90.5, T88.8, J15.9, Z93.0, R13, K91.8, N31.2, I80.8, R13, H35.0, S22.4, K80.2",0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,"I69.1, I61.0, F06.9, G93.6, G93, R13, N31.2, T88.8, J15.9, I11.9, I25.1, H35.0",1
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,"I69.1, I61.0, F06.9, G93.6, G93, R13, N31.2, T88.8, J15.9, I11.9, I25.1, H35.0",1
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,"I69.1, I61.0, F06.9, G93.6, G93, R13, N31.2, T88.8, J15.9, K91.8, I11.9, I25.1, H35.0",1
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+moderate,nan,0
+moderate,nan,0
+moderate,nan,0
+moderate,nan,0
+moderate,nan,0
+moderate,nan,0
+moderate,nan,0
+moderate,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+satisfactory,nan,0
+satisfactory,nan,0
+satisfactory,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+satisfactory,nan,0
+satisfactory,nan,0
+satisfactory,nan,0
+satisfactory,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,"I69.1, I69.1, J15.0, J90, A41.9, I82.2, E46, N39.0, K91.8, K60.0, I21.9, I25.1, F06.9, H35.0, T92.1, N28.1, K81.1, K86.9",1
+extremely severe,nan,0
+extremely severe,"I69.1, I69.1, J15.0, J90, A41.9, I82.2, E46, N39.0, K91.8, K60.0, I21.9, I25.1, F06.9, H35.0, T92.1, N28.1, K81.1, K86.9",1
+extremely severe,"I69.1, I11.9, Z93.0, F06.9, E66.9, J41.0",1
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+severe,"I69.1, I11.9, G93.6, F06.9, G82.4, R13, N31.2, J15.9, Z93.0, E66.9, J41.0, Q40.1, H47.2",1
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,"I69.1, I11.9, G93.6, F06.9, G82.4, R13, N31.2, J15.9, Z93.0, E66.9, J41.0, Q40.1, H47.2",1
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,"I69.1, I11.9, G93.6, F06.9, G82.4, R13, N31.2, J15.9, Z93.0, E66.9, J41.0, Q40.1, H47.2",1
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,"I69.1, I11.9, G93.6, F06.9, G82.4, R13, N31.2, J15.9, Z93.0, E66.9, J41.0, Q40.1, H47.2",1
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,"I69.1, I11.9, G93.6, F06.9, G82.4, R13, N31.2, J15.9, Z93.0, E66.9, J41.0, Q40.1, H47.2",1
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,"I69.1, I11.9, G93.6, F06.9, G82.4, R13, N31.2, J15.9, Z93.0, E66.9, J41.0, Q40.1, H47.2",1
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,"I69.1, I11.9, G93.6, F06.9, G82.4, R13, N31.2, J15.9, Z93.0, E66.9, J41.0, Q40.1, H47.2",1
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,"I69.1, I11.9, G93.6, F06.9, G82.4, R13, N31.2, N30.1, J15.9, Z93.0, D50.9, E66.9, J41.0, Q40.1, H47.2, N95.1",1
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,"I69.1, I11.9, G93.6, G82.4, R13, N31.2, J15.9, F06.9, I80.2, D50.9, E66.9, J41.0, Q40.1, H47.2, N95.1, N30.1",1
+severe,"I69.1, I11.9, G93.6, G82.4, R13, N31.2, J15.9, F06.9, I80.2, D50.9, E66.9, J41.0, Q40.1, H47.2, N95.1, N30.1",1
+severe,nan,0
+severe,"I69.1, I11.9, G93.6, G82.4, R13, N31.2, J15.9, F06.9, I80.2, D50.9, E66.9, J41.0, Q40.1, H47.2, N95.1, N30.1",1
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,"I69.1, I11.9, G93.6, G82.4, R13, N31.2, J15.9, F06.9, I80.2, D50.9, I25.8, E66.9, J41.0, Q40.1, H47.2, N95.1, N30.1",1
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,"I69.1, I11.9, G93.6, G82.4, R13, N31.2, J15.9, F06.9, I80.2, D50.9, I25.8, E66.9, J41.0, Q40.1, H47.2, N95.1, N30.1",1
+severe,nan,0
+severe,nan,0
+severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,"G93.1, G41.8, J15.9, N31.2, N11.9, G25.3, R64, I30.8, I30.8, K86.3, J34.2, H35.0, N30.1, K86.1",0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,"G93.1, G41.8, J15.9, N31.2, N11.9, G25.3, R64, I30.8, I30.8, K86.3, J34.2, H35.0, N30.1, K86.1",0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,"G93.1, G41.8, J15.9, N31.2, N11.9, G25.3, R64, I30.8, I30.8, K86.3, J34.2, H35.0, N30.1, K86.1",0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,"G93.1, G41.8, J15.9, N31.2, N11.9, G25.3, R64, I30.8, I30.8, K86.3, J34.2, H35.0, N30.1, K86.1",0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,"G93.1, G41.8, J15.9, N31.2, N11.9, G25.3, R64, I30.8, I30.8, K86.3, J34.2, H35.0, N30.1, K86.1, H47.2",0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,"G93.1, G41.8, J15.9, N31.2, N11.9, G25.3, R64, I30.8, I30.8, K86.3, J34.2, H35.0, N30.1, K86.1, H47.2",0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,"G93.1, G41.8, J15.9, N31.2, N11.9, G25.3, R64, I30.8, I30.8, K86.3, J34.2, H35.0, N30.1, K86.1, H47.2",0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,"G93.1, G41.8, J15.9, N31.2, N11.9, G25.3, R64, I30.8, I30.8, K86.3, J34.2, H35.0, N30.1, K86.1, H47.2",0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,"G93.1, J15.9, N31.2, R13, N11.9, G41.8, G25.3, R64, I30.8, I30.8, K86.3, J34.2, H35.0, N30.1, K86.1, H47.2",0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,"G93.1, J15.9, N31.2, R13, N11.9, G41.8, G25.3, R64, I30.8, I30.8, K86.3, J34.2, H35.0, N30.1, K86.1, H47.2",0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,"G93.1, J15.9, N31.2, R13, N11.9, G41.8, G25.3, R64, I30.8, I30.8, K86.3, J34.2, H35.0, N30.1, K86.1, H47.2",0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,"G93.1, J15.9, N31.2, R13, N11.9, G41.8, G25.3, R64, I30.8, I30.8, K86.3, J34.2, H35.0, N30.1, K86.1, H47.2",0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,nan,0
+extremely severe,"G93.1, J15.9, N31.2, R13, N11.9, G41.8, G25.3, R64, I30.8, I30.8, I80.3, K86.3, J34.2, H35.0, N30.1, K86.1, H47.2",0
+extremely severe,"G93.1, J15.9, N31.2, R13, N11.9, G41.8, G25.3, R64, I30.8, I30.8, K86.3, J34.2, H35.0, N30.1, K86.1, H47.2",0
+extremely severe,nan,0
+extremely severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,"I69.3, R13, N31.2, I11.9, J15.9, S00.1, N40",1
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,"I69.3, R13, N31.2, I11.9, J15.9, S00.1, N40",1
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,"I69.3, J15.9, G81.0, R13, N31.2, S00.1, I11.9, N40",1
+severe,nan,0
+severe,"I69.3, J15.9, G81.0, R13, N31.2, S00.1, I11.9, N40",1
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,"I69.3, J15.9, G81.0, R13, N31.2, S00.1, I11.9, N40",1
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,"I69.3, J15.9, G81.0, R13, N31.2, S00.1, I11.9, N40",1
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,"I69.3, J15.9, G81.0, R13, N31.2, S00.1, I11.9, N40",1
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,"I69.3, J15.9, G81.0, R13, N31.2, S00.1, I11.9, N40",1
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,"G93.1, G93.1, J15.9, J15.9, G82.4, K29.5, K29.5, N83.1",0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,"G93.1, G93.1, J15.9, J15.9, G82.4, K29.5, K29.5, N83.1",0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,"G93.1, G93.1, J15.9, J15.9, G82.4, K29.5, K29.5, N83.1",0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,"G93.1, G93.1, J15.9, J15.9, G82.4, K29.5, K29.5, N83.1",0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0
+severe,nan,0

@@ -1,0 +1,14 @@
+# Dataset summary: registry_steel_ir
+
+- status: `READY`
+- n: `8080`
+- domain: `industrial_cv`
+- model_accuracy: `0.9920792079207921`
+- model_roc_auc: `0.5`
+- observer_action_accuracy: `1.0`
+- mean_I_pre: `0.7893476847952753`
+- mean_rho: `0.06749594132621858`
+- rupture_rate: `0.0`
+- action_distribution: `{'accept': 2020}`
+- selected_representation_distribution: `{'FML-audit': 2020}`
+- notes: Prototype measurements per object; no I/O timing.

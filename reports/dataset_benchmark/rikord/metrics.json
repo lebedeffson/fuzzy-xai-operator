@@ -1,0 +1,49 @@
+{
+  "dataset": "rikord",
+  "dataset_card": {
+    "name": "RIKORD (or fallback proxy)",
+    "source": "public russian medical / local file",
+    "license": "depends on source distribution",
+    "domain": "medicine",
+    "shape": [
+      442,
+      11
+    ],
+    "features": [
+      "age",
+      "sex",
+      "bmi",
+      "bp",
+      "s1",
+      "s2",
+      "s3",
+      "s4",
+      "s5",
+      "s6"
+    ],
+    "target": "risk_target",
+    "missing_values": 0.0,
+    "label_description": "target=risk_target",
+    "fallback": true
+  },
+  "quality": {
+    "accuracy": 0.7567567567567568,
+    "roc_auc": 0.8298701298701298,
+    "observer_action": "request_more_data"
+  },
+  "interpretability": {
+    "I_pre": 0.7539000124176166,
+    "I_final": 0.7539000124176166,
+    "rho": 0.4736525883846673
+  },
+  "timing": {
+    "pipeline_seconds": 0.11049580899998546,
+    "rows": 442,
+    "features_after_preprocess": 10
+  },
+  "reports": {
+    "json": "reports/dataset_benchmark/rikord/dataset_observer_report.json",
+    "markdown": "reports/dataset_benchmark/rikord/dataset_observer_report.md",
+    "html": "reports/dataset_benchmark/rikord/dataset_observer_report.html"
+  }
+}

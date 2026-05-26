@@ -1,8 +1,9 @@
 PYTHON ?= $(shell if [ -x /home/lebedeffson/Code/venv/bin/python ]; then echo /home/lebedeffson/Code/venv/bin/python; else echo python; fi)
 PYTHONPATH := .
 PORT ?= 8085
+DATASET ?= breast_cancer
 
-.PHONY: install test risk-test category-hott-test chapter2-breast-cancer-demo chapter5-experiments chapter5-demo chapter5-latex web-demo full-pipeline figures full-experiments demo dashboard proof formal-proof thesis full-demo full-observer dataset-observer benchmark operator-benchmark risk-benchmark lofo-f1-demo clean
+.PHONY: install test risk-test category-hott-test chapter2-breast-cancer-demo chapter5-experiments chapter5-demo chapter5-latex web-demo unified-demo layered-demo unified-demo-cli full-pipeline figures full-experiments demo dashboard proof formal-proof thesis full-demo full-observer dataset-observer dataset-modes-check baseline-check real-data-validation benchmark benchmark-dataset real-reduction-example dissertation-demo-summary dissertation-component-tables operator-benchmark risk-benchmark lofo-f1-demo clean
 
 install:
 	$(PYTHON) -m pip install -r requirements.txt
@@ -31,6 +32,15 @@ chapter5-latex:
 
 web-demo:
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) apps/chapter5_web_demo.py --port $(PORT)
+
+unified-demo:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) apps/unified_demo.py --port $(PORT)
+
+layered-demo:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) apps/layered_demo.py --port $(PORT)
+
+unified-demo-cli:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) experiments/unified_full_demo.py --out-dir reports/unified_full_demo
 
 full-pipeline:
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) experiments/full_pipeline_demo.py --out-dir reports/full_pipeline
@@ -69,11 +79,46 @@ dataset-observer:
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) examples/dataset_observer_demo.py --sample breast_cancer
 	@echo "Dataset observer report: reports/dataset_observer/dataset_observer_report.html"
 
+dataset-modes-check:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) examples/check_dataset_modes.py
+
+baseline-check:
+	mkdir -p reports/dev
+	{ \
+		echo "# Baseline check"; \
+		echo; \
+		echo '```'; \
+		PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m pytest -q || true; \
+		echo; \
+		PYTHONPATH=$(PYTHONPATH) $(PYTHON) examples/check_dataset_modes.py || true; \
+		echo; \
+		PYTHONPATH=$(PYTHONPATH) $(PYTHON) experiments/dataset_benchmark.py --dataset breast_cancer --out-root reports/datasets || true; \
+		echo '```'; \
+	} > reports/dev/baseline_check.md
+
+real-data-validation:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) experiments/unified_full_demo.py --dataset citr --out-dir reports/chapter5/real_data_validation
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) experiments/unified_full_demo.py --dataset rikord --out-dir reports/chapter5/real_data_validation
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) experiments/unified_full_demo.py --dataset ruccod --out-dir reports/chapter5/real_data_validation
+
 benchmark:
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) benchmarks/breast_cancer_benchmark.py
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) benchmarks/operator_comparison_benchmark.py
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) benchmarks/risk_aware_observer_benchmark.py
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) benchmarks/lofo_f1_rule_pruning_demo.py
+
+benchmark-dataset:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) experiments/dataset_benchmark.py --dataset $(DATASET) --out-root reports/datasets
+
+real-reduction-example:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) experiments/real_reduction_example.py --out-dir reports/real_reduction_example
+
+dissertation-demo-summary:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) experiments/dissertation_demo_summary.py --out-dir reports
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) experiments/dissertation_component_tables.py --out-dir reports
+
+dissertation-component-tables:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) experiments/dissertation_component_tables.py --out-dir reports
 
 operator-benchmark:
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) benchmarks/operator_comparison_benchmark.py

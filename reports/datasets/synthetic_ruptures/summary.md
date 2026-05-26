@@ -1,0 +1,14 @@
+# Dataset summary: synthetic_ruptures
+
+- status: `READY`
+- n: `900`
+- domain: `controlled`
+- model_accuracy: `0.9511111111111111`
+- model_roc_auc: `0.9955908289241623`
+- observer_action_accuracy: `0.3022222222222222`
+- mean_I_pre: `0.7728543248175938`
+- mean_rho: `0.3172559460867956`
+- rupture_rate: `0.0`
+- action_distribution: `{'accept': 104, 'request_more_data': 78, 'lower_confidence': 43}`
+- selected_representation_distribution: `{'FML-audit': 225}`
+- notes: Prototype measurements per object; no I/O timing.

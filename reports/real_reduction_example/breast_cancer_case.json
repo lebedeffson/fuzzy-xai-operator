@@ -1,0 +1,43 @@
+{
+  "object": "sample_113",
+  "P(malignant)": 0.7035770563720608,
+  "selected_features": [
+    "symmetry error",
+    "concave points error",
+    "mean fractal dimension",
+    "worst fractal dimension",
+    "mean texture"
+  ],
+  "F0": {
+    "mu": 0.703577
+  },
+  "F_int": {
+    "low": 0.635577,
+    "high": 0.771577
+  },
+  "F_H": {
+    "values": [
+      0.703577,
+      0.489955
+    ]
+  },
+  "F_N_src": {
+    "truth": 0.703577,
+    "indeterminacy": 0.213622,
+    "falsity": 0.082801
+  },
+  "selected_class": "F_N_src",
+  "Delta": 0.106811,
+  "Delta_by_class": {
+    "F0": 0.42,
+    "F_int": 0.0,
+    "F_H": 0.213622,
+    "F_N_src": 0.106811
+  },
+  "I_pre": 0.6743235322764167,
+  "rho": 0.8,
+  "action": "block",
+  "chi_Auto": false,
+  "chi_R": 1,
+  "chi_R_crit": 1
+}

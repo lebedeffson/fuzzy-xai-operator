@@ -1,0 +1,4 @@
+dataset,resolved_dataset,fallback,predicted_risk,I_pre,rho,action,diagnostics_count
+citr,citr_fallback_registry_mosmed_doctor_analysis,True,0.9330601092896176,0.9227224616897444,0.6636999424892832,defer_to_human,0
+rikord,rikord_demo_fallback,True,0.6535486307054649,0.7439870281277927,0.5049298270168893,defer_to_human,0
+ruccod,ruccod_demo_fallback,True,0.5333333333333333,0.7077399538878698,0.43461300230560646,request_more_data,0

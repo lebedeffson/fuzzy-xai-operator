@@ -5,29 +5,13 @@ import json
 from pathlib import Path
 
 import pandas as pd
-from sklearn.datasets import load_breast_cancer
 
-from fuzzyxai.data import CITRegistryDatasetClient, DatasetRecord, guess_target_column, load_table_dataset
+from fuzzyxai.data import CITRegistryDatasetClient, guess_target_column, load_table_dataset
+from fuzzyxai.datasets import DATASET_REGISTRY, load_dataset_mode
 from fuzzyxai.pipelines import DatasetObserverPipeline, write_dataset_observer_report
 
 
-def _load_sample(name: str) -> tuple[DatasetRecord, pd.DataFrame]:
-    if name != 'breast_cancer':
-        raise ValueError(f'Unknown sample: {name}')
-    data = load_breast_cancer(as_frame=True)
-    df = data.frame.copy()
-    # In sklearn target=0 is malignant. We expose a direct binary risk target.
-    df['risk_target'] = (df['target'] == 0).astype(int)
-    df = df.drop(columns=['target'])
-    record = DatasetRecord(
-        name='sklearn_breast_cancer',
-        source='sklearn.datasets',
-        target_column='risk_target',
-        task_type='binary_classification',
-        description='Breast cancer diagnostic tabular sample; risk_target=1 means malignant.',
-        metadata={'sample': name},
-    )
-    return record, df
+SAMPLE_NAMES = tuple(DATASET_REGISTRY.keys())
 
 
 def _augment_uncertainty_metadata(
@@ -64,7 +48,7 @@ def _augment_uncertainty_metadata(
 
 def main() -> None:
     parser = argparse.ArgumentParser(description='Run dataset -> model -> XAI observer pipeline')
-    parser.add_argument('--sample', default='breast_cancer', help='sample dataset name')
+    parser.add_argument('--sample', default='breast_cancer', choices=SAMPLE_NAMES, help='sample dataset name')
     parser.add_argument('--file', help='local CSV/XLSX/JSON/Parquet file')
     parser.add_argument('--url', help='direct dataset file URL from registry.cit.gov.ru or another source')
     parser.add_argument('--target', help='target column')
@@ -85,7 +69,10 @@ def main() -> None:
         record = client.from_local_file(args.file, target_column=args.target)
         df = load_table_dataset(Path(args.file))
     else:
-        record, df = _load_sample(args.sample)
+        try:
+            record, df = load_dataset_mode(args.sample)
+        except FileNotFoundError as exc:
+            raise SystemExit(str(exc)) from exc
 
     target_column = args.target or record.target_column or guess_target_column(df)
     df = _augment_uncertainty_metadata(
