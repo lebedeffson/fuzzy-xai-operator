@@ -5,10 +5,23 @@
 - domain: `medical`
 - model_accuracy: `0.972027972027972`
 - model_roc_auc: `0.9949685534591195`
-- observer_action_accuracy: `0.5594405594405595`
+- reason_if_roc_auc_nan_or_05: ``
+- n_positive: `212`
+- n_negative: `357`
+- positive_rate: `0.37258347978910367`
+- score_std: `0.42208565349168203`
+- observer_action_accuracy_applicable: `False`
+- observer_action_accuracy_reason: `no expert action labels`
+- observer_action_accuracy: `None`
+- observer_action_proxy_accuracy: `0.5594405594405595`
 - mean_I_pre: `0.7935691880178595`
 - mean_rho: `0.2076536833161616`
 - rupture_rate: `0.0`
+- critical_rupture_rate: `0.0`
+- metric_interpretation: `Use accuracy/roc_auc with rupture rates for built-in datasets; for registry datasets prioritize pipeline readiness and transfer limitations.`
+- valid_for_quantitative_claims: `True`
+- limitations: `['no expert action labels']`
+- recommended_use_in_dissertation: `quantitative`
 - action_distribution: `{'lower_confidence': 36, 'accept': 90, 'request_more_data': 17}`
 - selected_representation_distribution: `{'FML-audit': 143}`
 - notes: Prototype measurements per object; no I/O timing.

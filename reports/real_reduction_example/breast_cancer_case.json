@@ -1,6 +1,7 @@
 {
   "object": "sample_113",
   "P(malignant)": 0.7035770563720608,
+  "p_malignant": 0.7035770563720608,
   "selected_features": [
     "symmetry error",
     "concave points error",
@@ -27,7 +28,9 @@
     "falsity": 0.082801
   },
   "selected_class": "F_N_src",
+  "selected_representation": "F_N_src",
   "Delta": 0.106811,
+  "reduction_loss": 0.106811,
   "Delta_by_class": {
     "F0": 0.42,
     "F_int": 0.0,
@@ -35,6 +38,7 @@
     "F_N_src": 0.106811
   },
   "I_pre": 0.6743235322764167,
+  "i_pre": 0.6743235322764167,
   "rho": 0.8,
   "action": "block",
   "chi_Auto": false,

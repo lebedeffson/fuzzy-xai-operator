@@ -16,6 +16,9 @@ def test_dataset_benchmark_writes_required_files(tmp_path) -> None:
     for key in [
         'dataset', 'status', 'n', 'domain', 'model_accuracy', 'model_roc_auc',
         'observer_action_accuracy', 'mean_I_pre', 'mean_rho', 'rupture_rate',
+        'critical_rupture_rate', 'observer_action_proxy_accuracy',
+        'metric_interpretation', 'valid_for_quantitative_claims', 'limitations',
+        'recommended_use_in_dissertation',
         'action_distribution', 'selected_representation_distribution', 'notes',
     ]:
         assert key in payload

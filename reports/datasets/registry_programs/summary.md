@@ -5,10 +5,23 @@
 - domain: `tabular_text`
 - model_accuracy: `0.5011990407673861`
 - model_roc_auc: `0.4948539968984046`
-- observer_action_accuracy: `0.0`
+- reason_if_roc_auc_nan_or_05: `roc_auc near 0.5: ranking signal is weak or class imbalance dominates`
+- n_positive: `5003`
+- n_negative: `5004`
+- positive_rate: `0.49995003497551715`
+- score_std: `0.0030119257722783133`
+- observer_action_accuracy_applicable: `False`
+- observer_action_accuracy_reason: `no expert action labels`
+- observer_action_accuracy: `None`
+- observer_action_proxy_accuracy: `0.0`
 - mean_I_pre: `0.7605362825571323`
 - mean_rho: `0.46119131706650957`
 - rupture_rate: `0.0`
+- critical_rupture_rate: `0.0`
+- metric_interpretation: `Use accuracy/roc_auc with rupture rates for built-in datasets; for registry datasets prioritize pipeline readiness and transfer limitations.`
+- valid_for_quantitative_claims: `False`
+- limitations: `['no expert action labels', 'roc_auc near 0.5: ranking signal is weak or class imbalance dominates']`
+- recommended_use_in_dissertation: `external-transfer`
 - action_distribution: `{'request_more_data': 2502}`
 - selected_representation_distribution: `{'FML-audit': 2502}`
-- notes: Prototype measurements per object; no I/O timing.
+- notes: Prototype measurements per object; no I/O timing. Registry mode validates readiness/portability of the pipeline; action quality metric may be N/A. No expert action labels: observer_action_accuracy is not applicable.

@@ -27,12 +27,12 @@
 
 ## 3) Количественная проверка (встроенные режимы)
 
-| Dataset | Acc | ROC AUC | Observer action acc | Observer proxy acc | Rupture rate | Crit rupture rate | positive_rate | score_std | Note |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| breast_cancer | 0.972028 | 0.994969 | N/A | 0.559441 | 0 | 0 | 0.372583 | 0.422086 | Prototype measurements per object; no I/O timing. |
-| diabetes_binary | 0.756757 | 0.82987 | N/A | 0.099099 | 0 | 0 | 0.5 | 0.274921 | Prototype measurements per object; no I/O timing. Stress-test for borderline uncertainty; threshold calibration may be required. |
-| wine_risk | 0.977778 | 1 | N/A | 0.622222 | 0 | 0 | 0.269663 | 0.390654 | Prototype measurements per object; no I/O timing. |
-| synthetic_ruptures | 0.951111 | 0.995591 | N/A | 0.226667 | 0.346667 | 0.222222 | 0.442222 | 0.35258 | Prototype measurements per object; no I/O timing. Rupture proxies are derived from expert/source disagreement fields. |
+| Dataset | Acc | ROC AUC | Observer action acc | Observer proxy acc | Rupture rate | Crit rupture rate | positive_rate | score_std | Use tag | Note |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| breast_cancer | 0.972028 | 0.994969 | N/A | 0.559441 | 0 | 0 | 0.372583 | 0.422086 | quantitative | Prototype measurements per object; no I/O timing. |
+| diabetes_binary | 0.756757 | 0.82987 | N/A | 0.099099 | 0 | 0 | 0.5 | 0.274921 | stress-test | Prototype measurements per object; no I/O timing. Stress-test for borderline uncertainty; threshold calibration may be required. |
+| wine_risk | 0.977778 | 1 | N/A | 0.622222 | 0 | 0 | 0.269663 | 0.390654 | quantitative | Prototype measurements per object; no I/O timing. |
+| synthetic_ruptures | 0.951111 | 0.995591 | N/A | 0.226667 | 0.346667 | 0.222222 | 0.442222 | 0.35258 | control-diagnostics | Prototype measurements per object; no I/O timing. Rupture proxies are derived from expert/source disagreement fields. |
 
 ## 4) Registry-режимы: readiness и ограничения интерпретации
 

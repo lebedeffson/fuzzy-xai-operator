@@ -5,10 +5,23 @@
 - domain: `medical`
 - model_accuracy: `0.7567567567567568`
 - model_roc_auc: `0.8298701298701298`
-- observer_action_accuracy: `0.0990990990990991`
+- reason_if_roc_auc_nan_or_05: ``
+- n_positive: `221`
+- n_negative: `221`
+- positive_rate: `0.5`
+- score_std: `0.2749214209893211`
+- observer_action_accuracy_applicable: `False`
+- observer_action_accuracy_reason: `no expert action labels`
+- observer_action_accuracy: `None`
+- observer_action_proxy_accuracy: `0.0990990990990991`
 - mean_I_pre: `0.765687631853013`
 - mean_rho: `0.38605707865721867`
 - rupture_rate: `0.0`
+- critical_rupture_rate: `0.0`
+- metric_interpretation: `Use accuracy/roc_auc with rupture rates for built-in datasets; for registry datasets prioritize pipeline readiness and transfer limitations.`
+- valid_for_quantitative_claims: `False`
+- limitations: `['no expert action labels']`
+- recommended_use_in_dissertation: `stress-test`
 - action_distribution: `{'request_more_data': 66, 'lower_confidence': 13, 'accept': 32}`
 - selected_representation_distribution: `{'FML-audit': 111}`
-- notes: Prototype measurements per object; no I/O timing.
+- notes: Prototype measurements per object; no I/O timing. Stress-test for borderline uncertainty; threshold calibration may be required.

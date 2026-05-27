@@ -64,6 +64,67 @@ def _save_trace(case_state: dict[str, Any]) -> Path:
     return path
 
 
+def _build_defense_case_payload(case_state: dict[str, Any]) -> dict[str, Any]:
+    e_action_auto = bool(case_state.get('contexts', {}).get('AutoAccept', {}).get('E_action'))
+    edges = case_state.get('composition', {}).get('edges', [])
+    return {
+        'dataset_mode': case_state.get('dataset', {}).get('name'),
+        'domain': case_state.get('dataset', {}).get('domain'),
+        'sample_id': case_state.get('input', {}).get('sample_id'),
+        'E_model': case_state.get('explanation', {}).get('E_model', {}),
+        'gamma_edges': [
+            {
+                'transition': f"{e.get('source')}->{e.get('target')}",
+                'gamma': e.get('gamma'),
+                'gamma_max': e.get('gamma_max'),
+                'status': e.get('status'),
+            }
+            for e in edges
+        ],
+        'selected_representation': case_state.get('uncertainty', {}).get('selected_class'),
+        'reduction_loss': case_state.get('uncertainty', {}).get('delta'),
+        'chi_Auto': e_action_auto,
+        'rho': case_state.get('risk', {}).get('rho'),
+        'chi_R': case_state.get('risk', {}).get('chi_R'),
+        'chi_R_crit': case_state.get('risk', {}).get('chi_R_crit'),
+        'action': case_state.get('risk', {}).get('action'),
+        'conclusion': case_state.get('risk', {}).get('reason'),
+        'exported_at_utc': datetime.now(timezone.utc).isoformat(),
+    }
+
+
+def _save_defense_case(case_state: dict[str, Any]) -> tuple[Path, Path]:
+    out = ROOT / 'reports/layered_demo'
+    out.mkdir(parents=True, exist_ok=True)
+    payload = _build_defense_case_payload(case_state)
+    json_path = out / 'defense_case.json'
+    md_path = out / 'defense_case.md'
+    json_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding='utf-8')
+    md_lines = [
+        '# Defense Case Report',
+        '',
+        f"- dataset_mode: `{payload['dataset_mode']}`",
+        f"- sample_id: `{payload['sample_id']}`",
+        f"- selected_representation: `{payload['selected_representation']}`",
+        f"- reduction_loss: `{_num(payload['reduction_loss'], 6)}`",
+        f"- chi_Auto: `{payload['chi_Auto']}`",
+        f"- rho: `{_num(payload['rho'], 6)}`",
+        f"- chi_R: `{payload['chi_R']}`",
+        f"- chi_R_crit: `{payload['chi_R_crit']}`",
+        f"- action: `{payload['action']}`",
+        f"- conclusion: `{payload['conclusion']}`",
+        '',
+        '## Composition',
+    ]
+    for edge in payload['gamma_edges']:
+        md_lines.append(
+            f"- `{edge['transition']}`: gamma=`{_num(edge['gamma'])}`, "
+            f"gamma_max=`{_num(edge['gamma_max'])}`, status=`{edge['status']}`"
+        )
+    md_path.write_text('\n'.join(md_lines), encoding='utf-8')
+    return json_path, md_path
+
+
 def _route_html(route: dict[str, str]) -> str:
     order = ['Input', 'Model', 'Omega', 'Expl', 'Fuzzy', 'Topos', 'Observer', 'Action']
     items = []
@@ -250,7 +311,9 @@ def run_ui(port: int = 8096) -> None:  # pragma: no cover
             with ui.column().classes('gap-1'):
                 ui.label('FuzzyXAI Layered Demo').classes('text-3xl font-bold')
                 ui.label('Input → Model → Ω → Expl → Fuzzy → Topos → Observer → Action').classes('opacity-90')
-            ui.label('defense mode').classes('text-xs opacity-90')
+            with ui.column().classes('items-end gap-1'):
+                ui.label('defense mode').classes('text-xs opacity-90')
+                defense_mode = ui.switch('Defense mode', value=True)
 
         with ui.tabs().classes('w-full') as tabs:
             t_case = ui.tab('Сквозной кейс')
@@ -296,10 +359,12 @@ def run_ui(port: int = 8096) -> None:  # pragma: no cover
                                     manual_inputs[feat] = ui.number(feat, value=float(manual_vec[i]), format='%.6f').classes('w-full')
                         run_btn = ui.button('Run full pipeline', color='primary').classes('w-full')
                         export_btn = ui.button('Export trace JSON').classes('w-full')
+                        export_defense_btn = ui.button('Export defense case report').classes('w-full')
 
                     with ui.column().classes('panel w-3/5 gap-2'):
                         ui.label('Итог кейса').classes('text-lg font-semibold')
                         mode_preview = ui.markdown('')
+                        defense_summary = ui.markdown('')
                         _explain_block(
                             ui,
                             title='Dataset modes: проверка переносимости',
@@ -307,81 +372,82 @@ def run_ui(port: int = 8096) -> None:  # pragma: no cover
                             interpretation='Встроенные режимы дают воспроизводимую проверку без внешних файлов; registry-режимы показывают переносимость после локальной загрузки.',
                             conclusion='MISSING для registry не ошибка метода: это индикатор, что локальный файл ещё не подключён.',
                         )
-                        mode_matrix = ui.table(
-                            columns=[
-                                {'name': 'dataset_mode', 'label': 'Dataset mode', 'field': 'dataset_mode'},
-                                {'name': 'domain', 'label': 'Domain', 'field': 'domain'},
-                                {'name': 'validates', 'label': 'What validates', 'field': 'validates'},
-                                {'name': 'status', 'label': 'Status', 'field': 'status'},
-                            ],
-                            rows=_dataset_status_rows(),
-                            pagination=8,
-                        ).classes('w-full')
-                        mode_matrix.add_slot(
-                            'body-cell-status',
-                            """
-                            <q-td :props="props">
-                              <q-badge
-                                :color="props.value === 'READY' ? 'positive' : (props.value === 'MISSING' ? 'warning' : 'negative')"
-                                text-color="white"
-                                :label="props.value"
-                              />
-                            </q-td>
-                            """,
-                        )
-                        _explain_block(
-                            ui,
-                            title='Сквозной кейс: от прогноза к действию',
-                            question='Как этот конкретный объект проходит через весь наблюдающий контур?',
-                            formula='Input -> Model -> Omega -> Expl -> Fuzzy -> Topos -> Risk -> Action',
-                            interpretation='Смотрим не только вероятность модели, но и целостность объяснительной цепочки.',
-                            conclusion='Итоговое действие выбирается только после проверки всех слоёв.',
-                        )
-                        route_md = ui.html('')
-                        summary = ui.markdown('')
-                        status_md = ui.html('')
-                        step1 = ui.markdown('')
-                        step2 = ui.markdown('')
-                        step3 = ui.table(
-                            columns=[
-                                {'name': 'transition', 'label': 'Переход', 'field': 'transition'},
-                                {'name': 'gamma', 'label': 'γ', 'field': 'gamma'},
-                                {'name': 'gamma_max', 'label': 'γ_max', 'field': 'gamma_max'},
-                                {'name': 'status', 'label': 'Результат', 'field': 'status'},
-                                {'name': 'hott', 'label': 'HoTT', 'field': 'hott'},
-                                {'name': 'meaning', 'label': 'Что это значит', 'field': 'meaning'},
-                            ],
-                            rows=[],
-                        ).classes('w-full')
-                        step4 = ui.table(
-                            columns=[
-                                {'name': 'class', 'label': 'Класс', 'field': 'class'},
-                                {'name': 'coverage', 'label': 'Покрытие', 'field': 'coverage'},
-                                {'name': 'complexity', 'label': 'Сложность', 'field': 'complexity'},
-                                {'name': 'reduction_loss', 'label': 'Потеря редукции', 'field': 'reduction_loss'},
-                                {'name': 'status', 'label': 'Статус', 'field': 'status'},
-                            ],
-                            rows=[],
-                        ).classes('w-full')
-                        step5 = ui.table(
-                            columns=[
-                                {'name': 'object', 'label': 'Объект', 'field': 'object'},
-                                {'name': 'risk_context', 'label': 'RiskContext', 'field': 'risk_context'},
-                                {'name': 'auto_accept', 'label': 'AutoAccept', 'field': 'auto_accept'},
-                                {'name': 'conclusion', 'label': 'Вывод', 'field': 'conclusion'},
-                            ],
-                            rows=[],
-                        ).classes('w-full')
-                        step6 = ui.table(
-                            columns=[
-                                {'name': 'component', 'label': 'Компонента', 'field': 'component'},
-                                {'name': 'value', 'label': 'Значение', 'field': 'value'},
-                                {'name': 'weight', 'label': 'Вес', 'field': 'weight'},
-                                {'name': 'contrib', 'label': 'Вклад', 'field': 'contrib'},
-                            ],
-                            rows=[],
-                        ).classes('w-full')
-                        final_card = ui.markdown('')
+                        with ui.expansion('Technical details', value=False).classes('w-full') as tech_expansion:
+                            mode_matrix = ui.table(
+                                columns=[
+                                    {'name': 'dataset_mode', 'label': 'Dataset mode', 'field': 'dataset_mode'},
+                                    {'name': 'domain', 'label': 'Domain', 'field': 'domain'},
+                                    {'name': 'validates', 'label': 'What validates', 'field': 'validates'},
+                                    {'name': 'status', 'label': 'Status', 'field': 'status'},
+                                ],
+                                rows=_dataset_status_rows(),
+                                pagination=8,
+                            ).classes('w-full')
+                            mode_matrix.add_slot(
+                                'body-cell-status',
+                                """
+                                <q-td :props="props">
+                                  <q-badge
+                                    :color="props.value === 'READY' ? 'positive' : (props.value === 'MISSING' ? 'warning' : 'negative')"
+                                    text-color="white"
+                                    :label="props.value"
+                                  />
+                                </q-td>
+                                """,
+                            )
+                            _explain_block(
+                                ui,
+                                title='Сквозной кейс: от прогноза к действию',
+                                question='Как этот конкретный объект проходит через весь наблюдающий контур?',
+                                formula='Input -> Model -> Omega -> Expl -> Fuzzy -> Topos -> Risk -> Action',
+                                interpretation='Смотрим не только вероятность модели, но и целостность объяснительной цепочки.',
+                                conclusion='Итоговое действие выбирается только после проверки всех слоёв.',
+                            )
+                            route_md = ui.html('')
+                            summary = ui.markdown('')
+                            status_md = ui.html('')
+                            step1 = ui.markdown('')
+                            step2 = ui.markdown('')
+                            step3 = ui.table(
+                                columns=[
+                                    {'name': 'transition', 'label': 'Переход', 'field': 'transition'},
+                                    {'name': 'gamma', 'label': 'γ', 'field': 'gamma'},
+                                    {'name': 'gamma_max', 'label': 'γ_max', 'field': 'gamma_max'},
+                                    {'name': 'status', 'label': 'Результат', 'field': 'status'},
+                                    {'name': 'hott', 'label': 'HoTT', 'field': 'hott'},
+                                    {'name': 'meaning', 'label': 'Что это значит', 'field': 'meaning'},
+                                ],
+                                rows=[],
+                            ).classes('w-full')
+                            step4 = ui.table(
+                                columns=[
+                                    {'name': 'class', 'label': 'Класс', 'field': 'class'},
+                                    {'name': 'coverage', 'label': 'Покрытие', 'field': 'coverage'},
+                                    {'name': 'complexity', 'label': 'Сложность', 'field': 'complexity'},
+                                    {'name': 'reduction_loss', 'label': 'Потеря редукции', 'field': 'reduction_loss'},
+                                    {'name': 'status', 'label': 'Статус', 'field': 'status'},
+                                ],
+                                rows=[],
+                            ).classes('w-full')
+                            step5 = ui.table(
+                                columns=[
+                                    {'name': 'object', 'label': 'Объект', 'field': 'object'},
+                                    {'name': 'risk_context', 'label': 'RiskContext', 'field': 'risk_context'},
+                                    {'name': 'auto_accept', 'label': 'AutoAccept', 'field': 'auto_accept'},
+                                    {'name': 'conclusion', 'label': 'Вывод', 'field': 'conclusion'},
+                                ],
+                                rows=[],
+                            ).classes('w-full')
+                            step6 = ui.table(
+                                columns=[
+                                    {'name': 'component', 'label': 'Компонента', 'field': 'component'},
+                                    {'name': 'value', 'label': 'Значение', 'field': 'value'},
+                                    {'name': 'weight', 'label': 'Вес', 'field': 'weight'},
+                                    {'name': 'contrib', 'label': 'Вклад', 'field': 'contrib'},
+                                ],
+                                rows=[],
+                            ).classes('w-full')
+                            final_card = ui.markdown('')
 
                 dataset_mode.on_value_change(lambda _e: setattr(dataset_purpose, 'content', mode_help.get(str(dataset_mode.value), '')))
 
@@ -499,6 +565,23 @@ def run_ui(port: int = 8096) -> None:  # pragma: no cover
                         f"Что с того: **{rho_text}**.  \n"
                         f"Пороги: `{r['thresholds']}`"
                     )
+                    chi_auto = bool(state['contexts']['AutoAccept'].get('E_action'))
+                    defense_summary.content = (
+                        f"### Defense summary\n"
+                        f"- dataset: `{state['dataset']['name']}` ({state['dataset']['status']})\n"
+                        f"- E_model: `u={_num(state['explanation']['E_model']['u'])}`, `I_pre={_num(i_pre)}`\n"
+                        f"- composition: `γ_model_risk={_num(state['composition']['edges'][0]['gamma'])}`, "
+                        f"`γ_risk_action={_num(state['composition']['edges'][1]['gamma'])}`, "
+                        f"`rupture={'yes' if r['rupture'] else 'no'}`\n"
+                        f"- selected_representation: `{state['uncertainty']['selected_class']}`\n"
+                        f"- reduction_loss (Δ): `{_num(state['uncertainty']['delta'], 6)}`\n"
+                        f"- chi_Auto: `{chi_auto}`\n"
+                        f"- rho: `{_num(r['rho'], 6)}`\n"
+                        f"- chi_R: `{r.get('chi_R', 0)}` / chi_R_crit: `{r.get('chi_R_crit', 0)}`\n"
+                        f"- action: `{r['action']}`\n"
+                        f"- conclusion: **{rho_text}**"
+                    )
+                    tech_expansion.value = not bool(defense_mode.value)
 
                     mode_key = str(dataset_mode.value)
                     try:
@@ -552,14 +635,12 @@ def run_ui(port: int = 8096) -> None:  # pragma: no cover
 
                 run_btn.on_click(refresh)
                 export_btn.on_click(lambda: _save_trace(state))
+                export_defense_btn.on_click(lambda: _save_defense_case(state))
                 dataset_mode.on_value_change(lambda _e: refresh())
                 scenario.on_value_change(lambda _e: refresh())
                 sample_idx.on_value_change(lambda _e: refresh())
                 manual_switch.on_value_change(lambda _e: refresh())
-                dataset_mode.on_value_change(lambda _e: refresh())
-                scenario.on_value_change(lambda _e: refresh())
-                sample_idx.on_value_change(lambda _e: refresh())
-                manual_switch.on_value_change(lambda _e: refresh())
+                defense_mode.on_value_change(lambda _e: refresh())
                 refresh()
 
             with ui.tab_panel(t_op):
@@ -845,6 +926,14 @@ def run_ui(port: int = 8096) -> None:  # pragma: no cover
                         '- built-in наборы: интерпретируем `accuracy/roc_auc`, `rupture_rate`, `observer_proxy_accuracy`;  \n'
                         '- registry наборы: основной результат это `READY/pipeline_completed` и ограничения предметной разметки;  \n'
                         '- `observer_action_accuracy = N/A` означает отсутствие экспертных action-labels, а не провал метода.'
+                    )
+                    synth_summary = _load_benchmark_summary('synthetic_ruptures') or {}
+                    ui.markdown(
+                        'Полный контур проверяется не только по accuracy, а по способности не пропускать критические разрывы. '
+                        f"Для `synthetic_ruptures` сейчас "
+                        f"`rupture_rate={_num(synth_summary.get('rupture_rate'), 4)}`, "
+                        f"`critical_rupture_rate={_num(synth_summary.get('critical_rupture_rate'), 4)}`; "
+                        'это диагностически нагружает Expl/HoTT-слой.'
                     )
 
                     _explain_block(

@@ -260,6 +260,7 @@ def generate(out_dir: Path) -> dict[str, Any]:
                 'Crit rupture rate',
                 'positive_rate',
                 'score_std',
+                'Use tag',
                 'Note',
             ],
             [
@@ -273,6 +274,7 @@ def generate(out_dir: Path) -> dict[str, Any]:
                     _fmt((r['summary'] or {}).get('critical_rupture_rate', None)),
                     _fmt((r['summary'] or {}).get('positive_rate', None)),
                     _fmt((r['summary'] or {}).get('score_std', None)),
+                    _fmt((r['summary'] or {}).get('recommended_use_in_dissertation', None)),
                     str((r['summary'] or {}).get('notes', '-')),
                 ]
                 for r in quantitative_rows

@@ -200,6 +200,25 @@ def _evaluate_ready_dataset(record: DatasetRecord, df: pd.DataFrame, domain: str
         notes.append('Stress-test for borderline uncertainty; threshold calibration may be required.')
     if dataset_mode == 'synthetic_ruptures':
         notes.append('Rupture proxies are derived from expert/source disagreement fields.')
+    use_tag = 'quantitative'
+    if dataset_mode == 'diabetes_binary':
+        use_tag = 'stress-test'
+    elif dataset_mode == 'synthetic_ruptures':
+        use_tag = 'control-diagnostics'
+    elif dataset_mode.startswith('registry_'):
+        use_tag = 'external-transfer'
+    valid_for_quantitative_claims = dataset_mode in {'breast_cancer', 'wine_risk', 'synthetic_ruptures'}
+    limitations: list[str] = []
+    if not observer_action_accuracy_applicable:
+        limitations.append('no expert action labels')
+    if roc_reason:
+        limitations.append(roc_reason)
+    if dataset_mode == 'registry_mosmed_doctor_analysis':
+        limitations.append('small sample size')
+    metric_interpretation = (
+        'Use accuracy/roc_auc with rupture rates for built-in datasets; '
+        'for registry datasets prioritize pipeline readiness and transfer limitations.'
+    )
 
     summary = {
         'dataset': record.name,
@@ -224,6 +243,10 @@ def _evaluate_ready_dataset(record: DatasetRecord, df: pd.DataFrame, domain: str
         'critical_rupture_rate': float(pred_df['chi_R_crit'].mean()) if not pred_df.empty else 0.0,
         'action_distribution': dict(Counter(pred_df['action'].tolist())),
         'selected_representation_distribution': dict(Counter(pred_df['selected_representation'].tolist())),
+        'metric_interpretation': metric_interpretation,
+        'valid_for_quantitative_claims': valid_for_quantitative_claims,
+        'limitations': limitations,
+        'recommended_use_in_dissertation': use_tag,
         'notes': ' '.join(notes),
     }
     return summary, pred_df
@@ -251,6 +274,10 @@ def _write_summary_md(path: Path, summary: dict[str, Any]) -> None:
         f"- mean_rho: `{summary['mean_rho']}`",
         f"- rupture_rate: `{summary['rupture_rate']}`",
         f"- critical_rupture_rate: `{summary.get('critical_rupture_rate')}`",
+        f"- metric_interpretation: `{summary.get('metric_interpretation')}`",
+        f"- valid_for_quantitative_claims: `{summary.get('valid_for_quantitative_claims')}`",
+        f"- limitations: `{summary.get('limitations')}`",
+        f"- recommended_use_in_dissertation: `{summary.get('recommended_use_in_dissertation')}`",
         f"- action_distribution: `{summary['action_distribution']}`",
         f"- selected_representation_distribution: `{summary['selected_representation_distribution']}`",
         f"- notes: {summary['notes']}",
@@ -287,6 +314,10 @@ def run_benchmark(dataset: str, *, out_root: str | Path = 'reports/datasets') ->
             'critical_rupture_rate': None,
             'action_distribution': {},
             'selected_representation_distribution': {},
+            'metric_interpretation': 'dataset unavailable',
+            'valid_for_quantitative_claims': False,
+            'limitations': ['dataset unavailable'],
+            'recommended_use_in_dissertation': 'external-transfer',
             'notes': f'MISSING: {error}' if error else 'Dataset unavailable',
         }
         (out_dir / 'predictions.csv').write_text('row_id\n', encoding='utf-8')

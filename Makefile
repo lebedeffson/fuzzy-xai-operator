@@ -3,7 +3,7 @@ PYTHONPATH := .
 PORT ?= 8085
 DATASET ?= breast_cancer
 
-.PHONY: install test risk-test category-hott-test chapter2-breast-cancer-demo chapter5-experiments chapter5-demo chapter5-latex web-demo unified-demo layered-demo unified-demo-cli full-pipeline figures full-experiments demo dashboard proof formal-proof thesis full-demo full-observer dataset-observer dataset-modes-check baseline-check real-data-validation benchmark benchmark-dataset real-reduction-example dissertation-demo-summary dissertation-component-tables operator-benchmark risk-benchmark lofo-f1-demo clean
+.PHONY: install test risk-test category-hott-test chapter2-breast-cancer-demo chapter5-experiments chapter5-demo chapter5-latex web-demo unified-demo layered-demo unified-demo-cli full-pipeline figures full-experiments demo dashboard proof formal-proof thesis full-demo full-observer dataset-observer dataset-modes-check baseline-check real-data-validation benchmark benchmark-dataset real-reduction-example dissertation-demo-summary dissertation-component-tables dissertation-check dataset-cards operator-benchmark risk-benchmark lofo-f1-demo clean
 
 install:
 	$(PYTHON) -m pip install -r requirements.txt
@@ -119,6 +119,19 @@ dissertation-demo-summary:
 
 dissertation-component-tables:
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) experiments/dissertation_component_tables.py --out-dir reports
+
+dataset-cards:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) experiments/dataset_cards.py --out-root reports/datasets
+
+dissertation-check:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m pytest -q
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) examples/check_dataset_modes.py
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) experiments/dataset_benchmark.py --dataset breast_cancer --out-root reports/datasets
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) experiments/real_reduction_example.py --out-dir reports/real_reduction_example
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) experiments/dissertation_demo_summary.py --out-dir reports
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) experiments/dissertation_component_tables.py --out-dir reports
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) experiments/dataset_cards.py --out-root reports/datasets
+	@echo "DISSERTATION CHECK PASSED"
 
 operator-benchmark:
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) benchmarks/operator_comparison_benchmark.py

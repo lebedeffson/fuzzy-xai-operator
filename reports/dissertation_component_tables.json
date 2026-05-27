@@ -109,6 +109,12 @@
         "selected_representation_distribution": {
           "FML-audit": 143
         },
+        "metric_interpretation": "Use accuracy/roc_auc with rupture rates for built-in datasets; for registry datasets prioritize pipeline readiness and transfer limitations.",
+        "valid_for_quantitative_claims": true,
+        "limitations": [
+          "no expert action labels"
+        ],
+        "recommended_use_in_dissertation": "quantitative",
         "notes": "Prototype measurements per object; no I/O timing."
       },
       "note": ""
@@ -148,6 +154,12 @@
         "selected_representation_distribution": {
           "FML-audit": 111
         },
+        "metric_interpretation": "Use accuracy/roc_auc with rupture rates for built-in datasets; for registry datasets prioritize pipeline readiness and transfer limitations.",
+        "valid_for_quantitative_claims": false,
+        "limitations": [
+          "no expert action labels"
+        ],
+        "recommended_use_in_dissertation": "stress-test",
         "notes": "Prototype measurements per object; no I/O timing. Stress-test for borderline uncertainty; threshold calibration may be required."
       },
       "note": ""
@@ -187,6 +199,12 @@
         "selected_representation_distribution": {
           "FML-audit": 45
         },
+        "metric_interpretation": "Use accuracy/roc_auc with rupture rates for built-in datasets; for registry datasets prioritize pipeline readiness and transfer limitations.",
+        "valid_for_quantitative_claims": true,
+        "limitations": [
+          "no expert action labels"
+        ],
+        "recommended_use_in_dissertation": "quantitative",
         "notes": "Prototype measurements per object; no I/O timing."
       },
       "note": ""
@@ -226,6 +244,12 @@
         "selected_representation_distribution": {
           "FML-audit": 225
         },
+        "metric_interpretation": "Use accuracy/roc_auc with rupture rates for built-in datasets; for registry datasets prioritize pipeline readiness and transfer limitations.",
+        "valid_for_quantitative_claims": true,
+        "limitations": [
+          "no expert action labels"
+        ],
+        "recommended_use_in_dissertation": "control-diagnostics",
         "notes": "Prototype measurements per object; no I/O timing. Rupture proxies are derived from expert/source disagreement fields."
       },
       "note": ""
@@ -263,6 +287,13 @@
         "selected_representation_distribution": {
           "FML-audit": 2502
         },
+        "metric_interpretation": "Use accuracy/roc_auc with rupture rates for built-in datasets; for registry datasets prioritize pipeline readiness and transfer limitations.",
+        "valid_for_quantitative_claims": false,
+        "limitations": [
+          "no expert action labels",
+          "roc_auc near 0.5: ranking signal is weak or class imbalance dominates"
+        ],
+        "recommended_use_in_dissertation": "external-transfer",
         "notes": "Prototype measurements per object; no I/O timing. Registry mode validates readiness/portability of the pipeline; action quality metric may be N/A. No expert action labels: observer_action_accuracy is not applicable."
       },
       "note": ""
@@ -300,6 +331,14 @@
         "selected_representation_distribution": {
           "FML-audit": 3
         },
+        "metric_interpretation": "Use accuracy/roc_auc with rupture rates for built-in datasets; for registry datasets prioritize pipeline readiness and transfer limitations.",
+        "valid_for_quantitative_claims": false,
+        "limitations": [
+          "no expert action labels",
+          "roc_auc undefined: single class in test split",
+          "small sample size"
+        ],
+        "recommended_use_in_dissertation": "external-transfer",
         "notes": "Prototype measurements per object; no I/O timing. Registry mode validates readiness/portability of the pipeline; action quality metric may be N/A. Small audit slice (n=10): not for statistical validation."
       },
       "note": ""
@@ -337,6 +376,13 @@
         "selected_representation_distribution": {
           "FML-audit": 2020
         },
+        "metric_interpretation": "Use accuracy/roc_auc with rupture rates for built-in datasets; for registry datasets prioritize pipeline readiness and transfer limitations.",
+        "valid_for_quantitative_claims": false,
+        "limitations": [
+          "no expert action labels",
+          "roc_auc near 0.5: ranking signal is weak or class imbalance dominates"
+        ],
+        "recommended_use_in_dissertation": "external-transfer",
         "notes": "Prototype measurements per object; no I/O timing. Registry mode validates readiness/portability of the pipeline; action quality metric may be N/A. ROC AUC must not be interpreted as quality here; use this mode for industrial contour portability."
       },
       "note": ""
@@ -378,6 +424,12 @@
         "selected_representation_distribution": {
           "FML-audit": 143
         },
+        "metric_interpretation": "Use accuracy/roc_auc with rupture rates for built-in datasets; for registry datasets prioritize pipeline readiness and transfer limitations.",
+        "valid_for_quantitative_claims": true,
+        "limitations": [
+          "no expert action labels"
+        ],
+        "recommended_use_in_dissertation": "quantitative",
         "notes": "Prototype measurements per object; no I/O timing."
       },
       "note": ""
@@ -417,6 +469,12 @@
         "selected_representation_distribution": {
           "FML-audit": 111
         },
+        "metric_interpretation": "Use accuracy/roc_auc with rupture rates for built-in datasets; for registry datasets prioritize pipeline readiness and transfer limitations.",
+        "valid_for_quantitative_claims": false,
+        "limitations": [
+          "no expert action labels"
+        ],
+        "recommended_use_in_dissertation": "stress-test",
         "notes": "Prototype measurements per object; no I/O timing. Stress-test for borderline uncertainty; threshold calibration may be required."
       },
       "note": ""
@@ -456,6 +514,12 @@
         "selected_representation_distribution": {
           "FML-audit": 45
         },
+        "metric_interpretation": "Use accuracy/roc_auc with rupture rates for built-in datasets; for registry datasets prioritize pipeline readiness and transfer limitations.",
+        "valid_for_quantitative_claims": true,
+        "limitations": [
+          "no expert action labels"
+        ],
+        "recommended_use_in_dissertation": "quantitative",
         "notes": "Prototype measurements per object; no I/O timing."
       },
       "note": ""
@@ -495,6 +559,12 @@
         "selected_representation_distribution": {
           "FML-audit": 225
         },
+        "metric_interpretation": "Use accuracy/roc_auc with rupture rates for built-in datasets; for registry datasets prioritize pipeline readiness and transfer limitations.",
+        "valid_for_quantitative_claims": true,
+        "limitations": [
+          "no expert action labels"
+        ],
+        "recommended_use_in_dissertation": "control-diagnostics",
         "notes": "Prototype measurements per object; no I/O timing. Rupture proxies are derived from expert/source disagreement fields."
       },
       "note": ""
@@ -534,6 +604,13 @@
         "selected_representation_distribution": {
           "FML-audit": 2502
         },
+        "metric_interpretation": "Use accuracy/roc_auc with rupture rates for built-in datasets; for registry datasets prioritize pipeline readiness and transfer limitations.",
+        "valid_for_quantitative_claims": false,
+        "limitations": [
+          "no expert action labels",
+          "roc_auc near 0.5: ranking signal is weak or class imbalance dominates"
+        ],
+        "recommended_use_in_dissertation": "external-transfer",
         "notes": "Prototype measurements per object; no I/O timing. Registry mode validates readiness/portability of the pipeline; action quality metric may be N/A. No expert action labels: observer_action_accuracy is not applicable."
       },
       "note": ""
@@ -571,6 +648,14 @@
         "selected_representation_distribution": {
           "FML-audit": 3
         },
+        "metric_interpretation": "Use accuracy/roc_auc with rupture rates for built-in datasets; for registry datasets prioritize pipeline readiness and transfer limitations.",
+        "valid_for_quantitative_claims": false,
+        "limitations": [
+          "no expert action labels",
+          "roc_auc undefined: single class in test split",
+          "small sample size"
+        ],
+        "recommended_use_in_dissertation": "external-transfer",
         "notes": "Prototype measurements per object; no I/O timing. Registry mode validates readiness/portability of the pipeline; action quality metric may be N/A. Small audit slice (n=10): not for statistical validation."
       },
       "note": ""
@@ -608,6 +693,13 @@
         "selected_representation_distribution": {
           "FML-audit": 2020
         },
+        "metric_interpretation": "Use accuracy/roc_auc with rupture rates for built-in datasets; for registry datasets prioritize pipeline readiness and transfer limitations.",
+        "valid_for_quantitative_claims": false,
+        "limitations": [
+          "no expert action labels",
+          "roc_auc near 0.5: ranking signal is weak or class imbalance dominates"
+        ],
+        "recommended_use_in_dissertation": "external-transfer",
         "notes": "Prototype measurements per object; no I/O timing. Registry mode validates readiness/portability of the pipeline; action quality metric may be N/A. ROC AUC must not be interpreted as quality here; use this mode for industrial contour portability."
       },
       "note": ""

@@ -5,10 +5,23 @@
 - domain: `industrial_cv`
 - model_accuracy: `0.9920792079207921`
 - model_roc_auc: `0.5`
-- observer_action_accuracy: `1.0`
+- reason_if_roc_auc_nan_or_05: `roc_auc near 0.5: ranking signal is weak or class imbalance dominates`
+- n_positive: `65`
+- n_negative: `8015`
+- positive_rate: `0.008044554455445545`
+- score_std: `8.673617379884035e-19`
+- observer_action_accuracy_applicable: `False`
+- observer_action_accuracy_reason: `no expert action labels`
+- observer_action_accuracy: `None`
+- observer_action_proxy_accuracy: `1.0`
 - mean_I_pre: `0.7893476847952753`
 - mean_rho: `0.06749594132621858`
 - rupture_rate: `0.0`
+- critical_rupture_rate: `0.0`
+- metric_interpretation: `Use accuracy/roc_auc with rupture rates for built-in datasets; for registry datasets prioritize pipeline readiness and transfer limitations.`
+- valid_for_quantitative_claims: `False`
+- limitations: `['no expert action labels', 'roc_auc near 0.5: ranking signal is weak or class imbalance dominates']`
+- recommended_use_in_dissertation: `external-transfer`
 - action_distribution: `{'accept': 2020}`
 - selected_representation_distribution: `{'FML-audit': 2020}`
-- notes: Prototype measurements per object; no I/O timing.
+- notes: Prototype measurements per object; no I/O timing. Registry mode validates readiness/portability of the pipeline; action quality metric may be N/A. ROC AUC must not be interpreted as quality here; use this mode for industrial contour portability.
