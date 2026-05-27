@@ -32,17 +32,15 @@ def build_data_card(dataset_mode: str, out_root: Path) -> Path:
     n_neg = int(vc.get(0, 0))
     n_total = int(len(df))
     pos_rate = float(n_pos / n_total) if n_total else 0.0
-    action_labels = 'available' if bool(summary.get('observer_action_accuracy_applicable')) else 'not available'
+    action_labels = 'available' if bool(summary.get('agreement_proxy_applicable')) else 'not available'
     limitations = summary.get('limitations') or []
     applicable_metrics = [
         'model_accuracy',
         'model_roc_auc',
         'rupture_rate',
         'critical_rupture_rate',
-        'observer_action_proxy_accuracy',
+        'agreement_proxy',
     ]
-    if summary.get('observer_action_accuracy_applicable'):
-        applicable_metrics.append('observer_action_accuracy')
 
     md = [
         f'# Data Card: {dataset_mode}',
@@ -82,4 +80,3 @@ def main() -> None:
 
 if __name__ == '__main__':
     main()
-

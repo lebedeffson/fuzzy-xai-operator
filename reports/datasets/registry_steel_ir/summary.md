@@ -10,12 +10,27 @@
 - n_negative: `8015`
 - positive_rate: `0.008044554455445545`
 - score_std: `8.673617379884035e-19`
-- observer_action_accuracy_applicable: `False`
-- observer_action_accuracy_reason: `no expert action labels`
-- observer_action_accuracy: `None`
-- observer_action_proxy_accuracy: `1.0`
+- agreement_proxy: `None`
+- agreement_proxy_applicable: `False`
+- agreement_proxy_reason: `no expert action labels`
+- observer_action_accuracy (legacy): `None`
+- observer_action_proxy_accuracy (legacy): `1.0`
 - mean_I_pre: `0.7893476847952753`
 - mean_rho: `0.06749594132621858`
+- i_pre_mean: `0.7893476847952753`
+- i_pre_std: `2.220446049250313e-16`
+- i_pre_median: `0.7893476847952751`
+- i_pre_p25: `0.7893476847952751`
+- i_pre_p75: `0.7893476847952751`
+- i_pre_p05: `0.7893476847952751`
+- i_pre_p95: `0.7893476847952751`
+- rho_mean: `0.06749594132621858`
+- rho_std: `2.7755575615628914e-17`
+- rho_median: `0.06749594132621856`
+- rho_p25: `0.06749594132621856`
+- rho_p75: `0.06749594132621856`
+- rho_p05: `0.06749594132621856`
+- rho_p95: `0.06749594132621856`
 - rupture_rate: `0.0`
 - critical_rupture_rate: `0.0`
 - metric_interpretation: `Use accuracy/roc_auc with rupture rates for built-in datasets; for registry datasets prioritize pipeline readiness and transfer limitations.`

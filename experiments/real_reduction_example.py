@@ -108,6 +108,21 @@ def generate_real_reduction_example(
     reprs = _build_representations(service, idx)
 
     chi_auto = bool(state['contexts']['AutoAccept'].get('E_action'))
+    risk_components = state['risk'].get('components', {})
+    weights = state['risk'].get('weights', {}) or risk_components.get('weights', {})
+    rho_p = float(risk_components.get('predicted_risk', 0.0))
+    u_m = float(risk_components.get('uncertainty', 0.0))
+    i_pre = float(state['explanation']['I_pre'])
+    interpretability_gap = float(risk_components.get('interpretability_gap', 1.0 - i_pre))
+    reduction_loss = float(reprs['delta'][reprs['selected_class']])
+    chi_r = int(state['risk'].get('chi_R', 0))
+    contributions = {
+        'predicted_risk': float(weights.get('predicted_risk', 0.0)) * rho_p,
+        'uncertainty': float(weights.get('uncertainty', 0.0)) * u_m,
+        'interpretability_gap': float(weights.get('interpretability_gap', 0.0)) * interpretability_gap,
+        'reduction_loss': float(weights.get('reduction_loss', 0.0)) * reduction_loss,
+        'chi_R': float(weights.get('diagnostic', 0.0)) * float(chi_r),
+    }
     result = {
         'object': str(state['input']['sample_id']),
         'P(malignant)': float(state['model']['p_malignant']),
@@ -120,15 +135,35 @@ def generate_real_reduction_example(
         'selected_class': reprs['selected_class'],
         'selected_representation': reprs['selected_class'],
         'Delta': reprs['delta'][reprs['selected_class']],
-        'reduction_loss': reprs['delta'][reprs['selected_class']],
+        'reduction_loss': reduction_loss,
         'Delta_by_class': reprs['delta'],
-        'I_pre': float(state['explanation']['I_pre']),
-        'i_pre': float(state['explanation']['I_pre']),
+        'I_pre': i_pre,
+        'i_pre': i_pre,
         'rho': float(state['risk']['rho']),
         'action': str(state['risk']['action']),
         'chi_Auto': chi_auto,
-        'chi_R': int(state['risk'].get('chi_R', 0)),
+        'chi_R': chi_r,
         'chi_R_crit': int(state['risk'].get('chi_R_crit', 0)),
+        'risk_breakdown': {
+            'rho_p': rho_p,
+            'u_M': u_m,
+            'interpretability_gap': interpretability_gap,
+            'reduction_loss': reduction_loss,
+            'chi_R': chi_r,
+            'weights': {
+                'predicted_risk': float(weights.get('predicted_risk', 0.0)),
+                'uncertainty': float(weights.get('uncertainty', 0.0)),
+                'interpretability_gap': float(weights.get('interpretability_gap', 0.0)),
+                'reduction_loss': float(weights.get('reduction_loss', 0.0)),
+                'chi_R': float(weights.get('diagnostic', 0.0)),
+            },
+            'contributions': contributions,
+            'rho': float(state['risk']['rho']),
+            'threshold': float(max(0.80, state['risk'].get('thresholds', [0, 0, 0, 0])[3])),
+            'chi_R_crit': int(state['risk'].get('chi_R_crit', 0)),
+            'final_action': str(state['risk']['action']),
+            'reason': str(state['risk']['reason']),
+        },
     }
 
     out = Path(out_dir)
@@ -150,6 +185,16 @@ def generate_real_reduction_example(
         f"- chi_Auto: `{result['chi_Auto']}`",
         f"- chi_R: `{result['chi_R']}`",
         f"- chi_R_crit: `{result['chi_R_crit']}`",
+        '',
+        '## Risk breakdown',
+        f"- rho_p: `{result['risk_breakdown']['rho_p']:.6f}`",
+        f"- u_M: `{result['risk_breakdown']['u_M']:.6f}`",
+        f"- interpretability_gap: `{result['risk_breakdown']['interpretability_gap']:.6f}`",
+        f"- reduction_loss: `{result['risk_breakdown']['reduction_loss']:.6f}`",
+        f"- weights: `{result['risk_breakdown']['weights']}`",
+        f"- contributions: `{result['risk_breakdown']['contributions']}`",
+        f"- threshold: `{result['risk_breakdown']['threshold']:.6f}`",
+        f"- reason: `{result['risk_breakdown']['reason']}`",
     ]
     md_path.write_text('\n'.join(md_lines), encoding='utf-8')
     return result

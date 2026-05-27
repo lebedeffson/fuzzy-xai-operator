@@ -15,6 +15,9 @@
   "observer_action_accuracy_reason": "no expert action labels",
   "observer_action_accuracy": null,
   "observer_action_proxy_accuracy": 0.0990990990990991,
+  "agreement_proxy": 0.0990990990990991,
+  "agreement_proxy_applicable": true,
+  "agreement_proxy_reason": "simulated action rule, not clinical expert labels",
   "mean_I_pre": 0.765687631853013,
   "mean_rho": 0.38605707865721867,
   "rupture_rate": 0.0,
@@ -33,5 +36,19 @@
     "no expert action labels"
   ],
   "recommended_use_in_dissertation": "stress-test",
-  "notes": "Prototype measurements per object; no I/O timing. Stress-test for borderline uncertainty; threshold calibration may be required."
+  "notes": "Prototype measurements per object; no I/O timing. Stress-test for borderline uncertainty; threshold calibration may be required.",
+  "i_pre_mean": 0.765687631853013,
+  "i_pre_std": 0.02452992405824184,
+  "i_pre_median": 0.7583199736523422,
+  "i_pre_p25": 0.7475241234458079,
+  "i_pre_p75": 0.7791603598813865,
+  "i_pre_p05": 0.7381202327161595,
+  "i_pre_p95": 0.8174021335119281,
+  "rho_mean": 0.38605707865721867,
+  "rho_std": 0.09894445673293069,
+  "rho_median": 0.42958202647861904,
+  "rho_p25": 0.3233293824436253,
+  "rho_p75": 0.46461609420610683,
+  "rho_p05": 0.17136345143026813,
+  "rho_p95": 0.47299122159642576
 }

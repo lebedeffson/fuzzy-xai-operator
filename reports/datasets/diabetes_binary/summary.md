@@ -10,12 +10,27 @@
 - n_negative: `221`
 - positive_rate: `0.5`
 - score_std: `0.2749214209893211`
-- observer_action_accuracy_applicable: `False`
-- observer_action_accuracy_reason: `no expert action labels`
-- observer_action_accuracy: `None`
-- observer_action_proxy_accuracy: `0.0990990990990991`
+- agreement_proxy: `0.0990990990990991`
+- agreement_proxy_applicable: `True`
+- agreement_proxy_reason: `simulated action rule, not clinical expert labels`
+- observer_action_accuracy (legacy): `None`
+- observer_action_proxy_accuracy (legacy): `0.0990990990990991`
 - mean_I_pre: `0.765687631853013`
 - mean_rho: `0.38605707865721867`
+- i_pre_mean: `0.765687631853013`
+- i_pre_std: `0.02452992405824184`
+- i_pre_median: `0.7583199736523422`
+- i_pre_p25: `0.7475241234458079`
+- i_pre_p75: `0.7791603598813865`
+- i_pre_p05: `0.7381202327161595`
+- i_pre_p95: `0.8174021335119281`
+- rho_mean: `0.38605707865721867`
+- rho_std: `0.09894445673293069`
+- rho_median: `0.42958202647861904`
+- rho_p25: `0.3233293824436253`
+- rho_p75: `0.46461609420610683`
+- rho_p05: `0.17136345143026813`
+- rho_p95: `0.47299122159642576`
 - rupture_rate: `0.0`
 - critical_rupture_rate: `0.0`
 - metric_interpretation: `Use accuracy/roc_auc with rupture rates for built-in datasets; for registry datasets prioritize pipeline readiness and transfer limitations.`

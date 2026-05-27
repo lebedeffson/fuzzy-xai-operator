@@ -100,6 +100,19 @@ def _roc_auc_reason(y_test: pd.Series, model_roc_auc: float | None) -> str:
     return ''
 
 
+def _series_stats(prefix: str, values: pd.Series) -> dict[str, float]:
+    arr = values.astype(float).to_numpy()
+    return {
+        f'{prefix}_mean': float(np.mean(arr)),
+        f'{prefix}_std': float(np.std(arr)),
+        f'{prefix}_median': float(np.quantile(arr, 0.50)),
+        f'{prefix}_p25': float(np.quantile(arr, 0.25)),
+        f'{prefix}_p75': float(np.quantile(arr, 0.75)),
+        f'{prefix}_p05': float(np.quantile(arr, 0.05)),
+        f'{prefix}_p95': float(np.quantile(arr, 0.95)),
+    }
+
+
 def _evaluate_ready_dataset(record: DatasetRecord, df: pd.DataFrame, domain: str) -> tuple[dict[str, Any], pd.DataFrame]:
     target_column = str(record.target_column)
     x_raw, y_raw = split_features_target(df, target_column)
@@ -187,11 +200,21 @@ def _evaluate_ready_dataset(record: DatasetRecord, df: pd.DataFrame, domain: str
     score_std = float(np.std(proba[:, 1])) if proba.shape[1] == 2 else None
     roc_reason = _roc_auc_reason(y_test, model_roc_auc)
     dataset_mode = str(record.metadata.get('dataset_mode', record.name))
+    is_registry = dataset_mode.startswith('registry_')
+    if is_registry:
+        agreement_proxy = None
+        agreement_proxy_applicable = False
+        agreement_proxy_reason = 'no expert action labels'
+    else:
+        agreement_proxy = observer_action_proxy_accuracy
+        agreement_proxy_applicable = True
+        agreement_proxy_reason = 'simulated action rule, not clinical expert labels'
+
     notes = ['Prototype measurements per object; no I/O timing.']
-    if dataset_mode.startswith('registry_'):
+    if is_registry:
         notes.append('Registry mode validates readiness/portability of the pipeline; action quality metric may be N/A.')
     if dataset_mode == 'registry_programs':
-        notes.append('No expert action labels: observer_action_accuracy is not applicable.')
+        notes.append('No expert action labels: agreement_proxy is not applicable.')
     if dataset_mode == 'registry_steel_ir' and roc_reason:
         notes.append('ROC AUC must not be interpreted as quality here; use this mode for industrial contour portability.')
     if dataset_mode == 'registry_mosmed_doctor_analysis':
@@ -219,6 +242,8 @@ def _evaluate_ready_dataset(record: DatasetRecord, df: pd.DataFrame, domain: str
         'Use accuracy/roc_auc with rupture rates for built-in datasets; '
         'for registry datasets prioritize pipeline readiness and transfer limitations.'
     )
+    stat_i_pre = _series_stats('i_pre', pred_df['I_pre']) if not pred_df.empty else {}
+    stat_rho = _series_stats('rho', pred_df['rho']) if not pred_df.empty else {}
 
     summary = {
         'dataset': record.name,
@@ -237,6 +262,9 @@ def _evaluate_ready_dataset(record: DatasetRecord, df: pd.DataFrame, domain: str
         'observer_action_accuracy_reason': observer_action_accuracy_reason,
         'observer_action_accuracy': observer_action_accuracy,
         'observer_action_proxy_accuracy': observer_action_proxy_accuracy,
+        'agreement_proxy': agreement_proxy,
+        'agreement_proxy_applicable': agreement_proxy_applicable,
+        'agreement_proxy_reason': agreement_proxy_reason,
         'mean_I_pre': float(pred_df['I_pre'].mean()) if not pred_df.empty else 0.0,
         'mean_rho': float(pred_df['rho'].mean()) if not pred_df.empty else 0.0,
         'rupture_rate': float(pred_df['chi_R'].mean()) if not pred_df.empty else 0.0,
@@ -248,6 +276,8 @@ def _evaluate_ready_dataset(record: DatasetRecord, df: pd.DataFrame, domain: str
         'limitations': limitations,
         'recommended_use_in_dissertation': use_tag,
         'notes': ' '.join(notes),
+        **stat_i_pre,
+        **stat_rho,
     }
     return summary, pred_df
 
@@ -266,12 +296,27 @@ def _write_summary_md(path: Path, summary: dict[str, Any]) -> None:
         f"- n_negative: `{summary.get('n_negative')}`",
         f"- positive_rate: `{summary.get('positive_rate')}`",
         f"- score_std: `{summary.get('score_std')}`",
-        f"- observer_action_accuracy_applicable: `{summary.get('observer_action_accuracy_applicable')}`",
-        f"- observer_action_accuracy_reason: `{summary.get('observer_action_accuracy_reason')}`",
-        f"- observer_action_accuracy: `{summary['observer_action_accuracy']}`",
-        f"- observer_action_proxy_accuracy: `{summary.get('observer_action_proxy_accuracy')}`",
+        f"- agreement_proxy: `{summary.get('agreement_proxy')}`",
+        f"- agreement_proxy_applicable: `{summary.get('agreement_proxy_applicable')}`",
+        f"- agreement_proxy_reason: `{summary.get('agreement_proxy_reason')}`",
+        f"- observer_action_accuracy (legacy): `{summary['observer_action_accuracy']}`",
+        f"- observer_action_proxy_accuracy (legacy): `{summary.get('observer_action_proxy_accuracy')}`",
         f"- mean_I_pre: `{summary['mean_I_pre']}`",
         f"- mean_rho: `{summary['mean_rho']}`",
+        f"- i_pre_mean: `{summary.get('i_pre_mean')}`",
+        f"- i_pre_std: `{summary.get('i_pre_std')}`",
+        f"- i_pre_median: `{summary.get('i_pre_median')}`",
+        f"- i_pre_p25: `{summary.get('i_pre_p25')}`",
+        f"- i_pre_p75: `{summary.get('i_pre_p75')}`",
+        f"- i_pre_p05: `{summary.get('i_pre_p05')}`",
+        f"- i_pre_p95: `{summary.get('i_pre_p95')}`",
+        f"- rho_mean: `{summary.get('rho_mean')}`",
+        f"- rho_std: `{summary.get('rho_std')}`",
+        f"- rho_median: `{summary.get('rho_median')}`",
+        f"- rho_p25: `{summary.get('rho_p25')}`",
+        f"- rho_p75: `{summary.get('rho_p75')}`",
+        f"- rho_p05: `{summary.get('rho_p05')}`",
+        f"- rho_p95: `{summary.get('rho_p95')}`",
         f"- rupture_rate: `{summary['rupture_rate']}`",
         f"- critical_rupture_rate: `{summary.get('critical_rupture_rate')}`",
         f"- metric_interpretation: `{summary.get('metric_interpretation')}`",
@@ -308,8 +353,25 @@ def run_benchmark(dataset: str, *, out_root: str | Path = 'reports/datasets') ->
             'observer_action_accuracy_reason': 'no expert action labels',
             'observer_action_accuracy': None,
             'observer_action_proxy_accuracy': None,
+            'agreement_proxy': None,
+            'agreement_proxy_applicable': False,
+            'agreement_proxy_reason': 'no expert action labels',
             'mean_I_pre': None,
             'mean_rho': None,
+            'i_pre_mean': None,
+            'i_pre_std': None,
+            'i_pre_median': None,
+            'i_pre_p25': None,
+            'i_pre_p75': None,
+            'i_pre_p05': None,
+            'i_pre_p95': None,
+            'rho_mean': None,
+            'rho_std': None,
+            'rho_median': None,
+            'rho_p25': None,
+            'rho_p75': None,
+            'rho_p05': None,
+            'rho_p95': None,
             'rupture_rate': None,
             'critical_rupture_rate': None,
             'action_distribution': {},

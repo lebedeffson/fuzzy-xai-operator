@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 
+from fuzzyxai.category import CertifiedPath, paths_equivalent
 from fuzzyxai.category.expl_category import ExplanationMorphism
 
 
@@ -45,3 +46,11 @@ class ExplanationPath:
         if gamma_max is not None and self.gamma_total > gamma_max:
             return False
         return self.morphisms[0].source.key == self.source and self.morphisms[-1].target.key == self.target
+
+
+def path_inhabited(certified_path: CertifiedPath) -> bool:
+    return certified_path.certified
+
+
+def certified_paths_equivalent(left: CertifiedPath, right: CertifiedPath) -> bool:
+    return paths_equivalent(left, right)

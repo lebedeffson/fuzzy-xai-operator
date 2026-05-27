@@ -15,6 +15,9 @@
   "observer_action_accuracy_reason": "no expert action labels",
   "observer_action_accuracy": null,
   "observer_action_proxy_accuracy": 0.6222222222222222,
+  "agreement_proxy": 0.6222222222222222,
+  "agreement_proxy_applicable": true,
+  "agreement_proxy_reason": "simulated action rule, not clinical expert labels",
   "mean_I_pre": 0.7902422015533586,
   "mean_rho": 0.192412638958542,
   "rupture_rate": 0.0,
@@ -33,5 +36,19 @@
     "no expert action labels"
   ],
   "recommended_use_in_dissertation": "quantitative",
-  "notes": "Prototype measurements per object; no I/O timing."
+  "notes": "Prototype measurements per object; no I/O timing.",
+  "i_pre_mean": 0.7902422015533586,
+  "i_pre_std": 0.022899892209945826,
+  "i_pre_median": 0.7898320376921818,
+  "i_pre_p25": 0.7793694589864418,
+  "i_pre_p75": 0.7934220337395202,
+  "i_pre_p05": 0.7536255880011009,
+  "i_pre_p95": 0.8360462266040684,
+  "rho_mean": 0.192412638958542,
+  "rho_std": 0.1568114048350738,
+  "rho_median": 0.10819017742512142,
+  "rho_p25": 0.05181559325209595,
+  "rho_p75": 0.35484175338959373,
+  "rho_p05": 0.05181559325209595,
+  "rho_p95": 0.45609428232852706
 }

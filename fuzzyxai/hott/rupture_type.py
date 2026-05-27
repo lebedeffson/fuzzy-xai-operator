@@ -3,6 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Any, Mapping
 
+from fuzzyxai.category import CertifiedPath
 from fuzzyxai.core.diagnostics import DiagnosticState
 
 
@@ -37,3 +38,9 @@ class RuptureType:
             threshold=threshold,
             metadata=diagnostic.context,
         )
+
+
+def rupture_inhabited(certified_path: CertifiedPath) -> bool:
+    if certified_path.rupture:
+        return True
+    return any('critical' in d.lower() or 'crit' in d.lower() for d in certified_path.diagnostics)

@@ -65,8 +65,30 @@ def _save_trace(case_state: dict[str, Any]) -> Path:
 
 
 def _build_defense_case_payload(case_state: dict[str, Any]) -> dict[str, Any]:
-    e_action_auto = bool(case_state.get('contexts', {}).get('AutoAccept', {}).get('E_action'))
+    contexts = case_state.get('contexts', {})
+    risk_ctx_raw = contexts.get('RiskContext', {}).get('E_action', '')
+    auto_raw = contexts.get('AutoAccept', {}).get('E_action', '')
+    risk_ctx = [x.strip() for x in str(risk_ctx_raw).split(',') if x.strip()]
+    auto_accept = [x.strip() for x in str(auto_raw).split(',') if x.strip()]
+    current_context = str(case_state.get('risk', {}).get('action', ''))
+    e_action_auto = current_context in set(auto_accept)
     edges = case_state.get('composition', {}).get('edges', [])
+    risk = case_state.get('risk', {})
+    risk_components = risk.get('components', {})
+    risk_weights = risk.get('weights', {}) or risk_components.get('weights', {})
+    rho_p = float(risk_components.get('predicted_risk', 0.0))
+    u_m = float(risk_components.get('uncertainty', 0.0))
+    i_pre = float(case_state.get('explanation', {}).get('I_pre', 0.0))
+    interpretability_gap = float(risk_components.get('interpretability_gap', 1.0 - i_pre))
+    reduction_loss = float(case_state.get('uncertainty', {}).get('delta', 0.0))
+    chi_r = int(risk.get('chi_R', 0))
+    contributions = {
+        'predicted_risk': float(risk_weights.get('predicted_risk', 0.0)) * rho_p,
+        'uncertainty': float(risk_weights.get('uncertainty', 0.0)) * u_m,
+        'interpretability_gap': float(risk_weights.get('interpretability_gap', 0.0)) * interpretability_gap,
+        'reduction_loss': float(risk_weights.get('reduction_loss', 0.0)) * reduction_loss,
+        'chi_R': float(risk_weights.get('diagnostic', 0.0)) * float(chi_r),
+    }
     return {
         'dataset_mode': case_state.get('dataset', {}).get('name'),
         'domain': case_state.get('dataset', {}).get('domain'),
@@ -89,6 +111,35 @@ def _build_defense_case_payload(case_state: dict[str, Any]) -> dict[str, Any]:
         'chi_R_crit': case_state.get('risk', {}).get('chi_R_crit'),
         'action': case_state.get('risk', {}).get('action'),
         'conclusion': case_state.get('risk', {}).get('reason'),
+        'risk_breakdown': {
+            'rho_p': rho_p,
+            'u_M': u_m,
+            'interpretability_gap': interpretability_gap,
+            'reduction_loss': reduction_loss,
+            'chi_R': chi_r,
+            'weights': {
+                'predicted_risk': float(risk_weights.get('predicted_risk', 0.0)),
+                'uncertainty': float(risk_weights.get('uncertainty', 0.0)),
+                'interpretability_gap': float(risk_weights.get('interpretability_gap', 0.0)),
+                'reduction_loss': float(risk_weights.get('reduction_loss', 0.0)),
+                'chi_R': float(risk_weights.get('diagnostic', 0.0)),
+            },
+            'contributions': contributions,
+            'rho': float(risk.get('rho', 0.0)),
+            'threshold': float(max(0.80, (risk.get('thresholds') or [0, 0, 0, 0])[3])),
+            'chi_R_crit': int(risk.get('chi_R_crit', 0)),
+            'final_action': str(risk.get('action', '')),
+            'reason': str(risk.get('reason', '')),
+        },
+        'context_topos': {
+            'object': 'E_action',
+            'risk_context': risk_ctx,
+            'auto_accept': auto_accept,
+            'current_context': current_context,
+            'chi_Auto': e_action_auto,
+            'omega_evidence': 'finite sieve enumeration',
+            'decision_effect': 'automatic action allowed' if e_action_auto else 'automatic action forbidden',
+        },
         'exported_at_utc': datetime.now(timezone.utc).isoformat(),
     }
 
@@ -113,6 +164,17 @@ def _save_defense_case(case_state: dict[str, Any]) -> tuple[Path, Path]:
         f"- chi_R_crit: `{payload['chi_R_crit']}`",
         f"- action: `{payload['action']}`",
         f"- conclusion: `{payload['conclusion']}`",
+        f"- context_topos.decision_effect: `{payload['context_topos']['decision_effect']}`",
+        '',
+        '## Risk breakdown',
+        f"- rho_p: `{_num(payload['risk_breakdown']['rho_p'], 6)}`",
+        f"- u_M: `{_num(payload['risk_breakdown']['u_M'], 6)}`",
+        f"- interpretability_gap: `{_num(payload['risk_breakdown']['interpretability_gap'], 6)}`",
+        f"- reduction_loss: `{_num(payload['risk_breakdown']['reduction_loss'], 6)}`",
+        f"- weights: `{payload['risk_breakdown']['weights']}`",
+        f"- contributions: `{payload['risk_breakdown']['contributions']}`",
+        f"- threshold: `{_num(payload['risk_breakdown']['threshold'], 6)}`",
+        f"- reason: `{payload['risk_breakdown']['reason']}`",
         '',
         '## Composition',
     ]
@@ -594,10 +656,8 @@ def run_ui(port: int = 8096) -> None:  # pragma: no cover
                             pipeline = DatasetObserverPipeline(model_name='random_forest', mode='audit')
                             ds_result = pipeline.run(record, df, case_index=0)
                             summary = _load_benchmark_summary(mode_key) or {}
-                            obs_acc = summary.get('observer_action_accuracy')
-                            obs_acc_txt = _num(obs_acc) if obs_acc is not None else 'N/A'
-                            proxy_acc_txt = _num(summary.get('observer_action_proxy_accuracy'))
-                            applicability = summary.get('observer_action_accuracy_applicable')
+                            proxy_acc_txt = _num(summary.get('agreement_proxy'))
+                            applicability = summary.get('agreement_proxy_applicable')
                             applicability_txt = 'yes' if applicability else 'no'
                             limitation = summary.get('notes', 'summary not generated yet')
                             read_hint = (
@@ -612,8 +672,7 @@ def run_ui(port: int = 8096) -> None:  # pragma: no cover
                                 f"Action: `{ds_result.observer_result['action']}`, "
                                 f"rho=`{_num(ds_result.observer_result['application_risk'])}`, "
                                 f"repr=`{ds_result.observer_result['selected_representation']}`  \n"
-                                f"Observer action acc: `{obs_acc_txt}` (applicable=`{applicability_txt}`)  \n"
-                                f"Observer proxy acc: `{proxy_acc_txt}`  \n"
+                                f"Proxy agreement: `{proxy_acc_txt}` (applicable=`{applicability_txt}`)  \n"
                                 f"How to read: {read_hint}  \n"
                                 f"Limitation: {limitation}"
                             )
@@ -923,9 +982,9 @@ def run_ui(port: int = 8096) -> None:  # pragma: no cover
                         ).classes('w-full')
                     ui.markdown(
                         '**Как читать benchmark:**  \n'
-                        '- built-in наборы: интерпретируем `accuracy/roc_auc`, `rupture_rate`, `observer_proxy_accuracy`;  \n'
+                        '- built-in наборы: интерпретируем `accuracy/roc_auc`, `rupture_rate`, `agreement_proxy`;  \n'
                         '- registry наборы: основной результат это `READY/pipeline_completed` и ограничения предметной разметки;  \n'
-                        '- `observer_action_accuracy = N/A` означает отсутствие экспертных action-labels, а не провал метода.'
+                        '- `agreement_proxy = N/A` означает отсутствие экспертных action-labels, а не провал метода.'
                     )
                     synth_summary = _load_benchmark_summary('synthetic_ruptures') or {}
                     ui.markdown(

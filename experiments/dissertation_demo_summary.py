@@ -90,28 +90,29 @@ def generate_summary(*, out_dir: str | Path = 'reports') -> dict[str, Any]:
         '',
         '## Quantitative validation (built-in modes)',
         '',
-        '| dataset | acc | roc_auc | observer_action_acc | observer_proxy_acc | rupture_rate |',
+        '| dataset | acc | roc_auc | agreement_proxy | rupture_rate | critical_rupture_rate |',
         '|---|---:|---:|---:|---:|---:|',
     ]
     for key in ['breast_cancer', 'diabetes_binary', 'wine_risk', 'synthetic_ruptures']:
         row = benchmark.get(key, {})
         md_lines.append(
             f"| {key} | {_fmt(row.get('model_accuracy'))} | {_fmt(row.get('model_roc_auc'))} | "
-            f"{_fmt(row.get('observer_action_accuracy'))} | {_fmt(row.get('observer_action_proxy_accuracy'))} | {_fmt(row.get('rupture_rate'))} |"
+            f"{_fmt(row.get('agreement_proxy'))} | {_fmt(row.get('rupture_rate'))} | "
+            f"{_fmt(row.get('critical_rupture_rate'))} |"
         )
 
     md_lines += [
         '',
         '## Registry modes (readiness and limitations)',
         '',
-        '| dataset | pipeline_completed | observer_action_acc_applicable | observer_action_acc | note |',
+        '| dataset | pipeline_completed | agreement_proxy_applicable | agreement_proxy | note |',
         '|---|---:|---:|---:|---|',
     ]
     for key in ['registry_programs', 'registry_mosmed_doctor_analysis', 'registry_steel_ir']:
         row = benchmark.get(key, {})
         md_lines.append(
-            f"| {key} | {_fmt(row.get('pipeline_completed'))} | {_fmt(row.get('observer_action_accuracy_applicable'))} | "
-            f"{_fmt(row.get('observer_action_accuracy'))} | {_fmt(row.get('notes'))} |"
+            f"| {key} | {_fmt(row.get('pipeline_completed'))} | {_fmt(row.get('agreement_proxy_applicable'))} | "
+            f"{_fmt(row.get('agreement_proxy'))} | {_fmt(row.get('notes'))} |"
         )
 
     md_lines += [
@@ -120,14 +121,14 @@ def generate_summary(*, out_dir: str | Path = 'reports') -> dict[str, Any]:
         '',
         f"- object: `{real_reduction['object']}`",
         f"- selected_class: `{real_reduction['selected_class']}`",
-        f"- Delta: `{real_reduction['Delta']}`",
+        f"- reduction_loss: `{real_reduction.get('reduction_loss', real_reduction.get('Delta'))}`",
         f"- action: `{real_reduction['action']}`",
         '',
         '## Notes',
         '',
         '- Registry modes may remain `MISSING` until local files are connected.',
         '- Benchmark timing is prototype-level per object and excludes I/O.',
-        '- `observer_action_accuracy` is `N/A` when expert action labels are absent.',
+        '- `agreement_proxy = N/A` means no expert action labels for that dataset mode.',
     ]
     md_path.write_text('\n'.join(md_lines), encoding='utf-8')
     return summary

@@ -254,8 +254,7 @@ def generate(out_dir: Path) -> dict[str, Any]:
                 'Dataset',
                 'Acc',
                 'ROC AUC',
-                'Observer action acc',
-                'Observer proxy acc',
+                'Agreement proxy',
                 'Rupture rate',
                 'Crit rupture rate',
                 'positive_rate',
@@ -268,8 +267,7 @@ def generate(out_dir: Path) -> dict[str, Any]:
                     r['dataset_mode'],
                     _fmt((r['summary'] or {}).get('model_accuracy', None)),
                     _fmt((r['summary'] or {}).get('model_roc_auc', None)),
-                    _fmt((r['summary'] or {}).get('observer_action_accuracy', None)),
-                    _fmt((r['summary'] or {}).get('observer_action_proxy_accuracy', None)),
+                    _fmt((r['summary'] or {}).get('agreement_proxy', None)),
                     _fmt((r['summary'] or {}).get('rupture_rate', None)),
                     _fmt((r['summary'] or {}).get('critical_rupture_rate', None)),
                     _fmt((r['summary'] or {}).get('positive_rate', None)),
@@ -284,13 +282,13 @@ def generate(out_dir: Path) -> dict[str, Any]:
     md_lines += ['', '## 4) Registry-режимы: readiness и ограничения интерпретации', '']
     md_lines.append(
         _md_table(
-            ['Dataset', 'Pipeline', 'Observer action acc applicable', 'Observer action acc', 'ROC reason', 'Limitation'],
+            ['Dataset', 'Pipeline', 'Agreement proxy applicable', 'Agreement proxy', 'ROC reason', 'Limitation'],
             [
                 [
                     r['dataset_mode'],
                     _fmt((r['summary'] or {}).get('pipeline_completed', None)),
-                    _fmt((r['summary'] or {}).get('observer_action_accuracy_applicable', None)),
-                    _fmt((r['summary'] or {}).get('observer_action_accuracy', None)),
+                    _fmt((r['summary'] or {}).get('agreement_proxy_applicable', None)),
+                    _fmt((r['summary'] or {}).get('agreement_proxy', None)),
                     _fmt((r['summary'] or {}).get('reason_if_roc_auc_nan_or_05', None)),
                     _fmt((r['summary'] or {}).get('notes', None)),
                 ]
@@ -332,13 +330,13 @@ def generate(out_dir: Path) -> dict[str, Any]:
         ]
         for r in dataset_rows
     ]
-    quantitative_tex_headers = ['Dataset', 'Acc', 'ROC AUC', 'Proxy acc', 'Rupture', 'Crit rupture', 'positive_rate', 'note']
+    quantitative_tex_headers = ['Dataset', 'Acc', 'ROC AUC', 'Agreement proxy', 'Rupture', 'Crit rupture', 'positive_rate', 'note']
     quantitative_tex_rows = [
         [
             r['dataset_mode'],
             _fmt((r['summary'] or {}).get('model_accuracy', None)),
             _fmt((r['summary'] or {}).get('model_roc_auc', None)),
-            _fmt((r['summary'] or {}).get('observer_action_proxy_accuracy', None)),
+            _fmt((r['summary'] or {}).get('agreement_proxy', None)),
             _fmt((r['summary'] or {}).get('rupture_rate', None)),
             _fmt((r['summary'] or {}).get('critical_rupture_rate', None)),
             _fmt((r['summary'] or {}).get('positive_rate', None)),
