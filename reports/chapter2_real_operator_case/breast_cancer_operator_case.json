@@ -27,7 +27,7 @@
   "tau_fields": {
     "id": "sample_113",
     "version": "rf_breast_cancer_v1",
-    "timestamp": "2026-05-27T20:02:51.792175+00:00",
+    "timestamp": "2026-05-28T17:15:13.680242+00:00",
     "source": "sklearn_breast_cancer",
     "checksum": "sample_113:rf_breast_cancer_v1"
   },

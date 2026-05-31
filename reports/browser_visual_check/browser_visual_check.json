@@ -1,0 +1,60 @@
+{
+  "ok": true,
+  "url": "http://127.0.0.1:18097",
+  "results": [
+    {
+      "name": "home",
+      "ok": true,
+      "note": "loaded",
+      "screenshot": "reports/browser_visual_check/01_studio_home.png"
+    },
+    {
+      "name": "case_controls",
+      "ok": true,
+      "note": "ok",
+      "screenshot": "reports/browser_visual_check/02_case_controls.png"
+    },
+    {
+      "name": "plan_editor",
+      "ok": true,
+      "note": "ok",
+      "screenshot": "reports/browser_visual_check/03_plan_editor.png"
+    },
+    {
+      "name": "what_if",
+      "ok": true,
+      "note": "ok",
+      "screenshot": "reports/browser_visual_check/04_what_if.png"
+    },
+    {
+      "name": "benchmark",
+      "ok": true,
+      "note": "ok",
+      "screenshot": "reports/browser_visual_check/05_benchmark.png"
+    },
+    {
+      "name": "export",
+      "ok": true,
+      "note": "ok",
+      "screenshot": "reports/browser_visual_check/06_export.png"
+    },
+    {
+      "name": "summary",
+      "ok": true,
+      "note": "ok",
+      "screenshot": "reports/browser_visual_check/07_summary.png"
+    },
+    {
+      "name": "operator_trace",
+      "ok": true,
+      "note": "ok",
+      "screenshot": "reports/browser_visual_check/08_operator_trace.png"
+    },
+    {
+      "name": "operator_flow",
+      "ok": true,
+      "note": "ok",
+      "screenshot": "reports/browser_visual_check/09_operator_flow.png"
+    }
+  ]
+}

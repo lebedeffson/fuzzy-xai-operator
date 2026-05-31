@@ -5,6 +5,9 @@
 - domain: `medical_audit`
 - model_accuracy: `1.0`
 - model_roc_auc: `None`
+- model_f1: `1.0`
+- model_precision: `1.0`
+- model_recall: `1.0`
 - reason_if_roc_auc_nan_or_05: `roc_auc undefined: single class in test split`
 - n_positive: `1`
 - n_negative: `9`
@@ -13,10 +16,16 @@
 - agreement_proxy: `None`
 - agreement_proxy_applicable: `False`
 - agreement_proxy_reason: `no expert action labels`
+- missed_critical_ruptures: `0`
+- critical_rupture_recall: `None`
+- false_auto_accept_rate: `0.0`
+- false_block_rate: `0.0`
+- auto_accept_coverage: `0.6666666666666666`
 - observer_action_accuracy (legacy): `None`
-- observer_action_proxy_accuracy (legacy): `0.6666666666666666`
+- observer_action_proxy_accuracy (legacy): `0.3333333333333333`
 - mean_I_pre: `0.7607764309603002`
 - mean_rho: `0.19313492184381179`
+- mean_reduction_loss: `0.08972222222222224`
 - i_pre_mean: `0.7607764309603002`
 - i_pre_std: `0.005112743115507293`
 - i_pre_median: `0.7599210170052049`
@@ -37,6 +46,6 @@
 - valid_for_quantitative_claims: `False`
 - limitations: `['no expert action labels', 'roc_auc undefined: single class in test split', 'small sample size']`
 - recommended_use_in_dissertation: `external-transfer`
-- action_distribution: `{'accept': 3}`
+- action_distribution: `{'lower_confidence': 2, 'request_more_data': 1}`
 - selected_representation_distribution: `{'FML-audit': 3}`
 - notes: Prototype measurements per object; no I/O timing. Registry mode validates readiness/portability of the pipeline; action quality metric may be N/A. Small audit slice (n=10): not for statistical validation.

@@ -1,0 +1,24 @@
+\begin{table}[h]
+\centering
+\caption{Baseline comparison (full observer vs threshold vs SHAP/LIME/Anchors guardrails)}
+\label{tab:baseline\_comparison}
+\begin{tabular}{|l|l|l|l|l|l|l|l|}
+\hline
+baseline & information\_access & agreement\_proxy & agreement\_reference & missed\_critical & false\_auto\_accept & false\_block & auto\_accept\_cov \\
+\hline
+full\_observer\_runtime & full\_structure & 0.608392 & 0.643357 & 0 & 0 & 0 & 0.559441 \\
+\hline
+full\_observer\_uncalibrated & full\_structure & 0.636364 & 0.671329 & 0 & 0 & 0 & 0.559441 \\
+\hline
+full\_observer\_calibrated & full\_structure & 0.923077 & 0.888112 & 0 & 0 & 0 & 0.552448 \\
+\hline
+probability\_threshold & native\_risk\_only & 0.846154 & 0.811189 & 0 & 0.153846 & 0 & 0.713287 \\
+\hline
+shap\_guardrail & native\_feature\_importance & 0.846154 & 0.811189 & 0 & 0.097902 & 0 & 0.657343 \\
+\hline
+lime\_guardrail & native\_local\_surrogate & 0.846154 & 0.811189 & 0 & 0.153846 & 0 & 0.713287 \\
+\hline
+anchor\_guardrail & native\_rule\_anchor & 0.846154 & 0.811189 & 0 & 0.153846 & 0 & 0.713287 \\
+\hline
+\end{tabular}
+\end{table}

@@ -6,6 +6,9 @@
   "domain": "medical_audit",
   "model_accuracy": 1.0,
   "model_roc_auc": null,
+  "model_f1": 1.0,
+  "model_precision": 1.0,
+  "model_recall": 1.0,
   "reason_if_roc_auc_nan_or_05": "roc_auc undefined: single class in test split",
   "n_positive": 1,
   "n_negative": 9,
@@ -14,16 +17,23 @@
   "observer_action_accuracy_applicable": false,
   "observer_action_accuracy_reason": "no expert action labels",
   "observer_action_accuracy": null,
-  "observer_action_proxy_accuracy": 0.6666666666666666,
+  "observer_action_proxy_accuracy": 0.3333333333333333,
   "agreement_proxy": null,
   "agreement_proxy_applicable": false,
   "agreement_proxy_reason": "no expert action labels",
+  "missed_critical_ruptures": 0,
+  "critical_rupture_recall": null,
+  "false_auto_accept_rate": 0.0,
+  "false_block_rate": 0.0,
+  "auto_accept_coverage": 0.6666666666666666,
   "mean_I_pre": 0.7607764309603002,
   "mean_rho": 0.19313492184381179,
+  "mean_reduction_loss": 0.08972222222222224,
   "rupture_rate": 0.0,
   "critical_rupture_rate": 0.0,
   "action_distribution": {
-    "accept": 3
+    "lower_confidence": 2,
+    "request_more_data": 1
   },
   "selected_representation_distribution": {
     "FML-audit": 3
@@ -37,6 +47,22 @@
   ],
   "recommended_use_in_dissertation": "external-transfer",
   "notes": "Prototype measurements per object; no I/O timing. Registry mode validates readiness/portability of the pipeline; action quality metric may be N/A. Small audit slice (n=10): not for statistical validation.",
+  "model_metrics": {
+    "accuracy": 1.0,
+    "roc_auc": null,
+    "f1": 1.0,
+    "precision": 1.0,
+    "recall": 1.0
+  },
+  "observer_metrics": {
+    "agreement_proxy": null,
+    "missed_critical_ruptures": 0,
+    "critical_rupture_recall": null,
+    "false_auto_accept_rate": 0.0,
+    "false_block_rate": 0.0,
+    "auto_accept_coverage": 0.6666666666666666,
+    "mean_reduction_loss": 0.08972222222222224
+  },
   "i_pre_mean": 0.7607764309603002,
   "i_pre_std": 0.005112743115507293,
   "i_pre_median": 0.7599210170052049,

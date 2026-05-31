@@ -5,18 +5,27 @@
 - domain: `medical`
 - model_accuracy: `0.7567567567567568`
 - model_roc_auc: `0.8298701298701298`
+- model_f1: `0.7692307692307693`
+- model_precision: `0.7258064516129032`
+- model_recall: `0.8181818181818182`
 - reason_if_roc_auc_nan_or_05: ``
 - n_positive: `221`
 - n_negative: `221`
 - positive_rate: `0.5`
 - score_std: `0.2749214209893211`
-- agreement_proxy: `0.0990990990990991`
+- agreement_proxy: `0.6756756756756757`
 - agreement_proxy_applicable: `True`
 - agreement_proxy_reason: `simulated action rule, not clinical expert labels`
+- missed_critical_ruptures: `0`
+- critical_rupture_recall: `None`
+- false_auto_accept_rate: `0.0`
+- false_block_rate: `0.0`
+- auto_accept_coverage: `0.0990990990990991`
 - observer_action_accuracy (legacy): `None`
-- observer_action_proxy_accuracy (legacy): `0.0990990990990991`
+- observer_action_proxy_accuracy (legacy): `0.6756756756756757`
 - mean_I_pre: `0.765687631853013`
 - mean_rho: `0.38605707865721867`
+- mean_reduction_loss: `0.08969417194994994`
 - i_pre_mean: `0.765687631853013`
 - i_pre_std: `0.02452992405824184`
 - i_pre_median: `0.7583199736523422`
@@ -37,6 +46,6 @@
 - valid_for_quantitative_claims: `False`
 - limitations: `['no expert action labels']`
 - recommended_use_in_dissertation: `stress-test`
-- action_distribution: `{'request_more_data': 66, 'lower_confidence': 13, 'accept': 32}`
+- action_distribution: `{'request_more_data': 100, 'lower_confidence': 11}`
 - selected_representation_distribution: `{'FML-audit': 111}`
 - notes: Prototype measurements per object; no I/O timing. Stress-test for borderline uncertainty; threshold calibration may be required.

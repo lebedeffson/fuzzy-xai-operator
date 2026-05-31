@@ -1,0 +1,16 @@
+{
+  "ok": true,
+  "results": [
+    {
+      "app": "apps/fuzzyxai_studio.py",
+      "port": 18097,
+      "url": "http://127.0.0.1:18097",
+      "ok": true,
+      "status_code": 200,
+      "title_found": true,
+      "error": null,
+      "elapsed_sec": 2.148
+    }
+  ],
+  "checked_at_epoch": 1780186117.5778267
+}

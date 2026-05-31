@@ -5,6 +5,9 @@
 - domain: `tabular_text`
 - model_accuracy: `0.5011990407673861`
 - model_roc_auc: `0.4948539968984046`
+- model_f1: `0.5786630654962863`
+- model_precision: `0.5008766803039159`
+- model_recall: `0.6850519584332534`
 - reason_if_roc_auc_nan_or_05: `roc_auc near 0.5: ranking signal is weak or class imbalance dominates`
 - n_positive: `5003`
 - n_negative: `5004`
@@ -13,10 +16,16 @@
 - agreement_proxy: `None`
 - agreement_proxy_applicable: `False`
 - agreement_proxy_reason: `no expert action labels`
+- missed_critical_ruptures: `0`
+- critical_rupture_recall: `None`
+- false_auto_accept_rate: `0.0`
+- false_block_rate: `0.0`
+- auto_accept_coverage: `0.0`
 - observer_action_accuracy (legacy): `None`
-- observer_action_proxy_accuracy (legacy): `0.0`
+- observer_action_proxy_accuracy (legacy): `1.0`
 - mean_I_pre: `0.7605362825571323`
 - mean_rho: `0.46119131706650957`
+- mean_reduction_loss: `0.09000000000000001`
 - i_pre_mean: `0.7605362825571323`
 - i_pre_std: `0.00032348366319673414`
 - i_pre_median: `0.7606727979532419`

@@ -1,0 +1,113 @@
+{
+  "dataset": {
+    "name": "registry_steel_ir",
+    "domain": "industrial_cv",
+    "purpose": "Industrial control scenario: transfer beyond medical domain.",
+    "status": "READY",
+    "source": "registry.cit.gov.ru",
+    "task_type": "binary_classification"
+  },
+  "scenario": "safe",
+  "input": {
+    "sample_id": "sample_0",
+    "features": {
+      "mean radius": 12.75,
+      "mean texture": 16.7,
+      "mean perimeter": 82.51,
+      "mean area": 493.8,
+      "mean smoothness": 0.1125,
+      "mean compactness": 0.1117,
+      "mean concavity": 0.0388,
+      "mean concave points": 0.02995,
+      "mean symmetry": 0.212,
+      "mean fractal dimension": 0.06623,
+      "radius error": 0.3834,
+      "texture error": 1.003,
+      "perimeter error": 2.495,
+      "area error": 28.62,
+      "smoothness error": 0.007509,
+      "compactness error": 0.01561,
+      "concavity error": 0.01977,
+      "concave points error": 0.009199,
+      "symmetry error": 0.01805,
+      "fractal dimension error": 0.003629,
+      "worst radius": 14.45,
+      "worst texture": 21.74,
+      "worst perimeter": 93.63,
+      "worst area": 624.1,
+      "worst smoothness": 0.1475,
+      "worst compactness": 0.1979,
+      "worst concavity": 0.1423,
+      "worst concave points": 0.08045,
+      "worst symmetry": 0.3071,
+      "worst fractal dimension": 0.08557
+    }
+  },
+  "model": {
+    "prediction": 1,
+    "true_y": 1,
+    "predicted_risk": 0.015348643429035023,
+    "uncertainty": 0.03069728685807016
+  },
+  "explanation": {
+    "E_model": {
+      "L": [
+        "low_risk",
+        "high_risk"
+      ],
+      "mu": {
+        "low": 0.9847,
+        "high": 0.0153
+      },
+      "R": [
+        "r_low_risk",
+        "r_high_risk"
+      ],
+      "alpha": {
+        "r_low_risk": 0.9847,
+        "r_high_risk": 0.0153
+      },
+      "u": 0.0307,
+      "tau": {
+        "id": "sample_0",
+        "version": "rf_breast_cancer_v1"
+      }
+    },
+    "I_pre": 0.877933761300908
+  },
+  "representation": {
+    "selected_class": "FML-audit",
+    "reduction_loss": 0.07
+  },
+  "topos": {
+    "chi_Auto": "accept",
+    "RiskContext": "accept",
+    "omega_evidence": "finite sieve enumeration"
+  },
+  "observer": {
+    "rho": 0.018382226678182623,
+    "chi_R": 0,
+    "chi_R_crit": 0,
+    "action": "accept",
+    "reason": "threshold policy",
+    "breakdown": {},
+    "weights": {
+      "predicted_risk": 0.7,
+      "uncertainty": 0.05,
+      "reduction_loss": 0.05,
+      "interpretability_gap": 0.05,
+      "diagnostic": 0.15
+    },
+    "thresholds": [
+      0.1,
+      0.25,
+      0.5,
+      0.75
+    ]
+  },
+  "explain_plan_version": {
+    "mode": "audit",
+    "baseline_access": "native",
+    "reduction_strategy": "balance"
+  }
+}

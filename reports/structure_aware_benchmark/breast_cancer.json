@@ -1,0 +1,96 @@
+{
+  "dataset": "breast_cancer",
+  "status": "READY",
+  "n_cases": 252,
+  "scenarios": [
+    "clean",
+    "context_forbidden",
+    "critical_rupture",
+    "high_reduction_loss",
+    "rule_conflict",
+    "source_conflict",
+    "trace_gap"
+  ],
+  "rows": [
+    {
+      "policy": "full_observer_calibrated",
+      "agreement_reference": 0.4365079365079365,
+      "missed_critical_ruptures": 0,
+      "critical_rupture_recall": 1.0,
+      "false_auto_accept_rate": 0.17857142857142858,
+      "false_block_rate": 0.0,
+      "auto_accept_coverage": 0.2698412698412698,
+      "action_distribution": {
+        "defer_to_human": 57,
+        "request_more_data": 91,
+        "block": 36,
+        "accept": 20,
+        "lower_confidence": 48
+      }
+    },
+    {
+      "policy": "probability_threshold",
+      "agreement_reference": 0.3611111111111111,
+      "missed_critical_ruptures": 0,
+      "critical_rupture_recall": 1.0,
+      "false_auto_accept_rate": 0.4365079365079365,
+      "false_block_rate": 0.0,
+      "auto_accept_coverage": 0.5238095238095238,
+      "action_distribution": {
+        "defer_to_human": 54,
+        "block": 36,
+        "accept": 132,
+        "request_more_data": 30
+      }
+    },
+    {
+      "policy": "shap_guardrail",
+      "agreement_reference": 0.3611111111111111,
+      "missed_critical_ruptures": 0,
+      "critical_rupture_recall": 1.0,
+      "false_auto_accept_rate": 0.4365079365079365,
+      "false_block_rate": 0.0,
+      "auto_accept_coverage": 0.5238095238095238,
+      "action_distribution": {
+        "defer_to_human": 54,
+        "block": 36,
+        "accept": 132,
+        "request_more_data": 30
+      }
+    },
+    {
+      "policy": "lime_guardrail",
+      "agreement_reference": 0.3611111111111111,
+      "missed_critical_ruptures": 0,
+      "critical_rupture_recall": 1.0,
+      "false_auto_accept_rate": 0.4365079365079365,
+      "false_block_rate": 0.0,
+      "auto_accept_coverage": 0.5238095238095238,
+      "action_distribution": {
+        "defer_to_human": 54,
+        "block": 36,
+        "accept": 132,
+        "request_more_data": 30
+      }
+    },
+    {
+      "policy": "anchor_guardrail",
+      "agreement_reference": 0.3611111111111111,
+      "missed_critical_ruptures": 0,
+      "critical_rupture_recall": 1.0,
+      "false_auto_accept_rate": 0.4365079365079365,
+      "false_block_rate": 0.0,
+      "auto_accept_coverage": 0.5238095238095238,
+      "action_distribution": {
+        "defer_to_human": 54,
+        "block": 36,
+        "accept": 132,
+        "request_more_data": 30
+      }
+    }
+  ],
+  "notes": [
+    "Structure-aware benchmark uses real rows with controlled explanation-layer perturbations.",
+    "Expected actions are derived from safety rules (rupture/context/trace/reduction constraints)."
+  ]
+}

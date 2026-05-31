@@ -1,0 +1,77 @@
+{
+  "dataset": "synthetic_ruptures",
+  "status": "READY",
+  "rows": [
+    {
+      "mode": "full",
+      "agreement_proxy": 0.7333333333333333,
+      "missed_critical_ruptures": 0,
+      "critical_rupture_recall": 1.0,
+      "false_auto_accept_rate": 0.0,
+      "false_block_rate": 0.0,
+      "auto_accept_coverage": 0.16444444444444445,
+      "mean_reduction_loss": 0.12046024959046238
+    },
+    {
+      "mode": "no_trace",
+      "agreement_proxy": 0.6222222222222222,
+      "missed_critical_ruptures": 0,
+      "critical_rupture_recall": 1.0,
+      "false_auto_accept_rate": 0.0,
+      "false_block_rate": 0.0,
+      "auto_accept_coverage": 0.17777777777777778,
+      "mean_reduction_loss": 0.12046024959046238
+    },
+    {
+      "mode": "no_delta",
+      "agreement_proxy": 0.7333333333333333,
+      "missed_critical_ruptures": 0,
+      "critical_rupture_recall": 1.0,
+      "false_auto_accept_rate": 0.0,
+      "false_block_rate": 0.0,
+      "auto_accept_coverage": 0.16444444444444445,
+      "mean_reduction_loss": 0.0
+    },
+    {
+      "mode": "no_critical_rupture",
+      "agreement_proxy": 0.4222222222222222,
+      "missed_critical_ruptures": 70,
+      "critical_rupture_recall": 0.0,
+      "false_auto_accept_rate": 0.0,
+      "false_block_rate": 0.0,
+      "auto_accept_coverage": 0.16444444444444445,
+      "mean_reduction_loss": 0.12046024959046238
+    },
+    {
+      "mode": "f0_only",
+      "agreement_proxy": 0.7955555555555556,
+      "missed_critical_ruptures": 0,
+      "critical_rupture_recall": 1.0,
+      "false_auto_accept_rate": 0.0,
+      "false_block_rate": 0.0,
+      "auto_accept_coverage": 0.15555555555555556,
+      "mean_reduction_loss": 0.25
+    },
+    {
+      "mode": "no_topos",
+      "agreement_proxy": 0.72,
+      "missed_critical_ruptures": 0,
+      "critical_rupture_recall": 1.0,
+      "false_auto_accept_rate": 0.013333333333333334,
+      "false_block_rate": 0.0,
+      "auto_accept_coverage": 0.17777777777777778,
+      "mean_reduction_loss": 0.12046024959046238
+    },
+    {
+      "mode": "probability_threshold",
+      "agreement_proxy": 0.3466666666666667,
+      "missed_critical_ruptures": 70,
+      "critical_rupture_recall": 0.0,
+      "false_auto_accept_rate": 0.5866666666666667,
+      "false_block_rate": 0.0,
+      "auto_accept_coverage": 0.7644444444444445,
+      "mean_reduction_loss": 0.12046024959046238
+    }
+  ],
+  "notes": "Agreement uses proxy-rule labels, not expert clinical action labels."
+}

@@ -18,6 +18,7 @@ from .risk_observer_config import (
     weights_from_explain_plan,
 )
 from .risk_aware_model import RiskAwareModel
+from .proxy_policy import proxy_action_label, reference_action_label
 from .representation_selection import (
     RepresentationSelection,
     default_representation_candidates,
@@ -38,6 +39,7 @@ __all__ = [
     'ApplicationRiskBreakdown', 'DEFAULT_RISK_WEIGHTS', 'compute_application_risk',
     'normalize_risk_weights', 'expected_action_costs', 'choose_min_expected_cost',
     'RiskAction', 'RiskDecision', 'RiskPolicy', 'RiskAwareModel',
+    'proxy_action_label', 'reference_action_label',
     'ObserverDecision', 'RiskAwareObserver',
     'DEFAULT_THRESHOLDS', 'attach_risk_weights_to_plan', 'load_calibrated_risk_weights',
     'load_thresholds', 'policy_from_calibration', 'weights_from_explain_plan',

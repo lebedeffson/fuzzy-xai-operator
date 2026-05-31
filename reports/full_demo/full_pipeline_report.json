@@ -102,7 +102,7 @@
       "id": "R",
       "name": "Модуль риска",
       "operator": "Ω_R",
-      "output": "lower_confidence",
+      "output": "request_more_data",
       "meaning": "выбор безопасного действия"
     },
     {
@@ -317,12 +317,12 @@
     "model": "RandomForestClassifier",
     "accuracy_base": 0.965035,
     "roc_auc": 0.99434,
-    "accepted_accuracy": 0.972477,
-    "coverage": 0.762238,
+    "accepted_accuracy": 1.0,
+    "coverage": 0.475524,
     "defer_rate": 0.0,
     "cost_before": 0.174825,
-    "cost_after": 0.108462,
-    "risk_reduction": 0.066364,
+    "cost_after": 0.013636,
+    "risk_reduction": 0.161189,
     "forced_diagnostic_action": "block",
     "sample_actions": [
       {
@@ -330,10 +330,10 @@
         "predicted_risk": 0.94896,
         "uncertainty": 0.234183,
         "risk_score": 0.377481,
-        "action": "lower_confidence",
+        "action": "request_more_data",
         "corrected_confidence": 0.395102,
         "interpretability_index": 0.828765,
-        "reason": "medium risk: accept only with lower confidence"
+        "reason": "context forbids auto-accept"
       },
       {
         "idx": 1,
@@ -343,17 +343,17 @@
         "action": "accept",
         "corrected_confidence": 0.645464,
         "interpretability_index": 0.789882,
-        "reason": "risk score below theta_mid"
+        "reason": "all safety constraints satisfied for automatic accept"
       },
       {
         "idx": 2,
         "predicted_risk": 0.900999,
         "uncertainty": 0.385476,
         "risk_score": 0.403404,
-        "action": "lower_confidence",
+        "action": "request_more_data",
         "corrected_confidence": 0.299281,
         "interpretability_index": 0.816321,
-        "reason": "medium risk: accept only with lower confidence"
+        "reason": "context forbids auto-accept"
       },
       {
         "idx": 3,
@@ -363,7 +363,7 @@
         "action": "accept",
         "corrected_confidence": 0.722171,
         "interpretability_index": 0.795686,
-        "reason": "risk score below theta_mid"
+        "reason": "all safety constraints satisfied for automatic accept"
       },
       {
         "idx": 4,
@@ -373,7 +373,7 @@
         "action": "request_more_data",
         "corrected_confidence": 0.059855,
         "interpretability_index": 0.751315,
-        "reason": "medium risk with elevated uncertainty"
+        "reason": "context forbids auto-accept"
       }
     ]
   },

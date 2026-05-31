@@ -1,0 +1,13 @@
+{
+  "case": "block",
+  "object": "sample_113",
+  "P": 0.7035770563720608,
+  "representation": "FML-audit",
+  "delta": 0.07,
+  "I_pre": 0.6743235322764167,
+  "rho": 0.8,
+  "chi_R": 1,
+  "chi_R_crit": 1,
+  "chi_Auto": false,
+  "action": "block"
+}

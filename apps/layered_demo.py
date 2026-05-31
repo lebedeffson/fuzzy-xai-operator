@@ -320,6 +320,16 @@ def _load_benchmark_summary(dataset_mode: str) -> dict[str, Any] | None:
         return None
 
 
+def _load_dataset_report_json(dataset_mode: str, filename: str) -> dict[str, Any] | None:
+    p = ROOT / f'reports/datasets/{dataset_mode}/{filename}'
+    if not p.exists():
+        return None
+    try:
+        return json.loads(p.read_text(encoding='utf-8'))
+    except Exception:
+        return None
+
+
 def _explain_block(
     ui: Any,
     *,
@@ -655,11 +665,11 @@ def run_ui(port: int = 8096) -> None:  # pragma: no cover
                         try:
                             pipeline = DatasetObserverPipeline(model_name='random_forest', mode='audit')
                             ds_result = pipeline.run(record, df, case_index=0)
-                            summary = _load_benchmark_summary(mode_key) or {}
-                            proxy_acc_txt = _num(summary.get('agreement_proxy'))
-                            applicability = summary.get('agreement_proxy_applicable')
+                            bench_summary = _load_benchmark_summary(mode_key) or {}
+                            proxy_acc_txt = _num(bench_summary.get('agreement_proxy'))
+                            applicability = bench_summary.get('agreement_proxy_applicable')
                             applicability_txt = 'yes' if applicability else 'no'
-                            limitation = summary.get('notes', 'summary not generated yet')
+                            limitation = bench_summary.get('notes', 'summary not generated yet')
                             read_hint = (
                                 'registry mode: оцениваем readiness/pipeline_completed и ограничения интерпретации.'
                                 if mode_key.startswith('registry_')
@@ -994,6 +1004,28 @@ def run_ui(port: int = 8096) -> None:  # pragma: no cover
                         f"`critical_rupture_rate={_num(synth_summary.get('critical_rupture_rate'), 4)}`; "
                         'это диагностически нагружает Expl/HoTT-слой.'
                     )
+                    calib = _load_dataset_report_json('breast_cancer', 'calibration.json') or {}
+                    if calib:
+                        before = calib.get('before_calibration', {})
+                        after = calib.get('after_calibration', {})
+                        ui.markdown(
+                            f"**Calibration (breast_cancer):** agreement_proxy `{_num(before.get('agreement_proxy'), 4)} -> {_num(after.get('agreement_proxy'), 4)}`, "
+                            f"missed_critical `{before.get('missed_critical_ruptures')} -> {after.get('missed_critical_ruptures')}`, "
+                            f"false_auto_accept `{_num(before.get('false_auto_accept_rate'), 4)} -> {_num(after.get('false_auto_accept_rate'), 4)}`."
+                        )
+                    ablation = _load_dataset_report_json('breast_cancer', 'ablation.json') or {}
+                    if ablation and ablation.get('rows'):
+                        ui.table(
+                            columns=[
+                                {'name': 'mode', 'label': 'mode', 'field': 'mode'},
+                                {'name': 'agreement_proxy', 'label': 'agreement_proxy', 'field': 'agreement_proxy'},
+                                {'name': 'missed_critical_ruptures', 'label': 'missed_critical', 'field': 'missed_critical_ruptures'},
+                                {'name': 'false_auto_accept_rate', 'label': 'false_auto_accept', 'field': 'false_auto_accept_rate'},
+                                {'name': 'false_block_rate', 'label': 'false_block', 'field': 'false_block_rate'},
+                            ],
+                            rows=ablation.get('rows', []),
+                            pagination=10,
+                        ).classes('w-full')
 
                     _explain_block(
                         ui,

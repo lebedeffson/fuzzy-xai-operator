@@ -5,6 +5,9 @@
 - domain: `industrial_cv`
 - model_accuracy: `0.9920792079207921`
 - model_roc_auc: `0.5`
+- model_f1: `0.0`
+- model_precision: `0.0`
+- model_recall: `0.0`
 - reason_if_roc_auc_nan_or_05: `roc_auc near 0.5: ranking signal is weak or class imbalance dominates`
 - n_positive: `65`
 - n_negative: `8015`
@@ -13,10 +16,16 @@
 - agreement_proxy: `None`
 - agreement_proxy_applicable: `False`
 - agreement_proxy_reason: `no expert action labels`
+- missed_critical_ruptures: `0`
+- critical_rupture_recall: `None`
+- false_auto_accept_rate: `0.0`
+- false_block_rate: `0.0`
+- auto_accept_coverage: `1.0`
 - observer_action_accuracy (legacy): `None`
 - observer_action_proxy_accuracy (legacy): `1.0`
 - mean_I_pre: `0.7893476847952753`
 - mean_rho: `0.06749594132621858`
+- mean_reduction_loss: `0.0724931289163867`
 - i_pre_mean: `0.7893476847952753`
 - i_pre_std: `2.220446049250313e-16`
 - i_pre_median: `0.7893476847952751`

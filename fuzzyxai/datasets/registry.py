@@ -91,6 +91,33 @@ def _synthetic_ruptures(n: int = 900) -> tuple[DatasetRecord, pd.DataFrame]:
     df['expert_b'] = np.where(np.arange(n) % 6 == 0, 1 - df['risk_target'], df['risk_target'])
     df['source_model'] = df['risk_target']
     df['source_expert'] = np.where(np.arange(n) % 5 == 0, 1 - df['risk_target'], df['risk_target'])
+    idx = np.arange(n)
+    is_rule_conflict = (idx % 6 == 0)
+    is_source_conflict = (idx % 5 == 0)
+    is_trace_gap = (idx % 10 == 0)
+    is_context_forbidden = (idx % 9 == 0)
+    chi_r = is_rule_conflict | is_source_conflict | is_trace_gap | is_context_forbidden
+    chi_r_crit = is_source_conflict | is_context_forbidden
+    rupture_type = np.where(
+        is_context_forbidden,
+        'context_forbidden',
+        np.where(
+            is_source_conflict,
+            'source_conflict',
+            np.where(is_rule_conflict, 'rule_conflict', np.where(is_trace_gap, 'trace_gap', 'none')),
+        ),
+    )
+    expected_action = np.where(
+        chi_r_crit,
+        'block',
+        np.where(chi_r, 'request_more_data', np.where(probs < 0.30, 'accept', 'lower_confidence')),
+    )
+    df['rupture'] = chi_r.astype(int)
+    df['critical_rupture'] = chi_r_crit.astype(int)
+    df['chi_R'] = chi_r.astype(int)
+    df['chi_R_crit'] = chi_r_crit.astype(int)
+    df['rupture_type'] = rupture_type
+    df['expected_action'] = expected_action
 
     record = DatasetRecord(
         name='synthetic_ruptures',

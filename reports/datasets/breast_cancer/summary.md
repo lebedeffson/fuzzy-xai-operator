@@ -5,18 +5,27 @@
 - domain: `medical`
 - model_accuracy: `0.972027972027972`
 - model_roc_auc: `0.9949685534591195`
+- model_f1: `0.9607843137254902`
+- model_precision: `1.0`
+- model_recall: `0.9245283018867925`
 - reason_if_roc_auc_nan_or_05: ``
 - n_positive: `212`
 - n_negative: `357`
 - positive_rate: `0.37258347978910367`
 - score_std: `0.42208565349168203`
-- agreement_proxy: `0.5594405594405595`
+- agreement_proxy: `0.6083916083916084`
 - agreement_proxy_applicable: `True`
 - agreement_proxy_reason: `simulated action rule, not clinical expert labels`
+- missed_critical_ruptures: `0`
+- critical_rupture_recall: `None`
+- false_auto_accept_rate: `0.0`
+- false_block_rate: `0.0`
+- auto_accept_coverage: `0.5594405594405595`
 - observer_action_accuracy (legacy): `None`
-- observer_action_proxy_accuracy (legacy): `0.5594405594405595`
+- observer_action_proxy_accuracy (legacy): `0.6083916083916084`
 - mean_I_pre: `0.7935691880178595`
 - mean_rho: `0.2076536833161616`
+- mean_reduction_loss: `0.07851351432003316`
 - i_pre_mean: `0.7935691880178595`
 - i_pre_std: `0.028891093213033944`
 - i_pre_median: `0.7913864834269176`
@@ -37,6 +46,6 @@
 - valid_for_quantitative_claims: `True`
 - limitations: `['no expert action labels']`
 - recommended_use_in_dissertation: `quantitative`
-- action_distribution: `{'lower_confidence': 36, 'accept': 90, 'request_more_data': 17}`
+- action_distribution: `{'request_more_data': 63, 'accept': 65, 'lower_confidence': 15}`
 - selected_representation_distribution: `{'FML-audit': 143}`
 - notes: Prototype measurements per object; no I/O timing.

@@ -1,0 +1,13 @@
+{
+  "case": "audit",
+  "object": "sample_18",
+  "P": 0.14437183933975195,
+  "representation": "FML-audit",
+  "delta": 0.07,
+  "I_pre": 0.7578820191360587,
+  "rho": 0.12760337051499865,
+  "chi_R": 0,
+  "chi_R_crit": 0,
+  "chi_Auto": true,
+  "action": "lower_confidence"
+}

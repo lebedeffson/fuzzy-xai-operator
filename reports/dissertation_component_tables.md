@@ -29,10 +29,10 @@
 
 | Dataset | Acc | ROC AUC | Agreement proxy | Rupture rate | Crit rupture rate | positive_rate | score_std | Use tag | Note |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| breast_cancer | 0.972028 | 0.994969 | 0.559441 | 0 | 0 | 0.372583 | 0.422086 | quantitative | Prototype measurements per object; no I/O timing. |
-| diabetes_binary | 0.756757 | 0.82987 | 0.099099 | 0 | 0 | 0.5 | 0.274921 | stress-test | Prototype measurements per object; no I/O timing. Stress-test for borderline uncertainty; threshold calibration may be required. |
+| breast_cancer | 0.972028 | 0.994969 | 0.608392 | 0 | 0 | 0.372583 | 0.422086 | quantitative | Prototype measurements per object; no I/O timing. |
+| diabetes_binary | 0.756757 | 0.82987 | 0.675676 | 0 | 0 | 0.5 | 0.274921 | stress-test | Prototype measurements per object; no I/O timing. Stress-test for borderline uncertainty; threshold calibration may be required. |
 | wine_risk | 0.977778 | 1 | 0.622222 | 0 | 0 | 0.269663 | 0.390654 | quantitative | Prototype measurements per object; no I/O timing. |
-| synthetic_ruptures | 0.951111 | 0.995591 | 0.226667 | 0.346667 | 0.222222 | 0.442222 | 0.35258 | control-diagnostics | Prototype measurements per object; no I/O timing. Rupture proxies are derived from expert/source disagreement fields. |
+| synthetic_ruptures | 0.915556 | 0.981161 | 0.76 | 0.386667 | 0.311111 | 0.442222 | 0.330519 | control-diagnostics | Prototype measurements per object; no I/O timing. Rupture proxies are derived from expert/source disagreement fields. |
 
 ## 4) Registry-режимы: readiness и ограничения интерпретации
 
