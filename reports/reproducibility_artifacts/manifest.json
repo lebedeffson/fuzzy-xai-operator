@@ -99,7 +99,7 @@
     {
       "path": "reports/structure_aware_benchmark/breast_cancer.json",
       "exists": true,
-      "sha256": "4911d505319520aaa09d228c070bc319bdbff3d263d145f5de9c8295b431d2a4",
+      "sha256": "dee3b7e6a34a4ae0e11e076d55a39c72d247b565237b08eeda832f255b9827d9",
       "chapter": "5",
       "confirms": "Structure-aware cases: trace gap, source conflict, context forbidden, high Delta",
       "command": "make structure-aware-benchmark DATASET=breast_cancer"
@@ -107,7 +107,7 @@
     {
       "path": "reports/structure_aware_benchmark/wine_risk.json",
       "exists": true,
-      "sha256": "c5e08a516a9af65d417bdcda1563cc73a9cb80399033fe4c4ffa4c4a96ef8ea2",
+      "sha256": "84c321f3a1602b87d7756a67b68bf5b986fa399338f1ba2182ab861e5b759121",
       "chapter": "5",
       "confirms": "Structure-aware benchmark on real wine rows (non-synthetic improvement check)",
       "command": "make structure-aware-benchmark DATASET=wine_risk"
@@ -115,7 +115,7 @@
     {
       "path": "reports/structure_aware_benchmark/diabetes_binary.json",
       "exists": true,
-      "sha256": "dcfdb0a0eaf89ca3a3b5e57fa54cd54d7898d4145bdee3dec337bd9cd438edc0",
+      "sha256": "c8b25086a26888c8d2b44832ee01f7fcb94a1f5d1935977337f76c033467951a",
       "chapter": "5",
       "confirms": "Structure-aware benchmark on real diabetes rows (non-synthetic improvement check)",
       "command": "make structure-aware-benchmark DATASET=diabetes_binary"

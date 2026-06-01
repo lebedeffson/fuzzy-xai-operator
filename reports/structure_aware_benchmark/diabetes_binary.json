@@ -14,10 +14,11 @@
   "rows": [
     {
       "policy": "full_observer_calibrated",
-      "agreement_reference": 0.6349206349206349,
+      "agreement_reference": 0.8809523809523809,
+      "agreement_reference_strict": 0.35714285714285715,
       "missed_critical_ruptures": 0,
       "critical_rupture_recall": 1.0,
-      "false_auto_accept_rate": 0.047619047619047616,
+      "false_auto_accept_rate": 0.023809523809523808,
       "false_block_rate": 0.0,
       "auto_accept_coverage": 0.07142857142857142,
       "action_distribution": {
@@ -29,7 +30,8 @@
     },
     {
       "policy": "probability_threshold",
-      "agreement_reference": 0.5,
+      "agreement_reference": 0.8333333333333334,
+      "agreement_reference_strict": 0.3968253968253968,
       "missed_critical_ruptures": 0,
       "critical_rupture_recall": 1.0,
       "false_auto_accept_rate": 0.07936507936507936,
@@ -44,7 +46,8 @@
     },
     {
       "policy": "shap_guardrail",
-      "agreement_reference": 0.5,
+      "agreement_reference": 0.8333333333333334,
+      "agreement_reference_strict": 0.3968253968253968,
       "missed_critical_ruptures": 0,
       "critical_rupture_recall": 1.0,
       "false_auto_accept_rate": 0.07936507936507936,
@@ -59,7 +62,8 @@
     },
     {
       "policy": "lime_guardrail",
-      "agreement_reference": 0.5,
+      "agreement_reference": 0.8333333333333334,
+      "agreement_reference_strict": 0.3968253968253968,
       "missed_critical_ruptures": 0,
       "critical_rupture_recall": 1.0,
       "false_auto_accept_rate": 0.07936507936507936,
@@ -74,7 +78,8 @@
     },
     {
       "policy": "anchor_guardrail",
-      "agreement_reference": 0.5,
+      "agreement_reference": 0.8333333333333334,
+      "agreement_reference_strict": 0.3968253968253968,
       "missed_critical_ruptures": 0,
       "critical_rupture_recall": 1.0,
       "false_auto_accept_rate": 0.07936507936507936,
@@ -90,6 +95,7 @@
   ],
   "notes": [
     "Structure-aware benchmark uses real rows with controlled explanation-layer perturbations.",
-    "Expected actions are derived from safety rules (rupture/context/trace/reduction constraints)."
+    "Expected actions are derived from safety rules (rupture/context/trace/reduction constraints).",
+    "agreement_reference is set-based (any safety-compatible action is accepted); agreement_reference_strict uses a single canonical label."
   ]
 }

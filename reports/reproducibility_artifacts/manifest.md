@@ -26,9 +26,9 @@
 | `reports/datasets/breast_cancer/calibration.json` | `True` | `68118e91c83b` | 5 | Observer calibration before/after and constrained parameters | `make calibrate-observer DATASET=breast_cancer` |
 | `reports/datasets/synthetic_ruptures/baseline_comparison_native.json` | `True` | `fad3e831c07d` | 5 | Native-access safety comparison; baselines do not receive chi_R_crit | `make baseline-comparison DATASET=synthetic_ruptures BASELINE_ACCESS=native` |
 | `reports/datasets/synthetic_ruptures/baseline_comparison_equal_guardrail.json` | `True` | `5d7ddd1a679e` | 5 | Equal-guardrail sanity check where all methods receive chi_R_crit | `make baseline-comparison DATASET=synthetic_ruptures BASELINE_ACCESS=equal_guardrail` |
-| `reports/structure_aware_benchmark/breast_cancer.json` | `True` | `4911d5053195` | 5 | Structure-aware cases: trace gap, source conflict, context forbidden, high Delta | `make structure-aware-benchmark DATASET=breast_cancer` |
-| `reports/structure_aware_benchmark/wine_risk.json` | `True` | `c5e08a516a9a` | 5 | Structure-aware benchmark on real wine rows (non-synthetic improvement check) | `make structure-aware-benchmark DATASET=wine_risk` |
-| `reports/structure_aware_benchmark/diabetes_binary.json` | `True` | `dcfdb0a0eaf8` | 5 | Structure-aware benchmark on real diabetes rows (non-synthetic improvement check) | `make structure-aware-benchmark DATASET=diabetes_binary` |
+| `reports/structure_aware_benchmark/breast_cancer.json` | `True` | `dee3b7e6a34a` | 5 | Structure-aware cases: trace gap, source conflict, context forbidden, high Delta | `make structure-aware-benchmark DATASET=breast_cancer` |
+| `reports/structure_aware_benchmark/wine_risk.json` | `True` | `84c321f3a160` | 5 | Structure-aware benchmark on real wine rows (non-synthetic improvement check) | `make structure-aware-benchmark DATASET=wine_risk` |
+| `reports/structure_aware_benchmark/diabetes_binary.json` | `True` | `c8b25086a268` | 5 | Structure-aware benchmark on real diabetes rows (non-synthetic improvement check) | `make structure-aware-benchmark DATASET=diabetes_binary` |
 | `reports/datasets/breast_cancer/ablation.json` | `True` | `3a4d678e2890` | 5 | Ablation of trace, Delta, chi_R_crit, hierarchy, topos, risk-only threshold | `make ablation-benchmark DATASET=breast_cancer` |
 | `reports/thesis_practice/thesis_practice_tables.json` | `True` | `fc46650590a0` | appendix | Word/LaTeX-ready thesis practice table index | `make thesis-practice-tables` |
 | `Makefile` | `True` | `3c2470dcb4de` | appendix | Reproducible command route | `` |

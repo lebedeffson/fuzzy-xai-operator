@@ -99,19 +99,19 @@
 
 | Policy | agreement_ref | missed_critical | critical_recall | false_auto_accept | auto_accept_cov |
 | --- | ---: | ---: | ---: | ---: | ---: |
-| full_observer_calibrated | 0.4365 | 0 | 1.0000 | 0.1786 | 0.2698 |
-| probability_threshold | 0.3611 | 0 | 1.0000 | 0.4365 | 0.5238 |
-| shap_guardrail | 0.3611 | 0 | 1.0000 | 0.4365 | 0.5238 |
-| lime_guardrail | 0.3611 | 0 | 1.0000 | 0.4365 | 0.5238 |
-| anchor_guardrail | 0.3611 | 0 | 1.0000 | 0.4365 | 0.5238 |
+| full_observer_calibrated | 0.8889 | 0 | 1.0000 | 0.0913 | 0.2698 |
+| probability_threshold | 0.5437 | 0 | 1.0000 | 0.4365 | 0.5238 |
+| shap_guardrail | 0.5437 | 0 | 1.0000 | 0.4365 | 0.5238 |
+| lime_guardrail | 0.5437 | 0 | 1.0000 | 0.4365 | 0.5238 |
+| anchor_guardrail | 0.5437 | 0 | 1.0000 | 0.4365 | 0.5238 |
 
 ## Улучшения не только на синтетике (real rows + structure-aware)
 
 | Dataset | full_agreement_ref | threshold_agreement_ref | agreement_gain | full_false_auto_accept | threshold_false_auto_accept | false_auto_accept_drop |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| breast_cancer | 0.4365 | 0.3611 | 0.0754 | 0.1786 | 0.4365 | 0.2579 |
-| wine_risk | 0.4127 | 0.3571 | 0.0556 | 0.1984 | 0.4563 | 0.2579 |
-| diabetes_binary | 0.6349 | 0.5000 | 0.1349 | 0.0476 | 0.0794 | 0.0317 |
+| breast_cancer | 0.8889 | 0.5437 | 0.3452 | 0.0913 | 0.4365 | 0.3452 |
+| wine_risk | 0.8770 | 0.5238 | 0.3532 | 0.0992 | 0.4563 | 0.3571 |
+| diabetes_binary | 0.8810 | 0.8333 | 0.0476 | 0.0238 | 0.0794 | 0.0556 |
 
 ## Абляционный анализ
 

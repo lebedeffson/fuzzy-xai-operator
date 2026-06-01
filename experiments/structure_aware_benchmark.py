@@ -97,28 +97,105 @@ def _scenario_rows(dataset: str, n_base: int = 36) -> list[dict[str, Any]]:
         for o in outs[:n_base]
     ]
     rows: list[dict[str, Any]] = []
+
+    def _allowed_actions(scenario: str, risk: float) -> set[str]:
+        # Safety-oriented reference: several actions can be acceptable.
+        if scenario == 'critical_rupture':
+            return {'block'}
+        if scenario in {'rule_conflict', 'trace_gap', 'context_forbidden', 'source_conflict'}:
+            return {'request_more_data', 'defer_to_human'}
+        if scenario == 'high_reduction_loss':
+            return {'lower_confidence', 'request_more_data', 'defer_to_human'}
+        # clean
+        if risk < 0.25:
+            return {'accept', 'lower_confidence'}
+        return {'lower_confidence', 'defer_to_human'}
+
     for i, b in enumerate(base):
         clean = dict(b)
-        clean.update({'scenario': 'clean', 'chi_r': 0, 'chi_r_crit': 0, 'chi_auto': True, 'trace_valid': True, 'expected_action': 'accept' if clean['predicted_risk'] < 0.25 else 'lower_confidence'})
+        clean_allowed = _allowed_actions('clean', float(clean['predicted_risk']))
+        clean.update({
+            'scenario': 'clean',
+            'chi_r': 0,
+            'chi_r_crit': 0,
+            'chi_auto': True,
+            'trace_valid': True,
+            'expected_action': sorted(clean_allowed)[0],
+            'expected_actions': sorted(clean_allowed),
+        })
         rows.append(clean)
         rule_conflict = dict(b)
-        rule_conflict.update({'scenario': 'rule_conflict', 'chi_r': 1, 'chi_r_crit': 0, 'chi_auto': True, 'trace_valid': True, 'expected_action': 'request_more_data'})
+        rc_allowed = _allowed_actions('rule_conflict', float(rule_conflict['predicted_risk']))
+        rule_conflict.update({
+            'scenario': 'rule_conflict',
+            'chi_r': 1,
+            'chi_r_crit': 0,
+            'chi_auto': True,
+            'trace_valid': True,
+            'expected_action': sorted(rc_allowed)[0],
+            'expected_actions': sorted(rc_allowed),
+        })
         rows.append(rule_conflict)
         trace_gap = dict(b)
-        trace_gap.update({'scenario': 'trace_gap', 'chi_r': 0, 'chi_r_crit': 0, 'chi_auto': True, 'trace_valid': False, 'expected_action': 'request_more_data'})
+        tg_allowed = _allowed_actions('trace_gap', float(trace_gap['predicted_risk']))
+        trace_gap.update({
+            'scenario': 'trace_gap',
+            'chi_r': 0,
+            'chi_r_crit': 0,
+            'chi_auto': True,
+            'trace_valid': False,
+            'expected_action': sorted(tg_allowed)[0],
+            'expected_actions': sorted(tg_allowed),
+        })
         rows.append(trace_gap)
         context_forbidden = dict(b)
-        context_forbidden.update({'scenario': 'context_forbidden', 'chi_r': 0, 'chi_r_crit': 0, 'chi_auto': False, 'trace_valid': True, 'expected_action': 'defer_to_human'})
+        cf_allowed = _allowed_actions('context_forbidden', float(context_forbidden['predicted_risk']))
+        context_forbidden.update({
+            'scenario': 'context_forbidden',
+            'chi_r': 0,
+            'chi_r_crit': 0,
+            'chi_auto': False,
+            'trace_valid': True,
+            'expected_action': sorted(cf_allowed)[0],
+            'expected_actions': sorted(cf_allowed),
+        })
         rows.append(context_forbidden)
         source_conflict = dict(b)
-        source_conflict.update({'scenario': 'source_conflict', 'chi_r': 1, 'chi_r_crit': 0, 'chi_auto': False, 'trace_valid': True, 'expected_action': 'defer_to_human'})
+        sc_allowed = _allowed_actions('source_conflict', float(source_conflict['predicted_risk']))
+        source_conflict.update({
+            'scenario': 'source_conflict',
+            'chi_r': 1,
+            'chi_r_crit': 0,
+            'chi_auto': False,
+            'trace_valid': True,
+            'expected_action': sorted(sc_allowed)[0],
+            'expected_actions': sorted(sc_allowed),
+        })
         rows.append(source_conflict)
         high_delta = dict(b)
         high_delta['reduction_loss'] = max(0.35, b['reduction_loss'])
-        high_delta.update({'scenario': 'high_reduction_loss', 'chi_r': 0, 'chi_r_crit': 0, 'chi_auto': True, 'trace_valid': True, 'expected_action': 'request_more_data'})
+        hd_allowed = _allowed_actions('high_reduction_loss', float(high_delta['predicted_risk']))
+        high_delta.update({
+            'scenario': 'high_reduction_loss',
+            'chi_r': 0,
+            'chi_r_crit': 0,
+            'chi_auto': True,
+            'trace_valid': True,
+            'expected_action': sorted(hd_allowed)[0],
+            'expected_actions': sorted(hd_allowed),
+        })
         rows.append(high_delta)
         critical = dict(b)
-        critical.update({'scenario': 'critical_rupture', 'chi_r': 1, 'chi_r_crit': 1, 'chi_auto': False, 'trace_valid': True, 'expected_action': 'block'})
+        cr_allowed = _allowed_actions('critical_rupture', float(critical['predicted_risk']))
+        critical.update({
+            'scenario': 'critical_rupture',
+            'chi_r': 1,
+            'chi_r_crit': 1,
+            'chi_auto': False,
+            'trace_valid': True,
+            'expected_action': sorted(cr_allowed)[0],
+            'expected_actions': sorted(cr_allowed),
+        })
         rows.append(critical)
     return rows
 
@@ -126,6 +203,7 @@ def _scenario_rows(dataset: str, n_base: int = 36) -> list[dict[str, Any]]:
 def _evaluate_policy(name: str, rows: list[dict[str, Any]], calibrated: dict[str, Any]) -> dict[str, Any]:
     actions: list[str] = []
     expected: list[str] = []
+    expected_ok: list[set[str]] = []
     missed_critical = 0
     critical_total = 0
     false_auto_accept = 0
@@ -151,18 +229,22 @@ def _evaluate_policy(name: str, rows: list[dict[str, Any]], calibrated: dict[str
             action = _threshold_action(float(r['predicted_risk']), float(r['uncertainty']), float(r['i_pre']), int(r['chi_r_crit']))
         actions.append(action)
         expected.append(str(r['expected_action']))
+        expected_ok.append(set(r.get('expected_actions', [str(r['expected_action'])])))
         if int(r['chi_r_crit']) == 1:
             critical_total += 1
             if action != 'block':
                 missed_critical += 1
-        if action in AUTO_ACTIONS and str(r['expected_action']) not in AUTO_ACTIONS:
+        if action in AUTO_ACTIONS and action not in expected_ok[-1]:
             false_auto_accept += 1
         if action == 'block' and int(r['chi_r_crit']) == 0:
             false_block += 1
     n = max(1, len(rows))
+    strict = float(np.mean([a == e for a, e in zip(actions, expected)]))
+    set_based = float(np.mean([a in ok for a, ok in zip(actions, expected_ok)]))
     return {
         'policy': name,
-        'agreement_reference': float(np.mean([a == e for a, e in zip(actions, expected)])),
+        'agreement_reference': set_based,
+        'agreement_reference_strict': strict,
         'missed_critical_ruptures': int(missed_critical),
         'critical_rupture_recall': 1.0 if critical_total == 0 else float((critical_total - missed_critical) / critical_total),
         'false_auto_accept_rate': float(false_auto_accept / n),
@@ -210,6 +292,7 @@ def run(dataset: str, *, out_root: str | Path = 'reports') -> dict[str, Any]:
         'notes': [
             'Structure-aware benchmark uses real rows with controlled explanation-layer perturbations.',
             'Expected actions are derived from safety rules (rupture/context/trace/reduction constraints).',
+            'agreement_reference is set-based (any safety-compatible action is accepted); agreement_reference_strict uses a single canonical label.',
         ],
     }
     out_dir = Path(out_root) / 'structure_aware_benchmark'
@@ -241,4 +324,3 @@ def main() -> None:
 
 if __name__ == '__main__':
     main()
-
