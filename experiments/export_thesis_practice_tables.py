@@ -65,6 +65,8 @@ def export(*, out_dir: str | Path = 'reports/thesis_tables') -> dict[str, str]:
     baseline_synth_native = _load_json(Path('reports/datasets/synthetic_ruptures/baseline_comparison_native.json'))
     baseline_synth_equal = _load_json(Path('reports/datasets/synthetic_ruptures/baseline_comparison_equal_guardrail.json'))
     structure = _load_json(Path('reports/structure_aware_benchmark/breast_cancer.json'))
+    structure_wine = _load_json(Path('reports/structure_aware_benchmark/wine_risk.json'))
+    structure_diabetes = _load_json(Path('reports/structure_aware_benchmark/diabetes_binary.json'))
     defense = _load_json(Path('reports/defense_cases/summary.json'))
     backend = build_backend()
     plan = backend.plan
@@ -224,6 +226,57 @@ def export(*, out_dir: str | Path = 'reports/thesis_tables') -> dict[str, str]:
         encoding='utf-8',
     )
 
+    def _policy_row(payload: dict[str, Any], name: str) -> dict[str, Any]:
+        for row in payload.get('rows', []):
+            if row.get('policy') == name or row.get('baseline') == name:
+                return row
+        return {}
+
+    ns_rows: list[list[Any]] = []
+    for ds_name, payload in (
+        ('breast_cancer', structure),
+        ('wine_risk', structure_wine),
+        ('diabetes_binary', structure_diabetes),
+    ):
+        full = _policy_row(payload, 'full_observer_calibrated')
+        thr = _policy_row(payload, 'probability_threshold')
+        if not full or not thr:
+            continue
+        full_far = float(full.get('false_auto_accept_rate', 0.0))
+        thr_far = float(thr.get('false_auto_accept_rate', 0.0))
+        full_agr = float(full.get('agreement_reference', 0.0))
+        thr_agr = float(thr.get('agreement_reference', 0.0))
+        ns_rows.append([
+            ds_name,
+            full_agr,
+            thr_agr,
+            full_agr - thr_agr,
+            full_far,
+            thr_far,
+            thr_far - full_far,
+            full.get('critical_rupture_recall'),
+            full.get('missed_critical_ruptures'),
+        ])
+    (root / 'table_non_synthetic_improvements.tex').write_text(
+        _latex_table(
+            [
+                'dataset',
+                'full_agreement_ref',
+                'threshold_agreement_ref',
+                'agreement_gain',
+                'full_false_auto_accept',
+                'threshold_false_auto_accept',
+                'false_auto_accept_drop',
+                'critical_recall',
+                'missed_critical',
+            ],
+            ns_rows,
+            'Non-synthetic structure-aware improvements on real datasets',
+            'tab:non_synthetic_improvements',
+        ),
+        encoding='utf-8',
+    )
+
     def _rows_by_mode(payload: dict[str, Any], mode: str) -> list[list[Any]]:
         out_rows: list[list[Any]] = []
         for row in payload.get('rows', []):
@@ -314,6 +367,7 @@ def export(*, out_dir: str | Path = 'reports/thesis_tables') -> dict[str, str]:
         'baseline_comparison': str(root / 'table_baseline_comparison.tex'),
         'baseline_by_dataset': str(root / 'table_baseline_comparison_by_dataset.tex'),
         'structure_aware_benchmark': str(root / 'table_structure_aware_benchmark.tex'),
+        'non_synthetic_improvements': str(root / 'table_non_synthetic_improvements.tex'),
         'synthetic_guardrail_modes': str(root / 'table_synthetic_guardrail_modes.tex'),
         'defense_cases': str(root / 'table_defense_cases.tex'),
         'params': str(root / 'table_explainplan_params.tex'),

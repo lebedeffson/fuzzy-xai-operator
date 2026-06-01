@@ -361,16 +361,20 @@ def run(port: int = 8097) -> None:
     ui.add_css(
         """
         .studio-shell {background: linear-gradient(180deg, #f8fbff 0%, #eff6ff 100%); overflow-x:hidden;}
+        .nicegui-content {max-width: 100% !important; width: 100% !important; padding: 0 !important;}
         .studio-card {border: 1px solid #dbe7f3; border-radius: 14px; box-shadow: 0 6px 20px rgba(15, 23, 42, 0.05); background:#fff;}
         .studio-title {font-weight: 700; letter-spacing: .01em;}
         .studio-note {color: #334155; font-size: .9rem;}
         .studio-chip {display:inline-block; padding:4px 10px; border-radius:9999px; font-size:.78rem; font-weight:700;}
-        .studio-layout {display:grid; grid-template-columns:minmax(340px,31%) minmax(0,1fr); gap:16px; width:100%; box-sizing:border-box;}
+        .studio-layout {display:grid; grid-template-columns:minmax(340px,31%) minmax(0,1fr); gap:12px; width:100%; box-sizing:border-box;}
         .studio-layout > .nicegui-column:first-child {position: sticky; top: 72px; align-self: start; max-height: calc(100vh - 86px); overflow: auto; padding-right: 4px;}
         .studio-layout .q-tab {font-weight: 700; letter-spacing: .01em;}
         .q-table__container {max-width: 100% !important; overflow-x: auto !important;}
         .q-tab-panels, .q-tab-panel, .q-panel {max-width: 100% !important; overflow-x: hidden !important;}
         .echart, .q-markup-table {background:#fff;}
+        .studio-card .q-card__section {padding: 12px 14px;}
+        .studio-card .q-table th, .studio-card .q-table td {padding: 8px 10px; font-size: 12px;}
+        .studio-card .q-field--dense .q-field__control {min-height: 34px;}
         @media (max-width: 1200px) {.studio-layout {grid-template-columns:1fr;}}
         @media (max-width: 1200px) {.studio-layout > .nicegui-column:first-child {position: static; max-height: none; overflow: visible;}}
         """
@@ -646,7 +650,10 @@ def run(port: int = 8097) -> None:
         with operators_table:
             ui.label('Operator trace (что берет из системы)').classes('text-subtitle1 studio-title')
             ui.label(f"rows: {len(op_rows_view)}/{len(op_rows)} | view: {view_mode}").classes('studio-note')
-            ui.label('Operator flow graph mode available').classes('studio-note')
+            if not op_rows_view:
+                ui.label('Нет операторов после фильтрации. Ослабь Severity/Hide/Search фильтры.').classes('text-warning')
+                _render_operator_inspector()
+                return
 
             if view_mode == 'graph':
                 ui.echart(_operators_flow_option(op_rows_view)).classes('w-full h-72')
@@ -843,25 +850,32 @@ def run(port: int = 8097) -> None:
                         ui.label(p.name).classes('text-caption')
 
     def run_case() -> None:
-        state['scene'] = str(state.get('scene', 'custom') or 'custom')
-        _apply_plan()
-        ds = str(controls['dataset_select'].value)
-        sc = str(controls['scenario_select'].value)
-        pr = str(controls['preset_select'].value)
-        idx = _to_int(controls['sample_idx'].value, 0)
+        try:
+            state['scene'] = str(state.get('scene', 'custom') or 'custom')
+            _apply_plan()
+            ds = str(controls['dataset_select'].value)
+            sc = str(controls['scenario_select'].value)
+            pr = str(controls['preset_select'].value)
+            idx = _to_int(controls['sample_idx'].value, 0)
 
-        base = build_case_state(service, sc, sample_index=idx, dataset_mode=ds)
-        tuned = apply_named_preset(base, plan, pr) if pr != 'none' else base
-        ov = _collect_overrides()
-        if ov is not None:
-            from fuzzyxai.studio import recompute_case_state
+            base = build_case_state(service, sc, sample_index=idx, dataset_mode=ds)
+            tuned = apply_named_preset(base, plan, pr) if pr != 'none' else base
+            ov = _collect_overrides()
+            if ov is not None:
+                from fuzzyxai.studio import recompute_case_state
 
-            tuned = recompute_case_state(tuned, plan, ov)
-        state['case'] = tuned
-        _render_case(tuned)
-        _save_last_case(tuned)
-        demo_flow.content = _demo_flow_html(str(state.get('scene', 'custom')))
-        load_benchmark()
+                tuned = recompute_case_state(tuned, plan, ov)
+            state['case'] = tuned
+            _render_case(tuned)
+            _save_last_case(tuned)
+            demo_flow.content = _demo_flow_html(str(state.get('scene', 'custom')))
+            load_benchmark()
+        except Exception as exc:
+            summary.clear()
+            with summary:
+                ui.label('Ошибка выполнения pipeline').classes('text-subtitle1 text-negative')
+                ui.label(str(exc)).classes('text-negative')
+            ui.notify('Pipeline error: см. блок Итог по кейсу', type='negative')
 
     def load_benchmark() -> None:
         bench_box.clear()

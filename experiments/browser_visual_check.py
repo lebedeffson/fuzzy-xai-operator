@@ -70,7 +70,7 @@ def run_visual_check(port: int = 18097, out_dir: str | Path = 'reports/browser_v
                 ('export', '5) Export', None),
                 ('summary', 'Итог по кейсу', ('tab', 'Overview')),
                 ('operator_trace', 'Operator trace (что берет из системы)', ('tab', 'Operators')),
-                ('operator_flow', 'Operator flow graph mode available', ('tab', 'Operators')),
+                ('operator_flow', 'rows:', ('tab', 'Operators')),
             ]
             for i, (name, marker, nav) in enumerate(section_checks, start=2):
                 ok = True

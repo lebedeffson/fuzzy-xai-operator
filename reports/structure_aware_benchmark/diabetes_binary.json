@@ -1,0 +1,95 @@
+{
+  "dataset": "diabetes_binary",
+  "status": "READY",
+  "n_cases": 252,
+  "scenarios": [
+    "clean",
+    "context_forbidden",
+    "critical_rupture",
+    "high_reduction_loss",
+    "rule_conflict",
+    "source_conflict",
+    "trace_gap"
+  ],
+  "rows": [
+    {
+      "policy": "full_observer_calibrated",
+      "agreement_reference": 0.6349206349206349,
+      "missed_critical_ruptures": 0,
+      "critical_rupture_recall": 1.0,
+      "false_auto_accept_rate": 0.047619047619047616,
+      "false_block_rate": 0.0,
+      "auto_accept_coverage": 0.07142857142857142,
+      "action_distribution": {
+        "request_more_data": 144,
+        "defer_to_human": 54,
+        "block": 36,
+        "lower_confidence": 18
+      }
+    },
+    {
+      "policy": "probability_threshold",
+      "agreement_reference": 0.5,
+      "missed_critical_ruptures": 0,
+      "critical_rupture_recall": 1.0,
+      "false_auto_accept_rate": 0.07936507936507936,
+      "false_block_rate": 0.0,
+      "auto_accept_coverage": 0.09523809523809523,
+      "action_distribution": {
+        "request_more_data": 132,
+        "block": 36,
+        "defer_to_human": 60,
+        "accept": 24
+      }
+    },
+    {
+      "policy": "shap_guardrail",
+      "agreement_reference": 0.5,
+      "missed_critical_ruptures": 0,
+      "critical_rupture_recall": 1.0,
+      "false_auto_accept_rate": 0.07936507936507936,
+      "false_block_rate": 0.0,
+      "auto_accept_coverage": 0.09523809523809523,
+      "action_distribution": {
+        "request_more_data": 132,
+        "block": 36,
+        "defer_to_human": 60,
+        "accept": 24
+      }
+    },
+    {
+      "policy": "lime_guardrail",
+      "agreement_reference": 0.5,
+      "missed_critical_ruptures": 0,
+      "critical_rupture_recall": 1.0,
+      "false_auto_accept_rate": 0.07936507936507936,
+      "false_block_rate": 0.0,
+      "auto_accept_coverage": 0.09523809523809523,
+      "action_distribution": {
+        "request_more_data": 132,
+        "block": 36,
+        "defer_to_human": 60,
+        "accept": 24
+      }
+    },
+    {
+      "policy": "anchor_guardrail",
+      "agreement_reference": 0.5,
+      "missed_critical_ruptures": 0,
+      "critical_rupture_recall": 1.0,
+      "false_auto_accept_rate": 0.07936507936507936,
+      "false_block_rate": 0.0,
+      "auto_accept_coverage": 0.09523809523809523,
+      "action_distribution": {
+        "request_more_data": 132,
+        "block": 36,
+        "defer_to_human": 60,
+        "accept": 24
+      }
+    }
+  ],
+  "notes": [
+    "Structure-aware benchmark uses real rows with controlled explanation-layer perturbations.",
+    "Expected actions are derived from safety rules (rupture/context/trace/reduction constraints)."
+  ]
+}

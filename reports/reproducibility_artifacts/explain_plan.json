@@ -1,0 +1,23 @@
+{
+  "w_p": 0.7,
+  "w_u": 0.05,
+  "w_I": 0.05,
+  "w_Delta": 0.05,
+  "w_R": 0.15,
+  "theta_1": 0.1,
+  "theta_2": 0.25,
+  "theta_3": 0.5,
+  "theta_4": 0.75,
+  "i_min": 0.65,
+  "delta_max": 0.15,
+  "uncertainty_max": 0.45,
+  "gamma_max": 0.45,
+  "epsilon_int": 0.1,
+  "reduction_strategy": "balance",
+  "baseline_access": "native",
+  "mode": "audit",
+  "use_trace": true,
+  "use_delta": true,
+  "use_critical_rupture": true,
+  "use_topos": true
+}
