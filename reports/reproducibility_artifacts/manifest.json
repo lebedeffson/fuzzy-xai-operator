@@ -33,6 +33,7 @@
   "commands": [
     "make dissertation-check",
     "make reproduce-chapter2",
+    "make ecosystem-evidence",
     "make thesis-practice-tables",
     "make browser-visual-check",
     "make ui-health-check",
@@ -64,6 +65,30 @@
       "chapter": "2",
       "confirms": "Canonical sample_113 report generated from the chapter 2 ExplainPlan contract",
       "command": "make reproduce-chapter2"
+    },
+    {
+      "path": "fuzzyxai/ecosystem/registry.json",
+      "exists": true,
+      "sha256": "c4f1269d1532163d65ae133fa0b092e979ae35347c732d8bcf7429fb93ae13bc",
+      "chapter": "4",
+      "confirms": "External module registry for chapter 4 ecosystem integration",
+      "command": "make ecosystem-evidence"
+    },
+    {
+      "path": "evidence/evidence_matrix.csv",
+      "exists": true,
+      "sha256": "451b719410eca29c0d6ffcdd4d423cb28306be947e7e7af076cc86e4df0eb5b6",
+      "chapter": "4 / 5",
+      "confirms": "Module evidence matrix with status, fixture, and claim-scope flags",
+      "command": "make ecosystem-evidence"
+    },
+    {
+      "path": "reports/chapter4/ecosystem_evidence.json",
+      "exists": true,
+      "sha256": "ecbd9e15292878c62c0296fec982b510d814d7982d68469290b15910d156cc04",
+      "chapter": "4",
+      "confirms": "Chapter 4 external module evidence summary",
+      "command": "make ecosystem-evidence"
     },
     {
       "path": "reports/reproducibility_artifacts/explain_plan.json",
@@ -164,7 +189,7 @@
     {
       "path": "Makefile",
       "exists": true,
-      "sha256": "83b4d2a41559b290954f1b949cf042329ff7d85fcf2ba43eab0a3d59b1d63ede",
+      "sha256": "3f3bc20fe4c1238ce6f962954e25f074d8a56468d9682056aba56ecaf451617e",
       "chapter": "appendix",
       "confirms": "Reproducible command route",
       "command": ""

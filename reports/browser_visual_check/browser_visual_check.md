@@ -13,3 +13,6 @@ overall: `PASS`
 - summary: PASS (ok) -> `reports/browser_visual_check/07_summary.png`
 - operator_trace: PASS (ok) -> `reports/browser_visual_check/08_operator_trace.png`
 - operator_flow: PASS (ok) -> `reports/browser_visual_check/09_operator_flow.png`
+- evidence_contract: PASS (ok) -> `reports/browser_visual_check/10_evidence_contract.png`
+- ecosystem_registry: PASS (ok) -> `reports/browser_visual_check/11_ecosystem_registry.png`
+- real_rows_improvements: PASS (ok) -> `reports/browser_visual_check/12_real_rows_improvements.png`

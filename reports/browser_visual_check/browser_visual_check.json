@@ -55,6 +55,24 @@
       "ok": true,
       "note": "ok",
       "screenshot": "reports/browser_visual_check/09_operator_flow.png"
+    },
+    {
+      "name": "evidence_contract",
+      "ok": true,
+      "note": "ok",
+      "screenshot": "reports/browser_visual_check/10_evidence_contract.png"
+    },
+    {
+      "name": "ecosystem_registry",
+      "ok": true,
+      "note": "ok",
+      "screenshot": "reports/browser_visual_check/11_ecosystem_registry.png"
+    },
+    {
+      "name": "real_rows_improvements",
+      "ok": true,
+      "note": "ok",
+      "screenshot": "reports/browser_visual_check/12_real_rows_improvements.png"
     }
   ]
 }

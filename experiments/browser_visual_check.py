@@ -71,6 +71,9 @@ def run_visual_check(port: int = 18097, out_dir: str | Path = 'reports/browser_v
                 ('summary', 'Итог по кейсу', ('tab', 'Overview')),
                 ('operator_trace', 'Operator trace (что берет из системы)', ('tab', 'Operators')),
                 ('operator_flow', 'rows:', ('tab', 'Operators')),
+                ('evidence_contract', 'Evidence contract', ('tab', 'Evidence')),
+                ('ecosystem_registry', 'External module registry', ('tab', 'Evidence')),
+                ('real_rows_improvements', 'Real rows improvements', ('tab', 'Evidence')),
             ]
             for i, (name, marker, nav) in enumerate(section_checks, start=2):
                 ok = True

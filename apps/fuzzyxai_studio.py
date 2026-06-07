@@ -9,6 +9,7 @@ from typing import Any
 
 from apps.services.layered_case import LayeredCaseService, build_case_state
 from fuzzyxai.datasets import list_dataset_modes
+from fuzzyxai.ecosystem import build_evidence_matrix, load_ecosystem_registry
 from fuzzyxai.studio import (
     PRESETS,
     StudioExplainPlan,
@@ -172,6 +173,49 @@ def _baseline_compare_option(rows: list[dict[str, Any]]) -> dict[str, Any]:
         'series': [
             {'name': 'agreement_reference', 'type': 'bar', 'data': agreement, 'itemStyle': {'color': '#0f766e'}},
             {'name': 'missed_critical_ruptures', 'type': 'line', 'yAxisIndex': 1, 'data': missed, 'itemStyle': {'color': '#dc2626'}},
+        ],
+    }
+
+
+def _non_synthetic_rows() -> list[dict[str, Any]]:
+    rows: list[dict[str, Any]] = []
+    for ds in ['breast_cancer', 'wine_risk', 'diabetes_binary']:
+        payload = _load_json(ROOT / 'reports' / 'structure_aware_benchmark' / f'{ds}.json') or {}
+        full = next((r for r in payload.get('rows', []) if r.get('policy') == 'full_observer_calibrated'), {})
+        threshold = next((r for r in payload.get('rows', []) if r.get('policy') == 'probability_threshold'), {})
+        if not full or not threshold:
+            continue
+        full_ag = float(full.get('agreement_reference', 0.0))
+        th_ag = float(threshold.get('agreement_reference', 0.0))
+        full_faa = float(full.get('false_auto_accept_rate', 0.0))
+        th_faa = float(threshold.get('false_auto_accept_rate', 0.0))
+        rows.append(
+            {
+                'dataset': ds,
+                'full_agreement_ref': full_ag,
+                'threshold_agreement_ref': th_ag,
+                'agreement_gain': full_ag - th_ag,
+                'full_false_auto_accept': full_faa,
+                'threshold_false_auto_accept': th_faa,
+                'false_auto_accept_drop': th_faa - full_faa,
+            }
+        )
+    return rows
+
+
+def _non_synthetic_option(rows: list[dict[str, Any]]) -> dict[str, Any]:
+    labels = [str(r.get('dataset', '')) for r in rows]
+    gain = [round(float(r.get('agreement_gain', 0.0)), 4) for r in rows]
+    drop = [round(float(r.get('false_auto_accept_drop', 0.0)), 4) for r in rows]
+    return {
+        'tooltip': {'trigger': 'axis'},
+        'legend': {'data': ['agreement_gain', 'false_auto_accept_drop'], 'bottom': 0},
+        'grid': {'left': 52, 'right': 24, 'top': 40, 'bottom': 78},
+        'xAxis': {'type': 'category', 'data': labels},
+        'yAxis': {'type': 'value', 'min': 0, 'max': 0.5},
+        'series': [
+            {'name': 'agreement_gain', 'type': 'bar', 'data': gain, 'itemStyle': {'color': '#0f766e'}},
+            {'name': 'false_auto_accept_drop', 'type': 'bar', 'data': drop, 'itemStyle': {'color': '#b45309'}},
         ],
     }
 
@@ -515,6 +559,9 @@ def run(port: int = 8097) -> None:
                 composition_table = ui.card().classes('w-full studio-card')
 
             with ui.tab_panel(tab_evidence).classes('w-full gap-3'):
+                evidence_contract_card = ui.card().classes('w-full studio-card')
+                ecosystem_card = ui.card().classes('w-full studio-card')
+                improvements_card = ui.card().classes('w-full studio-card')
                 representation_table = ui.card().classes('w-full studio-card')
                 raw_trace = ui.expansion('Raw trace JSON', value=False).classes('w-full studio-card')
 
@@ -690,6 +737,77 @@ def run(port: int = 8097) -> None:
                 ui.code(json.dumps(op_rows_view, ensure_ascii=False, indent=2), language='json').classes('w-full')
         _render_operator_inspector()
 
+    def _render_evidence_pack() -> None:
+        contract = _load_json(ROOT / 'reports' / 'chapter2' / 'explain_plan_hash.json') or {}
+        sample = _load_json(ROOT / 'reports' / 'chapter2' / 'sample_113_report.json') or {}
+        article_path = ROOT / 'reports' / 'reproducibility_artifacts' / 'article_insert.md'
+        manifest = _load_json(ROOT / 'reports' / 'reproducibility_artifacts' / 'manifest.json') or {}
+        matrix = build_evidence_matrix(load_ecosystem_registry())
+        non_synth = _non_synthetic_rows()
+
+        evidence_contract_card.clear()
+        with evidence_contract_card:
+            ui.label('Evidence contract').classes('text-subtitle1 studio-title')
+            with ui.row().classes('w-full gap-2'):
+                for title, value in [
+                    ('Chapter2 YAML SHA', str(contract.get('sha256', '-'))[:16]),
+                    ('sample_113 SHA source', str(sample.get('explain_plan_hash', '-'))[:16]),
+                    ('Artifacts', len(manifest.get('artifacts', []))),
+                    ('Article insert', 'ready' if article_path.exists() else 'missing'),
+                ]:
+                    with ui.card().classes('w-full lg:w-[23%]'):
+                        ui.label(title).classes('text-caption')
+                        ui.label(str(value)).classes('text-body2')
+            ui.markdown(
+                f"- `plan_path`: `{contract.get('plan_path', '-')}`\n"
+                f"- `required_trace_fields`: `{contract.get('required_trace_fields', [])}`\n"
+                f"- `sample_113 action`: `{sample.get('action', '-')}`\n"
+                f"- `sample_113 P(malignant)`: `{_num(sample.get('P(malignant)'), 6)}`"
+            )
+
+        ecosystem_card.clear()
+        with ecosystem_card:
+            ui.label('External module registry').classes('text-subtitle1 studio-title')
+            ui.table(
+                columns=[
+                    {'name': 'registry_id', 'label': 'Module', 'field': 'registry_id'},
+                    {'name': 'status', 'label': 'Status', 'field': 'status'},
+                    {'name': 'evidence_level', 'label': 'Evidence', 'field': 'evidence_level'},
+                    {'name': 'adapter', 'label': 'Adapter', 'field': 'adapter'},
+                    {'name': 'run_allowed', 'label': 'Run', 'field': 'run_allowed'},
+                    {'name': 'quantitative_claim_allowed', 'label': 'Quant claim', 'field': 'quantitative_claim_allowed'},
+                ],
+                rows=matrix,
+            ).classes('w-full')
+            with ui.expansion('Source repo cards', value=False).classes('w-full'):
+                for row in matrix:
+                    with ui.card().classes('w-full'):
+                        ui.label(f"{row['registry_id']} | {row['status']}").classes('studio-title')
+                        ui.markdown(
+                            f"- `source_repo`: `{row['source_repo']}`\n"
+                            f"- `source_artifact`: `{row['source_artifact']}`\n"
+                            f"- `claim_scope`: {row['claim_scope']}"
+                        )
+
+        improvements_card.clear()
+        with improvements_card:
+            ui.label('Real rows improvements').classes('text-subtitle1 studio-title')
+            ui.echart(_non_synthetic_option(non_synth)).classes('w-full h-64')
+            if non_synth:
+                display_rows = [
+                    {
+                        'dataset': r['dataset'],
+                        'agreement_gain': _num(r['agreement_gain'], 4),
+                        'false_auto_accept_drop': _num(r['false_auto_accept_drop'], 4),
+                        'full_agreement_ref': _num(r['full_agreement_ref'], 4),
+                        'threshold_agreement_ref': _num(r['threshold_agreement_ref'], 4),
+                        'full_false_auto_accept': _num(r['full_false_auto_accept'], 4),
+                        'threshold_false_auto_accept': _num(r['threshold_false_auto_accept'], 4),
+                    }
+                    for r in non_synth
+                ]
+                ui.table(columns=[{'name': k, 'label': k, 'field': k} for k in display_rows[0].keys()], rows=display_rows).classes('w-full')
+
     def _render_case(st: dict[str, Any]) -> None:
         risk = st.get('risk', {})
         model = st.get('model', {})
@@ -827,6 +945,7 @@ def run(port: int = 8097) -> None:
             ui.label('Representation selection').classes('text-subtitle1 studio-title')
             if rep_rows:
                 ui.table(columns=[{'name': k, 'label': k, 'field': k} for k in rep_rows[0].keys()], rows=rep_rows).classes('w-full')
+        _render_evidence_pack()
 
         raw_trace.clear()
         with raw_trace:

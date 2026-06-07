@@ -9,6 +9,7 @@
 
 - `make dissertation-check`
 - `make reproduce-chapter2`
+- `make ecosystem-evidence`
 - `make thesis-practice-tables`
 - `make browser-visual-check`
 - `make ui-health-check`
@@ -23,6 +24,9 @@
 | `configs/explain_plan_chapter2.yaml` | `True` | `4469dad3fbee` | 2 / appendix | Fixed chapter 2 ExplainPlan YAML contract used for deterministic hashing | `make reproduce-chapter2` |
 | `reports/chapter2/explain_plan_hash.json` | `True` | `c18bfa69005f` | 2 / appendix | Validated ExplainPlan SHA256 and required trace field list | `make reproduce-chapter2` |
 | `reports/chapter2/sample_113_report.json` | `True` | `4920325789b0` | 2 | Canonical sample_113 report generated from the chapter 2 ExplainPlan contract | `make reproduce-chapter2` |
+| `fuzzyxai/ecosystem/registry.json` | `True` | `c4f1269d1532` | 4 | External module registry for chapter 4 ecosystem integration | `make ecosystem-evidence` |
+| `evidence/evidence_matrix.csv` | `True` | `451b719410ec` | 4 / 5 | Module evidence matrix with status, fixture, and claim-scope flags | `make ecosystem-evidence` |
+| `reports/chapter4/ecosystem_evidence.json` | `True` | `ecbd9e152928` | 4 | Chapter 4 external module evidence summary | `make ecosystem-evidence` |
 | `reports/reproducibility_artifacts/explain_plan.json` | `True` | `d7cdb8f76152` | 2 / appendix | Serializable ExplainPlan contract and trace hash source | `make reproducibility-artifacts` |
 | `reports/chapter2_real_operator_case/breast_cancer_operator_case.json` | `True` | `0d319ff99567` | 2 | sample_113 operator values: mu, alpha, U_model, U_rules, U_trace, u_M, tau | `make chapter2-real-operator-case` |
 | `reports/real_reduction_example/breast_cancer_case.json` | `True` | `ca31cd57c9b9` | 3 | sample_113 reduction, chi_Auto, chi_R, chi_R_crit, rho, action | `make real-reduction-example` |
@@ -35,5 +39,5 @@
 | `reports/structure_aware_benchmark/diabetes_binary.json` | `True` | `c8b25086a268` | 5 | Structure-aware benchmark on real diabetes rows (non-synthetic improvement check) | `make structure-aware-benchmark DATASET=diabetes_binary` |
 | `reports/datasets/breast_cancer/ablation.json` | `True` | `3a4d678e2890` | 5 | Ablation of trace, Delta, chi_R_crit, hierarchy, topos, risk-only threshold | `make ablation-benchmark DATASET=breast_cancer` |
 | `reports/thesis_practice/thesis_practice_tables.json` | `True` | `fc46650590a0` | appendix | Word/LaTeX-ready thesis practice table index | `make thesis-practice-tables` |
-| `Makefile` | `True` | `83b4d2a41559` | appendix | Reproducible command route | `` |
+| `Makefile` | `True` | `3f3bc20fe4c1` | appendix | Reproducible command route | `` |
 | `requirements.txt` | `True` | `3202b5309cef` | appendix | Python environment dependencies | `` |

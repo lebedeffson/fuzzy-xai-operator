@@ -93,6 +93,24 @@ def build_payload() -> dict[str, Any]:
             'make reproduce-chapter2',
         ),
         _artifact(
+            'fuzzyxai/ecosystem/registry.json',
+            'External module registry for chapter 4 ecosystem integration',
+            '4',
+            'make ecosystem-evidence',
+        ),
+        _artifact(
+            'evidence/evidence_matrix.csv',
+            'Module evidence matrix with status, fixture, and claim-scope flags',
+            '4 / 5',
+            'make ecosystem-evidence',
+        ),
+        _artifact(
+            'reports/chapter4/ecosystem_evidence.json',
+            'Chapter 4 external module evidence summary',
+            '4',
+            'make ecosystem-evidence',
+        ),
+        _artifact(
             'reports/reproducibility_artifacts/explain_plan.json',
             'Serializable ExplainPlan contract and trace hash source',
             '2 / appendix',
@@ -191,6 +209,7 @@ def build_payload() -> dict[str, Any]:
         'commands': [
             'make dissertation-check',
             'make reproduce-chapter2',
+            'make ecosystem-evidence',
             'make thesis-practice-tables',
             'make browser-visual-check',
             'make ui-health-check',
