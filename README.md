@@ -98,6 +98,8 @@ make calibrate-observer DATASET=breast_cancer
 make ablation-benchmark DATASET=breast_cancer
 make structure-aware-benchmark DATASET=breast_cancer
 make thesis-practice-tables
+make reproducibility-artifacts
+make dissertation-artifacts
 make dissertation-check
 make ui-health-check
 ```
@@ -463,7 +465,11 @@ make unified-demo
 make full-pipeline
 make figures
 make full-experiments
+make reproducibility-artifacts
+make dissertation-artifacts
 ```
+
+Готовый пакет для вставки в главы собирается в `dissertation_artifacts/`: там лежат PNG/CSV/Markdown для глав 2, 4, 5, приложение, подписи и SHA256-manifest.
 
 Финальная проверка диссертационных примеров:
 

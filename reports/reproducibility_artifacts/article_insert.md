@@ -128,11 +128,40 @@
 
 ## Команды воспроизведения
 
+- `make dissertation-check`
+- `make reproduce-chapter2`
+- `make ecosystem-evidence`
+- `make thesis-practice-tables`
+- `make browser-visual-check`
+- `make ui-health-check`
+- `make structure-aware-benchmark DATASET=wine_risk`
+- `make structure-aware-benchmark DATASET=diabetes_binary`
+- `make reproducibility-artifacts`
 
 ## Артефакты и SHA256
 
 | Артефакт | Глава | SHA256 | Что подтверждает |
 | --- | --- | --- | --- |
+| `configs/explain_plan_chapter2.yaml` | 2 / appendix | `4469dad3fbeeb4f53ad953c24bd4e29a8de0d17d6465fb2c71b2b15a954cacfc` | Fixed chapter 2 ExplainPlan YAML contract used for deterministic hashing |
+| `reports/chapter2/explain_plan_hash.json` | 2 / appendix | `c18bfa69005fd3b56cc3ea73ee2a59596b00486dd2cdd71398dc5eb30b12e7cb` | Validated ExplainPlan SHA256 and required trace field list |
+| `reports/chapter2/sample_113_report.json` | 2 | `4920325789b0e09fc54a9f64f9dd93f0ae5efa82aa57ca74e17903fd97025f33` | Canonical sample_113 report generated from the chapter 2 ExplainPlan contract |
+| `fuzzyxai/ecosystem/registry.json` | 4 | `c4f1269d1532163d65ae133fa0b092e979ae35347c732d8bcf7429fb93ae13bc` | External module registry for chapter 4 ecosystem integration |
+| `evidence/evidence_matrix.csv` | 4 / 5 | `451b719410eca29c0d6ffcdd4d423cb28306be947e7e7af076cc86e4df0eb5b6` | Module evidence matrix with status, fixture, and claim-scope flags |
+| `reports/chapter4/ecosystem_evidence.json` | 4 | `ecbd9e15292878c62c0296fec982b510d814d7982d68469290b15910d156cc04` | Chapter 4 external module evidence summary |
+| `reports/reproducibility_artifacts/explain_plan.json` | 2 / appendix | `d7cdb8f76152c43aec44316fad634fc337273206b26db67ad890697ab38bf524` | Serializable ExplainPlan contract and trace hash source |
+| `reports/chapter2_real_operator_case/breast_cancer_operator_case.json` | 2 | `0d319ff99567c4c8b16969fe22085b6dec1114932875e784f69168b57bd2921d` | sample_113 operator values: mu, alpha, U_model, U_rules, U_trace, u_M, tau |
+| `reports/real_reduction_example/breast_cancer_case.json` | 3 | `ca31cd57c9b9d0ddc683a9d42e2deeee0a316a0f2881af408dbe633bdeeca075` | sample_113 reduction, chi_Auto, chi_R, chi_R_crit, rho, action |
+| `reports/datasets/breast_cancer/summary.json` | 5 | `e938831464094240f0a88389f421fb8b6a3d58a04e237e87758b466dbb4c3a7e` | Breast Cancer model metrics, observer metrics, I_pre/rho quantiles |
+| `reports/datasets/breast_cancer/calibration.json` | 5 | `68118e91c83b2c8f24e5c940bb54dd4adb21620e2734f5eb82ad10ad3dfffc44` | Observer calibration before/after and constrained parameters |
+| `reports/datasets/synthetic_ruptures/baseline_comparison_native.json` | 5 | `fad3e831c07ddb943c21a0069b19b40c12bd0f069049377292621efb6d44df6b` | Native-access safety comparison; baselines do not receive chi_R_crit |
+| `reports/datasets/synthetic_ruptures/baseline_comparison_equal_guardrail.json` | 5 | `5d7ddd1a679e4aeefc8a9f7f728492b68d11eaac550025d21ec3ac4654782f07` | Equal-guardrail sanity check where all methods receive chi_R_crit |
+| `reports/structure_aware_benchmark/breast_cancer.json` | 5 | `dee3b7e6a34a4ae0e11e076d55a39c72d247b565237b08eeda832f255b9827d9` | Structure-aware cases: trace gap, source conflict, context forbidden, high Delta |
+| `reports/structure_aware_benchmark/wine_risk.json` | 5 | `84c321f3a1602b87d7756a67b68bf5b986fa399338f1ba2182ab861e5b759121` | Structure-aware benchmark on real wine rows (non-synthetic improvement check) |
+| `reports/structure_aware_benchmark/diabetes_binary.json` | 5 | `c8b25086a26888c8d2b44832ee01f7fcb94a1f5d1935977337f76c033467951a` | Structure-aware benchmark on real diabetes rows (non-synthetic improvement check) |
+| `reports/datasets/breast_cancer/ablation.json` | 5 | `3a4d678e2890901856badd94348c5dce27cf137231a2d4b68fa304720cba0b54` | Ablation of trace, Delta, chi_R_crit, hierarchy, topos, risk-only threshold |
+| `reports/thesis_practice/thesis_practice_tables.json` | appendix | `fc46650590a0fa891bedae193c34606d6489d6e0fce3d5d9c1d8f4534ebcb5c0` | Word/LaTeX-ready thesis practice table index |
+| `Makefile` | appendix | `19c38a68f6b8817ff787b15ddbee726461fec1769a4ca79911a7073aec236203` | Reproducible command route |
+| `requirements.txt` | appendix | `3202b5309cef65ab6e2ab21ea0f3a659820652d1d944e94dac3df63682a51c57` | Python environment dependencies |
 
 ## Корректная формулировка для текста
 

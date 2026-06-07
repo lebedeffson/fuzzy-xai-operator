@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import csv
 import json
 from pathlib import Path
 
@@ -16,6 +17,7 @@ def run(*, evidence_dir: str | Path = 'evidence', report_dir: str | Path = 'repo
     out.mkdir(parents=True, exist_ok=True)
     json_path = out / 'ecosystem_evidence.json'
     md_path = out / 'ecosystem_evidence.md'
+    csv_path = out / 'ecosystem_evidence.csv'
 
     payload = {
         'status': 'ok',
@@ -30,6 +32,11 @@ def run(*, evidence_dir: str | Path = 'evidence', report_dir: str | Path = 'repo
         ],
     }
     json_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding='utf-8')
+    if matrix:
+        with csv_path.open('w', encoding='utf-8', newline='') as f:
+            writer = csv.DictWriter(f, fieldnames=list(matrix[0].keys()))
+            writer.writeheader()
+            writer.writerows(matrix)
 
     md = [
         '# Chapter 4 Ecosystem Evidence',
@@ -48,7 +55,7 @@ def run(*, evidence_dir: str | Path = 'evidence', report_dir: str | Path = 'repo
         )
     md_path.write_text('\n'.join(md), encoding='utf-8')
 
-    return {**paths, 'json': str(json_path), 'md': str(md_path)}
+    return {**paths, 'json': str(json_path), 'md': str(md_path), 'csv': str(csv_path)}
 
 
 def main() -> None:
@@ -61,4 +68,3 @@ def main() -> None:
 
 if __name__ == '__main__':
     main()
-

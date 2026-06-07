@@ -353,13 +353,13 @@ def build_article_insert(payload: dict[str, Any]) -> str:
         _row(['Dataset', 'full_agreement_ref', 'threshold_agreement_ref', 'agreement_gain', 'full_false_auto_accept', 'threshold_false_auto_accept', 'false_auto_accept_drop']),
         _row(['---', '---:', '---:', '---:', '---:', '---:', '---:']),
     ]
-    for ds_name, payload in (
+    for ds_name, structure_payload in (
         ('breast_cancer', structure),
         ('wine_risk', structure_wine),
         ('diabetes_binary', structure_diabetes),
     ):
-        full = _pick_policy(payload, 'full_observer_calibrated')
-        thr = _pick_policy(payload, 'probability_threshold')
+        full = _pick_policy(structure_payload, 'full_observer_calibrated')
+        thr = _pick_policy(structure_payload, 'probability_threshold')
         if not full or not thr:
             continue
         fa_full = float(full.get('false_auto_accept_rate', 0.0))
@@ -548,13 +548,13 @@ def build_chapter5_ready(payload: dict[str, Any]) -> str:
         _row(['Dataset', 'full_agreement_ref', 'threshold_agreement_ref', 'agreement_gain', 'full_false_auto_accept', 'threshold_false_auto_accept', 'false_auto_accept_drop']),
         _row(['---', '---:', '---:', '---:', '---:', '---:', '---:']),
     ]
-    for ds_name, payload in (
+    for ds_name, structure_payload in (
         ('breast_cancer', structure),
         ('wine_risk', structure_wine),
         ('diabetes_binary', structure_diabetes),
     ):
-        full = _pick_policy(payload, 'full_observer_calibrated')
-        thr = _pick_policy(payload, 'probability_threshold')
+        full = _pick_policy(structure_payload, 'full_observer_calibrated')
+        thr = _pick_policy(structure_payload, 'probability_threshold')
         if not full or not thr:
             continue
         fa_full = float(full.get('false_auto_accept_rate', 0.0))

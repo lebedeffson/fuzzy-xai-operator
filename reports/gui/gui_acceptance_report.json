@@ -1,0 +1,18 @@
+{
+  "checked_at": "manual-fill-after-review",
+  "commit": "use git rev-parse HEAD",
+  "browser_visual_check": "PASS",
+  "ui_health_check": "PASS",
+  "screenshots": {
+    "10_evidence_contract.png": true,
+    "11_ecosystem_registry.png": true,
+    "12_real_rows_improvements.png": true
+  },
+  "manual_visual_score": {
+    "readability": 0,
+    "layout": 0,
+    "navigation": 0,
+    "dissertation_readiness": 0
+  },
+  "manual_notes": []
+}

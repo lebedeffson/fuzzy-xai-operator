@@ -1,0 +1,6 @@
+scenario,registry_id,module_name,adapter_class,source_repo,evidence_level,status,claim_scope,chapter_section
+HYBRID-XIRIS biometric pipeline,hybrid_xiris,HYBRID-XIRIS biometric pipeline,medical_image_to_explanation,https://github.com/lebedeffson/hybrid-xiris-biometric,repository-output-level,real-output-compatible,"adapter compatibility and evidence routing, not local model retraining",5.x
+Deep Neuro-Fuzzy / Routed KAFN,deep_neuro_fuzzy_kafn,Deep Neuro-Fuzzy / Routed KAFN,tabular_to_explanation,https://github.com/lebedeffson/deep-neuro-fuzzy,repository-output-level,fixture-certified,fixed fixture adapter run with source provenance,5.x
+Fuzzy Attention Networks,fan_multimodal,Fuzzy Attention Networks,tabular_to_explanation,https://github.com/lebedeffson/FuzzyAttentionNetworks,fixture-level,fixture-certified,concept-level fuzzy attention scenario,5.x
+EAAR attribution regularization,eaar_regularization,EAAR attribution regularization,planned,https://github.com/lebedeffson/eaar-regularization,planned,planned,"registered future adapter, excluded from quantitative claims",appendix/future work
+Bonner SHAP reconstruction,neutron_shap_reconstruction,Bonner SHAP reconstruction,planned,https://github.com/lebedeffson/bonner-shap-reconstruction,planned,planned,"registered future adapter, excluded from quantitative claims",appendix/future work

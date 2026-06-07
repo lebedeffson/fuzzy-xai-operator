@@ -39,5 +39,5 @@
 | `reports/structure_aware_benchmark/diabetes_binary.json` | `True` | `c8b25086a268` | 5 | Structure-aware benchmark on real diabetes rows (non-synthetic improvement check) | `make structure-aware-benchmark DATASET=diabetes_binary` |
 | `reports/datasets/breast_cancer/ablation.json` | `True` | `3a4d678e2890` | 5 | Ablation of trace, Delta, chi_R_crit, hierarchy, topos, risk-only threshold | `make ablation-benchmark DATASET=breast_cancer` |
 | `reports/thesis_practice/thesis_practice_tables.json` | `True` | `fc46650590a0` | appendix | Word/LaTeX-ready thesis practice table index | `make thesis-practice-tables` |
-| `Makefile` | `True` | `3f3bc20fe4c1` | appendix | Reproducible command route | `` |
+| `Makefile` | `True` | `19c38a68f6b8` | appendix | Reproducible command route | `` |
 | `requirements.txt` | `True` | `3202b5309cef` | appendix | Python environment dependencies | `` |

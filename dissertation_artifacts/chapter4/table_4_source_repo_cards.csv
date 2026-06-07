@@ -1,0 +1,6 @@
+registry_id,title,source_repo,source_commit,source_artifact,claim_scope
+hybrid_xiris,HYBRID-XIRIS biometric pipeline,https://github.com/lebedeffson/hybrid-xiris-biometric,external-not-pinned,results / full_pipeline.py / xai_features_improved.py,"adapter compatibility and evidence routing, not local model retraining"
+deep_neuro_fuzzy_kafn,Deep Neuro-Fuzzy / Routed KAFN,https://github.com/lebedeffson/deep-neuro-fuzzy,external-not-pinned,docs/artifacts / paper run outputs,fixed fixture adapter run with source provenance
+fan_multimodal,Fuzzy Attention Networks,https://github.com/lebedeffson/FuzzyAttentionNetworks,external-not-pinned,Streamlit demo / fuzzy attention outputs,concept-level fuzzy attention scenario
+eaar_regularization,EAAR attribution regularization,https://github.com/lebedeffson/eaar-regularization,external-not-pinned,planned report artifact,"registered future adapter, excluded from quantitative claims"
+neutron_shap_reconstruction,Bonner SHAP reconstruction,https://github.com/lebedeffson/bonner-shap-reconstruction,external-not-pinned,planned report artifact,"registered future adapter, excluded from quantitative claims"

@@ -1,0 +1,133 @@
+{
+  "status": "ok",
+  "files": [
+    {
+      "path": "appendix/app_browser_visual_check_report.md",
+      "sha256": "14f7985731f5b42360e60828038f5b7e51a31042a0439f63785f71c56dfa61f3"
+    },
+    {
+      "path": "appendix/app_evidence_matrix_full.csv",
+      "sha256": "451b719410eca29c0d6ffcdd4d423cb28306be947e7e7af076cc86e4df0eb5b6"
+    },
+    {
+      "path": "appendix/app_gui_screenshots/10_evidence_contract.png",
+      "sha256": "d0dd86a568fed4589d8efdfb536062d80dace0af3038e1cd04e1982826fb50d9"
+    },
+    {
+      "path": "appendix/app_gui_screenshots/11_ecosystem_registry.png",
+      "sha256": "9d321ae2fb9cd6cacfdc976e139cc97e19cdeb9dc4aee32c473667f6e519fce5"
+    },
+    {
+      "path": "appendix/app_gui_screenshots/12_real_rows_improvements.png",
+      "sha256": "9d321ae2fb9cd6cacfdc976e139cc97e19cdeb9dc4aee32c473667f6e519fce5"
+    },
+    {
+      "path": "appendix/app_registry_snapshot_full.json",
+      "sha256": "95dbfb3a73e8a41e969dc982477c2e9b8ab7a9416768ad31ef40d869419446b7"
+    },
+    {
+      "path": "appendix/app_reproduction_index.md",
+      "sha256": "006dced18ebc347c7a3285d0b5f2d2e99c209a021be90fafb08f65f2234573a0"
+    },
+    {
+      "path": "captions.md",
+      "sha256": "17eaed97dbf8e520aff49a22207407e7ffb7f729da8abe538a697f6496c0ea95"
+    },
+    {
+      "path": "chapter2/fig_2_explainplan_contract.png",
+      "sha256": "9f1e29e1ba7d3ac4109e9e883067631df661e4935d39cbe835cbc5f3488c2ec2"
+    },
+    {
+      "path": "chapter2/fig_2_sample113_membership.png",
+      "sha256": "48ef83ae4b7731af39aba231803904f652f02f57199e6db4b6dd084e71686535"
+    },
+    {
+      "path": "chapter2/fig_2_sample113_uncertainty.png",
+      "sha256": "daf3f5bccf44068349f9594625dfc1c61c1457783e8683c8b8fa2f6bdcbee137"
+    },
+    {
+      "path": "chapter2/table_2_explainplan_hash.csv",
+      "sha256": "c50e95d88e470c66a6c58c5568a130a78879694d9c6c6be54089953d66bc71fc"
+    },
+    {
+      "path": "chapter2/table_2_sample113_values.csv",
+      "sha256": "b15075eaa2fcc8f747f06486560d169b8142da4c1bae36f3dd530b173b3d6b70"
+    },
+    {
+      "path": "chapter2/text_2_reproducibility_insert.md",
+      "sha256": "14372f5808210cc62186488501e3309426c59e5a36779b490cc42cd808c06f70"
+    },
+    {
+      "path": "chapter4/fig_4_ecosystem_registry.png",
+      "sha256": "9d321ae2fb9cd6cacfdc976e139cc97e19cdeb9dc4aee32c473667f6e519fce5"
+    },
+    {
+      "path": "chapter4/fig_4_evidence_contract.png",
+      "sha256": "d0dd86a568fed4589d8efdfb536062d80dace0af3038e1cd04e1982826fb50d9"
+    },
+    {
+      "path": "chapter4/fig_4_evidence_matrix_heatmap.png",
+      "sha256": "f7369d13f146e808f5e260399c8cc7f9b78c06543d1eace2fc771cfd990fa249"
+    },
+    {
+      "path": "chapter4/fig_4_real_rows_improvements.png",
+      "sha256": "9d321ae2fb9cd6cacfdc976e139cc97e19cdeb9dc4aee32c473667f6e519fce5"
+    },
+    {
+      "path": "chapter4/fig_4_registry_status_counts.png",
+      "sha256": "d004b7c814a043e3c61d41b918cb56b93b5a8c33261e8ffdc21219a54bda75da"
+    },
+    {
+      "path": "chapter4/table_4_evidence_matrix.csv",
+      "sha256": "99805a40b4b3ab2a40a58923b0be16e95c4948d4c5ee4a9f0a6674377c9daa69"
+    },
+    {
+      "path": "chapter4/table_4_registry_snapshot.csv",
+      "sha256": "451b719410eca29c0d6ffcdd4d423cb28306be947e7e7af076cc86e4df0eb5b6"
+    },
+    {
+      "path": "chapter4/table_4_source_repo_cards.csv",
+      "sha256": "406148f1296be1c5f996d90200a6f73725d655cf82d5f2de73c5eaadc7f616af"
+    },
+    {
+      "path": "chapter4/text_4_evidence_pack_insert.md",
+      "sha256": "74030b588eac2c8bc1a2c35bb6d5588d3ce6c061a8da4f6abb71b6265638a7f9"
+    },
+    {
+      "path": "chapter4/text_4_gui_insert.md",
+      "sha256": "1784b58fa0af761cb0606972221c371bc6569dfa9cd577dfd324ad26649300e7"
+    },
+    {
+      "path": "chapter5/fig_5_module_channel_coverage.png",
+      "sha256": "eed71e813e3668ab3b77af38d3b84c2bf2f11ac258cf44dbc4cca030967f5150"
+    },
+    {
+      "path": "chapter5/fig_5_scenario_action_routes.png",
+      "sha256": "2631a872f94c4c703b2afcce52242417604dd469d92beb15203c8f4944bc1405"
+    },
+    {
+      "path": "chapter5/fig_5_scenario_status_overview.png",
+      "sha256": "280c0c5f6fd3c46ae1d15baa7cb5aa0591601b9991b59531f0ea5e675e1ed716"
+    },
+    {
+      "path": "chapter5/table_5_module_channel_coverage.csv",
+      "sha256": "22b2a16c2b5cdab2a49bed6115550f4fc232a5b56b3e628dc53f561bba43f9c8"
+    },
+    {
+      "path": "chapter5/table_5_registry_scenarios.csv",
+      "sha256": "2248f5e4548fe8c817c346a7f933319c52f2504f502fd9de668b22cf9ff26c9e"
+    },
+    {
+      "path": "chapter5/table_5_scenario_run_summary.csv",
+      "sha256": "ddbd1f2002b53c122453b5c928249a5dc6416f2fce556e609d443f57cf06b5dd"
+    },
+    {
+      "path": "chapter5/text_5_scenario_run_insert.md",
+      "sha256": "d0b3a82f00ed696361c1d61d9e0519af04bc381174da77b8eddd65a1b83cd3f9"
+    },
+    {
+      "path": "insertion_plan.md",
+      "sha256": "489015be7d1c1ff68eca53afdece9b10bda941d61f3770c3e15b716db4af2f1b"
+    }
+  ]
+}

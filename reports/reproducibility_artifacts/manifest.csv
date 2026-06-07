@@ -17,5 +17,5 @@ reports/structure_aware_benchmark/wine_risk.json,True,84c321f3a1602b87d7756a67b6
 reports/structure_aware_benchmark/diabetes_binary.json,True,c8b25086a26888c8d2b44832ee01f7fcb94a1f5d1935977337f76c033467951a,5,Structure-aware benchmark on real diabetes rows (non-synthetic improvement check),make structure-aware-benchmark DATASET=diabetes_binary
 reports/datasets/breast_cancer/ablation.json,True,3a4d678e2890901856badd94348c5dce27cf137231a2d4b68fa304720cba0b54,5,"Ablation of trace, Delta, chi_R_crit, hierarchy, topos, risk-only threshold",make ablation-benchmark DATASET=breast_cancer
 reports/thesis_practice/thesis_practice_tables.json,True,fc46650590a0fa891bedae193c34606d6489d6e0fce3d5d9c1d8f4534ebcb5c0,appendix,Word/LaTeX-ready thesis practice table index,make thesis-practice-tables
-Makefile,True,3f3bc20fe4c1238ce6f962954e25f074d8a56468d9682056aba56ecaf451617e,appendix,Reproducible command route,
+Makefile,True,19c38a68f6b8817ff787b15ddbee726461fec1769a4ca79911a7073aec236203,appendix,Reproducible command route,
 requirements.txt,True,3202b5309cef65ab6e2ab21ea0f3a659820652d1d944e94dac3df63682a51c57,appendix,Python environment dependencies,
