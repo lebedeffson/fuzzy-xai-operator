@@ -40,5 +40,7 @@
   "gamma_model_to_risk": 0.3514150457029992,
   "chi_R": 1,
   "chi_R_crit": 1,
-  "action": "block"
+  "action": "block",
+  "explain_plan_hash": "b3c3fc83fbba3f862e06470ddd1fb9ae77bb57e39c14575534275049e669209e",
+  "explain_plan_path": "configs/explain_plan_chapter2.yaml"
 }

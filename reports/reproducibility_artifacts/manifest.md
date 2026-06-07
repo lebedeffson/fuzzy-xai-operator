@@ -1,13 +1,14 @@
 # Reproducibility Artifacts
 
 - status: `ok`
-- python: `3.14.4`
-- platform: `Linux-7.0.3-arch1-2-x86_64-with-glibc2.43`
+- python: `3.14.5`
+- platform: `Linux-7.0.11-arch1-1-x86_64-with-glibc2.43`
 - ExplainPlan SHA256: `dc4460c6d7db9df9d3e95dcad6119c99d9c99093911c883d1186573d0cb05473`
 
 ## Commands
 
 - `make dissertation-check`
+- `make reproduce-chapter2`
 - `make thesis-practice-tables`
 - `make browser-visual-check`
 - `make ui-health-check`
@@ -19,8 +20,11 @@
 
 | artifact | exists | sha256 | chapter | confirms | command |
 | --- | --- | --- | --- | --- | --- |
+| `configs/explain_plan_chapter2.yaml` | `True` | `4469dad3fbee` | 2 / appendix | Fixed chapter 2 ExplainPlan YAML contract used for deterministic hashing | `make reproduce-chapter2` |
+| `reports/chapter2/explain_plan_hash.json` | `True` | `c18bfa69005f` | 2 / appendix | Validated ExplainPlan SHA256 and required trace field list | `make reproduce-chapter2` |
+| `reports/chapter2/sample_113_report.json` | `True` | `4920325789b0` | 2 | Canonical sample_113 report generated from the chapter 2 ExplainPlan contract | `make reproduce-chapter2` |
 | `reports/reproducibility_artifacts/explain_plan.json` | `True` | `d7cdb8f76152` | 2 / appendix | Serializable ExplainPlan contract and trace hash source | `make reproducibility-artifacts` |
-| `reports/chapter2_real_operator_case/breast_cancer_operator_case.json` | `True` | `618947c60c12` | 2 | sample_113 operator values: mu, alpha, U_model, U_rules, U_trace, u_M, tau | `make chapter2-real-operator-case` |
+| `reports/chapter2_real_operator_case/breast_cancer_operator_case.json` | `True` | `0d319ff99567` | 2 | sample_113 operator values: mu, alpha, U_model, U_rules, U_trace, u_M, tau | `make chapter2-real-operator-case` |
 | `reports/real_reduction_example/breast_cancer_case.json` | `True` | `ca31cd57c9b9` | 3 | sample_113 reduction, chi_Auto, chi_R, chi_R_crit, rho, action | `make real-reduction-example` |
 | `reports/datasets/breast_cancer/summary.json` | `True` | `e93883146409` | 5 | Breast Cancer model metrics, observer metrics, I_pre/rho quantiles | `make benchmark-dataset DATASET=breast_cancer` |
 | `reports/datasets/breast_cancer/calibration.json` | `True` | `68118e91c83b` | 5 | Observer calibration before/after and constrained parameters | `make calibrate-observer DATASET=breast_cancer` |
@@ -31,5 +35,5 @@
 | `reports/structure_aware_benchmark/diabetes_binary.json` | `True` | `c8b25086a268` | 5 | Structure-aware benchmark on real diabetes rows (non-synthetic improvement check) | `make structure-aware-benchmark DATASET=diabetes_binary` |
 | `reports/datasets/breast_cancer/ablation.json` | `True` | `3a4d678e2890` | 5 | Ablation of trace, Delta, chi_R_crit, hierarchy, topos, risk-only threshold | `make ablation-benchmark DATASET=breast_cancer` |
 | `reports/thesis_practice/thesis_practice_tables.json` | `True` | `fc46650590a0` | appendix | Word/LaTeX-ready thesis practice table index | `make thesis-practice-tables` |
-| `Makefile` | `True` | `3c2470dcb4de` | appendix | Reproducible command route | `` |
-| `requirements.txt` | `True` | `4d381eabe377` | appendix | Python environment dependencies | `` |
+| `Makefile` | `True` | `83b4d2a41559` | appendix | Reproducible command route | `` |
+| `requirements.txt` | `True` | `3202b5309cef` | appendix | Python environment dependencies | `` |

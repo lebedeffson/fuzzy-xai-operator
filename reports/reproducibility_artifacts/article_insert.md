@@ -6,9 +6,10 @@
 
 | Параметр | Значение |
 | --- | --- |
-| Python | `3.14.4` |
-| Platform | `Linux-7.0.3-arch1-2-x86_64-with-glibc2.43` |
+| Python | `3.14.5` |
+| Platform | `Linux-7.0.11-arch1-1-x86_64-with-glibc2.43` |
 | ExplainPlan SHA256 | `dc4460c6d7db9df9d3e95dcad6119c99d9c99093911c883d1186573d0cb05473` |
+| Chapter 2 YAML ExplainPlan SHA256 | `b3c3fc83fbba3f862e06470ddd1fb9ae77bb57e39c14575534275049e669209e` |
 | Mode | `audit` |
 | Risk weights | `0.7, 0.05, 0.05, 0.05, 0.15` |
 | Thresholds | `0.1, 0.25, 0.5, 0.75` |

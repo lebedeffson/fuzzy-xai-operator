@@ -12,7 +12,7 @@
 - U_rules: `0.296423`
 - U_trace: `0.020000`
 - u_M: `0.359708`
-- tau_fields: `{'id': 'sample_113', 'version': 'rf_breast_cancer_v1', 'timestamp': '2026-05-31T08:55:31.202649+00:00', 'source': 'sklearn_breast_cancer', 'checksum': 'sample_113:rf_breast_cancer_v1'}`
+- tau_fields: `{'id': 'sample_113', 'version': 'rf_breast_cancer_v1', 'timestamp': 'seeded-reproduction', 'source': 'sklearn_breast_cancer', 'checksum': 'sample_113:rf_breast_cancer_v1', 'params': {'seed': 42, 'target_probability': 0.72}, 'hash': 'sample_113:rf_breast_cancer_v1:chapter2'}`
 - I_pre: `0.674324`
 - gamma_model_to_risk: `0.3514150457029992`
 - chi_R: `1`

@@ -75,6 +75,24 @@ def build_payload() -> dict[str, Any]:
 
     artifacts = [
         _artifact(
+            'configs/explain_plan_chapter2.yaml',
+            'Fixed chapter 2 ExplainPlan YAML contract used for deterministic hashing',
+            '2 / appendix',
+            'make reproduce-chapter2',
+        ),
+        _artifact(
+            'reports/chapter2/explain_plan_hash.json',
+            'Validated ExplainPlan SHA256 and required trace field list',
+            '2 / appendix',
+            'make reproduce-chapter2',
+        ),
+        _artifact(
+            'reports/chapter2/sample_113_report.json',
+            'Canonical sample_113 report generated from the chapter 2 ExplainPlan contract',
+            '2',
+            'make reproduce-chapter2',
+        ),
+        _artifact(
             'reports/reproducibility_artifacts/explain_plan.json',
             'Serializable ExplainPlan contract and trace hash source',
             '2 / appendix',
@@ -172,18 +190,20 @@ def build_payload() -> dict[str, Any]:
         },
         'commands': [
             'make dissertation-check',
+            'make reproduce-chapter2',
             'make thesis-practice-tables',
-        'make browser-visual-check',
-        'make ui-health-check',
-        'make structure-aware-benchmark DATASET=wine_risk',
-        'make structure-aware-benchmark DATASET=diabetes_binary',
-        'make reproducibility-artifacts',
-    ],
+            'make browser-visual-check',
+            'make ui-health-check',
+            'make structure-aware-benchmark DATASET=wine_risk',
+            'make structure-aware-benchmark DATASET=diabetes_binary',
+            'make reproducibility-artifacts',
+        ],
         'artifacts': artifacts,
     }
 
 
 def build_article_insert(payload: dict[str, Any]) -> str:
+    chapter2_plan = _load_json_rel('reports/chapter2/explain_plan_hash.json')
     operator = _load_json_rel('reports/chapter2_real_operator_case/breast_cancer_operator_case.json')
     reduction = _load_json_rel('reports/real_reduction_example/breast_cancer_case.json')
     bcw = _load_json_rel('reports/datasets/breast_cancer/summary.json')
@@ -214,6 +234,7 @@ def build_article_insert(payload: dict[str, Any]) -> str:
         _row(['Python', f"`{payload['environment']['python']}`"]),
         _row(['Platform', f"`{payload['environment']['platform']}`"]),
         _row(['ExplainPlan SHA256', f"`{payload['explain_plan']['canonical_sha256']}`"]),
+        _row(['Chapter 2 YAML ExplainPlan SHA256', f"`{chapter2_plan.get('sha256', 'N/A')}`"]),
         _row(['Mode', f"`{payload['explain_plan']['canonical_json']['mode']}`"]),
         _row(['Risk weights', f"`{payload['explain_plan']['canonical_json']['w_p']}, {payload['explain_plan']['canonical_json']['w_u']}, {payload['explain_plan']['canonical_json']['w_I']}, {payload['explain_plan']['canonical_json']['w_Delta']}, {payload['explain_plan']['canonical_json']['w_R']}`"]),
         _row(['Thresholds', f"`{payload['explain_plan']['canonical_json']['theta_1']}, {payload['explain_plan']['canonical_json']['theta_2']}, {payload['explain_plan']['canonical_json']['theta_3']}, {payload['explain_plan']['canonical_json']['theta_4']}`"]),

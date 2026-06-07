@@ -1,8 +1,8 @@
 {
   "status": "ok",
   "environment": {
-    "python": "3.14.4",
-    "platform": "Linux-7.0.3-arch1-2-x86_64-with-glibc2.43"
+    "python": "3.14.5",
+    "platform": "Linux-7.0.11-arch1-1-x86_64-with-glibc2.43"
   },
   "explain_plan": {
     "canonical_sha256": "dc4460c6d7db9df9d3e95dcad6119c99d9c99093911c883d1186573d0cb05473",
@@ -32,6 +32,7 @@
   },
   "commands": [
     "make dissertation-check",
+    "make reproduce-chapter2",
     "make thesis-practice-tables",
     "make browser-visual-check",
     "make ui-health-check",
@@ -40,6 +41,30 @@
     "make reproducibility-artifacts"
   ],
   "artifacts": [
+    {
+      "path": "configs/explain_plan_chapter2.yaml",
+      "exists": true,
+      "sha256": "4469dad3fbeeb4f53ad953c24bd4e29a8de0d17d6465fb2c71b2b15a954cacfc",
+      "chapter": "2 / appendix",
+      "confirms": "Fixed chapter 2 ExplainPlan YAML contract used for deterministic hashing",
+      "command": "make reproduce-chapter2"
+    },
+    {
+      "path": "reports/chapter2/explain_plan_hash.json",
+      "exists": true,
+      "sha256": "c18bfa69005fd3b56cc3ea73ee2a59596b00486dd2cdd71398dc5eb30b12e7cb",
+      "chapter": "2 / appendix",
+      "confirms": "Validated ExplainPlan SHA256 and required trace field list",
+      "command": "make reproduce-chapter2"
+    },
+    {
+      "path": "reports/chapter2/sample_113_report.json",
+      "exists": true,
+      "sha256": "4920325789b0e09fc54a9f64f9dd93f0ae5efa82aa57ca74e17903fd97025f33",
+      "chapter": "2",
+      "confirms": "Canonical sample_113 report generated from the chapter 2 ExplainPlan contract",
+      "command": "make reproduce-chapter2"
+    },
     {
       "path": "reports/reproducibility_artifacts/explain_plan.json",
       "exists": true,
@@ -51,7 +76,7 @@
     {
       "path": "reports/chapter2_real_operator_case/breast_cancer_operator_case.json",
       "exists": true,
-      "sha256": "618947c60c12c36924b49f2d282fa46c0cfe2c9b6ce808a599b241921b4070ab",
+      "sha256": "0d319ff99567c4c8b16969fe22085b6dec1114932875e784f69168b57bd2921d",
       "chapter": "2",
       "confirms": "sample_113 operator values: mu, alpha, U_model, U_rules, U_trace, u_M, tau",
       "command": "make chapter2-real-operator-case"
@@ -139,7 +164,7 @@
     {
       "path": "Makefile",
       "exists": true,
-      "sha256": "3c2470dcb4deadf44410f4f0bd7c8b109bae2be9f6c7a10e5cc9e0da7b26aff3",
+      "sha256": "83b4d2a41559b290954f1b949cf042329ff7d85fcf2ba43eab0a3d59b1d63ede",
       "chapter": "appendix",
       "confirms": "Reproducible command route",
       "command": ""
@@ -147,7 +172,7 @@
     {
       "path": "requirements.txt",
       "exists": true,
-      "sha256": "4d381eabe3772f7748775788e6b151d37d00e83e3cbca3c6689a0806292907cf",
+      "sha256": "3202b5309cef65ab6e2ab21ea0f3a659820652d1d944e94dac3df63682a51c57",
       "chapter": "appendix",
       "confirms": "Python environment dependencies",
       "command": ""

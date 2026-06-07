@@ -1,0 +1,12 @@
+{
+  "id": "sample_113",
+  "version": "rf_breast_cancer_v1",
+  "timestamp": "seeded-reproduction",
+  "source": "sklearn_breast_cancer",
+  "checksum": "sample_113:rf_breast_cancer_v1",
+  "params": {
+    "seed": 42,
+    "target_probability": 0.72
+  },
+  "hash": "sample_113:rf_breast_cancer_v1:chapter2"
+}

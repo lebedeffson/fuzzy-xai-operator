@@ -65,9 +65,11 @@ def generate_case(*, out_dir: str | Path = 'reports/chapter2_real_operator_case'
         'tau_fields': {
             'id': exp_obj.trace.id,
             'version': exp_obj.trace.version,
-            'timestamp': exp_obj.trace.timestamp,
+            'timestamp': 'seeded-reproduction',
             'source': exp_obj.trace.source,
             'checksum': exp_obj.trace.checksum,
+            'params': {'seed': 42, 'target_probability': target_probability},
+            'hash': f'{exp_obj.trace.id}:{exp_obj.trace.version}:chapter2',
         },
         'I_pre': i_pre,
         'gamma_model_to_risk': out.get('gamma_model_risk'),
