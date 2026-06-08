@@ -11,15 +11,15 @@
     },
     {
       "path": "appendix/app_gui_screenshots/10_evidence_contract.png",
-      "sha256": "fea0ffa3265e8896bbfcb99e5a993044043ee13f53271b892121a8514b49c71f"
+      "sha256": "a31d64d73d247f33817a0276d884e34523d6a38a6daae1ba4159811b1a28e6a8"
     },
     {
       "path": "appendix/app_gui_screenshots/11_ecosystem_registry.png",
-      "sha256": "58df5d10c63f48df599a6612de58c95e26c8e775da5b783a226e1fe14ebec190"
+      "sha256": "6d41057b27fd7bc2d26a1cfcff1a8bf871162e92b8c8955b0068f8eef9b0d749"
     },
     {
       "path": "appendix/app_gui_screenshots/12_real_rows_improvements.png",
-      "sha256": "92d6a3cbdf5ded89dff16c7339a8ec5e7e91f1f12aac1d9a1be329318cd1cb85"
+      "sha256": "938ab7126c1dd4fbf3156e9c067c89d90fef7f7e1ef452d8f75f15963dba59f2"
     },
     {
       "path": "appendix/app_registry_snapshot_full.json",
@@ -34,6 +34,14 @@
       "sha256": "17eaed97dbf8e520aff49a22207407e7ffb7f729da8abe538a697f6496c0ea95"
     },
     {
+      "path": "chapter2/fig_2_calibration_constants.png",
+      "sha256": "fe4ac72b781e8d57eec8af5536b72fdb6f38b4d2a46436e10be5f4ca21336bda"
+    },
+    {
+      "path": "chapter2/fig_2_equal_raw_structure_comparison.png",
+      "sha256": "91a6794246f3bb7bed5051b593112cceb0bf25b1eba594e46e4dc0806b27e92f"
+    },
+    {
       "path": "chapter2/fig_2_explainplan_contract.png",
       "sha256": "9f1e29e1ba7d3ac4109e9e883067631df661e4935d39cbe835cbc5f3488c2ec2"
     },
@@ -46,6 +54,14 @@
       "sha256": "daf3f5bccf44068349f9594625dfc1c61c1457783e8683c8b8fa2f6bdcbee137"
     },
     {
+      "path": "chapter2/table_2_calibration_constants.csv",
+      "sha256": "5ae7af763efb982ca16108014e443c649a9bca3363f0b7a4e8c8142b88f150ce"
+    },
+    {
+      "path": "chapter2/table_2_equal_raw_structure_summary.csv",
+      "sha256": "768da4928dc99f3cdf265f67c8443f30724a2d9f7ef428137148fc2af292706b"
+    },
+    {
       "path": "chapter2/table_2_explainplan_hash.csv",
       "sha256": "c50e95d88e470c66a6c58c5568a130a78879694d9c6c6be54089953d66bc71fc"
     },
@@ -54,16 +70,32 @@
       "sha256": "b15075eaa2fcc8f747f06486560d169b8142da4c1bae36f3dd530b173b3d6b70"
     },
     {
+      "path": "chapter2/text_2_10_insert.md",
+      "sha256": "5c1e953dc01f44daad56a97eb43b333f3e059f93b246582042a6d6d4031ce462"
+    },
+    {
       "path": "chapter2/text_2_reproducibility_insert.md",
       "sha256": "14372f5808210cc62186488501e3309426c59e5a36779b490cc42cd808c06f70"
     },
     {
+      "path": "chapter3/table_3_dataset_roles_summary.csv",
+      "sha256": "e677dd7743b092631a81420c860f9c8e2b45d128cb8f86bda6ad9b3b3f4ea4e2"
+    },
+    {
+      "path": "chapter3/text_3_dataset_roles_summary.md",
+      "sha256": "447a55818e2866e340d317964f4b7270e1e5c46c063399b4d440208409ba877b"
+    },
+    {
+      "path": "chapter3/text_3_safety_limitation_insert.md",
+      "sha256": "8dda99a8b0e28a8b193f32f30b1a4f12b32c1dbc946d334f01b9bb888039769f"
+    },
+    {
       "path": "chapter4/fig_4_ecosystem_registry.png",
-      "sha256": "58df5d10c63f48df599a6612de58c95e26c8e775da5b783a226e1fe14ebec190"
+      "sha256": "6d41057b27fd7bc2d26a1cfcff1a8bf871162e92b8c8955b0068f8eef9b0d749"
     },
     {
       "path": "chapter4/fig_4_evidence_contract.png",
-      "sha256": "fea0ffa3265e8896bbfcb99e5a993044043ee13f53271b892121a8514b49c71f"
+      "sha256": "a31d64d73d247f33817a0276d884e34523d6a38a6daae1ba4159811b1a28e6a8"
     },
     {
       "path": "chapter4/fig_4_evidence_matrix_heatmap.png",
@@ -71,7 +103,7 @@
     },
     {
       "path": "chapter4/fig_4_real_rows_improvements.png",
-      "sha256": "92d6a3cbdf5ded89dff16c7339a8ec5e7e91f1f12aac1d9a1be329318cd1cb85"
+      "sha256": "938ab7126c1dd4fbf3156e9c067c89d90fef7f7e1ef452d8f75f15963dba59f2"
     },
     {
       "path": "chapter4/fig_4_registry_status_counts.png",
@@ -118,6 +150,10 @@
       "sha256": "78517aff0aa5858ed5d3496d8cd4946cd9b89ad9af879256def1911d579ccde6"
     },
     {
+      "path": "chapter5/table_5_scenario_quantitative_summary.csv",
+      "sha256": "071e404b1ed62341df8c68196bc4ec713bbc05e9db9689227626c856ec15f39a"
+    },
+    {
       "path": "chapter5/table_5_scenario_run_summary.csv",
       "sha256": "ac45fbdc60aa8c3c0f4666879183dac84d82d0695a583ee8577bacf060db2723"
     },
@@ -126,8 +162,56 @@
       "sha256": "d0b3a82f00ed696361c1d61d9e0519af04bc381174da77b8eddd65a1b83cd3f9"
     },
     {
+      "path": "diagram_specs/chapter2/fig_2_1_operator.json",
+      "sha256": "b1115136d2474dde086dad43c3b26f56acfda3f5788754a87716d8a8c8709897"
+    },
+    {
+      "path": "diagram_specs/chapter2/fig_2_4_composition.json",
+      "sha256": "f22cd34e44ecacd250bb2da54d413b0db4a7dc8b8c9c42a95c3a66516dbcc48b"
+    },
+    {
+      "path": "diagram_specs/chapter3/fig_3_2_hierarchy.json",
+      "sha256": "ed91d008d2088d0e21df9285c13f67662d7054bc8f70de7583aa74990d2cb558"
+    },
+    {
+      "path": "diagram_specs/chapter3/fig_3_3_reduction.json",
+      "sha256": "9de2bdae869d286d8b3576e93680598212a294f0244f8fe9c519f75ad0402ae0"
+    },
+    {
+      "path": "diagram_specs/chapter3/fig_3_4_route.json",
+      "sha256": "0610c9bcb457ba3a7da51e98172092f03bc71e502fcbdc59c2e7cb4de6c39a81"
+    },
+    {
+      "path": "diagram_specs/chapter3/fig_3_8_chi_auto_sample113.json",
+      "sha256": "806701e395f90f151261204ab21e027ccad8dd7dad26ae6f3a405dcdbbb5ef52"
+    },
+    {
+      "path": "diagram_specs/chapter4/fig_4_1_open_interfaces.json",
+      "sha256": "3d622999efd57eeebf1405f058b85daa6eaf3d2858a4ee286d8c8244d117ced0"
+    },
+    {
+      "path": "diagram_specs/chapter5/fig_5_1_general_scenario_route.json",
+      "sha256": "d8d91d336e9a78d4fbaad5e8bd54a34e2419afab7e18b9870123ef8c5a4becf5"
+    },
+    {
+      "path": "diagram_specs/chapter5/fig_5_2_hybrid_xiris_route.json",
+      "sha256": "d0a58f3f10abe7ac0fbfafded7bdd234f37eea262116ebbfe944cf13825236e6"
+    },
+    {
+      "path": "figure_captions_final.md",
+      "sha256": "fb0105886436970a2423f21b6511cbccde1dddbd3ca8543c32bbd9c6892bc3c2"
+    },
+    {
+      "path": "figure_to_text_map.csv",
+      "sha256": "ca5796175ac91134ee32cf1c808ed1161460e89e7418ce0c280e49d5edf37aef"
+    },
+    {
       "path": "insertion_plan.md",
       "sha256": "489015be7d1c1ff68eca53afdece9b10bda941d61f3770c3e15b716db4af2f1b"
+    },
+    {
+      "path": "retained_figures_manifest.csv",
+      "sha256": "c9facbaaa18296907980c15c675c8b7fd73516d0428e65d13771dcff13940e46"
     }
   ]
 }

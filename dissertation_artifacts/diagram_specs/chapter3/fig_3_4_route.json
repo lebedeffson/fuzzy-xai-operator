@@ -1,0 +1,74 @@
+{
+  "figure_id": "fig_3_4",
+  "title": "Risk-aware observer route",
+  "nodes": [
+    {
+      "id": "DatasetCase",
+      "label": "DatasetCase"
+    },
+    {
+      "id": "Prediction",
+      "label": "Prediction"
+    },
+    {
+      "id": "E_k",
+      "label": "E_k"
+    },
+    {
+      "id": "A_k^F",
+      "label": "A_k^F"
+    },
+    {
+      "id": "CertifiedPath/Rupture",
+      "label": "CertifiedPath/Rupture"
+    },
+    {
+      "id": "chi_Auto",
+      "label": "chi_Auto"
+    },
+    {
+      "id": "rho",
+      "label": "rho"
+    },
+    {
+      "id": "Action",
+      "label": "Action"
+    }
+  ],
+  "edges": [
+    {
+      "from": "DatasetCase",
+      "to": "Prediction"
+    },
+    {
+      "from": "Prediction",
+      "to": "E_k"
+    },
+    {
+      "from": "E_k",
+      "to": "A_k^F"
+    },
+    {
+      "from": "A_k^F",
+      "to": "CertifiedPath/Rupture"
+    },
+    {
+      "from": "CertifiedPath/Rupture",
+      "to": "chi_Auto"
+    },
+    {
+      "from": "chi_Auto",
+      "to": "rho"
+    },
+    {
+      "from": "rho",
+      "to": "Action"
+    }
+  ],
+  "color_roles": {
+    "risk": "#ea580c",
+    "action": "#0f766e"
+  },
+  "caption": "Единый маршрут наблюдателя от данных к действию.",
+  "short_explanation": "Shows where rupture, context and risk enter the route."
+}

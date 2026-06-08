@@ -41,6 +41,11 @@ def _write_csv(path: Path, rows: list[dict[str, Any]], fields: list[str]) -> Non
             writer.writerow({field: row.get(field, '') for field in fields})
 
 
+def _write_json(path: Path, payload: dict[str, Any]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding='utf-8')
+
+
 def _sha(path: Path) -> str:
     if not path.exists() or not path.is_file():
         return ''
@@ -211,11 +216,131 @@ def _scenario_tables(out: Path, matrix_rows: list[dict[str, Any]]) -> tuple[list
     return scenario_rows, run_rows, coverage_rows
 
 
+def _scenario_quantitative_summary(matrix_rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    fixed_values = {
+        'hybrid_xiris': ('accuracy', 'not_available', 'safe_accuracy', 'not_available'),
+        'anza_lira': ('dice', 'not_available', 'safe_dice', 'not_available'),
+        'deep_neuro_fuzzy_kafn': ('f1', 'not_available', 'safe_f1', 'not_available'),
+        'fan_multimodal': ('attention_consistency', 'not_available', 'safe_attention_consistency', 'not_available'),
+    }
+    rows: list[dict[str, Any]] = []
+    for row in matrix_rows:
+        rid = row.get('registry_id', '')
+        b_metric, b_value, fx_metric, fx_value = fixed_values.get(rid, ('not_available', 'not_available', 'not_available', 'not_available'))
+        available = b_value != 'not_available' and fx_value != 'not_available'
+        rows.append({
+            'registry_id': rid,
+            'baseline_metric': b_metric,
+            'baseline_value': b_value,
+            'fuzzyxai_metric': fx_metric,
+            'fuzzyxai_value': fx_value,
+            'missed_critical': 'N/A',
+            'false_auto_accept': 'N/A',
+            'report_only': str(row.get('status') != 'real-output-compatible').lower(),
+            'quantitative_comparison_available': str(available).lower(),
+            'status': row.get('status', ''),
+            'notes': 'No fake quantitative value is inserted; source metric must be pinned before comparison.' if not available else 'Quantitative comparison available from pinned source artifact.',
+        })
+    return rows
+
+
+def _write_diagram_specs(out: Path) -> None:
+    base = out / 'diagram_specs'
+    specs: dict[str, dict[str, Any]] = {
+        'chapter2/fig_2_1_operator.json': {
+            'figure_id': 'fig_2_1', 'title': 'System operator route',
+            'nodes': [{'id': x, 'label': x} for x in ['C_k', 'ExplainPlan', 'Omega', 'E_k', 'I(E_G)']],
+            'edges': [{'from': 'C_k', 'to': 'Omega'}, {'from': 'ExplainPlan', 'to': 'Omega'}, {'from': 'Omega', 'to': 'E_k'}, {'from': 'E_k', 'to': 'I(E_G)'}],
+            'color_roles': {'operator': '#0f766e', 'contract': '#2563eb'}, 'caption': 'Системный оператор строит E_k из состояния компонента и ExplainPlan.', 'short_explanation': 'Core operator route for chapter 2.'
+        },
+        'chapter2/fig_2_4_composition.json': {
+            'figure_id': 'fig_2_4', 'title': 'Composition and diagnostic state',
+            'nodes': [{'id': x, 'label': x} for x in ['E_i', 'd_E', 'E_j', 'D_ij']],
+            'edges': [{'from': 'E_i', 'to': 'd_E'}, {'from': 'd_E', 'to': 'E_j'}, {'from': 'd_E', 'to': 'D_ij'}],
+            'color_roles': {'ok': '#16a34a', 'rupture': '#dc2626'}, 'caption': 'Композиция объяснений и переход к диагностическому состоянию.', 'short_explanation': 'Shows where semantic disagreement is checked.'
+        },
+        'chapter3/fig_3_2_hierarchy.json': {
+            'figure_id': 'fig_3_2', 'title': 'Hierarchy of fuzzy representations',
+            'nodes': [{'id': x, 'label': x} for x in ['F0', 'F_int', 'F_H', 'F_N^src', 'F_ML-audit']],
+            'edges': [{'from': 'F0', 'to': 'F_int'}, {'from': 'F0', 'to': 'F_H'}, {'from': 'F_int', 'to': 'F_N^src'}, {'from': 'F_N^src', 'to': 'F_ML-audit'}],
+            'color_roles': {'selected': '#0f766e', 'candidate': '#dbeafe'}, 'caption': 'Иерархия представлений неопределённости.', 'short_explanation': 'Higher classes preserve more uncertainty structure.'
+        },
+        'chapter3/fig_3_3_reduction.json': {
+            'figure_id': 'fig_3_3', 'title': 'Reduction and Delta',
+            'nodes': [{'id': x, 'label': x} for x in ['A_k^F', 'reduce', 'F0', 'Delta']],
+            'edges': [{'from': 'A_k^F', 'to': 'reduce'}, {'from': 'reduce', 'to': 'F0'}, {'from': 'reduce', 'to': 'Delta'}],
+            'color_roles': {'loss': '#dc2626'}, 'caption': 'Редукция расширенного представления и потеря Delta.', 'short_explanation': 'Delta measures structural loss.'
+        },
+        'chapter3/fig_3_8_chi_auto_sample113.json': {
+            'figure_id': 'fig_3_8', 'title': 'Chi_Auto for sample_113',
+            'nodes': [{'id': 'e_model', 'label': 'E_model^ext', 'type': 'explanation'}, {'id': 'e_risk', 'label': 'E_risk', 'type': 'risk'}, {'id': 'e_action', 'label': 'E_action', 'type': 'action'}],
+            'edges': [{'from': 'e_model', 'to': 'e_risk', 'label': 'f'}, {'from': 'e_risk', 'to': 'e_action', 'label': 'g'}],
+            'color_roles': {'blocked': '#dc2626'}, 'caption': 'Контекстная проверка chi_Auto для sample_113.', 'short_explanation': 'chi_auto=false because auto maps to audit absent in AutoAccept.'
+        },
+        'chapter3/fig_3_4_route.json': {
+            'figure_id': 'fig_3_4', 'title': 'Risk-aware observer route',
+            'nodes': [{'id': x, 'label': x} for x in ['DatasetCase', 'Prediction', 'E_k', 'A_k^F', 'CertifiedPath/Rupture', 'chi_Auto', 'rho', 'Action']],
+            'edges': [{'from': a, 'to': b} for a, b in zip(['DatasetCase', 'Prediction', 'E_k', 'A_k^F', 'CertifiedPath/Rupture', 'chi_Auto', 'rho'], ['Prediction', 'E_k', 'A_k^F', 'CertifiedPath/Rupture', 'chi_Auto', 'rho', 'Action'])],
+            'color_roles': {'risk': '#ea580c', 'action': '#0f766e'}, 'caption': 'Маршрут наблюдателя от данных к действию.', 'short_explanation': 'Shows rupture, context and risk gates.'
+        },
+        'chapter4/fig_4_1_open_interfaces.json': {
+            'figure_id': 'fig_4_1', 'title': 'Open interfaces: SDK/API/registry',
+            'nodes': [{'id': x, 'label': x} for x in ['External module', 'BaseAdapter', '/v1/explain', 'ExplanationArtifact', '/v1/risk-action', 'Report']],
+            'edges': [{'from': 'External module', 'to': 'BaseAdapter'}, {'from': 'BaseAdapter', 'to': '/v1/explain'}, {'from': '/v1/explain', 'to': 'ExplanationArtifact'}, {'from': 'ExplanationArtifact', 'to': '/v1/risk-action'}, {'from': '/v1/risk-action', 'to': 'Report'}],
+            'color_roles': {'sdk': '#2563eb', 'api': '#0f766e'}, 'caption': 'Открытые интерфейсы экосистемы FuzzyXAI.', 'short_explanation': 'Registration, adapter and API contract route.'
+        },
+        'chapter5/fig_5_1_general_scenario_route.json': {
+            'figure_id': 'fig_5_1', 'title': 'General scenario route',
+            'nodes': [{'id': x, 'label': x} for x in ['registry_id', 'source artifact', 'adapter', 'E/D artifact', 'report/action']],
+            'edges': [{'from': 'registry_id', 'to': 'source artifact'}, {'from': 'source artifact', 'to': 'adapter'}, {'from': 'adapter', 'to': 'E/D artifact'}, {'from': 'E/D artifact', 'to': 'report/action'}],
+            'color_roles': {'adapter': '#0f766e', 'report': '#9333ea'}, 'caption': 'Общий маршрут сценария главы 5.', 'short_explanation': 'External artifact is routed through adapter to report/action.'
+        },
+        'chapter5/fig_5_2_hybrid_xiris_route.json': {
+            'figure_id': 'fig_5_2', 'title': 'HYBRID-XIRIS route',
+            'nodes': [{'id': x, 'label': x} for x in ['hybrid_xiris', 'image artifact', 'medical_image_to_explanation', 'ExplanationArtifact', 'audit_report']],
+            'edges': [{'from': 'hybrid_xiris', 'to': 'image artifact'}, {'from': 'image artifact', 'to': 'medical_image_to_explanation'}, {'from': 'medical_image_to_explanation', 'to': 'ExplanationArtifact'}, {'from': 'ExplanationArtifact', 'to': 'audit_report'}],
+            'color_roles': {'real_output': '#16a34a'}, 'caption': 'Сценарный маршрут HYBRID-XIRIS.', 'short_explanation': 'Shows real-output-compatible module route without retraining claims.'
+        },
+    }
+    for rel, payload in specs.items():
+        _write_json(base / rel, payload)
+
+
+def _write_figure_manifests(out: Path) -> None:
+    retained = [
+        {'chapter': 2, 'figure_id': '2.1', 'status': 'keep', 'type': 'diagram', 'source_spec': 'diagram_specs/chapter2/fig_2_1_operator.json', 'will_be_redrawn': True, 'notes': 'core operator route'},
+        {'chapter': 2, 'figure_id': '2.4', 'status': 'keep', 'type': 'diagram', 'source_spec': 'diagram_specs/chapter2/fig_2_4_composition.json', 'will_be_redrawn': True, 'notes': 'composition scheme'},
+        {'chapter': 3, 'figure_id': '3.2', 'status': 'keep', 'type': 'diagram', 'source_spec': 'diagram_specs/chapter3/fig_3_2_hierarchy.json', 'will_be_redrawn': True, 'notes': 'representation hierarchy'},
+        {'chapter': 3, 'figure_id': '3.8', 'status': 'keep', 'type': 'diagram', 'source_spec': 'diagram_specs/chapter3/fig_3_8_chi_auto_sample113.json', 'will_be_redrawn': True, 'notes': 'topos sample_113'},
+        {'chapter': 4, 'figure_id': '4.1', 'status': 'keep', 'type': 'diagram', 'source_spec': 'diagram_specs/chapter4/fig_4_1_open_interfaces.json', 'will_be_redrawn': True, 'notes': 'SDK/API interfaces'},
+        {'chapter': 4, 'figure_id': '4.app', 'status': 'appendix', 'type': 'screenshot', 'source_spec': 'appendix/app_gui_screenshots', 'will_be_redrawn': False, 'notes': 'GUI screenshots only in appendix'},
+        {'chapter': 5, 'figure_id': '5.1', 'status': 'keep', 'type': 'diagram', 'source_spec': 'diagram_specs/chapter5/fig_5_1_general_scenario_route.json', 'will_be_redrawn': True, 'notes': 'scenario route'},
+        {'chapter': 5, 'figure_id': '5.2', 'status': 'keep', 'type': 'diagram', 'source_spec': 'diagram_specs/chapter5/fig_5_2_hybrid_xiris_route.json', 'will_be_redrawn': True, 'notes': 'HYBRID-XIRIS route'},
+    ]
+    _write_csv(out / 'retained_figures_manifest.csv', retained, ['chapter', 'figure_id', 'status', 'type', 'source_spec', 'will_be_redrawn', 'notes'])
+    captions = ['# Figure Captions Final', '']
+    fmap = []
+    for row in retained:
+        if row['status'] == 'appendix':
+            continue
+        fid = f"fig_{str(row['figure_id']).replace('.', '_')}"
+        captions += [
+            f"## Figure {row['figure_id']}",
+            f"Short caption: {row['notes']}.",
+            f"Long caption: Diagram source is `{row['source_spec']}` and should be redrawn as clean vector art.",
+            f"In-text sentence: Как показано на рис. {row['figure_id']}, маршрут фиксирует проверяемый переход без ручной подстановки.",
+            '',
+        ]
+        fmap.append({'figure_id': fid, 'chapter': row['chapter'], 'section': f"{row['chapter']}.x", 'insert_after_heading': row['notes'], 'text_reference_sentence': f"Как показано на рис. {row['figure_id']}, ...", 'required': True})
+    (out / 'figure_captions_final.md').write_text('\n'.join(captions), encoding='utf-8')
+    _write_csv(out / 'figure_to_text_map.csv', fmap, ['figure_id', 'chapter', 'section', 'insert_after_heading', 'text_reference_sentence', 'required'])
+
+
 def run(out_dir: str | Path = 'dissertation_artifacts') -> dict[str, Any]:
     out = ROOT / out_dir
     if out.exists():
         shutil.rmtree(out)
-    for sub in ['chapter2', 'chapter3', 'chapter4', 'chapter5', 'appendix/app_gui_screenshots']:
+    for sub in ['chapter2', 'chapter3', 'chapter4', 'chapter5', 'appendix/app_gui_screenshots', 'diagram_specs/chapter2', 'diagram_specs/chapter3', 'diagram_specs/chapter4', 'diagram_specs/chapter5']:
         (out / sub).mkdir(parents=True, exist_ok=True)
 
     ch2 = _load_json('reports/chapter2/sample_113_report.json') or _load_json('reports/chapter2_real_operator_case/breast_cancer_operator_case.json')
@@ -244,7 +369,15 @@ def run(out_dir: str | Path = 'dissertation_artifacts') -> dict[str, Any]:
         'action': ch2.get('action', ''),
     }], ['p_113', 'mu_low', 'mu_medium', 'mu_high', 'U_model', 'U_rules', 'U_trace', 'u_M', 'I_pre', 'action'])
     _write_csv(out / 'chapter2/table_2_explainplan_hash.csv', [{'path': 'configs/explain_plan_chapter2.yaml', 'sha256': plan_hash.get('sha256', ''), 'status': plan_hash.get('status', '')}], ['path', 'sha256', 'status'])
+    _copy(ROOT / 'reports/chapter2/calibration_constants.csv', out / 'chapter2/table_2_calibration_constants.csv')
+    _copy(ROOT / 'reports/chapter2/equal_raw_structure_summary.csv', out / 'chapter2/table_2_equal_raw_structure_summary.csv')
+    _copy(ROOT / 'figures/chapter2/calibration_constants.png', out / 'chapter2/fig_2_calibration_constants.png')
+    _copy(ROOT / 'figures/chapter2/equal_raw_structure_comparison.png', out / 'chapter2/fig_2_equal_raw_structure_comparison.png')
     (out / 'chapter2/text_2_reproducibility_insert.md').write_text('Команда `make reproduce-chapter2` воспроизводит ExplainPlan hash и численный пример `sample_113` без ручной подстановки значений.\n', encoding='utf-8')
+    _copy(ROOT / 'reports/chapter2/section_2_10_insert.md', out / 'chapter2/text_2_10_insert.md')
+    _copy(ROOT / 'reports/chapter3/dataset_roles_summary.csv', out / 'chapter3/table_3_dataset_roles_summary.csv')
+    _copy(ROOT / 'reports/chapter3/dataset_roles_summary.md', out / 'chapter3/text_3_dataset_roles_summary.md')
+    _copy(ROOT / 'reports/chapter3/safety_limitation_insert.md', out / 'chapter3/text_3_safety_limitation_insert.md')
 
     required4 = ['module_id', 'name', 'evidence_level', 'status', 'source_repo', 'claim_scope', 'adapter_class', 'gui_visible', 'artifact_present', 'local_fixture_present', 'report_present', 'figure_present']
     table4 = []
@@ -287,13 +420,18 @@ def run(out_dir: str | Path = 'dissertation_artifacts') -> dict[str, Any]:
     (out / 'chapter4/text_4_gui_insert.md').write_text('Evidence-вкладка Studio показывает hash-контракт, sample_113, внешний реестр модулей и границы claims; скриншоты получены автоматической проверкой Chromium (`make browser-visual-check`).\n', encoding='utf-8')
 
     scenario_rows, run_rows, coverage_rows = _scenario_tables(out, matrix_rows)
+    quant_rows = _scenario_quantitative_summary(matrix_rows)
     _write_csv(out / 'chapter5/table_5_registry_scenarios.csv', scenario_rows, ['scenario', 'registry_id', 'module_name', 'adapter_class', 'source_repo', 'evidence_level', 'status', 'claim_scope', 'chapter_section'])
     _write_csv(out / 'chapter5/table_5_scenario_run_summary.csv', run_rows, ['registry_id', 'source_repo', 'adapter_called', 'output_type', 'has_explanation_object', 'has_diagnostic_state', 'chi_R', 'chi_Auto', 'rho', 'action', 'report_path', 'figure_path', 'status', 'claim_scope'])
     _write_csv(out / 'chapter5/table_5_module_channel_coverage.csv', coverage_rows, ['registry_id', *CHANNELS])
+    _write_csv(ROOT / 'reports' / 'chapter5' / 'scenario_quantitative_summary.csv', quant_rows, ['registry_id', 'baseline_metric', 'baseline_value', 'fuzzyxai_metric', 'fuzzyxai_value', 'missed_critical', 'false_auto_accept', 'report_only', 'quantitative_comparison_available', 'status', 'notes'])
+    _write_csv(out / 'chapter5/table_5_scenario_quantitative_summary.csv', quant_rows, ['registry_id', 'baseline_metric', 'baseline_value', 'fuzzyxai_metric', 'fuzzyxai_value', 'missed_critical', 'false_auto_accept', 'report_only', 'quantitative_comparison_available', 'status', 'notes'])
     _bar(out / 'chapter5/fig_5_scenario_status_overview.png', 'Chapter 5 scenario status overview', statuses, [float(c) for c in counts], color='#0891b2', ylim=None)
     _route_figure(out / 'chapter5/fig_5_scenario_action_routes.png', 'Scenario routes through FuzzyXAI', [r.get('registry_id', '') for r in matrix_rows])
     _heatmap(out / 'chapter5/fig_5_module_channel_coverage.png', 'Module channel coverage', [r['registry_id'] for r in coverage_rows], CHANNELS, [[float(r[c]) for c in CHANNELS] for r in coverage_rows])
     (out / 'chapter5/text_5_scenario_run_insert.md').write_text('Сценарный прогон проверяет не качество исходных моделей, а прохождение внешнего артефакта через `registry -> adapter -> explanation/report -> action`. Неполные внешние модули получают `action=audit_report` или `not_run`, а недоступные численные поля честно помечаются как `N/A`.\n', encoding='utf-8')
+    _write_diagram_specs(out)
+    _write_figure_manifests(out)
 
     for p in ['evidence/evidence_matrix.csv', 'evidence/registry_snapshot.json', 'evidence/reproduction_index.md', 'reports/browser_visual_check/browser_visual_check.md']:
         src = ROOT / p

@@ -13,7 +13,10 @@ def test_dissertation_artifacts_pack_contains_chapter_tables(tmp_path) -> None:
     assert (root / 'chapter2' / 'table_2_sample113_values.csv').exists()
     assert (root / 'chapter4' / 'table_4_evidence_matrix.csv').exists()
     assert (root / 'chapter5' / 'table_5_scenario_run_summary.csv').exists()
+    assert (root / 'chapter5' / 'table_5_scenario_quantitative_summary.csv').exists()
     assert (root / 'chapter5' / 'fig_5_module_channel_coverage.png').exists()
+    assert (root / 'diagram_specs' / 'chapter5' / 'fig_5_2_hybrid_xiris_route.json').exists()
+    assert (root / 'retained_figures_manifest.csv').exists()
 
     with (root / 'chapter4' / 'table_4_evidence_matrix.csv').open(encoding='utf-8') as f:
         row = next(csv.DictReader(f))

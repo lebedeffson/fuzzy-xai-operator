@@ -1,0 +1,14 @@
+{
+  "registry_id": "my_module",
+  "title": "My External Module",
+  "role": "external explanation source",
+  "source_repo": "https://github.com/example/my-module",
+  "source_commit": "external-not-pinned",
+  "source_artifact": "results/report.json",
+  "fixture_path": "data/fixtures/my_module_output.json",
+  "adapter": "tabular_to_explanation",
+  "evidence_level": "fixture-level",
+  "status": "fixture-certified",
+  "chapter_role": "chapter5_scenario",
+  "claim_scope": "adapter route only, not domain validation"
+}

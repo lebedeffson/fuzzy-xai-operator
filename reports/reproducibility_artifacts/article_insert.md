@@ -130,7 +130,11 @@
 
 - `make dissertation-check`
 - `make reproduce-chapter2`
+- `make calibrate-chapter2`
+- `make benchmark-equal-raw-structure`
+- `make chapter3-artifacts`
 - `make ecosystem-evidence`
+- `make validate-ecosystem-sdk`
 - `make thesis-practice-tables`
 - `make browser-visual-check`
 - `make ui-health-check`
@@ -145,6 +149,12 @@
 | `configs/explain_plan_chapter2.yaml` | 2 / appendix | `4469dad3fbeeb4f53ad953c24bd4e29a8de0d17d6465fb2c71b2b15a954cacfc` | Fixed chapter 2 ExplainPlan YAML contract used for deterministic hashing |
 | `reports/chapter2/explain_plan_hash.json` | 2 / appendix | `c18bfa69005fd3b56cc3ea73ee2a59596b00486dd2cdd71398dc5eb30b12e7cb` | Validated ExplainPlan SHA256 and required trace field list |
 | `reports/chapter2/sample_113_report.json` | 2 | `4920325789b0e09fc54a9f64f9dd93f0ae5efa82aa57ca74e17903fd97025f33` | Canonical sample_113 report generated from the chapter 2 ExplainPlan contract |
+| `reports/chapter2/calibration_constants.csv` | 2 | `5ae7af763efb982ca16108014e443c649a9bca3363f0b7a4e8c8142b88f150ce` | Chapter 2 calibrated c_H/c_O/c_K constants on calibration pairs |
+| `reports/chapter2/equal_raw_structure_summary.csv` | 2 | `768da4928dc99f3cdf265f67c8443f30724a2d9f7ef428137148fc2af292706b` | Equal raw structure benchmark for certified route vs raw structural access |
+| `reports/chapter3/dataset_roles_summary.csv` | 3 | `e677dd7743b092631a81420c860f9c8e2b45d128cb8f86bda6ad9b3b3f4ea4e2` | Chapter 3 concise dataset role table |
+| `api/openapi.yaml` | 4 | `35edef0eea1a6dbf18c30727dfe3282e62bc9dd764812c9e5a913e19c8c23cc3` | Open API contract for /v1/explain and /v1/risk-action |
+| `deploy/docker-compose.yml` | 4 / appendix | `b67bcadfd5df765658633f332afeaa53752660281b4ffb149e4f2d87efd24273` | Deployment skeleton for API and Studio services |
+| `templates/module_registry_entry.json` | 4 / appendix | `0479e2efe8c63397a00e14068617dba5e463dc3289e5116eeedb83cc3f917f78` | External module registration template |
 | `fuzzyxai/ecosystem/registry.json` | 4 | `e794e77071a318559c5b7d2d60cf9f7d4c20e31fb7021f2c15488dd2d47b5df9` | External module registry for chapter 4 ecosystem integration |
 | `evidence/evidence_matrix.csv` | 4 / 5 | `97a0eda4f67f2e55925312064d3f4a348c28d9845001110e04ed3b6936805162` | Module evidence matrix with status, fixture, and claim-scope flags |
 | `reports/chapter4/ecosystem_evidence.json` | 4 | `d62e72a2d297c817c4039e12e88c7ce3dfad90ae5a0b528870ac7dfc81ce382c` | Chapter 4 external module evidence summary |
@@ -160,7 +170,7 @@
 | `reports/structure_aware_benchmark/diabetes_binary.json` | 5 | `c8b25086a26888c8d2b44832ee01f7fcb94a1f5d1935977337f76c033467951a` | Structure-aware benchmark on real diabetes rows (non-synthetic improvement check) |
 | `reports/datasets/breast_cancer/ablation.json` | 5 | `3a4d678e2890901856badd94348c5dce27cf137231a2d4b68fa304720cba0b54` | Ablation of trace, Delta, chi_R_crit, hierarchy, topos, risk-only threshold |
 | `reports/thesis_practice/thesis_practice_tables.json` | appendix | `fc46650590a0fa891bedae193c34606d6489d6e0fce3d5d9c1d8f4534ebcb5c0` | Word/LaTeX-ready thesis practice table index |
-| `Makefile` | appendix | `19c38a68f6b8817ff787b15ddbee726461fec1769a4ca79911a7073aec236203` | Reproducible command route |
+| `Makefile` | appendix | `3ee8c7d4d8c7896b4e10e00db0ec4f4f437fa43323e9b55eec8568aa791c92b3` | Reproducible command route |
 | `requirements.txt` | appendix | `3202b5309cef65ab6e2ab21ea0f3a659820652d1d944e94dac3df63682a51c57` | Python environment dependencies |
 
 ## Корректная формулировка для текста

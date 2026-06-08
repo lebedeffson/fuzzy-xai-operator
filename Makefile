@@ -4,7 +4,7 @@ PORT ?= 8085
 DATASET ?= breast_cancer
 BASELINE_ACCESS ?= native
 
-.PHONY: install test risk-test category-hott-test chapter2-breast-cancer-demo chapter2-real-operator-case reproduce-chapter2 figures-chapter2 ecosystem-evidence dissertation-artifacts chapter5-experiments chapter5-demo chapter5-latex web-demo unified-demo layered-demo layered-demo-legacy defense-demo defense-demo-legacy studio ui-health-check ui-health-check-all browser-visual-check unified-demo-cli full-pipeline figures full-experiments demo dashboard proof formal-proof thesis full-demo full-observer dataset-observer dataset-modes-check baseline-check real-data-validation benchmark benchmark-dataset baseline-comparison calibrate-observer ablation-benchmark defense-cases real-reduction-example dissertation-demo-summary dissertation-component-tables dissertation-check dataset-cards thesis-practice-tables structure-aware-benchmark reproducibility-artifacts operator-benchmark risk-benchmark lofo-f1-demo clean
+.PHONY: install test risk-test category-hott-test chapter2-breast-cancer-demo chapter2-real-operator-case reproduce-chapter2 calibrate-chapter2 benchmark-equal-raw-structure chapter3-artifacts figures-chapter2 ecosystem-evidence validate-ecosystem-sdk dissertation-artifacts chapter5-experiments chapter5-demo chapter5-latex web-demo unified-demo layered-demo layered-demo-legacy defense-demo defense-demo-legacy studio ui-health-check ui-health-check-all browser-visual-check unified-demo-cli full-pipeline figures full-experiments demo dashboard proof formal-proof thesis full-demo full-observer dataset-observer dataset-modes-check baseline-check real-data-validation benchmark benchmark-dataset baseline-comparison calibrate-observer ablation-benchmark defense-cases real-reduction-example dissertation-demo-summary dissertation-component-tables dissertation-check dataset-cards thesis-practice-tables structure-aware-benchmark reproducibility-artifacts operator-benchmark risk-benchmark lofo-f1-demo clean
 
 install:
 	$(PYTHON) -m pip install -r requirements.txt
@@ -28,11 +28,23 @@ chapter2-real-operator-case:
 reproduce-chapter2:
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m fuzzyxai.experiments.chapter2_sample113 --out-dir reports/chapter2
 
+calibrate-chapter2:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m fuzzyxai.experiments.chapter2_calibration --out-dir reports/chapter2
+
+benchmark-equal-raw-structure:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m fuzzyxai.experiments.chapter2_equal_raw_structure --out-dir reports/chapter2
+
+chapter3-artifacts:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/build_chapter3_artifacts.py --out-dir reports/chapter3
+
 figures-chapter2:
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) experiments/generate_figures.py --out-dir reports/figures
 
 ecosystem-evidence:
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) experiments/ecosystem_evidence_pack.py --evidence-dir evidence --report-dir reports/chapter4
+
+validate-ecosystem-sdk:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m pytest tests/test_sdk_contracts.py tests/test_api_examples.py tests/test_registry_registration_flow.py -q
 
 dissertation-artifacts:
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/build_dissertation_artifacts.py --out-dir dissertation_artifacts
@@ -193,6 +205,9 @@ structure-aware-benchmark:
 
 reproducibility-artifacts:
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) experiments/ecosystem_evidence_pack.py --evidence-dir evidence --report-dir reports/chapter4
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m fuzzyxai.experiments.chapter2_calibration --out-dir reports/chapter2
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m fuzzyxai.experiments.chapter2_equal_raw_structure --out-dir reports/chapter2
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/build_chapter3_artifacts.py --out-dir reports/chapter3
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) experiments/reproducibility_artifacts.py --out-dir reports/reproducibility_artifacts
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/build_dissertation_artifacts.py --out-dir dissertation_artifacts
 
@@ -201,12 +216,16 @@ dissertation-check:
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) examples/check_dataset_modes.py
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) experiments/dataset_benchmark.py --dataset breast_cancer --out-root reports/datasets
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m fuzzyxai.experiments.chapter2_sample113 --out-dir reports/chapter2
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m fuzzyxai.experiments.chapter2_calibration --out-dir reports/chapter2
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m fuzzyxai.experiments.chapter2_equal_raw_structure --out-dir reports/chapter2
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) experiments/chapter2_real_operator_case.py --out-dir reports/chapter2_real_operator_case
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) experiments/real_reduction_example.py --out-dir reports/real_reduction_example
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) experiments/dissertation_demo_summary.py --out-dir reports
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) experiments/dissertation_component_tables.py --out-dir reports
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) experiments/dataset_cards.py --out-root reports/datasets
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/build_chapter3_artifacts.py --out-dir reports/chapter3
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) experiments/ecosystem_evidence_pack.py --evidence-dir evidence --report-dir reports/chapter4
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m pytest tests/test_sdk_contracts.py tests/test_api_examples.py tests/test_registry_registration_flow.py -q
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) experiments/reproducibility_artifacts.py --out-dir reports/reproducibility_artifacts
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/build_dissertation_artifacts.py --out-dir dissertation_artifacts
 	@echo "DISSERTATION CHECK PASSED"

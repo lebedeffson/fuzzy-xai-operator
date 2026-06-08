@@ -93,6 +93,42 @@ def build_payload() -> dict[str, Any]:
             'make reproduce-chapter2',
         ),
         _artifact(
+            'reports/chapter2/calibration_constants.csv',
+            'Chapter 2 calibrated c_H/c_O/c_K constants on calibration pairs',
+            '2',
+            'make calibrate-chapter2',
+        ),
+        _artifact(
+            'reports/chapter2/equal_raw_structure_summary.csv',
+            'Equal raw structure benchmark for certified route vs raw structural access',
+            '2',
+            'make benchmark-equal-raw-structure',
+        ),
+        _artifact(
+            'reports/chapter3/dataset_roles_summary.csv',
+            'Chapter 3 concise dataset role table',
+            '3',
+            'make chapter3-artifacts',
+        ),
+        _artifact(
+            'api/openapi.yaml',
+            'Open API contract for /v1/explain and /v1/risk-action',
+            '4',
+            'make validate-ecosystem-sdk',
+        ),
+        _artifact(
+            'deploy/docker-compose.yml',
+            'Deployment skeleton for API and Studio services',
+            '4 / appendix',
+            '',
+        ),
+        _artifact(
+            'templates/module_registry_entry.json',
+            'External module registration template',
+            '4 / appendix',
+            'python scripts/register_external_module.py --module-id my_module',
+        ),
+        _artifact(
             'fuzzyxai/ecosystem/registry.json',
             'External module registry for chapter 4 ecosystem integration',
             '4',
@@ -209,7 +245,11 @@ def build_payload() -> dict[str, Any]:
         'commands': [
             'make dissertation-check',
             'make reproduce-chapter2',
+            'make calibrate-chapter2',
+            'make benchmark-equal-raw-structure',
+            'make chapter3-artifacts',
             'make ecosystem-evidence',
+            'make validate-ecosystem-sdk',
             'make thesis-practice-tables',
             'make browser-visual-check',
             'make ui-health-check',
@@ -623,7 +663,7 @@ def write_reports(payload: dict[str, Any], out_dir: str | Path) -> dict[str, str
     csv_path = out / 'manifest.csv'
     rows = payload['artifacts']
     with csv_path.open('w', encoding='utf-8', newline='') as f:
-        writer = csv.DictWriter(f, fieldnames=['path', 'exists', 'sha256', 'chapter', 'confirms', 'command'])
+        writer = csv.DictWriter(f, fieldnames=['path', 'exists', 'sha256', 'chapter', 'confirms', 'command'], lineterminator='\n')
         writer.writeheader()
         writer.writerows(rows)
 

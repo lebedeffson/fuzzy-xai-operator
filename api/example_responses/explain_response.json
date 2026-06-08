@@ -1,0 +1,9 @@
+{
+  "status": "ok",
+  "registry_id": "hybrid_xiris",
+  "artifact_type": "ExplanationArtifact",
+  "has_explanation_object": true,
+  "has_diagnostic_state": false,
+  "report_path": "reports/sdk/hybrid_xiris_explain.md",
+  "trace_path": "reports/sdk/hybrid_xiris_trace.json"
+}

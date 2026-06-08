@@ -1,0 +1,42 @@
+{
+  "figure_id": "fig_3_3",
+  "title": "Reduction to F0 and Delta",
+  "nodes": [
+    {
+      "id": "A_F",
+      "label": "A_k^F"
+    },
+    {
+      "id": "reduce",
+      "label": "reduce"
+    },
+    {
+      "id": "F0",
+      "label": "F0"
+    },
+    {
+      "id": "Delta",
+      "label": "Delta"
+    }
+  ],
+  "edges": [
+    {
+      "from": "A_F",
+      "to": "reduce"
+    },
+    {
+      "from": "reduce",
+      "to": "F0"
+    },
+    {
+      "from": "reduce",
+      "to": "Delta"
+    }
+  ],
+  "color_roles": {
+    "loss": "#dc2626",
+    "representation": "#2563eb"
+  },
+  "caption": "Редукция расширенного представления и измерение потери Delta.",
+  "short_explanation": "Delta controls how much structure is lost."
+}

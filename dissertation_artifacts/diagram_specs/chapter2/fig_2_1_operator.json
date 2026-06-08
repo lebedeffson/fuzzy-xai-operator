@@ -1,0 +1,50 @@
+{
+  "figure_id": "fig_2_1",
+  "title": "System operator route",
+  "nodes": [
+    {
+      "id": "C_k",
+      "label": "C_k"
+    },
+    {
+      "id": "ExplainPlan",
+      "label": "ExplainPlan"
+    },
+    {
+      "id": "Omega",
+      "label": "Omega"
+    },
+    {
+      "id": "E_k",
+      "label": "E_k"
+    },
+    {
+      "id": "I(E_G)",
+      "label": "I(E_G)"
+    }
+  ],
+  "edges": [
+    {
+      "from": "C_k",
+      "to": "Omega"
+    },
+    {
+      "from": "ExplainPlan",
+      "to": "Omega"
+    },
+    {
+      "from": "Omega",
+      "to": "E_k"
+    },
+    {
+      "from": "E_k",
+      "to": "I(E_G)"
+    }
+  ],
+  "color_roles": {
+    "operator": "#0f766e",
+    "contract": "#2563eb"
+  },
+  "caption": "Системный оператор строит E_k из состояния компонента и ExplainPlan.",
+  "short_explanation": "Core operator route for chapter 2."
+}

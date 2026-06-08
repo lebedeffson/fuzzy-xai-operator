@@ -97,6 +97,10 @@ make baseline-comparison DATASET=synthetic_ruptures BASELINE_ACCESS=equal_guardr
 make calibrate-observer DATASET=breast_cancer
 make ablation-benchmark DATASET=breast_cancer
 make structure-aware-benchmark DATASET=breast_cancer
+make calibrate-chapter2
+make benchmark-equal-raw-structure
+make chapter3-artifacts
+make validate-ecosystem-sdk
 make thesis-practice-tables
 make reproducibility-artifacts
 make dissertation-artifacts

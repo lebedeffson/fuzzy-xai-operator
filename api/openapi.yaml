@@ -1,0 +1,63 @@
+openapi: 3.0.3
+info:
+  title: FuzzyXAI Open Interfaces
+  version: 1.0.0
+  description: Minimal API contract for external module adapters and risk-aware action routing.
+paths:
+  /v1/explain:
+    post:
+      summary: Convert an external module payload into an explanation artifact.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [registry_id, input_type, payload, explain_plan_hash]
+              properties:
+                registry_id: {type: string}
+                input_type: {type: string}
+                payload: {type: object}
+                explain_plan_hash: {type: string}
+      responses:
+        '200':
+          description: Explanation artifact response.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [status, registry_id, artifact_type, has_explanation_object, has_diagnostic_state]
+                properties:
+                  status: {type: string}
+                  registry_id: {type: string}
+                  artifact_type: {type: string}
+                  has_explanation_object: {type: boolean}
+                  has_diagnostic_state: {type: boolean}
+                  report_path: {type: string}
+                  trace_path: {type: string}
+  /v1/risk-action:
+    post:
+      summary: Choose observer action for an existing explanation artifact.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [artifact_path, observer_mode]
+              properties:
+                artifact_path: {type: string}
+                observer_mode: {type: string, enum: [research, audit, clinical, auto]}
+      responses:
+        '200':
+          description: Risk-aware action response.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [chi_R, chi_Auto, rho, action]
+                properties:
+                  chi_R: {}
+                  chi_Auto: {}
+                  rho: {}
+                  action: {type: string}

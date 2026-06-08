@@ -1,0 +1,13 @@
+registry_id,baseline_metric,baseline_value,fuzzyxai_metric,fuzzyxai_value,missed_critical,false_auto_accept,report_only,quantitative_comparison_available,status,notes
+hybrid_xiris,accuracy,not_available,safe_accuracy,not_available,N/A,N/A,false,false,real-output-compatible,No fake quantitative value is inserted; source metric must be pinned before comparison.
+gd_anfis_shap,not_available,not_available,not_available,not_available,N/A,N/A,true,false,source-pending,No fake quantitative value is inserted; source metric must be pinned before comparison.
+anza_lira,dice,not_available,safe_dice,not_available,N/A,N/A,true,false,fixture-certified,No fake quantitative value is inserted; source metric must be pinned before comparison.
+beacon_xai,not_available,not_available,not_available,not_available,N/A,N/A,true,false,source-pending,No fake quantitative value is inserted; source metric must be pinned before comparison.
+gis_integro,not_available,not_available,not_available,not_available,N/A,N/A,true,false,source-pending,No fake quantitative value is inserted; source metric must be pinned before comparison.
+deep_neuro_fuzzy_kafn,f1,not_available,safe_f1,not_available,N/A,N/A,true,false,fixture-certified,No fake quantitative value is inserted; source metric must be pinned before comparison.
+fan_multimodal,attention_consistency,not_available,safe_attention_consistency,not_available,N/A,N/A,true,false,fixture-certified,No fake quantitative value is inserted; source metric must be pinned before comparison.
+kan_xai_2_system,not_available,not_available,not_available,not_available,N/A,N/A,true,false,fixture-certified,No fake quantitative value is inserted; source metric must be pinned before comparison.
+trust_ade,not_available,not_available,not_available,not_available,N/A,N/A,true,false,fixture-certified,No fake quantitative value is inserted; source metric must be pinned before comparison.
+synt_isic_timeshap,not_available,not_available,not_available,not_available,N/A,N/A,true,false,fixture-certified,No fake quantitative value is inserted; source metric must be pinned before comparison.
+eaar_regularization,not_available,not_available,not_available,not_available,N/A,N/A,true,false,planned,No fake quantitative value is inserted; source metric must be pinned before comparison.
+neutron_shap_reconstruction,not_available,not_available,not_available,not_available,N/A,N/A,true,false,planned,No fake quantitative value is inserted; source metric must be pinned before comparison.

@@ -33,7 +33,11 @@
   "commands": [
     "make dissertation-check",
     "make reproduce-chapter2",
+    "make calibrate-chapter2",
+    "make benchmark-equal-raw-structure",
+    "make chapter3-artifacts",
     "make ecosystem-evidence",
+    "make validate-ecosystem-sdk",
     "make thesis-practice-tables",
     "make browser-visual-check",
     "make ui-health-check",
@@ -65,6 +69,54 @@
       "chapter": "2",
       "confirms": "Canonical sample_113 report generated from the chapter 2 ExplainPlan contract",
       "command": "make reproduce-chapter2"
+    },
+    {
+      "path": "reports/chapter2/calibration_constants.csv",
+      "exists": true,
+      "sha256": "5ae7af763efb982ca16108014e443c649a9bca3363f0b7a4e8c8142b88f150ce",
+      "chapter": "2",
+      "confirms": "Chapter 2 calibrated c_H/c_O/c_K constants on calibration pairs",
+      "command": "make calibrate-chapter2"
+    },
+    {
+      "path": "reports/chapter2/equal_raw_structure_summary.csv",
+      "exists": true,
+      "sha256": "768da4928dc99f3cdf265f67c8443f30724a2d9f7ef428137148fc2af292706b",
+      "chapter": "2",
+      "confirms": "Equal raw structure benchmark for certified route vs raw structural access",
+      "command": "make benchmark-equal-raw-structure"
+    },
+    {
+      "path": "reports/chapter3/dataset_roles_summary.csv",
+      "exists": true,
+      "sha256": "e677dd7743b092631a81420c860f9c8e2b45d128cb8f86bda6ad9b3b3f4ea4e2",
+      "chapter": "3",
+      "confirms": "Chapter 3 concise dataset role table",
+      "command": "make chapter3-artifacts"
+    },
+    {
+      "path": "api/openapi.yaml",
+      "exists": true,
+      "sha256": "35edef0eea1a6dbf18c30727dfe3282e62bc9dd764812c9e5a913e19c8c23cc3",
+      "chapter": "4",
+      "confirms": "Open API contract for /v1/explain and /v1/risk-action",
+      "command": "make validate-ecosystem-sdk"
+    },
+    {
+      "path": "deploy/docker-compose.yml",
+      "exists": true,
+      "sha256": "b67bcadfd5df765658633f332afeaa53752660281b4ffb149e4f2d87efd24273",
+      "chapter": "4 / appendix",
+      "confirms": "Deployment skeleton for API and Studio services",
+      "command": ""
+    },
+    {
+      "path": "templates/module_registry_entry.json",
+      "exists": true,
+      "sha256": "0479e2efe8c63397a00e14068617dba5e463dc3289e5116eeedb83cc3f917f78",
+      "chapter": "4 / appendix",
+      "confirms": "External module registration template",
+      "command": "python scripts/register_external_module.py --module-id my_module"
     },
     {
       "path": "fuzzyxai/ecosystem/registry.json",
@@ -189,7 +241,7 @@
     {
       "path": "Makefile",
       "exists": true,
-      "sha256": "19c38a68f6b8817ff787b15ddbee726461fec1769a4ca79911a7073aec236203",
+      "sha256": "3ee8c7d4d8c7896b4e10e00db0ec4f4f437fa43323e9b55eec8568aa791c92b3",
       "chapter": "appendix",
       "confirms": "Reproducible command route",
       "command": ""
