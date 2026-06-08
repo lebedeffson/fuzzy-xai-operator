@@ -23,8 +23,12 @@ def test_dissertation_artifacts_pack_contains_chapter_tables(tmp_path) -> None:
     assert {'module_id', 'evidence_level', 'status', 'source_repo', 'claim_scope'} <= set(row)
 
     with (root / 'chapter5' / 'table_5_scenario_run_summary.csv').open(encoding='utf-8') as f:
-        scenario_ids = {row['registry_id'] for row in csv.DictReader(f)}
+        reader = csv.DictReader(f)
+        assert reader.fieldnames is not None
+        assert len(reader.fieldnames) == len(set(reader.fieldnames))
+        scenario_ids = {row['registry_id'] for row in reader}
     assert {'gd_anfis_shap', 'hybrid_xiris', 'anza_lira', 'beacon_xai', 'gis_integro'} <= scenario_ids
+    assert (root / 'chapter5' / 'text_5_scenario_run_insert.md').read_text(encoding='utf-8').count('not_available') >= 1
 
     manifest = json.loads((root / 'artifact_manifest_sha256.json').read_text(encoding='utf-8'))
     assert manifest['status'] == 'ok'

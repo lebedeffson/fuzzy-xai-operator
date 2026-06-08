@@ -114,6 +114,10 @@
 | wine_risk | 0.8770 | 0.5238 | 0.3532 | 0.0992 | 0.4563 | 0.3571 |
 | diabetes_binary | 0.8810 | 0.8333 | 0.0476 | 0.0238 | 0.0794 | 0.0556 |
 
+## Граница claims для внешних сценариев главы 5
+
+Сценарии ЭКГ/табличных объяснений, глазного дна, AFLC/ANZA-LIRA, BEACON-XAI, GIS INTEGRO и других registry-модулей используются как проверка экосистемного маршрута `registry -> adapter -> explanation/report -> action`, а не как полноценный benchmark исходных моделей. Поэтому для них не подставляются искусственные `accuracy` или `missed_critical_ruptures`; при отсутствии pinned baseline-метрик поля остаются `not_available` или `N/A`.
+
 ## Абляционный анализ
 
 | Mode | agreement_proxy | missed_critical | critical_recall | false_auto_accept | auto_accept_cov | mean_reduction_loss |

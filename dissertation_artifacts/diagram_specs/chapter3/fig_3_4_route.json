@@ -69,6 +69,6 @@
     "risk": "#ea580c",
     "action": "#0f766e"
   },
-  "caption": "Единый маршрут наблюдателя от данных к действию.",
-  "short_explanation": "Shows where rupture, context and risk enter the route."
+  "caption": "Маршрут наблюдателя от данных к действию.",
+  "short_explanation": "Shows rupture, context and risk gates."
 }

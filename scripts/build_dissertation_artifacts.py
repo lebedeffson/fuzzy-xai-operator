@@ -429,7 +429,22 @@ def run(out_dir: str | Path = 'dissertation_artifacts') -> dict[str, Any]:
     _bar(out / 'chapter5/fig_5_scenario_status_overview.png', 'Chapter 5 scenario status overview', statuses, [float(c) for c in counts], color='#0891b2', ylim=None)
     _route_figure(out / 'chapter5/fig_5_scenario_action_routes.png', 'Scenario routes through FuzzyXAI', [r.get('registry_id', '') for r in matrix_rows])
     _heatmap(out / 'chapter5/fig_5_module_channel_coverage.png', 'Module channel coverage', [r['registry_id'] for r in coverage_rows], CHANNELS, [[float(r[c]) for c in CHANNELS] for r in coverage_rows])
-    (out / 'chapter5/text_5_scenario_run_insert.md').write_text('Сценарный прогон проверяет не качество исходных моделей, а прохождение внешнего артефакта через `registry -> adapter -> explanation/report -> action`. Неполные внешние модули получают `action=audit_report` или `not_run`, а недоступные численные поля честно помечаются как `N/A`.\n', encoding='utf-8')
+    scenario_scope_note = (
+        'Сценарии внешних модулей (ЭКГ/табличные объяснения, глазное дно, AFLC/ANZA-LIRA, '
+        'BEACON-XAI, GIS INTEGRO и другие registry-сценарии) в главе 5 используются как проверка '
+        'экосистемного маршрута, а не как полноценный benchmark исходных моделей. Поэтому для них '
+        'не вводятся искусственные таблицы accuracy или missed critical ruptures. Если pinned baseline '
+        'метрики отсутствуют, поля количественного сравнения помечаются как `not_available` или `N/A`. '
+        'Основные количественные safety-результаты вынесены в диагностические benchmark-разделы и приложения.\n'
+    )
+    (ROOT / 'reports' / 'chapter5' / 'scenario_scope_note.md').write_text(scenario_scope_note, encoding='utf-8')
+    (out / 'chapter5/text_5_scenario_run_insert.md').write_text(
+        'Сценарный прогон проверяет не качество исходных моделей, а прохождение внешнего артефакта через '
+        '`registry -> adapter -> explanation/report -> action`. Неполные внешние модули получают '
+        '`action=audit_report` или `not_run`, а недоступные численные поля честно помечаются как `N/A`.\n\n'
+        + scenario_scope_note,
+        encoding='utf-8',
+    )
     _write_diagram_specs(out)
     _write_figure_manifests(out)
 

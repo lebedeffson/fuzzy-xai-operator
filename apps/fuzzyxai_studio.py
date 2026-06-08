@@ -923,6 +923,10 @@ def run(port: int = 8097) -> None:
                         ui.label(title).classes('studio-title')
                         ui.markdown(body)
             ui.label('Сценарные прогоны главы 5').classes('text-subtitle2 studio-title')
+            ui.markdown(
+                'Здесь проверяется маршрут экосистемы, а не accuracy исходных моделей. '
+                'Если pinned baseline-метрик нет, количественные поля остаются `N/A` / `not_available`, без подстановки фиктивных чисел.'
+            ).classes('studio-note')
             if scenario_rows:
                 ui.echart(_scenario_status_option(scenario_rows)).classes('w-full h-56')
                 display = [

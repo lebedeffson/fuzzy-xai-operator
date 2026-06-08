@@ -16,3 +16,5 @@ overall: `PASS`
 - evidence_contract: PASS (ok) -> `reports/browser_visual_check/10_evidence_contract.png`
 - ecosystem_registry: PASS (ok) -> `reports/browser_visual_check/11_ecosystem_registry.png`
 - real_rows_improvements: PASS (ok) -> `reports/browser_visual_check/12_real_rows_improvements.png`
+- sdk_api_route: PASS (ok) -> `reports/browser_visual_check/13_sdk_api_route.png`
+- dissertation_artifacts: PASS (ok) -> `reports/browser_visual_check/14_dissertation_artifacts.png`

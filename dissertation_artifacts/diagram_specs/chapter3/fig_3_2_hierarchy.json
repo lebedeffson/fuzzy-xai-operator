@@ -1,6 +1,6 @@
 {
   "figure_id": "fig_3_2",
-  "title": "Hierarchy of fuzzy uncertainty representations",
+  "title": "Hierarchy of fuzzy representations",
   "nodes": [
     {
       "id": "F0",
@@ -15,11 +15,11 @@
       "label": "F_H"
     },
     {
-      "id": "F_N_src",
+      "id": "F_N^src",
       "label": "F_N^src"
     },
     {
-      "id": "F_ML",
+      "id": "F_ML-audit",
       "label": "F_ML-audit"
     }
   ],
@@ -34,21 +34,17 @@
     },
     {
       "from": "F_int",
-      "to": "F_N_src"
+      "to": "F_N^src"
     },
     {
-      "from": "F_H",
-      "to": "F_ML"
-    },
-    {
-      "from": "F_N_src",
-      "to": "F_ML"
+      "from": "F_N^src",
+      "to": "F_ML-audit"
     }
   ],
   "color_roles": {
     "selected": "#0f766e",
     "candidate": "#dbeafe"
   },
-  "caption": "Иерархия классов представления неопределенности.",
-  "short_explanation": "Higher classes preserve more structural uncertainty."
+  "caption": "Иерархия представлений неопределённости.",
+  "short_explanation": "Higher classes preserve more uncertainty structure."
 }

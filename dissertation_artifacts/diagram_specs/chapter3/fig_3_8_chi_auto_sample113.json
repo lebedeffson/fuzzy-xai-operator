@@ -31,9 +31,8 @@
     }
   ],
   "color_roles": {
-    "blocked": "#dc2626",
-    "allowed": "#16a34a"
+    "blocked": "#dc2626"
   },
   "caption": "Контекстная проверка chi_Auto для sample_113.",
-  "short_explanation": "chi_auto=false because auto maps to audit, which is absent in AutoAccept."
+  "short_explanation": "chi_auto=false because auto maps to audit absent in AutoAccept."
 }

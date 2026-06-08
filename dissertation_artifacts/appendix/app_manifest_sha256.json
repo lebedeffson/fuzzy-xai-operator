@@ -3,7 +3,7 @@
   "files": [
     {
       "path": "appendix/app_browser_visual_check_report.md",
-      "sha256": "14f7985731f5b42360e60828038f5b7e51a31042a0439f63785f71c56dfa61f3"
+      "sha256": "41cf0bd2595709ce8de41e0def24943028b69974742874a47896596ef03b68a1"
     },
     {
       "path": "appendix/app_evidence_matrix_full.csv",
@@ -11,15 +11,15 @@
     },
     {
       "path": "appendix/app_gui_screenshots/10_evidence_contract.png",
-      "sha256": "a31d64d73d247f33817a0276d884e34523d6a38a6daae1ba4159811b1a28e6a8"
+      "sha256": "ce39b806adeba4bcd958c498a1abee3c2270a8e89406898f1a99ddf625d3663c"
     },
     {
       "path": "appendix/app_gui_screenshots/11_ecosystem_registry.png",
-      "sha256": "6d41057b27fd7bc2d26a1cfcff1a8bf871162e92b8c8955b0068f8eef9b0d749"
+      "sha256": "ce39b806adeba4bcd958c498a1abee3c2270a8e89406898f1a99ddf625d3663c"
     },
     {
       "path": "appendix/app_gui_screenshots/12_real_rows_improvements.png",
-      "sha256": "938ab7126c1dd4fbf3156e9c067c89d90fef7f7e1ef452d8f75f15963dba59f2"
+      "sha256": "402cb23b0fde2cf74066763f889e9718c5c16a464bb3c5885ce76c3ecee944b4"
     },
     {
       "path": "appendix/app_registry_snapshot_full.json",
@@ -35,7 +35,7 @@
     },
     {
       "path": "chapter2/fig_2_calibration_constants.png",
-      "sha256": "fe4ac72b781e8d57eec8af5536b72fdb6f38b4d2a46436e10be5f4ca21336bda"
+      "sha256": "fa362093b43e3660c0c70d81f74810636be510c04c80f25895a0e4802d592169"
     },
     {
       "path": "chapter2/fig_2_equal_raw_structure_comparison.png",
@@ -91,11 +91,11 @@
     },
     {
       "path": "chapter4/fig_4_ecosystem_registry.png",
-      "sha256": "6d41057b27fd7bc2d26a1cfcff1a8bf871162e92b8c8955b0068f8eef9b0d749"
+      "sha256": "ce39b806adeba4bcd958c498a1abee3c2270a8e89406898f1a99ddf625d3663c"
     },
     {
       "path": "chapter4/fig_4_evidence_contract.png",
-      "sha256": "a31d64d73d247f33817a0276d884e34523d6a38a6daae1ba4159811b1a28e6a8"
+      "sha256": "ce39b806adeba4bcd958c498a1abee3c2270a8e89406898f1a99ddf625d3663c"
     },
     {
       "path": "chapter4/fig_4_evidence_matrix_heatmap.png",
@@ -103,7 +103,7 @@
     },
     {
       "path": "chapter4/fig_4_real_rows_improvements.png",
-      "sha256": "938ab7126c1dd4fbf3156e9c067c89d90fef7f7e1ef452d8f75f15963dba59f2"
+      "sha256": "402cb23b0fde2cf74066763f889e9718c5c16a464bb3c5885ce76c3ecee944b4"
     },
     {
       "path": "chapter4/fig_4_registry_status_counts.png",
@@ -159,7 +159,7 @@
     },
     {
       "path": "chapter5/text_5_scenario_run_insert.md",
-      "sha256": "d0b3a82f00ed696361c1d61d9e0519af04bc381174da77b8eddd65a1b83cd3f9"
+      "sha256": "537867b9ba153d56ac754d8414708c2be31c6f2852146e33dcae87de38c0bcdd"
     },
     {
       "path": "diagram_specs/chapter2/fig_2_1_operator.json",
