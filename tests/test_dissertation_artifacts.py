@@ -19,6 +19,10 @@ def test_dissertation_artifacts_pack_contains_chapter_tables(tmp_path) -> None:
         row = next(csv.DictReader(f))
     assert {'module_id', 'evidence_level', 'status', 'source_repo', 'claim_scope'} <= set(row)
 
+    with (root / 'chapter5' / 'table_5_scenario_run_summary.csv').open(encoding='utf-8') as f:
+        scenario_ids = {row['registry_id'] for row in csv.DictReader(f)}
+    assert {'gd_anfis_shap', 'hybrid_xiris', 'anza_lira', 'beacon_xai', 'gis_integro'} <= scenario_ids
+
     manifest = json.loads((root / 'artifact_manifest_sha256.json').read_text(encoding='utf-8'))
     assert manifest['status'] == 'ok'
     assert manifest['files']

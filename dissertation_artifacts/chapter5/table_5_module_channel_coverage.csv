@@ -1,6 +1,13 @@
 registry_id,L_k,mu_k,R_k,alpha_k,u_k,tau_k,eta_k,D_k,Report,Action
 hybrid_xiris,1,1,1,1,1,1,1,1,1,1
+gd_anfis_shap,0,0,0,0,0,0,0,0,0,0
+anza_lira,1,1,1,1,1,1,1,0,1,0
+beacon_xai,0,0,0,0,0,0,0,0,0,0
+gis_integro,0,0,0,0,0,0,0,0,0,0
 deep_neuro_fuzzy_kafn,1,1,1,1,1,1,1,0,1,0
 fan_multimodal,1,1,1,1,1,1,1,0,1,0
+kan_xai_2_system,1,1,1,1,1,1,1,0,1,0
+trust_ade,1,1,1,1,1,1,1,0,1,0
+synt_isic_timeshap,1,1,1,1,1,1,1,0,1,0
 eaar_regularization,0,0,0,0,0,0,0,0,0,0
 neutron_shap_reconstruction,0,0,0,0,0,0,0,0,0,0

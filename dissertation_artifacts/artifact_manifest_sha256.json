@@ -7,27 +7,27 @@
     },
     {
       "path": "appendix/app_evidence_matrix_full.csv",
-      "sha256": "451b719410eca29c0d6ffcdd4d423cb28306be947e7e7af076cc86e4df0eb5b6"
+      "sha256": "97a0eda4f67f2e55925312064d3f4a348c28d9845001110e04ed3b6936805162"
     },
     {
       "path": "appendix/app_gui_screenshots/10_evidence_contract.png",
-      "sha256": "d0dd86a568fed4589d8efdfb536062d80dace0af3038e1cd04e1982826fb50d9"
+      "sha256": "fea0ffa3265e8896bbfcb99e5a993044043ee13f53271b892121a8514b49c71f"
     },
     {
       "path": "appendix/app_gui_screenshots/11_ecosystem_registry.png",
-      "sha256": "9d321ae2fb9cd6cacfdc976e139cc97e19cdeb9dc4aee32c473667f6e519fce5"
+      "sha256": "58df5d10c63f48df599a6612de58c95e26c8e775da5b783a226e1fe14ebec190"
     },
     {
       "path": "appendix/app_gui_screenshots/12_real_rows_improvements.png",
-      "sha256": "9d321ae2fb9cd6cacfdc976e139cc97e19cdeb9dc4aee32c473667f6e519fce5"
+      "sha256": "92d6a3cbdf5ded89dff16c7339a8ec5e7e91f1f12aac1d9a1be329318cd1cb85"
     },
     {
       "path": "appendix/app_registry_snapshot_full.json",
-      "sha256": "95dbfb3a73e8a41e969dc982477c2e9b8ab7a9416768ad31ef40d869419446b7"
+      "sha256": "a13145c060d395d2b115d90602e4dae40d19c7ba8e3c61cf714f16be3d2cc3ee"
     },
     {
       "path": "appendix/app_reproduction_index.md",
-      "sha256": "006dced18ebc347c7a3285d0b5f2d2e99c209a021be90fafb08f65f2234573a0"
+      "sha256": "1e637bfeae4664f912ca3a861b1eb2ce2c8db46bd616ca7594d0cc4c46627187"
     },
     {
       "path": "captions.md",
@@ -59,35 +59,35 @@
     },
     {
       "path": "chapter4/fig_4_ecosystem_registry.png",
-      "sha256": "9d321ae2fb9cd6cacfdc976e139cc97e19cdeb9dc4aee32c473667f6e519fce5"
+      "sha256": "58df5d10c63f48df599a6612de58c95e26c8e775da5b783a226e1fe14ebec190"
     },
     {
       "path": "chapter4/fig_4_evidence_contract.png",
-      "sha256": "d0dd86a568fed4589d8efdfb536062d80dace0af3038e1cd04e1982826fb50d9"
+      "sha256": "fea0ffa3265e8896bbfcb99e5a993044043ee13f53271b892121a8514b49c71f"
     },
     {
       "path": "chapter4/fig_4_evidence_matrix_heatmap.png",
-      "sha256": "f7369d13f146e808f5e260399c8cc7f9b78c06543d1eace2fc771cfd990fa249"
+      "sha256": "a21f9628b9002c12d3b8b9fc6f5b9738c6f44d73b0e02781a2daf0e23e7ab0b0"
     },
     {
       "path": "chapter4/fig_4_real_rows_improvements.png",
-      "sha256": "9d321ae2fb9cd6cacfdc976e139cc97e19cdeb9dc4aee32c473667f6e519fce5"
+      "sha256": "92d6a3cbdf5ded89dff16c7339a8ec5e7e91f1f12aac1d9a1be329318cd1cb85"
     },
     {
       "path": "chapter4/fig_4_registry_status_counts.png",
-      "sha256": "d004b7c814a043e3c61d41b918cb56b93b5a8c33261e8ffdc21219a54bda75da"
+      "sha256": "f94893215a5e104f04a38d49e8af713011ae2e0210de28b31964efb45cfa9f1b"
     },
     {
       "path": "chapter4/table_4_evidence_matrix.csv",
-      "sha256": "99805a40b4b3ab2a40a58923b0be16e95c4948d4c5ee4a9f0a6674377c9daa69"
+      "sha256": "44e2f1cd20f4488032a79e2e418b92d8a60d44aff7b1142bced2a067c1bdcf80"
     },
     {
       "path": "chapter4/table_4_registry_snapshot.csv",
-      "sha256": "451b719410eca29c0d6ffcdd4d423cb28306be947e7e7af076cc86e4df0eb5b6"
+      "sha256": "97a0eda4f67f2e55925312064d3f4a348c28d9845001110e04ed3b6936805162"
     },
     {
       "path": "chapter4/table_4_source_repo_cards.csv",
-      "sha256": "406148f1296be1c5f996d90200a6f73725d655cf82d5f2de73c5eaadc7f616af"
+      "sha256": "b993c5cc82f6558d33fc9b574a063404511018ab58b2ed37503e14ef69b0bf8c"
     },
     {
       "path": "chapter4/text_4_evidence_pack_insert.md",
@@ -99,27 +99,27 @@
     },
     {
       "path": "chapter5/fig_5_module_channel_coverage.png",
-      "sha256": "eed71e813e3668ab3b77af38d3b84c2bf2f11ac258cf44dbc4cca030967f5150"
+      "sha256": "1e8fb0892927ebe290626b5a5599bc0ef98f8db684b23603408e9535fc518e04"
     },
     {
       "path": "chapter5/fig_5_scenario_action_routes.png",
-      "sha256": "2631a872f94c4c703b2afcce52242417604dd469d92beb15203c8f4944bc1405"
+      "sha256": "dcc55c7d58147187c61d67b792b53d663c1781e7a61bc75b5cdfcf1b77dc16c9"
     },
     {
       "path": "chapter5/fig_5_scenario_status_overview.png",
-      "sha256": "280c0c5f6fd3c46ae1d15baa7cb5aa0591601b9991b59531f0ea5e675e1ed716"
+      "sha256": "1c2a89ca946565869a83da394b8aa8603fe9490953ea98255b330f8315e2973b"
     },
     {
       "path": "chapter5/table_5_module_channel_coverage.csv",
-      "sha256": "22b2a16c2b5cdab2a49bed6115550f4fc232a5b56b3e628dc53f561bba43f9c8"
+      "sha256": "5680725850fdc8b927e30a37abab22221a3a2c4624d505669ef9f66066672e70"
     },
     {
       "path": "chapter5/table_5_registry_scenarios.csv",
-      "sha256": "2248f5e4548fe8c817c346a7f933319c52f2504f502fd9de668b22cf9ff26c9e"
+      "sha256": "78517aff0aa5858ed5d3496d8cd4946cd9b89ad9af879256def1911d579ccde6"
     },
     {
       "path": "chapter5/table_5_scenario_run_summary.csv",
-      "sha256": "ddbd1f2002b53c122453b5c928249a5dc6416f2fce556e609d443f57cf06b5dd"
+      "sha256": "ac45fbdc60aa8c3c0f4666879183dac84d82d0695a583ee8577bacf060db2723"
     },
     {
       "path": "chapter5/text_5_scenario_run_insert.md",

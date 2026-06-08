@@ -69,7 +69,7 @@
     {
       "path": "fuzzyxai/ecosystem/registry.json",
       "exists": true,
-      "sha256": "c4f1269d1532163d65ae133fa0b092e979ae35347c732d8bcf7429fb93ae13bc",
+      "sha256": "e794e77071a318559c5b7d2d60cf9f7d4c20e31fb7021f2c15488dd2d47b5df9",
       "chapter": "4",
       "confirms": "External module registry for chapter 4 ecosystem integration",
       "command": "make ecosystem-evidence"
@@ -77,7 +77,7 @@
     {
       "path": "evidence/evidence_matrix.csv",
       "exists": true,
-      "sha256": "451b719410eca29c0d6ffcdd4d423cb28306be947e7e7af076cc86e4df0eb5b6",
+      "sha256": "97a0eda4f67f2e55925312064d3f4a348c28d9845001110e04ed3b6936805162",
       "chapter": "4 / 5",
       "confirms": "Module evidence matrix with status, fixture, and claim-scope flags",
       "command": "make ecosystem-evidence"
@@ -85,7 +85,7 @@
     {
       "path": "reports/chapter4/ecosystem_evidence.json",
       "exists": true,
-      "sha256": "ecbd9e15292878c62c0296fec982b510d814d7982d68469290b15910d156cc04",
+      "sha256": "d62e72a2d297c817c4039e12e88c7ce3dfad90ae5a0b528870ac7dfc81ce382c",
       "chapter": "4",
       "confirms": "Chapter 4 external module evidence summary",
       "command": "make ecosystem-evidence"

@@ -145,9 +145,9 @@
 | `configs/explain_plan_chapter2.yaml` | 2 / appendix | `4469dad3fbeeb4f53ad953c24bd4e29a8de0d17d6465fb2c71b2b15a954cacfc` | Fixed chapter 2 ExplainPlan YAML contract used for deterministic hashing |
 | `reports/chapter2/explain_plan_hash.json` | 2 / appendix | `c18bfa69005fd3b56cc3ea73ee2a59596b00486dd2cdd71398dc5eb30b12e7cb` | Validated ExplainPlan SHA256 and required trace field list |
 | `reports/chapter2/sample_113_report.json` | 2 | `4920325789b0e09fc54a9f64f9dd93f0ae5efa82aa57ca74e17903fd97025f33` | Canonical sample_113 report generated from the chapter 2 ExplainPlan contract |
-| `fuzzyxai/ecosystem/registry.json` | 4 | `c4f1269d1532163d65ae133fa0b092e979ae35347c732d8bcf7429fb93ae13bc` | External module registry for chapter 4 ecosystem integration |
-| `evidence/evidence_matrix.csv` | 4 / 5 | `451b719410eca29c0d6ffcdd4d423cb28306be947e7e7af076cc86e4df0eb5b6` | Module evidence matrix with status, fixture, and claim-scope flags |
-| `reports/chapter4/ecosystem_evidence.json` | 4 | `ecbd9e15292878c62c0296fec982b510d814d7982d68469290b15910d156cc04` | Chapter 4 external module evidence summary |
+| `fuzzyxai/ecosystem/registry.json` | 4 | `e794e77071a318559c5b7d2d60cf9f7d4c20e31fb7021f2c15488dd2d47b5df9` | External module registry for chapter 4 ecosystem integration |
+| `evidence/evidence_matrix.csv` | 4 / 5 | `97a0eda4f67f2e55925312064d3f4a348c28d9845001110e04ed3b6936805162` | Module evidence matrix with status, fixture, and claim-scope flags |
+| `reports/chapter4/ecosystem_evidence.json` | 4 | `d62e72a2d297c817c4039e12e88c7ce3dfad90ae5a0b528870ac7dfc81ce382c` | Chapter 4 external module evidence summary |
 | `reports/reproducibility_artifacts/explain_plan.json` | 2 / appendix | `d7cdb8f76152c43aec44316fad634fc337273206b26db67ad890697ab38bf524` | Serializable ExplainPlan contract and trace hash source |
 | `reports/chapter2_real_operator_case/breast_cancer_operator_case.json` | 2 | `0d319ff99567c4c8b16969fe22085b6dec1114932875e784f69168b57bd2921d` | sample_113 operator values: mu, alpha, U_model, U_rules, U_trace, u_M, tau |
 | `reports/real_reduction_example/breast_cancer_case.json` | 3 | `ca31cd57c9b9d0ddc683a9d42e2deeee0a316a0f2881af408dbe633bdeeca075` | sample_113 reduction, chi_Auto, chi_R, chi_R_crit, rho, action |

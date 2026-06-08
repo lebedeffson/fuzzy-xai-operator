@@ -125,8 +125,8 @@ def _route_figure(path: Path, title: str, modules: list[str]) -> None:
 
 
 def _module_channels(row: dict[str, Any]) -> dict[str, int]:
-    planned = row.get('status') == 'planned'
-    if planned:
+    pending = row.get('status') in {'planned', 'source-pending'}
+    if pending:
         return {c: 0 for c in CHANNELS}
     adapter = str(row.get('adapter', ''))
     base = {c: 0 for c in CHANNELS}
@@ -166,7 +166,7 @@ def _scenario_tables(out: Path, matrix_rows: list[dict[str, Any]]) -> tuple[list
             'claim_scope': row.get('claim_scope', ''),
             'chapter_section': '5.x' if row.get('chapter_role') != 'future_extension' else 'appendix/future work',
         })
-        adapter_called = str(row.get('adapter', '')) != 'planned' and str(row.get('status', '')) != 'planned'
+        adapter_called = row.get('run_allowed') in {True, 'True', 'true', '1', 1}
         output_type = 'ExplanationArtifact + report' if adapter_called else 'registered metadata only'
         action = 'audit_report' if adapter_called else 'not_run'
         report_path = reports_dir / f'{rid}_action_report.md'
@@ -188,6 +188,7 @@ def _scenario_tables(out: Path, matrix_rows: list[dict[str, Any]]) -> tuple[list
         ]), encoding='utf-8')
         run_rows.append({
             'registry_id': rid,
+            'source_repo': row.get('source_repo', ''),
             'adapter_called': adapter_called,
             'output_type': output_type,
             'has_explanation_object': adapter_called,
@@ -205,7 +206,7 @@ def _scenario_tables(out: Path, matrix_rows: list[dict[str, Any]]) -> tuple[list
         coverage_rows.append(cov)
 
     _write_csv(ROOT / 'reports' / 'chapter5' / 'scenario_registry_table.csv', scenario_rows, ['scenario', 'registry_id', 'module_name', 'adapter_class', 'source_repo', 'evidence_level', 'status', 'claim_scope', 'chapter_section'])
-    _write_csv(ROOT / 'reports' / 'chapter5' / 'scenario_run_summary.csv', run_rows, ['registry_id', 'adapter_called', 'output_type', 'has_explanation_object', 'has_diagnostic_state', 'chi_R', 'chi_Auto', 'rho', 'action', 'report_path', 'figure_path', 'status', 'claim_scope'])
+    _write_csv(ROOT / 'reports' / 'chapter5' / 'scenario_run_summary.csv', run_rows, ['registry_id', 'source_repo', 'adapter_called', 'output_type', 'has_explanation_object', 'has_diagnostic_state', 'chi_R', 'chi_Auto', 'rho', 'action', 'report_path', 'figure_path', 'status', 'claim_scope'])
     _write_csv(ROOT / 'reports' / 'chapter5' / 'module_channel_coverage.csv', coverage_rows, ['registry_id', *CHANNELS])
     return scenario_rows, run_rows, coverage_rows
 
@@ -257,7 +258,7 @@ def run(out_dir: str | Path = 'dissertation_artifacts') -> dict[str, Any]:
             'claim_scope': row.get('claim_scope', ''),
             'adapter_class': row.get('adapter', ''),
             'gui_visible': True,
-            'artifact_present': bool(row.get('source_artifact')) and row.get('status') != 'planned',
+            'artifact_present': bool(row.get('source_artifact')) and str(row.get('source_repo', '')).startswith('https://github.com/') and row.get('status') != 'planned',
             'local_fixture_present': bool(row.get('fixture_exists', False)),
             'report_present': (ROOT / 'reports/chapter4/ecosystem_evidence.json').exists(),
             'figure_present': (ROOT / 'reports/browser_visual_check/11_ecosystem_registry.png').exists(),
@@ -287,7 +288,7 @@ def run(out_dir: str | Path = 'dissertation_artifacts') -> dict[str, Any]:
 
     scenario_rows, run_rows, coverage_rows = _scenario_tables(out, matrix_rows)
     _write_csv(out / 'chapter5/table_5_registry_scenarios.csv', scenario_rows, ['scenario', 'registry_id', 'module_name', 'adapter_class', 'source_repo', 'evidence_level', 'status', 'claim_scope', 'chapter_section'])
-    _write_csv(out / 'chapter5/table_5_scenario_run_summary.csv', run_rows, ['registry_id', 'adapter_called', 'output_type', 'has_explanation_object', 'has_diagnostic_state', 'chi_R', 'chi_Auto', 'rho', 'action', 'report_path', 'figure_path', 'status', 'claim_scope'])
+    _write_csv(out / 'chapter5/table_5_scenario_run_summary.csv', run_rows, ['registry_id', 'source_repo', 'adapter_called', 'output_type', 'has_explanation_object', 'has_diagnostic_state', 'chi_R', 'chi_Auto', 'rho', 'action', 'report_path', 'figure_path', 'status', 'claim_scope'])
     _write_csv(out / 'chapter5/table_5_module_channel_coverage.csv', coverage_rows, ['registry_id', *CHANNELS])
     _bar(out / 'chapter5/fig_5_scenario_status_overview.png', 'Chapter 5 scenario status overview', statuses, [float(c) for c in counts], color='#0891b2', ylim=None)
     _route_figure(out / 'chapter5/fig_5_scenario_action_routes.png', 'Scenario routes through FuzzyXAI', [r.get('registry_id', '') for r in matrix_rows])

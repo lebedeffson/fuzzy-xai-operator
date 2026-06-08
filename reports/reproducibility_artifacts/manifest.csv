@@ -2,9 +2,9 @@ path,exists,sha256,chapter,confirms,command
 configs/explain_plan_chapter2.yaml,True,4469dad3fbeeb4f53ad953c24bd4e29a8de0d17d6465fb2c71b2b15a954cacfc,2 / appendix,Fixed chapter 2 ExplainPlan YAML contract used for deterministic hashing,make reproduce-chapter2
 reports/chapter2/explain_plan_hash.json,True,c18bfa69005fd3b56cc3ea73ee2a59596b00486dd2cdd71398dc5eb30b12e7cb,2 / appendix,Validated ExplainPlan SHA256 and required trace field list,make reproduce-chapter2
 reports/chapter2/sample_113_report.json,True,4920325789b0e09fc54a9f64f9dd93f0ae5efa82aa57ca74e17903fd97025f33,2,Canonical sample_113 report generated from the chapter 2 ExplainPlan contract,make reproduce-chapter2
-fuzzyxai/ecosystem/registry.json,True,c4f1269d1532163d65ae133fa0b092e979ae35347c732d8bcf7429fb93ae13bc,4,External module registry for chapter 4 ecosystem integration,make ecosystem-evidence
-evidence/evidence_matrix.csv,True,451b719410eca29c0d6ffcdd4d423cb28306be947e7e7af076cc86e4df0eb5b6,4 / 5,"Module evidence matrix with status, fixture, and claim-scope flags",make ecosystem-evidence
-reports/chapter4/ecosystem_evidence.json,True,ecbd9e15292878c62c0296fec982b510d814d7982d68469290b15910d156cc04,4,Chapter 4 external module evidence summary,make ecosystem-evidence
+fuzzyxai/ecosystem/registry.json,True,e794e77071a318559c5b7d2d60cf9f7d4c20e31fb7021f2c15488dd2d47b5df9,4,External module registry for chapter 4 ecosystem integration,make ecosystem-evidence
+evidence/evidence_matrix.csv,True,97a0eda4f67f2e55925312064d3f4a348c28d9845001110e04ed3b6936805162,4 / 5,"Module evidence matrix with status, fixture, and claim-scope flags",make ecosystem-evidence
+reports/chapter4/ecosystem_evidence.json,True,d62e72a2d297c817c4039e12e88c7ce3dfad90ae5a0b528870ac7dfc81ce382c,4,Chapter 4 external module evidence summary,make ecosystem-evidence
 reports/reproducibility_artifacts/explain_plan.json,True,d7cdb8f76152c43aec44316fad634fc337273206b26db67ad890697ab38bf524,2 / appendix,Serializable ExplainPlan contract and trace hash source,make reproducibility-artifacts
 reports/chapter2_real_operator_case/breast_cancer_operator_case.json,True,0d319ff99567c4c8b16969fe22085b6dec1114932875e784f69168b57bd2921d,2,"sample_113 operator values: mu, alpha, U_model, U_rules, U_trace, u_M, tau",make chapter2-real-operator-case
 reports/real_reduction_example/breast_cancer_case.json,True,ca31cd57c9b9d0ddc683a9d42e2deeee0a316a0f2881af408dbe633bdeeca075,3,"sample_113 reduction, chi_Auto, chi_R, chi_R_crit, rho, action",make real-reduction-example

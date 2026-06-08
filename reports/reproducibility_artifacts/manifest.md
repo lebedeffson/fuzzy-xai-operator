@@ -24,9 +24,9 @@
 | `configs/explain_plan_chapter2.yaml` | `True` | `4469dad3fbee` | 2 / appendix | Fixed chapter 2 ExplainPlan YAML contract used for deterministic hashing | `make reproduce-chapter2` |
 | `reports/chapter2/explain_plan_hash.json` | `True` | `c18bfa69005f` | 2 / appendix | Validated ExplainPlan SHA256 and required trace field list | `make reproduce-chapter2` |
 | `reports/chapter2/sample_113_report.json` | `True` | `4920325789b0` | 2 | Canonical sample_113 report generated from the chapter 2 ExplainPlan contract | `make reproduce-chapter2` |
-| `fuzzyxai/ecosystem/registry.json` | `True` | `c4f1269d1532` | 4 | External module registry for chapter 4 ecosystem integration | `make ecosystem-evidence` |
-| `evidence/evidence_matrix.csv` | `True` | `451b719410ec` | 4 / 5 | Module evidence matrix with status, fixture, and claim-scope flags | `make ecosystem-evidence` |
-| `reports/chapter4/ecosystem_evidence.json` | `True` | `ecbd9e152928` | 4 | Chapter 4 external module evidence summary | `make ecosystem-evidence` |
+| `fuzzyxai/ecosystem/registry.json` | `True` | `e794e77071a3` | 4 | External module registry for chapter 4 ecosystem integration | `make ecosystem-evidence` |
+| `evidence/evidence_matrix.csv` | `True` | `97a0eda4f67f` | 4 / 5 | Module evidence matrix with status, fixture, and claim-scope flags | `make ecosystem-evidence` |
+| `reports/chapter4/ecosystem_evidence.json` | `True` | `d62e72a2d297` | 4 | Chapter 4 external module evidence summary | `make ecosystem-evidence` |
 | `reports/reproducibility_artifacts/explain_plan.json` | `True` | `d7cdb8f76152` | 2 / appendix | Serializable ExplainPlan contract and trace hash source | `make reproducibility-artifacts` |
 | `reports/chapter2_real_operator_case/breast_cancer_operator_case.json` | `True` | `0d319ff99567` | 2 | sample_113 operator values: mu, alpha, U_model, U_rules, U_trace, u_M, tau | `make chapter2-real-operator-case` |
 | `reports/real_reduction_example/breast_cancer_case.json` | `True` | `ca31cd57c9b9` | 3 | sample_113 reduction, chi_Auto, chi_R, chi_R_crit, rho, action | `make real-reduction-example` |

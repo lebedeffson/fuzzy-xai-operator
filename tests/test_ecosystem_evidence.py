@@ -10,8 +10,16 @@ from fuzzyxai.ecosystem import build_evidence_matrix, load_ecosystem_registry
 def test_ecosystem_registry_has_expected_modules() -> None:
     modules = load_ecosystem_registry()
     ids = {m.registry_id for m in modules}
-    assert {'hybrid_xiris', 'deep_neuro_fuzzy_kafn', 'fan_multimodal'} <= ids
-    assert all(m.source_repo.startswith('https://github.com/') for m in modules)
+    assert {
+        'hybrid_xiris',
+        'gd_anfis_shap',
+        'anza_lira',
+        'beacon_xai',
+        'gis_integro',
+        'deep_neuro_fuzzy_kafn',
+        'fan_multimodal',
+    } <= ids
+    assert all(m.source_repo.startswith('https://github.com/') or m.source_repo.startswith('source-not-provided:') for m in modules)
 
 
 def test_evidence_matrix_keeps_planned_out_of_quant_claims() -> None:
@@ -31,4 +39,3 @@ def test_ecosystem_evidence_pack_writes_files(tmp_path) -> None:
         rows = list(csv.DictReader(f))
     assert rows
     assert paths['index'].endswith('reproduction_index.md')
-
