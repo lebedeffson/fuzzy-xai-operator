@@ -66,14 +66,16 @@ def run_visual_check(port: int = 18097, out_dir: str | Path = 'reports/browser_v
                 ('case_controls', '1) Кейс и запуск', None),
                 ('plan_editor', '2) ExplainPlan', None),
                 ('what_if', '3) What-if', None),
-                ('benchmark', '4) Benchmark', None),
-                ('export', '5) Export', None),
-                ('summary', 'Итог по кейсу', ('tab', 'Overview')),
-                ('operator_trace', 'Operator trace (что берет из системы)', ('tab', 'Operators')),
-                ('operator_flow', 'rows:', ('tab', 'Operators')),
-                ('evidence_contract', 'Evidence contract', ('tab', 'Evidence')),
-                ('ecosystem_registry', 'External module registry', ('tab', 'Evidence')),
-                ('real_rows_improvements', 'Real rows improvements', ('tab', 'Evidence')),
+                ('benchmark', '4) Сравнение', None),
+                ('export', '5) Экспорт', None),
+                ('summary', 'Итог по кейсу', ('tab', 'Маршрут')),
+                ('operator_trace', 'Трасса операторов: что берется из системы', ('tab', 'Операторы')),
+                ('operator_flow', 'rows:', ('tab', 'Операторы')),
+                ('evidence_contract', 'Контракт доказательности', ('tab', 'Доказательства')),
+                ('ecosystem_registry', 'Реестр внешних модулей', ('tab', 'Доказательства')),
+                ('real_rows_improvements', 'Улучшения на реальных строках', ('tab', 'Доказательства')),
+                ('sdk_api_route', 'Маршрут SDK / API / Docker', ('tab', 'Доказательства')),
+                ('dissertation_artifacts', 'Пакет артефактов диссертации', ('tab', 'Артефакты')),
             ]
             for i, (name, marker, nav) in enumerate(section_checks, start=2):
                 ok = True
@@ -87,7 +89,7 @@ def run_visual_check(port: int = 18097, out_dir: str | Path = 'reports/browser_v
                     loc.wait_for(timeout=7000)
                     loc.scroll_into_view_if_needed(timeout=3000)
                     page.wait_for_timeout(300)
-                    page.screenshot(path=str(shot), full_page=True)
+                    page.screenshot(path=str(shot), full_page=False)
                 except Exception as exc:  # pragma: no cover
                     ok = False
                     note = f'{type(exc).__name__}: {exc}'

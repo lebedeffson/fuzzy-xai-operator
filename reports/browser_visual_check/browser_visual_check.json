@@ -73,6 +73,18 @@
       "ok": true,
       "note": "ok",
       "screenshot": "reports/browser_visual_check/12_real_rows_improvements.png"
+    },
+    {
+      "name": "sdk_api_route",
+      "ok": true,
+      "note": "ok",
+      "screenshot": "reports/browser_visual_check/13_sdk_api_route.png"
+    },
+    {
+      "name": "dissertation_artifacts",
+      "ok": true,
+      "note": "ok",
+      "screenshot": "reports/browser_visual_check/14_dissertation_artifacts.png"
     }
   ]
 }
