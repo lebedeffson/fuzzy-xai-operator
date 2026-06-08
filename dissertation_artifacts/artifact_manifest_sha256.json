@@ -11,15 +11,15 @@
     },
     {
       "path": "appendix/app_gui_screenshots/10_evidence_contract.png",
-      "sha256": "ce39b806adeba4bcd958c498a1abee3c2270a8e89406898f1a99ddf625d3663c"
+      "sha256": "a7d291e3cb8b2ba3bc0c504685cfddc9aaef157e6cba96a214da266c36c86a26"
     },
     {
       "path": "appendix/app_gui_screenshots/11_ecosystem_registry.png",
-      "sha256": "ce39b806adeba4bcd958c498a1abee3c2270a8e89406898f1a99ddf625d3663c"
+      "sha256": "a7d291e3cb8b2ba3bc0c504685cfddc9aaef157e6cba96a214da266c36c86a26"
     },
     {
       "path": "appendix/app_gui_screenshots/12_real_rows_improvements.png",
-      "sha256": "402cb23b0fde2cf74066763f889e9718c5c16a464bb3c5885ce76c3ecee944b4"
+      "sha256": "fafe6a6049278b08c7377872a1c53746ff4c7e5c946874d5389f21f4aed657c3"
     },
     {
       "path": "appendix/app_registry_snapshot_full.json",
@@ -91,11 +91,11 @@
     },
     {
       "path": "chapter4/fig_4_ecosystem_registry.png",
-      "sha256": "ce39b806adeba4bcd958c498a1abee3c2270a8e89406898f1a99ddf625d3663c"
+      "sha256": "a7d291e3cb8b2ba3bc0c504685cfddc9aaef157e6cba96a214da266c36c86a26"
     },
     {
       "path": "chapter4/fig_4_evidence_contract.png",
-      "sha256": "ce39b806adeba4bcd958c498a1abee3c2270a8e89406898f1a99ddf625d3663c"
+      "sha256": "a7d291e3cb8b2ba3bc0c504685cfddc9aaef157e6cba96a214da266c36c86a26"
     },
     {
       "path": "chapter4/fig_4_evidence_matrix_heatmap.png",
@@ -103,7 +103,7 @@
     },
     {
       "path": "chapter4/fig_4_real_rows_improvements.png",
-      "sha256": "402cb23b0fde2cf74066763f889e9718c5c16a464bb3c5885ce76c3ecee944b4"
+      "sha256": "fafe6a6049278b08c7377872a1c53746ff4c7e5c946874d5389f21f4aed657c3"
     },
     {
       "path": "chapter4/fig_4_registry_status_counts.png",
@@ -150,6 +150,14 @@
       "sha256": "78517aff0aa5858ed5d3496d8cd4946cd9b89ad9af879256def1911d579ccde6"
     },
     {
+      "path": "chapter5/table_5_scenario_baseline_comparison.csv",
+      "sha256": "237d4b3a8a172e0b7201e4c7ff1ab135345a8c4252b13bc30468f2d09828c8bf"
+    },
+    {
+      "path": "chapter5/table_5_scenario_baseline_comparison.md",
+      "sha256": "157b1873ec4c31b67b01bbba56e4b9df38c166b8e80019bfba05a56db0e1846f"
+    },
+    {
       "path": "chapter5/table_5_scenario_quantitative_summary.csv",
       "sha256": "071e404b1ed62341df8c68196bc4ec713bbc05e9db9689227626c856ec15f39a"
     },
@@ -159,7 +167,7 @@
     },
     {
       "path": "chapter5/text_5_scenario_run_insert.md",
-      "sha256": "537867b9ba153d56ac754d8414708c2be31c6f2852146e33dcae87de38c0bcdd"
+      "sha256": "47a8ed1ccfcc7caf49b9b9152fdf8e3ed23dbdac57dd4d7d124e30f00e705e8c"
     },
     {
       "path": "diagram_specs/chapter2/fig_2_1_operator.json",

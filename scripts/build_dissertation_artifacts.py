@@ -46,6 +46,14 @@ def _write_json(path: Path, payload: dict[str, Any]) -> None:
     path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding='utf-8')
 
 
+def _write_md_table(path: Path, rows: list[dict[str, Any]], fields: list[str]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    lines = ['| ' + ' | '.join(fields) + ' |', '| ' + ' | '.join(['---'] * len(fields)) + ' |']
+    for row in rows:
+        lines.append('| ' + ' | '.join(str(row.get(field, '')) for field in fields) + ' |')
+    path.write_text('\n'.join(lines) + '\n', encoding='utf-8')
+
+
 def _sha(path: Path) -> str:
     if not path.exists() or not path.is_file():
         return ''
@@ -244,6 +252,28 @@ def _scenario_quantitative_summary(matrix_rows: list[dict[str, Any]]) -> list[di
     return rows
 
 
+def _scenario_baseline_comparison_rows(quant_rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    rows: list[dict[str, Any]] = []
+    for row in quant_rows:
+        available = row.get('quantitative_comparison_available') == 'true'
+        rows.append({
+            'registry_id': row.get('registry_id', ''),
+            'baseline_accuracy': row.get('baseline_value', 'not_available') if row.get('baseline_metric') == 'accuracy' else 'not_available',
+            'fuzzyxai_accuracy': row.get('fuzzyxai_value', 'not_available') if row.get('fuzzyxai_metric') == 'safe_accuracy' else 'not_available',
+            'baseline_metric': row.get('baseline_metric', 'not_available'),
+            'baseline_value': row.get('baseline_value', 'not_available'),
+            'fuzzyxai_metric': row.get('fuzzyxai_metric', 'not_available'),
+            'fuzzyxai_value': row.get('fuzzyxai_value', 'not_available'),
+            'missed_critical_ruptures': row.get('missed_critical', 'N/A'),
+            'false_auto_accept_rate': row.get('false_auto_accept', 'N/A'),
+            'quantitative_comparison_available': str(available).lower(),
+            'pinned_baseline_required': str(not available).lower(),
+            'status': row.get('status', ''),
+            'note': row.get('notes', ''),
+        })
+    return rows
+
+
 def _write_diagram_specs(out: Path) -> None:
     base = out / 'diagram_specs'
     specs: dict[str, dict[str, Any]] = {
@@ -421,11 +451,17 @@ def run(out_dir: str | Path = 'dissertation_artifacts') -> dict[str, Any]:
 
     scenario_rows, run_rows, coverage_rows = _scenario_tables(out, matrix_rows)
     quant_rows = _scenario_quantitative_summary(matrix_rows)
+    baseline_rows = _scenario_baseline_comparison_rows(quant_rows)
+    baseline_fields = ['registry_id', 'baseline_accuracy', 'fuzzyxai_accuracy', 'baseline_metric', 'baseline_value', 'fuzzyxai_metric', 'fuzzyxai_value', 'missed_critical_ruptures', 'false_auto_accept_rate', 'quantitative_comparison_available', 'pinned_baseline_required', 'status', 'note']
     _write_csv(out / 'chapter5/table_5_registry_scenarios.csv', scenario_rows, ['scenario', 'registry_id', 'module_name', 'adapter_class', 'source_repo', 'evidence_level', 'status', 'claim_scope', 'chapter_section'])
     _write_csv(out / 'chapter5/table_5_scenario_run_summary.csv', run_rows, ['registry_id', 'source_repo', 'adapter_called', 'output_type', 'has_explanation_object', 'has_diagnostic_state', 'chi_R', 'chi_Auto', 'rho', 'action', 'report_path', 'figure_path', 'status', 'claim_scope'])
     _write_csv(out / 'chapter5/table_5_module_channel_coverage.csv', coverage_rows, ['registry_id', *CHANNELS])
     _write_csv(ROOT / 'reports' / 'chapter5' / 'scenario_quantitative_summary.csv', quant_rows, ['registry_id', 'baseline_metric', 'baseline_value', 'fuzzyxai_metric', 'fuzzyxai_value', 'missed_critical', 'false_auto_accept', 'report_only', 'quantitative_comparison_available', 'status', 'notes'])
     _write_csv(out / 'chapter5/table_5_scenario_quantitative_summary.csv', quant_rows, ['registry_id', 'baseline_metric', 'baseline_value', 'fuzzyxai_metric', 'fuzzyxai_value', 'missed_critical', 'false_auto_accept', 'report_only', 'quantitative_comparison_available', 'status', 'notes'])
+    _write_csv(ROOT / 'reports' / 'chapter5' / 'scenario_baseline_comparison.csv', baseline_rows, baseline_fields)
+    _write_csv(out / 'chapter5/table_5_scenario_baseline_comparison.csv', baseline_rows, baseline_fields)
+    _write_md_table(ROOT / 'reports' / 'chapter5' / 'scenario_baseline_comparison.md', baseline_rows, baseline_fields)
+    _write_md_table(out / 'chapter5/table_5_scenario_baseline_comparison.md', baseline_rows, baseline_fields)
     _bar(out / 'chapter5/fig_5_scenario_status_overview.png', 'Chapter 5 scenario status overview', statuses, [float(c) for c in counts], color='#0891b2', ylim=None)
     _route_figure(out / 'chapter5/fig_5_scenario_action_routes.png', 'Scenario routes through FuzzyXAI', [r.get('registry_id', '') for r in matrix_rows])
     _heatmap(out / 'chapter5/fig_5_module_channel_coverage.png', 'Module channel coverage', [r['registry_id'] for r in coverage_rows], CHANNELS, [[float(r[c]) for c in CHANNELS] for r in coverage_rows])
@@ -433,8 +469,9 @@ def run(out_dir: str | Path = 'dissertation_artifacts') -> dict[str, Any]:
         'Сценарии внешних модулей (ЭКГ/табличные объяснения, глазное дно, AFLC/ANZA-LIRA, '
         'BEACON-XAI, GIS INTEGRO и другие registry-сценарии) в главе 5 используются как проверка '
         'экосистемного маршрута, а не как полноценный benchmark исходных моделей. Поэтому для них '
-        'не вводятся искусственные таблицы accuracy или missed critical ruptures. Если pinned baseline '
-        'метрики отсутствуют, поля количественного сравнения помечаются как `not_available` или `N/A`. '
+        'формируется отдельная таблица baseline-сравнения, но без искусственных чисел: если pinned baseline '
+        'метрики отсутствуют, поля `accuracy`, `missed_critical_ruptures` и другие количественные поля '
+        'помечаются как `not_available` или `N/A`. '
         'Основные количественные safety-результаты вынесены в диагностические benchmark-разделы и приложения.\n'
     )
     (ROOT / 'reports' / 'chapter5' / 'scenario_scope_note.md').write_text(scenario_scope_note, encoding='utf-8')

@@ -118,6 +118,8 @@
 
 Сценарии ЭКГ/табличных объяснений, глазного дна, AFLC/ANZA-LIRA, BEACON-XAI, GIS INTEGRO и других registry-модулей используются как проверка экосистемного маршрута `registry -> adapter -> explanation/report -> action`, а не как полноценный benchmark исходных моделей. Поэтому для них не подставляются искусственные `accuracy` или `missed_critical_ruptures`; при отсутствии pinned baseline-метрик поля остаются `not_available` или `N/A`.
 
+Сформированная таблица: `reports/chapter5/scenario_baseline_comparison.csv`. Она содержит поля `baseline_accuracy`, `fuzzyxai_accuracy`, `missed_critical_ruptures`, `false_auto_accept_rate`, `quantitative_comparison_available`.
+
 ## Абляционный анализ
 
 | Mode | agreement_proxy | missed_critical | critical_recall | false_auto_accept | auto_accept_cov | mean_reduction_loss |

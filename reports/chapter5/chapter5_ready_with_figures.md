@@ -125,6 +125,8 @@
 
 Это ограничение является осознанным: глава 5 демонстрирует применимость единого интерфейса, SDK, реестра и evidence-пакета к внешним артефактам, а главные количественные safety-результаты приведены в диагностических benchmark-разделах и приложениях.
 
+Для единообразия сформирована таблица `reports/chapter5/scenario_baseline_comparison.csv`: она содержит поля `baseline_accuracy`, `fuzzyxai_accuracy`, `missed_critical_ruptures` и `false_auto_accept_rate`, но для неприкрепленных baseline-метрик использует `not_available`/`N/A`, не подставляя фиктивные значения.
+
 ## 5.8. Абляционный анализ
 
 | Mode | agreement_proxy | missed_critical | critical_recall | false_auto_accept | auto_accept_cov | mean_reduction_loss |

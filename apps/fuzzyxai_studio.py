@@ -863,6 +863,7 @@ def run(port: int = 8097) -> None:
         non_synth = _non_synthetic_rows()
         scenario_rows = _read_csv_rows(ROOT / 'reports' / 'chapter5' / 'scenario_run_summary.csv')
         quant_rows = _read_csv_rows(ROOT / 'reports' / 'chapter5' / 'scenario_quantitative_summary.csv')
+        scenario_baseline_rows = _read_csv_rows(ROOT / 'reports' / 'chapter5' / 'scenario_baseline_comparison.csv')
 
         evidence_contract_card.clear()
         with evidence_contract_card:
@@ -954,6 +955,20 @@ def run(port: int = 8097) -> None:
                         for r in quant_rows
                     ]
                     ui.table(columns=[{'name': k, 'label': k, 'field': k} for k in display_q[0].keys()], rows=display_q).classes('w-full')
+            if scenario_baseline_rows:
+                with ui.expansion('Таблица baseline-сравнения внешних сценариев', value=False).classes('w-full'):
+                    display_b = [
+                        {
+                            'registry_id': r.get('registry_id'),
+                            'baseline_accuracy': r.get('baseline_accuracy'),
+                            'fuzzyxai_accuracy': r.get('fuzzyxai_accuracy'),
+                            'missed_critical_ruptures': r.get('missed_critical_ruptures'),
+                            'false_auto_accept_rate': r.get('false_auto_accept_rate'),
+                            'available': r.get('quantitative_comparison_available'),
+                        }
+                        for r in scenario_baseline_rows
+                    ]
+                    ui.table(columns=[{'name': k, 'label': k, 'field': k} for k in display_b[0].keys()], rows=display_b).classes('w-full')
 
         improvements_card.clear()
         with improvements_card:
