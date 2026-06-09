@@ -1,0 +1,16 @@
+{
+  "T_ij": {
+    "name": "identity",
+    "term_map": {
+      "low": "low",
+      "high": "high"
+    },
+    "rule_map": {
+      "r_high": "r_high"
+    },
+    "activation_scale": 1.0
+  },
+  "gamma": 0.02,
+  "Delta_T": 0.0,
+  "J(T)": 0.02
+}

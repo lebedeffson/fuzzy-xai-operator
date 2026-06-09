@@ -1,6 +1,6 @@
 registry_id,L_k,mu_k,R_k,alpha_k,u_k,tau_k,eta_k,D_k,Report,Action
 hybrid_xiris,1,1,1,1,1,1,1,1,1,1
-gd_anfis_shap,0,0,0,0,0,0,0,0,0,0
+gd_anfis_shap,1,1,1,1,1,1,1,0,1,1
 anza_lira,1,1,1,1,1,1,1,0,1,0
 beacon_xai,0,0,0,0,0,0,0,0,0,0
 gis_integro,0,0,0,0,0,0,0,0,0,0

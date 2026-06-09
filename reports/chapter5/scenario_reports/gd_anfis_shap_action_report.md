@@ -1,11 +1,13 @@
-# Scenario action report: gd_anfis_shap
+# GD-ANFIS/SHAP action report
 
-- module: `GD-ANFIS / SHAP scenario`
-- adapter_called: `False`
-- output_type: `registered metadata only`
-- status: `source-pending`
-- evidence_level: `source-pending`
-- action: `not_run`
-- claim_scope: registered central chapter 5 scenario; excluded from quantitative claims until source repository is pinned
+- registry_id: `gd_anfis_shap`
+- sample_id: `gd_anfis_fixture_001`
+- source_status: `source-pending`
+- fixture_sha256: `dd18815b5e138f23573de1e099968e8393a33bf4356186adae764e2f3950c92b`
+- R_k: `3` rules
+- alpha_k: `{'r_high_marker': 0.86, 'r_pressure_medium': 0.48, 'r_age_low': 0.18}`
+- eta_k / SHAP: `{'marker': 0.41, 'pressure': 0.19, 'age': -0.08}`
+- u_k mean: `0.2767`
+- action: `audit_report`
 
-Численные `chi_R`, `chi_Auto` и `rho` для внешнего модуля не подставляются искусственно. Если адаптер не предоставляет полный структурный контур, сценарий фиксируется как audit/report-only.
+Сценарий исполняемый как локальный fixture-адаптер, но не используется как количественное доказательство до закрепления внешнего источника.

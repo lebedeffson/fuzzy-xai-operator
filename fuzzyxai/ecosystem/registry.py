@@ -96,7 +96,7 @@ def write_evidence_pack(out_dir: str | Path = 'evidence') -> dict[str, str]:
         encoding='utf-8',
     )
     with matrix_path.open('w', encoding='utf-8', newline='') as f:
-        writer = csv.DictWriter(f, fieldnames=list(matrix[0].keys()) if matrix else ['registry_id'])
+        writer = csv.DictWriter(f, fieldnames=list(matrix[0].keys()) if matrix else ['registry_id'], lineterminator='\n')
         writer.writeheader()
         writer.writerows(matrix)
 

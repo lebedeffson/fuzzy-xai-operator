@@ -7,10 +7,10 @@
 | module | status | evidence_level | role | claim_scope |
 | --- | --- | --- | --- | --- |
 | `hybrid_xiris` | `real-output-compatible` | `repository-output-level` | image / biometric / ophthalmology | adapter compatibility and evidence routing, not local model retraining |
-| `gd_anfis_shap` | `source-pending` | `source-pending` | neuro-fuzzy tabular explanation / SHAP alignment | registered central chapter 5 scenario; excluded from quantitative claims until source repository is pinned |
+| `gd_anfis_shap` | `source-pending` | `source-pending` | neuro-fuzzy tabular explanation / SHAP alignment | executable fixture adapter; excluded from quantitative claims until source repository is pinned |
 | `anza_lira` | `fixture-certified` | `repository-output-level` | vessel segmentation / AFLC-family / medical imaging | vessel-segmentation adapter route and report generation, not local model retraining |
-| `beacon_xai` | `source-pending` | `source-pending` | external XAI scenario / audit route | registered central chapter 5 scenario; excluded from quantitative claims until source repository is pinned |
-| `gis_integro` | `source-pending` | `source-pending` | geospatial / external integration / report route | registered central chapter 5 scenario; excluded from quantitative claims until source repository is pinned |
+| `beacon_xai` | `source-pending` | `source-pending` | external XAI scenario / audit route | source-pending planned scenario; adapter_called=false, action=not_run, quantitative_claims=false |
+| `gis_integro` | `source-pending` | `source-pending` | geospatial / external integration / report route | source-pending planned scenario; adapter_called=false, action=not_run, quantitative_claims=false |
 | `deep_neuro_fuzzy_kafn` | `fixture-certified` | `repository-output-level` | deep neuro-fuzzy / KAFN / RuFLEX-like scenario | fixed fixture adapter run with source provenance |
 | `fan_multimodal` | `fixture-certified` | `fixture-level` | fuzzy attention / concept explanation / multimodal | concept-level fuzzy attention scenario |
 | `kan_xai_2_system` | `fixture-certified` | `repository-output-level` | medical image explanation / KAN-XAI scenario | medical image explanation adapter route, not local model retraining |

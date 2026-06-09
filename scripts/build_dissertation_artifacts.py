@@ -8,6 +8,8 @@ import shutil
 from pathlib import Path
 from typing import Any
 
+from fuzzyxai.adapters.gd_anfis_shap import GDANFISSHAPAdapter
+
 import matplotlib
 
 matplotlib.use('Agg')
@@ -35,7 +37,7 @@ def _read_csv(path: str | Path) -> list[dict[str, str]]:
 def _write_csv(path: Path, rows: list[dict[str, Any]], fields: list[str]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open('w', encoding='utf-8', newline='') as f:
-        writer = csv.DictWriter(f, fieldnames=fields)
+        writer = csv.DictWriter(f, fieldnames=fields, lineterminator='\n')
         writer.writeheader()
         for row in rows:
             writer.writerow({field: row.get(field, '') for field in fields})
@@ -138,20 +140,22 @@ def _route_figure(path: Path, title: str, modules: list[str]) -> None:
 
 
 def _module_channels(row: dict[str, Any]) -> dict[str, int]:
-    pending = row.get('status') in {'planned', 'source-pending'}
+    adapter = str(row.get('adapter', ''))
+    pending = row.get('status') in {'planned', 'source-pending'} and adapter != 'gd_anfis_shap'
     if pending:
         return {c: 0 for c in CHANNELS}
-    adapter = str(row.get('adapter', ''))
     base = {c: 0 for c in CHANNELS}
     for c in ['L_k', 'mu_k', 'u_k', 'tau_k', 'Report']:
         base[c] = 1
     if adapter != 'planned':
         base['R_k'] = 1
         base['alpha_k'] = 1
-    if row.get('evidence_level') in {'repository-output-level', 'fixture-level'}:
+    if row.get('evidence_level') in {'repository-output-level', 'fixture-level'} or adapter == 'gd_anfis_shap':
         base['eta_k'] = 1
     if row.get('status') == 'real-output-compatible':
         base['D_k'] = 1
+        base['Action'] = 1
+    if adapter == 'gd_anfis_shap':
         base['Action'] = 1
     return base
 
@@ -180,32 +184,39 @@ def _scenario_tables(out: Path, matrix_rows: list[dict[str, Any]]) -> tuple[list
             'chapter_section': '5.x' if row.get('chapter_role') != 'future_extension' else 'appendix/future work',
         })
         adapter_called = row.get('run_allowed') in {True, 'True', 'true', '1', 1}
+        gd_raw: dict[str, Any] | None = None
+        if rid == 'gd_anfis_shap':
+            gd_raw = GDANFISSHAPAdapter().explain()
+            adapter_called = gd_raw.get('status') == 'ok'
+        if row.get('adapter') == 'planned' or row.get('status') == 'planned':
+            adapter_called = False
         output_type = 'ExplanationArtifact + report' if adapter_called else 'registered metadata only'
         action = 'audit_report' if adapter_called else 'not_run'
         report_path = reports_dir / f'{rid}_action_report.md'
         figure_path = figures_dir / f'{rid}_route.png'
         _route_figure(figure_path, f'{rid}: adapter route', [title])
-        report_path.write_text('\n'.join([
-            f'# Scenario action report: {rid}',
-            '',
-            f'- module: `{title}`',
-            f'- adapter_called: `{adapter_called}`',
-            f'- output_type: `{output_type}`',
-            f'- status: `{row.get("status", "")}`',
-            f'- evidence_level: `{row.get("evidence_level", "")}`',
-            f'- action: `{action}`',
-            f'- claim_scope: {row.get("claim_scope", "")}',
-            '',
-            'Численные `chi_R`, `chi_Auto` и `rho` для внешнего модуля не подставляются искусственно. '
-            'Если адаптер не предоставляет полный структурный контур, сценарий фиксируется как audit/report-only.',
-        ]), encoding='utf-8')
+        if gd_raw is None:
+            report_path.write_text('\n'.join([
+                f'# Scenario action report: {rid}',
+                '',
+                f'- module: `{title}`',
+                f'- adapter_called: `{adapter_called}`',
+                f'- output_type: `{output_type}`',
+                f'- status: `{row.get("status", "")}`',
+                f'- evidence_level: `{row.get("evidence_level", "")}`',
+                f'- action: `{action}`',
+                f'- claim_scope: {row.get("claim_scope", "")}',
+                '',
+                'Численные `chi_R`, `chi_Auto` и `rho` для внешнего модуля не подставляются искусственно. '
+                'Если адаптер не предоставляет полный структурный контур, сценарий фиксируется как audit/report-only.',
+            ]), encoding='utf-8')
         run_rows.append({
             'registry_id': rid,
             'source_repo': row.get('source_repo', ''),
             'adapter_called': adapter_called,
             'output_type': output_type,
             'has_explanation_object': adapter_called,
-            'has_diagnostic_state': row.get('status') == 'real-output-compatible',
+            'has_diagnostic_state': row.get('status') == 'real-output-compatible' or bool(gd_raw and gd_raw.get('has_diagnostic_state')),
             'chi_R': 'N/A',
             'chi_Auto': 'N/A',
             'rho': 'N/A',
@@ -408,6 +419,9 @@ def run(out_dir: str | Path = 'dissertation_artifacts') -> dict[str, Any]:
     _copy(ROOT / 'reports/chapter3/dataset_roles_summary.csv', out / 'chapter3/table_3_dataset_roles_summary.csv')
     _copy(ROOT / 'reports/chapter3/dataset_roles_summary.md', out / 'chapter3/text_3_dataset_roles_summary.md')
     _copy(ROOT / 'reports/chapter3/safety_limitation_insert.md', out / 'chapter3/text_3_safety_limitation_insert.md')
+    _copy(ROOT / 'reports/chapter3/synthetic_ruptures_summary.json', out / 'chapter3/synthetic_ruptures_summary.json')
+    _copy(ROOT / 'reports/chapter3/synthetic_ruptures_results.csv', out / 'chapter3/table_3_synthetic_ruptures_results.csv')
+    _copy(ROOT / 'figures/chapter3/critical_ruptures_comparison.png', out / 'chapter3/fig_3_critical_ruptures_comparison.png')
 
     required4 = ['module_id', 'name', 'evidence_level', 'status', 'source_repo', 'claim_scope', 'adapter_class', 'gui_visible', 'artifact_present', 'local_fixture_present', 'report_present', 'figure_present']
     table4 = []
@@ -448,6 +462,9 @@ def run(out_dir: str | Path = 'dissertation_artifacts') -> dict[str, Any]:
     _heatmap(out / 'chapter4/fig_4_evidence_matrix_heatmap.png', 'Evidence matrix flags', [r.get('registry_id', '') for r in matrix_rows], heat_fields, [[1.0 if r.get(f) in {True, 'True', 'true', '1', 1} else 0.0 for f in heat_fields] for r in matrix_rows])
     (out / 'chapter4/text_4_evidence_pack_insert.md').write_text('Команда `make ecosystem-evidence` формирует машинно-читаемый evidence-пакет: registry snapshot, evidence matrix и reproduction index. Поля `status`, `evidence_level` и `claim_scope` ограничивают допустимые утверждения по каждому модулю.\n', encoding='utf-8')
     (out / 'chapter4/text_4_gui_insert.md').write_text('Evidence-вкладка Studio показывает hash-контракт, sample_113, внешний реестр модулей и границы claims; скриншоты получены автоматической проверкой Chromium (`make browser-visual-check`).\n', encoding='utf-8')
+    _copy(ROOT / 'reports/chapter4/integration_effort_protocol.md', out / 'chapter4/text_4_integration_effort_protocol.md')
+    _copy(ROOT / 'reports/chapter4/integration_effort_measurements.csv', out / 'chapter4/table_4_integration_effort_measurements.csv')
+    _copy(ROOT / 'reports/chapter4/integration_effort_summary.json', out / 'chapter4/integration_effort_summary.json')
 
     scenario_rows, run_rows, coverage_rows = _scenario_tables(out, matrix_rows)
     quant_rows = _scenario_quantitative_summary(matrix_rows)
@@ -460,6 +477,9 @@ def run(out_dir: str | Path = 'dissertation_artifacts') -> dict[str, Any]:
     _write_csv(out / 'chapter5/table_5_scenario_quantitative_summary.csv', quant_rows, ['registry_id', 'baseline_metric', 'baseline_value', 'fuzzyxai_metric', 'fuzzyxai_value', 'missed_critical', 'false_auto_accept', 'report_only', 'quantitative_comparison_available', 'status', 'notes'])
     _write_csv(ROOT / 'reports' / 'chapter5' / 'scenario_baseline_comparison.csv', baseline_rows, baseline_fields)
     _write_csv(out / 'chapter5/table_5_scenario_baseline_comparison.csv', baseline_rows, baseline_fields)
+    _copy(ROOT / 'reports/chapter5/hybrid_xiris_blocking_case.json', out / 'chapter5/hybrid_xiris_blocking_case.json')
+    _copy(ROOT / 'reports/chapter5/hybrid_xiris_blocking_case.csv', out / 'chapter5/table_5_hybrid_xiris_blocking_case.csv')
+    _copy(ROOT / 'figures/chapter5/hybrid_xiris_blocking_case.png', out / 'chapter5/fig_5_hybrid_xiris_blocking_case.png')
     _write_md_table(ROOT / 'reports' / 'chapter5' / 'scenario_baseline_comparison.md', baseline_rows, baseline_fields)
     _write_md_table(out / 'chapter5/table_5_scenario_baseline_comparison.md', baseline_rows, baseline_fields)
     _bar(out / 'chapter5/fig_5_scenario_status_overview.png', 'Chapter 5 scenario status overview', statuses, [float(c) for c in counts], color='#0891b2', ylim=None)

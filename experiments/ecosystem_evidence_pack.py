@@ -34,7 +34,7 @@ def run(*, evidence_dir: str | Path = 'evidence', report_dir: str | Path = 'repo
     json_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding='utf-8')
     if matrix:
         with csv_path.open('w', encoding='utf-8', newline='') as f:
-            writer = csv.DictWriter(f, fieldnames=list(matrix[0].keys()))
+            writer = csv.DictWriter(f, fieldnames=list(matrix[0].keys()), lineterminator='\n')
             writer.writeheader()
             writer.writerows(matrix)
 
