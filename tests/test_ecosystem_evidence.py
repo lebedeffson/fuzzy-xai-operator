@@ -30,6 +30,15 @@ def test_evidence_matrix_keeps_planned_out_of_quant_claims() -> None:
     assert any(r['run_allowed'] for r in rows)
 
 
+def test_gd_anfis_claim_scope_is_unified_as_control_route() -> None:
+    rows = build_evidence_matrix()
+    gd = next(r for r in rows if r['registry_id'] == 'gd_anfis_shap')
+    assert gd['status'] == 'source-pending'
+    assert 'контрольный маршрут' in gd['claim_scope']
+    assert 'качество исходной модели не заявляется' in gd['claim_scope']
+    assert gd['quantitative_claim_allowed'] is False
+
+
 def test_ecosystem_evidence_pack_writes_files(tmp_path) -> None:
     paths = run(evidence_dir=tmp_path / 'evidence', report_dir=tmp_path / 'chapter4')
     payload = json.loads((tmp_path / 'chapter4' / 'ecosystem_evidence.json').read_text(encoding='utf-8'))

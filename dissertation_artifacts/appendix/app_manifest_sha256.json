@@ -7,7 +7,7 @@
     },
     {
       "path": "appendix/app_evidence_matrix_full.csv",
-      "sha256": "86091a603673b96655add09d71684a12870fec9bad0900499a8c135678844c1a"
+      "sha256": "0763ddbbfe05947b2f83a3fd7d4bd47ef3af3e33cc9ba376e7ed87c7ae891155"
     },
     {
       "path": "appendix/app_gui_screenshots/10_evidence_contract.png",
@@ -23,7 +23,7 @@
     },
     {
       "path": "appendix/app_registry_snapshot_full.json",
-      "sha256": "0da5f2bc56929bf71160cfeee0f6a8d3c79e93320735c623be7a3884f1eaa188"
+      "sha256": "4b2eef51999a56da8291021826919e6a05d153b586d41f76534fe59f59865d4b"
     },
     {
       "path": "appendix/app_reproduction_index.md",
@@ -127,7 +127,7 @@
     },
     {
       "path": "chapter4/table_4_evidence_matrix.csv",
-      "sha256": "d1b20355cc3947819525d08ea9f569eda9270b68fc57e822a407cc405280485a"
+      "sha256": "d8742e3e71f1208555543c9504cf8fba20af33994f6b575c037e03925074e6b3"
     },
     {
       "path": "chapter4/table_4_integration_effort_measurements.csv",
@@ -135,11 +135,11 @@
     },
     {
       "path": "chapter4/table_4_registry_snapshot.csv",
-      "sha256": "86091a603673b96655add09d71684a12870fec9bad0900499a8c135678844c1a"
+      "sha256": "0763ddbbfe05947b2f83a3fd7d4bd47ef3af3e33cc9ba376e7ed87c7ae891155"
     },
     {
       "path": "chapter4/table_4_source_repo_cards.csv",
-      "sha256": "a7a441f7c373a4b0f0b443551c2d304beac056ad26da96a9d58a7a769c170519"
+      "sha256": "a0b4c2359df915e6447b66c72c86e4408fbd9dc2b8209b1125845c64cff03f6e"
     },
     {
       "path": "chapter4/text_4_evidence_pack_insert.md",
@@ -183,7 +183,7 @@
     },
     {
       "path": "chapter5/table_5_registry_scenarios.csv",
-      "sha256": "511f5ee8ab9d31a30eef170d00ccf26f254ccb8781138e5cf470283d5d8b7623"
+      "sha256": "47a8294f1e7d9846fb7dba50a0f0059e66cbcaf4c728dd1ef7f710f407b61413"
     },
     {
       "path": "chapter5/table_5_scenario_baseline_comparison.csv",
@@ -199,7 +199,7 @@
     },
     {
       "path": "chapter5/table_5_scenario_run_summary.csv",
-      "sha256": "7ed3fc1e0c7ca7267fc2d7bdef2c0451212718ac4bc29e059bd0c39ba9047dae"
+      "sha256": "d8fd4d6ca3bd0cd64ecd31ad9965ea19e38ece2a32a5deace6b938bd5cbb272a"
     },
     {
       "path": "chapter5/text_5_scenario_run_insert.md",

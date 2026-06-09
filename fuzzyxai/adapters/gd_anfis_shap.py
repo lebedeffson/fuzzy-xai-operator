@@ -28,11 +28,28 @@ def _clip01(value: float) -> float:
     return max(0.0, min(1.0, float(value)))
 
 
+def compute_route_metrics(data: dict[str, Any], *, reduction_loss: float = 0.08) -> dict[str, float]:
+    """Compute fixture route disagreement without hand-entered thesis numbers."""
+    probability = _clip01(float(data.get('model_output', {}).get('probability', 0.5)))
+    activations = [_clip01(v) for v in data.get('rule_activations', {}).values()]
+    mean_alpha = sum(activations) / max(1, len(activations))
+    positive_shap_support = _clip01(sum(max(0.0, float(v)) for v in data.get('shap_values', {}).values()))
+    gamma_route = max(abs(probability - mean_alpha), abs(probability - positive_shap_support))
+    return {
+        'probability': round(probability, 6),
+        'mean_alpha_k': round(mean_alpha, 6),
+        'positive_shap_support': round(positive_shap_support, 6),
+        'gamma_route': round(gamma_route, 6),
+        'Delta': round(_clip01(reduction_loss), 6),
+    }
+
+
 class GDANFISSHAPAdapter(BaseAdapter):
     registry_id = 'gd_anfis_shap'
     adapter_class = 'GDANFISSHAPAdapter'
     input_types = ['gd_anfis_rules', 'shap_values', 'tabular_fixture']
     claim_scope = 'fixture adapter route only; excluded from quantitative claims until source repository is pinned'
+    report_path = REPORT_PATH
 
     def load_fixture(self, path: str | Path = DEFAULT_FIXTURE) -> dict[str, Any]:
         return json.loads(Path(path).read_text(encoding='utf-8'))
@@ -71,6 +88,8 @@ class GDANFISSHAPAdapter(BaseAdapter):
             source=str(data.get('source_repo', 'source-not-provided:gd_anfis_shap')),
             checksum=fixture_sha,
         )
+        reduction_loss = 0.08
+        route_metrics = compute_route_metrics(data, reduction_loss=reduction_loss)
         explanation = ExplanationObject(
             terms={'gd_anfis_rule', 'shap_attribution', 'tabular_risk'},
             representation=F0(lambda _x, val=probability: val, label='gd_anfis_shap_risk'),
@@ -78,7 +97,7 @@ class GDANFISSHAPAdapter(BaseAdapter):
             activations=activations,
             uncertainty=uncertainty,
             trace=trace,
-            reduction_loss=0.08,
+            reduction_loss=reduction_loss,
             metadata={
                 'adapter': self.adapter_class,
                 'source_status': data.get('status', 'source-pending'),
@@ -88,11 +107,15 @@ class GDANFISSHAPAdapter(BaseAdapter):
                 'eta_k': dict(data['shap_values']),
                 'u_k': dict(data['rule_uncertainty']),
                 'tau_k': trace.as_dict(),
+                'route_metrics': route_metrics,
+                'gamma_route': route_metrics['gamma_route'],
+                'Delta': route_metrics['Delta'],
                 'quantitative_claims': False,
             },
         )
-        REPORT_PATH.parent.mkdir(parents=True, exist_ok=True)
-        REPORT_PATH.write_text('\n'.join([
+        report_path = Path(getattr(self, 'report_path', REPORT_PATH))
+        report_path.parent.mkdir(parents=True, exist_ok=True)
+        report_path.write_text('\n'.join([
             '# GD-ANFIS/SHAP action report',
             '',
             f"- registry_id: `{self.registry_id}`",
@@ -103,9 +126,11 @@ class GDANFISSHAPAdapter(BaseAdapter):
             f"- alpha_k: `{activations}`",
             f"- eta_k / SHAP: `{data['shap_values']}`",
             f"- u_k mean: `{uncertainty:.4f}`",
+            f"- gamma_route: `{route_metrics['gamma_route']:.4f}`",
+            f"- Delta: `{route_metrics['Delta']:.4f}`",
             '- action: `audit_report`',
             '',
-            'Сценарий исполняемый как локальный fixture-адаптер, но не используется как количественное доказательство до закрепления внешнего источника.',
+            'Сценарий исполняемый как контрольный маршрут (локальный fixture-адаптер), но не используется как количественное доказательство до закрепления внешнего источника.',
         ]), encoding='utf-8')
         return {
             'registry_id': self.registry_id,
@@ -119,7 +144,7 @@ class GDANFISSHAPAdapter(BaseAdapter):
             'has_diagnostic_state': False,
             'explanation_object': explanation,
             'channels': explanation.metadata,
-            'report_path': str(REPORT_PATH.relative_to(ROOT)),
+            'report_path': str(report_path.relative_to(ROOT)),
             'action': 'audit_report',
         }
 

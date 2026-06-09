@@ -1,6 +1,6 @@
 {
   "status": "ok",
-  "checked_at": "2026-06-09T14:59:24.610755+00:00",
+  "checked_at": "2026-06-09T19:06:18.722784+00:00",
   "chapters": [
     2,
     3
@@ -135,7 +135,7 @@
     {
       "path": "reports/chapter2_3/chapter2_3_final_evidence.json",
       "exists": true,
-      "sha256": "61730387a3beca16156c91da2dbba5b551d6398145631a1b968d2a115d1985ca"
+      "sha256": "d0a84a1a432c947ce8b0eb0966e7c16191cb62f7481247e435b19c2c587b3257"
     }
   ]
 }

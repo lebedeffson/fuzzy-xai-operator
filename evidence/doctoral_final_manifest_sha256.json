@@ -1,6 +1,6 @@
 {
   "status": "ok",
-  "checked_at": "2026-06-09T14:59:29.280078+00:00",
+  "checked_at": "2026-06-09T19:06:23.521968+00:00",
   "commands": [
     {
       "command": "make reproduce-chapter2",
@@ -25,7 +25,7 @@
     {
       "command": "make chapter2-3-final-evidence",
       "returncode": 0,
-      "output_tail": " \"exists\": true,\n      \"sha256\": \"494eb19595bb34c8c2a92f985663fb10bba9f082e42c3e502da077ec189d2cca\"\n    },\n    {\n      \"path\": \"evidence/critical_ruptures_manifest_sha256.json\",\n      \"exists\": true,\n      \"sha256\": \"f4b3f3a56d1ab6944b8d8e2b01055ff34d341d9ee33a66cceb5663f474f1b9d2\"\n    },\n    {\n      \"path\": \"figures/chapter2/calibration_constants.png\",\n      \"exists\": true,\n      \"sha256\": \"fe4ac72b781e8d57eec8af5536b72fdb6f38b4d2a46436e10be5f4ca21336bda\"\n    },\n    {\n      \"path\": \"figures/chapter2/equal_raw_structure_comparison.png\",\n      \"exists\": true,\n      \"sha256\": \"91a6794246f3bb7bed5051b593112cceb0bf25b1eba594e46e4dc0806b27e92f\"\n    },\n    {\n      \"path\": \"figures/chapter3/critical_ruptures_comparison.png\",\n      \"exists\": true,\n      \"sha256\": \"26e714505887a5bf55a7edd30914bf1f3e593582151b8e9d87fe2f0ccb9d9a9f\"\n    },\n    {\n      \"path\": \"reports/chapter2/alignment_synthesis_report.json\",\n      \"exists\": true,\n      \"sha256\": \"c649cb0ec15ce918d302bfd4aceb829c65fdfe8e4ea7a0353274300323855259\"\n    },\n    {\n      \"path\": \"reports/chapter2/calibration_constants.csv\",\n      \"exists\": true,\n      \"sha256\": \"5ae7af763efb982ca16108014e443c649a9bca3363f0b7a4e8c8142b88f150ce\"\n    },\n    {\n      \"path\": \"reports/chapter2/calibration_report.json\",\n      \"exists\": true,\n      \"sha256\": \"1b95b961978092a295fa5450598c2862e9fd7c853031f62049704faa87084412\"\n    },\n    {\n      \"path\": \"reports/chapter2/chapter2_breast_cancer_summary.json\",\n      \"exists\": true,\n      \"sha256\": \"b395d5f63b098c03f03ea2b2cbc6214342a2c6356f5d667f22789f6e48e5a528\"\n    },\n    {\n      \"path\": \"reports/chapter2/equal_raw_structure_report.json\",\n      \"exists\": true,\n      \"sha256\": \"9f329e39d5ebbd824a1f9caaef5896fa8fc3349d52e43305c983f41ce6687260\"\n    },\n    {\n      \"path\": \"reports/chapter2/equal_raw_structure_summary.csv\",\n      \"exists\": true,\n      \"sha256\": \"768da4928dc99f3cdf265f67c8443f30724a2d9f7ef428137148fc2af292706b\"\n    },\n    {\n      \"path\": \"reports/chapter2/explain_plan_hash.json\",\n      \"exists\": true,\n      \"sha256\": \"c18bfa69005fd3b56cc3ea73ee2a59596b00486dd2cdd71398dc5eb30b12e7cb\"\n    },\n    {\n      \"path\": \"reports/chapter2/sample_113_report.json\",\n      \"exists\": true,\n      \"sha256\": \"4920325789b0e09fc54a9f64f9dd93f0ae5efa82aa57ca74e17903fd97025f33\"\n    },\n    {\n      \"path\": \"reports/chapter2/sample_113_table.csv\",\n      \"exists\": true,\n      \"sha256\": \"5e0ea40ec558148ee89a4439fc55ffd812030d69160b5c1d0e36c09b425a1646\"\n    },\n    {\n      \"path\": \"reports/chapter2/sample_113_trace.json\",\n      \"exists\": true,\n      \"sha256\": \"d251967af2e921a90fa2fcd5295d60e513910914f692a046c9818b5b8126d967\"\n    },\n    {\n      \"path\": \"reports/chapter2_3/chapter2_3_implementation_matrix.csv\",\n      \"exists\": true,\n      \"sha256\": \"1f9be3164349ab4b1dcc9da44aa11062edc6a367bee51b9735514123a6cbd17b\"\n    },\n    {\n      \"path\": \"reports/chapter2_3/chapter2_3_implementation_matrix.md\",\n      \"exists\": true,\n      \"sha256\": \"cf821cbbfb4c56516cc1d00c8475187f1c2af085e1d531aeabb85bcfce20c19c\"\n    },\n    {\n      \"path\": \"reports/chapter2_3/chapter2_3_writer_insert.md\",\n      \"exists\": true,\n      \"sha256\": \"fccd1ee8496d6be864be229843a313af3167b971c136632e55e8c826487328b5\"\n    },\n    {\n      \"path\": \"reports/chapter3/dataset_roles_summary.csv\",\n      \"exists\": true,\n      \"sha256\": \"e677dd7743b092631a81420c860f9c8e2b45d128cb8f86bda6ad9b3b3f4ea4e2\"\n    },\n    {\n      \"path\": \"reports/chapter3/synthetic_ruptures_results.csv\",\n      \"exists\": true,\n      \"sha256\": \"494c6cac3a3a94c1b91db074e4d3e4106df9aad7f1bc15f8cf18a7c51ffcac0e\"\n    },\n    {\n      \"path\": \"reports/chapter3/synthetic_ruptures_summary.json\",\n      \"exists\": true,\n      \"sha256\": \"45c9cca60b63f569ff2011b605f8340d187afda1b306f6eb583fd8b72bc1b599\"\n    },\n    {\n      \"path\": \"reports/chapter2_3/chapter2_3_final_evidence.json\",\n      \"exists\": true,\n      \"sha256\": \"61730387a3beca16156c91da2dbba5b551d6398145631a1b968d2a115d1985ca\"\n    }\n  ]\n}\nmake[1]: Leaving directory '/home/lebedeffson/Code/fuzzy-xai-operator'\n"
+      "output_tail": " \"exists\": true,\n      \"sha256\": \"494eb19595bb34c8c2a92f985663fb10bba9f082e42c3e502da077ec189d2cca\"\n    },\n    {\n      \"path\": \"evidence/critical_ruptures_manifest_sha256.json\",\n      \"exists\": true,\n      \"sha256\": \"f4b3f3a56d1ab6944b8d8e2b01055ff34d341d9ee33a66cceb5663f474f1b9d2\"\n    },\n    {\n      \"path\": \"figures/chapter2/calibration_constants.png\",\n      \"exists\": true,\n      \"sha256\": \"fe4ac72b781e8d57eec8af5536b72fdb6f38b4d2a46436e10be5f4ca21336bda\"\n    },\n    {\n      \"path\": \"figures/chapter2/equal_raw_structure_comparison.png\",\n      \"exists\": true,\n      \"sha256\": \"91a6794246f3bb7bed5051b593112cceb0bf25b1eba594e46e4dc0806b27e92f\"\n    },\n    {\n      \"path\": \"figures/chapter3/critical_ruptures_comparison.png\",\n      \"exists\": true,\n      \"sha256\": \"26e714505887a5bf55a7edd30914bf1f3e593582151b8e9d87fe2f0ccb9d9a9f\"\n    },\n    {\n      \"path\": \"reports/chapter2/alignment_synthesis_report.json\",\n      \"exists\": true,\n      \"sha256\": \"c649cb0ec15ce918d302bfd4aceb829c65fdfe8e4ea7a0353274300323855259\"\n    },\n    {\n      \"path\": \"reports/chapter2/calibration_constants.csv\",\n      \"exists\": true,\n      \"sha256\": \"5ae7af763efb982ca16108014e443c649a9bca3363f0b7a4e8c8142b88f150ce\"\n    },\n    {\n      \"path\": \"reports/chapter2/calibration_report.json\",\n      \"exists\": true,\n      \"sha256\": \"1b95b961978092a295fa5450598c2862e9fd7c853031f62049704faa87084412\"\n    },\n    {\n      \"path\": \"reports/chapter2/chapter2_breast_cancer_summary.json\",\n      \"exists\": true,\n      \"sha256\": \"b395d5f63b098c03f03ea2b2cbc6214342a2c6356f5d667f22789f6e48e5a528\"\n    },\n    {\n      \"path\": \"reports/chapter2/equal_raw_structure_report.json\",\n      \"exists\": true,\n      \"sha256\": \"9f329e39d5ebbd824a1f9caaef5896fa8fc3349d52e43305c983f41ce6687260\"\n    },\n    {\n      \"path\": \"reports/chapter2/equal_raw_structure_summary.csv\",\n      \"exists\": true,\n      \"sha256\": \"768da4928dc99f3cdf265f67c8443f30724a2d9f7ef428137148fc2af292706b\"\n    },\n    {\n      \"path\": \"reports/chapter2/explain_plan_hash.json\",\n      \"exists\": true,\n      \"sha256\": \"c18bfa69005fd3b56cc3ea73ee2a59596b00486dd2cdd71398dc5eb30b12e7cb\"\n    },\n    {\n      \"path\": \"reports/chapter2/sample_113_report.json\",\n      \"exists\": true,\n      \"sha256\": \"4920325789b0e09fc54a9f64f9dd93f0ae5efa82aa57ca74e17903fd97025f33\"\n    },\n    {\n      \"path\": \"reports/chapter2/sample_113_table.csv\",\n      \"exists\": true,\n      \"sha256\": \"5e0ea40ec558148ee89a4439fc55ffd812030d69160b5c1d0e36c09b425a1646\"\n    },\n    {\n      \"path\": \"reports/chapter2/sample_113_trace.json\",\n      \"exists\": true,\n      \"sha256\": \"d251967af2e921a90fa2fcd5295d60e513910914f692a046c9818b5b8126d967\"\n    },\n    {\n      \"path\": \"reports/chapter2_3/chapter2_3_implementation_matrix.csv\",\n      \"exists\": true,\n      \"sha256\": \"1f9be3164349ab4b1dcc9da44aa11062edc6a367bee51b9735514123a6cbd17b\"\n    },\n    {\n      \"path\": \"reports/chapter2_3/chapter2_3_implementation_matrix.md\",\n      \"exists\": true,\n      \"sha256\": \"cf821cbbfb4c56516cc1d00c8475187f1c2af085e1d531aeabb85bcfce20c19c\"\n    },\n    {\n      \"path\": \"reports/chapter2_3/chapter2_3_writer_insert.md\",\n      \"exists\": true,\n      \"sha256\": \"fccd1ee8496d6be864be229843a313af3167b971c136632e55e8c826487328b5\"\n    },\n    {\n      \"path\": \"reports/chapter3/dataset_roles_summary.csv\",\n      \"exists\": true,\n      \"sha256\": \"e677dd7743b092631a81420c860f9c8e2b45d128cb8f86bda6ad9b3b3f4ea4e2\"\n    },\n    {\n      \"path\": \"reports/chapter3/synthetic_ruptures_results.csv\",\n      \"exists\": true,\n      \"sha256\": \"494c6cac3a3a94c1b91db074e4d3e4106df9aad7f1bc15f8cf18a7c51ffcac0e\"\n    },\n    {\n      \"path\": \"reports/chapter3/synthetic_ruptures_summary.json\",\n      \"exists\": true,\n      \"sha256\": \"45c9cca60b63f569ff2011b605f8340d187afda1b306f6eb583fd8b72bc1b599\"\n    },\n    {\n      \"path\": \"reports/chapter2_3/chapter2_3_final_evidence.json\",\n      \"exists\": true,\n      \"sha256\": \"d0a84a1a432c947ce8b0eb0966e7c16191cb62f7481247e435b19c2c587b3257\"\n    }\n  ]\n}\nmake[1]: Leaving directory '/home/lebedeffson/Code/fuzzy-xai-operator'\n"
     },
     {
       "command": "make ecosystem-evidence",
@@ -61,7 +61,7 @@
     },
     {
       "path": "reports/chapter2_3/chapter2_3_final_evidence.json",
-      "sha256": "61730387a3beca16156c91da2dbba5b551d6398145631a1b968d2a115d1985ca",
+      "sha256": "d0a84a1a432c947ce8b0eb0966e7c16191cb62f7481247e435b19c2c587b3257",
       "exists": true
     },
     {
@@ -81,7 +81,7 @@
     },
     {
       "path": "reports/chapter4/ecosystem_evidence.json",
-      "sha256": "3984c825418e0b62a67d3a56c094a10edab252f9e24e9c963302b5d825a94ebd",
+      "sha256": "c1cd201040ea7242e5f149128352dc1c1888d6c3e6770d7975695ebc198f2ae1",
       "exists": true
     },
     {
@@ -91,7 +91,7 @@
     },
     {
       "path": "reports/chapter5/scenario_run_summary.csv",
-      "sha256": "7ed3fc1e0c7ca7267fc2d7bdef2c0451212718ac4bc29e059bd0c39ba9047dae",
+      "sha256": "d8fd4d6ca3bd0cd64ecd31ad9965ea19e38ece2a32a5deace6b938bd5cbb272a",
       "exists": true
     },
     {
@@ -101,7 +101,7 @@
     },
     {
       "path": "dissertation_artifacts/artifact_manifest_sha256.json",
-      "sha256": "e32b80d86c71f6227bad787649e139b032e8cf9f38428f02e4e77d98bbea49e9",
+      "sha256": "1cc65fc79993174748722d6305dd38e8690f43eca3cd619a330cd66d8a983478",
       "exists": true
     }
   ]

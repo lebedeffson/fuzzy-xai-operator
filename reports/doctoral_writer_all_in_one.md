@@ -21,7 +21,7 @@ a94cb63 Add external scenario baseline comparison tables
 
 ## 2. Проверки
 
-- `pytest -q`: `209 passed`, предупреждения только от `sklearn` про feature names.
+- `pytest -q`: `210 passed`, предупреждения только от `sklearn` про feature names.
 - `make doctoral-final-evidence`: `PASS`.
 - `make chapter2-3-final-evidence`: `PASS`.
 - Матрица глав 2-3: `15/15` реализовано, `missing = []`.
@@ -132,10 +132,10 @@ a94cb63 Add external scenario baseline comparison tables
 | registry_id | source_repo | adapter | output | E | D | action | status | claim_scope |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | hybrid_xiris | https://github.com/lebedeffson/hybrid-xiris-biometric | True | ExplanationArtifact + report | True | True | audit_report | real-output-compatible | adapter compatibility and evidence routing, not local model retraining |
-| gd_anfis_shap | source-not-provided:gd_anfis_shap | True | ExplanationArtifact + report | True | False | audit_report | source-pending | executable fixture adapter; excluded from quantitative claims until source repository is pinned |
+| gd_anfis_shap | source-not-provided:gd_anfis_shap | True | ExplanationArtifact + report | True | False | audit_report | source-pending | контрольный маршрут (исполняемый артефакт); source-pending; качество исходной модели не заявляется |
 | anza_lira | https://github.com/fims9000/anza_lira | True | ExplanationArtifact + report | True | False | audit_report | fixture-certified | vessel-segmentation adapter route and report generation, not local model retraining |
 | beacon_xai | https://github.com/fims9000/BeaconXAI | True | ExplanationArtifact + report | True | False | audit_report | fixture-certified | executable BeaconXAI fixture adapter with pinned repo HEAD; no local model retraining or quantitative claim |
-| gis_integro | source-not-provided:gis_integro | True | ExplanationArtifact + report | True | False | audit_report | source-pending | executable GIS fixture through GD-ANFIS/SHAP channels; source remains pending and quantitative_claims=false |
+| gis_integro | source-not-provided:gis_integro | True | ExplanationArtifact + report | True | False | audit_report | source-pending | контрольный маршрут (исполняемый GIS fixture через GD-ANFIS/SHAP-каналы); source-pending; качество исходной модели не заявляется |
 | deep_neuro_fuzzy_kafn | https://github.com/lebedeffson/deep-neuro-fuzzy | True | ExplanationArtifact + report | True | False | audit_report | fixture-certified | fixed fixture adapter run with source provenance |
 | fan_multimodal | https://github.com/lebedeffson/FuzzyAttentionNetworks | True | ExplanationArtifact + report | True | False | audit_report | fixture-certified | concept-level fuzzy attention scenario |
 | kan_xai_2_system | https://github.com/fims9000/KAN-XAI-2.0-System | True | ExplanationArtifact + report | True | False | audit_report | fixture-certified | medical image explanation adapter route, not local model retraining |
@@ -159,7 +159,21 @@ a94cb63 Add external scenario baseline comparison tables
 - Fixture: `data/article_fixtures/gis_integro_output.json`.
 - Статус: `source-pending`.
 - Каналы: GD-ANFIS/SHAP-style route (`R_k`, `alpha_k`, `eta_k`, `u_k`, `tau_k`).
-- Claim: исполняемый fixture route, без quantitative claims до закрепления внешнего источника.
+- Claim: контрольный маршрут (исполняемый GIS fixture), без quantitative claims до закрепления внешнего источника.
+
+
+### GIS INTEGRO route metrics
+
+- Отчёт: `reports/chapter5/gis_integro_route_metrics.json`.
+- `probability = 0.67`.
+- `mean_alpha_k = 0.72`.
+- `positive_SHAP_support = 0.47`.
+- `gamma_route = 0.20`.
+- `Delta = 0.08`.
+
+Готовая фраза для раздела 5.6:
+
+> В контрольном прогоне FuzzyXAI для GIS INTEGRO получено `gamma_route = 0.20` и `Delta = 0.08`; величина `gamma_route` вычислена как максимум рассогласования между вероятностью модели, средним уровнем активации `alpha_k` и положительной SHAP-поддержкой. Это число фиксирует маршрутное рассогласование контрольного fixture, но не является сравнением качества исходной GIS-модели.
 
 ### GD-ANFIS/SHAP
 

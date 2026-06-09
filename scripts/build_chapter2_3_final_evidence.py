@@ -184,6 +184,14 @@ def _display_path(path: Path) -> str:
         return str(path)
 
 
+def _is_inside_root(path: Path) -> bool:
+    try:
+        path.resolve().relative_to(ROOT.resolve())
+        return True
+    except ValueError:
+        return False
+
+
 def run(out_dir: str | Path = OUT_DIR) -> dict[str, Any]:
     out = Path(out_dir)
     out.mkdir(parents=True, exist_ok=True)
@@ -256,7 +264,8 @@ def run(out_dir: str | Path = OUT_DIR) -> dict[str, Any]:
     json_path = out / 'chapter2_3_final_evidence.json'
     json_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding='utf-8')
     payload['files'].append({'path': _display_path(json_path), 'exists': True, 'sha256': sha256_file(json_path)})
-    MANIFEST_PATH.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding='utf-8')
+    if _is_inside_root(out):
+        MANIFEST_PATH.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding='utf-8')
 
     if missing:
         raise SystemExit(json.dumps(payload, ensure_ascii=False, indent=2))
