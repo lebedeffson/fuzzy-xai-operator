@@ -1,0 +1,87 @@
+{
+  "experiment": "controlled_critical_ruptures",
+  "generated_at": "2026-06-09T19:36:27.183169+00:00",
+  "runtime_seconds": 6.6e-05,
+  "explain_plan": {
+    "path": "configs/explain_plan_chapter2.yaml",
+    "sha256": "4469dad3fbeeb4f53ad953c24bd4e29a8de0d17d6465fb2c71b2b15a954cacfc"
+  },
+  "status": "ok",
+  "seed": 314159,
+  "n_objects": 1000,
+  "rupture_types": [
+    "trace_gap",
+    "rule_conflict",
+    "term_inversion",
+    "source_conflict",
+    "missing_certified_transition"
+  ],
+  "policies": [
+    "probability_threshold",
+    "shap_rule",
+    "lime_rule",
+    "anchors_rule",
+    "fuzzyxai_full_contour"
+  ],
+  "explain_plan_version": {
+    "path": "configs/explain_plan_chapter2.yaml",
+    "sha256": "4469dad3fbeeb4f53ad953c24bd4e29a8de0d17d6465fb2c71b2b15a954cacfc"
+  },
+  "input_checksum_sha256": "b781681c74978f566a252e993d728d28455138c25b53821c03a833c24f5f4a9a",
+  "results_checksum_sha256": "494c6cac3a3a94c1b91db074e4d3e4106df9aad7f1bc15f8cf18a7c51ffcac0e",
+  "command": "make reproduce-critical-ruptures",
+  "results_csv": "reports/chapter3/synthetic_ruptures_results.csv",
+  "figure": "figures/chapter3/critical_ruptures_comparison.png",
+  "rows": [
+    {
+      "policy": "probability_threshold",
+      "n_objects": 1000,
+      "critical_objects": 250,
+      "missed_critical_ruptures": 250,
+      "critical_rupture_recall": 0.0,
+      "false_block_rate": 0.0013333333333333333,
+      "agreement_reference": 0.557,
+      "mean_processing_time_ms": 0.0001
+    },
+    {
+      "policy": "shap_rule",
+      "n_objects": 1000,
+      "critical_objects": 250,
+      "missed_critical_ruptures": 206,
+      "critical_rupture_recall": 0.176,
+      "false_block_rate": 0.0,
+      "agreement_reference": 0.602,
+      "mean_processing_time_ms": 0.0001
+    },
+    {
+      "policy": "lime_rule",
+      "n_objects": 1000,
+      "critical_objects": 250,
+      "missed_critical_ruptures": 196,
+      "critical_rupture_recall": 0.216,
+      "false_block_rate": 0.0,
+      "agreement_reference": 0.612,
+      "mean_processing_time_ms": 0.0001
+    },
+    {
+      "policy": "anchors_rule",
+      "n_objects": 1000,
+      "critical_objects": 250,
+      "missed_critical_ruptures": 234,
+      "critical_rupture_recall": 0.064,
+      "false_block_rate": 0.0,
+      "agreement_reference": 0.574,
+      "mean_processing_time_ms": 0.0001
+    },
+    {
+      "policy": "fuzzyxai_full_contour",
+      "n_objects": 1000,
+      "critical_objects": 250,
+      "missed_critical_ruptures": 0,
+      "critical_rupture_recall": 1.0,
+      "false_block_rate": 0.0,
+      "agreement_reference": 1.0,
+      "mean_processing_time_ms": 0.0001
+    }
+  ]
+}

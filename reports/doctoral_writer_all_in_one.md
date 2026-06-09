@@ -248,3 +248,73 @@ PYTHONPATH=. /home/lebedeffson/Code/venv/bin/python -m pytest -q
 ## 13. Короткая итоговая формулировка для введения к практической части
 
 > Практическая реализация FuzzyXAI оформлена как единый воспроизводимый контур: математические объекты глав 2-3 сопоставлены с кодом, тестами и артефактами; глава 4 фиксирует открытые интерфейсы, реестр модулей и evidence-пакет; глава 5 демонстрирует прохождение внешних сценариев через adapter/report route без завышения количественных claims. Для safety-проверки используется controlled critical ruptures, где полный контур FuzzyXAI обнаруживает все критические разрывы, а baseline-режимы без полного структурного маршрута часть разрывов пропускают.
+
+## Submission Ready v4: воспроизводимый слой `fuzzyxai_experiments`
+
+Дата обновления: `2026-06-09T19:36:58.244887+00:00`.
+
+Новый пакет запускается одной командой:
+
+```bash
+bash run_all.sh
+```
+
+Он создаёт стабильные JSON-отчёты в `fuzzyxai_experiments/reports/` и timestamp-копии для аудита.
+
+### Ключевые файлы для писателя
+
+- `fuzzyxai_experiments/reports/ch2_bc_results.json`: Breast Cancer, калибровка, `I_pre`, `rho`.
+- `fuzzyxai_experiments/reports/ch2_synthesis.json`: ограниченный синтез `T_ij`.
+- `fuzzyxai_experiments/reports/ch2_critical_ruptures.json`: сравнение режимов critical ruptures.
+- `fuzzyxai_experiments/reports/ch3_selection.json`: выбор класса представления.
+- `fuzzyxai_experiments/reports/ch3_reduction.json`: редукции и `Delta` для `sample_113`.
+- `fuzzyxai_experiments/reports/ch3_diagnostic_stand.json`: controlled critical ruptures главы 3.
+- `fuzzyxai_experiments/reports/ch4_integration.json`: интеграционные статусы и `delta_M`.
+- `fuzzyxai_experiments/reports/ch5_hybrid.json`: HYBRID-XIRIS synthetic degradation protocol.
+- `fuzzyxai_experiments/reports/ch5_gis.json`: GIS INTEGRO route metrics.
+- `fuzzyxai_experiments/reports/ch5_beacon.json`: BEACON-XAI fixture protocol.
+
+### Числа для замечаний рецензента
+
+GIS INTEGRO:
+
+- `gamma_route = 0.2`
+- `Delta = 0.08`
+- `probability = 0.67`
+- `mean_alpha_k = 0.72`
+- `positive_shap_support = 0.47`
+- Источник: `fuzzyxai_experiments/reports/ch5_gis.json` и `reports/chapter5/gis_integro_route_metrics.json`.
+
+Фраза для раздела 5.6:
+
+> В контрольном прогоне FuzzyXAI для GIS INTEGRO получено `gamma_route = 0.2` и `Delta = 0.08`; `gamma_route` вычисляется как `max(|p - mean(alpha_k)|, |p - positive_SHAP_support|)` при `p = 0.67`, `mean(alpha_k) = 0.72`, `positive_SHAP_support = 0.47`.
+
+BEACON-XAI:
+
+- `n_objects = 100`
+- `route_supported = 83`
+- `baseline_alerts_before = 64`
+- `fuzzyxai_alerts_after = 11`
+- `audit_reports = 12`
+- `source_commit = 660366759fb0b5045491a9f7b9fa50745afe44db`
+- Источник: `fuzzyxai_experiments/reports/ch5_beacon.json`.
+
+HYBRID-XIRIS:
+
+- `n_images = 1000`
+- `critical_low_segmentation_cases = 234`
+- `baseline_missed_critical_quality_cases = 168`
+- `fuzzyxai_missed_critical_quality_cases = 0`
+- Источник: `fuzzyxai_experiments/reports/ch5_hybrid.json`.
+
+### Ограничения формулировок
+
+- GIS INTEGRO, BEACON-XAI и HYBRID-XIRIS здесь являются воспроизводимыми контрольными/fixture-маршрутами, если в отчёте явно не указан внешний benchmark.
+- Нельзя писать, что эти числа доказывают превосходство исходных внешних моделей.
+- Можно писать, что FuzzyXAI воспроизводимо строит route metrics, adapter/report route и safety-действие на контрольных данных.
+
+### Проверка в текущем окружении
+
+- `bash fuzzyxai_experiments/run_all.sh`: PASS.
+- Ручная проверка JSON-assertions: PASS.
+- `pytest` не запускался в текущем shell, потому что модуль `pytest` отсутствует у системного Python; добавлен тест `tests/test_fuzzyxai_experiments_package.py` для окружения с pytest.

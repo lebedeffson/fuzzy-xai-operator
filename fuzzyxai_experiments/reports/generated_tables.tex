@@ -1,0 +1,17 @@
+% Table: controlled critical ruptures
+\begin{tabular}{lllll}
+policy & n_objects & missed_critical_ruptures & critical_rupture_recall & agreement_reference \
+\hline
+probability_threshold & 1000 & 250 & 0.0 & 0.557 \
+shap_rule & 1000 & 206 & 0.176 & 0.602 \
+lime_rule & 1000 & 196 & 0.216 & 0.612 \
+anchors_rule & 1000 & 234 & 0.064 & 0.574 \
+fuzzyxai_full_contour & 1000 & 0 & 1.0 & 1.0 \
+\end{tabular}
+
+% GIS INTEGRO route metrics
+\begin{tabular}{llllll}
+registry_id & gamma_route & Delta & probability & mean_alpha_k & positive_shap_support \
+\hline
+gis_integro & 0.2 & 0.08 & 0.67 & 0.72 & 0.47 \
+\end{tabular}

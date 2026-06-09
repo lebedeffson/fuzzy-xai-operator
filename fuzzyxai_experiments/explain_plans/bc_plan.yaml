@@ -1,0 +1,64 @@
+version: "2.0"
+name: "chapter2_sample113_plan"
+
+terms:
+  risk:
+    L: ["low", "medium", "high"]
+    universe: [0.0, 1.0]
+    membership:
+      type: "triangular"
+      nodes:
+        low: [0.0, 0.25, 0.5]
+        medium: [0.25, 0.5, 0.75]
+        high: [0.5, 0.75, 1.0]
+
+rules:
+  - id: "r_high_risk"
+    if: "risk is high"
+    then: "action block_or_audit"
+  - id: "r_low_risk"
+    if: "risk is low"
+    then: "action accept_or_lower_confidence"
+
+uncertainty:
+  U_model_policy: "distance_to_decision_boundary"
+  U_rules_policy: "conflict_and_coverage"
+  U_trace_policy: "missing_required_trace_fields"
+  weights:
+    model: 0.5
+    rules: 0.3
+    trace: 0.2
+
+trace_required:
+  - id
+  - version
+  - time
+  - params
+  - source
+  - hash
+
+composition:
+  beta:
+    mu: 0.25
+    R: 0.20
+    alpha: 0.20
+    u: 0.20
+    tau: 0.15
+  gamma_max: 0.4
+  lambda_complexity: 0.05
+
+surrogate:
+  theta_fid: 0.90
+  theta_stab: 0.85
+  theta_cov: 0.80
+
+risk_observer:
+  weights:
+    predicted_risk: 0.5
+    uncertainty: 0.2
+    interpretability_gap: 0.1
+    reduction_loss: 0.1
+    diagnostic: 0.1
+  thresholds: [0.12, 0.28, 0.52, 0.80]
+  hard_rules:
+    critical_rupture_to_block: true
