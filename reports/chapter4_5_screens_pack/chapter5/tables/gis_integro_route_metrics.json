@@ -1,0 +1,13 @@
+{
+  "registry_id": "gis_integro",
+  "sample_id": "gis_integro_fixture_001",
+  "source_status": "source-pending",
+  "fixture_sha256": "ae41cb6eb0d6b21b291eace74449f808f48cf82e643f16fc6669b59b0d88a262",
+  "probability": 0.67,
+  "mean_alpha_k": 0.72,
+  "positive_shap_support": 0.47,
+  "gamma_route": 0.2,
+  "Delta": 0.08,
+  "formula": "gamma_route = max(|p - mean(alpha_k)|, |p - positive_SHAP_support|); Delta = reduction_loss",
+  "claim_scope": "контрольный маршрут; не количественное сравнение качества исходной модели"
+}

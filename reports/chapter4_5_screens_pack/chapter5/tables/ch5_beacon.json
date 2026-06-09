@@ -1,0 +1,21 @@
+{
+  "experiment": "ch5_beacon",
+  "generated_at": "2026-06-09T19:36:27.615322+00:00",
+  "runtime_seconds": 0.000213,
+  "explain_plan": {
+    "path": "configs/explain_plan_chapter2.yaml",
+    "sha256": "4469dad3fbeeb4f53ad953c24bd4e29a8de0d17d6465fb2c71b2b15a954cacfc"
+  },
+  "status": "ok",
+  "source_repo": "https://github.com/fims9000/BeaconXAI",
+  "source_commit": "660366759fb0b5045491a9f7b9fa50745afe44db",
+  "fixture_sha256": "8a68aed113cfb56b421476bb4a5cc6913ce397e63ed6d897c9adc9594a895022",
+  "local_fixture_protocol": true,
+  "external_article_claim_verified": false,
+  "n_objects": 100,
+  "route_supported": 83,
+  "baseline_alerts_before": 64,
+  "fuzzyxai_alerts_after": 11,
+  "audit_reports": 12,
+  "claim_scope": "local deterministic fixture protocol; not a benchmark of the original BEACON-XAI model"
+}
