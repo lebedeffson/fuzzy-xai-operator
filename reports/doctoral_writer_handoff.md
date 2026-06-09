@@ -1,5 +1,7 @@
 # Пакет для писателя: финальное закрытие кода и текста глав 2-5
 
+Главный единый файл для передачи писателю: `reports/doctoral_writer_all_in_one.md`.
+
 Финальные коммиты см. в `git log --oneline -5`; после `5cf39c8 Add Beacon and GIS executable scenario adapters` добавлен контроль полной реализации глав 2-3.
 Базовый коммит закрытия evidence-хвостов: `a12a472 Close doctoral evidence integration gaps`.
 Ветка: `feature/math-aligned-code`.
