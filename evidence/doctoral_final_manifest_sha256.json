@@ -1,6 +1,6 @@
 {
   "status": "ok",
-  "checked_at": "2026-06-09T07:14:02.871158+00:00",
+  "checked_at": "2026-06-09T14:05:44.362722+00:00",
   "commands": [
     {
       "command": "make reproduce-chapter2",
@@ -66,7 +66,7 @@
     },
     {
       "path": "reports/chapter4/ecosystem_evidence.json",
-      "sha256": "60ee53bc928d0390d615c2e7386ec6d179f0412ed6b2d7ace3987d9655003f56",
+      "sha256": "3984c825418e0b62a67d3a56c094a10edab252f9e24e9c963302b5d825a94ebd",
       "exists": true
     },
     {
@@ -76,7 +76,7 @@
     },
     {
       "path": "reports/chapter5/scenario_run_summary.csv",
-      "sha256": "d56d0577b8140c55d0e2dc6e3759f12689bf6e24b034df336d771f68a7012e81",
+      "sha256": "7ed3fc1e0c7ca7267fc2d7bdef2c0451212718ac4bc29e059bd0c39ba9047dae",
       "exists": true
     },
     {
@@ -86,7 +86,7 @@
     },
     {
       "path": "dissertation_artifacts/artifact_manifest_sha256.json",
-      "sha256": "92c8685b42f400fc99d2e21a2e52accd40498ab82551633cb6f29a3181bf3d00",
+      "sha256": "e32b80d86c71f6227bad787649e139b032e8cf9f38428f02e4e77d98bbea49e9",
       "exists": true
     }
   ]

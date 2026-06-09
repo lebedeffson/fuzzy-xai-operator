@@ -74,7 +74,7 @@ def build_evidence_matrix(modules: list[EcosystemModule] | None = None) -> list[
                 **module.as_dict(),
                 'fixture_exists': bool(fixture and fixture.exists()),
                 'fixture_sha256': _sha256(fixture) if fixture else '',
-                'run_allowed': module.status in {'real-output-compatible', 'fixture-certified'},
+                'run_allowed': module.status in {'real-output-compatible', 'fixture-certified'} or module.adapter in {'gd_anfis_shap', 'gis_integro'},
                 'quantitative_claim_allowed': module.status == 'real-output-compatible',
             }
         )

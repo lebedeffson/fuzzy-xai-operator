@@ -47,15 +47,15 @@
       "registry_id": "beacon_xai",
       "title": "BEACON-XAI scenario",
       "role": "external XAI scenario / audit route",
-      "source_repo": "source-not-provided:beacon_xai",
-      "source_commit": "source-not-pinned",
-      "source_artifact": "expected: BEACON-XAI outputs and report artifacts",
-      "fixture_path": "data/fixtures/beacon_xai_output.json",
-      "adapter": "planned",
-      "evidence_level": "source-pending",
-      "status": "source-pending",
+      "source_repo": "https://github.com/fims9000/BeaconXAI",
+      "source_commit": "660366759fb0b5045491a9f7b9fa50745afe44db",
+      "source_artifact": "BeaconXAI repository HEAD + local fixture data/article_fixtures/beacon_xai_output.json",
+      "fixture_path": "data/article_fixtures/beacon_xai_output.json",
+      "adapter": "beacon_xai",
+      "evidence_level": "repository-output-level",
+      "status": "fixture-certified",
       "chapter_role": "chapter5_scenario",
-      "claim_scope": "source-pending planned scenario; adapter_called=false, action=not_run, quantitative_claims=false"
+      "claim_scope": "executable BeaconXAI fixture adapter with pinned repo HEAD; no local model retraining or quantitative claim"
     },
     {
       "registry_id": "gis_integro",
@@ -63,13 +63,13 @@
       "role": "geospatial / external integration / report route",
       "source_repo": "source-not-provided:gis_integro",
       "source_commit": "source-not-pinned",
-      "source_artifact": "expected: GIS INTEGRO outputs and report artifacts",
-      "fixture_path": "data/fixtures/gis_integro_output.json",
-      "adapter": "planned",
+      "source_artifact": "local fixture routed through GD-ANFIS/SHAP-style channels; external source pending",
+      "fixture_path": "data/article_fixtures/gis_integro_output.json",
+      "adapter": "gis_integro",
       "evidence_level": "source-pending",
       "status": "source-pending",
       "chapter_role": "chapter5_scenario",
-      "claim_scope": "source-pending planned scenario; adapter_called=false, action=not_run, quantitative_claims=false"
+      "claim_scope": "executable GIS fixture through GD-ANFIS/SHAP channels; source remains pending and quantitative_claims=false"
     },
     {
       "registry_id": "deep_neuro_fuzzy_kafn",

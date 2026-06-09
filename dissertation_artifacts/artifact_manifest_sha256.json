@@ -7,7 +7,7 @@
     },
     {
       "path": "appendix/app_evidence_matrix_full.csv",
-      "sha256": "96a4cd6ce73330cc31d769850bd515507dd79335fe896905948e09916776bee6"
+      "sha256": "86091a603673b96655add09d71684a12870fec9bad0900499a8c135678844c1a"
     },
     {
       "path": "appendix/app_gui_screenshots/10_evidence_contract.png",
@@ -23,11 +23,11 @@
     },
     {
       "path": "appendix/app_registry_snapshot_full.json",
-      "sha256": "ca8db12369ab4240fc30d757a0de6da860eab2b4470b4b8f0b0de973aa8fc0a3"
+      "sha256": "0da5f2bc56929bf71160cfeee0f6a8d3c79e93320735c623be7a3884f1eaa188"
     },
     {
       "path": "appendix/app_reproduction_index.md",
-      "sha256": "e2e962ac25b1efbae6a1b796e582ce7821c3e78bcabba957c3da5abfdba87763"
+      "sha256": "74bcc864d03ebe0a321bbc84dbf0e1a048e3dd32c00fb0ea22eb1a4b5a5ff71d"
     },
     {
       "path": "captions.md",
@@ -111,7 +111,7 @@
     },
     {
       "path": "chapter4/fig_4_evidence_matrix_heatmap.png",
-      "sha256": "39dd9a8da43473c2d5dcd3c60e559072579e2fff2bdbc1c2e130716336ce86d1"
+      "sha256": "51ff943da027f2174f3e379944d4805c552c79a391d21ac704470f1967ad81ae"
     },
     {
       "path": "chapter4/fig_4_real_rows_improvements.png",
@@ -119,7 +119,7 @@
     },
     {
       "path": "chapter4/fig_4_registry_status_counts.png",
-      "sha256": "f94893215a5e104f04a38d49e8af713011ae2e0210de28b31964efb45cfa9f1b"
+      "sha256": "59e517e45897b63c306a660ad5de0357a7e8ecb433f0bdf1467b83c8640ccfd0"
     },
     {
       "path": "chapter4/integration_effort_summary.json",
@@ -127,7 +127,7 @@
     },
     {
       "path": "chapter4/table_4_evidence_matrix.csv",
-      "sha256": "50d6ee84ec3d0a9552b45cadb78f40c9d11de7358fb870531ec259b05eff48db"
+      "sha256": "d1b20355cc3947819525d08ea9f569eda9270b68fc57e822a407cc405280485a"
     },
     {
       "path": "chapter4/table_4_integration_effort_measurements.csv",
@@ -135,11 +135,11 @@
     },
     {
       "path": "chapter4/table_4_registry_snapshot.csv",
-      "sha256": "96a4cd6ce73330cc31d769850bd515507dd79335fe896905948e09916776bee6"
+      "sha256": "86091a603673b96655add09d71684a12870fec9bad0900499a8c135678844c1a"
     },
     {
       "path": "chapter4/table_4_source_repo_cards.csv",
-      "sha256": "52ec4880a4d07af881be87954af3f301580246e296c0c1ef18cbc15f62ccf23a"
+      "sha256": "a7a441f7c373a4b0f0b443551c2d304beac056ad26da96a9d58a7a769c170519"
     },
     {
       "path": "chapter4/text_4_evidence_pack_insert.md",
@@ -159,7 +159,7 @@
     },
     {
       "path": "chapter5/fig_5_module_channel_coverage.png",
-      "sha256": "45c0f5436d4cadf8ebd199c5672fbc89aac605b0911209304d189c3f221d286d"
+      "sha256": "a8e7c036c900626c7f05567da62f58dd02379d11bdb2406b0c34b47b83be1d83"
     },
     {
       "path": "chapter5/fig_5_scenario_action_routes.png",
@@ -167,7 +167,7 @@
     },
     {
       "path": "chapter5/fig_5_scenario_status_overview.png",
-      "sha256": "1c2a89ca946565869a83da394b8aa8603fe9490953ea98255b330f8315e2973b"
+      "sha256": "e5fe6ba07dc4e6ed67c5ef1b9787a48666dbdf2fb55445cbf1700a9812687104"
     },
     {
       "path": "chapter5/hybrid_xiris_blocking_case.json",
@@ -179,27 +179,27 @@
     },
     {
       "path": "chapter5/table_5_module_channel_coverage.csv",
-      "sha256": "f642f13d328360ebbe1901fe39429da5fb14d6ca35c699510fae056b2545334a"
+      "sha256": "4accce23c4a015fe19bb121ff57f64b8e9a8cee30e7ad51d8094dce4c0a66615"
     },
     {
       "path": "chapter5/table_5_registry_scenarios.csv",
-      "sha256": "05a8fb2237ae54c17619225bb94251221cad1247201e20ee9a50f98c36655329"
+      "sha256": "511f5ee8ab9d31a30eef170d00ccf26f254ccb8781138e5cf470283d5d8b7623"
     },
     {
       "path": "chapter5/table_5_scenario_baseline_comparison.csv",
-      "sha256": "7e2f1105e9e963f586d17d3e03a73fc0687aa6bde45d3220143623c9fdd795cc"
+      "sha256": "66cf51215335baf4c63e893f183946b6e2d05c89119c15896364f5676ee2f558"
     },
     {
       "path": "chapter5/table_5_scenario_baseline_comparison.md",
-      "sha256": "157b1873ec4c31b67b01bbba56e4b9df38c166b8e80019bfba05a56db0e1846f"
+      "sha256": "767a1c3b9d363c877b0a8e1eb70db4b95f5de5889ac5aead793aa735aa53a1a1"
     },
     {
       "path": "chapter5/table_5_scenario_quantitative_summary.csv",
-      "sha256": "4691f414ddd7f1f872ba99ab6b5e474c1ba848f3f470fec20ee34c52d4aca751"
+      "sha256": "ddd7a2e7e2c245aa580d7f7c6925490eb159da7d6c98c8177ab7d7190823e52e"
     },
     {
       "path": "chapter5/table_5_scenario_run_summary.csv",
-      "sha256": "d56d0577b8140c55d0e2dc6e3759f12689bf6e24b034df336d771f68a7012e81"
+      "sha256": "7ed3fc1e0c7ca7267fc2d7bdef2c0451212718ac4bc29e059bd0c39ba9047dae"
     },
     {
       "path": "chapter5/text_5_scenario_run_insert.md",

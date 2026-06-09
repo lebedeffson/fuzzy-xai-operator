@@ -143,18 +143,37 @@ Fixture:
 
 ### BEACON-XAI и GIS INTEGRO
 
-Решение: вариант B, перенести в перспективные/source-pending сценарии.
+BEACON-XAI доведён до исполняемого fixture-адаптера с закреплённым GitHub HEAD:
 
-Статус в таблицах:
-
-- `status = source-pending`
-- `adapter_called = False`
-- `action = not_run`
+- `source_repo = https://github.com/fims9000/BeaconXAI`
+- `source_commit = 660366759fb0b5045491a9f7b9fa50745afe44db`
+- `adapter_called = True`
+- `status = fixture-certified`
+- `action = audit_report`
 - `quantitative_claims = false`
+
+GIS INTEGRO доведён до исполняемого fixture-адаптера через тот же GD-ANFIS/SHAP-стиль каналов:
+
+- `adapter_called = True`
+- `status = source-pending`
+- `action = audit_report`
+- `quantitative_claims = false`
+
+Код:
+
+- `fuzzyxai/adapters/beacon_xai.py`
+- `fuzzyxai/adapters/gis_integro.py`
+- `tests/test_beacon_xai_adapter.py`
+- `tests/test_gis_integro_adapter.py`
+
+Fixtures:
+
+- `data/article_fixtures/beacon_xai_output.json`
+- `data/article_fixtures/gis_integro_output.json`
 
 Корректная формулировка:
 
-> BEACON-XAI и GIS INTEGRO сохранены в реестре как перспективные сценарии интеграции. До закрепления источников и fixture-артефактов они не запускаются как адаптеры и не используются как экспериментальное подтверждение.
+> BEACON-XAI подключён как исполняемый fixture-маршрут с закреплённым репозиторием и commit hash. GIS INTEGRO подключён как исполняемый fixture-маршрут через GD-ANFIS/SHAP-каналы, но остаётся `source-pending` до закрепления внешнего источника. Оба сценария показывают прохождение через адаптер и отчётный контур, но не используются как количественное сравнение качества исходных моделей.
 
 ### HYBRID-XIRIS blocking case
 
@@ -223,7 +242,7 @@ make dissertation-artifacts
 
 ## Что нельзя утверждать
 
-- Нельзя писать, что BEACON-XAI или GIS INTEGRO экспериментально подтверждены.
+- Нельзя писать, что BEACON-XAI или GIS INTEGRO дают количественное экспериментальное превосходство: они подтверждают только adapter/report route.
 - Нельзя писать accuracy/missed critical ruptures для внешних сценариев, где стоят `N/A` или `not_available`.
 - Нельзя повышать `source-pending` до `fixture-certified` без закрепленного источника/fixture.
 - Нельзя использовать протокол трудоемкости как оценку production-интеграции.

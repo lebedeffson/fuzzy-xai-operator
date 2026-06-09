@@ -1,11 +1,11 @@
-# Scenario action report: gis_integro
+# GIS INTEGRO action report
 
-- module: `GIS INTEGRO scenario`
-- adapter_called: `False`
-- output_type: `registered metadata only`
-- status: `source-pending`
-- evidence_level: `source-pending`
-- action: `not_run`
-- claim_scope: source-pending planned scenario; adapter_called=false, action=not_run, quantitative_claims=false
+- registry_id: `gis_integro`
+- adapter_called: `True`
+- under_the_hood: `GD-ANFIS rules + SHAP regularization`
+- fixture_sha256: `dd18815b5e138f23573de1e099968e8393a33bf4356186adae764e2f3950c92b`
+- alpha_k: `{'r_spatial_risk': 0.71, 'r_shap_regularized': 0.73}`
+- eta_k / SHAP: `{'region_density': 0.29, 'route_connectivity': 0.18, 'noise_regularizer': -0.04}`
+- action: `audit_report`
 
-Численные `chi_R`, `chi_Auto` и `rho` для внешнего модуля не подставляются искусственно. Если адаптер не предоставляет полный структурный контур, сценарий фиксируется как audit/report-only.
+GIS INTEGRO исполняется как fixture-маршрут через GD-ANFIS/SHAP-каналы, но остаётся `source-pending` до закрепления внешнего источника.

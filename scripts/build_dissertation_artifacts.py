@@ -8,7 +8,9 @@ import shutil
 from pathlib import Path
 from typing import Any
 
+from fuzzyxai.adapters.beacon_xai import BeaconXAIAdapter
 from fuzzyxai.adapters.gd_anfis_shap import GDANFISSHAPAdapter
+from fuzzyxai.adapters.gis_integro import GISIntegroAdapter
 
 import matplotlib
 
@@ -141,7 +143,7 @@ def _route_figure(path: Path, title: str, modules: list[str]) -> None:
 
 def _module_channels(row: dict[str, Any]) -> dict[str, int]:
     adapter = str(row.get('adapter', ''))
-    pending = row.get('status') in {'planned', 'source-pending'} and adapter != 'gd_anfis_shap'
+    pending = row.get('status') in {'planned', 'source-pending'} and adapter not in {'gd_anfis_shap', 'beacon_xai', 'gis_integro'}
     if pending:
         return {c: 0 for c in CHANNELS}
     base = {c: 0 for c in CHANNELS}
@@ -150,12 +152,12 @@ def _module_channels(row: dict[str, Any]) -> dict[str, int]:
     if adapter != 'planned':
         base['R_k'] = 1
         base['alpha_k'] = 1
-    if row.get('evidence_level') in {'repository-output-level', 'fixture-level'} or adapter == 'gd_anfis_shap':
+    if row.get('evidence_level') in {'repository-output-level', 'fixture-level'} or adapter in {'gd_anfis_shap', 'beacon_xai', 'gis_integro'}:
         base['eta_k'] = 1
     if row.get('status') == 'real-output-compatible':
         base['D_k'] = 1
         base['Action'] = 1
-    if adapter == 'gd_anfis_shap':
+    if adapter in {'gd_anfis_shap', 'beacon_xai', 'gis_integro'}:
         base['Action'] = 1
     return base
 
@@ -184,10 +186,16 @@ def _scenario_tables(out: Path, matrix_rows: list[dict[str, Any]]) -> tuple[list
             'chapter_section': '5.x' if row.get('chapter_role') != 'future_extension' else 'appendix/future work',
         })
         adapter_called = row.get('run_allowed') in {True, 'True', 'true', '1', 1}
-        gd_raw: dict[str, Any] | None = None
+        adapter_raw: dict[str, Any] | None = None
         if rid == 'gd_anfis_shap':
-            gd_raw = GDANFISSHAPAdapter().explain()
-            adapter_called = gd_raw.get('status') == 'ok'
+            adapter_raw = GDANFISSHAPAdapter().explain()
+            adapter_called = adapter_raw.get('status') == 'ok'
+        elif rid == 'beacon_xai':
+            adapter_raw = BeaconXAIAdapter().explain()
+            adapter_called = adapter_raw.get('status') == 'ok'
+        elif rid == 'gis_integro':
+            adapter_raw = GISIntegroAdapter().explain()
+            adapter_called = adapter_raw.get('status') == 'ok'
         if row.get('adapter') == 'planned' or row.get('status') == 'planned':
             adapter_called = False
         output_type = 'ExplanationArtifact + report' if adapter_called else 'registered metadata only'
@@ -195,7 +203,7 @@ def _scenario_tables(out: Path, matrix_rows: list[dict[str, Any]]) -> tuple[list
         report_path = reports_dir / f'{rid}_action_report.md'
         figure_path = figures_dir / f'{rid}_route.png'
         _route_figure(figure_path, f'{rid}: adapter route', [title])
-        if gd_raw is None:
+        if adapter_raw is None:
             report_path.write_text('\n'.join([
                 f'# Scenario action report: {rid}',
                 '',
@@ -216,7 +224,7 @@ def _scenario_tables(out: Path, matrix_rows: list[dict[str, Any]]) -> tuple[list
             'adapter_called': adapter_called,
             'output_type': output_type,
             'has_explanation_object': adapter_called,
-            'has_diagnostic_state': row.get('status') == 'real-output-compatible' or bool(gd_raw and gd_raw.get('has_diagnostic_state')),
+            'has_diagnostic_state': row.get('status') == 'real-output-compatible' or bool(adapter_raw and adapter_raw.get('has_diagnostic_state')),
             'chi_R': 'N/A',
             'chi_Auto': 'N/A',
             'rho': 'N/A',

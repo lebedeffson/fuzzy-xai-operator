@@ -1,6 +1,6 @@
 # Doctoral final evidence index
 
-checked_at: `2026-06-09T07:14:02.871158+00:00`
+checked_at: `2026-06-09T14:05:44.362722+00:00`
 
 ## Commands
 
@@ -21,8 +21,8 @@ checked_at: `2026-06-09T07:14:02.871158+00:00`
 | `reports/chapter2/alignment_synthesis_report.json` | `True` | `c649cb0ec15ce918d302bfd4aceb829c65fdfe8e4ea7a0353274300323855259` |
 | `reports/chapter3/synthetic_ruptures_summary.json` | `True` | `45c9cca60b63f569ff2011b605f8340d187afda1b306f6eb583fd8b72bc1b599` |
 | `reports/chapter3/synthetic_ruptures_results.csv` | `True` | `494c6cac3a3a94c1b91db074e4d3e4106df9aad7f1bc15f8cf18a7c51ffcac0e` |
-| `reports/chapter4/ecosystem_evidence.json` | `True` | `60ee53bc928d0390d615c2e7386ec6d179f0412ed6b2d7ace3987d9655003f56` |
+| `reports/chapter4/ecosystem_evidence.json` | `True` | `3984c825418e0b62a67d3a56c094a10edab252f9e24e9c963302b5d825a94ebd` |
 | `reports/chapter4/integration_effort_summary.json` | `True` | `3ca16463c2228ae7476cba8aaec694fc715b4b2935698c6149b00802e53f2210` |
-| `reports/chapter5/scenario_run_summary.csv` | `True` | `d56d0577b8140c55d0e2dc6e3759f12689bf6e24b034df336d771f68a7012e81` |
+| `reports/chapter5/scenario_run_summary.csv` | `True` | `7ed3fc1e0c7ca7267fc2d7bdef2c0451212718ac4bc29e059bd0c39ba9047dae` |
 | `reports/chapter5/hybrid_xiris_blocking_case.json` | `True` | `316cf0307925e234ed1ec8978ed69520f1cd8959efe18fb364d8deb25e3e9d95` |
-| `dissertation_artifacts/artifact_manifest_sha256.json` | `True` | `92c8685b42f400fc99d2e21a2e52accd40498ab82551633cb6f29a3181bf3d00` |
+| `dissertation_artifacts/artifact_manifest_sha256.json` | `True` | `e32b80d86c71f6227bad787649e139b032e8cf9f38428f02e4e77d98bbea49e9` |
