@@ -13,6 +13,7 @@ COMMANDS = [
     ['make', 'calibrate-chapter2'],
     ['make', 'benchmark-equal-raw-structure'],
     ['make', 'reproduce-critical-ruptures'],
+    ['make', 'chapter2-3-final-evidence'],
     ['make', 'ecosystem-evidence'],
     ['make', 'dissertation-artifacts'],
 ]
@@ -21,6 +22,8 @@ KEY_FILES = [
     'reports/chapter2/calibration_report.json',
     'reports/chapter2/equal_raw_structure_report.json',
     'reports/chapter2/alignment_synthesis_report.json',
+    'reports/chapter2_3/chapter2_3_final_evidence.json',
+    'reports/chapter2_3/chapter2_3_implementation_matrix.csv',
     'reports/chapter3/synthetic_ruptures_summary.json',
     'reports/chapter3/synthetic_ruptures_results.csv',
     'reports/chapter4/ecosystem_evidence.json',

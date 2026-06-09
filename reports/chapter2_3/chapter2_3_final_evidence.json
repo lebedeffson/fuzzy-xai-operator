@@ -1,0 +1,136 @@
+{
+  "status": "ok",
+  "checked_at": "2026-06-09T14:59:24.610755+00:00",
+  "chapters": [
+    2,
+    3
+  ],
+  "implemented_rows": 15,
+  "total_rows": 15,
+  "missing": [],
+  "matrix_csv": "reports/chapter2_3/chapter2_3_implementation_matrix.csv",
+  "matrix_md": "reports/chapter2_3/chapter2_3_implementation_matrix.md",
+  "writer_insert": "reports/chapter2_3/chapter2_3_writer_insert.md",
+  "files": [
+    {
+      "path": "dissertation_artifacts/diagram_specs/chapter3/fig_3_2_hierarchy.json",
+      "exists": true,
+      "sha256": "16e9e3ea4781563474bea890561a17fad7df7f61062a78b29b8b21ac6a9672d4"
+    },
+    {
+      "path": "dissertation_artifacts/diagram_specs/chapter3/fig_3_3_reduction.json",
+      "exists": true,
+      "sha256": "d1ba6876b8cf345a38d4df72b8893f428bee0c27f92f0ba5a9402393a409729c"
+    },
+    {
+      "path": "dissertation_artifacts/diagram_specs/chapter3/fig_3_4_route.json",
+      "exists": true,
+      "sha256": "3efa9eb68eab2113b085b9ff5e342c73f1ce571b47c20ad81bcabffee4cde799"
+    },
+    {
+      "path": "dissertation_artifacts/diagram_specs/chapter3/fig_3_8_chi_auto_sample113.json",
+      "exists": true,
+      "sha256": "494eb19595bb34c8c2a92f985663fb10bba9f082e42c3e502da077ec189d2cca"
+    },
+    {
+      "path": "evidence/critical_ruptures_manifest_sha256.json",
+      "exists": true,
+      "sha256": "f4b3f3a56d1ab6944b8d8e2b01055ff34d341d9ee33a66cceb5663f474f1b9d2"
+    },
+    {
+      "path": "figures/chapter2/calibration_constants.png",
+      "exists": true,
+      "sha256": "fe4ac72b781e8d57eec8af5536b72fdb6f38b4d2a46436e10be5f4ca21336bda"
+    },
+    {
+      "path": "figures/chapter2/equal_raw_structure_comparison.png",
+      "exists": true,
+      "sha256": "91a6794246f3bb7bed5051b593112cceb0bf25b1eba594e46e4dc0806b27e92f"
+    },
+    {
+      "path": "figures/chapter3/critical_ruptures_comparison.png",
+      "exists": true,
+      "sha256": "26e714505887a5bf55a7edd30914bf1f3e593582151b8e9d87fe2f0ccb9d9a9f"
+    },
+    {
+      "path": "reports/chapter2/alignment_synthesis_report.json",
+      "exists": true,
+      "sha256": "c649cb0ec15ce918d302bfd4aceb829c65fdfe8e4ea7a0353274300323855259"
+    },
+    {
+      "path": "reports/chapter2/calibration_constants.csv",
+      "exists": true,
+      "sha256": "5ae7af763efb982ca16108014e443c649a9bca3363f0b7a4e8c8142b88f150ce"
+    },
+    {
+      "path": "reports/chapter2/calibration_report.json",
+      "exists": true,
+      "sha256": "1b95b961978092a295fa5450598c2862e9fd7c853031f62049704faa87084412"
+    },
+    {
+      "path": "reports/chapter2/chapter2_breast_cancer_summary.json",
+      "exists": true,
+      "sha256": "b395d5f63b098c03f03ea2b2cbc6214342a2c6356f5d667f22789f6e48e5a528"
+    },
+    {
+      "path": "reports/chapter2/equal_raw_structure_report.json",
+      "exists": true,
+      "sha256": "9f329e39d5ebbd824a1f9caaef5896fa8fc3349d52e43305c983f41ce6687260"
+    },
+    {
+      "path": "reports/chapter2/equal_raw_structure_summary.csv",
+      "exists": true,
+      "sha256": "768da4928dc99f3cdf265f67c8443f30724a2d9f7ef428137148fc2af292706b"
+    },
+    {
+      "path": "reports/chapter2/explain_plan_hash.json",
+      "exists": true,
+      "sha256": "c18bfa69005fd3b56cc3ea73ee2a59596b00486dd2cdd71398dc5eb30b12e7cb"
+    },
+    {
+      "path": "reports/chapter2/sample_113_report.json",
+      "exists": true,
+      "sha256": "4920325789b0e09fc54a9f64f9dd93f0ae5efa82aa57ca74e17903fd97025f33"
+    },
+    {
+      "path": "reports/chapter2/sample_113_table.csv",
+      "exists": true,
+      "sha256": "5e0ea40ec558148ee89a4439fc55ffd812030d69160b5c1d0e36c09b425a1646"
+    },
+    {
+      "path": "reports/chapter2/sample_113_trace.json",
+      "exists": true,
+      "sha256": "d251967af2e921a90fa2fcd5295d60e513910914f692a046c9818b5b8126d967"
+    },
+    {
+      "path": "reports/chapter2_3/chapter2_3_implementation_matrix.csv",
+      "exists": true,
+      "sha256": "1f9be3164349ab4b1dcc9da44aa11062edc6a367bee51b9735514123a6cbd17b"
+    },
+    {
+      "path": "reports/chapter2_3/chapter2_3_implementation_matrix.md",
+      "exists": true,
+      "sha256": "cf821cbbfb4c56516cc1d00c8475187f1c2af085e1d531aeabb85bcfce20c19c"
+    },
+    {
+      "path": "reports/chapter2_3/chapter2_3_writer_insert.md",
+      "exists": true,
+      "sha256": "fccd1ee8496d6be864be229843a313af3167b971c136632e55e8c826487328b5"
+    },
+    {
+      "path": "reports/chapter3/dataset_roles_summary.csv",
+      "exists": true,
+      "sha256": "e677dd7743b092631a81420c860f9c8e2b45d128cb8f86bda6ad9b3b3f4ea4e2"
+    },
+    {
+      "path": "reports/chapter3/synthetic_ruptures_results.csv",
+      "exists": true,
+      "sha256": "494c6cac3a3a94c1b91db074e4d3e4106df9aad7f1bc15f8cf18a7c51ffcac0e"
+    },
+    {
+      "path": "reports/chapter3/synthetic_ruptures_summary.json",
+      "exists": true,
+      "sha256": "45c9cca60b63f569ff2011b605f8340d187afda1b306f6eb583fd8b72bc1b599"
+    }
+  ]
+}

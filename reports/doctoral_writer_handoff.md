@@ -1,15 +1,34 @@
 # Пакет для писателя: финальное закрытие кода и текста глав 2-5
 
-Финальный коммит с доработкой сценариев: `5cf39c8 Add Beacon and GIS executable scenario adapters`.
+Финальные коммиты см. в `git log --oneline -5`; после `5cf39c8 Add Beacon and GIS executable scenario adapters` добавлен контроль полной реализации глав 2-3.
 Базовый коммит закрытия evidence-хвостов: `a12a472 Close doctoral evidence integration gaps`.
 Ветка: `feature/math-aligned-code`.
 
 ## Что проверено
 
-- `pytest -q`: `208 passed`, предупреждения только от `sklearn` про feature names.
+- `pytest -q`: `209 passed`, предупреждения только от `sklearn` про feature names.
 - `make doctoral-final-evidence`: `PASS`.
+- `make chapter2-3-final-evidence`: `PASS`, 15/15 ключевых объектов глав 2-3 имеют код, тест и артефакт.
 - Индекс проверки: `reports/doctoral_final_evidence_index.md`.
 - SHA-манифест: `evidence/doctoral_final_manifest_sha256.json`.
+
+## Главы 2-3: матрица полной реализации
+
+Новый контрольный пакет:
+
+- `reports/chapter2_3/chapter2_3_implementation_matrix.csv`
+- `reports/chapter2_3/chapter2_3_implementation_matrix.md`
+- `reports/chapter2_3/chapter2_3_final_evidence.json`
+- `reports/chapter2_3/chapter2_3_writer_insert.md`
+- `evidence/chapter2_3_manifest_sha256.json`
+
+Статус: `implemented_rows = 15`, `total_rows = 15`, `missing = []`.
+
+Матрица закрывает следующие группы: `ExplainPlan`, `E_k`, системный оператор, `d_E/gamma/D_ij`, ограниченный синтез `T_ij`, `L(E)/I(E_G)`, калибровку `c_H/c_O/c_K`, `equal_raw_structure`, иерархию `F0/F_int/F_H/F_N/F_ML`, редукцию `Delta`, `P_sit/D_choice`, `chi_Auto`, `CertifiedPath/Rupture`, `rho/action`, controlled critical ruptures.
+
+Корректная формулировка:
+
+> Для глав 2-3 сформирована матрица программной реализации: каждый ключевой математический объект сопоставлен с исходным кодом, pytest-проверкой и воспроизводимым артефактом. Команда `make chapter2-3-final-evidence` завершается успешно только при наличии всех трёх типов подтверждения.
 
 ## Главный принцип для текста
 
