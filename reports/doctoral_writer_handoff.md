@@ -1,11 +1,12 @@
 # Пакет для писателя: финальное закрытие кода и текста глав 2-5
 
-Коммит с программным закрытием несоответствий: `a12a472 Close doctoral evidence integration gaps`.
+Финальный коммит с доработкой сценариев: `5cf39c8 Add Beacon and GIS executable scenario adapters`.
+Базовый коммит закрытия evidence-хвостов: `a12a472 Close doctoral evidence integration gaps`.
 Ветка: `feature/math-aligned-code`.
 
 ## Что проверено
 
-- `pytest -q`: `206 passed`, предупреждения только от `sklearn` про feature names.
+- `pytest -q`: `208 passed`, предупреждения только от `sklearn` про feature names.
 - `make doctoral-final-evidence`: `PASS`.
 - Индекс проверки: `reports/doctoral_final_evidence_index.md`.
 - SHA-манифест: `evidence/doctoral_final_manifest_sha256.json`.
