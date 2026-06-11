@@ -9,7 +9,10 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Callable, Iterable
 
-import yaml
+try:
+    import yaml
+except ModuleNotFoundError:  # pragma: no cover - used in minimal archive checks.
+    yaml = None
 
 PACKAGE_ROOT = Path(__file__).resolve().parents[1]
 REPO_ROOT = Path(__file__).resolve().parents[2]
@@ -52,7 +55,11 @@ def read_yaml_or_json(path: str | Path) -> dict[str, Any]:
     """Read a YAML/JSON mapping."""
     p = resolve_path(path)
     text = p.read_text(encoding='utf-8')
-    return json.loads(text) if p.suffix.lower() == '.json' else yaml.safe_load(text)
+    if p.suffix.lower() == '.json':
+        return json.loads(text)
+    if yaml is None:
+        raise RuntimeError('PyYAML is required for YAML ExplainPlan files; install requirements.txt.')
+    return yaml.safe_load(text)
 
 
 def sha256_text(text: str) -> str:

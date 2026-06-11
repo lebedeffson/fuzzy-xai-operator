@@ -1,0 +1,5 @@
+scenario,baseline,baseline_value,fuzzyxai_value,evidence_file
+HYBRID-XIRIS,model_score > 0.7,168 missed,0 missed,reports/chapter5/hybrid_xiris_summary.json
+BEACON-XAI,manual_required_baseline,64 checks,11 checks,reports/chapter5/beacon_xai_summary.json
+GIS INTEGRO,not_available,N/A,route metrics,reports/chapter5/gis_integro_route_metrics.json
+GD-ANFIS/SHAP,not_available,N/A,route metrics,reports/chapter5/gd_anfis_shap_report.json

@@ -36,8 +36,8 @@ run_step hybrid_xiris python -m fuzzyxai_experiments.experiments.ch5_hybrid
 run_step beacon_xai python -m fuzzyxai_experiments.experiments.ch5_beacon
 run_step gis_integro python -m fuzzyxai_experiments.experiments.ch5_gis
 run_step gd_anfis_shap python -m fuzzyxai_experiments.experiments.ch5_gd_anfis_shap
-run_step ch4_integration python -m fuzzyxai_experiments.experiments.ch4_integration_metrics
 run_step ch5_scenario_runs python -m fuzzyxai_experiments.experiments.ch5_scenario_runs
+run_step ch4_integration python -m fuzzyxai_experiments.experiments.ch4_integration_metrics
 cp reports/ch4_integration.json reports/chapter4/ch4_integration.json
 cp reports/ch5_hybrid.json reports/chapter5/ch5_hybrid.json
 cp reports/ch5_beacon.json reports/chapter5/ch5_beacon.json
@@ -55,5 +55,4 @@ python scripts/build_manifest.py | tee logs/manifest.log
 echo "PASS: ch4_evidence_manifest"
 python compare_reports.py | tee logs/compare_reports.log
 sha256sum -c checksums.sha256 > logs/checksums.log
-echo "PASS: checksums"
 printf 'Docker daemon note: run `docker run --rm fuzzyxai/evidence:chapter4-5 bash run_chapter4_5.sh` after building image. Local daemon may be unavailable.\n' > logs/docker_run.log

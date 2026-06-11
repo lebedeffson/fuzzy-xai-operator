@@ -43,7 +43,8 @@ docker run --rm fuzzyxai/evidence:chapter4-5 bash run_chapter4_5.sh
 ## Ключевые файлы
 
 - `registry/modules.json`: реестр сценариев.
-- `data/generated/hybrid_xiris_objects.csv`: 1000 объектов HYBRID-XIRIS.
+- `data/generated/hybrid_xiris_objects.csv`: 1000 объектов HYBRID-XIRIS с `chi_R_crit`, `chi_Auto`, `reason`.
+- `reports/chapter5/hybrid_xiris_blocking_case.json`: один вычисленный blocking case для разбора в главе 5.
 - `data/generated/beacon_xai_signals.csv`: 100 сигналов BEACON-XAI.
 - `data/fixtures/gis_integro_fixture.csv`: входы для `gamma_route` и `Delta`.
 - `data/fixtures/gd_anfis_rules.csv`, `data/fixtures/gd_anfis_shap_values.csv`: правила и SHAP.
@@ -56,3 +57,10 @@ docker run --rm fuzzyxai/evidence:chapter4-5 bash run_chapter4_5.sh
 
 - Разрешено: маршрут выполнен, отчёт сформирован, метрики воспроизведены.
 - Запрещено: заявлять новую точность внешней модели, clinical effectiveness или production-ready статус без отдельной валидации.
+
+## Зафиксированные пороги HYBRID-XIRIS
+
+- `score_threshold = 0.70`
+- `quality_threshold = 0.45`
+- Baseline: `accept`, если `model_score > 0.70`.
+- FuzzyXAI блокирует критический случай при высокой уверенности и низком качестве: `model_score > 0.70` и `quality_score < 0.45`.

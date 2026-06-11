@@ -65,10 +65,10 @@ def home():
     gd = read_json('reports/chapter5/gd_anfis_shap_report.json')
     fig, ax = setup('FuzzyXAI Studio - сценарии объяснения, аудита и контроля риска')
     cards = [
-        ('HYBRID-XIRIS', ['Тип: safety', 'Задача: блокировка критического случая', f"Данные: {h['total_objects']} объектов", f"Ключевой результат: baseline missed = {h['baseline_missed']}, FuzzyXAI missed = {h['fuzzyxai_missed']}", 'Статус: real-output-compatible', 'Кнопка: Открыть сценарий']),
-        ('BEACON-XAI', ['Тип: audit', 'Задача: сокращение ручной проверки', f"Данные: {b['total_signals']} сигналов", f"Ключевой результат: {b['baseline_manual_checks']} -> {b['fuzzyxai_manual_checks']}, audit reports = {b['audit_reports']}", 'Статус: fixture-certified', 'Кнопка: Открыть сценарий']),
-        ('GIS INTEGRO', ['Тип: route', 'Задача: проверка геомаршрута', 'Данные: geo fixture', f"Ключевой результат: gamma_route = {g['gamma_route']:.2f}, Delta = {g['Delta']:.2f}", 'Статус: source-pending', 'Кнопка: Открыть сценарий']),
-        ('GD-ANFIS/SHAP', ['Тип: route', 'Задача: объединение правил и SHAP', 'Данные: rules + SHAP fixture', f"Ключевой результат: Delta = {gd['Delta']}, I_pre = {gd['I_pre']}", 'Статус: source-pending', 'Кнопка: Открыть сценарий']),
+        ('HYBRID-XIRIS', ['Тип: safety', 'Задача: блокировка критического случая', f"Данные: {h['total_objects']} объектов", f"Результат: baseline missed = {h['baseline_missed']}", f"FuzzyXAI missed = {h['fuzzyxai_missed']}", 'Статус: real-output-compatible', '[ Открыть сценарий ]']),
+        ('BEACON-XAI', ['Тип: audit', 'Задача: сокращение ручной проверки', f"Данные: {b['total_signals']} сигналов", f"Результат: {b['baseline_manual_checks']} -> {b['fuzzyxai_manual_checks']}", f"Audit reports = {b['audit_reports']}", 'Статус: fixture-certified', '[ Открыть сценарий ]']),
+        ('GIS INTEGRO', ['Тип: route', 'Задача: проверка геомаршрута', 'Данные: geo fixture', f"gamma_route = {g['gamma_route']:.2f}", f"Delta = {g['Delta']:.2f}", 'Статус: source-pending', '[ Открыть сценарий ]']),
+        ('GD-ANFIS/SHAP', ['Тип: route', 'Задача: объединение правил и SHAP', 'Данные: rules + SHAP fixture', f"Delta = {gd['Delta']}", f"I_pre = {gd['I_pre']}", 'Статус: source-pending', '[ Открыть сценарий ]']),
     ]
     positions = [(0.04, 0.53), (0.52, 0.53), (0.04, 0.18), (0.52, 0.18)]
     for (title, lines), (x, y) in zip(cards, positions):
@@ -82,7 +82,7 @@ def route_screen(name: str, filename: str, input_lines: list[str], adapter: str,
     steps = [
         ('1. Вход', input_lines),
         ('2. Адаптер', [adapter]),
-        ('3. E_k / D_k', [conflict]),
+        ('3. Объяснение', [conflict, '(E_k / D_k)']),
         ('4. Наблюдатель', ['Проверка риска, согласованности и ограничений claims']),
         ('5. Действие', [result]),
         ('6. Evidence', [evidence]),
@@ -103,7 +103,7 @@ def hybrid_result():
     fig, ax = setup('HYBRID-XIRIS - результат')
     box(ax, 0.04, 0.58, 0.28, 0.24, 'Результат', ['BLOCK', 'Причина: высокая уверенность модели при низком качестве сегментации'], fill=LIGHT, title_color=BLUE)
     box(ax, 0.36, 0.58, 0.28, 0.24, 'Сравнение', [f"Baseline missed: {h['baseline_missed']}", f"FuzzyXAI missed: {h['fuzzyxai_missed']}", f"False block: {h['false_block']}"], fill='white')
-    box(ax, 0.68, 0.58, 0.27, 0.24, 'Evidence', ['Отчёт: reports/chapter5/hybrid_xiris_summary.json', 'Таблица: tables/hybrid_xiris_baseline_comparison.md', 'Последний запуск: PASS'], fill='white')
+    box(ax, 0.68, 0.58, 0.27, 0.24, 'Evidence', ['Отчёт: hybrid_xiris_summary.json', 'Таблица: hybrid_xiris_baseline_comparison.md', 'Статус проверки: PASS'], fill='white')
     box(ax, 0.04, 0.24, 0.91, 0.22, 'Вывод', ['Критические случаи в контрольном протоколе не пропущены: FuzzyXAI missed = 0.', 'Baseline принимает критические случаи, если model_score > 0.7, и поэтому пропускает 168 объектов.'], fill='white')
     save(fig, '03_hybrid_xiris_result.png')
 
@@ -113,7 +113,7 @@ def beacon_result():
     fig, ax = setup('BEACON-XAI - результат аудита')
     box(ax, 0.04, 0.58, 0.28, 0.24, 'Результат', ['AUDIT REPORT', f"Valid after adapter: {b['valid_after_adapter']}/{b['total_signals']}"], fill=LIGHT, title_color=BLUE)
     box(ax, 0.36, 0.58, 0.28, 0.24, 'Сравнение', [f"Manual checks baseline: {b['baseline_manual_checks']}", f"Manual checks FuzzyXAI: {b['fuzzyxai_manual_checks']}", f"Audit reports: {b['audit_reports']}"], fill='white')
-    box(ax, 0.68, 0.58, 0.27, 0.24, 'Evidence', ['Отчёт: reports/chapter5/beacon_xai_summary.json', 'Таблица: tables/beacon_xai_summary.md', 'Последний запуск: PASS'], fill='white')
+    box(ax, 0.68, 0.58, 0.27, 0.24, 'Evidence', ['Отчёт: beacon_xai_summary.json', 'Таблица: beacon_xai_summary.md', 'Статус проверки: PASS'], fill='white')
     box(ax, 0.04, 0.24, 0.91, 0.22, 'Вывод', ['Ручная проверка сокращена в контрольном fixture-протоколе.', '17 сигналов не прошли адаптер; причины сохранены в beacon_xai_adapter_failures.csv.'], fill='white')
     save(fig, '05_beacon_audit_result.png')
 
@@ -125,10 +125,10 @@ def gis_report():
 
 def evidence_panel():
     fig, ax = setup('Evidence panel')
-    box(ax, 0.04, 0.60, 0.42, 0.22, 'HYBRID-XIRIS', ['Отчёт: reports/chapter5/hybrid_xiris_summary.json', 'Таблица: tables/hybrid_xiris_baseline_comparison.md', 'Checksum: checksums.sha256', 'Последний запуск: PASS'], fill='white')
-    box(ax, 0.52, 0.60, 0.42, 0.22, 'BEACON-XAI', ['Отчёт: reports/chapter5/beacon_xai_summary.json', 'Таблица: tables/beacon_xai_summary.md', 'Trace: beacon_xai_adapter_failures.csv', 'Последний запуск: PASS'], fill='white')
-    box(ax, 0.04, 0.30, 0.42, 0.22, 'GIS INTEGRO', ['Отчёт: reports/chapter5/gis_integro_route_metrics.json', 'Таблица: tables/gis_integro_metrics.md', 'Статус: source-pending', 'Последний запуск: PASS'], fill=WARN)
-    box(ax, 0.52, 0.30, 0.42, 0.22, 'GD-ANFIS/SHAP', ['Отчёт: reports/chapter5/gd_anfis_shap_report.json', 'Таблица: tables/gd_anfis_shap_metrics.md', 'Статус: source-pending', 'Последний запуск: PASS'], fill=WARN)
+    box(ax, 0.04, 0.60, 0.42, 0.22, 'HYBRID-XIRIS', ['Отчёт: hybrid_xiris_summary.json', 'Таблица: hybrid_xiris_baseline_comparison.md', 'Checksum: checksums.sha256', 'Последний запуск: PASS'], fill='white')
+    box(ax, 0.52, 0.60, 0.42, 0.22, 'BEACON-XAI', ['Отчёт: beacon_xai_summary.json', 'Таблица: beacon_xai_summary.md', 'Trace: beacon_xai_adapter_failures.csv', 'Последний запуск: PASS'], fill='white')
+    box(ax, 0.04, 0.30, 0.42, 0.22, 'GIS INTEGRO', ['Отчёт: gis_integro_route_metrics.json', 'Таблица: gis_integro_metrics.md', 'Статус: source-pending', 'Последний запуск: PASS'], fill=WARN)
+    box(ax, 0.52, 0.30, 0.42, 0.22, 'GD-ANFIS/SHAP', ['Отчёт: gd_anfis_shap_report.json', 'Таблица: gd_anfis_shap_metrics.md', 'Статус: source-pending', 'Последний запуск: PASS'], fill=WARN)
     save(fig, '07_evidence_panel.png')
 
 

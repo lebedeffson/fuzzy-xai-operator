@@ -7,18 +7,18 @@
     },
     {
       "path": "EVIDENCE_HANDOFF.md",
-      "sha256": "98bcc35be35b3b315663713cbab2d66b189945b1a971b33e021e21cf6a44f8a0",
-      "bytes": 3287
+      "sha256": "bfd97de7ae61f82b9895d782958950719bf41046e9e15d6ac2e07e4ab303f737",
+      "bytes": 3593
     },
     {
       "path": "README.md",
-      "sha256": "2a8d979e8f6fc15766d74f0773abd0f18c64e98ed1d424c542f0ab79519d0c98",
-      "bytes": 2073
+      "sha256": "02eec0430206170c769bd32955ea624234795cec1284b5c7b1881c62c24ed0b8",
+      "bytes": 2614
     },
     {
       "path": "compare_reports.py",
-      "sha256": "3a39743656c89a7e383ca00fc7e3923a0986d633f68d6321f6c9a3414107e4cd",
-      "bytes": 2585
+      "sha256": "f6f8d1f1a92d637315c133f32cf41c7c2fe0b9319e4fd359f987f028615ba86a",
+      "bytes": 3999
     },
     {
       "path": "data/article_fixtures/beacon_xai_output.json",
@@ -57,8 +57,8 @@
     },
     {
       "path": "data/generated/hybrid_xiris_objects.csv",
-      "sha256": "eb32d0bc6a79dd0b72aca5c681e8887e5ae4c743c593495a55f0d527c463dfd2",
-      "bytes": 42581
+      "sha256": "e316a9cfd988f861ab0754c7be0a010115b0d50f7c748bf09b9b2cce51f321ef",
+      "bytes": 71168
     },
     {
       "path": "data/raw/README.md",
@@ -72,8 +72,8 @@
     },
     {
       "path": "reports/chapter4/ch4_integration.json",
-      "sha256": "d2ec90e20ad57aa5084f3b8131ea234a1ff3e656e1eb161439be68b82e3851e2",
-      "bytes": 2044
+      "sha256": "98a3f592cd41c8b160c3e16c284af421cec0f582578e3269d587100b3cfe607b",
+      "bytes": 1915
     },
     {
       "path": "reports/chapter5/beacon_xai_adapter_failures.csv",
@@ -87,33 +87,33 @@
     },
     {
       "path": "reports/chapter5/beacon_xai_summary.json",
-      "sha256": "e45d1224b028ed00a59108060d42c70f40896be9e07512647238d0a5fe34714a",
+      "sha256": "b7642efd50f0910babc3ece1cbd4cf7d643c8a6af21f20d13c2cac647b9974c9",
       "bytes": 903
     },
     {
       "path": "reports/chapter5/ch5_beacon.json",
-      "sha256": "926c8ef28ba1a2ebdc15954ee9fbd765d59ff8d8bb2d34232d9362cdc52fbace",
+      "sha256": "f78f1741f928b1d0db692fbdebd54ccd78e8238a0074adcc3cfcf7358d1efd23",
       "bytes": 1216
     },
     {
       "path": "reports/chapter5/ch5_gd_anfis_shap.json",
-      "sha256": "04098e798424a8b455e976d46b65ea1300fb687e5bbfd74af20dee43b04265dd",
+      "sha256": "65a0171de2dcb51ea8deee87253afda0b8174d97c7fc5b6d421650b25f9f2fff",
       "bytes": 1124
     },
     {
       "path": "reports/chapter5/ch5_gis.json",
-      "sha256": "bc5e90972c034caec12887788118d11b913c215538b65a4b04bbf6d8ff3fde26",
+      "sha256": "1e24a82ad93ed1b010e6a69694208e9078a4f33eb3732b88cdfbb1b97453047c",
       "bytes": 1152
     },
     {
       "path": "reports/chapter5/ch5_hybrid.json",
-      "sha256": "a343153642b40bb65ca92a1ea19e6fe55c34018c7a743a5344d27472042849bf",
-      "bytes": 1662
+      "sha256": "2bada61504665a0ffa9d3bd704b6f1c92ad5b06359975dbd2c06364526bbf641",
+      "bytes": 1335
     },
     {
       "path": "reports/chapter5/ch5_scenario_runs.json",
-      "sha256": "2cf6397a6f37b84c36d33062920fac61f30df76a6f7de84fc52a455eb03401de",
-      "bytes": 16050
+      "sha256": "9cec4a34d8af34245359203bc13f1e746032953d7428680344debfdc1af26926",
+      "bytes": 4034
     },
     {
       "path": "reports/chapter5/gd_anfis_shap_report.csv",
@@ -136,49 +136,69 @@
       "bytes": 740
     },
     {
+      "path": "reports/chapter5/hybrid_xiris_blocking_case.csv",
+      "sha256": "f0607a54d7e714b3a1c6cad5a934b681d8f460126a2a8054e00ce8b453576b2d",
+      "bytes": 241
+    },
+    {
+      "path": "reports/chapter5/hybrid_xiris_blocking_case.json",
+      "sha256": "82bab61d58ecc1bfaa0207f36a96b3fca81faaa35268b5d74928a7833a13f49b",
+      "bytes": 317
+    },
+    {
       "path": "reports/chapter5/hybrid_xiris_objects.csv",
-      "sha256": "eb32d0bc6a79dd0b72aca5c681e8887e5ae4c743c593495a55f0d527c463dfd2",
-      "bytes": 42581
+      "sha256": "e316a9cfd988f861ab0754c7be0a010115b0d50f7c748bf09b9b2cce51f321ef",
+      "bytes": 71168
     },
     {
       "path": "reports/chapter5/hybrid_xiris_summary.json",
-      "sha256": "0b3e905b4961e7a76f3dc179d4fb5d2b3ae520c72def376cd6d4056159de03db",
-      "bytes": 1349
+      "sha256": "366c6fc1904bd834c85176459791b83c378add17334d5bef7e5ee9a9d6852adb",
+      "bytes": 1022
+    },
+    {
+      "path": "reports/chapter5/scenario_baseline_comparison.csv",
+      "sha256": "c86deb78825c20564a4138a8efe3d4176d80c97aa9154747a22dd5568d065c4d",
+      "bytes": 434
+    },
+    {
+      "path": "reports/chapter5/scenario_run_summary.csv",
+      "sha256": "9ef144e2232bf16746db542c4d951c56d4c65273a1711f5e90b06eb6a84fa855",
+      "bytes": 1533
     },
     {
       "path": "reports/gui_screenshots/01_home_dashboard.png",
-      "sha256": "2eec69e73bd479d5746d1cfa560b127c4b4c9f8adb8dc56acc7bbf1deeac3fa6",
-      "bytes": 124918
+      "sha256": "c571c408afd5dc4189ada4d183b722918016ce604abd0b629b1552fe1292e677",
+      "bytes": 111529
     },
     {
       "path": "reports/gui_screenshots/02_hybrid_xiris_route.png",
-      "sha256": "9fc542ba560319142586b3f410847708d622b2c5d75b880a6497e963ecca4972",
-      "bytes": 107995
+      "sha256": "131e93ebb4b8e1dc77dfe6aec94fd9d9794ab85316119cf63f322a467b5bdc70",
+      "bytes": 110061
     },
     {
       "path": "reports/gui_screenshots/03_hybrid_xiris_result.png",
-      "sha256": "b2f31bc3e98f78079955132f0d65793a9079bf40901a663fdede8ecb21efc11a",
-      "bytes": 90115
+      "sha256": "2c676174f8f0d897bc5bbc27f1481efc26ffce739461a5b4c2d94406f077522c",
+      "bytes": 85684
     },
     {
       "path": "reports/gui_screenshots/04_beacon_audit_route.png",
-      "sha256": "d5b906d55b0c7b1f039437f3681917eba95ce8c8551fc1ec20fc312d1f5bd4ac",
-      "bytes": 103743
+      "sha256": "135a2c12a0361c49cc26af332eaf76caed74a5b6e3701feeae586d435cf32130",
+      "bytes": 105938
     },
     {
       "path": "reports/gui_screenshots/05_beacon_audit_result.png",
-      "sha256": "7d30b9c580d7ad107fb172d74174eba16db4ba77c635ec86b9e428720719057e",
-      "bytes": 84076
+      "sha256": "603634d584c5ba57f98bcc25ccd20ae7b0add078077aa09a3f66705299909a49",
+      "bytes": 80605
     },
     {
       "path": "reports/gui_screenshots/06_gis_integro_route_report.png",
-      "sha256": "3345ec7d1baf22a8a569dc70e9d63a89b63a38a89eb3e77b82d60aa8cf76e906",
-      "bytes": 106412
+      "sha256": "f135226c277d16d9f427762e999aa85301d67258d43aab8eb3842ad9cbc7081e",
+      "bytes": 108554
     },
     {
       "path": "reports/gui_screenshots/07_evidence_panel.png",
-      "sha256": "63ae6b9f1c1419aa753334b85f460c95f0fa1bbd1e95b45df3caaff6c9e0acc4",
-      "bytes": 93954
+      "sha256": "0f13107ea8b37f72ca7cc34d151cf165de049640fbf35cf11dc4fb831dcf0755",
+      "bytes": 83787
     },
     {
       "path": "reports/gui_screenshots/fuzzyxai_studio_scenarios.html",
@@ -192,8 +212,8 @@
     },
     {
       "path": "run_chapter4_5.sh",
-      "sha256": "9e78ddeca287a7bfed05b76ea05977bb0353ead3aa0ab04fb71293d32d0d6ca2",
-      "bytes": 2687
+      "sha256": "1f374ebe101387a3c1274a20a2a536293bd5e8d1a152c5b0fa7be566bf1de7c6",
+      "bytes": 2664
     },
     {
       "path": "src/__init__.py",
@@ -217,8 +237,8 @@
     },
     {
       "path": "src/report_builders.py",
-      "sha256": "6ff5b119bb9e0a41685835b8eddafcbbad2ff93588257a633b1e426291e2a192",
-      "bytes": 15875
+      "sha256": "70a348870ffe1cef04d32bd0b6f5e166f82a63a2a75e9f9c4312c360a5bcafd3",
+      "bytes": 19574
     },
     {
       "path": "src/risk_observer.py",
@@ -227,8 +247,8 @@
     },
     {
       "path": "src/utils.py",
-      "sha256": "b4bdea595c9641b3e3eb143e4524cf5d07c9c5120fe3f05797b3d51085302342",
-      "bytes": 4162
+      "sha256": "5f6937439816d5dbcad04b034f5a8f5ed3ce3c4ddb3f5f0584362cbad5cf3460",
+      "bytes": 4408
     },
     {
       "path": "tables/beacon_xai_summary.md",

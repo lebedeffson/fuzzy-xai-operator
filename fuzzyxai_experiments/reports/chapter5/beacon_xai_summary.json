@@ -15,7 +15,7 @@
   "route_supported": 83,
   "baseline_alerts_before": 64,
   "fuzzyxai_alerts_after": 11,
-  "processing_time_seconds": 0.001192,
+  "processing_time_seconds": 0.003573,
   "input_csv": "fuzzyxai_experiments/data/generated/beacon_xai_signals.csv",
   "adapter_failures_csv": "fuzzyxai_experiments/reports/chapter5/beacon_xai_adapter_failures.csv",
   "claim_scope": "local deterministic fixture protocol; not a benchmark of the original BEACON-XAI model"

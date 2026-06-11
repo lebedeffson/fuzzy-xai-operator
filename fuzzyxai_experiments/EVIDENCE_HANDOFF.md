@@ -57,7 +57,11 @@ HYBRID-XIRIS:
 - `critical_cases = 168`
 - `baseline_missed = 168`
 - `fuzzyxai_missed = 0`
+- `score_threshold = 0.70`
+- `quality_threshold = 0.45`
 - Источник: `reports/chapter5/hybrid_xiris_summary.json`
+- Объект для разбора: `reports/chapter5/hybrid_xiris_blocking_case.json`
+- CSV содержит вычисленные поля `chi_R_crit`, `chi_Auto`, `reason`.
 
 BEACON-XAI:
 
@@ -79,7 +83,7 @@ GIS INTEGRO:
 
 GD-ANFIS/SHAP:
 
-- Фактические значения брать из `reports/chapter5/gd_anfis_shap_report.json`.
+- Фактические значения брать из `reports/chapter5/gd_anfis_shap_report.json`: сейчас `Delta = 0.16`, `I_pre = 0.71`, `action = audit_report`.
 - В текущем отчёте фиксируются `n_rules`, `alpha_k`, `eta_k`, `Delta`, `u_k`, `I_pre`, `action`.
 
 ## GUI-скриншоты

@@ -1,0 +1,2 @@
+sample_id,model_score,quality_score,score_threshold,quality_threshold,chi_R_crit,chi_Auto,rho,action,reason,evidence_source
+hybrid_0000,0.82,0.22,0.7,0.45,1,False,0.8,block,high_confidence_low_quality,data/generated/hybrid_xiris_objects.csv
