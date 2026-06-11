@@ -23,6 +23,13 @@ REQUIRED_FILES = [
     'tables/beacon_xai_summary.md',
     'tables/gis_integro_metrics.md',
     'tables/gd_anfis_shap_metrics.md',
+    'start_gui.sh',
+    'export_gui_screenshots.sh',
+    'gui_app.py',
+    'reports/gui_screenshots/01_home_dashboard.png',
+    'reports/gui_screenshots/07_gd_anfis_shap_route_report.png',
+    'reports/gui_screenshots/08_evidence_center.png',
+    'reports/gui_screenshots/09_developer_details.png',
 ]
 
 

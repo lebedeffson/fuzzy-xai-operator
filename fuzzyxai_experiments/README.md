@@ -40,6 +40,27 @@ docker build -t fuzzyxai/evidence:chapter4-5 .
 docker run --rm fuzzyxai/evidence:chapter4-5 bash run_chapter4_5.sh
 ```
 
+## GUI
+
+```bash
+cd fuzzyxai_experiments
+bash run_chapter4_5.sh
+python compare_reports.py
+bash start_gui.sh
+```
+
+URL: `http://localhost:8501`
+
+GUI читает реальные файлы evidence-пакета, а не hardcoded текст. Если отчёты не созданы, dashboard показывает `Evidence not generated` и предлагает запустить pipeline.
+
+Экспорт скриншотов:
+
+```bash
+bash export_gui_screenshots.sh
+```
+
+Папка: `reports/gui_screenshots/`.
+
 ## Ключевые файлы
 
 - `registry/modules.json`: реестр сценариев.
@@ -51,6 +72,7 @@ docker run --rm fuzzyxai/evidence:chapter4-5 bash run_chapter4_5.sh
 - `reports/chapter5/*`: JSON/CSV-отчёты глав 4-5.
 - `tables/*.md`, `tables/generated_tables.tex`: таблицы для диссертации.
 - `reports/gui_screenshots/*.png`: скриншоты GUI-витрины.
+- `gui_app.py`, `start_gui.sh`, `export_gui_screenshots.sh`: локальный GUI FuzzyXAI Studio.
 - `manifest_sha256.json`, `checksums.sha256`: контрольные суммы.
 
 ## Claims

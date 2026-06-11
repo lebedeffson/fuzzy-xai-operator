@@ -8,6 +8,7 @@ ROOT = Path(__file__).resolve().parents[1]
 INCLUDE_DIRS = ['data', 'registry', 'reports/chapter4', 'reports/chapter5', 'reports/gui_screenshots', 'src']
 INCLUDE_FILES = [
     'README.md', 'EVIDENCE_HANDOFF.md', 'Dockerfile', 'requirements.txt', 'run_chapter4_5.sh',
+    'start_gui.sh', 'export_gui_screenshots.sh', 'gui_app.py',
     'compare_reports.py', 'tables/generated_tables.tex', 'tables/scenario_summary.md',
     'tables/hybrid_xiris_baseline_comparison.md', 'tables/beacon_xai_summary.md',
     'tables/gis_integro_metrics.md', 'tables/gd_anfis_shap_metrics.md',

@@ -96,7 +96,54 @@ GD-ANFIS/SHAP:
 - `04_beacon_audit_route.png`
 - `05_beacon_audit_result.png`
 - `06_gis_integro_route_report.png`
-- `07_evidence_panel.png`
+- `07_gd_anfis_shap_route_report.png`
+- `08_evidence_center.png`
+- `09_developer_details.png`
+
+## GUI
+
+Запуск:
+
+```bash
+bash start_gui.sh
+```
+
+URL:
+
+```text
+http://localhost:8501
+```
+
+Основные экраны:
+
+- Dashboard
+- HYBRID-XIRIS
+- BEACON-XAI
+- GIS INTEGRO
+- GD-ANFIS/SHAP
+- Evidence Center
+- Developer details
+
+Экспорт скриншотов:
+
+```bash
+bash export_gui_screenshots.sh
+```
+
+GUI берёт данные из `registry/modules.json`, `reports/chapter5/*.json`, `tables/*.md`, `manifest_sha256.json`, `checksums.sha256`.
+
+## GUI acceptance
+
+GUI считается готовым, если пользователь без чтения кода понимает:
+
+- какой сценарий выбран;
+- какие данные используются;
+- какие параметры заданы;
+- какое действие выбрано;
+- почему выбрано это действие;
+- какие claims разрешены;
+- какие claims запрещены;
+- где находится evidence.
 
 ## Запреты claims
 

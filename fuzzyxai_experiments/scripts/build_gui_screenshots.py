@@ -123,13 +123,28 @@ def gis_report():
     route_screen('GIS INTEGRO', '06_gis_integro_route_report.png', ['probability + alpha_k + SHAP support'], 'gis-integro-adapter', f"gamma_route = {g['gamma_route']:.2f}, Delta = {g['Delta']:.2f}", 'ROUTE REPORT', 'gis_integro_route_metrics.json', 'source-pending')
 
 
-def evidence_panel():
-    fig, ax = setup('Evidence panel')
+def gd_report():
+    gd = read_json('reports/chapter5/gd_anfis_shap_report.json')
+    route_screen('GD-ANFIS/SHAP', '07_gd_anfis_shap_route_report.png', ['ANFIS rules + SHAP vector'], 'tabular-xai-adapter', f"Delta = {gd['Delta']}, I_pre = {gd['I_pre']}", 'AUDIT REPORT', 'gd_anfis_shap_report.json', 'source-pending')
+
+
+def evidence_center():
+    fig, ax = setup('Evidence Center')
+    box(ax, 0.04, 0.72, 0.91, 0.12, 'Статус evidence', ['Pipeline status: PASS', 'Reports: 4 / 4', 'Tables: 5 / 5', 'Checksums: PASS', 'Registry: PASS'], fill=LIGHT)
     box(ax, 0.04, 0.60, 0.42, 0.22, 'HYBRID-XIRIS', ['Отчёт: hybrid_xiris_summary.json', 'Таблица: hybrid_xiris_baseline_comparison.md', 'Checksum: checksums.sha256', 'Последний запуск: PASS'], fill='white')
     box(ax, 0.52, 0.60, 0.42, 0.22, 'BEACON-XAI', ['Отчёт: beacon_xai_summary.json', 'Таблица: beacon_xai_summary.md', 'Trace: beacon_xai_adapter_failures.csv', 'Последний запуск: PASS'], fill='white')
     box(ax, 0.04, 0.30, 0.42, 0.22, 'GIS INTEGRO', ['Отчёт: gis_integro_route_metrics.json', 'Таблица: gis_integro_metrics.md', 'Статус: source-pending', 'Последний запуск: PASS'], fill=WARN)
     box(ax, 0.52, 0.30, 0.42, 0.22, 'GD-ANFIS/SHAP', ['Отчёт: gd_anfis_shap_report.json', 'Таблица: gd_anfis_shap_metrics.md', 'Статус: source-pending', 'Последний запуск: PASS'], fill=WARN)
-    save(fig, '07_evidence_panel.png')
+    save(fig, '08_evidence_center.png')
+
+
+def developer_details():
+    fig, ax = setup('Developer / Evidence details')
+    box(ax, 0.04, 0.64, 0.28, 0.20, 'Registry', ['registry/modules.json', '4 сценария', 'claim_scope задан для каждого'], fill='white')
+    box(ax, 0.36, 0.64, 0.28, 0.20, 'Manifest', ['manifest_sha256.json', 'checksums.sha256', 'sha256sum -c checksums.sha256'], fill='white')
+    box(ax, 0.68, 0.64, 0.27, 0.20, 'Run scripts', ['run_chapter4_5.sh', 'compare_reports.py', 'export_gui_screenshots.sh'], fill='white')
+    box(ax, 0.04, 0.30, 0.91, 0.22, 'Raw reports', ['reports/chapter5/hybrid_xiris_summary.json', 'reports/chapter5/beacon_xai_summary.json', 'reports/chapter5/gis_integro_route_metrics.json', 'reports/chapter5/gd_anfis_shap_report.json'], fill=LIGHT)
+    save(fig, '09_developer_details.png')
 
 
 def html_index():
@@ -139,13 +154,18 @@ def html_index():
 
 
 def main():
+    OUT.mkdir(parents=True, exist_ok=True)
+    for old in OUT.glob('*.png'):
+        old.unlink()
     home()
     route_screen('HYBRID-XIRIS', '02_hybrid_xiris_route.png', ['model_score + quality_score', '1000 объектов, critical = 168'], 'image-adapter', 'высокая уверенность + низкое качество', 'BLOCK', 'hybrid_xiris_summary.json', 'safety')
     hybrid_result()
     route_screen('BEACON-XAI', '04_beacon_audit_route.png', ['100 сигналов', 'counterevidence + trace_version'], 'beacon-adapter', '17 сигналов не прошли адаптер', 'AUDIT REPORT', 'beacon_xai_summary.json', 'audit')
     beacon_result()
     gis_report()
-    evidence_panel()
+    gd_report()
+    evidence_center()
+    developer_details()
     html_index()
 
 
