@@ -4,7 +4,7 @@
 
 - Репозиторий: https://github.com/lebedeffson/fuzzy-xai-operator
 - Ветка: `feature/math-aligned-code`
-- Commit hash сборки: `6ef710b00160f9f8b2ceda2167eb427442394f46`
+- Commit hash сборки: см. `git log --oneline -1` в полученном репозитории; пакет запушен отдельным финальным коммитом
 - Дата сборки: `2026-06-11T06:59:39.501803+00:00`
 
 ## Запуск с нуля
