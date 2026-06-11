@@ -1,6 +1,6 @@
 {
   "experiment": "ch2_synthesis",
-  "generated_at": "2026-06-09T19:36:26.844460+00:00",
+  "generated_at": "2026-06-11T06:59:59.106606+00:00",
   "runtime_seconds": 0.000115,
   "explain_plan": {
     "path": "configs/explain_plan_chapter2.yaml",

@@ -1,0 +1,14 @@
+{
+  "status": "ok",
+  "registry_id": "gis_integro",
+  "source_status": "source-pending",
+  "probability": 0.67,
+  "mean_alpha_k": 0.72,
+  "positive_SHAP_support": 0.47,
+  "gamma_route": 0.2,
+  "Delta": 0.08,
+  "formula": "gamma_route = max(|p - mean(alpha_k)|, |p - positive_SHAP_support|); Delta = reduction_loss",
+  "input_fixture": "fuzzyxai_experiments/data/fixtures/gis_integro_fixture.csv",
+  "claim_scope": "source-pending; контрольный маршрут; качество исходной GIS-модели не заявляется",
+  "why_no_model_quality_claim": "нет закрепленного внешнего эталона/production dataset; фиксируется только route metric adapter/report route"
+}

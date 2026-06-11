@@ -1,0 +1,36 @@
+{
+  "modules": [
+    {
+      "registry_id": "hybrid_xiris",
+      "status": "real-output-compatible",
+      "adapter": "fuzzyxai_experiments.src.adapters.hybrid_xiris_adapter",
+      "input_artifact": "fuzzyxai_experiments/data/generated/hybrid_xiris_objects.csv",
+      "output_report": "fuzzyxai_experiments/reports/chapter5/hybrid_xiris_summary.json",
+      "claim_scope": "deterministic synthetic degradation protocol; not external production validation"
+    },
+    {
+      "registry_id": "beacon_xai",
+      "status": "fixture-certified",
+      "adapter": "fuzzyxai_experiments.src.adapters.beacon_xai_adapter",
+      "input_artifact": "fuzzyxai_experiments/data/generated/beacon_xai_signals.csv",
+      "output_report": "fuzzyxai_experiments/reports/chapter5/beacon_xai_summary.json",
+      "claim_scope": "local deterministic fixture protocol; not original model benchmark"
+    },
+    {
+      "registry_id": "gis_integro",
+      "status": "source-pending",
+      "adapter": "fuzzyxai_experiments.src.adapters.gis_integro_adapter",
+      "input_artifact": "fuzzyxai_experiments/data/fixtures/gis_integro_fixture.csv",
+      "output_report": "fuzzyxai_experiments/reports/chapter5/gis_integro_route_metrics.json",
+      "claim_scope": "контрольный маршрут; качество исходной GIS-модели не заявляется"
+    },
+    {
+      "registry_id": "gd_anfis_shap",
+      "status": "source-pending",
+      "adapter": "fuzzyxai_experiments.src.adapters.gd_anfis_shap_adapter",
+      "input_artifact": "fuzzyxai_experiments/data/fixtures/gd_anfis_rules.csv; fuzzyxai_experiments/data/fixtures/gd_anfis_shap_values.csv",
+      "output_report": "fuzzyxai_experiments/reports/chapter5/gd_anfis_shap_report.json",
+      "claim_scope": "контрольный маршрут (исполняемый артефакт); качество исходной модели не заявляется"
+    }
+  ]
+}

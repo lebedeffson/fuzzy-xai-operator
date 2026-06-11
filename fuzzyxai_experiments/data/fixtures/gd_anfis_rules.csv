@@ -1,0 +1,4 @@
+rule_id,condition,conclusion,alpha_k,quality,u_k
+r_stable_high,GD-ANFIS risk high,audit_report,0.74,0.78,0.22
+r_shap_support,SHAP positive support stable,audit_report,0.69,0.73,0.27
+r_uncertain_tail,tail uncertainty medium,lower_confidence,0.41,0.62,0.38
