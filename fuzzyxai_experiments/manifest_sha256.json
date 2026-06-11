@@ -7,18 +7,18 @@
     },
     {
       "path": "EVIDENCE_HANDOFF.md",
-      "sha256": "1b969e8160ecc0e6cf05aa100f903ccc0b6a2b84421ad4455a56a06085c187f7",
-      "bytes": 4626
+      "sha256": "e3cbe0ec4f7b31dc8db477971bda874dd90a63cf84b88c46b9f4a467899f71a5",
+      "bytes": 5072
     },
     {
       "path": "README.md",
-      "sha256": "9cdd03d4921641dbf6b12c173751b2ba4670a2a517cfa4e6ffff51526c9154fc",
-      "bytes": 3231
+      "sha256": "ca99da821052641072ec669a659dd418f6cfc6f3016596bde2c46975a8097a27",
+      "bytes": 3516
     },
     {
       "path": "compare_reports.py",
-      "sha256": "42aca674966b39c39a83984cdc08f600990ceef165c3a65209fb2203d603e78d",
-      "bytes": 4298
+      "sha256": "cb550c815fd551a9e92f28c02286441919a2d7dbcb91cb3ddffeb9239233246c",
+      "bytes": 4318
     },
     {
       "path": "data/article_fixtures/beacon_xai_output.json",
@@ -72,8 +72,8 @@
     },
     {
       "path": "gui_app.py",
-      "sha256": "b6004087168e48cde6e9ed4574a50be06bbf697555714d7019f2d43db9a18a35",
-      "bytes": 25139
+      "sha256": "e9ea57fa7d3d5a34e44ceef5666c18159f07fd97db1d3d47bbdf93eb1c1963ca",
+      "bytes": 26205
     },
     {
       "path": "registry/modules.json",
@@ -82,8 +82,8 @@
     },
     {
       "path": "reports/chapter4/ch4_integration.json",
-      "sha256": "d37cb85cd4e54812d9c6bc3275b416977f71b1b9c3aed348c018d7358325fbbb",
-      "bytes": 1913
+      "sha256": "53157b96263b6ba69716dfd05c04168619e6fe997555643c41bc43dd72f102fa",
+      "bytes": 1912
     },
     {
       "path": "reports/chapter5/beacon_xai_adapter_failures.csv",
@@ -97,32 +97,32 @@
     },
     {
       "path": "reports/chapter5/beacon_xai_summary.json",
-      "sha256": "17e983a967d040c8b377837687c19fa6d4b7d461b3d6adf66351c8d261f98ed5",
+      "sha256": "c4b8088bf14a5965e7d89dd280902bd6af2efa9cc4c654a45283ad5bf2f3868e",
       "bytes": 903
     },
     {
       "path": "reports/chapter5/ch5_beacon.json",
-      "sha256": "27c54aed6fca6d8ee5bdf412ac85c99ecaf86c84740f5fb8ec28e0553b5ec1c9",
+      "sha256": "65fde1d37a12eb8d808475a419d8ac445bfafd033a5b770f7ad269784c5bef31",
       "bytes": 1216
     },
     {
       "path": "reports/chapter5/ch5_gd_anfis_shap.json",
-      "sha256": "ade30e78558f163ef9ad7446a8f50a175f0998ba971c303c30f3d04c85a00736",
+      "sha256": "cfbab40e82c94729aaa6e029986c433852792d83c6722c39a2ef8f15c4cb9d2e",
       "bytes": 1124
     },
     {
       "path": "reports/chapter5/ch5_gis.json",
-      "sha256": "0e18ba3dc6ac8d046efc9430efb0ab32fa3de0f252810d634e294e65a303ef29",
+      "sha256": "85ce98152a09f1942a03cc3fa58f40a7bd8218a48f65f5f057d04e3dcf78a8df",
       "bytes": 1153
     },
     {
       "path": "reports/chapter5/ch5_hybrid.json",
-      "sha256": "828a42b6c5589044da749d4b349775bf86ee20fcbba61be0a4c9a8c09116a069",
+      "sha256": "59eaf7e3bc2a9d74cb076921ef796c13b13e697cf392d665afea04a1faf1cb7f",
       "bytes": 1335
     },
     {
       "path": "reports/chapter5/ch5_scenario_runs.json",
-      "sha256": "588709319a9430e0a1c1589b7ba7a119f5c74248a56aea2c995df1ed8d72882c",
+      "sha256": "22db445d120955f9afd29fc7036f0893438b2fa9084506c121903ca0b48ce74b",
       "bytes": 4034
     },
     {
@@ -162,7 +162,7 @@
     },
     {
       "path": "reports/chapter5/hybrid_xiris_summary.json",
-      "sha256": "09a10cdb1d9272cbddfec39d0bb3258fa59b74b15b0339ee15e379df18d44ba2",
+      "sha256": "6766122c81c8cd0d1453ca03a1b994cc320e6eb638a15d4aaa24ad1439c6382c",
       "bytes": 1022
     },
     {
@@ -177,23 +177,23 @@
     },
     {
       "path": "reports/gui_screenshots/01_home_dashboard.png",
-      "sha256": "c571c408afd5dc4189ada4d183b722918016ce604abd0b629b1552fe1292e677",
-      "bytes": 111529
+      "sha256": "40109715dadf9c3afb000562a7c1c5edba55d642e554c2df6aa55100f8ae3531",
+      "bytes": 105657
     },
     {
       "path": "reports/gui_screenshots/02_hybrid_xiris_route.png",
-      "sha256": "131e93ebb4b8e1dc77dfe6aec94fd9d9794ab85316119cf63f322a467b5bdc70",
-      "bytes": 110061
+      "sha256": "e21d66a4fcf90c38d6ba7e51ab3417f448fec4bf401e289446853fa0186b018a",
+      "bytes": 124220
     },
     {
       "path": "reports/gui_screenshots/03_hybrid_xiris_result.png",
-      "sha256": "2c676174f8f0d897bc5bbc27f1481efc26ffce739461a5b4c2d94406f077522c",
-      "bytes": 85684
+      "sha256": "8ecf299f6a50153e459b91ede0307acf875490b71b2be57514041fab39f06510",
+      "bytes": 108527
     },
     {
       "path": "reports/gui_screenshots/04_beacon_audit_route.png",
-      "sha256": "135a2c12a0361c49cc26af332eaf76caed74a5b6e3701feeae586d435cf32130",
-      "bytes": 105938
+      "sha256": "7acbb2b9e6aa1ce244b67198850165cc2cbc8252199b5d6b07ca00aa1ded6c6e",
+      "bytes": 119582
     },
     {
       "path": "reports/gui_screenshots/05_beacon_audit_result.png",
@@ -202,23 +202,23 @@
     },
     {
       "path": "reports/gui_screenshots/06_gis_integro_route_report.png",
-      "sha256": "f135226c277d16d9f427762e999aa85301d67258d43aab8eb3842ad9cbc7081e",
-      "bytes": 108554
+      "sha256": "64863d35f8c5c7f528d28b88dbaf7b53ab26159f515c692268ddc8db8744c814",
+      "bytes": 124686
     },
     {
       "path": "reports/gui_screenshots/07_gd_anfis_shap_route_report.png",
-      "sha256": "63da44d6ee27632a0ef30bec70acbe29edd58d3e54a5ae94fc7aa98cb79accd1",
-      "bytes": 105672
+      "sha256": "dcad303866f0ba3f4803f1dea48efdb19cf34a07a868da3f400fca8ae5047849",
+      "bytes": 120150
     },
     {
       "path": "reports/gui_screenshots/08_evidence_center.png",
-      "sha256": "74b2fa61c96db0a18b05d6204bda20a6df626930fd23fbae062808d24e927d5d",
-      "bytes": 98399
+      "sha256": "124d6484c0c4733b1db049e352485fccf15bacb4e72f7251e19a3cadda288f17",
+      "bytes": 75605
     },
     {
       "path": "reports/gui_screenshots/09_developer_details.png",
-      "sha256": "61e1a40e30ee75581e4c9e1813e885150d4ea3bc9126b7484eb737cbbc9e7430",
-      "bytes": 85665
+      "sha256": "a4e332713326b1aa9b63ebfe8b7b2ac5a98e72e3845e2ad2ba48e42facbdc080",
+      "bytes": 101326
     },
     {
       "path": "reports/gui_screenshots/fuzzyxai_studio_scenarios.html",
@@ -232,8 +232,13 @@
     },
     {
       "path": "run_chapter4_5.sh",
-      "sha256": "1f374ebe101387a3c1274a20a2a536293bd5e8d1a152c5b0fa7be566bf1de7c6",
-      "bytes": 2664
+      "sha256": "238892b712838f42c69a4b3ae8d04eefadb9c7df018b34985e88d0e77c81d6b6",
+      "bytes": 2898
+    },
+    {
+      "path": "smoke_gui.sh",
+      "sha256": "30bf792c6eb549d17afd7fb813d95de413a3eba52ff89a6e13427e9614734ef4",
+      "bytes": 2061
     },
     {
       "path": "src/__init__.py",

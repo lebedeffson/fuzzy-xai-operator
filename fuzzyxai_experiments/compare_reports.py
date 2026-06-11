@@ -25,6 +25,7 @@ REQUIRED_FILES = [
     'tables/gd_anfis_shap_metrics.md',
     'start_gui.sh',
     'export_gui_screenshots.sh',
+    'smoke_gui.sh',
     'gui_app.py',
     'reports/gui_screenshots/01_home_dashboard.png',
     'reports/gui_screenshots/07_gd_anfis_shap_route_report.png',

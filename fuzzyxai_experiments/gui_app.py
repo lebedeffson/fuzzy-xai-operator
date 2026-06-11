@@ -103,6 +103,22 @@ def all_scenarios():
     return {'evidence': evidence_status(), 'scenarios': [scenario_payload(s) for s in SCENARIOS]}
 
 
+def evidence_files():
+    """Return evidence files shown in the GUI as JSON metadata."""
+    rows = []
+    for sid, cfg in SCENARIOS.items():
+        rows.append({
+            'scenario_id': sid,
+            'json_report': cfg['report'],
+            'table': cfg['table'],
+            'csv_or_trace': cfg['csv'],
+            'extra': cfg['extra'],
+            'json_exists': (ROOT / cfg['report']).exists(),
+            'table_exists': (ROOT / cfg['table']).exists(),
+        })
+    return {'status': evidence_status(), 'files': rows}
+
+
 INDEX = r'''<!doctype html><html lang="ru"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>FuzzyXAI Studio</title><style>
 :root{--blue:#155c9e;--ink:#17191c;--muted:#657080;--line:#d8e0ea;--bg:#f7f9fc;--green:#16844a;--red:#b42318;--amber:#b7791f;--soft:#fff8e8}*{box-sizing:border-box}body{margin:0;font-family:Georgia,'Times New Roman',serif;color:var(--ink);background:white}.app{max-width:1320px;margin:0 auto;padding:28px}.top{display:flex;justify-content:space-between;gap:20px;align-items:flex-start;border-bottom:1px solid var(--line);padding-bottom:18px}.brand h1{margin:0;font-size:34px}.brand p{margin:6px 0;color:var(--muted)}.status{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}.pill{border:1px solid var(--line);border-radius:999px;padding:8px 12px;background:white;font-size:14px}.pass{color:var(--green);border-color:#b7e2c9}.fail,.block{color:var(--red);border-color:#f1b6b0}.warn{color:var(--amber);border-color:#efd391;background:var(--soft)}button,.button{border:1px solid var(--blue);background:var(--blue);color:white;border-radius:9px;padding:9px 12px;cursor:pointer;text-decoration:none;display:inline-block;font:inherit}button.secondary,.button.secondary{background:white;color:var(--blue)}button:disabled{opacity:.55}.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:20px 0}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.card,.panel{border:1px solid var(--line);border-radius:18px;padding:18px;background:white;box-shadow:0 8px 24px rgba(20,40,70,.05)}.card h2,.panel h2{margin:0 0 10px;font-size:22px;color:var(--blue)}.meta{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:12px 0}.kv{background:var(--bg);border-radius:10px;padding:9px}.kv b{display:block;font-size:12px;color:var(--muted);font-weight:normal}.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}.tabs button{background:white;color:var(--blue)}.tabs button.active{background:var(--blue);color:white}.route{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;align-items:stretch}.step{background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:12px;min-height:104px}.step b{color:var(--blue)}table{width:100%;border-collapse:collapse;margin-top:8px}th,td{border-bottom:1px solid var(--line);text-align:left;padding:9px;vertical-align:top}th{color:var(--muted);font-weight:normal;background:var(--bg)}pre{white-space:pre-wrap;background:#101820;color:#eef5ff;border-radius:12px;padding:14px;max-height:420px;overflow:auto}.claims{display:grid;grid-template-columns:1fr 1fr;gap:16px}.good{border-left:5px solid var(--green)}.bad{border-left:5px solid var(--red)}.warning{border-left:5px solid var(--amber);background:var(--soft)}.hidden{display:none}.small{font-size:13px;color:var(--muted)}@media(max-width:900px){.grid,.claims,.route{grid-template-columns:1fr}.top{display:block}.status{justify-content:flex-start;margin-top:14px}}
 </style><body><div id="app" class="app"></div><script>
@@ -155,7 +171,18 @@ class Handler(BaseHTTPRequestHandler):
         if path.startswith('/api/scenarios/'):
             sid = path.rsplit('/', 1)[-1]
             return self.json(scenario_payload(sid) if sid in SCENARIOS else {'error': 'unknown scenario'}, 200 if sid in SCENARIOS else 404)
-        if path.startswith('/api/reports/') or path.startswith('/api/evidence/'):
+        if path == '/api/evidence/status':
+            return self.json(evidence_status())
+        if path == '/api/evidence/files':
+            return self.json(evidence_files())
+        if path == '/api/registry':
+            return self.json(read_json('registry/modules.json') or {'modules': []})
+        if path.startswith('/api/reports/'):
+            sid = path.rsplit('/', 1)[-1]
+            if sid not in SCENARIOS:
+                return self.json({'error': 'unknown scenario'}, 404)
+            return self.json(read_json(SCENARIOS[sid]['report']) or {})
+        if path.startswith('/api/evidence/'):
             sid = path.rsplit('/', 1)[-1]
             return self.json(scenario_payload(sid).get('evidence', {}) if sid in SCENARIOS else {'error': 'unknown scenario'}, 200 if sid in SCENARIOS else 404)
         if path == '/api/checksums':

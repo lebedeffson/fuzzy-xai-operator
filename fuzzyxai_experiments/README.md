@@ -9,6 +9,7 @@ cd fuzzyxai_experiments
 bash run_chapter4_5.sh
 python compare_reports.py
 sha256sum -c checksums.sha256
+bash smoke_gui.sh
 ```
 
 Ожидаемый вывод:
@@ -61,6 +62,14 @@ bash export_gui_screenshots.sh
 
 Папка: `reports/gui_screenshots/`.
 
+GUI smoke-test:
+
+```bash
+bash smoke_gui.sh
+```
+
+Проверяет homepage, `/api/scenarios`, `/api/checksums`, дополнительные evidence endpoints, `/files/...` и экспорт скриншотов.
+
 ## Ключевые файлы
 
 - `registry/modules.json`: реестр сценариев.
@@ -73,6 +82,7 @@ bash export_gui_screenshots.sh
 - `tables/*.md`, `tables/generated_tables.tex`: таблицы для диссертации.
 - `reports/gui_screenshots/*.png`: скриншоты GUI-витрины.
 - `gui_app.py`, `start_gui.sh`, `export_gui_screenshots.sh`: локальный GUI FuzzyXAI Studio.
+- `smoke_gui.sh`: acceptance-проверка GUI.
 - `manifest_sha256.json`, `checksums.sha256`: контрольные суммы.
 
 ## Claims

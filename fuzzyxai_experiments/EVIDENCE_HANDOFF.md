@@ -14,7 +14,8 @@
 3. Выполнить `bash run_chapter4_5.sh`.
 4. Выполнить `python compare_reports.py`.
 5. Выполнить `sha256sum -c checksums.sha256`.
-6. Открыть `reports/gui_screenshots/` для проверки GUI.
+6. Выполнить `bash smoke_gui.sh`.
+7. Открыть `reports/gui_screenshots/` для проверки GUI.
 
 Ожидаемый результат: все проверки `PASS`.
 
@@ -131,6 +132,27 @@ bash export_gui_screenshots.sh
 ```
 
 GUI берёт данные из `registry/modules.json`, `reports/chapter5/*.json`, `tables/*.md`, `manifest_sha256.json`, `checksums.sha256`.
+
+Smoke-test:
+
+```bash
+bash smoke_gui.sh
+```
+
+Проверяемые endpoints:
+
+- `GET /api/scenarios`
+- `GET /api/scenarios/{id}`
+- `GET /api/evidence/status`
+- `GET /api/evidence/files`
+- `GET /api/registry`
+- `GET /api/reports/{scenario_id}`
+- `GET /api/checksums`
+- `POST /api/run/all`
+- `POST /api/run/{scenario_id}`
+- `POST /api/compare`
+- `POST /api/gui/export-screenshots`
+- `GET /files/{path}`
 
 ## GUI acceptance
 

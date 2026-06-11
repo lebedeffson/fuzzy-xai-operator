@@ -7,7 +7,7 @@
   "baseline_missed": 168,
   "fuzzyxai_missed": 0,
   "false_block": 0,
-  "processing_time_seconds": 0.007117,
+  "processing_time_seconds": 0.005982,
   "thresholds": {
     "quality_threshold": 0.45,
     "score_threshold": 0.7

@@ -13,15 +13,16 @@ cleanup() {
 trap cleanup EXIT
 export PYTHONPATH="$SCRIPT_DIR:$SCRIPT_DIR/..:${PYTHONPATH:-}"
 mkdir -p logs reports/chapter4 reports/chapter5 tables
-: > logs/run_chapter4_5.log
-exec > >(tee -a logs/run_chapter4_5.log) 2>&1
+LOG="logs/run_chapter4_5.log"
+: > "$LOG"
+log() { echo "$1" | tee -a "$LOG"; }
 run_step() {
   local name="$1"; shift
-  echo "RUN: ${name}"
+  log "RUN: ${name}"
   "$@" >"logs/${name}.log" 2>&1
-  echo "PASS: ${name}"
+  log "PASS: ${name}"
 }
-python - <<'PY'
+python - <<'PY' > logs/ch4_registry_check.log 2>&1
 import json
 from pathlib import Path
 modules = json.loads(Path('registry/modules.json').read_text(encoding='utf-8'))['modules']
@@ -31,7 +32,7 @@ assert required <= ids, ids
 for m in modules:
     assert {'registry_id', 'status', 'adapter', 'input_artifact', 'output_report', 'claim_scope'} <= set(m), m
 PY
-echo "PASS: ch4_registry_check"
+log "PASS: ch4_registry_check"
 run_step hybrid_xiris python -m fuzzyxai_experiments.experiments.ch5_hybrid
 run_step beacon_xai python -m fuzzyxai_experiments.experiments.ch5_beacon
 run_step gis_integro python -m fuzzyxai_experiments.experiments.ch5_gis
@@ -49,10 +50,14 @@ cp tables/generated_tables.tex reports/generated_tables.tex
 cp reports/chapter5/*.csv tables/ 2>/dev/null || true
 cp reports/chapter5/*.json tables/ 2>/dev/null || true
 cp reports/chapter4/*.json tables/ 2>/dev/null || true
-python extract_tables.py
-python scripts/build_gui_screenshots.py
-python scripts/build_manifest.py | tee logs/manifest.log
-echo "PASS: ch4_evidence_manifest"
-python compare_reports.py | tee logs/compare_reports.log
-sha256sum -c checksums.sha256 > logs/checksums.log
+python extract_tables.py > logs/extract_tables.log 2>&1
+python scripts/build_gui_screenshots.py > logs/export_gui_screenshots.log 2>&1
+python scripts/build_manifest.py > logs/manifest.log 2>&1
+cat logs/manifest.log | tee -a "$LOG"
+log "PASS: ch4_evidence_manifest"
+python compare_reports.py > logs/compare_reports.log 2>&1
+cat logs/compare_reports.log | tee -a "$LOG"
+sha256sum -c checksums.sha256 > logs/checksums.log 2>&1
 printf 'Docker daemon note: run `docker run --rm fuzzyxai/evidence:chapter4-5 bash run_chapter4_5.sh` after building image. Local daemon may be unavailable.\n' > logs/docker_run.log
+log "PASS: chapter4_5_complete"
+exit 0
