@@ -11,10 +11,25 @@ from typing import Any, Callable, Iterable
 
 import yaml
 
-ROOT = Path(__file__).resolve().parents[2]
 PACKAGE_ROOT = Path(__file__).resolve().parents[1]
+REPO_ROOT = Path(__file__).resolve().parents[2]
+ROOT = PACKAGE_ROOT
 REPORTS_DIR = PACKAGE_ROOT / 'reports'
 LOGGER = logging.getLogger('fuzzyxai_experiments')
+
+
+def resolve_path(path: str | Path) -> Path:
+    """Resolve a path inside the evidence package, falling back to repository root."""
+    p = Path(path)
+    if p.is_absolute():
+        return p
+    package_path = PACKAGE_ROOT / p
+    if package_path.exists():
+        return package_path
+    repo_path = REPO_ROOT / p
+    if repo_path.exists():
+        return repo_path
+    return package_path
 
 
 def utc_stamp() -> str:
@@ -23,25 +38,19 @@ def utc_stamp() -> str:
 
 
 def read_json(path: str | Path) -> dict[str, Any]:
-    """Read a JSON object from a repository-relative or absolute path."""
-    p = Path(path)
-    if not p.is_absolute():
-        p = ROOT / p
-    return json.loads(p.read_text(encoding='utf-8'))
+    """Read a JSON object from package path, repo path, or absolute path."""
+    return json.loads(resolve_path(path).read_text(encoding='utf-8'))
 
 
 def read_csv(path: str | Path) -> list[dict[str, str]]:
-    """Read CSV rows from a repository-relative or absolute path."""
-    p = Path(path)
-    if not p.is_absolute():
-        p = ROOT / p
-    with p.open(encoding='utf-8') as f:
+    """Read CSV rows from package path, repo path, or absolute path."""
+    with resolve_path(path).open(encoding='utf-8') as f:
         return list(csv.DictReader(f))
 
 
 def read_yaml_or_json(path: str | Path) -> dict[str, Any]:
     """Read a YAML/JSON mapping."""
-    p = Path(path)
+    p = resolve_path(path)
     text = p.read_text(encoding='utf-8')
     return json.loads(text) if p.suffix.lower() == '.json' else yaml.safe_load(text)
 
@@ -53,9 +62,7 @@ def sha256_text(text: str) -> str:
 
 def sha256_file(path: str | Path) -> str:
     """Return SHA256 for a file or an empty string when absent."""
-    p = Path(path)
-    if not p.is_absolute():
-        p = ROOT / p
+    p = resolve_path(path)
     if not p.exists():
         return ''
     h = hashlib.sha256()
@@ -68,6 +75,8 @@ def sha256_file(path: str | Path) -> str:
 def write_json(path: str | Path, payload: dict[str, Any]) -> Path:
     """Write a JSON report with stable UTF-8 formatting."""
     p = Path(path)
+    if not p.is_absolute():
+        p = PACKAGE_ROOT / p
     p.parent.mkdir(parents=True, exist_ok=True)
     p.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding='utf-8')
     return p
@@ -76,6 +85,8 @@ def write_json(path: str | Path, payload: dict[str, Any]) -> Path:
 def write_csv(path: str | Path, rows: Iterable[dict[str, Any]], fields: list[str]) -> Path:
     """Write CSV rows with fixed columns."""
     p = Path(path)
+    if not p.is_absolute():
+        p = PACKAGE_ROOT / p
     p.parent.mkdir(parents=True, exist_ok=True)
     with p.open('w', encoding='utf-8', newline='') as f:
         writer = csv.DictWriter(f, fieldnames=fields, lineterminator='\n')
@@ -85,18 +96,25 @@ def write_csv(path: str | Path, rows: Iterable[dict[str, Any]], fields: list[str
     return p
 
 
+def _plan_file(explain_plan_path: str) -> Path:
+    p = resolve_path(explain_plan_path)
+    if p.exists():
+        return p
+    return resolve_path('explain_plans/bc_plan.yaml')
+
+
 def timed_report(name: str, build: Callable[[], dict[str, Any]], *, explain_plan_path: str = 'configs/explain_plan_chapter2.yaml') -> dict[str, Any]:
     """Run a report builder and save deterministic plus timestamped JSON outputs."""
     started = time.perf_counter()
     payload = build()
     elapsed = time.perf_counter() - started
-    plan_file = ROOT / explain_plan_path
+    plan_file = _plan_file(explain_plan_path)
     report = {
         'experiment': name,
         'generated_at': datetime.now(timezone.utc).isoformat(),
         'runtime_seconds': round(elapsed, 6),
         'explain_plan': {
-            'path': explain_plan_path,
+            'path': str(plan_file.relative_to(PACKAGE_ROOT)) if str(plan_file).startswith(str(PACKAGE_ROOT)) else str(plan_file),
             'sha256': sha256_file(plan_file),
         },
         **payload,

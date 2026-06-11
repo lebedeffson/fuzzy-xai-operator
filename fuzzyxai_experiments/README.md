@@ -1,37 +1,58 @@
-# FuzzyXAI Experiments
+# FuzzyXAI Experiments Evidence Pack
 
-Воспроизводимый слой чисел для глав 2-5. Он не заменяет основное приложение, а собирает проверяемые JSON/CSV для текста диссертации.
+Воспроизводимый пакет для глав 4-5. Он хранит входные fixture/generated данные, запускаемые сценарии, таблицы, логи, GUI-скриншоты и SHA256-манифест.
 
-## Запуск
+## Проверка глав 4-5
+
+```bash
+cd fuzzyxai_experiments
+bash run_chapter4_5.sh
+python compare_reports.py
+sha256sum -c checksums.sha256
+```
+
+Ожидаемый вывод:
+
+```text
+PASS: ch4_registry_check
+PASS: ch4_evidence_manifest
+PASS: hybrid_xiris
+PASS: beacon_xai
+PASS: gis_integro
+PASS: gd_anfis_shap
+PASS: generated_tables
+PASS: checksums
+```
+
+## Полный запуск 2-5
 
 ```bash
 bash run_all.sh
-# или
-bash fuzzyxai_experiments/run_all.sh
 ```
 
-## Ключевые отчеты
-
-- `reports/ch2_bc_results.json`: Breast Cancer, калибровка, `I_pre`, `rho`.
-- `reports/ch2_synthesis.json`: ограниченный синтез `T_ij`.
-- `reports/ch2_critical_ruptures.json`: critical ruptures для главы 2.
-- `reports/ch3_selection.json`: выбор класса представления.
-- `reports/ch3_reduction.json`: редукции и `Delta` для `sample_113`.
-- `reports/ch3_diagnostic_stand.json`: controlled critical ruptures главы 3.
-- `reports/ch4_integration.json`: интеграционные статусы и `delta_M`.
-- `reports/ch5_hybrid.json`: HYBRID-XIRIS 1000 synthetic degradation cases.
-- `reports/ch5_gis.json`: GIS INTEGRO `gamma_route` и `Delta`.
-- `reports/ch5_beacon.json`: BEACON-XAI fixture protocol `83/64/11/12`.
-
-## Честность claims
-
-- GIS/BEACON/GD внешние сценарии показывают adapter/report route, а не превосходство исходных моделей.
-- Если `delta_M = not measured`, число не выдумывается.
-- `ch5_hybrid.json` и `ch5_beacon.json` используют deterministic fixture protocol, не production validation.
+Для финализации глав 4-5 использовать именно `run_chapter4_5.sh`.
 
 ## Docker
 
 ```bash
-docker build -t fuzzyxai-experiments .
-docker run --rm fuzzyxai-experiments
+cd fuzzyxai_experiments
+docker build -t fuzzyxai/evidence:chapter4-5 .
+docker run --rm fuzzyxai/evidence:chapter4-5 bash run_chapter4_5.sh
 ```
+
+## Ключевые файлы
+
+- `registry/modules.json`: реестр сценариев.
+- `data/generated/hybrid_xiris_objects.csv`: 1000 объектов HYBRID-XIRIS.
+- `data/generated/beacon_xai_signals.csv`: 100 сигналов BEACON-XAI.
+- `data/fixtures/gis_integro_fixture.csv`: входы для `gamma_route` и `Delta`.
+- `data/fixtures/gd_anfis_rules.csv`, `data/fixtures/gd_anfis_shap_values.csv`: правила и SHAP.
+- `reports/chapter5/*`: JSON/CSV-отчёты глав 4-5.
+- `tables/*.md`, `tables/generated_tables.tex`: таблицы для диссертации.
+- `reports/gui_screenshots/*.png`: скриншоты GUI-витрины.
+- `manifest_sha256.json`, `checksums.sha256`: контрольные суммы.
+
+## Claims
+
+- Разрешено: маршрут выполнен, отчёт сформирован, метрики воспроизведены.
+- Запрещено: заявлять новую точность внешней модели, clinical effectiveness или production-ready статус без отдельной валидации.

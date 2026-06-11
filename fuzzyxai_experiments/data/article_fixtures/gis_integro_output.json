@@ -1,0 +1,33 @@
+{
+  "registry_id": "gis_integro",
+  "status": "source-pending",
+  "source_repo": "source-not-provided:gis_integro",
+  "source_commit": "source-not-pinned",
+  "sample_id": "gis_integro_fixture_001",
+  "model_output": {
+    "predicted_class": 1,
+    "probability": 0.67
+  },
+  "gd_anfis_rules": [
+    {"id": "r_spatial_risk", "condition": "spatial risk is high", "conclusion": "risk high", "quality": 0.76},
+    {"id": "r_shap_regularized", "condition": "SHAP regularized signal is stable", "conclusion": "audit_report", "quality": 0.73}
+  ],
+  "rule_activations": {
+    "r_spatial_risk": 0.71,
+    "r_shap_regularized": 0.73
+  },
+  "shap_values": {
+    "region_density": 0.29,
+    "route_connectivity": 0.18,
+    "noise_regularizer": -0.04
+  },
+  "rule_uncertainty": {
+    "r_spatial_risk": 0.24,
+    "r_shap_regularized": 0.27
+  },
+  "run_params": {
+    "seed": 20260609,
+    "adapter_version": "1.0",
+    "fixture_note": "GIS INTEGRO fixture routed through GD-ANFIS/SHAP-style channels."
+  }
+}

@@ -4,19 +4,23 @@
 
 - Репозиторий: https://github.com/lebedeffson/fuzzy-xai-operator
 - Ветка: `feature/math-aligned-code`
-- Commit hash сборки: см. `git log --oneline -1` в полученном репозитории; пакет запушен отдельным финальным коммитом
-- Дата сборки: `2026-06-11T06:59:39.501803+00:00`
+- Commit hash сборки: см. `git log --oneline -1` в полученном репозитории.
+- Пакет: `reports/fuzzyxai_experiments_evidence_pack.zip`
 
-## Запуск с нуля
+## Как проверить пакет
 
-```bash
-bash run_all.sh
-python fuzzyxai_experiments/compare_reports.py
-```
+1. Распаковать архив.
+2. Перейти в `fuzzyxai_experiments/`.
+3. Выполнить `bash run_chapter4_5.sh`.
+4. Выполнить `python compare_reports.py`.
+5. Выполнить `sha256sum -c checksums.sha256`.
+6. Открыть `reports/gui_screenshots/` для проверки GUI.
 
-Ожидаемый итог:
+Ожидаемый результат: все проверки `PASS`.
 
 ```text
+PASS: ch4_registry_check
+PASS: ch4_evidence_manifest
 PASS: hybrid_xiris
 PASS: beacon_xai
 PASS: gis_integro
@@ -28,60 +32,67 @@ PASS: checksums
 ## Docker
 
 ```bash
-docker build -t fuzzyxai-experiments .
-docker run --rm fuzzyxai-experiments
+cd fuzzyxai_experiments
+docker build -t fuzzyxai/evidence:chapter4-5 .
+docker run --rm fuzzyxai/evidence:chapter4-5 bash run_chapter4_5.sh
 ```
 
-Примечание: в текущей локальной среде Docker daemon недоступен, поэтому проверен shell-запуск `bash run_all.sh`.
+Примечание: в текущей локальной среде Docker daemon недоступен, поэтому проверен shell-запуск `bash run_chapter4_5.sh`.
 
 ## Структура
 
-- `data/raw/`: примечание по внешним raw-данным.
-- `data/fixtures/`: GIS и GD-ANFIS/SHAP fixture-входы.
-- `data/generated/`: object-level HYBRID/BEACON данные.
-- `reports/chapter4/`: отчёты главы 4.
-- `reports/chapter5/`: отчёты главы 5.
-- `tables/`: generated tables для диссертации.
-- `logs/`: логи запуска и проверки.
-- `scripts/`: скрипты baseline/metrics/manifest.
-- `registry/modules.json`: реестр сценариев.
-- `manifest_sha256.json`, `checksums.sha256`: контрольные суммы.
+- `README.md`, `EVIDENCE_HANDOFF.md`
+- `Dockerfile`, `requirements.txt`, `run_all.sh`, `run_chapter4_5.sh`, `compare_reports.py`
+- `registry/modules.json`
+- `data/raw`, `data/fixtures`, `data/generated`, `data/article_fixtures`
+- `reports/chapter4`, `reports/chapter5`, `reports/gui_screenshots`
+- `tables`, `logs`, `scripts`, `src`
+- `manifest_sha256.json`, `checksums.sha256`
 
-## HYBRID-XIRIS
+## Какие числа используются в главах 4-5
 
-- Object-level CSV: `data/generated/hybrid_xiris_objects.csv`
-- Summary: `reports/chapter5/hybrid_xiris_summary.json`
-- Поля: `object_id, model_score, quality_score, is_critical, baseline_action, fuzzyxai_action`
-- Baseline: `accept if model_score > 0.7`
-- Числа: всего 1000; critical 168; baseline missed 168; FuzzyXAI missed 0.
+HYBRID-XIRIS:
 
-## BEACON-XAI
+- `total_objects = 1000`
+- `critical_cases = 168`
+- `baseline_missed = 168`
+- `fuzzyxai_missed = 0`
+- Источник: `reports/chapter5/hybrid_xiris_summary.json`
 
-- Input CSV: `data/generated/beacon_xai_signals.csv`
-- Summary: `reports/chapter5/beacon_xai_summary.json`
-- Adapter failures: `reports/chapter5/beacon_xai_adapter_failures.csv`
-- Числа: всего 100; valid after adapter 83; baseline manual checks 64; FuzzyXAI manual checks 11; audit reports 12.
+BEACON-XAI:
 
-## GIS INTEGRO
+- `total_signals = 100`
+- `valid_after_adapter = 83`
+- `baseline_manual_checks = 64`
+- `fuzzyxai_manual_checks = 11`
+- `audit_reports = 12`
+- Источник: `reports/chapter5/beacon_xai_summary.json`
 
-- Fixture: `data/fixtures/gis_integro_fixture.csv`
-- Summary: `reports/chapter5/gis_integro_route_metrics.json`
-- Числа: probability 0.67; mean_alpha_k 0.72; positive_SHAP_support 0.47; gamma_route 0.20; Delta 0.08; status source-pending.
-- Claim scope: контрольный маршрут, качество исходной GIS-модели не заявляется.
+GIS INTEGRO:
 
-## GD-ANFIS/SHAP
+- `probability = 0.67`
+- `mean_alpha_k = 0.72`
+- `positive_SHAP_support = 0.47`
+- `gamma_route = 0.20`
+- `Delta = 0.08`
+- Источник: `reports/chapter5/gis_integro_route_metrics.json`
 
-- Rules: `data/fixtures/gd_anfis_rules.csv`
-- SHAP: `data/fixtures/gd_anfis_shap_values.csv`
-- Summary: `reports/chapter5/gd_anfis_shap_report.json`
-- Метрики: число правил, `alpha_k`, `eta_k`, `Delta`, `u_k`, `I_pre`, action.
+GD-ANFIS/SHAP:
 
-## Таблицы для диссертации
+- Фактические значения брать из `reports/chapter5/gd_anfis_shap_report.json`.
+- В текущем отчёте фиксируются `n_rules`, `alpha_k`, `eta_k`, `Delta`, `u_k`, `I_pre`, `action`.
 
-- `tables/generated_tables.tex`
-- `reports/chapter5/*summary.json`
-- `reports/chapter5/*metrics.json`
-- `reports/chapter5/gd_anfis_shap_report.json`
+## GUI-скриншоты
+
+Папка: `reports/gui_screenshots/`
+
+- `01_home_dashboard.png`
+- `02_hybrid_xiris_route.png`
+- `03_hybrid_xiris_result.png`
+- `04_beacon_audit_route.png`
+- `05_beacon_audit_result.png`
+- `06_gis_integro_route_report.png`
+- `07_evidence_panel.png`
 
 ## Запреты claims
 
