@@ -1,0 +1,11 @@
+seed: 42
+dataset: Breast Cancer Wisconsin
+n_evaluation_cases: 1000
+top_k: 5
+theta_rank: 0.4
+auto_low: 0.30
+auto_high: 0.70
+lime_num_samples: 800
+bootstrap_samples: 2000
+model: logistic_regression
+positive_class: malignant

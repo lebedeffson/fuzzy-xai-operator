@@ -1,0 +1,8 @@
+metric,estimate,case_ci_low,case_ci_high,object_ci_low,object_ci_high,n_cases,n_unique_objects
+share_action_diff_f0_nas,0.716,0.688,0.744,0.648232330800898,0.7802662522293211,1000,227
+share_f0_accept_nas_block,0.605,0.574,0.636,0.5333316274309109,0.6743550593249991,1000,227
+recall_critical_nas,1.0,1.0,1.0,1.0,1.0,1000,227
+false_auto_accept_f0,0.605,0.574,0.636,0.5333316274309109,0.6743550593249991,1000,227
+false_auto_accept_nas,0.0,0.0,0.0,0.0,0.0,1000,227
+false_block_f0,0.0,0.0,0.0,0.0,0.0,1000,227
+false_block_nas,0.0,0.0,0.0,0.0,0.0,1000,227

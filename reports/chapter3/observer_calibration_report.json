@@ -1,0 +1,113 @@
+{
+  "data_split": {
+    "validation_cases": 491,
+    "test_cases": 509,
+    "n_unique_objects": 227
+  },
+  "search_space": {
+    "methods": [
+      "grid_search",
+      "random_search"
+    ],
+    "n_candidates": 173
+  },
+  "objective": "proxy-objective: 5*missed_critical + 3*false_auto_accept + 2*unsafe_accept_with_conflict + false_block + 0.5*excessive_defer",
+  "best_config": {
+    "weights": {
+      "w_p": 0.35,
+      "w_u": 0.15,
+      "w_I": 0.2,
+      "w_Delta": 0.1,
+      "w_R": 0.2
+    },
+    "thresholds": [
+      0.25,
+      0.45,
+      0.65,
+      0.82
+    ],
+    "gamma_max": 0.5,
+    "I_min": 0.4,
+    "Delta_max": 0.35
+  },
+  "best_grid_config": {
+    "weights": {
+      "w_p": 0.5,
+      "w_u": 0.1,
+      "w_I": 0.1,
+      "w_Delta": 0.1,
+      "w_R": 0.2
+    },
+    "thresholds": [
+      0.2,
+      0.4,
+      0.6,
+      0.8
+    ],
+    "gamma_max": 0.5,
+    "I_min": 0.4,
+    "Delta_max": 0.35,
+    "search": "grid_search"
+  },
+  "best_random_config": {
+    "weights": {
+      "w_p": 0.32093,
+      "w_u": 0.31185,
+      "w_I": 0.318334,
+      "w_Delta": 0.037349,
+      "w_R": 0.011538
+    },
+    "thresholds": [
+      0.219929,
+      0.713689,
+      0.73313,
+      0.880985
+    ],
+    "gamma_max": 0.475193,
+    "I_min": 0.385399,
+    "Delta_max": 0.567044,
+    "search": "random_search"
+  },
+  "manual_config_metrics": {
+    "missed_critical_ruptures": 0,
+    "false_auto_accept": 0,
+    "unsafe_accept_with_conflict": 0,
+    "false_block": 0,
+    "excessive_defer": 0,
+    "objective_J": 0.0
+  },
+  "best_grid_config_metrics_validation": {
+    "missed_critical_ruptures": 0,
+    "false_auto_accept": 0,
+    "unsafe_accept_with_conflict": 0,
+    "false_block": 0,
+    "excessive_defer": 0,
+    "objective_J": 0.0
+  },
+  "best_random_config_metrics_validation": {
+    "missed_critical_ruptures": 0,
+    "false_auto_accept": 0,
+    "unsafe_accept_with_conflict": 0,
+    "false_block": 0,
+    "excessive_defer": 0,
+    "objective_J": 0.0
+  },
+  "best_config_metrics_validation": {
+    "missed_critical_ruptures": 0,
+    "false_auto_accept": 0,
+    "unsafe_accept_with_conflict": 0,
+    "false_block": 0,
+    "excessive_defer": 0,
+    "objective_J": 0.0
+  },
+  "best_config_metrics_test": {
+    "missed_critical_ruptures": 0,
+    "false_auto_accept": 0,
+    "unsafe_accept_with_conflict": 0,
+    "false_block": 0,
+    "excessive_defer": 0,
+    "objective_J": 0.0
+  },
+  "bootstrap_ci": {},
+  "seed": 42
+}

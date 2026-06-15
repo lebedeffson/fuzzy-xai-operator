@@ -1,0 +1,41 @@
+{
+  "seed": 42,
+  "comparisons": {
+    "F0_vs_NAS": {
+      "n_discordant": 633,
+      "p_value": 5.611031933461512e-191,
+      "effect_size": 0.571,
+      "object_level_ci": [
+        0.48050395596835227,
+        0.6560114238567272
+      ]
+    },
+    "F0_vs_F_ML": {
+      "n_discordant": 633,
+      "p_value": 5.611031933461512e-191,
+      "effect_size": 0.576,
+      "object_level_ci": [
+        0.4850865789717652,
+        0.6629605263157894
+      ]
+    },
+    "B6_equal_raw_structure_without_NAS_vs_NAS": {
+      "n_discordant": 917,
+      "p_value": 1.8051943758648296e-276,
+      "effect_size": 0.917,
+      "object_level_ci": [
+        0.875,
+        0.9548256237813401
+      ]
+    },
+    "manual_config_vs_best_config_v2": {
+      "n_discordant": 0,
+      "p_value": 1.0,
+      "effect_size": 0.0,
+      "object_level_ci": [
+        0.0,
+        0.0
+      ]
+    }
+  }
+}

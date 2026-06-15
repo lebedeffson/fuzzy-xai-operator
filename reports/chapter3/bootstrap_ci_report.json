@@ -1,0 +1,41 @@
+{
+  "seed": 42,
+  "B": 2000,
+  "n_cases": 1000,
+  "n_unique_objects": 227,
+  "recall_critical_rupture": {
+    "estimate": 1.0,
+    "ci95": [
+      1.0,
+      1.0
+    ]
+  },
+  "false_auto_accept_rate": {
+    "estimate": 0.0,
+    "ci95": [
+      0.0,
+      0.0
+    ]
+  },
+  "action_difference_f0_vs_nas": {
+    "estimate": 0.716,
+    "ci95": [
+      0.688,
+      0.744
+    ]
+  },
+  "f0_accept_to_nas_block_rate": {
+    "estimate": 0.605,
+    "ci95": [
+      0.574,
+      0.635
+    ]
+  },
+  "calibration_objective_J": {
+    "estimate": 0.0,
+    "ci95": [
+      0.0,
+      0.0
+    ]
+  }
+}

@@ -1,0 +1,2 @@
+n_cases,n_unique_objects,n_conflicts,share_conflicts,n_critical_conflicts,share_critical_conflicts,n_action_diff_f0_nas,share_action_diff_f0_nas,n_f0_accept_nas_block,share_f0_accept_nas_block,n_f0_accept_nas_defer,share_f0_accept_nas_defer,recall_critical_nas,false_auto_accept_f0,false_auto_accept_nas,false_block_f0,false_block_nas
+228,228,215,0.9429824561403509,209,0.9166666666666666,167,0.7324561403508771,142,0.6228070175438597,0,0.0,1.0,142,0,0,0

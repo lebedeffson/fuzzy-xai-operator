@@ -4,7 +4,7 @@ PORT ?= 8085
 DATASET ?= breast_cancer
 BASELINE_ACCESS ?= native
 
-.PHONY: install test risk-test category-hott-test chapter2-breast-cancer-demo chapter2-real-operator-case reproduce-chapter2 calibrate-chapter2 benchmark-equal-raw-structure chapter2-3-final-evidence chapter3-artifacts reproduce-critical-ruptures figures-chapter2 ecosystem-evidence doctoral-final-evidence validate-ecosystem-sdk dissertation-artifacts chapter5-experiments chapter5-demo chapter5-latex web-demo unified-demo layered-demo layered-demo-legacy defense-demo defense-demo-legacy studio ui-health-check ui-health-check-all browser-visual-check unified-demo-cli full-pipeline figures full-experiments demo dashboard proof formal-proof thesis full-demo full-observer dataset-observer dataset-modes-check baseline-check real-data-validation benchmark benchmark-dataset baseline-comparison calibrate-observer ablation-benchmark defense-cases real-reduction-example dissertation-demo-summary dissertation-component-tables dissertation-check dataset-cards thesis-practice-tables structure-aware-benchmark reproducibility-artifacts operator-benchmark risk-benchmark lofo-f1-demo clean
+.PHONY: install test risk-test category-hott-test chapter2-breast-cancer-demo chapter2-real-operator-case reproduce-chapter2 calibrate-chapter2 benchmark-equal-raw-structure chapter2-3-final-evidence chapter3-artifacts reproduce-critical-ruptures chapter3-audit chapter3-real-conflicts chapter3-f0-vs-nas chapter3-calibrate-observer chapter3-tables chapter3-validate chapter3-final-evidence chapter3-practice-natural chapter3-practice-conflict chapter3-practice-bootstrap chapter3-practice-baselines chapter3-practice-calibrate chapter3-practice-ablation chapter3-practice-sensitivity chapter3-practice-stats chapter3-practice-validate chapter3-practice-all figures-chapter2 chapter2-figures chapter2-patch chapter2-validate chapter2-package2 ecosystem-evidence doctoral-final-evidence validate-ecosystem-sdk dissertation-artifacts chapter5-experiments chapter5-demo chapter5-latex web-demo unified-demo layered-demo layered-demo-legacy defense-demo defense-demo-legacy studio ui-health-check ui-health-check-all browser-visual-check unified-demo-cli full-pipeline figures full-experiments demo dashboard proof formal-proof thesis full-demo full-observer dataset-observer dataset-modes-check baseline-check real-data-validation benchmark benchmark-dataset baseline-comparison calibrate-observer ablation-benchmark defense-cases real-reduction-example dissertation-demo-summary dissertation-component-tables dissertation-check dataset-cards thesis-practice-tables structure-aware-benchmark reproducibility-artifacts operator-benchmark risk-benchmark lofo-f1-demo clean
 
 install:
 	$(PYTHON) -m pip install -r requirements.txt
@@ -43,8 +43,82 @@ chapter3-artifacts:
 reproduce-critical-ruptures:
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m fuzzyxai.experiments.chapter3_critical_ruptures --out-dir reports/chapter3
 
+chapter3-audit:
+	PYTHONPATH=scripts:$(PYTHONPATH) $(PYTHON) scripts/chapter3_audit_docx.py
+
+chapter3-real-conflicts:
+	PYTHONPATH=scripts:$(PYTHONPATH) $(PYTHON) scripts/chapter3_build_real_conflicts.py
+
+chapter3-f0-vs-nas:
+	PYTHONPATH=scripts:$(PYTHONPATH) $(PYTHON) scripts/chapter3_f0_vs_nas_experiment.py
+
+chapter3-calibrate-observer:
+	PYTHONPATH=scripts:$(PYTHONPATH) $(PYTHON) scripts/chapter3_calibrate_observer.py
+
+chapter3-tables:
+	PYTHONPATH=scripts:$(PYTHONPATH) $(PYTHON) scripts/chapter3_make_tables.py
+
+chapter3-validate:
+	PYTHONPATH=scripts:$(PYTHONPATH) $(PYTHON) scripts/chapter3_validate_package.py
+
+chapter3-final-evidence: chapter3-audit chapter3-real-conflicts chapter3-f0-vs-nas chapter3-calibrate-observer chapter3-tables chapter3-validate
+	@echo "Audit: reports/chapter3/current_chapter_audit.md"
+	@echo "Real conflicts: reports/chapter3/real_conflict_summary.csv"
+	@echo "F0 vs NAS: reports/chapter3/f0_vs_nas_action_diff.csv"
+	@echo "Calibration: reports/chapter3/observer_calibration_report.md"
+	@echo "Config: configs/chapter3/best_observer_config.yaml"
+	@echo "Package: chapter3_final_fix_evidence_package.zip"
+
+chapter3-practice-docx:
+	PYTHONPATH=scripts:$(PYTHONPATH) $(PYTHON) scripts/chapter3_apply_patches_to_docx.py
+
+chapter3-practice-natural:
+	PYTHONPATH=scripts:$(PYTHONPATH) $(PYTHON) scripts/chapter3_run_natural_flow.py
+
+chapter3-practice-conflict:
+	PYTHONPATH=scripts:$(PYTHONPATH) $(PYTHON) scripts/chapter3_run_conflict_enriched.py
+
+chapter3-practice-bootstrap:
+	PYTHONPATH=scripts:$(PYTHONPATH) $(PYTHON) scripts/chapter3_object_level_bootstrap.py
+
+chapter3-practice-baselines:
+	PYTHONPATH=scripts:$(PYTHONPATH) $(PYTHON) scripts/chapter3_compare_baselines.py
+
+chapter3-practice-calibrate:
+	PYTHONPATH=scripts:$(PYTHONPATH) $(PYTHON) scripts/chapter3_calibrate_observer_v2.py
+
+chapter3-practice-ablation:
+	PYTHONPATH=scripts:$(PYTHONPATH) $(PYTHON) scripts/chapter3_ablation.py
+
+chapter3-practice-sensitivity:
+	PYTHONPATH=scripts:$(PYTHONPATH) $(PYTHON) scripts/chapter3_sensitivity.py
+
+chapter3-practice-stats:
+	PYTHONPATH=scripts:$(PYTHONPATH) $(PYTHON) scripts/chapter3_stat_tests.py
+
+chapter3-practice-validate:
+	PYTHONPATH=scripts:$(PYTHONPATH) $(PYTHON) scripts/chapter3_validate_practice_package.py
+
+chapter3-practice-all: chapter3-practice-docx chapter3-practice-natural chapter3-practice-conflict chapter3-practice-bootstrap chapter3-practice-baselines chapter3-practice-calibrate chapter3-practice-ablation chapter3-practice-sensitivity chapter3-practice-stats chapter3-practice-validate
+	@echo "Practice validation: reports/chapter3_practice/package_validation_report.md"
+	@echo "Practice package: chapter3_practice_strengthening_package.zip"
+
 figures-chapter2:
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) experiments/generate_figures.py --out-dir reports/figures
+
+chapter2-figures:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/chapter2_generate_figures.py
+
+chapter2-patch:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/chapter2_patch_docx.py
+
+chapter2-validate:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/chapter2_validate_package2.py
+
+chapter2-package2: chapter2-figures chapter2-patch chapter2-validate
+	@echo "DOCX: glava2_chapter2_package2_full_fixed.docx"
+	@echo "Figures: figures/chapter2/"
+	@echo "Validation: reports/chapter2/package2_validation_report.md"
 
 ecosystem-evidence:
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) experiments/ecosystem_evidence_pack.py --evidence-dir evidence --report-dir reports/chapter4
