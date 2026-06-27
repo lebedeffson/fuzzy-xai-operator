@@ -42,14 +42,14 @@ def _stable_hash(payload: Any) -> str:
 
 def _code_version() -> str:
     try:
-        return subprocess.check_output(["git", "rev-parse", "--short", "HEAD"], text=True).strip()
+        return subprocess.check_output(["git", "rev-parse", "--short", "HEAD"], text=True, stderr=subprocess.DEVNULL).strip()
     except Exception:
         return _packaged_metadata().get("source_commit", "unknown")
 
 
 def _branch() -> str:
     try:
-        branch = subprocess.check_output(["git", "branch", "--show-current"], text=True).strip()
+        branch = subprocess.check_output(["git", "branch", "--show-current"], text=True, stderr=subprocess.DEVNULL).strip()
         return branch or f"detached:{_code_version()}"
     except Exception:
         return _packaged_metadata().get("audit_branch", "runtime_release")
@@ -57,7 +57,7 @@ def _branch() -> str:
 
 def _dirty_paths() -> list[str]:
     try:
-        out = subprocess.check_output(["git", "status", "--short"], text=True)
+        out = subprocess.check_output(["git", "status", "--short"], text=True, stderr=subprocess.DEVNULL)
     except Exception:
         return []
     return [line[3:].strip().strip('"') for line in out.splitlines() if line.strip()]

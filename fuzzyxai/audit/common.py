@@ -26,7 +26,7 @@ class AuditIssue:
 
 def current_commit() -> str:
     try:
-        return subprocess.check_output(["git", "rev-parse", "--short", "HEAD"], cwd=ROOT, text=True).strip()
+        return subprocess.check_output(["git", "rev-parse", "--short", "HEAD"], cwd=ROOT, text=True, stderr=subprocess.DEVNULL).strip()
     except Exception:
         if RELEASE_METADATA_FILE.exists():
             return read_json(RELEASE_METADATA_FILE).get("source_commit", "unknown")
@@ -35,7 +35,7 @@ def current_commit() -> str:
 
 def current_branch() -> str:
     try:
-        branch = subprocess.check_output(["git", "branch", "--show-current"], cwd=ROOT, text=True).strip()
+        branch = subprocess.check_output(["git", "branch", "--show-current"], cwd=ROOT, text=True, stderr=subprocess.DEVNULL).strip()
         return branch or f"detached:{current_commit()}"
     except Exception:
         if RELEASE_METADATA_FILE.exists():
@@ -45,7 +45,7 @@ def current_branch() -> str:
 
 def dirty_paths() -> list[str]:
     try:
-        out = subprocess.check_output(["git", "status", "--short"], cwd=ROOT, text=True)
+        out = subprocess.check_output(["git", "status", "--short"], cwd=ROOT, text=True, stderr=subprocess.DEVNULL)
     except Exception:
         return []
     return [line[3:].strip().strip('"') for line in out.splitlines() if line.strip()]

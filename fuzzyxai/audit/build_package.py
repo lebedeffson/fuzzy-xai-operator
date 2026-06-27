@@ -28,6 +28,7 @@ RUNTIME_INCLUDE = [
     "fuzzyxai",
     "apps",
     "configs/studio_scenarios",
+    "patches",
     "reports/audit",
     "reports/studio",
     "reports/studio_batch",
