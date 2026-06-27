@@ -2,10 +2,9 @@ from __future__ import annotations
 
 import argparse
 import csv
-import json
 from pathlib import Path
-from hashlib import sha256
 
+from fuzzyxai.core.proof_package import compute_explain_plan_hash
 from fuzzyxai.core.scenario_engine import DEFAULT_HYBRID_PLAN, HybridXirisInput, compute_hybrid_xiris
 from fuzzyxai.studio.operator_scenarios import load_scenarios
 
@@ -28,7 +27,7 @@ def export_hybrid_xiris_tables(out_dir: Path) -> list[Path]:
         out_dir / "table_5_5_run_summary.csv",
         out_dir / "table_5_6_risk_decomposition.csv",
     ]
-    plan_hash = sha256(json.dumps(DEFAULT_HYBRID_PLAN.__dict__, sort_keys=True, ensure_ascii=False).encode("utf-8")).hexdigest()[:16]
+    plan_hash = compute_explain_plan_hash(DEFAULT_HYBRID_PLAN.__dict__)
     _write_csv(
         paths[0],
         [{"section": "meta", "parameter": "explain_plan_version", "value": "EP-2026-01", "role": "версия ExplainPlan"}, {"section": "meta", "parameter": "explain_plan_hash", "value": plan_hash, "role": "контрольная сумма ExplainPlan"}]
@@ -59,7 +58,13 @@ def export_hybrid_xiris_tables(out_dir: Path) -> list[Path]:
     _write_csv(
         paths[2],
         [
-            {"component": key, "value": value, "weight": DEFAULT_HYBRID_PLAN.gamma_weights[key], "definition": definitions.get(key, "")}
+            {
+                "component": key,
+                "value": value,
+                "weight": DEFAULT_HYBRID_PLAN.gamma_weights[key],
+                "contribution": round(value * DEFAULT_HYBRID_PLAN.gamma_weights[key], 6),
+                "definition": definitions.get(key, ""),
+            }
             for key, value in DEFAULT_HYBRID_PLAN.gamma_components.items()
         ],
     )

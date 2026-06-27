@@ -5,6 +5,7 @@
   "data_type": "time_series",
   "explain_plan_version": "EP-2026-01",
   "status": "fixture-certified",
+  "evidence_level": "route_demonstration",
   "description": "Контрсвидетельство BEACON переводится в диагностический аудиторский отчёт.",
   "summary": {
     "objects_total": 100,

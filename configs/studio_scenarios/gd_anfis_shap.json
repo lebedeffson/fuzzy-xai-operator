@@ -5,6 +5,7 @@
   "data_type": "tabular_rules",
   "explain_plan_version": "EP-2026-01",
   "status": "source-pending",
+  "evidence_level": "operator_control_example",
   "description": "ANFIS-правила и SHAP-вклады согласуются как источники объяснительного объекта.",
   "summary": {
     "rules": 4,

@@ -358,6 +358,12 @@ def _scenario(
         "data_type": data_type,
         "explain_plan_version": "EP-2026-01",
         "status": status,
+        "evidence_level": {
+            "hybrid_xiris": "full_control_run",
+            "gd_anfis_shap": "operator_control_example",
+            "gis_integro": "operator_control_example",
+            "beacon_xai": "route_demonstration",
+        }.get(scenario_id, "extension_area"),
         "description": description,
         "summary": summary,
         "pipeline": nodes,

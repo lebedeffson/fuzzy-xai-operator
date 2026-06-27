@@ -1,0 +1,46 @@
+# Stale terms report
+
+- `D_source_conflict` in `fuzzyxai/core/scenario_engine.py:102` [allowed]: legacy_diagnostic_id="D_source_conflict",
+- `D_source_conflict` in `fuzzyxai/core/proof_package.py:125` [allowed]: if diagnostic.get("diagnostic_id") == "D_source_conflict" and not diagnostic.get("diagnostic_type") and not diagnostic.get("legacy_id"):
+- `rho:0.74` in `fuzzyxai/studio/operator_scenarios.py:400` [review]: "risk_computed": {"rho": 0.74, "chi_R": 1, "chi_R_crit": 1, "chi_Auto": 0},
+- `delta:0.08` in `fuzzyxai/studio/operator_scenarios.py:398` [review]: "delta": 0.08,
+- `delta:0.08` in `fuzzyxai/studio/operator_scenarios.py:441` [review]: {"probability": 0.67, "mean_alpha_k": 0.72, "positive_feature_support": 0.47, "gamma_route": 0.20, "delta": 0.08},
+- `delta:0.08` in `fuzzyxai/studio/operator_scenarios.py:452` [review]: "delta": 0.08,
+- `gamma_ij:0.35` in `fuzzyxai/studio/operator_scenarios.py:394` [review]: "alignment_computed": {"gamma_ij": 0.35, "gamma_max": 0.40, "delta_T": 0.08},
+- `D_source_conflict` in `fuzzyxai/studio/operator_scenarios.py:146` [allowed]: "legacy_id": "D_source_conflict",
+- `D_source_conflict` in `configs/studio_scenarios/hybrid_xiris.json:131` [allowed]: "legacy_id": "D_source_conflict",
+- `D_source_conflict` in `configs/studio_scenarios/hybrid_xiris.json:229` [allowed]: "legacy_id": "D_source_conflict",
+- `D_source_conflict` in `configs/studio_scenarios/hybrid_xiris.json:267` [allowed]: "legacy_id": "D_source_conflict",
+- `D_source_conflict` in `configs/studio_scenarios/hybrid_xiris.json:431` [allowed]: "legacy_id": "D_source_conflict",
+- `D_source_conflict` in `configs/studio_scenarios/hybrid_xiris.json:444` [allowed]: "legacy_id": "D_source_conflict",
+- `D_source_conflict` in `configs/studio_scenarios/hybrid_xiris.json:488` [allowed]: "legacy_id": "D_source_conflict",
+- `delta:0.08` in `configs/studio_scenarios/gis_integro.json:15` [review]: "delta": 0.08
+- `delta:0.08` in `configs/studio_scenarios/gis_integro.json:171` [review]: "delta": 0.08,
+- `delta:0.08` in `configs/studio_scenarios/gis_integro.json:330` [review]: "delta": 0.08
+- `gamma_max:0.45` in `reports/reproducibility_artifacts/explain_plan.json:14` [review]: "gamma_max": 0.45,
+- `delta_max:0.15` in `reports/reproducibility_artifacts/explain_plan.json:12` [review]: "delta_max": 0.15,
+- `gamma_max:0.45` in `reports/reproducibility_artifacts/manifest.json:22` [review]: "gamma_max": 0.45,
+- `delta_max:0.15` in `reports/reproducibility_artifacts/manifest.json:20` [review]: "delta_max": 0.15,
+- `gamma_max:0.45` in `reports/studio/last_case.json:51` [review]: "gamma_max": 0.45,
+- `gamma_max:0.45` in `reports/studio/last_case.json:153` [review]: "gamma_max": 0.45,
+- `gamma_max:0.45` in `reports/studio/last_case.json:159` [review]: "gamma_max": 0.45,
+- `gamma_max:0.45` in `reports/studio/last_case.json:167` [review]: "gamma_max": 0.45,
+- `D_source_conflict` in `reports/studio/hybrid_xiris_case_001.json:21` [allowed]: "legacy_id": "D_source_conflict",
+- `D_source_conflict` in `reports/studio/hybrid_xiris_case_001.json:88` [allowed]: "legacy_id": "D_source_conflict",
+- `D_source_conflict` in `reports/studio/hybrid_xiris_case_001.json:133` [allowed]: "legacy_id": "D_source_conflict",
+- `D_source_conflict` in `reports/studio/hybrid_xiris_case_001.json:154` [allowed]: "legacy_id": "D_source_conflict",
+- `gamma_max:0.45` in `reports/unified_full_demo/breast_cancer_report.json:82` [review]: "gamma_max": 0.45,
+- `gamma_max:0.45` in `reports/unified_full_demo/unified_full_demo_report.json:54` [review]: "gamma_max": 0.45,
+- `D_source_conflict` in `reports/studio_batch/hybrid_xiris_proof_package.json:71` [allowed]: "legacy_id": "D_source_conflict",
+- `D_source_conflict` in `reports/studio_batch/hybrid_xiris_proof_package.json:110` [allowed]: "legacy_id": "D_source_conflict",
+- `D_source_conflict` in `reports/studio_batch/hybrid_xiris_proof_package.json:137` [allowed]: "legacy_id": "D_source_conflict",
+- `D_source_conflict` in `reports/studio_batch/hybrid_xiris_proof_package.json:163` [allowed]: "legacy_diagnostic_id": "D_source_conflict",
+- `D_source_conflict` in `reports/studio_batch/hybrid_xiris_proof_package.json:213` [allowed]: "legacy_id": "D_source_conflict",
+- `gamma_max:0.45` in `reports/chapter5/real_data_validation/citr_report.json:85` [review]: "gamma_max": 0.45,
+- `gamma_max:0.45` in `reports/chapter5/real_data_validation/citr_report.json:129` [review]: "gamma_max": 0.45
+- `gamma_max:0.45` in `reports/chapter5/real_data_validation/rikord_report.json:83` [review]: "gamma_max": 0.45,
+- `gamma_max:0.45` in `reports/chapter5/real_data_validation/rikord_report.json:127` [review]: "gamma_max": 0.45
+- `gamma_max:0.45` in `reports/chapter5/real_data_validation/ruccod_report.json:83` [review]: "gamma_max": 0.45,
+- `gamma_max:0.45` in `reports/chapter5/real_data_validation/ruccod_report.json:127` [review]: "gamma_max": 0.45
+- `D_source_conflict` in `tests/test_fuzzyxai_studio_demo_readiness.py:53` [allowed]: assert diagnostic["legacy_id"] == "D_source_conflict"
+- `D_source_conflict` in `tests/test_fuzzyxai_studio_demo_readiness.py:66` [allowed]: assert summary[0]["legacy_id"] == "D_source_conflict"

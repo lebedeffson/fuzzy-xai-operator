@@ -14,6 +14,14 @@ class VerificationResult:
     errors: list[str]
 
 
+def canonicalize_explain_plan(plan: Any) -> str:
+    return json.dumps(plan, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+
+
+def compute_explain_plan_hash(plan: Any) -> str:
+    return sha256(canonicalize_explain_plan(plan).encode("utf-8")).hexdigest()
+
+
 def _stable_hash(payload: Any) -> str:
     return sha256(json.dumps(payload, ensure_ascii=False, sort_keys=True).encode("utf-8")).hexdigest()
 
@@ -58,7 +66,7 @@ def build_proof_package(scenario: dict[str, Any], report: dict[str, Any], engine
         "model_version": report.get("trace", {}).get("model_version"),
         "adapter_version": report.get("trace", {}).get("adapter_version"),
         "explain_plan": explain_plan,
-        "explain_plan_hash": _stable_hash(explain_plan),
+        "explain_plan_hash": compute_explain_plan_hash(explain_plan),
         "operator_values": _operator_values_from_engine(engine_payload, report),
         "computed_result": (engine_payload or {}).get("computed_result", {}),
         "diagnostics": report.get("diagnostics", []),
@@ -70,7 +78,7 @@ def build_proof_package(scenario: dict[str, Any], report: dict[str, Any], engine
     return package
 
 
-def verify_proof_package(package: dict[str, Any]) -> VerificationResult:
+def verify_proof_package(package: dict[str, Any], require_current_code_version: bool = False) -> VerificationResult:
     errors: list[str] = []
     for key in ["package_type", "scenario_id", "run_id", "explain_plan_hash", "operator_values", "diagnostics", "final_action", "package_hash"]:
         if key not in package:
@@ -80,6 +88,10 @@ def verify_proof_package(package: dict[str, Any]) -> VerificationResult:
     expected_hash = _stable_hash({k: v for k, v in package.items() if k != "package_hash"})
     if package.get("package_hash") != expected_hash:
         errors.append("invalid:package_hash")
+    if package.get("explain_plan_hash") != compute_explain_plan_hash(package.get("explain_plan", {})):
+        errors.append("invalid:explain_plan_hash")
+    if require_current_code_version and package.get("code_version") != _code_version():
+        errors.append(f"invalid:code_version:{package.get('code_version')}!={_code_version()}")
     if package.get("final_action") == "block" and not package.get("diagnostics"):
         errors.append("invalid:block_without_diagnostics")
     computed = package.get("computed_result", {})
@@ -103,9 +115,15 @@ def verify_proof_package(package: dict[str, Any]) -> VerificationResult:
 
     if computed.get("action") == "block" and int(computed.get("chi_r_crit", computed.get("chi_R_crit", 0))) != 1:
         errors.append("invalid:block_without_chi_r_crit")
+    if int(computed.get("chi_r_crit", computed.get("chi_R_crit", 0))) == 1 and computed.get("action") != "block":
+        errors.append("invalid:critical_not_blocked")
+    if computed.get("selected_class") == "F0" and computed.get("diagnostic_type") == "quality_source_conflict":
+        errors.append("invalid:F0_selected_for_source_conflict")
     for diagnostic in package.get("diagnostics", []):
         if computed.get("chi_r_crit", computed.get("chi_R_crit")) == 1 and diagnostic.get("criticality") != "high":
             errors.append("invalid:critical_without_high_diagnostic")
+        if diagnostic.get("diagnostic_id") == "D_source_conflict" and not diagnostic.get("diagnostic_type") and not diagnostic.get("legacy_id"):
+            errors.append("invalid:legacy_diagnostic_without_typed_id")
     alignment = operators.get("alignment", {}).get("computed", {})
     alignment_status = operators.get("alignment", {}).get("status")
     if alignment and alignment_status == "passed" and float(alignment.get("gamma_ij", 0.0)) > float(alignment.get("gamma_max", 1.0)):

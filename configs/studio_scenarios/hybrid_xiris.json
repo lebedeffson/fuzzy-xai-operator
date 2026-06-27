@@ -5,6 +5,7 @@
   "data_type": "iris_image",
   "explain_plan_version": "EP-2026-01",
   "status": "scenario_run_verified",
+  "evidence_level": "full_control_run",
   "description": "Конфликт между модельным сигналом и качеством сегментации радужной оболочки.",
   "summary": {
     "objects_total": 1000,

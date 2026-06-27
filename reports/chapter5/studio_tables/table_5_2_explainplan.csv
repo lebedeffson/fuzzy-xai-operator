@@ -1,6 +1,6 @@
 section,parameter,value,role
 meta,explain_plan_version,EP-2026-01,версия ExplainPlan
-meta,explain_plan_hash,8f736211fc308d3b,контрольная сумма ExplainPlan
+meta,explain_plan_hash,b67db9f1230c190e9b1a66331159dc292847252767e4aa707b578021e6bc743b,контрольная сумма ExplainPlan
 alignment,gamma_max,0.4,порог согласования
 alignment,w_d_mu,0.25,вес компоненты d_mu
 alignment,w_d_R,0.35,вес компоненты d_R
