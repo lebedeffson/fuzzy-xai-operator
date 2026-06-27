@@ -3,8 +3,8 @@
   "schema_version": "1.0",
   "scenario_id": "hybrid_xiris",
   "run_id": "hybrid_xiris_case_001",
-  "created_at": "2026-06-27T13:25:23.361146+00:00",
-  "code_version": "94fc23c-dirty",
+  "created_at": "2026-06-27T13:27:22.807539+00:00",
+  "code_version": "d34baf0",
   "input": {
     "image_quality": 0.31,
     "segmentation_quality": 0.27,
@@ -228,5 +228,5 @@
   "final_action": "block",
   "action_reason": "Модель поддерживает принятие, но низкое качество сегментации и конфликт источников дают критический разрыв.",
   "scenario_hash": "b491a0b9f010503c46a39061e0aad126e10f5b02389be81f914a6742ed7f0620",
-  "package_hash": "df4efb19d21a793fcbc3584fca737684caac8297ec5bb016164804a918289acc"
+  "package_hash": "c380f606b27bd1918e64f8e3ff1175357c47b4453f3d76be913c6d6b601d333c"
 }
