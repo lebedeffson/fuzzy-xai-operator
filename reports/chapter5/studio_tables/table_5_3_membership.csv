@@ -1,0 +1,5 @@
+field,value
+model_match_signal,0.88
+alpha_accept,0.82
+alpha_block,0.91
+u_k,0.36

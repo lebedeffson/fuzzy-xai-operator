@@ -1,0 +1,10 @@
+metric,value
+objects_total,1000
+accept,612
+lower_confidence,201
+block,187
+baseline_critical_misses,168
+fuzzyxai_critical_misses,0
+gamma,0.351
+delta,0.106811
+rho,0.8

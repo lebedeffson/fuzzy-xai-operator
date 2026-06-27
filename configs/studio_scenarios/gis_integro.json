@@ -383,6 +383,7 @@
   ],
   "diagnostics": [],
   "diagnostics_summary": [],
+  "expected_result": {},
   "runs": [
     {
       "run_id": "gis_integro_case_001",

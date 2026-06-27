@@ -384,6 +384,7 @@
   ],
   "diagnostics": [],
   "diagnostics_summary": [],
+  "expected_result": {},
   "runs": [
     {
       "run_id": "gd_anfis_shap_case_001",

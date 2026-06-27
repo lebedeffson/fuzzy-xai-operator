@@ -445,6 +445,14 @@
       "global": true
     }
   ],
+  "expected_result": {
+    "gamma": 0.351,
+    "delta": 0.106811,
+    "rho": 0.8,
+    "chi_R": 1,
+    "chi_R_crit": 1,
+    "action": "block"
+  },
   "runs": [
     {
       "run_id": "hybrid_xiris_case_001",

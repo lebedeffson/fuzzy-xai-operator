@@ -382,6 +382,7 @@
   ],
   "diagnostics": [],
   "diagnostics_summary": [],
+  "expected_result": {},
   "runs": [
     {
       "run_id": "beacon_xai_case_001",

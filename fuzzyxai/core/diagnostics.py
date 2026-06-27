@@ -1,5 +1,18 @@
 from dataclasses import dataclass, field
+from enum import Enum
 from typing import Any, Dict
+
+
+class DiagnosticType(Enum):
+    INCOMPLETE_INTERFACE = "D_k_incomplete"
+    TRACE_MISSING = "D_k_trace"
+    NORMALIZATION_FAILED = "D_k_norm"
+    RULE_CONFLICT = "D_k_rule"
+    INTERFACE_RUPTURE = "D_ij"
+    UNCERTAINTY_CHOICE_FAILED = "D_choice"
+    QUALITY_SOURCE_CONFLICT = "D_quality_source_conflict"
+    RULE_ATTRIBUTION_CONFLICT = "D_rule_attribution_conflict"
+    COUNTEREVIDENCE_CONFLICT = "D_counterevidence_conflict"
 
 @dataclass(frozen=True)
 class DiagnosticState:

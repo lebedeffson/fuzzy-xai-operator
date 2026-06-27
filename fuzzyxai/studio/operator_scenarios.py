@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import os
 from copy import deepcopy
 from datetime import datetime, timezone
 from hashlib import sha256
@@ -337,6 +338,7 @@ def _scenario(
         "edges": edges,
         "diagnostics": diagnostics,
         "diagnostics_summary": diagnostics_summary,
+        "expected_result": values.get("expected_result", {}),
         "runs": [report],
         "charts": charts,
     }
@@ -364,6 +366,7 @@ DEFAULT_SCENARIOS: list[dict[str, Any]] = [
             "delta": 0.08,
             "risk_inputs": {"rho_pred": 0.88, "u_M": 0.36, "chi_R": 1, "chi_R_crit": 1},
             "risk_computed": {"rho": 0.74, "chi_R": 1, "chi_R_crit": 1, "chi_Auto": 0},
+            "expected_result": {"gamma": 0.351, "delta": 0.106811, "rho": 0.800, "chi_R": 1, "chi_R_crit": 1, "action": "block"},
             "rupture_source": "segmentation_quality",
             "action_reason": "Модель поддерживает принятие, но низкое качество сегментации и конфликт источников дают критический разрыв.",
         },
@@ -455,7 +458,9 @@ def ensure_scenario_json_files(directory: Path = SCENARIO_DIR) -> None:
     directory.mkdir(parents=True, exist_ok=True)
     for scenario in DEFAULT_SCENARIOS:
         path = directory / f"{scenario['scenario_id']}.json"
-        path.write_text(json.dumps(scenario, ensure_ascii=False, indent=2), encoding="utf-8")
+        tmp = directory / f".{scenario['scenario_id']}.{os.getpid()}.tmp"
+        tmp.write_text(json.dumps(scenario, ensure_ascii=False, indent=2), encoding="utf-8")
+        tmp.replace(path)
 
 
 def load_scenarios(directory: Path = SCENARIO_DIR) -> list[dict[str, Any]]:

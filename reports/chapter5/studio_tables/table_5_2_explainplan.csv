@@ -1,0 +1,5 @@
+parameter,value
+gamma_max,0.4
+delta_max,0.35
+theta_4,0.78
+risk_action,block
