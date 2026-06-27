@@ -1,0 +1,102 @@
+{
+  "dataset": "wine_risk",
+  "status": "READY",
+  "n_cases": 252,
+  "scenarios": [
+    "clean",
+    "context_forbidden",
+    "critical_rupture",
+    "high_reduction_loss",
+    "rule_conflict",
+    "source_conflict",
+    "trace_gap"
+  ],
+  "rows": [
+    {
+      "policy": "full_observer_calibrated",
+      "agreement_reference": 0.876984126984127,
+      "agreement_reference_strict": 0.4246031746031746,
+      "missed_critical_ruptures": 0,
+      "critical_rupture_recall": 1.0,
+      "false_auto_accept_rate": 0.0992063492063492,
+      "false_block_rate": 0.0,
+      "auto_accept_coverage": 0.2976190476190476,
+      "action_distribution": {
+        "accept": 20,
+        "defer_to_human": 51,
+        "lower_confidence": 55,
+        "request_more_data": 90,
+        "block": 36
+      }
+    },
+    {
+      "policy": "probability_threshold",
+      "agreement_reference": 0.5238095238095238,
+      "agreement_reference_strict": 0.4246031746031746,
+      "missed_critical_ruptures": 0,
+      "critical_rupture_recall": 1.0,
+      "false_auto_accept_rate": 0.45634920634920634,
+      "false_block_rate": 0.0,
+      "auto_accept_coverage": 0.5476190476190477,
+      "action_distribution": {
+        "accept": 138,
+        "block": 36,
+        "defer_to_human": 48,
+        "request_more_data": 30
+      }
+    },
+    {
+      "policy": "shap_guardrail",
+      "agreement_reference": 0.5238095238095238,
+      "agreement_reference_strict": 0.4246031746031746,
+      "missed_critical_ruptures": 0,
+      "critical_rupture_recall": 1.0,
+      "false_auto_accept_rate": 0.45634920634920634,
+      "false_block_rate": 0.0,
+      "auto_accept_coverage": 0.5476190476190477,
+      "action_distribution": {
+        "accept": 138,
+        "block": 36,
+        "defer_to_human": 48,
+        "request_more_data": 30
+      }
+    },
+    {
+      "policy": "lime_guardrail",
+      "agreement_reference": 0.5238095238095238,
+      "agreement_reference_strict": 0.4246031746031746,
+      "missed_critical_ruptures": 0,
+      "critical_rupture_recall": 1.0,
+      "false_auto_accept_rate": 0.45634920634920634,
+      "false_block_rate": 0.0,
+      "auto_accept_coverage": 0.5476190476190477,
+      "action_distribution": {
+        "accept": 138,
+        "block": 36,
+        "defer_to_human": 48,
+        "request_more_data": 30
+      }
+    },
+    {
+      "policy": "anchor_guardrail",
+      "agreement_reference": 0.5238095238095238,
+      "agreement_reference_strict": 0.4246031746031746,
+      "missed_critical_ruptures": 0,
+      "critical_rupture_recall": 1.0,
+      "false_auto_accept_rate": 0.45634920634920634,
+      "false_block_rate": 0.0,
+      "auto_accept_coverage": 0.5476190476190477,
+      "action_distribution": {
+        "accept": 138,
+        "block": 36,
+        "defer_to_human": 48,
+        "request_more_data": 30
+      }
+    }
+  ],
+  "notes": [
+    "Structure-aware benchmark uses real rows with controlled explanation-layer perturbations.",
+    "Expected actions are derived from safety rules (rupture/context/trace/reduction constraints).",
+    "agreement_reference is set-based (any safety-compatible action is accepted); agreement_reference_strict uses a single canonical label."
+  ]
+}

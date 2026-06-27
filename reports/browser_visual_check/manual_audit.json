@@ -1,0 +1,51 @@
+{
+  "initial_action": "Action: ACCEPT",
+  "final_action": "Action: ACCEPT",
+  "issues": [
+    "operator view switching failed: Locator.select_option: Error: Element is not a <select> element\nCall log:\n  - waiting for get_by_label(\"View\")\n    - locator resolved to <input readonly tabindex=\"0\" role=\"combobox\" value=\"timeline\" aria-label=\"View\" aria-readonly=\"false\" aria-expanded=\"false\" aria-autocomplete=\"none\" class=\"q-select__focus-target\" id=\"f_fc0f4287-f5c7-42d0-a4e5-086455aea601\" aria-controls=\"f_fc0f4287-f5c7-42d0-a4e5-086455aea601_lb\"/>\n  - attempting select option action\n    - waiting for element to be visible and enabled\n"
+  ],
+  "console": [],
+  "page_errors": [],
+  "shots": [
+    "reports/browser_visual_check/manual_home.png",
+    "reports/browser_visual_check/manual_safe_scene.png",
+    "reports/browser_visual_check/manual_audit_scene.png",
+    "reports/browser_visual_check/manual_block_scene.png",
+    "reports/browser_visual_check/manual_reset_default.png",
+    "reports/browser_visual_check/manual_benchmark_loaded.png",
+    "reports/browser_visual_check/manual_export.png"
+  ],
+  "geometry": {
+    "left": {
+      "x": 32,
+      "y": -3020,
+      "width": 631.03125,
+      "height": 4869.5,
+      "top": -3020,
+      "right": 663.03125,
+      "bottom": 1849.5,
+      "left": 32
+    },
+    "right": {
+      "x": 679.03125,
+      "y": -3020,
+      "width": 1208.96875,
+      "height": 4869.5,
+      "top": -3020,
+      "right": 1888,
+      "bottom": 1849.5,
+      "left": 679.03125
+    },
+    "full": {
+      "x": 16,
+      "y": -3036,
+      "width": 1888,
+      "height": 4901.5,
+      "top": -3036,
+      "right": 1904,
+      "bottom": 1865.5,
+      "left": 16
+    },
+    "vw": 1920
+  }
+}

@@ -1,0 +1,18 @@
+\begin{table}[h]
+\centering
+\caption{Constrained calibration objective and safety constraints}
+\label{tab:constrained\_calibration}
+\begin{tabular}{|l|l|}
+\hline
+item & value \\
+\hline
+objective & maximize agreement\_reference - 5*missed\_critical\_ruptures - 2*false\_auto\_accept\_rate - false\_block\_rate with hard safety penalties \\
+\hline
+constraint\_missed\_critical & 0 \\
+\hline
+constraint\_critical\_recall & 1 \\
+\hline
+constraint\_false\_auto\_accept\_max & 0.1 \\
+\hline
+\end{tabular}
+\end{table}

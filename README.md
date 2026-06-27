@@ -29,44 +29,200 @@
 - Парето-выбор минимально достаточного класса представления.
 - Диагностика выбора `D_choice`.
 
+## Актуальный статус (2026-05-29)
+
+Ниже текущее состояние именно практической части для глав 2-3.
+
+Что уже есть:
+
+- Полный риск-наблюдатель с действиями `accept/lower_confidence/request_more_data/defer_to_human/block`.
+- Калибровка наблюдателя и ablation-бенчмарк.
+- Baseline comparison с двумя режимами доступа:
+  - `baseline_access=native`
+  - `baseline_access=equal_guardrail`
+- Structure-aware benchmark для контролируемых perturbation-сценариев.
+- Defense-cases и автоматический экспорт thesis-таблиц в LaTeX.
+
+Текущие dataset modes:
+
+- built-in:
+  - `breast_cancer`
+  - `diabetes_binary`
+  - `wine_risk`
+  - `synthetic_ruptures`
+- registry:
+  - `registry_programs`
+  - `registry_mosmed_doctor_analysis`
+  - `registry_steel_ir`
+
+Роли датасетов:
+
+- `breast_cancer`: количественная медицинская демонстрация контура.
+- `wine_risk`: переносимость на другой табличный домен.
+- `synthetic_ruptures`: safety/diagnostic стенд для разрывов.
+- `diabetes_binary`: stress-test калибровки.
+- `registry_*`: external-transfer/readiness, без завышенных claims по качеству.
+
+Ключевой safety-результат:
+
+- Для `synthetic_ruptures`:
+  - `missed_critical_ruptures = 0`
+  - `critical_rupture_recall = 1.0`
+  - `false_auto_accept_rate = 0.0`
+- См.:
+  - `reports/datasets/synthetic_ruptures/summary.json`
+
+Почему два baseline-режима:
+
+- `equal_guardrail`: всем методам передаётся внешний `chi_R_crit` (sanity-check).
+- `native`: baseline получают только свой естественный вход:
+  - threshold: `proba`
+  - SHAP/LIME/Anchors: `proba` + их локальные объяснения
+  - без `chi_R`, `chi_R_crit`, `chi_Auto`, `Delta`, trace, CertifiedPath
+- Full observer использует полный структурный вход.
+
+Главный сравнительный артефакт:
+
+- `reports/thesis_tables/table_synthetic_guardrail_modes.tex`
+  - в `native` baseline пропускают критические разрывы,
+  - в `equal_guardrail` блокируют их при наличии внешнего safety-сигнала.
+
+Быстрый запуск:
+
+```bash
+make dataset-modes-check
+make benchmark-dataset DATASET=synthetic_ruptures
+make baseline-comparison DATASET=synthetic_ruptures BASELINE_ACCESS=native
+make baseline-comparison DATASET=synthetic_ruptures BASELINE_ACCESS=equal_guardrail
+make calibrate-observer DATASET=breast_cancer
+make ablation-benchmark DATASET=breast_cancer
+make structure-aware-benchmark DATASET=breast_cancer
+make calibrate-chapter2
+make benchmark-equal-raw-structure
+make chapter3-artifacts
+make validate-ecosystem-sdk
+make thesis-practice-tables
+make reproducibility-artifacts
+make dissertation-artifacts
+make dissertation-check
+make ui-health-check
+```
+
+Оперативный статус dataset modes (фактически из `make dataset-modes-check`):
+
+| dataset_mode | status | rows | domain | validates |
+| --- | --- | ---: | --- | --- |
+| breast_cancer | READY | 569 | medical | risk observer baseline |
+| diabetes_binary | READY | 442 | medical | borderline uncertainty |
+| wine_risk | READY | 178 | tabular | transferability |
+| synthetic_ruptures | READY | 900 | diagnostic | controlled ruptures |
+| registry_programs | READY | 10007 | text-tabular | registry records |
+| registry_mosmed_doctor_analysis | READY | 10 | medical audit | doctor/model audit |
+| registry_steel_ir | READY | 8080 | industrial CV | industrial transferability |
+
+Ключевые практические артефакты (готовы):
+
+- Dataset summaries/cards: `reports/datasets/<dataset>/{summary.json,summary.md,data_card.md,predictions.csv}`
+- Calibration (Breast Cancer): `reports/datasets/breast_cancer/calibration.json`
+- Ablation:
+  - `reports/datasets/breast_cancer/ablation.json`
+  - `reports/datasets/synthetic_ruptures/ablation.json`
+- Baseline comparison:
+  - `reports/datasets/*/baseline_comparison.json`
+  - `reports/datasets/synthetic_ruptures/baseline_comparison_native.json`
+  - `reports/datasets/synthetic_ruptures/baseline_comparison_equal_guardrail.json`
+- Defense cases: `reports/defense_cases/{accept_case.json,audit_case.json,block_case.json,summary.md}`
+- Structure-aware benchmark: `reports/structure_aware_benchmark/breast_cancer.json`
+- Thesis practice index: `reports/thesis_practice/thesis_practice_tables.md`
+- LaTeX tables: `reports/thesis_tables/*.tex`
+
 ## Главная демо
+
+Единый вход для интерактивной демонстрации (Studio):
+
+```bash
+make demo PORT=8097
+# aliases:
+# make defense-demo PORT=8097
+# make studio PORT=8097
+# direct:
+PYTHONPATH=. python apps/fuzzyxai_studio.py --port 8097
+```
+
+`FuzzyXAI Studio` объединяет в одной странице:
+
+- `Защита`: сквозной маршрут `Dataset -> E_k -> A_k^F -> chi_Auto -> rho -> Action`.
+- `Эксперт`: интерактивный ExplainPlan editor + what-if (веса/пороги/rupture/context/trace).
+- `Benchmark`: загрузка `baseline_comparison` (`native/equal_guardrail`) и structure-aware отчётов.
+- `Отчёты`: экспорт текущего кейса в JSON/Markdown/LaTeX.
+- `Методология`: краткая карта связи с главами 2-3.
+
+Официальная страница для защиты: **только `FuzzyXAI Studio`**.  
+`defense_demo.py` и `layered_demo.py` остаются только для internal/debug и помечены как `*-legacy`.
+
+Быстрый pre-defense UI check:
+
+```bash
+make ui-health-check
+# legacy apps (опционально):
+make ui-health-check-all
+```
+
+Артефакты проверки:
+
+- `reports/ui_health_check.json`
+- `reports/ui_health_check.md`
+
+Визуальная браузерная проверка (headless Chromium, со скриншотами вкладок):
+
+```bash
+make browser-visual-check
+```
+
+Артефакты:
+
+- `reports/browser_visual_check/browser_visual_check.json`
+- `reports/browser_visual_check/browser_visual_check.md`
+- `reports/browser_visual_check/01_studio_home.png`
+- `reports/browser_visual_check/02_case_controls.png`
+- `reports/browser_visual_check/03_plan_editor.png`
+- `reports/browser_visual_check/04_what_if.png`
+- `reports/browser_visual_check/05_benchmark.png`
+- `reports/browser_visual_check/06_export.png`
+- `reports/browser_visual_check/07_summary.png`
 
 Запуск GUI для показа на защите:
 
 ```bash
 pip install -r requirements.txt
-python apps/defense_demo.py --port 8085
+python apps/fuzzyxai_studio.py --port 8097
 ```
 
 Открыть в браузере:
 
 ```text
-http://localhost:8085
+http://localhost:8097
 ```
 
 Сценарий демо:
 
-1. Обучается реальная модель `sklearn LogisticRegression` по признакам `age`, `pressure`, `marker`.
-2. Выбранный кейс проходит через модель и получает `risk_score = predict_proba(...)`.
-3. Риск модели переводится в лингвистические термы: `low`, `medium`, `high`.
-4. Для кейса строится объяснение `E_k` и выбирается класс представления `A_k^F`.
-5. Система проверяет, согласованы ли модель риска и модуль принятия решения.
-6. Отдельный benchmark-блок сравнивает режимы на `sklearn breast_cancer` с `RandomForestClassifier`: только модель против модели с нечётким системным оператором.
+1. Выбрать `dataset mode`, `scenario`, `sample index`.
+2. Нажать `Run pipeline` и получить итог `Action + reason`.
+3. В блоке `ExplainPlan` поменять веса/пороги и нажать `Apply plan`.
+4. В блоке `What-if` включить override и проверить, как меняется `rho`, `chi_R/chi_R_crit`, `chi_Auto`, `action`.
+5. В блоке `Benchmark` загрузить `native` и `equal_guardrail` отчёты.
+6. В `Export` сохранить текущий кейс в JSON/MD/TEX.
 
-Переключатель конфликта специально ломает интерфейс между компонентами. В этом режиме система показывает `D_ij`, а не скрывает рассогласование красивым, но неверным отчётом.
-
-GUI рассчитан на показ неспециалисту. Он показывает маршрут `model -> risk_score -> ExplainPlan -> E_k -> A_k^F -> D_ij / I(E_G)`, текущий кейс, вклад признаков модели, функции принадлежности, распределение классов, выбранное представление и проверку согласованности между моделью и решающим модулем.
-
-Для показа на проекторе есть переключатель презентационного режима. Кнопка справки открывает короткую экскурсию. Кнопка печати позволяет сохранить страницу как PDF через браузер.
+Страница единая: слева управление (кейс/план/what-if/benchmark/export), справа сквозной результат и трассировка.
 
 Ключевые визуальные блоки:
 
-- Метка текущего кейса на функциях принадлежности: видно, куда попал риск пациента относительно `low`, `medium`, `high`.
-- Граф вкладов модели: видно, какие признаки подняли или снизили предсказанный риск.
-- Граф `A_k^F` по слоям: отдельно показаны интервальная неопределённость, экспертные оценки и конфликт `T/I/F`.
-- Граф выбора класса из главы 3: кандидаты расположены по когнитивной сложности и ожидаемой потере редукции, выбранный класс подсвечен.
-- Граф композиции: модель и модуль решения соединены стрелкой рассогласования; конфликтный режим приводит к `D_ij`.
-- Benchmark “без оператора / с оператором”: baseline-модель даёт риск и важности признаков, а оператор добавляет `gamma`, `I(E_G)` и обнаружение конфликта `D_ij`.
+- Membership view (`low/medium/high`) с текущей точкой кейса.
+- Risk contribution view по компонентам `predicted_risk/uncertainty/interpretability_gap/reduction_loss/chi_R`.
+- Pipeline route (`Dataset -> E_k -> A_k^F -> chi_Auto -> rho -> Action`).
+- CertifiedPath/Rupture таблица переходов.
+- Representation selection таблица кандидатов и выбранного класса.
+- Raw trace JSON для аудита.
 
 ## Полная демонстрация
 
@@ -102,7 +258,7 @@ reports/full_demo/index.html
 - `reports/full_demo/03_representation.html`
 - `reports/full_demo/04_composition_graph.html`
 
-В GUI `apps/defense_demo.py` этот отчёт показан прямо на главной странице первым блоком. Оттуда же можно пересобрать отчёт и скачать HTML/JSON.
+В GUI `apps/fuzzyxai_studio.py` этот отчёт доступен из режима работы с отчётами и экспорта кейса.
 
 ## Технический dashboard
 
@@ -112,7 +268,7 @@ reports/full_demo/index.html
 python apps/nicegui_dashboard.py --port 8080
 ```
 
-Его стоит использовать для загрузки CSV, синтеза `FML`, просмотра отчётов, экспорта сессий и проверки примеров диссертации. Для презентации лучше использовать `apps/defense_demo.py`.
+Его стоит использовать для загрузки CSV, синтеза `FML`, просмотра отчётов, экспорта сессий и проверки примеров диссертации. Для презентации используется `apps/fuzzyxai_studio.py`.
 
 
 ## Risk-Aware XAI Observer
@@ -184,6 +340,49 @@ PYTHONPATH=. python examples/dataset_observer_demo.py --url https://raw.githubus
 - `reports/dataset_observer/dataset_observer_report.json`
 - `reports/dataset_observer/dataset_observer_report.md`
 - `reports/dataset_observer/dataset_observer_report.html`
+
+## Dataset modes и debug-утилиты
+
+Для защиты используется только `apps/fuzzyxai_studio.py` (`make demo`).
+`apps/layered_demo.py` и `apps/defense_demo.py` оставлены только для debug/обратной совместимости.
+
+`Input -> Model -> Omega -> Expl -> Fuzzy -> Topos -> Observer -> Action`.
+
+Запуск:
+
+```bash
+make layered-demo-legacy PORT=8096   # debug only
+make defense-demo-legacy PORT=8085   # debug only
+```
+
+Проверка режимов датасетов:
+
+```bash
+make dataset-modes-check
+```
+
+Запуск real-data validation (CITR/RIKORD/RuCCoD, с прозрачным fallback при отсутствии локальных файлов):
+
+```bash
+make real-data-validation
+```
+
+Бенчмарк одного датасета:
+
+```bash
+make benchmark-dataset DATASET=breast_cancer
+make benchmark-dataset DATASET=rikord
+```
+
+Документация по набору: `docs/datasets.md`.
+
+Режимы:
+
+- built-in: `breast_cancer`, `diabetes_binary`, `wine_risk`, `synthetic_ruptures`
+- registry: `registry_programs`, `registry_mosmed_doctor_analysis`, `registry_steel_ir`
+
+Для registry-режимов статус `MISSING` означает, что локальный файл ещё не загружен.
+Инструкция по путям: `docs/REGISTRY_DATASETS_SETUP_RU.md`.
 
 ## Risk-Aware Observer
 
@@ -266,10 +465,15 @@ make chapter5-experiments
 make chapter5-demo
 make chapter5-latex
 make web-demo
+make unified-demo
 make full-pipeline
 make figures
 make full-experiments
+make reproducibility-artifacts
+make dissertation-artifacts
 ```
+
+Готовый пакет для вставки в главы собирается в `dissertation_artifacts/`: там лежат PNG/CSV/Markdown для глав 2, 4, 5, приложение, подписи и SHA256-manifest.
 
 Финальная проверка диссертационных примеров:
 
@@ -344,10 +548,12 @@ fuzzyxai/
   pipelines/     dataset observer pipeline
   risk/          Risk-Aware Observer: неопределённость, rho(x), политика, метрики, observer pipeline
   rules/         LOFO-F1 и стабильный отбор правил
+  studio/        unified studio state/presets/charts/report export
   visual/        Plotly-графики функций принадлежности и композиции
   demo/          детерминированные demo-данные и сборщики примеров
 apps/
-  defense_demo.py       главный GUI для презентации
+  fuzzyxai_studio.py    единый интерактивный вход для защиты и эксперта
+  defense_demo.py       legacy-демо (оставлено для обратной совместимости)
   nicegui_dashboard.py  расширенный технический dashboard
 proofs/
   chapter2_operator_proof.py

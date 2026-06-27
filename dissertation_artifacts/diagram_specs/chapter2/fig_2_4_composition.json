@@ -1,0 +1,42 @@
+{
+  "figure_id": "fig_2_4",
+  "title": "Composition and diagnostic state",
+  "nodes": [
+    {
+      "id": "E_i",
+      "label": "E_i"
+    },
+    {
+      "id": "d_E",
+      "label": "d_E"
+    },
+    {
+      "id": "E_j",
+      "label": "E_j"
+    },
+    {
+      "id": "D_ij",
+      "label": "D_ij"
+    }
+  ],
+  "edges": [
+    {
+      "from": "E_i",
+      "to": "d_E"
+    },
+    {
+      "from": "d_E",
+      "to": "E_j"
+    },
+    {
+      "from": "d_E",
+      "to": "D_ij"
+    }
+  ],
+  "color_roles": {
+    "ok": "#16a34a",
+    "rupture": "#dc2626"
+  },
+  "caption": "Композиция объяснений и переход к диагностическому состоянию.",
+  "short_explanation": "Shows where semantic disagreement is checked."
+}

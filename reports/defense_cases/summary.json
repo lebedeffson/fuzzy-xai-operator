@@ -1,0 +1,44 @@
+{
+  "dataset": "breast_cancer",
+  "cases": [
+    {
+      "case": "safe",
+      "object": "sample_0",
+      "P": 0.015348643429035023,
+      "representation": "FML-audit",
+      "delta": 0.07,
+      "I_pre": 0.877933761300908,
+      "rho": 0.018382226678182623,
+      "chi_R": 0,
+      "chi_R_crit": 0,
+      "chi_Auto": true,
+      "action": "accept"
+    },
+    {
+      "case": "audit",
+      "object": "sample_18",
+      "P": 0.14437183933975195,
+      "representation": "FML-audit",
+      "delta": 0.07,
+      "I_pre": 0.7578820191360587,
+      "rho": 0.12760337051499865,
+      "chi_R": 0,
+      "chi_R_crit": 0,
+      "chi_Auto": true,
+      "action": "lower_confidence"
+    },
+    {
+      "case": "block",
+      "object": "sample_113",
+      "P": 0.7035770563720608,
+      "representation": "FML-audit",
+      "delta": 0.07,
+      "I_pre": 0.6743235322764167,
+      "rho": 0.8,
+      "chi_R": 1,
+      "chi_R_crit": 1,
+      "chi_Auto": false,
+      "action": "block"
+    }
+  ]
+}

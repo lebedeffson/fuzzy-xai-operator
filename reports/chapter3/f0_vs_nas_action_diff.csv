@@ -1,0 +1,2 @@
+n_cases,n_unique_objects,n_conflicts,n_critical_conflicts,n_action_diff_f0_nas,share_action_diff_f0_nas,ci95_action_diff_low,ci95_action_diff_high,n_f0_accept_nas_block,share_f0_accept_nas_block,ci95_f0_accept_nas_block_low,ci95_f0_accept_nas_block_high
+1000,227,938,917,716,0.716,0.6872653238598468,0.7430814559508324,605,0.605,0.5743542580369126,0.6348420932599453

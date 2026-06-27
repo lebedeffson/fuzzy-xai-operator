@@ -1,0 +1,13 @@
+{
+  "sample_id": "hybrid_0000",
+  "model_score": 0.82,
+  "quality_score": 0.22,
+  "score_threshold": 0.7,
+  "quality_threshold": 0.45,
+  "chi_R_crit": 1,
+  "chi_Auto": false,
+  "rho": 0.8,
+  "action": "block",
+  "reason": "high_confidence_low_quality",
+  "evidence_source": "data/generated/hybrid_xiris_objects.csv"
+}

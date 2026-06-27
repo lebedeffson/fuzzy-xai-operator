@@ -1,0 +1,51 @@
+# Dataset summary: registry_steel_ir
+
+- status: `READY`
+- n: `8080`
+- domain: `industrial_cv`
+- model_accuracy: `0.9920792079207921`
+- model_roc_auc: `0.5`
+- model_f1: `0.0`
+- model_precision: `0.0`
+- model_recall: `0.0`
+- reason_if_roc_auc_nan_or_05: `roc_auc near 0.5: ranking signal is weak or class imbalance dominates`
+- n_positive: `65`
+- n_negative: `8015`
+- positive_rate: `0.008044554455445545`
+- score_std: `8.673617379884035e-19`
+- agreement_proxy: `None`
+- agreement_proxy_applicable: `False`
+- agreement_proxy_reason: `no expert action labels`
+- missed_critical_ruptures: `0`
+- critical_rupture_recall: `None`
+- false_auto_accept_rate: `0.0`
+- false_block_rate: `0.0`
+- auto_accept_coverage: `1.0`
+- observer_action_accuracy (legacy): `None`
+- observer_action_proxy_accuracy (legacy): `1.0`
+- mean_I_pre: `0.7893476847952753`
+- mean_rho: `0.06749594132621858`
+- mean_reduction_loss: `0.0724931289163867`
+- i_pre_mean: `0.7893476847952753`
+- i_pre_std: `2.220446049250313e-16`
+- i_pre_median: `0.7893476847952751`
+- i_pre_p25: `0.7893476847952751`
+- i_pre_p75: `0.7893476847952751`
+- i_pre_p05: `0.7893476847952751`
+- i_pre_p95: `0.7893476847952751`
+- rho_mean: `0.06749594132621858`
+- rho_std: `2.7755575615628914e-17`
+- rho_median: `0.06749594132621856`
+- rho_p25: `0.06749594132621856`
+- rho_p75: `0.06749594132621856`
+- rho_p05: `0.06749594132621856`
+- rho_p95: `0.06749594132621856`
+- rupture_rate: `0.0`
+- critical_rupture_rate: `0.0`
+- metric_interpretation: `Use accuracy/roc_auc with rupture rates for built-in datasets; for registry datasets prioritize pipeline readiness and transfer limitations.`
+- valid_for_quantitative_claims: `False`
+- limitations: `['no expert action labels', 'roc_auc near 0.5: ranking signal is weak or class imbalance dominates']`
+- recommended_use_in_dissertation: `external-transfer`
+- action_distribution: `{'accept': 2020}`
+- selected_representation_distribution: `{'FML-audit': 2020}`
+- notes: Prototype measurements per object; no I/O timing. Registry mode validates readiness/portability of the pipeline; action quality metric may be N/A. ROC AUC must not be interpreted as quality here; use this mode for industrial contour portability.

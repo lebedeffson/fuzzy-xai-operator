@@ -1,0 +1,106 @@
+{
+  "experiment": "ch5_scenario_runs",
+  "generated_at": "2026-06-11T09:48:31.746385+00:00",
+  "runtime_seconds": 0.000378,
+  "explain_plan": {
+    "path": "/home/lebedeffson/Code/fuzzy-xai-operator/configs/explain_plan_chapter2.yaml",
+    "sha256": "4469dad3fbeeb4f53ad953c24bd4e29a8de0d17d6465fb2c71b2b15a954cacfc"
+  },
+  "status": "ok",
+  "rows": [
+    {
+      "registry_id": "hybrid_xiris",
+      "source_repo": "source-not-provided:hybrid_xiris",
+      "adapter_called": "true",
+      "output_type": "ExplanationArtifact + report",
+      "has_explanation_object": "true",
+      "has_diagnostic_state": "true",
+      "chi_R": "N/A",
+      "chi_Auto": "N/A",
+      "rho": "N/A",
+      "action": "audit_report",
+      "report_path": "fuzzyxai_experiments/reports/chapter5/hybrid_xiris_summary.json",
+      "figure_path": "reports/gui_screenshots/hybrid_xiris.png",
+      "status": "real-output-compatible",
+      "claim_scope": "deterministic synthetic degradation protocol; not external production validation"
+    },
+    {
+      "registry_id": "beacon_xai",
+      "source_repo": "source-not-provided:beacon_xai",
+      "adapter_called": "true",
+      "output_type": "ExplanationArtifact + report",
+      "has_explanation_object": "true",
+      "has_diagnostic_state": "false",
+      "chi_R": "N/A",
+      "chi_Auto": "N/A",
+      "rho": "N/A",
+      "action": "audit_report",
+      "report_path": "fuzzyxai_experiments/reports/chapter5/beacon_xai_summary.json",
+      "figure_path": "reports/gui_screenshots/beacon_xai.png",
+      "status": "fixture-certified",
+      "claim_scope": "local deterministic fixture protocol; not original model benchmark"
+    },
+    {
+      "registry_id": "gis_integro",
+      "source_repo": "source-not-provided:gis_integro",
+      "adapter_called": "true",
+      "output_type": "ExplanationArtifact + report",
+      "has_explanation_object": "true",
+      "has_diagnostic_state": "false",
+      "chi_R": "N/A",
+      "chi_Auto": "N/A",
+      "rho": "N/A",
+      "action": "audit_report",
+      "report_path": "fuzzyxai_experiments/reports/chapter5/gis_integro_route_metrics.json",
+      "figure_path": "reports/gui_screenshots/gis_integro.png",
+      "status": "source-pending",
+      "claim_scope": "контрольный маршрут; качество исходной GIS-модели не заявляется"
+    },
+    {
+      "registry_id": "gd_anfis_shap",
+      "source_repo": "source-not-provided:gd_anfis_shap",
+      "adapter_called": "true",
+      "output_type": "ExplanationArtifact + report",
+      "has_explanation_object": "true",
+      "has_diagnostic_state": "false",
+      "chi_R": "N/A",
+      "chi_Auto": "N/A",
+      "rho": "N/A",
+      "action": "audit_report",
+      "report_path": "fuzzyxai_experiments/reports/chapter5/gd_anfis_shap_report.json",
+      "figure_path": "reports/gui_screenshots/gd_anfis_shap.png",
+      "status": "source-pending",
+      "claim_scope": "контрольный маршрут (исполняемый артефакт); качество исходной модели не заявляется"
+    }
+  ],
+  "baseline_rows": [
+    {
+      "scenario": "HYBRID-XIRIS",
+      "baseline": "model_score > 0.7",
+      "baseline_value": "168 missed",
+      "fuzzyxai_value": "0 missed",
+      "evidence_file": "reports/chapter5/hybrid_xiris_summary.json"
+    },
+    {
+      "scenario": "BEACON-XAI",
+      "baseline": "manual_required_baseline",
+      "baseline_value": "64 checks",
+      "fuzzyxai_value": "11 checks",
+      "evidence_file": "reports/chapter5/beacon_xai_summary.json"
+    },
+    {
+      "scenario": "GIS INTEGRO",
+      "baseline": "not_available",
+      "baseline_value": "N/A",
+      "fuzzyxai_value": "route metrics",
+      "evidence_file": "reports/chapter5/gis_integro_route_metrics.json"
+    },
+    {
+      "scenario": "GD-ANFIS/SHAP",
+      "baseline": "not_available",
+      "baseline_value": "N/A",
+      "fuzzyxai_value": "route metrics",
+      "evidence_file": "reports/chapter5/gd_anfis_shap_report.json"
+    }
+  ]
+}

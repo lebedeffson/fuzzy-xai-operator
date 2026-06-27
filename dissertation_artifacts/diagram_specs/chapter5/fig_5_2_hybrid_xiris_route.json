@@ -1,0 +1,49 @@
+{
+  "figure_id": "fig_5_2",
+  "title": "HYBRID-XIRIS route",
+  "nodes": [
+    {
+      "id": "hybrid_xiris",
+      "label": "hybrid_xiris"
+    },
+    {
+      "id": "image artifact",
+      "label": "image artifact"
+    },
+    {
+      "id": "medical_image_to_explanation",
+      "label": "medical_image_to_explanation"
+    },
+    {
+      "id": "ExplanationArtifact",
+      "label": "ExplanationArtifact"
+    },
+    {
+      "id": "audit_report",
+      "label": "audit_report"
+    }
+  ],
+  "edges": [
+    {
+      "from": "hybrid_xiris",
+      "to": "image artifact"
+    },
+    {
+      "from": "image artifact",
+      "to": "medical_image_to_explanation"
+    },
+    {
+      "from": "medical_image_to_explanation",
+      "to": "ExplanationArtifact"
+    },
+    {
+      "from": "ExplanationArtifact",
+      "to": "audit_report"
+    }
+  ],
+  "color_roles": {
+    "real_output": "#16a34a"
+  },
+  "caption": "Сценарный маршрут HYBRID-XIRIS.",
+  "short_explanation": "Shows real-output-compatible module route without retraining claims."
+}

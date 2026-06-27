@@ -1,0 +1,48 @@
+% Table: controlled critical ruptures
+\begin{tabular}{lllll}
+policy & n_objects & missed_critical_ruptures & critical_rupture_recall & agreement_reference \
+\hline
+probability_threshold & 1000 & 250 & 0.0 & 0.557 \
+shap_rule & 1000 & 206 & 0.176 & 0.602 \
+lime_rule & 1000 & 196 & 0.216 & 0.612 \
+anchors_rule & 1000 & 234 & 0.064 & 0.574 \
+fuzzyxai_full_contour & 1000 & 0 & 1.0 & 1.0 \
+\end{tabular}
+
+% HYBRID-XIRIS baseline vs FuzzyXAI
+\begin{tabular}{lllll}
+total_objects & critical_cases & baseline_missed & fuzzyxai_missed & false_block \
+\hline
+1000 & 168 & 168 & 0 & 0 \
+\end{tabular}
+
+% BEACON-XAI summary
+\begin{tabular}{lllll}
+total_signals & valid_after_adapter & baseline_manual_checks & fuzzyxai_manual_checks & audit_reports \
+\hline
+100 & 83 & 64 & 11 & 12 \
+\end{tabular}
+
+% GIS INTEGRO route metrics
+\begin{tabular}{llllll}
+registry_id & gamma_route & Delta & probability & mean_alpha_k & positive_SHAP_support \
+\hline
+gis_integro & 0.2 & 0.08 & 0.67 & 0.72 & 0.47 \
+\end{tabular}
+
+% GD-ANFIS/SHAP route metrics
+\begin{tabular}{llllll}
+registry_id & n_rules & Delta & I_pre & action & source_status \
+\hline
+gd_anfis_shap & 3 & 0.16 & 0.71 & audit_report & source-pending \
+\end{tabular}
+
+% Evidence file map
+\begin{tabular}{ll}
+scenario & evidence_file \
+\hline
+HYBRID-XIRIS & reports/chapter5/hybrid_xiris_summary.json \
+BEACON-XAI & reports/chapter5/beacon_xai_summary.json \
+GIS INTEGRO & reports/chapter5/gis_integro_route_metrics.json \
+GD-ANFIS/SHAP & reports/chapter5/gd_anfis_shap_report.json \
+\end{tabular}

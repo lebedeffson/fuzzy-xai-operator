@@ -1,0 +1,77 @@
+{
+  "seed": 42,
+  "B": 5000,
+  "cluster_id": "source_row_id",
+  "metrics": {
+    "share_action_diff_f0_nas": {
+      "metric": "share_action_diff_f0_nas",
+      "estimate": 0.716,
+      "case_ci_low": 0.688,
+      "case_ci_high": 0.744,
+      "object_ci_low": 0.648232330800898,
+      "object_ci_high": 0.7802662522293211,
+      "n_cases": 1000,
+      "n_unique_objects": 227
+    },
+    "share_f0_accept_nas_block": {
+      "metric": "share_f0_accept_nas_block",
+      "estimate": 0.605,
+      "case_ci_low": 0.574,
+      "case_ci_high": 0.636,
+      "object_ci_low": 0.5333316274309109,
+      "object_ci_high": 0.6743550593249991,
+      "n_cases": 1000,
+      "n_unique_objects": 227
+    },
+    "recall_critical_nas": {
+      "metric": "recall_critical_nas",
+      "estimate": 1.0,
+      "case_ci_low": 1.0,
+      "case_ci_high": 1.0,
+      "object_ci_low": 1.0,
+      "object_ci_high": 1.0,
+      "n_cases": 1000,
+      "n_unique_objects": 227
+    },
+    "false_auto_accept_f0": {
+      "metric": "false_auto_accept_f0",
+      "estimate": 0.605,
+      "case_ci_low": 0.574,
+      "case_ci_high": 0.636,
+      "object_ci_low": 0.5333316274309109,
+      "object_ci_high": 0.6743550593249991,
+      "n_cases": 1000,
+      "n_unique_objects": 227
+    },
+    "false_auto_accept_nas": {
+      "metric": "false_auto_accept_nas",
+      "estimate": 0.0,
+      "case_ci_low": 0.0,
+      "case_ci_high": 0.0,
+      "object_ci_low": 0.0,
+      "object_ci_high": 0.0,
+      "n_cases": 1000,
+      "n_unique_objects": 227
+    },
+    "false_block_f0": {
+      "metric": "false_block_f0",
+      "estimate": 0.0,
+      "case_ci_low": 0.0,
+      "case_ci_high": 0.0,
+      "object_ci_low": 0.0,
+      "object_ci_high": 0.0,
+      "n_cases": 1000,
+      "n_unique_objects": 227
+    },
+    "false_block_nas": {
+      "metric": "false_block_nas",
+      "estimate": 0.0,
+      "case_ci_low": 0.0,
+      "case_ci_high": 0.0,
+      "object_ci_low": 0.0,
+      "object_ci_high": 0.0,
+      "n_cases": 1000,
+      "n_unique_objects": 227
+    }
+  }
+}

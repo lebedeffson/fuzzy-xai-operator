@@ -1,0 +1,24 @@
+\begin{table}[h]
+\centering
+\caption{Ablation benchmark for observer safety metrics}
+\label{tab:ablation}
+\begin{tabular}{|l|l|l|l|l|l|l|}
+\hline
+mode & agreement\_proxy & missed\_critical & false\_auto\_accept & false\_block & auto\_accept\_cov & mean\_Delta \\
+\hline
+full & 0.65035 & 0 & 0 & 0 & 0.517483 & 0.07879 \\
+\hline
+no\_trace & 0.65035 & 0 & 0 & 0 & 0.517483 & 0.07879 \\
+\hline
+no\_delta & 0.657343 & 0 & 0 & 0 & 0.517483 & 0 \\
+\hline
+no\_critical\_rupture & 0.65035 & 0 & 0 & 0 & 0.517483 & 0.07879 \\
+\hline
+f0\_only & 0.629371 & 0 & 0 & 0 & 0.517483 & 0.25 \\
+\hline
+no\_topos & 0.601399 & 0 & 0.048951 & 0 & 0.566434 & 0.07879 \\
+\hline
+probability\_threshold & 0.804196 & 0 & 0.195804 & 0 & 0.713287 & 0.07879 \\
+\hline
+\end{tabular}
+\end{table}

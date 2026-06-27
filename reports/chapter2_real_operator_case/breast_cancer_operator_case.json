@@ -1,0 +1,44 @@
+{
+  "sample_id": "sample_113",
+  "selected_features": [
+    "symmetry error",
+    "mean fractal dimension",
+    "concave points error",
+    "worst fractal dimension",
+    "mean texture"
+  ],
+  "P(malignant)": 0.7035770563720608,
+  "p_malignant": 0.7035770563720608,
+  "mu_low": 0.2964229436279392,
+  "mu_medium": 0.18569177451175678,
+  "mu_high": 0.7035770563720608,
+  "active_rules": [
+    "r_high_risk",
+    "r_low_risk"
+  ],
+  "alpha_values": {
+    "r_low_risk": 0.2964229436279392,
+    "r_high_risk": 0.7035770563720608
+  },
+  "U_model": 0.5928458872558784,
+  "U_rules": 0.2964229436279392,
+  "U_trace": 0.02,
+  "u_M": 0.35970753235352704,
+  "tau_fields": {
+    "id": "sample_113",
+    "version": "rf_breast_cancer_v1",
+    "timestamp": "seeded-reproduction",
+    "source": "sklearn_breast_cancer",
+    "checksum": "sample_113:rf_breast_cancer_v1",
+    "params": {
+      "seed": 42,
+      "target_probability": 0.72
+    },
+    "hash": "sample_113:rf_breast_cancer_v1:chapter2"
+  },
+  "I_pre": 0.6743235322764167,
+  "gamma_model_to_risk": 0.3514150457029992,
+  "chi_R": 1,
+  "chi_R_crit": 1,
+  "action": "block"
+}

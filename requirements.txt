@@ -4,3 +4,4 @@ scikit-learn>=1.2
 plotly>=5.0
 pytest>=7.0
 nicegui>=1.4
+PyYAML>=6.0

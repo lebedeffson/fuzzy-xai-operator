@@ -1,0 +1,11 @@
+new_patient_id,new_hosp_id,sex,body_weight,height,BMI,age,patient_condition,transfer,adm_year,admission_department,discharge department,ICU_patients,length_of_stay,fatal_outcome,risk_target
+69608,104820,male,117.0,198.0,29.8,66,severe,,2022,ICU,ICU,Yes,39,,0
+47072,106061,female,44.0,155.0,18.3,22,severe,Yes,2022,ICU,ICU,Yes,27,,0
+73825,109054,male,90.0,180.0,27.8,44,severe,Yes,2022,ICU,ICU,Yes,21,,0
+33001,110259,male,87.0,180.0,26.9,42,severe,Yes,2022,ICU,ICU,Yes,24,,0
+85774,104046,male,93.0,185.0,27.2,53,severe,Yes,2022,ICU,ICU,Yes,20,,0
+86124,102677,female,50.0,160.0,19.5,63,severe,Yes,2022,ICU,ICU,Yes,16,,0
+38668,107844,female,56.5,175.0,18.4,61,severe,Yes,2023,ICU,ICU,Yes,22,,0
+70419,112007,female,63.0,163.0,23.7,70,extremely severe,Yes,2023,neurorehabilitation,ICU,Yes,29,Yes,1
+77073,106342,female,95.0,174.0,31.4,50,severe,Yes,2023,ICU,ICU,Yes,29,,0
+49550,169372,male,42.0,175.0,13.7,24,extremely severe,Yes,2023,ICU,ICU,Yes,45,,0

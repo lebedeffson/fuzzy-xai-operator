@@ -1,0 +1,33 @@
+{
+  "status": "ok",
+  "seed": 42,
+  "n_images": 1000,
+  "total_objects": 1000,
+  "critical_cases": 168,
+  "baseline_missed": 168,
+  "fuzzyxai_missed": 0,
+  "false_block": 0,
+  "processing_time_seconds": 0.005982,
+  "thresholds": {
+    "quality_threshold": 0.45,
+    "score_threshold": 0.7
+  },
+  "baseline_definition": "accept if model_score > 0.7",
+  "object_level_csv": "data/generated/hybrid_xiris_objects.csv",
+  "chapter_report_csv": "reports/chapter5/hybrid_xiris_objects.csv",
+  "blocking_case_report": "reports/chapter5/hybrid_xiris_blocking_case.json",
+  "protocol": "deterministic synthetic degradation protocol; not external production validation",
+  "blocking_case": {
+    "sample_id": "hybrid_0000",
+    "model_score": 0.82,
+    "quality_score": 0.22,
+    "score_threshold": 0.7,
+    "quality_threshold": 0.45,
+    "chi_R_crit": 1,
+    "chi_Auto": false,
+    "rho": 0.8,
+    "action": "block",
+    "reason": "high_confidence_low_quality",
+    "evidence_source": "data/generated/hybrid_xiris_objects.csv"
+  }
+}

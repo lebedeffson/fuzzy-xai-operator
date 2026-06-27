@@ -1,0 +1,11 @@
+new_patient_id,new_hosp_id,sex,age,doctor_decision,model_decision,agreement,risk_target
+69608,104820,male,66,0,0,1,0
+47072,106061,female,22,0,0,1,0
+73825,109054,male,44,0,0,1,0
+33001,110259,male,42,0,0,1,0
+85774,104046,male,53,0,0,1,0
+86124,102677,female,63,0,0,1,0
+38668,107844,female,61,0,0,1,0
+70419,112007,female,70,0,1,0,1
+77073,106342,female,50,0,0,1,0
+49550,169372,male,24,0,0,1,0

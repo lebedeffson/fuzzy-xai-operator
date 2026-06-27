@@ -1,0 +1,33 @@
+{
+  "registry_id": "beacon_xai",
+  "status": "fixture-certified",
+  "source_repo": "https://github.com/fims9000/BeaconXAI",
+  "source_commit": "660366759fb0b5045491a9f7b9fa50745afe44db",
+  "sample_id": "beacon_fixture_001",
+  "beacon_score": 0.78,
+  "model_confidence": 0.81,
+  "explanation_consistency": 0.69,
+  "counterfactual_stability": 0.62,
+  "feature_attributions": {
+    "signal_peak": 0.34,
+    "interval_variance": 0.21,
+    "baseline_shift": -0.09
+  },
+  "rules": [
+    {"id": "r_beacon_consistent", "condition": "explanation consistency is sufficient", "conclusion": "audit_report", "quality": 0.69},
+    {"id": "r_beacon_stability", "condition": "counterfactual stability is medium", "conclusion": "lower_confidence", "quality": 0.62}
+  ],
+  "rule_activations": {
+    "r_beacon_consistent": 0.69,
+    "r_beacon_stability": 0.62
+  },
+  "uncertainty": {
+    "r_beacon_consistent": 0.31,
+    "r_beacon_stability": 0.38
+  },
+  "run_params": {
+    "seed": 20260609,
+    "adapter_version": "1.0",
+    "fixture_note": "Pinned BeaconXAI repository HEAD with local deterministic fixture."
+  }
+}

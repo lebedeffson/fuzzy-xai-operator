@@ -1,0 +1,2 @@
+sample_id,probability,alpha_spatial_risk,alpha_shap_regularized,shap_region_density,shap_route_connectivity,shap_noise_regularizer,reduction_loss,status
+ gis_integro_fixture_001,0.67,0.71,0.73,0.29,0.18,-0.04,0.08,source-pending

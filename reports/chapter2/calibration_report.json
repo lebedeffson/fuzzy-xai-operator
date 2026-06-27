@@ -1,0 +1,30 @@
+{
+  "status": "ok",
+  "dataset": "breast_cancer",
+  "seed": 42,
+  "n_pairs": 50,
+  "method": "q95",
+  "constants": [
+    {
+      "constant_name": "c_H_cal",
+      "value": 0.3154244660293586,
+      "method": "q95",
+      "n_pairs": 50,
+      "dataset": "breast_cancer"
+    },
+    {
+      "constant_name": "c_O_cal",
+      "value": 0.08875,
+      "method": "q95",
+      "n_pairs": 50,
+      "dataset": "breast_cancer"
+    },
+    {
+      "constant_name": "c_K_cal",
+      "value": 0.33333333333333337,
+      "method": "q95",
+      "n_pairs": 50,
+      "dataset": "breast_cancer"
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "figure_id": "fig_3_8",
+  "title": "Chi_Auto for sample_113",
+  "nodes": [
+    {
+      "id": "e_model",
+      "label": "E_model^ext",
+      "type": "explanation"
+    },
+    {
+      "id": "e_risk",
+      "label": "E_risk",
+      "type": "risk"
+    },
+    {
+      "id": "e_action",
+      "label": "E_action",
+      "type": "action"
+    }
+  ],
+  "edges": [
+    {
+      "from": "e_model",
+      "to": "e_risk",
+      "label": "f"
+    },
+    {
+      "from": "e_risk",
+      "to": "e_action",
+      "label": "g"
+    }
+  ],
+  "color_roles": {
+    "blocked": "#dc2626",
+    "allowed": "#16a34a"
+  },
+  "caption": "Контекстная проверка chi_Auto для sample_113.",
+  "short_explanation": "chi_auto=false because auto maps to audit, which is absent in AutoAccept."
+}

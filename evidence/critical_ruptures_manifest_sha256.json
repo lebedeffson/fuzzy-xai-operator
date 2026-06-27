@@ -1,0 +1,17 @@
+{
+  "status": "ok",
+  "command": "make reproduce-critical-ruptures",
+  "seed": 314159,
+  "n_objects": 1000,
+  "input_checksum_sha256": "b781681c74978f566a252e993d728d28455138c25b53821c03a833c24f5f4a9a",
+  "results_checksum_sha256": "494c6cac3a3a94c1b91db074e4d3e4106df9aad7f1bc15f8cf18a7c51ffcac0e",
+  "files": {
+    "reports/chapter3/synthetic_ruptures_summary.json": "45c9cca60b63f569ff2011b605f8340d187afda1b306f6eb583fd8b72bc1b599",
+    "reports/chapter3/synthetic_ruptures_results.csv": "494c6cac3a3a94c1b91db074e4d3e4106df9aad7f1bc15f8cf18a7c51ffcac0e",
+    "figures/chapter3/critical_ruptures_comparison.png": "26e714505887a5bf55a7edd30914bf1f3e593582151b8e9d87fe2f0ccb9d9a9f"
+  },
+  "explain_plan_version": {
+    "path": "configs/explain_plan_chapter2.yaml",
+    "sha256": "4469dad3fbeeb4f53ad953c24bd4e29a8de0d17d6465fb2c71b2b15a954cacfc"
+  }
+}

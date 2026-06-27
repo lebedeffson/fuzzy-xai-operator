@@ -1,0 +1,26 @@
+{
+  "name": "RIKORD (or fallback proxy)",
+  "source": "public russian medical / local file",
+  "license": "depends on source distribution",
+  "domain": "medicine",
+  "shape": [
+    442,
+    11
+  ],
+  "features": [
+    "age",
+    "sex",
+    "bmi",
+    "bp",
+    "s1",
+    "s2",
+    "s3",
+    "s4",
+    "s5",
+    "s6"
+  ],
+  "target": "risk_target",
+  "missing_values": 0.0,
+  "label_description": "target=risk_target",
+  "fallback": true
+}

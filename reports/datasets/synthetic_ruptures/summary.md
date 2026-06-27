@@ -1,0 +1,51 @@
+# Dataset summary: synthetic_ruptures
+
+- status: `READY`
+- n: `900`
+- domain: `controlled`
+- model_accuracy: `0.9155555555555556`
+- model_roc_auc: `0.9811608144941478`
+- model_f1: `0.9054726368159204`
+- model_precision: `0.8921568627450981`
+- model_recall: `0.9191919191919192`
+- reason_if_roc_auc_nan_or_05: ``
+- n_positive: `398`
+- n_negative: `502`
+- positive_rate: `0.44222222222222224`
+- score_std: `0.3305189329383201`
+- agreement_proxy: `0.76`
+- agreement_proxy_applicable: `True`
+- agreement_proxy_reason: `simulated action rule, not clinical expert labels`
+- missed_critical_ruptures: `0`
+- critical_rupture_recall: `1.0`
+- false_auto_accept_rate: `0.0`
+- false_block_rate: `0.0`
+- auto_accept_coverage: `0.1511111111111111`
+- observer_action_accuracy (legacy): `0.49333333333333335`
+- observer_action_proxy_accuracy (legacy): `0.76`
+- mean_I_pre: `0.7696147293744225`
+- mean_rho: `0.539517261492525`
+- mean_reduction_loss: `0.12057167018759261`
+- i_pre_mean: `0.7696147293744225`
+- i_pre_std: `0.02598620905866922`
+- i_pre_median: `0.7618844142096464`
+- i_pre_p25: `0.7472861882639729`
+- i_pre_p75: `0.7887925288819329`
+- i_pre_p05: `0.7364357122825875`
+- i_pre_p95: `0.8155871182293875`
+- rho_mean: `0.539517261492525`
+- rho_std: `0.3338537242437171`
+- rho_median: `0.4532729505056788`
+- rho_p25: `0.3340631343457305`
+- rho_p75: `1.0`
+- rho_p05: `0.06837212733751431`
+- rho_p95: `1.0`
+- rupture_rate: `0.38666666666666666`
+- critical_rupture_rate: `0.3111111111111111`
+- metric_interpretation: `Use accuracy/roc_auc with rupture rates for built-in datasets; for registry datasets prioritize pipeline readiness and transfer limitations.`
+- valid_for_quantitative_claims: `True`
+- limitations: `[]`
+- recommended_use_in_dissertation: `control-diagnostics`
+- action_distribution: `{'block': 70, 'accept': 28, 'request_more_data': 117, 'lower_confidence': 6, 'defer_to_human': 4}`
+- selected_representation_distribution: `{'FML-audit': 225}`
+- notes: Prototype measurements per object; no I/O timing. Rupture proxies are derived from expert/source disagreement fields.

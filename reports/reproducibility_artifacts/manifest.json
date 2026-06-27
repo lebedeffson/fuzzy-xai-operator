@@ -1,0 +1,258 @@
+{
+  "status": "ok",
+  "environment": {
+    "python": "3.14.5",
+    "platform": "Linux-7.0.11-arch1-1-x86_64-with-glibc2.43"
+  },
+  "explain_plan": {
+    "canonical_sha256": "dc4460c6d7db9df9d3e95dcad6119c99d9c99093911c883d1186573d0cb05473",
+    "canonical_json": {
+      "w_p": 0.7,
+      "w_u": 0.05,
+      "w_I": 0.05,
+      "w_Delta": 0.05,
+      "w_R": 0.15,
+      "theta_1": 0.1,
+      "theta_2": 0.25,
+      "theta_3": 0.5,
+      "theta_4": 0.75,
+      "i_min": 0.65,
+      "delta_max": 0.15,
+      "uncertainty_max": 0.45,
+      "gamma_max": 0.45,
+      "epsilon_int": 0.1,
+      "reduction_strategy": "balance",
+      "baseline_access": "native",
+      "mode": "audit",
+      "use_trace": true,
+      "use_delta": true,
+      "use_critical_rupture": true,
+      "use_topos": true
+    }
+  },
+  "commands": [
+    "make dissertation-check",
+    "make reproduce-chapter2",
+    "make calibrate-chapter2",
+    "make benchmark-equal-raw-structure",
+    "make chapter3-artifacts",
+    "make ecosystem-evidence",
+    "make validate-ecosystem-sdk",
+    "make thesis-practice-tables",
+    "make browser-visual-check",
+    "make ui-health-check",
+    "make structure-aware-benchmark DATASET=wine_risk",
+    "make structure-aware-benchmark DATASET=diabetes_binary",
+    "make reproducibility-artifacts"
+  ],
+  "artifacts": [
+    {
+      "path": "configs/explain_plan_chapter2.yaml",
+      "exists": true,
+      "sha256": "4469dad3fbeeb4f53ad953c24bd4e29a8de0d17d6465fb2c71b2b15a954cacfc",
+      "chapter": "2 / appendix",
+      "confirms": "Fixed chapter 2 ExplainPlan YAML contract used for deterministic hashing",
+      "command": "make reproduce-chapter2"
+    },
+    {
+      "path": "reports/chapter2/explain_plan_hash.json",
+      "exists": true,
+      "sha256": "c18bfa69005fd3b56cc3ea73ee2a59596b00486dd2cdd71398dc5eb30b12e7cb",
+      "chapter": "2 / appendix",
+      "confirms": "Validated ExplainPlan SHA256 and required trace field list",
+      "command": "make reproduce-chapter2"
+    },
+    {
+      "path": "reports/chapter2/sample_113_report.json",
+      "exists": true,
+      "sha256": "4920325789b0e09fc54a9f64f9dd93f0ae5efa82aa57ca74e17903fd97025f33",
+      "chapter": "2",
+      "confirms": "Canonical sample_113 report generated from the chapter 2 ExplainPlan contract",
+      "command": "make reproduce-chapter2"
+    },
+    {
+      "path": "reports/chapter2/calibration_constants.csv",
+      "exists": true,
+      "sha256": "5ae7af763efb982ca16108014e443c649a9bca3363f0b7a4e8c8142b88f150ce",
+      "chapter": "2",
+      "confirms": "Chapter 2 calibrated c_H/c_O/c_K constants on calibration pairs",
+      "command": "make calibrate-chapter2"
+    },
+    {
+      "path": "reports/chapter2/equal_raw_structure_summary.csv",
+      "exists": true,
+      "sha256": "768da4928dc99f3cdf265f67c8443f30724a2d9f7ef428137148fc2af292706b",
+      "chapter": "2",
+      "confirms": "Equal raw structure benchmark for certified route vs raw structural access",
+      "command": "make benchmark-equal-raw-structure"
+    },
+    {
+      "path": "reports/chapter3/dataset_roles_summary.csv",
+      "exists": true,
+      "sha256": "e677dd7743b092631a81420c860f9c8e2b45d128cb8f86bda6ad9b3b3f4ea4e2",
+      "chapter": "3",
+      "confirms": "Chapter 3 concise dataset role table",
+      "command": "make chapter3-artifacts"
+    },
+    {
+      "path": "api/openapi.yaml",
+      "exists": true,
+      "sha256": "35edef0eea1a6dbf18c30727dfe3282e62bc9dd764812c9e5a913e19c8c23cc3",
+      "chapter": "4",
+      "confirms": "Open API contract for /v1/explain and /v1/risk-action",
+      "command": "make validate-ecosystem-sdk"
+    },
+    {
+      "path": "deploy/docker-compose.yml",
+      "exists": true,
+      "sha256": "b67bcadfd5df765658633f332afeaa53752660281b4ffb149e4f2d87efd24273",
+      "chapter": "4 / appendix",
+      "confirms": "Deployment skeleton for API and Studio services",
+      "command": ""
+    },
+    {
+      "path": "templates/module_registry_entry.json",
+      "exists": true,
+      "sha256": "0479e2efe8c63397a00e14068617dba5e463dc3289e5116eeedb83cc3f917f78",
+      "chapter": "4 / appendix",
+      "confirms": "External module registration template",
+      "command": "python scripts/register_external_module.py --module-id my_module"
+    },
+    {
+      "path": "fuzzyxai/ecosystem/registry.json",
+      "exists": true,
+      "sha256": "e794e77071a318559c5b7d2d60cf9f7d4c20e31fb7021f2c15488dd2d47b5df9",
+      "chapter": "4",
+      "confirms": "External module registry for chapter 4 ecosystem integration",
+      "command": "make ecosystem-evidence"
+    },
+    {
+      "path": "evidence/evidence_matrix.csv",
+      "exists": true,
+      "sha256": "97a0eda4f67f2e55925312064d3f4a348c28d9845001110e04ed3b6936805162",
+      "chapter": "4 / 5",
+      "confirms": "Module evidence matrix with status, fixture, and claim-scope flags",
+      "command": "make ecosystem-evidence"
+    },
+    {
+      "path": "reports/chapter4/ecosystem_evidence.json",
+      "exists": true,
+      "sha256": "d62e72a2d297c817c4039e12e88c7ce3dfad90ae5a0b528870ac7dfc81ce382c",
+      "chapter": "4",
+      "confirms": "Chapter 4 external module evidence summary",
+      "command": "make ecosystem-evidence"
+    },
+    {
+      "path": "reports/reproducibility_artifacts/explain_plan.json",
+      "exists": true,
+      "sha256": "d7cdb8f76152c43aec44316fad634fc337273206b26db67ad890697ab38bf524",
+      "chapter": "2 / appendix",
+      "confirms": "Serializable ExplainPlan contract and trace hash source",
+      "command": "make reproducibility-artifacts"
+    },
+    {
+      "path": "reports/chapter2_real_operator_case/breast_cancer_operator_case.json",
+      "exists": true,
+      "sha256": "0d319ff99567c4c8b16969fe22085b6dec1114932875e784f69168b57bd2921d",
+      "chapter": "2",
+      "confirms": "sample_113 operator values: mu, alpha, U_model, U_rules, U_trace, u_M, tau",
+      "command": "make chapter2-real-operator-case"
+    },
+    {
+      "path": "reports/real_reduction_example/breast_cancer_case.json",
+      "exists": true,
+      "sha256": "ca31cd57c9b9d0ddc683a9d42e2deeee0a316a0f2881af408dbe633bdeeca075",
+      "chapter": "3",
+      "confirms": "sample_113 reduction, chi_Auto, chi_R, chi_R_crit, rho, action",
+      "command": "make real-reduction-example"
+    },
+    {
+      "path": "reports/datasets/breast_cancer/summary.json",
+      "exists": true,
+      "sha256": "e938831464094240f0a88389f421fb8b6a3d58a04e237e87758b466dbb4c3a7e",
+      "chapter": "5",
+      "confirms": "Breast Cancer model metrics, observer metrics, I_pre/rho quantiles",
+      "command": "make benchmark-dataset DATASET=breast_cancer"
+    },
+    {
+      "path": "reports/datasets/breast_cancer/calibration.json",
+      "exists": true,
+      "sha256": "68118e91c83b2c8f24e5c940bb54dd4adb21620e2734f5eb82ad10ad3dfffc44",
+      "chapter": "5",
+      "confirms": "Observer calibration before/after and constrained parameters",
+      "command": "make calibrate-observer DATASET=breast_cancer"
+    },
+    {
+      "path": "reports/datasets/synthetic_ruptures/baseline_comparison_native.json",
+      "exists": true,
+      "sha256": "fad3e831c07ddb943c21a0069b19b40c12bd0f069049377292621efb6d44df6b",
+      "chapter": "5",
+      "confirms": "Native-access safety comparison; baselines do not receive chi_R_crit",
+      "command": "make baseline-comparison DATASET=synthetic_ruptures BASELINE_ACCESS=native"
+    },
+    {
+      "path": "reports/datasets/synthetic_ruptures/baseline_comparison_equal_guardrail.json",
+      "exists": true,
+      "sha256": "5d7ddd1a679e4aeefc8a9f7f728492b68d11eaac550025d21ec3ac4654782f07",
+      "chapter": "5",
+      "confirms": "Equal-guardrail sanity check where all methods receive chi_R_crit",
+      "command": "make baseline-comparison DATASET=synthetic_ruptures BASELINE_ACCESS=equal_guardrail"
+    },
+    {
+      "path": "reports/structure_aware_benchmark/breast_cancer.json",
+      "exists": true,
+      "sha256": "dee3b7e6a34a4ae0e11e076d55a39c72d247b565237b08eeda832f255b9827d9",
+      "chapter": "5",
+      "confirms": "Structure-aware cases: trace gap, source conflict, context forbidden, high Delta",
+      "command": "make structure-aware-benchmark DATASET=breast_cancer"
+    },
+    {
+      "path": "reports/structure_aware_benchmark/wine_risk.json",
+      "exists": true,
+      "sha256": "84c321f3a1602b87d7756a67b68bf5b986fa399338f1ba2182ab861e5b759121",
+      "chapter": "5",
+      "confirms": "Structure-aware benchmark on real wine rows (non-synthetic improvement check)",
+      "command": "make structure-aware-benchmark DATASET=wine_risk"
+    },
+    {
+      "path": "reports/structure_aware_benchmark/diabetes_binary.json",
+      "exists": true,
+      "sha256": "c8b25086a26888c8d2b44832ee01f7fcb94a1f5d1935977337f76c033467951a",
+      "chapter": "5",
+      "confirms": "Structure-aware benchmark on real diabetes rows (non-synthetic improvement check)",
+      "command": "make structure-aware-benchmark DATASET=diabetes_binary"
+    },
+    {
+      "path": "reports/datasets/breast_cancer/ablation.json",
+      "exists": true,
+      "sha256": "3a4d678e2890901856badd94348c5dce27cf137231a2d4b68fa304720cba0b54",
+      "chapter": "5",
+      "confirms": "Ablation of trace, Delta, chi_R_crit, hierarchy, topos, risk-only threshold",
+      "command": "make ablation-benchmark DATASET=breast_cancer"
+    },
+    {
+      "path": "reports/thesis_practice/thesis_practice_tables.json",
+      "exists": true,
+      "sha256": "fc46650590a0fa891bedae193c34606d6489d6e0fce3d5d9c1d8f4534ebcb5c0",
+      "chapter": "appendix",
+      "confirms": "Word/LaTeX-ready thesis practice table index",
+      "command": "make thesis-practice-tables"
+    },
+    {
+      "path": "Makefile",
+      "exists": true,
+      "sha256": "3ee8c7d4d8c7896b4e10e00db0ec4f4f437fa43323e9b55eec8568aa791c92b3",
+      "chapter": "appendix",
+      "confirms": "Reproducible command route",
+      "command": ""
+    },
+    {
+      "path": "requirements.txt",
+      "exists": true,
+      "sha256": "3202b5309cef65ab6e2ab21ea0f3a659820652d1d944e94dac3df63682a51c57",
+      "chapter": "appendix",
+      "confirms": "Python environment dependencies",
+      "command": ""
+    }
+  ]
+}

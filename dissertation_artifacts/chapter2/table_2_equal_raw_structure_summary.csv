@@ -1,0 +1,16 @@
+mode,policy,agreement,missed_critical,false_auto_accept,trace_access,rule_access,delta_access,certified_path_access
+native,probability_threshold,0.8333333333333334,20,0.25,False,False,False,False
+native,shap_guardrail,0.8333333333333334,20,0.25,False,False,False,False
+native,lime_guardrail,0.8333333333333334,20,0.25,False,False,False,False
+native,anchor_guardrail,0.8333333333333334,20,0.25,False,False,False,False
+native,fuzzyxai_observer,1.0,0,0.0,True,True,True,True
+equal_guardrail,probability_threshold,1.0,0,0.15833333333333333,False,False,False,False
+equal_guardrail,shap_guardrail,1.0,0,0.15833333333333333,False,False,False,False
+equal_guardrail,lime_guardrail,1.0,0,0.15833333333333333,False,False,False,False
+equal_guardrail,anchor_guardrail,1.0,0,0.15833333333333333,False,False,False,False
+equal_guardrail,fuzzyxai_observer,1.0,0,0.0,True,True,True,True
+equal_raw_structure,probability_threshold,0.8333333333333334,20,0.25,True,True,True,False
+equal_raw_structure,shap_guardrail,0.8333333333333334,20,0.15833333333333333,True,True,True,False
+equal_raw_structure,lime_guardrail,0.8333333333333334,20,0.15833333333333333,True,True,True,False
+equal_raw_structure,anchor_guardrail,0.8333333333333334,20,0.06666666666666667,True,True,True,False
+equal_raw_structure,fuzzyxai_observer,1.0,0,0.0,True,True,True,True

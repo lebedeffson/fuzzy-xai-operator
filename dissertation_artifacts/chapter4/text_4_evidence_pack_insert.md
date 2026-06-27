@@ -1,0 +1,1 @@
+Команда `make ecosystem-evidence` формирует машинно-читаемый evidence-пакет: registry snapshot, evidence matrix и reproduction index. Поля `status`, `evidence_level` и `claim_scope` ограничивают допустимые утверждения по каждому модулю.

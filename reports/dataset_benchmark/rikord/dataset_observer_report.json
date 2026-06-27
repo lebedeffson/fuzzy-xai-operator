@@ -1,0 +1,217 @@
+{
+  "dataset_record": {
+    "dataset_name": "rikord_demo_fallback",
+    "source": "fallback:sklearn_diabetes",
+    "url": null,
+    "local_path": null,
+    "file_format": null,
+    "target_column": "risk_target",
+    "task_type": "binary_classification",
+    "description": "Fallback tabular proxy for RIKORD pipeline integration.",
+    "metadata": {
+      "fallback": true,
+      "fallback_reason": "local rikord file not found"
+    }
+  },
+  "target_column": "risk_target",
+  "dataset_profile": {
+    "n_rows": 442,
+    "n_columns": 11,
+    "numeric_columns": [
+      "age",
+      "sex",
+      "bmi",
+      "bp",
+      "s1",
+      "s2",
+      "s3",
+      "s4",
+      "s5",
+      "s6",
+      "risk_target"
+    ],
+    "categorical_columns": [],
+    "missing_rate": 0.0,
+    "has_intervals": false,
+    "has_multiple_experts": false,
+    "has_source_conflict": false,
+    "requires_audit": true,
+    "suggested_uncertainty_types": [
+      "u_num",
+      "u_trace"
+    ],
+    "metadata": {
+      "expert_columns": [],
+      "source_columns": []
+    }
+  },
+  "model_name": "random_forest",
+  "accuracy": 0.7567567567567568,
+  "roc_auc": 0.8298701298701298,
+  "case_index": 0,
+  "case_prediction": {
+    "raw_prediction_encoded": 1,
+    "raw_prediction_label": "1",
+    "raw_proba": [
+      0.3464513692945351,
+      0.6535486307054649
+    ]
+  },
+  "observer_result": {
+    "raw_prediction": 1,
+    "raw_proba": [
+      0.3464513692945351,
+      0.6535486307054649
+    ],
+    "predicted_risk": 0.6535486307054649,
+    "uncertainty": 0.8594720066262046,
+    "entropy_uncertainty": 0.9308588357849765,
+    "margin_uncertainty": 0.6929027385890703,
+    "confidence": 0.1405279933737954,
+    "selected_representation": "FML-audit",
+    "representation_class": "FML",
+    "representation_selection": {
+      "profile": [
+        "u_ling",
+        "u_num",
+        "u_trace"
+      ],
+      "selected_class": "FML-audit",
+      "representation_class": "FML",
+      "reduction_loss": 0.09,
+      "reduction_policy": "canonical",
+      "reason": "multi-level/audit profile requires preserving several uncertainty types"
+    },
+    "reduction_loss": 0.09,
+    "pre_interpretability": 0.7539000124176166,
+    "final_interpretability": 0.7539000124176166,
+    "interpretability_index": 0.7539000124176166,
+    "application_risk": 0.4736525883846673,
+    "risk_score": 0.4736525883846673,
+    "action": "request_more_data",
+    "corrected_confidence": 0.05074467545880786,
+    "reason": "medium risk with elevated uncertainty",
+    "diagnostics": [],
+    "E_model_ext": {
+      "terms": [
+        "high",
+        "low",
+        "medium"
+      ],
+      "active_rules": [
+        "risk_high",
+        "risk_medium"
+      ],
+      "uncertainty": 0.5474776464665445,
+      "trace": "risk-aware-model-0",
+      "representation_class": "FML",
+      "reduction_loss": 0.09
+    },
+    "E_R": {
+      "terms": [
+        "high",
+        "low",
+        "medium"
+      ],
+      "active_rules": [
+        "rho_low",
+        "rho_medium"
+      ],
+      "uncertainty": 0.04861689393839926,
+      "trace": "risk-module-0",
+      "representation_class": "F0",
+      "reduction_loss": 0.0
+    },
+    "E_A": {
+      "terms": [
+        "high",
+        "low",
+        "medium"
+      ],
+      "active_rules": [
+        "action_request_more_data"
+      ],
+      "uncertainty": 0.12774164315344216,
+      "trace": "action-0",
+      "representation_class": "F0",
+      "reduction_loss": 0.0
+    },
+    "composition_route": [
+      "E_M_ext",
+      "E_R",
+      "E_A"
+    ]
+  },
+  "trace": {
+    "dataset": {
+      "dataset_name": "rikord_demo_fallback",
+      "source": "fallback:sklearn_diabetes",
+      "url": null,
+      "local_path": null,
+      "file_format": null,
+      "target_column": "risk_target",
+      "task_type": "binary_classification",
+      "description": "Fallback tabular proxy for RIKORD pipeline integration.",
+      "metadata": {
+        "fallback": true,
+        "fallback_reason": "local rikord file not found"
+      }
+    },
+    "profile": {
+      "n_rows": 442,
+      "n_columns": 11,
+      "numeric_columns": [
+        "age",
+        "sex",
+        "bmi",
+        "bp",
+        "s1",
+        "s2",
+        "s3",
+        "s4",
+        "s5",
+        "s6",
+        "risk_target"
+      ],
+      "categorical_columns": [],
+      "missing_rate": 0.0,
+      "has_intervals": false,
+      "has_multiple_experts": false,
+      "has_source_conflict": false,
+      "requires_audit": true,
+      "suggested_uncertainty_types": [
+        "u_num",
+        "u_trace"
+      ],
+      "metadata": {
+        "expert_columns": [],
+        "source_columns": []
+      }
+    },
+    "xai_profile": [
+      "u_ling",
+      "u_num",
+      "u_trace"
+    ],
+    "representation_selection": {
+      "profile": [
+        "u_ling",
+        "u_num",
+        "u_trace"
+      ],
+      "selected_class": "FML-audit",
+      "representation_class": "FML",
+      "reduction_loss": 0.09,
+      "reduction_policy": "canonical",
+      "reason": "multi-level/audit profile requires preserving several uncertainty types"
+    },
+    "model": "random_forest",
+    "mode": "audit",
+    "excluded_metadata_columns": [],
+    "target_classes": [
+      "0",
+      "1"
+    ],
+    "route": "dataset -> profile -> model -> E_M_ext -> I_pre -> rho -> action"
+  }
+}

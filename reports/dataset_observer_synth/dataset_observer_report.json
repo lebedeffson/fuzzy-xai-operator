@@ -1,0 +1,230 @@
+{
+  "dataset_record": {
+    "dataset_name": "synthetic_ruptures",
+    "source": "fuzzyxai.synthetic",
+    "url": null,
+    "local_path": null,
+    "file_format": null,
+    "target_column": "risk_target",
+    "task_type": "binary_classification",
+    "description": "Controlled diagnostic rupture scenarios for category/HoTT checks.",
+    "metadata": {
+      "dataset_mode": "synthetic_ruptures"
+    }
+  },
+  "target_column": "risk_target",
+  "dataset_profile": {
+    "n_rows": 900,
+    "n_columns": 8,
+    "numeric_columns": [
+      "feature_a",
+      "feature_b",
+      "feature_c",
+      "risk_target",
+      "expert_a",
+      "expert_b",
+      "source_model",
+      "source_expert"
+    ],
+    "categorical_columns": [],
+    "missing_rate": 0.0,
+    "has_intervals": false,
+    "has_multiple_experts": true,
+    "has_source_conflict": true,
+    "requires_audit": false,
+    "suggested_uncertainty_types": [
+      "u_conf",
+      "u_expert",
+      "u_num"
+    ],
+    "metadata": {
+      "expert_columns": [
+        "expert_a",
+        "expert_b"
+      ],
+      "source_columns": [
+        "source_model",
+        "source_expert"
+      ]
+    }
+  },
+  "model_name": "random_forest",
+  "accuracy": 0.9511111111111111,
+  "roc_auc": 0.9955908289241623,
+  "case_index": 0,
+  "case_prediction": {
+    "raw_prediction_encoded": 0,
+    "raw_prediction_label": "0",
+    "raw_proba": [
+      0.9597040822010003,
+      0.04029591779899977
+    ]
+  },
+  "observer_result": {
+    "raw_prediction": 0,
+    "raw_proba": [
+      0.9597040822010003,
+      0.04029591779899977
+    ],
+    "predicted_risk": 0.04029591779899977,
+    "uncertainty": 0.19473067468403815,
+    "entropy_uncertainty": 0.24364732000662617,
+    "margin_uncertainty": 0.08059183559799943,
+    "confidence": 0.8052693253159618,
+    "selected_representation": "FML-user",
+    "representation_class": "FML",
+    "representation_selection": {
+      "profile": [
+        "u_conf",
+        "u_exp",
+        "u_ling",
+        "u_multi",
+        "u_num"
+      ],
+      "selected_class": "FML-user",
+      "representation_class": "FML",
+      "reduction_loss": 0.1167159862998333,
+      "reduction_policy": "canonical",
+      "reason": "multi-level/audit profile requires preserving several uncertainty types"
+    },
+    "reduction_loss": 0.1167159862998333,
+    "pre_interpretability": 0.7744945421385079,
+    "final_interpretability": 0.7744945421385079,
+    "interpretability_index": 0.7744945421385079,
+    "application_risk": 0.12337993352798289,
+    "risk_score": 0.12337993352798289,
+    "action": "accept",
+    "corrected_confidence": 0.4829156676131133,
+    "reason": "risk score below theta_mid",
+    "diagnostics": [],
+    "E_model_ext": {
+      "terms": [
+        "high",
+        "low",
+        "medium"
+      ],
+      "active_rules": [],
+      "uncertainty": 0.39936533734201907,
+      "trace": "risk-aware-model-0",
+      "representation_class": "FML",
+      "reduction_loss": 0.1167159862998333
+    },
+    "E_R": {
+      "terms": [
+        "high",
+        "low",
+        "medium"
+      ],
+      "active_rules": [
+        "rho_low"
+      ],
+      "uncertainty": 0.09102796011678972,
+      "trace": "risk-module-0",
+      "representation_class": "F0",
+      "reduction_loss": 0.0
+    },
+    "E_A": {
+      "terms": [
+        "high",
+        "low",
+        "medium"
+      ],
+      "active_rules": [
+        "action_accept"
+      ],
+      "uncertainty": 0.036177550679399866,
+      "trace": "action-0",
+      "representation_class": "F0",
+      "reduction_loss": 0.0
+    },
+    "composition_route": [
+      "E_M_ext",
+      "E_R",
+      "E_A"
+    ]
+  },
+  "trace": {
+    "dataset": {
+      "dataset_name": "synthetic_ruptures",
+      "source": "fuzzyxai.synthetic",
+      "url": null,
+      "local_path": null,
+      "file_format": null,
+      "target_column": "risk_target",
+      "task_type": "binary_classification",
+      "description": "Controlled diagnostic rupture scenarios for category/HoTT checks.",
+      "metadata": {
+        "dataset_mode": "synthetic_ruptures"
+      }
+    },
+    "profile": {
+      "n_rows": 900,
+      "n_columns": 8,
+      "numeric_columns": [
+        "feature_a",
+        "feature_b",
+        "feature_c",
+        "risk_target",
+        "expert_a",
+        "expert_b",
+        "source_model",
+        "source_expert"
+      ],
+      "categorical_columns": [],
+      "missing_rate": 0.0,
+      "has_intervals": false,
+      "has_multiple_experts": true,
+      "has_source_conflict": true,
+      "requires_audit": false,
+      "suggested_uncertainty_types": [
+        "u_conf",
+        "u_expert",
+        "u_num"
+      ],
+      "metadata": {
+        "expert_columns": [
+          "expert_a",
+          "expert_b"
+        ],
+        "source_columns": [
+          "source_model",
+          "source_expert"
+        ]
+      }
+    },
+    "xai_profile": [
+      "u_conf",
+      "u_exp",
+      "u_ling",
+      "u_multi",
+      "u_num"
+    ],
+    "representation_selection": {
+      "profile": [
+        "u_conf",
+        "u_exp",
+        "u_ling",
+        "u_multi",
+        "u_num"
+      ],
+      "selected_class": "FML-user",
+      "representation_class": "FML",
+      "reduction_loss": 0.1167159862998333,
+      "reduction_policy": "canonical",
+      "reason": "multi-level/audit profile requires preserving several uncertainty types"
+    },
+    "model": "random_forest",
+    "mode": "user",
+    "excluded_metadata_columns": [
+      "expert_a",
+      "expert_b",
+      "source_model",
+      "source_expert"
+    ],
+    "target_classes": [
+      "0",
+      "1"
+    ],
+    "route": "dataset -> profile -> model -> E_M_ext -> I_pre -> rho -> action"
+  }
+}

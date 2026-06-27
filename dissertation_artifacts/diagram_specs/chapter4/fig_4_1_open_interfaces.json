@@ -1,0 +1,58 @@
+{
+  "figure_id": "fig_4_1",
+  "title": "Open interfaces: SDK/API/registry",
+  "nodes": [
+    {
+      "id": "External module",
+      "label": "External module"
+    },
+    {
+      "id": "BaseAdapter",
+      "label": "BaseAdapter"
+    },
+    {
+      "id": "/v1/explain",
+      "label": "/v1/explain"
+    },
+    {
+      "id": "ExplanationArtifact",
+      "label": "ExplanationArtifact"
+    },
+    {
+      "id": "/v1/risk-action",
+      "label": "/v1/risk-action"
+    },
+    {
+      "id": "Report",
+      "label": "Report"
+    }
+  ],
+  "edges": [
+    {
+      "from": "External module",
+      "to": "BaseAdapter"
+    },
+    {
+      "from": "BaseAdapter",
+      "to": "/v1/explain"
+    },
+    {
+      "from": "/v1/explain",
+      "to": "ExplanationArtifact"
+    },
+    {
+      "from": "ExplanationArtifact",
+      "to": "/v1/risk-action"
+    },
+    {
+      "from": "/v1/risk-action",
+      "to": "Report"
+    }
+  ],
+  "color_roles": {
+    "sdk": "#2563eb",
+    "api": "#0f766e"
+  },
+  "caption": "Открытые интерфейсы экосистемы FuzzyXAI.",
+  "short_explanation": "Registration, adapter and API contract route."
+}

@@ -78,6 +78,19 @@ class RiskAwareModel:
             Rule('risk_medium', {'risk': 'medium'}, 'lower_confidence'),
         ]
         outputs: list[dict[str, Any]] = []
+        chi_r_flags = metadata.get('chi_r_flags')
+        chi_r_crit_flags = metadata.get('chi_r_crit_flags')
+        trace_valid_flags = metadata.get('trace_valid_flags')
+
+        def _flag_at(flags, idx: int, default: int | bool) -> int | bool:
+            if flags is None:
+                return default
+            if isinstance(flags, (list, tuple, np.ndarray)):
+                if idx < len(flags):
+                    return flags[idx]
+                return default
+            return flags
+
         for idx, risk in enumerate(risks):
             diagnostics = list(metadata.get('diagnostics', []) or [])
             if metadata.get('force_diagnostic', False):
@@ -106,7 +119,32 @@ class RiskAwareModel:
                 }
             loss = interpretability_loss(0.30, 0.33, 0.16, 0.03, explanation.uncertainty, self.plan.lambda_, explanation.reduction_loss, 0.10)
             pre_index = interpretability_index(loss)
-            decision = self.policy.choose(float(risk), float(uncertainty[idx]), float(pre_index), float(explanation.reduction_loss), diagnostics)
+            trace_valid = bool(explanation.trace.id and explanation.trace.version and explanation.trace.timestamp and explanation.trace.source and explanation.trace.checksum)
+            trace_valid = bool(_flag_at(trace_valid_flags, idx, trace_valid))
+            chi_r = 1 if diagnostics else 0
+            chi_r_crit = 1 if diagnostics else 0
+            chi_r = int(bool(chi_r) or bool(_flag_at(chi_r_flags, idx, 0)))
+            chi_r_crit = int(bool(chi_r_crit) or bool(_flag_at(chi_r_crit_flags, idx, 0)))
+            chi_auto = bool(
+                float(risk) < 0.35
+                and float(uncertainty[idx]) < self.policy.uncertainty_max
+                and float(pre_index) >= self.policy.i_min
+                and chi_r_crit == 0
+                and trace_valid
+            )
+            rho = self.policy.risk_score(float(risk), float(uncertainty[idx]), float(pre_index), float(explanation.reduction_loss), diagnostics)
+            decision = self.policy.choose_from_risk(
+                float(rho),
+                float(uncertainty[idx]),
+                float(risk),
+                float(pre_index),
+                float(explanation.reduction_loss),
+                diagnostics,
+                chi_r=chi_r,
+                chi_r_crit=chi_r_crit,
+                chi_auto=chi_auto,
+                trace_valid=trace_valid,
+            )
             e_risk = self._risk_module_explanation(float(decision.risk_score), idx)
             e_action = self._action_explanation(decision.action.value, float(risk), idx)
             outputs.append({
@@ -130,6 +168,10 @@ class RiskAwareModel:
                 'corrected_confidence': float(decision.corrected_confidence),
                 'reason': decision.reason,
                 'diagnostics': list(decision.diagnostics),
+                'chi_R': int(chi_r),
+                'chi_R_crit': int(chi_r_crit),
+                'chi_Auto': bool(chi_auto),
+                'trace_valid': bool(trace_valid),
                 'E_model_ext': _explanation_summary(explanation),
                 'E_R': _explanation_summary(e_risk),
                 'E_A': _explanation_summary(e_action),

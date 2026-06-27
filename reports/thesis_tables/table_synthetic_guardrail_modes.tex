@@ -1,0 +1,38 @@
+\begin{table}[h]
+\centering
+\caption{Synthetic ruptures: native vs equal-guardrail baseline access}
+\label{tab:synthetic\_guardrail\_modes}
+\begin{tabular}{|l|l|l|l|l|l|l|}
+\hline
+baseline\_access & baseline & information\_access & missed\_critical & critical\_recall & false\_auto\_accept & agreement\_reference \\
+\hline
+native & full\_observer\_runtime & full\_structure & 0 & 1 & 0 & 0.835556 \\
+\hline
+native & full\_observer\_uncalibrated & full\_structure & 0 & 1 & 0 & 0.822222 \\
+\hline
+native & full\_observer\_calibrated & full\_structure & 0 & 1 & 0 & 0.822222 \\
+\hline
+native & probability\_threshold & native\_risk\_only & 70 & 0 & 0.591111 & 0.253333 \\
+\hline
+native & shap\_guardrail & native\_feature\_importance & 70 & 0 & 0.564444 & 0.253333 \\
+\hline
+native & lime\_guardrail & native\_local\_surrogate & 70 & 0 & 0.586667 & 0.253333 \\
+\hline
+native & anchor\_guardrail & native\_rule\_anchor & 70 & 0 & 0.573333 & 0.253333 \\
+\hline
+equal\_guardrail & full\_observer\_runtime & full\_structure & 0 & 1 & 0 & 0.835556 \\
+\hline
+equal\_guardrail & full\_observer\_uncalibrated & full\_structure & 0 & 1 & 0 & 0.822222 \\
+\hline
+equal\_guardrail & full\_observer\_calibrated & full\_structure & 0 & 1 & 0 & 0.822222 \\
+\hline
+equal\_guardrail & probability\_threshold & equal\_guardrail & 0 & 1 & 0 & 0.871111 \\
+\hline
+equal\_guardrail & shap\_guardrail & equal\_guardrail & 0 & 1 & 0 & 0.857778 \\
+\hline
+equal\_guardrail & lime\_guardrail & equal\_guardrail & 0 & 1 & 0 & 0.866667 \\
+\hline
+equal\_guardrail & anchor\_guardrail & equal\_guardrail & 0 & 1 & 0 & 0.853333 \\
+\hline
+\end{tabular}
+\end{table}

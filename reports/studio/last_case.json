@@ -1,0 +1,283 @@
+{
+  "dataset": {
+    "name": "breast_cancer",
+    "domain": "medical",
+    "purpose": "Medical risk baseline: probability + observer action policy.",
+    "status": "READY",
+    "source": "sklearn.datasets",
+    "task_type": "binary_classification"
+  },
+  "dataset_case": {
+    "dataset_name": "breast_cancer",
+    "domain": "medical",
+    "task_type": "binary_classification",
+    "features": {
+      "f_0": 12.75,
+      "f_1": 16.7,
+      "f_2": 82.51,
+      "f_3": 493.8,
+      "f_4": 0.1125,
+      "f_5": 0.1117,
+      "f_6": 0.0388,
+      "f_7": 0.02995,
+      "f_8": 0.212,
+      "f_9": 0.06623,
+      "f_10": 0.3834,
+      "f_11": 1.003,
+      "f_12": 2.495,
+      "f_13": 28.62,
+      "f_14": 0.007509,
+      "f_15": 0.01561,
+      "f_16": 0.01977,
+      "f_17": 0.009199,
+      "f_18": 0.01805,
+      "f_19": 0.003629,
+      "f_20": 14.45,
+      "f_21": 21.74,
+      "f_22": 93.63,
+      "f_23": 624.1,
+      "f_24": 0.1475,
+      "f_25": 0.1979,
+      "f_26": 0.1423,
+      "f_27": 0.08045,
+      "f_28": 0.3071,
+      "f_29": 0.08557
+    },
+    "target": 1,
+    "prediction": 1,
+    "predicted_risk": 0.015348643429035023,
+    "uncertainty": 0.03069728685807016,
+    "explain_plan": {
+      "gamma_max": 0.45,
+      "thresholds": [
+        0.1,
+        0.25,
+        0.5,
+        0.75
+      ]
+    },
+    "scenario_tags": [
+      "safe"
+    ],
+    "purpose": "Medical risk baseline: probability + observer action policy.",
+    "source": "sklearn.datasets",
+    "status": "READY"
+  },
+  "scenario": "safe",
+  "forced_rupture": false,
+  "input": {
+    "sample_id": "sample_0",
+    "features": {
+      "mean radius": 12.75,
+      "mean texture": 16.7,
+      "mean perimeter": 82.51,
+      "mean area": 493.8,
+      "mean smoothness": 0.1125,
+      "mean compactness": 0.1117,
+      "mean concavity": 0.0388,
+      "mean concave points": 0.02995,
+      "mean symmetry": 0.212,
+      "mean fractal dimension": 0.06623,
+      "radius error": 0.3834,
+      "texture error": 1.003,
+      "perimeter error": 2.495,
+      "area error": 28.62,
+      "smoothness error": 0.007509,
+      "compactness error": 0.01561,
+      "concavity error": 0.01977,
+      "concave points error": 0.009199,
+      "symmetry error": 0.01805,
+      "fractal dimension error": 0.003629,
+      "worst radius": 14.45,
+      "worst texture": 21.74,
+      "worst perimeter": 93.63,
+      "worst area": 624.1,
+      "worst smoothness": 0.1475,
+      "worst compactness": 0.1979,
+      "worst concavity": 0.1423,
+      "worst concave points": 0.08045,
+      "worst symmetry": 0.3071,
+      "worst fractal dimension": 0.08557
+    }
+  },
+  "model": {
+    "prediction": 1,
+    "true_y": 1,
+    "p_malignant": 0.015348643429035023,
+    "uncertainty": 0.03069728685807016,
+    "predicted_risk": 0.015348643429035023
+  },
+  "explanation": {
+    "E_model": {
+      "L": [
+        "low_risk",
+        "high_risk"
+      ],
+      "mu": {
+        "low": 0.9847,
+        "high": 0.0153
+      },
+      "R": [
+        "r_low_risk",
+        "r_high_risk"
+      ],
+      "alpha": {
+        "r_low_risk": 0.9847,
+        "r_high_risk": 0.0153
+      },
+      "u": 0.0307,
+      "tau": {
+        "id": "sample_0",
+        "version": "rf_breast_cancer_v1"
+      }
+    },
+    "E_risk": {
+      "L": [
+        "low_risk",
+        "medium_risk",
+        "high_risk"
+      ]
+    },
+    "E_action": {
+      "L": [
+        "accept",
+        "lower_confidence",
+        "request_more_data",
+        "defer_to_human",
+        "block"
+      ]
+    },
+    "I_pre": 0.877933761300908
+  },
+  "composition": {
+    "gamma_max": 0.45,
+    "edges": [
+      {
+        "source": "E_model",
+        "target": "E_risk",
+        "gamma": 0.3538342346509665,
+        "gamma_max": 0.45,
+        "status": "morphism",
+        "hott": "Path exists"
+      },
+      {
+        "source": "E_risk",
+        "target": "E_action",
+        "gamma": 0.37363737242543055,
+        "gamma_max": 0.45,
+        "status": "morphism",
+        "hott": "Path exists"
+      }
+    ],
+    "ruptures": []
+  },
+  "uncertainty": {
+    "profile": {
+      "u_num": true,
+      "u_int": false,
+      "u_expert": false,
+      "u_conf": false,
+      "u_trace": true
+    },
+    "selected_class": "FML-audit",
+    "delta": 0.07,
+    "classes": [
+      {
+        "class": "F0",
+        "coverage": "2/2",
+        "complexity": "low",
+        "reduction_loss": 0.45,
+        "status": "candidate"
+      },
+      {
+        "class": "F_int",
+        "coverage": "2/2",
+        "complexity": "low",
+        "reduction_loss": 0.31,
+        "status": "candidate"
+      },
+      {
+        "class": "F_H",
+        "coverage": "2/2",
+        "complexity": "medium",
+        "reduction_loss": 0.28,
+        "status": "candidate"
+      },
+      {
+        "class": "F_N_src",
+        "coverage": "2/2",
+        "complexity": "medium",
+        "reduction_loss": 0.16,
+        "status": "candidate"
+      },
+      {
+        "class": "FML-audit",
+        "coverage": "2/2",
+        "complexity": "high",
+        "reduction_loss": 0.07,
+        "status": "selected"
+      }
+    ]
+  },
+  "contexts": {
+    "RiskContext": {
+      "E_model": "accept, block, defer_to_human, lower_confidence, request_more_data",
+      "E_risk": "block, defer_to_human, lower_confidence, request_more_data",
+      "E_action": "accept"
+    },
+    "AutoAccept": {
+      "E_model": "accept, lower_confidence",
+      "E_risk": "lower_confidence",
+      "E_action": "accept"
+    }
+  },
+  "risk": {
+    "rho": 0.018382226678182623,
+    "components": {
+      "predicted_risk": 0.015348643429035023,
+      "uncertainty": 0.03069728685807016,
+      "pre_interpretability": 0.877933761300908,
+      "interpretability_gap": 0.12206623869909194,
+      "reduction_loss": 0.0,
+      "diagnostic": 0.0,
+      "weights": {
+        "predicted_risk": 0.7,
+        "uncertainty": 0.05,
+        "reduction_loss": 0.05,
+        "interpretability_gap": 0.05,
+        "diagnostic": 0.15
+      },
+      "rho": 0.018382226678182623,
+      "chi_R": 0,
+      "chi_R_crit": 0
+    },
+    "action": "accept",
+    "rupture": false,
+    "chi_R": 0,
+    "chi_R_crit": 0,
+    "reason": "threshold policy",
+    "thresholds": [
+      0.1,
+      0.25,
+      0.5,
+      0.75
+    ],
+    "weights": {
+      "predicted_risk": 0.7,
+      "uncertainty": 0.05,
+      "reduction_loss": 0.05,
+      "interpretability_gap": 0.05,
+      "diagnostic": 0.15
+    }
+  },
+  "route_header": {
+    "Input": "built",
+    "Model": "built",
+    "Omega": "built",
+    "Expl": "morphism",
+    "Fuzzy": "selected:FML-audit",
+    "Topos": "restricted",
+    "Observer": "decided",
+    "Action": "accept"
+  }
+}

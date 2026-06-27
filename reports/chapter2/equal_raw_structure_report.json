@@ -1,0 +1,177 @@
+{
+  "status": "ok",
+  "n_cases": 120,
+  "modes": [
+    "native",
+    "equal_guardrail",
+    "equal_raw_structure"
+  ],
+  "rows": [
+    {
+      "mode": "native",
+      "policy": "probability_threshold",
+      "agreement": 0.8333333333333334,
+      "missed_critical": 20,
+      "false_auto_accept": 0.25,
+      "trace_access": false,
+      "rule_access": false,
+      "delta_access": false,
+      "certified_path_access": false
+    },
+    {
+      "mode": "native",
+      "policy": "shap_guardrail",
+      "agreement": 0.8333333333333334,
+      "missed_critical": 20,
+      "false_auto_accept": 0.25,
+      "trace_access": false,
+      "rule_access": false,
+      "delta_access": false,
+      "certified_path_access": false
+    },
+    {
+      "mode": "native",
+      "policy": "lime_guardrail",
+      "agreement": 0.8333333333333334,
+      "missed_critical": 20,
+      "false_auto_accept": 0.25,
+      "trace_access": false,
+      "rule_access": false,
+      "delta_access": false,
+      "certified_path_access": false
+    },
+    {
+      "mode": "native",
+      "policy": "anchor_guardrail",
+      "agreement": 0.8333333333333334,
+      "missed_critical": 20,
+      "false_auto_accept": 0.25,
+      "trace_access": false,
+      "rule_access": false,
+      "delta_access": false,
+      "certified_path_access": false
+    },
+    {
+      "mode": "native",
+      "policy": "fuzzyxai_observer",
+      "agreement": 1.0,
+      "missed_critical": 0,
+      "false_auto_accept": 0.0,
+      "trace_access": true,
+      "rule_access": true,
+      "delta_access": true,
+      "certified_path_access": true
+    },
+    {
+      "mode": "equal_guardrail",
+      "policy": "probability_threshold",
+      "agreement": 1.0,
+      "missed_critical": 0,
+      "false_auto_accept": 0.15833333333333333,
+      "trace_access": false,
+      "rule_access": false,
+      "delta_access": false,
+      "certified_path_access": false
+    },
+    {
+      "mode": "equal_guardrail",
+      "policy": "shap_guardrail",
+      "agreement": 1.0,
+      "missed_critical": 0,
+      "false_auto_accept": 0.15833333333333333,
+      "trace_access": false,
+      "rule_access": false,
+      "delta_access": false,
+      "certified_path_access": false
+    },
+    {
+      "mode": "equal_guardrail",
+      "policy": "lime_guardrail",
+      "agreement": 1.0,
+      "missed_critical": 0,
+      "false_auto_accept": 0.15833333333333333,
+      "trace_access": false,
+      "rule_access": false,
+      "delta_access": false,
+      "certified_path_access": false
+    },
+    {
+      "mode": "equal_guardrail",
+      "policy": "anchor_guardrail",
+      "agreement": 1.0,
+      "missed_critical": 0,
+      "false_auto_accept": 0.15833333333333333,
+      "trace_access": false,
+      "rule_access": false,
+      "delta_access": false,
+      "certified_path_access": false
+    },
+    {
+      "mode": "equal_guardrail",
+      "policy": "fuzzyxai_observer",
+      "agreement": 1.0,
+      "missed_critical": 0,
+      "false_auto_accept": 0.0,
+      "trace_access": true,
+      "rule_access": true,
+      "delta_access": true,
+      "certified_path_access": true
+    },
+    {
+      "mode": "equal_raw_structure",
+      "policy": "probability_threshold",
+      "agreement": 0.8333333333333334,
+      "missed_critical": 20,
+      "false_auto_accept": 0.25,
+      "trace_access": true,
+      "rule_access": true,
+      "delta_access": true,
+      "certified_path_access": false
+    },
+    {
+      "mode": "equal_raw_structure",
+      "policy": "shap_guardrail",
+      "agreement": 0.8333333333333334,
+      "missed_critical": 20,
+      "false_auto_accept": 0.15833333333333333,
+      "trace_access": true,
+      "rule_access": true,
+      "delta_access": true,
+      "certified_path_access": false
+    },
+    {
+      "mode": "equal_raw_structure",
+      "policy": "lime_guardrail",
+      "agreement": 0.8333333333333334,
+      "missed_critical": 20,
+      "false_auto_accept": 0.15833333333333333,
+      "trace_access": true,
+      "rule_access": true,
+      "delta_access": true,
+      "certified_path_access": false
+    },
+    {
+      "mode": "equal_raw_structure",
+      "policy": "anchor_guardrail",
+      "agreement": 0.8333333333333334,
+      "missed_critical": 20,
+      "false_auto_accept": 0.06666666666666667,
+      "trace_access": true,
+      "rule_access": true,
+      "delta_access": true,
+      "certified_path_access": false
+    },
+    {
+      "mode": "equal_raw_structure",
+      "policy": "fuzzyxai_observer",
+      "agreement": 1.0,
+      "missed_critical": 0,
+      "false_auto_accept": 0.0,
+      "trace_access": true,
+      "rule_access": true,
+      "delta_access": true,
+      "certified_path_access": true
+    }
+  ],
+  "note": "equal_raw_structure gives raw fields to baselines but not certified path semantics"
+}

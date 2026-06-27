@@ -5,6 +5,20 @@ from typing import Iterable, Set
 
 from fuzzyxai import Candidate, F0, HesitantFS, IntervalFS, MultiLevelFS, NeutrosophicFS, select_minimal_sufficient
 from fuzzyxai.hierarchy.meta_reducer import MetaReducer
+from .reduction_graph import F_CORE, F_EXT
+
+
+COGNITIVE_RAW: dict[str, float] = {
+    'F0': 0.10,
+    'F_int': 0.22,
+    'F_H': 0.30,
+    'F_N_src': 0.42,
+    'F_ML': 0.68,
+    'F_IF': 0.50,
+    'F_2': 0.55,
+    'F_RF': 0.60,
+}
+_C_MAX_CORE = max(COGNITIVE_RAW[k] for k in F_CORE)
 
 
 @dataclass(frozen=True)
@@ -16,6 +30,8 @@ class RepresentationSelection:
     reduction_policy: str
     reason: str
     representation: object
+    cognitive_complexity_normalized: float = 0.0
+    complexity_note: str = ''
 
     def as_dict(self) -> dict[str, object]:
         return {
@@ -25,7 +41,28 @@ class RepresentationSelection:
             'reduction_loss': self.reduction_loss,
             'reduction_policy': self.reduction_policy,
             'reason': self.reason,
+            'cognitive_complexity_normalized': self.cognitive_complexity_normalized,
+            'complexity_note': self.complexity_note,
         }
+
+
+def _canonical_class_name(selected_name: str) -> str:
+    mapping = {
+        'FI': 'F_int',
+        'FH': 'F_H',
+        'FNsrc': 'F_N_src',
+        'FML-user': 'F_ML',
+        'FML-audit': 'F_ML',
+    }
+    return mapping.get(selected_name, selected_name)
+
+
+def normalized_cognitive_complexity(selected_name: str) -> tuple[float, str]:
+    canonical = _canonical_class_name(selected_name)
+    raw = COGNITIVE_RAW.get(canonical, 0.0)
+    if canonical in F_CORE:
+        return float(raw / _C_MAX_CORE), 'core scale'
+    return float(raw / _C_MAX_CORE), 'extended class, normalized outside core scale'
 
 
 def default_representation_candidates() -> list[Candidate]:
@@ -71,6 +108,7 @@ def select_risk_representation(risk: float, profile: Iterable[str], mode: str = 
     representation = build_representation_for_risk(risk, profile_set, selected_name)
     reduction = MetaReducer(goal=mode).reduce(representation)
     reason = _selection_reason(profile_set, selected_name)
+    c_norm, c_note = normalized_cognitive_complexity(selected_name)
     return RepresentationSelection(
         profile=profile_set,
         selected_class=selected_name,
@@ -79,6 +117,8 @@ def select_risk_representation(risk: float, profile: Iterable[str], mode: str = 
         reduction_policy=reduction.policy,
         reason=reason,
         representation=representation,
+        cognitive_complexity_normalized=c_norm,
+        complexity_note=c_note,
     )
 
 

@@ -1,0 +1,65 @@
+{
+  "dataset": "breast_cancer",
+  "status": "READY",
+  "split": {
+    "train_val_test": [
+      0.5625,
+      0.1875,
+      0.25
+    ]
+  },
+  "before_calibration": {
+    "agreement_proxy": 0.7062937062937062,
+    "agreement_reference": 0.7342657342657343,
+    "missed_critical_ruptures": 0,
+    "critical_rupture_recall": 1.0,
+    "false_auto_accept_rate": 0.0,
+    "false_block_rate": 0.0,
+    "auto_accept_coverage": 0.0
+  },
+  "after_calibration": {
+    "agreement_proxy": 0.958041958041958,
+    "agreement_reference": 0.9300699300699301,
+    "missed_critical_ruptures": 0,
+    "critical_rupture_recall": 1.0,
+    "false_auto_accept_rate": 0.0,
+    "false_block_rate": 0.0,
+    "auto_accept_coverage": 0.0
+  },
+  "best_params": {
+    "weights": {
+      "predicted_risk": 0.5,
+      "uncertainty": 0.2,
+      "interpretability_gap": 0.1,
+      "reduction_loss": 0.1,
+      "diagnostic": 0.1
+    },
+    "thresholds": [
+      0.12,
+      0.28,
+      0.52,
+      0.8
+    ],
+    "gamma_max": 0.4,
+    "i_min": 0.6,
+    "delta_max": 0.12,
+    "uncertainty_max": 0.4,
+    "val_metrics": {
+      "agreement_proxy": 0.9813084112149533,
+      "agreement_reference": 0.9532710280373832,
+      "missed_critical_ruptures": 0,
+      "critical_rupture_recall": 1.0,
+      "false_auto_accept_rate": 0.0,
+      "false_block_rate": 0.0,
+      "auto_accept_coverage": 0.0
+    },
+    "objective": 0.9532710280373832
+  },
+  "objective": "maximize agreement_reference - 5*missed_critical_ruptures - 2*false_auto_accept_rate - false_block_rate with hard safety penalties",
+  "constraints": {
+    "missed_critical_ruptures": 0,
+    "critical_rupture_recall": 1.0,
+    "false_auto_accept_rate_max": 0.1
+  },
+  "notes": "agreement_proxy is proxy-rule based; agreement_reference is independent policy agreement, both are not clinical expert labels."
+}

@@ -19,17 +19,17 @@ Formula: `D -> F -> T -> M(x) -> XAI(x) -> A(x) -> R(x) -> B;  E_G = E_B ⊙ E_R
 - **M / Прогноз модели**: risk_score=0.9249 — перевод прогноза в E_M и термы low/medium/high
 - **X / Локальное объяснение**: top_contribution=0.503 — наблюдение вклада признаков
 - **A / Решающий модуль**: high risk -> send_to_check — проверка совместимости правила решения с моделью
-- **R / Модуль риска**: lower_confidence — выбор безопасного действия
+- **R / Модуль риска**: request_more_data — выбор безопасного действия
 - **B / Обратная связь**: case saved — сохранение кейса для калибровки
 
 ## Risk observer
 
-- accepted_accuracy: `0.972477`
-- coverage: `0.762238`
+- accepted_accuracy: `1.000000`
+- coverage: `0.475524`
 - defer_rate: `0.000000`
 - cost_before: `0.174825`
-- cost_after: `0.108462`
-- risk_reduction: `0.066364`
+- cost_after: `0.013636`
+- risk_reduction: `0.161189`
 
 ## Artifacts
 

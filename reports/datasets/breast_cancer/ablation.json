@@ -1,0 +1,77 @@
+{
+  "dataset": "breast_cancer",
+  "status": "READY",
+  "rows": [
+    {
+      "mode": "full",
+      "agreement_proxy": 0.6503496503496503,
+      "missed_critical_ruptures": 0,
+      "critical_rupture_recall": 1.0,
+      "false_auto_accept_rate": 0.0,
+      "false_block_rate": 0.0,
+      "auto_accept_coverage": 0.5174825174825175,
+      "mean_reduction_loss": 0.07878973462043405
+    },
+    {
+      "mode": "no_trace",
+      "agreement_proxy": 0.6503496503496503,
+      "missed_critical_ruptures": 0,
+      "critical_rupture_recall": 1.0,
+      "false_auto_accept_rate": 0.0,
+      "false_block_rate": 0.0,
+      "auto_accept_coverage": 0.5174825174825175,
+      "mean_reduction_loss": 0.07878973462043405
+    },
+    {
+      "mode": "no_delta",
+      "agreement_proxy": 0.6573426573426573,
+      "missed_critical_ruptures": 0,
+      "critical_rupture_recall": 1.0,
+      "false_auto_accept_rate": 0.0,
+      "false_block_rate": 0.0,
+      "auto_accept_coverage": 0.5174825174825175,
+      "mean_reduction_loss": 0.0
+    },
+    {
+      "mode": "no_critical_rupture",
+      "agreement_proxy": 0.6503496503496503,
+      "missed_critical_ruptures": 0,
+      "critical_rupture_recall": 1.0,
+      "false_auto_accept_rate": 0.0,
+      "false_block_rate": 0.0,
+      "auto_accept_coverage": 0.5174825174825175,
+      "mean_reduction_loss": 0.07878973462043405
+    },
+    {
+      "mode": "f0_only",
+      "agreement_proxy": 0.6293706293706294,
+      "missed_critical_ruptures": 0,
+      "critical_rupture_recall": 1.0,
+      "false_auto_accept_rate": 0.0,
+      "false_block_rate": 0.0,
+      "auto_accept_coverage": 0.5174825174825175,
+      "mean_reduction_loss": 0.25
+    },
+    {
+      "mode": "no_topos",
+      "agreement_proxy": 0.6013986013986014,
+      "missed_critical_ruptures": 0,
+      "critical_rupture_recall": 1.0,
+      "false_auto_accept_rate": 0.04895104895104895,
+      "false_block_rate": 0.0,
+      "auto_accept_coverage": 0.5664335664335665,
+      "mean_reduction_loss": 0.07878973462043405
+    },
+    {
+      "mode": "probability_threshold",
+      "agreement_proxy": 0.8041958041958042,
+      "missed_critical_ruptures": 0,
+      "critical_rupture_recall": 1.0,
+      "false_auto_accept_rate": 0.1958041958041958,
+      "false_block_rate": 0.0,
+      "auto_accept_coverage": 0.7132867132867133,
+      "mean_reduction_loss": 0.07878973462043405
+    }
+  ],
+  "notes": "Agreement uses proxy-rule labels, not expert clinical action labels."
+}

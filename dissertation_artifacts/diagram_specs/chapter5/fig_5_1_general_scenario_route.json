@@ -1,0 +1,50 @@
+{
+  "figure_id": "fig_5_1",
+  "title": "General scenario route",
+  "nodes": [
+    {
+      "id": "registry_id",
+      "label": "registry_id"
+    },
+    {
+      "id": "source artifact",
+      "label": "source artifact"
+    },
+    {
+      "id": "adapter",
+      "label": "adapter"
+    },
+    {
+      "id": "E/D artifact",
+      "label": "E/D artifact"
+    },
+    {
+      "id": "report/action",
+      "label": "report/action"
+    }
+  ],
+  "edges": [
+    {
+      "from": "registry_id",
+      "to": "source artifact"
+    },
+    {
+      "from": "source artifact",
+      "to": "adapter"
+    },
+    {
+      "from": "adapter",
+      "to": "E/D artifact"
+    },
+    {
+      "from": "E/D artifact",
+      "to": "report/action"
+    }
+  ],
+  "color_roles": {
+    "adapter": "#0f766e",
+    "report": "#9333ea"
+  },
+  "caption": "Общий маршрут сценария главы 5.",
+  "short_explanation": "External artifact is routed through adapter to report/action."
+}

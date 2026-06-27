@@ -1,0 +1,25 @@
+{
+  "experiment": "ch5_gis",
+  "generated_at": "2026-06-11T09:48:31.596598+00:00",
+  "runtime_seconds": 0.000295,
+  "explain_plan": {
+    "path": "/home/lebedeffson/Code/fuzzy-xai-operator/configs/explain_plan_chapter2.yaml",
+    "sha256": "4469dad3fbeeb4f53ad953c24bd4e29a8de0d17d6465fb2c71b2b15a954cacfc"
+  },
+  "status": "ok",
+  "adapter_raw_status": "source-pending",
+  "metrics": {
+    "status": "ok",
+    "registry_id": "gis_integro",
+    "source_status": "source-pending",
+    "probability": 0.67,
+    "mean_alpha_k": 0.72,
+    "positive_SHAP_support": 0.47,
+    "gamma_route": 0.2,
+    "Delta": 0.08,
+    "formula": "gamma_route = max(|p - mean(alpha_k)|, |p - positive_SHAP_support|); Delta = reduction_loss",
+    "input_fixture": "fuzzyxai_experiments/data/fixtures/gis_integro_fixture.csv",
+    "claim_scope": "source-pending; контрольный маршрут; качество исходной GIS-модели не заявляется",
+    "why_no_model_quality_claim": "нет закрепленного внешнего эталона/production dataset; фиксируется только route metric adapter/report route"
+  }
+}

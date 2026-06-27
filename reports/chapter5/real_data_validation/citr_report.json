@@ -1,0 +1,188 @@
+{
+  "meta": {
+    "dataset": "citr",
+    "resolved_dataset": "citr_fallback_registry_mosmed_doctor_analysis",
+    "seed": 42,
+    "sample_index": 0,
+    "timestamp_utc": "2026-05-25T23:06:21.383445+00:00",
+    "route": "data -> model -> E_model -> Expl/HoTT/topos -> rho -> action"
+  },
+  "dataset_metadata": {
+    "requested_dataset": "citr",
+    "resolved_dataset": "citr_fallback_registry_mosmed_doctor_analysis",
+    "source": "fallback:breast_cancer",
+    "fallback": true,
+    "fallback_reason": "missing local file for registry_mosmed_doctor_analysis",
+    "dataset_record": {
+      "dataset_name": "citr_fallback_registry_mosmed_doctor_analysis",
+      "source": "fallback:breast_cancer",
+      "url": null,
+      "local_path": null,
+      "file_format": null,
+      "target_column": "risk_target",
+      "task_type": "binary_classification",
+      "description": "Fallback dataset when CIT registry local file is missing.",
+      "metadata": {
+        "dataset_mode": "breast_cancer",
+        "fallback": true,
+        "fallback_reason": "missing local file for registry_mosmed_doctor_analysis",
+        "requested_mode": "registry_mosmed_doctor_analysis"
+      }
+    },
+    "n_rows": 569,
+    "n_features": 30,
+    "target_column": "risk_target"
+  },
+  "model": {
+    "true_y": 1,
+    "pred_y": 1,
+    "probabilities": [
+      0.0669398907103825,
+      0.9330601092896175
+    ],
+    "predicted_risk": 0.9330601092896175,
+    "uncertainty": 0.13387978142076506
+  },
+  "interpretability": {
+    "I_pre": 0.9227224616897444,
+    "reduction_loss": 0.0
+  },
+  "risk": {
+    "weights": {
+      "predicted_risk": 0.7,
+      "uncertainty": 0.05,
+      "reduction_loss": 0.05,
+      "interpretability_gap": 0.05,
+      "diagnostic": 0.15
+    },
+    "thresholds": [
+      0.1,
+      0.25,
+      0.5,
+      0.75
+    ],
+    "breakdown": {
+      "predicted_risk": 0.9330601092896175,
+      "uncertainty": 0.13387978142076506,
+      "pre_interpretability": 0.9227224616897444,
+      "interpretability_gap": 0.07727753831025563,
+      "reduction_loss": 0.0,
+      "diagnostic": 0.0,
+      "weights": {
+        "predicted_risk": 0.7,
+        "uncertainty": 0.05,
+        "reduction_loss": 0.05,
+        "interpretability_gap": 0.05,
+        "diagnostic": 0.15
+      },
+      "rho": 0.6636999424892832
+    },
+    "rho": 0.6636999424892832,
+    "action": "defer_to_human",
+    "reason": "threshold policy"
+  },
+  "category": {
+    "gamma_max": 0.45,
+    "objects": [
+      "E_model",
+      "E_risk",
+      "E_action"
+    ],
+    "morphisms": [
+      "E_model->E_risk:T_model_risk",
+      "E_model->E_model:id_E_model",
+      "E_risk->E_risk:id_E_risk",
+      "E_action->E_action:id_E_action"
+    ],
+    "model_to_risk_success": true,
+    "risk_to_action_success": false
+  },
+  "hott": {
+    "path_model_risk": {
+      "source": "E_model",
+      "target": "E_risk",
+      "gamma_total": 0.3564467213114754,
+      "delta_total": 0.0,
+      "trace": [
+        "E_model",
+        "E_risk"
+      ],
+      "morphisms": [
+        "E_model->E_risk:T_model_risk"
+      ]
+    },
+    "path_risk_action": null,
+    "path_full": null,
+    "rupture_model_risk": null,
+    "rupture_risk_action": {
+      "source": "E_risk",
+      "target": "E_action",
+      "reason": "morphism violates gamma_max or category constraints",
+      "gamma": null,
+      "threshold": 0.45,
+      "code": "D_ij",
+      "severity": "critical",
+      "context": {
+        "source": "E_risk",
+        "target": "E_action",
+        "gamma": null,
+        "gamma_max": 0.45
+      }
+    }
+  },
+  "topos": {
+    "descriptor": {
+      "base_category": "Expl",
+      "notation": "Set^{Expl^op}",
+      "role": "topos of explanation contexts"
+    },
+    "risk_context": {
+      "E_model": [
+        "accept",
+        "block",
+        "defer_to_human",
+        "lower_confidence",
+        "request_more_data"
+      ],
+      "E_risk": [
+        "block",
+        "defer_to_human",
+        "lower_confidence",
+        "request_more_data"
+      ],
+      "E_action": [
+        "defer_to_human"
+      ]
+    },
+    "auto_accept": {
+      "E_model": [
+        "accept",
+        "lower_confidence"
+      ],
+      "E_risk": [
+        "lower_confidence"
+      ],
+      "E_action": []
+    },
+    "audit_context": {
+      "E_model": [
+        "checksum",
+        "trace_id",
+        "trace_version"
+      ],
+      "E_risk": [
+        "trace_id",
+        "trace_version"
+      ],
+      "E_action": [
+        "trace_id"
+      ]
+    },
+    "restricted_context_model_from_risk": [
+      "block",
+      "defer_to_human",
+      "lower_confidence",
+      "request_more_data"
+    ]
+  }
+}

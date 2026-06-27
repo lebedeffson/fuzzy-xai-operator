@@ -1,0 +1,108 @@
+{
+  "status": "ok",
+  "checked_at": "2026-06-09T19:06:23.521968+00:00",
+  "commands": [
+    {
+      "command": "make reproduce-chapter2",
+      "returncode": 0,
+      "output_tail": "make[1]: Entering directory '/home/lebedeffson/Code/fuzzy-xai-operator'\nPYTHONPATH=. /home/lebedeffson/Code/venv/bin/python -m fuzzyxai.experiments.chapter2_sample113 --out-dir reports/chapter2\n/home/lebedeffson/Code/venv/lib/python3.14/site-packages/sklearn/utils/validation.py:2749: UserWarning: X does not have valid feature names, but RandomForestClassifier was fitted with feature names\n  warnings.warn(\n/home/lebedeffson/Code/venv/lib/python3.14/site-packages/sklearn/utils/validation.py:2749: UserWarning: X does not have valid feature names, but RandomForestClassifier was fitted with feature names\n  warnings.warn(\n{\n  \"sample_id\": \"sample_113\",\n  \"selected_features\": [\n    \"symmetry error\",\n    \"mean fractal dimension\",\n    \"concave points error\",\n    \"worst fractal dimension\",\n    \"mean texture\"\n  ],\n  \"P(malignant)\": 0.7035770563720608,\n  \"p_malignant\": 0.7035770563720608,\n  \"mu_low\": 0.2964229436279392,\n  \"mu_medium\": 0.18569177451175678,\n  \"mu_high\": 0.7035770563720608,\n  \"active_rules\": [\n    \"r_high_risk\",\n    \"r_low_risk\"\n  ],\n  \"alpha_values\": {\n    \"r_low_risk\": 0.2964229436279392,\n    \"r_high_risk\": 0.7035770563720608\n  },\n  \"U_model\": 0.5928458872558784,\n  \"U_rules\": 0.2964229436279392,\n  \"U_trace\": 0.02,\n  \"u_M\": 0.35970753235352704,\n  \"tau_fields\": {\n    \"id\": \"sample_113\",\n    \"version\": \"rf_breast_cancer_v1\",\n    \"timestamp\": \"seeded-reproduction\",\n    \"source\": \"sklearn_breast_cancer\",\n    \"checksum\": \"sample_113:rf_breast_cancer_v1\",\n    \"params\": {\n      \"seed\": 42,\n      \"target_probability\": 0.72\n    },\n    \"hash\": \"sample_113:rf_breast_cancer_v1:chapter2\"\n  },\n  \"I_pre\": 0.6743235322764167,\n  \"gamma_model_to_risk\": 0.3514150457029992,\n  \"chi_R\": 1,\n  \"chi_R_crit\": 1,\n  \"action\": \"block\",\n  \"explain_plan_hash\": \"b3c3fc83fbba3f862e06470ddd1fb9ae77bb57e39c14575534275049e669209e\",\n  \"explain_plan_path\": \"configs/explain_plan_chapter2.yaml\"\n}\nmake[1]: Leaving directory '/home/lebedeffson/Code/fuzzy-xai-operator'\n"
+    },
+    {
+      "command": "make calibrate-chapter2",
+      "returncode": 0,
+      "output_tail": "make[1]: Entering directory '/home/lebedeffson/Code/fuzzy-xai-operator'\nPYTHONPATH=. /home/lebedeffson/Code/venv/bin/python -m fuzzyxai.experiments.chapter2_calibration --out-dir reports/chapter2\n{\n  \"status\": \"ok\",\n  \"dataset\": \"breast_cancer\",\n  \"seed\": 42,\n  \"n_pairs\": 50,\n  \"method\": \"q95\",\n  \"constants\": [\n    {\n      \"constant_name\": \"c_H_cal\",\n      \"value\": 0.3154244660293586,\n      \"method\": \"q95\",\n      \"n_pairs\": 50,\n      \"dataset\": \"breast_cancer\"\n    },\n    {\n      \"constant_name\": \"c_O_cal\",\n      \"value\": 0.08875,\n      \"method\": \"q95\",\n      \"n_pairs\": 50,\n      \"dataset\": \"breast_cancer\"\n    },\n    {\n      \"constant_name\": \"c_K_cal\",\n      \"value\": 0.33333333333333337,\n      \"method\": \"q95\",\n      \"n_pairs\": 50,\n      \"dataset\": \"breast_cancer\"\n    }\n  ]\n}\nmake[1]: Leaving directory '/home/lebedeffson/Code/fuzzy-xai-operator'\n"
+    },
+    {
+      "command": "make benchmark-equal-raw-structure",
+      "returncode": 0,
+      "output_tail": "ssed_critical\": 20,\n      \"false_auto_accept\": 0.25,\n      \"trace_access\": false,\n      \"rule_access\": false,\n      \"delta_access\": false,\n      \"certified_path_access\": false\n    },\n    {\n      \"mode\": \"native\",\n      \"policy\": \"anchor_guardrail\",\n      \"agreement\": 0.8333333333333334,\n      \"missed_critical\": 20,\n      \"false_auto_accept\": 0.25,\n      \"trace_access\": false,\n      \"rule_access\": false,\n      \"delta_access\": false,\n      \"certified_path_access\": false\n    },\n    {\n      \"mode\": \"native\",\n      \"policy\": \"fuzzyxai_observer\",\n      \"agreement\": 1.0,\n      \"missed_critical\": 0,\n      \"false_auto_accept\": 0.0,\n      \"trace_access\": true,\n      \"rule_access\": true,\n      \"delta_access\": true,\n      \"certified_path_access\": true\n    },\n    {\n      \"mode\": \"equal_guardrail\",\n      \"policy\": \"probability_threshold\",\n      \"agreement\": 1.0,\n      \"missed_critical\": 0,\n      \"false_auto_accept\": 0.15833333333333333,\n      \"trace_access\": false,\n      \"rule_access\": false,\n      \"delta_access\": false,\n      \"certified_path_access\": false\n    },\n    {\n      \"mode\": \"equal_guardrail\",\n      \"policy\": \"shap_guardrail\",\n      \"agreement\": 1.0,\n      \"missed_critical\": 0,\n      \"false_auto_accept\": 0.15833333333333333,\n      \"trace_access\": false,\n      \"rule_access\": false,\n      \"delta_access\": false,\n      \"certified_path_access\": false\n    },\n    {\n      \"mode\": \"equal_guardrail\",\n      \"policy\": \"lime_guardrail\",\n      \"agreement\": 1.0,\n      \"missed_critical\": 0,\n      \"false_auto_accept\": 0.15833333333333333,\n      \"trace_access\": false,\n      \"rule_access\": false,\n      \"delta_access\": false,\n      \"certified_path_access\": false\n    },\n    {\n      \"mode\": \"equal_guardrail\",\n      \"policy\": \"anchor_guardrail\",\n      \"agreement\": 1.0,\n      \"missed_critical\": 0,\n      \"false_auto_accept\": 0.15833333333333333,\n      \"trace_access\": false,\n      \"rule_access\": false,\n      \"delta_access\": false,\n      \"certified_path_access\": false\n    },\n    {\n      \"mode\": \"equal_guardrail\",\n      \"policy\": \"fuzzyxai_observer\",\n      \"agreement\": 1.0,\n      \"missed_critical\": 0,\n      \"false_auto_accept\": 0.0,\n      \"trace_access\": true,\n      \"rule_access\": true,\n      \"delta_access\": true,\n      \"certified_path_access\": true\n    },\n    {\n      \"mode\": \"equal_raw_structure\",\n      \"policy\": \"probability_threshold\",\n      \"agreement\": 0.8333333333333334,\n      \"missed_critical\": 20,\n      \"false_auto_accept\": 0.25,\n      \"trace_access\": true,\n      \"rule_access\": true,\n      \"delta_access\": true,\n      \"certified_path_access\": false\n    },\n    {\n      \"mode\": \"equal_raw_structure\",\n      \"policy\": \"shap_guardrail\",\n      \"agreement\": 0.8333333333333334,\n      \"missed_critical\": 20,\n      \"false_auto_accept\": 0.15833333333333333,\n      \"trace_access\": true,\n      \"rule_access\": true,\n      \"delta_access\": true,\n      \"certified_path_access\": false\n    },\n    {\n      \"mode\": \"equal_raw_structure\",\n      \"policy\": \"lime_guardrail\",\n      \"agreement\": 0.8333333333333334,\n      \"missed_critical\": 20,\n      \"false_auto_accept\": 0.15833333333333333,\n      \"trace_access\": true,\n      \"rule_access\": true,\n      \"delta_access\": true,\n      \"certified_path_access\": false\n    },\n    {\n      \"mode\": \"equal_raw_structure\",\n      \"policy\": \"anchor_guardrail\",\n      \"agreement\": 0.8333333333333334,\n      \"missed_critical\": 20,\n      \"false_auto_accept\": 0.06666666666666667,\n      \"trace_access\": true,\n      \"rule_access\": true,\n      \"delta_access\": true,\n      \"certified_path_access\": false\n    },\n    {\n      \"mode\": \"equal_raw_structure\",\n      \"policy\": \"fuzzyxai_observer\",\n      \"agreement\": 1.0,\n      \"missed_critical\": 0,\n      \"false_auto_accept\": 0.0,\n      \"trace_access\": true,\n      \"rule_access\": true,\n      \"delta_access\": true,\n      \"certified_path_access\": true\n    }\n  ],\n  \"note\": \"equal_raw_structure gives raw fields to baselines but not certified path semantics\"\n}\nmake[1]: Leaving directory '/home/lebedeffson/Code/fuzzy-xai-operator'\n"
+    },
+    {
+      "command": "make reproduce-critical-ruptures",
+      "returncode": 0,
+      "output_tail": "make[1]: Entering directory '/home/lebedeffson/Code/fuzzy-xai-operator'\nPYTHONPATH=. /home/lebedeffson/Code/venv/bin/python -m fuzzyxai.experiments.chapter3_critical_ruptures --out-dir reports/chapter3\n{\n  \"status\": \"ok\",\n  \"experiment\": \"controlled_critical_ruptures\",\n  \"seed\": 314159,\n  \"n_objects\": 1000,\n  \"rupture_types\": [\n    \"trace_gap\",\n    \"rule_conflict\",\n    \"term_inversion\",\n    \"source_conflict\",\n    \"missing_certified_transition\"\n  ],\n  \"policies\": [\n    \"probability_threshold\",\n    \"shap_rule\",\n    \"lime_rule\",\n    \"anchors_rule\",\n    \"fuzzyxai_full_contour\"\n  ],\n  \"explain_plan_version\": {\n    \"path\": \"configs/explain_plan_chapter2.yaml\",\n    \"sha256\": \"4469dad3fbeeb4f53ad953c24bd4e29a8de0d17d6465fb2c71b2b15a954cacfc\"\n  },\n  \"input_checksum_sha256\": \"b781681c74978f566a252e993d728d28455138c25b53821c03a833c24f5f4a9a\",\n  \"results_checksum_sha256\": \"494c6cac3a3a94c1b91db074e4d3e4106df9aad7f1bc15f8cf18a7c51ffcac0e\",\n  \"command\": \"make reproduce-critical-ruptures\",\n  \"results_csv\": \"reports/chapter3/synthetic_ruptures_results.csv\",\n  \"figure\": \"figures/chapter3/critical_ruptures_comparison.png\",\n  \"rows\": [\n    {\n      \"policy\": \"probability_threshold\",\n      \"n_objects\": 1000,\n      \"critical_objects\": 250,\n      \"missed_critical_ruptures\": 250,\n      \"critical_rupture_recall\": 0.0,\n      \"false_block_rate\": 0.0013333333333333333,\n      \"agreement_reference\": 0.557,\n      \"mean_processing_time_ms\": 0.0001\n    },\n    {\n      \"policy\": \"shap_rule\",\n      \"n_objects\": 1000,\n      \"critical_objects\": 250,\n      \"missed_critical_ruptures\": 206,\n      \"critical_rupture_recall\": 0.176,\n      \"false_block_rate\": 0.0,\n      \"agreement_reference\": 0.602,\n      \"mean_processing_time_ms\": 0.0001\n    },\n    {\n      \"policy\": \"lime_rule\",\n      \"n_objects\": 1000,\n      \"critical_objects\": 250,\n      \"missed_critical_ruptures\": 196,\n      \"critical_rupture_recall\": 0.216,\n      \"false_block_rate\": 0.0,\n      \"agreement_reference\": 0.612,\n      \"mean_processing_time_ms\": 0.0001\n    },\n    {\n      \"policy\": \"anchors_rule\",\n      \"n_objects\": 1000,\n      \"critical_objects\": 250,\n      \"missed_critical_ruptures\": 234,\n      \"critical_rupture_recall\": 0.064,\n      \"false_block_rate\": 0.0,\n      \"agreement_reference\": 0.574,\n      \"mean_processing_time_ms\": 0.0001\n    },\n    {\n      \"policy\": \"fuzzyxai_full_contour\",\n      \"n_objects\": 1000,\n      \"critical_objects\": 250,\n      \"missed_critical_ruptures\": 0,\n      \"critical_rupture_recall\": 1.0,\n      \"false_block_rate\": 0.0,\n      \"agreement_reference\": 1.0,\n      \"mean_processing_time_ms\": 0.0001\n    }\n  ]\n}\nmake[1]: Leaving directory '/home/lebedeffson/Code/fuzzy-xai-operator'\n"
+    },
+    {
+      "command": "make chapter2-3-final-evidence",
+      "returncode": 0,
+      "output_tail": " \"exists\": true,\n      \"sha256\": \"494eb19595bb34c8c2a92f985663fb10bba9f082e42c3e502da077ec189d2cca\"\n    },\n    {\n      \"path\": \"evidence/critical_ruptures_manifest_sha256.json\",\n      \"exists\": true,\n      \"sha256\": \"f4b3f3a56d1ab6944b8d8e2b01055ff34d341d9ee33a66cceb5663f474f1b9d2\"\n    },\n    {\n      \"path\": \"figures/chapter2/calibration_constants.png\",\n      \"exists\": true,\n      \"sha256\": \"fe4ac72b781e8d57eec8af5536b72fdb6f38b4d2a46436e10be5f4ca21336bda\"\n    },\n    {\n      \"path\": \"figures/chapter2/equal_raw_structure_comparison.png\",\n      \"exists\": true,\n      \"sha256\": \"91a6794246f3bb7bed5051b593112cceb0bf25b1eba594e46e4dc0806b27e92f\"\n    },\n    {\n      \"path\": \"figures/chapter3/critical_ruptures_comparison.png\",\n      \"exists\": true,\n      \"sha256\": \"26e714505887a5bf55a7edd30914bf1f3e593582151b8e9d87fe2f0ccb9d9a9f\"\n    },\n    {\n      \"path\": \"reports/chapter2/alignment_synthesis_report.json\",\n      \"exists\": true,\n      \"sha256\": \"c649cb0ec15ce918d302bfd4aceb829c65fdfe8e4ea7a0353274300323855259\"\n    },\n    {\n      \"path\": \"reports/chapter2/calibration_constants.csv\",\n      \"exists\": true,\n      \"sha256\": \"5ae7af763efb982ca16108014e443c649a9bca3363f0b7a4e8c8142b88f150ce\"\n    },\n    {\n      \"path\": \"reports/chapter2/calibration_report.json\",\n      \"exists\": true,\n      \"sha256\": \"1b95b961978092a295fa5450598c2862e9fd7c853031f62049704faa87084412\"\n    },\n    {\n      \"path\": \"reports/chapter2/chapter2_breast_cancer_summary.json\",\n      \"exists\": true,\n      \"sha256\": \"b395d5f63b098c03f03ea2b2cbc6214342a2c6356f5d667f22789f6e48e5a528\"\n    },\n    {\n      \"path\": \"reports/chapter2/equal_raw_structure_report.json\",\n      \"exists\": true,\n      \"sha256\": \"9f329e39d5ebbd824a1f9caaef5896fa8fc3349d52e43305c983f41ce6687260\"\n    },\n    {\n      \"path\": \"reports/chapter2/equal_raw_structure_summary.csv\",\n      \"exists\": true,\n      \"sha256\": \"768da4928dc99f3cdf265f67c8443f30724a2d9f7ef428137148fc2af292706b\"\n    },\n    {\n      \"path\": \"reports/chapter2/explain_plan_hash.json\",\n      \"exists\": true,\n      \"sha256\": \"c18bfa69005fd3b56cc3ea73ee2a59596b00486dd2cdd71398dc5eb30b12e7cb\"\n    },\n    {\n      \"path\": \"reports/chapter2/sample_113_report.json\",\n      \"exists\": true,\n      \"sha256\": \"4920325789b0e09fc54a9f64f9dd93f0ae5efa82aa57ca74e17903fd97025f33\"\n    },\n    {\n      \"path\": \"reports/chapter2/sample_113_table.csv\",\n      \"exists\": true,\n      \"sha256\": \"5e0ea40ec558148ee89a4439fc55ffd812030d69160b5c1d0e36c09b425a1646\"\n    },\n    {\n      \"path\": \"reports/chapter2/sample_113_trace.json\",\n      \"exists\": true,\n      \"sha256\": \"d251967af2e921a90fa2fcd5295d60e513910914f692a046c9818b5b8126d967\"\n    },\n    {\n      \"path\": \"reports/chapter2_3/chapter2_3_implementation_matrix.csv\",\n      \"exists\": true,\n      \"sha256\": \"1f9be3164349ab4b1dcc9da44aa11062edc6a367bee51b9735514123a6cbd17b\"\n    },\n    {\n      \"path\": \"reports/chapter2_3/chapter2_3_implementation_matrix.md\",\n      \"exists\": true,\n      \"sha256\": \"cf821cbbfb4c56516cc1d00c8475187f1c2af085e1d531aeabb85bcfce20c19c\"\n    },\n    {\n      \"path\": \"reports/chapter2_3/chapter2_3_writer_insert.md\",\n      \"exists\": true,\n      \"sha256\": \"fccd1ee8496d6be864be229843a313af3167b971c136632e55e8c826487328b5\"\n    },\n    {\n      \"path\": \"reports/chapter3/dataset_roles_summary.csv\",\n      \"exists\": true,\n      \"sha256\": \"e677dd7743b092631a81420c860f9c8e2b45d128cb8f86bda6ad9b3b3f4ea4e2\"\n    },\n    {\n      \"path\": \"reports/chapter3/synthetic_ruptures_results.csv\",\n      \"exists\": true,\n      \"sha256\": \"494c6cac3a3a94c1b91db074e4d3e4106df9aad7f1bc15f8cf18a7c51ffcac0e\"\n    },\n    {\n      \"path\": \"reports/chapter3/synthetic_ruptures_summary.json\",\n      \"exists\": true,\n      \"sha256\": \"45c9cca60b63f569ff2011b605f8340d187afda1b306f6eb583fd8b72bc1b599\"\n    },\n    {\n      \"path\": \"reports/chapter2_3/chapter2_3_final_evidence.json\",\n      \"exists\": true,\n      \"sha256\": \"d0a84a1a432c947ce8b0eb0966e7c16191cb62f7481247e435b19c2c587b3257\"\n    }\n  ]\n}\nmake[1]: Leaving directory '/home/lebedeffson/Code/fuzzy-xai-operator'\n"
+    },
+    {
+      "command": "make ecosystem-evidence",
+      "returncode": 0,
+      "output_tail": "make[1]: Entering directory '/home/lebedeffson/Code/fuzzy-xai-operator'\nPYTHONPATH=. /home/lebedeffson/Code/venv/bin/python experiments/ecosystem_evidence_pack.py --evidence-dir evidence --report-dir reports/chapter4\n{\n  \"snapshot\": \"evidence/registry_snapshot.json\",\n  \"matrix\": \"evidence/evidence_matrix.csv\",\n  \"index\": \"evidence/reproduction_index.md\",\n  \"json\": \"reports/chapter4/ecosystem_evidence.json\",\n  \"md\": \"reports/chapter4/ecosystem_evidence.md\",\n  \"csv\": \"reports/chapter4/ecosystem_evidence.csv\"\n}\nmake[1]: Leaving directory '/home/lebedeffson/Code/fuzzy-xai-operator'\n"
+    },
+    {
+      "command": "make dissertation-artifacts",
+      "returncode": 0,
+      "output_tail": "make[1]: Entering directory '/home/lebedeffson/Code/fuzzy-xai-operator'\nPYTHONPATH=. /home/lebedeffson/Code/venv/bin/python scripts/build_dissertation_artifacts.py --out-dir dissertation_artifacts\n{\n  \"status\": \"ok\",\n  \"out_dir\": \"/home/lebedeffson/Code/fuzzy-xai-operator/dissertation_artifacts\",\n  \"files\": 64\n}\nmake[1]: Leaving directory '/home/lebedeffson/Code/fuzzy-xai-operator'\n"
+    }
+  ],
+  "files": [
+    {
+      "path": "reports/chapter2/sample_113_report.json",
+      "sha256": "4920325789b0e09fc54a9f64f9dd93f0ae5efa82aa57ca74e17903fd97025f33",
+      "exists": true
+    },
+    {
+      "path": "reports/chapter2/calibration_report.json",
+      "sha256": "1b95b961978092a295fa5450598c2862e9fd7c853031f62049704faa87084412",
+      "exists": true
+    },
+    {
+      "path": "reports/chapter2/equal_raw_structure_report.json",
+      "sha256": "9f329e39d5ebbd824a1f9caaef5896fa8fc3349d52e43305c983f41ce6687260",
+      "exists": true
+    },
+    {
+      "path": "reports/chapter2/alignment_synthesis_report.json",
+      "sha256": "c649cb0ec15ce918d302bfd4aceb829c65fdfe8e4ea7a0353274300323855259",
+      "exists": true
+    },
+    {
+      "path": "reports/chapter2_3/chapter2_3_final_evidence.json",
+      "sha256": "d0a84a1a432c947ce8b0eb0966e7c16191cb62f7481247e435b19c2c587b3257",
+      "exists": true
+    },
+    {
+      "path": "reports/chapter2_3/chapter2_3_implementation_matrix.csv",
+      "sha256": "1f9be3164349ab4b1dcc9da44aa11062edc6a367bee51b9735514123a6cbd17b",
+      "exists": true
+    },
+    {
+      "path": "reports/chapter3/synthetic_ruptures_summary.json",
+      "sha256": "45c9cca60b63f569ff2011b605f8340d187afda1b306f6eb583fd8b72bc1b599",
+      "exists": true
+    },
+    {
+      "path": "reports/chapter3/synthetic_ruptures_results.csv",
+      "sha256": "494c6cac3a3a94c1b91db074e4d3e4106df9aad7f1bc15f8cf18a7c51ffcac0e",
+      "exists": true
+    },
+    {
+      "path": "reports/chapter4/ecosystem_evidence.json",
+      "sha256": "c1cd201040ea7242e5f149128352dc1c1888d6c3e6770d7975695ebc198f2ae1",
+      "exists": true
+    },
+    {
+      "path": "reports/chapter4/integration_effort_summary.json",
+      "sha256": "3ca16463c2228ae7476cba8aaec694fc715b4b2935698c6149b00802e53f2210",
+      "exists": true
+    },
+    {
+      "path": "reports/chapter5/scenario_run_summary.csv",
+      "sha256": "d8fd4d6ca3bd0cd64ecd31ad9965ea19e38ece2a32a5deace6b938bd5cbb272a",
+      "exists": true
+    },
+    {
+      "path": "reports/chapter5/hybrid_xiris_blocking_case.json",
+      "sha256": "316cf0307925e234ed1ec8978ed69520f1cd8959efe18fb364d8deb25e3e9d95",
+      "exists": true
+    },
+    {
+      "path": "dissertation_artifacts/artifact_manifest_sha256.json",
+      "sha256": "1cc65fc79993174748722d6305dd38e8690f43eca3cd619a330cd66d8a983478",
+      "exists": true
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "status": "ok",
+  "measurement_count": 4,
+  "total_duration_minutes": 79,
+  "by_method_minutes": {
+    "registry_fixture_route": 63,
+    "registry_metadata_only": 16
+  },
+  "semantic_gap_detected_count": 4,
+  "source_csv": "reports/chapter4/integration_effort_measurements.csv",
+  "claim_scope": "integration effort protocol only; not production estimate"
+}

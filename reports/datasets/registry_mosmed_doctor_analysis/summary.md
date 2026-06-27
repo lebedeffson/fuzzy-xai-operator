@@ -1,0 +1,51 @@
+# Dataset summary: registry_mosmed_doctor_analysis
+
+- status: `READY`
+- n: `10`
+- domain: `medical_audit`
+- model_accuracy: `1.0`
+- model_roc_auc: `None`
+- model_f1: `1.0`
+- model_precision: `1.0`
+- model_recall: `1.0`
+- reason_if_roc_auc_nan_or_05: `roc_auc undefined: single class in test split`
+- n_positive: `1`
+- n_negative: `9`
+- positive_rate: `0.1`
+- score_std: `0.0238953479640073`
+- agreement_proxy: `None`
+- agreement_proxy_applicable: `False`
+- agreement_proxy_reason: `no expert action labels`
+- missed_critical_ruptures: `0`
+- critical_rupture_recall: `None`
+- false_auto_accept_rate: `0.0`
+- false_block_rate: `0.0`
+- auto_accept_coverage: `0.6666666666666666`
+- observer_action_accuracy (legacy): `None`
+- observer_action_proxy_accuracy (legacy): `0.3333333333333333`
+- mean_I_pre: `0.7607764309603002`
+- mean_rho: `0.19313492184381179`
+- mean_reduction_loss: `0.08972222222222224`
+- i_pre_mean: `0.7607764309603002`
+- i_pre_std: `0.005112743115507293`
+- i_pre_median: `0.7599210170052049`
+- i_pre_p25: `0.7574536623282722`
+- i_pre_p75: `0.7636714926147806`
+- i_pre_p05: `0.755479778586726`
+- i_pre_p95: `0.7666718731024412`
+- rho_mean: `0.19313492184381179`
+- rho_std: `0.024939835811235433`
+- rho_median: `0.19686773683767922`
+- rho_p25: `0.17888143170747245`
+- rho_p75: `0.20925481947708488`
+- rho_p05: `0.16449238760330706`
+- rho_p95: `0.2191644855886094`
+- rupture_rate: `0.0`
+- critical_rupture_rate: `0.0`
+- metric_interpretation: `Use accuracy/roc_auc with rupture rates for built-in datasets; for registry datasets prioritize pipeline readiness and transfer limitations.`
+- valid_for_quantitative_claims: `False`
+- limitations: `['no expert action labels', 'roc_auc undefined: single class in test split', 'small sample size']`
+- recommended_use_in_dissertation: `external-transfer`
+- action_distribution: `{'lower_confidence': 2, 'request_more_data': 1}`
+- selected_representation_distribution: `{'FML-audit': 3}`
+- notes: Prototype measurements per object; no I/O timing. Registry mode validates readiness/portability of the pipeline; action quality metric may be N/A. Small audit slice (n=10): not for statistical validation.

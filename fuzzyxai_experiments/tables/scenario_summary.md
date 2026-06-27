@@ -1,0 +1,6 @@
+| registry_id | status | adapter | input_artifact | output_report | claim_scope |
+| --- | --- | --- | --- | --- | --- |
+| hybrid_xiris | real-output-compatible | fuzzyxai_experiments.src.adapters.hybrid_xiris_adapter | fuzzyxai_experiments/data/generated/hybrid_xiris_objects.csv | fuzzyxai_experiments/reports/chapter5/hybrid_xiris_summary.json | deterministic synthetic degradation protocol; not external production validation |
+| beacon_xai | fixture-certified | fuzzyxai_experiments.src.adapters.beacon_xai_adapter | fuzzyxai_experiments/data/generated/beacon_xai_signals.csv | fuzzyxai_experiments/reports/chapter5/beacon_xai_summary.json | local deterministic fixture protocol; not original model benchmark |
+| gis_integro | source-pending | fuzzyxai_experiments.src.adapters.gis_integro_adapter | fuzzyxai_experiments/data/fixtures/gis_integro_fixture.csv | fuzzyxai_experiments/reports/chapter5/gis_integro_route_metrics.json | контрольный маршрут; качество исходной GIS-модели не заявляется |
+| gd_anfis_shap | source-pending | fuzzyxai_experiments.src.adapters.gd_anfis_shap_adapter | fuzzyxai_experiments/data/fixtures/gd_anfis_rules.csv; fuzzyxai_experiments/data/fixtures/gd_anfis_shap_values.csv | fuzzyxai_experiments/reports/chapter5/gd_anfis_shap_report.json | контрольный маршрут (исполняемый артефакт); качество исходной модели не заявляется |

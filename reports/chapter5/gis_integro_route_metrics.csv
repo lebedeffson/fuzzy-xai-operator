@@ -1,0 +1,2 @@
+registry_id,sample_id,probability,mean_alpha_k,positive_shap_support,gamma_route,Delta,fixture_sha256,claim_scope
+gis_integro,gis_integro_fixture_001,0.67,0.72,0.47,0.2,0.08,ae41cb6eb0d6b21b291eace74449f808f48cf82e643f16fc6669b59b0d88a262,контрольный маршрут; не количественное сравнение качества исходной модели

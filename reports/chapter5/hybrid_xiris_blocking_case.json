@@ -1,0 +1,17 @@
+{
+  "sample_id": "hybrid_xiris_block_001",
+  "image_quality_score": 0.31,
+  "segmentation_quality_score": 0.27,
+  "model_match_score": 0.88,
+  "rule_model_accept_activation": 0.82,
+  "rule_quality_block_activation": 0.91,
+  "source_conflict": true,
+  "notes": "Fixed numeric fixture for chapter 5.9.2 blocking demonstration.",
+  "chi_R_crit": 1,
+  "chi_Auto": false,
+  "rho": 0.8,
+  "action": "block",
+  "report_path": "reports/chapter5/scenario_reports/hybrid_xiris_blocking_case_report.md",
+  "explain_plan_hash": "4469dad3fbeeb4f53ad953c24bd4e29a8de0d17d6465fb2c71b2b15a954cacfc",
+  "fixture_sha256": "bcc3bfddaaa2b70b1bc6cd86fced7c00572fee57e7377abae4a6a809fb690721"
+}

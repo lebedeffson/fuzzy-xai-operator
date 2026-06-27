@@ -1,0 +1,1 @@
+Раздел 2.10 закрывается калибровочным протоколом: константы `c_H`, `c_O`, `c_K` вычисляются на `C_cal` из Breast Cancer Wisconsin с фиксированным seed и методом `q95`. Машинно-читаемые результаты находятся в `reports/chapter2/calibration_report.json` и `reports/chapter2/calibration_constants.csv`.

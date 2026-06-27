@@ -2,12 +2,104 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from typing import Any, Dict, Mapping
+import hashlib
 import json
 from pathlib import Path
+
+import yaml
 
 
 def _sum1(weights: Mapping[str, float], eps: float = 1e-9) -> bool:
     return abs(sum(float(v) for v in weights.values()) - 1.0) <= eps
+
+
+def load_explain_plan(path: str | Path) -> dict[str, Any]:
+    """Load a YAML or JSON ExplainPlan contract."""
+    p = Path(path)
+    text = p.read_text(encoding='utf-8')
+    if p.suffix.lower() == '.json':
+        data = json.loads(text)
+    else:
+        data = yaml.safe_load(text)
+    if not isinstance(data, dict):
+        raise ValueError('ExplainPlan file must contain a mapping')
+    return data
+
+
+def _require_mapping(data: Mapping[str, Any], key: str) -> Mapping[str, Any]:
+    value = data.get(key)
+    if not isinstance(value, Mapping):
+        raise ValueError(f'ExplainPlan.{key} must be a mapping')
+    return value
+
+
+def _require_sequence(data: Mapping[str, Any], key: str) -> list[Any]:
+    value = data.get(key)
+    if not isinstance(value, list) or not value:
+        raise ValueError(f'ExplainPlan.{key} must be a non-empty list')
+    return value
+
+
+def validate_explain_plan(plan: Mapping[str, Any]) -> None:
+    """Validate the machine-readable ExplainPlan contract used by reports."""
+    if not plan.get('version'):
+        raise ValueError('ExplainPlan.version is required')
+    if not plan.get('name'):
+        raise ValueError('ExplainPlan.name is required')
+
+    terms = _require_mapping(plan, 'terms')
+    risk_terms = _require_mapping(terms, 'risk')
+    labels = _require_sequence(risk_terms, 'L')
+    membership = _require_mapping(risk_terms, 'membership')
+    nodes = _require_mapping(membership, 'nodes')
+    for label in labels:
+        tri = nodes.get(str(label))
+        if not isinstance(tri, list) or len(tri) != 3:
+            raise ValueError(f'membership node for {label!r} must have 3 values')
+        a, b, c = [float(v) for v in tri]
+        if not (0.0 <= a <= b <= c <= 1.0):
+            raise ValueError(f'membership node for {label!r} must be ordered in [0,1]')
+
+    rules = _require_sequence(plan, 'rules')
+    for rule in rules:
+        if not isinstance(rule, Mapping) or not rule.get('id') or 'if' not in rule or 'then' not in rule:
+            raise ValueError('each rule must contain id/if/then')
+
+    uncertainty = _require_mapping(plan, 'uncertainty')
+    eta = _require_mapping(uncertainty, 'weights')
+    if not _sum1({str(k): float(v) for k, v in eta.items()}):
+        raise ValueError('uncertainty.weights must sum to 1')
+
+    trace_required = _require_sequence(plan, 'trace_required')
+    for field_name in ('id', 'version', 'time', 'params', 'source', 'hash'):
+        if field_name not in trace_required:
+            raise ValueError(f'trace_required must contain {field_name}')
+
+    composition = _require_mapping(plan, 'composition')
+    beta = _require_mapping(composition, 'beta')
+    if not _sum1({str(k): float(v) for k, v in beta.items()}):
+        raise ValueError('composition.beta must sum to 1')
+
+    risk_observer = _require_mapping(plan, 'risk_observer')
+    weights = _require_mapping(risk_observer, 'weights')
+    if not _sum1({str(k): float(v) for k, v in weights.items()}):
+        raise ValueError('risk_observer.weights must sum to 1')
+    thresholds = risk_observer.get('thresholds')
+    if not isinstance(thresholds, list) or len(thresholds) != 4:
+        raise ValueError('risk_observer.thresholds must contain 4 values')
+    t1, t2, t3, t4 = [float(v) for v in thresholds]
+    if not (0.0 <= t1 < t2 < t3 < t4 <= 1.0):
+        raise ValueError('risk_observer.thresholds must be ordered in [0,1]')
+
+
+def canonicalize_explain_plan(plan: Mapping[str, Any]) -> str:
+    """Deterministic JSON serialization used as the hash source."""
+    validate_explain_plan(plan)
+    return json.dumps(plan, ensure_ascii=False, sort_keys=True, separators=(',', ':'))
+
+
+def hash_explain_plan(plan: Mapping[str, Any]) -> str:
+    return hashlib.sha256(canonicalize_explain_plan(plan).encode('utf-8')).hexdigest()
 
 
 @dataclass

@@ -1,0 +1,2 @@
+registry_id,source_status,probability,mean_alpha_k,positive_SHAP_support,gamma_route,Delta,claim_scope
+gis_integro,source-pending,0.67,0.72,0.47,0.2,0.08,source-pending; контрольный маршрут; качество исходной GIS-модели не заявляется

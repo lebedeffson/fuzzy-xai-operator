@@ -1,0 +1,2 @@
+sample_id,image_quality_score,segmentation_quality_score,model_match_score,rule_model_accept_activation,rule_quality_block_activation,source_conflict,chi_R_crit,chi_Auto,rho,action,report_path,explain_plan_hash,fixture_sha256
+hybrid_xiris_block_001,0.31,0.27,0.88,0.82,0.91,True,1,False,0.8,block,reports/chapter5/scenario_reports/hybrid_xiris_blocking_case_report.md,4469dad3fbeeb4f53ad953c24bd4e29a8de0d17d6465fb2c71b2b15a954cacfc,bcc3bfddaaa2b70b1bc6cd86fced7c00572fee57e7377abae4a6a809fb690721

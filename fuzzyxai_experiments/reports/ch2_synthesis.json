@@ -1,0 +1,99 @@
+{
+  "experiment": "ch2_synthesis",
+  "generated_at": "2026-06-11T06:59:59.106606+00:00",
+  "runtime_seconds": 0.000115,
+  "explain_plan": {
+    "path": "configs/explain_plan_chapter2.yaml",
+    "sha256": "4469dad3fbeeb4f53ad953c24bd4e29a8de0d17d6465fb2c71b2b15a954cacfc"
+  },
+  "status": "ok",
+  "seed": 42,
+  "n_cases": 10,
+  "rows": [
+    {
+      "case_id": 0,
+      "candidate": "identity",
+      "gamma": 0.02,
+      "Delta_T": 0.0,
+      "J(T)": 0.02,
+      "status": "accepted"
+    },
+    {
+      "case_id": 1,
+      "candidate": "identity",
+      "gamma": 0.02,
+      "Delta_T": 0.0,
+      "J(T)": 0.02,
+      "status": "accepted"
+    },
+    {
+      "case_id": 2,
+      "candidate": "identity",
+      "gamma": 0.02,
+      "Delta_T": 0.0,
+      "J(T)": 0.02,
+      "status": "accepted"
+    },
+    {
+      "case_id": 3,
+      "candidate": "identity",
+      "gamma": 0.02,
+      "Delta_T": 0.0,
+      "J(T)": 0.02,
+      "status": "accepted"
+    },
+    {
+      "case_id": 4,
+      "candidate": "identity",
+      "gamma": 0.02,
+      "Delta_T": 0.0,
+      "J(T)": 0.02,
+      "status": "accepted"
+    },
+    {
+      "case_id": 5,
+      "candidate": "identity",
+      "gamma": 0.02,
+      "Delta_T": 0.0,
+      "J(T)": 0.02,
+      "status": "accepted"
+    },
+    {
+      "case_id": 6,
+      "candidate": "identity",
+      "gamma": 0.02,
+      "Delta_T": 0.0,
+      "J(T)": 0.02,
+      "status": "accepted"
+    },
+    {
+      "case_id": 7,
+      "candidate": "identity",
+      "gamma": 0.02,
+      "Delta_T": 0.0,
+      "J(T)": 0.02,
+      "status": "accepted"
+    },
+    {
+      "case_id": 8,
+      "candidate": "identity",
+      "gamma": 0.02,
+      "Delta_T": 0.0,
+      "J(T)": 0.02,
+      "status": "accepted"
+    },
+    {
+      "case_id": 9,
+      "candidate": "identity",
+      "gamma": 0.02,
+      "Delta_T": 0.0,
+      "J(T)": 0.02,
+      "status": "accepted"
+    }
+  ],
+  "means": {
+    "gamma": 0.019999999999999997,
+    "Delta_T": 0.0,
+    "J(T)": 0.019999999999999997
+  }
+}

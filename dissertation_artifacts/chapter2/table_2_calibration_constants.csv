@@ -1,0 +1,4 @@
+constant_name,value,method,n_pairs,dataset
+c_H_cal,0.3154244660293586,q95,50,breast_cancer
+c_O_cal,0.08875,q95,50,breast_cancer
+c_K_cal,0.33333333333333337,q95,50,breast_cancer

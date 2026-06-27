@@ -1,0 +1,9 @@
+# Dataset roles summary
+
+| dataset | role | used_for | critical ruptures | notes |
+| --- | --- | --- | ---: | --- |
+| `breast_cancer` | `quantitative_demo` | `operator_metrics` | `False` | real medical tabular dataset |
+| `wine_risk` | `transfer_demo` | `tabular_portability` | `False` | non-medical tabular transfer |
+| `diabetes_binary` | `calibration_stress_test` | `borderline_uncertainty` | `False` | stress-test for domain thresholds |
+| `synthetic_ruptures` | `diagnostic_benchmark` | `safety_validation` | `True` | controlled rupture injection |
+| `registry_fixtures` | `transfer_demo` | `ecosystem_portability` | `False` | adapter-level evidence |

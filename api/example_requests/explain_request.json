@@ -1,0 +1,6 @@
+{
+  "registry_id": "hybrid_xiris",
+  "input_type": "image_biometric",
+  "payload": {"image_id": "demo_001", "source_conflict": false},
+  "explain_plan_hash": "b3c3fc83fbba3f862e06470ddd1fb9ae77bb57e39c14575534275049e669209e"
+}

@@ -28,6 +28,13 @@ class RiskDecision:
 class RiskPolicy:
     theta_mid: float = 0.35
     theta_high: float = 0.65
+    theta_1: float = 0.10
+    theta_2: float = 0.25
+    theta_3: float = 0.50
+    theta_4: float = 0.75
+    i_min: float = 0.65
+    delta_max: float = 0.15
+    uncertainty_max: float = 0.45
     block_on_diagnostic: bool = True
     risk_weights: Mapping[str, float] = field(default_factory=lambda: {
         'predicted_risk': 0.30,
@@ -63,6 +70,7 @@ class RiskPolicy:
         diagnostics: Sequence[str] | None = None,
     ) -> RiskDecision:
         rho = self.risk_score(predicted_risk, uncertainty, pre_interpretability, reduction_loss, diagnostics)
+        # Keep choose() backward-compatible for legacy callers.
         return self.choose_from_risk(rho, uncertainty, predicted_risk, pre_interpretability, reduction_loss, diagnostics)
 
     def choose_from_risk(
@@ -73,19 +81,51 @@ class RiskPolicy:
         pre_interpretability: float = 1.0,
         reduction_loss: float = 0.0,
         diagnostics: Sequence[str] | None = None,
+        *,
+        chi_r: int | None = None,
+        chi_r_crit: int | None = None,
+        chi_auto: bool | None = None,
+        trace_valid: bool = True,
     ) -> RiskDecision:
         diagnostics = list(diagnostics or [])
         rho = _clip01(application_risk)
-        if diagnostics and self.block_on_diagnostic:
+        if (chi_r_crit == 1 if chi_r_crit is not None else False) or (diagnostics and self.block_on_diagnostic):
             return RiskDecision(RiskAction.BLOCK, 1.0, 0.0, 'diagnostic state blocks automatic decision', diagnostics)
 
         corrected = _clip01((1.0 - uncertainty) * (1.0 - rho) * pre_interpretability * (1.0 - reduction_loss))
-        if rho >= self.theta_high:
-            return RiskDecision(RiskAction.DEFER_TO_HUMAN, rho, corrected, 'risk score exceeds theta_high', diagnostics)
-        if rho >= self.theta_mid:
-            if uncertainty >= 0.45:
-                return RiskDecision(RiskAction.REQUEST_MORE_DATA, rho, corrected, 'medium risk with elevated uncertainty', diagnostics)
-            return RiskDecision(RiskAction.LOWER_CONFIDENCE, rho, corrected, 'medium risk: accept only with lower confidence', diagnostics)
-        if uncertainty >= 0.45 and predicted_risk >= self.theta_mid:
-            return RiskDecision(RiskAction.LOWER_CONFIDENCE, rho, corrected, 'low application risk but elevated model uncertainty', diagnostics)
-        return RiskDecision(RiskAction.ACCEPT, rho, corrected, 'risk score below theta_mid', diagnostics)
+        # Backward-compatible legacy mode for callers that do not pass explicit
+        # rupture/context indicators.
+        if chi_auto is None and chi_r is None and chi_r_crit is None:
+            if rho >= self.theta_high:
+                return RiskDecision(RiskAction.DEFER_TO_HUMAN, rho, corrected, 'risk score exceeds theta_high', diagnostics)
+            if rho >= self.theta_mid:
+                if uncertainty >= self.uncertainty_max:
+                    return RiskDecision(RiskAction.REQUEST_MORE_DATA, rho, corrected, 'medium risk with elevated uncertainty', diagnostics)
+                return RiskDecision(RiskAction.LOWER_CONFIDENCE, rho, corrected, 'medium risk: accept only with lower confidence', diagnostics)
+            if uncertainty >= self.uncertainty_max and predicted_risk >= self.theta_mid:
+                return RiskDecision(RiskAction.LOWER_CONFIDENCE, rho, corrected, 'low application risk but elevated model uncertainty', diagnostics)
+            return RiskDecision(RiskAction.ACCEPT, rho, corrected, 'risk score below theta_mid', diagnostics)
+
+        chi_r = int(chi_r or 0)
+        chi_r_crit = int(chi_r_crit or 0)
+        chi_auto = bool(True if chi_auto is None else chi_auto)
+        if not chi_auto:
+            if rho >= self.theta_3:
+                return RiskDecision(RiskAction.DEFER_TO_HUMAN, rho, corrected, 'context forbids auto-accept with elevated risk', diagnostics)
+            return RiskDecision(RiskAction.REQUEST_MORE_DATA, rho, corrected, 'context forbids auto-accept', diagnostics)
+        if (
+            rho < self.theta_1
+            and chi_r == 0
+            and pre_interpretability >= self.i_min
+            and reduction_loss <= self.delta_max
+            and trace_valid
+            and uncertainty < self.uncertainty_max
+        ):
+            return RiskDecision(RiskAction.ACCEPT, rho, corrected, 'all safety constraints satisfied for automatic accept', diagnostics)
+        if rho < self.theta_2 and chi_r == 0:
+            return RiskDecision(RiskAction.LOWER_CONFIDENCE, rho, corrected, 'low risk but not enough for full accept', diagnostics)
+        if uncertainty >= self.uncertainty_max or reduction_loss > self.delta_max or pre_interpretability < self.i_min or not trace_valid:
+            return RiskDecision(RiskAction.REQUEST_MORE_DATA, rho, corrected, 'insufficient confidence/interpretability/trace quality', diagnostics)
+        if rho < self.theta_4:
+            return RiskDecision(RiskAction.DEFER_TO_HUMAN, rho, corrected, 'requires human review under current risk/context', diagnostics)
+        return RiskDecision(RiskAction.BLOCK, rho, corrected, 'risk too high for safe continuation', diagnostics)

@@ -1,0 +1,51 @@
+# Dataset summary: registry_programs
+
+- status: `READY`
+- n: `10007`
+- domain: `tabular_text`
+- model_accuracy: `0.5011990407673861`
+- model_roc_auc: `0.4948539968984046`
+- model_f1: `0.5786630654962863`
+- model_precision: `0.5008766803039159`
+- model_recall: `0.6850519584332534`
+- reason_if_roc_auc_nan_or_05: `roc_auc near 0.5: ranking signal is weak or class imbalance dominates`
+- n_positive: `5003`
+- n_negative: `5004`
+- positive_rate: `0.49995003497551715`
+- score_std: `0.0030119257722783133`
+- agreement_proxy: `None`
+- agreement_proxy_applicable: `False`
+- agreement_proxy_reason: `no expert action labels`
+- missed_critical_ruptures: `0`
+- critical_rupture_recall: `None`
+- false_auto_accept_rate: `0.0`
+- false_block_rate: `0.0`
+- auto_accept_coverage: `0.0`
+- observer_action_accuracy (legacy): `None`
+- observer_action_proxy_accuracy (legacy): `1.0`
+- mean_I_pre: `0.7605362825571323`
+- mean_rho: `0.46119131706650957`
+- mean_reduction_loss: `0.09000000000000001`
+- i_pre_mean: `0.7605362825571323`
+- i_pre_std: `0.00032348366319673414`
+- i_pre_median: `0.7606727979532419`
+- i_pre_p25: `0.7604462531545945`
+- i_pre_p75: `0.7607360259439523`
+- i_pre_p05: `0.7598426844248591`
+- i_pre_p95: `0.7607360259439523`
+- rho_mean: `0.46119131706650957`
+- rho_std: `0.0008900238196698784`
+- rho_median: `0.4614101281402879`
+- rho_p25: `0.4609847770023671`
+- rho_p75: `0.4614101281402879`
+- rho_p05: `0.4596877622423729`
+- rho_p95: `0.46222118568016385`
+- rupture_rate: `0.0`
+- critical_rupture_rate: `0.0`
+- metric_interpretation: `Use accuracy/roc_auc with rupture rates for built-in datasets; for registry datasets prioritize pipeline readiness and transfer limitations.`
+- valid_for_quantitative_claims: `False`
+- limitations: `['no expert action labels', 'roc_auc near 0.5: ranking signal is weak or class imbalance dominates']`
+- recommended_use_in_dissertation: `external-transfer`
+- action_distribution: `{'request_more_data': 2502}`
+- selected_representation_distribution: `{'FML-audit': 2502}`
+- notes: Prototype measurements per object; no I/O timing. Registry mode validates readiness/portability of the pipeline; action quality metric may be N/A. No expert action labels: agreement_proxy is not applicable.

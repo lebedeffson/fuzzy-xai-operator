@@ -1,0 +1,175 @@
+{
+  "dataset": "breast_cancer",
+  "quantiles": {
+    "i_pre_mean": 0.7935691880178595,
+    "i_pre_std": 0.028891093213033944,
+    "i_pre_median": 0.7913864834269176,
+    "i_pre_p25": 0.781136104092202,
+    "i_pre_p75": 0.8049893875841105,
+    "i_pre_p05": 0.7452511488142374,
+    "i_pre_p95": 0.8422037308877101,
+    "rho_mean": 0.2076536833161616,
+    "rho_std": 0.15009304671440749,
+    "rho_median": 0.13846747429895342,
+    "rho_p25": 0.06133269296264607,
+    "rho_p75": 0.34321398144211535,
+    "rho_p05": 0.056597635756142906,
+    "rho_p95": 0.4606185115725768
+  },
+  "end_to_end_cases": [
+    {
+      "mode": "accept",
+      "object": "sample_0",
+      "P": 0.015348643429035023,
+      "representation": "FML-audit",
+      "delta": 0.07,
+      "I_pre": 0.877933761300908,
+      "rho": 0.018382226678182623,
+      "chi_R": 0,
+      "chi_R_crit": 0,
+      "chi_Auto": true,
+      "action": "accept"
+    },
+    {
+      "mode": "audit",
+      "object": "sample_18",
+      "P": 0.14437183933975195,
+      "representation": "FML-audit",
+      "delta": 0.07,
+      "I_pre": 0.7578820191360587,
+      "rho": 0.12760337051499865,
+      "chi_R": 0,
+      "chi_R_crit": 0,
+      "chi_Auto": true,
+      "action": "lower_confidence"
+    },
+    {
+      "mode": "block",
+      "object": "sample_2",
+      "P": 0.32282374425442834,
+      "representation": "FML-audit",
+      "delta": 0.07,
+      "I_pre": 0.6631923793592487,
+      "rho": 0.8,
+      "chi_R": 1,
+      "chi_R_crit": 1,
+      "chi_Auto": false,
+      "action": "block"
+    }
+  ],
+  "ablations": [
+    {
+      "variant": "without_tau",
+      "missed_critical_ruptures": 1.0,
+      "false_automatic_accept": 0.0,
+      "false_block_rate": 0.0,
+      "coverage_auto_accept": 0.5594405594405595,
+      "mean_reduction_loss": 0.0,
+      "agreement_proxy": 0.6993006993006993
+    },
+    {
+      "variant": "without_delta",
+      "missed_critical_ruptures": 0.0,
+      "false_automatic_accept": 0.0,
+      "false_block_rate": 0.0,
+      "coverage_auto_accept": 0.5594405594405595,
+      "mean_reduction_loss": 0.0,
+      "agreement_proxy": 0.9440559440559441
+    },
+    {
+      "variant": "without_chi_r_crit",
+      "missed_critical_ruptures": 1.0,
+      "false_automatic_accept": 0.0,
+      "false_block_rate": 0.0,
+      "coverage_auto_accept": 0.5594405594405595,
+      "mean_reduction_loss": 0.0,
+      "agreement_proxy": 0.6993006993006993
+    },
+    {
+      "variant": "only_f0",
+      "missed_critical_ruptures": 0.0,
+      "false_automatic_accept": 0.0,
+      "false_block_rate": 0.0,
+      "coverage_auto_accept": 0.5594405594405595,
+      "mean_reduction_loss": 0.25,
+      "agreement_proxy": 0.9300699300699301
+    },
+    {
+      "variant": "without_chi_auto",
+      "missed_critical_ruptures": 0.0,
+      "false_automatic_accept": 0.0,
+      "false_block_rate": 0.0,
+      "coverage_auto_accept": 0.5594405594405595,
+      "mean_reduction_loss": 0.0,
+      "agreement_proxy": 0.9440559440559441
+    },
+    {
+      "variant": "probability_threshold_only",
+      "missed_critical_ruptures": 1.0,
+      "false_automatic_accept": 0.13286713286713286,
+      "false_block_rate": 0.0,
+      "coverage_auto_accept": 0.6923076923076923,
+      "mean_reduction_loss": 0.0,
+      "agreement_proxy": 0.7552447552447552
+    }
+  ],
+  "explainplan_parameters": [
+    {
+      "parameter": "gamma_max",
+      "value": 0.45,
+      "where_used": "certified alignment / composition",
+      "selection": "fixed before experiments"
+    },
+    {
+      "parameter": "I_min",
+      "value": 0.5,
+      "where_used": "interpretability floor",
+      "selection": "ExplainPlan baseline"
+    },
+    {
+      "parameter": "theta_1...theta_4",
+      "value": [
+        0.1,
+        0.25,
+        0.5,
+        0.75
+      ],
+      "where_used": "risk observer policy",
+      "selection": "calibrated policy thresholds"
+    },
+    {
+      "parameter": "w_p,w_u,w_I,w_Delta,w_R",
+      "value": {
+        "predicted_risk": 0.7,
+        "uncertainty": 0.05,
+        "reduction_loss": 0.05,
+        "interpretability_gap": 0.05,
+        "diagnostic": 0.15
+      },
+      "where_used": "rho risk aggregation",
+      "selection": "observer calibration"
+    },
+    {
+      "parameter": "eta_1,eta_2,eta_3",
+      "value": {
+        "model": 0.5,
+        "rules": 0.3,
+        "trace": 0.2
+      },
+      "where_used": "u_M decomposition",
+      "selection": "ExplainPlan"
+    },
+    {
+      "parameter": "epsilon_int",
+      "value": 0.001,
+      "where_used": "interval tolerance / numerical stability",
+      "selection": "fixed before experiments"
+    },
+    {
+      "parameter": "lambda_Delta",
+      "value": 0.1,
+      "where_used": "representation reduction penalty",
+      "selection": "fixed before experiments"
+    }
+  ]
+}

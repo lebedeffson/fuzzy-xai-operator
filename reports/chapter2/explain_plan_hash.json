@@ -1,0 +1,15 @@
+{
+  "plan_path": "configs/explain_plan_chapter2.yaml",
+  "sha256": "b3c3fc83fbba3f862e06470ddd1fb9ae77bb57e39c14575534275049e669209e",
+  "validated": true,
+  "required_trace_fields": [
+    "id",
+    "version",
+    "time",
+    "params",
+    "source",
+    "hash"
+  ],
+  "python": "3.14.5",
+  "sklearn": "1.7.2"
+}

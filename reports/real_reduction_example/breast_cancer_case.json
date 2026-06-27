@@ -1,0 +1,73 @@
+{
+  "object": "sample_113",
+  "P(malignant)": 0.7035770563720608,
+  "p_malignant": 0.7035770563720608,
+  "selected_features": [
+    "symmetry error",
+    "concave points error",
+    "mean fractal dimension",
+    "worst fractal dimension",
+    "mean texture"
+  ],
+  "F0": {
+    "mu": 0.703577
+  },
+  "F_int": {
+    "low": 0.635577,
+    "high": 0.771577
+  },
+  "F_H": {
+    "values": [
+      0.703577,
+      0.489955
+    ]
+  },
+  "F_N_src": {
+    "truth": 0.703577,
+    "indeterminacy": 0.213622,
+    "falsity": 0.082801
+  },
+  "selected_class": "F_N_src",
+  "selected_representation": "F_N_src",
+  "Delta": 0.106811,
+  "reduction_loss": 0.106811,
+  "Delta_by_class": {
+    "F0": 0.42,
+    "F_int": 0.0,
+    "F_H": 0.213622,
+    "F_N_src": 0.106811
+  },
+  "I_pre": 0.6743235322764167,
+  "i_pre": 0.6743235322764167,
+  "rho": 0.8,
+  "action": "block",
+  "chi_Auto": false,
+  "chi_R": 1,
+  "chi_R_crit": 1,
+  "risk_breakdown": {
+    "rho_p": 0.7035770563720608,
+    "u_M": 0.5928458872558784,
+    "interpretability_gap": 0.3256764677235833,
+    "reduction_loss": 0.106811,
+    "chi_R": 1,
+    "weights": {
+      "predicted_risk": 0.7,
+      "uncertainty": 0.05,
+      "interpretability_gap": 0.05,
+      "reduction_loss": 0.05,
+      "chi_R": 0.15
+    },
+    "contributions": {
+      "predicted_risk": 0.4925039394604425,
+      "uncertainty": 0.02964229436279392,
+      "interpretability_gap": 0.016283823386179164,
+      "reduction_loss": 0.00534055,
+      "chi_R": 0.15
+    },
+    "rho": 0.8,
+    "threshold": 0.8,
+    "chi_R_crit": 1,
+    "final_action": "block",
+    "reason": "critical rupture"
+  }
+}

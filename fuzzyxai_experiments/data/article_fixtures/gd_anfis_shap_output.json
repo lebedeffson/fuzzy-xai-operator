@@ -1,0 +1,36 @@
+{
+  "registry_id": "gd_anfis_shap",
+  "status": "source-pending",
+  "source_repo": "source-not-provided:gd_anfis_shap",
+  "source_commit": "source-not-pinned",
+  "sample_id": "gd_anfis_fixture_001",
+  "model_output": {
+    "predicted_class": 1,
+    "probability": 0.74
+  },
+  "gd_anfis_rules": [
+    {"id": "r_high_marker", "condition": "marker is high", "conclusion": "risk high", "quality": 0.82},
+    {"id": "r_pressure_medium", "condition": "pressure is medium", "conclusion": "risk medium", "quality": 0.71},
+    {"id": "r_age_low", "condition": "age is low", "conclusion": "risk lower", "quality": 0.64}
+  ],
+  "rule_activations": {
+    "r_high_marker": 0.86,
+    "r_pressure_medium": 0.48,
+    "r_age_low": 0.18
+  },
+  "shap_values": {
+    "marker": 0.41,
+    "pressure": 0.19,
+    "age": -0.08
+  },
+  "rule_uncertainty": {
+    "r_high_marker": 0.18,
+    "r_pressure_medium": 0.29,
+    "r_age_low": 0.36
+  },
+  "run_params": {
+    "seed": 20260609,
+    "adapter_version": "1.0",
+    "fixture_note": "Reproducible local fixture; not a pinned external benchmark."
+  }
+}

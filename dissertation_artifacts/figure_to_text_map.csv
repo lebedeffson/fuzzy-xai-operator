@@ -1,0 +1,8 @@
+figure_id,chapter,section,insert_after_heading,text_reference_sentence,required
+fig_2_1,2,2.x,core operator route,"Как показано на рис. 2.1, ...",True
+fig_2_4,2,2.x,composition scheme,"Как показано на рис. 2.4, ...",True
+fig_3_2,3,3.x,representation hierarchy,"Как показано на рис. 3.2, ...",True
+fig_3_8,3,3.x,topos sample_113,"Как показано на рис. 3.8, ...",True
+fig_4_1,4,4.x,SDK/API interfaces,"Как показано на рис. 4.1, ...",True
+fig_5_1,5,5.x,scenario route,"Как показано на рис. 5.1, ...",True
+fig_5_2,5,5.x,HYBRID-XIRIS route,"Как показано на рис. 5.2, ...",True

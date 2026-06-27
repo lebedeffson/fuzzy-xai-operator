@@ -1,0 +1,9 @@
+chapter,figure_id,status,type,source_spec,will_be_redrawn,notes
+2,2.1,keep,diagram,diagram_specs/chapter2/fig_2_1_operator.json,True,core operator route
+2,2.4,keep,diagram,diagram_specs/chapter2/fig_2_4_composition.json,True,composition scheme
+3,3.2,keep,diagram,diagram_specs/chapter3/fig_3_2_hierarchy.json,True,representation hierarchy
+3,3.8,keep,diagram,diagram_specs/chapter3/fig_3_8_chi_auto_sample113.json,True,topos sample_113
+4,4.1,keep,diagram,diagram_specs/chapter4/fig_4_1_open_interfaces.json,True,SDK/API interfaces
+4,4.app,appendix,screenshot,appendix/app_gui_screenshots,False,GUI screenshots only in appendix
+5,5.1,keep,diagram,diagram_specs/chapter5/fig_5_1_general_scenario_route.json,True,scenario route
+5,5.2,keep,diagram,diagram_specs/chapter5/fig_5_2_hybrid_xiris_route.json,True,HYBRID-XIRIS route

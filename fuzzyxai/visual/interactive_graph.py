@@ -68,4 +68,12 @@ def composition_plotly_figure(edges: Sequence[Tuple[str, ExplanationObject, str,
 
 def save_composition_html(edges, beta, path: str | Path) -> None:
     fig = composition_plotly_figure(edges, beta)
-    fig.write_html(str(path), include_plotlyjs='cdn')
+    div_id = Path(path).stem.replace('-', '_')
+    try:
+        fig.write_html(str(path), include_plotlyjs='cdn', div_id=div_id)
+    except TypeError:
+        import re
+
+        html = fig.to_html(include_plotlyjs='cdn', full_html=True)
+        html = re.sub(r'id="[a-f0-9-]{32,36}"', f'id="{div_id}"', html, count=1)
+        Path(path).write_text(html, encoding='utf-8')
