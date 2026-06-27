@@ -426,24 +426,6 @@
       "criticality": "high",
       "chi_R_crit": 1,
       "recommended_action": "block"
-    },
-    {
-      "diagnostic_id": "D_source_conflict",
-      "type": "critical_rupture",
-      "source": "segmentation_quality",
-      "reason": "Модель поддерживает принятие, но низкое качество сегментации и конфликт источников дают критический разрыв.",
-      "criticality": "high",
-      "chi_R_crit": 1,
-      "recommended_action": "block"
-    },
-    {
-      "diagnostic_id": "D_source_conflict",
-      "type": "critical_rupture",
-      "source": "segmentation_quality",
-      "reason": "Модель поддерживает принятие, но низкое качество сегментации и конфликт источников дают критический разрыв.",
-      "criticality": "high",
-      "chi_R_crit": 1,
-      "recommended_action": "block"
     }
   ],
   "runs": [
@@ -464,24 +446,6 @@
         "action_policy"
       ],
       "diagnostics": [
-        {
-          "diagnostic_id": "D_source_conflict",
-          "type": "critical_rupture",
-          "source": "segmentation_quality",
-          "reason": "Модель поддерживает принятие, но низкое качество сегментации и конфликт источников дают критический разрыв.",
-          "criticality": "high",
-          "chi_R_crit": 1,
-          "recommended_action": "block"
-        },
-        {
-          "diagnostic_id": "D_source_conflict",
-          "type": "critical_rupture",
-          "source": "segmentation_quality",
-          "reason": "Модель поддерживает принятие, но низкое качество сегментации и конфликт источников дают критический разрыв.",
-          "criticality": "high",
-          "chi_R_crit": 1,
-          "recommended_action": "block"
-        },
         {
           "diagnostic_id": "D_source_conflict",
           "type": "critical_rupture",

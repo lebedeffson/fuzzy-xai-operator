@@ -22,6 +22,51 @@ STATUS_COLOR = {
     "info": "#2563eb",
 }
 
+STATUS_LABELS = {
+    "connected": "подключено",
+    "verified": "проверено",
+    "scenario_run_verified": "сценарный прогон",
+    "source_pending": "источник уточняется",
+    "source-pending": "источник уточняется",
+    "fixture-certified": "проверочный стенд",
+    "limited": "ограниченный вывод",
+    "blocked": "блокировка",
+    "passed": "пройдено",
+    "warning": "предупреждение",
+    "critical": "критично",
+    "info": "инфо",
+}
+
+STATUS_COLORS = {
+    "connected": "#2563eb",
+    "verified": "#059669",
+    "scenario_run_verified": "#0f766e",
+    "source_pending": "#d97706",
+    "source-pending": "#d97706",
+    "fixture-certified": "#0f766e",
+    "limited": "#7c3aed",
+    "blocked": "#dc2626",
+    **STATUS_COLOR,
+}
+
+
+def collect_unique_diagnostics(pipeline: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    seen: set[tuple[Any, Any, Any, Any]] = set()
+    out: list[dict[str, Any]] = []
+    for node in pipeline:
+        for diagnostic in node.get("diagnostics", []):
+            key = (
+                diagnostic.get("diagnostic_id"),
+                diagnostic.get("type"),
+                diagnostic.get("source"),
+                diagnostic.get("recommended_action"),
+            )
+            if key in seen:
+                continue
+            seen.add(key)
+            out.append(diagnostic)
+    return out
+
 
 def _node(
     node_id: str,
@@ -246,7 +291,7 @@ def _scenario(
     charts: dict[str, Any],
 ) -> dict[str, Any]:
     nodes, edges = _base_pipeline(final_action, rupture, {"data_type": data_type, **values})
-    diagnostics = [d for n in nodes for d in n.get("diagnostics", [])]
+    diagnostics = collect_unique_diagnostics(nodes)
     run_id = f"{scenario_id}_case_001"
     report = {
         "run_id": run_id,
@@ -412,6 +457,7 @@ def load_scenarios(directory: Path = SCENARIO_DIR) -> list[dict[str, Any]]:
 
 def build_report(scenario: dict[str, Any]) -> dict[str, Any]:
     report = deepcopy((scenario.get("runs") or [{}])[0])
+    report["diagnostics"] = collect_unique_diagnostics(scenario.get("pipeline", []))
     report["timestamp_generated"] = datetime.now(timezone.utc).isoformat()
     trace = report.setdefault("trace", {})
     trace["timestamp"] = report["timestamp_generated"]
@@ -422,7 +468,7 @@ def build_report(scenario: dict[str, Any]) -> dict[str, Any]:
             "operator_id": node.get("operator", {}).get("operator_id"),
             "status": node.get("status"),
             "computed": node.get("computed", {}),
-            "diagnostics": node.get("diagnostics", []),
+            "diagnostics": collect_unique_diagnostics([node]),
         }
         for node in scenario.get("pipeline", [])
     ]
@@ -579,10 +625,13 @@ def build_ecosystem_entities(scenarios: list[dict[str, Any]] | None = None) -> d
         },
     ]
     operator_map: dict[str, dict[str, Any]] = {}
+    verified_operator_ids = {"build_Ek", "T_ij", "select_F", "Delta", "risk_observer", "action_policy"}
+    technical_operator_ids = {"input", "adapter", "report_export"}
     for scenario in scenarios:
         for node in scenario.get("pipeline", []):
             op = node.get("operator", {})
             op_id = str(op.get("operator_id", node.get("node_id")))
+            status = "verified" if op_id in verified_operator_ids else ("connected" if op_id in technical_operator_ids else "limited")
             if op_id not in operator_map:
                 operator_map[op_id] = {
                     "id": op_id,
@@ -591,7 +640,7 @@ def build_ecosystem_entities(scenarios: list[dict[str, Any]] | None = None) -> d
                     "subtitle": f"глава {op.get('source_chapter', '')}",
                     "description": op.get("description", ""),
                     "tags": [f"chapter-{op.get('source_chapter', '')}", node.get("node_type", "")],
-                    "status": "connected",
+                    "status": status,
                     "chapter": str(op.get("source_chapter", "")),
                     "formula": op.get("formula_latex", ""),
                     "checks": [],

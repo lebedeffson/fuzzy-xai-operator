@@ -23,33 +23,15 @@
       "criticality": "high",
       "chi_R_crit": 1,
       "recommended_action": "block"
-    },
-    {
-      "diagnostic_id": "D_source_conflict",
-      "type": "critical_rupture",
-      "source": "segmentation_quality",
-      "reason": "Модель поддерживает принятие, но низкое качество сегментации и конфликт источников дают критический разрыв.",
-      "criticality": "high",
-      "chi_R_crit": 1,
-      "recommended_action": "block"
-    },
-    {
-      "diagnostic_id": "D_source_conflict",
-      "type": "critical_rupture",
-      "source": "segmentation_quality",
-      "reason": "Модель поддерживает принятие, но низкое качество сегментации и конфликт источников дают критический разрыв.",
-      "criticality": "high",
-      "chi_R_crit": 1,
-      "recommended_action": "block"
     }
   ],
   "trace": {
     "model_version": "demo-model-v1",
     "adapter_version": "adapter-hybrid_xiris-v1",
-    "timestamp": "2026-06-27T00:33:10.197402+00:00",
-    "hash": "c0830c9203648515"
+    "timestamp": "2026-06-27T00:41:25.068235+00:00",
+    "hash": "c175b215c45e60a5"
   },
-  "timestamp_generated": "2026-06-27T00:33:10.197402+00:00",
+  "timestamp_generated": "2026-06-27T00:41:25.068235+00:00",
   "operators": [
     {
       "node_id": "input_artifact",

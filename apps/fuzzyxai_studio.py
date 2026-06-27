@@ -13,6 +13,8 @@ if str(ROOT) not in sys.path:
 
 from fuzzyxai.studio.operator_scenarios import (  # noqa: E402
     STATUS_COLOR,
+    STATUS_COLORS,
+    STATUS_LABELS,
     build_ecosystem_entities,
     build_report,
     ensure_scenario_json_files,
@@ -37,7 +39,11 @@ def _color(status: str) -> str:
         "fixture-certified": "#16a34a",
         "scenario_run_verified": "#16a34a",
     }
-    return mapping.get(str(status), STATUS_COLOR.get(str(status), "#334155"))
+    return STATUS_COLORS.get(str(status), mapping.get(str(status), STATUS_COLOR.get(str(status), "#334155")))
+
+
+def _status_label(status: str) -> str:
+    return STATUS_LABELS.get(str(status), str(status).replace("_", " "))
 
 
 def _fmt(value: Any) -> str:
@@ -106,6 +112,31 @@ def run(port: int = 8097) -> None:
     articles_by_id = {a["id"]: a for a in ecosystem["articles"]}
     operators_by_id = {o["id"]: o for o in ecosystem["operators"]}
 
+    def scenario_operator_ids(scenario_id: str) -> list[str]:
+        scenario = scenario_by_id.get(scenario_id, {})
+        ids: list[str] = []
+        for node in scenario.get("pipeline", []):
+            op_id = node.get("operator", {}).get("operator_id")
+            if op_id and op_id not in ids:
+                ids.append(op_id)
+        return ids
+
+    def model_operator_ids(model: dict[str, Any]) -> list[str]:
+        ids: list[str] = []
+        for sid in model.get("usedIn", []):
+            for op_id in scenario_operator_ids(sid):
+                if op_id not in ids:
+                    ids.append(op_id)
+        return ids
+
+    def operator_model_ids(operator_id: str) -> list[str]:
+        out: list[str] = []
+        operator = operators_by_id.get(operator_id, {})
+        for model in ecosystem["models"]:
+            if any(sid in operator.get("usedInScenarios", []) for sid in model.get("usedIn", [])):
+                out.append(model["id"])
+        return out
+
     state = {
         "view": "ecosystem",
         "scenario_id": "hybrid_xiris" if "hybrid_xiris" in scenario_by_id else scenarios[0]["scenario_id"],
@@ -132,11 +163,19 @@ def run(port: int = 8097) -> None:
           .fx-nav { display:flex; gap:6px; flex-wrap:wrap; }
           .fx-nav button { border:1px solid var(--fx-border); background:white; border-radius:8px; padding:8px 12px; font-weight:650; }
           .fx-nav button.active { background:#0f766e; color:white; border-color:#0f766e; }
+          .fx-hero { background:linear-gradient(135deg,#ffffff 0%,#ecfeff 100%); border:1px solid #b7ede7; border-radius:12px; padding:24px; margin:6px 0 14px; }
+          .fx-hero h1 { font-size:34px; line-height:1.05; margin:0 0 8px; font-weight:820; letter-spacing:0; }
+          .fx-hero-route { display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-top:14px; color:#0f766e; font-weight:760; }
+          .fx-hero-route span { background:white; border:1px solid #99f6e4; border-radius:999px; padding:5px 10px; }
           .fx-card { background:var(--fx-card); border:1px solid var(--fx-border); border-radius:8px; padding:14px; }
+          .fx-metric { background:white; border:1px solid var(--fx-border); border-radius:10px; padding:14px; min-height:90px; }
+          .fx-metric-value { font-size:28px; font-weight:840; color:#0f172a; line-height:1; }
+          .fx-metric-label { margin-top:8px; color:var(--fx-muted); font-size:12px; font-weight:700; text-transform:uppercase; }
+          .fx-main-finding { padding:14px 16px; border-radius:8px; background:#ecfeff; border:1px solid #99f6e4; color:#0f172a; font-size:14px; }
           .fx-grid-4 { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px; }
           .fx-grid-3 { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
           .fx-grid-2 { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
-          .fx-entity { border:1px solid var(--fx-border); border-radius:8px; padding:12px; background:white; cursor:pointer; min-height:150px; }
+          .fx-entity { border:1px solid var(--fx-border); border-radius:8px; padding:12px; background:white; cursor:pointer; min-height:158px; }
           .fx-entity.active { border-color:var(--fx-accent); box-shadow:0 0 0 2px rgba(15,118,110,.12); }
           .fx-entity-title { font-size:16px; font-weight:740; line-height:1.2; }
           .fx-badge { display:inline-flex; align-items:center; border-radius:999px; padding:3px 8px; font-size:12px; font-weight:650; background:#eef2f7; color:#334155; }
@@ -144,10 +183,13 @@ def run(port: int = 8097) -> None:
           .fx-map { display:grid; grid-template-columns: repeat(6, minmax(120px,1fr)); gap:8px; align-items:stretch; }
           .fx-map-step { border:1px solid var(--fx-border); background:white; border-radius:8px; padding:12px; text-align:center; min-height:92px; }
           .fx-map-arrow { color:var(--fx-muted); text-align:center; margin-top:8px; }
-          .fx-workspace { display:grid; grid-template-columns:280px minmax(0,1fr) 390px; gap:12px; align-items:start; }
-          .fx-pipeline { display:flex; gap:8px; overflow-x:auto; padding-bottom:4px; }
-          .fx-node { min-width:136px; min-height:96px; border:2px solid var(--c); background:white; border-radius:8px; padding:10px; cursor:pointer; text-align:left; }
-          .fx-node.active { box-shadow:0 0 0 3px rgba(37,99,235,.16); }
+          .fx-workspace { display:grid; grid-template-columns:300px minmax(0,1fr) 410px; gap:12px; align-items:start; }
+          .fx-hybrid-header { background:white; border:1px solid var(--fx-border); border-radius:12px; padding:18px; margin:0 0 12px; }
+          .fx-pipeline { display:flex; gap:10px; overflow-x:auto; padding:8px 2px 12px; align-items:stretch; }
+          .fx-node { position:relative; min-width:142px; min-height:104px; border:2px solid var(--c); background:white; border-radius:10px; padding:11px; cursor:pointer; text-align:left; }
+          .fx-node:after { content:"→"; position:absolute; right:-14px; top:42px; color:#94a3b8; font-weight:900; }
+          .fx-node:last-child:after { content:""; }
+          .fx-node.active { box-shadow:0 0 0 3px rgba(15,118,110,.18); transform:translateY(-1px); }
           .fx-node-title { font-weight:760; font-size:13px; line-height:1.18; }
           .fx-node-status { margin-top:7px; color:var(--c); font-size:12px; font-weight:760; }
           .fx-edge-strip { display:flex; gap:8px; overflow-x:auto; margin:8px 20px 0; }
@@ -155,6 +197,8 @@ def run(port: int = 8097) -> None:
           .fx-inspector-title { font-size:18px; font-weight:760; line-height:1.2; }
           .fx-section-title { font-size:14px; font-weight:760; margin:10px 0 6px; }
           .fx-human { border-left:4px solid var(--fx-accent); background:#f0fdfa; border-radius:4px; padding:9px 10px; font-size:14px; }
+          .fx-diagnostic { border-left:4px solid #dc2626; background:#fef2f2; border-radius:4px; padding:9px 10px; font-size:13px; margin-top:8px; }
+          .fx-link-list button { width:100%; justify-content:flex-start; }
           .fx-formula { background:#f8fafc; border:1px solid var(--fx-border); border-radius:8px; padding:10px; overflow-x:auto; }
           .fx-technical { max-height:360px; overflow:auto; font-size:12px; }
           .fx-action { font-size:24px; font-weight:800; }
@@ -211,7 +255,7 @@ def run(port: int = 8097) -> None:
         with ui.element("div").classes("fx-entity active" if active else "fx-entity").on("click", on_click):
             ui.html(f"<div class='fx-entity-title'>{entity.get('title')}</div>")
             ui.label(entity.get("subtitle", "")).classes("fx-muted")
-            ui.html(f"<span class='fx-badge status' style='--c:{c}'>{entity.get('status')}</span>").classes("mt-2")
+            ui.html(f"<span class='fx-badge status' style='--c:{c}'>{_status_label(entity.get('status', 'connected'))}</span>").classes("mt-2")
             ui.label(_short(entity.get("description", ""), 150)).classes("text-sm mt-2")
             tags = " ".join(f"<span class='fx-badge'>{t}</span>" for t in entity.get("tags", [])[:4])
             ui.html(tags).classes("mt-2")
@@ -219,8 +263,12 @@ def run(port: int = 8097) -> None:
 
     def render_ecosystem() -> None:
         with content:
-            ui.label("Экосистема FuzzyXAI").classes("text-2xl font-bold")
-            ui.label("Не dashboard с JSON, а карта связей: статья → модель → адаптер → оператор → сценарий → действие.").classes("fx-muted")
+            with ui.element("div").classes("fx-hero"):
+                ui.html("<h1>FuzzyXAI Studio</h1>")
+                ui.label("Исследовательская экосистема для проверки объяснительных маршрутов").classes("text-base")
+                with ui.element("div").classes("fx-hero-route"):
+                    for part in ["Публикации", "Модели", "Операторы", "Сценарии", "Действия"]:
+                        ui.html(f"<span>{part}</span>")
             with ui.element("div").classes("fx-grid-4 mt-3"):
                 for title, value in [
                     ("Публикации", len(ecosystem["articles"])),
@@ -228,9 +276,13 @@ def run(port: int = 8097) -> None:
                     ("Сценарии", len(ecosystem["scenarios"])),
                     ("Операторы", len(ecosystem["operators"])),
                 ]:
-                    with ui.element("div").classes("fx-card"):
-                        ui.label(str(value)).classes("text-3xl font-bold")
-                        ui.label(title).classes("fx-muted")
+                    with ui.element("div").classes("fx-metric"):
+                        ui.html(f"<div class='fx-metric-value'>{value}</div><div class='fx-metric-label'>{title}</div>")
+            with ui.element("div").classes("fx-card mt-3"):
+                ui.label("Главный проверенный маршрут").classes("text-lg font-bold")
+                with ui.element("div").classes("fx-main-finding mt-2"):
+                    ui.html("<b>HYBRID-XIRIS:</b> модель уверена → сегментация ненадёжна → конфликт источников → <b>BLOCK</b>")
+                ui.button("Открыть HYBRID-XIRIS workspace", on_click=lambda: set_view("scenario", scenario_id="hybrid_xiris", node_id="risk_observer")).props("unelevated color=teal").classes("mt-3")
             with ui.element("div").classes("fx-card mt-3"):
                 ui.label("Общая карта связей").classes("text-lg font-bold")
                 with ui.element("div").classes("fx-map mt-2"):
@@ -297,7 +349,7 @@ def run(port: int = 8097) -> None:
                 with ui.element("div").classes("fx-card"):
                     ui.label(model["title"]).classes("text-xl font-bold")
                     ui.label(model.get("description", "")).classes("text-sm mt-2")
-                    ui.html(f"<span class='fx-badge status' style='--c:{_color(model.get('status'))}'>{model.get('status')}</span>").classes("mt-2")
+                    ui.html(f"<span class='fx-badge status' style='--c:{_color(model.get('status'))}'>{_status_label(model.get('status', 'connected'))}</span>").classes("mt-2")
                 with ui.element("div").classes("fx-card"):
                     ui.label("Карточка модели").classes("text-lg font-bold")
                     ui.table(
@@ -317,6 +369,12 @@ def run(port: int = 8097) -> None:
                         s = scenario_by_id.get(sid)
                         if s:
                             ui.button(s["scenario_name"], on_click=lambda _e=None, x=sid: set_view("scenario", scenario_id=x, node_id="input_artifact")).props("outline")
+                    ui.label("Операторы").classes("fx-section-title")
+                    with ui.element("div").classes("fx-link-list"):
+                        for op_id in model_operator_ids(model):
+                            op = operators_by_id.get(op_id)
+                            if op:
+                                ui.button(op["title"], on_click=lambda _e=None, x=op_id: set_view("operator", operator_id=x)).props("flat dense")
 
     def render_scenarios() -> None:
         with content:
@@ -329,25 +387,64 @@ def run(port: int = 8097) -> None:
         scenario = current_scenario()
         node = current_node()
         report = build_report(scenario)
+        summary = scenario.get("summary", {})
         with content:
-            ui.label(scenario["scenario_name"]).classes("text-2xl font-bold")
-            ui.label(scenario.get("description", "")).classes("fx-muted")
+            with ui.element("div").classes("fx-hybrid-header"):
+                ui.label(scenario["scenario_name"]).classes("text-2xl font-bold")
+                ui.label("Биометрический сценарий: радужная оболочка" if scenario["scenario_id"] == "hybrid_xiris" else scenario.get("description", "")).classes("fx-muted")
+                if scenario["scenario_id"] == "hybrid_xiris":
+                    with ui.element("div").classes("fx-grid-4 mt-3"):
+                        for label, value in [
+                            ("Объектов", summary.get("objects_total", "—")),
+                            ("Принято", summary.get("accept", "—")),
+                            ("Снижено", summary.get("lower_confidence", "—")),
+                            ("Block", summary.get("block", "—")),
+                        ]:
+                            with ui.element("div").classes("fx-metric"):
+                                ui.html(f"<div class='fx-metric-value'>{value}</div><div class='fx-metric-label'>{label}</div>")
+                    with ui.element("div").classes("fx-main-finding mt-3"):
+                        ui.html(
+                            f"<b>Главный обнаруженный эффект:</b> модель поддерживает принятие, но низкое качество сегментации создаёт критический разрыв. "
+                            f"Пропуски critical: baseline {summary.get('baseline_critical_misses', '—')} → FuzzyXAI {summary.get('fuzzyxai_critical_misses', '—')}."
+                        )
+                else:
+                    ui.label(scenario.get("description", "")).classes("mt-1")
             with ui.element("div").classes("fx-workspace mt-3"):
                 with ui.element("div").classes("fx-card"):
-                    ui.label("Данные и модель").classes("text-lg font-bold")
-                    ui.table(
-                        columns=[{"name": "metric", "label": "Показатель", "field": "metric"}, {"name": "value", "label": "Значение", "field": "value"}],
-                        rows=_metric_rows(scenario.get("summary", {})),
-                        row_key="metric",
-                    ).classes("w-full")
+                    ui.label("Вход / модель").classes("text-lg font-bold")
+                    if scenario["scenario_id"] == "hybrid_xiris":
+                        ui.label("Neuro-fuzzy iris matcher").classes("font-bold mt-2")
+                        ui.label("score совпадения + активированные правила").classes("fx-muted")
+                        ui.label("Контрольный кейс").classes("fx-section-title")
+                        for label, value in [
+                            ("image_quality", "0.31"),
+                            ("segmentation_quality", "0.27"),
+                            ("model_match_signal", "0.88"),
+                            ("alpha_accept", "0.82"),
+                            ("alpha_block", "0.91"),
+                        ]:
+                            ui.html(f"<div class='fx-badge' style='margin:3px 3px 3px 0'>{label}: <b>{value}</b></div>")
+                        ui.label("Связанные модели").classes("fx-section-title")
+                        for mid in ["model_iris_quality", "model_iris_matcher"]:
+                            m = models_by_id.get(mid)
+                            if m:
+                                ui.button(m["title"], on_click=lambda _e=None, x=mid: set_view("model", model_id=x)).props("flat dense")
+                    else:
+                        ui.table(
+                            columns=[{"name": "metric", "label": "Показатель", "field": "metric"}, {"name": "value", "label": "Значение", "field": "value"}],
+                            rows=_metric_rows(summary),
+                            row_key="metric",
+                        ).classes("w-full")
                 with ui.element("div").classes("fx-card"):
                     ui.label("Маршрут операторов").classes("text-lg font-bold")
+                    if scenario["scenario_id"] == "hybrid_xiris":
+                        ui.label("Input image → Segmentation quality → Model score → Eₖ → Tᵢⱼ → NAS → Risk observer → BLOCK").classes("fx-muted")
                     with ui.element("div").classes("fx-pipeline mt-2"):
                         for n in scenario["pipeline"]:
                             c = _color(n.get("status"))
                             active = n["node_id"] == state["node_id"]
                             with ui.element("button").classes("fx-node active" if active else "fx-node").style(f"--c:{c}").on("click", lambda _e, nid=n["node_id"]: set_view("scenario", scenario_id=scenario["scenario_id"], node_id=nid)):
-                                ui.html(f"<div class='fx-node-title'>{n['title']}</div><div class='fx-node-status'>{n['status']}</div>")
+                                ui.html(f"<div class='fx-node-title'>{n['title']}</div><div class='fx-node-status'>{_status_label(n.get('status', 'info'))}</div>")
                     with ui.element("div").classes("fx-edge-strip"):
                         for e in scenario.get("edges", []):
                             ui.html(f"<div class='fx-edge' style='--c:{_color(e.get('status'))}'>{e.get('operator_id')} · {e.get('status')} →</div>")
@@ -363,10 +460,27 @@ def run(port: int = 8097) -> None:
         with ui.element("div").classes("fx-card"):
             ui.label(node.get("title", "")).classes("fx-inspector-title")
             ui.label(f"{op.get('operator_name')} · глава {op.get('source_chapter')}").classes("fx-muted")
+            ui.html(f"<span class='fx-badge status' style='--c:{_color(node.get('status', 'info'))}'>{_status_label(node.get('status', 'info'))}</span>").classes("mt-2")
             ui.label("Что проверяет").classes("fx-section-title")
             ui.label(op.get("description", "")).classes("text-sm")
-            ui.label("Человеческое объяснение").classes("fx-section-title")
+            ui.label("Что обнаружено").classes("fx-section-title")
+            if node.get("computed"):
+                first_items = list(node.get("computed", {}).items())[:3]
+                for key, value in first_items:
+                    ui.label(f"{key}: {_fmt(value)}").classes("text-sm")
+            else:
+                ui.label("Проверяемый участок маршрута готов к передаче дальше.").classes("text-sm")
+            ui.label("Почему это важно").classes("fx-section-title")
             ui.html(f"<div class='fx-human'>{node.get('effect_on_final_action', 'Проверяет участок объяснительного маршрута.')}</div>")
+            if node.get("output"):
+                ui.label("Выход").classes("fx-section-title")
+                for key, value in node.get("output", {}).items():
+                    ui.html(f"<span class='fx-badge'>{key}: <b>{_fmt(value)}</b></span>").classes("mr-1")
+            diagnostics = node.get("diagnostics", [])
+            if diagnostics:
+                ui.label("Диагностика").classes("fx-section-title")
+                for d in diagnostics:
+                    ui.html(f"<div class='fx-diagnostic'><b>{d.get('type', 'diagnostic')}</b>: {d.get('reason', '')}<br>действие: <b>{d.get('recommended_action', '')}</b></div>")
             ui.label("Входные сигналы").classes("fx-section-title")
             ui.table(
                 columns=[{"name": "metric", "label": "Сигнал", "field": "metric"}, {"name": "value", "label": "Значение", "field": "value"}],
@@ -405,16 +519,23 @@ def run(port: int = 8097) -> None:
                     ui.html(f"<div class='fx-formula'>\\({operator.get('formula', '')}\\)</div>")
                 with ui.element("div").classes("fx-card"):
                     ui.label("Где используется").classes("text-lg font-bold")
-                    for sid in sorted(set(operator.get("usedInScenarios", []))):
-                        s = scenario_by_id.get(sid)
-                        if s:
-                            ui.button(s["scenario_name"], on_click=lambda _e=None, x=sid: set_view("scenario", scenario_id=x, node_id="alignment")).props("flat").classes("w-full justify-start")
+                    with ui.element("div").classes("fx-link-list"):
+                        for sid in sorted(set(operator.get("usedInScenarios", []))):
+                            s = scenario_by_id.get(sid)
+                            if s:
+                                ui.button(s["scenario_name"], on_click=lambda _e=None, x=sid: set_view("scenario", scenario_id=x, node_id="alignment")).props("flat dense")
+                    ui.label("Связанные модели").classes("fx-section-title")
+                    with ui.element("div").classes("fx-link-list"):
+                        for mid in operator_model_ids(operator["id"]):
+                            m = models_by_id.get(mid)
+                            if m:
+                                ui.button(m["title"], on_click=lambda _e=None, x=mid: set_view("model", model_id=x)).props("flat dense")
                     ui.label("Типовые исходы").classes("fx-section-title")
                     for out in operator.get("possibleOutcomes", []):
                         ui.html(f"<span class='fx-badge'>{out}</span>").classes("mr-1")
                 with ui.element("div").classes("fx-card"):
                     ui.label("Реальные срабатывания").classes("text-lg font-bold")
-                    for case in operator.get("realCases", [])[:6]:
+                    for case in operator.get("realCases", [])[:8]:
                         with ui.element("div").classes("fx-card mt-2"):
                             ui.label(case.get("scenario_name", "")).classes("font-bold")
                             ui.label(f"{case.get('node_title')} · {case.get('status')}").classes("fx-muted")
