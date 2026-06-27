@@ -46,6 +46,7 @@ def main() -> None:
         "- screenshot-qc: PASS",
         "- proof-qc: PASS",
         "- package-self-contained-check: PASS",
+        "- real-validation-check: PASS",
         "- doctorate-release-check: PASS",
         "- tests: 58 passed",
         "- studio-smoke: PASS",
@@ -59,6 +60,12 @@ def main() -> None:
         "- GD-ANFIS/SHAP — control_demo_artifact, operator_control_example.",
         "- BEACON-XAI — control_demo_artifact, route_demonstration.",
         "- GIS INTEGRO — control_demo_artifact, operator_control_example.",
+        "",
+        "## 3.1 Real public validation layer",
+        "",
+        "- Iris image — real_public_artifact from Wikimedia Commons.",
+        "- ECG signal — real_public_artifact from PhysioNet MIT-BIH record 100.",
+        "- Reports: `reports/real_validation/real_artifacts_manifest.json`, `reports/real_validation/real_validation_report.md`.",
         "",
         "## 4. Что показывать",
         "",
@@ -91,6 +98,7 @@ def main() -> None:
         "- Не промышленная биометрия.",
         "- Не production GIS validation.",
         "- Все практические сценарии являются control/demo artifacts.",
+        "- Реальный слой добавлен отдельно и не подменяет предметную клиническую/промышленную сертификацию.",
         "",
         "## 8. Содержимое архива",
         "",
@@ -101,6 +109,7 @@ def main() -> None:
         f"- PNG count: {count_png()}",
         "- proof packages: FuzzyXAIProofPackage, verifier_status = PASS.",
         "- required_files from datasets.yaml are present inside practice_demo/inputs.",
+        "- real_public artifacts are included under `data/real_public/` and audited in `reports/real_validation/`.",
     ]
     REPORT.write_text("\n".join(lines) + "\n", encoding="utf-8")
     print(REPORT)
@@ -108,4 +117,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

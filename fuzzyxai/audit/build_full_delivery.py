@@ -35,8 +35,10 @@ def main() -> None:
         ROOT / "reports/training",
         ROOT / "reports/evaluation",
         ROOT / "reports/audit",
+        ROOT / "reports/real_validation",
         ROOT / "reports/studio_batch",
         ROOT / "reports/chapter5/studio_tables",
+        ROOT / "data/real_public",
     ]
     fixed = (2024, 1, 1, 0, 0, 0)
     seen: set[str] = set()
@@ -65,4 +67,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-
