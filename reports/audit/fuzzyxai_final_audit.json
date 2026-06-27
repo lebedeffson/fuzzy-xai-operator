@@ -1,24 +1,17 @@
 {
-  "source_commit": "9e2735b",
-  "artifact_commit": "9e2735b",
+  "source_commit": "1589816",
+  "artifact_commit": "1589816",
   "audit_branch": "audit/fuzzyxai-final-readiness",
   "working_tree_clean": false,
   "working_tree_dirty_ignored_paths": [
-    "fuzzyxai_final_audit_package.zip",
     "reports/audit/artifact_inventory.csv",
-    "reports/audit/fuzzyxai_final_audit.json",
-    "reports/audit/fuzzyxai_final_audit.md",
     "reports/audit/stale_terms_report.md",
     "reports/studio_batch/hybrid_xiris_proof_package.json",
-    "visual_artifacts_latest.zip",
     "3 \\320\\263\\320\\273\\320\\260\\320\\262\\320\\260.docx",
     "glava_4_FuzzyXAI_corrected_final(1).docx",
     "glava_5_FuzzyXAI_corrected_final(1).docx",
     "\\320\\263\\320\\273\\320\\260\\320\\262\\320\\260 2.docx"
   ],
-  "working_tree_dirty_unignored_paths": [
-    "fuzzyxai/audit/common.py",
-    "fuzzyxai/core/proof_package.py"
-  ],
+  "working_tree_dirty_unignored_paths": [],
   "issues": []
 }

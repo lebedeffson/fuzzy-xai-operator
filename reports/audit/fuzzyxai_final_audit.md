@@ -6,18 +6,18 @@
 
 ## 2. Ветка и commit
 
-Source commit: `9e2735b`
-Artifact commit: `9e2735b`
+Source commit: `1589816`
+Artifact commit: `1589816`
 Branch: `audit/fuzzyxai-final-readiness`
 Working tree clean: `False`
 
 ## 3. Source commit / artifact commit
 
-- source_commit: `9e2735b`
-- artifact_commit: `9e2735b`
+- source_commit: `1589816`
+- artifact_commit: `1589816`
 - audit_branch: `audit/fuzzyxai-final-readiness`
-- dirty ignored paths: `11`
-- dirty unignored paths: `2`
+- dirty ignored paths: `7`
+- dirty unignored paths: `0`
 
 ## Краткий статус
 
