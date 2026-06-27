@@ -25,7 +25,7 @@ INCLUDE = [
 
 RUNTIME_INCLUDE = [
     "fuzzyxai",
-    "apps/fuzzyxai_studio.py",
+    "apps",
     "configs/studio_scenarios",
     "reports/audit",
     "reports/studio",
