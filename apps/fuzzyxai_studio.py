@@ -46,6 +46,23 @@ def _status_label(status: str) -> str:
     return STATUS_LABELS.get(str(status), str(status).replace("_", " "))
 
 
+NODE_TITLE_RU = {
+    "Input Artifact": "Входной артефакт",
+    "Adapter": "Адаптер",
+    "Explanation Object Eₖ": "Объект Eₖ",
+    "Interface Alignment Tᵢⱼ": "Согласование Tᵢⱼ",
+    "Uncertainty Representation F": "Представление F",
+    "Reduction Δ": "Редукция Δ",
+    "Risk Observer": "Риск-наблюдатель",
+    "Action": "Действие",
+    "Report / Proof Package": "Доказательный пакет",
+}
+
+
+def _node_title(node: dict[str, Any]) -> str:
+    return NODE_TITLE_RU.get(str(node.get("title", "")), str(node.get("title", "")))
+
+
 def _fmt(value: Any) -> str:
     if isinstance(value, float):
         return f"{value:.4f}"
@@ -63,6 +80,19 @@ def _metric_rows(mapping: dict[str, Any]) -> list[dict[str, str]]:
 def _short(text: str, limit: int = 120) -> str:
     text = str(text)
     return text if len(text) <= limit else text[: limit - 1] + "…"
+
+
+def _compact_bar_html(title: str, rows: list[tuple[str, int, str]]) -> str:
+    max_value = max([value for _, value, _ in rows] or [1])
+    bars = []
+    for label, value, color in rows:
+        width = 0 if max_value == 0 else max(3, round(value / max_value * 100))
+        bars.append(
+            f"<div class='fx-bar-row'><div class='fx-bar-label'>{label}</div>"
+            f"<div class='fx-bar-track'><div class='fx-bar-fill' style='width:{width}%;background:{color}'></div></div>"
+            f"<div class='fx-bar-value'>{value}</div></div>"
+        )
+    return f"<div class='fx-compact-chart'><div class='fx-compact-title'>{title}</div>{''.join(bars)}</div>"
 
 
 def _scenario_action_chart(summary: dict[str, Any]) -> dict[str, Any]:
@@ -172,6 +202,11 @@ def run(port: int = 8097) -> None:
           .fx-metric-value { font-size:28px; font-weight:840; color:#0f172a; line-height:1; }
           .fx-metric-label { margin-top:8px; color:var(--fx-muted); font-size:12px; font-weight:700; text-transform:uppercase; }
           .fx-main-finding { padding:14px 16px; border-radius:8px; background:#ecfeff; border:1px solid #99f6e4; color:#0f172a; font-size:14px; }
+          .fx-action-banner { border-radius:12px; padding:16px 18px; margin:14px 0; border:1px solid; }
+          .fx-action-banner.blocked { background:#fff1f2; border-color:#fecdd3; color:#881337; }
+          .fx-action-label { font-size:12px; font-weight:850; text-transform:uppercase; letter-spacing:.06em; opacity:.76; }
+          .fx-action-title { font-size:32px; font-weight:900; margin-top:3px; line-height:1; }
+          .fx-action-reason { margin-top:8px; color:#3f1d24; font-size:14px; }
           .fx-grid-4 { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px; }
           .fx-grid-3 { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
           .fx-grid-2 { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
@@ -183,22 +218,33 @@ def run(port: int = 8097) -> None:
           .fx-map { display:grid; grid-template-columns: repeat(6, minmax(120px,1fr)); gap:8px; align-items:stretch; }
           .fx-map-step { border:1px solid var(--fx-border); background:white; border-radius:8px; padding:12px; text-align:center; min-height:92px; }
           .fx-map-arrow { color:var(--fx-muted); text-align:center; margin-top:8px; }
-          .fx-workspace { display:grid; grid-template-columns:300px minmax(0,1fr) 410px; gap:12px; align-items:start; }
+          .fx-workspace { display:grid; grid-template-columns:270px minmax(0,1fr) 380px; gap:12px; align-items:start; }
           .fx-hybrid-header { background:white; border:1px solid var(--fx-border); border-radius:12px; padding:18px; margin:0 0 12px; }
-          .fx-pipeline { display:flex; gap:10px; overflow-x:auto; padding:8px 2px 12px; align-items:stretch; }
-          .fx-node { position:relative; min-width:142px; min-height:104px; border:2px solid var(--c); background:white; border-radius:10px; padding:11px; cursor:pointer; text-align:left; }
-          .fx-node:after { content:"→"; position:absolute; right:-14px; top:42px; color:#94a3b8; font-weight:900; }
-          .fx-node:last-child:after { content:""; }
+          .fx-pipeline { display:grid; grid-template-columns:repeat(auto-fit,minmax(118px,1fr)); gap:10px; overflow:visible; padding:8px 2px 12px; align-items:stretch; }
+          .fx-node { position:relative; min-height:108px; border:2px solid var(--c); background:white; border-radius:10px; padding:11px; cursor:pointer; text-align:left; }
           .fx-node.active { box-shadow:0 0 0 3px rgba(15,118,110,.18); transform:translateY(-1px); }
+          .fx-node-index { width:24px; height:24px; border-radius:999px; display:flex; align-items:center; justify-content:center; background:#eef2f7; color:#334155; font-size:12px; font-weight:850; margin-bottom:8px; }
           .fx-node-title { font-weight:760; font-size:13px; line-height:1.18; }
           .fx-node-status { margin-top:7px; color:var(--c); font-size:12px; font-weight:760; }
-          .fx-edge-strip { display:flex; gap:8px; overflow-x:auto; margin:8px 20px 0; }
-          .fx-edge { min-width:128px; border-top:3px solid var(--c); color:var(--c); padding-top:4px; font-size:11px; white-space:nowrap; }
+          .fx-inspector-head { border:1px solid var(--fx-border); border-radius:10px; padding:12px; margin-bottom:10px; background:#f8fafc; }
+          .fx-inspector-head.blocked, .fx-inspector-head.critical { background:#fff1f2; border-color:#fecdd3; color:#881337; }
+          .fx-inspector-head.warning { background:#fffbeb; border-color:#fde68a; color:#713f12; }
+          .fx-inspector-kicker { font-size:12px; font-weight:760; opacity:.78; }
           .fx-inspector-title { font-size:18px; font-weight:760; line-height:1.2; }
           .fx-section-title { font-size:14px; font-weight:760; margin:10px 0 6px; }
           .fx-human { border-left:4px solid var(--fx-accent); background:#f0fdfa; border-radius:4px; padding:9px 10px; font-size:14px; }
           .fx-diagnostic { border-left:4px solid #dc2626; background:#fef2f2; border-radius:4px; padding:9px 10px; font-size:13px; margin-top:8px; }
           .fx-link-list button { width:100%; justify-content:flex-start; }
+          .fx-chip-list { display:flex; flex-wrap:wrap; gap:6px; margin-top:6px; }
+          .fx-chip-list button { border:1px solid #cbd5e1; border-radius:999px; background:#f8fafc; padding:4px 8px; min-height:30px; font-size:12px; font-weight:700; }
+          .fx-compact-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; margin-top:10px; }
+          .fx-compact-chart { border:1px solid var(--fx-border); border-radius:10px; padding:12px; background:#fff; }
+          .fx-compact-title { font-weight:820; margin-bottom:10px; }
+          .fx-bar-row { display:grid; grid-template-columns:118px minmax(80px,1fr) 42px; align-items:center; gap:8px; margin:8px 0; font-size:12px; }
+          .fx-bar-label { color:#334155; font-weight:700; }
+          .fx-bar-track { height:10px; border-radius:999px; background:#e2e8f0; overflow:hidden; }
+          .fx-bar-fill { height:10px; border-radius:999px; }
+          .fx-bar-value { text-align:right; font-weight:820; color:#0f172a; }
           .fx-formula { background:#f8fafc; border:1px solid var(--fx-border); border-radius:8px; padding:10px; overflow-x:auto; }
           .fx-technical { max-height:360px; overflow:auto; font-size:12px; }
           .fx-action { font-size:24px; font-weight:800; }
@@ -398,10 +444,16 @@ def run(port: int = 8097) -> None:
                             ("Объектов", summary.get("objects_total", "—")),
                             ("Принято", summary.get("accept", "—")),
                             ("Снижено", summary.get("lower_confidence", "—")),
-                            ("Block", summary.get("block", "—")),
+                            ("Заблокировано", summary.get("block", "—")),
                         ]:
                             with ui.element("div").classes("fx-metric"):
                                 ui.html(f"<div class='fx-metric-value'>{value}</div><div class='fx-metric-label'>{label}</div>")
+                    with ui.element("div").classes("fx-action-banner blocked"):
+                        ui.html(
+                            "<div class='fx-action-label'>Итоговое действие</div>"
+                            "<div class='fx-action-title'>BLOCK</div>"
+                            f"<div class='fx-action-reason'>{report.get('action_reason')}</div>"
+                        )
                     with ui.element("div").classes("fx-main-finding mt-3"):
                         ui.html(
                             f"<b>Главный обнаруженный эффект:</b> модель поддерживает принятие, но низкое качество сегментации создаёт критический разрыв. "
@@ -425,10 +477,11 @@ def run(port: int = 8097) -> None:
                         ]:
                             ui.html(f"<div class='fx-badge' style='margin:3px 3px 3px 0'>{label}: <b>{value}</b></div>")
                         ui.label("Связанные модели").classes("fx-section-title")
-                        for mid in ["model_iris_quality", "model_iris_matcher"]:
-                            m = models_by_id.get(mid)
-                            if m:
-                                ui.button(m["title"], on_click=lambda _e=None, x=mid: set_view("model", model_id=x)).props("flat dense")
+                        with ui.element("div").classes("fx-chip-list"):
+                            for mid in ["model_iris_quality", "model_iris_matcher"]:
+                                m = models_by_id.get(mid)
+                                if m:
+                                    ui.button(f"Model · {m['title']}", on_click=lambda _e=None, x=mid: set_view("model", model_id=x)).props("flat dense")
                     else:
                         ui.table(
                             columns=[{"name": "metric", "label": "Показатель", "field": "metric"}, {"name": "value", "label": "Значение", "field": "value"}],
@@ -438,19 +491,37 @@ def run(port: int = 8097) -> None:
                 with ui.element("div").classes("fx-card"):
                     ui.label("Маршрут операторов").classes("text-lg font-bold")
                     if scenario["scenario_id"] == "hybrid_xiris":
-                        ui.label("Input image → Segmentation quality → Model score → Eₖ → Tᵢⱼ → NAS → Risk observer → BLOCK").classes("fx-muted")
+                        ui.label("Вход → качество сегментации → сигнал модели → Eₖ → Tᵢⱼ → NAS → риск-наблюдатель → BLOCK").classes("fx-muted")
                     with ui.element("div").classes("fx-pipeline mt-2"):
-                        for n in scenario["pipeline"]:
+                        for idx, n in enumerate(scenario["pipeline"], start=1):
                             c = _color(n.get("status"))
                             active = n["node_id"] == state["node_id"]
                             with ui.element("button").classes("fx-node active" if active else "fx-node").style(f"--c:{c}").on("click", lambda _e, nid=n["node_id"]: set_view("scenario", scenario_id=scenario["scenario_id"], node_id=nid)):
-                                ui.html(f"<div class='fx-node-title'>{n['title']}</div><div class='fx-node-status'>{_status_label(n.get('status', 'info'))}</div>")
-                    with ui.element("div").classes("fx-edge-strip"):
-                        for e in scenario.get("edges", []):
-                            ui.html(f"<div class='fx-edge' style='--c:{_color(e.get('status'))}'>{e.get('operator_id')} · {e.get('status')} →</div>")
-                    with ui.element("div").classes("fx-grid-2 mt-3"):
-                        ui.echart(_scenario_action_chart(scenario.get("summary", {}))).classes("h-60")
-                        ui.echart(_scenario_evidence_chart(scenario.get("summary", {}))).classes("h-60")
+                                ui.html(f"<div class='fx-node-index'>{idx}</div><div class='fx-node-title'>{_node_title(n)}</div><div class='fx-node-status'>{_status_label(n.get('status', 'info'))}</div>")
+                    if scenario["scenario_id"] == "hybrid_xiris":
+                        ui.html(
+                            "<div class='fx-compact-grid'>"
+                            + _compact_bar_html(
+                                "Распределение действий",
+                                [
+                                    ("accept", int(summary.get("accept", 0)), "#0f766e"),
+                                    ("lower confidence", int(summary.get("lower_confidence", 0)), "#d97706"),
+                                    ("block", int(summary.get("block", 0)), "#dc2626"),
+                                ],
+                            )
+                            + _compact_bar_html(
+                                "Критические пропуски",
+                                [
+                                    ("baseline", int(summary.get("baseline_critical_misses", 0)), "#b45309"),
+                                    ("FuzzyXAI", int(summary.get("fuzzyxai_critical_misses", 0)), "#0f766e"),
+                                ],
+                            )
+                            + "</div>"
+                        )
+                    else:
+                        with ui.element("div").classes("fx-grid-2 mt-3"):
+                            ui.echart(_scenario_action_chart(scenario.get("summary", {}))).classes("h-60")
+                            ui.echart(_scenario_evidence_chart(scenario.get("summary", {}))).classes("h-60")
                     with ui.element("div").classes("fx-human mt-3"):
                         ui.html(f"<b>Итог:</b> {report.get('final_action')}<br><b>Почему:</b> {report.get('action_reason')}")
                 render_inspector(node, scenario)
@@ -458,22 +529,17 @@ def run(port: int = 8097) -> None:
     def render_inspector(node: dict[str, Any], scenario: dict[str, Any]) -> None:
         op = node.get("operator", {})
         with ui.element("div").classes("fx-card"):
-            ui.label(node.get("title", "")).classes("fx-inspector-title")
-            ui.label(f"{op.get('operator_name')} · глава {op.get('source_chapter')}").classes("fx-muted")
-            ui.html(f"<span class='fx-badge status' style='--c:{_color(node.get('status', 'info'))}'>{_status_label(node.get('status', 'info'))}</span>").classes("mt-2")
+            status = node.get("status", "info")
+            with ui.element("div").classes(f"fx-inspector-head {status}"):
+                ui.html(f"<div class='fx-inspector-kicker'>{op.get('operator_name')} · глава {op.get('source_chapter')}</div>")
+                ui.html(f"<div class='fx-inspector-title'>{_node_title(node)}</div>")
+                ui.html(f"<span class='fx-badge status' style='--c:{_color(status)}'>{_status_label(status)}</span>").classes("mt-2")
             ui.label("Что проверяет").classes("fx-section-title")
             ui.label(op.get("description", "")).classes("text-sm")
-            ui.label("Что обнаружено").classes("fx-section-title")
-            if node.get("computed"):
-                first_items = list(node.get("computed", {}).items())[:3]
-                for key, value in first_items:
-                    ui.label(f"{key}: {_fmt(value)}").classes("text-sm")
-            else:
-                ui.label("Проверяемый участок маршрута готов к передаче дальше.").classes("text-sm")
-            ui.label("Почему это важно").classes("fx-section-title")
+            ui.label("Что произошло").classes("fx-section-title")
             ui.html(f"<div class='fx-human'>{node.get('effect_on_final_action', 'Проверяет участок объяснительного маршрута.')}</div>")
             if node.get("output"):
-                ui.label("Выход").classes("fx-section-title")
+                ui.label("Итог блока").classes("fx-section-title")
                 for key, value in node.get("output", {}).items():
                     ui.html(f"<span class='fx-badge'>{key}: <b>{_fmt(value)}</b></span>").classes("mr-1")
             diagnostics = node.get("diagnostics", [])
@@ -481,18 +547,18 @@ def run(port: int = 8097) -> None:
                 ui.label("Диагностика").classes("fx-section-title")
                 for d in diagnostics:
                     ui.html(f"<div class='fx-diagnostic'><b>{d.get('type', 'diagnostic')}</b>: {d.get('reason', '')}<br>действие: <b>{d.get('recommended_action', '')}</b></div>")
-            ui.label("Входные сигналы").classes("fx-section-title")
-            ui.table(
-                columns=[{"name": "metric", "label": "Сигнал", "field": "metric"}, {"name": "value", "label": "Значение", "field": "value"}],
-                rows=_metric_rows(node.get("inputs", {})),
-                row_key="metric",
-            ).classes("w-full")
-            ui.label("Что вычислено").classes("fx-section-title")
-            ui.table(
-                columns=[{"name": "metric", "label": "Величина", "field": "metric"}, {"name": "value", "label": "Значение", "field": "value"}],
-                rows=_metric_rows(node.get("computed", {})),
-                row_key="metric",
-            ).classes("w-full")
+            with ui.expansion("Входные сигналы", icon="input").classes("w-full mt-2"):
+                ui.table(
+                    columns=[{"name": "metric", "label": "Сигнал", "field": "metric"}, {"name": "value", "label": "Значение", "field": "value"}],
+                    rows=_metric_rows(node.get("inputs", {})),
+                    row_key="metric",
+                ).classes("w-full")
+            with ui.expansion("Что вычислено", icon="calculate").classes("w-full"):
+                ui.table(
+                    columns=[{"name": "metric", "label": "Величина", "field": "metric"}, {"name": "value", "label": "Значение", "field": "value"}],
+                    rows=_metric_rows(node.get("computed", {})),
+                    row_key="metric",
+                ).classes("w-full")
             with ui.expansion("Математическая проверка", icon="functions").classes("w-full mt-2"):
                 ui.html(f"<div class='fx-formula'>\\({op.get('formula_latex', '')}\\)</div>")
             with ui.expansion("Технический след", icon="data_object").classes("w-full"):
@@ -538,7 +604,7 @@ def run(port: int = 8097) -> None:
                     for case in operator.get("realCases", [])[:8]:
                         with ui.element("div").classes("fx-card mt-2"):
                             ui.label(case.get("scenario_name", "")).classes("font-bold")
-                            ui.label(f"{case.get('node_title')} · {case.get('status')}").classes("fx-muted")
+                            ui.label(f"{NODE_TITLE_RU.get(str(case.get('node_title')), case.get('node_title'))} · {_status_label(case.get('status', 'info'))}").classes("fx-muted")
                             ui.label(_short(case.get("effect", ""), 160)).classes("text-sm")
 
     def render_runs() -> None:
