@@ -3,8 +3,22 @@
   "schema_version": "1.0",
   "scenario_id": "hybrid_xiris",
   "run_id": "hybrid_xiris_case_001",
-  "created_at": "2026-06-27T13:27:22.807539+00:00",
-  "code_version": "d34baf0",
+  "created_at": "2026-06-27T14:12:08.119240+00:00",
+  "code_version": "538db39",
+  "source_commit": "538db39",
+  "artifact_commit": "538db39",
+  "audit_branch": "audit/fuzzyxai-final-readiness",
+  "working_tree_clean": false,
+  "working_tree_dirty_ignored_paths": [
+    "fuzzyxai_final_audit_package.zip",
+    "reports/audit/artifact_inventory.csv",
+    "reports/audit/fuzzyxai_final_audit.json",
+    "reports/audit/fuzzyxai_final_audit.md",
+    "reports/audit/stale_terms_report.md",
+    "reports/studio_batch/hybrid_xiris_proof_package.json",
+    "visual_artifacts_latest.zip"
+  ],
+  "working_tree_dirty_unignored_paths": [],
   "input": {
     "image_quality": 0.31,
     "segmentation_quality": 0.27,
@@ -53,7 +67,7 @@
       "theta_4": 0.78
     }
   },
-  "explain_plan_hash": "8f736211fc308d3baa3d049dee77578035cde563d327a8683fe2c9b47baed9a8",
+  "explain_plan_hash": "b67db9f1230c190e9b1a66331159dc292847252767e4aa707b578021e6bc743b",
   "operator_values": [
     {
       "node_id": "alignment",
@@ -227,6 +241,6 @@
   ],
   "final_action": "block",
   "action_reason": "Модель поддерживает принятие, но низкое качество сегментации и конфликт источников дают критический разрыв.",
-  "scenario_hash": "b491a0b9f010503c46a39061e0aad126e10f5b02389be81f914a6742ed7f0620",
-  "package_hash": "c380f606b27bd1918e64f8e3ff1175357c47b4453f3d76be913c6d6b601d333c"
+  "scenario_hash": "7a05d6a98ae30bbb9019563bf55f6cfb4821e0fa7717fe53bc8d5ae4273c4072",
+  "package_hash": "b8bc757be1e8db5e782080524e15370c32b7d87460b16e5897badc42ebc2c22e"
 }

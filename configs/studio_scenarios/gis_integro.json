@@ -5,6 +5,7 @@
   "data_type": "geo_layer",
   "explain_plan_version": "EP-2026-01",
   "status": "source-pending",
+  "evidence_level": "operator_control_example",
   "description": "Геослой, правила и feature support объединяются в проверяемый маршрут без заявления качества исходной геомодели.",
   "summary": {
     "probability": 0.67,

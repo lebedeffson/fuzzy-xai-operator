@@ -41,7 +41,7 @@ def run_hybrid_xiris_batch(out_dir: Path) -> dict[str, Any]:
     rows = _hybrid_batch_cases()
 
     with (out_dir / "hybrid_xiris_batch_cases.csv").open("w", encoding="utf-8", newline="") as fh:
-        writer = csv.DictWriter(fh, fieldnames=list(rows[0]))
+        writer = csv.DictWriter(fh, fieldnames=list(rows[0]), lineterminator="\n")
         writer.writeheader()
         writer.writerows(rows)
 

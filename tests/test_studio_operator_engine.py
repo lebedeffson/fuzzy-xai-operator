@@ -122,4 +122,4 @@ def test_exported_tables_include_explainplan_and_risk_decomposition(tmp_path: Pa
     risk = (tmp_path / "table_5_6_risk_decomposition.csv").read_text(encoding="utf-8")
     assert "alignment,w_d_mu,0.25" in explainplan
     assert "risk,w_source_conflict,0.2" in explainplan
-    assert "rho,total,,0.8" in risk
+    assert "total,rho,,0.8" in risk

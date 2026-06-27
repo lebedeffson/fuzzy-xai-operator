@@ -21,9 +21,11 @@ Thumbs.db
 
 dist/
 build/
+*.egg-info/
 *.spec~
 
 defense_demo_last_error.txt
+fuzzyxai_doctoral_runtime_release.zip
 
 # Reproducibility package timestamp copies
 fuzzyxai_experiments/reports/*_20*.json
