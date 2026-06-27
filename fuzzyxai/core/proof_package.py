@@ -5,7 +5,21 @@ import subprocess
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from hashlib import sha256
+from pathlib import Path
 from typing import Any
+
+
+ROOT = Path(__file__).resolve().parents[2]
+RELEASE_METADATA_FILE = ROOT / "RELEASE_METADATA.json"
+
+
+def _packaged_metadata() -> dict[str, Any]:
+    if not RELEASE_METADATA_FILE.exists():
+        return {}
+    try:
+        return json.loads(RELEASE_METADATA_FILE.read_text(encoding="utf-8"))
+    except Exception:
+        return {}
 
 
 @dataclass(frozen=True)
@@ -30,7 +44,7 @@ def _code_version() -> str:
     try:
         return subprocess.check_output(["git", "rev-parse", "--short", "HEAD"], text=True).strip()
     except Exception:
-        return "unknown"
+        return _packaged_metadata().get("source_commit", "unknown")
 
 
 def _branch() -> str:
@@ -38,7 +52,7 @@ def _branch() -> str:
         branch = subprocess.check_output(["git", "branch", "--show-current"], text=True).strip()
         return branch or f"detached:{_code_version()}"
     except Exception:
-        return "unknown"
+        return _packaged_metadata().get("audit_branch", "runtime_release")
 
 
 def _dirty_paths() -> list[str]:

@@ -1,9 +1,10 @@
 from __future__ import annotations
 
 import zipfile
+import json
 from pathlib import Path
 
-from .common import ROOT
+from .common import ROOT, release_metadata
 
 
 PACKAGE = ROOT / "fuzzyxai_final_audit_package.zip"
@@ -99,6 +100,7 @@ def build_runtime_release() -> Path:
             _add_path(zf, ROOT / rel)
         _add_path(zf, PACKAGE)
         _add_path(zf, VISUAL)
+        zf.writestr("RELEASE_METADATA.json", json.dumps(release_metadata(), ensure_ascii=False, indent=2))
     return RUNTIME_PACKAGE
 
 

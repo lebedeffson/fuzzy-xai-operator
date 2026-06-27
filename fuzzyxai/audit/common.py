@@ -9,6 +9,7 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[2]
 AUDIT_DIR = ROOT / "reports" / "audit"
+RELEASE_METADATA_FILE = ROOT / "RELEASE_METADATA.json"
 
 
 @dataclass
@@ -27,6 +28,8 @@ def current_commit() -> str:
     try:
         return subprocess.check_output(["git", "rev-parse", "--short", "HEAD"], cwd=ROOT, text=True).strip()
     except Exception:
+        if RELEASE_METADATA_FILE.exists():
+            return read_json(RELEASE_METADATA_FILE).get("source_commit", "unknown")
         return "unknown"
 
 
@@ -35,6 +38,8 @@ def current_branch() -> str:
         branch = subprocess.check_output(["git", "branch", "--show-current"], cwd=ROOT, text=True).strip()
         return branch or f"detached:{current_commit()}"
     except Exception:
+        if RELEASE_METADATA_FILE.exists():
+            return read_json(RELEASE_METADATA_FILE).get("audit_branch", "runtime_release")
         return "unknown"
 
 
