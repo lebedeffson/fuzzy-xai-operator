@@ -306,6 +306,7 @@ def _scenario(
 ) -> dict[str, Any]:
     nodes, edges = _base_pipeline(final_action, rupture, {"data_type": data_type, **values})
     diagnostics = collect_unique_diagnostics(nodes)
+    diagnostics_summary = summarize_diagnostic_occurrences(nodes)
     run_id = f"{scenario_id}_case_001"
     report = {
         "run_id": run_id,
@@ -315,7 +316,7 @@ def _scenario(
         "final_action": final_action,
         "action_reason": values.get("action_reason", ""),
         "operators_used": ["adapter", "build_Ek", "T_ij", "select_F", "Delta", "risk_observer", "action_policy"],
-        "diagnostics": diagnostics,
+        "diagnostics": diagnostics_summary,
         "trace": {
             "model_version": values.get("model_version", "demo-model-v1"),
             "adapter_version": values.get("adapter_version", f"adapter-{scenario_id}-v1"),
@@ -335,6 +336,7 @@ def _scenario(
         "pipeline": nodes,
         "edges": edges,
         "diagnostics": diagnostics,
+        "diagnostics_summary": diagnostics_summary,
         "runs": [report],
         "charts": charts,
     }
@@ -674,6 +676,43 @@ def build_ecosystem_entities(scenarios: list[dict[str, Any]] | None = None) -> d
                 }
             )
     operators = list(operator_map.values())
+    model_ids_by_scenario: dict[str, list[str]] = {}
+    for model in models:
+        for scenario_id in model.get("usedIn", []):
+            model_ids_by_scenario.setdefault(scenario_id, []).append(model["id"])
+
+    for article in articles:
+        article["links"] = (
+            [{"targetId": mid, "targetKind": "model", "relation": "uses_model"} for mid in article.get("connectedModels", [])]
+            + [{"targetId": sid, "targetKind": "scenario", "relation": "tested_in"} for sid in article.get("connectedScenarios", [])]
+            + [{"targetId": oid, "targetKind": "operator", "relation": "uses_operator"} for oid in article.get("connectedOperators", [])]
+        )
+
+    operator_ids_by_scenario = {scenario["scenario_id"]: [] for scenario in scenarios}
+    for operator in operators:
+        operator["links"] = []
+        for scenario_id in sorted(set(operator.get("usedInScenarios", []))):
+            operator["links"].append({"targetId": scenario_id, "targetKind": "scenario", "relation": "used_in"})
+            operator_ids_by_scenario.setdefault(scenario_id, []).append(operator["id"])
+        for model in models:
+            if any(sid in operator.get("usedInScenarios", []) for sid in model.get("usedIn", [])):
+                operator["links"].append({"targetId": model["id"], "targetKind": "model", "relation": "checks_model"})
+
+    for model in models:
+        model["links"] = [{"targetId": sid, "targetKind": "scenario", "relation": "tested_in"} for sid in model.get("usedIn", [])]
+        for scenario_id in model.get("usedIn", []):
+            for operator_id in operator_ids_by_scenario.get(scenario_id, []):
+                model["links"].append({"targetId": operator_id, "targetKind": "operator", "relation": "uses_operator"})
+
+    for scenario in scenarios:
+        scenario["id"] = scenario["scenario_id"]
+        scenario["kind"] = "scenario"
+        scenario["title"] = scenario["scenario_name"]
+        scenario["links"] = (
+            [{"targetId": mid, "targetKind": "model", "relation": "uses_model"} for mid in model_ids_by_scenario.get(scenario["scenario_id"], [])]
+            + [{"targetId": oid, "targetKind": "operator", "relation": "uses_operator"} for oid in operator_ids_by_scenario.get(scenario["scenario_id"], [])]
+        )
+
     return {
         "articles": articles,
         "models": models,

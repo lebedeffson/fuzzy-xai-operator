@@ -381,6 +381,7 @@
     }
   ],
   "diagnostics": [],
+  "diagnostics_summary": [],
   "runs": [
     {
       "run_id": "beacon_xai_case_001",

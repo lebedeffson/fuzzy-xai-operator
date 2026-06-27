@@ -428,6 +428,23 @@
       "recommended_action": "block"
     }
   ],
+  "diagnostics_summary": [
+    {
+      "diagnostic_id": "D_source_conflict",
+      "type": "critical_rupture",
+      "source": "segmentation_quality",
+      "reason": "Модель поддерживает принятие, но низкое качество сегментации и конфликт источников дают критический разрыв.",
+      "criticality": "high",
+      "chi_R_crit": 1,
+      "recommended_action": "block",
+      "occurrences": [
+        "alignment",
+        "risk_observer",
+        "action"
+      ],
+      "global": true
+    }
+  ],
   "runs": [
     {
       "run_id": "hybrid_xiris_case_001",
@@ -453,7 +470,13 @@
           "reason": "Модель поддерживает принятие, но низкое качество сегментации и конфликт источников дают критический разрыв.",
           "criticality": "high",
           "chi_R_crit": 1,
-          "recommended_action": "block"
+          "recommended_action": "block",
+          "occurrences": [
+            "alignment",
+            "risk_observer",
+            "action"
+          ],
+          "global": true
         }
       ],
       "trace": {

@@ -34,10 +34,10 @@
   "trace": {
     "model_version": "demo-model-v1",
     "adapter_version": "adapter-hybrid_xiris-v1",
-    "timestamp": "2026-06-27T00:55:11.279156+00:00",
-    "hash": "c175b215c45e60a5"
+    "timestamp": "2026-06-27T00:59:14.151155+00:00",
+    "hash": "1791ed503955147e"
   },
-  "timestamp_generated": "2026-06-27T00:55:11.279156+00:00",
+  "timestamp_generated": "2026-06-27T00:59:14.151155+00:00",
   "operators": [
     {
       "node_id": "input_artifact",

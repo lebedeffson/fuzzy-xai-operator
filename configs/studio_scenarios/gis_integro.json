@@ -382,6 +382,7 @@
     }
   ],
   "diagnostics": [],
+  "diagnostics_summary": [],
   "runs": [
     {
       "run_id": "gis_integro_case_001",
