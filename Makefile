@@ -33,7 +33,7 @@ final-readiness-audit: studio-hybrid-batch studio-export-tables
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m fuzzyxai.audit.build_package
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m pytest tests/audit -q
 
-.PHONY: studio-semantic-smoke studio-server-smoke studio-smoke doctorate-release-check fresh-clone-gate
+.PHONY: studio-semantic-smoke studio-server-smoke studio-smoke doctorate-release-check fresh-clone-gate practice-demo practice-screenshots practice-package
 studio-semantic-smoke:
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m fuzzyxai.audit.studio_smoke
 
@@ -57,6 +57,15 @@ doctorate-release-check: studio-hybrid-batch studio-export-tables
 
 fresh-clone-gate:
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m fuzzyxai.audit.fresh_clone_gate
+
+practice-demo:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m fuzzyxai.audit.practice_demo
+
+practice-screenshots:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m fuzzyxai.audit.practice_demo --screenshots-only
+
+practice-package:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m fuzzyxai.audit.practice_demo --package-only
 
 risk-test:
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m pytest tests/test_risk_*.py -q
