@@ -25,6 +25,7 @@ INCLUDE = [
 ]
 
 RUNTIME_INCLUDE = [
+    ".github/workflows",
     "fuzzyxai",
     "apps",
     "configs/studio_scenarios",
@@ -49,6 +50,7 @@ RUNTIME_INCLUDE = [
 EXCLUDE_PARTS = {"__pycache__", ".pytest_cache", ".venv", "venv", "node_modules"}
 EXCLUDE_SUFFIXES = {".pyc", ".pyo"}
 EXCLUDE_NAMES = {".DS_Store"}
+ZIP_TIMESTAMP = (2024, 1, 1, 0, 0, 0)
 
 
 def _allowed(path: Path) -> bool:
@@ -67,11 +69,26 @@ def _add_path(zf: zipfile.ZipFile, path: Path) -> None:
         return
     if path.is_file():
         if _allowed(path):
-            zf.write(path, path.relative_to(ROOT).as_posix())
+            _write_file(zf, path, path.relative_to(ROOT).as_posix())
         return
     for item in sorted(path.rglob("*")):
         if item.is_file() and _allowed(item):
-            zf.write(item, item.relative_to(ROOT).as_posix())
+            _write_file(zf, item, item.relative_to(ROOT).as_posix())
+
+
+def _write_file(zf: zipfile.ZipFile, path: Path, arcname: str) -> None:
+    info = zipfile.ZipInfo(arcname)
+    info.date_time = ZIP_TIMESTAMP
+    info.compress_type = zipfile.ZIP_DEFLATED
+    info.external_attr = (path.stat().st_mode & 0xFFFF) << 16
+    zf.writestr(info, path.read_bytes())
+
+
+def _write_text(zf: zipfile.ZipFile, arcname: str, text: str) -> None:
+    info = zipfile.ZipInfo(arcname)
+    info.date_time = ZIP_TIMESTAMP
+    info.compress_type = zipfile.ZIP_DEFLATED
+    zf.writestr(info, text)
 
 
 def build_visual_zip() -> Path:
@@ -101,7 +118,7 @@ def build_runtime_release() -> Path:
             _add_path(zf, ROOT / rel)
         _add_path(zf, PACKAGE)
         _add_path(zf, VISUAL)
-        zf.writestr("RELEASE_METADATA.json", json.dumps(release_metadata(), ensure_ascii=False, indent=2))
+        _write_text(zf, "RELEASE_METADATA.json", json.dumps(release_metadata(), ensure_ascii=False, indent=2))
     return RUNTIME_PACKAGE
 
 

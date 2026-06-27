@@ -69,7 +69,12 @@ make studio
 make studio-smoke
 ```
 
-Проверяется наличие ключевых смысловых элементов: `БЛОКИРОВКА`, `γ = 0.351`, `Δ = 0.106811`, `ρ = 0.800`, `D_quality_source_conflict`, скрытый технический след.
+`studio-smoke` запускает два уровня проверки:
+
+- `make studio-semantic-smoke` — проверяет смысловые элементы и engine values: `БЛОКИРОВКА`, `γ = 0.351`, `Δ = 0.106811`, `ρ = 0.800`, `D_quality_source_conflict`;
+- `make studio-server-smoke` — реально стартует `apps/fuzzyxai_studio.py`, ждёт HTTP-ответ на локальном порту и завершает процесс.
+
+GitHub Actions workflow входит в runtime release zip: `.github/workflows/fuzzyxai-readiness.yml`.
 
 ## Главы 4-5
 

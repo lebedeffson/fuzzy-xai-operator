@@ -1,4 +1,4 @@
-PYTHON ?= $(shell if [ -x /home/lebedeffson/Code/venv/bin/python ]; then echo /home/lebedeffson/Code/venv/bin/python; else echo python; fi)
+PYTHON ?= python
 PYTHONPATH := .
 PORT ?= 8085
 DATASET ?= breast_cancer
@@ -33,9 +33,14 @@ final-readiness-audit: studio-hybrid-batch studio-export-tables
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m fuzzyxai.audit.build_package
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m pytest tests/audit -q
 
-.PHONY: studio-smoke doctorate-release-check fresh-clone-gate
-studio-smoke:
+.PHONY: studio-semantic-smoke studio-server-smoke studio-smoke doctorate-release-check fresh-clone-gate
+studio-semantic-smoke:
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m fuzzyxai.audit.studio_smoke
+
+studio-server-smoke:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m fuzzyxai.audit.studio_server_smoke
+
+studio-smoke: studio-semantic-smoke studio-server-smoke
 
 doctorate-release-check: studio-hybrid-batch studio-export-tables
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m fuzzyxai.audit.inventory
@@ -48,6 +53,7 @@ doctorate-release-check: studio-hybrid-batch studio-export-tables
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m fuzzyxai.audit.build_package
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m pytest tests/audit tests/test_studio_operator_engine.py tests/test_fuzzyxai_studio_demo_readiness.py -q
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m fuzzyxai.audit.studio_smoke
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m fuzzyxai.audit.studio_server_smoke
 
 fresh-clone-gate:
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m fuzzyxai.audit.fresh_clone_gate
