@@ -3,44 +3,28 @@
   "schema_version": "1.0",
   "scenario_id": "hybrid_xiris",
   "run_id": "hybrid_xiris_case_001",
-  "created_at": "2026-06-27T13:59:04.532099+00:00",
-  "code_version": "2c3bf5a",
-  "source_commit": "2c3bf5a",
-  "artifact_commit": "2c3bf5a",
+  "created_at": "2026-06-27T14:00:46.626725+00:00",
+  "code_version": "9e2735b",
+  "source_commit": "9e2735b",
+  "artifact_commit": "9e2735b",
   "audit_branch": "audit/fuzzyxai-final-readiness",
   "working_tree_clean": false,
   "working_tree_dirty_ignored_paths": [
+    "fuzzyxai_final_audit_package.zip",
     "reports/audit/artifact_inventory.csv",
-    "reports/audit/docx_audit_report.md",
-    "reports/audit/docx_format_report.md",
     "reports/audit/fuzzyxai_final_audit.json",
     "reports/audit/fuzzyxai_final_audit.md",
     "reports/audit/stale_terms_report.md",
-    "reports/chapter5/studio_tables/table_5_2_explainplan.csv",
-    "reports/chapter5/studio_tables/table_5_6_risk_decomposition.csv",
-    "reports/studio_batch/hybrid_xiris_proof_package.json"
-  ],
-  "working_tree_dirty_unignored_paths": [
-    "Makefile",
-    "fuzzyxai/audit/common.py",
-    "fuzzyxai/audit/docx_chapters.py",
-    "fuzzyxai/audit/docx_format.py",
-    "fuzzyxai/audit/final_audit.py",
-    "fuzzyxai/audit/inventory.py",
-    "fuzzyxai/core/proof_package.py",
-    "fuzzyxai/export_tables.py",
-    "tests/audit/test_exported_chapter_tables.py",
-    "tests/audit/test_final_audit_gate.py",
-    "tests/audit/test_proof_package_tamper.py",
-    "tests/audit/test_single_source_of_truth.py",
-    "tests/test_studio_operator_engine.py",
+    "reports/studio_batch/hybrid_xiris_proof_package.json",
+    "visual_artifacts_latest.zip",
     "3 \\320\\263\\320\\273\\320\\260\\320\\262\\320\\260.docx",
-    "docs/chapters/glava_4_FuzzyXAI_corrected_final.docx",
-    "docs/chapters/glava_5_FuzzyXAI_corrected_final.docx",
-    "fuzzyxai/audit/build_package.py",
     "glava_4_FuzzyXAI_corrected_final(1).docx",
     "glava_5_FuzzyXAI_corrected_final(1).docx",
     "\\320\\263\\320\\273\\320\\260\\320\\262\\320\\260 2.docx"
+  ],
+  "working_tree_dirty_unignored_paths": [
+    "fuzzyxai/audit/common.py",
+    "fuzzyxai/core/proof_package.py"
   ],
   "input": {
     "image_quality": 0.31,
@@ -265,5 +249,5 @@
   "final_action": "block",
   "action_reason": "Модель поддерживает принятие, но низкое качество сегментации и конфликт источников дают критический разрыв.",
   "scenario_hash": "7a05d6a98ae30bbb9019563bf55f6cfb4821e0fa7717fe53bc8d5ae4273c4072",
-  "package_hash": "1d5455b482f0990cc75e496eea97a1ec5032add3e97b212a40fdbb09319f7ce6"
+  "package_hash": "43daf574274f88297e51d7a97e96b3d4ca529f5e47c0110c446c07bfa7146461"
 }
