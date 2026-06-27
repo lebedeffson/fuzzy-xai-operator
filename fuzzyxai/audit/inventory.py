@@ -71,7 +71,7 @@ def main() -> None:
     AUDIT_DIR.mkdir(parents=True, exist_ok=True)
     path = AUDIT_DIR / "artifact_inventory.csv"
     with path.open("w", encoding="utf-8", newline="") as fh:
-        writer = csv.DictWriter(fh, fieldnames=list(rows[0]))
+        writer = csv.DictWriter(fh, fieldnames=list(rows[0]), lineterminator="\n")
         writer.writeheader()
         writer.writerows(rows)
     print(path)

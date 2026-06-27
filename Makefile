@@ -21,6 +21,15 @@ studio-hybrid-batch:
 studio-export-tables:
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m fuzzyxai.export_tables --scenario hybrid_xiris --out-dir reports/chapter5/studio_tables
 
+.PHONY: final-readiness-audit
+final-readiness-audit: studio-hybrid-batch studio-export-tables
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m fuzzyxai.audit.inventory
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m fuzzyxai.audit.grep_stale_terms
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m fuzzyxai.audit.docx_chapters --chapter4 docs/chapters/glava_4_FuzzyXAI_corrected_final.docx --chapter5 docs/chapters/glava_5_FuzzyXAI_corrected_final.docx
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m fuzzyxai.audit.docx_format --chapter4 docs/chapters/glava_4_FuzzyXAI_corrected_final.docx --chapter5 docs/chapters/glava_5_FuzzyXAI_corrected_final.docx
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m fuzzyxai.audit.final_audit
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m pytest tests/audit -q
+
 risk-test:
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m pytest tests/test_risk_*.py -q
 

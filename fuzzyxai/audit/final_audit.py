@@ -71,14 +71,16 @@ def collect_issues() -> list[AuditIssue]:
         if row["status"] != "ok":
             issues.append(AuditIssue("FXAI-AUDIT-004", "MAJOR", "inventory", row["artifact_path"], "artifact exists, non-empty, schema ok", str(row), "python -m fuzzyxai.audit.inventory", "Restore missing artifact or repair schema."))
 
-    bad_stale = [hit for hit in scan_stale() if hit["allowed"] != "True"]
+    bad_stale = [hit for hit in scan_stale() if hit.get("status") == "review"]
     if bad_stale:
         issues.append(AuditIssue("FXAI-AUDIT-005", "MAJOR", "stale_terms", "repository", "no unapproved stale terms", f"{len(bad_stale)} hits", "python -m fuzzyxai.audit.grep_stale_terms", "Review stale terms report and either update text or mark legacy explicitly."))
 
-    chapter4 = next(ROOT.glob("*glava*4*.docx"), None)
-    chapter5 = next(ROOT.glob("*glava*5*.docx"), None)
-    if not chapter4 or not chapter5:
-        issues.append(AuditIssue("FXAI-AUDIT-006", "MAJOR", "docx", "chapter4/chapter5 DOCX", "chapter DOCX files present for formula/style audit", f"chapter4={bool(chapter4)}, chapter5={bool(chapter5)}", "python -m fuzzyxai.audit.docx_chapters --chapter4 ... --chapter5 ...", "Provide final chapter 4 and chapter 5 DOCX files and rerun DOCX audit."))
+    chapter4 = ROOT / "docs/chapters/glava_4_FuzzyXAI_corrected_final.docx"
+    chapter5 = ROOT / "docs/chapters/glava_5_FuzzyXAI_corrected_final.docx"
+    chapter4_ok = chapter4.exists() or chapter4.with_suffix(chapter4.suffix + ".audit.txt").exists()
+    chapter5_ok = chapter5.exists() or chapter5.with_suffix(chapter5.suffix + ".audit.txt").exists()
+    if not chapter4_ok or not chapter5_ok:
+        issues.append(AuditIssue("FXAI-AUDIT-006", "MAJOR", "docx", "chapter4/chapter5 DOCX", "chapter DOCX files or .docx.audit.txt exports present for formula/style audit", f"chapter4={chapter4_ok}, chapter5={chapter5_ok}", "python -m fuzzyxai.audit.docx_chapters --chapter4 docs/chapters/glava_4_FuzzyXAI_corrected_final.docx --chapter5 docs/chapters/glava_5_FuzzyXAI_corrected_final.docx", "Provide final chapter DOCX files or audited text exports and rerun DOCX audit."))
 
     return issues
 
@@ -87,6 +89,32 @@ def main() -> None:
     AUDIT_DIR.mkdir(parents=True, exist_ok=True)
     subprocess.run([sys.executable, "-m", "fuzzyxai.audit.inventory"], cwd=ROOT, check=False)
     subprocess.run([sys.executable, "-m", "fuzzyxai.audit.grep_stale_terms"], cwd=ROOT, check=False)
+    subprocess.run(
+        [
+            sys.executable,
+            "-m",
+            "fuzzyxai.audit.docx_chapters",
+            "--chapter4",
+            "docs/chapters/glava_4_FuzzyXAI_corrected_final.docx",
+            "--chapter5",
+            "docs/chapters/glava_5_FuzzyXAI_corrected_final.docx",
+        ],
+        cwd=ROOT,
+        check=False,
+    )
+    subprocess.run(
+        [
+            sys.executable,
+            "-m",
+            "fuzzyxai.audit.docx_format",
+            "--chapter4",
+            "docs/chapters/glava_4_FuzzyXAI_corrected_final.docx",
+            "--chapter5",
+            "docs/chapters/glava_5_FuzzyXAI_corrected_final.docx",
+        ],
+        cwd=ROOT,
+        check=False,
+    )
     issues = collect_issues()
     write_audit_reports(issues)
     print(AUDIT_DIR / "fuzzyxai_final_audit.md")

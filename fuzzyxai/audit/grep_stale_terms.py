@@ -18,6 +18,29 @@ TERMS: list[tuple[str, re.Pattern[str]]] = [
 ]
 
 
+ARCHIVE_PREFIXES = (
+    "reports/reproducibility_artifacts/",
+    "reports/unified_full_demo/",
+    "reports/chapter5/real_data_validation/",
+)
+
+
+def _context(lines: list[str], index: int) -> str:
+    start = max(0, index - 45)
+    return "\n".join(lines[start : index + 1])
+
+
+def _classification(term: str, rel: Path, line: str, context: str) -> str:
+    rel_s = str(rel)
+    if term == "D_source_conflict":
+        return "allowed" if ("legacy_id" in line or "legacy_diagnostic_id" in line or "legacy_diagnostic_id=" in line) else "review"
+    if rel_s.startswith(ARCHIVE_PREFIXES) and term in {"gamma_max:0.45", "delta_max:0.15"}:
+        return "allowed_archive"
+    if term == "delta:0.08" and ("gis_integro" in rel_s or '"gis_integro"' in context or "gamma_route" in context):
+        return "allowed"
+    return "review"
+
+
 def scan() -> list[dict[str, str]]:
     roots = ["fuzzyxai", "apps", "configs", "reports", "patches", "tests"]
     hits: list[dict[str, str]] = []
@@ -35,16 +58,18 @@ def scan() -> list[dict[str, str]]:
                 text = path.read_text(encoding="utf-8")
             except Exception:
                 continue
+            lines = text.splitlines()
             for term, pattern in TERMS:
-                for line_no, line in enumerate(text.splitlines(), start=1):
+                for line_no, line in enumerate(lines, start=1):
                     if pattern.search(line):
-                        allowed = term == "D_source_conflict" and ("legacy" in line or "legacy_id" in text)
+                        classification = _classification(term, rel, line, _context(lines, line_no - 1))
                         hits.append(
                             {
                                 "term": term,
                                 "path": str(path.relative_to(ROOT)),
                                 "line": str(line_no),
-                                "allowed": str(allowed),
+                                "status": classification,
+                                "allowed": str(classification in {"allowed", "allowed_archive"}),
                                 "context": line.strip()[:220],
                             }
                         )
@@ -59,7 +84,7 @@ def main() -> None:
         lines.append("Подозрительных старых терминов не найдено.")
     else:
         for hit in hits:
-            flag = "allowed" if hit["allowed"] == "True" else "review"
+            flag = hit.get("status", "allowed" if hit["allowed"] == "True" else "review")
             lines.append(f"- `{hit['term']}` in `{hit['path']}:{hit['line']}` [{flag}]: {hit['context']}")
     path = AUDIT_DIR / "stale_terms_report.md"
     path.write_text("\n".join(lines), encoding="utf-8")

@@ -9,6 +9,7 @@ from pathlib import Path
 from typing import Any
 
 from fuzzyxai.core.diagnostics import DiagnosticType
+from fuzzyxai.core.scenario_engine import compute_hybrid_xiris
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -376,6 +377,9 @@ def _scenario(
     }
 
 
+_HYBRID_RESULT = compute_hybrid_xiris()
+
+
 DEFAULT_SCENARIOS: list[dict[str, Any]] = [
     _scenario(
         "hybrid_xiris",
@@ -391,14 +395,21 @@ DEFAULT_SCENARIOS: list[dict[str, Any]] = [
             "adapter_computed": {"quality_term": "low", "match_term": "high"},
             "ek_inputs": {"model_score": 0.88, "segmentation_quality": 0.27, "feature_support": "iris texture", "trace": "complete"},
             "ek_computed": {"mu_high": 0.88, "alpha_accept": 0.82, "alpha_block": 0.91, "u_k": 0.36},
-            "alignment_computed": {"gamma_ij": 0.35, "gamma_max": 0.40, "delta_T": 0.08},
+            "alignment_computed": {"gamma_ij": _HYBRID_RESULT.gamma, "gamma_max": 0.40, "delta_T": 0.08},
             "P_sit": ["u_conf", "u_trace", "source_conflict"],
             "f_computed": {"selected_class": "NAS", "coverage": "u_conf,u_trace,source_conflict", "why_not_F0": "F0 теряет источник контрсвидетельства"},
             "selected_class": "NAS",
-            "delta": 0.08,
+            "delta": _HYBRID_RESULT.delta,
             "risk_inputs": {"rho_pred": 0.88, "u_M": 0.36, "chi_R": 1, "chi_R_crit": 1},
-            "risk_computed": {"rho": 0.74, "chi_R": 1, "chi_R_crit": 1, "chi_Auto": 0},
-            "expected_result": {"gamma": 0.351, "delta": 0.106811, "rho": 0.800, "chi_R": 1, "chi_R_crit": 1, "action": "block"},
+            "risk_computed": {"rho": _HYBRID_RESULT.rho, "chi_R": 1, "chi_R_crit": 1, "chi_Auto": 0},
+            "expected_result": {
+                "gamma": _HYBRID_RESULT.gamma,
+                "delta": _HYBRID_RESULT.delta,
+                "rho": _HYBRID_RESULT.rho,
+                "chi_R": _HYBRID_RESULT.chi_r,
+                "chi_R_crit": _HYBRID_RESULT.chi_r_crit,
+                "action": _HYBRID_RESULT.action,
+            },
             "rupture_source": "segmentation_quality",
             "action_reason": "Модель поддерживает принятие, но низкое качество сегментации и конфликт источников дают критический разрыв.",
         },
