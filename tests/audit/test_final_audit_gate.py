@@ -11,6 +11,7 @@ def test_final_audit_has_no_blockers_or_majors() -> None:
     assert report["source_commit"]
     assert report["artifact_commit"]
     assert "dirty" not in report["source_commit"]
+    assert report["working_tree_effective_clean"] is True
 
 
 def test_stale_terms_have_no_review_hits() -> None:
@@ -21,6 +22,20 @@ def test_stale_terms_have_no_review_hits() -> None:
 def test_docx_chapter_gate_passes() -> None:
     report = Path("reports/audit/docx_audit_report.md").read_text(encoding="utf-8")
     assert "status: PASS" in report
+
+
+def test_formula_reference_gate_passes() -> None:
+    report = Path("reports/audit/formula_reference_check.md").read_text(encoding="utf-8")
+    assert "status: PASS" in report
+    for number in ["(2.7)", "(2.14)", "(2.21)", "(2.30)", "(3.29)", "(3.42)", "(3.44)"]:
+        assert f"{number} — OK" in report
+
+
+def test_docx_render_gate_passes() -> None:
+    report = Path("reports/audit/docx_render_report.md").read_text(encoding="utf-8")
+    assert "render_status: PASS" in report
+    assert "chapter4: PASS" in report
+    assert "chapter5: PASS" in report
 
 
 def test_audit_package_is_clean() -> None:

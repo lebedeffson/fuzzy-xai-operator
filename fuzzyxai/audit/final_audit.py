@@ -87,6 +87,12 @@ def collect_issues() -> list[AuditIssue]:
     docx_format = AUDIT_DIR / "docx_format_report.md"
     if docx_format.exists() and "status: PASS\n" not in docx_format.read_text(encoding="utf-8"):
         issues.append(AuditIssue("FXAI-AUDIT-008", "MAJOR", "docx_format", str(docx_format.relative_to(ROOT)), "Real DOCX style gate PASS", "FAIL or PASS_LIMITED", "python -m fuzzyxai.audit.docx_format --chapter4 docs/chapters/glava_4_FuzzyXAI_corrected_final.docx --chapter5 docs/chapters/glava_5_FuzzyXAI_corrected_final.docx", "Use real DOCX files with Heading/Caption styles."))
+    formula = AUDIT_DIR / "formula_reference_check.md"
+    if not formula.exists() or "status: PASS" not in formula.read_text(encoding="utf-8"):
+        issues.append(AuditIssue("FXAI-AUDIT-009", "MAJOR", "formula_reference", str(formula.relative_to(ROOT)), "Formula reference gate PASS", "FAIL or missing", "python -m fuzzyxai.audit.formula_references", "Add/update formula_index_ch2_ch3.json and rerun formula gate."))
+    render = AUDIT_DIR / "docx_render_report.md"
+    if not render.exists() or "render_status: PASS" not in render.read_text(encoding="utf-8"):
+        issues.append(AuditIssue("FXAI-AUDIT-010", "MAJOR", "docx_render", str(render.relative_to(ROOT)), "DOCX visual render gate PASS", "FAIL or missing", "python -m fuzzyxai.audit.docx_render_gate --chapter4 docs/chapters/glava_4_FuzzyXAI_corrected_final.docx --chapter5 docs/chapters/glava_5_FuzzyXAI_corrected_final.docx", "Ensure LibreOffice can render DOCX to non-empty PDFs."))
 
     return issues
 
@@ -113,6 +119,20 @@ def main() -> None:
             sys.executable,
             "-m",
             "fuzzyxai.audit.docx_format",
+            "--chapter4",
+            "docs/chapters/glava_4_FuzzyXAI_corrected_final.docx",
+            "--chapter5",
+            "docs/chapters/glava_5_FuzzyXAI_corrected_final.docx",
+        ],
+        cwd=ROOT,
+        check=False,
+    )
+    subprocess.run([sys.executable, "-m", "fuzzyxai.audit.formula_references"], cwd=ROOT, check=False)
+    subprocess.run(
+        [
+            sys.executable,
+            "-m",
+            "fuzzyxai.audit.docx_render_gate",
             "--chapter4",
             "docs/chapters/glava_4_FuzzyXAI_corrected_final.docx",
             "--chapter5",

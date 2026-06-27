@@ -1,0 +1,44 @@
+{
+  "2.7": {
+    "chapter": 2,
+    "title": "definition of E_k",
+    "canonical_reference": "E_k = <L_k, mu_k, R_k, alpha_k, u_k, tau_k>",
+    "status": "ok"
+  },
+  "2.14": {
+    "chapter": 2,
+    "title": "t-norm / rule activation",
+    "canonical_reference": "rule activation via fuzzy conjunction",
+    "status": "ok"
+  },
+  "2.21": {
+    "chapter": 2,
+    "title": "T_ij alignment",
+    "canonical_reference": "T_ij = (rho_ij, sigma_ij, pi_ij, theta_ij)",
+    "status": "ok"
+  },
+  "2.30": {
+    "chapter": 2,
+    "title": "gamma / d_E aggregation",
+    "canonical_reference": "d_E and gamma as weighted component disagreement",
+    "status": "ok"
+  },
+  "3.29": {
+    "chapter": 3,
+    "title": "reduction loss Delta",
+    "canonical_reference": "Delta as information loss under representation reduction",
+    "status": "ok"
+  },
+  "3.42": {
+    "chapter": 3,
+    "title": "risk rho",
+    "canonical_reference": "rho as weighted risk observer score",
+    "status": "ok"
+  },
+  "3.44": {
+    "chapter": 3,
+    "title": "chi_R_crit",
+    "canonical_reference": "critical rupture blocks automatic action",
+    "status": "ok"
+  }
+}

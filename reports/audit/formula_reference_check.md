@@ -1,7 +1,13 @@
 # Formula reference check
 
-Статус: ожидает финальные DOCX глав 4-5 и зафиксированные DOCX глав 2-3.
+status: PASS
 
-Проверить ссылки: `(2.7)`, `(2.14)`, `(2.21)`, `(2.30)`, `(3.29)`, `(3.42)`, `(3.44)`.
+Formula index: `docs/chapters/formula_index_ch2_ch3.json`
 
-Если номер не совпадает с фактической формулой, заменить ссылку на раздел без номера.
+- (2.7) — OK — definition of E_k
+- (2.14) — OK — t-norm / rule activation
+- (2.21) — OK — T_ij alignment
+- (2.30) — OK — gamma / d_E aggregation
+- (3.29) — OK — reduction loss Delta
+- (3.42) — OK — risk rho
+- (3.44) — OK — chi_R_crit

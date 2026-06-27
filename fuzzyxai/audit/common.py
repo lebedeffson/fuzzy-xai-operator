@@ -55,6 +55,7 @@ def release_metadata() -> dict[str, Any]:
         "artifact_commit": current_commit(),
         "audit_branch": current_branch(),
         "working_tree_clean": not paths,
+        "working_tree_effective_clean": not unignored,
         "working_tree_dirty_ignored_paths": ignored,
         "working_tree_dirty_unignored_paths": unignored,
     }
@@ -82,9 +83,13 @@ def write_audit_reports(issues: list[AuditIssue], extra_sections: list[str] | No
     artifact_count = max(0, len(inventory_path.read_text(encoding="utf-8").splitlines()) - 1) if inventory_path.exists() else 0
     docx_report = (AUDIT_DIR / "docx_audit_report.md").read_text(encoding="utf-8") if (AUDIT_DIR / "docx_audit_report.md").exists() else ""
     docx_format = (AUDIT_DIR / "docx_format_report.md").read_text(encoding="utf-8") if (AUDIT_DIR / "docx_format_report.md").exists() else ""
+    formula_report = (AUDIT_DIR / "formula_reference_check.md").read_text(encoding="utf-8") if (AUDIT_DIR / "formula_reference_check.md").exists() else ""
+    render_report = (AUDIT_DIR / "docx_render_report.md").read_text(encoding="utf-8") if (AUDIT_DIR / "docx_render_report.md").exists() else ""
     stale_report = (AUDIT_DIR / "stale_terms_report.md").read_text(encoding="utf-8") if (AUDIT_DIR / "stale_terms_report.md").exists() else ""
     docx_status = "PASS" if "status: PASS" in docx_report else "FAIL"
     style_status = "PASS" if "status: PASS\n" in docx_format else ("PASS_LIMITED" if "status: PASS_LIMITED" in docx_format else "FAIL")
+    formula_status = "PASS" if "status: PASS" in formula_report else "FAIL"
+    render_status = "PASS" if "render_status: PASS" in render_report else "FAIL"
     stale_status = "PASS" if "[review]" not in stale_report else "FAIL"
     verdict = "PASS" if not issues else "FAIL"
     lines = [
@@ -100,6 +105,7 @@ def write_audit_reports(issues: list[AuditIssue], extra_sections: list[str] | No
         f"Artifact commit: `{metadata['artifact_commit']}`",
         f"Branch: `{metadata['audit_branch']}`",
         f"Working tree clean: `{metadata['working_tree_clean']}`",
+        f"Working tree effective clean: `{metadata['working_tree_effective_clean']}`",
         "",
         "## 3. Source commit / artifact commit",
         "",
@@ -151,7 +157,12 @@ def write_audit_reports(issues: list[AuditIssue], extra_sections: list[str] | No
         "## 11. DOCX gate",
         "",
         f"- DOCX content gate: `{docx_status}`",
-        f"- Real DOCX style gate: `{style_status}`",
+        f"- DOCX XML style gate: `{style_status}`",
+        f"- DOCX visual render gate: `{render_status}`",
+        "",
+        "## 11.1 Formula reference gate",
+        "",
+        f"- Formula reference gate: `{formula_status}`",
         "",
         "## 12. Stale terms scan",
         "",
