@@ -54,6 +54,7 @@ def dirty_paths() -> list[str]:
 def release_metadata() -> dict[str, Any]:
     ignored_prefixes = (
         "reports/",
+        "models/",
         "visual_artifacts_latest.zip",
         "fuzzyxai_final_audit_package.zip",
         "fuzzyxai_doctoral_runtime_release.zip",
