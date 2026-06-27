@@ -1,0 +1,429 @@
+from __future__ import annotations
+
+import json
+from copy import deepcopy
+from datetime import datetime, timezone
+from hashlib import sha256
+from pathlib import Path
+from typing import Any
+
+
+ROOT = Path(__file__).resolve().parents[2]
+SCENARIO_DIR = ROOT / "configs" / "studio_scenarios"
+
+
+STATUS_COLOR = {
+    "passed": "#16a34a",
+    "valid": "#16a34a",
+    "warning": "#d97706",
+    "blocked": "#dc2626",
+    "rupture": "#dc2626",
+    "not_applicable": "#64748b",
+    "info": "#2563eb",
+}
+
+
+def _node(
+    node_id: str,
+    title: str,
+    status: str,
+    operator_id: str,
+    operator_name: str,
+    source_chapter: str,
+    formula: str,
+    description: str,
+    inputs: dict[str, Any],
+    computed: dict[str, Any],
+    output: dict[str, Any],
+    diagnostics: list[dict[str, Any]] | None = None,
+    effect: str = "",
+) -> dict[str, Any]:
+    return {
+        "node_id": node_id,
+        "node_type": node_id,
+        "title": title,
+        "status": status,
+        "operator": {
+            "operator_id": operator_id,
+            "operator_name": operator_name,
+            "source_chapter": source_chapter,
+            "formula_latex": formula,
+            "description": description,
+        },
+        "inputs": inputs,
+        "computed": computed,
+        "output": output,
+        "diagnostics": diagnostics or [],
+        "effect_on_final_action": effect,
+    }
+
+
+def _edge(edge_id: str, src: str, dst: str, operator_id: str, status: str, computed: dict[str, Any], reason: str = "") -> dict[str, Any]:
+    return {
+        "edge_id": edge_id,
+        "from": src,
+        "to": dst,
+        "operator_id": operator_id,
+        "status": status,
+        "computed": computed,
+        "diagnostic": {
+            "has_rupture": status in {"blocked", "rupture"},
+            "criticality": "high" if status in {"blocked", "rupture"} else ("medium" if status == "warning" else "low"),
+            "reason": reason,
+        },
+    }
+
+
+def _base_pipeline(final_action: str, rupture: bool, values: dict[str, Any]) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+    diag = []
+    if rupture:
+        diag = [
+            {
+                "diagnostic_id": "D_source_conflict",
+                "type": "critical_rupture",
+                "source": values.get("rupture_source", "source_conflict"),
+                "reason": values.get("action_reason", "Источник поддержки противоречит источнику качества."),
+                "criticality": "high",
+                "chi_R_crit": 1,
+                "recommended_action": "block",
+            }
+        ]
+    nodes = [
+        _node(
+            "input_artifact",
+            "Input Artifact",
+            "info",
+            "input",
+            "Входной артефакт",
+            "4",
+            r"x \in U_{artifact}",
+            "Фиксирует исходный объект и trace входа.",
+            {"input_id": values.get("input_id", "sample_001"), "data_type": values.get("data_type", "artifact")},
+            {"hash": values.get("input_hash", "auto")},
+            {"artifact_ready": True},
+            effect="Передаёт проверяемый вход адаптеру.",
+        ),
+        _node(
+            "adapter",
+            "Adapter",
+            "passed",
+            "adapter",
+            "Адаптер внешнего метода",
+            "4",
+            r"A(x) \rightarrow channels(E_k)",
+            "Переводит внешний результат в каналы объяснительного объекта.",
+            values.get("adapter_inputs", {}),
+            values.get("adapter_computed", {}),
+            {"adapter_status": "valid", "trace_complete": True},
+            effect="Создаёт проверяемый интерфейс для операторов главы 2.",
+        ),
+        _node(
+            "explanation_object",
+            "Explanation Object Eₖ",
+            "passed" if not rupture else "warning",
+            "build_Ek",
+            "Построение объяснительного объекта Eₖ",
+            "2",
+            r"E_k=\langle L_k,\mu_k,R_k,\alpha_k,u_k,\tau_k\rangle",
+            "Собирает термы, принадлежности, правила, активации, неопределённость и trace.",
+            values.get("ek_inputs", {}),
+            values.get("ek_computed", {}),
+            {"object_type": "E_k", "valid": True},
+            effect="Объект передан в согласование Tᵢⱼ и риск-наблюдатель.",
+        ),
+        _node(
+            "alignment",
+            "Interface Alignment Tᵢⱼ",
+            "warning" if rupture else "passed",
+            "T_ij",
+            "Согласование интерфейсов Tᵢⱼ",
+            "2",
+            r"T_{ij}=(\rho_{ij},\sigma_{ij},\pi_{ij},\theta_{ij}),\quad \gamma_{ij}\leq\gamma_{max}",
+            "Проверяет совместимость термов, правил и trace соседних объектов.",
+            {"source_object": "E_model", "target_object": "E_quality"},
+            values.get("alignment_computed", {"gamma_ij": 0.2, "gamma_max": 0.4, "delta_T": 0.08}),
+            {"composition": "E_ij" if not rupture else "D_ij warning"},
+            diag,
+            effect="Высокое рассогласование усиливает диагностический контур.",
+        ),
+        _node(
+            "f_selector",
+            "Uncertainty Representation F",
+            "passed",
+            "select_F",
+            "Выбор класса представления F",
+            "3",
+            r"F^*=\arg\min_F(c_H+c_O+c_K+\Delta_F)",
+            "Выбирает F0, F_int, NAS или F_ML по покрытию и цене редукции.",
+            {"P_sit": values.get("P_sit", ["u_conf", "u_trace"])},
+            values.get("f_computed", {"selected_class": "NAS", "coverage": "u_conf,u_trace,source_conflict"}),
+            {"selected_class": values.get("selected_class", "NAS")},
+            effect="NAS/F_ML сохраняет источник поддержки и контрсвидетельства.",
+        ),
+        _node(
+            "reduction",
+            "Reduction Δ",
+            "warning" if values.get("delta", 0.0) > 0.25 else "passed",
+            "Delta",
+            "Редукция и потеря Δ",
+            "3",
+            r"\Delta=\mathcal{L}(F_{source}\rightarrow F_{target})",
+            "Оценивает потерю информации при упрощении представления.",
+            {"source_representation": values.get("selected_class", "NAS"), "target_representation": "user_action"},
+            {"delta": values.get("delta", 0.08), "delta_max": values.get("delta_max", 0.35)},
+            {"reduction_allowed": values.get("delta", 0.08) <= values.get("delta_max", 0.35)},
+            effect="Потеря Δ входит в риск и может запретить авто-действие.",
+        ),
+        _node(
+            "risk_observer",
+            "Risk Observer",
+            "blocked" if final_action == "block" else ("warning" if final_action != "accept" else "passed"),
+            "risk_observer",
+            "Риск-ориентированный наблюдатель",
+            "3",
+            r"\rho=w_p\rho_{pred}+w_u u_M+w_I(1-I_{pre})+w_\Delta\Delta_M+w_R\chi_R",
+            "Вычисляет риск, учитывает χ_R и χ_R^crit, выбирает допустимое действие.",
+            values.get("risk_inputs", {}),
+            values.get("risk_computed", {}),
+            {"final_action": final_action},
+            diag,
+            effect=values.get("action_reason", "Формирует итоговое действие."),
+        ),
+        _node(
+            "action",
+            "Action",
+            "blocked" if final_action == "block" else "passed",
+            "action_policy",
+            "Политика действия",
+            "3",
+            r"\chi_R^{crit}=1\Rightarrow action=block",
+            "Преобразует риск и диагностический статус в действие.",
+            {"rho": values.get("risk_computed", {}).get("rho", 0.0), "chi_R_crit": int(rupture)},
+            {"action": final_action},
+            {"action": final_action, "reason": values.get("action_reason", "")},
+            diag,
+            effect="Показывает, можно ли использовать результат автоматически.",
+        ),
+        _node(
+            "report",
+            "Report / Proof Package",
+            "info",
+            "report_export",
+            "Отчёт и proof package",
+            "4",
+            r"Report=(operators,diagnostics,trace,action)",
+            "Формирует JSON-отчёт с операторами, числами, диагностикой и trace.",
+            {"operators": ["build_Ek", "T_ij", "select_F", "risk_observer"]},
+            {"report_ready": True},
+            {"export": "json"},
+            effect="Сохраняет проверяемый след расчёта.",
+        ),
+    ]
+    edges = [
+        _edge("input_to_adapter", "input_artifact", "adapter", "adapter", "passed", {}),
+        _edge("adapter_to_ek", "adapter", "explanation_object", "build_Ek", "passed", {}),
+        _edge("ek_to_alignment", "explanation_object", "alignment", "T_ij", "warning" if rupture else "passed", values.get("alignment_computed", {}), values.get("action_reason", "")),
+        _edge("alignment_to_f", "alignment", "f_selector", "select_F", "warning" if rupture else "passed", {}),
+        _edge("f_to_reduction", "f_selector", "reduction", "Delta", "passed", {"delta": values.get("delta", 0.08)}),
+        _edge("reduction_to_risk", "reduction", "risk_observer", "risk_observer", "blocked" if final_action == "block" else "passed", values.get("risk_computed", {}), values.get("action_reason", "")),
+        _edge("risk_to_action", "risk_observer", "action", "action_policy", "blocked" if final_action == "block" else "passed", {"action": final_action}),
+        _edge("action_to_report", "action", "report", "report_export", "passed", {}),
+    ]
+    return nodes, edges
+
+
+def _scenario(
+    scenario_id: str,
+    scenario_name: str,
+    domain: str,
+    data_type: str,
+    status: str,
+    description: str,
+    summary: dict[str, Any],
+    values: dict[str, Any],
+    final_action: str,
+    rupture: bool,
+    charts: dict[str, Any],
+) -> dict[str, Any]:
+    nodes, edges = _base_pipeline(final_action, rupture, {"data_type": data_type, **values})
+    diagnostics = [d for n in nodes for d in n.get("diagnostics", [])]
+    run_id = f"{scenario_id}_case_001"
+    report = {
+        "run_id": run_id,
+        "scenario_id": scenario_id,
+        "explain_plan_version": "EP-2026-01",
+        "input_id": values.get("input_id", "sample_001"),
+        "final_action": final_action,
+        "action_reason": values.get("action_reason", ""),
+        "operators_used": ["adapter", "build_Ek", "T_ij", "select_F", "Delta", "risk_observer", "action_policy"],
+        "diagnostics": diagnostics,
+        "trace": {
+            "model_version": values.get("model_version", "demo-model-v1"),
+            "adapter_version": values.get("adapter_version", f"adapter-{scenario_id}-v1"),
+            "timestamp": "auto",
+            "hash": "auto",
+        },
+    }
+    return {
+        "scenario_id": scenario_id,
+        "scenario_name": scenario_name,
+        "domain": domain,
+        "data_type": data_type,
+        "explain_plan_version": "EP-2026-01",
+        "status": status,
+        "description": description,
+        "summary": summary,
+        "pipeline": nodes,
+        "edges": edges,
+        "diagnostics": diagnostics,
+        "runs": [report],
+        "charts": charts,
+    }
+
+
+DEFAULT_SCENARIOS: list[dict[str, Any]] = [
+    _scenario(
+        "hybrid_xiris",
+        "HYBRID-XIRIS",
+        "biometrics",
+        "iris_image",
+        "scenario_run_verified",
+        "Конфликт между модельным сигналом и качеством сегментации радужной оболочки.",
+        {"objects_total": 1000, "accept": 612, "lower_confidence": 201, "block": 187, "baseline_critical_misses": 168, "fuzzyxai_critical_misses": 0},
+        {
+            "input_id": "iris_case_001",
+            "adapter_inputs": {"image_quality": 0.31, "segmentation_quality": 0.27, "model_match_signal": 0.88},
+            "adapter_computed": {"quality_term": "low", "match_term": "high"},
+            "ek_inputs": {"model_score": 0.88, "segmentation_quality": 0.27, "feature_support": "iris texture", "trace": "complete"},
+            "ek_computed": {"mu_high": 0.88, "alpha_accept": 0.82, "alpha_block": 0.91, "u_k": 0.36},
+            "alignment_computed": {"gamma_ij": 0.35, "gamma_max": 0.40, "delta_T": 0.08},
+            "P_sit": ["u_conf", "u_trace", "source_conflict"],
+            "f_computed": {"selected_class": "NAS", "coverage": "u_conf,u_trace,source_conflict", "why_not_F0": "F0 теряет источник контрсвидетельства"},
+            "selected_class": "NAS",
+            "delta": 0.08,
+            "risk_inputs": {"rho_pred": 0.88, "u_M": 0.36, "chi_R": 1, "chi_R_crit": 1},
+            "risk_computed": {"rho": 0.74, "chi_R": 1, "chi_R_crit": 1, "chi_Auto": 0},
+            "rupture_source": "segmentation_quality",
+            "action_reason": "Модель поддерживает принятие, но низкое качество сегментации и конфликт источников дают критический разрыв.",
+        },
+        "block",
+        True,
+        {"actions": {"accept": 612, "lower_confidence": 201, "block": 187}, "misses": {"baseline": 168, "FuzzyXAI": 0}},
+    ),
+    _scenario(
+        "beacon_xai",
+        "BEACON-XAI",
+        "monitoring",
+        "time_series",
+        "fixture-certified",
+        "Контрсвидетельство BEACON переводится в диагностический аудиторский отчёт.",
+        {"objects_total": 100, "counter_evidence_detected": 83, "checks_without_beacon": 64, "checks_with_beacon": 11, "audit_reports": 12},
+        {
+            "input_id": "beacon_signal_001",
+            "adapter_inputs": {"counter_evidence_score": 0.83, "signal_window": "t-32:t"},
+            "adapter_computed": {"counter_evidence_detected": 83, "audit_reports": 12},
+            "ek_inputs": {"beacon_signal": 0.83, "trace": "github-head+fixture"},
+            "ek_computed": {"mu_counter_evidence": 0.83, "alpha_audit": 0.79, "u_k": 0.28},
+            "alignment_computed": {"gamma_ij": 0.22, "gamma_max": 0.40, "delta_T": 0.05},
+            "risk_inputs": {"rho_pred": 0.54, "u_M": 0.28, "chi_R": 1, "chi_R_crit": 0},
+            "risk_computed": {"rho": 0.58, "chi_R": 1, "chi_R_crit": 0, "chi_Auto": 0},
+            "selected_class": "NAS",
+            "delta": 0.05,
+            "action_reason": "BEACON-сигнал является контрсвидетельством и переводит маршрут в audit report.",
+        },
+        "defer_to_human",
+        False,
+        {"beacon_checks": {"without_BEACON": 64, "with_BEACON": 11}, "evidence": {"counter_evidence_detected": 83, "audit_reports": 12}},
+    ),
+    _scenario(
+        "gis_integro",
+        "GIS INTEGRO",
+        "geospatial",
+        "geo_layer",
+        "source-pending",
+        "Геослой, правила и feature support объединяются в проверяемый маршрут без заявления качества исходной геомодели.",
+        {"probability": 0.67, "mean_alpha_k": 0.72, "positive_feature_support": 0.47, "gamma_route": 0.20, "delta": 0.08},
+        {
+            "input_id": "geo_layer_001",
+            "adapter_inputs": {"probability": 0.67, "layer_source": "fixture"},
+            "adapter_computed": {"mean_alpha_k": 0.72, "positive_feature_support": 0.47},
+            "ek_inputs": {"probability": 0.67, "rules": "geo constraints", "feature_support": 0.47},
+            "ek_computed": {"mu_geo_support": 0.67, "alpha_k_mean": 0.72, "u_k": 0.31},
+            "alignment_computed": {"gamma_ij": 0.20, "gamma_max": 0.40, "delta_T": 0.08},
+            "risk_inputs": {"rho_pred": 0.67, "u_M": 0.31, "chi_R": 0, "chi_R_crit": 0},
+            "risk_computed": {"rho": 0.41, "chi_R": 0, "chi_R_crit": 0, "chi_Auto": 0},
+            "selected_class": "F_ML",
+            "delta": 0.08,
+            "action_reason": "Маршрут согласован, но статус source-pending оставляет результат отчётным, а не claim о качестве геомодели.",
+        },
+        "audit_report",
+        False,
+        {"gis_values": {"probability": 0.67, "mean_alpha": 0.72, "feature_support": 0.47}},
+    ),
+    _scenario(
+        "gd_anfis_shap",
+        "GD-ANFIS/SHAP",
+        "tabular",
+        "tabular_rules",
+        "source-pending",
+        "ANFIS-правила и SHAP-вклады согласуются как источники объяснительного объекта.",
+        {"rules": 4, "mean_activation": 0.69, "shap_positive_support": 0.58, "diagnostic_warnings": 1},
+        {
+            "input_id": "tabular_case_001",
+            "adapter_inputs": {"anfis_rules": 4, "shap_features": 6},
+            "adapter_computed": {"mean_activation": 0.69, "shap_positive_support": 0.58},
+            "ek_inputs": {"rules": "ANFIS", "alpha_k": "native", "eta_k": "SHAP"},
+            "ek_computed": {"alpha_rule_1": 0.74, "alpha_rule_2": 0.61, "shap_support": 0.58, "u_k": 0.33},
+            "alignment_computed": {"gamma_ij": 0.29, "gamma_max": 0.40, "delta_T": 0.10},
+            "P_sit": ["u_conf", "u_num", "u_trace"],
+            "f_computed": {"selected_class": "F_ML", "warning": "rule/SHAP support differs on feature x_4"},
+            "selected_class": "F_ML",
+            "delta": 0.10,
+            "risk_inputs": {"rho_pred": 0.62, "u_M": 0.33, "chi_R": 1, "chi_R_crit": 0},
+            "risk_computed": {"rho": 0.52, "chi_R": 1, "chi_R_crit": 0, "chi_Auto": 0},
+            "action_reason": "Правила и SHAP частично расходятся, поэтому формируется diagnostic warning и отчётный режим.",
+        },
+        "defer_to_human",
+        False,
+        {"anfis": {"rules": 4, "mean_activation": 0.69, "shap_positive_support": 0.58, "diagnostic_warnings": 1}},
+    ),
+]
+
+
+def ensure_scenario_json_files(directory: Path = SCENARIO_DIR) -> None:
+    directory.mkdir(parents=True, exist_ok=True)
+    for scenario in DEFAULT_SCENARIOS:
+        path = directory / f"{scenario['scenario_id']}.json"
+        path.write_text(json.dumps(scenario, ensure_ascii=False, indent=2), encoding="utf-8")
+
+
+def load_scenarios(directory: Path = SCENARIO_DIR) -> list[dict[str, Any]]:
+    ensure_scenario_json_files(directory)
+    scenarios: list[dict[str, Any]] = []
+    for path in sorted(directory.glob("*.json")):
+        try:
+            scenarios.append(json.loads(path.read_text(encoding="utf-8")))
+        except Exception:
+            continue
+    order = {scenario["scenario_id"]: i for i, scenario in enumerate(DEFAULT_SCENARIOS)}
+    scenarios.sort(key=lambda item: order.get(str(item.get("scenario_id")), 10_000))
+    return scenarios or deepcopy(DEFAULT_SCENARIOS)
+
+
+def build_report(scenario: dict[str, Any]) -> dict[str, Any]:
+    report = deepcopy((scenario.get("runs") or [{}])[0])
+    report["timestamp_generated"] = datetime.now(timezone.utc).isoformat()
+    trace = report.setdefault("trace", {})
+    trace["timestamp"] = report["timestamp_generated"]
+    trace["hash"] = sha256(json.dumps(scenario, ensure_ascii=False, sort_keys=True).encode("utf-8")).hexdigest()[:16]
+    report["operators"] = [
+        {
+            "node_id": node.get("node_id"),
+            "operator_id": node.get("operator", {}).get("operator_id"),
+            "status": node.get("status"),
+            "computed": node.get("computed", {}),
+            "diagnostics": node.get("diagnostics", []),
+        }
+        for node in scenario.get("pipeline", [])
+    ]
+    return report

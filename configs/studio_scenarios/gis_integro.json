@@ -1,0 +1,418 @@
+{
+  "scenario_id": "gis_integro",
+  "scenario_name": "GIS INTEGRO",
+  "domain": "geospatial",
+  "data_type": "geo_layer",
+  "explain_plan_version": "EP-2026-01",
+  "status": "source-pending",
+  "description": "Геослой, правила и feature support объединяются в проверяемый маршрут без заявления качества исходной геомодели.",
+  "summary": {
+    "probability": 0.67,
+    "mean_alpha_k": 0.72,
+    "positive_feature_support": 0.47,
+    "gamma_route": 0.2,
+    "delta": 0.08
+  },
+  "pipeline": [
+    {
+      "node_id": "input_artifact",
+      "node_type": "input_artifact",
+      "title": "Input Artifact",
+      "status": "info",
+      "operator": {
+        "operator_id": "input",
+        "operator_name": "Входной артефакт",
+        "source_chapter": "4",
+        "formula_latex": "x \\in U_{artifact}",
+        "description": "Фиксирует исходный объект и trace входа."
+      },
+      "inputs": {
+        "input_id": "geo_layer_001",
+        "data_type": "geo_layer"
+      },
+      "computed": {
+        "hash": "auto"
+      },
+      "output": {
+        "artifact_ready": true
+      },
+      "diagnostics": [],
+      "effect_on_final_action": "Передаёт проверяемый вход адаптеру."
+    },
+    {
+      "node_id": "adapter",
+      "node_type": "adapter",
+      "title": "Adapter",
+      "status": "passed",
+      "operator": {
+        "operator_id": "adapter",
+        "operator_name": "Адаптер внешнего метода",
+        "source_chapter": "4",
+        "formula_latex": "A(x) \\rightarrow channels(E_k)",
+        "description": "Переводит внешний результат в каналы объяснительного объекта."
+      },
+      "inputs": {
+        "probability": 0.67,
+        "layer_source": "fixture"
+      },
+      "computed": {
+        "mean_alpha_k": 0.72,
+        "positive_feature_support": 0.47
+      },
+      "output": {
+        "adapter_status": "valid",
+        "trace_complete": true
+      },
+      "diagnostics": [],
+      "effect_on_final_action": "Создаёт проверяемый интерфейс для операторов главы 2."
+    },
+    {
+      "node_id": "explanation_object",
+      "node_type": "explanation_object",
+      "title": "Explanation Object Eₖ",
+      "status": "passed",
+      "operator": {
+        "operator_id": "build_Ek",
+        "operator_name": "Построение объяснительного объекта Eₖ",
+        "source_chapter": "2",
+        "formula_latex": "E_k=\\langle L_k,\\mu_k,R_k,\\alpha_k,u_k,\\tau_k\\rangle",
+        "description": "Собирает термы, принадлежности, правила, активации, неопределённость и trace."
+      },
+      "inputs": {
+        "probability": 0.67,
+        "rules": "geo constraints",
+        "feature_support": 0.47
+      },
+      "computed": {
+        "mu_geo_support": 0.67,
+        "alpha_k_mean": 0.72,
+        "u_k": 0.31
+      },
+      "output": {
+        "object_type": "E_k",
+        "valid": true
+      },
+      "diagnostics": [],
+      "effect_on_final_action": "Объект передан в согласование Tᵢⱼ и риск-наблюдатель."
+    },
+    {
+      "node_id": "alignment",
+      "node_type": "alignment",
+      "title": "Interface Alignment Tᵢⱼ",
+      "status": "passed",
+      "operator": {
+        "operator_id": "T_ij",
+        "operator_name": "Согласование интерфейсов Tᵢⱼ",
+        "source_chapter": "2",
+        "formula_latex": "T_{ij}=(\\rho_{ij},\\sigma_{ij},\\pi_{ij},\\theta_{ij}),\\quad \\gamma_{ij}\\leq\\gamma_{max}",
+        "description": "Проверяет совместимость термов, правил и trace соседних объектов."
+      },
+      "inputs": {
+        "source_object": "E_model",
+        "target_object": "E_quality"
+      },
+      "computed": {
+        "gamma_ij": 0.2,
+        "gamma_max": 0.4,
+        "delta_T": 0.08
+      },
+      "output": {
+        "composition": "E_ij"
+      },
+      "diagnostics": [],
+      "effect_on_final_action": "Высокое рассогласование усиливает диагностический контур."
+    },
+    {
+      "node_id": "f_selector",
+      "node_type": "f_selector",
+      "title": "Uncertainty Representation F",
+      "status": "passed",
+      "operator": {
+        "operator_id": "select_F",
+        "operator_name": "Выбор класса представления F",
+        "source_chapter": "3",
+        "formula_latex": "F^*=\\arg\\min_F(c_H+c_O+c_K+\\Delta_F)",
+        "description": "Выбирает F0, F_int, NAS или F_ML по покрытию и цене редукции."
+      },
+      "inputs": {
+        "P_sit": [
+          "u_conf",
+          "u_trace"
+        ]
+      },
+      "computed": {
+        "selected_class": "NAS",
+        "coverage": "u_conf,u_trace,source_conflict"
+      },
+      "output": {
+        "selected_class": "F_ML"
+      },
+      "diagnostics": [],
+      "effect_on_final_action": "NAS/F_ML сохраняет источник поддержки и контрсвидетельства."
+    },
+    {
+      "node_id": "reduction",
+      "node_type": "reduction",
+      "title": "Reduction Δ",
+      "status": "passed",
+      "operator": {
+        "operator_id": "Delta",
+        "operator_name": "Редукция и потеря Δ",
+        "source_chapter": "3",
+        "formula_latex": "\\Delta=\\mathcal{L}(F_{source}\\rightarrow F_{target})",
+        "description": "Оценивает потерю информации при упрощении представления."
+      },
+      "inputs": {
+        "source_representation": "F_ML",
+        "target_representation": "user_action"
+      },
+      "computed": {
+        "delta": 0.08,
+        "delta_max": 0.35
+      },
+      "output": {
+        "reduction_allowed": true
+      },
+      "diagnostics": [],
+      "effect_on_final_action": "Потеря Δ входит в риск и может запретить авто-действие."
+    },
+    {
+      "node_id": "risk_observer",
+      "node_type": "risk_observer",
+      "title": "Risk Observer",
+      "status": "warning",
+      "operator": {
+        "operator_id": "risk_observer",
+        "operator_name": "Риск-ориентированный наблюдатель",
+        "source_chapter": "3",
+        "formula_latex": "\\rho=w_p\\rho_{pred}+w_u u_M+w_I(1-I_{pre})+w_\\Delta\\Delta_M+w_R\\chi_R",
+        "description": "Вычисляет риск, учитывает χ_R и χ_R^crit, выбирает допустимое действие."
+      },
+      "inputs": {
+        "rho_pred": 0.67,
+        "u_M": 0.31,
+        "chi_R": 0,
+        "chi_R_crit": 0
+      },
+      "computed": {
+        "rho": 0.41,
+        "chi_R": 0,
+        "chi_R_crit": 0,
+        "chi_Auto": 0
+      },
+      "output": {
+        "final_action": "audit_report"
+      },
+      "diagnostics": [],
+      "effect_on_final_action": "Маршрут согласован, но статус source-pending оставляет результат отчётным, а не claim о качестве геомодели."
+    },
+    {
+      "node_id": "action",
+      "node_type": "action",
+      "title": "Action",
+      "status": "passed",
+      "operator": {
+        "operator_id": "action_policy",
+        "operator_name": "Политика действия",
+        "source_chapter": "3",
+        "formula_latex": "\\chi_R^{crit}=1\\Rightarrow action=block",
+        "description": "Преобразует риск и диагностический статус в действие."
+      },
+      "inputs": {
+        "rho": 0.41,
+        "chi_R_crit": 0
+      },
+      "computed": {
+        "action": "audit_report"
+      },
+      "output": {
+        "action": "audit_report",
+        "reason": "Маршрут согласован, но статус source-pending оставляет результат отчётным, а не claim о качестве геомодели."
+      },
+      "diagnostics": [],
+      "effect_on_final_action": "Показывает, можно ли использовать результат автоматически."
+    },
+    {
+      "node_id": "report",
+      "node_type": "report",
+      "title": "Report / Proof Package",
+      "status": "info",
+      "operator": {
+        "operator_id": "report_export",
+        "operator_name": "Отчёт и proof package",
+        "source_chapter": "4",
+        "formula_latex": "Report=(operators,diagnostics,trace,action)",
+        "description": "Формирует JSON-отчёт с операторами, числами, диагностикой и trace."
+      },
+      "inputs": {
+        "operators": [
+          "build_Ek",
+          "T_ij",
+          "select_F",
+          "risk_observer"
+        ]
+      },
+      "computed": {
+        "report_ready": true
+      },
+      "output": {
+        "export": "json"
+      },
+      "diagnostics": [],
+      "effect_on_final_action": "Сохраняет проверяемый след расчёта."
+    }
+  ],
+  "edges": [
+    {
+      "edge_id": "input_to_adapter",
+      "from": "input_artifact",
+      "to": "adapter",
+      "operator_id": "adapter",
+      "status": "passed",
+      "computed": {},
+      "diagnostic": {
+        "has_rupture": false,
+        "criticality": "low",
+        "reason": ""
+      }
+    },
+    {
+      "edge_id": "adapter_to_ek",
+      "from": "adapter",
+      "to": "explanation_object",
+      "operator_id": "build_Ek",
+      "status": "passed",
+      "computed": {},
+      "diagnostic": {
+        "has_rupture": false,
+        "criticality": "low",
+        "reason": ""
+      }
+    },
+    {
+      "edge_id": "ek_to_alignment",
+      "from": "explanation_object",
+      "to": "alignment",
+      "operator_id": "T_ij",
+      "status": "passed",
+      "computed": {
+        "gamma_ij": 0.2,
+        "gamma_max": 0.4,
+        "delta_T": 0.08
+      },
+      "diagnostic": {
+        "has_rupture": false,
+        "criticality": "low",
+        "reason": "Маршрут согласован, но статус source-pending оставляет результат отчётным, а не claim о качестве геомодели."
+      }
+    },
+    {
+      "edge_id": "alignment_to_f",
+      "from": "alignment",
+      "to": "f_selector",
+      "operator_id": "select_F",
+      "status": "passed",
+      "computed": {},
+      "diagnostic": {
+        "has_rupture": false,
+        "criticality": "low",
+        "reason": ""
+      }
+    },
+    {
+      "edge_id": "f_to_reduction",
+      "from": "f_selector",
+      "to": "reduction",
+      "operator_id": "Delta",
+      "status": "passed",
+      "computed": {
+        "delta": 0.08
+      },
+      "diagnostic": {
+        "has_rupture": false,
+        "criticality": "low",
+        "reason": ""
+      }
+    },
+    {
+      "edge_id": "reduction_to_risk",
+      "from": "reduction",
+      "to": "risk_observer",
+      "operator_id": "risk_observer",
+      "status": "passed",
+      "computed": {
+        "rho": 0.41,
+        "chi_R": 0,
+        "chi_R_crit": 0,
+        "chi_Auto": 0
+      },
+      "diagnostic": {
+        "has_rupture": false,
+        "criticality": "low",
+        "reason": "Маршрут согласован, но статус source-pending оставляет результат отчётным, а не claim о качестве геомодели."
+      }
+    },
+    {
+      "edge_id": "risk_to_action",
+      "from": "risk_observer",
+      "to": "action",
+      "operator_id": "action_policy",
+      "status": "passed",
+      "computed": {
+        "action": "audit_report"
+      },
+      "diagnostic": {
+        "has_rupture": false,
+        "criticality": "low",
+        "reason": ""
+      }
+    },
+    {
+      "edge_id": "action_to_report",
+      "from": "action",
+      "to": "report",
+      "operator_id": "report_export",
+      "status": "passed",
+      "computed": {},
+      "diagnostic": {
+        "has_rupture": false,
+        "criticality": "low",
+        "reason": ""
+      }
+    }
+  ],
+  "diagnostics": [],
+  "runs": [
+    {
+      "run_id": "gis_integro_case_001",
+      "scenario_id": "gis_integro",
+      "explain_plan_version": "EP-2026-01",
+      "input_id": "geo_layer_001",
+      "final_action": "audit_report",
+      "action_reason": "Маршрут согласован, но статус source-pending оставляет результат отчётным, а не claim о качестве геомодели.",
+      "operators_used": [
+        "adapter",
+        "build_Ek",
+        "T_ij",
+        "select_F",
+        "Delta",
+        "risk_observer",
+        "action_policy"
+      ],
+      "diagnostics": [],
+      "trace": {
+        "model_version": "demo-model-v1",
+        "adapter_version": "adapter-gis_integro-v1",
+        "timestamp": "auto",
+        "hash": "auto"
+      }
+    }
+  ],
+  "charts": {
+    "gis_values": {
+      "probability": 0.67,
+      "mean_alpha": 0.72,
+      "feature_support": 0.47
+    }
+  }
+}

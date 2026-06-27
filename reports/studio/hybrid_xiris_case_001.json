@@ -1,0 +1,178 @@
+{
+  "run_id": "hybrid_xiris_case_001",
+  "scenario_id": "hybrid_xiris",
+  "explain_plan_version": "EP-2026-01",
+  "input_id": "iris_case_001",
+  "final_action": "block",
+  "action_reason": "Модель поддерживает принятие, но низкое качество сегментации и конфликт источников дают критический разрыв.",
+  "operators_used": [
+    "adapter",
+    "build_Ek",
+    "T_ij",
+    "select_F",
+    "Delta",
+    "risk_observer",
+    "action_policy"
+  ],
+  "diagnostics": [
+    {
+      "diagnostic_id": "D_source_conflict",
+      "type": "critical_rupture",
+      "source": "segmentation_quality",
+      "reason": "Модель поддерживает принятие, но низкое качество сегментации и конфликт источников дают критический разрыв.",
+      "criticality": "high",
+      "chi_R_crit": 1,
+      "recommended_action": "block"
+    },
+    {
+      "diagnostic_id": "D_source_conflict",
+      "type": "critical_rupture",
+      "source": "segmentation_quality",
+      "reason": "Модель поддерживает принятие, но низкое качество сегментации и конфликт источников дают критический разрыв.",
+      "criticality": "high",
+      "chi_R_crit": 1,
+      "recommended_action": "block"
+    },
+    {
+      "diagnostic_id": "D_source_conflict",
+      "type": "critical_rupture",
+      "source": "segmentation_quality",
+      "reason": "Модель поддерживает принятие, но низкое качество сегментации и конфликт источников дают критический разрыв.",
+      "criticality": "high",
+      "chi_R_crit": 1,
+      "recommended_action": "block"
+    }
+  ],
+  "trace": {
+    "model_version": "demo-model-v1",
+    "adapter_version": "adapter-hybrid_xiris-v1",
+    "timestamp": "2026-06-27T00:13:31.849317+00:00",
+    "hash": "c0830c9203648515"
+  },
+  "timestamp_generated": "2026-06-27T00:13:31.849317+00:00",
+  "operators": [
+    {
+      "node_id": "input_artifact",
+      "operator_id": "input",
+      "status": "info",
+      "computed": {
+        "hash": "auto"
+      },
+      "diagnostics": []
+    },
+    {
+      "node_id": "adapter",
+      "operator_id": "adapter",
+      "status": "passed",
+      "computed": {
+        "quality_term": "low",
+        "match_term": "high"
+      },
+      "diagnostics": []
+    },
+    {
+      "node_id": "explanation_object",
+      "operator_id": "build_Ek",
+      "status": "warning",
+      "computed": {
+        "mu_high": 0.88,
+        "alpha_accept": 0.82,
+        "alpha_block": 0.91,
+        "u_k": 0.36
+      },
+      "diagnostics": []
+    },
+    {
+      "node_id": "alignment",
+      "operator_id": "T_ij",
+      "status": "warning",
+      "computed": {
+        "gamma_ij": 0.35,
+        "gamma_max": 0.4,
+        "delta_T": 0.08
+      },
+      "diagnostics": [
+        {
+          "diagnostic_id": "D_source_conflict",
+          "type": "critical_rupture",
+          "source": "segmentation_quality",
+          "reason": "Модель поддерживает принятие, но низкое качество сегментации и конфликт источников дают критический разрыв.",
+          "criticality": "high",
+          "chi_R_crit": 1,
+          "recommended_action": "block"
+        }
+      ]
+    },
+    {
+      "node_id": "f_selector",
+      "operator_id": "select_F",
+      "status": "passed",
+      "computed": {
+        "selected_class": "NAS",
+        "coverage": "u_conf,u_trace,source_conflict",
+        "why_not_F0": "F0 теряет источник контрсвидетельства"
+      },
+      "diagnostics": []
+    },
+    {
+      "node_id": "reduction",
+      "operator_id": "Delta",
+      "status": "passed",
+      "computed": {
+        "delta": 0.08,
+        "delta_max": 0.35
+      },
+      "diagnostics": []
+    },
+    {
+      "node_id": "risk_observer",
+      "operator_id": "risk_observer",
+      "status": "blocked",
+      "computed": {
+        "rho": 0.74,
+        "chi_R": 1,
+        "chi_R_crit": 1,
+        "chi_Auto": 0
+      },
+      "diagnostics": [
+        {
+          "diagnostic_id": "D_source_conflict",
+          "type": "critical_rupture",
+          "source": "segmentation_quality",
+          "reason": "Модель поддерживает принятие, но низкое качество сегментации и конфликт источников дают критический разрыв.",
+          "criticality": "high",
+          "chi_R_crit": 1,
+          "recommended_action": "block"
+        }
+      ]
+    },
+    {
+      "node_id": "action",
+      "operator_id": "action_policy",
+      "status": "blocked",
+      "computed": {
+        "action": "block"
+      },
+      "diagnostics": [
+        {
+          "diagnostic_id": "D_source_conflict",
+          "type": "critical_rupture",
+          "source": "segmentation_quality",
+          "reason": "Модель поддерживает принятие, но низкое качество сегментации и конфликт источников дают критический разрыв.",
+          "criticality": "high",
+          "chi_R_crit": 1,
+          "recommended_action": "block"
+        }
+      ]
+    },
+    {
+      "node_id": "report",
+      "operator_id": "report_export",
+      "status": "info",
+      "computed": {
+        "report_ready": true
+      },
+      "diagnostics": []
+    }
+  ]
+}
