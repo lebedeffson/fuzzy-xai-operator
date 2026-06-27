@@ -46,10 +46,10 @@
   "trace": {
     "model_version": "demo-model-v1",
     "adapter_version": "adapter-hybrid_xiris-v1",
-    "timestamp": "2026-06-27T00:13:31.849317+00:00",
+    "timestamp": "2026-06-27T00:33:10.197402+00:00",
     "hash": "c0830c9203648515"
   },
-  "timestamp_generated": "2026-06-27T00:13:31.849317+00:00",
+  "timestamp_generated": "2026-06-27T00:33:10.197402+00:00",
   "operators": [
     {
       "node_id": "input_artifact",

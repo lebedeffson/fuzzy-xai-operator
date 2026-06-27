@@ -427,3 +427,195 @@ def build_report(scenario: dict[str, Any]) -> dict[str, Any]:
         for node in scenario.get("pipeline", [])
     ]
     return report
+
+
+def build_ecosystem_entities(scenarios: list[dict[str, Any]] | None = None) -> dict[str, list[dict[str, Any]]]:
+    scenarios = scenarios or load_scenarios()
+    scenario_ids = [s["scenario_id"] for s in scenarios]
+    articles = [
+        {
+            "id": "article_hybrid_xiris",
+            "kind": "article",
+            "title": "HYBRID-XIRIS: нейро-нечёткий биометрический контур",
+            "subtitle": "модель + сценарий",
+            "description": "Проверка конфликта между модельным сигналом и качеством сегментации радужной оболочки.",
+            "tags": ["biometrics", "iris", "NAS", "risk-observer"],
+            "status": "verified",
+            "resultType": "model+scenario",
+            "connectedModels": ["model_iris_quality", "model_iris_matcher"],
+            "connectedScenarios": ["hybrid_xiris"],
+            "connectedOperators": ["build_Ek", "T_ij", "select_F", "risk_observer"],
+        },
+        {
+            "id": "article_beacon_xai",
+            "kind": "article",
+            "title": "BEACON-XAI: контрсвидетельства во временных сигналах",
+            "subtitle": "adapter fixture",
+            "description": "BEACON-сигнал подключается как источник контрсвидетельства и аудиторского отчёта.",
+            "tags": ["time-series", "counter-evidence", "audit"],
+            "status": "connected",
+            "resultType": "method+adapter",
+            "connectedModels": ["model_beacon_counter"],
+            "connectedScenarios": ["beacon_xai"],
+            "connectedOperators": ["build_Ek", "risk_observer"],
+        },
+        {
+            "id": "article_gis_integro",
+            "kind": "article",
+            "title": "GIS INTEGRO: геослой и правиловой маршрут",
+            "subtitle": "source-pending scenario",
+            "description": "Геослой, признаки и правила объединяются в проверяемый объяснительный маршрут.",
+            "tags": ["geo", "rules", "route"],
+            "status": "limited",
+            "resultType": "scenario",
+            "connectedModels": ["model_gis_route"],
+            "connectedScenarios": ["gis_integro"],
+            "connectedOperators": ["T_ij", "Delta", "report_export"],
+        },
+        {
+            "id": "article_gd_anfis_shap",
+            "kind": "article",
+            "title": "GD-ANFIS/SHAP: правила и вклады признаков",
+            "subtitle": "neuro-fuzzy + SHAP",
+            "description": "ANFIS-правила и SHAP-вклады согласуются как источники объяснительного объекта.",
+            "tags": ["ANFIS", "SHAP", "tabular"],
+            "status": "limited",
+            "resultType": "model+method",
+            "connectedModels": ["model_gd_anfis", "model_shap_explainer"],
+            "connectedScenarios": ["gd_anfis_shap"],
+            "connectedOperators": ["build_Ek", "T_ij", "select_F"],
+        },
+    ]
+    models = [
+        {
+            "id": "model_iris_quality",
+            "kind": "model",
+            "title": "Iris segmentation quality model",
+            "subtitle": "quality gate",
+            "description": "Оценивает надёжность сегментации радужной оболочки.",
+            "domain": "biometrics",
+            "inputType": "iris image + mask",
+            "outputType": "segmentation_quality",
+            "adapterId": "iris_quality_adapter",
+            "explainabilityChannels": ["quality_score", "quality_terms", "trace"],
+            "limitations": ["не является самостоятельной биометрической моделью"],
+            "status": "verified",
+            "usedIn": ["hybrid_xiris"],
+        },
+        {
+            "id": "model_iris_matcher",
+            "kind": "model",
+            "title": "Neuro-fuzzy iris matcher",
+            "subtitle": "matching score + rules",
+            "description": "Оценивает совпадение радужной оболочки и активированные правила принятия.",
+            "domain": "biometrics",
+            "inputType": "iris features",
+            "outputType": "model_match_signal, alpha_accept, alpha_block",
+            "adapterId": "iris_match_adapter",
+            "explainabilityChannels": ["score", "confidence", "rule_activation", "trace"],
+            "limitations": ["автоматическое действие разрешено только после риск-наблюдателя"],
+            "status": "verified",
+            "usedIn": ["hybrid_xiris"],
+        },
+        {
+            "id": "model_beacon_counter",
+            "kind": "model",
+            "title": "BEACON counter-evidence module",
+            "subtitle": "counter-evidence detector",
+            "description": "Выделяет контрсвидетельства во временном сигнале.",
+            "domain": "monitoring",
+            "inputType": "time series",
+            "outputType": "counter_evidence_score",
+            "adapterId": "beacon_adapter",
+            "explainabilityChannels": ["counter_evidence", "audit_trace"],
+            "limitations": ["не заявляет новую метрику качества исходной модели"],
+            "status": "connected",
+            "usedIn": ["beacon_xai"],
+        },
+        {
+            "id": "model_gis_route",
+            "kind": "model",
+            "title": "GIS route explanation profile",
+            "subtitle": "geo layer + rules",
+            "description": "Связывает вероятность, правила геослоя и поддержку признаков.",
+            "domain": "geospatial",
+            "inputType": "geo layer",
+            "outputType": "probability, alpha_k, feature_support",
+            "adapterId": "gis_adapter",
+            "explainabilityChannels": ["layer_source", "rule_activation", "feature_support"],
+            "limitations": ["source-pending; качество исходной геомодели не утверждается"],
+            "status": "limited",
+            "usedIn": ["gis_integro"],
+        },
+        {
+            "id": "model_gd_anfis",
+            "kind": "model",
+            "title": "GD-ANFIS rule model",
+            "subtitle": "native fuzzy rules",
+            "description": "Нейро-нечёткая модель с нативными термами, правилами и активациями.",
+            "domain": "tabular",
+            "inputType": "tabular object",
+            "outputType": "rules, alpha_k",
+            "adapterId": "gd_anfis_adapter",
+            "explainabilityChannels": ["L_k", "mu_k", "R_k", "alpha_k"],
+            "limitations": ["fixture source-pending"],
+            "status": "limited",
+            "usedIn": ["gd_anfis_shap"],
+        },
+        {
+            "id": "model_shap_explainer",
+            "kind": "model",
+            "title": "SHAP contribution explainer",
+            "subtitle": "feature contributions",
+            "description": "Преобразует вклады признаков в каналы поддержки и контрсвидетельства.",
+            "domain": "tabular",
+            "inputType": "model + tabular object",
+            "outputType": "feature contributions",
+            "adapterId": "shap_adapter",
+            "explainabilityChannels": ["feature_support", "sign", "trace"],
+            "limitations": ["согласуется с правилами через T_ij"],
+            "status": "connected",
+            "usedIn": ["gd_anfis_shap"],
+        },
+    ]
+    operator_map: dict[str, dict[str, Any]] = {}
+    for scenario in scenarios:
+        for node in scenario.get("pipeline", []):
+            op = node.get("operator", {})
+            op_id = str(op.get("operator_id", node.get("node_id")))
+            if op_id not in operator_map:
+                operator_map[op_id] = {
+                    "id": op_id,
+                    "kind": "operator",
+                    "title": op.get("operator_name", op_id),
+                    "subtitle": f"глава {op.get('source_chapter', '')}",
+                    "description": op.get("description", ""),
+                    "tags": [f"chapter-{op.get('source_chapter', '')}", node.get("node_type", "")],
+                    "status": "connected",
+                    "chapter": str(op.get("source_chapter", "")),
+                    "formula": op.get("formula_latex", ""),
+                    "checks": [],
+                    "possibleOutcomes": ["passed", "warning", "diagnostic rupture", "blocked"],
+                    "usedInScenarios": [],
+                    "realCases": [],
+                }
+            operator_map[op_id]["usedInScenarios"].append(scenario["scenario_id"])
+            operator_map[op_id]["realCases"].append(
+                {
+                    "scenario_id": scenario["scenario_id"],
+                    "scenario_name": scenario["scenario_name"],
+                    "node_title": node.get("title"),
+                    "status": node.get("status"),
+                    "computed": node.get("computed", {}),
+                    "effect": node.get("effect_on_final_action", ""),
+                }
+            )
+    operators = list(operator_map.values())
+    return {
+        "articles": articles,
+        "models": models,
+        "scenarios": scenarios,
+        "operators": operators,
+        "runs": [build_report(s) for s in scenarios if s.get("runs")],
+        "scenario_ids": scenario_ids,
+    }
