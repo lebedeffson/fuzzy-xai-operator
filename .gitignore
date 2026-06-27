@@ -21,6 +21,7 @@ Thumbs.db
 
 dist/
 build/
+*.egg-info/
 *.spec~
 
 defense_demo_last_error.txt

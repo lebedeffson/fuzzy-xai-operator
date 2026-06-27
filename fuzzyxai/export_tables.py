@@ -34,7 +34,10 @@ def export_hybrid_xiris_tables(out_dir: Path) -> list[Path]:
         + [{"section": "alignment", "parameter": "gamma_max", "value": DEFAULT_HYBRID_PLAN.gamma_max, "role": "порог согласования"}]
         + [{"section": "alignment", "parameter": f"w_{key}", "value": value, "role": f"вес компоненты {key}"} for key, value in DEFAULT_HYBRID_PLAN.gamma_weights.items()]
         + [{"section": "reduction", "parameter": "delta_max", "value": DEFAULT_HYBRID_PLAN.delta_max, "role": "порог редукции"}]
-        + [{"section": "reduction", "parameter": "kappa_delta", "value": 0.3225, "role": "нормированная редукционная компонента риска"}]
+        + [
+            {"section": "reduction", "parameter": "kappa_delta", "value": 3.020, "role": "коэффициент нормировки потери редукции"},
+            {"section": "reduction", "parameter": "r_delta", "value": 0.3225, "role": "нормированная редукционная компонента риска"},
+        ]
         + [{"section": "risk", "parameter": f"w_{key}", "value": value, "role": f"вес компоненты риска {key}"} for key, value in DEFAULT_HYBRID_PLAN.risk_weights.items()]
         + [{"section": "action", "parameter": key, "value": value, "role": "порог действия"} for key, value in DEFAULT_HYBRID_PLAN.thresholds.items()]
         + [

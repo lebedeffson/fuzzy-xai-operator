@@ -33,6 +33,25 @@ final-readiness-audit: studio-hybrid-batch studio-export-tables
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m fuzzyxai.audit.build_package
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m pytest tests/audit -q
 
+.PHONY: studio-smoke doctorate-release-check fresh-clone-gate
+studio-smoke:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m fuzzyxai.audit.studio_smoke
+
+doctorate-release-check: studio-hybrid-batch studio-export-tables
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m fuzzyxai.audit.inventory
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m fuzzyxai.audit.grep_stale_terms
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m fuzzyxai.audit.formula_references
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m fuzzyxai.audit.docx_chapters --chapter4 docs/chapters/glava_4_FuzzyXAI_corrected_final.docx --chapter5 docs/chapters/glava_5_FuzzyXAI_corrected_final.docx
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m fuzzyxai.audit.docx_format --chapter4 docs/chapters/glava_4_FuzzyXAI_corrected_final.docx --chapter5 docs/chapters/glava_5_FuzzyXAI_corrected_final.docx
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m fuzzyxai.audit.docx_render_gate --chapter4 docs/chapters/glava_4_FuzzyXAI_corrected_final.docx --chapter5 docs/chapters/glava_5_FuzzyXAI_corrected_final.docx
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m fuzzyxai.audit.final_audit
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m fuzzyxai.audit.build_package
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m pytest tests/audit tests/test_studio_operator_engine.py tests/test_fuzzyxai_studio_demo_readiness.py -q
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m fuzzyxai.audit.studio_smoke
+
+fresh-clone-gate:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m fuzzyxai.audit.fresh_clone_gate
+
 risk-test:
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m pytest tests/test_risk_*.py -q
 

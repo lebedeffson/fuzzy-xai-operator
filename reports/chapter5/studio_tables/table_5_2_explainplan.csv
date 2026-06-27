@@ -7,7 +7,8 @@ alignment,w_d_R,0.35,вес компоненты d_R
 alignment,w_d_u,0.2,вес компоненты d_u
 alignment,w_d_tau,0.2,вес компоненты d_tau
 reduction,delta_max,0.35,порог редукции
-reduction,kappa_delta,0.3225,нормированная редукционная компонента риска
+reduction,kappa_delta,3.02,коэффициент нормировки потери редукции
+reduction,r_delta,0.3225,нормированная редукционная компонента риска
 risk,w_model_signal,0.35,вес компоненты риска model_signal
 risk,w_block_rule,0.25,вес компоненты риска block_rule
 risk,w_source_conflict,0.2,вес компоненты риска source_conflict

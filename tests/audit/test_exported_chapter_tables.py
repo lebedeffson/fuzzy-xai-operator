@@ -28,6 +28,7 @@ def test_table_5_2_explainplan_has_required_parameters() -> None:
         "w_source_conflict",
         "w_reduction_component",
         "kappa_delta",
+        "r_delta",
         "theta_1",
         "theta_2",
         "theta_3",

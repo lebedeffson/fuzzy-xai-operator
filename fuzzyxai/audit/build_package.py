@@ -7,6 +7,7 @@ from .common import ROOT
 
 
 PACKAGE = ROOT / "fuzzyxai_final_audit_package.zip"
+RUNTIME_PACKAGE = ROOT / "fuzzyxai_doctoral_runtime_release.zip"
 VISUAL = ROOT / "visual_artifacts_latest.zip"
 
 INCLUDE = [
@@ -20,6 +21,27 @@ INCLUDE = [
     "docs/chapters",
     "figures",
     "visual_artifacts_latest.zip",
+]
+
+RUNTIME_INCLUDE = [
+    "fuzzyxai",
+    "apps/fuzzyxai_studio.py",
+    "configs/studio_scenarios",
+    "reports/audit",
+    "reports/studio",
+    "reports/studio_batch",
+    "reports/chapter5/studio_tables",
+    "docs/chapters",
+    "docs/DATA_AND_SCENARIO_POLICY.md",
+    "tests/audit",
+    "tests/test_studio_operator_engine.py",
+    "tests/test_fuzzyxai_studio_demo_readiness.py",
+    "Makefile",
+    "pyproject.toml",
+    "requirements.txt",
+    "README.md",
+    "README_DOCTORAL_RELEASE.md",
+    "RELEASE_NOTES.md",
 ]
 
 EXCLUDE_PARTS = {"__pycache__", ".pytest_cache", ".venv", "venv", "node_modules"}
@@ -69,8 +91,20 @@ def build_audit_package() -> Path:
     return PACKAGE
 
 
+def build_runtime_release() -> Path:
+    if RUNTIME_PACKAGE.exists():
+        RUNTIME_PACKAGE.unlink()
+    with zipfile.ZipFile(RUNTIME_PACKAGE, "w", zipfile.ZIP_DEFLATED) as zf:
+        for rel in RUNTIME_INCLUDE:
+            _add_path(zf, ROOT / rel)
+        _add_path(zf, PACKAGE)
+        _add_path(zf, VISUAL)
+    return RUNTIME_PACKAGE
+
+
 def main() -> None:
     print(build_audit_package())
+    print(build_runtime_release())
 
 
 if __name__ == "__main__":

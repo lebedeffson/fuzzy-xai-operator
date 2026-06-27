@@ -83,7 +83,7 @@ def main() -> None:
         "",
         f"status: {status}",
         "",
-        "DOCX XML gate checks Heading styles, Caption styles, table presence and drawing/caption consistency. Full visual page-break verification still requires manual Word/LibreOffice inspection.",
+        "DOCX XML gate checks structural formatting. Visual layout is checked separately by docx_render_gate.",
     ]
     for source, kind in sources:
         lines.append(f"- {kind}: `{source}`")

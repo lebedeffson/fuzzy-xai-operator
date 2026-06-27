@@ -50,7 +50,7 @@ def main() -> None:
         entries.append({"label": label, "path": path, "ok": ok and pages > 0, "pdf": pdf, "pages": pages, "output": output.strip()})
     status = "PASS" if all(entry["ok"] for entry in entries) else "FAIL"
     AUDIT_DIR.mkdir(parents=True, exist_ok=True)
-    lines = ["# DOCX visual render gate", "", f"render_status: {status}", "automated_visual_review: PASS", "manual_visual_review: not_required_for_gate", ""]
+    lines = ["# DOCX visual render gate", "", f"render_status: {status}", "automated_visual_review: PASS", "manual_visual_review: optional", ""]
     for entry in entries:
         lines.append(f"- {entry['label']}: {'PASS' if entry['ok'] else 'FAIL'}")
         lines.append(f"  - source: `{entry['path'].relative_to(ROOT)}`")

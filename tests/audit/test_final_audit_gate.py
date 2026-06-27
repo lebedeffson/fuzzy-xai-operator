@@ -40,9 +40,10 @@ def test_docx_render_gate_passes() -> None:
 
 def test_audit_package_is_clean() -> None:
     forbidden = ["__pycache__", ".pyc", ".pytest_cache", ".venv", "node_modules", ".DS_Store"]
-    with zipfile.ZipFile("fuzzyxai_final_audit_package.zip") as zf:
-        names = zf.namelist()
-    assert not [name for name in names if any(term in name for term in forbidden)]
+    for package in ["fuzzyxai_final_audit_package.zip", "fuzzyxai_doctoral_runtime_release.zip"]:
+        with zipfile.ZipFile(package) as zf:
+            names = zf.namelist()
+        assert not [name for name in names if any(term in name for term in forbidden)]
 
 
 def test_proof_package_release_metadata_is_explicit() -> None:
