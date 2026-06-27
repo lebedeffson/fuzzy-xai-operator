@@ -31,6 +31,8 @@ TRAINING_REPORTS = OUT / "training_reports"
 EVALUATION_REPORTS = OUT / "evaluation_reports"
 DATASET_REGISTRY = OUT / "dataset_registry"
 DATASET_AUDIT = OUT / "dataset_audit"
+CHAPTER_TABLES = OUT / "chapter_tables"
+QA = OUT / "qa"
 RENDER = OUT / "render_report"
 ZIP_PATH = OUT / "FuzzyXAI_practice_demo_package.zip"
 SCREENSHOT_ZIP = OUT / "FuzzyXAI_practice_screenshots.zip"
@@ -46,7 +48,7 @@ SCENARIO_META = {
 
 
 def _mkdirs() -> None:
-    for path in [SCREENSHOTS, INPUTS, SCENARIO_INPUTS, PROOFS, TABLES, MODEL_CARDS, TRAINING_REPORTS, EVALUATION_REPORTS, DATASET_REGISTRY, DATASET_AUDIT, RENDER]:
+    for path in [SCREENSHOTS, INPUTS, SCENARIO_INPUTS, PROOFS, TABLES, MODEL_CARDS, TRAINING_REPORTS, EVALUATION_REPORTS, DATASET_REGISTRY, DATASET_AUDIT, CHAPTER_TABLES, QA, RENDER]:
         path.mkdir(parents=True, exist_ok=True)
 
 
@@ -210,6 +212,14 @@ def _gis_body() -> str:
 
 def build_inputs() -> None:
     _mkdirs()
+    raw_copies = [
+        (ROOT / "data/raw/iris/input_hybrid_xiris_eye_sample.json", INPUTS / "input_hybrid_xiris_eye_sample.json"),
+        (ROOT / "data/raw/ecg/input_ecg_sample_signal.csv", INPUTS / "input_ecg_sample_signal.csv"),
+        (ROOT / "data/raw/gis/gis_layer_sample.json", INPUTS / "gis_layer_sample.json"),
+    ]
+    for src, dst in raw_copies:
+        if src.exists():
+            shutil.copy2(src, dst)
     eye = _html("HYBRID-XIRIS: входной артефакт радужки", _iris_body())
     _write(INPUTS / "hybrid_xiris_eye_sample.html", eye)
     ecg = _html("Medical ECG Signal: контрольный сигнал", _ecg_body())
@@ -528,49 +538,120 @@ def build_docs() -> None:
     _write(RENDER / "screenshot_index.md", f"# Screenshot index\n\n{screenshot_rows}\n")
     mapping = """# Figure to chapter mapping
 
-Рисунок 4.1 — Общая карта экосистемы
-Источник: screenshots/00_ecosystem_main.png
+## Рисунок 4.1 — Общая карта экосистемы
 
-Рисунок 4.2 — Пользовательский слой HYBRID-XIRIS
-Источник: screenshots/01_hybrid_xiris_workspace.png
+Файл: `screenshots/00_ecosystem_main.png`
+Раздел: 4.1-4.3
+Что доказывает: показывает контейнеры экосистемы — сценарии, модели, операторы, прогоны и proof package.
+Связанный proof package: `proof_packages/hybrid_xiris_proof_package.json`
+Ограничение: пользовательский слой не является самостоятельной моделью, он инспектирует вычислительный контур.
 
-Рисунок 4.3 — Инспекция риск-наблюдателя
-Источник: screenshots/04_hybrid_xiris_risk_observer.png
+## Рисунок 4.2 — Пользовательский слой HYBRID-XIRIS
 
-Рисунок 4.4 — Реестр операторов
-Источник: screenshots/13_operator_registry.png
+Файл: `screenshots/01_hybrid_xiris_workspace.png`
+Раздел: 4.4
+Что доказывает: рабочее пространство сценария с входом, маршрутом операторов, инспектором и итоговым действием.
+Связанные значения: action = block, evidence_level = full_control_run.
+Связанный proof package: `proof_packages/hybrid_xiris_proof_package.json`
 
-Рисунок 5.1 — HYBRID-XIRIS: входной артефакт и блокировка
-Источник: screenshots/02_hybrid_xiris_input_eye.png
+## Рисунок 4.3 — Инспекция риск-наблюдателя
 
-Рисунок 5.2 — ECG: контрольный сигнал и аудиторское действие
-Источник: screenshots/06_ecg_workspace.png
+Файл: `screenshots/04_hybrid_xiris_risk_observer.png`
+Раздел: 4.6 / 5.2
+Что доказывает: решение не принимается напрямую моделью; действие выводится через риск-наблюдатель и diagnostic state.
+Связанные значения: γ = 0.351, Δ = 0.106811, r_Δ = 0.3225, ρ = 0.800, χ_R^crit = 1.
+Связанный proof package: `proof_packages/hybrid_xiris_proof_package.json`
 
-Рисунок 5.3 — GD-ANFIS/SHAP: конфликт правила и локального вклада
-Источник: screenshots/10_gd_anfis_shap_workspace.png
+## Рисунок 4.4 — Реестр операторов
 
-Рисунок 5.4 — BEACON-XAI: временные контрсвидетельства
-Источник: screenshots/11_beacon_xai_workspace.png
+Файл: `screenshots/13_operator_registry.png`
+Раздел: 4.3 / 4.5
+Что доказывает: операторы представлены как сущности экосистемы, а не как подпункты теории.
 
-Рисунок 5.5 — GIS INTEGRO: геослой и согласование маршрута
-Источник: screenshots/12_gis_integro_workspace.png
+## Рисунок 5.1 — HYBRID-XIRIS: контрольный артефакт радужной оболочки и блокировка
+
+Файл: `screenshots/02_hybrid_xiris_input_eye.png`
+Раздел: 5.2
+Что доказывает: высокий модельный сигнал p_match = 0.88 конфликтует с Q_img = 0.31 и Q_seg = 0.27.
+Связанные значения: γ = 0.351, Δ = 0.106811, ρ = 0.800, action = block.
+Связанный proof package: `proof_packages/hybrid_xiris_proof_package.json`
+Связанные таблицы: `tables/hybrid_xiris_tables/`
+Ограничение: control_demo_artifact, не промышленная биометрическая валидация.
+
+## Рисунок 5.2 — ECG: контрольный сигнал и передача эксперту
+
+Файл: `screenshots/07_ecg_signal_input.png`
+Раздел: 5.3
+Что доказывает: шум/пропуски порождают D_signal_quality и действие defer_to_human.
+Связанный proof package: `proof_packages/medical_ecg_signal_proof_package.json`
+Ограничение: не медицинская диагностика.
+
+## Рисунок 5.3 — GD-ANFIS/SHAP: конфликт правила и локального вклада
+
+Файл: `screenshots/10_gd_anfis_shap_workspace.png`
+Раздел: 5.4
+Что доказывает: ANFIS rule α = 0.82 конфликтует с SHAP X1 = +0.45, X2 = -0.30; γ_rule-shap = 0.685.
+Связанный proof package: `proof_packages/gd_anfis_shap_proof_package.json`
+
+## Рисунок 5.4 — BEACON-XAI: временные контрсвидетельства
+
+Файл: `screenshots/11_beacon_xai_workspace.png`
+Раздел: 5.5
+Что доказывает: 70 support и 30 counter fragments формируют D_counterevidence_conflict и аудит.
+Связанный proof package: `proof_packages/beacon_xai_proof_package.json`
+Ограничение: checks 64→11 относится к BEACON-механизму, а не к собственной метрике FuzzyXAI.
+
+## Рисунок 5.5 — GIS INTEGRO: геослой и маршрутное согласование
+
+Файл: `screenshots/12_gis_integro_workspace.png`
+Раздел: 5.6
+Что доказывает: γ_route = max(|p − α_mean|, |p − s|) = 0.20, Δ = 0.08.
+Связанный proof package: `proof_packages/gis_integro_proof_package.json`
+Ограничение: не production GIS validation.
+
+## Технический экран — экспортированные таблицы
+
+Файл: `screenshots/17_exported_tables.png`
+Раздел: приложение / демонстрация
+Ограничение: для основного текста главы лучше использовать CSV/Markdown таблицы из `chapter_tables/`.
 """
     _write(RENDER / "figure_to_chapter_mapping.md", mapping)
     readme = """# FuzzyXAI practice demo
 
 ## Маршрут показа руководителю
 
-1. `screenshots/00_ecosystem_main.png` — показать карту экосистемы.
-2. `screenshots/01_hybrid_xiris_workspace.png` — показать основной сценарий.
-3. `screenshots/02_hybrid_xiris_input_eye.png` — показать входной артефакт радужки.
-4. `screenshots/04_hybrid_xiris_risk_observer.png` — показать γ, Δ, ρ и причину блокировки.
-5. `screenshots/05_hybrid_xiris_proof_package.png` — показать verifier PASS.
-6. `screenshots/16_batch_summary.png` — показать 612/201/187 и 168→0.
-7. `screenshots/07_ecg_signal_input.png` — показать ЭКГ и передачу эксперту.
-8. `screenshots/10_gd_anfis_shap_workspace.png` — показать конфликт правила и SHAP.
-9. `screenshots/11_beacon_xai_workspace.png` — показать counterevidence.
-10. `screenshots/12_gis_integro_workspace.png` — показать геослой и γ_route.
-11. `screenshots/17_exported_tables.png` — показать экспорт таблиц главы 5.
+1. Открыть `screenshots/00_ecosystem_main.png`.
+   Говорим: это карта программно-методической экосистемы FuzzyXAI. Она связывает сценарии, модели, операторы, прогоны и proof package.
+
+2. Открыть `screenshots/01_hybrid_xiris_workspace.png`.
+   Говорим: это основной сценарий HYBRID-XIRIS, где пользователь видит вход, маршрут операторов, инспектор и итоговое действие.
+
+3. Открыть `screenshots/02_hybrid_xiris_input_eye.png`.
+   Говорим: это контрольный артефакт радужной оболочки. Модель даёт p_match = 0.88, но Q_img = 0.31 и Q_seg = 0.27 создают D_quality_source_conflict и действие block.
+
+4. Открыть `screenshots/04_hybrid_xiris_risk_observer.png`.
+   Говорим: риск-наблюдатель связывает γ = 0.351, Δ = 0.106811, r_Δ = 0.3225, ρ = 0.800 и χ_R^crit = 1 с блокировкой.
+
+5. Открыть `screenshots/05_hybrid_xiris_proof_package.png`.
+   Говорим: verifier сравнивает computed_result и operator_values; γ, Δ, ρ и action совпадают, поэтому proof package имеет PASS.
+
+6. Открыть `screenshots/16_batch_summary.png`.
+   Говорим: контрольный прогон даёт 612/201/187 и снижает критические пропуски с 168 до 0.
+
+7. Открыть `screenshots/07_ecg_signal_input.png`.
+   Говорим: это контрольный ЭКГ-сигнал, не медицинская диагностика. Шум/пропуски дают D_signal_quality и действие defer_to_human.
+
+8. Открыть `screenshots/10_gd_anfis_shap_workspace.png`.
+   Говорим: правило ANFIS конфликтует с локальными SHAP-вкладами, поэтому формируется D_rule_attribution_conflict и действие audit.
+
+9. Открыть `screenshots/11_beacon_xai_workspace.png`.
+   Говорим: временные контрсвидетельства формируют D_counterevidence_conflict и аудиторский маршрут.
+
+10. Открыть `screenshots/12_gis_integro_workspace.png`.
+    Говорим: геослой проверяется через γ_route = max(|p − α_mean|, |p − s|) = 0.20 и Δ = 0.08.
+
+11. Открыть `screenshots/17_exported_tables.png`.
+    Говорим: это технический экран экспорта; для главы лучше использовать таблицы из `chapter_tables/`.
 
 ## Что лежит в пакете
 
@@ -590,6 +671,30 @@ def build_docs() -> None:
 - GIS INTEGRO: control/demo artifact, operator_control_example.
 """
     _write(OUT / "README_PRACTICE_DEMO.md", readme)
+    build_chapter_tables()
+
+
+def build_chapter_tables() -> None:
+    rows = {
+        "table_hybrid_summary.md": [
+            "# HYBRID-XIRIS summary",
+            "| Показатель | Значение |",
+            "|---|---:|",
+            "| Q_img | 0.31 |",
+            "| Q_seg | 0.27 |",
+            "| p_match | 0.88 |",
+            "| γ | 0.351 |",
+            "| Δ | 0.106811 |",
+            "| ρ | 0.800 |",
+            "| action | block |",
+        ],
+        "table_ecg_summary.md": ["# ECG summary", "| Показатель | Значение |", "|---|---:|", "| quality_score | 0.58 |", "| missing_fragments | 2 |", "| action | defer_to_human |"],
+        "table_gd_shap_summary.md": ["# GD-ANFIS/SHAP summary", "| Показатель | Значение |", "|---|---:|", "| α_rule | 0.82 |", "| SHAP X1 | +0.45 |", "| SHAP X2 | -0.30 |", "| γ_rule-shap | 0.685 |", "| action | audit |"],
+        "table_beacon_summary.md": ["# BEACON-XAI summary", "| Показатель | Значение |", "|---|---:|", "| fragments | 100 |", "| support | 70 |", "| counter | 30 |", "| objects with counterevidence | 83 |", "| audit reports | 12 |"],
+        "table_gis_summary.md": ["# GIS INTEGRO summary", "| Показатель | Значение |", "|---|---:|", "| p | 0.67 |", "| α_mean | 0.72 |", "| s | 0.47 |", "| γ_route | 0.20 |", "| Δ | 0.08 |"],
+    }
+    for name, lines in rows.items():
+        _write(CHAPTER_TABLES / name, "\n".join(lines) + "\n")
 
 
 def build_zip() -> None:
@@ -658,6 +763,15 @@ def validate_package() -> dict[str, Any]:
         issues.append("missing dataset_audit/dataset_audit_report.md")
     if not (DATASET_AUDIT / "dataset_audit_report.json").exists():
         issues.append("missing dataset_audit/dataset_audit_report.json")
+    registry_path = DATASET_REGISTRY / "datasets.yaml"
+    if registry_path.exists():
+        import yaml
+
+        registry = yaml.safe_load(registry_path.read_text(encoding="utf-8")) or {}
+        for entry in registry.values():
+            for name in entry.get("required_files", []):
+                if not (INPUTS / name).exists():
+                    issues.append(f"missing required input file {name}")
     for proof_path in PROOFS.glob("*_proof_package.json"):
         proof = json.loads(proof_path.read_text(encoding="utf-8"))
         for key in ["package_type", "schema_version", "source_commit", "code_version", "computed_result", "operator_values", "diagnostics", "final_action", "verifier_status"]:
@@ -673,6 +787,8 @@ def validate_package() -> dict[str, Any]:
             expected_action = json.loads(scenario_input.read_text(encoding="utf-8")).get("expected_outputs", {}).get("action")
             if expected_action and expected_action != proof.get("final_action"):
                 issues.append(f"{proof_path.name}: final_action mismatch {expected_action}!={proof.get('final_action')}")
+    if not any(CHAPTER_TABLES.glob("*.md")):
+        issues.append("missing chapter_tables/*.md")
     manifest = OUT / "practice_manifest.json"
     if not SCREENSHOT_ZIP.exists():
         issues.append("missing FuzzyXAI_practice_screenshots.zip")
