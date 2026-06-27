@@ -68,6 +68,20 @@ def collect_unique_diagnostics(pipeline: list[dict[str, Any]]) -> list[dict[str,
     return out
 
 
+def summarize_diagnostic_occurrences(pipeline: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    grouped: dict[str, dict[str, Any]] = {}
+    for node in pipeline:
+        node_id = node.get("node_id")
+        for diagnostic in node.get("diagnostics", []):
+            diagnostic_id = diagnostic.get("diagnostic_id")
+            if not diagnostic_id:
+                continue
+            if diagnostic_id not in grouped:
+                grouped[diagnostic_id] = {**diagnostic, "occurrences": [], "global": True}
+            grouped[diagnostic_id]["occurrences"].append(node_id)
+    return list(grouped.values())
+
+
 def _node(
     node_id: str,
     title: str,
@@ -457,7 +471,7 @@ def load_scenarios(directory: Path = SCENARIO_DIR) -> list[dict[str, Any]]:
 
 def build_report(scenario: dict[str, Any]) -> dict[str, Any]:
     report = deepcopy((scenario.get("runs") or [{}])[0])
-    report["diagnostics"] = collect_unique_diagnostics(scenario.get("pipeline", []))
+    report["diagnostics"] = summarize_diagnostic_occurrences(scenario.get("pipeline", []))
     report["timestamp_generated"] = datetime.now(timezone.utc).isoformat()
     trace = report.setdefault("trace", {})
     trace["timestamp"] = report["timestamp_generated"]

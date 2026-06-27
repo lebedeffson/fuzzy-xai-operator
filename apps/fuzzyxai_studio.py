@@ -58,9 +58,30 @@ NODE_TITLE_RU = {
     "Report / Proof Package": "Доказательный пакет",
 }
 
+ACTION_LABELS_RU = {
+    "accept": "ПРИНЯТО",
+    "lower_confidence": "СНИЖЕНО ДОВЕРИЕ",
+    "request_more_data": "ЗАПРОС ДАННЫХ",
+    "defer_to_human": "ПЕРЕДАНО ЭКСПЕРТУ",
+    "block": "БЛОКИРОВКА",
+    "audit_report": "АУДИТОРСКИЙ ОТЧЁТ",
+}
+
+BAR_LABELS_RU = {
+    "accept": "принято",
+    "lower_confidence": "снижено доверие",
+    "block": "заблокировано",
+    "baseline": "базовый режим",
+    "FuzzyXAI": "маршрут FuzzyXAI",
+}
+
 
 def _node_title(node: dict[str, Any]) -> str:
     return NODE_TITLE_RU.get(str(node.get("title", "")), str(node.get("title", "")))
+
+
+def _action_label(action: Any) -> str:
+    return ACTION_LABELS_RU.get(str(action), str(action).upper())
 
 
 def _fmt(value: Any) -> str:
@@ -222,7 +243,8 @@ def run(port: int = 8097) -> None:
           .fx-hybrid-header { background:white; border:1px solid var(--fx-border); border-radius:12px; padding:18px; margin:0 0 12px; }
           .fx-pipeline { display:grid; grid-template-columns:repeat(auto-fit,minmax(118px,1fr)); gap:10px; overflow:visible; padding:8px 2px 12px; align-items:stretch; }
           .fx-node { position:relative; min-height:108px; border:2px solid var(--c); background:white; border-radius:10px; padding:11px; cursor:pointer; text-align:left; }
-          .fx-node.active { box-shadow:0 0 0 3px rgba(15,118,110,.18); transform:translateY(-1px); }
+          .fx-node.active { border:3px solid #111827 !important; box-shadow:0 0 0 4px rgba(17,24,39,.10); transform:translateY(-2px); }
+          .fx-selected-pill { display:inline-block; margin-top:8px; padding:2px 8px; border-radius:999px; background:#111827; color:white; font-size:11px; font-weight:760; }
           .fx-node-index { width:24px; height:24px; border-radius:999px; display:flex; align-items:center; justify-content:center; background:#eef2f7; color:#334155; font-size:12px; font-weight:850; margin-bottom:8px; }
           .fx-node-title { font-weight:760; font-size:13px; line-height:1.18; }
           .fx-node-status { margin-top:7px; color:var(--c); font-size:12px; font-weight:760; }
@@ -236,7 +258,8 @@ def run(port: int = 8097) -> None:
           .fx-diagnostic { border-left:4px solid #dc2626; background:#fef2f2; border-radius:4px; padding:9px 10px; font-size:13px; margin-top:8px; }
           .fx-link-list button { width:100%; justify-content:flex-start; }
           .fx-chip-list { display:flex; flex-wrap:wrap; gap:6px; margin-top:6px; }
-          .fx-chip-list button { border:1px solid #cbd5e1; border-radius:999px; background:#f8fafc; padding:4px 8px; min-height:30px; font-size:12px; font-weight:700; }
+          .fx-chip-list button { border:1px solid #cbd5e1; border-radius:999px; background:#f8fafc; padding:4px 8px; min-height:30px; font-size:12px; font-weight:700; text-transform:none !important; }
+          .fx-chip-list .q-btn__content { text-transform:none !important; }
           .fx-compact-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; margin-top:10px; }
           .fx-compact-chart { border:1px solid var(--fx-border); border-radius:10px; padding:12px; background:#fff; }
           .fx-compact-title { font-weight:820; margin-bottom:10px; }
@@ -327,8 +350,22 @@ def run(port: int = 8097) -> None:
             with ui.element("div").classes("fx-card mt-3"):
                 ui.label("Главный проверенный маршрут").classes("text-lg font-bold")
                 with ui.element("div").classes("fx-main-finding mt-2"):
-                    ui.html("<b>HYBRID-XIRIS:</b> модель уверена → сегментация ненадёжна → конфликт источников → <b>BLOCK</b>")
+                    ui.html("<b>HYBRID-XIRIS:</b> статья / разработка → neuro-fuzzy iris matcher → Tᵢⱼ + NAS + риск-наблюдатель → <b>БЛОКИРОВКА</b>")
                 ui.button("Открыть HYBRID-XIRIS workspace", on_click=lambda: set_view("scenario", scenario_id="hybrid_xiris", node_id="risk_observer")).props("unelevated color=teal").classes("mt-3")
+            with ui.element("div").classes("fx-card mt-3"):
+                ui.label("Карта маршрута HYBRID-XIRIS").classes("text-lg font-bold")
+                with ui.element("div").classes("fx-map mt-2"):
+                    for step, sub in [
+                        ("Разработка", "HYBRID-XIRIS"),
+                        ("Модель", "neuro-fuzzy iris matcher"),
+                        ("Операторы", "Eₖ, Tᵢⱼ, NAS, риск"),
+                        ("Сценарий", "контрольный прогон"),
+                        ("Диагностика", "конфликт источников"),
+                        ("Действие", "БЛОКИРОВКА"),
+                    ]:
+                        with ui.element("div").classes("fx-map-step"):
+                            ui.label(step).classes("font-bold")
+                            ui.label(sub).classes("fx-muted")
             with ui.element("div").classes("fx-card mt-3"):
                 ui.label("Общая карта связей").classes("text-lg font-bold")
                 with ui.element("div").classes("fx-map mt-2"):
@@ -451,13 +488,13 @@ def run(port: int = 8097) -> None:
                     with ui.element("div").classes("fx-action-banner blocked"):
                         ui.html(
                             "<div class='fx-action-label'>Итоговое действие</div>"
-                            "<div class='fx-action-title'>BLOCK</div>"
-                            f"<div class='fx-action-reason'>{report.get('action_reason')}</div>"
+                            f"<div class='fx-action-title'>{_action_label(report.get('final_action'))}</div>"
+                            f"<div class='fx-action-reason'>{report.get('action_reason')}<br><b>код действия:</b> {report.get('final_action')}</div>"
                         )
                     with ui.element("div").classes("fx-main-finding mt-3"):
                         ui.html(
                             f"<b>Главный обнаруженный эффект:</b> модель поддерживает принятие, но низкое качество сегментации создаёт критический разрыв. "
-                            f"Пропуски critical: baseline {summary.get('baseline_critical_misses', '—')} → FuzzyXAI {summary.get('fuzzyxai_critical_misses', '—')}."
+                            f"Критические пропуски: базовый режим — {summary.get('baseline_critical_misses', '—')}, маршрут FuzzyXAI — {summary.get('fuzzyxai_critical_misses', '—')}."
                         )
                 else:
                     ui.label(scenario.get("description", "")).classes("mt-1")
@@ -481,7 +518,8 @@ def run(port: int = 8097) -> None:
                             for mid in ["model_iris_quality", "model_iris_matcher"]:
                                 m = models_by_id.get(mid)
                                 if m:
-                                    ui.button(f"Model · {m['title']}", on_click=lambda _e=None, x=mid: set_view("model", model_id=x)).props("flat dense")
+                                    label = m["title"].replace(" model", "").replace("Model", "").strip()
+                                    ui.button(f"Модель · {label}", on_click=lambda _e=None, x=mid: set_view("model", model_id=x)).props("flat dense")
                     else:
                         ui.table(
                             columns=[{"name": "metric", "label": "Показатель", "field": "metric"}, {"name": "value", "label": "Значение", "field": "value"}],
@@ -497,23 +535,24 @@ def run(port: int = 8097) -> None:
                             c = _color(n.get("status"))
                             active = n["node_id"] == state["node_id"]
                             with ui.element("button").classes("fx-node active" if active else "fx-node").style(f"--c:{c}").on("click", lambda _e, nid=n["node_id"]: set_view("scenario", scenario_id=scenario["scenario_id"], node_id=nid)):
-                                ui.html(f"<div class='fx-node-index'>{idx}</div><div class='fx-node-title'>{_node_title(n)}</div><div class='fx-node-status'>{_status_label(n.get('status', 'info'))}</div>")
+                                selected = "<div class='fx-selected-pill'>выбран</div>" if active else ""
+                                ui.html(f"<div class='fx-node-index'>{idx}</div><div class='fx-node-title'>{_node_title(n)}</div><div class='fx-node-status'>{_status_label(n.get('status', 'info'))}</div>{selected}")
                     if scenario["scenario_id"] == "hybrid_xiris":
                         ui.html(
                             "<div class='fx-compact-grid'>"
                             + _compact_bar_html(
                                 "Распределение действий",
                                 [
-                                    ("accept", int(summary.get("accept", 0)), "#0f766e"),
-                                    ("lower confidence", int(summary.get("lower_confidence", 0)), "#d97706"),
-                                    ("block", int(summary.get("block", 0)), "#dc2626"),
+                                    ("принято", int(summary.get("accept", 0)), "#0f766e"),
+                                    ("снижено доверие", int(summary.get("lower_confidence", 0)), "#d97706"),
+                                    ("заблокировано", int(summary.get("block", 0)), "#dc2626"),
                                 ],
                             )
                             + _compact_bar_html(
                                 "Критические пропуски",
                                 [
-                                    ("baseline", int(summary.get("baseline_critical_misses", 0)), "#b45309"),
-                                    ("FuzzyXAI", int(summary.get("fuzzyxai_critical_misses", 0)), "#0f766e"),
+                                    ("базовый режим", int(summary.get("baseline_critical_misses", 0)), "#b45309"),
+                                    ("маршрут FuzzyXAI", int(summary.get("fuzzyxai_critical_misses", 0)), "#0f766e"),
                                 ],
                             )
                             + "</div>"
@@ -523,7 +562,7 @@ def run(port: int = 8097) -> None:
                             ui.echart(_scenario_action_chart(scenario.get("summary", {}))).classes("h-60")
                             ui.echart(_scenario_evidence_chart(scenario.get("summary", {}))).classes("h-60")
                     with ui.element("div").classes("fx-human mt-3"):
-                        ui.html(f"<b>Итог:</b> {report.get('final_action')}<br><b>Почему:</b> {report.get('action_reason')}")
+                        ui.html(f"<b>Итог:</b> {_action_label(report.get('final_action'))} <span class='fx-muted'>(код: {report.get('final_action')})</span><br><b>Почему:</b> {report.get('action_reason')}")
                 render_inspector(node, scenario)
 
     def render_inspector(node: dict[str, Any], scenario: dict[str, Any]) -> None:
