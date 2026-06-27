@@ -3,17 +3,20 @@
   "schema_version": "1.0",
   "scenario_id": "hybrid_xiris",
   "run_id": "hybrid_xiris_case_001",
-  "created_at": "2026-06-27T14:01:20.048251+00:00",
-  "code_version": "1589816",
-  "source_commit": "1589816",
-  "artifact_commit": "1589816",
+  "created_at": "2026-06-27T14:12:08.119240+00:00",
+  "code_version": "538db39",
+  "source_commit": "538db39",
+  "artifact_commit": "538db39",
   "audit_branch": "audit/fuzzyxai-final-readiness",
   "working_tree_clean": false,
   "working_tree_dirty_ignored_paths": [
-    "3 \\320\\263\\320\\273\\320\\260\\320\\262\\320\\260.docx",
-    "glava_4_FuzzyXAI_corrected_final(1).docx",
-    "glava_5_FuzzyXAI_corrected_final(1).docx",
-    "\\320\\263\\320\\273\\320\\260\\320\\262\\320\\260 2.docx"
+    "fuzzyxai_final_audit_package.zip",
+    "reports/audit/artifact_inventory.csv",
+    "reports/audit/fuzzyxai_final_audit.json",
+    "reports/audit/fuzzyxai_final_audit.md",
+    "reports/audit/stale_terms_report.md",
+    "reports/studio_batch/hybrid_xiris_proof_package.json",
+    "visual_artifacts_latest.zip"
   ],
   "working_tree_dirty_unignored_paths": [],
   "input": {
@@ -239,5 +242,5 @@
   "final_action": "block",
   "action_reason": "Модель поддерживает принятие, но низкое качество сегментации и конфликт источников дают критический разрыв.",
   "scenario_hash": "7a05d6a98ae30bbb9019563bf55f6cfb4821e0fa7717fe53bc8d5ae4273c4072",
-  "package_hash": "6a2827c3187d2221d829dc246f8e4110e3afdac7a9dfee6a09f0fe53fbedb6f0"
+  "package_hash": "b8bc757be1e8db5e782080524e15370c32b7d87460b16e5897badc42ebc2c22e"
 }

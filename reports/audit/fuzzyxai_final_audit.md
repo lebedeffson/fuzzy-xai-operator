@@ -6,17 +6,18 @@
 
 ## 2. Ветка и commit
 
-Source commit: `1589816`
-Artifact commit: `1589816`
+Source commit: `538db39`
+Artifact commit: `538db39`
 Branch: `audit/fuzzyxai-final-readiness`
 Working tree clean: `False`
+Working tree effective clean: `True`
 
 ## 3. Source commit / artifact commit
 
-- source_commit: `1589816`
-- artifact_commit: `1589816`
+- source_commit: `538db39`
+- artifact_commit: `538db39`
 - audit_branch: `audit/fuzzyxai-final-readiness`
-- dirty ignored paths: `7`
+- dirty ignored paths: `9`
 - dirty unignored paths: `0`
 
 ## Краткий статус
@@ -27,7 +28,7 @@ Working tree clean: `False`
 
 ## 4. Список проверенных артефактов
 
-Проверено артефактов: `37`. Детали: `reports/audit/artifact_inventory.csv`.
+Проверено артефактов: `38`. Детали: `reports/audit/artifact_inventory.csv`.
 
 ## Команды запуска
 
@@ -61,7 +62,12 @@ Batch summary пересчитывается из `hybrid_xiris_batch_cases.csv`
 ## 11. DOCX gate
 
 - DOCX content gate: `PASS`
-- Real DOCX style gate: `PASS`
+- DOCX XML style gate: `PASS`
+- DOCX visual render gate: `PASS`
+
+## 11.1 Formula reference gate
+
+- Formula reference gate: `PASS`
 
 ## 12. Stale terms scan
 
