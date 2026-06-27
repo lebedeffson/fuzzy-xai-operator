@@ -22,10 +22,15 @@ from fuzzyxai.studio.operator_scenarios import build_report, ensure_scenario_jso
 OUT = ROOT / "reports" / "practice_demo"
 SCREENSHOTS = OUT / "screenshots"
 INPUTS = OUT / "inputs"
+SCENARIO_INPUTS = OUT / "scenario_inputs"
 PROOFS = OUT / "proof_packages"
 TABLES = OUT / "tables"
+MODEL_CARDS = OUT / "model_cards"
+TRAINING_REPORTS = OUT / "training_reports"
+EVALUATION_REPORTS = OUT / "evaluation_reports"
 RENDER = OUT / "render_report"
 ZIP_PATH = OUT / "FuzzyXAI_practice_demo_package.zip"
+SCREENSHOT_ZIP = OUT / "FuzzyXAI_practice_screenshots.zip"
 
 
 SCENARIO_META = {
@@ -38,7 +43,7 @@ SCENARIO_META = {
 
 
 def _mkdirs() -> None:
-    for path in [SCREENSHOTS, INPUTS, PROOFS, TABLES, RENDER]:
+    for path in [SCREENSHOTS, INPUTS, SCENARIO_INPUTS, PROOFS, TABLES, MODEL_CARDS, TRAINING_REPORTS, EVALUATION_REPORTS, RENDER]:
         path.mkdir(parents=True, exist_ok=True)
 
 
@@ -227,6 +232,20 @@ def build_proofs_and_tables() -> None:
     scenarios = _scenario_by_id()
     for scenario_id, scenario in scenarios.items():
         report = build_report(scenario)
+        scenario_input = ROOT / "reports" / "practice_demo" / "scenario_inputs" / f"{scenario_id}_input.json"
+        model_card = {
+            "hybrid_xiris": ROOT / "models/iris/model_card.json",
+            "medical_ecg_signal": ROOT / "models/ecg/model_card.json",
+            "gd_anfis_shap": ROOT / "models/gd_anfis_shap/model_card.json",
+            "beacon_xai": ROOT / "models/beacon/model_card.json",
+            "gis_integro": ROOT / "models/gis/model_card.json",
+        }.get(scenario_id)
+        if scenario_input.exists():
+            input_data = json.loads(scenario_input.read_text(encoding="utf-8"))
+            report["scenario_input_hash"] = input_data.get("scenario_input_hash")
+        if model_card and model_card.exists():
+            card_data = json.loads(model_card.read_text(encoding="utf-8"))
+            report["model_card_hash"] = card_data.get("model_card_hash")
         _write(PROOFS / f"{scenario_id}_proof_package.json", json.dumps(report, ensure_ascii=False, indent=2))
         sdir = TABLES / f"{scenario_id}_tables"
         sdir.mkdir(parents=True, exist_ok=True)
@@ -237,13 +256,40 @@ def build_proofs_and_tables() -> None:
         ]).to_csv(sdir / "operator_values.csv", index=False)
     src = ROOT / "reports" / "studio_batch" / "hybrid_xiris_proof_package.json"
     if src.exists():
-        shutil.copy2(src, PROOFS / "hybrid_xiris_proof_package.json")
+        hybrid = json.loads(src.read_text(encoding="utf-8"))
+        scenario_input = SCENARIO_INPUTS / "hybrid_xiris_input.json"
+        model_card = MODEL_CARDS / "iris_model_card.json"
+        if scenario_input.exists():
+            hybrid["scenario_input_hash"] = json.loads(scenario_input.read_text(encoding="utf-8")).get("scenario_input_hash")
+        if model_card.exists():
+            hybrid["model_card_hash"] = json.loads(model_card.read_text(encoding="utf-8")).get("model_card_hash")
+        _write(PROOFS / "hybrid_xiris_proof_package.json", json.dumps(hybrid, ensure_ascii=False, indent=2))
     src_tables = ROOT / "reports" / "chapter5" / "studio_tables"
     if src_tables.exists():
         dst = TABLES / "hybrid_xiris_tables"
         dst.mkdir(exist_ok=True)
         for item in src_tables.glob("*.csv"):
             shutil.copy2(item, dst / item.name)
+
+
+def build_practice_evidence() -> None:
+    copies = [
+        (ROOT / "models/iris/model_card.json", MODEL_CARDS / "iris_model_card.json"),
+        (ROOT / "models/ecg/model_card.json", MODEL_CARDS / "ecg_model_card.json"),
+        (ROOT / "models/gd_anfis_shap/model_card.json", MODEL_CARDS / "gd_anfis_shap_model_card.json"),
+        (ROOT / "models/beacon/model_card.json", MODEL_CARDS / "beacon_model_card.json"),
+        (ROOT / "models/gis/model_card.json", MODEL_CARDS / "gis_model_card.json"),
+    ]
+    for src, dst in copies:
+        if src.exists():
+            shutil.copy2(src, dst)
+    for src in (ROOT / "reports/training").glob("*_training_report.json"):
+        shutil.copy2(src, TRAINING_REPORTS / src.name)
+    for src in (ROOT / "reports/evaluation").glob("*_eval_report.json"):
+        shutil.copy2(src, EVALUATION_REPORTS / src.name)
+    for src in (ROOT / "reports/practice_demo/scenario_inputs").glob("*_input.json"):
+        if src.parent != SCENARIO_INPUTS:
+            shutil.copy2(src, SCENARIO_INPUTS / src.name)
 
 
 def _start_server(port: int) -> subprocess.Popen[str]:
@@ -391,6 +437,8 @@ def build_manifest() -> None:
             "license_or_origin": "repository control/demo artifact",
             "used_in_chapter": "4/5",
             "evidence_level": level,
+            "scenario_input": f"scenario_inputs/{sid}_input.json",
+            "proof_package": f"proof_packages/{sid}_proof_package.json",
         })
     _write(OUT / "practice_manifest.json", json.dumps(manifest, ensure_ascii=False, indent=2))
 
@@ -450,6 +498,7 @@ def build_docs() -> None:
 
 
 def build_zip() -> None:
+    build_screenshot_zip()
     if ZIP_PATH.exists():
         ZIP_PATH.unlink()
     with zipfile.ZipFile(ZIP_PATH, "w", zipfile.ZIP_DEFLATED) as zf:
@@ -458,16 +507,91 @@ def build_zip() -> None:
                 zf.write(item, item.relative_to(OUT.parent).as_posix())
 
 
+def build_screenshot_zip() -> None:
+    if SCREENSHOT_ZIP.exists():
+        SCREENSHOT_ZIP.unlink()
+    with zipfile.ZipFile(SCREENSHOT_ZIP, "w", zipfile.ZIP_DEFLATED) as zf:
+        for folder in [SCREENSHOTS, INPUTS, RENDER]:
+            for item in sorted(folder.rglob("*")):
+                if item.is_file() and (folder != INPUTS or item.suffix == ".png"):
+                    zf.write(item, item.relative_to(OUT.parent).as_posix())
+        readme = OUT / "README_PRACTICE_DEMO.md"
+        if readme.exists():
+            zf.write(readme, readme.relative_to(OUT.parent).as_posix())
+
+
+def validate_package() -> dict[str, Any]:
+    required_screenshots = [
+        "00_ecosystem_main.png",
+        "01_hybrid_xiris_workspace.png",
+        "02_hybrid_xiris_input_eye.png",
+        "03_hybrid_xiris_operator_route.png",
+        "04_hybrid_xiris_risk_observer.png",
+        "05_hybrid_xiris_proof_package.png",
+        "06_ecg_workspace.png",
+        "07_ecg_signal_input.png",
+        "08_ecg_operator_route.png",
+        "09_ecg_diagnostic_action.png",
+        "10_gd_anfis_shap_workspace.png",
+        "11_beacon_xai_workspace.png",
+        "12_gis_integro_workspace.png",
+        "13_operator_registry.png",
+        "14_model_registry.png",
+        "15_scenario_registry.png",
+        "16_batch_summary.png",
+        "17_exported_tables.png",
+    ]
+    issues: list[str] = []
+    for name in required_screenshots:
+        if not (SCREENSHOTS / name).exists():
+            issues.append(f"missing screenshot {name}")
+    for sid in SCENARIO_META:
+        for folder, suffix in [
+            (SCENARIO_INPUTS, "_input.json"),
+            (PROOFS, "_proof_package.json"),
+            (TABLES, "_tables"),
+        ]:
+            path = folder / f"{sid}{suffix}"
+            if not path.exists():
+                issues.append(f"missing {path.relative_to(ROOT)}")
+    for folder in [MODEL_CARDS, TRAINING_REPORTS, EVALUATION_REPORTS]:
+        if not any(folder.glob("*.json")):
+            issues.append(f"empty {folder.relative_to(ROOT)}")
+    manifest = OUT / "practice_manifest.json"
+    if not SCREENSHOT_ZIP.exists():
+        issues.append("missing FuzzyXAI_practice_screenshots.zip")
+    if not ZIP_PATH.exists():
+        issues.append("missing FuzzyXAI_practice_demo_package.zip")
+    if not manifest.exists():
+        issues.append("missing practice_manifest.json")
+    else:
+        data = json.loads(manifest.read_text(encoding="utf-8"))
+        for scenario in data.get("scenarios", []):
+            if scenario.get("artifact_status") == "control_demo_artifact" and not scenario.get("demo_control_artifact"):
+                issues.append(f"{scenario.get('scenario_id')}: missing demo_control_artifact flag")
+    return {"status": "PASS" if not issues else "FAIL", "issues": issues}
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--screenshots-only", action="store_true")
     parser.add_argument("--package-only", action="store_true")
+    parser.add_argument("--validate", action="store_true")
     args = parser.parse_args()
     _mkdirs()
+    if args.validate:
+        result = validate_package()
+        print(json.dumps(result, ensure_ascii=False, indent=2))
+        if result["status"] != "PASS":
+            raise SystemExit(1)
+        return
     if not args.package_only:
         build_inputs()
+        build_practice_evidence()
         build_proofs_and_tables()
         build_screenshots()
+    else:
+        build_practice_evidence()
     build_manifest()
     build_docs()
     build_zip()

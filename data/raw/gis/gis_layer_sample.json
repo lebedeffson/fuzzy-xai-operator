@@ -1,0 +1,10 @@
+{
+  "artifact_id": "gis_layer_sample",
+  "artifact_type": "geo_layer_control",
+  "p": 0.67,
+  "alpha_mean": 0.72,
+  "s": 0.47,
+  "formula": "max(|p - alpha_mean|, |p - s|)",
+  "not_production_gis_validation": true
+}
+

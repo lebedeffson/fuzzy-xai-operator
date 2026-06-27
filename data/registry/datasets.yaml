@@ -1,0 +1,104 @@
+hybrid_xiris:
+  dataset_id: hybrid_xiris_control
+  scenario_id: hybrid_xiris
+  artifact_type: iris_image
+  status: control_demo_artifact
+  source: local_control_artifact
+  license: internal_demo
+  raw_path: data/raw/iris/
+  processed_path: data/processed/iris/
+  required_files:
+    - input_hybrid_xiris_eye_sample.json
+  required_fields:
+    - image_quality
+    - segmentation_quality
+    - model_match_signal
+    - alpha_accept
+    - alpha_block
+  evidence_level: full_control_run
+  control_demo_artifact: true
+  not_industrial_biometric_validation: true
+  not_a_claim: Not an industrial biometric validation.
+
+medical_ecg_signal:
+  dataset_id: ecg_control_signal
+  scenario_id: medical_ecg_signal
+  artifact_type: ecg_signal
+  status: control_demo_artifact
+  source: local_control_artifact
+  license: internal_demo
+  raw_path: data/raw/ecg/
+  processed_path: data/processed/ecg/
+  required_files:
+    - input_ecg_sample_signal.csv
+  required_fields:
+    - sampling_rate
+    - signal
+    - noise_mask
+    - missing_segments
+    - quality_score
+  evidence_level: operator_control_example
+  control_demo_artifact: true
+  not_clinical_diagnosis: true
+  not_a_claim: Not a clinical diagnostic validation.
+
+gd_anfis_shap:
+  dataset_id: gd_anfis_shap_control
+  scenario_id: gd_anfis_shap
+  artifact_type: tabular_rules
+  status: control_demo_artifact
+  source: local_control_artifact
+  license: internal_demo
+  raw_path: data/raw/tabular/
+  processed_path: data/processed/tabular/
+  required_files:
+    - gd_anfis_shap_sample.csv
+  required_fields:
+    - X1
+    - X2
+    - alpha_rule
+    - shap_x1
+    - shap_x2
+  evidence_level: operator_control_example
+  control_demo_artifact: true
+  not_a_claim: Operator-control example, not a production GD model.
+
+beacon_xai:
+  dataset_id: beacon_counterevidence_control
+  scenario_id: beacon_xai
+  artifact_type: time_series
+  status: control_demo_artifact
+  source: local_control_artifact
+  license: internal_demo
+  raw_path: data/raw/timeseries/
+  processed_path: data/processed/timeseries/
+  required_files:
+    - beacon_timeseries_sample.csv
+  required_fields:
+    - fragment
+    - support
+    - counter
+  evidence_level: route_demonstration
+  control_demo_artifact: true
+  external_beacon_mechanism: true
+  not_a_claim: BEACON check reduction is an external mechanism demonstration.
+
+gis_integro:
+  dataset_id: gis_integro_control
+  scenario_id: gis_integro
+  artifact_type: geo_layer
+  status: control_demo_artifact
+  source: local_control_artifact
+  license: internal_demo
+  raw_path: data/raw/gis/
+  processed_path: data/processed/gis/
+  required_files:
+    - gis_layer_sample.json
+  required_fields:
+    - p
+    - alpha_mean
+    - s
+  evidence_level: operator_control_example
+  control_demo_artifact: true
+  not_a_claim: Control geolayer, not a production GIS validation.
+
