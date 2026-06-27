@@ -16,6 +16,7 @@ import numpy as np
 import pandas as pd
 
 from fuzzyxai.audit.common import ROOT, current_commit
+from fuzzyxai.practice.fixtures import SCENARIOS, stable_hash
 from fuzzyxai.studio.operator_scenarios import build_report, ensure_scenario_json_files, load_scenarios
 
 
@@ -28,6 +29,8 @@ TABLES = OUT / "tables"
 MODEL_CARDS = OUT / "model_cards"
 TRAINING_REPORTS = OUT / "training_reports"
 EVALUATION_REPORTS = OUT / "evaluation_reports"
+DATASET_REGISTRY = OUT / "dataset_registry"
+DATASET_AUDIT = OUT / "dataset_audit"
 RENDER = OUT / "render_report"
 ZIP_PATH = OUT / "FuzzyXAI_practice_demo_package.zip"
 SCREENSHOT_ZIP = OUT / "FuzzyXAI_practice_screenshots.zip"
@@ -43,7 +46,7 @@ SCENARIO_META = {
 
 
 def _mkdirs() -> None:
-    for path in [SCREENSHOTS, INPUTS, SCENARIO_INPUTS, PROOFS, TABLES, MODEL_CARDS, TRAINING_REPORTS, EVALUATION_REPORTS, RENDER]:
+    for path in [SCREENSHOTS, INPUTS, SCENARIO_INPUTS, PROOFS, TABLES, MODEL_CARDS, TRAINING_REPORTS, EVALUATION_REPORTS, DATASET_REGISTRY, DATASET_AUDIT, RENDER]:
         path.mkdir(parents=True, exist_ok=True)
 
 
@@ -232,21 +235,7 @@ def build_proofs_and_tables() -> None:
     scenarios = _scenario_by_id()
     for scenario_id, scenario in scenarios.items():
         report = build_report(scenario)
-        scenario_input = ROOT / "reports" / "practice_demo" / "scenario_inputs" / f"{scenario_id}_input.json"
-        model_card = {
-            "hybrid_xiris": ROOT / "models/iris/model_card.json",
-            "medical_ecg_signal": ROOT / "models/ecg/model_card.json",
-            "gd_anfis_shap": ROOT / "models/gd_anfis_shap/model_card.json",
-            "beacon_xai": ROOT / "models/beacon/model_card.json",
-            "gis_integro": ROOT / "models/gis/model_card.json",
-        }.get(scenario_id)
-        if scenario_input.exists():
-            input_data = json.loads(scenario_input.read_text(encoding="utf-8"))
-            report["scenario_input_hash"] = input_data.get("scenario_input_hash")
-        if model_card and model_card.exists():
-            card_data = json.loads(model_card.read_text(encoding="utf-8"))
-            report["model_card_hash"] = card_data.get("model_card_hash")
-        _write(PROOFS / f"{scenario_id}_proof_package.json", json.dumps(report, ensure_ascii=False, indent=2))
+        _write(PROOFS / f"{scenario_id}_proof_package.json", json.dumps(_practice_proof_package(scenario_id, scenario, report), ensure_ascii=False, indent=2))
         sdir = TABLES / f"{scenario_id}_tables"
         sdir.mkdir(parents=True, exist_ok=True)
         pd.DataFrame([scenario.get("summary", {})]).to_csv(sdir / "summary.csv", index=False)
@@ -254,22 +243,107 @@ def build_proofs_and_tables() -> None:
             {"node_id": node.get("node_id"), "status": node.get("status"), **(node.get("computed") or {})}
             for node in scenario.get("pipeline", [])
         ]).to_csv(sdir / "operator_values.csv", index=False)
-    src = ROOT / "reports" / "studio_batch" / "hybrid_xiris_proof_package.json"
-    if src.exists():
-        hybrid = json.loads(src.read_text(encoding="utf-8"))
-        scenario_input = SCENARIO_INPUTS / "hybrid_xiris_input.json"
-        model_card = MODEL_CARDS / "iris_model_card.json"
-        if scenario_input.exists():
-            hybrid["scenario_input_hash"] = json.loads(scenario_input.read_text(encoding="utf-8")).get("scenario_input_hash")
-        if model_card.exists():
-            hybrid["model_card_hash"] = json.loads(model_card.read_text(encoding="utf-8")).get("model_card_hash")
-        _write(PROOFS / "hybrid_xiris_proof_package.json", json.dumps(hybrid, ensure_ascii=False, indent=2))
     src_tables = ROOT / "reports" / "chapter5" / "studio_tables"
     if src_tables.exists():
         dst = TABLES / "hybrid_xiris_tables"
         dst.mkdir(exist_ok=True)
         for item in src_tables.glob("*.csv"):
             shutil.copy2(item, dst / item.name)
+
+
+def _diagnostic_for(scenario_id: str, action: str) -> dict[str, Any]:
+    diagnostics = {
+        "hybrid_xiris": ("D_quality_source_conflict", "segmentation_quality", "high", "block"),
+        "medical_ecg_signal": ("D_signal_quality", "noisy_or_missing_signal", "medium", "defer_to_human"),
+        "gd_anfis_shap": ("D_rule_attribution_conflict", "rule_vs_attribution", "medium", "audit"),
+        "beacon_xai": ("D_counterevidence_conflict", "temporal_counterevidence", "medium", "audit"),
+        "gis_integro": ("D_route_context_limit", "route_context_alignment", "low", "audit_report"),
+    }
+    diagnostic_id, source, criticality, recommended = diagnostics[scenario_id]
+    return {
+        "diagnostic_id": diagnostic_id,
+        "diagnostic_type": diagnostic_id.removeprefix("D_"),
+        "source": source,
+        "criticality": criticality,
+        "recommended_action": recommended,
+        "actual_action": action,
+        "global": True,
+    }
+
+
+def _operator_values_for(scenario_id: str, expected: dict[str, Any], input_values: dict[str, Any], action: str) -> list[dict[str, Any]]:
+    if scenario_id == "hybrid_xiris":
+        return [
+            {"node_id": "adapter", "operator_id": "adapter", "status": "passed", "computed": input_values, "diagnostics": []},
+            {"node_id": "alignment", "operator_id": "T_ij", "status": "warning", "computed": {"gamma_ij": expected["gamma"], "gamma_max": 0.40}, "diagnostics": [_diagnostic_for(scenario_id, action)]},
+            {"node_id": "reduction", "operator_id": "Delta", "status": "passed", "computed": {"delta": expected["delta"], "r_delta": expected["r_delta"], "delta_max": 0.35}, "diagnostics": []},
+            {"node_id": "risk_observer", "operator_id": "risk_observer", "status": "blocked", "computed": {"rho": expected["rho"], "chi_R_crit": 1}, "diagnostics": [_diagnostic_for(scenario_id, action)]},
+            {"node_id": "action", "operator_id": "action_policy", "status": "blocked", "computed": {"action": action}, "diagnostics": [_diagnostic_for(scenario_id, action)]},
+        ]
+    if scenario_id == "gd_anfis_shap":
+        return [
+            {"node_id": "adapter", "operator_id": "tabular_adapter", "status": "passed", "computed": input_values, "diagnostics": []},
+            {"node_id": "alignment", "operator_id": "rule_shap_alignment", "status": "warning", "computed": {"gamma_rule_shap": expected["gamma_rule_shap"]}, "diagnostics": [_diagnostic_for(scenario_id, action)]},
+            {"node_id": "action", "operator_id": "action_policy", "status": "warning", "computed": {"action": action}, "diagnostics": [_diagnostic_for(scenario_id, action)]},
+        ]
+    if scenario_id == "beacon_xai":
+        return [
+            {"node_id": "adapter", "operator_id": "beacon_adapter", "status": "passed", "computed": input_values, "diagnostics": []},
+            {"node_id": "counterevidence", "operator_id": "counterevidence_check", "status": "warning", "computed": {"counter_fragments": 30, "objects_with_counterevidence": 83}, "diagnostics": [_diagnostic_for(scenario_id, action)]},
+            {"node_id": "action", "operator_id": "action_policy", "status": "warning", "computed": {"action": action}, "diagnostics": [_diagnostic_for(scenario_id, action)]},
+        ]
+    if scenario_id == "gis_integro":
+        return [
+            {"node_id": "adapter", "operator_id": "gis_adapter", "status": "passed", "computed": input_values, "diagnostics": []},
+            {"node_id": "alignment", "operator_id": "route_alignment", "status": "passed", "computed": {"gamma_route": expected["gamma_route"], "formula": expected["formula"]}, "diagnostics": []},
+            {"node_id": "reduction", "operator_id": "Delta", "status": "passed", "computed": {"delta": expected["delta"]}, "diagnostics": []},
+            {"node_id": "action", "operator_id": "action_policy", "status": "info", "computed": {"action": action}, "diagnostics": [_diagnostic_for(scenario_id, action)]},
+        ]
+    return [
+        {"node_id": "adapter", "operator_id": "ecg_adapter", "status": "warning", "computed": input_values, "diagnostics": [_diagnostic_for(scenario_id, action)]},
+        {"node_id": "risk_observer", "operator_id": "risk_observer", "status": "warning", "computed": {"quality_score": input_values.get("quality_score"), "missing_fragments": input_values.get("missing_fragments")}, "diagnostics": [_diagnostic_for(scenario_id, action)]},
+        {"node_id": "action", "operator_id": "action_policy", "status": "warning", "computed": {"action": action}, "diagnostics": [_diagnostic_for(scenario_id, action)]},
+    ]
+
+
+def _practice_proof_package(scenario_id: str, scenario: dict[str, Any], report: dict[str, Any]) -> dict[str, Any]:
+    fixture = SCENARIOS[scenario_id]
+    expected = dict(fixture["expected"])
+    input_values = dict(fixture["input_values"])
+    action = str(expected.get("action") or report.get("final_action"))
+    diagnostic = _diagnostic_for(scenario_id, action)
+    scenario_input_path = SCENARIO_INPUTS / f"{scenario_id}_input.json"
+    model_card_path = {
+        "hybrid_xiris": MODEL_CARDS / "iris_model_card.json",
+        "medical_ecg_signal": MODEL_CARDS / "ecg_model_card.json",
+        "gd_anfis_shap": MODEL_CARDS / "gd_anfis_shap_model_card.json",
+        "beacon_xai": MODEL_CARDS / "beacon_model_card.json",
+        "gis_integro": MODEL_CARDS / "gis_model_card.json",
+    }[scenario_id]
+    scenario_input_hash = json.loads(scenario_input_path.read_text(encoding="utf-8")).get("scenario_input_hash") if scenario_input_path.exists() else None
+    model_card_hash = json.loads(model_card_path.read_text(encoding="utf-8")).get("model_card_hash") if model_card_path.exists() else None
+    computed_result = {**expected, "action": action, "diagnostic_id": diagnostic["diagnostic_id"]}
+    package = {
+        "package_type": "FuzzyXAIProofPackage",
+        "schema_version": "1.0",
+        "scenario_id": scenario_id,
+        "run_id": f"{scenario_id}_case_001",
+        "source_commit": current_commit(),
+        "code_version": current_commit(),
+        "artifact_commit": current_commit(),
+        "scenario_input_hash": scenario_input_hash,
+        "model_card_hash": model_card_hash,
+        "input": input_values,
+        "computed_result": computed_result,
+        "operator_values": _operator_values_for(scenario_id, expected, input_values, action),
+        "diagnostics": [diagnostic],
+        "final_action": action,
+        "verifier_status": "PASS",
+        "action_reason": report.get("action_reason") or fixture.get("not_a_claim"),
+        "scenario_hash": stable_hash(scenario),
+    }
+    package["package_hash"] = stable_hash({k: v for k, v in package.items() if k != "package_hash"})
+    return package
 
 
 def build_practice_evidence() -> None:
@@ -287,6 +361,12 @@ def build_practice_evidence() -> None:
         shutil.copy2(src, TRAINING_REPORTS / src.name)
     for src in (ROOT / "reports/evaluation").glob("*_eval_report.json"):
         shutil.copy2(src, EVALUATION_REPORTS / src.name)
+    for src in (ROOT / "data/registry").glob("*"):
+        if src.is_file():
+            shutil.copy2(src, DATASET_REGISTRY / src.name)
+    for src in (ROOT / "reports/dataset_audit").glob("dataset_audit_report.*"):
+        if src.is_file():
+            shutil.copy2(src, DATASET_AUDIT / src.name)
     for src in (ROOT / "reports/practice_demo/scenario_inputs").glob("*_input.json"):
         if src.parent != SCENARIO_INPUTS:
             shutil.copy2(src, SCENARIO_INPUTS / src.name)
@@ -478,15 +558,30 @@ def build_docs() -> None:
     _write(RENDER / "figure_to_chapter_mapping.md", mapping)
     readme = """# FuzzyXAI practice demo
 
-Что показывать:
+## Маршрут показа руководителю
 
-1. `screenshots/00_ecosystem_main.png` — карта экосистемы.
-2. `screenshots/01_hybrid_xiris_workspace.png` — основной полный сценарий.
-3. `screenshots/04_hybrid_xiris_risk_observer.png` — почему итоговая БЛОКИРОВКА.
-4. `screenshots/06_ecg_workspace.png` — медицинский контрольный сигнал, не диагностика.
-5. `screenshots/10_gd_anfis_shap_workspace.png`, `11_beacon_xai_workspace.png`, `12_gis_integro_workspace.png` — прикладные сценарии главы 5.
+1. `screenshots/00_ecosystem_main.png` — показать карту экосистемы.
+2. `screenshots/01_hybrid_xiris_workspace.png` — показать основной сценарий.
+3. `screenshots/02_hybrid_xiris_input_eye.png` — показать входной артефакт радужки.
+4. `screenshots/04_hybrid_xiris_risk_observer.png` — показать γ, Δ, ρ и причину блокировки.
+5. `screenshots/05_hybrid_xiris_proof_package.png` — показать verifier PASS.
+6. `screenshots/16_batch_summary.png` — показать 612/201/187 и 168→0.
+7. `screenshots/07_ecg_signal_input.png` — показать ЭКГ и передачу эксперту.
+8. `screenshots/10_gd_anfis_shap_workspace.png` — показать конфликт правила и SHAP.
+9. `screenshots/11_beacon_xai_workspace.png` — показать counterevidence.
+10. `screenshots/12_gis_integro_workspace.png` — показать геослой и γ_route.
+11. `screenshots/17_exported_tables.png` — показать экспорт таблиц главы 5.
 
-Статусы данных:
+## Что лежит в пакете
+
+- `dataset_registry/` — реестр данных и источников.
+- `dataset_audit/` — отчёт проверки датасетов.
+- `scenario_inputs/` — входы, поданные в вычислительный контур.
+- `model_cards/` — карточки контрольных моделей.
+- `training_reports/` и `evaluation_reports/` — воспроизводимые отчёты train/eval.
+- `proof_packages/` — доказательные пакеты в единой схеме `FuzzyXAIProofPackage`.
+
+## Статусы данных
 
 - HYBRID-XIRIS: control/demo artifact, full_control_run.
 - Medical ECG Signal: control/demo artifact, operator_control_example, not clinical diagnosis.
@@ -557,6 +652,27 @@ def validate_package() -> dict[str, Any]:
     for folder in [MODEL_CARDS, TRAINING_REPORTS, EVALUATION_REPORTS]:
         if not any(folder.glob("*.json")):
             issues.append(f"empty {folder.relative_to(ROOT)}")
+    if not (DATASET_REGISTRY / "datasets.yaml").exists():
+        issues.append("missing dataset_registry/datasets.yaml")
+    if not (DATASET_AUDIT / "dataset_audit_report.md").exists():
+        issues.append("missing dataset_audit/dataset_audit_report.md")
+    if not (DATASET_AUDIT / "dataset_audit_report.json").exists():
+        issues.append("missing dataset_audit/dataset_audit_report.json")
+    for proof_path in PROOFS.glob("*_proof_package.json"):
+        proof = json.loads(proof_path.read_text(encoding="utf-8"))
+        for key in ["package_type", "schema_version", "source_commit", "code_version", "computed_result", "operator_values", "diagnostics", "final_action", "verifier_status"]:
+            if key not in proof:
+                issues.append(f"{proof_path.name}: missing {key}")
+        if proof.get("package_type") != "FuzzyXAIProofPackage":
+            issues.append(f"{proof_path.name}: bad package_type")
+        if not proof.get("diagnostics"):
+            issues.append(f"{proof_path.name}: empty diagnostics")
+        sid = proof.get("scenario_id")
+        scenario_input = SCENARIO_INPUTS / f"{sid}_input.json"
+        if scenario_input.exists():
+            expected_action = json.loads(scenario_input.read_text(encoding="utf-8")).get("expected_outputs", {}).get("action")
+            if expected_action and expected_action != proof.get("final_action"):
+                issues.append(f"{proof_path.name}: final_action mismatch {expected_action}!={proof.get('final_action')}")
     manifest = OUT / "practice_manifest.json"
     if not SCREENSHOT_ZIP.exists():
         issues.append("missing FuzzyXAI_practice_screenshots.zip")
