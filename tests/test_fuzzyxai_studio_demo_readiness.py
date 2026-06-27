@@ -49,7 +49,8 @@ def test_hybrid_xiris_global_diagnostics_are_deduplicated() -> None:
     assert len(diagnostics) == 1
 
     diagnostic = diagnostics[0]
-    assert diagnostic["diagnostic_id"] == "D_source_conflict"
+    assert diagnostic["diagnostic_id"] == "D_quality_source_conflict"
+    assert diagnostic["legacy_id"] == "D_source_conflict"
     assert diagnostic["type"] == "critical_rupture"
     assert diagnostic["recommended_action"] == "block"
     assert diagnostic["occurrences"] == ["alignment", "risk_observer", "action"]
@@ -61,7 +62,8 @@ def test_hybrid_xiris_scenario_config_has_diagnostics_summary() -> None:
     summary = scenario["diagnostics_summary"]
 
     assert len(summary) == 1
-    assert summary[0]["diagnostic_id"] == "D_source_conflict"
+    assert summary[0]["diagnostic_id"] == "D_quality_source_conflict"
+    assert summary[0]["legacy_id"] == "D_source_conflict"
     assert summary[0]["occurrences"] == ["alignment", "risk_observer", "action"]
     assert summary[0]["global"] is True
 

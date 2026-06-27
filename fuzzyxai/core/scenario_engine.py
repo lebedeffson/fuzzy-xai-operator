@@ -41,7 +41,9 @@ class HybridXirisResult:
     action: str
     diagnostic_id: str
     diagnostic_type: str
+    legacy_diagnostic_id: str
     occurrences: list[str]
+    operator_values: list[dict[str, Any]]
 
 
 DEFAULT_HYBRID_PLAN = HybridXirisPlan(
@@ -80,16 +82,26 @@ def compute_hybrid_xiris(input_values: HybridXirisInput | None = None, plan: Hyb
         plan.thresholds,
         chi_r_crit=chi_r_crit,
     )
+    diagnostic_id = DiagnosticType.QUALITY_SOURCE_CONFLICT.value
+    action = risk.action
+    operator_values = [
+        {"node_id": "alignment", "operator_id": "T_ij", "status": "warning", "computed": {"gamma_ij": alignment.gamma, "gamma_max": plan.gamma_max, "delta_T": alignment.delta_t}},
+        {"node_id": "reduction", "operator_id": "Delta", "status": "passed" if reduction.allowed else "blocked", "computed": {"delta": reduction.delta, "delta_max": reduction.delta_max}},
+        {"node_id": "risk_observer", "operator_id": "risk_observer", "status": "blocked" if action == "block" else "passed", "computed": {"rho": risk.rho, "chi_R": chi_r, "chi_R_crit": chi_r_crit}},
+        {"node_id": "action", "operator_id": "action_policy", "status": "blocked" if action == "block" else "passed", "computed": {"action": action}},
+    ]
     return HybridXirisResult(
         gamma=alignment.gamma,
         delta=reduction.delta,
         rho=risk.rho,
         chi_r=chi_r,
         chi_r_crit=chi_r_crit,
-        action=risk.action,
-        diagnostic_id="D_source_conflict",
-        diagnostic_type=DiagnosticType.QUALITY_SOURCE_CONFLICT.value,
+        action=action,
+        diagnostic_id=diagnostic_id,
+        diagnostic_type="quality_source_conflict",
+        legacy_diagnostic_id="D_source_conflict",
         occurrences=["alignment", "risk_observer", "action"],
+        operator_values=operator_values,
     )
 
 

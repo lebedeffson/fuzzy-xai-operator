@@ -2,9 +2,11 @@ from __future__ import annotations
 
 import argparse
 import csv
+import json
 from pathlib import Path
+from hashlib import sha256
 
-from fuzzyxai.core.scenario_engine import DEFAULT_HYBRID_PLAN, compute_hybrid_xiris
+from fuzzyxai.core.scenario_engine import DEFAULT_HYBRID_PLAN, HybridXirisInput, compute_hybrid_xiris
 from fuzzyxai.studio.operator_scenarios import load_scenarios
 
 
@@ -24,29 +26,40 @@ def export_hybrid_xiris_tables(out_dir: Path) -> list[Path]:
         out_dir / "table_5_3_membership.csv",
         out_dir / "table_5_4_dE.csv",
         out_dir / "table_5_5_run_summary.csv",
+        out_dir / "table_5_6_risk_decomposition.csv",
     ]
+    plan_hash = sha256(json.dumps(DEFAULT_HYBRID_PLAN.__dict__, sort_keys=True, ensure_ascii=False).encode("utf-8")).hexdigest()[:16]
     _write_csv(
         paths[0],
-        [
-            {"parameter": "gamma_max", "value": DEFAULT_HYBRID_PLAN.gamma_max},
-            {"parameter": "delta_max", "value": DEFAULT_HYBRID_PLAN.delta_max},
-            {"parameter": "theta_4", "value": DEFAULT_HYBRID_PLAN.thresholds["theta_4"]},
-            {"parameter": "risk_action", "value": result.action},
-        ],
+        [{"section": "meta", "parameter": "explain_plan_version", "value": "EP-2026-01", "role": "версия ExplainPlan"}, {"section": "meta", "parameter": "explain_plan_hash", "value": plan_hash, "role": "контрольная сумма ExplainPlan"}]
+        + [{"section": "alignment", "parameter": "gamma_max", "value": DEFAULT_HYBRID_PLAN.gamma_max, "role": "порог согласования"}]
+        + [{"section": "alignment", "parameter": f"w_{key}", "value": value, "role": f"вес компоненты {key}"} for key, value in DEFAULT_HYBRID_PLAN.gamma_weights.items()]
+        + [{"section": "reduction", "parameter": "delta_max", "value": DEFAULT_HYBRID_PLAN.delta_max, "role": "порог редукции"}]
+        + [{"section": "risk", "parameter": f"w_{key}", "value": value, "role": f"вес компоненты риска {key}"} for key, value in DEFAULT_HYBRID_PLAN.risk_weights.items()]
+        + [{"section": "action", "parameter": key, "value": value, "role": "порог действия"} for key, value in DEFAULT_HYBRID_PLAN.thresholds.items()]
+        + [{"section": "action", "parameter": "risk_action", "value": result.action, "role": "итоговое действие"}],
     )
+    inputs = HybridXirisInput()
     _write_csv(
         paths[1],
         [
-            {"field": "model_match_signal", "value": 0.88},
-            {"field": "alpha_accept", "value": 0.82},
-            {"field": "alpha_block", "value": 0.91},
-            {"field": "u_k", "value": 0.36},
+            {"variable": "p_match", "term": "high", "input_value": inputs.model_match_signal, "membership_function": "mu_high(p)=p", "computed_membership": inputs.model_match_signal},
+            {"variable": "Q_seg", "term": "low", "input_value": inputs.segmentation_quality, "membership_function": "mu_low(Q)=1-Q/3 rounded by ExplainPlan gate", "computed_membership": inputs.alpha_block},
+            {"variable": "quality_ok", "term": "sufficient", "input_value": inputs.segmentation_quality, "membership_function": "mu_accept from adapter rule activation", "computed_membership": inputs.alpha_accept},
+            {"variable": "block_condition", "term": "active", "input_value": inputs.alpha_block, "membership_function": "mu_block=alpha_block", "computed_membership": inputs.alpha_block},
+            {"variable": "u_k", "term": "aggregated uncertainty", "input_value": 0.36, "membership_function": "u_k from model/quality disagreement", "computed_membership": 0.36},
         ],
     )
+    definitions = {
+        "d_mu": "рассогласование функций принадлежности между модельным сигналом и качеством сегментации",
+        "d_R": "рассогласование состава правил принятия и блокировки",
+        "d_u": "рассогласование агрегированной неопределённости",
+        "d_tau": "рассогласование трассируемого следа",
+    }
     _write_csv(
         paths[2],
         [
-            {"component": key, "value": value, "weight": DEFAULT_HYBRID_PLAN.gamma_weights[key]}
+            {"component": key, "value": value, "weight": DEFAULT_HYBRID_PLAN.gamma_weights[key], "definition": definitions.get(key, "")}
             for key, value in DEFAULT_HYBRID_PLAN.gamma_components.items()
         ],
     )
@@ -65,6 +78,23 @@ def export_hybrid_xiris_tables(out_dir: Path) -> list[Path]:
             {"metric": "rho", "value": result.rho},
         ],
     )
+    risk_components = {
+        "model_signal": inputs.model_match_signal,
+        "block_rule": inputs.alpha_block,
+        "source_conflict": 1.0,
+        "reduction_component": 0.3225,
+    }
+    risk_rows = [
+        {
+            "component": key,
+            "value": value,
+            "weight": DEFAULT_HYBRID_PLAN.risk_weights[key],
+            "contribution": round(value * DEFAULT_HYBRID_PLAN.risk_weights[key], 6),
+        }
+        for key, value in risk_components.items()
+    ]
+    risk_rows.append({"component": "rho", "value": "total", "weight": "", "contribution": result.rho})
+    _write_csv(paths[4], risk_rows)
     return paths
 
 

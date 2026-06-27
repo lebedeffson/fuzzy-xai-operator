@@ -16,7 +16,9 @@
   ],
   "diagnostics": [
     {
-      "diagnostic_id": "D_source_conflict",
+      "diagnostic_id": "D_quality_source_conflict",
+      "diagnostic_type": "quality_source_conflict",
+      "legacy_id": "D_source_conflict",
       "type": "critical_rupture",
       "source": "segmentation_quality",
       "reason": "Модель поддерживает принятие, но низкое качество сегментации и конфликт источников дают критический разрыв.",
@@ -34,10 +36,10 @@
   "trace": {
     "model_version": "demo-model-v1",
     "adapter_version": "adapter-hybrid_xiris-v1",
-    "timestamp": "2026-06-27T13:13:30.284458+00:00",
-    "hash": "1154e48a4febbdf1"
+    "timestamp": "2026-06-27T13:25:22.296617+00:00",
+    "hash": "b491a0b9f010503c"
   },
-  "timestamp_generated": "2026-06-27T13:13:30.284458+00:00",
+  "timestamp_generated": "2026-06-27T13:25:22.296617+00:00",
   "operators": [
     {
       "node_id": "input_artifact",
@@ -75,13 +77,15 @@
       "operator_id": "T_ij",
       "status": "warning",
       "computed": {
-        "gamma_ij": 0.35,
+        "gamma_ij": 0.351,
         "gamma_max": 0.4,
         "delta_T": 0.08
       },
       "diagnostics": [
         {
-          "diagnostic_id": "D_source_conflict",
+          "diagnostic_id": "D_quality_source_conflict",
+          "diagnostic_type": "quality_source_conflict",
+          "legacy_id": "D_source_conflict",
           "type": "critical_rupture",
           "source": "segmentation_quality",
           "reason": "Модель поддерживает принятие, но низкое качество сегментации и конфликт источников дают критический разрыв.",
@@ -107,7 +111,7 @@
       "operator_id": "Delta",
       "status": "passed",
       "computed": {
-        "delta": 0.08,
+        "delta": 0.106811,
         "delta_max": 0.35
       },
       "diagnostics": []
@@ -117,14 +121,16 @@
       "operator_id": "risk_observer",
       "status": "blocked",
       "computed": {
-        "rho": 0.74,
+        "rho": 0.8,
         "chi_R": 1,
         "chi_R_crit": 1,
         "chi_Auto": 0
       },
       "diagnostics": [
         {
-          "diagnostic_id": "D_source_conflict",
+          "diagnostic_id": "D_quality_source_conflict",
+          "diagnostic_type": "quality_source_conflict",
+          "legacy_id": "D_source_conflict",
           "type": "critical_rupture",
           "source": "segmentation_quality",
           "reason": "Модель поддерживает принятие, но низкое качество сегментации и конфликт источников дают критический разрыв.",
@@ -143,7 +149,9 @@
       },
       "diagnostics": [
         {
-          "diagnostic_id": "D_source_conflict",
+          "diagnostic_id": "D_quality_source_conflict",
+          "diagnostic_type": "quality_source_conflict",
+          "legacy_id": "D_source_conflict",
           "type": "critical_rupture",
           "source": "segmentation_quality",
           "reason": "Модель поддерживает принятие, но низкое качество сегментации и конфликт источников дают критический разрыв.",

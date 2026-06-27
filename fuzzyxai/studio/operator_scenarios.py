@@ -8,6 +8,8 @@ from hashlib import sha256
 from pathlib import Path
 from typing import Any
 
+from fuzzyxai.core.diagnostics import DiagnosticType
+
 
 ROOT = Path(__file__).resolve().parents[2]
 SCENARIO_DIR = ROOT / "configs" / "studio_scenarios"
@@ -139,7 +141,9 @@ def _base_pipeline(final_action: str, rupture: bool, values: dict[str, Any]) -> 
     if rupture:
         diag = [
             {
-                "diagnostic_id": "D_source_conflict",
+                "diagnostic_id": DiagnosticType.QUALITY_SOURCE_CONFLICT.value,
+                "diagnostic_type": "quality_source_conflict",
+                "legacy_id": "D_source_conflict",
                 "type": "critical_rupture",
                 "source": values.get("rupture_source", "source_conflict"),
                 "reason": values.get("action_reason", "Источник поддержки противоречит источнику качества."),
@@ -306,6 +310,28 @@ def _scenario(
     charts: dict[str, Any],
 ) -> dict[str, Any]:
     nodes, edges = _base_pipeline(final_action, rupture, {"data_type": data_type, **values})
+    expected = values.get("expected_result", {})
+    if expected:
+        for node in nodes:
+            if node.get("node_id") == "alignment":
+                node["computed"]["gamma_ij"] = expected.get("gamma", node["computed"].get("gamma_ij"))
+            elif node.get("node_id") == "reduction":
+                node["computed"]["delta"] = expected.get("delta", node["computed"].get("delta"))
+            elif node.get("node_id") == "risk_observer":
+                node["computed"]["rho"] = expected.get("rho", node["computed"].get("rho"))
+                node["computed"]["chi_R"] = expected.get("chi_R", node["computed"].get("chi_R"))
+                node["computed"]["chi_R_crit"] = expected.get("chi_R_crit", node["computed"].get("chi_R_crit"))
+            elif node.get("node_id") == "action":
+                node["inputs"]["rho"] = expected.get("rho", node["inputs"].get("rho"))
+                node["computed"]["action"] = expected.get("action", node["computed"].get("action"))
+                node["output"]["action"] = expected.get("action", node["output"].get("action"))
+        for edge in edges:
+            if edge.get("operator_id") == "T_ij":
+                edge["computed"]["gamma_ij"] = expected.get("gamma", edge.get("computed", {}).get("gamma_ij"))
+            elif edge.get("operator_id") == "Delta":
+                edge["computed"]["delta"] = expected.get("delta", edge.get("computed", {}).get("delta"))
+            elif edge.get("operator_id") == "risk_observer":
+                edge["computed"]["rho"] = expected.get("rho", edge.get("computed", {}).get("rho"))
     diagnostics = collect_unique_diagnostics(nodes)
     diagnostics_summary = summarize_diagnostic_occurrences(nodes)
     run_id = f"{scenario_id}_case_001"

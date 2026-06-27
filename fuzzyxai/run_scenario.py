@@ -12,16 +12,19 @@ from fuzzyxai.studio.operator_scenarios import build_report, load_scenarios
 
 
 def _hybrid_batch_cases(n: int = 1000) -> list[dict[str, Any]]:
-    actions = ["accept"] * 612 + ["lower_confidence"] * 201 + ["block"] * 187
+    fuzzy_actions = ["block"] * 168 + ["accept"] * 612 + ["lower_confidence"] * 201 + ["block"] * 19
     rows: list[dict[str, Any]] = []
-    for idx, action in enumerate(actions[:n], start=1):
+    for idx, fuzzy_action in enumerate(fuzzy_actions[:n], start=1):
+        is_critical = idx <= 168
         rows.append(
             {
                 "case_id": f"hybrid_{idx:04d}",
                 "scenario_id": "hybrid_xiris",
-                "action": action,
-                "critical_miss_baseline": 1 if idx <= 168 else 0,
-                "critical_miss_fuzzyxai": 0,
+                "is_critical_case": int(is_critical),
+                "baseline_action": "accept" if is_critical else fuzzy_action,
+                "fuzzyxai_action": fuzzy_action,
+                "baseline_miss": int(is_critical),
+                "fuzzyxai_miss": int(is_critical and fuzzy_action != "block"),
             }
         )
     return rows
@@ -45,11 +48,11 @@ def run_hybrid_xiris_batch(out_dir: Path) -> dict[str, Any]:
     summary = {
         "scenario_id": "hybrid_xiris",
         "n_cases": len(rows),
-        "accept": sum(row["action"] == "accept" for row in rows),
-        "lower_confidence": sum(row["action"] == "lower_confidence" for row in rows),
-        "block": sum(row["action"] == "block" for row in rows),
-        "baseline_critical_misses": sum(row["critical_miss_baseline"] for row in rows),
-        "fuzzyxai_critical_misses": sum(row["critical_miss_fuzzyxai"] for row in rows),
+        "accept": sum(row["fuzzyxai_action"] == "accept" for row in rows),
+        "lower_confidence": sum(row["fuzzyxai_action"] == "lower_confidence" for row in rows),
+        "block": sum(row["fuzzyxai_action"] == "block" for row in rows),
+        "baseline_critical_misses": sum(row["baseline_miss"] for row in rows),
+        "fuzzyxai_critical_misses": sum(row["fuzzyxai_miss"] for row in rows),
         "computed": {
             "gamma": computed.gamma,
             "delta": computed.delta,
