@@ -46,7 +46,12 @@ def dirty_paths() -> list[str]:
 
 
 def release_metadata() -> dict[str, Any]:
-    ignored_prefixes = ("reports/", "visual_artifacts_latest.zip", "fuzzyxai_final_audit_package.zip")
+    ignored_prefixes = (
+        "reports/",
+        "visual_artifacts_latest.zip",
+        "fuzzyxai_final_audit_package.zip",
+        "fuzzyxai_doctoral_runtime_release.zip",
+    )
     paths = dirty_paths()
     ignored = [path for path in paths if path.startswith(ignored_prefixes) or path in ignored_prefixes or (path.endswith(".docx") and "/" not in path)]
     unignored = [path for path in paths if path not in ignored]
