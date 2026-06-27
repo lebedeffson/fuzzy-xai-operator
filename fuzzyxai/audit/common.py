@@ -58,6 +58,7 @@ def release_metadata() -> dict[str, Any]:
         "visual_artifacts_latest.zip",
         "fuzzyxai_final_audit_package.zip",
         "fuzzyxai_doctoral_runtime_release.zip",
+        "FuzzyXAI_full_delivery_package.zip",
     )
     paths = dirty_paths()
     ignored = [path for path in paths if path.startswith(ignored_prefixes) or path in ignored_prefixes or (path.endswith(".docx") and "/" not in path)]
