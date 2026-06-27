@@ -1,7 +1,7 @@
 # Stale terms report
 
 - `D_source_conflict` in `fuzzyxai/core/scenario_engine.py:102` [allowed]: legacy_diagnostic_id="D_source_conflict",
-- `D_source_conflict` in `fuzzyxai/core/proof_package.py:125` [allowed]: if diagnostic.get("diagnostic_id") == "D_source_conflict" and not diagnostic.get("diagnostic_type") and not diagnostic.get("legacy_id"):
+- `D_source_conflict` in `fuzzyxai/core/proof_package.py:156` [allowed]: if diagnostic.get("diagnostic_id") == "D_source_conflict" and not diagnostic.get("diagnostic_type") and not diagnostic.get("legacy_id"):
 - `delta:0.08` in `fuzzyxai/studio/operator_scenarios.py:452` [allowed]: {"probability": 0.67, "mean_alpha_k": 0.72, "positive_feature_support": 0.47, "gamma_route": 0.20, "delta": 0.08},
 - `delta:0.08` in `fuzzyxai/studio/operator_scenarios.py:463` [allowed]: "delta": 0.08,
 - `D_source_conflict` in `fuzzyxai/studio/operator_scenarios.py:147` [allowed]: "legacy_id": "D_source_conflict",
@@ -28,11 +28,11 @@
 - `D_source_conflict` in `reports/studio/hybrid_xiris_case_001.json:154` [allowed]: "legacy_id": "D_source_conflict",
 - `gamma_max:0.45` in `reports/unified_full_demo/breast_cancer_report.json:82` [allowed_archive]: "gamma_max": 0.45,
 - `gamma_max:0.45` in `reports/unified_full_demo/unified_full_demo_report.json:54` [allowed_archive]: "gamma_max": 0.45,
-- `D_source_conflict` in `reports/studio_batch/hybrid_xiris_proof_package.json:71` [allowed]: "legacy_id": "D_source_conflict",
-- `D_source_conflict` in `reports/studio_batch/hybrid_xiris_proof_package.json:110` [allowed]: "legacy_id": "D_source_conflict",
-- `D_source_conflict` in `reports/studio_batch/hybrid_xiris_proof_package.json:137` [allowed]: "legacy_id": "D_source_conflict",
-- `D_source_conflict` in `reports/studio_batch/hybrid_xiris_proof_package.json:163` [allowed]: "legacy_diagnostic_id": "D_source_conflict",
-- `D_source_conflict` in `reports/studio_batch/hybrid_xiris_proof_package.json:213` [allowed]: "legacy_id": "D_source_conflict",
+- `D_source_conflict` in `reports/studio_batch/hybrid_xiris_proof_package.json:108` [allowed]: "legacy_id": "D_source_conflict",
+- `D_source_conflict` in `reports/studio_batch/hybrid_xiris_proof_package.json:147` [allowed]: "legacy_id": "D_source_conflict",
+- `D_source_conflict` in `reports/studio_batch/hybrid_xiris_proof_package.json:174` [allowed]: "legacy_id": "D_source_conflict",
+- `D_source_conflict` in `reports/studio_batch/hybrid_xiris_proof_package.json:200` [allowed]: "legacy_diagnostic_id": "D_source_conflict",
+- `D_source_conflict` in `reports/studio_batch/hybrid_xiris_proof_package.json:250` [allowed]: "legacy_id": "D_source_conflict",
 - `gamma_max:0.45` in `reports/chapter5/real_data_validation/citr_report.json:85` [allowed_archive]: "gamma_max": 0.45,
 - `gamma_max:0.45` in `reports/chapter5/real_data_validation/citr_report.json:129` [allowed_archive]: "gamma_max": 0.45
 - `gamma_max:0.45` in `reports/chapter5/real_data_validation/rikord_report.json:83` [allowed_archive]: "gamma_max": 0.45,

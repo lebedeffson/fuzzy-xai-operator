@@ -33,7 +33,7 @@ def test_exported_tables_match_proof_package() -> None:
     assert f"gamma,{package['computed_result']['gamma']}" in summary
     assert f"delta,{package['computed_result']['delta']}" in summary
     assert f"rho,{package['computed_result']['rho']}" in summary
-    assert f"rho,total,,{package['computed_result']['rho']}" in risk
+    assert f"total,rho,,{package['computed_result']['rho']}" in risk
 
 
 def test_studio_trace_matches_engine_result() -> None:

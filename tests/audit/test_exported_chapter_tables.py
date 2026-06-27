@@ -27,11 +27,13 @@ def test_table_5_2_explainplan_has_required_parameters() -> None:
         "w_block_rule",
         "w_source_conflict",
         "w_reduction_component",
+        "kappa_delta",
         "theta_1",
         "theta_2",
         "theta_3",
         "theta_4",
-        "risk_action",
+        "selected_class",
+        "action_rule",
     }
     assert required <= params
 
@@ -50,7 +52,7 @@ def test_table_5_4_de_sums_to_gamma() -> None:
 
 def test_table_5_6_risk_decomposition_sums_to_rho() -> None:
     rows = _rows("table_5_6_risk_decomposition.csv")
-    subtotal = sum(float(row["contribution"]) for row in rows if row["component"] != "rho")
-    total = next(row for row in rows if row["component"] == "rho")
+    subtotal = sum(float(row["contribution"]) for row in rows if row["component"] != "total")
+    total = next(row for row in rows if row["component"] == "total")
     assert subtotal == pytest.approx(0.800)
     assert float(total["contribution"]) == pytest.approx(0.800)

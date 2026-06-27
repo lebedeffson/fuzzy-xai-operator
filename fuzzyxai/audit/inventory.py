@@ -15,6 +15,8 @@ PATTERNS = [
     "reports/studio_batch/*.csv",
     "reports/chapter5/studio_tables/*.csv",
     "visual_artifacts_latest.zip",
+    "fuzzyxai_final_audit_package.zip",
+    "docs/chapters/*",
     "patches/chapter4_5_doctoral_strengthening.md",
     "apps/fuzzyxai_studio.py",
     "fuzzyxai/core/*.py",

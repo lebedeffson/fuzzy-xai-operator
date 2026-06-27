@@ -62,8 +62,8 @@ def test_verifier_rejects_gamma_over_max_but_passed() -> None:
 
 def test_verifier_rejects_code_version_when_requested() -> None:
     package = _package()
-    package["code_version"] = "old"
-    assert any(error.startswith("invalid:code_version") for error in verify_proof_package(package, require_current_code_version=True).errors)
+    package["source_commit"] = "old"
+    assert any(error.startswith("invalid:source_commit") for error in verify_proof_package(package, require_current_code_version=True).errors)
 
 
 def test_verifier_rejects_explain_plan_hash_tamper() -> None:

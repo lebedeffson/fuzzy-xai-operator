@@ -1,4 +1,40 @@
 {
-  "commit": "24a1797",
+  "source_commit": "2c3bf5a",
+  "artifact_commit": "2c3bf5a",
+  "audit_branch": "audit/fuzzyxai-final-readiness",
+  "working_tree_clean": false,
+  "working_tree_dirty_ignored_paths": [
+    "reports/audit/artifact_inventory.csv",
+    "reports/audit/docx_audit_report.md",
+    "reports/audit/docx_format_report.md",
+    "reports/audit/fuzzyxai_final_audit.json",
+    "reports/audit/fuzzyxai_final_audit.md",
+    "reports/audit/stale_terms_report.md",
+    "reports/chapter5/studio_tables/table_5_2_explainplan.csv",
+    "reports/chapter5/studio_tables/table_5_6_risk_decomposition.csv",
+    "reports/studio_batch/hybrid_xiris_proof_package.json"
+  ],
+  "working_tree_dirty_unignored_paths": [
+    "Makefile",
+    "fuzzyxai/audit/common.py",
+    "fuzzyxai/audit/docx_chapters.py",
+    "fuzzyxai/audit/docx_format.py",
+    "fuzzyxai/audit/final_audit.py",
+    "fuzzyxai/audit/inventory.py",
+    "fuzzyxai/core/proof_package.py",
+    "fuzzyxai/export_tables.py",
+    "tests/audit/test_exported_chapter_tables.py",
+    "tests/audit/test_final_audit_gate.py",
+    "tests/audit/test_proof_package_tamper.py",
+    "tests/audit/test_single_source_of_truth.py",
+    "tests/test_studio_operator_engine.py",
+    "3 \\320\\263\\320\\273\\320\\260\\320\\262\\320\\260.docx",
+    "docs/chapters/glava_4_FuzzyXAI_corrected_final.docx",
+    "docs/chapters/glava_5_FuzzyXAI_corrected_final.docx",
+    "fuzzyxai/audit/build_package.py",
+    "glava_4_FuzzyXAI_corrected_final(1).docx",
+    "glava_5_FuzzyXAI_corrected_final(1).docx",
+    "\\320\\263\\320\\273\\320\\260\\320\\262\\320\\260 2.docx"
+  ],
   "issues": []
 }

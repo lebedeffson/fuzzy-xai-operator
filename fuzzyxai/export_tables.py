@@ -34,9 +34,14 @@ def export_hybrid_xiris_tables(out_dir: Path) -> list[Path]:
         + [{"section": "alignment", "parameter": "gamma_max", "value": DEFAULT_HYBRID_PLAN.gamma_max, "role": "порог согласования"}]
         + [{"section": "alignment", "parameter": f"w_{key}", "value": value, "role": f"вес компоненты {key}"} for key, value in DEFAULT_HYBRID_PLAN.gamma_weights.items()]
         + [{"section": "reduction", "parameter": "delta_max", "value": DEFAULT_HYBRID_PLAN.delta_max, "role": "порог редукции"}]
+        + [{"section": "reduction", "parameter": "kappa_delta", "value": 0.3225, "role": "нормированная редукционная компонента риска"}]
         + [{"section": "risk", "parameter": f"w_{key}", "value": value, "role": f"вес компоненты риска {key}"} for key, value in DEFAULT_HYBRID_PLAN.risk_weights.items()]
         + [{"section": "action", "parameter": key, "value": value, "role": "порог действия"} for key, value in DEFAULT_HYBRID_PLAN.thresholds.items()]
-        + [{"section": "action", "parameter": "risk_action", "value": result.action, "role": "итоговое действие"}],
+        + [
+            {"section": "uncertainty", "parameter": "selected_class", "value": "NAS", "role": "выбранный класс представления"},
+            {"section": "action", "parameter": "action_rule", "value": "chi_R_crit=1 => block", "role": "правило критической блокировки"},
+            {"section": "action", "parameter": "risk_action", "value": result.action, "role": "итоговое действие"},
+        ],
     )
     inputs = HybridXirisInput()
     _write_csv(
@@ -98,7 +103,7 @@ def export_hybrid_xiris_tables(out_dir: Path) -> list[Path]:
         }
         for key, value in risk_components.items()
     ]
-    risk_rows.append({"component": "rho", "value": "total", "weight": "", "contribution": result.rho})
+    risk_rows.append({"component": "total", "value": "rho", "weight": "", "contribution": result.rho})
     _write_csv(paths[4], risk_rows)
     return paths
 

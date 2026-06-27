@@ -81,6 +81,12 @@ def collect_issues() -> list[AuditIssue]:
     chapter5_ok = chapter5.exists() or chapter5.with_suffix(chapter5.suffix + ".audit.txt").exists()
     if not chapter4_ok or not chapter5_ok:
         issues.append(AuditIssue("FXAI-AUDIT-006", "MAJOR", "docx", "chapter4/chapter5 DOCX", "chapter DOCX files or .docx.audit.txt exports present for formula/style audit", f"chapter4={chapter4_ok}, chapter5={chapter5_ok}", "python -m fuzzyxai.audit.docx_chapters --chapter4 docs/chapters/glava_4_FuzzyXAI_corrected_final.docx --chapter5 docs/chapters/glava_5_FuzzyXAI_corrected_final.docx", "Provide final chapter DOCX files or audited text exports and rerun DOCX audit."))
+    docx_report = AUDIT_DIR / "docx_audit_report.md"
+    if docx_report.exists() and "status: PASS" not in docx_report.read_text(encoding="utf-8"):
+        issues.append(AuditIssue("FXAI-AUDIT-007", "MAJOR", "docx", str(docx_report.relative_to(ROOT)), "DOCX content gate PASS", "FAIL", "python -m fuzzyxai.audit.docx_chapters --chapter4 docs/chapters/glava_4_FuzzyXAI_corrected_final.docx --chapter5 docs/chapters/glava_5_FuzzyXAI_corrected_final.docx", "Align chapter text with verified engine values."))
+    docx_format = AUDIT_DIR / "docx_format_report.md"
+    if docx_format.exists() and "status: PASS\n" not in docx_format.read_text(encoding="utf-8"):
+        issues.append(AuditIssue("FXAI-AUDIT-008", "MAJOR", "docx_format", str(docx_format.relative_to(ROOT)), "Real DOCX style gate PASS", "FAIL or PASS_LIMITED", "python -m fuzzyxai.audit.docx_format --chapter4 docs/chapters/glava_4_FuzzyXAI_corrected_final.docx --chapter5 docs/chapters/glava_5_FuzzyXAI_corrected_final.docx", "Use real DOCX files with Heading/Caption styles."))
 
     return issues
 

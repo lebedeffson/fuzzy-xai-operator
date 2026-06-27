@@ -11,8 +11,13 @@ from .common import AUDIT_DIR
 REQUIRED_CHAPTER5 = [
     "γ = 0,351",
     "Δ = 0,106811",
+    "r_Δ = 0,3225",
     "ρ = 0,800",
     "D_quality_source_conflict",
+    "612",
+    "201",
+    "187",
+    "168",
     "max(|p - α_mean|, |p - s|)",
 ]
 
@@ -20,6 +25,7 @@ FORBIDDEN = [
     "ρ = 0,74",
     "rho = 0.74",
     "Δ = 0,08",
+    "γ_ij = 0,35",
     "v0.9",
     "JSON как пользовательский интерфейс",
 ]

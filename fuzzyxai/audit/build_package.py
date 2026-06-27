@@ -1,0 +1,77 @@
+from __future__ import annotations
+
+import zipfile
+from pathlib import Path
+
+from .common import ROOT
+
+
+PACKAGE = ROOT / "fuzzyxai_final_audit_package.zip"
+VISUAL = ROOT / "visual_artifacts_latest.zip"
+
+INCLUDE = [
+    "fuzzyxai/audit",
+    "tests/audit",
+    "reports/audit",
+    "reports/studio",
+    "reports/studio_batch",
+    "reports/chapter5/studio_tables",
+    "configs/studio_scenarios",
+    "docs/chapters",
+    "figures",
+    "visual_artifacts_latest.zip",
+]
+
+EXCLUDE_PARTS = {"__pycache__", ".pytest_cache", ".venv", "venv", "node_modules"}
+EXCLUDE_SUFFIXES = {".pyc", ".pyo"}
+EXCLUDE_NAMES = {".DS_Store"}
+
+
+def _allowed(path: Path) -> bool:
+    parts = set(path.parts)
+    if parts & EXCLUDE_PARTS:
+        return False
+    if path.suffix in EXCLUDE_SUFFIXES:
+        return False
+    if path.name in EXCLUDE_NAMES:
+        return False
+    return True
+
+
+def _add_path(zf: zipfile.ZipFile, path: Path) -> None:
+    if not path.exists():
+        return
+    if path.is_file():
+        if _allowed(path):
+            zf.write(path, path.relative_to(ROOT).as_posix())
+        return
+    for item in sorted(path.rglob("*")):
+        if item.is_file() and _allowed(item):
+            zf.write(item, item.relative_to(ROOT).as_posix())
+
+
+def build_visual_zip() -> Path:
+    if VISUAL.exists():
+        VISUAL.unlink()
+    with zipfile.ZipFile(VISUAL, "w", zipfile.ZIP_DEFLATED) as zf:
+        for rel in ["figures", "reports/studio/fuzzyxai_studio_smoke.png", "reports/studio/hybrid_xiris_case_001.json", "reports/audit"]:
+            _add_path(zf, ROOT / rel)
+    return VISUAL
+
+
+def build_audit_package() -> Path:
+    build_visual_zip()
+    if PACKAGE.exists():
+        PACKAGE.unlink()
+    with zipfile.ZipFile(PACKAGE, "w", zipfile.ZIP_DEFLATED) as zf:
+        for rel in INCLUDE:
+            _add_path(zf, ROOT / rel)
+    return PACKAGE
+
+
+def main() -> None:
+    print(build_audit_package())
+
+
+if __name__ == "__main__":
+    main()
