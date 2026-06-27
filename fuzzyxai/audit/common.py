@@ -55,6 +55,7 @@ def release_metadata() -> dict[str, Any]:
     ignored_prefixes = (
         "reports/",
         "models/",
+        "data/real_public/",
         "visual_artifacts_latest.zip",
         "fuzzyxai_final_audit_package.zip",
         "fuzzyxai_doctoral_runtime_release.zip",
