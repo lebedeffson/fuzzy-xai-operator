@@ -50,7 +50,7 @@ def test_proof_package_release_metadata_is_explicit() -> None:
     proof = json.loads(Path("reports/studio_batch/hybrid_xiris_proof_package.json").read_text(encoding="utf-8"))
     assert proof["source_commit"]
     assert proof["artifact_commit"]
-    assert proof["audit_branch"] == "audit/fuzzyxai-final-readiness"
+    assert proof["audit_branch"] == "audit/fuzzyxai-final-readiness" or proof["audit_branch"].startswith("detached:")
     assert "dirty" not in proof["code_version"]
     assert isinstance(proof["working_tree_dirty_ignored_paths"], list)
     assert isinstance(proof["working_tree_dirty_unignored_paths"], list)

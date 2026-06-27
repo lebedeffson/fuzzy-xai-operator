@@ -32,7 +32,8 @@ def current_commit() -> str:
 
 def current_branch() -> str:
     try:
-        return subprocess.check_output(["git", "branch", "--show-current"], cwd=ROOT, text=True).strip()
+        branch = subprocess.check_output(["git", "branch", "--show-current"], cwd=ROOT, text=True).strip()
+        return branch or f"detached:{current_commit()}"
     except Exception:
         return "unknown"
 

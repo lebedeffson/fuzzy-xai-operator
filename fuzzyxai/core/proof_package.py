@@ -35,7 +35,8 @@ def _code_version() -> str:
 
 def _branch() -> str:
     try:
-        return subprocess.check_output(["git", "branch", "--show-current"], text=True).strip()
+        branch = subprocess.check_output(["git", "branch", "--show-current"], text=True).strip()
+        return branch or f"detached:{_code_version()}"
     except Exception:
         return "unknown"
 
@@ -49,7 +50,12 @@ def _dirty_paths() -> list[str]:
 
 
 def _release_metadata() -> dict[str, Any]:
-    ignored_prefixes = ("reports/", "visual_artifacts_latest.zip", "fuzzyxai_final_audit_package.zip")
+    ignored_prefixes = (
+        "reports/",
+        "visual_artifacts_latest.zip",
+        "fuzzyxai_final_audit_package.zip",
+        "fuzzyxai_doctoral_runtime_release.zip",
+    )
     paths = _dirty_paths()
     ignored = [path for path in paths if path.startswith(ignored_prefixes) or path in ignored_prefixes or (path.endswith(".docx") and "/" not in path)]
     unignored = [path for path in paths if path not in ignored]
