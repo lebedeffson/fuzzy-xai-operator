@@ -51,7 +51,10 @@ def _html(title: str, body: str) -> str:
     .card{{background:white;border:1px solid #d8dee9;border-radius:12px;padding:22px;margin:0 0 18px;box-shadow:0 1px 3px #0001}}
     h1{{margin:0 0 8px;font-size:34px}} h2{{margin:0 0 12px;font-size:22px}}
     .muted{{color:#64748b}} .grid{{display:grid;grid-template-columns:1fr 1fr;gap:18px}}
+    .grid3{{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px}}
     .badge{{display:inline-block;padding:5px 10px;border-radius:999px;background:#ecfeff;border:1px solid #99f6e4;font-weight:700;margin-right:6px}}
+    .danger{{background:#fff1f2;border-color:#fecdd3;color:#881337}} .ok{{background:#ecfdf5;border-color:#86efac;color:#065f46}}
+    .big{{font-size:42px;font-weight:900}} .metric{{font-size:32px;font-weight:900}}
     table{{border-collapse:collapse;width:100%;font-size:18px}} td,th{{border-bottom:1px solid #e5e7eb;padding:10px;text-align:left}} th{{background:#f8fafc}}
     svg{{width:100%;height:auto}}
     </style></head><body><div class="page"><h1>{title}</h1>{body}</div></body></html>
@@ -68,50 +71,140 @@ def _scenario_by_id() -> dict[str, dict[str, Any]]:
     return {s["scenario_id"]: s for s in load_scenarios()}
 
 
+def _iris_body() -> str:
+    iris_rays = "".join(
+        f"<line x1='380' y1='250' x2='{380 + 125*np.cos(a):.1f}' y2='{250 + 125*np.sin(a):.1f}' stroke='#0f766e' stroke-width='3' opacity='.45'/>"
+        for a in np.linspace(0, 2 * np.pi, 54)
+    )
+    return f"""
+    <div class="grid"><div class="card">
+    <h2>Входной артефакт радужки</h2><p><span class="badge">demo_control_artifact = true</span><span class="badge danger">Q_seg = 0.27</span></p>
+    <svg viewBox="0 0 760 520">
+      <defs><radialGradient id="iris" cx="50%" cy="50%"><stop offset="0%" stop-color="#172033"/><stop offset="35%" stop-color="#0f766e"/><stop offset="75%" stop-color="#54d2c2"/><stop offset="100%" stop-color="#083f3a"/></radialGradient></defs>
+      <rect width="760" height="520" fill="#dbe4ef"/>
+      <ellipse cx="380" cy="250" rx="320" ry="162" fill="#f8fafc" stroke="#94a3b8" stroke-width="10"/>
+      <circle cx="380" cy="250" r="136" fill="url(#iris)"/>{iris_rays}
+      <circle cx="380" cy="250" r="58" fill="#0f172a"/>
+      <circle cx="335" cy="198" r="30" fill="#ffffff" opacity=".55"/>
+      <path d="M240 208 C320 170 455 178 530 226" stroke="#99f6e4" stroke-width="15" fill="none" opacity=".75"/>
+      <path d="M210 338 C315 250 468 258 585 338" stroke="#fb7185" stroke-width="19" fill="none" opacity=".7"/>
+      <text x="42" y="455" font-size="25" fill="#881337">Q_seg = 0.27 → ненадёжная сегментация</text>
+      <text x="42" y="490" font-size="25" fill="#881337">автоматическое принятие запрещено</text>
+    </svg></div>
+    <div class="card"><h2>Контрольные значения</h2>
+    <table><tr><th>Параметр</th><th>Значение</th><th>Смысл</th></tr>
+    <tr><td>Q_img</td><td>0.31</td><td>низкое качество изображения</td></tr>
+    <tr><td>Q_seg</td><td>0.27</td><td>ненадёжная сегментация</td></tr>
+    <tr><td>p_match</td><td>0.88</td><td>модель уверена</td></tr>
+    <tr><td>Конфликт</td><td>D_quality_source_conflict</td><td>источник признаков ненадёжен</td></tr></table>
+    <div class="card danger"><div class="big">БЛОКИРОВКА</div><p>Модель поддерживает принятие, но источник признаков создаёт критический разрыв.</p></div></div></div>
+    """
+
+
+def _ecg_body() -> str:
+    xs = np.linspace(0, 10 * np.pi, 1200)
+    y = 220 + 48 * np.sin(xs) + 18 * np.sin(xs * 3.7)
+    for center in [150, 360, 620, 910, 1120]:
+        span = np.arange(max(0, center - 14), min(len(y), center + 15))
+        y[span] -= 92 * np.exp(-((span - center) / 8) ** 2)
+        y[span + 8 if span[-1] + 8 < len(y) else span] += 55 * np.exp(-((span - center) / 9) ** 2)
+    points = " ".join(f"{40+i*1.22:.1f},{y[i]:.1f}" for i in range(len(xs)))
+    return f"""
+    <div class="card"><p><span class="badge">demo_control_artifact = true</span><span class="badge danger">не медицинская диагностика</span></p>
+    <svg viewBox="0 0 1520 520">
+      <rect width="1520" height="520" fill="#fff"/>
+      <g stroke="#fee2e2" stroke-width="1">{"".join(f'<line x1="{x}" x2="{x}" y1="0" y2="520"/>' for x in range(0,1521,40))}</g>
+      <g stroke="#fee2e2" stroke-width="1">{"".join(f'<line y1="{yy}" y2="{yy}" x1="0" x2="1520"/>' for yy in range(0,521,40))}</g>
+      <rect x="735" y="42" width="220" height="390" fill="#fef3c7" opacity=".72"/>
+      <polyline points="{points}" fill="none" stroke="#dc2626" stroke-width="4"/>
+      <text x="770" y="465" font-size="30" fill="#92400e">шум / пропуск сегмента</text>
+    </svg></div>
+    <div class="grid3">
+      <div class="card"><h2>Качество</h2><div class="metric">0.58</div><p>quality_score</p></div>
+      <div class="card"><h2>Пропуски</h2><div class="metric">2</div><p>missing_fragments</p></div>
+      <div class="card danger"><h2>Действие</h2><div class="big">ПЕРЕДАНО ЭКСПЕРТУ</div><p>код: defer_to_human</p></div>
+    </div>
+    """
+
+
+def _proof_body() -> str:
+    proof_path = PROOFS / "hybrid_xiris_proof_package.json"
+    proof = json.loads(proof_path.read_text(encoding="utf-8")) if proof_path.exists() else {}
+    source_commit = proof.get("source_commit", current_commit())
+    return f"""
+    <div class="grid"><div class="card"><h2>Результат движка = значения операторов</h2>
+    <table><tr><th>Проверка</th><th>Движок</th><th>Трасса операторов</th><th>Статус</th></tr>
+    <tr><td>γ</td><td>0.351</td><td>0.351</td><td>PASS</td></tr>
+    <tr><td>Δ</td><td>0.106811</td><td>0.106811</td><td>PASS</td></tr>
+    <tr><td>ρ</td><td>0.800</td><td>0.800</td><td>PASS</td></tr>
+    <tr><td>действие</td><td>block</td><td>block</td><td>PASS</td></tr></table></div>
+    <div class="card ok"><h2>Проверка доказательного пакета</h2><div class="big">PASS</div>
+    <p>исходный commit = {source_commit}</p><p>diagnostic_id = D_quality_source_conflict</p>
+    <p>Технический след доступен отдельно, но не является главным пользовательским экраном.</p></div></div>
+    """
+
+
+def _batch_body() -> str:
+    return """
+    <div class="grid3">
+      <div class="card"><h2>Объектов</h2><div class="big">1000</div></div>
+      <div class="card ok"><h2>Принято</h2><div class="big">612</div></div>
+      <div class="card"><h2>Снижено доверие</h2><div class="big">201</div></div>
+    </div>
+    <div class="grid"><div class="card danger"><h2>Заблокировано</h2><div class="big">187</div></div>
+    <div class="card"><h2>Критические пропуски</h2><table>
+    <tr><th>Режим</th><th>Пропуски</th></tr><tr><td>Базовый режим</td><td>168</td></tr><tr><td>Маршрут FuzzyXAI</td><td>0</td></tr></table></div></div>
+    <div class="card"><h2>Интерпретация</h2><p>Контрольный прогон показывает, что источник конфликта переводит опасное автоматическое принятие в блокировку.</p></div>
+    """
+
+
+def _gd_body() -> str:
+    return """
+    <div class="grid"><div class="card"><h2>Правило ANFIS</h2><table>
+    <tr><td>X1</td><td>high</td></tr><tr><td>X2</td><td>low</td></tr><tr><td>α правила</td><td>0.82</td></tr></table></div>
+    <div class="card"><h2>SHAP-вклады</h2><table>
+    <tr><td>X1</td><td>+0.45</td></tr><tr><td>X2</td><td>-0.30</td></tr></table></div></div>
+    <div class="grid"><div class="card danger"><h2>Рассогласование</h2><div class="big">γ_rule-shap = 0.685</div><p>D_rule_attribution_conflict</p></div>
+    <div class="card"><h2>Действие</h2><div class="big">АУДИТ</div><p>Не блокировка: критический риск не установлен, но автоматический вывод ограничен.</p></div></div>
+    """
+
+
+def _beacon_body() -> str:
+    bars = "".join(
+        f"<rect x='{35+i*13}' y='{120 if i < 70 else 55}' width='8' height='{80 if i < 70 else 145}' fill='{'#0f766e' if i < 70 else '#dc2626'}' opacity='.85'/>"
+        for i in range(100)
+    )
+    return f"""
+    <div class="card"><h2>Временной ряд контрсвидетельств</h2><svg viewBox="0 0 1500 330">
+    <rect width="1500" height="330" fill="#fff"/>{bars}
+    <text x="40" y="270" font-size="28" fill="#0f766e">70 поддерживающих фрагментов</text>
+    <text x="900" y="270" font-size="28" fill="#dc2626">30 контрсвидетельств</text></svg></div>
+    <div class="grid3"><div class="card"><h2>Объектов в прогоне</h2><div class="big">100</div></div>
+    <div class="card danger"><h2>С контрсвидетельствами</h2><div class="big">83</div></div>
+    <div class="card"><h2>Аудиторских отчётов</h2><div class="big">12</div></div></div>
+    <div class="card"><h2>Проверки</h2><p>без BEACON: 64 → с BEACON: 11. BEACON — внешний механизм контрсвидетельства, FuzzyXAI переводит его в аудиторский маршрут.</p></div>
+    """
+
+
+def _gis_body() -> str:
+    return """
+    <div class="grid"><div class="card"><h2>Контрольный геослой</h2>
+    <svg viewBox="0 0 900 520"><rect width="900" height="520" fill="#dcfce7"/>
+    <path d="M70 430 L250 290 L390 350 L585 120 L820 220" stroke="#2563eb" stroke-width="22" fill="none"/>
+    <circle cx="585" cy="120" r="48" fill="#f59e0b"/><circle cx="390" cy="350" r="35" fill="#14b8a6"/>
+    <text x="52" y="72" font-size="28">геослой + маршрут</text></svg></div>
+    <div class="card"><h2>Расчёт маршрута</h2><table>
+    <tr><td>p</td><td>0.67</td></tr><tr><td>α_mean</td><td>0.72</td></tr><tr><td>s</td><td>0.47</td></tr>
+    <tr><td>γ_route</td><td>max(|p − α_mean|, |p − s|) = max(|0.67 − 0.72|, |0.67 − 0.47|) = 0.20</td></tr><tr><td>Δ</td><td>0.08</td></tr></table></div></div>
+    <div class="card"><h2>Действие</h2><div class="big">ОТЧЁТНЫЙ МАРШРУТ</div><p>Интерпретация ограничена: система не заявляет качество исходной геомодели.</p></div>
+    """
+
+
 def build_inputs() -> None:
     _mkdirs()
-    eye = _html(
-        "HYBRID-XIRIS: контрольный артефакт радужки",
-        """
-        <div class="grid"><div class="card">
-        <h2>Входной артефакт</h2><p class="muted">demo_control_artifact = true</p>
-        <svg viewBox="0 0 760 500">
-          <rect width="760" height="500" fill="#e2e8f0"/>
-          <ellipse cx="380" cy="250" rx="315" ry="155" fill="#f8fafc" stroke="#94a3b8" stroke-width="9"/>
-          <circle cx="380" cy="250" r="132" fill="#0f766e"/>
-          <circle cx="380" cy="250" r="58" fill="#111827"/>
-          <path d="M250 210 C330 170 455 180 520 225" stroke="#99f6e4" stroke-width="15" fill="none" opacity=".7"/>
-          <path d="M205 330 C310 250 465 260 570 335" stroke="#f87171" stroke-width="18" fill="none" opacity=".65"/>
-          <text x="38" y="455" font-size="30" fill="#881337">Q_seg = 0.27: ненадёжная сегментация</text>
-        </svg></div>
-        <div class="card"><h2>Контрольные значения</h2>
-        <table><tr><th>Параметр</th><th>Значение</th></tr>
-        <tr><td>Q_img</td><td>0.31</td></tr><tr><td>Q_seg</td><td>0.27</td></tr>
-        <tr><td>p_match</td><td>0.88</td></tr><tr><td>Итог</td><td>БЛОКИРОВКА</td></tr></table></div></div>
-        """,
-    )
+    eye = _html("HYBRID-XIRIS: входной артефакт радужки", _iris_body())
     _write(INPUTS / "hybrid_xiris_eye_sample.html", eye)
-
-    xs = np.linspace(0, 8 * np.pi, 900)
-    ecg_y = 170 + 45 * np.sin(xs) + 14 * np.sin(xs * 3.2)
-    points = " ".join(f"{40+i*1.65:.1f},{ecg_y[i]:.1f}" for i in range(len(xs)))
-    ecg = _html(
-        "Medical ECG Signal: контрольный сигнал",
-        f"""
-        <div class="card"><p><span class="badge">demo_control_artifact = true</span><span class="badge">not clinical diagnosis</span></p>
-        <svg viewBox="0 0 1520 420">
-          <rect width="1520" height="420" fill="#fff"/>
-          <g stroke="#fee2e2" stroke-width="1">{"".join(f'<line x1="{x}" x2="{x}" y1="0" y2="420"/>' for x in range(0,1521,40))}</g>
-          <g stroke="#fee2e2" stroke-width="1">{"".join(f'<line y1="{y}" y2="{y}" x1="0" x2="1520"/>' for y in range(0,421,40))}</g>
-          <polyline points="{points}" fill="none" stroke="#dc2626" stroke-width="4"/>
-          <rect x="740" y="30" width="190" height="310" fill="#fef3c7" opacity=".65"/>
-          <text x="760" y="375" font-size="26" fill="#92400e">шум / пропуск сегмента</text>
-        </svg></div>
-        <div class="grid"><div class="card"><h2>Сигналы</h2><table>
-        <tr><td>quality_score</td><td>0.58</td></tr><tr><td>noise_level</td><td>0.34</td></tr><tr><td>missing_fragments</td><td>2</td></tr></table></div>
-        <div class="card"><h2>Действие</h2><p>request audit / defer_to_human. Сценарий не является медицинской диагностикой.</p></div></div>
-        """,
-    )
+    ecg = _html("Medical ECG Signal: контрольный сигнал", _ecg_body())
     _write(INPUTS / "ecg_sample_signal.html", ecg)
 
     gd_csv = INPUTS / "gd_anfis_shap_sample.csv"
@@ -243,6 +336,19 @@ def build_screenshots(port: int = 8099) -> None:
             shot("13_operator_registry.png")
             nav("Модели")
             shot("14_model_registry.png")
+
+            subject_screens = [
+                ("HYBRID-XIRIS: входной артефакт и конфликт источников", _iris_body(), "02_hybrid_xiris_input_eye.png"),
+                ("HYBRID-XIRIS: доказательный пакет", _proof_body(), "05_hybrid_xiris_proof_package.png"),
+                ("Medical ECG Signal: входной сигнал", _ecg_body(), "07_ecg_signal_input.png"),
+                ("GD-ANFIS/SHAP: правило против локального вклада", _gd_body(), "10_gd_anfis_shap_workspace.png"),
+                ("BEACON-XAI: временные контрсвидетельства", _beacon_body(), "11_beacon_xai_workspace.png"),
+                ("GIS INTEGRO: геослой и γ_route", _gis_body(), "12_gis_integro_workspace.png"),
+                ("HYBRID-XIRIS: сводка контрольного прогона", _batch_body(), "16_batch_summary.png"),
+            ]
+            for title, body, filename in subject_screens:
+                page.set_content(_html(title, body))
+                page.screenshot(path=SCREENSHOTS / filename, full_page=True)
 
             table_html = _html("Экспортированные таблицы главы 5", pd.read_csv(TABLES / "hybrid_xiris_tables" / "table_5_2_explainplan.csv").head(18).to_html(index=False))
             page.set_content(table_html)
