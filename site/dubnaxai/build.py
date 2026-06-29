@@ -25,18 +25,29 @@ def load_route(name: str):
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+def load_routes():
+    route_dir = PUBLIC / "routes"
+    if not route_dir.exists():
+        return []
+    return [json.loads(path.read_text(encoding="utf-8")) for path in sorted(route_dir.glob("*_route.json"))]
+
+
 def main() -> None:
     DIST.mkdir(parents=True, exist_ok=True)
     if (DIST / "screenshots").exists():
         shutil.rmtree(DIST / "screenshots")
     shutil.copytree(PUBLIC / "screenshots", DIST / "screenshots")
+    if (PUBLIC / "figures").exists():
+        if (DIST / "figures").exists():
+            shutil.rmtree(DIST / "figures")
+        shutil.copytree(PUBLIC / "figures", DIST / "figures")
     models = load("models")
     methods = load("methods")
     demos = load("demos")
     repositories = load("repositories")
     researchers = load("researchers")
     publications = load("publications")
-    route = load_route("hybrid_xiris_route.json")
+    routes = load_routes()
     model_html = "".join(card(m.get("model_id", "model"), f"scenario: {m.get('scenario_id')}<br>status: {m.get('model_status')}<br>{m.get('not_a_claim','')}") for m in models)
     method_html = "".join(card(m["title"], f"{m['kind']}<br>{m['description']}") for m in methods)
     demo_html = "".join(card(d["name"], f"{d['artifact_type']} / {d['artifact_status']}<br>evidence: {d['evidence_level']}") for d in demos)
@@ -51,21 +62,29 @@ def main() -> None:
     pub_html = "".join(card(p["title"], f"{p['type']} / {p['status']}") for p in publications)
     shots = ["00_ecosystem_main.png", "02_hybrid_xiris_input_eye.png", "07_ecg_signal_input.png", "10_gd_anfis_shap_workspace.png", "11_beacon_xai_workspace.png", "12_gis_integro_workspace.png"]
     gallery = "".join(f'<figure><img src="screenshots/{s}" alt="{s}"><figcaption>{s}</figcaption></figure>' for s in shots)
-    if route:
-        route_nodes = "".join(
-            card(
-                f"{idx + 1}. {node['title']}",
-                f"{node['value']}<br>status: {node['status']}<br>{node['explanation']}",
+    if routes:
+        route_blocks = []
+        for route in routes:
+            route_nodes = "".join(
+                card(
+                    f"{idx + 1}. {node['title']}",
+                    f"{node['value']}<br>status: {node['status']}<br>{node['explanation']}",
+                )
+                for idx, node in enumerate(route.get("nodes", []))
             )
-            for idx, node in enumerate(route.get("nodes", []))
-        )
+            route_blocks.append(
+                f"<h3>{route.get('title', route.get('scenario_id'))}</h3>"
+                f"<p><code>public/routes/{route.get('scenario_id')}_route.json</code> "
+                f"action: <strong>{route.get('final_action')}</strong>; verifier: <strong>{route.get('verifier_status')}</strong></p>"
+                f"<div class=\"grid\">{route_nodes}</div>"
+            )
         route_html = (
-            f"<p>Готовый JSON маршрута: <code>public/routes/hybrid_xiris_route.json</code>. "
-            f"Сайт его отображает, но не вычисляет gamma, Delta, rho.</p>"
-            f"<div class=\"grid\">{route_nodes}</div>"
+            "<p>Готовые JSON маршрутов лежат в <code>public/routes</code>. "
+            "Сайт их отображает, но не вычисляет gamma, Delta, rho, диагностику или действие.</p>"
+            + "".join(route_blocks)
         )
     else:
-        route_html = "<p>Маршрут ещё не экспортирован. Запустите <code>make operator-dashboard</code>.</p>"
+        route_html = "<p>Маршруты ещё не экспортированы. Запустите <code>make operator-dashboard</code>.</p>"
     html = f"""<!doctype html>
 <html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>DubnaXAI</title><link rel="stylesheet" href="style.css"></head>

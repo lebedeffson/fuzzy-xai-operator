@@ -1,0 +1,128 @@
+{
+  "package_type": "FuzzyXAIProofPackage",
+  "schema_version": "1.0",
+  "scenario_id": "hybrid_xiris",
+  "run_id": "hybrid_xiris_case_001",
+  "source_commit": "b5d9e0f",
+  "code_version": "b5d9e0f",
+  "artifact_commit": "b5d9e0f",
+  "scenario_input_hash": "8577a96d0c6d2db820dd0f8254edc7e79a84082279b1ce9b23b43380d15d7a68",
+  "model_card_hash": "01bd53142a2b85b1d9e464bc0fc73b1d0002aff4d3db88b1bd825b8e2811a1d4",
+  "input": {
+    "image_quality": 0.31,
+    "segmentation_quality": 0.27,
+    "model_match_signal": 0.88,
+    "alpha_accept": 0.82,
+    "alpha_block": 0.91
+  },
+  "computed_result": {
+    "gamma": 0.351,
+    "delta": 0.106811,
+    "r_delta": 0.3225,
+    "rho": 0.8,
+    "action": "block",
+    "diagnostic": "D_quality_source_conflict",
+    "diagnostic_id": "D_quality_source_conflict"
+  },
+  "operator_values": [
+    {
+      "node_id": "adapter",
+      "operator_id": "adapter",
+      "status": "passed",
+      "computed": {
+        "image_quality": 0.31,
+        "segmentation_quality": 0.27,
+        "model_match_signal": 0.88,
+        "alpha_accept": 0.82,
+        "alpha_block": 0.91
+      },
+      "diagnostics": []
+    },
+    {
+      "node_id": "alignment",
+      "operator_id": "T_ij",
+      "status": "warning",
+      "computed": {
+        "gamma_ij": 0.351,
+        "gamma_max": 0.4
+      },
+      "diagnostics": [
+        {
+          "diagnostic_id": "D_quality_source_conflict",
+          "diagnostic_type": "quality_source_conflict",
+          "source": "segmentation_quality",
+          "criticality": "high",
+          "recommended_action": "block",
+          "actual_action": "block",
+          "global": true
+        }
+      ]
+    },
+    {
+      "node_id": "reduction",
+      "operator_id": "Delta",
+      "status": "passed",
+      "computed": {
+        "delta": 0.106811,
+        "r_delta": 0.3225,
+        "delta_max": 0.35
+      },
+      "diagnostics": []
+    },
+    {
+      "node_id": "risk_observer",
+      "operator_id": "risk_observer",
+      "status": "blocked",
+      "computed": {
+        "rho": 0.8,
+        "chi_R_crit": 1
+      },
+      "diagnostics": [
+        {
+          "diagnostic_id": "D_quality_source_conflict",
+          "diagnostic_type": "quality_source_conflict",
+          "source": "segmentation_quality",
+          "criticality": "high",
+          "recommended_action": "block",
+          "actual_action": "block",
+          "global": true
+        }
+      ]
+    },
+    {
+      "node_id": "action",
+      "operator_id": "action_policy",
+      "status": "blocked",
+      "computed": {
+        "action": "block"
+      },
+      "diagnostics": [
+        {
+          "diagnostic_id": "D_quality_source_conflict",
+          "diagnostic_type": "quality_source_conflict",
+          "source": "segmentation_quality",
+          "criticality": "high",
+          "recommended_action": "block",
+          "actual_action": "block",
+          "global": true
+        }
+      ]
+    }
+  ],
+  "diagnostics": [
+    {
+      "diagnostic_id": "D_quality_source_conflict",
+      "diagnostic_type": "quality_source_conflict",
+      "source": "segmentation_quality",
+      "criticality": "high",
+      "recommended_action": "block",
+      "actual_action": "block",
+      "global": true
+    }
+  ],
+  "final_action": "block",
+  "verifier_status": "PASS",
+  "action_reason": "Модель поддерживает принятие, но низкое качество сегментации и конфликт источников дают критический разрыв.",
+  "scenario_hash": "a7e0a9eab58d6a6ca877c23e6386044b3ef84f052623dc51fa2e1036d4a286c3",
+  "package_hash": "0aaf296928160553339c6c87629c297794642633256b45555d117958916ba4ae"
+}

@@ -1,0 +1,37 @@
+[
+  {
+    "scenario_id": "hybrid_xiris",
+    "route": "/home/lebedeffson/Code/fuzzy-xai-operator/applications/scenarios/hybrid_xiris/route/route.json",
+    "proof_trace": "/home/lebedeffson/Code/fuzzy-xai-operator/applications/scenarios/hybrid_xiris/proof/proof_trace.json",
+    "figure": "/home/lebedeffson/Code/fuzzy-xai-operator/applications/scenarios/hybrid_xiris/figures/operator_dashboard.png",
+    "site_payload": "/home/lebedeffson/Code/fuzzy-xai-operator/applications/scenarios/hybrid_xiris/site_payload/scenario.json"
+  },
+  {
+    "scenario_id": "medical_ecg_signal",
+    "route": "/home/lebedeffson/Code/fuzzy-xai-operator/applications/scenarios/medical_ecg_signal/route/route.json",
+    "proof_trace": "/home/lebedeffson/Code/fuzzy-xai-operator/applications/scenarios/medical_ecg_signal/proof/proof_trace.json",
+    "figure": "/home/lebedeffson/Code/fuzzy-xai-operator/applications/scenarios/medical_ecg_signal/figures/operator_dashboard.png",
+    "site_payload": "/home/lebedeffson/Code/fuzzy-xai-operator/applications/scenarios/medical_ecg_signal/site_payload/scenario.json"
+  },
+  {
+    "scenario_id": "gd_anfis_shap",
+    "route": "/home/lebedeffson/Code/fuzzy-xai-operator/applications/scenarios/gd_anfis_shap/route/route.json",
+    "proof_trace": "/home/lebedeffson/Code/fuzzy-xai-operator/applications/scenarios/gd_anfis_shap/proof/proof_trace.json",
+    "figure": "/home/lebedeffson/Code/fuzzy-xai-operator/applications/scenarios/gd_anfis_shap/figures/operator_dashboard.png",
+    "site_payload": "/home/lebedeffson/Code/fuzzy-xai-operator/applications/scenarios/gd_anfis_shap/site_payload/scenario.json"
+  },
+  {
+    "scenario_id": "beacon_xai",
+    "route": "/home/lebedeffson/Code/fuzzy-xai-operator/applications/scenarios/beacon_xai/route/route.json",
+    "proof_trace": "/home/lebedeffson/Code/fuzzy-xai-operator/applications/scenarios/beacon_xai/proof/proof_trace.json",
+    "figure": "/home/lebedeffson/Code/fuzzy-xai-operator/applications/scenarios/beacon_xai/figures/operator_dashboard.png",
+    "site_payload": "/home/lebedeffson/Code/fuzzy-xai-operator/applications/scenarios/beacon_xai/site_payload/scenario.json"
+  },
+  {
+    "scenario_id": "gis_integro",
+    "route": "/home/lebedeffson/Code/fuzzy-xai-operator/applications/scenarios/gis_integro/route/route.json",
+    "proof_trace": "/home/lebedeffson/Code/fuzzy-xai-operator/applications/scenarios/gis_integro/proof/proof_trace.json",
+    "figure": "/home/lebedeffson/Code/fuzzy-xai-operator/applications/scenarios/gis_integro/figures/operator_dashboard.png",
+    "site_payload": "/home/lebedeffson/Code/fuzzy-xai-operator/applications/scenarios/gis_integro/site_payload/scenario.json"
+  }
+]

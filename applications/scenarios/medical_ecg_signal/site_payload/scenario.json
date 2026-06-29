@@ -1,0 +1,9 @@
+{
+  "scenario_id": "medical_ecg_signal",
+  "route": "route/route.json",
+  "proof_trace": "proof/proof_trace.json",
+  "figure": "figures/operator_dashboard.png",
+  "final_action": "defer_to_human",
+  "verifier_status": "PASS",
+  "source_commit": "b5d9e0f"
+}

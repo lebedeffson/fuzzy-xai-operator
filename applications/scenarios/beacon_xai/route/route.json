@@ -1,0 +1,181 @@
+{
+  "scenario_id": "beacon_xai",
+  "title": "BEACON-XAI: временные контрсвидетельства",
+  "proof_ref": "/home/lebedeffson/Code/fuzzy-xai-operator/applications/scenarios/beacon_xai/proof/beacon_xai_proof_package.json",
+  "verifier_status": "PASS",
+  "final_action": "audit",
+  "source_commit": "b5d9e0f",
+  "nodes": [
+    {
+      "node_id": "input_artifact",
+      "title": "Входной артефакт",
+      "input_summary": "временные фрагменты, support/counter evidence и batch-сводка",
+      "output_summary": "параметры для операторного маршрута",
+      "value": "single_object_fragments=100; support_fragments=70; counter_fragments=30; batch_objects=100; objects_with_counterevidence=83",
+      "threshold": "",
+      "status": "warning",
+      "explanation": "Маршрут фиксирует контрсвидетельства и переводит результат в аудит.",
+      "formula_ref": "адаптер входного артефакта",
+      "trace_ref": "input",
+      "raw": {
+        "single_object_fragments": 100,
+        "support_fragments": 70,
+        "counter_fragments": 30,
+        "batch_objects": 100,
+        "objects_with_counterevidence": 83,
+        "audit_reports": 12,
+        "checks_full": 64,
+        "checks_reduced": 11
+      }
+    },
+    {
+      "node_id": "explanation_object",
+      "title": "Объяснительный объект E_k",
+      "input_summary": "структурированный вход",
+      "output_summary": "E_k с качеством источника и правилом действия",
+      "value": "E_k сформирован из входа и модели/правила",
+      "threshold": "",
+      "status": "passed",
+      "explanation": "Объект объяснения связывает входные признаки, модельный/правиловый сигнал и trace.",
+      "formula_ref": "E_k",
+      "trace_ref": "computed_result",
+      "raw": {
+        "diagnostic": "D_counterevidence_conflict",
+        "action": "audit",
+        "diagnostic_id": "D_counterevidence_conflict"
+      }
+    },
+    {
+      "node_id": "adapter",
+      "title": "Адаптер",
+      "input_summary": "предыдущее состояние маршрута",
+      "output_summary": "структурированный вход маршрута",
+      "value": "single_object_fragments=100; support_fragments=70; counter_fragments=30; batch_objects=100",
+      "threshold": "",
+      "status": "passed",
+      "explanation": "Вычислительный узел маршрута FuzzyXAI; значение взято из proof package.",
+      "formula_ref": "beacon_adapter",
+      "trace_ref": "operator_values.adapter",
+      "raw": {
+        "node_id": "adapter",
+        "operator_id": "beacon_adapter",
+        "status": "passed",
+        "computed": {
+          "single_object_fragments": 100,
+          "support_fragments": 70,
+          "counter_fragments": 30,
+          "batch_objects": 100,
+          "objects_with_counterevidence": 83,
+          "audit_reports": 12,
+          "checks_full": 64,
+          "checks_reduced": 11
+        },
+        "diagnostics": []
+      }
+    },
+    {
+      "node_id": "counterevidence",
+      "title": "Контрсвидетельства",
+      "input_summary": "предыдущее состояние маршрута",
+      "output_summary": "support/counter evidence",
+      "value": "counter_fragments=30; objects_with_counterevidence=83",
+      "threshold": "",
+      "status": "warning",
+      "explanation": "Вычислительный узел маршрута FuzzyXAI; значение взято из proof package.",
+      "formula_ref": "counterevidence_check",
+      "trace_ref": "operator_values.counterevidence",
+      "raw": {
+        "node_id": "counterevidence",
+        "operator_id": "counterevidence_check",
+        "status": "warning",
+        "computed": {
+          "counter_fragments": 30,
+          "objects_with_counterevidence": 83
+        },
+        "diagnostics": [
+          {
+            "diagnostic_id": "D_counterevidence_conflict",
+            "diagnostic_type": "counterevidence_conflict",
+            "source": "temporal_counterevidence",
+            "criticality": "medium",
+            "recommended_action": "audit",
+            "actual_action": "audit",
+            "global": true
+          }
+        ]
+      }
+    },
+    {
+      "node_id": "diagnostics",
+      "title": "Диагностика D",
+      "input_summary": "операторные статусы",
+      "output_summary": "тип диагностического состояния",
+      "value": "конфликт контрсвидетельств",
+      "threshold": "",
+      "status": "warning",
+      "explanation": "Диагностика объясняет, почему выбран именно этот режим действия.",
+      "formula_ref": "D_k, D_ij",
+      "trace_ref": "diagnostics",
+      "raw": {
+        "diagnostics": [
+          {
+            "diagnostic_id": "D_counterevidence_conflict",
+            "diagnostic_type": "counterevidence_conflict",
+            "source": "temporal_counterevidence",
+            "criticality": "medium",
+            "recommended_action": "audit",
+            "actual_action": "audit",
+            "global": true
+          }
+        ]
+      }
+    },
+    {
+      "node_id": "action",
+      "title": "Действие",
+      "input_summary": "диагностика и операторные значения",
+      "output_summary": "режим применения",
+      "value": "аудит",
+      "threshold": "",
+      "status": "warning",
+      "explanation": "Итоговое действие сценария: аудит.",
+      "formula_ref": "политика действия",
+      "trace_ref": "operator_values.action",
+      "raw": {
+        "node_id": "action",
+        "operator_id": "action_policy",
+        "status": "warning",
+        "computed": {
+          "action": "audit"
+        },
+        "diagnostics": [
+          {
+            "diagnostic_id": "D_counterevidence_conflict",
+            "diagnostic_type": "counterevidence_conflict",
+            "source": "temporal_counterevidence",
+            "criticality": "medium",
+            "recommended_action": "audit",
+            "actual_action": "audit",
+            "global": true
+          }
+        ]
+      }
+    },
+    {
+      "node_id": "proof",
+      "title": "Доказательный след",
+      "input_summary": "все operator_values",
+      "output_summary": "проверяемый пакет",
+      "value": "verifier=PASS",
+      "threshold": "",
+      "status": "passed",
+      "explanation": "След сохраняет computed_result и operator_values для повторной проверки.",
+      "formula_ref": "proof trace",
+      "trace_ref": "/home/lebedeffson/Code/fuzzy-xai-operator/applications/scenarios/beacon_xai/proof/beacon_xai_proof_package.json",
+      "raw": {
+        "package_hash": "0369dec20e25f352bd406ea10a13c90ff36ed10c213b91c71633311fbd6df0f9",
+        "source_commit": "b5d9e0f"
+      }
+    }
+  ]
+}

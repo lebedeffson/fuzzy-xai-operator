@@ -1,0 +1,99 @@
+{
+  "package_type": "FuzzyXAIProofPackage",
+  "schema_version": "1.0",
+  "scenario_id": "beacon_xai",
+  "run_id": "beacon_xai_case_001",
+  "source_commit": "b5d9e0f",
+  "code_version": "b5d9e0f",
+  "artifact_commit": "b5d9e0f",
+  "scenario_input_hash": "2a3a2e7b86a23ce3c4768212b8a0e118b674d76a8e6c420bc06fe10b0f75e45c",
+  "model_card_hash": "676c06eaba9c3d345fdb4c4ab7ac5a91db488fd5639bd82bfd068f329885e0c8",
+  "input": {
+    "single_object_fragments": 100,
+    "support_fragments": 70,
+    "counter_fragments": 30,
+    "batch_objects": 100,
+    "objects_with_counterevidence": 83,
+    "audit_reports": 12,
+    "checks_full": 64,
+    "checks_reduced": 11
+  },
+  "computed_result": {
+    "diagnostic": "D_counterevidence_conflict",
+    "action": "audit",
+    "diagnostic_id": "D_counterevidence_conflict"
+  },
+  "operator_values": [
+    {
+      "node_id": "adapter",
+      "operator_id": "beacon_adapter",
+      "status": "passed",
+      "computed": {
+        "single_object_fragments": 100,
+        "support_fragments": 70,
+        "counter_fragments": 30,
+        "batch_objects": 100,
+        "objects_with_counterevidence": 83,
+        "audit_reports": 12,
+        "checks_full": 64,
+        "checks_reduced": 11
+      },
+      "diagnostics": []
+    },
+    {
+      "node_id": "counterevidence",
+      "operator_id": "counterevidence_check",
+      "status": "warning",
+      "computed": {
+        "counter_fragments": 30,
+        "objects_with_counterevidence": 83
+      },
+      "diagnostics": [
+        {
+          "diagnostic_id": "D_counterevidence_conflict",
+          "diagnostic_type": "counterevidence_conflict",
+          "source": "temporal_counterevidence",
+          "criticality": "medium",
+          "recommended_action": "audit",
+          "actual_action": "audit",
+          "global": true
+        }
+      ]
+    },
+    {
+      "node_id": "action",
+      "operator_id": "action_policy",
+      "status": "warning",
+      "computed": {
+        "action": "audit"
+      },
+      "diagnostics": [
+        {
+          "diagnostic_id": "D_counterevidence_conflict",
+          "diagnostic_type": "counterevidence_conflict",
+          "source": "temporal_counterevidence",
+          "criticality": "medium",
+          "recommended_action": "audit",
+          "actual_action": "audit",
+          "global": true
+        }
+      ]
+    }
+  ],
+  "diagnostics": [
+    {
+      "diagnostic_id": "D_counterevidence_conflict",
+      "diagnostic_type": "counterevidence_conflict",
+      "source": "temporal_counterevidence",
+      "criticality": "medium",
+      "recommended_action": "audit",
+      "actual_action": "audit",
+      "global": true
+    }
+  ],
+  "final_action": "audit",
+  "verifier_status": "PASS",
+  "action_reason": "BEACON-сигнал является контрсвидетельством и переводит маршрут в audit report.",
+  "scenario_hash": "40b54ed4e1036d01688279335731f01e23d43f35a4c0b8f386e49ad47aeeebac",
+  "package_hash": "0369dec20e25f352bd406ea10a13c90ff36ed10c213b91c71633311fbd6df0f9"
+}

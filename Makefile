@@ -118,7 +118,7 @@ applications-check:
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) applications/run_all_scenarios.py
 
 operator-dashboard:
-	$(PYTHON) framework/fuzzyxai/examples/show_hybrid_xiris_dashboard.py
+	$(PYTHON) applications/export_operator_routes.py
 
 site-build:
 	$(PYTHON) site/dubnaxai/build.py

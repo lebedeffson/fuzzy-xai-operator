@@ -58,6 +58,27 @@ The scenario runner verifies expected actions and proof statuses:
 - BEACON-XAI: `audit`
 - GIS INTEGRO: `audit_report`
 
+### Operator Route Pipeline
+
+The HYBRID-only operator dashboard was extended to all five application scenarios.
+Each scenario now exports the same artifact set:
+
+- `route/route.json`
+- `proof/proof_trace.json`
+- `figures/operator_dashboard.png`
+- `site_payload/scenario.json`
+
+The shared exporter is:
+
+- `applications/export_operator_routes.py`
+
+Generated site-facing artifacts are copied to:
+
+- `site/dubnaxai/public/routes/*_route.json`
+- `site/dubnaxai/public/figures/*_operator_dashboard.png`
+
+The site still does not compute operator values. It only displays prepared routes.
+
 ### Site Layer
 
 The DubnaXAI site reads prepared JSON and images:

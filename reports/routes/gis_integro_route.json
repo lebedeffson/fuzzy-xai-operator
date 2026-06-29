@@ -1,28 +1,26 @@
 {
-  "scenario_id": "hybrid_xiris",
-  "title": "HYBRID-XIRIS: радужка и блокировка",
-  "proof_ref": "/home/lebedeffson/Code/fuzzy-xai-operator/applications/scenarios/hybrid_xiris/proof/hybrid_xiris_proof_package.json",
+  "scenario_id": "gis_integro",
+  "title": "GIS INTEGRO: геослой и маршрутное согласование",
+  "proof_ref": "/home/lebedeffson/Code/fuzzy-xai-operator/applications/scenarios/gis_integro/proof/gis_integro_proof_package.json",
   "verifier_status": "PASS",
-  "final_action": "block",
+  "final_action": "audit_report",
   "source_commit": "b5d9e0f",
   "nodes": [
     {
       "node_id": "input_artifact",
       "title": "Входной артефакт",
-      "input_summary": "изображение радужки, качество источника и модельный сигнал",
+      "input_summary": "геосигнал p, alpha_mean, s и маршрутное согласование",
       "output_summary": "параметры для операторного маршрута",
-      "value": "image_quality=0.31; segmentation_quality=0.27; model_match_signal=0.88; alpha_accept=0.82; alpha_block=0.91",
+      "value": "p=0.67; alpha_mean=0.72; s=0.47",
       "threshold": "",
       "status": "warning",
-      "explanation": "Контрольный вход показывает конфликт: модель уверена, но качество источника низкое.",
+      "explanation": "Маршрут использует gamma_route = max(|p - alpha_mean|, |p - s|) и отчётный режим.",
       "formula_ref": "адаптер входного артефакта",
       "trace_ref": "input",
       "raw": {
-        "image_quality": 0.31,
-        "segmentation_quality": 0.27,
-        "model_match_signal": 0.88,
-        "alpha_accept": 0.82,
-        "alpha_block": 0.91
+        "p": 0.67,
+        "alpha_mean": 0.72,
+        "s": 0.47
       }
     },
     {
@@ -37,13 +35,11 @@
       "formula_ref": "E_k",
       "trace_ref": "computed_result",
       "raw": {
-        "gamma": 0.351,
-        "delta": 0.106811,
-        "r_delta": 0.3225,
-        "rho": 0.8,
-        "action": "block",
-        "diagnostic": "D_quality_source_conflict",
-        "diagnostic_id": "D_quality_source_conflict"
+        "gamma_route": 0.2,
+        "delta": 0.08,
+        "formula": "max(|p - alpha_mean|, |p - s|)",
+        "action": "audit_report",
+        "diagnostic_id": "D_route_context_limit"
       }
     },
     {
@@ -51,22 +47,20 @@
       "title": "Адаптер",
       "input_summary": "предыдущее состояние маршрута",
       "output_summary": "структурированный вход маршрута",
-      "value": "image_quality=0.31; segmentation_quality=0.27; model_match_signal=0.88; alpha_accept=0.82",
+      "value": "p=0.67; alpha_mean=0.72; s=0.47",
       "threshold": "",
       "status": "passed",
       "explanation": "Вычислительный узел маршрута FuzzyXAI; значение взято из proof package.",
-      "formula_ref": "adapter",
+      "formula_ref": "gis_adapter",
       "trace_ref": "operator_values.adapter",
       "raw": {
         "node_id": "adapter",
-        "operator_id": "adapter",
+        "operator_id": "gis_adapter",
         "status": "passed",
         "computed": {
-          "image_quality": 0.31,
-          "segmentation_quality": 0.27,
-          "model_match_signal": 0.88,
-          "alpha_accept": 0.82,
-          "alpha_block": 0.91
+          "p": 0.67,
+          "alpha_mean": 0.72,
+          "s": 0.47
         },
         "diagnostics": []
       }
@@ -76,31 +70,21 @@
       "title": "Согласование",
       "input_summary": "предыдущее состояние маршрута",
       "output_summary": "мера рассогласования",
-      "value": "gamma_ij=0.351; gamma_max=0.4",
+      "value": "gamma_route=0.2; formula=max(|p - alpha_mean|, |p - s|)",
       "threshold": "",
-      "status": "warning",
+      "status": "passed",
       "explanation": "Вычислительный узел маршрута FuzzyXAI; значение взято из proof package.",
-      "formula_ref": "T_ij",
+      "formula_ref": "route_alignment",
       "trace_ref": "operator_values.alignment",
       "raw": {
         "node_id": "alignment",
-        "operator_id": "T_ij",
-        "status": "warning",
+        "operator_id": "route_alignment",
+        "status": "passed",
         "computed": {
-          "gamma_ij": 0.351,
-          "gamma_max": 0.4
+          "gamma_route": 0.2,
+          "formula": "max(|p - alpha_mean|, |p - s|)"
         },
-        "diagnostics": [
-          {
-            "diagnostic_id": "D_quality_source_conflict",
-            "diagnostic_type": "quality_source_conflict",
-            "source": "segmentation_quality",
-            "criticality": "high",
-            "recommended_action": "block",
-            "actual_action": "block",
-            "global": true
-          }
-        ]
+        "diagnostics": []
       }
     },
     {
@@ -108,7 +92,7 @@
       "title": "Потери представления",
       "input_summary": "предыдущее состояние маршрута",
       "output_summary": "Delta / редукционная потеря",
-      "value": "delta=0.106811; r_delta=0.3225; delta_max=0.35",
+      "value": "delta=0.08",
       "threshold": "",
       "status": "passed",
       "explanation": "Вычислительный узел маршрута FuzzyXAI; значение взято из proof package.",
@@ -119,43 +103,9 @@
         "operator_id": "Delta",
         "status": "passed",
         "computed": {
-          "delta": 0.106811,
-          "r_delta": 0.3225,
-          "delta_max": 0.35
+          "delta": 0.08
         },
         "diagnostics": []
-      }
-    },
-    {
-      "node_id": "risk_observer",
-      "title": "Риск-наблюдатель",
-      "input_summary": "предыдущее состояние маршрута",
-      "output_summary": "rho / критический статус",
-      "value": "rho=0.8; chi_R_crit=1",
-      "threshold": "",
-      "status": "blocked",
-      "explanation": "Вычислительный узел маршрута FuzzyXAI; значение взято из proof package.",
-      "formula_ref": "risk_observer",
-      "trace_ref": "operator_values.risk_observer",
-      "raw": {
-        "node_id": "risk_observer",
-        "operator_id": "risk_observer",
-        "status": "blocked",
-        "computed": {
-          "rho": 0.8,
-          "chi_R_crit": 1
-        },
-        "diagnostics": [
-          {
-            "diagnostic_id": "D_quality_source_conflict",
-            "diagnostic_type": "quality_source_conflict",
-            "source": "segmentation_quality",
-            "criticality": "high",
-            "recommended_action": "block",
-            "actual_action": "block",
-            "global": true
-          }
-        ]
       }
     },
     {
@@ -163,7 +113,7 @@
       "title": "Диагностика D",
       "input_summary": "операторные статусы",
       "output_summary": "тип диагностического состояния",
-      "value": "конфликт качества источника",
+      "value": "ограничение маршрутного контекста",
       "threshold": "",
       "status": "warning",
       "explanation": "Диагностика объясняет, почему выбран именно этот режим действия.",
@@ -172,12 +122,12 @@
       "raw": {
         "diagnostics": [
           {
-            "diagnostic_id": "D_quality_source_conflict",
-            "diagnostic_type": "quality_source_conflict",
-            "source": "segmentation_quality",
-            "criticality": "high",
-            "recommended_action": "block",
-            "actual_action": "block",
+            "diagnostic_id": "D_route_context_limit",
+            "diagnostic_type": "route_context_limit",
+            "source": "route_context_alignment",
+            "criticality": "low",
+            "recommended_action": "audit_report",
+            "actual_action": "audit_report",
             "global": true
           }
         ]
@@ -188,27 +138,27 @@
       "title": "Действие",
       "input_summary": "диагностика и операторные значения",
       "output_summary": "режим применения",
-      "value": "блокировка",
+      "value": "отчётный режим",
       "threshold": "",
-      "status": "blocked",
-      "explanation": "Итоговое действие сценария: блокировка.",
+      "status": "info",
+      "explanation": "Итоговое действие сценария: отчётный режим.",
       "formula_ref": "политика действия",
       "trace_ref": "operator_values.action",
       "raw": {
         "node_id": "action",
         "operator_id": "action_policy",
-        "status": "blocked",
+        "status": "info",
         "computed": {
-          "action": "block"
+          "action": "audit_report"
         },
         "diagnostics": [
           {
-            "diagnostic_id": "D_quality_source_conflict",
-            "diagnostic_type": "quality_source_conflict",
-            "source": "segmentation_quality",
-            "criticality": "high",
-            "recommended_action": "block",
-            "actual_action": "block",
+            "diagnostic_id": "D_route_context_limit",
+            "diagnostic_type": "route_context_limit",
+            "source": "route_context_alignment",
+            "criticality": "low",
+            "recommended_action": "audit_report",
+            "actual_action": "audit_report",
             "global": true
           }
         ]
@@ -224,9 +174,9 @@
       "status": "passed",
       "explanation": "След сохраняет computed_result и operator_values для повторной проверки.",
       "formula_ref": "proof trace",
-      "trace_ref": "/home/lebedeffson/Code/fuzzy-xai-operator/applications/scenarios/hybrid_xiris/proof/hybrid_xiris_proof_package.json",
+      "trace_ref": "/home/lebedeffson/Code/fuzzy-xai-operator/applications/scenarios/gis_integro/proof/gis_integro_proof_package.json",
       "raw": {
-        "package_hash": "0aaf296928160553339c6c87629c297794642633256b45555d117958916ba4ae",
+        "package_hash": "79a7f6dea15d018783181ebd62ef573224394d2312988e2393fd671bc129bf64",
         "source_commit": "b5d9e0f"
       }
     }

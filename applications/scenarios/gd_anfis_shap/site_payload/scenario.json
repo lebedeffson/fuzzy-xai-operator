@@ -1,0 +1,9 @@
+{
+  "scenario_id": "gd_anfis_shap",
+  "route": "route/route.json",
+  "proof_trace": "proof/proof_trace.json",
+  "figure": "figures/operator_dashboard.png",
+  "final_action": "audit",
+  "verifier_status": "PASS",
+  "source_commit": "b5d9e0f"
+}

@@ -1,6 +1,6 @@
 {
   "scenario_id": "hybrid_xiris",
-  "title": "FuzzyXAI operator route: hybrid_xiris",
+  "title": "HYBRID-XIRIS: радужка и блокировка",
   "proof_ref": "/home/lebedeffson/Code/fuzzy-xai-operator/applications/scenarios/hybrid_xiris/proof/hybrid_xiris_proof_package.json",
   "verifier_status": "PASS",
   "final_action": "block",
@@ -9,12 +9,12 @@
     {
       "node_id": "input_artifact",
       "title": "Входной артефакт",
-      "input_summary": "изображение радужки и признаки качества",
-      "output_summary": "Q_img, Q_seg, p_match",
-      "value": "Q_img=0.31; Q_seg=0.27; p=0.88",
+      "input_summary": "изображение радужки, качество источника и модельный сигнал",
+      "output_summary": "параметры для операторного маршрута",
+      "value": "image_quality=0.31; segmentation_quality=0.27; model_match_signal=0.88; alpha_accept=0.82; alpha_block=0.91",
       "threshold": "",
       "status": "warning",
-      "explanation": "Контрольный вход передаёт качество источника и модельный сигнал.",
+      "explanation": "Контрольный вход показывает конфликт: модель уверена, но качество источника низкое.",
       "formula_ref": "адаптер входного артефакта",
       "trace_ref": "input",
       "raw": {
@@ -26,15 +26,36 @@
       }
     },
     {
-      "node_id": "adapter",
-      "title": "Адаптер",
-      "input_summary": "сырой артефакт и выход модели",
-      "output_summary": "структурированный вход маршрута",
-      "value": "alpha_accept=0.82; alpha_block=0.91",
+      "node_id": "explanation_object",
+      "title": "Объяснительный объект E_k",
+      "input_summary": "структурированный вход",
+      "output_summary": "E_k с качеством источника и правилом действия",
+      "value": "E_k сформирован из входа и модели/правила",
       "threshold": "",
       "status": "passed",
-      "explanation": "Адаптер переводит вход и модельный сигнал в форму, пригодную для операторов FuzzyXAI.",
-      "formula_ref": "раздел адаптеров FuzzyXAI",
+      "explanation": "Объект объяснения связывает входные признаки, модельный/правиловый сигнал и trace.",
+      "formula_ref": "E_k",
+      "trace_ref": "computed_result",
+      "raw": {
+        "gamma": 0.351,
+        "delta": 0.106811,
+        "r_delta": 0.3225,
+        "rho": 0.8,
+        "action": "block",
+        "diagnostic": "D_quality_source_conflict",
+        "diagnostic_id": "D_quality_source_conflict"
+      }
+    },
+    {
+      "node_id": "adapter",
+      "title": "Адаптер",
+      "input_summary": "предыдущее состояние маршрута",
+      "output_summary": "структурированный вход маршрута",
+      "value": "image_quality=0.31; segmentation_quality=0.27; model_match_signal=0.88; alpha_accept=0.82",
+      "threshold": "",
+      "status": "passed",
+      "explanation": "Вычислительный узел маршрута FuzzyXAI; значение взято из proof package.",
+      "formula_ref": "adapter",
       "trace_ref": "operator_values.adapter",
       "raw": {
         "node_id": "adapter",
@@ -51,61 +72,15 @@
       }
     },
     {
-      "node_id": "explanation_object",
-      "title": "Объяснительный объект E_k",
-      "input_summary": "структурированный вход",
-      "output_summary": "E_k с качеством источника и правилом действия",
-      "value": "E_k сформирован",
-      "threshold": "",
-      "status": "passed",
-      "explanation": "Объект объяснения связывает p_match, качество источника, правила и trace.",
-      "formula_ref": "E_k",
-      "trace_ref": "computed_result",
-      "raw": {
-        "gamma": 0.351,
-        "delta": 0.106811,
-        "r_delta": 0.3225,
-        "rho": 0.8,
-        "action": "block",
-        "diagnostic": "D_quality_source_conflict",
-        "diagnostic_id": "D_quality_source_conflict"
-      }
-    },
-    {
-      "node_id": "uncertainty_class",
-      "title": "Выбор класса F",
-      "input_summary": "E_k и диагностический профиль",
-      "output_summary": "расширенное представление неопределённости",
-      "value": "не F0; требуется учёт качества источника",
-      "threshold": "",
-      "status": "warning",
-      "explanation": "Конфликт качества источника не должен редуцироваться до простого нечёткого значения без потерь.",
-      "formula_ref": "выбор F",
-      "trace_ref": "diagnostics",
-      "raw": {
-        "diagnostics": [
-          {
-            "diagnostic_id": "D_quality_source_conflict",
-            "diagnostic_type": "quality_source_conflict",
-            "source": "segmentation_quality",
-            "criticality": "high",
-            "recommended_action": "block",
-            "actual_action": "block",
-            "global": true
-          }
-        ]
-      }
-    },
-    {
       "node_id": "alignment",
-      "title": "Согласование T_ij",
-      "input_summary": "компоненты объяснения",
-      "output_summary": "мера рассогласования gamma",
-      "value": "gamma=0.351",
-      "threshold": "gamma_max=0.4",
+      "title": "Согласование",
+      "input_summary": "предыдущее состояние маршрута",
+      "output_summary": "мера рассогласования",
+      "value": "gamma_ij=0.351; gamma_max=0.4",
+      "threshold": "",
       "status": "warning",
-      "explanation": "T_ij фиксирует рассогласование между высоким модельным сигналом и низким качеством источника.",
-      "formula_ref": "T_ij, gamma",
+      "explanation": "Вычислительный узел маршрута FuzzyXAI; значение взято из proof package.",
+      "formula_ref": "T_ij",
       "trace_ref": "operator_values.alignment",
       "raw": {
         "node_id": "alignment",
@@ -131,13 +106,13 @@
     {
       "node_id": "reduction",
       "title": "Потери представления",
-      "input_summary": "выбранное представление F",
-      "output_summary": "Delta и r_Delta",
-      "value": "Delta=0.106811; r_Delta=0.3225",
-      "threshold": "Delta_max=0.35",
+      "input_summary": "предыдущее состояние маршрута",
+      "output_summary": "Delta / редукционная потеря",
+      "value": "delta=0.106811; r_delta=0.3225; delta_max=0.35",
+      "threshold": "",
       "status": "passed",
-      "explanation": "Редукция контролируется: потеря представления сохраняется в доказательном следе.",
-      "formula_ref": "Delta, r_Delta",
+      "explanation": "Вычислительный узел маршрута FuzzyXAI; значение взято из proof package.",
+      "formula_ref": "Delta",
       "trace_ref": "operator_values.reduction",
       "raw": {
         "node_id": "reduction",
@@ -152,15 +127,15 @@
       }
     },
     {
-      "node_id": "risk",
-      "title": "Риск rho",
-      "input_summary": "gamma, Delta, критический конфликт",
-      "output_summary": "интегральный риск",
-      "value": "rho=0.8",
+      "node_id": "risk_observer",
+      "title": "Риск-наблюдатель",
+      "input_summary": "предыдущее состояние маршрута",
+      "output_summary": "rho / критический статус",
+      "value": "rho=0.8; chi_R_crit=1",
       "threshold": "",
       "status": "blocked",
-      "explanation": "Риск-наблюдатель объединяет модельный сигнал, правило блокировки, конфликт источника и r_Delta.",
-      "formula_ref": "rho",
+      "explanation": "Вычислительный узел маршрута FuzzyXAI; значение взято из proof package.",
+      "formula_ref": "risk_observer",
       "trace_ref": "operator_values.risk_observer",
       "raw": {
         "node_id": "risk_observer",
@@ -184,30 +159,14 @@
       }
     },
     {
-      "node_id": "critical_indicator",
-      "title": "Критический индикатор",
-      "input_summary": "диагностика и риск",
-      "output_summary": "chi_R^crit",
-      "value": "chi_R^crit=1",
-      "threshold": "",
-      "status": "blocked",
-      "explanation": "Критическая область активна, поэтому принятие результата запрещено.",
-      "formula_ref": "chi_R^crit",
-      "trace_ref": "operator_values.risk_observer",
-      "raw": {
-        "rho": 0.8,
-        "chi_R_crit": 1
-      }
-    },
-    {
       "node_id": "diagnostics",
       "title": "Диагностика D",
       "input_summary": "операторные статусы",
       "output_summary": "тип диагностического состояния",
       "value": "конфликт качества источника",
       "threshold": "",
-      "status": "blocked",
-      "explanation": "Диагностика объясняет, почему высокий p_match не приводит к принятию.",
+      "status": "warning",
+      "explanation": "Диагностика объясняет, почему выбран именно этот режим действия.",
       "formula_ref": "D_k, D_ij",
       "trace_ref": "diagnostics",
       "raw": {
@@ -227,12 +186,12 @@
     {
       "node_id": "action",
       "title": "Действие",
-      "input_summary": "rho, chi_R^crit, D",
+      "input_summary": "диагностика и операторные значения",
       "output_summary": "режим применения",
       "value": "блокировка",
       "threshold": "",
       "status": "blocked",
-      "explanation": "Для HYBRID-XIRIS итоговое действие — блокировка.",
+      "explanation": "Итоговое действие сценария: блокировка.",
       "formula_ref": "политика действия",
       "trace_ref": "operator_values.action",
       "raw": {
