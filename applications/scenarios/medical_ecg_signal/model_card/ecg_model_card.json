@@ -1,0 +1,27 @@
+{
+  "model_id": "ecg_quality_model",
+  "scenario_id": "medical_ecg_signal",
+  "model_status": "demo_control_model",
+  "trained_from": "data/raw/ecg/input_ecg_sample_signal.csv",
+  "training_script": "fuzzyxai/train/train_ecg_quality.py",
+  "model_artifact": "models/ecg/ecg_quality_model.json",
+  "input_schema": [
+    "baseline_instability",
+    "missing_fragments",
+    "noise_segments",
+    "quality_score",
+    "sampling_rate"
+  ],
+  "output_schema": [
+    "action",
+    "diagnostic"
+  ],
+  "metrics": {
+    "action": "defer_to_human",
+    "diagnostic": "D_signal_quality"
+  },
+  "not_a_claim": "Not a clinical diagnostic validation.",
+  "source_commit": "b5d9e0f",
+  "dataset_file_hash": "c8d8ecc53a6ca5252926db34263e32b9aafea8f4774cd96f8db42dd9a3bcdc88",
+  "model_card_hash": "e87e6366f7ed0baa3b21855e346d283b016f872d49f7144c30be2e64441f4657"
+}

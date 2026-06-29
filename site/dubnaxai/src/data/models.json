@@ -1,0 +1,124 @@
+[
+  {
+    "model_id": "beacon_counterevidence_model",
+    "scenario_id": "beacon_xai",
+    "model_status": "demo_control_model",
+    "input_schema": [
+      "audit_reports",
+      "batch_objects",
+      "checks_full",
+      "checks_reduced",
+      "counter_fragments",
+      "objects_with_counterevidence",
+      "single_object_fragments",
+      "support_fragments"
+    ],
+    "output_schema": [
+      "action",
+      "diagnostic"
+    ],
+    "metrics": {
+      "diagnostic": "D_counterevidence_conflict",
+      "action": "audit"
+    },
+    "not_a_claim": "BEACON check reduction is an external mechanism demonstration."
+  },
+  {
+    "model_id": "ecg_quality_model",
+    "scenario_id": "medical_ecg_signal",
+    "model_status": "demo_control_model",
+    "input_schema": [
+      "baseline_instability",
+      "missing_fragments",
+      "noise_segments",
+      "quality_score",
+      "sampling_rate"
+    ],
+    "output_schema": [
+      "action",
+      "diagnostic"
+    ],
+    "metrics": {
+      "action": "defer_to_human",
+      "diagnostic": "D_signal_quality"
+    },
+    "not_a_claim": "Not a clinical diagnostic validation."
+  },
+  {
+    "model_id": "gd_anfis_shap_rule_model",
+    "scenario_id": "gd_anfis_shap",
+    "model_status": "demo_control_model",
+    "input_schema": [
+      "alpha_rule",
+      "shap_x1",
+      "shap_x2",
+      "x1",
+      "x1_term",
+      "x2",
+      "x2_term"
+    ],
+    "output_schema": [
+      "action",
+      "diagnostic",
+      "gamma_rule_shap"
+    ],
+    "metrics": {
+      "gamma_rule_shap": 0.685,
+      "diagnostic": "D_rule_attribution_conflict",
+      "action": "audit"
+    },
+    "not_a_claim": "Operator-control example, not a production GD model."
+  },
+  {
+    "model_id": "gis_route_model",
+    "scenario_id": "gis_integro",
+    "model_status": "demo_control_model",
+    "input_schema": [
+      "alpha_mean",
+      "p",
+      "s"
+    ],
+    "output_schema": [
+      "action",
+      "delta",
+      "formula",
+      "gamma_route"
+    ],
+    "metrics": {
+      "gamma_route": 0.2,
+      "delta": 0.08,
+      "formula": "max(|p - alpha_mean|, |p - s|)",
+      "action": "audit_report"
+    },
+    "not_a_claim": "Control geolayer, not a production GIS validation."
+  },
+  {
+    "model_id": "iris_quality_model",
+    "scenario_id": "hybrid_xiris",
+    "model_status": "demo_control_model",
+    "input_schema": [
+      "alpha_accept",
+      "alpha_block",
+      "image_quality",
+      "model_match_signal",
+      "segmentation_quality"
+    ],
+    "output_schema": [
+      "action",
+      "delta",
+      "diagnostic",
+      "gamma",
+      "r_delta",
+      "rho"
+    ],
+    "metrics": {
+      "gamma": 0.351,
+      "delta": 0.106811,
+      "r_delta": 0.3225,
+      "rho": 0.8,
+      "action": "block",
+      "diagnostic": "D_quality_source_conflict"
+    },
+    "not_a_claim": "Not an industrial biometric validation."
+  }
+]

@@ -1,0 +1,10 @@
+node_id,status,hash,quality_term,uncertainty_class,trace_complete,mu_noisy,mu_quality_borderline,u_k,alpha_audit,gamma_ij,gamma_max,delta_T,selected_class,coverage,clinical_claim,delta,delta_max,rho,chi_R,chi_R_crit,chi_Auto,action,report_ready
+input_artifact,info,auto,,,,,,,,,,,,,,,,,,,,,
+adapter,passed,,borderline,F_int,True,,,,,,,,,,,,,,,,,,
+explanation_object,passed,,,,,0.34,0.58,0.42,0.71,,,,,,,,,,,,,,
+alignment,passed,,,,,,,,,0.26,0.4,0.06,,,,,,,,,,,
+f_selector,passed,,,,,,,,,,,,F_int,"interval uncertainty, trace quality",not asserted,,,,,,,,
+reduction,passed,,,,,,,,,,,,,,,0.06,0.35,,,,,,
+risk_observer,warning,,,,,,,,,,,,,,,,,0.61,1.0,0.0,0.0,,
+action,passed,,,,,,,,,,,,,,,,,,,,,defer_to_human,
+report,info,,,,,,,,,,,,,,,,,,,,,,True

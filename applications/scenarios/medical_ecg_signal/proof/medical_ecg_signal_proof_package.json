@@ -1,0 +1,103 @@
+{
+  "package_type": "FuzzyXAIProofPackage",
+  "schema_version": "1.0",
+  "scenario_id": "medical_ecg_signal",
+  "run_id": "medical_ecg_signal_case_001",
+  "source_commit": "b5d9e0f",
+  "code_version": "b5d9e0f",
+  "artifact_commit": "b5d9e0f",
+  "scenario_input_hash": "d609a08c69f7e9d029566575cb26c5fcc7b0421360ac9ef034d0e96e3e6256a3",
+  "model_card_hash": "e87e6366f7ed0baa3b21855e346d283b016f872d49f7144c30be2e64441f4657",
+  "input": {
+    "sampling_rate": 250,
+    "quality_score": 0.58,
+    "noise_segments": 1,
+    "missing_fragments": 2,
+    "baseline_instability": 0.21
+  },
+  "computed_result": {
+    "action": "defer_to_human",
+    "diagnostic": "D_signal_quality",
+    "diagnostic_id": "D_signal_quality"
+  },
+  "operator_values": [
+    {
+      "node_id": "adapter",
+      "operator_id": "ecg_adapter",
+      "status": "warning",
+      "computed": {
+        "sampling_rate": 250,
+        "quality_score": 0.58,
+        "noise_segments": 1,
+        "missing_fragments": 2,
+        "baseline_instability": 0.21
+      },
+      "diagnostics": [
+        {
+          "diagnostic_id": "D_signal_quality",
+          "diagnostic_type": "signal_quality",
+          "source": "noisy_or_missing_signal",
+          "criticality": "medium",
+          "recommended_action": "defer_to_human",
+          "actual_action": "defer_to_human",
+          "global": true
+        }
+      ]
+    },
+    {
+      "node_id": "risk_observer",
+      "operator_id": "risk_observer",
+      "status": "warning",
+      "computed": {
+        "quality_score": 0.58,
+        "missing_fragments": 2
+      },
+      "diagnostics": [
+        {
+          "diagnostic_id": "D_signal_quality",
+          "diagnostic_type": "signal_quality",
+          "source": "noisy_or_missing_signal",
+          "criticality": "medium",
+          "recommended_action": "defer_to_human",
+          "actual_action": "defer_to_human",
+          "global": true
+        }
+      ]
+    },
+    {
+      "node_id": "action",
+      "operator_id": "action_policy",
+      "status": "warning",
+      "computed": {
+        "action": "defer_to_human"
+      },
+      "diagnostics": [
+        {
+          "diagnostic_id": "D_signal_quality",
+          "diagnostic_type": "signal_quality",
+          "source": "noisy_or_missing_signal",
+          "criticality": "medium",
+          "recommended_action": "defer_to_human",
+          "actual_action": "defer_to_human",
+          "global": true
+        }
+      ]
+    }
+  ],
+  "diagnostics": [
+    {
+      "diagnostic_id": "D_signal_quality",
+      "diagnostic_type": "signal_quality",
+      "source": "noisy_or_missing_signal",
+      "criticality": "medium",
+      "recommended_action": "defer_to_human",
+      "actual_action": "defer_to_human",
+      "global": true
+    }
+  ],
+  "final_action": "defer_to_human",
+  "verifier_status": "PASS",
+  "action_reason": "Сигнал шумный/неполный, поэтому автоматическая интерпретация запрещена: требуется аудит или повтор данных. Это не медицинская диагностика.",
+  "scenario_hash": "0ab842b5491517570e88b9334c266e967c1265ed5e79f57feccb26c98540b73d",
+  "package_hash": "3131e0860a52b5d6e7ce452a16534067af5b98d31711e40e7285013cd4417581"
+}

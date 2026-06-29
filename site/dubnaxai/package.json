@@ -1,0 +1,9 @@
+{
+  "name": "dubnaxai-site",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "python build.py",
+    "start": "python -m http.server 8090 -d dist"
+  }
+}

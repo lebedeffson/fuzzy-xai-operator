@@ -1,0 +1,24 @@
+{
+  "scenario_id": "gd_anfis_shap",
+  "source_dataset": "gd_anfis_shap_control",
+  "source_model": "gd_anfis_shap_rule_model",
+  "input_values": {
+    "x1": 0.88,
+    "x2": 0.22,
+    "x1_term": "high",
+    "x2_term": "low",
+    "alpha_rule": 0.82,
+    "shap_x1": 0.45,
+    "shap_x2": -0.3
+  },
+  "expected_outputs": {
+    "gamma_rule_shap": 0.685,
+    "diagnostic": "D_rule_attribution_conflict",
+    "action": "audit"
+  },
+  "fed_to_engine": true,
+  "dataset_manifest_hash": "247a0201bbda05ac7724b28c623731c4d00a66721a85c73e9cc19b1ec0ce0494",
+  "model_card_hash": "4e5303a1cb1ec37b748b649a46f4e533ea59598a7be7bba893e3bbed9a3a9b87",
+  "source_commit": "b5d9e0f",
+  "scenario_input_hash": "78aff5aaf45eccf4f185913d8a7e93245bd2e03d89cb3dd7df256c3fab1c664f"
+}

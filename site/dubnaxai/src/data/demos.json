@@ -1,0 +1,42 @@
+[
+  {
+    "scenario_id": "hybrid_xiris",
+    "name": "HYBRID-XIRIS",
+    "artifact_type": "iris_image",
+    "artifact_status": "control_demo_artifact",
+    "evidence_level": "full_control_run",
+    "proof_package": "proof_packages/hybrid_xiris_proof_package.json"
+  },
+  {
+    "scenario_id": "beacon_xai",
+    "name": "BEACON-XAI",
+    "artifact_type": "time_series",
+    "artifact_status": "control_demo_artifact",
+    "evidence_level": "route_demonstration",
+    "proof_package": "proof_packages/beacon_xai_proof_package.json"
+  },
+  {
+    "scenario_id": "gis_integro",
+    "name": "GIS INTEGRO",
+    "artifact_type": "geo_layer",
+    "artifact_status": "control_demo_artifact",
+    "evidence_level": "operator_control_example",
+    "proof_package": "proof_packages/gis_integro_proof_package.json"
+  },
+  {
+    "scenario_id": "gd_anfis_shap",
+    "name": "GD-ANFIS/SHAP",
+    "artifact_type": "tabular_rules",
+    "artifact_status": "control_demo_artifact",
+    "evidence_level": "operator_control_example",
+    "proof_package": "proof_packages/gd_anfis_shap_proof_package.json"
+  },
+  {
+    "scenario_id": "medical_ecg_signal",
+    "name": "Medical ECG Signal",
+    "artifact_type": "ECG signal",
+    "artifact_status": "control_demo_artifact",
+    "evidence_level": "operator_control_example",
+    "proof_package": "proof_packages/medical_ecg_signal_proof_package.json"
+  }
+]

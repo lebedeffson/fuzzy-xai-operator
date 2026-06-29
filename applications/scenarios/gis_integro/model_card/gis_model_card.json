@@ -1,0 +1,29 @@
+{
+  "model_id": "gis_route_model",
+  "scenario_id": "gis_integro",
+  "model_status": "demo_control_model",
+  "trained_from": "data/raw/gis/gis_layer_sample.json",
+  "training_script": "fuzzyxai/train/train_gis_route.py",
+  "model_artifact": "models/gis/gis_route_model.json",
+  "input_schema": [
+    "alpha_mean",
+    "p",
+    "s"
+  ],
+  "output_schema": [
+    "action",
+    "delta",
+    "formula",
+    "gamma_route"
+  ],
+  "metrics": {
+    "gamma_route": 0.2,
+    "delta": 0.08,
+    "formula": "max(|p - alpha_mean|, |p - s|)",
+    "action": "audit_report"
+  },
+  "not_a_claim": "Control geolayer, not a production GIS validation.",
+  "source_commit": "b5d9e0f",
+  "dataset_file_hash": "b237fe42b8331f707998e87337ef5a0f8b2acb16939d736bc42ef600b96aa1ff",
+  "model_card_hash": "fbe39f621654b8198a14c334a2ea9e0f2c0760a18e9e3684da6d54893fbf2aa9"
+}

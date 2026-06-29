@@ -1,0 +1,35 @@
+{
+  "model_id": "iris_quality_model",
+  "scenario_id": "hybrid_xiris",
+  "model_status": "demo_control_model",
+  "trained_from": "data/raw/iris/input_hybrid_xiris_eye_sample.json",
+  "training_script": "fuzzyxai/train/train_iris_quality.py",
+  "model_artifact": "models/iris/iris_quality_model.json",
+  "input_schema": [
+    "alpha_accept",
+    "alpha_block",
+    "image_quality",
+    "model_match_signal",
+    "segmentation_quality"
+  ],
+  "output_schema": [
+    "action",
+    "delta",
+    "diagnostic",
+    "gamma",
+    "r_delta",
+    "rho"
+  ],
+  "metrics": {
+    "gamma": 0.351,
+    "delta": 0.106811,
+    "r_delta": 0.3225,
+    "rho": 0.8,
+    "action": "block",
+    "diagnostic": "D_quality_source_conflict"
+  },
+  "not_a_claim": "Not an industrial biometric validation.",
+  "source_commit": "b5d9e0f",
+  "dataset_file_hash": "c1d3425ef213915f70ae3a9dfd839b651c7cfbe94f33542b97eebfaa9918aa81",
+  "model_card_hash": "01bd53142a2b85b1d9e464bc0fc73b1d0002aff4d3db88b1bd825b8e2811a1d4"
+}

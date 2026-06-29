@@ -1,0 +1,10 @@
+node_id,status,hash,mean_activation,shap_positive_support,alpha_rule_1,alpha_rule_2,shap_support,u_k,gamma_ij,gamma_max,delta_T,selected_class,warning,delta,delta_max,rho,chi_R,chi_R_crit,chi_Auto,action,report_ready
+input_artifact,info,auto,,,,,,,,,,,,,,,,,,,
+adapter,passed,,0.69,0.58,,,,,,,,,,,,,,,,,
+explanation_object,passed,,,,0.74,0.61,0.58,0.33,,,,,,,,,,,,,
+alignment,passed,,,,,,,,0.29,0.4,0.1,,,,,,,,,,
+f_selector,passed,,,,,,,,,,,F_ML,rule/SHAP support differs on feature x_4,,,,,,,,
+reduction,passed,,,,,,,,,,,,,0.1,0.35,,,,,,
+risk_observer,warning,,,,,,,,,,,,,,,0.52,1.0,0.0,0.0,,
+action,passed,,,,,,,,,,,,,,,,,,,defer_to_human,
+report,info,,,,,,,,,,,,,,,,,,,,True

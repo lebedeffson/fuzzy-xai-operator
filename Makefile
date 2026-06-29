@@ -33,7 +33,7 @@ final-readiness-audit: studio-hybrid-batch studio-export-tables
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m fuzzyxai.audit.build_package
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m pytest tests/audit -q
 
-.PHONY: studio-semantic-smoke studio-server-smoke studio-smoke doctorate-release-check fresh-clone-gate practice-demo practice-screenshots practice-package practice-package-with-qa dataset-audit train-all evaluate-all training-audit practice-readiness-check screenshot-qc proof-qc package-self-contained-check real-validation-check full-delivery-package final-delivery-report final-product-check
+.PHONY: studio-semantic-smoke studio-server-smoke studio-smoke doctorate-release-check fresh-clone-gate practice-demo practice-screenshots practice-package practice-package-with-qa dataset-audit train-all evaluate-all training-audit practice-readiness-check screenshot-qc proof-qc package-self-contained-check real-validation-check full-delivery-package final-delivery-report final-product-check framework-check applications-check site-build dubnaxai-release-check
 studio-semantic-smoke:
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m fuzzyxai.audit.studio_smoke
 
@@ -106,6 +106,19 @@ full-delivery-package:
 
 final-product-check: dataset-audit train-all evaluate-all training-audit practice-demo practice-screenshots practice-package screenshot-qc proof-qc practice-package-with-qa package-self-contained-check real-validation-check doctorate-release-check final-delivery-report full-delivery-package
 	@echo "final-product-check: PASS"
+
+framework-check:
+	$(PYTHON) -m pip install -e framework/fuzzyxai
+	$(PYTHON) -c "import sys; sys.path=['framework/fuzzyxai']+[p for p in sys.path if p not in ('', '.')]; import fuzzyxai; print(fuzzyxai.__version__); print(fuzzyxai.show_operator_route())"
+
+applications-check:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) applications/run_all_scenarios.py
+
+site-build:
+	$(PYTHON) site/dubnaxai/build.py
+
+dubnaxai-release-check: framework-check applications-check site-build
+	@echo "dubnaxai-release-check: PASS"
 
 risk-test:
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m pytest tests/test_risk_*.py -q

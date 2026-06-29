@@ -1,0 +1,25 @@
+{
+  "scenario_id": "hybrid_xiris",
+  "source_dataset": "hybrid_xiris_control",
+  "source_model": "iris_quality_model",
+  "input_values": {
+    "image_quality": 0.31,
+    "segmentation_quality": 0.27,
+    "model_match_signal": 0.88,
+    "alpha_accept": 0.82,
+    "alpha_block": 0.91
+  },
+  "expected_outputs": {
+    "gamma": 0.351,
+    "delta": 0.106811,
+    "r_delta": 0.3225,
+    "rho": 0.8,
+    "action": "block",
+    "diagnostic": "D_quality_source_conflict"
+  },
+  "fed_to_engine": true,
+  "dataset_manifest_hash": "247a0201bbda05ac7724b28c623731c4d00a66721a85c73e9cc19b1ec0ce0494",
+  "model_card_hash": "617bc68ff9ce912c8644ad039cee13cbefbc8a0c90cba4abc274e60bfa5e21b7",
+  "source_commit": "b5d9e0f",
+  "scenario_input_hash": "8577a96d0c6d2db820dd0f8254edc7e79a84082279b1ce9b23b43380d15d7a68"
+}

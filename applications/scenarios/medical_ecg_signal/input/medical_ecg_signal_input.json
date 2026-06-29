@@ -1,0 +1,21 @@
+{
+  "scenario_id": "medical_ecg_signal",
+  "source_dataset": "ecg_control_signal",
+  "source_model": "ecg_quality_model",
+  "input_values": {
+    "sampling_rate": 250,
+    "quality_score": 0.58,
+    "noise_segments": 1,
+    "missing_fragments": 2,
+    "baseline_instability": 0.21
+  },
+  "expected_outputs": {
+    "action": "defer_to_human",
+    "diagnostic": "D_signal_quality"
+  },
+  "fed_to_engine": true,
+  "dataset_manifest_hash": "247a0201bbda05ac7724b28c623731c4d00a66721a85c73e9cc19b1ec0ce0494",
+  "model_card_hash": "bfb841eaa037b9cbfc0021ae110ce315b4c8e1190254e8710d4c3e1264d8a1a1",
+  "source_commit": "b5d9e0f",
+  "scenario_input_hash": "d609a08c69f7e9d029566575cb26c5fcc7b0421360ac9ef034d0e96e3e6256a3"
+}

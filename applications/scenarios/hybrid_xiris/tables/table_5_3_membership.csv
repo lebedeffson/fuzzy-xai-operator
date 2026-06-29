@@ -1,0 +1,6 @@
+variable,term,input_value,membership_function,computed_membership
+p_match,high,0.88,mu_high(p)=p,0.88
+Q_seg,low,0.27,mu_low(Q)=1-Q/3 rounded by ExplainPlan gate,0.91
+quality_ok,sufficient,0.27,mu_accept from adapter rule activation,0.82
+block_condition,active,0.91,mu_block=alpha_block,0.91
+u_k,aggregated uncertainty,0.36,u_k from model/quality disagreement,0.36

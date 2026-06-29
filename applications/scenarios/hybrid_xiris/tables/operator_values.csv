@@ -1,0 +1,10 @@
+node_id,status,hash,quality_term,match_term,mu_high,alpha_accept,alpha_block,u_k,gamma_ij,gamma_max,delta_T,selected_class,coverage,why_not_F0,delta,delta_max,rho,chi_R,chi_R_crit,chi_Auto,action,report_ready
+input_artifact,info,auto,,,,,,,,,,,,,,,,,,,,
+adapter,passed,,low,high,,,,,,,,,,,,,,,,,,
+explanation_object,warning,,,,0.88,0.82,0.91,0.36,,,,,,,,,,,,,,
+alignment,warning,,,,,,,,0.351,0.4,0.08,,,,,,,,,,,
+f_selector,passed,,,,,,,,,,,NAS,"u_conf,u_trace,source_conflict",F0 теряет источник контрсвидетельства,,,,,,,,
+reduction,passed,,,,,,,,,,,,,,0.106811,0.35,,,,,,
+risk_observer,blocked,,,,,,,,,,,,,,,,0.8,1.0,1.0,0.0,,
+action,blocked,,,,,,,,,,,,,,,,,,,,block,
+report,info,,,,,,,,,,,,,,,,,,,,,True

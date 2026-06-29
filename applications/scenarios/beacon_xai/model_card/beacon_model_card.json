@@ -1,0 +1,30 @@
+{
+  "model_id": "beacon_counterevidence_model",
+  "scenario_id": "beacon_xai",
+  "model_status": "demo_control_model",
+  "trained_from": "data/raw/timeseries/beacon_timeseries_sample.csv",
+  "training_script": "fuzzyxai/train/train_beacon_counterevidence.py",
+  "model_artifact": "models/beacon/beacon_counterevidence_model.json",
+  "input_schema": [
+    "audit_reports",
+    "batch_objects",
+    "checks_full",
+    "checks_reduced",
+    "counter_fragments",
+    "objects_with_counterevidence",
+    "single_object_fragments",
+    "support_fragments"
+  ],
+  "output_schema": [
+    "action",
+    "diagnostic"
+  ],
+  "metrics": {
+    "diagnostic": "D_counterevidence_conflict",
+    "action": "audit"
+  },
+  "not_a_claim": "BEACON check reduction is an external mechanism demonstration.",
+  "source_commit": "b5d9e0f",
+  "dataset_file_hash": "2af0b443251eb563999a72218e86db06f3d684d6266bd548a8270af14f1667b5",
+  "model_card_hash": "676c06eaba9c3d345fdb4c4ab7ac5a91db488fd5639bd82bfd068f329885e0c8"
+}

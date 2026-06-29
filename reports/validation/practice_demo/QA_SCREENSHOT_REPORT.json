@@ -1,0 +1,168 @@
+{
+  "status": "PASS",
+  "issues": [],
+  "screenshots": [
+    {
+      "file": "00_ecosystem_main.png",
+      "chapter_status": "Глава 4, рисунок 4.1",
+      "expected_visible_content": "карта экосистемы, контейнеры, русский пользовательский слой",
+      "exists": true,
+      "width_px": 1680,
+      "status": "PASS",
+      "limitation": ""
+    },
+    {
+      "file": "01_hybrid_xiris_workspace.png",
+      "chapter_status": "Глава 4",
+      "expected_visible_content": "основной сценарий HYBRID-XIRIS, маршрут, инспектор, действие",
+      "exists": true,
+      "width_px": 1680,
+      "status": "PASS",
+      "limitation": ""
+    },
+    {
+      "file": "02_hybrid_xiris_input_eye.png",
+      "chapter_status": "Глава 5",
+      "expected_visible_content": "радужка, Q_img, Q_seg, p_match, D_quality_source_conflict, БЛОКИРОВКА",
+      "exists": true,
+      "width_px": 1680,
+      "status": "PASS",
+      "limitation": ""
+    },
+    {
+      "file": "03_hybrid_xiris_operator_route.png",
+      "chapter_status": "Глава 4",
+      "expected_visible_content": "Вход, адаптер, E_k/D_k, T_ij, F, Δ, risk observer, action",
+      "exists": true,
+      "width_px": 1680,
+      "status": "PASS",
+      "limitation": ""
+    },
+    {
+      "file": "04_hybrid_xiris_risk_observer.png",
+      "chapter_status": "Глава 4/5",
+      "expected_visible_content": "γ, Δ, r_Δ, ρ, χ_R^crit, action block",
+      "exists": true,
+      "width_px": 1680,
+      "status": "PASS",
+      "limitation": ""
+    },
+    {
+      "file": "05_hybrid_xiris_proof_package.png",
+      "chapter_status": "Глава 4",
+      "expected_visible_content": "computed_result = operator_values, verifier PASS",
+      "exists": true,
+      "width_px": 1680,
+      "status": "PASS",
+      "limitation": ""
+    },
+    {
+      "file": "06_ecg_workspace.png",
+      "chapter_status": "Глава 5",
+      "expected_visible_content": "ECG operator_control_example, not clinical diagnosis",
+      "exists": true,
+      "width_px": 1680,
+      "status": "PASS",
+      "limitation": ""
+    },
+    {
+      "file": "07_ecg_signal_input.png",
+      "chapter_status": "Глава 5",
+      "expected_visible_content": "ECG graph, noise/missing, quality_score, defer_to_human",
+      "exists": true,
+      "width_px": 1680,
+      "status": "PASS",
+      "limitation": ""
+    },
+    {
+      "file": "08_ecg_operator_route.png",
+      "chapter_status": "Глава 4/app",
+      "expected_visible_content": "ECG route, D_signal_quality, proof package",
+      "exists": true,
+      "width_px": 1680,
+      "status": "PASS",
+      "limitation": ""
+    },
+    {
+      "file": "09_ecg_diagnostic_action.png",
+      "chapter_status": "Глава 5",
+      "expected_visible_content": "D_signal_quality, reason, action defer_to_human",
+      "exists": true,
+      "width_px": 1680,
+      "status": "PASS",
+      "limitation": ""
+    },
+    {
+      "file": "10_gd_anfis_shap_workspace.png",
+      "chapter_status": "Глава 5",
+      "expected_visible_content": "ANFIS rule, SHAP, γ_rule-shap, audit",
+      "exists": true,
+      "width_px": 1680,
+      "status": "PASS",
+      "limitation": ""
+    },
+    {
+      "file": "11_beacon_xai_workspace.png",
+      "chapter_status": "Глава 5",
+      "expected_visible_content": "100 fragments, 70 support, 30 counter, 83 objects, 12 audit reports",
+      "exists": true,
+      "width_px": 1680,
+      "status": "PASS",
+      "limitation": ""
+    },
+    {
+      "file": "12_gis_integro_workspace.png",
+      "chapter_status": "Глава 5",
+      "expected_visible_content": "geolayer, p, α_mean, s, γ_route, Δ",
+      "exists": true,
+      "width_px": 1680,
+      "status": "PASS",
+      "limitation": ""
+    },
+    {
+      "file": "13_operator_registry.png",
+      "chapter_status": "Глава 4",
+      "expected_visible_content": "operator registry",
+      "exists": true,
+      "width_px": 1680,
+      "status": "PASS",
+      "limitation": ""
+    },
+    {
+      "file": "14_model_registry.png",
+      "chapter_status": "Глава 4",
+      "expected_visible_content": "model cards and model status",
+      "exists": true,
+      "width_px": 1680,
+      "status": "PASS",
+      "limitation": ""
+    },
+    {
+      "file": "15_scenario_registry.png",
+      "chapter_status": "Глава 4",
+      "expected_visible_content": "scenario registry and evidence levels",
+      "exists": true,
+      "width_px": 1680,
+      "status": "PASS",
+      "limitation": ""
+    },
+    {
+      "file": "16_batch_summary.png",
+      "chapter_status": "Глава 5",
+      "expected_visible_content": "1000, 612, 201, 187, 168→0",
+      "exists": true,
+      "width_px": 1680,
+      "status": "PASS",
+      "limitation": ""
+    },
+    {
+      "file": "17_exported_tables.png",
+      "chapter_status": "Приложение",
+      "expected_visible_content": "technical exported tables screen",
+      "exists": true,
+      "width_px": 1680,
+      "status": "PASS",
+      "limitation": "17_exported_tables.png is technical; use CSV/Markdown tables in chapter text."
+    }
+  ]
+}

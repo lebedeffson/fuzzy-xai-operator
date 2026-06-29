@@ -1,0 +1,6 @@
+component,value,weight,contribution
+model_signal,0.88,0.35,0.308
+block_rule,0.91,0.25,0.2275
+source_conflict,1.0,0.2,0.2
+reduction_component,0.3225,0.2,0.0645
+total,rho,,0.8

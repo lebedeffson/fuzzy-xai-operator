@@ -1,0 +1,31 @@
+{
+  "model_id": "gd_anfis_shap_rule_model",
+  "scenario_id": "gd_anfis_shap",
+  "model_status": "demo_control_model",
+  "trained_from": "data/raw/tabular/gd_anfis_shap_sample.csv",
+  "training_script": "fuzzyxai/train/train_gd_anfis_shap.py",
+  "model_artifact": "models/gd_anfis_shap/gd_anfis_shap_rule_model.json",
+  "input_schema": [
+    "alpha_rule",
+    "shap_x1",
+    "shap_x2",
+    "x1",
+    "x1_term",
+    "x2",
+    "x2_term"
+  ],
+  "output_schema": [
+    "action",
+    "diagnostic",
+    "gamma_rule_shap"
+  ],
+  "metrics": {
+    "gamma_rule_shap": 0.685,
+    "diagnostic": "D_rule_attribution_conflict",
+    "action": "audit"
+  },
+  "not_a_claim": "Operator-control example, not a production GD model.",
+  "source_commit": "b5d9e0f",
+  "dataset_file_hash": "b47a77c64d8c0ed843461170bb07fcd9f6433acc98ab48015abea51c8555078d",
+  "model_card_hash": "a09fbd583decc03a928569419e83fb0a14a6caa8aafa98c9acaf9e4d48092570"
+}

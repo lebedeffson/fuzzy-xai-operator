@@ -1,0 +1,27 @@
+{
+  "source_commit": "b5d9e0f",
+  "artifacts": {
+    "iris": {
+      "status": "real_public_artifact",
+      "source": "Wikimedia Commons",
+      "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Close-up_Image_of_a_Human_Iris.jpg",
+      "path": "data/real_public/iris/close_up_human_iris.jpg",
+      "sha256": "1185d7e48ac9facecdab7f89f4942b59bb2c27719b03ed7dcd2e94d254f5ea3d",
+      "width": 1270,
+      "height": 1397
+    },
+    "ecg": {
+      "status": "real_public_artifact",
+      "source": "PhysioNet MIT-BIH Arrhythmia Database record 100",
+      "url_header": "https://physionet.org/files/mitdb/1.0.0/100.hea",
+      "url_signal": "https://physionet.org/files/mitdb/1.0.0/100.dat",
+      "header_path": "data/real_public/ecg/mitdb_100.hea",
+      "signal_path": "data/real_public/ecg/mitdb_100.dat",
+      "csv_path": "data/real_public/ecg/mitdb_100_first_10s.csv",
+      "header_sha256": "60ebc904c7bf3e04d142638d3fd5c903e8dc9f10f1ea3264e07926aa089ee75e",
+      "signal_sha256": "b2ea3c250e56e48f4b7b90697832b8ecd1afa1e0bb31f2dcfea4ed6e1075a639",
+      "csv_sha256": "f7227967ada10f91a5dc7cdee8701f06dc853fe2168bd8c943893d65385aa7c6",
+      "sampling_rate": 360
+    }
+  }
+}

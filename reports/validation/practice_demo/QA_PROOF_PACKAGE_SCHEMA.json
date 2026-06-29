@@ -1,0 +1,36 @@
+{
+  "status": "PASS",
+  "issues": [],
+  "proof_packages": [
+    {
+      "scenario_id": "hybrid_xiris",
+      "final_action": "block",
+      "diagnostic_id": "D_quality_source_conflict",
+      "status": "PASS"
+    },
+    {
+      "scenario_id": "medical_ecg_signal",
+      "final_action": "defer_to_human",
+      "diagnostic_id": "D_signal_quality",
+      "status": "PASS"
+    },
+    {
+      "scenario_id": "gd_anfis_shap",
+      "final_action": "audit",
+      "diagnostic_id": "D_rule_attribution_conflict",
+      "status": "PASS"
+    },
+    {
+      "scenario_id": "beacon_xai",
+      "final_action": "audit",
+      "diagnostic_id": "D_counterevidence_conflict",
+      "status": "PASS"
+    },
+    {
+      "scenario_id": "gis_integro",
+      "final_action": "audit_report",
+      "diagnostic_id": "D_route_context_limit",
+      "status": "PASS"
+    }
+  ]
+}

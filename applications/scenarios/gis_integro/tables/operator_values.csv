@@ -1,0 +1,10 @@
+node_id,status,hash,mean_alpha_k,positive_feature_support,mu_geo_support,alpha_k_mean,u_k,gamma_ij,gamma_max,delta_T,selected_class,coverage,delta,delta_max,rho,chi_R,chi_R_crit,chi_Auto,action,report_ready
+input_artifact,info,auto,,,,,,,,,,,,,,,,,,
+adapter,passed,,0.72,0.47,,,,,,,,,,,,,,,,
+explanation_object,passed,,,,0.67,0.72,0.31,,,,,,,,,,,,,
+alignment,passed,,,,,,,0.2,0.4,0.08,,,,,,,,,,
+f_selector,passed,,,,,,,,,,NAS,"u_conf,u_trace,source_conflict",,,,,,,,
+reduction,passed,,,,,,,,,,,,0.08,0.35,,,,,,
+risk_observer,warning,,,,,,,,,,,,,,0.41,0.0,0.0,0.0,,
+action,passed,,,,,,,,,,,,,,,,,,audit_report,
+report,info,,,,,,,,,,,,,,,,,,,True

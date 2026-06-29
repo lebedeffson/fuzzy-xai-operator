@@ -1,0 +1,21 @@
+{
+  "scenario_id": "gis_integro",
+  "source_dataset": "gis_integro_control",
+  "source_model": "gis_route_model",
+  "input_values": {
+    "p": 0.67,
+    "alpha_mean": 0.72,
+    "s": 0.47
+  },
+  "expected_outputs": {
+    "gamma_route": 0.2,
+    "delta": 0.08,
+    "formula": "max(|p - alpha_mean|, |p - s|)",
+    "action": "audit_report"
+  },
+  "fed_to_engine": true,
+  "dataset_manifest_hash": "247a0201bbda05ac7724b28c623731c4d00a66721a85c73e9cc19b1ec0ce0494",
+  "model_card_hash": "fbe57802c8a8ecde94a9087552ffed89ece009200732c98dd80424d5c28c2e7b",
+  "source_commit": "b5d9e0f",
+  "scenario_input_hash": "1085346fdabcc0390d23f25925d9b2faa4ed868994403799543f7299d3577d5a"
+}

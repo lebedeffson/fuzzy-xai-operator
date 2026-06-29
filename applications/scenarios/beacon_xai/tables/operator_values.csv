@@ -1,0 +1,10 @@
+node_id,status,hash,counter_evidence_detected,audit_reports,mu_counter_evidence,alpha_audit,u_k,gamma_ij,gamma_max,delta_T,selected_class,coverage,delta,delta_max,rho,chi_R,chi_R_crit,chi_Auto,action,report_ready
+input_artifact,info,auto,,,,,,,,,,,,,,,,,,
+adapter,passed,,83.0,12.0,,,,,,,,,,,,,,,,
+explanation_object,passed,,,,0.83,0.79,0.28,,,,,,,,,,,,,
+alignment,passed,,,,,,,0.22,0.4,0.05,,,,,,,,,,
+f_selector,passed,,,,,,,,,,NAS,"u_conf,u_trace,source_conflict",,,,,,,,
+reduction,passed,,,,,,,,,,,,0.05,0.35,,,,,,
+risk_observer,warning,,,,,,,,,,,,,,0.58,1.0,0.0,0.0,,
+action,passed,,,,,,,,,,,,,,,,,,defer_to_human,
+report,info,,,,,,,,,,,,,,,,,,,True

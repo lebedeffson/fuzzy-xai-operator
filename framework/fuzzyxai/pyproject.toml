@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fuzzyxai-operator"
+version = "1.0.0"
+description = "FuzzyXAI operator engine, Studio, proof package, and doctoral readiness audit."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+  "numpy>=1.24",
+  "pandas>=1.5",
+  "scikit-learn>=1.2",
+  "plotly>=5.0",
+  "nicegui>=1.4",
+  "PyYAML>=6.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "playwright>=1.40",
+]
+
+[tool.setuptools.packages.find]
+include = ["fuzzyxai*"]

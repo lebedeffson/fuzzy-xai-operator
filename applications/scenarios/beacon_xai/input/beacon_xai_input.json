@@ -1,0 +1,24 @@
+{
+  "scenario_id": "beacon_xai",
+  "source_dataset": "beacon_counterevidence_control",
+  "source_model": "beacon_counterevidence_model",
+  "input_values": {
+    "single_object_fragments": 100,
+    "support_fragments": 70,
+    "counter_fragments": 30,
+    "batch_objects": 100,
+    "objects_with_counterevidence": 83,
+    "audit_reports": 12,
+    "checks_full": 64,
+    "checks_reduced": 11
+  },
+  "expected_outputs": {
+    "diagnostic": "D_counterevidence_conflict",
+    "action": "audit"
+  },
+  "fed_to_engine": true,
+  "dataset_manifest_hash": "247a0201bbda05ac7724b28c623731c4d00a66721a85c73e9cc19b1ec0ce0494",
+  "model_card_hash": "670bfddc9bf893129229c7bf4887ac0cb8eade0be9d7d90bedb281270616be16",
+  "source_commit": "b5d9e0f",
+  "scenario_input_hash": "2a3a2e7b86a23ce3c4768212b8a0e118b674d76a8e6c420bc06fe10b0f75e45c"
+}

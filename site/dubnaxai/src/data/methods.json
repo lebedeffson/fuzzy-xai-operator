@@ -1,0 +1,32 @@
+[
+  {
+    "id": "fuzzyxai",
+    "title": "FuzzyXAI",
+    "kind": "operator framework",
+    "description": "Маршрут объяснения: E_k, T_ij, F, Delta, риск-наблюдатель, действие, доказательный след."
+  },
+  {
+    "id": "anfis",
+    "title": "ANFIS",
+    "kind": "rule model",
+    "description": "Нечёткие правила и активации для сценария GD-ANFIS/SHAP."
+  },
+  {
+    "id": "shap",
+    "title": "SHAP",
+    "kind": "attribution",
+    "description": "Локальные вклады признаков и конфликт с правилом."
+  },
+  {
+    "id": "beacon-xai",
+    "title": "BEACON-XAI",
+    "kind": "counterevidence",
+    "description": "Временные контрсвидетельства и аудиторский режим."
+  },
+  {
+    "id": "gis-integro",
+    "title": "GIS INTEGRO",
+    "kind": "route alignment",
+    "description": "Согласование геослоя, контекста и маршрута."
+  }
+]
