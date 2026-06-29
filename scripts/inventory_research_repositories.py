@@ -12,6 +12,19 @@ OWNERS = ["fims9000", "lebedeffson"]
 REGISTRY_DIR = ROOT / "registry"
 REPORT_DIR = ROOT / "reports" / "validation" / "repository_inventory"
 SITE_DATA = ROOT / "site" / "dubnaxai" / "src" / "data"
+SELECTED_STATUSES = {"required", "research_candidate"}
+
+
+EXCLUDE_OVERRIDES: dict[str, str] = {
+    "fims9000/fims9000": "profile repository, not a research/application source",
+    "lebedeffson/Avalonia_Mnist": "education/demo repository, not part of DubnaXAI research layer",
+    "lebedeffson/fuzzy-xai-operator": "current monorepo, tracked as local source rather than external research repo",
+    "lebedeffson/lebedeffson": "profile repository, not a research/application source",
+    "lebedeffson/MobilePhotoSensor": "mobile utility/project repo; excluded until research relevance is proven",
+    "lebedeffson/SYNT_ISIC": "duplicate/empty-side listing; canonical selected repo is fims9000/SYNT_ISIC",
+    "lebedeffson/TMPKWebApp": "web/hackathon utility repo, not part of DubnaXAI research layer",
+    "lebedeffson/Yandex_skill": "assistant skill/utility repo, not part of DubnaXAI research layer",
+}
 
 
 ROLE_OVERRIDES: dict[str, dict[str, str]] = {
@@ -205,6 +218,7 @@ def normalize_repo(owner: str, repo: dict[str, Any]) -> dict[str, Any]:
     role = ROLE_OVERRIDES.get(full, {})
     license_info = repo.get("license") or {}
     status = role.get("status", "profile_or_utility_review")
+    selected = status in SELECTED_STATUSES
     return {
         "id": repo_id(owner, repo["name"]),
         "owner": owner,
@@ -221,6 +235,12 @@ def normalize_repo(owner: str, repo: dict[str, Any]) -> dict[str, Any]:
         "adapter": role.get("adapter", "TBD"),
         "scenario_id": role.get("scenario_id", ""),
         "status": status,
+        "selected_for_dubnaxai": selected,
+        "selection_reason": (
+            role.get("research_area_ru", "selected research/application repository")
+            if selected
+            else EXCLUDE_OVERRIDES.get(full, "public repository kept only in inventory until manual research review")
+        ),
         "license_review_required": True,
         "commit_pin_required": True,
         "clone_path": f"external/research_repos/{owner}/{repo['name']}",
@@ -229,31 +249,52 @@ def normalize_repo(owner: str, repo: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def write_reports(items: list[dict[str, Any]]) -> None:
+def write_reports(all_items: list[dict[str, Any]], selected_items: list[dict[str, Any]], excluded_items: list[dict[str, Any]]) -> None:
     REPORT_DIR.mkdir(parents=True, exist_ok=True)
     SITE_DATA.mkdir(parents=True, exist_ok=True)
     payload = {
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "owners": OWNERS,
-        "repository_count": len(items),
-        "repositories": items,
+        "discovered_count": len(all_items),
+        "selected_count": len(selected_items),
+        "excluded_count": len(excluded_items),
+        "selected_repositories": selected_items,
+        "excluded_repositories": excluded_items,
+        "all_repositories": all_items,
     }
     (REPORT_DIR / "repository_inventory.json").write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
-    (SITE_DATA / "repositories.json").write_text(json.dumps(items, ensure_ascii=False, indent=2), encoding="utf-8")
+    (REPORT_DIR / "repository_excluded.json").write_text(json.dumps(excluded_items, ensure_ascii=False, indent=2), encoding="utf-8")
+    (SITE_DATA / "repositories.json").write_text(json.dumps(selected_items, ensure_ascii=False, indent=2), encoding="utf-8")
     lines = [
         "# Research Repository Inventory",
         "",
         f"Generated at: `{payload['generated_at']}`",
-        f"Repositories: `{len(items)}`",
+        f"Discovered repositories: `{len(all_items)}`",
+        f"Selected research/application repositories: `{len(selected_items)}`",
+        f"Excluded/catalog-only repositories: `{len(excluded_items)}`",
+        "",
+        "Only public repositories with a research/application role are exported to the DubnaXAI site data and `registry/repositories.yaml`.",
+        "Profile, mobile, assistant, web-utility and duplicate repositories remain in the audit inventory only.",
+        "",
+        "## Selected research/application repositories",
         "",
         "| Owner | Repo | Status | Scenario | Adapter | License |",
         "|---|---|---|---|---|---|",
     ]
-    for item in items:
+    for item in selected_items:
         lines.append(
             f"| {item['owner']} | [{item['repo']}]({item['url']}) | {item['status']} | "
             f"{item['scenario_id']} | {item['adapter']} | {item['license']} |"
         )
+    lines.extend([
+        "",
+        "## Excluded from DubnaXAI research layer",
+        "",
+        "| Owner | Repo | Status | Reason |",
+        "|---|---|---|---|",
+    ])
+    for item in excluded_items:
+        lines.append(f"| {item['owner']} | [{item['repo']}]({item['url']}) | {item['status']} | {item['selection_reason']} |")
     (REPORT_DIR / "repository_inventory.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
@@ -263,13 +304,14 @@ def main() -> None:
         for repo in fetch_repos(owner):
             items.append(normalize_repo(owner, repo))
     items.sort(key=lambda item: (item["owner"], item["repo"].lower()))
+    selected_items = [item for item in items if item["selected_for_dubnaxai"]]
+    excluded_items = [item for item in items if not item["selected_for_dubnaxai"]]
     REGISTRY_DIR.mkdir(parents=True, exist_ok=True)
-    write_yaml(items, REGISTRY_DIR / "repositories.yaml")
-    write_reports(items)
+    write_yaml(selected_items, REGISTRY_DIR / "repositories.yaml")
+    write_reports(items, selected_items, excluded_items)
     print(REGISTRY_DIR / "repositories.yaml")
     print(REPORT_DIR / "repository_inventory.md")
 
 
 if __name__ == "__main__":
     main()
-
