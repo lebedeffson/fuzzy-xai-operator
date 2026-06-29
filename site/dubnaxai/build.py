@@ -33,12 +33,20 @@ def main() -> None:
     models = load("models")
     methods = load("methods")
     demos = load("demos")
+    repositories = load("repositories")
     researchers = load("researchers")
     publications = load("publications")
     route = load_route("hybrid_xiris_route.json")
     model_html = "".join(card(m.get("model_id", "model"), f"scenario: {m.get('scenario_id')}<br>status: {m.get('model_status')}<br>{m.get('not_a_claim','')}") for m in models)
     method_html = "".join(card(m["title"], f"{m['kind']}<br>{m['description']}") for m in methods)
     demo_html = "".join(card(d["name"], f"{d['artifact_type']} / {d['artifact_status']}<br>evidence: {d['evidence_level']}") for d in demos)
+    repo_html = "".join(
+        card(
+            f"{repo['owner']}/{repo['repo']}",
+            f"{repo['research_area_ru']}<br>status: {repo['status']}<br>scenario: {repo['scenario_id'] or 'catalog'}<br><a href=\"{repo['url']}\">GitHub</a>",
+        )
+        for repo in repositories
+    )
     research_html = "".join(card(r["name"], f"{r['role']}<br>{r['focus']}") for r in researchers)
     pub_html = "".join(card(p["title"], f"{p['type']} / {p['status']}") for p in publications)
     shots = ["00_ecosystem_main.png", "02_hybrid_xiris_input_eye.png", "07_ecg_signal_input.png", "10_gd_anfis_shap_workspace.png", "11_beacon_xai_workspace.png", "12_gis_integro_workspace.png"]
@@ -61,13 +69,14 @@ def main() -> None:
     html = f"""<!doctype html>
 <html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>DubnaXAI</title><link rel="stylesheet" href="style.css"></head>
-<body><header><h1>DubnaXAI</h1><p>Исследовательская экосистема: FuzzyXAI framework, модели, методы и прикладные сценарии.</p>
-<nav><a href="#models">Модели</a><a href="#methods">Методы</a><a href="#demos">Демонстрации</a><a href="#operators">Операторы</a><a href="#publications">Публикации</a></nav></header>
+<body><header><h1>DubnaXAI</h1><p>Исследовательская экосистема: FuzzyXAI framework, модели, методы, репозитории и прикладные сценарии.</p>
+<nav><a href="#models">Модели</a><a href="#methods">Методы</a><a href="#repositories">Репозитории</a><a href="#demos">Демонстрации</a><a href="#operators">Операторы</a><a href="#publications">Публикации</a></nav></header>
 <main>
 <section id="ecosystem"><h2>Экосистема</h2><p>Сайт отделён от библиотеки и читает структурированные данные из <code>src/data/*.json</code>.</p>{gallery}</section>
 <section id="researchers"><h2>Исследователи</h2><div class="grid">{research_html}</div></section>
 <section id="models"><h2>Модели</h2><div class="grid">{model_html}</div></section>
 <section id="methods"><h2>Методы</h2><div class="grid">{method_html}</div></section>
+<section id="repositories"><h2>Исследовательские репозитории</h2><p>Реестр сформирован из GitHub-профилей <code>fims9000</code> и <code>lebedeffson</code>. Сайт показывает карточки; запуск и адаптация выполняются в слое applications.</p><div class="grid">{repo_html}</div></section>
 <section id="demos"><h2>Демонстрации</h2><div class="grid">{demo_html}</div></section>
 <section id="operators"><h2>Панель операторов</h2><p>E_k -> T_ij -> F -> Delta -> rho -> действие -> доказательный след.</p>{route_html}</section>
 <section id="publications"><h2>Публикации</h2><div class="grid">{pub_html}</div></section>
