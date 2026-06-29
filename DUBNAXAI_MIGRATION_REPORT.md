@@ -123,6 +123,24 @@ Output:
 site/dubnaxai/dist/index.html
 ```
 
+## Operator Route Visualization
+
+Framework now exports a verified operator-route state from a proof package:
+
+```bash
+python framework/fuzzyxai/examples/show_hybrid_xiris_dashboard.py
+```
+
+Outputs:
+
+```text
+reports/routes/hybrid_xiris_route.json
+reports/figures/hybrid_xiris_operator_dashboard.png
+site/dubnaxai/public/routes/hybrid_xiris_route.json
+```
+
+The site reads the prepared route JSON and does not compute `gamma`, `Delta`, `rho`, diagnostics, or actions.
+
 ## Validation
 
 New combined check:
@@ -146,4 +164,3 @@ Chapter 4 -> framework/fuzzyxai
 Chapter 5 -> site/dubnaxai
 Chapter 6 -> applications/scenarios
 ```
-

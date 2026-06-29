@@ -18,6 +18,13 @@ def card(title: str, body: str) -> str:
     return f'<article class="card"><h3>{title}</h3><p>{body}</p></article>'
 
 
+def load_route(name: str):
+    path = PUBLIC / "routes" / name
+    if not path.exists():
+        return None
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
 def main() -> None:
     DIST.mkdir(parents=True, exist_ok=True)
     if (DIST / "screenshots").exists():
@@ -28,6 +35,7 @@ def main() -> None:
     demos = load("demos")
     researchers = load("researchers")
     publications = load("publications")
+    route = load_route("hybrid_xiris_route.json")
     model_html = "".join(card(m.get("model_id", "model"), f"scenario: {m.get('scenario_id')}<br>status: {m.get('model_status')}<br>{m.get('not_a_claim','')}") for m in models)
     method_html = "".join(card(m["title"], f"{m['kind']}<br>{m['description']}") for m in methods)
     demo_html = "".join(card(d["name"], f"{d['artifact_type']} / {d['artifact_status']}<br>evidence: {d['evidence_level']}") for d in demos)
@@ -35,6 +43,21 @@ def main() -> None:
     pub_html = "".join(card(p["title"], f"{p['type']} / {p['status']}") for p in publications)
     shots = ["00_ecosystem_main.png", "02_hybrid_xiris_input_eye.png", "07_ecg_signal_input.png", "10_gd_anfis_shap_workspace.png", "11_beacon_xai_workspace.png", "12_gis_integro_workspace.png"]
     gallery = "".join(f'<figure><img src="screenshots/{s}" alt="{s}"><figcaption>{s}</figcaption></figure>' for s in shots)
+    if route:
+        route_nodes = "".join(
+            card(
+                f"{idx + 1}. {node['title']}",
+                f"{node['value']}<br>status: {node['status']}<br>{node['explanation']}",
+            )
+            for idx, node in enumerate(route.get("nodes", []))
+        )
+        route_html = (
+            f"<p>Готовый JSON маршрута: <code>public/routes/hybrid_xiris_route.json</code>. "
+            f"Сайт его отображает, но не вычисляет gamma, Delta, rho.</p>"
+            f"<div class=\"grid\">{route_nodes}</div>"
+        )
+    else:
+        route_html = "<p>Маршрут ещё не экспортирован. Запустите <code>make operator-dashboard</code>.</p>"
     html = f"""<!doctype html>
 <html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>DubnaXAI</title><link rel="stylesheet" href="style.css"></head>
@@ -46,7 +69,7 @@ def main() -> None:
 <section id="models"><h2>Модели</h2><div class="grid">{model_html}</div></section>
 <section id="methods"><h2>Методы</h2><div class="grid">{method_html}</div></section>
 <section id="demos"><h2>Демонстрации</h2><div class="grid">{demo_html}</div></section>
-<section id="operators"><h2>Панель операторов</h2><p>E_k -> T_ij -> F -> Delta -> rho -> действие -> доказательный след.</p></section>
+<section id="operators"><h2>Панель операторов</h2><p>E_k -> T_ij -> F -> Delta -> rho -> действие -> доказательный след.</p>{route_html}</section>
 <section id="publications"><h2>Публикации</h2><div class="grid">{pub_html}</div></section>
 </main><footer>DubnaXAI static site build.</footer></body></html>"""
     (DIST / "index.html").write_text(html, encoding="utf-8")

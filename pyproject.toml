@@ -13,6 +13,7 @@ dependencies = [
   "pandas>=1.5",
   "scikit-learn>=1.2",
   "plotly>=5.0",
+  "matplotlib>=3.7",
   "nicegui>=1.4",
   "PyYAML>=6.0",
 ]

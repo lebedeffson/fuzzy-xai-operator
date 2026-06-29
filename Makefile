@@ -33,7 +33,7 @@ final-readiness-audit: studio-hybrid-batch studio-export-tables
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m fuzzyxai.audit.build_package
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m pytest tests/audit -q
 
-.PHONY: studio-semantic-smoke studio-server-smoke studio-smoke doctorate-release-check fresh-clone-gate practice-demo practice-screenshots practice-package practice-package-with-qa dataset-audit train-all evaluate-all training-audit practice-readiness-check screenshot-qc proof-qc package-self-contained-check real-validation-check full-delivery-package final-delivery-report final-product-check framework-check applications-check site-build dubnaxai-release-check
+.PHONY: studio-semantic-smoke studio-server-smoke studio-smoke doctorate-release-check fresh-clone-gate practice-demo practice-screenshots practice-package practice-package-with-qa dataset-audit train-all evaluate-all training-audit practice-readiness-check screenshot-qc proof-qc package-self-contained-check real-validation-check full-delivery-package final-delivery-report final-product-check framework-check applications-check operator-dashboard site-build dubnaxai-release-check
 studio-semantic-smoke:
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m fuzzyxai.audit.studio_smoke
 
@@ -114,10 +114,13 @@ framework-check:
 applications-check:
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) applications/run_all_scenarios.py
 
+operator-dashboard:
+	$(PYTHON) framework/fuzzyxai/examples/show_hybrid_xiris_dashboard.py
+
 site-build:
 	$(PYTHON) site/dubnaxai/build.py
 
-dubnaxai-release-check: framework-check applications-check site-build
+dubnaxai-release-check: framework-check applications-check operator-dashboard site-build
 	@echo "dubnaxai-release-check: PASS"
 
 risk-test:

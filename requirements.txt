@@ -2,6 +2,7 @@ numpy>=1.24
 pandas>=1.5
 scikit-learn>=1.2
 plotly>=5.0
+matplotlib>=3.7
 pytest>=7.0
 nicegui>=1.4
 PyYAML>=6.0
