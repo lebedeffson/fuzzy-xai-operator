@@ -221,10 +221,33 @@ Additional research analysis layer:
 - `research_validation/sensitivity/action_transition_heatmap.png`
 - `research_validation/sensitivity/gamma_delta_action_map.png`
 - `research_validation/ablation/ablation_results.csv`
+- `research_validation/ablation/ablation_action_changes.csv`
 - `research_validation/ablation/ablation_summary.csv`
 - `research_validation/ablation/ablation_changed_actions.png`
 - `research_validation/cross_model/cross_model_summary.csv`
 - `research_validation/cross_model/cross_model_mean_rho.png`
+
+### Framework Release Candidate Acceptance
+
+Added a release-candidate acceptance audit for FuzzyXAI as an installed
+framework:
+
+- `scripts/build_fuzzyxai_framework_rc.py`
+- `make fuzzyxai-framework-rc-check`
+- `make fuzzyxai-framework-rc-package`
+- `reports/release/fuzzyxai_framework_rc/`
+- `reports/release/fuzzyxai_framework_rc_package.zip`
+
+The RC audit creates a temporary local git clone, checks out the current source
+commit, builds a clean virtual environment, installs `framework/fuzzyxai` in
+editable mode and verifies that `import fuzzyxai` resolves to the framework
+package. It then runs CLI validation, CLI route/proof/dashboard/package export,
+an SDK smoke test through `FuzzyXAI` and `ExplainPlan`, schema/registry checks,
+documentation presence checks and research-analysis artifact checks.
+
+The acceptance payload is intentionally external to `applications/scenarios`.
+It produces non-zero `gamma`, `delta` and `rho`, and the framework selects
+`lower_confidence`.
 
 ### Operator Traceability v2
 
@@ -317,6 +340,7 @@ The check runs:
 - FuzzyXAI CLI check
 - FuzzyXAI schema check
 - FuzzyXAI adapter SDK check
+- FuzzyXAI framework RC acceptance check/package
 - operator traceability check
 - research validation is available through `make research-validation` and
   `make research-validation-check`; research analysis is available through
@@ -341,6 +365,7 @@ The check runs:
 - Operator dashboard PNG: `reports/figures/hybrid_xiris_operator_dashboard.png`
 - Framework route JSON: `reports/framework/hybrid_xiris_route.json`
 - Framework proof trace JSON: `reports/framework/hybrid_xiris_proof_trace.json`
+- Framework RC package: `reports/release/fuzzyxai_framework_rc_package.zip`
 
 ## Chapter Mapping
 

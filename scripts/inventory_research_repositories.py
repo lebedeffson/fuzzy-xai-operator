@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import json
+import sys
+import urllib.error
 import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
@@ -181,6 +183,18 @@ def fetch_repos(owner: str) -> list[dict[str, Any]]:
         return json.load(response)
 
 
+def load_cached_inventory() -> list[dict[str, Any]]:
+    cache = REPORT_DIR / "repository_inventory.json"
+    if not cache.exists():
+        raise FileNotFoundError(f"cached inventory not found: {cache}")
+    payload = json.loads(cache.read_text(encoding="utf-8"))
+    items = payload.get("all_repositories") or []
+    if not items:
+        raise RuntimeError(f"cached inventory has no all_repositories: {cache}")
+    print(f"WARNING: GitHub inventory API unavailable; using cached {cache}", file=sys.stderr)
+    return items
+
+
 def repo_id(owner: str, repo: str) -> str:
     return f"{owner}_{repo}".lower().replace("-", "_").replace(".", "_")
 
@@ -300,9 +314,13 @@ def write_reports(all_items: list[dict[str, Any]], selected_items: list[dict[str
 
 def main() -> None:
     items: list[dict[str, Any]] = []
-    for owner in OWNERS:
-        for repo in fetch_repos(owner):
-            items.append(normalize_repo(owner, repo))
+    try:
+        for owner in OWNERS:
+            for repo in fetch_repos(owner):
+                items.append(normalize_repo(owner, repo))
+    except (urllib.error.HTTPError, urllib.error.URLError, TimeoutError) as exc:
+        print(f"WARNING: {exc}", file=sys.stderr)
+        items = load_cached_inventory()
     items.sort(key=lambda item: (item["owner"], item["repo"].lower()))
     selected_items = [item for item in items if item["selected_for_dubnaxai"]]
     excluded_items = [item for item in items if not item["selected_for_dubnaxai"]]
