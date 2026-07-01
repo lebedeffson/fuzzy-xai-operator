@@ -1,0 +1,227 @@
+{
+  "scenario_id": "external_wine_classification",
+  "title": "External Wine Classification FuzzyXAI OperatorRoute",
+  "nodes": [
+    {
+      "node_id": "input_artifact",
+      "title": "Внешняя табличная модель",
+      "input_summary": "payload sklearn wine classifier",
+      "output_summary": "AdaptedInput",
+      "value": "p=0.689724; class=1",
+      "threshold": "",
+      "status": "passed",
+      "explanation": "Адаптер принимает внешний результат RandomForestClassifier.",
+      "formula_ref": "adapter",
+      "trace_ref": "adapted_input",
+      "value_source": "external_model_payload",
+      "raw": {
+        "model_name": "LogisticRegression",
+        "dataset_name": "sklearn_wine",
+        "predicted_class": 1,
+        "class_probability": 0.689724,
+        "feature_values": {
+          "alcohol": 12.29,
+          "malic_acid": 1.61,
+          "ash": 2.21,
+          "alcalinity_of_ash": 20.4,
+          "magnesium": 103.0,
+          "total_phenols": 1.1,
+          "flavanoids": 1.02,
+          "nonflavanoid_phenols": 0.37,
+          "proanthocyanins": 1.46,
+          "color_intensity": 3.05,
+          "hue": 0.906,
+          "od280/od315_of_diluted_wines": 1.82,
+          "proline": 870.0
+        },
+        "feature_importance": {
+          "alcohol": 0.166384,
+          "proline": 0.145116,
+          "color_intensity": 0.133733,
+          "ash": 0.0985,
+          "hue": 0.083139
+        },
+        "missing_rate": 0.0,
+        "feature_range_violation": 0.0,
+        "context_values": {
+          "external_task": true,
+          "model_key": "logistic_regression",
+          "top_k_importance": 5,
+          "sample_index": 24,
+          "train_size": 115,
+          "test_size": 63
+        }
+      }
+    },
+    {
+      "node_id": "explanation_object",
+      "title": "Объяснительный объект E_k",
+      "input_summary": "предыдущее состояние маршрута",
+      "output_summary": "выход оператора",
+      "value": "E_k сформирован",
+      "threshold": "",
+      "status": "passed",
+      "explanation": "Внешний payload переведён в объяснительный объект.",
+      "formula_ref": "E_k",
+      "trace_ref": "explanation_object",
+      "value_source": "computed",
+      "raw": {
+        "value_source": "computed"
+      }
+    },
+    {
+      "node_id": "representation",
+      "title": "Класс представления F",
+      "input_summary": "предыдущее состояние маршрута",
+      "output_summary": "выход оператора",
+      "value": "F_tabular",
+      "threshold": "",
+      "status": "passed",
+      "explanation": "Табличный результат представлен через вероятности, признаки и важности.",
+      "formula_ref": "F",
+      "trace_ref": "representation",
+      "value_source": "computed",
+      "raw": {
+        "value_source": "computed"
+      }
+    },
+    {
+      "node_id": "alignment",
+      "title": "Согласование T_ij",
+      "input_summary": "предыдущее состояние маршрута",
+      "output_summary": "выход оператора",
+      "value": "gamma=0.310276",
+      "threshold": "",
+      "status": "passed",
+      "explanation": "gamma=max(1-p, quality_penalty).",
+      "formula_ref": "gamma",
+      "trace_ref": "alignment",
+      "value_source": "computed",
+      "raw": {
+        "uncertainty": 0.310276,
+        "quality_penalty": 0.0,
+        "gamma": 0.310276,
+        "value_source": "computed"
+      }
+    },
+    {
+      "node_id": "reduction",
+      "title": "Потери представления",
+      "input_summary": "предыдущее состояние маршрута",
+      "output_summary": "выход оператора",
+      "value": "Delta=0.373128",
+      "threshold": "",
+      "status": "warning",
+      "explanation": "Delta=1-sum(feature_importance) для переданного набора важностей.",
+      "formula_ref": "Delta",
+      "trace_ref": "reduction",
+      "value_source": "computed",
+      "raw": {
+        "delta": 0.373128,
+        "importance_sum": 0.626872,
+        "value_source": "computed"
+      }
+    },
+    {
+      "node_id": "risk",
+      "title": "Риск rho",
+      "input_summary": "предыдущее состояние маршрута",
+      "output_summary": "выход оператора",
+      "value": "rho=0.373128",
+      "threshold": "",
+      "status": "warning",
+      "explanation": "rho=max(gamma, Delta).",
+      "formula_ref": "rho",
+      "trace_ref": "risk",
+      "value_source": "computed",
+      "raw": {
+        "rho": 0.373128,
+        "theta_accept": 0.35,
+        "theta_warning": 0.6,
+        "value_source": "computed"
+      }
+    },
+    {
+      "node_id": "diagnostics",
+      "title": "Диагностика D",
+      "input_summary": "предыдущее состояние маршрута",
+      "output_summary": "выход оператора",
+      "value": "D_external_tabular_uncertainty",
+      "threshold": "",
+      "status": "warning",
+      "explanation": "ограниченная уверенность внешней табличной модели",
+      "formula_ref": "D",
+      "trace_ref": "diagnostics",
+      "value_source": "computed",
+      "raw": {
+        "diagnostics": [
+          {
+            "diagnostic_id": "D_external_tabular_uncertainty",
+            "diagnostic_type": "external_tabular_uncertainty",
+            "source": "external_tabular_adapter",
+            "criticality": "medium",
+            "message_ru": "ограниченная уверенность внешней табличной модели",
+            "recommended_action": "lower_confidence"
+          }
+        ],
+        "value_source": "computed"
+      }
+    },
+    {
+      "node_id": "action",
+      "title": "Действие",
+      "input_summary": "предыдущее состояние маршрута",
+      "output_summary": "выход оператора",
+      "value": "lower_confidence",
+      "threshold": "",
+      "status": "warning",
+      "explanation": "Действие выбрано политикой FuzzyXAI.",
+      "formula_ref": "action policy",
+      "trace_ref": "action",
+      "value_source": "computed",
+      "raw": {
+        "action": "lower_confidence",
+        "value_source": "computed"
+      }
+    },
+    {
+      "node_id": "proof",
+      "title": "Доказательный след",
+      "input_summary": "предыдущее состояние маршрута",
+      "output_summary": "выход оператора",
+      "value": "proof trace готов",
+      "threshold": "",
+      "status": "passed",
+      "explanation": "Маршрут сохраняется как проверяемый доказательный след.",
+      "formula_ref": "proof trace",
+      "trace_ref": "proof",
+      "value_source": "computed",
+      "raw": {
+        "value_source": "computed"
+      }
+    }
+  ],
+  "computed_result": {
+    "class_probability": 0.689724,
+    "uncertainty": 0.310276,
+    "quality_penalty": 0.0,
+    "gamma": 0.310276,
+    "delta": 0.373128,
+    "rho": 0.373128,
+    "diagnostic_id": "D_external_tabular_uncertainty",
+    "action": "lower_confidence"
+  },
+  "diagnostics": [
+    {
+      "diagnostic_id": "D_external_tabular_uncertainty",
+      "diagnostic_type": "external_tabular_uncertainty",
+      "source": "external_tabular_adapter",
+      "criticality": "medium",
+      "message_ru": "ограниченная уверенность внешней табличной модели",
+      "recommended_action": "lower_confidence"
+    }
+  ],
+  "final_action": "lower_confidence",
+  "verifier_status": "PASS",
+  "source_commit": "42548a8d11902d70db87bb474957a9c443907b6e"
+}

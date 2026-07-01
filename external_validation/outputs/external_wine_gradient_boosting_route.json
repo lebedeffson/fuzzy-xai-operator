@@ -7,7 +7,7 @@
       "title": "Внешняя табличная модель",
       "input_summary": "payload sklearn wine classifier",
       "output_summary": "AdaptedInput",
-      "value": "p=1.0; class=1",
+      "value": "p=0.679119; class=0",
       "threshold": "",
       "status": "passed",
       "explanation": "Адаптер принимает внешний результат RandomForestClassifier.",
@@ -15,46 +15,38 @@
       "trace_ref": "adapted_input",
       "value_source": "external_model_payload",
       "raw": {
-        "model_name": "RandomForestClassifier",
+        "model_name": "GradientBoostingClassifier",
         "dataset_name": "sklearn_wine",
-        "predicted_class": 1,
-        "class_probability": 1.0,
+        "predicted_class": 0,
+        "class_probability": 0.679119,
         "feature_values": {
-          "alcohol": 11.65,
-          "malic_acid": 1.67,
-          "ash": 2.62,
-          "alcalinity_of_ash": 26.0,
-          "magnesium": 88.0,
-          "total_phenols": 1.92,
-          "flavanoids": 1.61,
-          "nonflavanoid_phenols": 0.4,
-          "proanthocyanins": 1.34,
-          "color_intensity": 2.6,
-          "hue": 1.36,
-          "od280/od315_of_diluted_wines": 3.21,
-          "proline": 562.0
+          "alcohol": 13.07,
+          "malic_acid": 1.5,
+          "ash": 2.1,
+          "alcalinity_of_ash": 15.5,
+          "magnesium": 98.0,
+          "total_phenols": 2.4,
+          "flavanoids": 2.64,
+          "nonflavanoid_phenols": 0.28,
+          "proanthocyanins": 1.37,
+          "color_intensity": 3.7,
+          "hue": 1.18,
+          "od280/od315_of_diluted_wines": 2.69,
+          "proline": 1020.0
         },
         "feature_importance": {
-          "alcohol": 0.13209569943973215,
-          "malic_acid": 0.028671057109002914,
-          "ash": 0.015844198287657176,
-          "alcalinity_of_ash": 0.02684675632022079,
-          "magnesium": 0.031073053621741398,
-          "total_phenols": 0.03532612948607915,
-          "flavanoids": 0.18801481238115658,
-          "nonflavanoid_phenols": 0.012100962610241845,
-          "proanthocyanins": 0.029767357034221422,
-          "color_intensity": 0.18067210423930177,
-          "hue": 0.1012971063310608,
-          "od280/od315_of_diluted_wines": 0.07844572787784164,
-          "proline": 0.13984503526174236
+          "proline": 0.326532,
+          "color_intensity": 0.243624
         },
         "missing_rate": 0.0,
         "feature_range_violation": 0.0,
         "context_values": {
           "external_task": true,
-          "train_size": 133,
-          "test_size": 45
+          "model_key": "gradient_boosting",
+          "top_k_importance": 2,
+          "sample_index": 14,
+          "train_size": 115,
+          "test_size": 63
         }
       }
     },
@@ -95,7 +87,7 @@
       "title": "Согласование T_ij",
       "input_summary": "предыдущее состояние маршрута",
       "output_summary": "выход оператора",
-      "value": "gamma=0.0",
+      "value": "gamma=0.320881",
       "threshold": "",
       "status": "passed",
       "explanation": "gamma=max(1-p, quality_penalty).",
@@ -103,9 +95,9 @@
       "trace_ref": "alignment",
       "value_source": "computed",
       "raw": {
-        "uncertainty": 0.0,
+        "uncertainty": 0.320881,
         "quality_penalty": 0.0,
-        "gamma": 0.0,
+        "gamma": 0.320881,
         "value_source": "computed"
       }
     },
@@ -114,16 +106,16 @@
       "title": "Потери представления",
       "input_summary": "предыдущее состояние маршрута",
       "output_summary": "выход оператора",
-      "value": "Delta=0.0",
+      "value": "Delta=0.429844",
       "threshold": "",
-      "status": "passed",
+      "status": "warning",
       "explanation": "Delta=1-sum(feature_importance) для переданного набора важностей.",
       "formula_ref": "Delta",
       "trace_ref": "reduction",
       "value_source": "computed",
       "raw": {
-        "delta": 0.0,
-        "importance_sum": 1.0,
+        "delta": 0.429844,
+        "importance_sum": 0.570156,
         "value_source": "computed"
       }
     },
@@ -132,15 +124,15 @@
       "title": "Риск rho",
       "input_summary": "предыдущее состояние маршрута",
       "output_summary": "выход оператора",
-      "value": "rho=0.0",
+      "value": "rho=0.429844",
       "threshold": "",
-      "status": "passed",
+      "status": "warning",
       "explanation": "rho=max(gamma, Delta).",
       "formula_ref": "rho",
       "trace_ref": "risk",
       "value_source": "computed",
       "raw": {
-        "rho": 0.0,
+        "rho": 0.429844,
         "theta_accept": 0.35,
         "theta_warning": 0.6,
         "value_source": "computed"
@@ -151,22 +143,22 @@
       "title": "Диагностика D",
       "input_summary": "предыдущее состояние маршрута",
       "output_summary": "выход оператора",
-      "value": "D_external_tabular_ok",
+      "value": "D_external_tabular_uncertainty",
       "threshold": "",
-      "status": "passed",
-      "explanation": "внешняя табличная классификация допустима",
+      "status": "warning",
+      "explanation": "ограниченная уверенность внешней табличной модели",
       "formula_ref": "D",
       "trace_ref": "diagnostics",
       "value_source": "computed",
       "raw": {
         "diagnostics": [
           {
-            "diagnostic_id": "D_external_tabular_ok",
-            "diagnostic_type": "external_tabular_ok",
+            "diagnostic_id": "D_external_tabular_uncertainty",
+            "diagnostic_type": "external_tabular_uncertainty",
             "source": "external_tabular_adapter",
-            "criticality": "low",
-            "message_ru": "внешняя табличная классификация допустима",
-            "recommended_action": "accept"
+            "criticality": "medium",
+            "message_ru": "ограниченная уверенность внешней табличной модели",
+            "recommended_action": "lower_confidence"
           }
         ],
         "value_source": "computed"
@@ -177,15 +169,15 @@
       "title": "Действие",
       "input_summary": "предыдущее состояние маршрута",
       "output_summary": "выход оператора",
-      "value": "accept",
+      "value": "lower_confidence",
       "threshold": "",
-      "status": "passed",
+      "status": "warning",
       "explanation": "Действие выбрано политикой FuzzyXAI.",
       "formula_ref": "action policy",
       "trace_ref": "action",
       "value_source": "computed",
       "raw": {
-        "action": "accept",
+        "action": "lower_confidence",
         "value_source": "computed"
       }
     },
@@ -207,26 +199,26 @@
     }
   ],
   "computed_result": {
-    "class_probability": 1.0,
-    "uncertainty": 0.0,
+    "class_probability": 0.679119,
+    "uncertainty": 0.320881,
     "quality_penalty": 0.0,
-    "gamma": 0.0,
-    "delta": 0.0,
-    "rho": 0.0,
-    "diagnostic_id": "D_external_tabular_ok",
-    "action": "accept"
+    "gamma": 0.320881,
+    "delta": 0.429844,
+    "rho": 0.429844,
+    "diagnostic_id": "D_external_tabular_uncertainty",
+    "action": "lower_confidence"
   },
   "diagnostics": [
     {
-      "diagnostic_id": "D_external_tabular_ok",
-      "diagnostic_type": "external_tabular_ok",
+      "diagnostic_id": "D_external_tabular_uncertainty",
+      "diagnostic_type": "external_tabular_uncertainty",
       "source": "external_tabular_adapter",
-      "criticality": "low",
-      "message_ru": "внешняя табличная классификация допустима",
-      "recommended_action": "accept"
+      "criticality": "medium",
+      "message_ru": "ограниченная уверенность внешней табличной модели",
+      "recommended_action": "lower_confidence"
     }
   ],
-  "final_action": "accept",
+  "final_action": "lower_confidence",
   "verifier_status": "PASS",
-  "source_commit": "00caff9012de7ad74f81ef367a61d012734b40c2"
+  "source_commit": "42548a8d11902d70db87bb474957a9c443907b6e"
 }

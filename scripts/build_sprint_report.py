@@ -94,9 +94,8 @@ GENERATED_PREFIXES = (
 
 
 EXTERNAL_SUMMARY = ROOT / "external_validation" / "outputs" / "external_wine_summary.json"
-EXTERNAL_ROUTE = ROOT / "external_validation" / "outputs" / "external_wine_route.json"
-EXTERNAL_PROOF = ROOT / "external_validation" / "outputs" / "external_wine_proof_trace.json"
-EXTERNAL_DASHBOARD = ROOT / "external_validation" / "outputs" / "external_wine_operator_dashboard.png"
+EXTERNAL_MODEL_KEYS = ("logistic_regression", "gradient_boosting")
+EXTERNAL_ZIP = ROOT / "external_validation" / "outputs" / "external_wine_blackbox_validation.zip"
 
 
 def status_path(line: str) -> str:
@@ -237,7 +236,17 @@ def scan_apps() -> tuple[bool, list[str]]:
 
 def validate_external_framework() -> tuple[dict[str, Any], list[str]]:
     errors: list[str] = []
-    exists = all(path.exists() and path.stat().st_size > 0 for path in (EXTERNAL_SUMMARY, EXTERNAL_ROUTE, EXTERNAL_PROOF, EXTERNAL_DASHBOARD))
+    required = [EXTERNAL_SUMMARY, EXTERNAL_ZIP]
+    for model_key in EXTERNAL_MODEL_KEYS:
+        required.extend(
+            [
+                ROOT / "external_validation" / "outputs" / f"external_wine_{model_key}_route.json",
+                ROOT / "external_validation" / "outputs" / f"external_wine_{model_key}_proof_trace.json",
+                ROOT / "external_validation" / "outputs" / f"external_wine_{model_key}_operator_dashboard.png",
+                ROOT / "external_validation" / "outputs" / f"external_wine_{model_key}_summary.json",
+            ]
+        )
+    exists = all(path.exists() and path.stat().st_size > 0 for path in required)
     summary: dict[str, Any] = {}
     if not exists:
         errors.append("external framework outputs are missing; run make framework-external-check")
@@ -247,25 +256,41 @@ def validate_external_framework() -> tuple[dict[str, Any], list[str]]:
             errors.append(f"external task expected sklearn_wine_classification, got {summary.get('task')}")
         if summary.get("scenario_id") != "external_wine_classification":
             errors.append(f"external scenario_id expected external_wine_classification, got {summary.get('scenario_id')}")
-        if summary.get("action") != "accept":
-            errors.append(f"external action expected accept, got {summary.get('action')}")
-        if summary.get("diagnostic") != "D_external_tabular_ok":
-            errors.append(f"external diagnostic expected D_external_tabular_ok, got {summary.get('diagnostic')}")
         if summary.get("verifier") != "passed":
             errors.append(f"external verifier expected passed, got {summary.get('verifier')}")
         if not summary.get("source_commit"):
             errors.append("external source_commit is empty")
+        validations = summary.get("validations") or []
+        if len(validations) != 2:
+            errors.append(f"external validations expected 2, got {len(validations)}")
+        for item in validations:
+            computed = item.get("computed_result") or {}
+            if item.get("action") != "lower_confidence":
+                errors.append(f"external {item.get('model_key')} action expected lower_confidence, got {item.get('action')}")
+            if item.get("diagnostic") != "D_external_tabular_uncertainty":
+                errors.append(f"external {item.get('model_key')} diagnostic expected D_external_tabular_uncertainty, got {item.get('diagnostic')}")
+            for key in ("gamma", "delta", "rho"):
+                value = float(computed.get(key, 0.0))
+                if value <= 0.0:
+                    errors.append(f"external {item.get('model_key')} {key} is zero")
+            gamma = float(computed.get("gamma", 0.0))
+            delta = float(computed.get("delta", 0.0))
+            rho = float(computed.get("rho", 0.0))
+            if not (0.10 <= gamma <= 0.60 and 0.05 <= delta <= 0.60 and 0.10 <= rho <= 0.70):
+                errors.append(f"external {item.get('model_key')} values out of range: gamma={gamma}, delta={delta}, rho={rho}")
     return {
         "status": "FAIL" if errors else "PASS",
         "task": summary.get("task", ""),
         "scenario_id": summary.get("scenario_id", ""),
-        "action": summary.get("action", ""),
-        "diagnostic": summary.get("diagnostic", ""),
+        "models": summary.get("models", []),
+        "validations": summary.get("validations", []),
+        "action": ",".join(item.get("action", "") for item in summary.get("validations", [])),
+        "diagnostic": ",".join(item.get("diagnostic", "") for item in summary.get("validations", [])),
         "verifier": summary.get("verifier", ""),
         "source_commit": summary.get("source_commit", ""),
-        "route_exists": EXTERNAL_ROUTE.exists(),
-        "proof_exists": EXTERNAL_PROOF.exists(),
-        "dashboard_exists": EXTERNAL_DASHBOARD.exists(),
+        "route_exists": all((ROOT / "external_validation" / "outputs" / f"external_wine_{key}_route.json").exists() for key in EXTERNAL_MODEL_KEYS),
+        "proof_exists": all((ROOT / "external_validation" / "outputs" / f"external_wine_{key}_proof_trace.json").exists() for key in EXTERNAL_MODEL_KEYS),
+        "dashboard_exists": all((ROOT / "external_validation" / "outputs" / f"external_wine_{key}_operator_dashboard.png").exists() for key in EXTERNAL_MODEL_KEYS),
     }, errors
 
 
@@ -529,6 +554,7 @@ DubnaXAI/FuzzyXAI has three separated layers: framework computes, applications r
 | import from /tmp | {external['status']} |
 | package path | framework/fuzzyxai |
 | external task | {external.get('task') or 'sklearn_wine_classification'} |
+| models | {', '.join(external.get('models') or [])} |
 | action | {external.get('action') or ''} |
 | diagnostic | {external.get('diagnostic') or ''} |
 | route | {'PASS' if external.get('route_exists') else 'FAIL'} |
@@ -633,6 +659,7 @@ def main() -> int:
         "external_task": external.get("task") or "sklearn_wine_classification",
         "external_task_action": external.get("action"),
         "external_task_verifier": external.get("verifier"),
+        "external_task_models": external.get("models"),
         "package_boundary_ok": external["status"] == "PASS",
         "source_commit_filled": bool(external.get("source_commit")),
         "operator_route_check": "PASS" if not errors else "FAIL",

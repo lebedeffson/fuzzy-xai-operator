@@ -160,9 +160,13 @@ Added black-box validation for FuzzyXAI as an installed library:
 - `scripts/check_framework_external_usage.py`
 - `make framework-external-check`
 
-The external task uses `sklearn.datasets.load_wine` and `RandomForestClassifier`.
-It runs outside the repository root, imports only the installed `fuzzyxai` package,
-uses the generic tabular adapter and does not import `applications/scenarios`.
+The external task uses `sklearn.datasets.load_wine` with two external model
+families: `LogisticRegression` and `GradientBoostingClassifier`. It selects
+moderate-confidence objects and passes only top-k feature importances, so
+`gamma`, `delta` and `rho` are non-zero and the framework selects
+`lower_confidence`. It runs outside the repository root, imports only the
+installed `fuzzyxai` package, uses the generic tabular adapter and does not
+import `applications/scenarios`.
 
 ### Site Layer
 

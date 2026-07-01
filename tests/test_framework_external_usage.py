@@ -38,13 +38,22 @@ def test_framework_external_usage_from_tmp(tmp_path: Path) -> None:
     assert result.returncode == 0, result.stdout + result.stderr
 
     out = ROOT / "external_validation" / "outputs"
-    route = json.loads((out / "external_wine_route.json").read_text(encoding="utf-8"))
-    proof = json.loads((out / "external_wine_proof_trace.json").read_text(encoding="utf-8"))
     summary = json.loads((out / "external_wine_summary.json").read_text(encoding="utf-8"))
 
-    assert (out / "external_wine_operator_dashboard.png").stat().st_size > 0
     assert summary["verifier"] == "passed"
-    assert summary["action"] == "accept"
-    assert summary["diagnostic"] == "D_external_tabular_ok"
-    assert route["source_commit"]
-    assert proof["source_commit"]
+    assert (out / "external_wine_blackbox_validation.zip").stat().st_size > 0
+    assert len(summary["validations"]) == 2
+    for item in summary["validations"]:
+        model_key = item["model_key"]
+        route = json.loads((out / f"external_wine_{model_key}_route.json").read_text(encoding="utf-8"))
+        proof = json.loads((out / f"external_wine_{model_key}_proof_trace.json").read_text(encoding="utf-8"))
+        computed = item["computed_result"]
+        assert (out / f"external_wine_{model_key}_operator_dashboard.png").stat().st_size > 0
+        assert item["verifier"] == "passed"
+        assert item["action"] == "lower_confidence"
+        assert item["diagnostic"] == "D_external_tabular_uncertainty"
+        assert 0.10 <= computed["gamma"] <= 0.60
+        assert 0.05 <= computed["delta"] <= 0.60
+        assert 0.10 <= computed["rho"] <= 0.70
+        assert route["source_commit"]
+        assert proof["source_commit"]

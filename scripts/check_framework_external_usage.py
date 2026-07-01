@@ -10,6 +10,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUTS = ROOT / "external_validation" / "outputs"
+MODEL_KEYS = ("logistic_regression", "gradient_boosting")
+ZIP_PATH = OUTPUTS / "external_wine_blackbox_validation.zip"
 
 
 def run(cmd: list[str], cwd: Path) -> subprocess.CompletedProcess[str]:
@@ -49,10 +51,17 @@ def main() -> int:
             return result.returncode
 
     summary_path = OUTPUTS / "external_wine_summary.json"
-    route_path = OUTPUTS / "external_wine_route.json"
-    proof_path = OUTPUTS / "external_wine_proof_trace.json"
-    dashboard_path = OUTPUTS / "external_wine_operator_dashboard.png"
-    for path in (summary_path, route_path, proof_path, dashboard_path):
+    required = [summary_path, ZIP_PATH]
+    for model_key in MODEL_KEYS:
+        required.extend(
+            [
+                OUTPUTS / f"external_wine_{model_key}_route.json",
+                OUTPUTS / f"external_wine_{model_key}_proof_trace.json",
+                OUTPUTS / f"external_wine_{model_key}_operator_dashboard.png",
+                OUTPUTS / f"external_wine_{model_key}_summary.json",
+            ]
+        )
+    for path in required:
         if not path.exists() or path.stat().st_size == 0:
             print(f"framework-external-check: FAIL missing output {path}", file=sys.stderr)
             return 1
@@ -64,18 +73,48 @@ def main() -> int:
     if not summary.get("source_commit"):
         print("framework-external-check: FAIL source_commit is empty", file=sys.stderr)
         return 1
+    validations = summary.get("validations") or []
+    if len(validations) != 2:
+        print(f"framework-external-check: FAIL expected 2 external validations, got {len(validations)}", file=sys.stderr)
+        return 1
+    for item in validations:
+        computed = item.get("computed_result") or {}
+        if item.get("action") != "lower_confidence":
+            print(f"framework-external-check: FAIL {item.get('model_key')} action is {item.get('action')}", file=sys.stderr)
+            return 1
+        if item.get("diagnostic") != "D_external_tabular_uncertainty":
+            print(f"framework-external-check: FAIL {item.get('model_key')} diagnostic is {item.get('diagnostic')}", file=sys.stderr)
+            return 1
+        for key in ("gamma", "delta", "rho"):
+            value = float(computed.get(key, 0.0))
+            if value <= 0.0:
+                print(f"framework-external-check: FAIL {item.get('model_key')} {key} is zero", file=sys.stderr)
+                return 1
+        gamma = float(computed["gamma"])
+        delta = float(computed["delta"])
+        rho = float(computed["rho"])
+        if not (0.10 <= gamma <= 0.60 and 0.05 <= delta <= 0.60 and 0.10 <= rho <= 0.70):
+            print(
+                f"framework-external-check: FAIL {item.get('model_key')} values out of range: "
+                f"gamma={gamma}, delta={delta}, rho={rho}",
+                file=sys.stderr,
+            )
+            return 1
 
     print(f"import path: {import_path}")
     print(f"external task: {summary['task']}")
-    print(
-        "external result: "
-        f"action={summary['action']}; "
-        f"diagnostic={summary['diagnostic']}; "
-        f"gamma={summary['computed_result'].get('gamma')}; "
-        f"delta={summary['computed_result'].get('delta')}; "
-        f"rho={summary['computed_result'].get('rho')}; "
-        f"verifier={summary['verifier']}"
-    )
+    for item in validations:
+        computed = item["computed_result"]
+        print(
+            "external result: "
+            f"model={item['model_name']}; "
+            f"action={item['action']}; "
+            f"diagnostic={item['diagnostic']}; "
+            f"gamma={computed.get('gamma')}; "
+            f"delta={computed.get('delta')}; "
+            f"rho={computed.get('rho')}; "
+            f"verifier={item['verifier']}"
+        )
     print("framework-external-check: PASS")
     return 0
 

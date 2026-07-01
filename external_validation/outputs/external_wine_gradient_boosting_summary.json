@@ -1,0 +1,24 @@
+{
+  "task": "sklearn_wine_classification",
+  "package": "fuzzyxai",
+  "model_key": "gradient_boosting",
+  "model_name": "GradientBoostingClassifier",
+  "scenario_id": "external_wine_classification",
+  "action": "lower_confidence",
+  "diagnostic": "D_external_tabular_uncertainty",
+  "computed_result": {
+    "class_probability": 0.679119,
+    "uncertainty": 0.320881,
+    "quality_penalty": 0.0,
+    "gamma": 0.320881,
+    "delta": 0.429844,
+    "rho": 0.429844,
+    "diagnostic_id": "D_external_tabular_uncertainty",
+    "action": "lower_confidence"
+  },
+  "verifier": "passed",
+  "source_commit": "42548a8d11902d70db87bb474957a9c443907b6e",
+  "route": "/home/lebedeffson/Code/fuzzy-xai-operator/external_validation/outputs/external_wine_gradient_boosting_route.json",
+  "proof_trace": "/home/lebedeffson/Code/fuzzy-xai-operator/external_validation/outputs/external_wine_gradient_boosting_proof_trace.json",
+  "dashboard": "/home/lebedeffson/Code/fuzzy-xai-operator/external_validation/outputs/external_wine_gradient_boosting_operator_dashboard.png"
+}

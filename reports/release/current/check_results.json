@@ -19,7 +19,7 @@
     "status": "PASS",
     "errors": [],
     "warnings": [
-      "dirty source files: Makefile, applications/scenarios/beacon_xai/figures/operator_dashboard.png, applications/scenarios/beacon_xai/proof/proof_trace.json, applications/scenarios/beacon_xai/route/route.json, applications/scenarios/beacon_xai/site_payload/scenario.json, applications/scenarios/gd_anfis_shap/figures/operator_dashboard.png, applications/scenarios/gd_anfis_shap/proof/proof_trace.json, applications/scenarios/gd_anfis_shap/route/route.json, applications/scenarios/gd_anfis_shap/site_payload/scenario.json, applications/scenarios/gis_integro/figures/operator_dashboard.png"
+      "dirty source files: DUBNAXAI_FULL_WORK_REPORT.md, applications/scenarios/beacon_xai/figures/operator_dashboard.png, applications/scenarios/beacon_xai/proof/proof_trace.json, applications/scenarios/beacon_xai/route/route.json, applications/scenarios/beacon_xai/site_payload/scenario.json, applications/scenarios/gd_anfis_shap/figures/operator_dashboard.png, applications/scenarios/gd_anfis_shap/proof/proof_trace.json, applications/scenarios/gd_anfis_shap/route/route.json, applications/scenarios/gd_anfis_shap/site_payload/scenario.json, applications/scenarios/gis_integro/figures/operator_dashboard.png"
     ]
   }
 }

@@ -1,0 +1,24 @@
+{
+  "task": "sklearn_wine_classification",
+  "package": "fuzzyxai",
+  "model_key": "logistic_regression",
+  "model_name": "LogisticRegression",
+  "scenario_id": "external_wine_classification",
+  "action": "lower_confidence",
+  "diagnostic": "D_external_tabular_uncertainty",
+  "computed_result": {
+    "class_probability": 0.689724,
+    "uncertainty": 0.310276,
+    "quality_penalty": 0.0,
+    "gamma": 0.310276,
+    "delta": 0.373128,
+    "rho": 0.373128,
+    "diagnostic_id": "D_external_tabular_uncertainty",
+    "action": "lower_confidence"
+  },
+  "verifier": "passed",
+  "source_commit": "42548a8d11902d70db87bb474957a9c443907b6e",
+  "route": "/home/lebedeffson/Code/fuzzy-xai-operator/external_validation/outputs/external_wine_logistic_regression_route.json",
+  "proof_trace": "/home/lebedeffson/Code/fuzzy-xai-operator/external_validation/outputs/external_wine_logistic_regression_proof_trace.json",
+  "dashboard": "/home/lebedeffson/Code/fuzzy-xai-operator/external_validation/outputs/external_wine_logistic_regression_operator_dashboard.png"
+}

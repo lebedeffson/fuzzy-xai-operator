@@ -1,13 +1,17 @@
 {
   "branch": "main",
-  "commit": "00caff9",
+  "commit": "42548a8",
   "tag": null,
   "sprint_report_status": "PASS",
   "framework_check": "UNKNOWN",
   "framework_external_check": "PASS",
   "external_task": "sklearn_wine_classification",
-  "external_task_action": "accept",
+  "external_task_action": "lower_confidence,lower_confidence",
   "external_task_verifier": "passed",
+  "external_task_models": [
+    "LogisticRegression",
+    "GradientBoostingClassifier"
+  ],
   "package_boundary_ok": true,
   "source_commit_filled": true,
   "operator_route_check": "PASS",
@@ -25,7 +29,7 @@
   "dirty_worktree": true,
   "dirty_source_files": true,
   "warnings": [
-    "dirty source files: Makefile, applications/scenarios/beacon_xai/figures/operator_dashboard.png, applications/scenarios/beacon_xai/proof/proof_trace.json, applications/scenarios/beacon_xai/route/route.json, applications/scenarios/beacon_xai/site_payload/scenario.json, applications/scenarios/gd_anfis_shap/figures/operator_dashboard.png, applications/scenarios/gd_anfis_shap/proof/proof_trace.json, applications/scenarios/gd_anfis_shap/route/route.json, applications/scenarios/gd_anfis_shap/site_payload/scenario.json, applications/scenarios/gis_integro/figures/operator_dashboard.png"
+    "dirty source files: DUBNAXAI_FULL_WORK_REPORT.md, applications/scenarios/beacon_xai/figures/operator_dashboard.png, applications/scenarios/beacon_xai/proof/proof_trace.json, applications/scenarios/beacon_xai/route/route.json, applications/scenarios/beacon_xai/site_payload/scenario.json, applications/scenarios/gd_anfis_shap/figures/operator_dashboard.png, applications/scenarios/gd_anfis_shap/proof/proof_trace.json, applications/scenarios/gd_anfis_shap/route/route.json, applications/scenarios/gd_anfis_shap/site_payload/scenario.json, applications/scenarios/gis_integro/figures/operator_dashboard.png"
   ],
   "errors": [],
   "next_step": "external payload schemas and adapter contracts"
