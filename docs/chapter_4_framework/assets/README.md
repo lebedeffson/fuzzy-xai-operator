@@ -25,5 +25,13 @@ Assets copied from verified FuzzyXAI framework artifacts.
 | `operator_trace_heatmap_compact.png` | `reports/release/fuzzyxai_visualization_package/chapter/operator_trace_heatmap_compact.png` |
 | `representation_atlas_chapter.png` | `reports/release/fuzzyxai_visualization_package/chapter/representation_atlas_chapter.png` |
 | `proof_consistency_matrix_chapter.png` | `reports/release/fuzzyxai_visualization_package/chapter/proof_consistency_matrix_chapter.png` |
+| `operator_risk_contribution_summary.png` | `reports/release/fuzzyxai_shap_like_visualization_package/chapter/operator_risk_contribution_summary.png` |
+| `local_risk_evidence_bridge.png` | `reports/release/fuzzyxai_shap_like_visualization_package/chapter/local_risk_evidence_bridge.png` |
+| `gamma_delta_action_map_v2.png` | `reports/release/fuzzyxai_shap_like_visualization_package/chapter/gamma_delta_action_map_v2.png` |
+| `action_boundary_strip_v2.png` | `reports/release/fuzzyxai_shap_like_visualization_package/chapter/action_boundary_strip_v2.png` |
+| `compact_operator_trace_heatmap_v2.png` | `reports/release/fuzzyxai_shap_like_visualization_package/chapter/compact_operator_trace_heatmap_v2.png` |
+| `representation_class_atlas_v2.png` | `reports/release/fuzzyxai_shap_like_visualization_package/chapter/representation_class_atlas_v2.png` |
+| `explanation_coverage_curve_v2.png` | `reports/release/fuzzyxai_shap_like_visualization_package/chapter/explanation_coverage_curve_v2.png` |
+| `proof_consistency_matrix_v2.png` | `reports/release/fuzzyxai_shap_like_visualization_package/chapter/proof_consistency_matrix_v2.png` |
 
 These files are presentation assets for Chapter 4. The source computations remain in `framework/fuzzyxai`, `external_validation`, `research_validation`, and `reports/release/fuzzyxai_framework_rc_package.zip`.

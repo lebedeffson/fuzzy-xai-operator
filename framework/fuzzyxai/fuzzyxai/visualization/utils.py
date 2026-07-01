@@ -79,6 +79,37 @@ def action_for_rho(rho: float) -> str:
     return "audit"
 
 
+def action_for_rho_with_plan(rho: float, plan: Any | None = None) -> str:
+    accept = float(getattr(plan, "rho_accept", 0.35))
+    warning = float(getattr(plan, "rho_warning", 0.60))
+    audit = float(getattr(plan, "rho_audit", 0.75))
+    if rho < accept:
+        return "accept"
+    if rho < warning:
+        return "lower_confidence"
+    if rho < audit:
+        return "audit"
+    return "block"
+
+
+def aggregate_risk(components: dict[str, float], aggregation: str = "max", weights: dict[str, float] | None = None) -> float:
+    values = [max(0.0, float(value)) for value in components.values()]
+    if not values:
+        return 0.0
+    if aggregation == "max":
+        return max(values)
+    if aggregation == "weighted_sum":
+        if weights is None:
+            raise ValueError("weights required for weighted_sum aggregation")
+        return sum(float(weights[key]) * float(components[key]) for key in components)
+    if aggregation == "probabilistic_or":
+        product = 1.0
+        for value in values:
+            product *= 1.0 - value
+        return 1.0 - product
+    raise ValueError(f"Unknown risk aggregation: {aggregation}")
+
+
 def status_color(action: str) -> str:
     return ACTION_COLORS.get(action, "#607d8b")
 
@@ -116,6 +147,17 @@ def png_size(path: str | Path) -> tuple[int, int]:
 
     with Image.open(path) as image:
         return image.size
+
+
+def save_figure_all(fig: Any, out: str | Path, *, dpi: int = 300) -> dict[str, Path]:
+    out = ensure_parent(out)
+    outputs = {"png": out}
+    fig.savefig(out, dpi=dpi, bbox_inches="tight")
+    for suffix in ("pdf", "svg"):
+        path = out.with_suffix(f".{suffix}")
+        fig.savefig(path, bbox_inches="tight")
+        outputs[suffix] = path
+    return outputs
 
 
 def write_html_with_image(

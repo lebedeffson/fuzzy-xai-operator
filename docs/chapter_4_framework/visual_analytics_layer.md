@@ -2,138 +2,118 @@
 
 ## Идея
 
-FuzzyXAI visual analytics показывает не локальный вклад признаков в предсказание, а трассу формирования доверия к объяснению. Визуальная единица фреймворка:
+FuzzyXAI visual analytics показывает не локальный вклад признаков в предсказание, а трассу формирования доверия к объяснению:
 
 ```text
-operator -> component -> risk -> diagnostic -> action -> proof
+operator -> risk evidence -> aggregation rule -> rho -> diagnostic -> action -> proof
 ```
 
-Поэтому визуализация FuzzyXAI отвечает на вопрос:
+Главное отличие от SHAP: SHAP объясняет `feature -> contribution -> prediction`, а FuzzyXAI объясняет `operator -> risk -> action`.
+
+## Difference from SHAP
+
+SHAP waterfall математически аддитивен:
 
 ```text
-почему объяснение прошло именно такой операторный маршрут и почему итоговое действие стало таким
+base value + feature contributions = prediction
 ```
 
-## Отличие от feature-contribution подхода
-
-В feature-attribution визуализациях основная линия:
+Для FuzzyXAI это нельзя копировать напрямую, потому что текущий риск чаще агрегируется так:
 
 ```text
-feature -> contribution -> prediction
+rho = max(gamma, delta, quality, conflict, interval)
 ```
 
-В FuzzyXAI основная линия:
+Поэтому FuzzyXAI использует SHAP-like readability, но FuzzyXAI-correct semantics. Вместо cumulative waterfall вводится `Local Risk Evidence Bridge`: параллельные evidence bars, линия `rho=max(...)`, доминирующий компонент и action boundary.
 
-```text
-input -> explanation object -> representation -> gamma -> delta -> rho -> diagnostic -> action -> proof
-```
-
-Это делает визуальный слой пригодным для анализа деградации доверия к объяснению.
-
-## Canonical Visualizations
-
-Введены 8 базовых визуализаций.
+## SHAP-like FuzzyXAI Visualizations
 
 | ID | Visualization | Назначение |
 |---|---|---|
-| V1 | Operator Route Sankey | поток значений между операторами |
-| V2 | Gamma-Delta Action Map | геометрия решения в пространстве `gamma`/`delta` |
-| V3 | Risk Waterfall | вклад uncertainty/reduction/quality/conflict в `rho` |
-| V4 | Operator Trace Heatmap | матрица эксперименты x операторные компоненты |
-| V5 | Representation Class Atlas | активация `F0`, `F_int`, `NAS`, `F_ML` |
-| V6 | Explanation Coverage Curve | покрытие top-k объяснения и потеря `delta` |
-| V7 | Action Boundary Plot | положение `rho` относительно границ action |
-| V8 | Proof Consistency Matrix | согласованность route/proof/dashboard/verifier/manifest |
+| S1 | Operator Risk Contribution Summary | среднее значение компоненты, dominance rate и превышение warning-порога |
+| S2 | Local Risk Evidence Bridge | локальные evidence bars и `rho=max(...)` без ложного суммирования |
+| S3 | Gamma-Delta Action Map v2 | зоны действий по `rho=max(gamma, delta)` и ExplainPlan thresholds |
+| S4 | Action Boundary Strip v2 | положение `rho`, расстояния до границ и dominant evidence |
+| S5 | Compact Operator Trace Heatmap v2 | числовая матрица риска без смешивания категорий |
+| S6 | Representation Class Atlas v2 | `task_type x perturbation -> representation_class` с count |
+| S7 | Explanation Coverage Curve | top-k coverage и `delta = 1 - coverage` |
+| S8 | Proof Consistency Matrix v2 | artifact x invariant для воспроизводимости |
 
-## Single-case visualizations
+## Chapter Figures
 
-Для одного внешнего решения используются:
+Основной набор для главы 4:
 
 ```text
-assets/operator_route_sankey.png
-assets/risk_waterfall.png
-assets/explanation_coverage_curve.png
-assets/action_boundary_plot.png
-assets/proof_consistency_matrix.png
-assets/operator_dashboard_v3.png
+operator_risk_contribution_summary.png
+local_risk_evidence_bridge.png
+gamma_delta_action_map_v2.png
+action_boundary_strip_v2.png
+compact_operator_trace_heatmap_v2.png
+representation_class_atlas_v2.png
+proof_consistency_matrix_v2.png
+explanation_coverage_curve_v2.png
 ```
 
-Пример RC payload:
+Каждая chapter-ready фигура экспортируется в:
 
 ```text
-gamma = 0.32
-delta = 0.39
+PNG
+PDF
+SVG
+```
+
+## Interpretation
+
+`Operator Risk Contribution Summary` не показывает “средний вклад в сумму”. Он показывает:
+
+```text
+mean_value
+std_value
+dominance_count
+dominance_rate
+mean_excess_over_warning
+max_value
+```
+
+Это важно для `max`-агрегации: компонент может редко доминировать, но именно он переводит отдельные случаи в `audit` или `defer_to_human`.
+
+`Gamma-Delta Action Map v2` строит фон не вручную, а по правилу:
+
+```text
+rho = max(gamma, delta)
+```
+
+Поэтому `accept` — это нижний левый квадрат, где одновременно `gamma < rho_accept` и `delta < rho_accept`.
+
+`Action Boundary Strip v2` показывает, почему решение не перешло в соседнюю зону:
+
+```text
 rho = 0.39
-dominant_component = delta
 action = lower_confidence
+dominant evidence = reduction
 ```
 
-Смысл: результат не блокируется, но доверие понижено, потому что потеря редуцированного объяснения удерживает `rho` в зоне `lower_confidence`.
+## Release Artifact
 
-## Research visualizations
-
-Для исследовательского набора используются:
+Проверенный пакет:
 
 ```text
-assets/gamma_delta_action_map_viz.png
-assets/operator_trace_heatmap.png
-assets/representation_atlas.png
+reports/release/fuzzyxai_shap_like_visualization_package.zip
 ```
 
-Эти фигуры показывают:
-
-- расположение экспериментов в пространстве `gamma`/`delta`;
-- изменение риска и компонент по 20 экспериментам;
-- покрытие классов представления по task type и perturbation.
-
-## Dashboard v3
-
-`operator_dashboard_v3` объединяет:
+Он содержит `manifest.json`, `shap_like_visualization_report.md`, PNG/PDF/SVG figure exports и исходные CSV/JSON:
 
 ```text
-Operator Route Sankey
-Risk Waterfall
-Action Boundary Plot
-Proof Consistency Matrix
+data/operator_risk_contribution_summary.csv
+data/local_risk_evidence_bridge.json
+data/visual_source_index.json
 ```
-
-Dashboard v3 не пересчитывает операторные значения. Он строится из уже сохранённых:
-
-```text
-route.json
-operator_trace.json
-proof_trace.json
-verifier_report.json
-dashboard_data.json
-```
-
-## CLI
-
-В CLI добавлена группа:
-
-```bash
-fuzzyxai visualize ...
-```
-
-Примеры:
-
-```bash
-fuzzyxai visualize route-sankey --route route.json --out operator_route_sankey.png
-fuzzyxai visualize risk-waterfall --trace operator_trace.json --out risk_waterfall.png
-fuzzyxai visualize gamma-delta-map --results research_validation_results.csv --out gamma_delta_action_map.png
-fuzzyxai visualize proof-matrix --package audit_package.zip --out proof_consistency_matrix.png
-```
-
-## Release artifact
-
-Проверенный пакет визуализаций:
-
-```text
-reports/release/fuzzyxai_visualization_package.zip
-```
-
-Он содержит PNG и HTML для single-case и research visual analytics, `visualization_report.md` и `manifest.json` с SHA256.
 
 ## Вывод
 
-Визуальный слой FuzzyXAI формирует собственный язык объяснимости: не feature contribution, а operator-risk-action trace. Это поддерживает главную идею главы 4: фреймворк объясняет не только результат модели, но и путь ограничения доверия к объяснению.
+Визуальный слой FuzzyXAI не копирует SHAP математически. Он заимствует читаемость, но сохраняет операторную семантику:
+
+```text
+SHAP: additive feature contributions
+FuzzyXAI: operator evidence + risk aggregation + action boundary
+```

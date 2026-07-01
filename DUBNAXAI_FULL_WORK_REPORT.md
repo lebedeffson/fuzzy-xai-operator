@@ -298,6 +298,17 @@ Visual hardening added chapter-ready compact figures, unified semantic colors
 for actions/statuses, provenance footers with `source_commit` and verifier
 markers, a long-form visualization report and sha256-backed package validation.
 
+Added SHAP-like, FuzzyXAI-correct visual refinement:
+
+- `framework/fuzzyxai/fuzzyxai/visualization/shap_like.py`
+- `make fuzzyxai-shap-like-visualization-check`
+- `make fuzzyxai-shap-like-visualization-package`
+- `reports/release/fuzzyxai_shap_like_visualization_package.zip`
+
+This layer does not copy SHAP waterfall semantics. For the default FuzzyXAI
+aggregation `rho = max(gamma, delta, quality, conflict, interval)`, it renders
+operator risk evidence and dominant components instead of cumulative sums.
+
 ### Operator Traceability v2
 
 Added framework-level operator traceability for the external validation package:
@@ -391,6 +402,7 @@ The check runs:
 - FuzzyXAI adapter SDK check
 - FuzzyXAI framework RC acceptance check/package
 - FuzzyXAI visualization check/package/quality gate
+- FuzzyXAI SHAP-like visualization check/package
 - operator traceability check
 - research validation is available through `make research-validation` and
   `make research-validation-check`; research analysis is available through
