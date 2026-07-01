@@ -84,7 +84,7 @@ def build_external_wine_classification_route(adapted: AdaptedInput) -> OperatorR
             output_summary="AdaptedInput",
             value=f"p={probability}; class={values['predicted_class']}",
             status="passed",
-            explanation="Адаптер принимает внешний результат RandomForestClassifier.",
+            explanation="Адаптер принимает внешний результат табличной модели.",
             formula_ref="adapter",
             trace_ref="adapted_input",
             value_source="external_model_payload",

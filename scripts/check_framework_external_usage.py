@@ -5,6 +5,7 @@ import json
 import subprocess
 import sys
 import tempfile
+import zipfile
 from pathlib import Path
 
 
@@ -12,6 +13,7 @@ ROOT = Path(__file__).resolve().parents[1]
 OUTPUTS = ROOT / "external_validation" / "outputs"
 MODEL_KEYS = ("logistic_regression", "gradient_boosting")
 ZIP_PATH = OUTPUTS / "external_wine_blackbox_validation.zip"
+PACKAGE_DIR = OUTPUTS / "external_wine_blackbox_validation"
 
 
 def run(cmd: list[str], cwd: Path) -> subprocess.CompletedProcess[str]:
@@ -51,7 +53,14 @@ def main() -> int:
             return result.returncode
 
     summary_path = OUTPUTS / "external_wine_summary.json"
-    required = [summary_path, ZIP_PATH]
+    required = [
+        summary_path,
+        ZIP_PATH,
+        PACKAGE_DIR / "manifest.json",
+        PACKAGE_DIR / "external_validation_report.md",
+        PACKAGE_DIR / "import_provenance.json",
+        PACKAGE_DIR / "external_wine_summary.json",
+    ]
     for model_key in MODEL_KEYS:
         required.extend(
             [
@@ -59,6 +68,10 @@ def main() -> int:
                 OUTPUTS / f"external_wine_{model_key}_proof_trace.json",
                 OUTPUTS / f"external_wine_{model_key}_operator_dashboard.png",
                 OUTPUTS / f"external_wine_{model_key}_summary.json",
+                PACKAGE_DIR / model_key / "route.json",
+                PACKAGE_DIR / model_key / "proof_trace.json",
+                PACKAGE_DIR / model_key / "operator_dashboard.png",
+                PACKAGE_DIR / model_key / "summary.json",
             ]
         )
     for path in required:
@@ -72,6 +85,39 @@ def main() -> int:
         return 1
     if not summary.get("source_commit"):
         print("framework-external-check: FAIL source_commit is empty", file=sys.stderr)
+        return 1
+    manifest = json.loads((PACKAGE_DIR / "manifest.json").read_text(encoding="utf-8"))
+    provenance = json.loads((PACKAGE_DIR / "import_provenance.json").read_text(encoding="utf-8"))
+    if manifest.get("source_commit") != summary.get("source_commit"):
+        print("framework-external-check: FAIL manifest source_commit mismatch", file=sys.stderr)
+        return 1
+    if not provenance.get("package_boundary_ok") or provenance.get("applications_used") is not False:
+        print("framework-external-check: FAIL import provenance is invalid", file=sys.stderr)
+        return 1
+    if "/applications/" in json.dumps(summary) or str(ROOT) in json.dumps(summary):
+        print("framework-external-check: FAIL external summary contains absolute/internal paths", file=sys.stderr)
+        return 1
+    if "RandomForestClassifier" in (PACKAGE_DIR / "external_validation_report.md").read_text(encoding="utf-8"):
+        print("framework-external-check: FAIL report contains RandomForestClassifier", file=sys.stderr)
+        return 1
+    with zipfile.ZipFile(ZIP_PATH) as archive:
+        names = set(archive.namelist())
+    expected_zip_entries = {
+        "external_wine_blackbox_validation/manifest.json",
+        "external_wine_blackbox_validation/external_validation_report.md",
+        "external_wine_blackbox_validation/import_provenance.json",
+        "external_wine_blackbox_validation/logistic_regression/route.json",
+        "external_wine_blackbox_validation/logistic_regression/proof_trace.json",
+        "external_wine_blackbox_validation/logistic_regression/summary.json",
+        "external_wine_blackbox_validation/logistic_regression/operator_dashboard.png",
+        "external_wine_blackbox_validation/gradient_boosting/route.json",
+        "external_wine_blackbox_validation/gradient_boosting/proof_trace.json",
+        "external_wine_blackbox_validation/gradient_boosting/summary.json",
+        "external_wine_blackbox_validation/gradient_boosting/operator_dashboard.png",
+    }
+    missing_zip_entries = expected_zip_entries - names
+    if missing_zip_entries:
+        print(f"framework-external-check: FAIL zip missing entries {sorted(missing_zip_entries)}", file=sys.stderr)
         return 1
     validations = summary.get("validations") or []
     if len(validations) != 2:

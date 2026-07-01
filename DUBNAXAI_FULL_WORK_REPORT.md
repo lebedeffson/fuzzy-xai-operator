@@ -153,9 +153,12 @@ runners, external framework validation and current git state. It is called by
 Added black-box validation for FuzzyXAI as an installed library:
 
 - `external_validation/run_external_wine_test.py`
-- `external_validation/outputs/external_wine_route.json`
-- `external_validation/outputs/external_wine_proof_trace.json`
-- `external_validation/outputs/external_wine_operator_dashboard.png`
+- `external_validation/outputs/external_wine_blackbox_validation.zip`
+- `external_validation/outputs/external_wine_blackbox_validation/manifest.json`
+- `external_validation/outputs/external_wine_blackbox_validation/external_validation_report.md`
+- `external_validation/outputs/external_wine_blackbox_validation/import_provenance.json`
+- `external_validation/outputs/external_wine_blackbox_validation/logistic_regression/route.json`
+- `external_validation/outputs/external_wine_blackbox_validation/gradient_boosting/route.json`
 - `external_validation/outputs/external_wine_summary.json`
 - `scripts/check_framework_external_usage.py`
 - `make framework-external-check`

@@ -2,10 +2,14 @@
 from __future__ import annotations
 
 import json
+import shutil
 import zipfile
+from datetime import UTC, datetime
+from hashlib import sha256
 from pathlib import Path
 from typing import Any
 
+import fuzzyxai
 import numpy as np
 from sklearn.datasets import load_wine
 from sklearn.ensemble import GradientBoostingClassifier
@@ -23,6 +27,8 @@ ROOT = Path(__file__).resolve().parent
 OUT = ROOT / "outputs"
 TARGET_PROBABILITY = 0.68
 ZIP_NAME = "external_wine_blackbox_validation.zip"
+PACKAGE_NAME = "external_wine_blackbox_validation"
+PACKAGE_DIR = OUT / PACKAGE_NAME
 
 
 def _split_wine() -> tuple[Any, Any, Any, Any, Any]:
@@ -118,6 +124,18 @@ def _payload_for_model(model_key: str) -> dict[str, Any]:
     }
 
 
+def _sha256(path: Path) -> str:
+    digest = sha256()
+    with path.open("rb") as file:
+        for chunk in iter(lambda: file.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def _model_dir_name(model_key: str) -> str:
+    return model_key
+
+
 def _run_one(model_key: str) -> dict[str, Any]:
     payload = _payload_for_model(model_key)
     adapter = TabularClassificationAdapter()
@@ -129,9 +147,17 @@ def _run_one(model_key: str) -> dict[str, Any]:
         raise SystemExit(f"{model_key}: proof verification failed: {verification.errors}")
 
     prefix = f"external_wine_{model_key}"
+    model_dir = PACKAGE_DIR / _model_dir_name(model_key)
+    model_dir.mkdir(parents=True, exist_ok=True)
     route_path = save_route_json(route, OUT / f"{prefix}_route.json")
     proof_path = save_proof_trace_json(trace, OUT / f"{prefix}_proof_trace.json")
     dashboard_path = render_dashboard(route, OUT / f"{prefix}_operator_dashboard.png")
+    package_route = model_dir / "route.json"
+    package_proof = model_dir / "proof_trace.json"
+    package_dashboard = model_dir / "operator_dashboard.png"
+    shutil.copy2(route_path, package_route)
+    shutil.copy2(proof_path, package_proof)
+    shutil.copy2(dashboard_path, package_dashboard)
     computed = route.computed_result
     if computed.get("gamma", 0.0) <= 0 or computed.get("delta", 0.0) <= 0 or computed.get("rho", 0.0) <= 0:
         raise SystemExit(f"{model_key}: expected non-zero gamma/delta/rho, got {computed}")
@@ -149,19 +175,128 @@ def _run_one(model_key: str) -> dict[str, Any]:
         "computed_result": computed,
         "verifier": "passed" if verification.valid else "failed",
         "source_commit": route.source_commit,
-        "route": route_path.as_posix(),
-        "proof_trace": proof_path.as_posix(),
-        "dashboard": dashboard_path.as_posix(),
+        "route": f"{_model_dir_name(model_key)}/route.json",
+        "proof_trace": f"{_model_dir_name(model_key)}/proof_trace.json",
+        "dashboard": f"{_model_dir_name(model_key)}/operator_dashboard.png",
     }
-    summary_path = OUT / f"{prefix}_summary.json"
-    summary_path.write_text(json.dumps(summary, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    package_summary = model_dir / "summary.json"
+    package_summary.write_text(json.dumps(summary, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    shutil.copy2(package_summary, OUT / f"{prefix}_summary.json")
     return summary
+
+
+def _write_report(aggregate: dict[str, Any]) -> Path:
+    rows = []
+    for item in aggregate["validations"]:
+        computed = item["computed_result"]
+        rows.append(
+            "| {model} | {p:.6f} | {gamma:.6f} | {delta:.6f} | {rho:.6f} | {action} | {diagnostic} |".format(
+                model=item["model_name"],
+                p=float(computed["class_probability"]),
+                gamma=float(computed["gamma"]),
+                delta=float(computed["delta"]),
+                rho=float(computed["rho"]),
+                action=item["action"],
+                diagnostic=item["diagnostic"],
+            )
+        )
+    report = "\n".join(
+        [
+            "# External FuzzyXAI Black-Box Validation",
+            "",
+            f"- task: `{aggregate['task']}`",
+            f"- scenario_id: `{aggregate['scenario_id']}`",
+            f"- source_commit: `{aggregate['source_commit']}`",
+            f"- verifier: `{aggregate['verifier']}`",
+            f"- package: `{ZIP_NAME}`",
+            "",
+            "The package was generated from an installed `fuzzyxai` framework import and does not use `applications/scenarios`.",
+            "Both checks use moderate-confidence wine-classification objects and top-k feature importances, so operator values are non-zero.",
+            "",
+            "| Model | p | gamma | delta | rho | action | diagnostic |",
+            "|---|---:|---:|---:|---:|---|---|",
+            *rows,
+            "",
+            "Formulas:",
+            "",
+            "- `gamma = max(1 - class_probability, quality_penalty)`",
+            "- `delta = 1 - sum(top_k_feature_importance)`",
+            "- `rho = max(gamma, delta)`",
+            "",
+        ]
+    )
+    path = PACKAGE_DIR / "external_validation_report.md"
+    path.write_text(report, encoding="utf-8")
+    return path
+
+
+def _write_provenance(aggregate: dict[str, Any]) -> Path:
+    provenance = {
+        "task": aggregate["task"],
+        "scenario_id": aggregate["scenario_id"],
+        "source_commit": aggregate["source_commit"],
+        "generated_at_utc": datetime.now(UTC).isoformat(),
+        "cwd": Path.cwd().as_posix(),
+        "fuzzyxai_file": Path(fuzzyxai.__file__).resolve().as_posix(),
+        "package_boundary_ok": "framework/fuzzyxai/fuzzyxai" in Path(fuzzyxai.__file__).resolve().as_posix(),
+        "applications_used": False,
+        "imports": [
+            "fuzzyxai",
+            "fuzzyxai.adapters.tabular_classification.TabularClassificationAdapter",
+            "sklearn.datasets.load_wine",
+            "sklearn.linear_model.LogisticRegression",
+            "sklearn.ensemble.GradientBoostingClassifier",
+        ],
+    }
+    path = PACKAGE_DIR / "import_provenance.json"
+    path.write_text(json.dumps(provenance, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    return path
+
+
+def _write_manifest(aggregate: dict[str, Any]) -> Path:
+    files = []
+    for path in sorted(PACKAGE_DIR.rglob("*")):
+        if path.is_file() and path.name != "manifest.json":
+            files.append(
+                {
+                    "path": path.relative_to(PACKAGE_DIR).as_posix(),
+                    "size_bytes": path.stat().st_size,
+                    "sha256": _sha256(path),
+                }
+            )
+    manifest = {
+        "package_name": PACKAGE_NAME,
+        "task": aggregate["task"],
+        "scenario_id": aggregate["scenario_id"],
+        "source_commit": aggregate["source_commit"],
+        "verifier": aggregate["verifier"],
+        "models": aggregate["models"],
+        "files": files,
+    }
+    path = PACKAGE_DIR / "manifest.json"
+    path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    return path
+
+
+def _build_zip() -> Path:
+    zip_path = OUT / ZIP_NAME
+    if zip_path.exists():
+        zip_path.unlink()
+    with zipfile.ZipFile(zip_path, "w", compression=zipfile.ZIP_DEFLATED) as archive:
+        for path in sorted(PACKAGE_DIR.rglob("*")):
+            if path.is_file():
+                archive.write(path, arcname=(Path(PACKAGE_NAME) / path.relative_to(PACKAGE_DIR)).as_posix())
+    return zip_path
 
 
 def main() -> None:
     OUT.mkdir(parents=True, exist_ok=True)
     for old_file in OUT.glob("external_wine_*"):
-        old_file.unlink()
+        if old_file.is_file():
+            old_file.unlink()
+        elif old_file.is_dir():
+            shutil.rmtree(old_file)
+    PACKAGE_DIR.mkdir(parents=True, exist_ok=True)
     validations = [_run_one("logistic_regression"), _run_one("gradient_boosting")]
     aggregate = {
         "task": "sklearn_wine_classification",
@@ -174,11 +309,11 @@ def main() -> None:
     }
     summary_path = OUT / "external_wine_summary.json"
     summary_path.write_text(json.dumps(aggregate, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    zip_path = OUT / ZIP_NAME
-    with zipfile.ZipFile(zip_path, "w", compression=zipfile.ZIP_DEFLATED) as archive:
-        for path in sorted(OUT.glob("external_wine_*")):
-            if path.name != ZIP_NAME and path.is_file():
-                archive.write(path, arcname=path.name)
+    shutil.copy2(summary_path, PACKAGE_DIR / "external_wine_summary.json")
+    _write_report(aggregate)
+    _write_provenance(aggregate)
+    _write_manifest(aggregate)
+    _build_zip()
     print(json.dumps(aggregate, ensure_ascii=False, indent=2))
 
 

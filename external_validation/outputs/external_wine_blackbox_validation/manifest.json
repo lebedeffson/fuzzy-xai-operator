@@ -1,0 +1,68 @@
+{
+  "package_name": "external_wine_blackbox_validation",
+  "task": "sklearn_wine_classification",
+  "scenario_id": "external_wine_classification",
+  "source_commit": "c15d5a0476b909fe9e25d27cc077a9d8fa3be3fd",
+  "verifier": "passed",
+  "models": [
+    "LogisticRegression",
+    "GradientBoostingClassifier"
+  ],
+  "files": [
+    {
+      "path": "external_validation_report.md",
+      "size_bytes": 983,
+      "sha256": "86e41eae9b3fcf89d1cbadc88f2db0a500b81d6545db97a71dc5c768c992d8b3"
+    },
+    {
+      "path": "external_wine_summary.json",
+      "size_bytes": 2102,
+      "sha256": "ccb94393fafdbefde4c07e8432bf6a44d2af131ce76ae435c5456022d402c3d2"
+    },
+    {
+      "path": "gradient_boosting/operator_dashboard.png",
+      "size_bytes": 266872,
+      "sha256": "a14b13574cbd8262b995e661afce6b6ede91b679a07d22e931b6d4a03e10ca76"
+    },
+    {
+      "path": "gradient_boosting/proof_trace.json",
+      "size_bytes": 9235,
+      "sha256": "1b3f5d7c8ba633da9581a4a0606798b4521e21020fa49d734f3b6a8f2b4597a6"
+    },
+    {
+      "path": "gradient_boosting/route.json",
+      "size_bytes": 7863,
+      "sha256": "390154a70a7006a4e72d3762f779c1925df48e040d1b238b59872e042992ff80"
+    },
+    {
+      "path": "gradient_boosting/summary.json",
+      "size_bytes": 801,
+      "sha256": "af176558784780d6f62bd8a53021eca80be1554bb2d163ea6bcce5164fc81dfb"
+    },
+    {
+      "path": "import_provenance.json",
+      "size_bytes": 667,
+      "sha256": "4687b817e17bc2cbb008ac048484714f1b78fcc6cd6b3c5bcadeb213d214399d"
+    },
+    {
+      "path": "logistic_regression/operator_dashboard.png",
+      "size_bytes": 267904,
+      "sha256": "a2365c0ba9f671e617ba3e9e97a42c89fbf832288cc12575bf5bc775eca79afa"
+    },
+    {
+      "path": "logistic_regression/proof_trace.json",
+      "size_bytes": 9322,
+      "sha256": "c18eda1b8416384f3312eb9cc26c868d6f561af3d3c9b59e81fefa32fe6c50c9"
+    },
+    {
+      "path": "logistic_regression/route.json",
+      "size_bytes": 7944,
+      "sha256": "4d4643994fd09aab6e4a81d27b52e470f76035680099c1b8753718a15ca1eabc"
+    },
+    {
+      "path": "logistic_regression/summary.json",
+      "size_bytes": 801,
+      "sha256": "95e449ef08b25c7634ad5d0052af7ed6795fc38451e30c8333553faae80c48ff"
+    }
+  ]
+}

@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import subprocess
 import sys
+import zipfile
 from pathlib import Path
 
 
@@ -38,10 +39,22 @@ def test_framework_external_usage_from_tmp(tmp_path: Path) -> None:
     assert result.returncode == 0, result.stdout + result.stderr
 
     out = ROOT / "external_validation" / "outputs"
+    package_dir = out / "external_wine_blackbox_validation"
     summary = json.loads((out / "external_wine_summary.json").read_text(encoding="utf-8"))
 
     assert summary["verifier"] == "passed"
     assert (out / "external_wine_blackbox_validation.zip").stat().st_size > 0
+    manifest = json.loads((package_dir / "manifest.json").read_text(encoding="utf-8"))
+    provenance = json.loads((package_dir / "import_provenance.json").read_text(encoding="utf-8"))
+    assert manifest["source_commit"] == summary["source_commit"]
+    assert provenance["package_boundary_ok"] is True
+    assert provenance["applications_used"] is False
+    assert str(ROOT) not in json.dumps(summary)
+    with zipfile.ZipFile(out / "external_wine_blackbox_validation.zip") as archive:
+        names = set(archive.namelist())
+    assert "external_wine_blackbox_validation/manifest.json" in names
+    assert "external_wine_blackbox_validation/logistic_regression/route.json" in names
+    assert "external_wine_blackbox_validation/gradient_boosting/route.json" in names
     assert len(summary["validations"]) == 2
     for item in summary["validations"]:
         model_key = item["model_key"]
@@ -57,3 +70,6 @@ def test_framework_external_usage_from_tmp(tmp_path: Path) -> None:
         assert 0.10 <= computed["rho"] <= 0.70
         assert route["source_commit"]
         assert proof["source_commit"]
+        assert item["route"] == f"{model_key}/route.json"
+        assert item["proof_trace"] == f"{model_key}/proof_trace.json"
+        assert item["dashboard"] == f"{model_key}/operator_dashboard.png"

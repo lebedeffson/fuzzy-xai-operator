@@ -1,0 +1,17 @@
+{
+  "task": "sklearn_wine_classification",
+  "scenario_id": "external_wine_classification",
+  "source_commit": "c15d5a0476b909fe9e25d27cc077a9d8fa3be3fd",
+  "generated_at_utc": "2026-07-01T14:48:48.369330+00:00",
+  "cwd": "/tmp/fuzzyxai-external-cgeno_n7",
+  "fuzzyxai_file": "/home/lebedeffson/Code/fuzzy-xai-operator/framework/fuzzyxai/fuzzyxai/__init__.py",
+  "package_boundary_ok": true,
+  "applications_used": false,
+  "imports": [
+    "fuzzyxai",
+    "fuzzyxai.adapters.tabular_classification.TabularClassificationAdapter",
+    "sklearn.datasets.load_wine",
+    "sklearn.linear_model.LogisticRegression",
+    "sklearn.ensemble.GradientBoostingClassifier"
+  ]
+}

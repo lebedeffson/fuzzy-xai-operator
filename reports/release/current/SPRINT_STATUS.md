@@ -3,7 +3,7 @@
 ## Git
 
 - branch: main
-- commit: 42548a8
+- commit: c15d5a0
 - tag: none
 - pushed: unknown
 
@@ -19,6 +19,7 @@ DubnaXAI/FuzzyXAI has three separated layers: framework computes, applications r
 - applications
 - data
 - external_validation
+- framework
 - fuzzyxai_final_audit_package.zip
 - models
 - reports
@@ -86,7 +87,7 @@ DubnaXAI/FuzzyXAI has three separated layers: framework computes, applications r
 | proof | PASS |
 | dashboard | PASS |
 | verifier | passed |
-| source_commit | 42548a8d11902d70db87bb474957a9c443907b6e |
+| source_commit | c15d5a0476b909fe9e25d27cc077a9d8fa3be3fd |
 
 ## Site Separation
 
@@ -102,40 +103,40 @@ DubnaXAI/FuzzyXAI has three separated layers: framework computes, applications r
 Dirty source files: yes
 
 ```text
-M  DUBNAXAI_FULL_WORK_REPORT.md
-M  applications/scenarios/beacon_xai/figures/operator_dashboard.png
-M  applications/scenarios/beacon_xai/proof/proof_trace.json
-M  applications/scenarios/beacon_xai/route/route.json
-M  applications/scenarios/beacon_xai/site_payload/scenario.json
-M  applications/scenarios/gd_anfis_shap/figures/operator_dashboard.png
-M  applications/scenarios/gd_anfis_shap/proof/proof_trace.json
-M  applications/scenarios/gd_anfis_shap/route/route.json
-M  applications/scenarios/gd_anfis_shap/site_payload/scenario.json
-M  applications/scenarios/gis_integro/figures/operator_dashboard.png
-M  applications/scenarios/gis_integro/proof/proof_trace.json
-M  applications/scenarios/gis_integro/route/route.json
-M  applications/scenarios/gis_integro/site_payload/scenario.json
-M  applications/scenarios/hybrid_xiris/figures/operator_dashboard.png
-M  applications/scenarios/hybrid_xiris/proof/proof_trace.json
-M  applications/scenarios/hybrid_xiris/route/route.json
-M  applications/scenarios/hybrid_xiris/site_payload/scenario.json
-M  applications/scenarios/medical_ecg_signal/figures/operator_dashboard.png
-M  applications/scenarios/medical_ecg_signal/proof/proof_trace.json
-M  applications/scenarios/medical_ecg_signal/route/route.json
-M  applications/scenarios/medical_ecg_signal/site_payload/scenario.json
-M  external_validation/README.md
-AM external_validation/outputs/external_wine_blackbox_validation.zip
-A  external_validation/outputs/external_wine_gradient_boosting_operator_dashboard.png
-A  external_validation/outputs/external_wine_gradient_boosting_proof_trace.json
-A  external_validation/outputs/external_wine_gradient_boosting_route.json
-A  external_validation/outputs/external_wine_gradient_boosting_summary.json
-A  external_validation/outputs/external_wine_logistic_regression_operator_dashboard.png
-R  external_validation/outputs/external_wine_proof_trace.json -> external_validation/outputs/external_wine_logistic_regression_proof_trace.json
-R  external_validation/outputs/external_wine_route.json -> external_validation/outputs/external_wine_logistic_regression_route.json
-A  external_validation/outputs/external_wine_logistic_regression_summary.json
-D  external_validation/outputs/external_wine_operator_dashboard.png
-M  external_validation/outputs/external_wine_summary.json
-M  external_validation/run_external_wine_test.py
+M DUBNAXAI_FULL_WORK_REPORT.md
+ M applications/scenarios/beacon_xai/figures/operator_dashboard.png
+ M applications/scenarios/beacon_xai/proof/proof_trace.json
+ M applications/scenarios/beacon_xai/route/route.json
+ M applications/scenarios/beacon_xai/site_payload/scenario.json
+ M applications/scenarios/gd_anfis_shap/figures/operator_dashboard.png
+ M applications/scenarios/gd_anfis_shap/proof/proof_trace.json
+ M applications/scenarios/gd_anfis_shap/route/route.json
+ M applications/scenarios/gd_anfis_shap/site_payload/scenario.json
+ M applications/scenarios/gis_integro/figures/operator_dashboard.png
+ M applications/scenarios/gis_integro/proof/proof_trace.json
+ M applications/scenarios/gis_integro/route/route.json
+ M applications/scenarios/gis_integro/site_payload/scenario.json
+ M applications/scenarios/hybrid_xiris/figures/operator_dashboard.png
+ M applications/scenarios/hybrid_xiris/proof/proof_trace.json
+ M applications/scenarios/hybrid_xiris/route/route.json
+ M applications/scenarios/hybrid_xiris/site_payload/scenario.json
+ M applications/scenarios/medical_ecg_signal/figures/operator_dashboard.png
+ M applications/scenarios/medical_ecg_signal/proof/proof_trace.json
+ M applications/scenarios/medical_ecg_signal/route/route.json
+ M applications/scenarios/medical_ecg_signal/site_payload/scenario.json
+ M external_validation/README.md
+ M external_validation/outputs/external_wine_blackbox_validation.zip
+ M external_validation/outputs/external_wine_gradient_boosting_operator_dashboard.png
+ M external_validation/outputs/external_wine_gradient_boosting_proof_trace.json
+ M external_validation/outputs/external_wine_gradient_boosting_route.json
+ M external_validation/outputs/external_wine_gradient_boosting_summary.json
+ M external_validation/outputs/external_wine_logistic_regression_operator_dashboard.png
+ M external_validation/outputs/external_wine_logistic_regression_proof_trace.json
+ M external_validation/outputs/external_wine_logistic_regression_route.json
+ M external_validation/outputs/external_wine_logistic_regression_summary.json
+ M external_validation/outputs/external_wine_summary.json
+ M external_validation/run_external_wine_test.py
+ M framework/fuzzyxai/fuzzyxai/core/external_tabular_route.py
  M fuzzyxai_final_audit_package.zip
  M reports/audit/artifact_inventory.csv
  M reports/audit/docx_format_report.md
@@ -145,46 +146,47 @@ M  external_validation/run_external_wine_test.py
  M reports/audit/fuzzyxai_final_audit.json
  M reports/audit/fuzzyxai_final_audit.md
  M reports/audit/stale_terms_report.md
-M  reports/figures/beacon_xai_operator_dashboard.png
-M  reports/figures/gd_anfis_shap_operator_dashboard.png
-M  reports/figures/gis_integro_operator_dashboard.png
-M  reports/figures/hybrid_xiris_operator_dashboard.png
-M  reports/figures/medical_ecg_signal_operator_dashboard.png
-M  reports/framework/hybrid_xiris_proof_trace.json
-M  reports/framework/hybrid_xiris_route.json
-M  reports/release/DUBNAXAI_FULL_WORK_REPORT.md
-M  reports/release/current/SPRINT_STATUS.md
-M  reports/release/current/artifact_manifest.json
-M  reports/release/current/check_results.json
-M  reports/release/current/git_diff_summary.txt
-M  reports/release/current/git_status.txt
-M  reports/release/current/release_summary.json
-M  reports/routes/beacon_xai_route.json
-M  reports/routes/gd_anfis_shap_route.json
-M  reports/routes/gis_integro_route.json
-M  reports/routes/hybrid_xiris_route.json
-M  reports/routes/medical_ecg_signal_route.json
+ M reports/figures/beacon_xai_operator_dashboard.png
+ M reports/figures/gd_anfis_shap_operator_dashboard.png
+ M reports/figures/gis_integro_operator_dashboard.png
+ M reports/figures/hybrid_xiris_operator_dashboard.png
+ M reports/figures/medical_ecg_signal_operator_dashboard.png
+ M reports/framework/hybrid_xiris_proof_trace.json
+ M reports/framework/hybrid_xiris_route.json
+ M reports/release/DUBNAXAI_FULL_WORK_REPORT.md
+ M reports/release/current/SPRINT_STATUS.md
+ M reports/release/current/artifact_manifest.json
+ M reports/release/current/check_results.json
+ M reports/release/current/git_diff_summary.txt
+ M reports/release/current/git_status.txt
+ M reports/release/current/release_summary.json
+ M reports/routes/beacon_xai_route.json
+ M reports/routes/gd_anfis_shap_route.json
+ M reports/routes/gis_integro_route.json
+ M reports/routes/hybrid_xiris_route.json
+ M reports/routes/medical_ecg_signal_route.json
  M reports/studio_batch/hybrid_xiris_proof_package.json
  M reports/validation/repository_inventory/repository_excluded.json
  M reports/validation/repository_inventory/repository_inventory.json
  M reports/validation/repository_inventory/repository_inventory.md
-M  scripts/build_sprint_report.py
-M  scripts/check_framework_external_usage.py
-M  site/dubnaxai/public/figures/beacon_xai_operator_dashboard.png
-M  site/dubnaxai/public/figures/gd_anfis_shap_operator_dashboard.png
-M  site/dubnaxai/public/figures/gis_integro_operator_dashboard.png
-M  site/dubnaxai/public/figures/hybrid_xiris_operator_dashboard.png
-M  site/dubnaxai/public/figures/medical_ecg_signal_operator_dashboard.png
-M  site/dubnaxai/public/routes/beacon_xai_route.json
-M  site/dubnaxai/public/routes/gd_anfis_shap_route.json
-M  site/dubnaxai/public/routes/gis_integro_route.json
-M  site/dubnaxai/public/routes/hybrid_xiris_route.json
-M  site/dubnaxai/public/routes/medical_ecg_signal_route.json
-M  tests/test_framework_external_usage.py
+ M scripts/build_sprint_report.py
+ M scripts/check_framework_external_usage.py
+ M site/dubnaxai/public/figures/beacon_xai_operator_dashboard.png
+ M site/dubnaxai/public/figures/gd_anfis_shap_operator_dashboard.png
+ M site/dubnaxai/public/figures/gis_integro_operator_dashboard.png
+ M site/dubnaxai/public/figures/hybrid_xiris_operator_dashboard.png
+ M site/dubnaxai/public/figures/medical_ecg_signal_operator_dashboard.png
+ M site/dubnaxai/public/routes/beacon_xai_route.json
+ M site/dubnaxai/public/routes/gd_anfis_shap_route.json
+ M site/dubnaxai/public/routes/gis_integro_route.json
+ M site/dubnaxai/public/routes/hybrid_xiris_route.json
+ M site/dubnaxai/public/routes/medical_ecg_signal_route.json
+ M tests/test_framework_external_usage.py
  M visual_artifacts_latest.zip
 ?? FuzzyXAI_FINAL_DELIVERY_REPORT.md
 ?? FuzzyXAI_full_delivery_package.zip
 ?? data/real_public/
+?? external_validation/outputs/external_wine_blackbox_validation/
 ?? models/
 ?? reports/dataset_audit/
 ?? reports/evaluation/
@@ -198,22 +200,87 @@ M  tests/test_framework_external_usage.py
 Diff summary:
 
 ```text
-.../outputs/external_wine_blackbox_validation.zip  | Bin 490120 -> 490120 bytes
+DUBNAXAI_FULL_WORK_REPORT.md                       |   9 +-
+ .../beacon_xai/figures/operator_dashboard.png      | Bin 215877 -> 215831 bytes
+ .../scenarios/beacon_xai/proof/proof_trace.json    |   4 +-
+ applications/scenarios/beacon_xai/route/route.json |   2 +-
+ .../beacon_xai/site_payload/scenario.json          |   2 +-
+ .../gd_anfis_shap/figures/operator_dashboard.png   | Bin 202228 -> 202172 bytes
+ .../scenarios/gd_anfis_shap/proof/proof_trace.json |   4 +-
+ .../scenarios/gd_anfis_shap/route/route.json       |   2 +-
+ .../gd_anfis_shap/site_payload/scenario.json       |   2 +-
+ .../gis_integro/figures/operator_dashboard.png     | Bin 216570 -> 216496 bytes
+ .../scenarios/gis_integro/proof/proof_trace.json   |   4 +-
+ .../scenarios/gis_integro/route/route.json         |   2 +-
+ .../gis_integro/site_payload/scenario.json         |   2 +-
+ .../hybrid_xiris/figures/operator_dashboard.png    | Bin 261786 -> 261700 bytes
+ .../scenarios/hybrid_xiris/proof/proof_trace.json  |   4 +-
+ .../scenarios/hybrid_xiris/route/route.json        |   2 +-
+ .../hybrid_xiris/site_payload/scenario.json        |   2 +-
+ .../figures/operator_dashboard.png                 | Bin 206309 -> 206245 bytes
+ .../medical_ecg_signal/proof/proof_trace.json      |   4 +-
+ .../scenarios/medical_ecg_signal/route/route.json  |   2 +-
+ .../medical_ecg_signal/site_payload/scenario.json  |   2 +-
+ external_validation/README.md                      |  23 +--
+ .../outputs/external_wine_blackbox_validation.zip  | Bin 490120 -> 488113 bytes
+ ...l_wine_gradient_boosting_operator_dashboard.png | Bin 269393 -> 266872 bytes
+ ...xternal_wine_gradient_boosting_proof_trace.json |   6 +-
+ .../external_wine_gradient_boosting_route.json     |   4 +-
+ .../external_wine_gradient_boosting_summary.json   |   8 +-
+ ...wine_logistic_regression_operator_dashboard.png | Bin 270822 -> 267904 bytes
+ ...ernal_wine_logistic_regression_proof_trace.json |   6 +-
+ .../external_wine_logistic_regression_route.json   |   4 +-
+ .../external_wine_logistic_regression_summary.json |   8 +-
+ .../outputs/external_wine_summary.json             |  18 +--
+ external_validation/run_external_wine_test.py      | 157 +++++++++++++++++++--
+ .../fuzzyxai/core/external_tabular_route.py        |   2 +-
  fuzzyxai_final_audit_package.zip                   | Bin 6099067 -> 6129548 bytes
- reports/audit/artifact_inventory.csv               |  11 ++++----
+ reports/audit/artifact_inventory.csv               |  11 +-
  reports/audit/docx_format_report.md                |   2 +-
  .../glava_4_FuzzyXAI_corrected_final.pdf           | Bin 674182 -> 674182 bytes
  .../glava_5_FuzzyXAI_corrected_final.pdf           | Bin 782995 -> 782995 bytes
  reports/audit/docx_render_report.md                |   2 +-
- reports/audit/fuzzyxai_final_audit.json            |  19 ++++++++++---
- reports/audit/fuzzyxai_final_audit.md              |  16 +++++------
- reports/audit/stale_terms_report.md                |  31 +++++++++++++--------
- .../studio_batch/hybrid_xiris_proof_package.json   |  30 ++++++++++++++------
+ reports/audit/fuzzyxai_final_audit.json            |  19 ++-
+ reports/audit/fuzzyxai_final_audit.md              |  16 +--
+ reports/audit/stale_terms_report.md                |  31 ++--
+ reports/figures/beacon_xai_operator_dashboard.png  | Bin 215877 -> 215831 bytes
+ .../figures/gd_anfis_shap_operator_dashboard.png   | Bin 202228 -> 202172 bytes
+ reports/figures/gis_integro_operator_dashboard.png | Bin 216570 -> 216496 bytes
+ .../figures/hybrid_xiris_operator_dashboard.png    | Bin 261786 -> 261700 bytes
+ .../medical_ecg_signal_operator_dashboard.png      | Bin 206309 -> 206245 bytes
+ reports/framework/hybrid_xiris_proof_trace.json    |   4 +-
+ reports/framework/hybrid_xiris_route.json          |   2 +-
+ reports/release/DUBNAXAI_FULL_WORK_REPORT.md       |   9 +-
+ reports/release/current/SPRINT_STATUS.md           | 125 ++++++----------
+ reports/release/current/artifact_manifest.json     |  14 +-
+ reports/release/current/check_results.json         |   2 +-
+ reports/release/current/git_diff_summary.txt       |  33 +++--
+ reports/release/current/git_status.txt             |  85 +++--------
+ reports/release/current/release_summary.json       |   4 +-
+ reports/routes/beacon_xai_route.json               |   2 +-
+ reports/routes/gd_anfis_shap_route.json            |   2 +-
+ reports/routes/gis_integro_route.json              |   2 +-
+ reports/routes/hybrid_xiris_route.json             |   2 +-
+ reports/routes/medical_ecg_signal_route.json       |   2 +-
+ .../studio_batch/hybrid_xiris_proof_package.json   |  30 ++--
  .../repository_inventory/repository_excluded.json  |   2 +-
- .../repository_inventory/repository_inventory.json |   6 ++--
+ .../repository_inventory/repository_inventory.json |   6 +-
  .../repository_inventory/repository_inventory.md   |   2 +-
+ scripts/build_sprint_report.py                     |  25 +++-
+ scripts/check_framework_external_usage.py          |  48 ++++++-
+ .../figures/beacon_xai_operator_dashboard.png      | Bin 215877 -> 215831 bytes
+ .../figures/gd_anfis_shap_operator_dashboard.png   | Bin 202228 -> 202172 bytes
+ .../figures/gis_integro_operator_dashboard.png     | Bin 216570 -> 216496 bytes
+ .../figures/hybrid_xiris_operator_dashboard.png    | Bin 261786 -> 261700 bytes
+ .../medical_ecg_signal_operator_dashboard.png      | Bin 206309 -> 206245 bytes
+ site/dubnaxai/public/routes/beacon_xai_route.json  |   2 +-
+ .../public/routes/gd_anfis_shap_route.json         |   2 +-
+ site/dubnaxai/public/routes/gis_integro_route.json |   2 +-
+ .../dubnaxai/public/routes/hybrid_xiris_route.json |   2 +-
+ .../public/routes/medical_ecg_signal_route.json    |   2 +-
+ tests/test_framework_external_usage.py             |  16 +++
  visual_artifacts_latest.zip                        | Bin 2533274 -> 2533446 bytes
- 15 files changed, 77 insertions(+), 44 deletions(-)
+ 80 files changed, 499 insertions(+), 294 deletions(-)
 ```
 
 ## Risks and Todos

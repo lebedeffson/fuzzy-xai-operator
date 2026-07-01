@@ -96,6 +96,7 @@ GENERATED_PREFIXES = (
 EXTERNAL_SUMMARY = ROOT / "external_validation" / "outputs" / "external_wine_summary.json"
 EXTERNAL_MODEL_KEYS = ("logistic_regression", "gradient_boosting")
 EXTERNAL_ZIP = ROOT / "external_validation" / "outputs" / "external_wine_blackbox_validation.zip"
+EXTERNAL_PACKAGE_DIR = ROOT / "external_validation" / "outputs" / "external_wine_blackbox_validation"
 
 
 def status_path(line: str) -> str:
@@ -236,7 +237,14 @@ def scan_apps() -> tuple[bool, list[str]]:
 
 def validate_external_framework() -> tuple[dict[str, Any], list[str]]:
     errors: list[str] = []
-    required = [EXTERNAL_SUMMARY, EXTERNAL_ZIP]
+    required = [
+        EXTERNAL_SUMMARY,
+        EXTERNAL_ZIP,
+        EXTERNAL_PACKAGE_DIR / "manifest.json",
+        EXTERNAL_PACKAGE_DIR / "external_validation_report.md",
+        EXTERNAL_PACKAGE_DIR / "import_provenance.json",
+        EXTERNAL_PACKAGE_DIR / "external_wine_summary.json",
+    ]
     for model_key in EXTERNAL_MODEL_KEYS:
         required.extend(
             [
@@ -244,6 +252,10 @@ def validate_external_framework() -> tuple[dict[str, Any], list[str]]:
                 ROOT / "external_validation" / "outputs" / f"external_wine_{model_key}_proof_trace.json",
                 ROOT / "external_validation" / "outputs" / f"external_wine_{model_key}_operator_dashboard.png",
                 ROOT / "external_validation" / "outputs" / f"external_wine_{model_key}_summary.json",
+                EXTERNAL_PACKAGE_DIR / model_key / "route.json",
+                EXTERNAL_PACKAGE_DIR / model_key / "proof_trace.json",
+                EXTERNAL_PACKAGE_DIR / model_key / "operator_dashboard.png",
+                EXTERNAL_PACKAGE_DIR / model_key / "summary.json",
             ]
         )
     exists = all(path.exists() and path.stat().st_size > 0 for path in required)
@@ -260,6 +272,17 @@ def validate_external_framework() -> tuple[dict[str, Any], list[str]]:
             errors.append(f"external verifier expected passed, got {summary.get('verifier')}")
         if not summary.get("source_commit"):
             errors.append("external source_commit is empty")
+        if str(ROOT) in json.dumps(summary) or "/applications/" in json.dumps(summary):
+            errors.append("external summary contains absolute/internal paths")
+        manifest_path = EXTERNAL_PACKAGE_DIR / "manifest.json"
+        provenance_path = EXTERNAL_PACKAGE_DIR / "import_provenance.json"
+        if manifest_path.exists() and provenance_path.exists():
+            manifest = load_json(manifest_path)
+            provenance = load_json(provenance_path)
+            if manifest.get("source_commit") != summary.get("source_commit"):
+                errors.append("external manifest source_commit mismatch")
+            if not provenance.get("package_boundary_ok") or provenance.get("applications_used") is not False:
+                errors.append("external import provenance is invalid")
         validations = summary.get("validations") or []
         if len(validations) != 2:
             errors.append(f"external validations expected 2, got {len(validations)}")

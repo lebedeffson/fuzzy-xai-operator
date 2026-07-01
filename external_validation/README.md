@@ -28,13 +28,20 @@ Outputs:
 
 ```text
 external_validation/outputs/external_wine_summary.json
-external_validation/outputs/external_wine_logistic_regression_route.json
-external_validation/outputs/external_wine_logistic_regression_proof_trace.json
-external_validation/outputs/external_wine_logistic_regression_operator_dashboard.png
-external_validation/outputs/external_wine_logistic_regression_summary.json
-external_validation/outputs/external_wine_gradient_boosting_route.json
-external_validation/outputs/external_wine_gradient_boosting_proof_trace.json
-external_validation/outputs/external_wine_gradient_boosting_operator_dashboard.png
-external_validation/outputs/external_wine_gradient_boosting_summary.json
 external_validation/outputs/external_wine_blackbox_validation.zip
+external_validation/outputs/external_wine_blackbox_validation/
+  manifest.json
+  external_validation_report.md
+  import_provenance.json
+  external_wine_summary.json
+  logistic_regression/
+    route.json
+    proof_trace.json
+    summary.json
+    operator_dashboard.png
+  gradient_boosting/
+    route.json
+    proof_trace.json
+    summary.json
+    operator_dashboard.png
 ```

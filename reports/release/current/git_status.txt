@@ -1,37 +1,37 @@
-M  DUBNAXAI_FULL_WORK_REPORT.md
-M  applications/scenarios/beacon_xai/figures/operator_dashboard.png
-M  applications/scenarios/beacon_xai/proof/proof_trace.json
-M  applications/scenarios/beacon_xai/route/route.json
-M  applications/scenarios/beacon_xai/site_payload/scenario.json
-M  applications/scenarios/gd_anfis_shap/figures/operator_dashboard.png
-M  applications/scenarios/gd_anfis_shap/proof/proof_trace.json
-M  applications/scenarios/gd_anfis_shap/route/route.json
-M  applications/scenarios/gd_anfis_shap/site_payload/scenario.json
-M  applications/scenarios/gis_integro/figures/operator_dashboard.png
-M  applications/scenarios/gis_integro/proof/proof_trace.json
-M  applications/scenarios/gis_integro/route/route.json
-M  applications/scenarios/gis_integro/site_payload/scenario.json
-M  applications/scenarios/hybrid_xiris/figures/operator_dashboard.png
-M  applications/scenarios/hybrid_xiris/proof/proof_trace.json
-M  applications/scenarios/hybrid_xiris/route/route.json
-M  applications/scenarios/hybrid_xiris/site_payload/scenario.json
-M  applications/scenarios/medical_ecg_signal/figures/operator_dashboard.png
-M  applications/scenarios/medical_ecg_signal/proof/proof_trace.json
-M  applications/scenarios/medical_ecg_signal/route/route.json
-M  applications/scenarios/medical_ecg_signal/site_payload/scenario.json
-M  external_validation/README.md
-AM external_validation/outputs/external_wine_blackbox_validation.zip
-A  external_validation/outputs/external_wine_gradient_boosting_operator_dashboard.png
-A  external_validation/outputs/external_wine_gradient_boosting_proof_trace.json
-A  external_validation/outputs/external_wine_gradient_boosting_route.json
-A  external_validation/outputs/external_wine_gradient_boosting_summary.json
-A  external_validation/outputs/external_wine_logistic_regression_operator_dashboard.png
-R  external_validation/outputs/external_wine_proof_trace.json -> external_validation/outputs/external_wine_logistic_regression_proof_trace.json
-R  external_validation/outputs/external_wine_route.json -> external_validation/outputs/external_wine_logistic_regression_route.json
-A  external_validation/outputs/external_wine_logistic_regression_summary.json
-D  external_validation/outputs/external_wine_operator_dashboard.png
-M  external_validation/outputs/external_wine_summary.json
-M  external_validation/run_external_wine_test.py
+M DUBNAXAI_FULL_WORK_REPORT.md
+ M applications/scenarios/beacon_xai/figures/operator_dashboard.png
+ M applications/scenarios/beacon_xai/proof/proof_trace.json
+ M applications/scenarios/beacon_xai/route/route.json
+ M applications/scenarios/beacon_xai/site_payload/scenario.json
+ M applications/scenarios/gd_anfis_shap/figures/operator_dashboard.png
+ M applications/scenarios/gd_anfis_shap/proof/proof_trace.json
+ M applications/scenarios/gd_anfis_shap/route/route.json
+ M applications/scenarios/gd_anfis_shap/site_payload/scenario.json
+ M applications/scenarios/gis_integro/figures/operator_dashboard.png
+ M applications/scenarios/gis_integro/proof/proof_trace.json
+ M applications/scenarios/gis_integro/route/route.json
+ M applications/scenarios/gis_integro/site_payload/scenario.json
+ M applications/scenarios/hybrid_xiris/figures/operator_dashboard.png
+ M applications/scenarios/hybrid_xiris/proof/proof_trace.json
+ M applications/scenarios/hybrid_xiris/route/route.json
+ M applications/scenarios/hybrid_xiris/site_payload/scenario.json
+ M applications/scenarios/medical_ecg_signal/figures/operator_dashboard.png
+ M applications/scenarios/medical_ecg_signal/proof/proof_trace.json
+ M applications/scenarios/medical_ecg_signal/route/route.json
+ M applications/scenarios/medical_ecg_signal/site_payload/scenario.json
+ M external_validation/README.md
+ M external_validation/outputs/external_wine_blackbox_validation.zip
+ M external_validation/outputs/external_wine_gradient_boosting_operator_dashboard.png
+ M external_validation/outputs/external_wine_gradient_boosting_proof_trace.json
+ M external_validation/outputs/external_wine_gradient_boosting_route.json
+ M external_validation/outputs/external_wine_gradient_boosting_summary.json
+ M external_validation/outputs/external_wine_logistic_regression_operator_dashboard.png
+ M external_validation/outputs/external_wine_logistic_regression_proof_trace.json
+ M external_validation/outputs/external_wine_logistic_regression_route.json
+ M external_validation/outputs/external_wine_logistic_regression_summary.json
+ M external_validation/outputs/external_wine_summary.json
+ M external_validation/run_external_wine_test.py
+ M framework/fuzzyxai/fuzzyxai/core/external_tabular_route.py
  M fuzzyxai_final_audit_package.zip
  M reports/audit/artifact_inventory.csv
  M reports/audit/docx_format_report.md
@@ -41,46 +41,47 @@ M  external_validation/run_external_wine_test.py
  M reports/audit/fuzzyxai_final_audit.json
  M reports/audit/fuzzyxai_final_audit.md
  M reports/audit/stale_terms_report.md
-M  reports/figures/beacon_xai_operator_dashboard.png
-M  reports/figures/gd_anfis_shap_operator_dashboard.png
-M  reports/figures/gis_integro_operator_dashboard.png
-M  reports/figures/hybrid_xiris_operator_dashboard.png
-M  reports/figures/medical_ecg_signal_operator_dashboard.png
-M  reports/framework/hybrid_xiris_proof_trace.json
-M  reports/framework/hybrid_xiris_route.json
-M  reports/release/DUBNAXAI_FULL_WORK_REPORT.md
-M  reports/release/current/SPRINT_STATUS.md
-M  reports/release/current/artifact_manifest.json
-M  reports/release/current/check_results.json
-M  reports/release/current/git_diff_summary.txt
-M  reports/release/current/git_status.txt
-M  reports/release/current/release_summary.json
-M  reports/routes/beacon_xai_route.json
-M  reports/routes/gd_anfis_shap_route.json
-M  reports/routes/gis_integro_route.json
-M  reports/routes/hybrid_xiris_route.json
-M  reports/routes/medical_ecg_signal_route.json
+ M reports/figures/beacon_xai_operator_dashboard.png
+ M reports/figures/gd_anfis_shap_operator_dashboard.png
+ M reports/figures/gis_integro_operator_dashboard.png
+ M reports/figures/hybrid_xiris_operator_dashboard.png
+ M reports/figures/medical_ecg_signal_operator_dashboard.png
+ M reports/framework/hybrid_xiris_proof_trace.json
+ M reports/framework/hybrid_xiris_route.json
+ M reports/release/DUBNAXAI_FULL_WORK_REPORT.md
+ M reports/release/current/SPRINT_STATUS.md
+ M reports/release/current/artifact_manifest.json
+ M reports/release/current/check_results.json
+ M reports/release/current/git_diff_summary.txt
+ M reports/release/current/git_status.txt
+ M reports/release/current/release_summary.json
+ M reports/routes/beacon_xai_route.json
+ M reports/routes/gd_anfis_shap_route.json
+ M reports/routes/gis_integro_route.json
+ M reports/routes/hybrid_xiris_route.json
+ M reports/routes/medical_ecg_signal_route.json
  M reports/studio_batch/hybrid_xiris_proof_package.json
  M reports/validation/repository_inventory/repository_excluded.json
  M reports/validation/repository_inventory/repository_inventory.json
  M reports/validation/repository_inventory/repository_inventory.md
-M  scripts/build_sprint_report.py
-M  scripts/check_framework_external_usage.py
-M  site/dubnaxai/public/figures/beacon_xai_operator_dashboard.png
-M  site/dubnaxai/public/figures/gd_anfis_shap_operator_dashboard.png
-M  site/dubnaxai/public/figures/gis_integro_operator_dashboard.png
-M  site/dubnaxai/public/figures/hybrid_xiris_operator_dashboard.png
-M  site/dubnaxai/public/figures/medical_ecg_signal_operator_dashboard.png
-M  site/dubnaxai/public/routes/beacon_xai_route.json
-M  site/dubnaxai/public/routes/gd_anfis_shap_route.json
-M  site/dubnaxai/public/routes/gis_integro_route.json
-M  site/dubnaxai/public/routes/hybrid_xiris_route.json
-M  site/dubnaxai/public/routes/medical_ecg_signal_route.json
-M  tests/test_framework_external_usage.py
+ M scripts/build_sprint_report.py
+ M scripts/check_framework_external_usage.py
+ M site/dubnaxai/public/figures/beacon_xai_operator_dashboard.png
+ M site/dubnaxai/public/figures/gd_anfis_shap_operator_dashboard.png
+ M site/dubnaxai/public/figures/gis_integro_operator_dashboard.png
+ M site/dubnaxai/public/figures/hybrid_xiris_operator_dashboard.png
+ M site/dubnaxai/public/figures/medical_ecg_signal_operator_dashboard.png
+ M site/dubnaxai/public/routes/beacon_xai_route.json
+ M site/dubnaxai/public/routes/gd_anfis_shap_route.json
+ M site/dubnaxai/public/routes/gis_integro_route.json
+ M site/dubnaxai/public/routes/hybrid_xiris_route.json
+ M site/dubnaxai/public/routes/medical_ecg_signal_route.json
+ M tests/test_framework_external_usage.py
  M visual_artifacts_latest.zip
 ?? FuzzyXAI_FINAL_DELIVERY_REPORT.md
 ?? FuzzyXAI_full_delivery_package.zip
 ?? data/real_public/
+?? external_validation/outputs/external_wine_blackbox_validation/
 ?? models/
 ?? reports/dataset_audit/
 ?? reports/evaluation/
