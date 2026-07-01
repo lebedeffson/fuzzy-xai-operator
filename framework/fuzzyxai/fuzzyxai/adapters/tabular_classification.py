@@ -8,6 +8,9 @@ from fuzzyxai.core.types import AdaptedInput
 
 
 class TabularClassificationAdapter(BaseAdapter):
+    adapter_id = "tabular_classification"
+    task_type = "tabular_classification"
+    supported_payload_schema = "classification"
     repo_id = "external_tabular_model"
     scenario_id = "external_wine_classification"
     required_fields = (

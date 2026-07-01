@@ -100,6 +100,11 @@ EXTERNAL_ZIP = ROOT / "external_validation" / "outputs" / "external_wine_blackbo
 EXTERNAL_PACKAGE_DIR = ROOT / "external_validation" / "outputs" / "external_wine_blackbox_validation"
 RESEARCH_RESULTS = ROOT / "research_validation" / "reports" / "research_validation_results.csv"
 RESEARCH_PACKAGE = ROOT / "research_validation" / "reports" / "fuzzyxai_research_validation_package.zip"
+RESEARCH_ANALYSIS_FILES = [
+    ROOT / "research_validation" / "sensitivity" / "sensitivity_results.csv",
+    ROOT / "research_validation" / "ablation" / "ablation_summary.csv",
+    ROOT / "research_validation" / "cross_model" / "cross_model_summary.csv",
+]
 
 
 def status_path(line: str) -> str:
@@ -386,6 +391,15 @@ def validate_research_validation() -> dict[str, Any]:
     }
 
 
+def validate_research_analysis() -> dict[str, Any]:
+    existing = [path for path in RESEARCH_ANALYSIS_FILES if path.exists() and path.stat().st_size > 0]
+    return {
+        "status": "PASS" if len(existing) == len(RESEARCH_ANALYSIS_FILES) else "not_run",
+        "files_total": len(RESEARCH_ANALYSIS_FILES),
+        "files_present": len(existing),
+    }
+
+
 def validate_scenarios() -> tuple[list[dict[str, Any]], list[dict[str, Any]], dict[str, list[dict[str, Any]]]]:
     rows: list[dict[str, Any]] = []
     key_rows: list[dict[str, Any]] = []
@@ -606,6 +620,7 @@ def render_md(
         )
         for row in external.get("traceability", [])
     )
+    research_analysis = summary.get("research_analysis", {})
     if research.get("status") == "not_run":
         research_rows = "| research_validation_status | not_run |"
     else:
@@ -623,6 +638,8 @@ def render_md(
                 "traceability_passed",
             ]
         )
+    research_rows += f"\n| research_analysis_status | {research_analysis.get('status', 'not_run')} |"
+    research_rows += f"\n| research_analysis_files | {research_analysis.get('files_present', 0)} / {research_analysis.get('files_total', 0)} |"
     status_text = git_status if git_status.strip() else "clean"
     diff_text = diff_summary if diff_summary.strip() else "no diff"
     return f"""# Sprint Status
@@ -741,8 +758,7 @@ def risks_text() -> str:
 
 ## Technical TODO
 
-- Add external payload schemas.
-- Add adapter contract tests.
+- Add live external repository adapter contract tests.
 - Add repository-to-model/method/scenario links.
 
 ## Dissertation TODO
@@ -764,6 +780,7 @@ def main() -> int:
     rows, key_rows, manifest = validate_scenarios()
     external, external_errors = validate_external_framework()
     research = validate_research_validation()
+    research_analysis = validate_research_analysis()
     site_bad, site_issues = scan_site()
     apps_bad, app_issues = scan_apps()
     errors = [err for row in rows for err in row["errors"]] + external_errors + research.get("errors", []) + site_issues + app_issues
@@ -801,6 +818,7 @@ def main() -> int:
         "operator_traceability_check": external.get("operator_traceability_check", "FAIL"),
         "research_validation_status": research.get("status"),
         "research_validation": research,
+        "research_analysis": research_analysis,
         "dashboard_v2_available": external.get("dashboard_v2_available", False),
         "operator_cards_available": external.get("operator_cards_available", False),
         "operator_edges_available": external.get("operator_edges_available", False),

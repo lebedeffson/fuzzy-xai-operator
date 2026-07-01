@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "FuzzyXAI operator route",
+  "type": "object",
+  "required": ["scenario_id", "nodes", "computed_result", "final_action"],
+  "properties": {
+    "route_id": {"type": "string"},
+    "scenario_id": {"type": "string"},
+    "nodes": {"type": "array"},
+    "edges": {"type": "array"},
+    "computed_result": {"type": "object"},
+    "final_action": {"type": "string"},
+    "source_commit": {"type": "string"}
+  }
+}

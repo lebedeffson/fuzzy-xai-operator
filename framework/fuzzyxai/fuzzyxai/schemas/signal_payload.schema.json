@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "FuzzyXAI signal payload",
+  "type": "object",
+  "required": ["scenario_id", "source_type", "model_name", "signal_quality", "quality_metrics", "feature_values"],
+  "properties": {
+    "scenario_id": {"type": "string"},
+    "source_type": {"type": "string"},
+    "model_name": {"type": "string"},
+    "signal_quality": {"type": "number"},
+    "quality_metrics": {"type": "object"},
+    "feature_values": {"type": "object"},
+    "context_values": {"type": "object"}
+  }
+}

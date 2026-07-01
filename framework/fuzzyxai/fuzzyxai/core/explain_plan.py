@@ -122,6 +122,17 @@ class ExplainPlan:
     i_min: float = 0.50
     activation_threshold: float = 0.05
     epsilon: float = 1e-3
+    gamma_warning: float = 0.25
+    gamma_critical: float = 0.60
+    delta_warning: float = 0.25
+    delta_critical: float = 0.60
+    rho_accept: float = 0.35
+    rho_warning: float = 0.60
+    rho_audit: float = 0.75
+    rho_critical: float = 0.85
+    top_k: int = 5
+    representation_policy: str = "auto"
+    action_policy: str = "risk_zone"
     metadata: Dict[str, Any] = field(default_factory=dict)
 
     def validate(self) -> None:
@@ -135,15 +146,40 @@ class ExplainPlan:
             raise ValueError('i_min must be in (0,1]')
         if not 0 <= self.activation_threshold <= 1:
             raise ValueError('activation_threshold must be in [0,1]')
+        if not (0 <= self.gamma_warning <= self.gamma_critical <= 1):
+            raise ValueError('gamma thresholds must be ordered in [0,1]')
+        if not (0 <= self.delta_warning <= self.delta_critical <= 1):
+            raise ValueError('delta thresholds must be ordered in [0,1]')
+        if not (0 <= self.rho_accept <= self.rho_warning <= self.rho_audit <= self.rho_critical <= 1):
+            raise ValueError('rho thresholds must be ordered in [0,1]')
+        if self.top_k <= 0:
+            raise ValueError('top_k must be positive')
 
     def with_reduction_weight(self, beta_delta: float) -> 'ExplainPlan':
         if not 0 <= beta_delta < 1:
             raise ValueError('beta_delta must be in [0,1)')
         beta = {k: (1 - beta_delta) * v for k, v in self.beta.items()}
         beta['reduction'] = beta_delta
-        return ExplainPlan(beta=beta, lambda_=dict(self.lambda_), eta=dict(self.eta), i_min=self.i_min,
-                           activation_threshold=self.activation_threshold, epsilon=self.epsilon,
-                           metadata=dict(self.metadata))
+        return ExplainPlan(
+            beta=beta,
+            lambda_=dict(self.lambda_),
+            eta=dict(self.eta),
+            i_min=self.i_min,
+            activation_threshold=self.activation_threshold,
+            epsilon=self.epsilon,
+            gamma_warning=self.gamma_warning,
+            gamma_critical=self.gamma_critical,
+            delta_warning=self.delta_warning,
+            delta_critical=self.delta_critical,
+            rho_accept=self.rho_accept,
+            rho_warning=self.rho_warning,
+            rho_audit=self.rho_audit,
+            rho_critical=self.rho_critical,
+            top_k=self.top_k,
+            representation_policy=self.representation_policy,
+            action_policy=self.action_policy,
+            metadata=dict(self.metadata),
+        )
 
     def to_dict(self) -> Dict[str, Any]:
         return {
@@ -153,6 +189,17 @@ class ExplainPlan:
             'i_min': self.i_min,
             'activation_threshold': self.activation_threshold,
             'epsilon': self.epsilon,
+            'gamma_warning': self.gamma_warning,
+            'gamma_critical': self.gamma_critical,
+            'delta_warning': self.delta_warning,
+            'delta_critical': self.delta_critical,
+            'rho_accept': self.rho_accept,
+            'rho_warning': self.rho_warning,
+            'rho_audit': self.rho_audit,
+            'rho_critical': self.rho_critical,
+            'top_k': self.top_k,
+            'representation_policy': self.representation_policy,
+            'action_policy': self.action_policy,
             'metadata': self.metadata,
         }
 
@@ -168,9 +215,23 @@ class ExplainPlan:
         plan.i_min = float(data.get('i_min', plan.i_min))
         plan.activation_threshold = float(data.get('activation_threshold', plan.activation_threshold))
         plan.epsilon = float(data.get('epsilon', plan.epsilon))
+        for key in (
+            'gamma_warning', 'gamma_critical', 'delta_warning', 'delta_critical',
+            'rho_accept', 'rho_warning', 'rho_audit', 'rho_critical',
+        ):
+            if key in data:
+                setattr(plan, key, float(data[key]))
+        if 'top_k' in data:
+            plan.top_k = int(data['top_k'])
+        plan.representation_policy = str(data.get('representation_policy', plan.representation_policy))
+        plan.action_policy = str(data.get('action_policy', plan.action_policy))
         plan.metadata = dict(data.get('metadata', {}))
         plan.validate()
         return plan
+
+    @classmethod
+    def default(cls) -> 'ExplainPlan':
+        return cls()
 
     def save_json(self, path: str | Path) -> None:
         Path(path).write_text(json.dumps(self.to_dict(), ensure_ascii=False, indent=2), encoding='utf-8')

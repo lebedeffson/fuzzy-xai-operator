@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "FuzzyXAI operator trace",
+  "type": "object",
+  "required": ["scenario_id", "nodes", "edges", "computed_result"],
+  "properties": {
+    "scenario_id": {"type": "string"},
+    "nodes": {"type": "array"},
+    "edges": {"type": "array"},
+    "computed_result": {"type": "object"},
+    "verification_summary": {"type": "object"}
+  }
+}

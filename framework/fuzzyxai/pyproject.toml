@@ -24,5 +24,11 @@ dev = [
     "playwright>=1.40",
 ]
 
+[project.scripts]
+fuzzyxai = "fuzzyxai.cli:main"
+
 [tool.setuptools.packages.find]
 include = ["fuzzyxai*"]
+
+[tool.setuptools.package-data]
+fuzzyxai = ["schemas/*.json"]

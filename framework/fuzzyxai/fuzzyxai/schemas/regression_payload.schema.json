@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "FuzzyXAI regression payload",
+  "type": "object",
+  "required": ["scenario_id", "source_type", "model_name", "dataset_name", "prediction", "feature_values", "feature_importance", "quality_metrics"],
+  "properties": {
+    "scenario_id": {"type": "string"},
+    "source_type": {"type": "string"},
+    "model_name": {"type": "string"},
+    "dataset_name": {"type": "string"},
+    "prediction": {"type": "number"},
+    "prediction_interval_width": {"type": "number"},
+    "feature_values": {"type": "object"},
+    "feature_importance": {"type": "object"},
+    "quality_metrics": {"type": "object"},
+    "context_values": {"type": "object"}
+  }
+}

@@ -1,0 +1,13 @@
+model,experiments,mean_gamma,mean_delta,mean_rho,audit_count,dominant_action
+DecisionTreeClassifier,1,0.67,0.29,0.67,1,audit
+GradientBoostingClassifier,3,0.45,0.416667,0.553333,0,lower_confidence
+GradientBoostingRegressor,1,0.48,0.3,0.48,0,lower_confidence
+KNeighborsClassifier,1,0.42,0.26,0.42,0,lower_confidence
+LinearRegression,1,0.22,0.2,0.22,0,accept
+LogisticRegression,5,0.342,0.228,0.364,0,accept
+MLPClassifier,2,0.33,0.465,0.47,0,lower_confidence
+MLPRegressor,1,0.52,0.28,0.52,0,lower_confidence
+RandomForestRegressor,1,0.58,0.37,0.58,0,lower_confidence
+SVC(probability=True),2,0.63,0.3,0.63,2,audit
+SVR,1,0.3,0.55,0.55,0,lower_confidence
+threshold_model,1,0.22,0.22,0.22,0,accept

@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "FuzzyXAI proof trace",
+  "type": "object",
+  "required": ["package_type", "scenario_id", "route", "computed_result", "final_action"],
+  "properties": {
+    "package_type": {"type": "string"},
+    "scenario_id": {"type": "string"},
+    "route": {"type": "object"},
+    "computed_result": {"type": "object"},
+    "final_action": {"type": "string"},
+    "source_commit": {"type": "string"}
+  }
+}

@@ -1,0 +1,7 @@
+variant,changed_actions,mean_rho
+full,2,0.467
+without_delta,6,0.4195
+without_gamma,10,0.3195
+without_quality_component,2,0.467
+without_representation_selection,2,0.467
+without_verifier,2,0.467

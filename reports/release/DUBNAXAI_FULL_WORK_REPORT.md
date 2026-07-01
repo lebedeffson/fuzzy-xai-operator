@@ -61,6 +61,19 @@ The site is intentionally separated from the framework. FuzzyXAI computes; Dubna
   - `fuzzyxai.adapters.tabular_classification.TabularClassificationAdapter`
   - `external_wine_classification` route builder
   - non-empty `source_commit` in `OperatorRoute` and `ProofTrace`
+- Added framework hardening layer:
+  - `fuzzyxai.runtime.FuzzyXAI`
+  - expanded `ExplainPlan` thresholds and policies
+  - adapter SDK validation and adapter registry
+  - operator registry
+  - JSON payload/route/proof/operator trace schemas
+  - CLI entrypoint `fuzzyxai`
+- Added framework documentation:
+  - `framework/fuzzyxai/docs/API.md`
+  - `framework/fuzzyxai/docs/CLI.md`
+  - `framework/fuzzyxai/docs/ADAPTER_SDK.md`
+  - `framework/fuzzyxai/docs/EXPLAIN_PLAN.md`
+  - `framework/fuzzyxai/docs/OPERATOR_REGISTRY.md`
 - Added route visualization layer:
   - `framework/fuzzyxai/fuzzyxai/viz/operator_state.py`
   - `framework/fuzzyxai/fuzzyxai/viz/route_builder.py`
@@ -196,9 +209,22 @@ Generated artifacts:
 - `research_validation/reports/manifest.json` with `manifest_self_hash_policy = excluded`
 - `research_validation/reports/fuzzyxai_research_validation_package.zip`
 - `docs/chapter_4_framework/research_validation_section.md`
+- `docs/chapter_4_framework/research_assets/README.md`
 
 Every experiment exports route, operator trace, operator table, proof trace,
 verifier report, dashboard data, dashboard v2 and operator cards.
+
+Additional research analysis layer:
+
+- `research_validation/sensitivity/sensitivity_results.csv`
+- `research_validation/sensitivity/rho_surface.png`
+- `research_validation/sensitivity/action_transition_heatmap.png`
+- `research_validation/sensitivity/gamma_delta_action_map.png`
+- `research_validation/ablation/ablation_results.csv`
+- `research_validation/ablation/ablation_summary.csv`
+- `research_validation/ablation/ablation_changed_actions.png`
+- `research_validation/cross_model/cross_model_summary.csv`
+- `research_validation/cross_model/cross_model_mean_rho.png`
 
 ### Operator Traceability v2
 
@@ -288,9 +314,13 @@ The check runs:
 - editable framework install
 - public framework import/API smoke
 - external framework black-box check
+- FuzzyXAI CLI check
+- FuzzyXAI schema check
+- FuzzyXAI adapter SDK check
 - operator traceability check
 - research validation is available through `make research-validation` and
-  `make research-validation-check`
+  `make research-validation-check`; research analysis is available through
+  `make fuzzyxai-research-analysis` and `make fuzzyxai-research-analysis-check`
 - HYBRID-XIRIS framework example
 - framework-core and all-scenario tests
 - all application scenarios

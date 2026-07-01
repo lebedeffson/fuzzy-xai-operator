@@ -139,8 +139,12 @@ from .proof.verifier import verify_proof_trace
 from .viz.export import save_route_json
 from .viz.matplotlib_dashboard import render_dashboard
 from .examples import list_examples, load_example
+from .runtime import FuzzyXAI
+from .adapters import BaseAdapter, TabularClassificationAdapter, get_adapter, list_adapters
+from .operators import get_operator, list_operators
 
 __all__ += [
+    "FuzzyXAI",
     "build_explainable_object",
     "build_route",
     "build_proof_trace",
@@ -149,4 +153,10 @@ __all__ += [
     "save_route_json",
     "list_examples",
     "load_example",
+    "BaseAdapter",
+    "TabularClassificationAdapter",
+    "get_adapter",
+    "list_adapters",
+    "get_operator",
+    "list_operators",
 ]
