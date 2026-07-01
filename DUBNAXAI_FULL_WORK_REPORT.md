@@ -171,6 +171,29 @@ moderate-confidence objects and passes only top-k feature importances, so
 installed `fuzzyxai` package, uses the generic tabular adapter and does not
 import `applications/scenarios`.
 
+### Operator Traceability v2
+
+Added framework-level operator traceability for the external validation package:
+
+- expanded `OperatorNode` with input/output values, formula text, components,
+  thresholds, status reason, interpretation and next-node links;
+- added `OperatorEdge` and route edge export;
+- added `framework/fuzzyxai/fuzzyxai/viz/traceability.py`;
+- added per-model trace artifacts:
+  - `operator_trace.json`
+  - `operator_table.csv`
+  - `verifier_report.json`
+  - `dashboard_data.json`
+  - `operator_dashboard_v2.png`
+  - `operator_dashboard_v2.html`
+  - `operator_cards/*.md`
+- added `scripts/check_operator_traceability.py`;
+- added `make operator-traceability-check`.
+
+The v2 dashboard and HTML are exported by the framework from route/dashboard
+data. They do not compute `gamma`, `delta`, `rho` and do not depend on the
+DubnaXAI site.
+
 ### Site Layer
 
 The DubnaXAI site reads prepared JSON and images:
@@ -236,6 +259,7 @@ The check runs:
 - editable framework install
 - public framework import/API smoke
 - external framework black-box check
+- operator traceability check
 - HYBRID-XIRIS framework example
 - framework-core and all-scenario tests
 - all application scenarios

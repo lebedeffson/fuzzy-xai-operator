@@ -54,14 +54,32 @@ def test_framework_external_usage_from_tmp(tmp_path: Path) -> None:
         names = set(archive.namelist())
     assert "external_wine_blackbox_validation/manifest.json" in names
     assert "external_wine_blackbox_validation/logistic_regression/route.json" in names
+    assert "external_wine_blackbox_validation/logistic_regression/operator_trace.json" in names
+    assert "external_wine_blackbox_validation/logistic_regression/operator_table.csv" in names
+    assert "external_wine_blackbox_validation/logistic_regression/verifier_report.json" in names
+    assert "external_wine_blackbox_validation/logistic_regression/dashboard_data.json" in names
+    assert "external_wine_blackbox_validation/logistic_regression/operator_dashboard_v2.png" in names
+    assert "external_wine_blackbox_validation/logistic_regression/operator_dashboard_v2.html" in names
     assert "external_wine_blackbox_validation/gradient_boosting/route.json" in names
+    assert "external_wine_blackbox_validation/gradient_boosting/operator_trace.json" in names
+    assert "external_wine_blackbox_validation/gradient_boosting/operator_dashboard_v2.png" in names
     assert len(summary["validations"]) == 2
     for item in summary["validations"]:
         model_key = item["model_key"]
+        model_dir = package_dir / model_key
         route = json.loads((out / f"external_wine_{model_key}_route.json").read_text(encoding="utf-8"))
         proof = json.loads((out / f"external_wine_{model_key}_proof_trace.json").read_text(encoding="utf-8"))
+        operator_trace = json.loads((model_dir / "operator_trace.json").read_text(encoding="utf-8"))
+        verifier_report = json.loads((model_dir / "verifier_report.json").read_text(encoding="utf-8"))
+        dashboard_data = json.loads((model_dir / "dashboard_data.json").read_text(encoding="utf-8"))
         computed = item["computed_result"]
         assert (out / f"external_wine_{model_key}_operator_dashboard.png").stat().st_size > 0
+        assert (model_dir / "operator_dashboard_v2.png").stat().st_size > 0
+        assert (model_dir / "operator_dashboard_v2.html").stat().st_size > 0
+        assert len(list((model_dir / "operator_cards").glob("*.md"))) == len(operator_trace["nodes"])
+        assert verifier_report["overall_status"] == "passed"
+        assert operator_trace["edges"]
+        assert dashboard_data["computed_result"] == route["computed_result"]
         assert item["verifier"] == "passed"
         assert item["action"] == "lower_confidence"
         assert item["diagnostic"] == "D_external_tabular_uncertainty"

@@ -1,0 +1,893 @@
+<!doctype html>
+<html lang="ru"><meta charset="utf-8"><title>FuzzyXAI Operator Dashboard v2</title>
+<style>body{font-family:Arial,sans-serif;margin:24px;color:#17202a}table{border-collapse:collapse;width:100%}td,th{border:1px solid #ccc;padding:8px;vertical-align:top}pre{white-space:pre-wrap;margin:0}.meta{background:#f3f5f7;padding:12px}</style>
+<h1>Внешняя классификация sklearn wine</h1>
+<div class="meta">route_id: external_wine_classification:LogisticRegression<br>source_commit: be2a30096b275d3365a92cb69b165e57e99e90de<br>verifier: passed</div>
+<h2>Key Values</h2><pre>{
+  &quot;action&quot;: &quot;lower_confidence&quot;,
+  &quot;action_id&quot;: &quot;lower_confidence&quot;,
+  &quot;class_probability&quot;: 0.689724,
+  &quot;delta&quot;: 0.373128,
+  &quot;diagnostic_id&quot;: &quot;D_external_tabular_uncertainty&quot;,
+  &quot;gamma&quot;: 0.310276,
+  &quot;quality_penalty&quot;: 0.0,
+  &quot;rho&quot;: 0.373128,
+  &quot;uncertainty&quot;: 0.310276
+}</pre>
+<h2>Operator Cards</h2><table><tr><th>node</th><th>formula</th><th>output</th><th>interpretation</th></tr><tr><td>input_artifact</td><td>Нормализация внешнего входа</td><td><pre>{
+  &quot;adapted_input_id&quot;: &quot;external_wine_classification:LogisticRegression&quot;,
+  &quot;class_probability&quot;: 0.689724,
+  &quot;feature_importance&quot;: {
+    &quot;alcohol&quot;: 0.166384,
+    &quot;ash&quot;: 0.0985,
+    &quot;color_intensity&quot;: 0.133733,
+    &quot;hue&quot;: 0.083139,
+    &quot;proline&quot;: 0.145116
+  },
+  &quot;trace_origin&quot;: &quot;external_model_payload&quot;
+}</pre></td><td>Фреймворк получил вероятность класса, признаки, важности признаков и метрики качества.</td></tr>
+<tr><td>explanation_object</td><td>E_k = {L_k, μ_k, R_k, α_k, u_k, τ_k}</td><td><pre>{
+  &quot;activations&quot;: {
+    &quot;predicted_class&quot;: 1
+  },
+  &quot;memberships&quot;: {
+    &quot;alcohol&quot;: 0.166384,
+    &quot;ash&quot;: 0.0985,
+    &quot;color_intensity&quot;: 0.133733,
+    &quot;hue&quot;: 0.083139,
+    &quot;proline&quot;: 0.145116
+  },
+  &quot;object_summary&quot;: &quot;табличный объект с вероятностью класса и top-k атрибуциями&quot;,
+  &quot;rules&quot;: [],
+  &quot;terms&quot;: [
+    &quot;alcohol&quot;,
+    &quot;proline&quot;,
+    &quot;color_intensity&quot;,
+    &quot;ash&quot;,
+    &quot;hue&quot;
+  ],
+  &quot;trace&quot;: &quot;external_wine_classification:LogisticRegression&quot;,
+  &quot;uncertainty&quot;: 0.310276
+}</pre></td><td>E_k фиксирует, что модель уверена не полностью и объяснение редуцировано до top-k признаков.</td></tr>
+<tr><td>representation</td><td>class_id = F0 для табличной модели с одной вероятностью и редуцированным объяснением</td><td><pre>{
+  &quot;class_id&quot;: &quot;F0&quot;,
+  &quot;class_title_ru&quot;: &quot;обычное нечёткое представление&quot;,
+  &quot;output_representation&quot;: &quot;probability + top-k feature importance&quot;
+}</pre></td><td>F0 достаточно для внешней табличной классификации с одной вероятностью класса.</td></tr>
+<tr><td>alignment</td><td>gamma = max(1 - class_probability, max(missing_rate, feature_range_violation))</td><td><pre>{
+  &quot;gamma&quot;: 0.310276
+}</pre></td><td>Уверенность модели неполная; это ограничивает автоматическое доверие.</td></tr>
+<tr><td>reduction</td><td>delta = 1 - sum(top_k_feature_importance)</td><td><pre>{
+  &quot;delta&quot;: 0.373128,
+  &quot;top_k_importance_sum&quot;: 0.626872
+}</pre></td><td>Delta показывает, какая доля атрибутивного объяснения не попала в сокращённый набор признаков.</td></tr>
+<tr><td>risk</td><td>rho = max(gamma, delta)</td><td><pre>{
+  &quot;dominant_component&quot;: &quot;delta&quot;,
+  &quot;rho&quot;: 0.373128,
+  &quot;risk_zone&quot;: &quot;lower_confidence&quot;
+}</pre></td><td>Основной вклад в риск дала потеря редуцированного объяснения.</td></tr>
+<tr><td>diagnostics</td><td>diagnostic_id выбирается по risk_zone и ненулевым компонентам gamma/delta</td><td><pre>{
+  &quot;diagnostic_id&quot;: &quot;D_external_tabular_uncertainty&quot;,
+  &quot;diagnostic_title_ru&quot;: &quot;ограниченная уверенность внешней табличной модели&quot;,
+  &quot;recommended_action_level&quot;: &quot;lower_confidence&quot;,
+  &quot;severity&quot;: &quot;medium&quot;
+}</pre></td><td>Диагностика означает ограничение доверия, а не запрет или утверждение о плохой модели.</td></tr>
+<tr><td>action</td><td>if rho &lt; 0.35: accept; elif rho &lt; 0.60: lower_confidence; else: audit</td><td><pre>{
+  &quot;action_id&quot;: &quot;lower_confidence&quot;,
+  &quot;action_title_ru&quot;: &quot;понизить доверие&quot;
+}</pre></td><td>Результат не блокируется, но автоматическое доверие понижается из-за ненулевого риска.</td></tr>
+<tr><td>proof</td><td>proof_trace = hashable route + computed_result + diagnostics + action + source_commit</td><td><pre>{
+  &quot;source_commit&quot;: &quot;be2a30096b275d3365a92cb69b165e57e99e90de&quot;,
+  &quot;verification_status&quot;: &quot;PASS&quot;
+}</pre></td><td>Доказательный след связывает route, значения операторов, диагностику и действие.</td></tr></table>
+<h2>Embedded Data</h2><script type="application/json" id="dashboard-data">{
+  &quot;computed_result&quot;: {
+    &quot;action&quot;: &quot;lower_confidence&quot;,
+    &quot;action_id&quot;: &quot;lower_confidence&quot;,
+    &quot;class_probability&quot;: 0.689724,
+    &quot;delta&quot;: 0.373128,
+    &quot;diagnostic_id&quot;: &quot;D_external_tabular_uncertainty&quot;,
+    &quot;gamma&quot;: 0.310276,
+    &quot;quality_penalty&quot;: 0.0,
+    &quot;rho&quot;: 0.373128,
+    &quot;uncertainty&quot;: 0.310276
+  },
+  &quot;edges&quot;: [
+    {
+      &quot;edge_id&quot;: &quot;edge_input_explanation&quot;,
+      &quot;explanation_ru&quot;: &quot;Адаптированный вход передан в объяснительный объект.&quot;,
+      &quot;passed_values&quot;: {
+        &quot;class_probability&quot;: 0.689724,
+        &quot;feature_importance&quot;: {
+          &quot;alcohol&quot;: 0.166384,
+          &quot;ash&quot;: 0.0985,
+          &quot;color_intensity&quot;: 0.133733,
+          &quot;hue&quot;: 0.083139,
+          &quot;proline&quot;: 0.145116
+        }
+      },
+      &quot;source_node_id&quot;: &quot;input_artifact&quot;,
+      &quot;target_node_id&quot;: &quot;explanation_object&quot;
+    },
+    {
+      &quot;edge_id&quot;: &quot;edge_explanation_representation&quot;,
+      &quot;explanation_ru&quot;: &quot;Объяснительный объект передан в выбор представления.&quot;,
+      &quot;passed_values&quot;: {
+        &quot;terms&quot;: [
+          &quot;alcohol&quot;,
+          &quot;proline&quot;,
+          &quot;color_intensity&quot;,
+          &quot;ash&quot;,
+          &quot;hue&quot;
+        ],
+        &quot;uncertainty&quot;: 0.310276
+      },
+      &quot;source_node_id&quot;: &quot;explanation_object&quot;,
+      &quot;target_node_id&quot;: &quot;representation&quot;
+    },
+    {
+      &quot;edge_id&quot;: &quot;edge_representation_alignment&quot;,
+      &quot;explanation_ru&quot;: &quot;Вероятность и качество переданы в оператор согласования.&quot;,
+      &quot;passed_values&quot;: {
+        &quot;class_probability&quot;: 0.689724,
+        &quot;quality_metrics&quot;: {
+          &quot;feature_range_violation&quot;: 0.0,
+          &quot;missing_rate&quot;: 0.0
+        }
+      },
+      &quot;source_node_id&quot;: &quot;representation&quot;,
+      &quot;target_node_id&quot;: &quot;alignment&quot;
+    },
+    {
+      &quot;edge_id&quot;: &quot;edge_representation_reduction&quot;,
+      &quot;explanation_ru&quot;: &quot;Top-k атрибуции переданы в оператор редукции.&quot;,
+      &quot;passed_values&quot;: {
+        &quot;feature_importance&quot;: {
+          &quot;alcohol&quot;: 0.166384,
+          &quot;ash&quot;: 0.0985,
+          &quot;color_intensity&quot;: 0.133733,
+          &quot;hue&quot;: 0.083139,
+          &quot;proline&quot;: 0.145116
+        },
+        &quot;top_k&quot;: 5
+      },
+      &quot;source_node_id&quot;: &quot;representation&quot;,
+      &quot;target_node_id&quot;: &quot;reduction&quot;
+    },
+    {
+      &quot;edge_id&quot;: &quot;edge_alignment_risk&quot;,
+      &quot;explanation_ru&quot;: &quot;Рассогласование передано в наблюдатель риска.&quot;,
+      &quot;passed_values&quot;: {
+        &quot;gamma&quot;: 0.310276
+      },
+      &quot;source_node_id&quot;: &quot;alignment&quot;,
+      &quot;target_node_id&quot;: &quot;risk&quot;
+    },
+    {
+      &quot;edge_id&quot;: &quot;edge_reduction_risk&quot;,
+      &quot;explanation_ru&quot;: &quot;Потери редукции переданы в наблюдатель риска.&quot;,
+      &quot;passed_values&quot;: {
+        &quot;delta&quot;: 0.373128
+      },
+      &quot;source_node_id&quot;: &quot;reduction&quot;,
+      &quot;target_node_id&quot;: &quot;risk&quot;
+    },
+    {
+      &quot;edge_id&quot;: &quot;edge_risk_diagnostics&quot;,
+      &quot;explanation_ru&quot;: &quot;Риск переведён в диагностическое состояние.&quot;,
+      &quot;passed_values&quot;: {
+        &quot;rho&quot;: 0.373128,
+        &quot;risk_zone&quot;: &quot;lower_confidence&quot;
+      },
+      &quot;source_node_id&quot;: &quot;risk&quot;,
+      &quot;target_node_id&quot;: &quot;diagnostics&quot;
+    },
+    {
+      &quot;edge_id&quot;: &quot;edge_diagnostics_action&quot;,
+      &quot;explanation_ru&quot;: &quot;Диагностика передана в политику действия.&quot;,
+      &quot;passed_values&quot;: {
+        &quot;diagnostic_id&quot;: &quot;D_external_tabular_uncertainty&quot;,
+        &quot;recommended_action&quot;: &quot;lower_confidence&quot;
+      },
+      &quot;source_node_id&quot;: &quot;diagnostics&quot;,
+      &quot;target_node_id&quot;: &quot;action&quot;
+    },
+    {
+      &quot;edge_id&quot;: &quot;edge_action_proof&quot;,
+      &quot;explanation_ru&quot;: &quot;Итоговое действие сохранено в proof trace.&quot;,
+      &quot;passed_values&quot;: {
+        &quot;action_id&quot;: &quot;lower_confidence&quot;,
+        &quot;computed_result&quot;: {
+          &quot;action&quot;: &quot;lower_confidence&quot;,
+          &quot;action_id&quot;: &quot;lower_confidence&quot;,
+          &quot;class_probability&quot;: 0.689724,
+          &quot;delta&quot;: 0.373128,
+          &quot;diagnostic_id&quot;: &quot;D_external_tabular_uncertainty&quot;,
+          &quot;gamma&quot;: 0.310276,
+          &quot;quality_penalty&quot;: 0.0,
+          &quot;rho&quot;: 0.373128,
+          &quot;uncertainty&quot;: 0.310276
+        }
+      },
+      &quot;source_node_id&quot;: &quot;action&quot;,
+      &quot;target_node_id&quot;: &quot;proof&quot;
+    }
+  ],
+  &quot;nodes&quot;: [
+    {
+      &quot;components&quot;: {
+        &quot;dataset_name&quot;: &quot;sklearn_wine&quot;,
+        &quot;model_name&quot;: &quot;LogisticRegression&quot;,
+        &quot;source_type&quot;: &quot;tabular&quot;
+      },
+      &quot;details&quot;: {
+        &quot;applications_used&quot;: false
+      },
+      &quot;explanation&quot;: &quot;Адаптер принимает внешний результат табличной модели.&quot;,
+      &quot;formula_id&quot;: null,
+      &quot;formula_latex&quot;: null,
+      &quot;formula_ref&quot;: &quot;adapter&quot;,
+      &quot;formula_text&quot;: &quot;Нормализация внешнего входа&quot;,
+      &quot;input_refs&quot;: [],
+      &quot;input_summary&quot;: &quot;payload sklearn wine classifier&quot;,
+      &quot;input_values&quot;: {
+        &quot;attribution_values&quot;: {
+          &quot;alcohol&quot;: 0.166384,
+          &quot;ash&quot;: 0.0985,
+          &quot;color_intensity&quot;: 0.133733,
+          &quot;hue&quot;: 0.083139,
+          &quot;proline&quot;: 0.145116
+        },
+        &quot;context_values&quot;: {
+          &quot;external_task&quot;: true,
+          &quot;model_key&quot;: &quot;logistic_regression&quot;,
+          &quot;sample_index&quot;: 24,
+          &quot;test_size&quot;: 63,
+          &quot;top_k_importance&quot;: 5,
+          &quot;train_size&quot;: 115
+        },
+        &quot;dataset_name&quot;: &quot;sklearn_wine&quot;,
+        &quot;feature_values&quot;: {
+          &quot;alcalinity_of_ash&quot;: 20.4,
+          &quot;alcohol&quot;: 12.29,
+          &quot;ash&quot;: 2.21,
+          &quot;color_intensity&quot;: 3.05,
+          &quot;flavanoids&quot;: 1.02,
+          &quot;hue&quot;: 0.906,
+          &quot;magnesium&quot;: 103.0,
+          &quot;malic_acid&quot;: 1.61,
+          &quot;nonflavanoid_phenols&quot;: 0.37,
+          &quot;od280/od315_of_diluted_wines&quot;: 1.82,
+          &quot;proanthocyanins&quot;: 1.46,
+          &quot;proline&quot;: 870.0,
+          &quot;total_phenols&quot;: 1.1
+        },
+        &quot;model_name&quot;: &quot;LogisticRegression&quot;,
+        &quot;model_output&quot;: {
+          &quot;class_probability&quot;: 0.689724,
+          &quot;predicted_class&quot;: 1
+        },
+        &quot;quality_metrics&quot;: {
+          &quot;feature_range_violation&quot;: 0.0,
+          &quot;missing_rate&quot;: 0.0
+        },
+        &quot;source_type&quot;: &quot;tabular&quot;
+      },
+      &quot;interpretation_ru&quot;: &quot;Фреймворк получил вероятность класса, признаки, важности признаков и метрики качества.&quot;,
+      &quot;next_node_ids&quot;: [
+        &quot;explanation_object&quot;
+      ],
+      &quot;node_id&quot;: &quot;input_artifact&quot;,
+      &quot;operator_type&quot;: &quot;adapter&quot;,
+      &quot;output_refs&quot;: [],
+      &quot;output_summary&quot;: &quot;AdaptedInput&quot;,
+      &quot;output_values&quot;: {
+        &quot;adapted_input_id&quot;: &quot;external_wine_classification:LogisticRegression&quot;,
+        &quot;class_probability&quot;: 0.689724,
+        &quot;feature_importance&quot;: {
+          &quot;alcohol&quot;: 0.166384,
+          &quot;ash&quot;: 0.0985,
+          &quot;color_intensity&quot;: 0.133733,
+          &quot;hue&quot;: 0.083139,
+          &quot;proline&quot;: 0.145116
+        },
+        &quot;trace_origin&quot;: &quot;external_model_payload&quot;
+      },
+      &quot;raw&quot;: {
+        &quot;class_probability&quot;: 0.689724,
+        &quot;context_values&quot;: {
+          &quot;external_task&quot;: true,
+          &quot;model_key&quot;: &quot;logistic_regression&quot;,
+          &quot;sample_index&quot;: 24,
+          &quot;test_size&quot;: 63,
+          &quot;top_k_importance&quot;: 5,
+          &quot;train_size&quot;: 115
+        },
+        &quot;dataset_name&quot;: &quot;sklearn_wine&quot;,
+        &quot;feature_importance&quot;: {
+          &quot;alcohol&quot;: 0.166384,
+          &quot;ash&quot;: 0.0985,
+          &quot;color_intensity&quot;: 0.133733,
+          &quot;hue&quot;: 0.083139,
+          &quot;proline&quot;: 0.145116
+        },
+        &quot;feature_range_violation&quot;: 0.0,
+        &quot;feature_values&quot;: {
+          &quot;alcalinity_of_ash&quot;: 20.4,
+          &quot;alcohol&quot;: 12.29,
+          &quot;ash&quot;: 2.21,
+          &quot;color_intensity&quot;: 3.05,
+          &quot;flavanoids&quot;: 1.02,
+          &quot;hue&quot;: 0.906,
+          &quot;magnesium&quot;: 103.0,
+          &quot;malic_acid&quot;: 1.61,
+          &quot;nonflavanoid_phenols&quot;: 0.37,
+          &quot;od280/od315_of_diluted_wines&quot;: 1.82,
+          &quot;proanthocyanins&quot;: 1.46,
+          &quot;proline&quot;: 870.0,
+          &quot;total_phenols&quot;: 1.1
+        },
+        &quot;missing_rate&quot;: 0.0,
+        &quot;model_name&quot;: &quot;LogisticRegression&quot;,
+        &quot;predicted_class&quot;: 1,
+        &quot;source_type&quot;: &quot;tabular&quot;
+      },
+      &quot;source_commit&quot;: &quot;be2a30096b275d3365a92cb69b165e57e99e90de&quot;,
+      &quot;status&quot;: &quot;passed&quot;,
+      &quot;status_reason_ru&quot;: &quot;Внешний payload успешно приведён к AdaptedInput.&quot;,
+      &quot;threshold&quot;: &quot;&quot;,
+      &quot;thresholds&quot;: {},
+      &quot;title&quot;: &quot;Внешняя табличная модель&quot;,
+      &quot;title_ru&quot;: &quot;Внешняя табличная модель&quot;,
+      &quot;trace_ref&quot;: &quot;adapted_input&quot;,
+      &quot;value&quot;: &quot;p=0.689724; class=1&quot;,
+      &quot;value_source&quot;: &quot;external_model_payload&quot;
+    },
+    {
+      &quot;components&quot;: {
+        &quot;terms&quot;: [
+          &quot;alcohol&quot;,
+          &quot;proline&quot;,
+          &quot;color_intensity&quot;,
+          &quot;ash&quot;,
+          &quot;hue&quot;
+        ],
+        &quot;uncertainty&quot;: 0.310276
+      },
+      &quot;details&quot;: {},
+      &quot;explanation&quot;: &quot;Внешний payload переведён в объяснительный объект.&quot;,
+      &quot;formula_id&quot;: &quot;E_k&quot;,
+      &quot;formula_latex&quot;: null,
+      &quot;formula_ref&quot;: &quot;E_k&quot;,
+      &quot;formula_text&quot;: &quot;E_k = {L_k, μ_k, R_k, α_k, u_k, τ_k}&quot;,
+      &quot;input_refs&quot;: [
+        &quot;input_artifact&quot;
+      ],
+      &quot;input_summary&quot;: &quot;предыдущее состояние маршрута&quot;,
+      &quot;input_values&quot;: {
+        &quot;class_probability&quot;: 0.689724,
+        &quot;feature_importance&quot;: {
+          &quot;alcohol&quot;: 0.166384,
+          &quot;ash&quot;: 0.0985,
+          &quot;color_intensity&quot;: 0.133733,
+          &quot;hue&quot;: 0.083139,
+          &quot;proline&quot;: 0.145116
+        }
+      },
+      &quot;interpretation_ru&quot;: &quot;E_k фиксирует, что модель уверена не полностью и объяснение редуцировано до top-k признаков.&quot;,
+      &quot;next_node_ids&quot;: [
+        &quot;representation&quot;
+      ],
+      &quot;node_id&quot;: &quot;explanation_object&quot;,
+      &quot;operator_type&quot;: &quot;explanation_object&quot;,
+      &quot;output_refs&quot;: [
+        &quot;representation&quot;
+      ],
+      &quot;output_summary&quot;: &quot;выход оператора&quot;,
+      &quot;output_values&quot;: {
+        &quot;activations&quot;: {
+          &quot;predicted_class&quot;: 1
+        },
+        &quot;memberships&quot;: {
+          &quot;alcohol&quot;: 0.166384,
+          &quot;ash&quot;: 0.0985,
+          &quot;color_intensity&quot;: 0.133733,
+          &quot;hue&quot;: 0.083139,
+          &quot;proline&quot;: 0.145116
+        },
+        &quot;object_summary&quot;: &quot;табличный объект с вероятностью класса и top-k атрибуциями&quot;,
+        &quot;rules&quot;: [],
+        &quot;terms&quot;: [
+          &quot;alcohol&quot;,
+          &quot;proline&quot;,
+          &quot;color_intensity&quot;,
+          &quot;ash&quot;,
+          &quot;hue&quot;
+        ],
+        &quot;trace&quot;: &quot;external_wine_classification:LogisticRegression&quot;,
+        &quot;uncertainty&quot;: 0.310276
+      },
+      &quot;raw&quot;: {
+        &quot;value_source&quot;: &quot;computed&quot;
+      },
+      &quot;source_commit&quot;: &quot;be2a30096b275d3365a92cb69b165e57e99e90de&quot;,
+      &quot;status&quot;: &quot;passed&quot;,
+      &quot;status_reason_ru&quot;: &quot;Объект объяснения содержит вероятность, признаки и атрибуции.&quot;,
+      &quot;threshold&quot;: &quot;&quot;,
+      &quot;thresholds&quot;: {},
+      &quot;title&quot;: &quot;Объяснительный объект E_k&quot;,
+      &quot;title_ru&quot;: &quot;Объяснительный объект E_k&quot;,
+      &quot;trace_ref&quot;: &quot;explanation_object&quot;,
+      &quot;value&quot;: &quot;E_k сформирован&quot;,
+      &quot;value_source&quot;: &quot;computed&quot;
+    },
+    {
+      &quot;components&quot;: {
+        &quot;input_conditions&quot;: [
+          &quot;single_probability&quot;,
+          &quot;top_k_feature_importance&quot;
+        ]
+      },
+      &quot;details&quot;: {},
+      &quot;explanation&quot;: &quot;Табличный результат представлен через обычное нечёткое представление.&quot;,
+      &quot;formula_id&quot;: &quot;F0-selection&quot;,
+      &quot;formula_latex&quot;: null,
+      &quot;formula_ref&quot;: &quot;F&quot;,
+      &quot;formula_text&quot;: &quot;class_id = F0 для табличной модели с одной вероятностью и редуцированным объяснением&quot;,
+      &quot;input_refs&quot;: [
+        &quot;explanation_object&quot;
+      ],
+      &quot;input_summary&quot;: &quot;предыдущее состояние маршрута&quot;,
+      &quot;input_values&quot;: {
+        &quot;has_single_probability&quot;: true,
+        &quot;has_top_k_importance&quot;: true,
+        &quot;source_type&quot;: &quot;tabular&quot;
+      },
+      &quot;interpretation_ru&quot;: &quot;F0 достаточно для внешней табличной классификации с одной вероятностью класса.&quot;,
+      &quot;next_node_ids&quot;: [
+        &quot;alignment&quot;,
+        &quot;reduction&quot;
+      ],
+      &quot;node_id&quot;: &quot;representation&quot;,
+      &quot;operator_type&quot;: &quot;representation&quot;,
+      &quot;output_refs&quot;: [
+        &quot;alignment&quot;,
+        &quot;reduction&quot;
+      ],
+      &quot;output_summary&quot;: &quot;выход оператора&quot;,
+      &quot;output_values&quot;: {
+        &quot;class_id&quot;: &quot;F0&quot;,
+        &quot;class_title_ru&quot;: &quot;обычное нечёткое представление&quot;,
+        &quot;output_representation&quot;: &quot;probability + top-k feature importance&quot;
+      },
+      &quot;raw&quot;: {
+        &quot;value_source&quot;: &quot;computed&quot;
+      },
+      &quot;source_commit&quot;: &quot;be2a30096b275d3365a92cb69b165e57e99e90de&quot;,
+      &quot;status&quot;: &quot;passed&quot;,
+      &quot;status_reason_ru&quot;: &quot;Интервальная или многоуровневая структура не требуется.&quot;,
+      &quot;threshold&quot;: &quot;&quot;,
+      &quot;thresholds&quot;: {},
+      &quot;title&quot;: &quot;Класс представления F&quot;,
+      &quot;title_ru&quot;: &quot;Класс представления F&quot;,
+      &quot;trace_ref&quot;: &quot;representation&quot;,
+      &quot;value&quot;: &quot;F0&quot;,
+      &quot;value_source&quot;: &quot;computed&quot;
+    },
+    {
+      &quot;components&quot;: {
+        &quot;calculation&quot;: &quot;max(0.310276, 0.0) = 0.310276&quot;,
+        &quot;quality_penalty&quot;: 0.0,
+        &quot;uncertainty&quot;: 0.310276
+      },
+      &quot;details&quot;: {},
+      &quot;explanation&quot;: &quot;gamma=max(1-p, quality_penalty).&quot;,
+      &quot;formula_id&quot;: &quot;external_tabular_gamma&quot;,
+      &quot;formula_latex&quot;: &quot;\\gamma=\\max(1-p,\\max(missing,range))&quot;,
+      &quot;formula_ref&quot;: &quot;gamma&quot;,
+      &quot;formula_text&quot;: &quot;gamma = max(1 - class_probability, max(missing_rate, feature_range_violation))&quot;,
+      &quot;input_refs&quot;: [
+        &quot;representation&quot;
+      ],
+      &quot;input_summary&quot;: &quot;предыдущее состояние маршрута&quot;,
+      &quot;input_values&quot;: {
+        &quot;class_probability&quot;: 0.689724,
+        &quot;feature_range_violation&quot;: 0.0,
+        &quot;missing_rate&quot;: 0.0
+      },
+      &quot;interpretation_ru&quot;: &quot;Уверенность модели неполная; это ограничивает автоматическое доверие.&quot;,
+      &quot;next_node_ids&quot;: [
+        &quot;risk&quot;
+      ],
+      &quot;node_id&quot;: &quot;alignment&quot;,
+      &quot;operator_type&quot;: &quot;alignment&quot;,
+      &quot;output_refs&quot;: [
+        &quot;risk&quot;
+      ],
+      &quot;output_summary&quot;: &quot;выход оператора&quot;,
+      &quot;output_values&quot;: {
+        &quot;gamma&quot;: 0.310276
+      },
+      &quot;raw&quot;: {
+        &quot;gamma&quot;: 0.310276,
+        &quot;quality_penalty&quot;: 0.0,
+        &quot;uncertainty&quot;: 0.310276,
+        &quot;value_source&quot;: &quot;computed&quot;
+      },
+      &quot;source_commit&quot;: &quot;be2a30096b275d3365a92cb69b165e57e99e90de&quot;,
+      &quot;status&quot;: &quot;passed&quot;,
+      &quot;status_reason_ru&quot;: &quot;Рассогласование ненулевое, потому что вероятность класса меньше 1.&quot;,
+      &quot;threshold&quot;: &quot;&quot;,
+      &quot;thresholds&quot;: {
+        &quot;gamma_warning&quot;: 0.35
+      },
+      &quot;title&quot;: &quot;Согласование T_ij&quot;,
+      &quot;title_ru&quot;: &quot;Согласование T_ij&quot;,
+      &quot;trace_ref&quot;: &quot;alignment&quot;,
+      &quot;value&quot;: &quot;gamma=0.310276&quot;,
+      &quot;value_source&quot;: &quot;computed&quot;
+    },
+    {
+      &quot;components&quot;: {
+        &quot;calculation&quot;: &quot;1 - 0.626872 = 0.373128&quot;,
+        &quot;selected_features&quot;: [
+          &quot;alcohol&quot;,
+          &quot;proline&quot;,
+          &quot;color_intensity&quot;,
+          &quot;ash&quot;,
+          &quot;hue&quot;
+        ],
+        &quot;top_k_importance_sum&quot;: 0.626872
+      },
+      &quot;details&quot;: {},
+      &quot;explanation&quot;: &quot;Delta=1-sum(feature_importance) для переданного набора важностей.&quot;,
+      &quot;formula_id&quot;: &quot;external_tabular_delta&quot;,
+      &quot;formula_latex&quot;: &quot;\\Delta=1-\\sum importance_{top-k}&quot;,
+      &quot;formula_ref&quot;: &quot;Delta&quot;,
+      &quot;formula_text&quot;: &quot;delta = 1 - sum(top_k_feature_importance)&quot;,
+      &quot;input_refs&quot;: [
+        &quot;representation&quot;
+      ],
+      &quot;input_summary&quot;: &quot;предыдущее состояние маршрута&quot;,
+      &quot;input_values&quot;: {
+        &quot;feature_importance&quot;: {
+          &quot;alcohol&quot;: 0.166384,
+          &quot;ash&quot;: 0.0985,
+          &quot;color_intensity&quot;: 0.133733,
+          &quot;hue&quot;: 0.083139,
+          &quot;proline&quot;: 0.145116
+        },
+        &quot;selected_features&quot;: [
+          &quot;alcohol&quot;,
+          &quot;proline&quot;,
+          &quot;color_intensity&quot;,
+          &quot;ash&quot;,
+          &quot;hue&quot;
+        ],
+        &quot;top_k&quot;: 5
+      },
+      &quot;interpretation_ru&quot;: &quot;Delta показывает, какая доля атрибутивного объяснения не попала в сокращённый набор признаков.&quot;,
+      &quot;next_node_ids&quot;: [
+        &quot;risk&quot;
+      ],
+      &quot;node_id&quot;: &quot;reduction&quot;,
+      &quot;operator_type&quot;: &quot;reduction&quot;,
+      &quot;output_refs&quot;: [
+        &quot;risk&quot;
+      ],
+      &quot;output_summary&quot;: &quot;выход оператора&quot;,
+      &quot;output_values&quot;: {
+        &quot;delta&quot;: 0.373128,
+        &quot;top_k_importance_sum&quot;: 0.626872
+      },
+      &quot;raw&quot;: {
+        &quot;delta&quot;: 0.373128,
+        &quot;importance_sum&quot;: 0.626872,
+        &quot;value_source&quot;: &quot;computed&quot;
+      },
+      &quot;source_commit&quot;: &quot;be2a30096b275d3365a92cb69b165e57e99e90de&quot;,
+      &quot;status&quot;: &quot;warning&quot;,
+      &quot;status_reason_ru&quot;: &quot;Часть объяснения потеряна при top-k редукции.&quot;,
+      &quot;threshold&quot;: &quot;&quot;,
+      &quot;thresholds&quot;: {
+        &quot;delta_warning&quot;: 0.35
+      },
+      &quot;title&quot;: &quot;Потери представления&quot;,
+      &quot;title_ru&quot;: &quot;Потери представления&quot;,
+      &quot;trace_ref&quot;: &quot;reduction&quot;,
+      &quot;value&quot;: &quot;Delta=0.373128&quot;,
+      &quot;value_source&quot;: &quot;computed&quot;
+    },
+    {
+      &quot;components&quot;: {
+        &quot;calculation&quot;: &quot;max(0.310276, 0.373128) = 0.373128&quot;,
+        &quot;delta&quot;: 0.373128,
+        &quot;gamma&quot;: 0.310276
+      },
+      &quot;details&quot;: {},
+      &quot;explanation&quot;: &quot;rho=max(gamma, Delta).&quot;,
+      &quot;formula_id&quot;: &quot;external_tabular_rho&quot;,
+      &quot;formula_latex&quot;: &quot;\\rho=\\max(\\gamma,\\Delta)&quot;,
+      &quot;formula_ref&quot;: &quot;rho&quot;,
+      &quot;formula_text&quot;: &quot;rho = max(gamma, delta)&quot;,
+      &quot;input_refs&quot;: [
+        &quot;alignment&quot;,
+        &quot;reduction&quot;
+      ],
+      &quot;input_summary&quot;: &quot;предыдущее состояние маршрута&quot;,
+      &quot;input_values&quot;: {
+        &quot;delta&quot;: 0.373128,
+        &quot;gamma&quot;: 0.310276
+      },
+      &quot;interpretation_ru&quot;: &quot;Основной вклад в риск дала потеря редуцированного объяснения.&quot;,
+      &quot;next_node_ids&quot;: [
+        &quot;diagnostics&quot;
+      ],
+      &quot;node_id&quot;: &quot;risk&quot;,
+      &quot;operator_type&quot;: &quot;risk&quot;,
+      &quot;output_refs&quot;: [
+        &quot;diagnostics&quot;
+      ],
+      &quot;output_summary&quot;: &quot;выход оператора&quot;,
+      &quot;output_values&quot;: {
+        &quot;dominant_component&quot;: &quot;delta&quot;,
+        &quot;rho&quot;: 0.373128,
+        &quot;risk_zone&quot;: &quot;lower_confidence&quot;
+      },
+      &quot;raw&quot;: {
+        &quot;rho&quot;: 0.373128,
+        &quot;theta_accept&quot;: 0.35,
+        &quot;theta_warning&quot;: 0.6,
+        &quot;value_source&quot;: &quot;computed&quot;
+      },
+      &quot;source_commit&quot;: &quot;be2a30096b275d3365a92cb69b165e57e99e90de&quot;,
+      &quot;status&quot;: &quot;warning&quot;,
+      &quot;status_reason_ru&quot;: &quot;rho попал в зону lower_confidence.&quot;,
+      &quot;threshold&quot;: &quot;&quot;,
+      &quot;thresholds&quot;: {
+        &quot;theta_accept&quot;: 0.35,
+        &quot;theta_warning&quot;: 0.6
+      },
+      &quot;title&quot;: &quot;Риск rho&quot;,
+      &quot;title_ru&quot;: &quot;Риск rho&quot;,
+      &quot;trace_ref&quot;: &quot;risk&quot;,
+      &quot;value&quot;: &quot;rho=0.373128&quot;,
+      &quot;value_source&quot;: &quot;computed&quot;
+    },
+    {
+      &quot;components&quot;: {
+        &quot;reason_components&quot;: {
+          &quot;delta&quot;: 0.373128,
+          &quot;gamma&quot;: 0.310276,
+          &quot;rho&quot;: 0.373128
+        }
+      },
+      &quot;details&quot;: {},
+      &quot;explanation&quot;: &quot;ограниченная уверенность внешней табличной модели&quot;,
+      &quot;formula_id&quot;: &quot;diagnostic-policy&quot;,
+      &quot;formula_latex&quot;: null,
+      &quot;formula_ref&quot;: &quot;D&quot;,
+      &quot;formula_text&quot;: &quot;diagnostic_id выбирается по risk_zone и ненулевым компонентам gamma/delta&quot;,
+      &quot;input_refs&quot;: [
+        &quot;risk&quot;
+      ],
+      &quot;input_summary&quot;: &quot;предыдущее состояние маршрута&quot;,
+      &quot;input_values&quot;: {
+        &quot;delta&quot;: 0.373128,
+        &quot;gamma&quot;: 0.310276,
+        &quot;rho&quot;: 0.373128,
+        &quot;risk_zone&quot;: &quot;lower_confidence&quot;
+      },
+      &quot;interpretation_ru&quot;: &quot;Диагностика означает ограничение доверия, а не запрет или утверждение о плохой модели.&quot;,
+      &quot;next_node_ids&quot;: [
+        &quot;action&quot;
+      ],
+      &quot;node_id&quot;: &quot;diagnostics&quot;,
+      &quot;operator_type&quot;: &quot;diagnostics&quot;,
+      &quot;output_refs&quot;: [
+        &quot;action&quot;
+      ],
+      &quot;output_summary&quot;: &quot;выход оператора&quot;,
+      &quot;output_values&quot;: {
+        &quot;diagnostic_id&quot;: &quot;D_external_tabular_uncertainty&quot;,
+        &quot;diagnostic_title_ru&quot;: &quot;ограниченная уверенность внешней табличной модели&quot;,
+        &quot;recommended_action_level&quot;: &quot;lower_confidence&quot;,
+        &quot;severity&quot;: &quot;medium&quot;
+      },
+      &quot;raw&quot;: {
+        &quot;diagnostics&quot;: [
+          {
+            &quot;criticality&quot;: &quot;medium&quot;,
+            &quot;diagnostic_id&quot;: &quot;D_external_tabular_uncertainty&quot;,
+            &quot;diagnostic_type&quot;: &quot;external_tabular_uncertainty&quot;,
+            &quot;message_ru&quot;: &quot;ограниченная уверенность внешней табличной модели&quot;,
+            &quot;recommended_action&quot;: &quot;lower_confidence&quot;,
+            &quot;source&quot;: &quot;external_tabular_adapter&quot;
+          }
+        ],
+        &quot;value_source&quot;: &quot;computed&quot;
+      },
+      &quot;source_commit&quot;: &quot;be2a30096b275d3365a92cb69b165e57e99e90de&quot;,
+      &quot;status&quot;: &quot;warning&quot;,
+      &quot;status_reason_ru&quot;: &quot;ограниченная уверенность внешней табличной модели&quot;,
+      &quot;threshold&quot;: &quot;&quot;,
+      &quot;thresholds&quot;: {},
+      &quot;title&quot;: &quot;Диагностика D&quot;,
+      &quot;title_ru&quot;: &quot;Диагностика D&quot;,
+      &quot;trace_ref&quot;: &quot;diagnostics&quot;,
+      &quot;value&quot;: &quot;D_external_tabular_uncertainty&quot;,
+      &quot;value_source&quot;: &quot;computed&quot;
+    },
+    {
+      &quot;components&quot;: {
+        &quot;alternative_actions&quot;: [
+          &quot;accept&quot;,
+          &quot;lower_confidence&quot;,
+          &quot;audit&quot;
+        ],
+        &quot;diagnostic_id&quot;: &quot;D_external_tabular_uncertainty&quot;,
+        &quot;rho&quot;: 0.373128
+      },
+      &quot;details&quot;: {},
+      &quot;explanation&quot;: &quot;Действие выбрано политикой FuzzyXAI.&quot;,
+      &quot;formula_id&quot;: &quot;action-policy&quot;,
+      &quot;formula_latex&quot;: null,
+      &quot;formula_ref&quot;: &quot;action policy&quot;,
+      &quot;formula_text&quot;: &quot;if rho &lt; 0.35: accept; elif rho &lt; 0.60: lower_confidence; else: audit&quot;,
+      &quot;input_refs&quot;: [
+        &quot;diagnostics&quot;
+      ],
+      &quot;input_summary&quot;: &quot;предыдущее состояние маршрута&quot;,
+      &quot;input_values&quot;: {
+        &quot;diagnostic_id&quot;: &quot;D_external_tabular_uncertainty&quot;,
+        &quot;rho&quot;: 0.373128,
+        &quot;risk_zone&quot;: &quot;lower_confidence&quot;
+      },
+      &quot;interpretation_ru&quot;: &quot;Результат не блокируется, но автоматическое доверие понижается из-за ненулевого риска.&quot;,
+      &quot;next_node_ids&quot;: [
+        &quot;proof&quot;
+      ],
+      &quot;node_id&quot;: &quot;action&quot;,
+      &quot;operator_type&quot;: &quot;action&quot;,
+      &quot;output_refs&quot;: [
+        &quot;proof&quot;
+      ],
+      &quot;output_summary&quot;: &quot;выход оператора&quot;,
+      &quot;output_values&quot;: {
+        &quot;action_id&quot;: &quot;lower_confidence&quot;,
+        &quot;action_title_ru&quot;: &quot;понизить доверие&quot;
+      },
+      &quot;raw&quot;: {
+        &quot;action&quot;: &quot;lower_confidence&quot;,
+        &quot;value_source&quot;: &quot;computed&quot;
+      },
+      &quot;source_commit&quot;: &quot;be2a30096b275d3365a92cb69b165e57e99e90de&quot;,
+      &quot;status&quot;: &quot;warning&quot;,
+      &quot;status_reason_ru&quot;: &quot;Риск ненулевой, но не критический.&quot;,
+      &quot;threshold&quot;: &quot;&quot;,
+      &quot;thresholds&quot;: {
+        &quot;theta_accept&quot;: 0.35,
+        &quot;theta_warning&quot;: 0.6
+      },
+      &quot;title&quot;: &quot;Действие&quot;,
+      &quot;title_ru&quot;: &quot;Действие&quot;,
+      &quot;trace_ref&quot;: &quot;action&quot;,
+      &quot;value&quot;: &quot;lower_confidence&quot;,
+      &quot;value_source&quot;: &quot;computed&quot;
+    },
+    {
+      &quot;components&quot;: {
+        &quot;scenario_id&quot;: &quot;external_wine_classification&quot;,
+        &quot;source_commit&quot;: &quot;be2a30096b275d3365a92cb69b165e57e99e90de&quot;
+      },
+      &quot;details&quot;: {},
+      &quot;explanation&quot;: &quot;Маршрут сохраняется как проверяемый доказательный след.&quot;,
+      &quot;formula_id&quot;: &quot;proof-trace&quot;,
+      &quot;formula_latex&quot;: null,
+      &quot;formula_ref&quot;: &quot;proof trace&quot;,
+      &quot;formula_text&quot;: &quot;proof_trace = hashable route + computed_result + diagnostics + action + source_commit&quot;,
+      &quot;input_refs&quot;: [
+        &quot;action&quot;
+      ],
+      &quot;input_summary&quot;: &quot;предыдущее состояние маршрута&quot;,
+      &quot;input_values&quot;: {
+        &quot;action&quot;: &quot;lower_confidence&quot;,
+        &quot;computed_result&quot;: {
+          &quot;action&quot;: &quot;lower_confidence&quot;,
+          &quot;action_id&quot;: &quot;lower_confidence&quot;,
+          &quot;class_probability&quot;: 0.689724,
+          &quot;delta&quot;: 0.373128,
+          &quot;diagnostic_id&quot;: &quot;D_external_tabular_uncertainty&quot;,
+          &quot;gamma&quot;: 0.310276,
+          &quot;quality_penalty&quot;: 0.0,
+          &quot;rho&quot;: 0.373128,
+          &quot;uncertainty&quot;: 0.310276
+        },
+        &quot;diagnostics&quot;: [
+          {
+            &quot;criticality&quot;: &quot;medium&quot;,
+            &quot;diagnostic_id&quot;: &quot;D_external_tabular_uncertainty&quot;,
+            &quot;diagnostic_type&quot;: &quot;external_tabular_uncertainty&quot;,
+            &quot;message_ru&quot;: &quot;ограниченная уверенность внешней табличной модели&quot;,
+            &quot;recommended_action&quot;: &quot;lower_confidence&quot;,
+            &quot;source&quot;: &quot;external_tabular_adapter&quot;
+          }
+        ]
+      },
+      &quot;interpretation_ru&quot;: &quot;Доказательный след связывает route, значения операторов, диагностику и действие.&quot;,
+      &quot;next_node_ids&quot;: [],
+      &quot;node_id&quot;: &quot;proof&quot;,
+      &quot;operator_type&quot;: &quot;proof&quot;,
+      &quot;output_refs&quot;: [],
+      &quot;output_summary&quot;: &quot;выход оператора&quot;,
+      &quot;output_values&quot;: {
+        &quot;source_commit&quot;: &quot;be2a30096b275d3365a92cb69b165e57e99e90de&quot;,
+        &quot;verification_status&quot;: &quot;PASS&quot;
+      },
+      &quot;raw&quot;: {
+        &quot;value_source&quot;: &quot;computed&quot;
+      },
+      &quot;source_commit&quot;: &quot;be2a30096b275d3365a92cb69b165e57e99e90de&quot;,
+      &quot;status&quot;: &quot;passed&quot;,
+      &quot;status_reason_ru&quot;: &quot;Proof trace содержит значения маршрута и source_commit.&quot;,
+      &quot;threshold&quot;: &quot;&quot;,
+      &quot;thresholds&quot;: {},
+      &quot;title&quot;: &quot;Доказательный след&quot;,
+      &quot;title_ru&quot;: &quot;Доказательный след&quot;,
+      &quot;trace_ref&quot;: &quot;proof&quot;,
+      &quot;value&quot;: &quot;proof trace готов&quot;,
+      &quot;value_source&quot;: &quot;computed&quot;
+    }
+  ],
+  &quot;proof_hash&quot;: &quot;b51eb61865d0be7a5f6ce95aa7bd85af15f94e51ba4f7484c1a6e90a0b0db85f&quot;,
+  &quot;route_hash&quot;: &quot;06423f6347b72c984a43809f35bd26b3c10e5c76264bdb30e5659be8897e2d7c&quot;,
+  &quot;route_id&quot;: &quot;external_wine_classification:LogisticRegression&quot;,
+  &quot;scenario_id&quot;: &quot;external_wine_classification&quot;,
+  &quot;scenario_title_ru&quot;: &quot;Внешняя классификация sklearn wine&quot;,
+  &quot;source_commit&quot;: &quot;be2a30096b275d3365a92cb69b165e57e99e90de&quot;,
+  &quot;title&quot;: &quot;External Wine Classification FuzzyXAI OperatorRoute&quot;,
+  &quot;verifier_report&quot;: {
+    &quot;checks&quot;: [
+      {
+        &quot;id&quot;: &quot;source_commit_present&quot;,
+        &quot;status&quot;: &quot;passed&quot;
+      },
+      {
+        &quot;id&quot;: &quot;route_proof_values_match&quot;,
+        &quot;status&quot;: &quot;passed&quot;
+      },
+      {
+        &quot;id&quot;: &quot;action_matches_route&quot;,
+        &quot;status&quot;: &quot;passed&quot;
+      },
+      {
+        &quot;id&quot;: &quot;diagnostic_present&quot;,
+        &quot;status&quot;: &quot;passed&quot;
+      },
+      {
+        &quot;id&quot;: &quot;operator_nodes_have_io&quot;,
+        &quot;status&quot;: &quot;passed&quot;
+      },
+      {
+        &quot;id&quot;: &quot;operator_edges_have_passed_values&quot;,
+        &quot;status&quot;: &quot;passed&quot;
+      },
+      {
+        &quot;id&quot;: &quot;gamma_matches_formula&quot;,
+        &quot;status&quot;: &quot;passed&quot;
+      },
+      {
+        &quot;id&quot;: &quot;rho_matches_formula&quot;,
+        &quot;status&quot;: &quot;passed&quot;
+      },
+      {
+        &quot;id&quot;: &quot;action_matches_risk_zone&quot;,
+        &quot;status&quot;: &quot;passed&quot;
+      }
+    ],
+    &quot;errors&quot;: [],
+    &quot;overall_status&quot;: &quot;passed&quot;,
+    &quot;warnings&quot;: []
+  }
+}</script>
+</html>

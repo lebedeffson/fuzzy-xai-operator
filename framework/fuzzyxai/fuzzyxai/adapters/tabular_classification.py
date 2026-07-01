@@ -38,6 +38,7 @@ class TabularClassificationAdapter(BaseAdapter):
         self.validate(payload)
         quality = dict(payload.get("quality_metrics") or {})
         values = {
+            "source_type": payload["source_type"],
             "model_name": payload["model_name"],
             "dataset_name": payload["dataset_name"],
             "predicted_class": int(payload["predicted_class"]),

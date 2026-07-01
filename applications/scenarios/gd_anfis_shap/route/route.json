@@ -1,6 +1,9 @@
 {
+  "route_id": "",
   "scenario_id": "gd_anfis_shap",
+  "scenario_title_ru": "",
   "title": "GD-ANFIS/SHAP FuzzyXAI OperatorRoute",
+  "created_at": "",
   "nodes": [
     {
       "node_id": "input_artifact",
@@ -23,7 +26,23 @@
         "shap_x1": 0.45,
         "shap_x2": -0.3,
         "gamma_rule_shap": 0.685
-      }
+      },
+      "title_ru": "",
+      "operator_type": "",
+      "input_refs": [],
+      "output_refs": [],
+      "input_values": {},
+      "output_values": {},
+      "formula_id": null,
+      "formula_text": null,
+      "formula_latex": null,
+      "components": {},
+      "thresholds": {},
+      "status_reason_ru": "",
+      "interpretation_ru": "",
+      "next_node_ids": [],
+      "source_commit": "",
+      "details": {}
     },
     {
       "node_id": "explanation_object",
@@ -39,7 +58,23 @@
       "value_source": "computed",
       "raw": {
         "value_source": "computed"
-      }
+      },
+      "title_ru": "",
+      "operator_type": "",
+      "input_refs": [],
+      "output_refs": [],
+      "input_values": {},
+      "output_values": {},
+      "formula_id": null,
+      "formula_text": null,
+      "formula_latex": null,
+      "components": {},
+      "thresholds": {},
+      "status_reason_ru": "",
+      "interpretation_ru": "",
+      "next_node_ids": [],
+      "source_commit": "",
+      "details": {}
     },
     {
       "node_id": "alignment",
@@ -63,7 +98,23 @@
         "shap_x2": -0.3,
         "gamma_rule_shap": 0.685,
         "value_source": "computed"
-      }
+      },
+      "title_ru": "",
+      "operator_type": "",
+      "input_refs": [],
+      "output_refs": [],
+      "input_values": {},
+      "output_values": {},
+      "formula_id": null,
+      "formula_text": null,
+      "formula_latex": null,
+      "components": {},
+      "thresholds": {},
+      "status_reason_ru": "",
+      "interpretation_ru": "",
+      "next_node_ids": [],
+      "source_commit": "",
+      "details": {}
     },
     {
       "node_id": "diagnostics",
@@ -89,7 +140,23 @@
           }
         ],
         "value_source": "computed"
-      }
+      },
+      "title_ru": "",
+      "operator_type": "",
+      "input_refs": [],
+      "output_refs": [],
+      "input_values": {},
+      "output_values": {},
+      "formula_id": null,
+      "formula_text": null,
+      "formula_latex": null,
+      "components": {},
+      "thresholds": {},
+      "status_reason_ru": "",
+      "interpretation_ru": "",
+      "next_node_ids": [],
+      "source_commit": "",
+      "details": {}
     },
     {
       "node_id": "action",
@@ -106,7 +173,23 @@
       "raw": {
         "action": "audit",
         "value_source": "computed"
-      }
+      },
+      "title_ru": "",
+      "operator_type": "",
+      "input_refs": [],
+      "output_refs": [],
+      "input_values": {},
+      "output_values": {},
+      "formula_id": null,
+      "formula_text": null,
+      "formula_latex": null,
+      "components": {},
+      "thresholds": {},
+      "status_reason_ru": "",
+      "interpretation_ru": "",
+      "next_node_ids": [],
+      "source_commit": "",
+      "details": {}
     },
     {
       "node_id": "proof",
@@ -122,9 +205,26 @@
       "value_source": "computed",
       "raw": {
         "value_source": "computed"
-      }
+      },
+      "title_ru": "",
+      "operator_type": "",
+      "input_refs": [],
+      "output_refs": [],
+      "input_values": {},
+      "output_values": {},
+      "formula_id": null,
+      "formula_text": null,
+      "formula_latex": null,
+      "components": {},
+      "thresholds": {},
+      "status_reason_ru": "",
+      "interpretation_ru": "",
+      "next_node_ids": [],
+      "source_commit": "",
+      "details": {}
     }
   ],
+  "edges": [],
   "computed_result": {
     "gamma_rule_shap": 0.685,
     "diagnostic_id": "D_rule_attribution_conflict",
@@ -141,6 +241,11 @@
     }
   ],
   "final_action": "audit",
+  "final_action_id": "audit",
+  "final_diagnostic_id": "D_rule_attribution_conflict",
   "verifier_status": "PASS",
-  "source_commit": "c15d5a0476b909fe9e25d27cc077a9d8fa3be3fd"
+  "source_commit": "be2a30096b275d3365a92cb69b165e57e99e90de",
+  "proof_ref": "",
+  "dashboard_ref": "",
+  "verification_summary": {}
 }

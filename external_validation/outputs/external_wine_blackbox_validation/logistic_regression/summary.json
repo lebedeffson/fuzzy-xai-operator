@@ -14,11 +14,19 @@
     "delta": 0.373128,
     "rho": 0.373128,
     "diagnostic_id": "D_external_tabular_uncertainty",
+    "action_id": "lower_confidence",
     "action": "lower_confidence"
   },
   "verifier": "passed",
-  "source_commit": "c15d5a0476b909fe9e25d27cc077a9d8fa3be3fd",
+  "source_commit": "be2a30096b275d3365a92cb69b165e57e99e90de",
   "route": "logistic_regression/route.json",
   "proof_trace": "logistic_regression/proof_trace.json",
-  "dashboard": "logistic_regression/operator_dashboard.png"
+  "dashboard": "logistic_regression/operator_dashboard.png",
+  "operator_trace": "logistic_regression/operator_trace.json",
+  "operator_table": "logistic_regression/operator_table.csv",
+  "verifier_report": "logistic_regression/verifier_report.json",
+  "dashboard_data": "logistic_regression/dashboard_data.json",
+  "dashboard_v2": "logistic_regression/operator_dashboard_v2.png",
+  "dashboard_v2_html": "logistic_regression/operator_dashboard_v2.html",
+  "operator_cards": "logistic_regression/operator_cards/"
 }

@@ -2,7 +2,7 @@
   "package_name": "external_wine_blackbox_validation",
   "task": "sklearn_wine_classification",
   "scenario_id": "external_wine_classification",
-  "source_commit": "c15d5a0476b909fe9e25d27cc077a9d8fa3be3fd",
+  "source_commit": "be2a30096b275d3365a92cb69b165e57e99e90de",
   "verifier": "passed",
   "models": [
     "LogisticRegression",
@@ -12,57 +12,207 @@
     {
       "path": "external_validation_report.md",
       "size_bytes": 983,
-      "sha256": "86e41eae9b3fcf89d1cbadc88f2db0a500b81d6545db97a71dc5c768c992d8b3"
+      "sha256": "d93feb095bcab640866165056efadb17c53cd49f2d4f929ed21baf56be0ca353"
     },
     {
       "path": "external_wine_summary.json",
-      "size_bytes": 2102,
-      "sha256": "ccb94393fafdbefde4c07e8432bf6a44d2af131ce76ae435c5456022d402c3d2"
+      "size_bytes": 3130,
+      "sha256": "be5df0f2bd363b794fd43fa9a05b944567a69fa4f98edf81956e1a45e6bff858"
+    },
+    {
+      "path": "gradient_boosting/dashboard_data.json",
+      "size_bytes": 26715,
+      "sha256": "29ed64cf05410e527b6e3459df30d7180d852f5a2bfe4617374becf8604d0e42"
+    },
+    {
+      "path": "gradient_boosting/operator_cards/action.md",
+      "size_bytes": 834,
+      "sha256": "f81090e95e6b25278b0f8993adcc8d880347cb95a9238dad5b439af3e844f5fd"
+    },
+    {
+      "path": "gradient_boosting/operator_cards/alignment.md",
+      "size_bytes": 735,
+      "sha256": "ea0e60c46d044433c3270143955c1b15c74ed28b68e95c9494649eb1623a1f8e"
+    },
+    {
+      "path": "gradient_boosting/operator_cards/diagnostics.md",
+      "size_bytes": 955,
+      "sha256": "381872ca36f8ef71d9ef1b89bf9490fcd1756604754630d47d36116459a50a13"
+    },
+    {
+      "path": "gradient_boosting/operator_cards/explanation_object.md",
+      "size_bytes": 1089,
+      "sha256": "047f7d58a1bdf3ef3067da7a12d8a1cf7d25a3e48290362639e2b4d4918e580a"
+    },
+    {
+      "path": "gradient_boosting/operator_cards/input_artifact.md",
+      "size_bytes": 1639,
+      "sha256": "4c59be8e40dc4bca39cf9ee760be50f88442ac448a2071acc26d921c175f097e"
+    },
+    {
+      "path": "gradient_boosting/operator_cards/proof.md",
+      "size_bytes": 1336,
+      "sha256": "dbd657c0eee0e8243a12b6ba0e240accebf41b2e318f313397db3fb01514ba11"
+    },
+    {
+      "path": "gradient_boosting/operator_cards/reduction.md",
+      "size_bytes": 831,
+      "sha256": "5739fc0d0792186ea8fc0d455ec695b93c3d5639d8a4e7df53f647b2ba5230a1"
+    },
+    {
+      "path": "gradient_boosting/operator_cards/representation.md",
+      "size_bytes": 927,
+      "sha256": "ac0c1eb7dd56cbd7f90eb2ceae5f3a3c86183965d1218a13a4e8ff9c2e77a482"
+    },
+    {
+      "path": "gradient_boosting/operator_cards/risk.md",
+      "size_bytes": 616,
+      "sha256": "07e659d03bbac07664cde8116c5ee5e5bd7de09dea773f9397487797392069ba"
     },
     {
       "path": "gradient_boosting/operator_dashboard.png",
-      "size_bytes": 266872,
-      "sha256": "a14b13574cbd8262b995e661afce6b6ede91b679a07d22e931b6d4a03e10ca76"
+      "size_bytes": 265670,
+      "sha256": "9ef97df01e2fb07981692a4e58dc97ac36ea10c1cda10a9427e7e4c0c39c8138"
+    },
+    {
+      "path": "gradient_boosting/operator_dashboard_v2.html",
+      "size_bytes": 41541,
+      "sha256": "79eb696cfbf7d9319a8dc4b4e691c2e8cc9b133af8a9173071660828af2a59f2"
+    },
+    {
+      "path": "gradient_boosting/operator_dashboard_v2.png",
+      "size_bytes": 389401,
+      "sha256": "d633625687157ae94e964bfaf2345afe6fd9d21a9dbb0cadc7bd7e7a291b3ec4"
+    },
+    {
+      "path": "gradient_boosting/operator_table.csv",
+      "size_bytes": 7300,
+      "sha256": "ef472024337169eb4d21ec6ed0edc9c5667a8a40787476b841880ba0c0d43001"
+    },
+    {
+      "path": "gradient_boosting/operator_trace.json",
+      "size_bytes": 26638,
+      "sha256": "5e18cd1994b731e1201fa7a7ec003c47c0d3b35e1e7e78e1ff8ea2f27121a8ef"
     },
     {
       "path": "gradient_boosting/proof_trace.json",
-      "size_bytes": 9235,
-      "sha256": "1b3f5d7c8ba633da9581a4a0606798b4521e21020fa49d734f3b6a8f2b4597a6"
+      "size_bytes": 28897,
+      "sha256": "37fa30a4d58fc5fe0af02d2f1feae45d32e626818fc8a00a345a6f54d9e28e41"
     },
     {
       "path": "gradient_boosting/route.json",
-      "size_bytes": 7863,
-      "sha256": "390154a70a7006a4e72d3762f779c1925df48e040d1b238b59872e042992ff80"
+      "size_bytes": 26442,
+      "sha256": "25008c026a04b2f5cbd78ca32bb0b73d1e9ee61de5cf351dc443281d6c836716"
     },
     {
       "path": "gradient_boosting/summary.json",
-      "size_bytes": 801,
-      "sha256": "af176558784780d6f62bd8a53021eca80be1554bb2d163ea6bcce5164fc81dfb"
+      "size_bytes": 1276,
+      "sha256": "795bafac86756496ef92df82157c63fadb3971171d3fd748e3f389c3e33be6cb"
+    },
+    {
+      "path": "gradient_boosting/verifier_report.json",
+      "size_bytes": 773,
+      "sha256": "b019503513955ca963722227d9aa2cd1f1defdbcc17cff2304967abf35801f1d"
     },
     {
       "path": "import_provenance.json",
       "size_bytes": 667,
-      "sha256": "4687b817e17bc2cbb008ac048484714f1b78fcc6cd6b3c5bcadeb213d214399d"
+      "sha256": "6a6b1c7b5a93065df3dfe45b0d191cad20ffda8e5064f9eb3b8f48a43024299e"
+    },
+    {
+      "path": "logistic_regression/dashboard_data.json",
+      "size_bytes": 27618,
+      "sha256": "3d6188b0675d54aa7cef161c39bd4b160209cad3d20ba4e9d2fdb07f00062de5"
+    },
+    {
+      "path": "logistic_regression/operator_cards/action.md",
+      "size_bytes": 834,
+      "sha256": "732ba138a3f619c0b937b464f0a86be24430830eeb303b26e717604291202f31"
+    },
+    {
+      "path": "logistic_regression/operator_cards/alignment.md",
+      "size_bytes": 735,
+      "sha256": "b69b793c5dcd7d0b6a4b96597f9aa23ea48d5162ac4507937aa3986633f04ec0"
+    },
+    {
+      "path": "logistic_regression/operator_cards/diagnostics.md",
+      "size_bytes": 955,
+      "sha256": "369bdc303dd9ccf229039c417fa952cd2ab7c44e441402643887db896525cab3"
+    },
+    {
+      "path": "logistic_regression/operator_cards/explanation_object.md",
+      "size_bytes": 1237,
+      "sha256": "ec0f1086ce1e94debb165f4aea79ef6212b9d99430ee36b30fe1a0f26dc4c884"
+    },
+    {
+      "path": "logistic_regression/operator_cards/input_artifact.md",
+      "size_bytes": 1727,
+      "sha256": "d8b8a0bc08cde08d61e54d3b0cd3492584268078d4ce5c4a5e45e786c7f67916"
+    },
+    {
+      "path": "logistic_regression/operator_cards/proof.md",
+      "size_bytes": 1336,
+      "sha256": "a3d40d74b6a8c6648fbd41c88dd3f40fde6ede2de7011f6275b7cbf8f9b42e7f"
+    },
+    {
+      "path": "logistic_regression/operator_cards/reduction.md",
+      "size_bytes": 934,
+      "sha256": "f91490100c520872d32e57adf38d73407c49da08a05583b903a26e4aa85ca9b6"
+    },
+    {
+      "path": "logistic_regression/operator_cards/representation.md",
+      "size_bytes": 927,
+      "sha256": "ac0c1eb7dd56cbd7f90eb2ceae5f3a3c86183965d1218a13a4e8ff9c2e77a482"
+    },
+    {
+      "path": "logistic_regression/operator_cards/risk.md",
+      "size_bytes": 616,
+      "sha256": "06d204520fb52d408852721e91a2077903b4ae487d8afec37aa0f4d93ca89a94"
     },
     {
       "path": "logistic_regression/operator_dashboard.png",
-      "size_bytes": 267904,
-      "sha256": "a2365c0ba9f671e617ba3e9e97a42c89fbf832288cc12575bf5bc775eca79afa"
+      "size_bytes": 266740,
+      "sha256": "0a4ec30227cb60fe18d18c431f129006b743cbc03ba7bc0f86733d72ff2a7014"
+    },
+    {
+      "path": "logistic_regression/operator_dashboard_v2.html",
+      "size_bytes": 43067,
+      "sha256": "02b3ca3683d627ad56c5e2cbd4765ef81f163b4c724d3240df90ecd51aba2c52"
+    },
+    {
+      "path": "logistic_regression/operator_dashboard_v2.png",
+      "size_bytes": 394306,
+      "sha256": "5dcacacfa71205e1a5331e6043756b706b553c5eceb03e4cfb3589e1415c3f8c"
+    },
+    {
+      "path": "logistic_regression/operator_table.csv",
+      "size_bytes": 7639,
+      "sha256": "b6510ecab08f26f73d40627aa093f1b5cce65888e7536bf1030742a808770bf6"
+    },
+    {
+      "path": "logistic_regression/operator_trace.json",
+      "size_bytes": 27541,
+      "sha256": "94e6b2e8aebe8582bb5785cac25cc585634185dc5c7e7c4f596ce9e528419858"
     },
     {
       "path": "logistic_regression/proof_trace.json",
-      "size_bytes": 9322,
-      "sha256": "c18eda1b8416384f3312eb9cc26c868d6f561af3d3c9b59e81fefa32fe6c50c9"
+      "size_bytes": 29878,
+      "sha256": "85ae84811cddaf32197c831c7d81080baccb9eb30982af340b46cb4e4ae0cac0"
     },
     {
       "path": "logistic_regression/route.json",
-      "size_bytes": 7944,
-      "sha256": "4d4643994fd09aab6e4a81d27b52e470f76035680099c1b8753718a15ca1eabc"
+      "size_bytes": 27345,
+      "sha256": "15dfba6a5c87106671b58ad35452d60a95228f64fc281fdef1d865758b350475"
     },
     {
       "path": "logistic_regression/summary.json",
-      "size_bytes": 801,
-      "sha256": "95e449ef08b25c7634ad5d0052af7ed6795fc38451e30c8333553faae80c48ff"
+      "size_bytes": 1290,
+      "sha256": "97de1dcbaa757746acb30a9b689e28893e924f2e9492ffb57a1cea29f533e226"
+    },
+    {
+      "path": "logistic_regression/verifier_report.json",
+      "size_bytes": 773,
+      "sha256": "b019503513955ca963722227d9aa2cd1f1defdbcc17cff2304967abf35801f1d"
     }
   ]
 }

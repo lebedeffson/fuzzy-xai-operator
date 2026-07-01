@@ -253,8 +253,14 @@ def validate_external_framework() -> tuple[dict[str, Any], list[str]]:
                 ROOT / "external_validation" / "outputs" / f"external_wine_{model_key}_operator_dashboard.png",
                 ROOT / "external_validation" / "outputs" / f"external_wine_{model_key}_summary.json",
                 EXTERNAL_PACKAGE_DIR / model_key / "route.json",
+                EXTERNAL_PACKAGE_DIR / model_key / "operator_trace.json",
+                EXTERNAL_PACKAGE_DIR / model_key / "operator_table.csv",
                 EXTERNAL_PACKAGE_DIR / model_key / "proof_trace.json",
+                EXTERNAL_PACKAGE_DIR / model_key / "verifier_report.json",
+                EXTERNAL_PACKAGE_DIR / model_key / "dashboard_data.json",
                 EXTERNAL_PACKAGE_DIR / model_key / "operator_dashboard.png",
+                EXTERNAL_PACKAGE_DIR / model_key / "operator_dashboard_v2.png",
+                EXTERNAL_PACKAGE_DIR / model_key / "operator_dashboard_v2.html",
                 EXTERNAL_PACKAGE_DIR / model_key / "summary.json",
             ]
         )
@@ -301,6 +307,39 @@ def validate_external_framework() -> tuple[dict[str, Any], list[str]]:
             rho = float(computed.get("rho", 0.0))
             if not (0.10 <= gamma <= 0.60 and 0.05 <= delta <= 0.60 and 0.10 <= rho <= 0.70):
                 errors.append(f"external {item.get('model_key')} values out of range: gamma={gamma}, delta={delta}, rho={rho}")
+    traceability = []
+    for model_key in EXTERNAL_MODEL_KEYS:
+        base = EXTERNAL_PACKAGE_DIR / model_key
+        trace_path = base / "operator_trace.json"
+        verifier_path = base / "verifier_report.json"
+        if trace_path.exists() and verifier_path.exists():
+            trace = load_json(trace_path)
+            verifier = load_json(verifier_path)
+            nodes = trace.get("nodes", [])
+            edges = trace.get("edges", [])
+            traceability.append(
+                {
+                    "scenario": f"external_{model_key}",
+                    "nodes_traced": len(nodes),
+                    "edges_traced": len(edges),
+                    "formulas": all(node.get("formula_text") for node in nodes),
+                    "components": all(node.get("components") for node in nodes),
+                    "verifier_report": verifier.get("overall_status", ""),
+                    "dashboard_v2": (base / "operator_dashboard_v2.png").exists(),
+                    "operator_cards": (base / "operator_cards").exists(),
+                }
+            )
+        else:
+            errors.append(f"external {model_key} traceability artifacts are missing")
+    for row in traceability:
+        if row["nodes_traced"] == 0 or row["edges_traced"] == 0:
+            errors.append(f"{row['scenario']} traceability has empty nodes/edges")
+        if not row["formulas"] or not row["components"]:
+            errors.append(f"{row['scenario']} traceability lacks formulas/components")
+        if row["verifier_report"] != "passed":
+            errors.append(f"{row['scenario']} verifier_report is not passed")
+        if not row["dashboard_v2"] or not row["operator_cards"]:
+            errors.append(f"{row['scenario']} dashboard_v2/operator_cards missing")
     return {
         "status": "FAIL" if errors else "PASS",
         "task": summary.get("task", ""),
@@ -314,6 +353,11 @@ def validate_external_framework() -> tuple[dict[str, Any], list[str]]:
         "route_exists": all((ROOT / "external_validation" / "outputs" / f"external_wine_{key}_route.json").exists() for key in EXTERNAL_MODEL_KEYS),
         "proof_exists": all((ROOT / "external_validation" / "outputs" / f"external_wine_{key}_proof_trace.json").exists() for key in EXTERNAL_MODEL_KEYS),
         "dashboard_exists": all((ROOT / "external_validation" / "outputs" / f"external_wine_{key}_operator_dashboard.png").exists() for key in EXTERNAL_MODEL_KEYS),
+        "traceability": traceability,
+        "operator_traceability_check": "PASS" if traceability and all(row["verifier_report"] == "passed" for row in traceability) else "FAIL",
+        "dashboard_v2_available": bool(traceability) and all(row["dashboard_v2"] for row in traceability),
+        "operator_cards_available": bool(traceability) and all(row["operator_cards"] for row in traceability),
+        "operator_edges_available": bool(traceability) and all(row["edges_traced"] > 0 for row in traceability),
     }, errors
 
 
@@ -524,6 +568,18 @@ def render_md(
             f"| sprint-report | {summary['sprint_report_status']} |",
         ]
     )
+    traceability_rows = "\n".join(
+        "| {scenario} | {nodes_traced} | {edges_traced} | {formulas} | {components} | {verifier_report} | {dashboard_v2} |".format(
+            scenario=row["scenario"],
+            nodes_traced=row["nodes_traced"],
+            edges_traced=row["edges_traced"],
+            formulas="yes" if row["formulas"] else "no",
+            components="yes" if row["components"] else "no",
+            verifier_report=row["verifier_report"],
+            dashboard_v2="yes" if row["dashboard_v2"] else "no",
+        )
+        for row in external.get("traceability", [])
+    )
     status_text = git_status if git_status.strip() else "clean"
     diff_text = diff_summary if diff_summary.strip() else "no diff"
     return f"""# Sprint Status
@@ -585,6 +641,12 @@ DubnaXAI/FuzzyXAI has three separated layers: framework computes, applications r
 | dashboard | {'PASS' if external.get('dashboard_exists') else 'FAIL'} |
 | verifier | {external.get('verifier') or ''} |
 | source_commit | {external.get('source_commit') or ''} |
+
+## Operator Traceability
+
+| Scenario | Nodes traced | Edges traced | Formulas | Components | Verifier report | Dashboard v2 |
+|---|---:|---:|---|---|---|---|
+{traceability_rows}
 
 ## Site Separation
 
@@ -686,6 +748,10 @@ def main() -> int:
         "package_boundary_ok": external["status"] == "PASS",
         "source_commit_filled": bool(external.get("source_commit")),
         "operator_route_check": "PASS" if not errors else "FAIL",
+        "operator_traceability_check": external.get("operator_traceability_check", "FAIL"),
+        "dashboard_v2_available": external.get("dashboard_v2_available", False),
+        "operator_cards_available": external.get("operator_cards_available", False),
+        "operator_edges_available": external.get("operator_edges_available", False),
         "dubnaxai_release_check": "UNKNOWN",
         "scenarios_total": len(rows),
         "scenarios_passed": sum(1 for row in rows if row["status"] == "PASS"),
@@ -717,6 +783,10 @@ def main() -> int:
             "status": summary["operator_route_check"],
             "source": "sprint-report artifact validation",
         },
+        "operator_traceability_check": {
+            "status": summary["operator_traceability_check"],
+            "source": "external_validation/outputs/external_wine_blackbox_validation",
+        },
         "dubnaxai_release_check": {
             "status": "UNKNOWN",
             "source": "not executed by sprint-report",
@@ -746,6 +816,7 @@ def main() -> int:
     print("\nchecks:")
     print(f"  sprint-report: {summary['sprint_report_status']}")
     print(f"  external framework check: {external['status']}")
+    print(f"  operator traceability check: {summary['operator_traceability_check']}")
     print("\nscenarios:")
     for row in rows:
         print(
@@ -757,6 +828,9 @@ def main() -> int:
     print(f"  proofs: {summary['proofs_total']}")
     print(f"  dashboards: {summary['dashboards_total']}")
     print(f"  site payloads: {summary['site_payloads_total']}")
+    print("\ntraceability:")
+    for row in external.get("traceability", []):
+        print(f"  {row['scenario']}: nodes={row['nodes_traced']}; edges={row['edges_traced']}; dashboard_v2={'yes' if row['dashboard_v2'] else 'no'}")
     print("\nseparation:")
     print(f"  site computes FuzzyXAI: {'yes' if site_bad else 'no'}")
     print(f"  applications choose actions directly: {'yes' if apps_bad else 'no'}")

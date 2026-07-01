@@ -14,11 +14,19 @@
     "delta": 0.429844,
     "rho": 0.429844,
     "diagnostic_id": "D_external_tabular_uncertainty",
+    "action_id": "lower_confidence",
     "action": "lower_confidence"
   },
   "verifier": "passed",
-  "source_commit": "c15d5a0476b909fe9e25d27cc077a9d8fa3be3fd",
+  "source_commit": "be2a30096b275d3365a92cb69b165e57e99e90de",
   "route": "gradient_boosting/route.json",
   "proof_trace": "gradient_boosting/proof_trace.json",
-  "dashboard": "gradient_boosting/operator_dashboard.png"
+  "dashboard": "gradient_boosting/operator_dashboard.png",
+  "operator_trace": "gradient_boosting/operator_trace.json",
+  "operator_table": "gradient_boosting/operator_table.csv",
+  "verifier_report": "gradient_boosting/verifier_report.json",
+  "dashboard_data": "gradient_boosting/dashboard_data.json",
+  "dashboard_v2": "gradient_boosting/operator_dashboard_v2.png",
+  "dashboard_v2_html": "gradient_boosting/operator_dashboard_v2.html",
+  "operator_cards": "gradient_boosting/operator_cards/"
 }

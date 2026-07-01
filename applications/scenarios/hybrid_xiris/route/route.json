@@ -1,6 +1,9 @@
 {
+  "route_id": "",
   "scenario_id": "hybrid_xiris",
+  "scenario_title_ru": "",
   "title": "HYBRID-XIRIS FuzzyXAI OperatorRoute",
+  "created_at": "",
   "nodes": [
     {
       "node_id": "input_artifact",
@@ -20,7 +23,23 @@
         "model_match_signal": 0.88,
         "alpha_accept": 0.82,
         "alpha_block": 0.91
-      }
+      },
+      "title_ru": "",
+      "operator_type": "",
+      "input_refs": [],
+      "output_refs": [],
+      "input_values": {},
+      "output_values": {},
+      "formula_id": null,
+      "formula_text": null,
+      "formula_latex": null,
+      "components": {},
+      "thresholds": {},
+      "status_reason_ru": "",
+      "interpretation_ru": "",
+      "next_node_ids": [],
+      "source_commit": "",
+      "details": {}
     },
     {
       "node_id": "explanation_object",
@@ -40,7 +59,23 @@
         "segmentation_quality": 0.27,
         "alpha_accept": 0.82,
         "alpha_block": 0.91
-      }
+      },
+      "title_ru": "",
+      "operator_type": "",
+      "input_refs": [],
+      "output_refs": [],
+      "input_values": {},
+      "output_values": {},
+      "formula_id": null,
+      "formula_text": null,
+      "formula_latex": null,
+      "components": {},
+      "thresholds": {},
+      "status_reason_ru": "",
+      "interpretation_ru": "",
+      "next_node_ids": [],
+      "source_commit": "",
+      "details": {}
     },
     {
       "node_id": "alignment",
@@ -71,7 +106,23 @@
           "d_u": 0.2,
           "d_tau": 0.2
         }
-      }
+      },
+      "title_ru": "",
+      "operator_type": "",
+      "input_refs": [],
+      "output_refs": [],
+      "input_values": {},
+      "output_values": {},
+      "formula_id": null,
+      "formula_text": null,
+      "formula_latex": null,
+      "components": {},
+      "thresholds": {},
+      "status_reason_ru": "",
+      "interpretation_ru": "",
+      "next_node_ids": [],
+      "source_commit": "",
+      "details": {}
     },
     {
       "node_id": "representation",
@@ -87,7 +138,23 @@
       "value_source": "computed",
       "raw": {
         "value_source": "computed"
-      }
+      },
+      "title_ru": "",
+      "operator_type": "",
+      "input_refs": [],
+      "output_refs": [],
+      "input_values": {},
+      "output_values": {},
+      "formula_id": null,
+      "formula_text": null,
+      "formula_latex": null,
+      "components": {},
+      "thresholds": {},
+      "status_reason_ru": "",
+      "interpretation_ru": "",
+      "next_node_ids": [],
+      "source_commit": "",
+      "details": {}
     },
     {
       "node_id": "reduction",
@@ -114,7 +181,23 @@
         "weights": {
           "hybrid_delta": 1.0
         }
-      }
+      },
+      "title_ru": "",
+      "operator_type": "",
+      "input_refs": [],
+      "output_refs": [],
+      "input_values": {},
+      "output_values": {},
+      "formula_id": null,
+      "formula_text": null,
+      "formula_latex": null,
+      "components": {},
+      "thresholds": {},
+      "status_reason_ru": "",
+      "interpretation_ru": "",
+      "next_node_ids": [],
+      "source_commit": "",
+      "details": {}
     },
     {
       "node_id": "risk",
@@ -147,7 +230,23 @@
           "source_conflict": 0.2,
           "reduction_component": 0.2
         }
-      }
+      },
+      "title_ru": "",
+      "operator_type": "",
+      "input_refs": [],
+      "output_refs": [],
+      "input_values": {},
+      "output_values": {},
+      "formula_id": null,
+      "formula_text": null,
+      "formula_latex": null,
+      "components": {},
+      "thresholds": {},
+      "status_reason_ru": "",
+      "interpretation_ru": "",
+      "next_node_ids": [],
+      "source_commit": "",
+      "details": {}
     },
     {
       "node_id": "diagnostics",
@@ -173,7 +272,23 @@
           }
         ],
         "value_source": "computed"
-      }
+      },
+      "title_ru": "",
+      "operator_type": "",
+      "input_refs": [],
+      "output_refs": [],
+      "input_values": {},
+      "output_values": {},
+      "formula_id": null,
+      "formula_text": null,
+      "formula_latex": null,
+      "components": {},
+      "thresholds": {},
+      "status_reason_ru": "",
+      "interpretation_ru": "",
+      "next_node_ids": [],
+      "source_commit": "",
+      "details": {}
     },
     {
       "node_id": "action",
@@ -191,7 +306,23 @@
         "action": "block",
         "status": "blocked",
         "reason_ru": "автоматическое принятие запрещено при chi_crit = 1"
-      }
+      },
+      "title_ru": "",
+      "operator_type": "",
+      "input_refs": [],
+      "output_refs": [],
+      "input_values": {},
+      "output_values": {},
+      "formula_id": null,
+      "formula_text": null,
+      "formula_latex": null,
+      "components": {},
+      "thresholds": {},
+      "status_reason_ru": "",
+      "interpretation_ru": "",
+      "next_node_ids": [],
+      "source_commit": "",
+      "details": {}
     },
     {
       "node_id": "proof",
@@ -207,9 +338,26 @@
       "value_source": "computed",
       "raw": {
         "value_source": "computed"
-      }
+      },
+      "title_ru": "",
+      "operator_type": "",
+      "input_refs": [],
+      "output_refs": [],
+      "input_values": {},
+      "output_values": {},
+      "formula_id": null,
+      "formula_text": null,
+      "formula_latex": null,
+      "components": {},
+      "thresholds": {},
+      "status_reason_ru": "",
+      "interpretation_ru": "",
+      "next_node_ids": [],
+      "source_commit": "",
+      "details": {}
     }
   ],
+  "edges": [],
   "computed_result": {
     "gamma": 0.351,
     "delta": 0.106811,
@@ -231,6 +379,11 @@
     }
   ],
   "final_action": "block",
+  "final_action_id": "block",
+  "final_diagnostic_id": "D_quality_source_conflict",
   "verifier_status": "PASS",
-  "source_commit": "c15d5a0476b909fe9e25d27cc077a9d8fa3be3fd"
+  "source_commit": "be2a30096b275d3365a92cb69b165e57e99e90de",
+  "proof_ref": "",
+  "dashboard_ref": "",
+  "verification_summary": {}
 }

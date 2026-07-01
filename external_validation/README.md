@@ -36,12 +36,26 @@ external_validation/outputs/external_wine_blackbox_validation/
   external_wine_summary.json
   logistic_regression/
     route.json
+    operator_trace.json
+    operator_table.csv
     proof_trace.json
+    verifier_report.json
+    dashboard_data.json
     summary.json
     operator_dashboard.png
+    operator_dashboard_v2.png
+    operator_dashboard_v2.html
+    operator_cards/
   gradient_boosting/
     route.json
+    operator_trace.json
+    operator_table.csv
     proof_trace.json
+    verifier_report.json
+    dashboard_data.json
     summary.json
     operator_dashboard.png
+    operator_dashboard_v2.png
+    operator_dashboard_v2.html
+    operator_cards/
 ```

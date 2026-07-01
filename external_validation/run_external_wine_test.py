@@ -20,7 +20,7 @@ from sklearn.preprocessing import StandardScaler
 
 from fuzzyxai import build_proof_trace, build_route, render_dashboard, verify_proof_trace
 from fuzzyxai.adapters.tabular_classification import TabularClassificationAdapter
-from fuzzyxai.viz import save_proof_trace_json, save_route_json
+from fuzzyxai.viz import save_proof_trace_json, save_route_json, write_traceability_artifacts
 
 
 ROOT = Path(__file__).resolve().parent
@@ -158,6 +158,7 @@ def _run_one(model_key: str) -> dict[str, Any]:
     shutil.copy2(route_path, package_route)
     shutil.copy2(proof_path, package_proof)
     shutil.copy2(dashboard_path, package_dashboard)
+    write_traceability_artifacts(route, trace, verification, model_dir)
     computed = route.computed_result
     if computed.get("gamma", 0.0) <= 0 or computed.get("delta", 0.0) <= 0 or computed.get("rho", 0.0) <= 0:
         raise SystemExit(f"{model_key}: expected non-zero gamma/delta/rho, got {computed}")
@@ -178,6 +179,13 @@ def _run_one(model_key: str) -> dict[str, Any]:
         "route": f"{_model_dir_name(model_key)}/route.json",
         "proof_trace": f"{_model_dir_name(model_key)}/proof_trace.json",
         "dashboard": f"{_model_dir_name(model_key)}/operator_dashboard.png",
+        "operator_trace": f"{_model_dir_name(model_key)}/operator_trace.json",
+        "operator_table": f"{_model_dir_name(model_key)}/operator_table.csv",
+        "verifier_report": f"{_model_dir_name(model_key)}/verifier_report.json",
+        "dashboard_data": f"{_model_dir_name(model_key)}/dashboard_data.json",
+        "dashboard_v2": f"{_model_dir_name(model_key)}/operator_dashboard_v2.png",
+        "dashboard_v2_html": f"{_model_dir_name(model_key)}/operator_dashboard_v2.html",
+        "operator_cards": f"{_model_dir_name(model_key)}/operator_cards/",
     }
     package_summary = model_dir / "summary.json"
     package_summary.write_text(json.dumps(summary, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")

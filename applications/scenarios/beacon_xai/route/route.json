@@ -1,6 +1,9 @@
 {
+  "route_id": "",
   "scenario_id": "beacon_xai",
+  "scenario_title_ru": "",
   "title": "BEACON-XAI FuzzyXAI OperatorRoute",
+  "created_at": "",
   "nodes": [
     {
       "node_id": "input_artifact",
@@ -23,7 +26,23 @@
         "audit_reports": 12,
         "checks_full": 64,
         "checks_reduced": 11
-      }
+      },
+      "title_ru": "",
+      "operator_type": "",
+      "input_refs": [],
+      "output_refs": [],
+      "input_values": {},
+      "output_values": {},
+      "formula_id": null,
+      "formula_text": null,
+      "formula_latex": null,
+      "components": {},
+      "thresholds": {},
+      "status_reason_ru": "",
+      "interpretation_ru": "",
+      "next_node_ids": [],
+      "source_commit": "",
+      "details": {}
     },
     {
       "node_id": "explanation_object",
@@ -39,7 +58,23 @@
       "value_source": "computed",
       "raw": {
         "value_source": "computed"
-      }
+      },
+      "title_ru": "",
+      "operator_type": "",
+      "input_refs": [],
+      "output_refs": [],
+      "input_values": {},
+      "output_values": {},
+      "formula_id": null,
+      "formula_text": null,
+      "formula_latex": null,
+      "components": {},
+      "thresholds": {},
+      "status_reason_ru": "",
+      "interpretation_ru": "",
+      "next_node_ids": [],
+      "source_commit": "",
+      "details": {}
     },
     {
       "node_id": "counterevidence",
@@ -63,7 +98,23 @@
         "checks_full": 64,
         "checks_reduced": 11,
         "value_source": "computed"
-      }
+      },
+      "title_ru": "",
+      "operator_type": "",
+      "input_refs": [],
+      "output_refs": [],
+      "input_values": {},
+      "output_values": {},
+      "formula_id": null,
+      "formula_text": null,
+      "formula_latex": null,
+      "components": {},
+      "thresholds": {},
+      "status_reason_ru": "",
+      "interpretation_ru": "",
+      "next_node_ids": [],
+      "source_commit": "",
+      "details": {}
     },
     {
       "node_id": "diagnostics",
@@ -89,7 +140,23 @@
           }
         ],
         "value_source": "computed"
-      }
+      },
+      "title_ru": "",
+      "operator_type": "",
+      "input_refs": [],
+      "output_refs": [],
+      "input_values": {},
+      "output_values": {},
+      "formula_id": null,
+      "formula_text": null,
+      "formula_latex": null,
+      "components": {},
+      "thresholds": {},
+      "status_reason_ru": "",
+      "interpretation_ru": "",
+      "next_node_ids": [],
+      "source_commit": "",
+      "details": {}
     },
     {
       "node_id": "action",
@@ -106,7 +173,23 @@
       "raw": {
         "action": "audit",
         "value_source": "computed"
-      }
+      },
+      "title_ru": "",
+      "operator_type": "",
+      "input_refs": [],
+      "output_refs": [],
+      "input_values": {},
+      "output_values": {},
+      "formula_id": null,
+      "formula_text": null,
+      "formula_latex": null,
+      "components": {},
+      "thresholds": {},
+      "status_reason_ru": "",
+      "interpretation_ru": "",
+      "next_node_ids": [],
+      "source_commit": "",
+      "details": {}
     },
     {
       "node_id": "proof",
@@ -122,9 +205,26 @@
       "value_source": "computed",
       "raw": {
         "value_source": "computed"
-      }
+      },
+      "title_ru": "",
+      "operator_type": "",
+      "input_refs": [],
+      "output_refs": [],
+      "input_values": {},
+      "output_values": {},
+      "formula_id": null,
+      "formula_text": null,
+      "formula_latex": null,
+      "components": {},
+      "thresholds": {},
+      "status_reason_ru": "",
+      "interpretation_ru": "",
+      "next_node_ids": [],
+      "source_commit": "",
+      "details": {}
     }
   ],
+  "edges": [],
   "computed_result": {
     "counter_fragments": 30,
     "objects_with_counterevidence": 83,
@@ -142,6 +242,11 @@
     }
   ],
   "final_action": "audit",
+  "final_action_id": "audit",
+  "final_diagnostic_id": "D_counterevidence_conflict",
   "verifier_status": "PASS",
-  "source_commit": "c15d5a0476b909fe9e25d27cc077a9d8fa3be3fd"
+  "source_commit": "be2a30096b275d3365a92cb69b165e57e99e90de",
+  "proof_ref": "",
+  "dashboard_ref": "",
+  "verification_summary": {}
 }
