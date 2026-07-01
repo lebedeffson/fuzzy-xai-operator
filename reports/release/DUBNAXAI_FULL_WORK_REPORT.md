@@ -249,6 +249,23 @@ The acceptance payload is intentionally external to `applications/scenarios`.
 It produces non-zero `gamma`, `delta` and `rho`, and the framework selects
 `lower_confidence`.
 
+### Chapter 4 Framework Materials
+
+Prepared dissertation-facing framework materials:
+
+- `docs/chapter_4_framework/framework_overview.md`
+- `docs/chapter_4_framework/public_api.md`
+- `docs/chapter_4_framework/cli_usage.md`
+- `docs/chapter_4_framework/operator_traceability.md`
+- `docs/chapter_4_framework/research_validation_section.md`
+- `docs/chapter_4_framework/research_analysis_section.md`
+- `docs/chapter_4_framework/assets/`
+- `reports/release/chapter_4_framework_package.zip`
+
+The assets are copied from verified RC, external validation and research
+validation artifacts. They are presentation assets only; source computations
+remain in the framework, validation and release-report layers.
+
 ### Operator Traceability v2
 
 Added framework-level operator traceability for the external validation package:
@@ -366,6 +383,7 @@ The check runs:
 - Framework route JSON: `reports/framework/hybrid_xiris_route.json`
 - Framework proof trace JSON: `reports/framework/hybrid_xiris_proof_trace.json`
 - Framework RC package: `reports/release/fuzzyxai_framework_rc_package.zip`
+- Chapter 4 framework package: `reports/release/chapter_4_framework_package.zip`
 
 ## Chapter Mapping
 
