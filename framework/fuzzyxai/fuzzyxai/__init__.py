@@ -138,6 +138,7 @@ from .proof.trace import build_proof_trace
 from .proof.verifier import verify_proof_trace
 from .viz.export import save_route_json
 from .viz.matplotlib_dashboard import render_dashboard
+from .examples import list_examples, load_example
 
 __all__ += [
     "build_explainable_object",
@@ -146,4 +147,6 @@ __all__ += [
     "verify_proof_trace",
     "render_dashboard",
     "save_route_json",
+    "list_examples",
+    "load_example",
 ]

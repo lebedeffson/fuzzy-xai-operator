@@ -1,103 +1,164 @@
 {
-  "package_type": "FuzzyXAIProofPackage",
+  "package_type": "FuzzyXAIProofTrace",
   "schema_version": "1.0",
   "scenario_id": "medical_ecg_signal",
-  "run_id": "medical_ecg_signal_case_001",
-  "source_commit": "b5d9e0f",
-  "code_version": "b5d9e0f",
-  "artifact_commit": "b5d9e0f",
-  "scenario_input_hash": "d609a08c69f7e9d029566575cb26c5fcc7b0421360ac9ef034d0e96e3e6256a3",
-  "model_card_hash": "e87e6366f7ed0baa3b21855e346d283b016f872d49f7144c30be2e64441f4657",
-  "input": {
-    "sampling_rate": 250,
-    "quality_score": 0.58,
-    "noise_segments": 1,
-    "missing_fragments": 2,
-    "baseline_instability": 0.21
+  "route": {
+    "scenario_id": "medical_ecg_signal",
+    "title": "ECG FuzzyXAI OperatorRoute",
+    "nodes": [
+      {
+        "node_id": "input_artifact",
+        "title": "Входной артефакт",
+        "input_summary": "выход внешней модели/правила",
+        "output_summary": "AdaptedInput",
+        "value": "sampling_rate=250; quality_score=0.58; noise_segments=1; missing_fragments=2; baseline_instability=0.21",
+        "threshold": "",
+        "status": "warning",
+        "explanation": "Вход поступает через адаптер FuzzyXAI.",
+        "formula_ref": "adapter",
+        "trace_ref": "adapted_input",
+        "value_source": "external_model_payload",
+        "raw": {
+          "sampling_rate": 250,
+          "quality_score": 0.58,
+          "noise_segments": 1,
+          "missing_fragments": 2,
+          "baseline_instability": 0.21
+        }
+      },
+      {
+        "node_id": "explanation_object",
+        "title": "Объяснительный объект E_k",
+        "input_summary": "предыдущее состояние маршрута",
+        "output_summary": "выход оператора",
+        "value": "E_k сформирован",
+        "threshold": "",
+        "status": "passed",
+        "explanation": "Вход переведён в объяснительный объект.",
+        "formula_ref": "E_k",
+        "trace_ref": "explanation_object",
+        "value_source": "computed",
+        "raw": {
+          "value_source": "computed"
+        }
+      },
+      {
+        "node_id": "signal_quality",
+        "title": "Качество сигнала",
+        "input_summary": "предыдущее состояние маршрута",
+        "output_summary": "выход оператора",
+        "value": "quality=0.58; missing=2",
+        "threshold": "",
+        "status": "warning",
+        "explanation": "Контрольный ЭКГ-сценарий не является клинической диагностикой.",
+        "formula_ref": "D_signal_quality",
+        "trace_ref": "signal_quality",
+        "value_source": "computed",
+        "raw": {
+          "sampling_rate": 250,
+          "quality_score": 0.58,
+          "noise_segments": 1,
+          "missing_fragments": 2,
+          "baseline_instability": 0.21,
+          "value_source": "computed"
+        }
+      },
+      {
+        "node_id": "diagnostics",
+        "title": "Диагностика D",
+        "input_summary": "предыдущее состояние маршрута",
+        "output_summary": "выход оператора",
+        "value": "D_signal_quality",
+        "threshold": "",
+        "status": "warning",
+        "explanation": "Диагностика задаёт режим применения.",
+        "formula_ref": "D",
+        "trace_ref": "diagnostics",
+        "value_source": "computed",
+        "raw": {
+          "diagnostics": [
+            {
+              "diagnostic_id": "D_signal_quality",
+              "diagnostic_type": "signal_quality",
+              "source": "noisy_or_missing_signal",
+              "criticality": "medium",
+              "message_ru": "ограничение качества сигнала",
+              "recommended_action": "defer_to_human"
+            }
+          ],
+          "value_source": "computed"
+        }
+      },
+      {
+        "node_id": "action",
+        "title": "Действие",
+        "input_summary": "предыдущее состояние маршрута",
+        "output_summary": "выход оператора",
+        "value": "defer_to_human",
+        "threshold": "",
+        "status": "warning",
+        "explanation": "Действие выбрано политикой FuzzyXAI.",
+        "formula_ref": "action policy",
+        "trace_ref": "action",
+        "value_source": "computed",
+        "raw": {
+          "action": "defer_to_human",
+          "value_source": "computed"
+        }
+      },
+      {
+        "node_id": "proof",
+        "title": "Доказательный след",
+        "input_summary": "предыдущее состояние маршрута",
+        "output_summary": "выход оператора",
+        "value": "proof trace готов",
+        "threshold": "",
+        "status": "passed",
+        "explanation": "Маршрут сохраняется как проверяемый доказательный след.",
+        "formula_ref": "proof trace",
+        "trace_ref": "proof",
+        "value_source": "computed",
+        "raw": {
+          "value_source": "computed"
+        }
+      }
+    ],
+    "computed_result": {
+      "quality_score": 0.58,
+      "missing_fragments": 2,
+      "diagnostic_id": "D_signal_quality",
+      "action": "defer_to_human"
+    },
+    "diagnostics": [
+      {
+        "diagnostic_id": "D_signal_quality",
+        "diagnostic_type": "signal_quality",
+        "source": "noisy_or_missing_signal",
+        "criticality": "medium",
+        "message_ru": "ограничение качества сигнала",
+        "recommended_action": "defer_to_human"
+      }
+    ],
+    "final_action": "defer_to_human",
+    "verifier_status": "PASS",
+    "source_commit": ""
   },
   "computed_result": {
-    "action": "defer_to_human",
-    "diagnostic": "D_signal_quality",
-    "diagnostic_id": "D_signal_quality"
+    "quality_score": 0.58,
+    "missing_fragments": 2,
+    "diagnostic_id": "D_signal_quality",
+    "action": "defer_to_human"
   },
-  "operator_values": [
-    {
-      "node_id": "adapter",
-      "operator_id": "ecg_adapter",
-      "status": "warning",
-      "computed": {
-        "sampling_rate": 250,
-        "quality_score": 0.58,
-        "noise_segments": 1,
-        "missing_fragments": 2,
-        "baseline_instability": 0.21
-      },
-      "diagnostics": [
-        {
-          "diagnostic_id": "D_signal_quality",
-          "diagnostic_type": "signal_quality",
-          "source": "noisy_or_missing_signal",
-          "criticality": "medium",
-          "recommended_action": "defer_to_human",
-          "actual_action": "defer_to_human",
-          "global": true
-        }
-      ]
-    },
-    {
-      "node_id": "risk_observer",
-      "operator_id": "risk_observer",
-      "status": "warning",
-      "computed": {
-        "quality_score": 0.58,
-        "missing_fragments": 2
-      },
-      "diagnostics": [
-        {
-          "diagnostic_id": "D_signal_quality",
-          "diagnostic_type": "signal_quality",
-          "source": "noisy_or_missing_signal",
-          "criticality": "medium",
-          "recommended_action": "defer_to_human",
-          "actual_action": "defer_to_human",
-          "global": true
-        }
-      ]
-    },
-    {
-      "node_id": "action",
-      "operator_id": "action_policy",
-      "status": "warning",
-      "computed": {
-        "action": "defer_to_human"
-      },
-      "diagnostics": [
-        {
-          "diagnostic_id": "D_signal_quality",
-          "diagnostic_type": "signal_quality",
-          "source": "noisy_or_missing_signal",
-          "criticality": "medium",
-          "recommended_action": "defer_to_human",
-          "actual_action": "defer_to_human",
-          "global": true
-        }
-      ]
-    }
-  ],
   "diagnostics": [
     {
       "diagnostic_id": "D_signal_quality",
       "diagnostic_type": "signal_quality",
       "source": "noisy_or_missing_signal",
       "criticality": "medium",
-      "recommended_action": "defer_to_human",
-      "actual_action": "defer_to_human",
-      "global": true
+      "message_ru": "ограничение качества сигнала",
+      "recommended_action": "defer_to_human"
     }
   ],
   "final_action": "defer_to_human",
-  "verifier_status": "PASS",
-  "action_reason": "Сигнал шумный/неполный, поэтому автоматическая интерпретация запрещена: требуется аудит или повтор данных. Это не медицинская диагностика.",
-  "scenario_hash": "0ab842b5491517570e88b9334c266e967c1265ed5e79f57feccb26c98540b73d",
-  "package_hash": "3131e0860a52b5d6e7ce452a16534067af5b98d31711e40e7285013cd4417581"
+  "verifier_status": "PASS"
 }

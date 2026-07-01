@@ -1,97 +1,168 @@
 {
-  "package_type": "FuzzyXAIProofPackage",
+  "package_type": "FuzzyXAIProofTrace",
   "schema_version": "1.0",
   "scenario_id": "gd_anfis_shap",
-  "run_id": "gd_anfis_shap_case_001",
-  "source_commit": "b5d9e0f",
-  "code_version": "b5d9e0f",
-  "artifact_commit": "b5d9e0f",
-  "scenario_input_hash": "78aff5aaf45eccf4f185913d8a7e93245bd2e03d89cb3dd7df256c3fab1c664f",
-  "model_card_hash": "a09fbd583decc03a928569419e83fb0a14a6caa8aafa98c9acaf9e4d48092570",
-  "input": {
-    "x1": 0.88,
-    "x2": 0.22,
-    "x1_term": "high",
-    "x2_term": "low",
-    "alpha_rule": 0.82,
-    "shap_x1": 0.45,
-    "shap_x2": -0.3
+  "route": {
+    "scenario_id": "gd_anfis_shap",
+    "title": "GD-ANFIS/SHAP FuzzyXAI OperatorRoute",
+    "nodes": [
+      {
+        "node_id": "input_artifact",
+        "title": "Входной артефакт",
+        "input_summary": "выход внешней модели/правила",
+        "output_summary": "AdaptedInput",
+        "value": "x1=0.88; x2=0.22; x1_term=high; x2_term=low; alpha_rule=0.82",
+        "threshold": "",
+        "status": "warning",
+        "explanation": "Вход поступает через адаптер FuzzyXAI.",
+        "formula_ref": "adapter",
+        "trace_ref": "adapted_input",
+        "value_source": "external_model_payload",
+        "raw": {
+          "x1": 0.88,
+          "x2": 0.22,
+          "x1_term": "high",
+          "x2_term": "low",
+          "alpha_rule": 0.82,
+          "shap_x1": 0.45,
+          "shap_x2": -0.3,
+          "gamma_rule_shap": 0.685
+        }
+      },
+      {
+        "node_id": "explanation_object",
+        "title": "Объяснительный объект E_k",
+        "input_summary": "предыдущее состояние маршрута",
+        "output_summary": "выход оператора",
+        "value": "E_k сформирован",
+        "threshold": "",
+        "status": "passed",
+        "explanation": "Вход переведён в объяснительный объект.",
+        "formula_ref": "E_k",
+        "trace_ref": "explanation_object",
+        "value_source": "computed",
+        "raw": {
+          "value_source": "computed"
+        }
+      },
+      {
+        "node_id": "alignment",
+        "title": "Правило и SHAP",
+        "input_summary": "предыдущее состояние маршрута",
+        "output_summary": "выход оператора",
+        "value": "alpha=0.82; gamma=0.685",
+        "threshold": "",
+        "status": "warning",
+        "explanation": "Правило ANFIS конфликтует с локальными SHAP-вкладами.",
+        "formula_ref": "rule-shap alignment",
+        "trace_ref": "alignment",
+        "value_source": "computed",
+        "raw": {
+          "x1": 0.88,
+          "x2": 0.22,
+          "x1_term": "high",
+          "x2_term": "low",
+          "alpha_rule": 0.82,
+          "shap_x1": 0.45,
+          "shap_x2": -0.3,
+          "gamma_rule_shap": 0.685,
+          "value_source": "computed"
+        }
+      },
+      {
+        "node_id": "diagnostics",
+        "title": "Диагностика D",
+        "input_summary": "предыдущее состояние маршрута",
+        "output_summary": "выход оператора",
+        "value": "D_rule_attribution_conflict",
+        "threshold": "",
+        "status": "warning",
+        "explanation": "Диагностика задаёт режим применения.",
+        "formula_ref": "D",
+        "trace_ref": "diagnostics",
+        "value_source": "computed",
+        "raw": {
+          "diagnostics": [
+            {
+              "diagnostic_id": "D_rule_attribution_conflict",
+              "diagnostic_type": "rule_attribution_conflict",
+              "source": "rule_vs_attribution",
+              "criticality": "medium",
+              "message_ru": "конфликт правила и локального вклада",
+              "recommended_action": "audit"
+            }
+          ],
+          "value_source": "computed"
+        }
+      },
+      {
+        "node_id": "action",
+        "title": "Действие",
+        "input_summary": "предыдущее состояние маршрута",
+        "output_summary": "выход оператора",
+        "value": "audit",
+        "threshold": "",
+        "status": "warning",
+        "explanation": "Действие выбрано политикой FuzzyXAI.",
+        "formula_ref": "action policy",
+        "trace_ref": "action",
+        "value_source": "computed",
+        "raw": {
+          "action": "audit",
+          "value_source": "computed"
+        }
+      },
+      {
+        "node_id": "proof",
+        "title": "Доказательный след",
+        "input_summary": "предыдущее состояние маршрута",
+        "output_summary": "выход оператора",
+        "value": "proof trace готов",
+        "threshold": "",
+        "status": "passed",
+        "explanation": "Маршрут сохраняется как проверяемый доказательный след.",
+        "formula_ref": "proof trace",
+        "trace_ref": "proof",
+        "value_source": "computed",
+        "raw": {
+          "value_source": "computed"
+        }
+      }
+    ],
+    "computed_result": {
+      "gamma_rule_shap": 0.685,
+      "diagnostic_id": "D_rule_attribution_conflict",
+      "action": "audit"
+    },
+    "diagnostics": [
+      {
+        "diagnostic_id": "D_rule_attribution_conflict",
+        "diagnostic_type": "rule_attribution_conflict",
+        "source": "rule_vs_attribution",
+        "criticality": "medium",
+        "message_ru": "конфликт правила и локального вклада",
+        "recommended_action": "audit"
+      }
+    ],
+    "final_action": "audit",
+    "verifier_status": "PASS",
+    "source_commit": ""
   },
   "computed_result": {
     "gamma_rule_shap": 0.685,
-    "diagnostic": "D_rule_attribution_conflict",
-    "action": "audit",
-    "diagnostic_id": "D_rule_attribution_conflict"
+    "diagnostic_id": "D_rule_attribution_conflict",
+    "action": "audit"
   },
-  "operator_values": [
-    {
-      "node_id": "adapter",
-      "operator_id": "tabular_adapter",
-      "status": "passed",
-      "computed": {
-        "x1": 0.88,
-        "x2": 0.22,
-        "x1_term": "high",
-        "x2_term": "low",
-        "alpha_rule": 0.82,
-        "shap_x1": 0.45,
-        "shap_x2": -0.3
-      },
-      "diagnostics": []
-    },
-    {
-      "node_id": "alignment",
-      "operator_id": "rule_shap_alignment",
-      "status": "warning",
-      "computed": {
-        "gamma_rule_shap": 0.685
-      },
-      "diagnostics": [
-        {
-          "diagnostic_id": "D_rule_attribution_conflict",
-          "diagnostic_type": "rule_attribution_conflict",
-          "source": "rule_vs_attribution",
-          "criticality": "medium",
-          "recommended_action": "audit",
-          "actual_action": "audit",
-          "global": true
-        }
-      ]
-    },
-    {
-      "node_id": "action",
-      "operator_id": "action_policy",
-      "status": "warning",
-      "computed": {
-        "action": "audit"
-      },
-      "diagnostics": [
-        {
-          "diagnostic_id": "D_rule_attribution_conflict",
-          "diagnostic_type": "rule_attribution_conflict",
-          "source": "rule_vs_attribution",
-          "criticality": "medium",
-          "recommended_action": "audit",
-          "actual_action": "audit",
-          "global": true
-        }
-      ]
-    }
-  ],
   "diagnostics": [
     {
       "diagnostic_id": "D_rule_attribution_conflict",
       "diagnostic_type": "rule_attribution_conflict",
       "source": "rule_vs_attribution",
       "criticality": "medium",
-      "recommended_action": "audit",
-      "actual_action": "audit",
-      "global": true
+      "message_ru": "конфликт правила и локального вклада",
+      "recommended_action": "audit"
     }
   ],
   "final_action": "audit",
-  "verifier_status": "PASS",
-  "action_reason": "Правила и SHAP частично расходятся, поэтому формируется diagnostic warning и отчётный режим.",
-  "scenario_hash": "389185abe0178c51f48a72834f579dfd2e093e0850f6a5fd150623303c9da9cf",
-  "package_hash": "b484acd88beeadf12ae58d2a761cfa409c9e6da3943323920e3796061a58ade9"
+  "verifier_status": "PASS"
 }

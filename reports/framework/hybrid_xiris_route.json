@@ -3,7 +3,7 @@
   "title": "HYBRID-XIRIS FuzzyXAI OperatorRoute",
   "nodes": [
     {
-      "node_id": "input",
+      "node_id": "input_artifact",
       "title": "Входной артефакт",
       "input_summary": "выход внешней модели и признаки качества",
       "output_summary": "AdaptedInput",
@@ -23,7 +23,7 @@
       }
     },
     {
-      "node_id": "explanation",
+      "node_id": "explanation_object",
       "title": "Объяснительный объект E_k",
       "input_summary": "предыдущее состояние маршрута",
       "output_summary": "выход оператора",
@@ -32,7 +32,7 @@
       "status": "passed",
       "explanation": "Вход переведён в объяснительный объект.",
       "formula_ref": "E_k",
-      "trace_ref": "explanation",
+      "trace_ref": "explanation_object",
       "value_source": "computed",
       "raw": {
         "model_signal": 0.88,
@@ -192,6 +192,22 @@
         "status": "blocked",
         "reason_ru": "автоматическое принятие запрещено при chi_crit = 1"
       }
+    },
+    {
+      "node_id": "proof",
+      "title": "Доказательный след",
+      "input_summary": "предыдущее состояние маршрута",
+      "output_summary": "выход оператора",
+      "value": "proof trace готов",
+      "threshold": "",
+      "status": "passed",
+      "explanation": "Маршрут сохраняется как проверяемый доказательный след.",
+      "formula_ref": "proof trace",
+      "trace_ref": "proof",
+      "value_source": "computed",
+      "raw": {
+        "value_source": "computed"
+      }
     }
   ],
   "computed_result": {
@@ -215,6 +231,6 @@
     }
   ],
   "final_action": "block",
-  "verifier_status": "UNVERIFIED",
+  "verifier_status": "PASS",
   "source_commit": ""
 }

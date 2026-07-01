@@ -1,22 +1,19 @@
 {
   "scenario_id": "gis_integro",
-  "title": "GIS INTEGRO: геослой и маршрутное согласование",
-  "proof_ref": "/home/lebedeffson/Code/fuzzy-xai-operator/applications/scenarios/gis_integro/proof/gis_integro_proof_package.json",
-  "verifier_status": "PASS",
-  "final_action": "audit_report",
-  "source_commit": "b5d9e0f",
+  "title": "GIS INTEGRO FuzzyXAI OperatorRoute",
   "nodes": [
     {
       "node_id": "input_artifact",
       "title": "Входной артефакт",
-      "input_summary": "геосигнал p, alpha_mean, s и маршрутное согласование",
-      "output_summary": "параметры для операторного маршрута",
+      "input_summary": "выход внешней модели/правила",
+      "output_summary": "AdaptedInput",
       "value": "p=0.67; alpha_mean=0.72; s=0.47",
       "threshold": "",
       "status": "warning",
-      "explanation": "Маршрут использует gamma_route = max(|p - alpha_mean|, |p - s|) и отчётный режим.",
-      "formula_ref": "адаптер входного артефакта",
-      "trace_ref": "input",
+      "explanation": "Вход поступает через адаптер FuzzyXAI.",
+      "formula_ref": "adapter",
+      "trace_ref": "adapted_input",
+      "value_source": "external_model_payload",
       "raw": {
         "p": 0.67,
         "alpha_mean": 0.72,
@@ -26,99 +23,68 @@
     {
       "node_id": "explanation_object",
       "title": "Объяснительный объект E_k",
-      "input_summary": "структурированный вход",
-      "output_summary": "E_k с качеством источника и правилом действия",
-      "value": "E_k сформирован из входа и модели/правила",
-      "threshold": "",
-      "status": "passed",
-      "explanation": "Объект объяснения связывает входные признаки, модельный/правиловый сигнал и trace.",
-      "formula_ref": "E_k",
-      "trace_ref": "computed_result",
-      "raw": {
-        "gamma_route": 0.2,
-        "delta": 0.08,
-        "formula": "max(|p - alpha_mean|, |p - s|)",
-        "action": "audit_report",
-        "diagnostic_id": "D_route_context_limit"
-      }
-    },
-    {
-      "node_id": "adapter",
-      "title": "Адаптер",
       "input_summary": "предыдущее состояние маршрута",
-      "output_summary": "структурированный вход маршрута",
-      "value": "p=0.67; alpha_mean=0.72; s=0.47",
+      "output_summary": "выход оператора",
+      "value": "E_k сформирован",
       "threshold": "",
       "status": "passed",
-      "explanation": "Вычислительный узел маршрута FuzzyXAI; значение взято из proof package.",
-      "formula_ref": "gis_adapter",
-      "trace_ref": "operator_values.adapter",
+      "explanation": "Вход переведён в объяснительный объект.",
+      "formula_ref": "E_k",
+      "trace_ref": "explanation_object",
+      "value_source": "computed",
       "raw": {
-        "node_id": "adapter",
-        "operator_id": "gis_adapter",
-        "status": "passed",
-        "computed": {
-          "p": 0.67,
-          "alpha_mean": 0.72,
-          "s": 0.47
-        },
-        "diagnostics": []
+        "value_source": "computed"
       }
     },
     {
       "node_id": "alignment",
-      "title": "Согласование",
+      "title": "Маршрутное согласование",
       "input_summary": "предыдущее состояние маршрута",
-      "output_summary": "мера рассогласования",
-      "value": "gamma_route=0.2; formula=max(|p - alpha_mean|, |p - s|)",
+      "output_summary": "выход оператора",
+      "value": "gamma_route=0.2",
       "threshold": "",
       "status": "passed",
-      "explanation": "Вычислительный узел маршрута FuzzyXAI; значение взято из proof package.",
-      "formula_ref": "route_alignment",
-      "trace_ref": "operator_values.alignment",
+      "explanation": "Используется max(|p-alpha_mean|, |p-s|), без попарного |alpha_mean-s|.",
+      "formula_ref": "gamma_route",
+      "trace_ref": "alignment",
+      "value_source": "computed",
       "raw": {
-        "node_id": "alignment",
-        "operator_id": "route_alignment",
-        "status": "passed",
-        "computed": {
-          "gamma_route": 0.2,
-          "formula": "max(|p - alpha_mean|, |p - s|)"
-        },
-        "diagnostics": []
+        "p": 0.67,
+        "alpha_mean": 0.72,
+        "s": 0.47,
+        "gamma_route": 0.2,
+        "value_source": "computed"
       }
     },
     {
       "node_id": "reduction",
-      "title": "Потери представления",
+      "title": "Потери маршрута",
       "input_summary": "предыдущее состояние маршрута",
-      "output_summary": "Delta / редукционная потеря",
-      "value": "delta=0.08",
+      "output_summary": "выход оператора",
+      "value": "Delta=0.08",
       "threshold": "",
       "status": "passed",
-      "explanation": "Вычислительный узел маршрута FuzzyXAI; значение взято из proof package.",
+      "explanation": "Контрольная редукционная потеря GIS-маршрута.",
       "formula_ref": "Delta",
-      "trace_ref": "operator_values.reduction",
+      "trace_ref": "reduction",
+      "value_source": "computed",
       "raw": {
-        "node_id": "reduction",
-        "operator_id": "Delta",
-        "status": "passed",
-        "computed": {
-          "delta": 0.08
-        },
-        "diagnostics": []
+        "delta": 0.08,
+        "value_source": "computed"
       }
     },
     {
       "node_id": "diagnostics",
       "title": "Диагностика D",
-      "input_summary": "операторные статусы",
-      "output_summary": "тип диагностического состояния",
-      "value": "ограничение маршрутного контекста",
+      "input_summary": "предыдущее состояние маршрута",
+      "output_summary": "выход оператора",
+      "value": "D_route_context_limit",
       "threshold": "",
       "status": "warning",
-      "explanation": "Диагностика объясняет, почему выбран именно этот режим действия.",
-      "formula_ref": "D_k, D_ij",
+      "explanation": "Диагностика задаёт режим применения.",
+      "formula_ref": "D",
       "trace_ref": "diagnostics",
+      "value_source": "computed",
       "raw": {
         "diagnostics": [
           {
@@ -126,59 +92,65 @@
             "diagnostic_type": "route_context_limit",
             "source": "route_context_alignment",
             "criticality": "low",
-            "recommended_action": "audit_report",
-            "actual_action": "audit_report",
-            "global": true
+            "message_ru": "маршрутное контекстное ограничение",
+            "recommended_action": "audit_report"
           }
-        ]
+        ],
+        "value_source": "computed"
       }
     },
     {
       "node_id": "action",
       "title": "Действие",
-      "input_summary": "диагностика и операторные значения",
-      "output_summary": "режим применения",
-      "value": "отчётный режим",
+      "input_summary": "предыдущее состояние маршрута",
+      "output_summary": "выход оператора",
+      "value": "audit_report",
       "threshold": "",
-      "status": "info",
-      "explanation": "Итоговое действие сценария: отчётный режим.",
-      "formula_ref": "политика действия",
-      "trace_ref": "operator_values.action",
+      "status": "warning",
+      "explanation": "Действие выбрано политикой FuzzyXAI.",
+      "formula_ref": "action policy",
+      "trace_ref": "action",
+      "value_source": "computed",
       "raw": {
-        "node_id": "action",
-        "operator_id": "action_policy",
-        "status": "info",
-        "computed": {
-          "action": "audit_report"
-        },
-        "diagnostics": [
-          {
-            "diagnostic_id": "D_route_context_limit",
-            "diagnostic_type": "route_context_limit",
-            "source": "route_context_alignment",
-            "criticality": "low",
-            "recommended_action": "audit_report",
-            "actual_action": "audit_report",
-            "global": true
-          }
-        ]
+        "action": "audit_report",
+        "value_source": "computed"
       }
     },
     {
       "node_id": "proof",
       "title": "Доказательный след",
-      "input_summary": "все operator_values",
-      "output_summary": "проверяемый пакет",
-      "value": "verifier=PASS",
+      "input_summary": "предыдущее состояние маршрута",
+      "output_summary": "выход оператора",
+      "value": "proof trace готов",
       "threshold": "",
       "status": "passed",
-      "explanation": "След сохраняет computed_result и operator_values для повторной проверки.",
+      "explanation": "Маршрут сохраняется как проверяемый доказательный след.",
       "formula_ref": "proof trace",
-      "trace_ref": "/home/lebedeffson/Code/fuzzy-xai-operator/applications/scenarios/gis_integro/proof/gis_integro_proof_package.json",
+      "trace_ref": "proof",
+      "value_source": "computed",
       "raw": {
-        "package_hash": "79a7f6dea15d018783181ebd62ef573224394d2312988e2393fd671bc129bf64",
-        "source_commit": "b5d9e0f"
+        "value_source": "computed"
       }
     }
-  ]
+  ],
+  "computed_result": {
+    "gamma_route": 0.2,
+    "delta": 0.08,
+    "formula": "max(|p - alpha_mean|, |p - s|)",
+    "diagnostic_id": "D_route_context_limit",
+    "action": "audit_report"
+  },
+  "diagnostics": [
+    {
+      "diagnostic_id": "D_route_context_limit",
+      "diagnostic_type": "route_context_limit",
+      "source": "route_context_alignment",
+      "criticality": "low",
+      "message_ru": "маршрутное контекстное ограничение",
+      "recommended_action": "audit_report"
+    }
+  ],
+  "final_action": "audit_report",
+  "verifier_status": "PASS",
+  "source_commit": ""
 }

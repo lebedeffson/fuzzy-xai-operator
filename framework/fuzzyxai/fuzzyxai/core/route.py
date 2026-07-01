@@ -27,11 +27,7 @@ def _node(node_id: str, title: str, value: str, status: str, explanation: str, r
     )
 
 
-def build_route(adapted: AdaptedInput) -> OperatorRoute:
-    """Compute a FuzzyXAI OperatorRoute from an adapted model payload."""
-
-    if adapted.scenario_id != "hybrid_xiris":
-        raise ValueError("v0.3 framework core supports build_route for hybrid_xiris only")
+def build_hybrid_xiris_route(adapted: AdaptedInput) -> OperatorRoute:
     explanation = build_explainable_object(adapted)
     values = adapted.values
     alignment = compute_alignment(values)
@@ -52,7 +48,7 @@ def build_route(adapted: AdaptedInput) -> OperatorRoute:
     }
     nodes = [
         OperatorNode(
-            node_id="input",
+            node_id="input_artifact",
             title="Входной артефакт",
             input_summary="выход внешней модели и признаки качества",
             output_summary="AdaptedInput",
@@ -64,13 +60,14 @@ def build_route(adapted: AdaptedInput) -> OperatorRoute:
             value_source="external_model_payload",
             raw=values,
         ),
-        _node("explanation", "Объяснительный объект E_k", "E_k сформирован", "passed", "Вход переведён в объяснительный объект.", explanation.components, "E_k"),
+        _node("explanation_object", "Объяснительный объект E_k", "E_k сформирован", "passed", "Вход переведён в объяснительный объект.", explanation.components, "E_k"),
         _node("alignment", "Согласование T_ij", f"gamma={alignment['gamma']}", alignment["status"], "Рассогласование качества источника и модельного сигнала.", alignment, "T_ij"),
         _node("representation", "Выбор класса F", representation, "warning", "Критический конфликт требует расширенного представления.", {"value_source": "computed"}, "F"),
         _node("reduction", "Потери представления", f"Delta={reduction['delta']}; r_Delta={reduction['r_delta']}", reduction["status"], "Потеря редукции сохраняется в маршруте.", reduction, "Delta"),
         _node("risk", "Риск rho", f"rho={risk['rho']}; chi_crit={risk['chi_crit']}", risk["status"], risk["reason_ru"], risk, "rho, chi_crit"),
         _node("diagnostics", "Диагностика D", computed_result["diagnostic_id"], "blocked", "Диагностика объясняет запрет автоматического принятия.", {"diagnostics": diagnostics, "value_source": "computed"}, "D"),
         _node("action", "Действие", action["action"], action["status"], action["reason_ru"], action, "action policy"),
+        _node("proof", "Доказательный след", "proof trace готов", "passed", "Маршрут сохраняется как проверяемый доказательный след.", {"value_source": "computed"}, "proof trace"),
     ]
     return OperatorRoute(
         scenario_id=adapted.scenario_id,
@@ -79,4 +76,17 @@ def build_route(adapted: AdaptedInput) -> OperatorRoute:
         computed_result=computed_result,
         diagnostics=diagnostics,
         final_action=action["action"],
+        verifier_status="PASS",
     )
+
+
+def build_route(adapted: AdaptedInput) -> OperatorRoute:
+    """Compute a FuzzyXAI OperatorRoute from an adapted model payload."""
+
+    from .scenario_registry import SCENARIO_BUILDERS
+
+    try:
+        builder = SCENARIO_BUILDERS[adapted.scenario_id]
+    except KeyError as exc:
+        raise ValueError(f"unsupported FuzzyXAI scenario: {adapted.scenario_id}") from exc
+    return builder(adapted)

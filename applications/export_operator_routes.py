@@ -11,7 +11,9 @@ FRAMEWORK = ROOT / "framework" / "fuzzyxai"
 if str(FRAMEWORK) not in sys.path:
     sys.path.insert(0, str(FRAMEWORK))
 
-from fuzzyxai.viz import load_route_from_proof, render_operator_dashboard
+from fuzzyxai import build_proof_trace, build_route, render_dashboard, verify_proof_trace
+from fuzzyxai.examples import load_example
+from fuzzyxai.viz import save_proof_trace_json
 
 
 SCENARIOS = [
@@ -25,8 +27,12 @@ SCENARIOS = [
 
 def export_scenario(scenario_id: str) -> dict[str, str]:
     scenario_dir = ROOT / "applications" / "scenarios" / scenario_id
-    proof_path = scenario_dir / "proof" / f"{scenario_id}_proof_package.json"
-    route = load_route_from_proof(proof_path)
+    adapted = load_example(scenario_id)
+    route = build_route(adapted)
+    trace = build_proof_trace(route)
+    verification = verify_proof_trace(trace)
+    if not verification.valid:
+        raise SystemExit(f"{scenario_id}: proof trace failed: {verification.errors}")
 
     route_path = scenario_dir / "route" / "route.json"
     proof_trace_path = scenario_dir / "proof" / "proof_trace.json"
@@ -34,9 +40,8 @@ def export_scenario(scenario_id: str) -> dict[str, str]:
     site_payload_path = scenario_dir / "site_payload" / "scenario.json"
 
     route.write_json(route_path)
-    proof_trace_path.parent.mkdir(parents=True, exist_ok=True)
-    shutil.copy2(proof_path, proof_trace_path)
-    render_operator_dashboard(route, figure_path)
+    save_proof_trace_json(trace, proof_trace_path)
+    render_dashboard(route, figure_path)
 
     payload = {
         "scenario_id": scenario_id,

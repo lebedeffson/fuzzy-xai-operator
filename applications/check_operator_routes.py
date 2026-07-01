@@ -47,7 +47,7 @@ def check_scenario(scenario_id: str, expected_action: str, expected_diagnostic: 
     paths = {
         "route": base / "route" / "route.json",
         "proof": base / "proof" / "proof_trace.json",
-        "source_proof": base / "proof" / f"{scenario_id}_proof_package.json",
+        "input": base / "input" / f"{scenario_id}_input.json",
         "figure": base / "figures" / "operator_dashboard.png",
         "payload": base / "site_payload" / "scenario.json",
         "site_route": ROOT / "site" / "dubnaxai" / "public" / "routes" / f"{scenario_id}_route.json",
@@ -63,9 +63,10 @@ def check_scenario(scenario_id: str, expected_action: str, expected_diagnostic: 
 
     route = load(paths["route"])
     proof = load(paths["proof"])
-    source_proof = load(paths["source_proof"])
+    scenario_input = load(paths["input"])
     payload = load(paths["payload"])
     site_route = load(paths["site_route"])
+    expected_from_input = (scenario_input.get("expected_outputs") or {}).get("action")
 
     if route.get("scenario_id") != scenario_id:
         fail(errors, f"{scenario_id}: route scenario_id mismatch")
@@ -73,8 +74,12 @@ def check_scenario(scenario_id: str, expected_action: str, expected_diagnostic: 
         fail(errors, f"{scenario_id}: route action {route.get('final_action')} != {expected_action}")
     if proof.get("final_action") != expected_action:
         fail(errors, f"{scenario_id}: proof action {proof.get('final_action')} != {expected_action}")
-    if source_proof != proof:
-        fail(errors, f"{scenario_id}: proof_trace.json differs from source proof package")
+    if expected_from_input and expected_from_input != expected_action:
+        fail(errors, f"{scenario_id}: scenario input action {expected_from_input} != {expected_action}")
+    if proof.get("route", {}).get("computed_result") != route.get("computed_result"):
+        fail(errors, f"{scenario_id}: proof route computed_result differs from route")
+    if proof.get("computed_result") != route.get("computed_result"):
+        fail(errors, f"{scenario_id}: proof computed_result differs from route")
     if proof.get("verifier_status") != "PASS" or route.get("verifier_status") != "PASS":
         fail(errors, f"{scenario_id}: verifier status is not PASS")
     if expected_diagnostic not in diagnostic_ids(proof):
@@ -107,10 +112,22 @@ def check_site_is_display_only(errors: list[str]) -> None:
                 fail(errors, f"site computes/imports forbidden FuzzyXAI token in {path}: {pattern.pattern}")
 
 
+def check_applications_are_thin(errors: list[str]) -> None:
+    for path in (ROOT / "applications" / "scenarios").glob("*/run.py"):
+        text = path.read_text(encoding="utf-8")
+        forbidden = ["proof_package.json", "final_action = ", "computed_result = ", "expected_outputs"]
+        for token in forbidden:
+            if token in text:
+                fail(errors, f"application run.py contains scenario logic token {token!r}: {path}")
+        if "run_framework_scenario" not in text:
+            fail(errors, f"application run.py does not call framework runner: {path}")
+
+
 def main() -> None:
     errors: list[str] = []
     for scenario_id, (action, diagnostic) in SCENARIOS.items():
         check_scenario(scenario_id, action, diagnostic, errors)
+    check_applications_are_thin(errors)
     check_site_is_display_only(errors)
     if errors:
         print("operator-route-check: FAIL", file=sys.stderr)

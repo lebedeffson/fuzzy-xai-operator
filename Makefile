@@ -118,7 +118,7 @@ fuzzyxai-framework-check:
 	$(PYTHON) -m pip install -e framework/fuzzyxai
 	$(PYTHON) -c "import sys; sys.path=['framework/fuzzyxai']+[p for p in sys.path if p not in ('', '.')]; from fuzzyxai import build_route, build_proof_trace, verify_proof_trace, render_dashboard, save_route_json; print('fuzzyxai-framework-import: PASS')"
 	$(PYTHON) framework/fuzzyxai/examples/show_hybrid_xiris_dashboard.py
-	$(PYTHON) -m pytest framework/fuzzyxai/tests/test_framework_core_v03.py -q
+	$(PYTHON) -m pytest framework/fuzzyxai/tests/test_framework_core_v03.py framework/fuzzyxai/tests/test_framework_all_scenarios_v04.py -q
 
 applications-check:
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) applications/run_all_scenarios.py

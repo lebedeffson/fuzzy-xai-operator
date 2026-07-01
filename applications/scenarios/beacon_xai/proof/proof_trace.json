@@ -1,99 +1,170 @@
 {
-  "package_type": "FuzzyXAIProofPackage",
+  "package_type": "FuzzyXAIProofTrace",
   "schema_version": "1.0",
   "scenario_id": "beacon_xai",
-  "run_id": "beacon_xai_case_001",
-  "source_commit": "b5d9e0f",
-  "code_version": "b5d9e0f",
-  "artifact_commit": "b5d9e0f",
-  "scenario_input_hash": "2a3a2e7b86a23ce3c4768212b8a0e118b674d76a8e6c420bc06fe10b0f75e45c",
-  "model_card_hash": "676c06eaba9c3d345fdb4c4ab7ac5a91db488fd5639bd82bfd068f329885e0c8",
-  "input": {
-    "single_object_fragments": 100,
-    "support_fragments": 70,
-    "counter_fragments": 30,
-    "batch_objects": 100,
-    "objects_with_counterevidence": 83,
-    "audit_reports": 12,
-    "checks_full": 64,
-    "checks_reduced": 11
+  "route": {
+    "scenario_id": "beacon_xai",
+    "title": "BEACON-XAI FuzzyXAI OperatorRoute",
+    "nodes": [
+      {
+        "node_id": "input_artifact",
+        "title": "Входной артефакт",
+        "input_summary": "выход внешней модели/правила",
+        "output_summary": "AdaptedInput",
+        "value": "single_object_fragments=100; support_fragments=70; counter_fragments=30; batch_objects=100; objects_with_counterevidence=83",
+        "threshold": "",
+        "status": "warning",
+        "explanation": "Вход поступает через адаптер FuzzyXAI.",
+        "formula_ref": "adapter",
+        "trace_ref": "adapted_input",
+        "value_source": "external_model_payload",
+        "raw": {
+          "single_object_fragments": 100,
+          "support_fragments": 70,
+          "counter_fragments": 30,
+          "batch_objects": 100,
+          "objects_with_counterevidence": 83,
+          "audit_reports": 12,
+          "checks_full": 64,
+          "checks_reduced": 11
+        }
+      },
+      {
+        "node_id": "explanation_object",
+        "title": "Объяснительный объект E_k",
+        "input_summary": "предыдущее состояние маршрута",
+        "output_summary": "выход оператора",
+        "value": "E_k сформирован",
+        "threshold": "",
+        "status": "passed",
+        "explanation": "Вход переведён в объяснительный объект.",
+        "formula_ref": "E_k",
+        "trace_ref": "explanation_object",
+        "value_source": "computed",
+        "raw": {
+          "value_source": "computed"
+        }
+      },
+      {
+        "node_id": "counterevidence",
+        "title": "Контрсвидетельства",
+        "input_summary": "предыдущее состояние маршрута",
+        "output_summary": "выход оператора",
+        "value": "support=70; counter=30",
+        "threshold": "",
+        "status": "warning",
+        "explanation": "64 -> 11 относится к внешнему BEACON-механизму; FuzzyXAI фиксирует диагностику.",
+        "formula_ref": "counterevidence",
+        "trace_ref": "counterevidence",
+        "value_source": "computed",
+        "raw": {
+          "single_object_fragments": 100,
+          "support_fragments": 70,
+          "counter_fragments": 30,
+          "batch_objects": 100,
+          "objects_with_counterevidence": 83,
+          "audit_reports": 12,
+          "checks_full": 64,
+          "checks_reduced": 11,
+          "value_source": "computed"
+        }
+      },
+      {
+        "node_id": "diagnostics",
+        "title": "Диагностика D",
+        "input_summary": "предыдущее состояние маршрута",
+        "output_summary": "выход оператора",
+        "value": "D_counterevidence_conflict",
+        "threshold": "",
+        "status": "warning",
+        "explanation": "Диагностика задаёт режим применения.",
+        "formula_ref": "D",
+        "trace_ref": "diagnostics",
+        "value_source": "computed",
+        "raw": {
+          "diagnostics": [
+            {
+              "diagnostic_id": "D_counterevidence_conflict",
+              "diagnostic_type": "counterevidence_conflict",
+              "source": "temporal_counterevidence",
+              "criticality": "medium",
+              "message_ru": "конфликт контрсвидетельств",
+              "recommended_action": "audit"
+            }
+          ],
+          "value_source": "computed"
+        }
+      },
+      {
+        "node_id": "action",
+        "title": "Действие",
+        "input_summary": "предыдущее состояние маршрута",
+        "output_summary": "выход оператора",
+        "value": "audit",
+        "threshold": "",
+        "status": "warning",
+        "explanation": "Действие выбрано политикой FuzzyXAI.",
+        "formula_ref": "action policy",
+        "trace_ref": "action",
+        "value_source": "computed",
+        "raw": {
+          "action": "audit",
+          "value_source": "computed"
+        }
+      },
+      {
+        "node_id": "proof",
+        "title": "Доказательный след",
+        "input_summary": "предыдущее состояние маршрута",
+        "output_summary": "выход оператора",
+        "value": "proof trace готов",
+        "threshold": "",
+        "status": "passed",
+        "explanation": "Маршрут сохраняется как проверяемый доказательный след.",
+        "formula_ref": "proof trace",
+        "trace_ref": "proof",
+        "value_source": "computed",
+        "raw": {
+          "value_source": "computed"
+        }
+      }
+    ],
+    "computed_result": {
+      "counter_fragments": 30,
+      "objects_with_counterevidence": 83,
+      "diagnostic_id": "D_counterevidence_conflict",
+      "action": "audit"
+    },
+    "diagnostics": [
+      {
+        "diagnostic_id": "D_counterevidence_conflict",
+        "diagnostic_type": "counterevidence_conflict",
+        "source": "temporal_counterevidence",
+        "criticality": "medium",
+        "message_ru": "конфликт контрсвидетельств",
+        "recommended_action": "audit"
+      }
+    ],
+    "final_action": "audit",
+    "verifier_status": "PASS",
+    "source_commit": ""
   },
   "computed_result": {
-    "diagnostic": "D_counterevidence_conflict",
-    "action": "audit",
-    "diagnostic_id": "D_counterevidence_conflict"
+    "counter_fragments": 30,
+    "objects_with_counterevidence": 83,
+    "diagnostic_id": "D_counterevidence_conflict",
+    "action": "audit"
   },
-  "operator_values": [
-    {
-      "node_id": "adapter",
-      "operator_id": "beacon_adapter",
-      "status": "passed",
-      "computed": {
-        "single_object_fragments": 100,
-        "support_fragments": 70,
-        "counter_fragments": 30,
-        "batch_objects": 100,
-        "objects_with_counterevidence": 83,
-        "audit_reports": 12,
-        "checks_full": 64,
-        "checks_reduced": 11
-      },
-      "diagnostics": []
-    },
-    {
-      "node_id": "counterevidence",
-      "operator_id": "counterevidence_check",
-      "status": "warning",
-      "computed": {
-        "counter_fragments": 30,
-        "objects_with_counterevidence": 83
-      },
-      "diagnostics": [
-        {
-          "diagnostic_id": "D_counterevidence_conflict",
-          "diagnostic_type": "counterevidence_conflict",
-          "source": "temporal_counterevidence",
-          "criticality": "medium",
-          "recommended_action": "audit",
-          "actual_action": "audit",
-          "global": true
-        }
-      ]
-    },
-    {
-      "node_id": "action",
-      "operator_id": "action_policy",
-      "status": "warning",
-      "computed": {
-        "action": "audit"
-      },
-      "diagnostics": [
-        {
-          "diagnostic_id": "D_counterevidence_conflict",
-          "diagnostic_type": "counterevidence_conflict",
-          "source": "temporal_counterevidence",
-          "criticality": "medium",
-          "recommended_action": "audit",
-          "actual_action": "audit",
-          "global": true
-        }
-      ]
-    }
-  ],
   "diagnostics": [
     {
       "diagnostic_id": "D_counterevidence_conflict",
       "diagnostic_type": "counterevidence_conflict",
       "source": "temporal_counterevidence",
       "criticality": "medium",
-      "recommended_action": "audit",
-      "actual_action": "audit",
-      "global": true
+      "message_ru": "конфликт контрсвидетельств",
+      "recommended_action": "audit"
     }
   ],
   "final_action": "audit",
-  "verifier_status": "PASS",
-  "action_reason": "BEACON-сигнал является контрсвидетельством и переводит маршрут в audit report.",
-  "scenario_hash": "40b54ed4e1036d01688279335731f01e23d43f35a4c0b8f386e49ad47aeeebac",
-  "package_hash": "0369dec20e25f352bd406ea10a13c90ff36ed10c213b91c71633311fbd6df0f9"
+  "verifier_status": "PASS"
 }

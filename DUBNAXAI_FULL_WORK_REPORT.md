@@ -41,6 +41,19 @@ The site is intentionally separated from the framework. FuzzyXAI computes; Dubna
   - `OperatorRoute`
   - `ProofTrace`
 - Added HYBRID-XIRIS adapter and operator modules for alignment, reduction, risk, diagnostics and actions.
+- Extended the framework route API to all five scenarios in v0.4:
+  - `hybrid_xiris`
+  - `medical_ecg_signal`
+  - `gd_anfis_shap`
+  - `beacon_xai`
+  - `gis_integro`
+- Added scenario adapters and examples:
+  - `signal_quality.py`
+  - `rule_attribution.py`
+  - `counterevidence.py`
+  - `geospatial_route.py`
+  - `fuzzyxai.examples.load_example(...)`
+- Added scenario registry dispatch in `fuzzyxai.core.scenario_registry`.
 - Added route visualization layer:
   - `framework/fuzzyxai/fuzzyxai/viz/operator_state.py`
   - `framework/fuzzyxai/fuzzyxai/viz/route_builder.py`
@@ -74,6 +87,9 @@ The scenario runner verifies expected actions and proof statuses:
 - BEACON-XAI: `audit`
 - GIS INTEGRO: `audit_report`
 
+Application `run.py` files are thin wrappers. They call the FuzzyXAI public API through
+`applications/run_framework_scenario.py`; they do not choose diagnostics or actions themselves.
+
 ### Operator Route Pipeline
 
 The HYBRID-only operator dashboard was extended to all five application scenarios.
@@ -102,6 +118,8 @@ Route QA was added as a release gate:
 
 It verifies route/proof consistency, expected actions, diagnostics, dashboard files,
 site payload links and the rule that the site does not import or compute FuzzyXAI.
+It also checks that application scenario runners stay thin and do not reintroduce local
+action-selection logic.
 
 ### Site Layer
 
@@ -168,7 +186,7 @@ The check runs:
 - editable framework install
 - public framework import/API smoke
 - HYBRID-XIRIS framework example
-- framework-core tests
+- framework-core and all-scenario tests
 - all application scenarios
 - HYBRID-XIRIS operator dashboard export
 - all scenario operator route export

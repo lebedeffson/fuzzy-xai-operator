@@ -1,22 +1,19 @@
 {
   "scenario_id": "medical_ecg_signal",
-  "title": "ECG: сигнал и передача эксперту",
-  "proof_ref": "/home/lebedeffson/Code/fuzzy-xai-operator/applications/scenarios/medical_ecg_signal/proof/medical_ecg_signal_proof_package.json",
-  "verifier_status": "PASS",
-  "final_action": "defer_to_human",
-  "source_commit": "b5d9e0f",
+  "title": "ECG FuzzyXAI OperatorRoute",
   "nodes": [
     {
       "node_id": "input_artifact",
       "title": "Входной артефакт",
-      "input_summary": "ЭКГ-сигнал, шум, пропуски и качество",
-      "output_summary": "параметры для операторного маршрута",
+      "input_summary": "выход внешней модели/правила",
+      "output_summary": "AdaptedInput",
       "value": "sampling_rate=250; quality_score=0.58; noise_segments=1; missing_fragments=2; baseline_instability=0.21",
       "threshold": "",
       "status": "warning",
-      "explanation": "Сценарий не ставит диагноз: он фиксирует ограничение качества сигнала и передаёт случай эксперту.",
-      "formula_ref": "адаптер входного артефакта",
-      "trace_ref": "input",
+      "explanation": "Вход поступает через адаптер FuzzyXAI.",
+      "formula_ref": "adapter",
+      "trace_ref": "adapted_input",
+      "value_source": "external_model_payload",
       "raw": {
         "sampling_rate": 250,
         "quality_score": 0.58,
@@ -28,98 +25,52 @@
     {
       "node_id": "explanation_object",
       "title": "Объяснительный объект E_k",
-      "input_summary": "структурированный вход",
-      "output_summary": "E_k с качеством источника и правилом действия",
-      "value": "E_k сформирован из входа и модели/правила",
+      "input_summary": "предыдущее состояние маршрута",
+      "output_summary": "выход оператора",
+      "value": "E_k сформирован",
       "threshold": "",
       "status": "passed",
-      "explanation": "Объект объяснения связывает входные признаки, модельный/правиловый сигнал и trace.",
+      "explanation": "Вход переведён в объяснительный объект.",
       "formula_ref": "E_k",
-      "trace_ref": "computed_result",
+      "trace_ref": "explanation_object",
+      "value_source": "computed",
       "raw": {
-        "action": "defer_to_human",
-        "diagnostic": "D_signal_quality",
-        "diagnostic_id": "D_signal_quality"
+        "value_source": "computed"
       }
     },
     {
-      "node_id": "adapter",
-      "title": "Адаптер",
+      "node_id": "signal_quality",
+      "title": "Качество сигнала",
       "input_summary": "предыдущее состояние маршрута",
-      "output_summary": "структурированный вход маршрута",
-      "value": "sampling_rate=250; quality_score=0.58; noise_segments=1; missing_fragments=2",
+      "output_summary": "выход оператора",
+      "value": "quality=0.58; missing=2",
       "threshold": "",
       "status": "warning",
-      "explanation": "Вычислительный узел маршрута FuzzyXAI; значение взято из proof package.",
-      "formula_ref": "ecg_adapter",
-      "trace_ref": "operator_values.adapter",
+      "explanation": "Контрольный ЭКГ-сценарий не является клинической диагностикой.",
+      "formula_ref": "D_signal_quality",
+      "trace_ref": "signal_quality",
+      "value_source": "computed",
       "raw": {
-        "node_id": "adapter",
-        "operator_id": "ecg_adapter",
-        "status": "warning",
-        "computed": {
-          "sampling_rate": 250,
-          "quality_score": 0.58,
-          "noise_segments": 1,
-          "missing_fragments": 2,
-          "baseline_instability": 0.21
-        },
-        "diagnostics": [
-          {
-            "diagnostic_id": "D_signal_quality",
-            "diagnostic_type": "signal_quality",
-            "source": "noisy_or_missing_signal",
-            "criticality": "medium",
-            "recommended_action": "defer_to_human",
-            "actual_action": "defer_to_human",
-            "global": true
-          }
-        ]
-      }
-    },
-    {
-      "node_id": "risk_observer",
-      "title": "Риск-наблюдатель",
-      "input_summary": "предыдущее состояние маршрута",
-      "output_summary": "rho / критический статус",
-      "value": "quality_score=0.58; missing_fragments=2",
-      "threshold": "",
-      "status": "warning",
-      "explanation": "Вычислительный узел маршрута FuzzyXAI; значение взято из proof package.",
-      "formula_ref": "risk_observer",
-      "trace_ref": "operator_values.risk_observer",
-      "raw": {
-        "node_id": "risk_observer",
-        "operator_id": "risk_observer",
-        "status": "warning",
-        "computed": {
-          "quality_score": 0.58,
-          "missing_fragments": 2
-        },
-        "diagnostics": [
-          {
-            "diagnostic_id": "D_signal_quality",
-            "diagnostic_type": "signal_quality",
-            "source": "noisy_or_missing_signal",
-            "criticality": "medium",
-            "recommended_action": "defer_to_human",
-            "actual_action": "defer_to_human",
-            "global": true
-          }
-        ]
+        "sampling_rate": 250,
+        "quality_score": 0.58,
+        "noise_segments": 1,
+        "missing_fragments": 2,
+        "baseline_instability": 0.21,
+        "value_source": "computed"
       }
     },
     {
       "node_id": "diagnostics",
       "title": "Диагностика D",
-      "input_summary": "операторные статусы",
-      "output_summary": "тип диагностического состояния",
-      "value": "ограничение качества сигнала",
+      "input_summary": "предыдущее состояние маршрута",
+      "output_summary": "выход оператора",
+      "value": "D_signal_quality",
       "threshold": "",
       "status": "warning",
-      "explanation": "Диагностика объясняет, почему выбран именно этот режим действия.",
-      "formula_ref": "D_k, D_ij",
+      "explanation": "Диагностика задаёт режим применения.",
+      "formula_ref": "D",
       "trace_ref": "diagnostics",
+      "value_source": "computed",
       "raw": {
         "diagnostics": [
           {
@@ -127,59 +78,64 @@
             "diagnostic_type": "signal_quality",
             "source": "noisy_or_missing_signal",
             "criticality": "medium",
-            "recommended_action": "defer_to_human",
-            "actual_action": "defer_to_human",
-            "global": true
+            "message_ru": "ограничение качества сигнала",
+            "recommended_action": "defer_to_human"
           }
-        ]
+        ],
+        "value_source": "computed"
       }
     },
     {
       "node_id": "action",
       "title": "Действие",
-      "input_summary": "диагностика и операторные значения",
-      "output_summary": "режим применения",
-      "value": "передача эксперту",
+      "input_summary": "предыдущее состояние маршрута",
+      "output_summary": "выход оператора",
+      "value": "defer_to_human",
       "threshold": "",
       "status": "warning",
-      "explanation": "Итоговое действие сценария: передача эксперту.",
-      "formula_ref": "политика действия",
-      "trace_ref": "operator_values.action",
+      "explanation": "Действие выбрано политикой FuzzyXAI.",
+      "formula_ref": "action policy",
+      "trace_ref": "action",
+      "value_source": "computed",
       "raw": {
-        "node_id": "action",
-        "operator_id": "action_policy",
-        "status": "warning",
-        "computed": {
-          "action": "defer_to_human"
-        },
-        "diagnostics": [
-          {
-            "diagnostic_id": "D_signal_quality",
-            "diagnostic_type": "signal_quality",
-            "source": "noisy_or_missing_signal",
-            "criticality": "medium",
-            "recommended_action": "defer_to_human",
-            "actual_action": "defer_to_human",
-            "global": true
-          }
-        ]
+        "action": "defer_to_human",
+        "value_source": "computed"
       }
     },
     {
       "node_id": "proof",
       "title": "Доказательный след",
-      "input_summary": "все operator_values",
-      "output_summary": "проверяемый пакет",
-      "value": "verifier=PASS",
+      "input_summary": "предыдущее состояние маршрута",
+      "output_summary": "выход оператора",
+      "value": "proof trace готов",
       "threshold": "",
       "status": "passed",
-      "explanation": "След сохраняет computed_result и operator_values для повторной проверки.",
+      "explanation": "Маршрут сохраняется как проверяемый доказательный след.",
       "formula_ref": "proof trace",
-      "trace_ref": "/home/lebedeffson/Code/fuzzy-xai-operator/applications/scenarios/medical_ecg_signal/proof/medical_ecg_signal_proof_package.json",
+      "trace_ref": "proof",
+      "value_source": "computed",
       "raw": {
-        "package_hash": "3131e0860a52b5d6e7ce452a16534067af5b98d31711e40e7285013cd4417581",
-        "source_commit": "b5d9e0f"
+        "value_source": "computed"
       }
     }
-  ]
+  ],
+  "computed_result": {
+    "quality_score": 0.58,
+    "missing_fragments": 2,
+    "diagnostic_id": "D_signal_quality",
+    "action": "defer_to_human"
+  },
+  "diagnostics": [
+    {
+      "diagnostic_id": "D_signal_quality",
+      "diagnostic_type": "signal_quality",
+      "source": "noisy_or_missing_signal",
+      "criticality": "medium",
+      "message_ru": "ограничение качества сигнала",
+      "recommended_action": "defer_to_human"
+    }
+  ],
+  "final_action": "defer_to_human",
+  "verifier_status": "PASS",
+  "source_commit": ""
 }

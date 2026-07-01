@@ -5,5 +5,5 @@
   "figure": "figures/operator_dashboard.png",
   "final_action": "defer_to_human",
   "verifier_status": "PASS",
-  "source_commit": "b5d9e0f"
+  "source_commit": ""
 }
