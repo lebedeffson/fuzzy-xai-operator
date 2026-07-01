@@ -1,0 +1,21 @@
+{
+  "experiment_id": "wine_mlp_reduction_loss",
+  "task_type": "tabular_classification",
+  "dataset": "sklearn_wine",
+  "model": "MLPClassifier",
+  "perturbation": "top_k_reduction",
+  "representation_class": "F_ML",
+  "gamma": 0.24,
+  "delta": 0.52,
+  "rho": 0.52,
+  "dominant_component": "delta",
+  "diagnostic_id": "D_external_tabular_reduction_loss",
+  "action_id": "lower_confidence",
+  "verifier_status": "passed",
+  "traceability_status": "passed",
+  "source_commit": "11955855fb111912239f83500af5349fba895ee5",
+  "uncertainty_component": 0.24,
+  "quality_component": 0.0,
+  "reduction_component": 0.52,
+  "conflict_component": 0.0
+}

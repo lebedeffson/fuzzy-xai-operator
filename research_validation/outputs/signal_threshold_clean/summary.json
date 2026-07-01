@@ -1,0 +1,21 @@
+{
+  "experiment_id": "signal_threshold_clean",
+  "task_type": "signal_quality",
+  "dataset": "synthetic_signal",
+  "model": "threshold_model",
+  "perturbation": "clean",
+  "representation_class": "F_ML",
+  "gamma": 0.22,
+  "delta": 0.22,
+  "rho": 0.22,
+  "dominant_component": "gamma",
+  "diagnostic_id": "D_external_tabular_ok",
+  "action_id": "accept",
+  "verifier_status": "passed",
+  "traceability_status": "passed",
+  "source_commit": "11955855fb111912239f83500af5349fba895ee5",
+  "uncertainty_component": 0.22,
+  "quality_component": 0.08,
+  "reduction_component": 0.22,
+  "conflict_component": 0.0
+}

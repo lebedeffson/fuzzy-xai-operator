@@ -1,6 +1,6 @@
 {
   "branch": "main",
-  "commit": "be2a300",
+  "commit": "1195585",
   "tag": null,
   "sprint_report_status": "PASS",
   "framework_check": "UNKNOWN",
@@ -16,6 +16,21 @@
   "source_commit_filled": true,
   "operator_route_check": "PASS",
   "operator_traceability_check": "PASS",
+  "research_validation_status": "PASS",
+  "research_validation": {
+    "status": "PASS",
+    "experiments_total": 20,
+    "task_types": 4,
+    "model_families": 12,
+    "actions_covered": 4,
+    "diagnostics_covered": 12,
+    "representation_classes_covered": 4,
+    "verifier_passed": 20,
+    "traceability_passed": 20,
+    "package_exists": true,
+    "package_path": "research_validation/reports/fuzzyxai_research_validation_package.zip",
+    "errors": []
+  },
   "dashboard_v2_available": true,
   "operator_cards_available": true,
   "operator_edges_available": true,
@@ -33,7 +48,7 @@
   "dirty_worktree": true,
   "dirty_source_files": true,
   "warnings": [
-    "dirty source files: DUBNAXAI_FULL_WORK_REPORT.md, Makefile, applications/scenarios/beacon_xai/figures/operator_dashboard.png, applications/scenarios/beacon_xai/proof/proof_trace.json, applications/scenarios/beacon_xai/route/route.json, applications/scenarios/beacon_xai/site_payload/scenario.json, applications/scenarios/gd_anfis_shap/figures/operator_dashboard.png, applications/scenarios/gd_anfis_shap/proof/proof_trace.json, applications/scenarios/gd_anfis_shap/route/route.json, applications/scenarios/gd_anfis_shap/site_payload/scenario.json"
+    "dirty source files: Makefile, applications/scenarios/beacon_xai/figures/operator_dashboard.png, applications/scenarios/beacon_xai/proof/proof_trace.json, applications/scenarios/beacon_xai/route/route.json, applications/scenarios/beacon_xai/site_payload/scenario.json, applications/scenarios/gd_anfis_shap/figures/operator_dashboard.png, applications/scenarios/gd_anfis_shap/proof/proof_trace.json, applications/scenarios/gd_anfis_shap/route/route.json, applications/scenarios/gd_anfis_shap/site_payload/scenario.json, applications/scenarios/gis_integro/figures/operator_dashboard.png"
   ],
   "errors": [],
   "next_step": "external payload schemas and adapter contracts"

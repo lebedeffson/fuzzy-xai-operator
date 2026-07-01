@@ -1,5 +1,4 @@
-M DUBNAXAI_FULL_WORK_REPORT.md
- M Makefile
+M Makefile
  M applications/scenarios/beacon_xai/figures/operator_dashboard.png
  M applications/scenarios/beacon_xai/proof/proof_trace.json
  M applications/scenarios/beacon_xai/route/route.json
@@ -20,16 +19,37 @@ M DUBNAXAI_FULL_WORK_REPORT.md
  M applications/scenarios/medical_ecg_signal/proof/proof_trace.json
  M applications/scenarios/medical_ecg_signal/route/route.json
  M applications/scenarios/medical_ecg_signal/site_payload/scenario.json
- M external_validation/README.md
  M external_validation/outputs/external_wine_blackbox_validation.zip
  M external_validation/outputs/external_wine_blackbox_validation/external_validation_report.md
  M external_validation/outputs/external_wine_blackbox_validation/external_wine_summary.json
+ M external_validation/outputs/external_wine_blackbox_validation/gradient_boosting/dashboard_data.json
+ M external_validation/outputs/external_wine_blackbox_validation/gradient_boosting/operator_cards/alignment.md
+ M external_validation/outputs/external_wine_blackbox_validation/gradient_boosting/operator_cards/diagnostics.md
+ M external_validation/outputs/external_wine_blackbox_validation/gradient_boosting/operator_cards/input_artifact.md
+ M external_validation/outputs/external_wine_blackbox_validation/gradient_boosting/operator_cards/proof.md
+ M external_validation/outputs/external_wine_blackbox_validation/gradient_boosting/operator_cards/representation.md
+ M external_validation/outputs/external_wine_blackbox_validation/gradient_boosting/operator_cards/risk.md
  M external_validation/outputs/external_wine_blackbox_validation/gradient_boosting/operator_dashboard.png
+ M external_validation/outputs/external_wine_blackbox_validation/gradient_boosting/operator_dashboard_v2.html
+ M external_validation/outputs/external_wine_blackbox_validation/gradient_boosting/operator_dashboard_v2.png
+ M external_validation/outputs/external_wine_blackbox_validation/gradient_boosting/operator_table.csv
+ M external_validation/outputs/external_wine_blackbox_validation/gradient_boosting/operator_trace.json
  M external_validation/outputs/external_wine_blackbox_validation/gradient_boosting/proof_trace.json
  M external_validation/outputs/external_wine_blackbox_validation/gradient_boosting/route.json
  M external_validation/outputs/external_wine_blackbox_validation/gradient_boosting/summary.json
  M external_validation/outputs/external_wine_blackbox_validation/import_provenance.json
+ M external_validation/outputs/external_wine_blackbox_validation/logistic_regression/dashboard_data.json
+ M external_validation/outputs/external_wine_blackbox_validation/logistic_regression/operator_cards/alignment.md
+ M external_validation/outputs/external_wine_blackbox_validation/logistic_regression/operator_cards/diagnostics.md
+ M external_validation/outputs/external_wine_blackbox_validation/logistic_regression/operator_cards/input_artifact.md
+ M external_validation/outputs/external_wine_blackbox_validation/logistic_regression/operator_cards/proof.md
+ M external_validation/outputs/external_wine_blackbox_validation/logistic_regression/operator_cards/representation.md
+ M external_validation/outputs/external_wine_blackbox_validation/logistic_regression/operator_cards/risk.md
  M external_validation/outputs/external_wine_blackbox_validation/logistic_regression/operator_dashboard.png
+ M external_validation/outputs/external_wine_blackbox_validation/logistic_regression/operator_dashboard_v2.html
+ M external_validation/outputs/external_wine_blackbox_validation/logistic_regression/operator_dashboard_v2.png
+ M external_validation/outputs/external_wine_blackbox_validation/logistic_regression/operator_table.csv
+ M external_validation/outputs/external_wine_blackbox_validation/logistic_regression/operator_trace.json
  M external_validation/outputs/external_wine_blackbox_validation/logistic_regression/proof_trace.json
  M external_validation/outputs/external_wine_blackbox_validation/logistic_regression/route.json
  M external_validation/outputs/external_wine_blackbox_validation/logistic_regression/summary.json
@@ -43,11 +63,9 @@ M DUBNAXAI_FULL_WORK_REPORT.md
  M external_validation/outputs/external_wine_logistic_regression_route.json
  M external_validation/outputs/external_wine_logistic_regression_summary.json
  M external_validation/outputs/external_wine_summary.json
- M external_validation/run_external_wine_test.py
  M framework/fuzzyxai/fuzzyxai/adapters/tabular_classification.py
  M framework/fuzzyxai/fuzzyxai/core/external_tabular_route.py
- M framework/fuzzyxai/fuzzyxai/core/types.py
- M framework/fuzzyxai/fuzzyxai/viz/__init__.py
+ M framework/fuzzyxai/fuzzyxai/viz/traceability.py
  M fuzzyxai_final_audit_package.zip
  M reports/audit/artifact_inventory.csv
  M reports/audit/docx_format_report.md
@@ -64,7 +82,6 @@ M DUBNAXAI_FULL_WORK_REPORT.md
  M reports/figures/medical_ecg_signal_operator_dashboard.png
  M reports/framework/hybrid_xiris_proof_trace.json
  M reports/framework/hybrid_xiris_route.json
- M reports/release/DUBNAXAI_FULL_WORK_REPORT.md
  M reports/release/current/SPRINT_STATUS.md
  M reports/release/current/artifact_manifest.json
  M reports/release/current/check_results.json
@@ -81,7 +98,6 @@ M DUBNAXAI_FULL_WORK_REPORT.md
  M reports/validation/repository_inventory/repository_inventory.json
  M reports/validation/repository_inventory/repository_inventory.md
  M scripts/build_sprint_report.py
- M scripts/check_framework_external_usage.py
  M site/dubnaxai/public/figures/beacon_xai_operator_dashboard.png
  M site/dubnaxai/public/figures/gd_anfis_shap_operator_dashboard.png
  M site/dubnaxai/public/figures/gis_integro_operator_dashboard.png
@@ -92,27 +108,12 @@ M DUBNAXAI_FULL_WORK_REPORT.md
  M site/dubnaxai/public/routes/gis_integro_route.json
  M site/dubnaxai/public/routes/hybrid_xiris_route.json
  M site/dubnaxai/public/routes/medical_ecg_signal_route.json
- M tests/test_framework_external_usage.py
  M visual_artifacts_latest.zip
 ?? FuzzyXAI_FINAL_DELIVERY_REPORT.md
 ?? FuzzyXAI_full_delivery_package.zip
 ?? data/real_public/
-?? external_validation/outputs/external_wine_blackbox_validation/gradient_boosting/dashboard_data.json
-?? external_validation/outputs/external_wine_blackbox_validation/gradient_boosting/operator_cards/
-?? external_validation/outputs/external_wine_blackbox_validation/gradient_boosting/operator_dashboard_v2.html
-?? external_validation/outputs/external_wine_blackbox_validation/gradient_boosting/operator_dashboard_v2.png
-?? external_validation/outputs/external_wine_blackbox_validation/gradient_boosting/operator_table.csv
-?? external_validation/outputs/external_wine_blackbox_validation/gradient_boosting/operator_trace.json
-?? external_validation/outputs/external_wine_blackbox_validation/gradient_boosting/verifier_report.json
-?? external_validation/outputs/external_wine_blackbox_validation/logistic_regression/dashboard_data.json
-?? external_validation/outputs/external_wine_blackbox_validation/logistic_regression/operator_cards/
-?? external_validation/outputs/external_wine_blackbox_validation/logistic_regression/operator_dashboard_v2.html
-?? external_validation/outputs/external_wine_blackbox_validation/logistic_regression/operator_dashboard_v2.png
-?? external_validation/outputs/external_wine_blackbox_validation/logistic_regression/operator_table.csv
-?? external_validation/outputs/external_wine_blackbox_validation/logistic_regression/operator_trace.json
-?? external_validation/outputs/external_wine_blackbox_validation/logistic_regression/verifier_report.json
-?? framework/fuzzyxai/fuzzyxai/viz/traceability.py
 ?? models/
+?? reports/chapter4/chapter4_framework_traceability_insert.md
 ?? reports/dataset_audit/
 ?? reports/evaluation/
 ?? reports/framework_audit/
@@ -120,4 +121,4 @@ M DUBNAXAI_FULL_WORK_REPORT.md
 ?? reports/real_validation/
 ?? reports/release/FuzzyXAI_framework_audit_package.zip
 ?? reports/training/
-?? scripts/check_operator_traceability.py
+?? research_validation/

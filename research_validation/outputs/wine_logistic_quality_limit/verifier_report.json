@@ -1,0 +1,43 @@
+{
+  "checks": [
+    {
+      "id": "source_commit_present",
+      "status": "passed"
+    },
+    {
+      "id": "route_proof_values_match",
+      "status": "passed"
+    },
+    {
+      "id": "action_matches_route",
+      "status": "passed"
+    },
+    {
+      "id": "diagnostic_present",
+      "status": "passed"
+    },
+    {
+      "id": "operator_nodes_have_io",
+      "status": "passed"
+    },
+    {
+      "id": "operator_edges_have_passed_values",
+      "status": "passed"
+    },
+    {
+      "id": "gamma_matches_formula",
+      "status": "passed"
+    },
+    {
+      "id": "rho_matches_formula",
+      "status": "passed"
+    },
+    {
+      "id": "action_matches_risk_zone",
+      "status": "passed"
+    }
+  ],
+  "errors": [],
+  "overall_status": "passed",
+  "warnings": []
+}

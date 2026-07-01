@@ -171,6 +171,33 @@ moderate-confidence objects and passes only top-k feature importances, so
 installed `fuzzyxai` package, uses the generic tabular adapter and does not
 import `applications/scenarios`.
 
+### Research Validation Suite
+
+Added a framework-level research validation suite under `research_validation/`.
+It uses controlled external payloads through the installed FuzzyXAI public API and
+does not import `applications/scenarios` or the DubnaXAI site.
+
+Current coverage:
+
+- 20 experiments
+- 4 task classes
+- 12 model families
+- 4 action classes
+- 12 diagnostic states
+- 4 representation classes
+
+Generated artifacts:
+
+- `research_validation/reports/research_validation_results.csv`
+- `research_validation/reports/action_distribution.csv`
+- `research_validation/reports/diagnostic_distribution.csv`
+- `research_validation/reports/representation_class_coverage.csv`
+- `research_validation/reports/risk_component_summary.csv`
+- `research_validation/reports/fuzzyxai_research_validation_package.zip`
+
+Every experiment exports route, operator trace, operator table, proof trace,
+verifier report, dashboard data, dashboard v2 and operator cards.
+
 ### Operator Traceability v2
 
 Added framework-level operator traceability for the external validation package:
@@ -260,6 +287,8 @@ The check runs:
 - public framework import/API smoke
 - external framework black-box check
 - operator traceability check
+- research validation is available through `make research-validation` and
+  `make research-validation-check`
 - HYBRID-XIRIS framework example
 - framework-core and all-scenario tests
 - all application scenarios

@@ -30,10 +30,29 @@ def build_verifier_report(route: OperatorRoute, trace: ProofTrace, verification:
         {"id": "operator_edges_have_passed_values", "status": "passed" if all(e.passed_values for e in route.edges) else "failed"},
     ]
     if {"gamma", "delta", "rho"} <= set(computed):
+        gamma_expected = round(
+            max(
+                float(computed.get("uncertainty", computed.get("uncertainty_component", 0.0))),
+                float(computed.get("quality_penalty", computed.get("quality_component", 0.0))),
+                float(computed.get("conflict_component", 0.0)),
+                float(computed.get("interval_component", 0.0)),
+            ),
+            6,
+        )
+        rho_expected = round(
+            max(
+                float(computed["gamma"]),
+                float(computed["delta"]),
+                float(computed.get("quality_component", computed.get("quality_penalty", 0.0))),
+                float(computed.get("conflict_component", 0.0)),
+                float(computed.get("interval_component", 0.0)),
+            ),
+            6,
+        )
         checks.extend(
             [
-                {"id": "gamma_matches_formula", "status": "passed" if computed["gamma"] == round(max(computed["uncertainty"], computed["quality_penalty"]), 6) else "failed"},
-                {"id": "rho_matches_formula", "status": "passed" if computed["rho"] == round(max(computed["gamma"], computed["delta"]), 6) else "failed"},
+                {"id": "gamma_matches_formula", "status": "passed" if computed["gamma"] == gamma_expected else "failed"},
+                {"id": "rho_matches_formula", "status": "passed" if computed["rho"] == rho_expected else "failed"},
                 {"id": "action_matches_risk_zone", "status": "passed" if _action_ok(computed["rho"], route.final_action) else "failed"},
             ]
         )
@@ -52,7 +71,7 @@ def _action_ok(rho: float, action: str) -> bool:
         return action == "accept"
     if rho < 0.60:
         return action == "lower_confidence"
-    return action == "audit"
+    return action in {"audit", "defer_to_human", "audit_report"}
 
 
 def route_to_operator_trace(route: OperatorRoute, verifier_report: dict[str, Any]) -> dict[str, Any]:

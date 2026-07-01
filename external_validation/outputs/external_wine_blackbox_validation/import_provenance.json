@@ -1,9 +1,9 @@
 {
   "task": "sklearn_wine_classification",
   "scenario_id": "external_wine_classification",
-  "source_commit": "be2a30096b275d3365a92cb69b165e57e99e90de",
-  "generated_at_utc": "2026-07-01T15:24:28.862426+00:00",
-  "cwd": "/tmp/fuzzyxai-external-qnkokpk2",
+  "source_commit": "11955855fb111912239f83500af5349fba895ee5",
+  "generated_at_utc": "2026-07-01T16:45:51.870876+00:00",
+  "cwd": "/tmp/pytest-of-lebedeffson/pytest-31/test_framework_external_usage_0",
   "fuzzyxai_file": "/home/lebedeffson/Code/fuzzy-xai-operator/framework/fuzzyxai/fuzzyxai/__init__.py",
   "package_boundary_ok": true,
   "applications_used": false,

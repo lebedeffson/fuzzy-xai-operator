@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import hashlib
+import csv
 import json
 import re
 import subprocess
@@ -97,6 +98,8 @@ EXTERNAL_SUMMARY = ROOT / "external_validation" / "outputs" / "external_wine_sum
 EXTERNAL_MODEL_KEYS = ("logistic_regression", "gradient_boosting")
 EXTERNAL_ZIP = ROOT / "external_validation" / "outputs" / "external_wine_blackbox_validation.zip"
 EXTERNAL_PACKAGE_DIR = ROOT / "external_validation" / "outputs" / "external_wine_blackbox_validation"
+RESEARCH_RESULTS = ROOT / "research_validation" / "reports" / "research_validation_results.csv"
+RESEARCH_PACKAGE = ROOT / "research_validation" / "reports" / "fuzzyxai_research_validation_package.zip"
 
 
 def status_path(line: str) -> str:
@@ -361,6 +364,28 @@ def validate_external_framework() -> tuple[dict[str, Any], list[str]]:
     }, errors
 
 
+def validate_research_validation() -> dict[str, Any]:
+    if not RESEARCH_RESULTS.exists():
+        return {"status": "not_run"}
+    rows = list(csv.DictReader(RESEARCH_RESULTS.open(encoding="utf-8")))
+    if not rows:
+        return {"status": "FAIL", "errors": ["research validation results are empty"]}
+    return {
+        "status": "PASS" if RESEARCH_PACKAGE.exists() else "FAIL",
+        "experiments_total": len(rows),
+        "task_types": len({row["task_type"] for row in rows}),
+        "model_families": len({row["model"] for row in rows}),
+        "actions_covered": len({row["action_id"] for row in rows}),
+        "diagnostics_covered": len({row["diagnostic_id"] for row in rows}),
+        "representation_classes_covered": len({row["representation_class"] for row in rows}),
+        "verifier_passed": sum(row["verifier_status"] == "passed" for row in rows),
+        "traceability_passed": sum(row["traceability_status"] == "passed" for row in rows),
+        "package_exists": RESEARCH_PACKAGE.exists(),
+        "package_path": RESEARCH_PACKAGE.relative_to(ROOT).as_posix(),
+        "errors": [] if RESEARCH_PACKAGE.exists() else ["research validation package is missing"],
+    }
+
+
 def validate_scenarios() -> tuple[list[dict[str, Any]], list[dict[str, Any]], dict[str, list[dict[str, Any]]]]:
     rows: list[dict[str, Any]] = []
     key_rows: list[dict[str, Any]] = []
@@ -545,6 +570,7 @@ def render_md(
     key_rows: list[dict[str, Any]],
     summary: dict[str, Any],
     external: dict[str, Any],
+    research: dict[str, Any],
     git_status: str,
     diff_summary: str,
 ) -> str:
@@ -580,6 +606,23 @@ def render_md(
         )
         for row in external.get("traceability", [])
     )
+    if research.get("status") == "not_run":
+        research_rows = "| research_validation_status | not_run |"
+    else:
+        research_rows = "\n".join(
+            f"| {key} | {research.get(key, '')} |"
+            for key in [
+                "status",
+                "experiments_total",
+                "task_types",
+                "model_families",
+                "actions_covered",
+                "diagnostics_covered",
+                "representation_classes_covered",
+                "verifier_passed",
+                "traceability_passed",
+            ]
+        )
     status_text = git_status if git_status.strip() else "clean"
     diff_text = diff_summary if diff_summary.strip() else "no diff"
     return f"""# Sprint Status
@@ -648,6 +691,12 @@ DubnaXAI/FuzzyXAI has three separated layers: framework computes, applications r
 |---|---:|---:|---|---|---|---|
 {traceability_rows}
 
+## Research Validation
+
+| Metric | Value |
+|---|---:|
+{research_rows}
+
 ## Site Separation
 
 - site imports fuzzyxai: {'yes' if summary['site_computes_fuzzyxai'] else 'no'}
@@ -714,9 +763,10 @@ def main() -> int:
 
     rows, key_rows, manifest = validate_scenarios()
     external, external_errors = validate_external_framework()
+    research = validate_research_validation()
     site_bad, site_issues = scan_site()
     apps_bad, app_issues = scan_apps()
-    errors = [err for row in rows for err in row["errors"]] + external_errors + site_issues + app_issues
+    errors = [err for row in rows for err in row["errors"]] + external_errors + research.get("errors", []) + site_issues + app_issues
     warnings = [warn for row in rows for warn in row["warnings"]]
     dirty_sources = dirty_source_files(git_status)
     if dirty_sources:
@@ -749,6 +799,8 @@ def main() -> int:
         "source_commit_filled": bool(external.get("source_commit")),
         "operator_route_check": "PASS" if not errors else "FAIL",
         "operator_traceability_check": external.get("operator_traceability_check", "FAIL"),
+        "research_validation_status": research.get("status"),
+        "research_validation": research,
         "dashboard_v2_available": external.get("dashboard_v2_available", False),
         "operator_cards_available": external.get("operator_cards_available", False),
         "operator_edges_available": external.get("operator_edges_available", False),
@@ -787,6 +839,10 @@ def main() -> int:
             "status": summary["operator_traceability_check"],
             "source": "external_validation/outputs/external_wine_blackbox_validation",
         },
+        "research_validation_check": {
+            "status": research.get("status", "not_run"),
+            "source": "research_validation/reports/research_validation_results.csv",
+        },
         "dubnaxai_release_check": {
             "status": "UNKNOWN",
             "source": "not executed by sprint-report",
@@ -806,7 +862,7 @@ def main() -> int:
     dump_json(OUT / "release_summary.json", summary)
     dump_json(OUT / "check_results.json", check_results)
     (OUT / "SPRINT_STATUS.md").write_text(
-        render_md(branch, commit, tag, rows, key_rows, summary, external, git_status, diff_summary),
+        render_md(branch, commit, tag, rows, key_rows, summary, external, research, git_status, diff_summary),
         encoding="utf-8",
     )
 
@@ -831,6 +887,10 @@ def main() -> int:
     print("\ntraceability:")
     for row in external.get("traceability", []):
         print(f"  {row['scenario']}: nodes={row['nodes_traced']}; edges={row['edges_traced']}; dashboard_v2={'yes' if row['dashboard_v2'] else 'no'}")
+    print("\nresearch validation:")
+    print(f"  status: {research.get('status')}")
+    if research.get("status") != "not_run":
+        print(f"  experiments: {research.get('experiments_total')}; task_types: {research.get('task_types')}; models: {research.get('model_families')}")
     print("\nseparation:")
     print(f"  site computes FuzzyXAI: {'yes' if site_bad else 'no'}")
     print(f"  applications choose actions directly: {'yes' if apps_bad else 'no'}")

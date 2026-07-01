@@ -1,53 +1,71 @@
-DUBNAXAI_FULL_WORK_REPORT.md                       |  24 +
- Makefile                                           |   7 +-
- .../beacon_xai/figures/operator_dashboard.png      | Bin 215831 -> 214951 bytes
- .../scenarios/beacon_xai/proof/proof_trace.json    | 121 ++++-
- applications/scenarios/beacon_xai/route/route.json | 119 ++++-
+Makefile                                           |   8 +-
+ .../beacon_xai/figures/operator_dashboard.png      | Bin 214951 -> 214634 bytes
+ .../scenarios/beacon_xai/proof/proof_trace.json    |   4 +-
+ applications/scenarios/beacon_xai/route/route.json |   2 +-
  .../beacon_xai/site_payload/scenario.json          |   2 +-
- .../gd_anfis_shap/figures/operator_dashboard.png   | Bin 202172 -> 201290 bytes
- .../scenarios/gd_anfis_shap/proof/proof_trace.json | 121 ++++-
- .../scenarios/gd_anfis_shap/route/route.json       | 119 ++++-
+ .../gd_anfis_shap/figures/operator_dashboard.png   | Bin 201290 -> 200962 bytes
+ .../scenarios/gd_anfis_shap/proof/proof_trace.json |   4 +-
+ .../scenarios/gd_anfis_shap/route/route.json       |   2 +-
  .../gd_anfis_shap/site_payload/scenario.json       |   2 +-
- .../gis_integro/figures/operator_dashboard.png     | Bin 216496 -> 215701 bytes
- .../scenarios/gis_integro/proof/proof_trace.json   | 139 ++++-
- .../scenarios/gis_integro/route/route.json         | 137 ++++-
+ .../gis_integro/figures/operator_dashboard.png     | Bin 215701 -> 215246 bytes
+ .../scenarios/gis_integro/proof/proof_trace.json   |   4 +-
+ .../scenarios/gis_integro/route/route.json         |   2 +-
  .../gis_integro/site_payload/scenario.json         |   2 +-
- .../hybrid_xiris/figures/operator_dashboard.png    | Bin 261700 -> 260987 bytes
- .../scenarios/hybrid_xiris/proof/proof_trace.json  | 175 +++++-
- .../scenarios/hybrid_xiris/route/route.json        | 173 +++++-
+ .../hybrid_xiris/figures/operator_dashboard.png    | Bin 260987 -> 260458 bytes
+ .../scenarios/hybrid_xiris/proof/proof_trace.json  |   4 +-
+ .../scenarios/hybrid_xiris/route/route.json        |   2 +-
  .../hybrid_xiris/site_payload/scenario.json        |   2 +-
- .../figures/operator_dashboard.png                 | Bin 206245 -> 205412 bytes
- .../medical_ecg_signal/proof/proof_trace.json      | 121 ++++-
- .../scenarios/medical_ecg_signal/route/route.json  | 119 ++++-
+ .../figures/operator_dashboard.png                 | Bin 205412 -> 204944 bytes
+ .../medical_ecg_signal/proof/proof_trace.json      |   4 +-
+ .../scenarios/medical_ecg_signal/route/route.json  |   2 +-
  .../medical_ecg_signal/site_payload/scenario.json  |   2 +-
- external_validation/README.md                      |  14 +
- .../outputs/external_wine_blackbox_validation.zip  | Bin 488113 -> 1213657 bytes
+ .../outputs/external_wine_blackbox_validation.zip  | Bin 1213657 -> 1243708 bytes
  .../external_validation_report.md                  |   2 +-
- .../external_wine_summary.json                     |  26 +-
- .../gradient_boosting/operator_dashboard.png       | Bin 266872 -> 265670 bytes
- .../gradient_boosting/proof_trace.json             | 548 ++++++++++++++++++-
- .../gradient_boosting/route.json                   | 545 ++++++++++++++++++-
- .../gradient_boosting/summary.json                 |  12 +-
+ .../external_wine_summary.json                     |  28 ++-
+ .../gradient_boosting/dashboard_data.json          | 168 +++++++++-----
+ .../gradient_boosting/operator_cards/alignment.md  |   8 +-
+ .../operator_cards/diagnostics.md                  |   6 +-
+ .../operator_cards/input_artifact.md               |   6 +-
+ .../gradient_boosting/operator_cards/proof.md      |   6 +-
+ .../operator_cards/representation.md               |  15 +-
+ .../gradient_boosting/operator_cards/risk.md       |  10 +-
+ .../gradient_boosting/operator_dashboard.png       | Bin 265670 -> 276160 bytes
+ .../gradient_boosting/operator_dashboard_v2.html   | 203 +++++++++++------
+ .../gradient_boosting/operator_dashboard_v2.png    | Bin 389401 -> 396660 bytes
+ .../gradient_boosting/operator_table.csv           |  12 +-
+ .../gradient_boosting/operator_trace.json          | 164 ++++++++++----
+ .../gradient_boosting/proof_trace.json             | 171 +++++++++++----
+ .../gradient_boosting/route.json                   | 158 ++++++++++----
+ .../gradient_boosting/summary.json                 |  13 +-
  .../import_provenance.json                         |   6 +-
- .../logistic_regression/operator_dashboard.png     | Bin 267904 -> 266740 bytes
- .../logistic_regression/proof_trace.json           | 584 ++++++++++++++++++++-
- .../logistic_regression/route.json                 | 581 +++++++++++++++++++-
- .../logistic_regression/summary.json               |  12 +-
- .../manifest.json                                  | 192 ++++++-
- ...l_wine_gradient_boosting_operator_dashboard.png | Bin 266872 -> 265670 bytes
- ...xternal_wine_gradient_boosting_proof_trace.json | 548 ++++++++++++++++++-
- .../external_wine_gradient_boosting_route.json     | 545 ++++++++++++++++++-
- .../external_wine_gradient_boosting_summary.json   |  12 +-
- ...wine_logistic_regression_operator_dashboard.png | Bin 267904 -> 266740 bytes
- ...ernal_wine_logistic_regression_proof_trace.json | 584 ++++++++++++++++++++-
- .../external_wine_logistic_regression_route.json   | 581 +++++++++++++++++++-
- .../external_wine_logistic_regression_summary.json |  12 +-
- .../outputs/external_wine_summary.json             |  26 +-
- external_validation/run_external_wine_test.py      |  10 +-
+ .../logistic_regression/dashboard_data.json        | 168 +++++++++-----
+ .../operator_cards/alignment.md                    |   8 +-
+ .../operator_cards/diagnostics.md                  |   6 +-
+ .../operator_cards/input_artifact.md               |   6 +-
+ .../logistic_regression/operator_cards/proof.md    |   6 +-
+ .../operator_cards/representation.md               |  15 +-
+ .../logistic_regression/operator_cards/risk.md     |  10 +-
+ .../logistic_regression/operator_dashboard.png     | Bin 266740 -> 277277 bytes
+ .../logistic_regression/operator_dashboard_v2.html | 203 +++++++++++------
+ .../logistic_regression/operator_dashboard_v2.png  | Bin 394306 -> 396564 bytes
+ .../logistic_regression/operator_table.csv         |  12 +-
+ .../logistic_regression/operator_trace.json        | 164 ++++++++++----
+ .../logistic_regression/proof_trace.json           | 171 +++++++++++----
+ .../logistic_regression/route.json                 | 158 ++++++++++----
+ .../logistic_regression/summary.json               |  13 +-
+ .../manifest.json                                  | 130 +++++------
+ ...l_wine_gradient_boosting_operator_dashboard.png | Bin 265670 -> 276160 bytes
+ ...xternal_wine_gradient_boosting_proof_trace.json | 171 +++++++++++----
+ .../external_wine_gradient_boosting_route.json     | 158 ++++++++++----
+ .../external_wine_gradient_boosting_summary.json   |  13 +-
+ ...wine_logistic_regression_operator_dashboard.png | Bin 266740 -> 277277 bytes
+ ...ernal_wine_logistic_regression_proof_trace.json | 171 +++++++++++----
+ .../external_wine_logistic_regression_route.json   | 158 ++++++++++----
+ .../external_wine_logistic_regression_summary.json |  13 +-
+ .../outputs/external_wine_summary.json             |  28 ++-
  .../fuzzyxai/adapters/tabular_classification.py    |   1 +
- .../fuzzyxai/core/external_tabular_route.py        | 296 ++++++++++-
- framework/fuzzyxai/fuzzyxai/core/types.py          |  46 ++
- framework/fuzzyxai/fuzzyxai/viz/__init__.py        |   2 +
+ .../fuzzyxai/core/external_tabular_route.py        | 195 +++++++++++------
+ framework/fuzzyxai/fuzzyxai/viz/traceability.py    |  25 ++-
  fuzzyxai_final_audit_package.zip                   | Bin 6099067 -> 6129548 bytes
  reports/audit/artifact_inventory.csv               |  11 +-
  reports/audit/docx_format_report.md                |   2 +-
@@ -56,42 +74,39 @@ DUBNAXAI_FULL_WORK_REPORT.md                       |  24 +
  reports/audit/docx_render_report.md                |   2 +-
  reports/audit/fuzzyxai_final_audit.json            |  19 +-
  reports/audit/fuzzyxai_final_audit.md              |  16 +-
- reports/audit/stale_terms_report.md                |  31 +-
- reports/figures/beacon_xai_operator_dashboard.png  | Bin 215831 -> 214951 bytes
- .../figures/gd_anfis_shap_operator_dashboard.png   | Bin 202172 -> 201290 bytes
- reports/figures/gis_integro_operator_dashboard.png | Bin 216496 -> 215701 bytes
- .../figures/hybrid_xiris_operator_dashboard.png    | Bin 261700 -> 260987 bytes
- .../medical_ecg_signal_operator_dashboard.png      | Bin 206245 -> 205412 bytes
- reports/framework/hybrid_xiris_proof_trace.json    | 175 +++++-
- reports/framework/hybrid_xiris_route.json          | 173 +++++-
- reports/release/DUBNAXAI_FULL_WORK_REPORT.md       |  24 +
- reports/release/current/SPRINT_STATUS.md           | 193 ++++---
- reports/release/current/artifact_manifest.json     | 134 ++---
+ reports/audit/stale_terms_report.md                |  31 ++-
+ reports/figures/beacon_xai_operator_dashboard.png  | Bin 214951 -> 214634 bytes
+ .../figures/gd_anfis_shap_operator_dashboard.png   | Bin 201290 -> 200962 bytes
+ reports/figures/gis_integro_operator_dashboard.png | Bin 215701 -> 215246 bytes
+ .../figures/hybrid_xiris_operator_dashboard.png    | Bin 260987 -> 260458 bytes
+ .../medical_ecg_signal_operator_dashboard.png      | Bin 205412 -> 204944 bytes
+ reports/framework/hybrid_xiris_proof_trace.json    |   4 +-
+ reports/framework/hybrid_xiris_route.json          |   2 +-
+ reports/release/current/SPRINT_STATUS.md           | 241 ++++++++++++---------
+ reports/release/current/artifact_manifest.json     | 102 ++++-----
  reports/release/current/check_results.json         |   6 +-
- reports/release/current/git_diff_summary.txt       | 148 +++---
- reports/release/current/git_status.txt             |  33 +-
- reports/release/current/release_summary.json       |   8 +-
- reports/routes/beacon_xai_route.json               | 119 ++++-
- reports/routes/gd_anfis_shap_route.json            | 119 ++++-
- reports/routes/gis_integro_route.json              | 137 ++++-
- reports/routes/hybrid_xiris_route.json             | 173 +++++-
- reports/routes/medical_ecg_signal_route.json       | 119 ++++-
- .../studio_batch/hybrid_xiris_proof_package.json   |  30 +-
+ reports/release/current/git_diff_summary.txt       | 169 ++++++++-------
+ reports/release/current/git_status.txt             |  51 ++---
+ reports/release/current/release_summary.json       |  19 +-
+ reports/routes/beacon_xai_route.json               |   2 +-
+ reports/routes/gd_anfis_shap_route.json            |   2 +-
+ reports/routes/gis_integro_route.json              |   2 +-
+ reports/routes/hybrid_xiris_route.json             |   2 +-
+ reports/routes/medical_ecg_signal_route.json       |   2 +-
+ .../studio_batch/hybrid_xiris_proof_package.json   |  30 ++-
  .../repository_inventory/repository_excluded.json  |   2 +-
  .../repository_inventory/repository_inventory.json |   6 +-
  .../repository_inventory/repository_inventory.md   |   2 +-
- scripts/build_sprint_report.py                     |  74 +++
- scripts/check_framework_external_usage.py          |  18 +
- .../figures/beacon_xai_operator_dashboard.png      | Bin 215831 -> 214951 bytes
- .../figures/gd_anfis_shap_operator_dashboard.png   | Bin 202172 -> 201290 bytes
- .../figures/gis_integro_operator_dashboard.png     | Bin 216496 -> 215701 bytes
- .../figures/hybrid_xiris_operator_dashboard.png    | Bin 261700 -> 260987 bytes
- .../medical_ecg_signal_operator_dashboard.png      | Bin 206245 -> 205412 bytes
- site/dubnaxai/public/routes/beacon_xai_route.json  | 119 ++++-
- .../public/routes/gd_anfis_shap_route.json         | 119 ++++-
- site/dubnaxai/public/routes/gis_integro_route.json | 137 ++++-
- .../dubnaxai/public/routes/hybrid_xiris_route.json | 173 +++++-
- .../public/routes/medical_ecg_signal_route.json    | 119 ++++-
- tests/test_framework_external_usage.py             |  18 +
+ scripts/build_sprint_report.py                     |  64 +++++-
+ .../figures/beacon_xai_operator_dashboard.png      | Bin 214951 -> 214634 bytes
+ .../figures/gd_anfis_shap_operator_dashboard.png   | Bin 201290 -> 200962 bytes
+ .../figures/gis_integro_operator_dashboard.png     | Bin 215701 -> 215246 bytes
+ .../figures/hybrid_xiris_operator_dashboard.png    | Bin 260987 -> 260458 bytes
+ .../medical_ecg_signal_operator_dashboard.png      | Bin 205412 -> 204944 bytes
+ site/dubnaxai/public/routes/beacon_xai_route.json  |   2 +-
+ .../public/routes/gd_anfis_shap_route.json         |   2 +-
+ site/dubnaxai/public/routes/gis_integro_route.json |   2 +-
+ .../dubnaxai/public/routes/hybrid_xiris_route.json |   2 +-
+ .../public/routes/medical_ecg_signal_route.json    |   2 +-
  visual_artifacts_latest.zip                        | Bin 2533274 -> 2533446 bytes
- 96 files changed, 8443 insertions(+), 586 deletions(-)
+ 111 files changed, 2615 insertions(+), 1211 deletions(-)

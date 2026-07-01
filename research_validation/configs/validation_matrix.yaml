@@ -1,0 +1,211 @@
+experiments:
+  - id: wine_logistic_clean
+    task_type: tabular_classification
+    dataset: sklearn_wine
+    model: LogisticRegression
+    perturbation: clean
+    source_type: tabular
+    probability: 0.88
+    importance_sum: 0.82
+    missing_rate: 0.00
+    range_violation: 0.00
+    representation_class: F0
+  - id: wine_gradient_reduced
+    task_type: tabular_classification
+    dataset: sklearn_wine
+    model: GradientBoostingClassifier
+    perturbation: top_k_reduction
+    source_type: tabular
+    probability: 0.68
+    importance_sum: 0.57
+    missing_rate: 0.00
+    range_violation: 0.00
+    representation_class: F0
+  - id: breast_cancer_svc_missing
+    task_type: tabular_classification
+    dataset: sklearn_breast_cancer
+    model: SVC(probability=True)
+    perturbation: missing_features
+    source_type: tabular
+    probability: 0.72
+    importance_sum: 0.70
+    missing_rate: 0.62
+    range_violation: 0.10
+    representation_class: NAS
+  - id: breast_cancer_knn_boundary
+    task_type: tabular_classification
+    dataset: sklearn_breast_cancer
+    model: KNeighborsClassifier
+    perturbation: confidence_boundary
+    source_type: tabular
+    probability: 0.58
+    importance_sum: 0.74
+    missing_rate: 0.00
+    range_violation: 0.00
+    representation_class: F0
+  - id: digits_tree_conflict
+    task_type: tabular_classification
+    dataset: sklearn_digits
+    model: DecisionTreeClassifier
+    perturbation: explanation_conflict
+    source_type: tabular
+    probability: 0.83
+    importance_sum: 0.71
+    missing_rate: 0.00
+    range_violation: 0.00
+    conflict_component: 0.67
+    representation_class: NAS
+  - id: wine_mlp_reduction_loss
+    task_type: tabular_classification
+    dataset: sklearn_wine
+    model: MLPClassifier
+    perturbation: top_k_reduction
+    source_type: tabular
+    probability: 0.76
+    importance_sum: 0.48
+    missing_rate: 0.00
+    range_violation: 0.00
+    representation_class: F_ML
+  - id: diabetes_linear_clean
+    task_type: tabular_regression
+    dataset: sklearn_diabetes
+    model: LinearRegression
+    perturbation: clean
+    source_type: tabular_regression
+    probability: 0.82
+    importance_sum: 0.80
+    prediction_interval_width: 0.22
+    representation_class: F_int
+  - id: diabetes_gbr_wide_interval
+    task_type: tabular_regression
+    dataset: sklearn_diabetes
+    model: GradientBoostingRegressor
+    perturbation: wide_interval
+    source_type: tabular_regression
+    probability: 0.62
+    importance_sum: 0.70
+    prediction_interval_width: 0.48
+    representation_class: F_int
+  - id: synthetic_rf_regressor_spread
+    task_type: tabular_regression
+    dataset: synthetic_regression
+    model: RandomForestRegressor
+    perturbation: wide_interval
+    source_type: tabular_regression
+    probability: 0.55
+    importance_sum: 0.63
+    prediction_interval_width: 0.58
+    representation_class: F_int
+  - id: synthetic_svr_explanation_loss
+    task_type: tabular_regression
+    dataset: synthetic_regression
+    model: SVR
+    perturbation: top_k_reduction
+    source_type: tabular_regression
+    probability: 0.71
+    importance_sum: 0.45
+    prediction_interval_width: 0.30
+    representation_class: F_int
+  - id: diabetes_mlp_quality_limit
+    task_type: tabular_regression
+    dataset: sklearn_diabetes
+    model: MLPRegressor
+    perturbation: missing_features
+    source_type: tabular_regression
+    probability: 0.74
+    importance_sum: 0.72
+    missing_rate: 0.52
+    prediction_interval_width: 0.36
+    representation_class: NAS
+  - id: signal_threshold_clean
+    task_type: signal_quality
+    dataset: synthetic_signal
+    model: threshold_model
+    perturbation: clean
+    source_type: signal_features
+    probability: 0.78
+    importance_sum: 0.78
+    noise_ratio: 0.08
+    representation_class: F_ML
+  - id: signal_logistic_noise
+    task_type: signal_quality
+    dataset: synthetic_signal
+    model: LogisticRegression
+    perturbation: noise
+    source_type: signal_features
+    probability: 0.75
+    importance_sum: 0.72
+    noise_ratio: 0.61
+    representation_class: F_ML
+  - id: signal_gradient_missing
+    task_type: signal_quality
+    dataset: synthetic_signal
+    model: GradientBoostingClassifier
+    perturbation: missing_features
+    source_type: signal_features
+    probability: 0.80
+    importance_sum: 0.68
+    missing_rate: 0.73
+    noise_ratio: 0.35
+    representation_class: F_ML
+  - id: signal_logistic_boundary
+    task_type: signal_quality
+    dataset: synthetic_signal
+    model: LogisticRegression
+    perturbation: confidence_boundary
+    source_type: signal_features
+    probability: 0.57
+    importance_sum: 0.75
+    noise_ratio: 0.15
+    representation_class: F_ML
+  - id: digits_logistic_clean
+    task_type: image_like_classification
+    dataset: sklearn_digits
+    model: LogisticRegression
+    perturbation: clean
+    source_type: image_like_features
+    probability: 0.86
+    importance_sum: 0.81
+    occlusion_rate: 0.00
+    representation_class: F_ML
+  - id: digits_svc_occlusion
+    task_type: image_like_classification
+    dataset: sklearn_digits
+    model: SVC(probability=True)
+    perturbation: occlusion
+    source_type: image_like_features
+    probability: 0.79
+    importance_sum: 0.70
+    occlusion_rate: 0.64
+    representation_class: F_ML
+  - id: digits_mlp_pixel_noise
+    task_type: image_like_classification
+    dataset: sklearn_digits
+    model: MLPClassifier
+    perturbation: noise
+    source_type: image_like_features
+    probability: 0.66
+    importance_sum: 0.59
+    occlusion_rate: 0.42
+    representation_class: F_ML
+  - id: digits_gradient_reduction
+    task_type: image_like_classification
+    dataset: sklearn_digits
+    model: GradientBoostingClassifier
+    perturbation: top_k_reduction
+    source_type: image_like_features
+    probability: 0.70
+    importance_sum: 0.50
+    occlusion_rate: 0.12
+    representation_class: F_ML
+  - id: wine_logistic_quality_limit
+    task_type: tabular_classification
+    dataset: sklearn_wine
+    model: LogisticRegression
+    perturbation: missing_features
+    source_type: tabular
+    probability: 0.84
+    importance_sum: 0.76
+    missing_rate: 0.41
+    range_violation: 0.20
+    representation_class: NAS

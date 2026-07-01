@@ -1,4 +1,4 @@
-# Внешняя табличная модель
+# Внешняя модель
 
 ## Input
 - `source_type` = `"tabular"`
@@ -17,6 +17,8 @@
 - `model_name` = `"GradientBoostingClassifier"`
 - `dataset_name` = `"sklearn_wine"`
 - `source_type` = `"tabular"`
+- `task_type` = `"tabular_classification"`
+- `perturbation` = `"external_payload"`
 
 ## Output
 - `adapted_input_id` = `"external_wine_classification:GradientBoostingClassifier"`
@@ -31,7 +33,7 @@ n/a
 passed: Внешний payload успешно приведён к AdaptedInput.
 
 ## Interpretation
-Фреймворк получил вероятность класса, признаки, важности признаков и метрики качества.
+Фреймворк получил уверенность модели, признаки, важности признаков, метрики качества и контекст ограничения.
 
 ## Next
 explanation_object

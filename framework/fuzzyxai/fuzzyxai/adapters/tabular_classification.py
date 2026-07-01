@@ -45,6 +45,7 @@ class TabularClassificationAdapter(BaseAdapter):
             "class_probability": float(payload["class_probability"]),
             "feature_values": dict(payload["feature_values"]),
             "feature_importance": dict(payload["feature_importance"]),
+            "top_k_importance": int(payload.get("top_k_importance", len(payload["feature_importance"]))),
             "missing_rate": float(quality.get("missing_rate", 0.0)),
             "feature_range_violation": float(quality.get("feature_range_violation", 0.0)),
             "context_values": dict(payload.get("context_values") or {}),

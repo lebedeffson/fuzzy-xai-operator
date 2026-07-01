@@ -1,0 +1,872 @@
+{
+  "computed_result": {
+    "action": "lower_confidence",
+    "action_id": "lower_confidence",
+    "class_probability": 0.55,
+    "conflict_component": 0.0,
+    "dataset_name": "synthetic_regression",
+    "delta": 0.37,
+    "diagnostic_id": "D_external_regression_uncertainty",
+    "gamma": 0.58,
+    "interval_component": 0.58,
+    "model_name": "RandomForestRegressor",
+    "perturbation": "wide_interval",
+    "quality_component": 0.0,
+    "quality_penalty": 0.0,
+    "reduction_component": 0.37,
+    "representation_class": "F_int",
+    "rho": 0.58,
+    "risk_dominant_component": "gamma",
+    "task_type": "tabular_regression",
+    "uncertainty": 0.45,
+    "uncertainty_component": 0.45
+  },
+  "created_at": "2026-07-01T16:42:11.760544+00:00",
+  "edges": [
+    {
+      "edge_id": "edge_input_explanation",
+      "explanation_ru": "Адаптированный вход передан в объяснительный объект.",
+      "passed_values": {
+        "class_probability": 0.55,
+        "feature_importance": {
+          "f1": 0.2016,
+          "f2": 0.1512,
+          "f3": 0.1134,
+          "f4": 0.0882,
+          "f5": 0.0756
+        }
+      },
+      "source_node_id": "input_artifact",
+      "target_node_id": "explanation_object"
+    },
+    {
+      "edge_id": "edge_explanation_representation",
+      "explanation_ru": "Объяснительный объект передан в выбор представления.",
+      "passed_values": {
+        "terms": [
+          "f1",
+          "f2",
+          "f3",
+          "f4",
+          "f5"
+        ],
+        "uncertainty": 0.45
+      },
+      "source_node_id": "explanation_object",
+      "target_node_id": "representation"
+    },
+    {
+      "edge_id": "edge_representation_alignment",
+      "explanation_ru": "Вероятность, качество и контекст переданы в оператор согласования.",
+      "passed_values": {
+        "class_probability": 0.55,
+        "context": {
+          "conflict_component": 0.0,
+          "experiment_id": "synthetic_rf_regressor_spread",
+          "noise_ratio": 0.0,
+          "occlusion_rate": 0.0,
+          "perturbation": "wide_interval",
+          "prediction_interval_width": 0.58,
+          "representation_class": "F_int",
+          "task_type": "tabular_regression"
+        },
+        "quality_metrics": {
+          "feature_range_violation": 0.0,
+          "missing_rate": 0.0
+        }
+      },
+      "source_node_id": "representation",
+      "target_node_id": "alignment"
+    },
+    {
+      "edge_id": "edge_representation_reduction",
+      "explanation_ru": "Top-k атрибуции переданы в оператор редукции.",
+      "passed_values": {
+        "feature_importance": {
+          "f1": 0.2016,
+          "f2": 0.1512,
+          "f3": 0.1134,
+          "f4": 0.0882,
+          "f5": 0.0756
+        },
+        "top_k": 5
+      },
+      "source_node_id": "representation",
+      "target_node_id": "reduction"
+    },
+    {
+      "edge_id": "edge_alignment_risk",
+      "explanation_ru": "Рассогласование передано в наблюдатель риска.",
+      "passed_values": {
+        "gamma": 0.58
+      },
+      "source_node_id": "alignment",
+      "target_node_id": "risk"
+    },
+    {
+      "edge_id": "edge_reduction_risk",
+      "explanation_ru": "Потери редукции переданы в наблюдатель риска.",
+      "passed_values": {
+        "delta": 0.37
+      },
+      "source_node_id": "reduction",
+      "target_node_id": "risk"
+    },
+    {
+      "edge_id": "edge_risk_diagnostics",
+      "explanation_ru": "Риск переведён в диагностическое состояние.",
+      "passed_values": {
+        "rho": 0.58,
+        "risk_zone": "lower_confidence"
+      },
+      "source_node_id": "risk",
+      "target_node_id": "diagnostics"
+    },
+    {
+      "edge_id": "edge_diagnostics_action",
+      "explanation_ru": "Диагностика передана в политику действия.",
+      "passed_values": {
+        "diagnostic_id": "D_external_regression_uncertainty",
+        "recommended_action": "lower_confidence"
+      },
+      "source_node_id": "diagnostics",
+      "target_node_id": "action"
+    },
+    {
+      "edge_id": "edge_action_proof",
+      "explanation_ru": "Итоговое действие сохранено в proof trace.",
+      "passed_values": {
+        "action_id": "lower_confidence",
+        "computed_result": {
+          "action": "lower_confidence",
+          "action_id": "lower_confidence",
+          "class_probability": 0.55,
+          "conflict_component": 0.0,
+          "dataset_name": "synthetic_regression",
+          "delta": 0.37,
+          "diagnostic_id": "D_external_regression_uncertainty",
+          "gamma": 0.58,
+          "interval_component": 0.58,
+          "model_name": "RandomForestRegressor",
+          "perturbation": "wide_interval",
+          "quality_component": 0.0,
+          "quality_penalty": 0.0,
+          "reduction_component": 0.37,
+          "representation_class": "F_int",
+          "rho": 0.58,
+          "risk_dominant_component": "gamma",
+          "task_type": "tabular_regression",
+          "uncertainty": 0.45,
+          "uncertainty_component": 0.45
+        }
+      },
+      "source_node_id": "action",
+      "target_node_id": "proof"
+    }
+  ],
+  "final_action_id": "lower_confidence",
+  "final_diagnostic_id": "D_external_regression_uncertainty",
+  "nodes": [
+    {
+      "components": {
+        "dataset_name": "synthetic_regression",
+        "model_name": "RandomForestRegressor",
+        "perturbation": "wide_interval",
+        "source_type": "tabular_regression",
+        "task_type": "tabular_regression"
+      },
+      "details": {
+        "applications_used": false
+      },
+      "explanation": "Адаптер принимает внешний результат модели.",
+      "formula_id": null,
+      "formula_latex": null,
+      "formula_ref": "adapter",
+      "formula_text": "Нормализация внешнего входа",
+      "input_refs": [],
+      "input_summary": "payload внешней модели",
+      "input_values": {
+        "attribution_values": {
+          "f1": 0.2016,
+          "f2": 0.1512,
+          "f3": 0.1134,
+          "f4": 0.0882,
+          "f5": 0.0756
+        },
+        "context_values": {
+          "conflict_component": 0.0,
+          "experiment_id": "synthetic_rf_regressor_spread",
+          "noise_ratio": 0.0,
+          "occlusion_rate": 0.0,
+          "perturbation": "wide_interval",
+          "prediction_interval_width": 0.58,
+          "representation_class": "F_int",
+          "task_type": "tabular_regression"
+        },
+        "dataset_name": "synthetic_regression",
+        "feature_values": {
+          "f1": 0.1,
+          "f2": 0.2,
+          "f3": 0.3,
+          "f4": 0.4,
+          "f5": 0.5
+        },
+        "model_name": "RandomForestRegressor",
+        "model_output": {
+          "class_probability": 0.55,
+          "predicted_class": 1
+        },
+        "quality_metrics": {
+          "feature_range_violation": 0.0,
+          "missing_rate": 0.0
+        },
+        "source_type": "tabular_regression"
+      },
+      "interpretation_ru": "Фреймворк получил уверенность модели, признаки, важности признаков, метрики качества и контекст ограничения.",
+      "next_node_ids": [
+        "explanation_object"
+      ],
+      "node_id": "input_artifact",
+      "operator_type": "adapter",
+      "output_refs": [],
+      "output_summary": "AdaptedInput",
+      "output_values": {
+        "adapted_input_id": "external_wine_classification:RandomForestRegressor",
+        "class_probability": 0.55,
+        "feature_importance": {
+          "f1": 0.2016,
+          "f2": 0.1512,
+          "f3": 0.1134,
+          "f4": 0.0882,
+          "f5": 0.0756
+        },
+        "trace_origin": "external_model_payload"
+      },
+      "raw": {
+        "class_probability": 0.55,
+        "context_values": {
+          "conflict_component": 0.0,
+          "experiment_id": "synthetic_rf_regressor_spread",
+          "noise_ratio": 0.0,
+          "occlusion_rate": 0.0,
+          "perturbation": "wide_interval",
+          "prediction_interval_width": 0.58,
+          "representation_class": "F_int",
+          "task_type": "tabular_regression"
+        },
+        "dataset_name": "synthetic_regression",
+        "feature_importance": {
+          "f1": 0.2016,
+          "f2": 0.1512,
+          "f3": 0.1134,
+          "f4": 0.0882,
+          "f5": 0.0756
+        },
+        "feature_range_violation": 0.0,
+        "feature_values": {
+          "f1": 0.1,
+          "f2": 0.2,
+          "f3": 0.3,
+          "f4": 0.4,
+          "f5": 0.5
+        },
+        "missing_rate": 0.0,
+        "model_name": "RandomForestRegressor",
+        "predicted_class": 1,
+        "source_type": "tabular_regression",
+        "top_k_importance": 5
+      },
+      "source_commit": "11955855fb111912239f83500af5349fba895ee5",
+      "status": "passed",
+      "status_reason_ru": "Внешний payload успешно приведён к AdaptedInput.",
+      "threshold": "",
+      "thresholds": {},
+      "title": "Внешняя модель",
+      "title_ru": "Внешняя модель",
+      "trace_ref": "adapted_input",
+      "value": "p=0.55; class=1",
+      "value_source": "external_model_payload"
+    },
+    {
+      "components": {
+        "terms": [
+          "f1",
+          "f2",
+          "f3",
+          "f4",
+          "f5"
+        ],
+        "uncertainty": 0.45
+      },
+      "details": {},
+      "explanation": "Внешний payload переведён в объяснительный объект.",
+      "formula_id": "E_k",
+      "formula_latex": null,
+      "formula_ref": "E_k",
+      "formula_text": "E_k = {L_k, μ_k, R_k, α_k, u_k, τ_k}",
+      "input_refs": [
+        "input_artifact"
+      ],
+      "input_summary": "предыдущее состояние маршрута",
+      "input_values": {
+        "class_probability": 0.55,
+        "feature_importance": {
+          "f1": 0.2016,
+          "f2": 0.1512,
+          "f3": 0.1134,
+          "f4": 0.0882,
+          "f5": 0.0756
+        }
+      },
+      "interpretation_ru": "E_k фиксирует, что модель уверена не полностью и объяснение редуцировано до top-k признаков.",
+      "next_node_ids": [
+        "representation"
+      ],
+      "node_id": "explanation_object",
+      "operator_type": "explanation_object",
+      "output_refs": [
+        "representation"
+      ],
+      "output_summary": "выход оператора",
+      "output_values": {
+        "activations": {
+          "predicted_class": 1
+        },
+        "memberships": {
+          "f1": 0.2016,
+          "f2": 0.1512,
+          "f3": 0.1134,
+          "f4": 0.0882,
+          "f5": 0.0756
+        },
+        "object_summary": "табличный объект с вероятностью класса и top-k атрибуциями",
+        "rules": [],
+        "terms": [
+          "f1",
+          "f2",
+          "f3",
+          "f4",
+          "f5"
+        ],
+        "trace": "external_wine_classification:RandomForestRegressor",
+        "uncertainty": 0.45
+      },
+      "raw": {
+        "value_source": "computed"
+      },
+      "source_commit": "11955855fb111912239f83500af5349fba895ee5",
+      "status": "passed",
+      "status_reason_ru": "Объект объяснения содержит вероятность, признаки и атрибуции.",
+      "threshold": "",
+      "thresholds": {},
+      "title": "Объяснительный объект E_k",
+      "title_ru": "Объяснительный объект E_k",
+      "trace_ref": "explanation_object",
+      "value": "E_k сформирован",
+      "value_source": "computed"
+    },
+    {
+      "components": {
+        "conflict_component": 0.0,
+        "input_conditions": [
+          "tabular_regression",
+          "wide_interval"
+        ],
+        "interval_width": 0.58,
+        "quality_penalty": 0.0
+      },
+      "details": {},
+      "explanation": "Табличный результат представлен через обычное нечёткое представление.",
+      "formula_id": "F_int-selection",
+      "formula_latex": null,
+      "formula_ref": "F",
+      "formula_text": "class_id выбирается по task_type, interval, source/quality conflict и multilevel context",
+      "input_refs": [
+        "explanation_object"
+      ],
+      "input_summary": "предыдущее состояние маршрута",
+      "input_values": {
+        "context": {
+          "conflict_component": 0.0,
+          "experiment_id": "synthetic_rf_regressor_spread",
+          "noise_ratio": 0.0,
+          "occlusion_rate": 0.0,
+          "perturbation": "wide_interval",
+          "prediction_interval_width": 0.58,
+          "representation_class": "F_int",
+          "task_type": "tabular_regression"
+        },
+        "has_single_probability": true,
+        "has_top_k_importance": true,
+        "source_type": "tabular_regression",
+        "task_type": "tabular_regression"
+      },
+      "interpretation_ru": "Интервальное представление фиксирует ширину прогноза или неопределённость регрессии.",
+      "next_node_ids": [
+        "alignment",
+        "reduction"
+      ],
+      "node_id": "representation",
+      "operator_type": "representation",
+      "output_refs": [
+        "alignment",
+        "reduction"
+      ],
+      "output_summary": "выход оператора",
+      "output_values": {
+        "class_id": "F_int",
+        "class_title_ru": "интервальное нечёткое представление",
+        "output_representation": "confidence + top-k attribution + context metrics"
+      },
+      "raw": {
+        "value_source": "computed"
+      },
+      "source_commit": "11955855fb111912239f83500af5349fba895ee5",
+      "status": "passed",
+      "status_reason_ru": "Выбран класс F_int.",
+      "threshold": "",
+      "thresholds": {},
+      "title": "Класс представления F",
+      "title_ru": "Класс представления F",
+      "trace_ref": "representation",
+      "value": "F0",
+      "value_source": "computed"
+    },
+    {
+      "components": {
+        "calculation": "max(0.45, 0.0, 0.0, 0.58) = 0.58",
+        "conflict_component": 0.0,
+        "interval_width": 0.58,
+        "quality_penalty": 0.0,
+        "uncertainty": 0.45
+      },
+      "details": {},
+      "explanation": "gamma=max(1-p, quality_penalty, conflict_component, interval_width).",
+      "formula_id": "external_tabular_gamma",
+      "formula_latex": "\\gamma=\\max(1-p,q,c,w)",
+      "formula_ref": "gamma",
+      "formula_text": "gamma = max(1 - class_probability, quality_penalty, conflict_component, interval_width)",
+      "input_refs": [
+        "representation"
+      ],
+      "input_summary": "предыдущее состояние маршрута",
+      "input_values": {
+        "class_probability": 0.55,
+        "conflict_component": 0.0,
+        "feature_range_violation": 0.0,
+        "interval_width": 0.58,
+        "missing_rate": 0.0
+      },
+      "interpretation_ru": "Уверенность модели неполная; это ограничивает автоматическое доверие.",
+      "next_node_ids": [
+        "risk"
+      ],
+      "node_id": "alignment",
+      "operator_type": "alignment",
+      "output_refs": [
+        "risk"
+      ],
+      "output_summary": "выход оператора",
+      "output_values": {
+        "gamma": 0.58
+      },
+      "raw": {
+        "conflict_component": 0.0,
+        "gamma": 0.58,
+        "interval_width": 0.58,
+        "quality_penalty": 0.0,
+        "uncertainty": 0.45,
+        "value_source": "computed"
+      },
+      "source_commit": "11955855fb111912239f83500af5349fba895ee5",
+      "status": "warning",
+      "status_reason_ru": "Рассогласование ненулевое, потому что вероятность класса меньше 1.",
+      "threshold": "",
+      "thresholds": {
+        "gamma_warning": 0.35
+      },
+      "title": "Согласование T_ij",
+      "title_ru": "Согласование T_ij",
+      "trace_ref": "alignment",
+      "value": "gamma=0.58",
+      "value_source": "computed"
+    },
+    {
+      "components": {
+        "calculation": "1 - 0.63 = 0.37",
+        "selected_features": [
+          "f1",
+          "f2",
+          "f3",
+          "f4",
+          "f5"
+        ],
+        "top_k_importance_sum": 0.63
+      },
+      "details": {},
+      "explanation": "Delta=1-sum(feature_importance) для переданного набора важностей.",
+      "formula_id": "external_tabular_delta",
+      "formula_latex": "\\Delta=1-\\sum importance_{top-k}",
+      "formula_ref": "Delta",
+      "formula_text": "delta = 1 - sum(top_k_feature_importance)",
+      "input_refs": [
+        "representation"
+      ],
+      "input_summary": "предыдущее состояние маршрута",
+      "input_values": {
+        "feature_importance": {
+          "f1": 0.2016,
+          "f2": 0.1512,
+          "f3": 0.1134,
+          "f4": 0.0882,
+          "f5": 0.0756
+        },
+        "selected_features": [
+          "f1",
+          "f2",
+          "f3",
+          "f4",
+          "f5"
+        ],
+        "top_k": 5
+      },
+      "interpretation_ru": "Delta показывает, какая доля атрибутивного объяснения не попала в сокращённый набор признаков.",
+      "next_node_ids": [
+        "risk"
+      ],
+      "node_id": "reduction",
+      "operator_type": "reduction",
+      "output_refs": [
+        "risk"
+      ],
+      "output_summary": "выход оператора",
+      "output_values": {
+        "delta": 0.37,
+        "top_k_importance_sum": 0.63
+      },
+      "raw": {
+        "delta": 0.37,
+        "importance_sum": 0.63,
+        "value_source": "computed"
+      },
+      "source_commit": "11955855fb111912239f83500af5349fba895ee5",
+      "status": "warning",
+      "status_reason_ru": "Часть объяснения потеряна при top-k редукции.",
+      "threshold": "",
+      "thresholds": {
+        "delta_warning": 0.35
+      },
+      "title": "Потери представления",
+      "title_ru": "Потери представления",
+      "trace_ref": "reduction",
+      "value": "Delta=0.37",
+      "value_source": "computed"
+    },
+    {
+      "components": {
+        "calculation": "max(0.58, 0.37, 0.0, 0.0) = 0.58",
+        "conflict_component": 0.0,
+        "delta": 0.37,
+        "gamma": 0.58,
+        "quality_component": 0.0
+      },
+      "details": {},
+      "explanation": "rho=max(gamma, Delta, quality_component, conflict_component).",
+      "formula_id": "external_tabular_rho",
+      "formula_latex": "\\rho=\\max(\\gamma,\\Delta)",
+      "formula_ref": "rho",
+      "formula_text": "rho = max(gamma, delta, quality_component, conflict_component)",
+      "input_refs": [
+        "alignment",
+        "reduction"
+      ],
+      "input_summary": "предыдущее состояние маршрута",
+      "input_values": {
+        "conflict_component": 0.0,
+        "delta": 0.37,
+        "gamma": 0.58,
+        "quality_component": 0.0
+      },
+      "interpretation_ru": "Основной вклад в риск: gamma.",
+      "next_node_ids": [
+        "diagnostics"
+      ],
+      "node_id": "risk",
+      "operator_type": "risk",
+      "output_refs": [
+        "diagnostics"
+      ],
+      "output_summary": "выход оператора",
+      "output_values": {
+        "dominant_component": "gamma",
+        "rho": 0.58,
+        "risk_zone": "lower_confidence"
+      },
+      "raw": {
+        "rho": 0.58,
+        "theta_accept": 0.35,
+        "theta_warning": 0.6,
+        "value_source": "computed"
+      },
+      "source_commit": "11955855fb111912239f83500af5349fba895ee5",
+      "status": "warning",
+      "status_reason_ru": "rho попал в зону lower_confidence.",
+      "threshold": "",
+      "thresholds": {
+        "theta_accept": 0.35,
+        "theta_warning": 0.6
+      },
+      "title": "Риск rho",
+      "title_ru": "Риск rho",
+      "trace_ref": "risk",
+      "value": "rho=0.58",
+      "value_source": "computed"
+    },
+    {
+      "components": {
+        "reason_components": {
+          "delta": 0.37,
+          "dominant_component": "gamma",
+          "gamma": 0.58,
+          "rho": 0.58,
+          "task_type": "tabular_regression"
+        }
+      },
+      "details": {},
+      "explanation": "ограниченная уверенность внешней регрессионной модели",
+      "formula_id": "diagnostic-policy",
+      "formula_latex": null,
+      "formula_ref": "D",
+      "formula_text": "diagnostic_id выбирается по task_type, risk_zone и доминирующему компоненту риска",
+      "input_refs": [
+        "risk"
+      ],
+      "input_summary": "предыдущее состояние маршрута",
+      "input_values": {
+        "delta": 0.37,
+        "dominant_component": "gamma",
+        "gamma": 0.58,
+        "rho": 0.58,
+        "risk_zone": "lower_confidence",
+        "task_type": "tabular_regression"
+      },
+      "interpretation_ru": "Диагностика означает ограничение доверия, а не запрет или утверждение о плохой модели.",
+      "next_node_ids": [
+        "action"
+      ],
+      "node_id": "diagnostics",
+      "operator_type": "diagnostics",
+      "output_refs": [
+        "action"
+      ],
+      "output_summary": "выход оператора",
+      "output_values": {
+        "diagnostic_id": "D_external_regression_uncertainty",
+        "diagnostic_title_ru": "ограниченная уверенность внешней регрессионной модели",
+        "recommended_action_level": "lower_confidence",
+        "severity": "medium"
+      },
+      "raw": {
+        "diagnostics": [
+          {
+            "criticality": "medium",
+            "diagnostic_id": "D_external_regression_uncertainty",
+            "diagnostic_type": "external_regression_uncertainty",
+            "message_ru": "ограниченная уверенность внешней регрессионной модели",
+            "recommended_action": "lower_confidence",
+            "source": "external_tabular_adapter"
+          }
+        ],
+        "value_source": "computed"
+      },
+      "source_commit": "11955855fb111912239f83500af5349fba895ee5",
+      "status": "warning",
+      "status_reason_ru": "ограниченная уверенность внешней регрессионной модели",
+      "threshold": "",
+      "thresholds": {},
+      "title": "Диагностика D",
+      "title_ru": "Диагностика D",
+      "trace_ref": "diagnostics",
+      "value": "D_external_regression_uncertainty",
+      "value_source": "computed"
+    },
+    {
+      "components": {
+        "alternative_actions": [
+          "accept",
+          "lower_confidence",
+          "audit"
+        ],
+        "diagnostic_id": "D_external_regression_uncertainty",
+        "rho": 0.58
+      },
+      "details": {},
+      "explanation": "Действие выбрано политикой FuzzyXAI.",
+      "formula_id": "action-policy",
+      "formula_latex": null,
+      "formula_ref": "action policy",
+      "formula_text": "if rho < 0.35: accept; elif rho < 0.60: lower_confidence; else: audit",
+      "input_refs": [
+        "diagnostics"
+      ],
+      "input_summary": "предыдущее состояние маршрута",
+      "input_values": {
+        "diagnostic_id": "D_external_regression_uncertainty",
+        "rho": 0.58,
+        "risk_zone": "lower_confidence"
+      },
+      "interpretation_ru": "Результат не блокируется, но автоматическое доверие понижается из-за ненулевого риска.",
+      "next_node_ids": [
+        "proof"
+      ],
+      "node_id": "action",
+      "operator_type": "action",
+      "output_refs": [
+        "proof"
+      ],
+      "output_summary": "выход оператора",
+      "output_values": {
+        "action_id": "lower_confidence",
+        "action_title_ru": "понизить доверие"
+      },
+      "raw": {
+        "action": "lower_confidence",
+        "value_source": "computed"
+      },
+      "source_commit": "11955855fb111912239f83500af5349fba895ee5",
+      "status": "warning",
+      "status_reason_ru": "Риск ненулевой, но не критический.",
+      "threshold": "",
+      "thresholds": {
+        "theta_accept": 0.35,
+        "theta_warning": 0.6
+      },
+      "title": "Действие",
+      "title_ru": "Действие",
+      "trace_ref": "action",
+      "value": "lower_confidence",
+      "value_source": "computed"
+    },
+    {
+      "components": {
+        "scenario_id": "external_wine_classification",
+        "source_commit": "11955855fb111912239f83500af5349fba895ee5"
+      },
+      "details": {},
+      "explanation": "Маршрут сохраняется как проверяемый доказательный след.",
+      "formula_id": "proof-trace",
+      "formula_latex": null,
+      "formula_ref": "proof trace",
+      "formula_text": "proof_trace = hashable route + computed_result + diagnostics + action + source_commit",
+      "input_refs": [
+        "action"
+      ],
+      "input_summary": "предыдущее состояние маршрута",
+      "input_values": {
+        "action": "lower_confidence",
+        "computed_result": {
+          "action": "lower_confidence",
+          "action_id": "lower_confidence",
+          "class_probability": 0.55,
+          "conflict_component": 0.0,
+          "dataset_name": "synthetic_regression",
+          "delta": 0.37,
+          "diagnostic_id": "D_external_regression_uncertainty",
+          "gamma": 0.58,
+          "interval_component": 0.58,
+          "model_name": "RandomForestRegressor",
+          "perturbation": "wide_interval",
+          "quality_component": 0.0,
+          "quality_penalty": 0.0,
+          "reduction_component": 0.37,
+          "representation_class": "F_int",
+          "rho": 0.58,
+          "risk_dominant_component": "gamma",
+          "task_type": "tabular_regression",
+          "uncertainty": 0.45,
+          "uncertainty_component": 0.45
+        },
+        "diagnostics": [
+          {
+            "criticality": "medium",
+            "diagnostic_id": "D_external_regression_uncertainty",
+            "diagnostic_type": "external_regression_uncertainty",
+            "message_ru": "ограниченная уверенность внешней регрессионной модели",
+            "recommended_action": "lower_confidence",
+            "source": "external_tabular_adapter"
+          }
+        ]
+      },
+      "interpretation_ru": "Доказательный след связывает route, значения операторов, диагностику и действие.",
+      "next_node_ids": [],
+      "node_id": "proof",
+      "operator_type": "proof",
+      "output_refs": [],
+      "output_summary": "выход оператора",
+      "output_values": {
+        "source_commit": "11955855fb111912239f83500af5349fba895ee5",
+        "verification_status": "PASS"
+      },
+      "raw": {
+        "value_source": "computed"
+      },
+      "source_commit": "11955855fb111912239f83500af5349fba895ee5",
+      "status": "passed",
+      "status_reason_ru": "Proof trace содержит значения маршрута и source_commit.",
+      "threshold": "",
+      "thresholds": {},
+      "title": "Доказательный след",
+      "title_ru": "Доказательный след",
+      "trace_ref": "proof",
+      "value": "proof trace готов",
+      "value_source": "computed"
+    }
+  ],
+  "route_id": "external_wine_classification:synthetic_regression:RandomForestRegressor:wide_interval",
+  "scenario_id": "external_wine_classification",
+  "scenario_title_ru": "Research validation: tabular_regression",
+  "source_commit": "11955855fb111912239f83500af5349fba895ee5",
+  "verification_summary": {
+    "checks": [
+      {
+        "id": "source_commit_present",
+        "status": "passed"
+      },
+      {
+        "id": "route_proof_values_match",
+        "status": "passed"
+      },
+      {
+        "id": "action_matches_route",
+        "status": "passed"
+      },
+      {
+        "id": "diagnostic_present",
+        "status": "passed"
+      },
+      {
+        "id": "operator_nodes_have_io",
+        "status": "passed"
+      },
+      {
+        "id": "operator_edges_have_passed_values",
+        "status": "passed"
+      },
+      {
+        "id": "gamma_matches_formula",
+        "status": "passed"
+      },
+      {
+        "id": "rho_matches_formula",
+        "status": "passed"
+      },
+      {
+        "id": "action_matches_risk_zone",
+        "status": "passed"
+      }
+    ],
+    "errors": [],
+    "overall_status": "passed",
+    "warnings": []
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "experiment_id": "synthetic_rf_regressor_spread",
+  "task_type": "tabular_regression",
+  "dataset": "synthetic_regression",
+  "model": "RandomForestRegressor",
+  "perturbation": "wide_interval",
+  "representation_class": "F_int",
+  "gamma": 0.58,
+  "delta": 0.37,
+  "rho": 0.58,
+  "dominant_component": "gamma",
+  "diagnostic_id": "D_external_regression_uncertainty",
+  "action_id": "lower_confidence",
+  "verifier_status": "passed",
+  "traceability_status": "passed",
+  "source_commit": "11955855fb111912239f83500af5349fba895ee5",
+  "uncertainty_component": 0.45,
+  "quality_component": 0.0,
+  "reduction_component": 0.37,
+  "conflict_component": 0.0
+}

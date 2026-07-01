@@ -2,28 +2,33 @@
 
 ## Input
 - `source_type` = `"tabular"`
+- `task_type` = `"tabular_classification"`
 - `has_single_probability` = `true`
 - `has_top_k_importance` = `true`
+- `context` = `{"external_task": true, "model_key": "logistic_regression", "top_k_importance": 5, "sample_index": 24, "train_size": 115, "test_size": 63}`
 
 ## Formula
-class_id = F0 для табличной модели с одной вероятностью и редуцированным объяснением
+class_id выбирается по task_type, interval, source/quality conflict и multilevel context
 
 ## Components
-- `input_conditions` = `["single_probability", "top_k_feature_importance"]`
+- `input_conditions` = `["tabular_classification", "external_payload"]`
+- `interval_width` = `0.0`
+- `quality_penalty` = `0.0`
+- `conflict_component` = `0.0`
 
 ## Output
 - `class_id` = `"F0"`
 - `class_title_ru` = `"обычное нечёткое представление"`
-- `output_representation` = `"probability + top-k feature importance"`
+- `output_representation` = `"confidence + top-k attribution + context metrics"`
 
 ## Thresholds
 n/a
 
 ## Status
-passed: Интервальная или многоуровневая структура не требуется.
+passed: Выбран класс F0.
 
 ## Interpretation
-F0 достаточно для внешней табличной классификации с одной вероятностью класса.
+Базовое представление достаточно для одной уверенности и top-k объяснения.
 
 ## Next
 alignment, reduction

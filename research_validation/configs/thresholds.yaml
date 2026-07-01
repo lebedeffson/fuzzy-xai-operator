@@ -1,0 +1,9 @@
+theta_accept: 0.35
+theta_warning: 0.60
+minimum_experiments: 12
+minimum_task_types: 4
+minimum_models: 6
+minimum_actions: 3
+minimum_diagnostics: 4
+minimum_representation_classes: 3
+minimum_nonzero_ratio: 0.80

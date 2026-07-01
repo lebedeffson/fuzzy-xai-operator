@@ -1,0 +1,21 @@
+{
+  "experiment_id": "breast_cancer_svc_missing",
+  "task_type": "tabular_classification",
+  "dataset": "sklearn_breast_cancer",
+  "model": "SVC(probability=True)",
+  "perturbation": "missing_features",
+  "representation_class": "NAS",
+  "gamma": 0.62,
+  "delta": 0.3,
+  "rho": 0.62,
+  "dominant_component": "gamma",
+  "diagnostic_id": "D_external_tabular_quality_limit",
+  "action_id": "audit",
+  "verifier_status": "passed",
+  "traceability_status": "passed",
+  "source_commit": "11955855fb111912239f83500af5349fba895ee5",
+  "uncertainty_component": 0.28,
+  "quality_component": 0.62,
+  "reduction_component": 0.3,
+  "conflict_component": 0.0
+}

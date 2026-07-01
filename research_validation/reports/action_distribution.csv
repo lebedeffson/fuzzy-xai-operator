@@ -1,0 +1,5 @@
+action_id,count,percentage
+accept,4,20.0
+audit,3,15.0
+defer_to_human,2,10.0
+lower_confidence,11,55.0

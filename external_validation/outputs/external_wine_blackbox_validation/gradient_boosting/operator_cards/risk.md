@@ -3,14 +3,18 @@
 ## Input
 - `gamma` = `0.320881`
 - `delta` = `0.429844`
+- `quality_component` = `0.0`
+- `conflict_component` = `0.0`
 
 ## Formula
-rho = max(gamma, delta)
+rho = max(gamma, delta, quality_component, conflict_component)
 
 ## Components
 - `gamma` = `0.320881`
 - `delta` = `0.429844`
-- `calculation` = `"max(0.320881, 0.429844) = 0.429844"`
+- `quality_component` = `0.0`
+- `conflict_component` = `0.0`
+- `calculation` = `"max(0.320881, 0.429844, 0.0, 0.0) = 0.429844"`
 
 ## Output
 - `rho` = `0.429844`
@@ -25,7 +29,7 @@ rho = max(gamma, delta)
 warning: rho попал в зону lower_confidence.
 
 ## Interpretation
-Основной вклад в риск дала потеря редуцированного объяснения.
+Основной вклад в риск: delta.
 
 ## Next
 diagnostics

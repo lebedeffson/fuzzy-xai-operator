@@ -1,0 +1,1865 @@
+{
+  "package_type": "FuzzyXAIResearchValidationPackage",
+  "files": [
+    {
+      "path": "outputs/breast_cancer_knn_boundary/dashboard_data.json",
+      "size_bytes": 29538,
+      "sha256": "9ea409940ef443296e361209b63f7742c2dd618e9bf8b46573158ef9047c40d0"
+    },
+    {
+      "path": "outputs/breast_cancer_knn_boundary/operator_cards/action.md",
+      "size_bytes": 826,
+      "sha256": "31fa4fb2e88e7f52a6f272dac5eb72efa4ad33dd24f524eac7640eb0ad6ca3e0"
+    },
+    {
+      "path": "outputs/breast_cancer_knn_boundary/operator_cards/alignment.md",
+      "size_bytes": 851,
+      "sha256": "11373b32db4f481876fa185b80bcb3f99c7e036840993056e2356d0ed1c772f1"
+    },
+    {
+      "path": "outputs/breast_cancer_knn_boundary/operator_cards/diagnostics.md",
+      "size_bytes": 1095,
+      "sha256": "90d6e3c322b4005e450b9fabc21bab3e8d3aa9896731c993342e7d7c40fe5a58"
+    },
+    {
+      "path": "outputs/breast_cancer_knn_boundary/operator_cards/explanation_object.md",
+      "size_bytes": 1111,
+      "sha256": "9ee8185cf9a8bf5f3bf1ce6b6a775f68baf120a5956b5e0e505d10b2fc831d24"
+    },
+    {
+      "path": "outputs/breast_cancer_knn_boundary/operator_cards/input_artifact.md",
+      "size_bytes": 1671,
+      "sha256": "b075948c01dabcc0ec50632cd8066cd7e99dc3ec074790cda2a0c10ff5c7ef5b"
+    },
+    {
+      "path": "outputs/breast_cancer_knn_boundary/operator_cards/proof.md",
+      "size_bytes": 1679,
+      "sha256": "d1b4b1f90c5a99d8800a8ad9292f7a2ff11045f16eebce5ef197c08acbfcd56d"
+    },
+    {
+      "path": "outputs/breast_cancer_knn_boundary/operator_cards/reduction.md",
+      "size_bytes": 830,
+      "sha256": "636d0c2bd5bafd4361d1600996adc918867bb5b9829a6b8c82b5d6aad13c408c"
+    },
+    {
+      "path": "outputs/breast_cancer_knn_boundary/operator_cards/representation.md",
+      "size_bytes": 1209,
+      "sha256": "ecab6f8fc20b65801d0ac0cfc71144889cb2037fe8167806bacb0a8ce1d55be6"
+    },
+    {
+      "path": "outputs/breast_cancer_knn_boundary/operator_cards/risk.md",
+      "size_bytes": 688,
+      "sha256": "3c57b672f2736ec66c38f7a51ffbf91e1c1bc208d29ebbeb34d39b1540a0bf93"
+    },
+    {
+      "path": "outputs/breast_cancer_knn_boundary/operator_dashboard_v2.html",
+      "size_bytes": 46427,
+      "sha256": "9a48fe07a17e74eb186aa696d4ca4c6e5a09861d3f7dfcefaf22bc8399258577"
+    },
+    {
+      "path": "outputs/breast_cancer_knn_boundary/operator_dashboard_v2.png",
+      "size_bytes": 387495,
+      "sha256": "3f2bb056801862a9d010538f72c383560550617df1e49a4b86d00b7b3dcebe98"
+    },
+    {
+      "path": "outputs/breast_cancer_knn_boundary/operator_table.csv",
+      "size_bytes": 8155,
+      "sha256": "578c40908e71a576869ec58a21801ba07647516a210521394941ecf40e34acc0"
+    },
+    {
+      "path": "outputs/breast_cancer_knn_boundary/operator_trace.json",
+      "size_bytes": 29461,
+      "sha256": "bfce46f1d75241b25e0ed5b382a5237572f3835e4ef1a837df62ffa40810ca43"
+    },
+    {
+      "path": "outputs/breast_cancer_knn_boundary/proof_trace.json",
+      "size_bytes": 32309,
+      "sha256": "43b061fdfbc9a0c0a846f776be9dccaa868ccbd8f188cdc2ce53ff76c132a2ea"
+    },
+    {
+      "path": "outputs/breast_cancer_knn_boundary/route.json",
+      "size_bytes": 29265,
+      "sha256": "b990dc790fa928757b2a526615c02fb0ec3491e72e05256a9ed62b30e9d52b61"
+    },
+    {
+      "path": "outputs/breast_cancer_knn_boundary/summary.json",
+      "size_bytes": 659,
+      "sha256": "8144baac2bf6018bd2c0719e19dad54001e3bd10af194a66058ed9fa5b552732"
+    },
+    {
+      "path": "outputs/breast_cancer_knn_boundary/verifier_report.json",
+      "size_bytes": 773,
+      "sha256": "b019503513955ca963722227d9aa2cd1f1defdbcc17cff2304967abf35801f1d"
+    },
+    {
+      "path": "outputs/breast_cancer_svc_missing/dashboard_data.json",
+      "size_bytes": 29249,
+      "sha256": "8c2792b5833e1e531ce8f91eb1e8b71a1b438ea75d5421df6693eabedb50e8b8"
+    },
+    {
+      "path": "outputs/breast_cancer_svc_missing/operator_cards/action.md",
+      "size_bytes": 782,
+      "sha256": "f121e957e71109a46a090e9d8b944ed866132ef793652b45b4b32e0b1e96b29b"
+    },
+    {
+      "path": "outputs/breast_cancer_svc_missing/operator_cards/alignment.md",
+      "size_bytes": 854,
+      "sha256": "98ce5d43f17bd6300c252a45b19346e893ba00d47fa12b35acc052fa99cf39a1"
+    },
+    {
+      "path": "outputs/breast_cancer_svc_missing/operator_cards/diagnostics.md",
+      "size_bytes": 1059,
+      "sha256": "f00e798f32d48f711c673745fd02cde5e4ae9c9d27167b7e76e7c55f4a94ac6e"
+    },
+    {
+      "path": "outputs/breast_cancer_svc_missing/operator_cards/explanation_object.md",
+      "size_bytes": 1102,
+      "sha256": "59b4051745a2479e53acd6497aa7851f59d6b777759423882db7708429c82832"
+    },
+    {
+      "path": "outputs/breast_cancer_svc_missing/operator_cards/input_artifact.md",
+      "size_bytes": 1659,
+      "sha256": "b9197d887fbd30afc624046fe9f94d5372bc4b17a70952ef45f2c9854345ff60"
+    },
+    {
+      "path": "outputs/breast_cancer_svc_missing/operator_cards/proof.md",
+      "size_bytes": 1632,
+      "sha256": "2670ec732d1e8f6061798d9b6c82e4d7ae75fce912b5a5807918505aa50e3fab"
+    },
+    {
+      "path": "outputs/breast_cancer_svc_missing/operator_cards/reduction.md",
+      "size_bytes": 820,
+      "sha256": "5dc04e3120ba8afc42fd894cf059c833090d770e1464ac108fb124d61597e83b"
+    },
+    {
+      "path": "outputs/breast_cancer_svc_missing/operator_cards/representation.md",
+      "size_bytes": 1218,
+      "sha256": "bd646786a59c5b21c444b02453cb76f411545cbc3b06d99efe4d11fd7fa61fb9"
+    },
+    {
+      "path": "outputs/breast_cancer_svc_missing/operator_cards/risk.md",
+      "size_bytes": 666,
+      "sha256": "ab04ef684e84718593fae4bfd81d84a46fa82d992c64b85dd58211c49c323db0"
+    },
+    {
+      "path": "outputs/breast_cancer_svc_missing/operator_dashboard_v2.html",
+      "size_bytes": 46053,
+      "sha256": "4a6e506d96e44f14547160b4bc08a8966381dbc421c0ccb03836c17024eb9fbc"
+    },
+    {
+      "path": "outputs/breast_cancer_svc_missing/operator_dashboard_v2.png",
+      "size_bytes": 387342,
+      "sha256": "db35e0b74b89dde87e05b9accf5956d78dfc6d4e746afdf006bf3304f23cbc86"
+    },
+    {
+      "path": "outputs/breast_cancer_svc_missing/operator_table.csv",
+      "size_bytes": 8065,
+      "sha256": "f59b2dc25fd61ec4750fd0a50be68241d2bd47b196836bc53f83ea965c4938ef"
+    },
+    {
+      "path": "outputs/breast_cancer_svc_missing/operator_trace.json",
+      "size_bytes": 29163,
+      "sha256": "203b5894e69b48b5508c2eecdf94ac400813c1300a0e1a965867010bbddde03a"
+    },
+    {
+      "path": "outputs/breast_cancer_svc_missing/proof_trace.json",
+      "size_bytes": 31938,
+      "sha256": "5e39b47b31b95978cb1141c0ec3209725a40ea54a254afbecc13982efb8b79d4"
+    },
+    {
+      "path": "outputs/breast_cancer_svc_missing/route.json",
+      "size_bytes": 28941,
+      "sha256": "311ca810bd98c6827b8c7b1bc2e164fb8355f28b4d7c1c50295afd15bc727cdc"
+    },
+    {
+      "path": "outputs/breast_cancer_svc_missing/summary.json",
+      "size_bytes": 647,
+      "sha256": "cea496e0f27b07dcfdc4ddd8f2ee7d1e98050e97e065fc98b75076b8a36da9a8"
+    },
+    {
+      "path": "outputs/breast_cancer_svc_missing/verifier_report.json",
+      "size_bytes": 773,
+      "sha256": "b019503513955ca963722227d9aa2cd1f1defdbcc17cff2304967abf35801f1d"
+    },
+    {
+      "path": "outputs/diabetes_gbr_wide_interval/dashboard_data.json",
+      "size_bytes": 29589,
+      "sha256": "79627bcd89e13bb7d7037ef79af5136a7539552d5daf00fb7b994b31ff8305b9"
+    },
+    {
+      "path": "outputs/diabetes_gbr_wide_interval/operator_cards/action.md",
+      "size_bytes": 832,
+      "sha256": "d5caed2beca04acbed20f5be740a77bd45b6b5e160a20a918c9230369f91dee3"
+    },
+    {
+      "path": "outputs/diabetes_gbr_wide_interval/operator_cards/alignment.md",
+      "size_bytes": 854,
+      "sha256": "7db578e19c7b8389c4f83ee261d9be4e8d3f602e85a82d180faa6de027c21ffa"
+    },
+    {
+      "path": "outputs/diabetes_gbr_wide_interval/operator_cards/diagnostics.md",
+      "size_bytes": 1104,
+      "sha256": "6a0fe35429d2e719f9b97aab17095642605849f96485a980ae58841091ee9f3d"
+    },
+    {
+      "path": "outputs/diabetes_gbr_wide_interval/operator_cards/explanation_object.md",
+      "size_bytes": 1106,
+      "sha256": "a0571721116a5ade01c04bee9834c3e5545e2965595f152c79996b326acffdbc"
+    },
+    {
+      "path": "outputs/diabetes_gbr_wide_interval/operator_cards/input_artifact.md",
+      "size_bytes": 1672,
+      "sha256": "eb6be5f7ff86201fb83c0a3c43fd99c20808b4f6817bc447624fecc17090d177"
+    },
+    {
+      "path": "outputs/diabetes_gbr_wide_interval/operator_cards/proof.md",
+      "size_bytes": 1688,
+      "sha256": "cafe711dcfa42009b3be936b9faf2bcb28d6a20b14b8f467173fdc70276551c5"
+    },
+    {
+      "path": "outputs/diabetes_gbr_wide_interval/operator_cards/reduction.md",
+      "size_bytes": 820,
+      "sha256": "5dc04e3120ba8afc42fd894cf059c833090d770e1464ac108fb124d61597e83b"
+    },
+    {
+      "path": "outputs/diabetes_gbr_wide_interval/operator_cards/representation.md",
+      "size_bytes": 1243,
+      "sha256": "3b2ab15772ef56407ac84cb4934fcf849a0cf1e3a251100fe34bd0f9a073d279"
+    },
+    {
+      "path": "outputs/diabetes_gbr_wide_interval/operator_cards/risk.md",
+      "size_bytes": 685,
+      "sha256": "9c1a7758360729f2ae82108dfe77016fd2aa60ff718604cbd0c36c6758337318"
+    },
+    {
+      "path": "outputs/diabetes_gbr_wide_interval/operator_dashboard_v2.html",
+      "size_bytes": 46511,
+      "sha256": "2bba359fc50081c3bc66687903971018bd7b09a54ce9a250ff24cfb39a3fe529"
+    },
+    {
+      "path": "outputs/diabetes_gbr_wide_interval/operator_dashboard_v2.png",
+      "size_bytes": 389992,
+      "sha256": "137c39f5c12f3e4e3772bfc8a7db0cc15f060001042da9237989fc524d05edd5"
+    },
+    {
+      "path": "outputs/diabetes_gbr_wide_interval/operator_table.csv",
+      "size_bytes": 8182,
+      "sha256": "97c1ffd1b20bb4aaca163a7da108e2ebfc0efe47ae26c8deb37e0e8def99cfd8"
+    },
+    {
+      "path": "outputs/diabetes_gbr_wide_interval/operator_trace.json",
+      "size_bytes": 29515,
+      "sha256": "9f813849ae3524ea8cff12e22b50a9afa77b26c04ad9cccbf3ce5d45dae3ec81"
+    },
+    {
+      "path": "outputs/diabetes_gbr_wide_interval/proof_trace.json",
+      "size_bytes": 32386,
+      "sha256": "1ea3ea85c85e3c8f72e317d1592747bbd843722a078e410eca67591fd00a31fa"
+    },
+    {
+      "path": "outputs/diabetes_gbr_wide_interval/route.json",
+      "size_bytes": 29333,
+      "sha256": "03ee88188e568c9ef63a442571eb9e43b105ab1b9ee3aa5d5050ce2e0aec4da1"
+    },
+    {
+      "path": "outputs/diabetes_gbr_wide_interval/summary.json",
+      "size_bytes": 653,
+      "sha256": "1f01f4c6f8b41023af563df4bd51e9d0eeadb197516634c6654521f464f55345"
+    },
+    {
+      "path": "outputs/diabetes_gbr_wide_interval/verifier_report.json",
+      "size_bytes": 773,
+      "sha256": "b019503513955ca963722227d9aa2cd1f1defdbcc17cff2304967abf35801f1d"
+    },
+    {
+      "path": "outputs/diabetes_linear_clean/dashboard_data.json",
+      "size_bytes": 28751,
+      "sha256": "c4b90efe34748efb2dde19ebfdc4ccb8190cd85b28cd6b53fe14a997eb283722"
+    },
+    {
+      "path": "outputs/diabetes_linear_clean/operator_cards/action.md",
+      "size_bytes": 762,
+      "sha256": "513d648ce2c5f3dde1a414abc72b87a80a01e3c6bbc177fb6d2b2d3bef3da95d"
+    },
+    {
+      "path": "outputs/diabetes_linear_clean/operator_cards/alignment.md",
+      "size_bytes": 853,
+      "sha256": "d05dff4a1b968c7e453b22189935a9222d5afb0eb0f260a19e6a8bb98a1a6eb9"
+    },
+    {
+      "path": "outputs/diabetes_linear_clean/operator_cards/diagnostics.md",
+      "size_bytes": 964,
+      "sha256": "b219f2c0685c0d6db01992fdb54887c9f34ca9a37d14dd477a46ca9602c4274a"
+    },
+    {
+      "path": "outputs/diabetes_linear_clean/operator_cards/explanation_object.md",
+      "size_bytes": 1097,
+      "sha256": "b405d5b87c70a19599d70c579e6afdd2cfb09a4c93fb78a9cd28fa2073fbb7e8"
+    },
+    {
+      "path": "outputs/diabetes_linear_clean/operator_cards/input_artifact.md",
+      "size_bytes": 1624,
+      "sha256": "191d486cde0036b7623e2edd4ba3339c20a80a99c6e8e27f945f7388665764c8"
+    },
+    {
+      "path": "outputs/diabetes_linear_clean/operator_cards/proof.md",
+      "size_bytes": 1540,
+      "sha256": "0837304e1abbd4b20e1dfdf57893b9a445a3fc42c4c4cd0676bc2cbd7863d967"
+    },
+    {
+      "path": "outputs/diabetes_linear_clean/operator_cards/reduction.md",
+      "size_bytes": 820,
+      "sha256": "740b6dbba3a83a5889cd8a166448a91936f7250d682cdf96a7b4068b94e38100"
+    },
+    {
+      "path": "outputs/diabetes_linear_clean/operator_cards/representation.md",
+      "size_bytes": 1222,
+      "sha256": "5094c11dcb71ec31b50c233d27b115f338ac654fc8c51c085b2d99404380c10e"
+    },
+    {
+      "path": "outputs/diabetes_linear_clean/operator_cards/risk.md",
+      "size_bytes": 664,
+      "sha256": "18e8457b35c46b3ea11a599d007674198d36fe615141e741d8a1e70f71a98d32"
+    },
+    {
+      "path": "outputs/diabetes_linear_clean/operator_dashboard_v2.html",
+      "size_bytes": 45467,
+      "sha256": "edb4a07bc42a1ca4988d0bf7393dcbc1e982bfe945f75581f58ec3be6ce1a68e"
+    },
+    {
+      "path": "outputs/diabetes_linear_clean/operator_dashboard_v2.png",
+      "size_bytes": 378293,
+      "sha256": "3c64261f629977549ff6088e8ad6d4c007e235ce0a3e20ee0be722a56e9e7efd"
+    },
+    {
+      "path": "outputs/diabetes_linear_clean/operator_table.csv",
+      "size_bytes": 7966,
+      "sha256": "d05675a0fce063b0675e40f0aa68e41b19799293f33fa1fd784c7510cbe55961"
+    },
+    {
+      "path": "outputs/diabetes_linear_clean/operator_trace.json",
+      "size_bytes": 28655,
+      "sha256": "e02b6188c9d7a9cfd3cc77785f8841abbf92ed2fb8da43bfcfe36e240a0e89ba"
+    },
+    {
+      "path": "outputs/diabetes_linear_clean/proof_trace.json",
+      "size_bytes": 31279,
+      "sha256": "e2832ea620defd9677cd68a357e96a5f4f14847d1396b8ce757605716ef73daa"
+    },
+    {
+      "path": "outputs/diabetes_linear_clean/route.json",
+      "size_bytes": 28374,
+      "sha256": "80e5c6385c1db98426d4c6711e946946e74132e27fc8d5dcfb4bb0287dfc1f40"
+    },
+    {
+      "path": "outputs/diabetes_linear_clean/summary.json",
+      "size_bytes": 609,
+      "sha256": "b39120dc1557449594f4b6d11e4f07a039c89af63fcdaa870ab29e0493b42e4c"
+    },
+    {
+      "path": "outputs/diabetes_linear_clean/verifier_report.json",
+      "size_bytes": 773,
+      "sha256": "b019503513955ca963722227d9aa2cd1f1defdbcc17cff2304967abf35801f1d"
+    },
+    {
+      "path": "outputs/diabetes_mlp_quality_limit/dashboard_data.json",
+      "size_bytes": 29520,
+      "sha256": "bc88d4e7cda4bb99babc05ff4cca4ffffe80bce7547dfec970fff6ee982a8f4f"
+    },
+    {
+      "path": "outputs/diabetes_mlp_quality_limit/operator_cards/action.md",
+      "size_bytes": 832,
+      "sha256": "5886896997f3ffe10608b34c4859e876dbe86feaab0c5d508da78c1580b113ed"
+    },
+    {
+      "path": "outputs/diabetes_mlp_quality_limit/operator_cards/alignment.md",
+      "size_bytes": 857,
+      "sha256": "5319cc8116398c90f1ed01c4c8311f772e90b612c770222ce743b09331728fee"
+    },
+    {
+      "path": "outputs/diabetes_mlp_quality_limit/operator_cards/diagnostics.md",
+      "size_bytes": 1106,
+      "sha256": "6abd3173798984e842017f70586c30e15dda81a385d69b564e2601a1c8278081"
+    },
+    {
+      "path": "outputs/diabetes_mlp_quality_limit/operator_cards/explanation_object.md",
+      "size_bytes": 1103,
+      "sha256": "701e1a596d62435c8e5ba3f54dc2126cf7eca07c8c1abf91ceef8a29741adbcf"
+    },
+    {
+      "path": "outputs/diabetes_mlp_quality_limit/operator_cards/input_artifact.md",
+      "size_bytes": 1648,
+      "sha256": "15221b1c02039169c8221b4254fd4189573a1fa641fbc50605427e8f5ec155b1"
+    },
+    {
+      "path": "outputs/diabetes_mlp_quality_limit/operator_cards/proof.md",
+      "size_bytes": 1680,
+      "sha256": "384f31d99e8a0d9016da6cc9f9f3eb8d2000856ef5d8d26d608624b2b54cce90"
+    },
+    {
+      "path": "outputs/diabetes_mlp_quality_limit/operator_cards/reduction.md",
+      "size_bytes": 830,
+      "sha256": "c2e681ddef2ca81d215fcdd26bbd6e225e9fb1629850629c1e54d816a815bb06"
+    },
+    {
+      "path": "outputs/diabetes_mlp_quality_limit/operator_cards/representation.md",
+      "size_bytes": 1220,
+      "sha256": "765b0b61954ceeecd9473ca3943b417a0f2dc07ead6a2ac31ed0b7231cd08f34"
+    },
+    {
+      "path": "outputs/diabetes_mlp_quality_limit/operator_cards/risk.md",
+      "size_bytes": 691,
+      "sha256": "2babbf87b83ef386b75ba582966aa6430592283d0ef968d61dc46ef6a2ea18d5"
+    },
+    {
+      "path": "outputs/diabetes_mlp_quality_limit/operator_dashboard_v2.html",
+      "size_bytes": 46384,
+      "sha256": "761bb1b88f1137072e0fefe49696d3b33a1935c9eec76f8675447bd82d1201cf"
+    },
+    {
+      "path": "outputs/diabetes_mlp_quality_limit/operator_dashboard_v2.png",
+      "size_bytes": 391599,
+      "sha256": "568ea8aed73219770bde82fece474cca57cfae4b5ca59daecdf3cce2cb15b905"
+    },
+    {
+      "path": "outputs/diabetes_mlp_quality_limit/operator_table.csv",
+      "size_bytes": 8165,
+      "sha256": "e2229ef411cc8b6f155eab32969ce7e14ec5cf2201f2cda53c25e4c7e07d2dc1"
+    },
+    {
+      "path": "outputs/diabetes_mlp_quality_limit/operator_trace.json",
+      "size_bytes": 29446,
+      "sha256": "7b81f8b1284a33c1114eadf1f91ef287d1d45ad49126ee7b0d41bd69fb917e1d"
+    },
+    {
+      "path": "outputs/diabetes_mlp_quality_limit/proof_trace.json",
+      "size_bytes": 32309,
+      "sha256": "3ad1aedb44c256605391a8e4f8d5a6e9beb9bd6cb5bd1044370fa0fb7300f0ec"
+    },
+    {
+      "path": "outputs/diabetes_mlp_quality_limit/route.json",
+      "size_bytes": 29264,
+      "sha256": "be57c9c73b4193e697fabc8d24c20c6beac933e5c3b380954cedfc257ebbf24e"
+    },
+    {
+      "path": "outputs/diabetes_mlp_quality_limit/summary.json",
+      "size_bytes": 644,
+      "sha256": "d2949b8c779329896a4c511bbba13786845170769f2ce1555cbb1df1003a2f60"
+    },
+    {
+      "path": "outputs/diabetes_mlp_quality_limit/verifier_report.json",
+      "size_bytes": 773,
+      "sha256": "b019503513955ca963722227d9aa2cd1f1defdbcc17cff2304967abf35801f1d"
+    },
+    {
+      "path": "outputs/digits_gradient_reduction/dashboard_data.json",
+      "size_bytes": 29608,
+      "sha256": "0d3b67c4682135352f5e66b1df0d11012dc93ddc7f309ffbe78c16b17982eed7"
+    },
+    {
+      "path": "outputs/digits_gradient_reduction/operator_cards/action.md",
+      "size_bytes": 822,
+      "sha256": "9c1abd80a7317ede21c84369e9a5135b615176b5ef2876c3ffe1a0e8abf4117b"
+    },
+    {
+      "path": "outputs/digits_gradient_reduction/operator_cards/alignment.md",
+      "size_bytes": 847,
+      "sha256": "d3794dab296b74ac9fdb233d25a7a8651ceb79a0d57836647e312bda4ae03521"
+    },
+    {
+      "path": "outputs/digits_gradient_reduction/operator_cards/diagnostics.md",
+      "size_bytes": 1014,
+      "sha256": "a98594ebdf2e3f521e24053e15fbca9b558ad8f3443f4b59b631a139cfc0ce62"
+    },
+    {
+      "path": "outputs/digits_gradient_reduction/operator_cards/explanation_object.md",
+      "size_bytes": 1174,
+      "sha256": "f9605a843bbb312e5c482e50f59d1c82eec9bb34ca3589b2a687226828cf4c00"
+    },
+    {
+      "path": "outputs/digits_gradient_reduction/operator_cards/input_artifact.md",
+      "size_bytes": 1737,
+      "sha256": "cbd13cf9a5e1826c14bec9e41e7299d22d417ffb5984944efa9012de499389f5"
+    },
+    {
+      "path": "outputs/digits_gradient_reduction/operator_cards/proof.md",
+      "size_bytes": 1631,
+      "sha256": "9385335463ef711ef8b80f7d6c25b4c9b3d2fe329b9c59c22326b24e033096f4"
+    },
+    {
+      "path": "outputs/digits_gradient_reduction/operator_cards/reduction.md",
+      "size_bytes": 876,
+      "sha256": "21d00aa0329b28c4375f0b92b841408b77ea2144e3a9fc8720d071a39db102b3"
+    },
+    {
+      "path": "outputs/digits_gradient_reduction/operator_cards/representation.md",
+      "size_bytes": 1274,
+      "sha256": "53666bdf859402a1f506d7b0f4f9a4b49bc2311e4dbbfab658e57e91da8ffad2"
+    },
+    {
+      "path": "outputs/digits_gradient_reduction/operator_cards/risk.md",
+      "size_bytes": 683,
+      "sha256": "0d0a78b089ec658854b7ec46915dfbab31b16c8c33d83ffcdf171b40b3ff9db7"
+    },
+    {
+      "path": "outputs/digits_gradient_reduction/operator_dashboard_v2.html",
+      "size_bytes": 46541,
+      "sha256": "f142ed10be33bc83fe958d5d31689c5732524f55070708a4b3031339ca2d9cba"
+    },
+    {
+      "path": "outputs/digits_gradient_reduction/operator_dashboard_v2.png",
+      "size_bytes": 390855,
+      "sha256": "f1a61f6a29e6cfb730ec145ba3a2e4ab5434dc061b5dcb6585bd8df6ae38b390"
+    },
+    {
+      "path": "outputs/digits_gradient_reduction/operator_table.csv",
+      "size_bytes": 8299,
+      "sha256": "a210b062085e28ef93c5e4eec9f76de2b64beb604bd61de0420b6ffc15ec0b5d"
+    },
+    {
+      "path": "outputs/digits_gradient_reduction/operator_trace.json",
+      "size_bytes": 29530,
+      "sha256": "1c7a1f50f4aa5b612e47bbdcf8dc0e7ccb7f1fdf676b3ca48b1eafcc2767048d"
+    },
+    {
+      "path": "outputs/digits_gradient_reduction/proof_trace.json",
+      "size_bytes": 32288,
+      "sha256": "53faf4c999f8d0d06118a714cd9a4db03b3e9adc518bfdfe3860e4bf929e4038"
+    },
+    {
+      "path": "outputs/digits_gradient_reduction/route.json",
+      "size_bytes": 29292,
+      "sha256": "e7e05a6ed41078f60aeadf80cbf251593d8b36c891c395b19fe7a1afeea31160"
+    },
+    {
+      "path": "outputs/digits_gradient_reduction/summary.json",
+      "size_bytes": 653,
+      "sha256": "aa6c9b91332a34ec19bdb8c26d02675c7d6bd6bbba672e6f39e5399a54a8799f"
+    },
+    {
+      "path": "outputs/digits_gradient_reduction/verifier_report.json",
+      "size_bytes": 773,
+      "sha256": "b019503513955ca963722227d9aa2cd1f1defdbcc17cff2304967abf35801f1d"
+    },
+    {
+      "path": "outputs/digits_logistic_clean/dashboard_data.json",
+      "size_bytes": 29211,
+      "sha256": "687c540d72b257d154df0230f0ae97364d1f7a242587908bafa767e90a98d890"
+    },
+    {
+      "path": "outputs/digits_logistic_clean/operator_cards/action.md",
+      "size_bytes": 762,
+      "sha256": "53f11c5ed311d7373db40780082974910e788ba2a8fde1fc758358bc79f3ac4a"
+    },
+    {
+      "path": "outputs/digits_logistic_clean/operator_cards/alignment.md",
+      "size_bytes": 850,
+      "sha256": "598790c87a7e1d96d92b68d16de22e0abaa737923c4f1cbd93c512c2b8e4867d"
+    },
+    {
+      "path": "outputs/digits_logistic_clean/operator_cards/diagnostics.md",
+      "size_bytes": 980,
+      "sha256": "dd153b7a01cefa83ceac513d21a40bd2f68086864dcb50ce27831edf79a2e8f0"
+    },
+    {
+      "path": "outputs/digits_logistic_clean/operator_cards/explanation_object.md",
+      "size_bytes": 1189,
+      "sha256": "191c5a3623e7645a8e76292d992e981367e89a8f1b4fc1b194c9596d9ac2fad7"
+    },
+    {
+      "path": "outputs/digits_logistic_clean/operator_cards/input_artifact.md",
+      "size_bytes": 1710,
+      "sha256": "01aec6f7c1daa26aa34fc45b322d21cf14ebbb2c2a812732d8766d1dc432e964"
+    },
+    {
+      "path": "outputs/digits_logistic_clean/operator_cards/proof.md",
+      "size_bytes": 1547,
+      "sha256": "aa47b86c8348943c7c92a2ef5732fec5439fd00bfe715a86a20e0a33f10cf9ad"
+    },
+    {
+      "path": "outputs/digits_logistic_clean/operator_cards/reduction.md",
+      "size_bytes": 890,
+      "sha256": "7f755c10cbeb29c11db6ac854bf9cb7d2a5f61afd87e4823482050f8e314e773"
+    },
+    {
+      "path": "outputs/digits_logistic_clean/operator_cards/representation.md",
+      "size_bytes": 1248,
+      "sha256": "176e9d3f5805a6b1f2c44997c314903bc6fa01a67f82406208e8c94cd413e905"
+    },
+    {
+      "path": "outputs/digits_logistic_clean/operator_cards/risk.md",
+      "size_bytes": 667,
+      "sha256": "fd693890f3c0c58c19b13deafc10539dfe53504d60ec6139d95db827be7c9e25"
+    },
+    {
+      "path": "outputs/digits_logistic_clean/operator_dashboard_v2.html",
+      "size_bytes": 46025,
+      "sha256": "a4922da2bef96c8220f6197e9a64ecad2f32d0956c7d5f83f68656dd8e6e6d5d"
+    },
+    {
+      "path": "outputs/digits_logistic_clean/operator_dashboard_v2.png",
+      "size_bytes": 386739,
+      "sha256": "d2d2ae7f53eb93a5bce3215fd3cffef72b8a68f69399e80315360ede95792ea9"
+    },
+    {
+      "path": "outputs/digits_logistic_clean/operator_table.csv",
+      "size_bytes": 8202,
+      "sha256": "c5f810b413c0e51241d6132be5b87950c5b42151221e05db20472adb159a4037"
+    },
+    {
+      "path": "outputs/digits_logistic_clean/operator_trace.json",
+      "size_bytes": 29115,
+      "sha256": "2360f9729cbc006eeb4f7b345b3dcc1a4fb28b46c17a6c5a63477f206831c79e"
+    },
+    {
+      "path": "outputs/digits_logistic_clean/proof_trace.json",
+      "size_bytes": 31746,
+      "sha256": "46bd680606204b854cbcddce6c7378f7875ae9e5b73fe0664dfe841e62414f10"
+    },
+    {
+      "path": "outputs/digits_logistic_clean/route.json",
+      "size_bytes": 28834,
+      "sha256": "86e16c5c25cb6467ad2506cd2ee1826b2ce3ad0de771191251de24d80a02cb05"
+    },
+    {
+      "path": "outputs/digits_logistic_clean/summary.json",
+      "size_bytes": 617,
+      "sha256": "f6a75cd75fe9bed1d2de4533b4d0d31f0fa630b4ddf1d05e7f1dd5c8b8bfcf9c"
+    },
+    {
+      "path": "outputs/digits_logistic_clean/verifier_report.json",
+      "size_bytes": 773,
+      "sha256": "b019503513955ca963722227d9aa2cd1f1defdbcc17cff2304967abf35801f1d"
+    },
+    {
+      "path": "outputs/digits_mlp_pixel_noise/dashboard_data.json",
+      "size_bytes": 29516,
+      "sha256": "a8ce9b95a5ef1125755a4890218cf3914d03731eba2abfc24d5d6e52fbe9da8f"
+    },
+    {
+      "path": "outputs/digits_mlp_pixel_noise/operator_cards/action.md",
+      "size_bytes": 822,
+      "sha256": "3791b61797fde7faeeefc3aeebcd90418ee28c27ef9d0b23417563d173e78f3b"
+    },
+    {
+      "path": "outputs/digits_mlp_pixel_noise/operator_cards/alignment.md",
+      "size_bytes": 853,
+      "sha256": "b51f958a8fcd5641a20011a6d39fb45312769079f5bcd51fe1ab5c35b3dc9c11"
+    },
+    {
+      "path": "outputs/digits_mlp_pixel_noise/operator_cards/diagnostics.md",
+      "size_bytes": 1019,
+      "sha256": "0e7ffd729a747a67e503d822988de151da63b0a86b272590bf904cace77c4432"
+    },
+    {
+      "path": "outputs/digits_mlp_pixel_noise/operator_cards/explanation_object.md",
+      "size_bytes": 1184,
+      "sha256": "3972c4f765d5803653146ee3f58e1f9d3769d9fabd15b2a57b919fc17811c677"
+    },
+    {
+      "path": "outputs/digits_mlp_pixel_noise/operator_cards/input_artifact.md",
+      "size_bytes": 1697,
+      "sha256": "fe8d366dba720653f23d998f851867840ced21e5641f14e6395fe9e1f8738af1"
+    },
+    {
+      "path": "outputs/digits_mlp_pixel_noise/operator_cards/proof.md",
+      "size_bytes": 1612,
+      "sha256": "2e067ebb0eb7129e0475f41f43cf7efbe90fdc542c8a5862ec58e22a4f873ee3"
+    },
+    {
+      "path": "outputs/digits_mlp_pixel_noise/operator_cards/reduction.md",
+      "size_bytes": 891,
+      "sha256": "d0d7fa61f733396ebe904934b34fa7769585a7f6f058ab87dfe21fccaf58c63c"
+    },
+    {
+      "path": "outputs/digits_mlp_pixel_noise/operator_cards/representation.md",
+      "size_bytes": 1251,
+      "sha256": "e9b3a97386468c45a753c8024873fd8a66ba68b017d2473c993b0692b39018e1"
+    },
+    {
+      "path": "outputs/digits_mlp_pixel_noise/operator_cards/risk.md",
+      "size_bytes": 691,
+      "sha256": "7a8b8095d33eb9cebce971a3c8abb235235e9f40673433951bae442a81c1a48b"
+    },
+    {
+      "path": "outputs/digits_mlp_pixel_noise/operator_dashboard_v2.html",
+      "size_bytes": 46408,
+      "sha256": "01ee61565ca33266bc1fb89faf6b2c76e9ae2d758dbd5bd78c361baa547c227b"
+    },
+    {
+      "path": "outputs/digits_mlp_pixel_noise/operator_dashboard_v2.png",
+      "size_bytes": 388471,
+      "sha256": "9a3b580178fc85c43e42b634887f2d1f0bf46c3db32d5b215fffb8dfe798f11a"
+    },
+    {
+      "path": "outputs/digits_mlp_pixel_noise/operator_table.csv",
+      "size_bytes": 8299,
+      "sha256": "9d2e3e5bcdc4dbd62367de7f8bd752ea729553e0a674c8d30a322c0fd0e28595"
+    },
+    {
+      "path": "outputs/digits_mlp_pixel_noise/operator_trace.json",
+      "size_bytes": 29437,
+      "sha256": "9649c18df8d2a0a631f71b22528596b65f2147aedeff2895466cb30411cf4632"
+    },
+    {
+      "path": "outputs/digits_mlp_pixel_noise/proof_trace.json",
+      "size_bytes": 32174,
+      "sha256": "da549016edc7d6c44f88e3e8729c3d3309018051227e03497d7e0c29ce353a2f"
+    },
+    {
+      "path": "outputs/digits_mlp_pixel_noise/route.json",
+      "size_bytes": 29197,
+      "sha256": "c21d158acc9b2c45120079cdcc3c3afdbe5aecce26dea0c7c6e89faea65bf0ef"
+    },
+    {
+      "path": "outputs/digits_mlp_pixel_noise/summary.json",
+      "size_bytes": 631,
+      "sha256": "e66e1e2d5da6f0f172d54983137586043099871cbeccec51fcdbcf4faf0f6420"
+    },
+    {
+      "path": "outputs/digits_mlp_pixel_noise/verifier_report.json",
+      "size_bytes": 773,
+      "sha256": "b019503513955ca963722227d9aa2cd1f1defdbcc17cff2304967abf35801f1d"
+    },
+    {
+      "path": "outputs/digits_svc_occlusion/dashboard_data.json",
+      "size_bytes": 29278,
+      "sha256": "de43fcd25b68046aadceadc5ccaa3404cfdad86cdfd7f58891dd5cb2aab622a8"
+    },
+    {
+      "path": "outputs/digits_svc_occlusion/operator_cards/action.md",
+      "size_bytes": 760,
+      "sha256": "78e82201a004f103f06d5da917c952a100940662d30b309def911e4783a486e7"
+    },
+    {
+      "path": "outputs/digits_svc_occlusion/operator_cards/alignment.md",
+      "size_bytes": 853,
+      "sha256": "f30d4aabcf46d4e374801c74da53e88e1a697c5d1273384e69771960860248cc"
+    },
+    {
+      "path": "outputs/digits_svc_occlusion/operator_cards/diagnostics.md",
+      "size_bytes": 1002,
+      "sha256": "3b73b2f7031c607437643608839b61fb8f339a81d72ee1258c31539621ae3a33"
+    },
+    {
+      "path": "outputs/digits_svc_occlusion/operator_cards/explanation_object.md",
+      "size_bytes": 1182,
+      "sha256": "52da18678b163258a0d8b765727562c53ff45d33d0320e780bb6323c542fe7dd"
+    },
+    {
+      "path": "outputs/digits_svc_occlusion/operator_cards/input_artifact.md",
+      "size_bytes": 1717,
+      "sha256": "f63ceea17d07165f98a4ae8660c283c33aee0b1f5bbf0d4459e19efdca59e823"
+    },
+    {
+      "path": "outputs/digits_svc_occlusion/operator_cards/proof.md",
+      "size_bytes": 1563,
+      "sha256": "9e5673181ffb60b50789d6b29b6904c4844f3459529f6f0367fe1db6eb26567a"
+    },
+    {
+      "path": "outputs/digits_svc_occlusion/operator_cards/reduction.md",
+      "size_bytes": 880,
+      "sha256": "3c712cfcaa2a1f55a1b7183916bef8ff7fae9496803e8583d4fe02f2dddaaefc"
+    },
+    {
+      "path": "outputs/digits_svc_occlusion/operator_cards/representation.md",
+      "size_bytes": 1257,
+      "sha256": "426d3e3ab2db983e992ec539d624638be76e5a7f43d0c5e5b199834eef82116b"
+    },
+    {
+      "path": "outputs/digits_svc_occlusion/operator_cards/risk.md",
+      "size_bytes": 666,
+      "sha256": "d4b3719ef98462ce656f962136bd4b3b14be09871358448dcb68412195a74207"
+    },
+    {
+      "path": "outputs/digits_svc_occlusion/operator_dashboard_v2.html",
+      "size_bytes": 46107,
+      "sha256": "499edd3de9dcc6d692a9b7e941bd1f299ffe5f1e3db38f956f04ef5ee531f7d1"
+    },
+    {
+      "path": "outputs/digits_svc_occlusion/operator_dashboard_v2.png",
+      "size_bytes": 385721,
+      "sha256": "4407a0094e851905d26e05da73770f8c393b284e7010eb227c7ff2dbc1363930"
+    },
+    {
+      "path": "outputs/digits_svc_occlusion/operator_table.csv",
+      "size_bytes": 8210,
+      "sha256": "d23d138f34a4963d0f67260d5fc73f237beb356c86f90b803903280a58f42c28"
+    },
+    {
+      "path": "outputs/digits_svc_occlusion/operator_trace.json",
+      "size_bytes": 29181,
+      "sha256": "2f542b3972161ce6b79f64eaa8510f0fd5bb095a227a066cdd4e06392b269936"
+    },
+    {
+      "path": "outputs/digits_svc_occlusion/proof_trace.json",
+      "size_bytes": 31839,
+      "sha256": "3481983eb57ce54907d23c10d4ebbaf520366f9424761d71b8af9622b74ca007"
+    },
+    {
+      "path": "outputs/digits_svc_occlusion/route.json",
+      "size_bytes": 28911,
+      "sha256": "1005755a3a77c5e280c999a40d053dccf3305a7a8b6ab4a8eafd0dc27b73f37c"
+    },
+    {
+      "path": "outputs/digits_svc_occlusion/summary.json",
+      "size_bytes": 621,
+      "sha256": "b13f162c2fe01831d82e225a88e9ebe351c0be377f3db23a5e3787c835061ff2"
+    },
+    {
+      "path": "outputs/digits_svc_occlusion/verifier_report.json",
+      "size_bytes": 773,
+      "sha256": "b019503513955ca963722227d9aa2cd1f1defdbcc17cff2304967abf35801f1d"
+    },
+    {
+      "path": "outputs/digits_tree_conflict/dashboard_data.json",
+      "size_bytes": 29297,
+      "sha256": "40dfb94ca777d4d4c30ce7dee892fb8acdcf0b846a693d4281cb686b80dba4bc"
+    },
+    {
+      "path": "outputs/digits_tree_conflict/operator_cards/action.md",
+      "size_bytes": 772,
+      "sha256": "1e6ef230bbbc0867db2378ea867ba044f0fa0cbee9d574acb1d1ddd82317cfbd"
+    },
+    {
+      "path": "outputs/digits_tree_conflict/operator_cards/alignment.md",
+      "size_bytes": 854,
+      "sha256": "9198d17e43733878c06d3d63f1577fb013b7ae6fbf498c658c7fd21f18453e1b"
+    },
+    {
+      "path": "outputs/digits_tree_conflict/operator_cards/diagnostics.md",
+      "size_bytes": 1090,
+      "sha256": "d0dfefba44cc98dc902907c2b9838c66271b02820b8ad891b89d2e33d56a9376"
+    },
+    {
+      "path": "outputs/digits_tree_conflict/operator_cards/explanation_object.md",
+      "size_bytes": 1113,
+      "sha256": "6ca2f6790cdc895c43fca990a0a9cc6ba963511b74668b148b974c60140442d4"
+    },
+    {
+      "path": "outputs/digits_tree_conflict/operator_cards/input_artifact.md",
+      "size_bytes": 1661,
+      "sha256": "ce9542e910953dea901ae8863519d15f7b7315e6f332576a63480048727297c0"
+    },
+    {
+      "path": "outputs/digits_tree_conflict/operator_cards/proof.md",
+      "size_bytes": 1633,
+      "sha256": "856f18771351d3c0dd5c45cedea2a4dc8d0edeb19fa01b114b2cdded7d6a8f98"
+    },
+    {
+      "path": "outputs/digits_tree_conflict/operator_cards/reduction.md",
+      "size_bytes": 830,
+      "sha256": "03be1ee8326e44d1b71e90fc2381f88921a3d058a0ea2342863e8872ace30a52"
+    },
+    {
+      "path": "outputs/digits_tree_conflict/operator_cards/representation.md",
+      "size_bytes": 1222,
+      "sha256": "abab7b3a6aac5b8ba59f373988248af2c44b52cdfef929bc71f3dffe5cfb166f"
+    },
+    {
+      "path": "outputs/digits_tree_conflict/operator_cards/risk.md",
+      "size_bytes": 669,
+      "sha256": "4c4c2bfb011480d347e5f7aac9a96d46be70f7068f47c483e854facd3f920267"
+    },
+    {
+      "path": "outputs/digits_tree_conflict/operator_dashboard_v2.html",
+      "size_bytes": 46119,
+      "sha256": "1982305a7f895f75c6153c026245da1adf07dafb88c88e9f0aa27b5d356353f1"
+    },
+    {
+      "path": "outputs/digits_tree_conflict/operator_dashboard_v2.png",
+      "size_bytes": 382355,
+      "sha256": "6ecaa8d65ab06bdb62d4c9ba1689c296395f0659b2d50a275414a8fea1fcc798"
+    },
+    {
+      "path": "outputs/digits_tree_conflict/operator_table.csv",
+      "size_bytes": 8101,
+      "sha256": "f0cc2f8ef44de42bcf3f0575d009dc0171b0c448db6180acf41e0d8e194dd2a2"
+    },
+    {
+      "path": "outputs/digits_tree_conflict/operator_trace.json",
+      "size_bytes": 29206,
+      "sha256": "8b06f2981c9ece2e1b95ef8e63c2e5b110bb6b77b7c52cfe70da1576985dc163"
+    },
+    {
+      "path": "outputs/digits_tree_conflict/proof_trace.json",
+      "size_bytes": 31989,
+      "sha256": "7dd26aeccb1d2a87b438214f09a7e4e84dc6f455b3754c8b9e04daa3b6071560"
+    },
+    {
+      "path": "outputs/digits_tree_conflict/route.json",
+      "size_bytes": 28991,
+      "sha256": "84a2b3044c9efdf3fc18875c0a0e62f4e4727f283cc76c39771fd485244994fd"
+    },
+    {
+      "path": "outputs/digits_tree_conflict/summary.json",
+      "size_bytes": 637,
+      "sha256": "a2c797eca8e087592bdb04a1fcc5029622bd548e7cc2f9c2a8f20ef74f1fa9c9"
+    },
+    {
+      "path": "outputs/digits_tree_conflict/verifier_report.json",
+      "size_bytes": 773,
+      "sha256": "b019503513955ca963722227d9aa2cd1f1defdbcc17cff2304967abf35801f1d"
+    },
+    {
+      "path": "outputs/signal_gradient_missing/dashboard_data.json",
+      "size_bytes": 29150,
+      "sha256": "d55e7991f6d8be47933159e0ba5e56eab3e527873f7f3a754994ad945e8da63b"
+    },
+    {
+      "path": "outputs/signal_gradient_missing/operator_cards/action.md",
+      "size_bytes": 788,
+      "sha256": "74c742ea7b2a4d2791ce3aa73c98d624f782023d46124cab5705e5d32158c276"
+    },
+    {
+      "path": "outputs/signal_gradient_missing/operator_cards/alignment.md",
+      "size_bytes": 851,
+      "sha256": "0adb525b7296014bfb24569d02e92207d35f29a28bce37528af33c8f828b57bb"
+    },
+    {
+      "path": "outputs/signal_gradient_missing/operator_cards/diagnostics.md",
+      "size_bytes": 980,
+      "sha256": "a3f964aafb82586119682f546eaf3386fb547d80ac4d755e99b13779d1bb5d1b"
+    },
+    {
+      "path": "outputs/signal_gradient_missing/operator_cards/explanation_object.md",
+      "size_bytes": 1114,
+      "sha256": "80d46aa3b95a4a61842f89ce107026bfb4a183af0fb4ab068f6597767c609856"
+    },
+    {
+      "path": "outputs/signal_gradient_missing/operator_cards/input_artifact.md",
+      "size_bytes": 1672,
+      "sha256": "ed1a87362d86f74bcd991de481dde1ddbda56f038bb0df0a6c56ba9aed30a440"
+    },
+    {
+      "path": "outputs/signal_gradient_missing/operator_cards/proof.md",
+      "size_bytes": 1608,
+      "sha256": "f3d6dbdaeffbfa9bcf9db4f285792056325e191e9a2e839d03b9a63f2c728ade"
+    },
+    {
+      "path": "outputs/signal_gradient_missing/operator_cards/reduction.md",
+      "size_bytes": 830,
+      "sha256": "c4655f9f04f42c6012c438ee7325dfc0b28bf2cb54ad3425e95d476c7d5b1dc7"
+    },
+    {
+      "path": "outputs/signal_gradient_missing/operator_cards/representation.md",
+      "size_bytes": 1237,
+      "sha256": "72189ef50a6d1ec3509880d0146b4094705aa9015659b1b875b5ade93c8ef389"
+    },
+    {
+      "path": "outputs/signal_gradient_missing/operator_cards/risk.md",
+      "size_bytes": 669,
+      "sha256": "80e9bea1b1be5c124b998f375f0ece32839a44810f84ad8974bfd5ed9acb5ea0"
+    },
+    {
+      "path": "outputs/signal_gradient_missing/operator_dashboard_v2.html",
+      "size_bytes": 45991,
+      "sha256": "afe094f197553128b14266f54ee2f75383da118ffe4422ab81b1893c2e00d29e"
+    },
+    {
+      "path": "outputs/signal_gradient_missing/operator_dashboard_v2.png",
+      "size_bytes": 383114,
+      "sha256": "1683a873df77d79e9856eaf5e00b96a7715b217cabe66988023f686caf2d778d"
+    },
+    {
+      "path": "outputs/signal_gradient_missing/operator_table.csv",
+      "size_bytes": 8073,
+      "sha256": "67d6b88c24c374fa20d07997048860e65d21d44b2818ee7dd2fd96c2102ac744"
+    },
+    {
+      "path": "outputs/signal_gradient_missing/operator_trace.json",
+      "size_bytes": 29067,
+      "sha256": "11c48ed25a46132c87b32389f152989e5613dab3a76e7aef84a6bcc722d8d93a"
+    },
+    {
+      "path": "outputs/signal_gradient_missing/proof_trace.json",
+      "size_bytes": 31790,
+      "sha256": "433df6073cbc3b2f1854564b136d760ef80b1b8c91ce9b46a1876dce84b86b3d"
+    },
+    {
+      "path": "outputs/signal_gradient_missing/route.json",
+      "size_bytes": 28817,
+      "sha256": "be042c0849d0b59a88ebb41c59c7bf9c32ca814b9c88e86a6ae9abc4a4a7f03d"
+    },
+    {
+      "path": "outputs/signal_gradient_missing/summary.json",
+      "size_bytes": 642,
+      "sha256": "d43373686f7aafd8f716658ea61202994dffe148ad0d832d7db01f4c14d8f9fa"
+    },
+    {
+      "path": "outputs/signal_gradient_missing/verifier_report.json",
+      "size_bytes": 773,
+      "sha256": "b019503513955ca963722227d9aa2cd1f1defdbcc17cff2304967abf35801f1d"
+    },
+    {
+      "path": "outputs/signal_logistic_boundary/dashboard_data.json",
+      "size_bytes": 29423,
+      "sha256": "702aee9167a1cfff840e338d59728fe8845f552b0927f63f7126f730ad171e77"
+    },
+    {
+      "path": "outputs/signal_logistic_boundary/operator_cards/action.md",
+      "size_bytes": 826,
+      "sha256": "654aaf148d38024f34862d8663034f88f65ab1a23b8f72b4631dc81bc99359b7"
+    },
+    {
+      "path": "outputs/signal_logistic_boundary/operator_cards/alignment.md",
+      "size_bytes": 853,
+      "sha256": "e10f9debafde08869241caf3f8216a06c5fd4046c4b0c23e96f9a3db63d175d5"
+    },
+    {
+      "path": "outputs/signal_logistic_boundary/operator_cards/diagnostics.md",
+      "size_bytes": 1079,
+      "sha256": "45a5d9baade35980ef0eafd0567252cb45b6ea5e4565043a295a5d29108ce0f6"
+    },
+    {
+      "path": "outputs/signal_logistic_boundary/operator_cards/explanation_object.md",
+      "size_bytes": 1093,
+      "sha256": "54fd285f9b1343160b5f9e4fe34046a7461ba65fc100906d67ff5d2be3c5b087"
+    },
+    {
+      "path": "outputs/signal_logistic_boundary/operator_cards/input_artifact.md",
+      "size_bytes": 1640,
+      "sha256": "3cd0cf7dd59608158cd982b0dc6800631289ec1fcdfd7b8782bd4857e4d684e7"
+    },
+    {
+      "path": "outputs/signal_logistic_boundary/operator_cards/proof.md",
+      "size_bytes": 1668,
+      "sha256": "3c9e7be4dc387b51e743a3f077c8584fe1534f33fcc52f271a59985e6a02f762"
+    },
+    {
+      "path": "outputs/signal_logistic_boundary/operator_cards/reduction.md",
+      "size_bytes": 822,
+      "sha256": "805eb24fe7b0b8d5d8378e6e6692b354a2c80ffa46a85b544886781928a6cb10"
+    },
+    {
+      "path": "outputs/signal_logistic_boundary/operator_cards/representation.md",
+      "size_bytes": 1244,
+      "sha256": "d44f8b7ed70cb9e48b2da30178bdc8fd42199f82281102c1424eef8a8a34d988"
+    },
+    {
+      "path": "outputs/signal_logistic_boundary/operator_cards/risk.md",
+      "size_bytes": 691,
+      "sha256": "56d83de95854865d702aa9cef97273a52e1f0bc808708eb81e7f5c01fe95bc78"
+    },
+    {
+      "path": "outputs/signal_logistic_boundary/operator_dashboard_v2.html",
+      "size_bytes": 46313,
+      "sha256": "1a233c6bd38b462c55f3e1e12d57a92e15508c59553050925ef9b5bdea1a47a7"
+    },
+    {
+      "path": "outputs/signal_logistic_boundary/operator_dashboard_v2.png",
+      "size_bytes": 386293,
+      "sha256": "2d7059472a4339807b7fcf8caa1b49305a15bc05a7e0885276d8397e906da8c5"
+    },
+    {
+      "path": "outputs/signal_logistic_boundary/operator_table.csv",
+      "size_bytes": 8139,
+      "sha256": "d0fb9c84c8e66cf59ca7d638f792087fc34a69331198c71baec2d2f6d1864f32"
+    },
+    {
+      "path": "outputs/signal_logistic_boundary/operator_trace.json",
+      "size_bytes": 29346,
+      "sha256": "076a81a38e4cdd7fbef0ff0f4500dbf0b3796a99c99ee79a1f905246e54ccaf5"
+    },
+    {
+      "path": "outputs/signal_logistic_boundary/proof_trace.json",
+      "size_bytes": 32183,
+      "sha256": "c2968dca986cf0bb3b489dfda9ac813cf783be577285516622a9872aa621c4f8"
+    },
+    {
+      "path": "outputs/signal_logistic_boundary/route.json",
+      "size_bytes": 29150,
+      "sha256": "ab5ab6700053b6e2b16fa291afe9b65d8d297121b0adfb2a017230ccaf808c6b"
+    },
+    {
+      "path": "outputs/signal_logistic_boundary/summary.json",
+      "size_bytes": 645,
+      "sha256": "dac44cfa92542aebc9ef8dc9d2886e34f760e5fe59af5da4b2aacb6dde001191"
+    },
+    {
+      "path": "outputs/signal_logistic_boundary/verifier_report.json",
+      "size_bytes": 773,
+      "sha256": "b019503513955ca963722227d9aa2cd1f1defdbcc17cff2304967abf35801f1d"
+    },
+    {
+      "path": "outputs/signal_logistic_noise/dashboard_data.json",
+      "size_bytes": 28907,
+      "sha256": "af454d48fc7b7d435cf2ef5722305d90e3b38875987112a68aad056bb99398f1"
+    },
+    {
+      "path": "outputs/signal_logistic_noise/operator_cards/action.md",
+      "size_bytes": 776,
+      "sha256": "d7a72ea41b3dde2d2dfa9ec2e36fba8ccbcd382ba2195df89c6a79e821766e40"
+    },
+    {
+      "path": "outputs/signal_logistic_noise/operator_cards/alignment.md",
+      "size_bytes": 853,
+      "sha256": "460ab798f77b9fc3bd56373a0d91d2287745f8483e312b446aa683bc882d0d07"
+    },
+    {
+      "path": "outputs/signal_logistic_noise/operator_cards/diagnostics.md",
+      "size_bytes": 974,
+      "sha256": "437155e5f581cc9a6341442dac30932b4cc0288ff6f88087f7641bce6201b48f"
+    },
+    {
+      "path": "outputs/signal_logistic_noise/operator_cards/explanation_object.md",
+      "size_bytes": 1109,
+      "sha256": "7d8ae8a2735f3d66ae745723c6d88265eabdba3132c86ce5c60ac6d410a4269f"
+    },
+    {
+      "path": "outputs/signal_logistic_noise/operator_cards/input_artifact.md",
+      "size_bytes": 1625,
+      "sha256": "17ccd94b5bf571ef4a807202d44f136954a29200929af56c4a1713375006f715"
+    },
+    {
+      "path": "outputs/signal_logistic_noise/operator_cards/proof.md",
+      "size_bytes": 1574,
+      "sha256": "a1f6dd87fee4ab5f06f58d8c5121271325b42830c759fbe2723c1bf49bd06ca4"
+    },
+    {
+      "path": "outputs/signal_logistic_noise/operator_cards/reduction.md",
+      "size_bytes": 830,
+      "sha256": "c2e681ddef2ca81d215fcdd26bbd6e225e9fb1629850629c1e54d816a815bb06"
+    },
+    {
+      "path": "outputs/signal_logistic_noise/operator_cards/representation.md",
+      "size_bytes": 1213,
+      "sha256": "f02e106d48e4ea29470533bc87a793cf3df92941f2395c12639f9be4f0b21bf0"
+    },
+    {
+      "path": "outputs/signal_logistic_noise/operator_cards/risk.md",
+      "size_bytes": 669,
+      "sha256": "3f7fa274eee9fc1b7ba37cac412bb4826977d5abf14e7b0159b8a83c7ecb95eb"
+    },
+    {
+      "path": "outputs/signal_logistic_noise/operator_dashboard_v2.html",
+      "size_bytes": 45687,
+      "sha256": "5e62dac250d8c9fae7cc3308b4bf611b75962af8abad94d1a2c907b4307d4da5"
+    },
+    {
+      "path": "outputs/signal_logistic_noise/operator_dashboard_v2.png",
+      "size_bytes": 380856,
+      "sha256": "7af00ef93406071919013aa332795ef27ee64fd1d60baa9bdc7b981c6b191636"
+    },
+    {
+      "path": "outputs/signal_logistic_noise/operator_table.csv",
+      "size_bytes": 8005,
+      "sha256": "a45e75a6885e4f5735684fa13d71bb5c6864a52c6a89e59d672aae07bcfd91a4"
+    },
+    {
+      "path": "outputs/signal_logistic_noise/operator_trace.json",
+      "size_bytes": 28818,
+      "sha256": "c543f42b74218a205402c26159766437a1913dfa65eabb9c98707dc0553e00d7"
+    },
+    {
+      "path": "outputs/signal_logistic_noise/proof_trace.json",
+      "size_bytes": 31495,
+      "sha256": "5f6a97074e566b4e9a71586f3c624dedf7bce529f7d45386f50106df41987ac7"
+    },
+    {
+      "path": "outputs/signal_logistic_noise/route.json",
+      "size_bytes": 28556,
+      "sha256": "49b548d3bd494be0fdc3f3e92783117ca79cd9410e58dc9a053275f93170141b"
+    },
+    {
+      "path": "outputs/signal_logistic_noise/summary.json",
+      "size_bytes": 616,
+      "sha256": "9c6dd70e46c976d5f51feb7043bbd44a2a81217d0231b5d285945697c5ff0474"
+    },
+    {
+      "path": "outputs/signal_logistic_noise/verifier_report.json",
+      "size_bytes": 773,
+      "sha256": "b019503513955ca963722227d9aa2cd1f1defdbcc17cff2304967abf35801f1d"
+    },
+    {
+      "path": "outputs/signal_threshold_clean/dashboard_data.json",
+      "size_bytes": 28746,
+      "sha256": "8b0f0d3cf5f4b77924d15623af6f03d53a21ac52ffd4e86bd8159d596e9385e3"
+    },
+    {
+      "path": "outputs/signal_threshold_clean/operator_cards/action.md",
+      "size_bytes": 762,
+      "sha256": "513d648ce2c5f3dde1a414abc72b87a80a01e3c6bbc177fb6d2b2d3bef3da95d"
+    },
+    {
+      "path": "outputs/signal_threshold_clean/operator_cards/alignment.md",
+      "size_bytes": 852,
+      "sha256": "26ac8b8e56970d6f09a79770dc0afa7264084b85dbb0205f124ba2e8a21d7606"
+    },
+    {
+      "path": "outputs/signal_threshold_clean/operator_cards/diagnostics.md",
+      "size_bytes": 958,
+      "sha256": "1a87f5f356bb61e3cb45308faaf97db83661ed63c768043dda62ca3cf2502c20"
+    },
+    {
+      "path": "outputs/signal_threshold_clean/operator_cards/explanation_object.md",
+      "size_bytes": 1106,
+      "sha256": "0a4e13909815d5aabcebfc2ac63f6ba8783b260612cd02ca21e5bf42eb103c3c"
+    },
+    {
+      "path": "outputs/signal_threshold_clean/operator_cards/input_artifact.md",
+      "size_bytes": 1617,
+      "sha256": "eb5fd23fb270904cd46766807e604c06f8d497054ddd3a179005ab4dd49c172d"
+    },
+    {
+      "path": "outputs/signal_threshold_clean/operator_cards/proof.md",
+      "size_bytes": 1537,
+      "sha256": "20f997fc15b73331f703ac804fcdc03824769a7f13501375d4dd160951f2973b"
+    },
+    {
+      "path": "outputs/signal_threshold_clean/operator_cards/reduction.md",
+      "size_bytes": 830,
+      "sha256": "bc0c9246a720f25adfab7515a808e1f9780a4c7696cb840b58dd85f1465e29b9"
+    },
+    {
+      "path": "outputs/signal_threshold_clean/operator_cards/representation.md",
+      "size_bytes": 1214,
+      "sha256": "1ef385af551cbab307f6532d8258a407e16bf218fdabc73c5e71c18e8824bd54"
+    },
+    {
+      "path": "outputs/signal_threshold_clean/operator_cards/risk.md",
+      "size_bytes": 670,
+      "sha256": "aa084b43e5644242f42b9849e76e0740d04d007487a5ee752e9d6f2d5882287b"
+    },
+    {
+      "path": "outputs/signal_threshold_clean/operator_dashboard_v2.html",
+      "size_bytes": 45472,
+      "sha256": "b6b75343adf7dbf6d0635a90a595dbf6d7b943a2f09064e6a46d901f09ed6f3c"
+    },
+    {
+      "path": "outputs/signal_threshold_clean/operator_dashboard_v2.png",
+      "size_bytes": 377695,
+      "sha256": "015364f36a5d9428134d74b3f3861249496522d779e260b060e4d3296b4872e1"
+    },
+    {
+      "path": "outputs/signal_threshold_clean/operator_table.csv",
+      "size_bytes": 7975,
+      "sha256": "6a3e34cb4fd4faa6a4a764a8caa5b29efd6e1419c03da53ef11bdc90c95d8c8a"
+    },
+    {
+      "path": "outputs/signal_threshold_clean/operator_trace.json",
+      "size_bytes": 28650,
+      "sha256": "857dfd28f9a21afe50be692c8407f199db599c8996c44afdf71b4dc641812ad9"
+    },
+    {
+      "path": "outputs/signal_threshold_clean/proof_trace.json",
+      "size_bytes": 31271,
+      "sha256": "af44ddb1707f2deb63c1bdae88f7e2895a65a5624cb07646a2159d0d9a572ce1"
+    },
+    {
+      "path": "outputs/signal_threshold_clean/route.json",
+      "size_bytes": 28369,
+      "sha256": "63a9565c7b1f6a01e00626cf87fa3e5d5d036c4b50b35d90d9e72ad0af6dcf54"
+    },
+    {
+      "path": "outputs/signal_threshold_clean/summary.json",
+      "size_bytes": 607,
+      "sha256": "0f1d4be00abf5844c9bfec1c82b5d92e15825b45d074afc552c547634eb1ab96"
+    },
+    {
+      "path": "outputs/signal_threshold_clean/verifier_report.json",
+      "size_bytes": 773,
+      "sha256": "b019503513955ca963722227d9aa2cd1f1defdbcc17cff2304967abf35801f1d"
+    },
+    {
+      "path": "outputs/synthetic_rf_regressor_spread/dashboard_data.json",
+      "size_bytes": 29639,
+      "sha256": "882a9bf1c4514d46eb53efc8ca9a4b6c2db480e6f74ab4907ed1396f5bfbc25f"
+    },
+    {
+      "path": "outputs/synthetic_rf_regressor_spread/operator_cards/action.md",
+      "size_bytes": 832,
+      "sha256": "e189423b930045acad52e0cb5c25a2d5b643268b2401a2581e199f796640e65d"
+    },
+    {
+      "path": "outputs/synthetic_rf_regressor_spread/operator_cards/alignment.md",
+      "size_bytes": 854,
+      "sha256": "5b2e3aa932efba71fc130841814f284d5cbef12f0568aeb973c963c48266bae3"
+    },
+    {
+      "path": "outputs/synthetic_rf_regressor_spread/operator_cards/diagnostics.md",
+      "size_bytes": 1106,
+      "sha256": "813dac6a3aa7147dbb156e7283b8c8395720590e2a5ec0efdfc9b4594747d4f1"
+    },
+    {
+      "path": "outputs/synthetic_rf_regressor_spread/operator_cards/explanation_object.md",
+      "size_bytes": 1112,
+      "sha256": "ef11d0b9279e9bba8e88b48339f0efd220e66bdb6a145dcfb59011c1fd58e56e"
+    },
+    {
+      "path": "outputs/synthetic_rf_regressor_spread/operator_cards/input_artifact.md",
+      "size_bytes": 1681,
+      "sha256": "aa7236ce18288acdd5a7ae37fab0ef283af6cb154df0bf59705608eead0ef3f5"
+    },
+    {
+      "path": "outputs/synthetic_rf_regressor_spread/operator_cards/proof.md",
+      "size_bytes": 1690,
+      "sha256": "1e932a64b1a3c4d8a339c7bb0a0e875f1297828045f0c2fa0f52da53bc9c306a"
+    },
+    {
+      "path": "outputs/synthetic_rf_regressor_spread/operator_cards/reduction.md",
+      "size_bytes": 831,
+      "sha256": "524cd0051c00ebee9afcd865b7f0e70ecacd42961462042a090d6327ba1bf540"
+    },
+    {
+      "path": "outputs/synthetic_rf_regressor_spread/operator_cards/representation.md",
+      "size_bytes": 1246,
+      "sha256": "42f572969d9e669ad41916f6ca1fc5135e84d4eeeb6704fd7176db1c9a1d0d46"
+    },
+    {
+      "path": "outputs/synthetic_rf_regressor_spread/operator_cards/risk.md",
+      "size_bytes": 688,
+      "sha256": "4f00cc05d479a47d64d9887836fa8deef42a4ab5a61350dae6d302c70ac6268e"
+    },
+    {
+      "path": "outputs/synthetic_rf_regressor_spread/operator_dashboard_v2.html",
+      "size_bytes": 46567,
+      "sha256": "4dcd09feb8a47f01aa1c1a7ad2da2182bfd60bb4cb06d679cc27af900bd6b324"
+    },
+    {
+      "path": "outputs/synthetic_rf_regressor_spread/operator_dashboard_v2.png",
+      "size_bytes": 391687,
+      "sha256": "a89dda5120f55a3433fd055a6a5313200c5dc5da3740f8094ec4bb303f085cfe"
+    },
+    {
+      "path": "outputs/synthetic_rf_regressor_spread/operator_table.csv",
+      "size_bytes": 8206,
+      "sha256": "fcf288a1603cff278f1525688aaaaf34b96c028f1f13e27600ae94940ba91f1f"
+    },
+    {
+      "path": "outputs/synthetic_rf_regressor_spread/operator_trace.json",
+      "size_bytes": 29565,
+      "sha256": "f15ecdf95810fb3607845b7d885d5bca2b386048685b3baa1ef29d4b4d7e3f83"
+    },
+    {
+      "path": "outputs/synthetic_rf_regressor_spread/proof_trace.json",
+      "size_bytes": 32438,
+      "sha256": "a6d11bc3f8082c7cdf4e39b789cc19656b5cf882d697cb28b42908d5d61d677c"
+    },
+    {
+      "path": "outputs/synthetic_rf_regressor_spread/route.json",
+      "size_bytes": 29383,
+      "sha256": "076d0b859d1c7788a8fea7b27693d5c7191966f347e3093a9b06158249076859"
+    },
+    {
+      "path": "outputs/synthetic_rf_regressor_spread/summary.json",
+      "size_bytes": 658,
+      "sha256": "4fcd49de502d806470e05e4a29838e48df3de6ed384cb5301edda5425ea239cd"
+    },
+    {
+      "path": "outputs/synthetic_rf_regressor_spread/verifier_report.json",
+      "size_bytes": 773,
+      "sha256": "b019503513955ca963722227d9aa2cd1f1defdbcc17cff2304967abf35801f1d"
+    },
+    {
+      "path": "outputs/synthetic_svr_explanation_loss/dashboard_data.json",
+      "size_bytes": 29495,
+      "sha256": "4bbf65153017d3e11b6526bf5bd9eb1c1821044286005ab5bb958e3e04ed31ff"
+    },
+    {
+      "path": "outputs/synthetic_svr_explanation_loss/operator_cards/action.md",
+      "size_bytes": 842,
+      "sha256": "6d1b40bbfe2d5bb38ef1613117418d838675f9dadf86d724f6c1910cbf1155b8"
+    },
+    {
+      "path": "outputs/synthetic_svr_explanation_loss/operator_cards/alignment.md",
+      "size_bytes": 848,
+      "sha256": "5cc6291d78828d493f8a1b43f62cd878f425f143e0c7b2b85bdeee8b305e7796"
+    },
+    {
+      "path": "outputs/synthetic_svr_explanation_loss/operator_cards/diagnostics.md",
+      "size_bytes": 1109,
+      "sha256": "75c11b40df8cd71554426cf16098a30733e88f100b0aa0a6cebef777c2fb85c0"
+    },
+    {
+      "path": "outputs/synthetic_svr_explanation_loss/operator_cards/explanation_object.md",
+      "size_bytes": 1084,
+      "sha256": "0048d240beeb009a6a7fbe8e89c5915f92802cfb431dc7f704021a797e300149"
+    },
+    {
+      "path": "outputs/synthetic_svr_explanation_loss/operator_cards/input_artifact.md",
+      "size_bytes": 1621,
+      "sha256": "f81d3d6c626c93346f3adff9a3c91a5a19aa3cfce4090625b4ddb8d077790c79"
+    },
+    {
+      "path": "outputs/synthetic_svr_explanation_loss/operator_cards/proof.md",
+      "size_bytes": 1687,
+      "sha256": "e6ee62e936825e62fa3723301dfccab4a5b6916d6937d4f5cf3a980362389082"
+    },
+    {
+      "path": "outputs/synthetic_svr_explanation_loss/operator_cards/reduction.md",
+      "size_bytes": 826,
+      "sha256": "6447905f8982be9d4ae6fb3e1cf63090cdfbeccac566531113107683b83bffea"
+    },
+    {
+      "path": "outputs/synthetic_svr_explanation_loss/operator_cards/representation.md",
+      "size_bytes": 1249,
+      "sha256": "d7d2bc56aedec737c92bdb1f83c9de71ad7301190874b15ad58025c9eb4f21bf"
+    },
+    {
+      "path": "outputs/synthetic_svr_explanation_loss/operator_cards/risk.md",
+      "size_bytes": 685,
+      "sha256": "26c33b85c59062ebbe32b9eb1cbdc777d27bfbe039141cffac47da204c67284a"
+    },
+    {
+      "path": "outputs/synthetic_svr_explanation_loss/operator_dashboard_v2.html",
+      "size_bytes": 46352,
+      "sha256": "fc86a85f0d0560f27e84177c4f56312b5ada6a74318210c7e43d4ba235e14395"
+    },
+    {
+      "path": "outputs/synthetic_svr_explanation_loss/operator_dashboard_v2.png",
+      "size_bytes": 385522,
+      "sha256": "a11dc9904114753e6323e639dedaac05c08ac32a0b95c07bf660bb90667ce1e4"
+    },
+    {
+      "path": "outputs/synthetic_svr_explanation_loss/operator_table.csv",
+      "size_bytes": 8145,
+      "sha256": "0970ae28667d42dca70d258702f7048888d829c76962505426b5a491742148b6"
+    },
+    {
+      "path": "outputs/synthetic_svr_explanation_loss/operator_trace.json",
+      "size_bytes": 29426,
+      "sha256": "62e900c13382faefe238e4d4c0eaf2d6de88351da9e38f765c7e7215668b528e"
+    },
+    {
+      "path": "outputs/synthetic_svr_explanation_loss/proof_trace.json",
+      "size_bytes": 32306,
+      "sha256": "23810c21be4ee131ce9ca79136aef86488e8a9053172450830cd9c52a0e379e9"
+    },
+    {
+      "path": "outputs/synthetic_svr_explanation_loss/route.json",
+      "size_bytes": 29254,
+      "sha256": "ae2dfd9a68370c00c8fe0534edf7e5139cb1651a29d3d93f352702bf4a98a982"
+    },
+    {
+      "path": "outputs/synthetic_svr_explanation_loss/summary.json",
+      "size_bytes": 647,
+      "sha256": "4b4e68ed0f97feae9b1d7d6a24efe41262c58b5b3ba531d16109ffcc1aa00ae6"
+    },
+    {
+      "path": "outputs/synthetic_svr_explanation_loss/verifier_report.json",
+      "size_bytes": 773,
+      "sha256": "b019503513955ca963722227d9aa2cd1f1defdbcc17cff2304967abf35801f1d"
+    },
+    {
+      "path": "outputs/wine_gradient_reduced/dashboard_data.json",
+      "size_bytes": 29483,
+      "sha256": "146cb89fd7205b9e2f53f0c26266b8ddcb5dab77d185092fd7ca0f56541b6e11"
+    },
+    {
+      "path": "outputs/wine_gradient_reduced/operator_cards/action.md",
+      "size_bytes": 826,
+      "sha256": "654aaf148d38024f34862d8663034f88f65ab1a23b8f72b4631dc81bc99359b7"
+    },
+    {
+      "path": "outputs/wine_gradient_reduced/operator_cards/alignment.md",
+      "size_bytes": 850,
+      "sha256": "2f9de694b6d11605e82ce22db67c82522748a4bc5d0b71c1ba6265cffebc2003"
+    },
+    {
+      "path": "outputs/wine_gradient_reduced/operator_cards/diagnostics.md",
+      "size_bytes": 1095,
+      "sha256": "c5faf453500df21c697046b18bf512549a0614dcf4761c27c8a49a1dc9ca2648"
+    },
+    {
+      "path": "outputs/wine_gradient_reduced/operator_cards/explanation_object.md",
+      "size_bytes": 1117,
+      "sha256": "b2b608b7e5e8c1b73012d60d83610599e5db860bd28e4f9ce2bfc2afdb536be0"
+    },
+    {
+      "path": "outputs/wine_gradient_reduced/operator_cards/input_artifact.md",
+      "size_bytes": 1658,
+      "sha256": "ed2dbfaeab67f89c4ce1e0f8614ffb6b70478424e74607a55dd7c9a4f26557e8"
+    },
+    {
+      "path": "outputs/wine_gradient_reduced/operator_cards/proof.md",
+      "size_bytes": 1672,
+      "sha256": "a87068c2cfc06c83ba35bc3480adc916248ec96d6da2ba222398bec649dbb762"
+    },
+    {
+      "path": "outputs/wine_gradient_reduced/operator_cards/reduction.md",
+      "size_bytes": 831,
+      "sha256": "3d4a738ac78a40bdc6f68c03968db040840dca6612a5ac71d57217c470d7c43d"
+    },
+    {
+      "path": "outputs/wine_gradient_reduced/operator_cards/representation.md",
+      "size_bytes": 1196,
+      "sha256": "ace7456468bb729d773126d2f5a9c584c53af60622e62348310abcbf257458dc"
+    },
+    {
+      "path": "outputs/wine_gradient_reduced/operator_cards/risk.md",
+      "size_bytes": 688,
+      "sha256": "cb0b0e834694ebcb15c7c06de6317d08160be66744d34c109f0cfde99a201528"
+    },
+    {
+      "path": "outputs/wine_gradient_reduced/operator_dashboard_v2.html",
+      "size_bytes": 46370,
+      "sha256": "c09522876e6b2e657240070a211cf3e0bfa9c142b4d384f30734c1f9d782c701"
+    },
+    {
+      "path": "outputs/wine_gradient_reduced/operator_dashboard_v2.png",
+      "size_bytes": 389193,
+      "sha256": "af8659741a685d319e179064c700c543654f7adb5df6393196d431180a1dcb2d"
+    },
+    {
+      "path": "outputs/wine_gradient_reduced/operator_table.csv",
+      "size_bytes": 8152,
+      "sha256": "3c5a36d1d612e1997209a171c3ef96e0bbcbf3ef81dbefb0a5db09fa9c33dae4"
+    },
+    {
+      "path": "outputs/wine_gradient_reduced/operator_trace.json",
+      "size_bytes": 29406,
+      "sha256": "1e58f3bce3fd7ba63ebe1ab7cde0ec3f71061909cb94a8ec557f35e9122e3fc1"
+    },
+    {
+      "path": "outputs/wine_gradient_reduced/proof_trace.json",
+      "size_bytes": 32247,
+      "sha256": "ec6c1c6ceaa316f4d731d3b40a63f0d9366b89e6f5f5b3670bf019ad47c67e47"
+    },
+    {
+      "path": "outputs/wine_gradient_reduced/route.json",
+      "size_bytes": 29210,
+      "sha256": "98dd50cd34b4cd3e44d439d86035315988d474997d32603a869e858aba4e730c"
+    },
+    {
+      "path": "outputs/wine_gradient_reduced/summary.json",
+      "size_bytes": 647,
+      "sha256": "866617c26b22365123576c67f3c174ca786d3f89d79e77d4111e3948bd11362a"
+    },
+    {
+      "path": "outputs/wine_gradient_reduced/verifier_report.json",
+      "size_bytes": 773,
+      "sha256": "b019503513955ca963722227d9aa2cd1f1defdbcc17cff2304967abf35801f1d"
+    },
+    {
+      "path": "outputs/wine_logistic_clean/dashboard_data.json",
+      "size_bytes": 28737,
+      "sha256": "f491851ba232041024739922bf778b916a0c51bf8b328332693d793eb4d11f93"
+    },
+    {
+      "path": "outputs/wine_logistic_clean/operator_cards/action.md",
+      "size_bytes": 762,
+      "sha256": "a809ac55cfa1a974c0c2a6aef3c26069551b39d068a11a445cde84f58ea63c6b"
+    },
+    {
+      "path": "outputs/wine_logistic_clean/operator_cards/alignment.md",
+      "size_bytes": 850,
+      "sha256": "6008e8735cf5d6eff5226015630dbebf7a84e1f860d476b1f36375d37672eebf"
+    },
+    {
+      "path": "outputs/wine_logistic_clean/operator_cards/diagnostics.md",
+      "size_bytes": 974,
+      "sha256": "b271f3001e3fb4168e49bc9c9801ce9bdfb3712ca265b847f1ec47e942e34535"
+    },
+    {
+      "path": "outputs/wine_logistic_clean/operator_cards/explanation_object.md",
+      "size_bytes": 1109,
+      "sha256": "6353fad25c063cd204232112d8b36fc25101a52cbbbc789fc5ec3721b528f09d"
+    },
+    {
+      "path": "outputs/wine_logistic_clean/operator_cards/input_artifact.md",
+      "size_bytes": 1612,
+      "sha256": "064419d15b54f2880e33548d92d58f303bc08fa924845e86983eb9d9a2cfd46c"
+    },
+    {
+      "path": "outputs/wine_logistic_clean/operator_cards/proof.md",
+      "size_bytes": 1540,
+      "sha256": "22eb30732b47bd4020bc237a9ac46cd22477457a3816adb09e717360a2123d69"
+    },
+    {
+      "path": "outputs/wine_logistic_clean/operator_cards/reduction.md",
+      "size_bytes": 830,
+      "sha256": "58cd5005f44828daf0c14fc443a2eb4122b09396d0a1375d118a91e31c516866"
+    },
+    {
+      "path": "outputs/wine_logistic_clean/operator_cards/representation.md",
+      "size_bytes": 1174,
+      "sha256": "f0ff89201d98674a68c981ad6879b4fdc26543c89c1ce05e7ae653a10fbdeb59"
+    },
+    {
+      "path": "outputs/wine_logistic_clean/operator_cards/risk.md",
+      "size_bytes": 667,
+      "sha256": "1e4dbfb862e8b21215e302f443a16de9e515df5f8496d77d09d2a1a44153fe55"
+    },
+    {
+      "path": "outputs/wine_logistic_clean/operator_dashboard_v2.html",
+      "size_bytes": 45432,
+      "sha256": "5053f9be71f7b61742e9824f03b3d6f3c4a8f66327a6689a3bdcfe1645de11f1"
+    },
+    {
+      "path": "outputs/wine_logistic_clean/operator_dashboard_v2.png",
+      "size_bytes": 378951,
+      "sha256": "843e04b98a61a943455c78bddfedf80fbe590b304b06c528859cdf1d3ee5c50f"
+    },
+    {
+      "path": "outputs/wine_logistic_clean/operator_table.csv",
+      "size_bytes": 7951,
+      "sha256": "6902ecc2349ac04f857618167d1690c1fbc821e7c06171d7d91d6c7243368c69"
+    },
+    {
+      "path": "outputs/wine_logistic_clean/operator_trace.json",
+      "size_bytes": 28641,
+      "sha256": "c8b2040e01705a13c687ec3e78c4c18e4bd1e55265fe65d6e4a48e077b4379a5"
+    },
+    {
+      "path": "outputs/wine_logistic_clean/proof_trace.json",
+      "size_bytes": 31265,
+      "sha256": "2d259055c4e3c0153fbef402dd2dcb62f043b372f6ac7f6a381edba26674e7ea"
+    },
+    {
+      "path": "outputs/wine_logistic_clean/route.json",
+      "size_bytes": 28360,
+      "sha256": "2c6c717189993cd4e11654f252187f4d6d247b2f628c311b4445cba5f143f652"
+    },
+    {
+      "path": "outputs/wine_logistic_clean/summary.json",
+      "size_bytes": 608,
+      "sha256": "14c0744673ec9aaa0a312c6fb3a4a2dc37e64ec2ed22bacaae21eef7f2b0d71c"
+    },
+    {
+      "path": "outputs/wine_logistic_clean/verifier_report.json",
+      "size_bytes": 773,
+      "sha256": "b019503513955ca963722227d9aa2cd1f1defdbcc17cff2304967abf35801f1d"
+    },
+    {
+      "path": "outputs/wine_logistic_quality_limit/dashboard_data.json",
+      "size_bytes": 29464,
+      "sha256": "63f1091f3e52cd014a24c04b1468cd7b6b3d517e5aa4c8d3c7f7d64240e92d30"
+    },
+    {
+      "path": "outputs/wine_logistic_quality_limit/operator_cards/action.md",
+      "size_bytes": 830,
+      "sha256": "62eece06e499d3c8fa746a26cf893c0b55915a00a2bc9e050f452a70c7c5dfc7"
+    },
+    {
+      "path": "outputs/wine_logistic_quality_limit/operator_cards/alignment.md",
+      "size_bytes": 854,
+      "sha256": "0043a8d1b034887057959881177c82ef7fe74982bea3c732d85435c2b37ba392"
+    },
+    {
+      "path": "outputs/wine_logistic_quality_limit/operator_cards/diagnostics.md",
+      "size_bytes": 1085,
+      "sha256": "7c0749677ad0dd4b0d1ab9e7c32799a401460c61fc8eb5889a8a25aec5a419f3"
+    },
+    {
+      "path": "outputs/wine_logistic_quality_limit/operator_cards/explanation_object.md",
+      "size_bytes": 1109,
+      "sha256": "a827348a6dbc8be28c14a22d8ca98828a8e0142f50f4ecd566780a98ead79eab"
+    },
+    {
+      "path": "outputs/wine_logistic_quality_limit/operator_cards/input_artifact.md",
+      "size_bytes": 1644,
+      "sha256": "201cabec921ea8b7b6f66c5bce5efb01c53426982ba734f088b312038771e14d"
+    },
+    {
+      "path": "outputs/wine_logistic_quality_limit/operator_cards/proof.md",
+      "size_bytes": 1668,
+      "sha256": "98f4b9debb6709d655c059c63658abf1c5ebe9bf07760d92f9abc6cb07d7eb73"
+    },
+    {
+      "path": "outputs/wine_logistic_quality_limit/operator_cards/reduction.md",
+      "size_bytes": 830,
+      "sha256": "9edde3ce2f9566ad4ef6a172ee2c103b41907158bc653763601aa40b83fbfcea"
+    },
+    {
+      "path": "outputs/wine_logistic_quality_limit/operator_cards/representation.md",
+      "size_bytes": 1220,
+      "sha256": "683195eb73b746c9146e0b4269db72ed4d59b2e94f72ab89f02f53098393430c"
+    },
+    {
+      "path": "outputs/wine_logistic_quality_limit/operator_cards/risk.md",
+      "size_bytes": 691,
+      "sha256": "2e9055447b89da538b535cd90dfbce1bfe681ebd5a24f6ba8d02cddb2a1d7a41"
+    },
+    {
+      "path": "outputs/wine_logistic_quality_limit/operator_dashboard_v2.html",
+      "size_bytes": 46335,
+      "sha256": "347373a53341590633c3640020c46fc4e34853dba8c5a8efb0567caab44bff55"
+    },
+    {
+      "path": "outputs/wine_logistic_quality_limit/operator_dashboard_v2.png",
+      "size_bytes": 385223,
+      "sha256": "f0176ab37b9cb642aaac87b82ff5d020a0fbf9c0fe9a79ed859ac6c54e8352c5"
+    },
+    {
+      "path": "outputs/wine_logistic_quality_limit/operator_table.csv",
+      "size_bytes": 8160,
+      "sha256": "62768729821fe8c3e333097e71d4a80627a7906ecbc601cb0217a3b7009dd5de"
+    },
+    {
+      "path": "outputs/wine_logistic_quality_limit/operator_trace.json",
+      "size_bytes": 29389,
+      "sha256": "2d973a00bb8baa83df52db296dc69712572a2a08009fcd39863e706766fe8274"
+    },
+    {
+      "path": "outputs/wine_logistic_quality_limit/proof_trace.json",
+      "size_bytes": 32224,
+      "sha256": "df2affa1433264119dbf8050d6e0ebdb43831f0f844f696608a0ccef663397c6"
+    },
+    {
+      "path": "outputs/wine_logistic_quality_limit/route.json",
+      "size_bytes": 29191,
+      "sha256": "639a5187fc47f015da4e4ec5eb3365fdde538c9d00fc4a81aff3820e1077b4f8"
+    },
+    {
+      "path": "outputs/wine_logistic_quality_limit/summary.json",
+      "size_bytes": 650,
+      "sha256": "33439debc06d1499ebebd83b9af40dce654316bed726c830ee8de28fa3130058"
+    },
+    {
+      "path": "outputs/wine_logistic_quality_limit/verifier_report.json",
+      "size_bytes": 773,
+      "sha256": "b019503513955ca963722227d9aa2cd1f1defdbcc17cff2304967abf35801f1d"
+    },
+    {
+      "path": "outputs/wine_mlp_reduction_loss/dashboard_data.json",
+      "size_bytes": 29416,
+      "sha256": "3ea864fc9efb0933217e0808b7682ec8bfe0aa3133c6360a64ad6335a7fd6fa0"
+    },
+    {
+      "path": "outputs/wine_mlp_reduction_loss/operator_cards/action.md",
+      "size_bytes": 832,
+      "sha256": "983c80bf6b095d888d53d1380f428b84f3ca7787251c6ceff616eb4ef893c17f"
+    },
+    {
+      "path": "outputs/wine_mlp_reduction_loss/operator_cards/alignment.md",
+      "size_bytes": 850,
+      "sha256": "fc98ea570e032e0c916169a7e579794191860ea9af42b19a775353333bcd865e"
+    },
+    {
+      "path": "outputs/wine_mlp_reduction_loss/operator_cards/diagnostics.md",
+      "size_bytes": 1080,
+      "sha256": "e2eb3be951868e653eab37ac0f4d1738489257e09f2a376e91579ed629f21259"
+    },
+    {
+      "path": "outputs/wine_mlp_reduction_loss/operator_cards/explanation_object.md",
+      "size_bytes": 1104,
+      "sha256": "68dd80d764f09befa458cc9beb7b4bf3cc40c0078ce4be05138659bb9da7afcb"
+    },
+    {
+      "path": "outputs/wine_mlp_reduction_loss/operator_cards/input_artifact.md",
+      "size_bytes": 1623,
+      "sha256": "9bfb47cebb2167be03e3bae080f86882736705b9fbd54338113f7d70802ef91f"
+    },
+    {
+      "path": "outputs/wine_mlp_reduction_loss/operator_cards/proof.md",
+      "size_bytes": 1661,
+      "sha256": "98af952d66fcfc45750e5dc3d355250b145a1010b3474c622aa358ac25140b90"
+    },
+    {
+      "path": "outputs/wine_mlp_reduction_loss/operator_cards/reduction.md",
+      "size_bytes": 831,
+      "sha256": "4fc661f41564b44f1a6c6c770fc68d6c259477529b20f5dd5edfdf431e0bdd66"
+    },
+    {
+      "path": "outputs/wine_mlp_reduction_loss/operator_cards/representation.md",
+      "size_bytes": 1249,
+      "sha256": "90423317c510ca0ff98faa190dc5946790b61c53013abfe3335c6db215f24dd0"
+    },
+    {
+      "path": "outputs/wine_mlp_reduction_loss/operator_cards/risk.md",
+      "size_bytes": 688,
+      "sha256": "4bf8bc25b6a4e7233205656f8e00337016104c6269ceb63825dd12e26aa015ee"
+    },
+    {
+      "path": "outputs/wine_mlp_reduction_loss/operator_dashboard_v2.html",
+      "size_bytes": 46297,
+      "sha256": "b0a95f6c8f1f9f98068f2fc5e3caedbe01e18194a2b3cd3b6ed214c6162d7d81"
+    },
+    {
+      "path": "outputs/wine_mlp_reduction_loss/operator_dashboard_v2.png",
+      "size_bytes": 387426,
+      "sha256": "6ca866156414fcfad9c2eaedf7d5e857da57def2692ec7809a2efcbac25a9667"
+    },
+    {
+      "path": "outputs/wine_mlp_reduction_loss/operator_table.csv",
+      "size_bytes": 8167,
+      "sha256": "72e5e722220751de12bcfd5e22dd1ea6e3dadbc34ce794c39f021ef68c5ed2af"
+    },
+    {
+      "path": "outputs/wine_mlp_reduction_loss/operator_trace.json",
+      "size_bytes": 29342,
+      "sha256": "812c5d348aea4d654af352efc934fa98f2dd467c1fccfed63d8ed0523acefd3c"
+    },
+    {
+      "path": "outputs/wine_mlp_reduction_loss/proof_trace.json",
+      "size_bytes": 32169,
+      "sha256": "ce22d978d2a30e9d6a24666541be6cc9bd3cf39149e74342987725b03936d425"
+    },
+    {
+      "path": "outputs/wine_mlp_reduction_loss/route.json",
+      "size_bytes": 29143,
+      "sha256": "cf3a83786f6d159aa431db0f19f883268842d81d1d5a8b98d075fa207dd4f1c5"
+    },
+    {
+      "path": "outputs/wine_mlp_reduction_loss/summary.json",
+      "size_bytes": 641,
+      "sha256": "1eecf846fdb3a3f0a59b0422ac154c0f5bb14e56bc211c66a0af30d3825be4f2"
+    },
+    {
+      "path": "outputs/wine_mlp_reduction_loss/verifier_report.json",
+      "size_bytes": 773,
+      "sha256": "b019503513955ca963722227d9aa2cd1f1defdbcc17cff2304967abf35801f1d"
+    },
+    {
+      "path": "reports/action_distribution.csv",
+      "size_bytes": 106,
+      "sha256": "18ffbe590bbb7c90374e8809f4503d1b3245e124082c5fb1f8ffaa823075cbe0"
+    },
+    {
+      "path": "reports/diagnostic_distribution.csv",
+      "size_bytes": 470,
+      "sha256": "3317aee92dd6415ff1734c5e64753cab982e2a0a25695426c1fc33cbeb7534f8"
+    },
+    {
+      "path": "reports/figures/action_distribution.png",
+      "size_bytes": 31168,
+      "sha256": "4c76280761e6f922887ce0287eb1df0a400ce31a3a18342b9a6e1bf9cc11d34a"
+    },
+    {
+      "path": "reports/figures/diagnostic_distribution.png",
+      "size_bytes": 106798,
+      "sha256": "c0fcc435d4cb6fa30e86f75e60fce0d6aedee8d6f876d1f26f51bc239e98cd88"
+    },
+    {
+      "path": "reports/figures/gamma_delta_scatter.png",
+      "size_bytes": 43987,
+      "sha256": "222775c8d848ca909d8eccc4f621493c4a3e99a3b7c491faa655e243935dd8fd"
+    },
+    {
+      "path": "reports/figures/representation_class_coverage.png",
+      "size_bytes": 18535,
+      "sha256": "cc627226ba98f8c76acaa5157625d8bf5c14b327ef3c8d14fe5eb9438395843c"
+    },
+    {
+      "path": "reports/figures/rho_by_experiment.png",
+      "size_bytes": 128740,
+      "sha256": "956630d99efe2ed37912990a40bf2666dadbb8b385b59b8ca124e0dffcf48330"
+    },
+    {
+      "path": "reports/figures/risk_component_heatmap.png",
+      "size_bytes": 103919,
+      "sha256": "778c19523525592e1cae271ef954290c5c911fdd182d25a7a93d6a08d2be9218"
+    },
+    {
+      "path": "reports/representation_class_coverage.csv",
+      "size_bytes": 528,
+      "sha256": "7beb1dc4e3d2a1a8db6874900eadc2122bde409ad4011ad073b251dd398e0e34"
+    },
+    {
+      "path": "reports/research_validation_report.md",
+      "size_bytes": 2279,
+      "sha256": "fd71e893eb7948522d9dbf4d5aa73203f6e9077da87ef1b3bd935db712c5f1d1"
+    },
+    {
+      "path": "reports/research_validation_results.csv",
+      "size_bytes": 4993,
+      "sha256": "fc72cc997efa0d2bfd402175af0e14b889f63cfb753b2a92c778557a117d5e7e"
+    },
+    {
+      "path": "reports/risk_component_summary.csv",
+      "size_bytes": 87,
+      "sha256": "95ac7d9af6ac466c31b3a7952dd149a8d00a5eba71d9cfa0480cf77188d1a083"
+    }
+  ]
+}

@@ -1,0 +1,848 @@
+{
+  "route_id": "external_wine_classification:sklearn_wine:LogisticRegression:missing_features",
+  "scenario_id": "external_wine_classification",
+  "scenario_title_ru": "Research validation: tabular_classification",
+  "title": "External Research Validation FuzzyXAI OperatorRoute",
+  "created_at": "2026-07-01T16:42:19.063872+00:00",
+  "nodes": [
+    {
+      "node_id": "input_artifact",
+      "title": "Внешняя модель",
+      "input_summary": "payload внешней модели",
+      "output_summary": "AdaptedInput",
+      "value": "p=0.84; class=1",
+      "threshold": "",
+      "status": "passed",
+      "explanation": "Адаптер принимает внешний результат модели.",
+      "formula_ref": "adapter",
+      "trace_ref": "adapted_input",
+      "value_source": "external_model_payload",
+      "raw": {
+        "source_type": "tabular",
+        "model_name": "LogisticRegression",
+        "dataset_name": "sklearn_wine",
+        "predicted_class": 1,
+        "class_probability": 0.84,
+        "feature_values": {
+          "f1": 0.1,
+          "f2": 0.2,
+          "f3": 0.3,
+          "f4": 0.4,
+          "f5": 0.5
+        },
+        "feature_importance": {
+          "f1": 0.2432,
+          "f2": 0.1824,
+          "f3": 0.1368,
+          "f4": 0.1064,
+          "f5": 0.0912
+        },
+        "top_k_importance": 5,
+        "missing_rate": 0.41,
+        "feature_range_violation": 0.2,
+        "context_values": {
+          "experiment_id": "wine_logistic_quality_limit",
+          "task_type": "tabular_classification",
+          "perturbation": "missing_features",
+          "representation_class": "NAS",
+          "prediction_interval_width": 0.0,
+          "conflict_component": 0.0,
+          "noise_ratio": 0.0,
+          "occlusion_rate": 0.0
+        }
+      },
+      "title_ru": "Внешняя модель",
+      "operator_type": "adapter",
+      "input_refs": [],
+      "output_refs": [],
+      "input_values": {
+        "source_type": "tabular",
+        "model_name": "LogisticRegression",
+        "dataset_name": "sklearn_wine",
+        "model_output": {
+          "predicted_class": 1,
+          "class_probability": 0.84
+        },
+        "quality_metrics": {
+          "missing_rate": 0.41,
+          "feature_range_violation": 0.2
+        },
+        "feature_values": {
+          "f1": 0.1,
+          "f2": 0.2,
+          "f3": 0.3,
+          "f4": 0.4,
+          "f5": 0.5
+        },
+        "attribution_values": {
+          "f1": 0.2432,
+          "f2": 0.1824,
+          "f3": 0.1368,
+          "f4": 0.1064,
+          "f5": 0.0912
+        },
+        "context_values": {
+          "experiment_id": "wine_logistic_quality_limit",
+          "task_type": "tabular_classification",
+          "perturbation": "missing_features",
+          "representation_class": "NAS",
+          "prediction_interval_width": 0.0,
+          "conflict_component": 0.0,
+          "noise_ratio": 0.0,
+          "occlusion_rate": 0.0
+        }
+      },
+      "output_values": {
+        "adapted_input_id": "external_wine_classification:LogisticRegression",
+        "trace_origin": "external_model_payload",
+        "class_probability": 0.84,
+        "feature_importance": {
+          "f1": 0.2432,
+          "f2": 0.1824,
+          "f3": 0.1368,
+          "f4": 0.1064,
+          "f5": 0.0912
+        }
+      },
+      "formula_id": null,
+      "formula_text": "Нормализация внешнего входа",
+      "formula_latex": null,
+      "components": {
+        "model_name": "LogisticRegression",
+        "dataset_name": "sklearn_wine",
+        "source_type": "tabular",
+        "task_type": "tabular_classification",
+        "perturbation": "missing_features"
+      },
+      "thresholds": {},
+      "status_reason_ru": "Внешний payload успешно приведён к AdaptedInput.",
+      "interpretation_ru": "Фреймворк получил уверенность модели, признаки, важности признаков, метрики качества и контекст ограничения.",
+      "next_node_ids": [
+        "explanation_object"
+      ],
+      "source_commit": "11955855fb111912239f83500af5349fba895ee5",
+      "details": {
+        "applications_used": false
+      }
+    },
+    {
+      "node_id": "explanation_object",
+      "title": "Объяснительный объект E_k",
+      "input_summary": "предыдущее состояние маршрута",
+      "output_summary": "выход оператора",
+      "value": "E_k сформирован",
+      "threshold": "",
+      "status": "passed",
+      "explanation": "Внешний payload переведён в объяснительный объект.",
+      "formula_ref": "E_k",
+      "trace_ref": "explanation_object",
+      "value_source": "computed",
+      "raw": {
+        "value_source": "computed"
+      },
+      "title_ru": "Объяснительный объект E_k",
+      "operator_type": "explanation_object",
+      "input_refs": [
+        "input_artifact"
+      ],
+      "output_refs": [
+        "representation"
+      ],
+      "input_values": {
+        "class_probability": 0.84,
+        "feature_importance": {
+          "f1": 0.2432,
+          "f2": 0.1824,
+          "f3": 0.1368,
+          "f4": 0.1064,
+          "f5": 0.0912
+        }
+      },
+      "output_values": {
+        "terms": [
+          "f1",
+          "f2",
+          "f3",
+          "f4",
+          "f5"
+        ],
+        "memberships": {
+          "f1": 0.2432,
+          "f2": 0.1824,
+          "f3": 0.1368,
+          "f4": 0.1064,
+          "f5": 0.0912
+        },
+        "rules": [],
+        "activations": {
+          "predicted_class": 1
+        },
+        "uncertainty": 0.16,
+        "trace": "external_wine_classification:LogisticRegression",
+        "object_summary": "табличный объект с вероятностью класса и top-k атрибуциями"
+      },
+      "formula_id": "E_k",
+      "formula_text": "E_k = {L_k, μ_k, R_k, α_k, u_k, τ_k}",
+      "formula_latex": null,
+      "components": {
+        "terms": [
+          "f1",
+          "f2",
+          "f3",
+          "f4",
+          "f5"
+        ],
+        "uncertainty": 0.16
+      },
+      "thresholds": {},
+      "status_reason_ru": "Объект объяснения содержит вероятность, признаки и атрибуции.",
+      "interpretation_ru": "E_k фиксирует, что модель уверена не полностью и объяснение редуцировано до top-k признаков.",
+      "next_node_ids": [
+        "representation"
+      ],
+      "source_commit": "11955855fb111912239f83500af5349fba895ee5",
+      "details": {}
+    },
+    {
+      "node_id": "representation",
+      "title": "Класс представления F",
+      "input_summary": "предыдущее состояние маршрута",
+      "output_summary": "выход оператора",
+      "value": "F0",
+      "threshold": "",
+      "status": "passed",
+      "explanation": "Табличный результат представлен через обычное нечёткое представление.",
+      "formula_ref": "F",
+      "trace_ref": "representation",
+      "value_source": "computed",
+      "raw": {
+        "value_source": "computed"
+      },
+      "title_ru": "Класс представления F",
+      "operator_type": "representation",
+      "input_refs": [
+        "explanation_object"
+      ],
+      "output_refs": [
+        "alignment",
+        "reduction"
+      ],
+      "input_values": {
+        "source_type": "tabular",
+        "task_type": "tabular_classification",
+        "has_single_probability": true,
+        "has_top_k_importance": true,
+        "context": {
+          "experiment_id": "wine_logistic_quality_limit",
+          "task_type": "tabular_classification",
+          "perturbation": "missing_features",
+          "representation_class": "NAS",
+          "prediction_interval_width": 0.0,
+          "conflict_component": 0.0,
+          "noise_ratio": 0.0,
+          "occlusion_rate": 0.0
+        }
+      },
+      "output_values": {
+        "class_id": "NAS",
+        "class_title_ru": "источниковое представление",
+        "output_representation": "confidence + top-k attribution + context metrics"
+      },
+      "formula_id": "NAS-selection",
+      "formula_text": "class_id выбирается по task_type, interval, source/quality conflict и multilevel context",
+      "formula_latex": null,
+      "components": {
+        "input_conditions": [
+          "tabular_classification",
+          "missing_features"
+        ],
+        "interval_width": 0.0,
+        "quality_penalty": 0.41,
+        "conflict_component": 0.0
+      },
+      "thresholds": {},
+      "status_reason_ru": "Выбран класс NAS.",
+      "interpretation_ru": "Источниковое представление фиксирует конфликт качества, источника или объяснения.",
+      "next_node_ids": [
+        "alignment",
+        "reduction"
+      ],
+      "source_commit": "11955855fb111912239f83500af5349fba895ee5",
+      "details": {}
+    },
+    {
+      "node_id": "alignment",
+      "title": "Согласование T_ij",
+      "input_summary": "предыдущее состояние маршрута",
+      "output_summary": "выход оператора",
+      "value": "gamma=0.41",
+      "threshold": "",
+      "status": "warning",
+      "explanation": "gamma=max(1-p, quality_penalty, conflict_component, interval_width).",
+      "formula_ref": "gamma",
+      "trace_ref": "alignment",
+      "value_source": "computed",
+      "raw": {
+        "uncertainty": 0.16,
+        "quality_penalty": 0.41,
+        "conflict_component": 0.0,
+        "interval_width": 0.0,
+        "gamma": 0.41,
+        "value_source": "computed"
+      },
+      "title_ru": "Согласование T_ij",
+      "operator_type": "alignment",
+      "input_refs": [
+        "representation"
+      ],
+      "output_refs": [
+        "risk"
+      ],
+      "input_values": {
+        "class_probability": 0.84,
+        "missing_rate": 0.41,
+        "feature_range_violation": 0.2,
+        "conflict_component": 0.0,
+        "interval_width": 0.0
+      },
+      "output_values": {
+        "gamma": 0.41
+      },
+      "formula_id": "external_tabular_gamma",
+      "formula_text": "gamma = max(1 - class_probability, quality_penalty, conflict_component, interval_width)",
+      "formula_latex": "\\gamma=\\max(1-p,q,c,w)",
+      "components": {
+        "uncertainty": 0.16,
+        "quality_penalty": 0.41,
+        "conflict_component": 0.0,
+        "interval_width": 0.0,
+        "calculation": "max(0.16, 0.41, 0.0, 0.0) = 0.41"
+      },
+      "thresholds": {
+        "gamma_warning": 0.35
+      },
+      "status_reason_ru": "Рассогласование ненулевое, потому что вероятность класса меньше 1.",
+      "interpretation_ru": "Уверенность модели неполная; это ограничивает автоматическое доверие.",
+      "next_node_ids": [
+        "risk"
+      ],
+      "source_commit": "11955855fb111912239f83500af5349fba895ee5",
+      "details": {}
+    },
+    {
+      "node_id": "reduction",
+      "title": "Потери представления",
+      "input_summary": "предыдущее состояние маршрута",
+      "output_summary": "выход оператора",
+      "value": "Delta=0.24",
+      "threshold": "",
+      "status": "passed",
+      "explanation": "Delta=1-sum(feature_importance) для переданного набора важностей.",
+      "formula_ref": "Delta",
+      "trace_ref": "reduction",
+      "value_source": "computed",
+      "raw": {
+        "delta": 0.24,
+        "importance_sum": 0.76,
+        "value_source": "computed"
+      },
+      "title_ru": "Потери представления",
+      "operator_type": "reduction",
+      "input_refs": [
+        "representation"
+      ],
+      "output_refs": [
+        "risk"
+      ],
+      "input_values": {
+        "selected_features": [
+          "f1",
+          "f2",
+          "f3",
+          "f4",
+          "f5"
+        ],
+        "feature_importance": {
+          "f1": 0.2432,
+          "f2": 0.1824,
+          "f3": 0.1368,
+          "f4": 0.1064,
+          "f5": 0.0912
+        },
+        "top_k": 5
+      },
+      "output_values": {
+        "delta": 0.24,
+        "top_k_importance_sum": 0.76
+      },
+      "formula_id": "external_tabular_delta",
+      "formula_text": "delta = 1 - sum(top_k_feature_importance)",
+      "formula_latex": "\\Delta=1-\\sum importance_{top-k}",
+      "components": {
+        "selected_features": [
+          "f1",
+          "f2",
+          "f3",
+          "f4",
+          "f5"
+        ],
+        "top_k_importance_sum": 0.76,
+        "calculation": "1 - 0.76 = 0.24"
+      },
+      "thresholds": {
+        "delta_warning": 0.35
+      },
+      "status_reason_ru": "Часть объяснения потеряна при top-k редукции.",
+      "interpretation_ru": "Delta показывает, какая доля атрибутивного объяснения не попала в сокращённый набор признаков.",
+      "next_node_ids": [
+        "risk"
+      ],
+      "source_commit": "11955855fb111912239f83500af5349fba895ee5",
+      "details": {}
+    },
+    {
+      "node_id": "risk",
+      "title": "Риск rho",
+      "input_summary": "предыдущее состояние маршрута",
+      "output_summary": "выход оператора",
+      "value": "rho=0.41",
+      "threshold": "",
+      "status": "warning",
+      "explanation": "rho=max(gamma, Delta, quality_component, conflict_component).",
+      "formula_ref": "rho",
+      "trace_ref": "risk",
+      "value_source": "computed",
+      "raw": {
+        "rho": 0.41,
+        "theta_accept": 0.35,
+        "theta_warning": 0.6,
+        "value_source": "computed"
+      },
+      "title_ru": "Риск rho",
+      "operator_type": "risk",
+      "input_refs": [
+        "alignment",
+        "reduction"
+      ],
+      "output_refs": [
+        "diagnostics"
+      ],
+      "input_values": {
+        "gamma": 0.41,
+        "delta": 0.24,
+        "quality_component": 0.41,
+        "conflict_component": 0.0
+      },
+      "output_values": {
+        "rho": 0.41,
+        "risk_zone": "lower_confidence",
+        "dominant_component": "gamma"
+      },
+      "formula_id": "external_tabular_rho",
+      "formula_text": "rho = max(gamma, delta, quality_component, conflict_component)",
+      "formula_latex": "\\rho=\\max(\\gamma,\\Delta)",
+      "components": {
+        "gamma": 0.41,
+        "delta": 0.24,
+        "quality_component": 0.41,
+        "conflict_component": 0.0,
+        "calculation": "max(0.41, 0.24, 0.41, 0.0) = 0.41"
+      },
+      "thresholds": {
+        "theta_accept": 0.35,
+        "theta_warning": 0.6
+      },
+      "status_reason_ru": "rho попал в зону lower_confidence.",
+      "interpretation_ru": "Основной вклад в риск: gamma.",
+      "next_node_ids": [
+        "diagnostics"
+      ],
+      "source_commit": "11955855fb111912239f83500af5349fba895ee5",
+      "details": {}
+    },
+    {
+      "node_id": "diagnostics",
+      "title": "Диагностика D",
+      "input_summary": "предыдущее состояние маршрута",
+      "output_summary": "выход оператора",
+      "value": "D_external_tabular_quality_limit",
+      "threshold": "",
+      "status": "warning",
+      "explanation": "ограничение качества внешнего табличного входа",
+      "formula_ref": "D",
+      "trace_ref": "diagnostics",
+      "value_source": "computed",
+      "raw": {
+        "diagnostics": [
+          {
+            "diagnostic_id": "D_external_tabular_quality_limit",
+            "diagnostic_type": "external_tabular_quality_limit",
+            "source": "external_tabular_adapter",
+            "criticality": "medium",
+            "message_ru": "ограничение качества внешнего табличного входа",
+            "recommended_action": "lower_confidence"
+          }
+        ],
+        "value_source": "computed"
+      },
+      "title_ru": "Диагностика D",
+      "operator_type": "diagnostics",
+      "input_refs": [
+        "risk"
+      ],
+      "output_refs": [
+        "action"
+      ],
+      "input_values": {
+        "rho": 0.41,
+        "risk_zone": "lower_confidence",
+        "gamma": 0.41,
+        "delta": 0.24,
+        "task_type": "tabular_classification",
+        "dominant_component": "gamma"
+      },
+      "output_values": {
+        "diagnostic_id": "D_external_tabular_quality_limit",
+        "diagnostic_title_ru": "ограничение качества внешнего табличного входа",
+        "severity": "medium",
+        "recommended_action_level": "lower_confidence"
+      },
+      "formula_id": "diagnostic-policy",
+      "formula_text": "diagnostic_id выбирается по task_type, risk_zone и доминирующему компоненту риска",
+      "formula_latex": null,
+      "components": {
+        "reason_components": {
+          "gamma": 0.41,
+          "delta": 0.24,
+          "rho": 0.41,
+          "dominant_component": "gamma",
+          "task_type": "tabular_classification"
+        }
+      },
+      "thresholds": {},
+      "status_reason_ru": "ограничение качества внешнего табличного входа",
+      "interpretation_ru": "Диагностика означает ограничение доверия, а не запрет или утверждение о плохой модели.",
+      "next_node_ids": [
+        "action"
+      ],
+      "source_commit": "11955855fb111912239f83500af5349fba895ee5",
+      "details": {}
+    },
+    {
+      "node_id": "action",
+      "title": "Действие",
+      "input_summary": "предыдущее состояние маршрута",
+      "output_summary": "выход оператора",
+      "value": "lower_confidence",
+      "threshold": "",
+      "status": "warning",
+      "explanation": "Действие выбрано политикой FuzzyXAI.",
+      "formula_ref": "action policy",
+      "trace_ref": "action",
+      "value_source": "computed",
+      "raw": {
+        "action": "lower_confidence",
+        "value_source": "computed"
+      },
+      "title_ru": "Действие",
+      "operator_type": "action",
+      "input_refs": [
+        "diagnostics"
+      ],
+      "output_refs": [
+        "proof"
+      ],
+      "input_values": {
+        "rho": 0.41,
+        "diagnostic_id": "D_external_tabular_quality_limit",
+        "risk_zone": "lower_confidence"
+      },
+      "output_values": {
+        "action_id": "lower_confidence",
+        "action_title_ru": "понизить доверие"
+      },
+      "formula_id": "action-policy",
+      "formula_text": "if rho < 0.35: accept; elif rho < 0.60: lower_confidence; else: audit",
+      "formula_latex": null,
+      "components": {
+        "rho": 0.41,
+        "diagnostic_id": "D_external_tabular_quality_limit",
+        "alternative_actions": [
+          "accept",
+          "lower_confidence",
+          "audit"
+        ]
+      },
+      "thresholds": {
+        "theta_accept": 0.35,
+        "theta_warning": 0.6
+      },
+      "status_reason_ru": "Риск ненулевой, но не критический.",
+      "interpretation_ru": "Результат не блокируется, но автоматическое доверие понижается из-за ненулевого риска.",
+      "next_node_ids": [
+        "proof"
+      ],
+      "source_commit": "11955855fb111912239f83500af5349fba895ee5",
+      "details": {}
+    },
+    {
+      "node_id": "proof",
+      "title": "Доказательный след",
+      "input_summary": "предыдущее состояние маршрута",
+      "output_summary": "выход оператора",
+      "value": "proof trace готов",
+      "threshold": "",
+      "status": "passed",
+      "explanation": "Маршрут сохраняется как проверяемый доказательный след.",
+      "formula_ref": "proof trace",
+      "trace_ref": "proof",
+      "value_source": "computed",
+      "raw": {
+        "value_source": "computed"
+      },
+      "title_ru": "Доказательный след",
+      "operator_type": "proof",
+      "input_refs": [
+        "action"
+      ],
+      "output_refs": [],
+      "input_values": {
+        "computed_result": {
+          "model_name": "LogisticRegression",
+          "dataset_name": "sklearn_wine",
+          "task_type": "tabular_classification",
+          "perturbation": "missing_features",
+          "representation_class": "NAS",
+          "class_probability": 0.84,
+          "uncertainty": 0.16,
+          "quality_penalty": 0.41,
+          "uncertainty_component": 0.16,
+          "quality_component": 0.41,
+          "reduction_component": 0.24,
+          "conflict_component": 0.0,
+          "interval_component": 0.0,
+          "gamma": 0.41,
+          "delta": 0.24,
+          "rho": 0.41,
+          "risk_dominant_component": "gamma",
+          "diagnostic_id": "D_external_tabular_quality_limit",
+          "action_id": "lower_confidence",
+          "action": "lower_confidence"
+        },
+        "diagnostics": [
+          {
+            "diagnostic_id": "D_external_tabular_quality_limit",
+            "diagnostic_type": "external_tabular_quality_limit",
+            "source": "external_tabular_adapter",
+            "criticality": "medium",
+            "message_ru": "ограничение качества внешнего табличного входа",
+            "recommended_action": "lower_confidence"
+          }
+        ],
+        "action": "lower_confidence"
+      },
+      "output_values": {
+        "verification_status": "PASS",
+        "source_commit": "11955855fb111912239f83500af5349fba895ee5"
+      },
+      "formula_id": "proof-trace",
+      "formula_text": "proof_trace = hashable route + computed_result + diagnostics + action + source_commit",
+      "formula_latex": null,
+      "components": {
+        "scenario_id": "external_wine_classification",
+        "source_commit": "11955855fb111912239f83500af5349fba895ee5"
+      },
+      "thresholds": {},
+      "status_reason_ru": "Proof trace содержит значения маршрута и source_commit.",
+      "interpretation_ru": "Доказательный след связывает route, значения операторов, диагностику и действие.",
+      "next_node_ids": [],
+      "source_commit": "11955855fb111912239f83500af5349fba895ee5",
+      "details": {}
+    }
+  ],
+  "edges": [
+    {
+      "edge_id": "edge_input_explanation",
+      "source_node_id": "input_artifact",
+      "target_node_id": "explanation_object",
+      "passed_values": {
+        "class_probability": 0.84,
+        "feature_importance": {
+          "f1": 0.2432,
+          "f2": 0.1824,
+          "f3": 0.1368,
+          "f4": 0.1064,
+          "f5": 0.0912
+        }
+      },
+      "explanation_ru": "Адаптированный вход передан в объяснительный объект."
+    },
+    {
+      "edge_id": "edge_explanation_representation",
+      "source_node_id": "explanation_object",
+      "target_node_id": "representation",
+      "passed_values": {
+        "terms": [
+          "f1",
+          "f2",
+          "f3",
+          "f4",
+          "f5"
+        ],
+        "uncertainty": 0.16
+      },
+      "explanation_ru": "Объяснительный объект передан в выбор представления."
+    },
+    {
+      "edge_id": "edge_representation_alignment",
+      "source_node_id": "representation",
+      "target_node_id": "alignment",
+      "passed_values": {
+        "class_probability": 0.84,
+        "quality_metrics": {
+          "missing_rate": 0.41,
+          "feature_range_violation": 0.2
+        },
+        "context": {
+          "experiment_id": "wine_logistic_quality_limit",
+          "task_type": "tabular_classification",
+          "perturbation": "missing_features",
+          "representation_class": "NAS",
+          "prediction_interval_width": 0.0,
+          "conflict_component": 0.0,
+          "noise_ratio": 0.0,
+          "occlusion_rate": 0.0
+        }
+      },
+      "explanation_ru": "Вероятность, качество и контекст переданы в оператор согласования."
+    },
+    {
+      "edge_id": "edge_representation_reduction",
+      "source_node_id": "representation",
+      "target_node_id": "reduction",
+      "passed_values": {
+        "feature_importance": {
+          "f1": 0.2432,
+          "f2": 0.1824,
+          "f3": 0.1368,
+          "f4": 0.1064,
+          "f5": 0.0912
+        },
+        "top_k": 5
+      },
+      "explanation_ru": "Top-k атрибуции переданы в оператор редукции."
+    },
+    {
+      "edge_id": "edge_alignment_risk",
+      "source_node_id": "alignment",
+      "target_node_id": "risk",
+      "passed_values": {
+        "gamma": 0.41
+      },
+      "explanation_ru": "Рассогласование передано в наблюдатель риска."
+    },
+    {
+      "edge_id": "edge_reduction_risk",
+      "source_node_id": "reduction",
+      "target_node_id": "risk",
+      "passed_values": {
+        "delta": 0.24
+      },
+      "explanation_ru": "Потери редукции переданы в наблюдатель риска."
+    },
+    {
+      "edge_id": "edge_risk_diagnostics",
+      "source_node_id": "risk",
+      "target_node_id": "diagnostics",
+      "passed_values": {
+        "rho": 0.41,
+        "risk_zone": "lower_confidence"
+      },
+      "explanation_ru": "Риск переведён в диагностическое состояние."
+    },
+    {
+      "edge_id": "edge_diagnostics_action",
+      "source_node_id": "diagnostics",
+      "target_node_id": "action",
+      "passed_values": {
+        "diagnostic_id": "D_external_tabular_quality_limit",
+        "recommended_action": "lower_confidence"
+      },
+      "explanation_ru": "Диагностика передана в политику действия."
+    },
+    {
+      "edge_id": "edge_action_proof",
+      "source_node_id": "action",
+      "target_node_id": "proof",
+      "passed_values": {
+        "action_id": "lower_confidence",
+        "computed_result": {
+          "model_name": "LogisticRegression",
+          "dataset_name": "sklearn_wine",
+          "task_type": "tabular_classification",
+          "perturbation": "missing_features",
+          "representation_class": "NAS",
+          "class_probability": 0.84,
+          "uncertainty": 0.16,
+          "quality_penalty": 0.41,
+          "uncertainty_component": 0.16,
+          "quality_component": 0.41,
+          "reduction_component": 0.24,
+          "conflict_component": 0.0,
+          "interval_component": 0.0,
+          "gamma": 0.41,
+          "delta": 0.24,
+          "rho": 0.41,
+          "risk_dominant_component": "gamma",
+          "diagnostic_id": "D_external_tabular_quality_limit",
+          "action_id": "lower_confidence",
+          "action": "lower_confidence"
+        }
+      },
+      "explanation_ru": "Итоговое действие сохранено в proof trace."
+    }
+  ],
+  "computed_result": {
+    "model_name": "LogisticRegression",
+    "dataset_name": "sklearn_wine",
+    "task_type": "tabular_classification",
+    "perturbation": "missing_features",
+    "representation_class": "NAS",
+    "class_probability": 0.84,
+    "uncertainty": 0.16,
+    "quality_penalty": 0.41,
+    "uncertainty_component": 0.16,
+    "quality_component": 0.41,
+    "reduction_component": 0.24,
+    "conflict_component": 0.0,
+    "interval_component": 0.0,
+    "gamma": 0.41,
+    "delta": 0.24,
+    "rho": 0.41,
+    "risk_dominant_component": "gamma",
+    "diagnostic_id": "D_external_tabular_quality_limit",
+    "action_id": "lower_confidence",
+    "action": "lower_confidence"
+  },
+  "diagnostics": [
+    {
+      "diagnostic_id": "D_external_tabular_quality_limit",
+      "diagnostic_type": "external_tabular_quality_limit",
+      "source": "external_tabular_adapter",
+      "criticality": "medium",
+      "message_ru": "ограничение качества внешнего табличного входа",
+      "recommended_action": "lower_confidence"
+    }
+  ],
+  "final_action": "lower_confidence",
+  "final_action_id": "lower_confidence",
+  "final_diagnostic_id": "D_external_tabular_quality_limit",
+  "verifier_status": "PASS",
+  "source_commit": "11955855fb111912239f83500af5349fba895ee5",
+  "proof_ref": "proof_trace.json",
+  "dashboard_ref": "operator_dashboard_v2.png",
+  "verification_summary": {
+    "overall_status": "passed",
+    "checks": []
+  }
+}

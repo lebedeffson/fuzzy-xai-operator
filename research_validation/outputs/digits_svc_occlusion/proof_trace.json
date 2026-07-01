@@ -1,0 +1,888 @@
+{
+  "package_type": "FuzzyXAIProofTrace",
+  "schema_version": "1.0",
+  "scenario_id": "external_wine_classification",
+  "route": {
+    "route_id": "external_wine_classification:sklearn_digits:SVC(probability=True):occlusion",
+    "scenario_id": "external_wine_classification",
+    "scenario_title_ru": "Research validation: image_like_classification",
+    "title": "External Research Validation FuzzyXAI OperatorRoute",
+    "created_at": "2026-07-01T16:42:17.078481+00:00",
+    "nodes": [
+      {
+        "node_id": "input_artifact",
+        "title": "Внешняя модель",
+        "input_summary": "payload внешней модели",
+        "output_summary": "AdaptedInput",
+        "value": "p=0.79; class=1",
+        "threshold": "",
+        "status": "passed",
+        "explanation": "Адаптер принимает внешний результат модели.",
+        "formula_ref": "adapter",
+        "trace_ref": "adapted_input",
+        "value_source": "external_model_payload",
+        "raw": {
+          "source_type": "image_like_features",
+          "model_name": "SVC(probability=True)",
+          "dataset_name": "sklearn_digits",
+          "predicted_class": 1,
+          "class_probability": 0.79,
+          "feature_values": {
+            "pixel1": 0.1,
+            "pixel2": 0.2,
+            "pixel3": 0.3,
+            "pixel4": 0.4,
+            "pixel5": 0.5
+          },
+          "feature_importance": {
+            "pixel1": 0.224,
+            "pixel2": 0.168,
+            "pixel3": 0.126,
+            "pixel4": 0.098,
+            "pixel5": 0.084
+          },
+          "top_k_importance": 5,
+          "missing_rate": 0.0,
+          "feature_range_violation": 0.0,
+          "context_values": {
+            "experiment_id": "digits_svc_occlusion",
+            "task_type": "image_like_classification",
+            "perturbation": "occlusion",
+            "representation_class": "F_ML",
+            "prediction_interval_width": 0.0,
+            "conflict_component": 0.0,
+            "noise_ratio": 0.0,
+            "occlusion_rate": 0.64
+          }
+        },
+        "title_ru": "Внешняя модель",
+        "operator_type": "adapter",
+        "input_refs": [],
+        "output_refs": [],
+        "input_values": {
+          "source_type": "image_like_features",
+          "model_name": "SVC(probability=True)",
+          "dataset_name": "sklearn_digits",
+          "model_output": {
+            "predicted_class": 1,
+            "class_probability": 0.79
+          },
+          "quality_metrics": {
+            "missing_rate": 0.0,
+            "feature_range_violation": 0.0
+          },
+          "feature_values": {
+            "pixel1": 0.1,
+            "pixel2": 0.2,
+            "pixel3": 0.3,
+            "pixel4": 0.4,
+            "pixel5": 0.5
+          },
+          "attribution_values": {
+            "pixel1": 0.224,
+            "pixel2": 0.168,
+            "pixel3": 0.126,
+            "pixel4": 0.098,
+            "pixel5": 0.084
+          },
+          "context_values": {
+            "experiment_id": "digits_svc_occlusion",
+            "task_type": "image_like_classification",
+            "perturbation": "occlusion",
+            "representation_class": "F_ML",
+            "prediction_interval_width": 0.0,
+            "conflict_component": 0.0,
+            "noise_ratio": 0.0,
+            "occlusion_rate": 0.64
+          }
+        },
+        "output_values": {
+          "adapted_input_id": "external_wine_classification:SVC(probability=True)",
+          "trace_origin": "external_model_payload",
+          "class_probability": 0.79,
+          "feature_importance": {
+            "pixel1": 0.224,
+            "pixel2": 0.168,
+            "pixel3": 0.126,
+            "pixel4": 0.098,
+            "pixel5": 0.084
+          }
+        },
+        "formula_id": null,
+        "formula_text": "Нормализация внешнего входа",
+        "formula_latex": null,
+        "components": {
+          "model_name": "SVC(probability=True)",
+          "dataset_name": "sklearn_digits",
+          "source_type": "image_like_features",
+          "task_type": "image_like_classification",
+          "perturbation": "occlusion"
+        },
+        "thresholds": {},
+        "status_reason_ru": "Внешний payload успешно приведён к AdaptedInput.",
+        "interpretation_ru": "Фреймворк получил уверенность модели, признаки, важности признаков, метрики качества и контекст ограничения.",
+        "next_node_ids": [
+          "explanation_object"
+        ],
+        "source_commit": "11955855fb111912239f83500af5349fba895ee5",
+        "details": {
+          "applications_used": false
+        }
+      },
+      {
+        "node_id": "explanation_object",
+        "title": "Объяснительный объект E_k",
+        "input_summary": "предыдущее состояние маршрута",
+        "output_summary": "выход оператора",
+        "value": "E_k сформирован",
+        "threshold": "",
+        "status": "passed",
+        "explanation": "Внешний payload переведён в объяснительный объект.",
+        "formula_ref": "E_k",
+        "trace_ref": "explanation_object",
+        "value_source": "computed",
+        "raw": {
+          "value_source": "computed"
+        },
+        "title_ru": "Объяснительный объект E_k",
+        "operator_type": "explanation_object",
+        "input_refs": [
+          "input_artifact"
+        ],
+        "output_refs": [
+          "representation"
+        ],
+        "input_values": {
+          "class_probability": 0.79,
+          "feature_importance": {
+            "pixel1": 0.224,
+            "pixel2": 0.168,
+            "pixel3": 0.126,
+            "pixel4": 0.098,
+            "pixel5": 0.084
+          }
+        },
+        "output_values": {
+          "terms": [
+            "pixel1",
+            "pixel2",
+            "pixel3",
+            "pixel4",
+            "pixel5"
+          ],
+          "memberships": {
+            "pixel1": 0.224,
+            "pixel2": 0.168,
+            "pixel3": 0.126,
+            "pixel4": 0.098,
+            "pixel5": 0.084
+          },
+          "rules": [],
+          "activations": {
+            "predicted_class": 1
+          },
+          "uncertainty": 0.21,
+          "trace": "external_wine_classification:SVC(probability=True)",
+          "object_summary": "табличный объект с вероятностью класса и top-k атрибуциями"
+        },
+        "formula_id": "E_k",
+        "formula_text": "E_k = {L_k, μ_k, R_k, α_k, u_k, τ_k}",
+        "formula_latex": null,
+        "components": {
+          "terms": [
+            "pixel1",
+            "pixel2",
+            "pixel3",
+            "pixel4",
+            "pixel5"
+          ],
+          "uncertainty": 0.21
+        },
+        "thresholds": {},
+        "status_reason_ru": "Объект объяснения содержит вероятность, признаки и атрибуции.",
+        "interpretation_ru": "E_k фиксирует, что модель уверена не полностью и объяснение редуцировано до top-k признаков.",
+        "next_node_ids": [
+          "representation"
+        ],
+        "source_commit": "11955855fb111912239f83500af5349fba895ee5",
+        "details": {}
+      },
+      {
+        "node_id": "representation",
+        "title": "Класс представления F",
+        "input_summary": "предыдущее состояние маршрута",
+        "output_summary": "выход оператора",
+        "value": "F0",
+        "threshold": "",
+        "status": "passed",
+        "explanation": "Табличный результат представлен через обычное нечёткое представление.",
+        "formula_ref": "F",
+        "trace_ref": "representation",
+        "value_source": "computed",
+        "raw": {
+          "value_source": "computed"
+        },
+        "title_ru": "Класс представления F",
+        "operator_type": "representation",
+        "input_refs": [
+          "explanation_object"
+        ],
+        "output_refs": [
+          "alignment",
+          "reduction"
+        ],
+        "input_values": {
+          "source_type": "image_like_features",
+          "task_type": "image_like_classification",
+          "has_single_probability": true,
+          "has_top_k_importance": true,
+          "context": {
+            "experiment_id": "digits_svc_occlusion",
+            "task_type": "image_like_classification",
+            "perturbation": "occlusion",
+            "representation_class": "F_ML",
+            "prediction_interval_width": 0.0,
+            "conflict_component": 0.0,
+            "noise_ratio": 0.0,
+            "occlusion_rate": 0.64
+          }
+        },
+        "output_values": {
+          "class_id": "F_ML",
+          "class_title_ru": "многоуровневое представление",
+          "output_representation": "confidence + top-k attribution + context metrics"
+        },
+        "formula_id": "F_ML-selection",
+        "formula_text": "class_id выбирается по task_type, interval, source/quality conflict и multilevel context",
+        "formula_latex": null,
+        "components": {
+          "input_conditions": [
+            "image_like_classification",
+            "occlusion"
+          ],
+          "interval_width": 0.0,
+          "quality_penalty": 0.64,
+          "conflict_component": 0.0
+        },
+        "thresholds": {},
+        "status_reason_ru": "Выбран класс F_ML.",
+        "interpretation_ru": "Многоуровневое представление связывает качество входа, признаки, уверенность модели и объяснение.",
+        "next_node_ids": [
+          "alignment",
+          "reduction"
+        ],
+        "source_commit": "11955855fb111912239f83500af5349fba895ee5",
+        "details": {}
+      },
+      {
+        "node_id": "alignment",
+        "title": "Согласование T_ij",
+        "input_summary": "предыдущее состояние маршрута",
+        "output_summary": "выход оператора",
+        "value": "gamma=0.64",
+        "threshold": "",
+        "status": "warning",
+        "explanation": "gamma=max(1-p, quality_penalty, conflict_component, interval_width).",
+        "formula_ref": "gamma",
+        "trace_ref": "alignment",
+        "value_source": "computed",
+        "raw": {
+          "uncertainty": 0.21,
+          "quality_penalty": 0.64,
+          "conflict_component": 0.0,
+          "interval_width": 0.0,
+          "gamma": 0.64,
+          "value_source": "computed"
+        },
+        "title_ru": "Согласование T_ij",
+        "operator_type": "alignment",
+        "input_refs": [
+          "representation"
+        ],
+        "output_refs": [
+          "risk"
+        ],
+        "input_values": {
+          "class_probability": 0.79,
+          "missing_rate": 0.0,
+          "feature_range_violation": 0.0,
+          "conflict_component": 0.0,
+          "interval_width": 0.0
+        },
+        "output_values": {
+          "gamma": 0.64
+        },
+        "formula_id": "external_tabular_gamma",
+        "formula_text": "gamma = max(1 - class_probability, quality_penalty, conflict_component, interval_width)",
+        "formula_latex": "\\gamma=\\max(1-p,q,c,w)",
+        "components": {
+          "uncertainty": 0.21,
+          "quality_penalty": 0.64,
+          "conflict_component": 0.0,
+          "interval_width": 0.0,
+          "calculation": "max(0.21, 0.64, 0.0, 0.0) = 0.64"
+        },
+        "thresholds": {
+          "gamma_warning": 0.35
+        },
+        "status_reason_ru": "Рассогласование ненулевое, потому что вероятность класса меньше 1.",
+        "interpretation_ru": "Уверенность модели неполная; это ограничивает автоматическое доверие.",
+        "next_node_ids": [
+          "risk"
+        ],
+        "source_commit": "11955855fb111912239f83500af5349fba895ee5",
+        "details": {}
+      },
+      {
+        "node_id": "reduction",
+        "title": "Потери представления",
+        "input_summary": "предыдущее состояние маршрута",
+        "output_summary": "выход оператора",
+        "value": "Delta=0.3",
+        "threshold": "",
+        "status": "passed",
+        "explanation": "Delta=1-sum(feature_importance) для переданного набора важностей.",
+        "formula_ref": "Delta",
+        "trace_ref": "reduction",
+        "value_source": "computed",
+        "raw": {
+          "delta": 0.3,
+          "importance_sum": 0.7000000000000001,
+          "value_source": "computed"
+        },
+        "title_ru": "Потери представления",
+        "operator_type": "reduction",
+        "input_refs": [
+          "representation"
+        ],
+        "output_refs": [
+          "risk"
+        ],
+        "input_values": {
+          "selected_features": [
+            "pixel1",
+            "pixel2",
+            "pixel3",
+            "pixel4",
+            "pixel5"
+          ],
+          "feature_importance": {
+            "pixel1": 0.224,
+            "pixel2": 0.168,
+            "pixel3": 0.126,
+            "pixel4": 0.098,
+            "pixel5": 0.084
+          },
+          "top_k": 5
+        },
+        "output_values": {
+          "delta": 0.3,
+          "top_k_importance_sum": 0.7
+        },
+        "formula_id": "external_tabular_delta",
+        "formula_text": "delta = 1 - sum(top_k_feature_importance)",
+        "formula_latex": "\\Delta=1-\\sum importance_{top-k}",
+        "components": {
+          "selected_features": [
+            "pixel1",
+            "pixel2",
+            "pixel3",
+            "pixel4",
+            "pixel5"
+          ],
+          "top_k_importance_sum": 0.7,
+          "calculation": "1 - 0.7 = 0.3"
+        },
+        "thresholds": {
+          "delta_warning": 0.35
+        },
+        "status_reason_ru": "Часть объяснения потеряна при top-k редукции.",
+        "interpretation_ru": "Delta показывает, какая доля атрибутивного объяснения не попала в сокращённый набор признаков.",
+        "next_node_ids": [
+          "risk"
+        ],
+        "source_commit": "11955855fb111912239f83500af5349fba895ee5",
+        "details": {}
+      },
+      {
+        "node_id": "risk",
+        "title": "Риск rho",
+        "input_summary": "предыдущее состояние маршрута",
+        "output_summary": "выход оператора",
+        "value": "rho=0.64",
+        "threshold": "",
+        "status": "warning",
+        "explanation": "rho=max(gamma, Delta, quality_component, conflict_component).",
+        "formula_ref": "rho",
+        "trace_ref": "risk",
+        "value_source": "computed",
+        "raw": {
+          "rho": 0.64,
+          "theta_accept": 0.35,
+          "theta_warning": 0.6,
+          "value_source": "computed"
+        },
+        "title_ru": "Риск rho",
+        "operator_type": "risk",
+        "input_refs": [
+          "alignment",
+          "reduction"
+        ],
+        "output_refs": [
+          "diagnostics"
+        ],
+        "input_values": {
+          "gamma": 0.64,
+          "delta": 0.3,
+          "quality_component": 0.64,
+          "conflict_component": 0.0
+        },
+        "output_values": {
+          "rho": 0.64,
+          "risk_zone": "audit",
+          "dominant_component": "gamma"
+        },
+        "formula_id": "external_tabular_rho",
+        "formula_text": "rho = max(gamma, delta, quality_component, conflict_component)",
+        "formula_latex": "\\rho=\\max(\\gamma,\\Delta)",
+        "components": {
+          "gamma": 0.64,
+          "delta": 0.3,
+          "quality_component": 0.64,
+          "conflict_component": 0.0,
+          "calculation": "max(0.64, 0.3, 0.64, 0.0) = 0.64"
+        },
+        "thresholds": {
+          "theta_accept": 0.35,
+          "theta_warning": 0.6
+        },
+        "status_reason_ru": "rho попал в зону audit.",
+        "interpretation_ru": "Основной вклад в риск: gamma.",
+        "next_node_ids": [
+          "diagnostics"
+        ],
+        "source_commit": "11955855fb111912239f83500af5349fba895ee5",
+        "details": {}
+      },
+      {
+        "node_id": "diagnostics",
+        "title": "Диагностика D",
+        "input_summary": "предыдущее состояние маршрута",
+        "output_summary": "выход оператора",
+        "value": "D_image_quality_limit",
+        "threshold": "",
+        "status": "warning",
+        "explanation": "ограничение качества изображения",
+        "formula_ref": "D",
+        "trace_ref": "diagnostics",
+        "value_source": "computed",
+        "raw": {
+          "diagnostics": [
+            {
+              "diagnostic_id": "D_image_quality_limit",
+              "diagnostic_type": "image_quality_limit",
+              "source": "external_tabular_adapter",
+              "criticality": "high",
+              "message_ru": "ограничение качества изображения",
+              "recommended_action": "audit"
+            }
+          ],
+          "value_source": "computed"
+        },
+        "title_ru": "Диагностика D",
+        "operator_type": "diagnostics",
+        "input_refs": [
+          "risk"
+        ],
+        "output_refs": [
+          "action"
+        ],
+        "input_values": {
+          "rho": 0.64,
+          "risk_zone": "audit",
+          "gamma": 0.64,
+          "delta": 0.3,
+          "task_type": "image_like_classification",
+          "dominant_component": "gamma"
+        },
+        "output_values": {
+          "diagnostic_id": "D_image_quality_limit",
+          "diagnostic_title_ru": "ограничение качества изображения",
+          "severity": "high",
+          "recommended_action_level": "audit"
+        },
+        "formula_id": "diagnostic-policy",
+        "formula_text": "diagnostic_id выбирается по task_type, risk_zone и доминирующему компоненту риска",
+        "formula_latex": null,
+        "components": {
+          "reason_components": {
+            "gamma": 0.64,
+            "delta": 0.3,
+            "rho": 0.64,
+            "dominant_component": "gamma",
+            "task_type": "image_like_classification"
+          }
+        },
+        "thresholds": {},
+        "status_reason_ru": "ограничение качества изображения",
+        "interpretation_ru": "Диагностика означает ограничение доверия, а не запрет или утверждение о плохой модели.",
+        "next_node_ids": [
+          "action"
+        ],
+        "source_commit": "11955855fb111912239f83500af5349fba895ee5",
+        "details": {}
+      },
+      {
+        "node_id": "action",
+        "title": "Действие",
+        "input_summary": "предыдущее состояние маршрута",
+        "output_summary": "выход оператора",
+        "value": "audit",
+        "threshold": "",
+        "status": "warning",
+        "explanation": "Действие выбрано политикой FuzzyXAI.",
+        "formula_ref": "action policy",
+        "trace_ref": "action",
+        "value_source": "computed",
+        "raw": {
+          "action": "audit",
+          "value_source": "computed"
+        },
+        "title_ru": "Действие",
+        "operator_type": "action",
+        "input_refs": [
+          "diagnostics"
+        ],
+        "output_refs": [
+          "proof"
+        ],
+        "input_values": {
+          "rho": 0.64,
+          "diagnostic_id": "D_image_quality_limit",
+          "risk_zone": "audit"
+        },
+        "output_values": {
+          "action_id": "audit",
+          "action_title_ru": "audit"
+        },
+        "formula_id": "action-policy",
+        "formula_text": "if rho < 0.35: accept; elif rho < 0.60: lower_confidence; else: audit",
+        "formula_latex": null,
+        "components": {
+          "rho": 0.64,
+          "diagnostic_id": "D_image_quality_limit",
+          "alternative_actions": [
+            "accept",
+            "lower_confidence",
+            "audit"
+          ]
+        },
+        "thresholds": {
+          "theta_accept": 0.35,
+          "theta_warning": 0.6
+        },
+        "status_reason_ru": "Риск ненулевой, но не критический.",
+        "interpretation_ru": "Результат не блокируется, но автоматическое доверие понижается из-за ненулевого риска.",
+        "next_node_ids": [
+          "proof"
+        ],
+        "source_commit": "11955855fb111912239f83500af5349fba895ee5",
+        "details": {}
+      },
+      {
+        "node_id": "proof",
+        "title": "Доказательный след",
+        "input_summary": "предыдущее состояние маршрута",
+        "output_summary": "выход оператора",
+        "value": "proof trace готов",
+        "threshold": "",
+        "status": "passed",
+        "explanation": "Маршрут сохраняется как проверяемый доказательный след.",
+        "formula_ref": "proof trace",
+        "trace_ref": "proof",
+        "value_source": "computed",
+        "raw": {
+          "value_source": "computed"
+        },
+        "title_ru": "Доказательный след",
+        "operator_type": "proof",
+        "input_refs": [
+          "action"
+        ],
+        "output_refs": [],
+        "input_values": {
+          "computed_result": {
+            "model_name": "SVC(probability=True)",
+            "dataset_name": "sklearn_digits",
+            "task_type": "image_like_classification",
+            "perturbation": "occlusion",
+            "representation_class": "F_ML",
+            "class_probability": 0.79,
+            "uncertainty": 0.21,
+            "quality_penalty": 0.64,
+            "uncertainty_component": 0.21,
+            "quality_component": 0.64,
+            "reduction_component": 0.3,
+            "conflict_component": 0.0,
+            "interval_component": 0.0,
+            "gamma": 0.64,
+            "delta": 0.3,
+            "rho": 0.64,
+            "risk_dominant_component": "gamma",
+            "diagnostic_id": "D_image_quality_limit",
+            "action_id": "audit",
+            "action": "audit"
+          },
+          "diagnostics": [
+            {
+              "diagnostic_id": "D_image_quality_limit",
+              "diagnostic_type": "image_quality_limit",
+              "source": "external_tabular_adapter",
+              "criticality": "high",
+              "message_ru": "ограничение качества изображения",
+              "recommended_action": "audit"
+            }
+          ],
+          "action": "audit"
+        },
+        "output_values": {
+          "verification_status": "PASS",
+          "source_commit": "11955855fb111912239f83500af5349fba895ee5"
+        },
+        "formula_id": "proof-trace",
+        "formula_text": "proof_trace = hashable route + computed_result + diagnostics + action + source_commit",
+        "formula_latex": null,
+        "components": {
+          "scenario_id": "external_wine_classification",
+          "source_commit": "11955855fb111912239f83500af5349fba895ee5"
+        },
+        "thresholds": {},
+        "status_reason_ru": "Proof trace содержит значения маршрута и source_commit.",
+        "interpretation_ru": "Доказательный след связывает route, значения операторов, диагностику и действие.",
+        "next_node_ids": [],
+        "source_commit": "11955855fb111912239f83500af5349fba895ee5",
+        "details": {}
+      }
+    ],
+    "edges": [
+      {
+        "edge_id": "edge_input_explanation",
+        "source_node_id": "input_artifact",
+        "target_node_id": "explanation_object",
+        "passed_values": {
+          "class_probability": 0.79,
+          "feature_importance": {
+            "pixel1": 0.224,
+            "pixel2": 0.168,
+            "pixel3": 0.126,
+            "pixel4": 0.098,
+            "pixel5": 0.084
+          }
+        },
+        "explanation_ru": "Адаптированный вход передан в объяснительный объект."
+      },
+      {
+        "edge_id": "edge_explanation_representation",
+        "source_node_id": "explanation_object",
+        "target_node_id": "representation",
+        "passed_values": {
+          "terms": [
+            "pixel1",
+            "pixel2",
+            "pixel3",
+            "pixel4",
+            "pixel5"
+          ],
+          "uncertainty": 0.21
+        },
+        "explanation_ru": "Объяснительный объект передан в выбор представления."
+      },
+      {
+        "edge_id": "edge_representation_alignment",
+        "source_node_id": "representation",
+        "target_node_id": "alignment",
+        "passed_values": {
+          "class_probability": 0.79,
+          "quality_metrics": {
+            "missing_rate": 0.0,
+            "feature_range_violation": 0.0
+          },
+          "context": {
+            "experiment_id": "digits_svc_occlusion",
+            "task_type": "image_like_classification",
+            "perturbation": "occlusion",
+            "representation_class": "F_ML",
+            "prediction_interval_width": 0.0,
+            "conflict_component": 0.0,
+            "noise_ratio": 0.0,
+            "occlusion_rate": 0.64
+          }
+        },
+        "explanation_ru": "Вероятность, качество и контекст переданы в оператор согласования."
+      },
+      {
+        "edge_id": "edge_representation_reduction",
+        "source_node_id": "representation",
+        "target_node_id": "reduction",
+        "passed_values": {
+          "feature_importance": {
+            "pixel1": 0.224,
+            "pixel2": 0.168,
+            "pixel3": 0.126,
+            "pixel4": 0.098,
+            "pixel5": 0.084
+          },
+          "top_k": 5
+        },
+        "explanation_ru": "Top-k атрибуции переданы в оператор редукции."
+      },
+      {
+        "edge_id": "edge_alignment_risk",
+        "source_node_id": "alignment",
+        "target_node_id": "risk",
+        "passed_values": {
+          "gamma": 0.64
+        },
+        "explanation_ru": "Рассогласование передано в наблюдатель риска."
+      },
+      {
+        "edge_id": "edge_reduction_risk",
+        "source_node_id": "reduction",
+        "target_node_id": "risk",
+        "passed_values": {
+          "delta": 0.3
+        },
+        "explanation_ru": "Потери редукции переданы в наблюдатель риска."
+      },
+      {
+        "edge_id": "edge_risk_diagnostics",
+        "source_node_id": "risk",
+        "target_node_id": "diagnostics",
+        "passed_values": {
+          "rho": 0.64,
+          "risk_zone": "audit"
+        },
+        "explanation_ru": "Риск переведён в диагностическое состояние."
+      },
+      {
+        "edge_id": "edge_diagnostics_action",
+        "source_node_id": "diagnostics",
+        "target_node_id": "action",
+        "passed_values": {
+          "diagnostic_id": "D_image_quality_limit",
+          "recommended_action": "audit"
+        },
+        "explanation_ru": "Диагностика передана в политику действия."
+      },
+      {
+        "edge_id": "edge_action_proof",
+        "source_node_id": "action",
+        "target_node_id": "proof",
+        "passed_values": {
+          "action_id": "audit",
+          "computed_result": {
+            "model_name": "SVC(probability=True)",
+            "dataset_name": "sklearn_digits",
+            "task_type": "image_like_classification",
+            "perturbation": "occlusion",
+            "representation_class": "F_ML",
+            "class_probability": 0.79,
+            "uncertainty": 0.21,
+            "quality_penalty": 0.64,
+            "uncertainty_component": 0.21,
+            "quality_component": 0.64,
+            "reduction_component": 0.3,
+            "conflict_component": 0.0,
+            "interval_component": 0.0,
+            "gamma": 0.64,
+            "delta": 0.3,
+            "rho": 0.64,
+            "risk_dominant_component": "gamma",
+            "diagnostic_id": "D_image_quality_limit",
+            "action_id": "audit",
+            "action": "audit"
+          }
+        },
+        "explanation_ru": "Итоговое действие сохранено в proof trace."
+      }
+    ],
+    "computed_result": {
+      "model_name": "SVC(probability=True)",
+      "dataset_name": "sklearn_digits",
+      "task_type": "image_like_classification",
+      "perturbation": "occlusion",
+      "representation_class": "F_ML",
+      "class_probability": 0.79,
+      "uncertainty": 0.21,
+      "quality_penalty": 0.64,
+      "uncertainty_component": 0.21,
+      "quality_component": 0.64,
+      "reduction_component": 0.3,
+      "conflict_component": 0.0,
+      "interval_component": 0.0,
+      "gamma": 0.64,
+      "delta": 0.3,
+      "rho": 0.64,
+      "risk_dominant_component": "gamma",
+      "diagnostic_id": "D_image_quality_limit",
+      "action_id": "audit",
+      "action": "audit"
+    },
+    "diagnostics": [
+      {
+        "diagnostic_id": "D_image_quality_limit",
+        "diagnostic_type": "image_quality_limit",
+        "source": "external_tabular_adapter",
+        "criticality": "high",
+        "message_ru": "ограничение качества изображения",
+        "recommended_action": "audit"
+      }
+    ],
+    "final_action": "audit",
+    "final_action_id": "audit",
+    "final_diagnostic_id": "D_image_quality_limit",
+    "verifier_status": "PASS",
+    "source_commit": "11955855fb111912239f83500af5349fba895ee5",
+    "proof_ref": "proof_trace.json",
+    "dashboard_ref": "operator_dashboard_v2.png",
+    "verification_summary": {
+      "overall_status": "passed",
+      "checks": []
+    }
+  },
+  "computed_result": {
+    "model_name": "SVC(probability=True)",
+    "dataset_name": "sklearn_digits",
+    "task_type": "image_like_classification",
+    "perturbation": "occlusion",
+    "representation_class": "F_ML",
+    "class_probability": 0.79,
+    "uncertainty": 0.21,
+    "quality_penalty": 0.64,
+    "uncertainty_component": 0.21,
+    "quality_component": 0.64,
+    "reduction_component": 0.3,
+    "conflict_component": 0.0,
+    "interval_component": 0.0,
+    "gamma": 0.64,
+    "delta": 0.3,
+    "rho": 0.64,
+    "risk_dominant_component": "gamma",
+    "diagnostic_id": "D_image_quality_limit",
+    "action_id": "audit",
+    "action": "audit"
+  },
+  "diagnostics": [
+    {
+      "diagnostic_id": "D_image_quality_limit",
+      "diagnostic_type": "image_quality_limit",
+      "source": "external_tabular_adapter",
+      "criticality": "high",
+      "message_ru": "ограничение качества изображения",
+      "recommended_action": "audit"
+    }
+  ],
+  "final_action": "audit",
+  "verifier_status": "PASS",
+  "source_commit": "11955855fb111912239f83500af5349fba895ee5"
+}

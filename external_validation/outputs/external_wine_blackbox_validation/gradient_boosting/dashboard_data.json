@@ -3,12 +3,23 @@
     "action": "lower_confidence",
     "action_id": "lower_confidence",
     "class_probability": 0.679119,
+    "conflict_component": 0.0,
+    "dataset_name": "sklearn_wine",
     "delta": 0.429844,
     "diagnostic_id": "D_external_tabular_uncertainty",
     "gamma": 0.320881,
+    "interval_component": 0.0,
+    "model_name": "GradientBoostingClassifier",
+    "perturbation": "external_payload",
+    "quality_component": 0.0,
     "quality_penalty": 0.0,
+    "reduction_component": 0.429844,
+    "representation_class": "F0",
     "rho": 0.429844,
-    "uncertainty": 0.320881
+    "risk_dominant_component": "delta",
+    "task_type": "tabular_classification",
+    "uncertainty": 0.320881,
+    "uncertainty_component": 0.320881
   },
   "edges": [
     {
@@ -39,9 +50,17 @@
     },
     {
       "edge_id": "edge_representation_alignment",
-      "explanation_ru": "Вероятность и качество переданы в оператор согласования.",
+      "explanation_ru": "Вероятность, качество и контекст переданы в оператор согласования.",
       "passed_values": {
         "class_probability": 0.679119,
+        "context": {
+          "external_task": true,
+          "model_key": "gradient_boosting",
+          "sample_index": 14,
+          "test_size": 63,
+          "top_k_importance": 2,
+          "train_size": 115
+        },
         "quality_metrics": {
           "feature_range_violation": 0.0,
           "missing_rate": 0.0
@@ -110,12 +129,23 @@
           "action": "lower_confidence",
           "action_id": "lower_confidence",
           "class_probability": 0.679119,
+          "conflict_component": 0.0,
+          "dataset_name": "sklearn_wine",
           "delta": 0.429844,
           "diagnostic_id": "D_external_tabular_uncertainty",
           "gamma": 0.320881,
+          "interval_component": 0.0,
+          "model_name": "GradientBoostingClassifier",
+          "perturbation": "external_payload",
+          "quality_component": 0.0,
           "quality_penalty": 0.0,
+          "reduction_component": 0.429844,
+          "representation_class": "F0",
           "rho": 0.429844,
-          "uncertainty": 0.320881
+          "risk_dominant_component": "delta",
+          "task_type": "tabular_classification",
+          "uncertainty": 0.320881,
+          "uncertainty_component": 0.320881
         }
       },
       "source_node_id": "action",
@@ -127,18 +157,20 @@
       "components": {
         "dataset_name": "sklearn_wine",
         "model_name": "GradientBoostingClassifier",
-        "source_type": "tabular"
+        "perturbation": "external_payload",
+        "source_type": "tabular",
+        "task_type": "tabular_classification"
       },
       "details": {
         "applications_used": false
       },
-      "explanation": "Адаптер принимает внешний результат табличной модели.",
+      "explanation": "Адаптер принимает внешний результат модели.",
       "formula_id": null,
       "formula_latex": null,
       "formula_ref": "adapter",
       "formula_text": "Нормализация внешнего входа",
       "input_refs": [],
-      "input_summary": "payload sklearn wine classifier",
+      "input_summary": "payload внешней модели",
       "input_values": {
         "attribution_values": {
           "color_intensity": 0.243624,
@@ -179,7 +211,7 @@
         },
         "source_type": "tabular"
       },
-      "interpretation_ru": "Фреймворк получил вероятность класса, признаки, важности признаков и метрики качества.",
+      "interpretation_ru": "Фреймворк получил уверенность модели, признаки, важности признаков, метрики качества и контекст ограничения.",
       "next_node_ids": [
         "explanation_object"
       ],
@@ -230,15 +262,16 @@
         "missing_rate": 0.0,
         "model_name": "GradientBoostingClassifier",
         "predicted_class": 0,
-        "source_type": "tabular"
+        "source_type": "tabular",
+        "top_k_importance": 2
       },
-      "source_commit": "be2a30096b275d3365a92cb69b165e57e99e90de",
+      "source_commit": "11955855fb111912239f83500af5349fba895ee5",
       "status": "passed",
       "status_reason_ru": "Внешний payload успешно приведён к AdaptedInput.",
       "threshold": "",
       "thresholds": {},
-      "title": "Внешняя табличная модель",
-      "title_ru": "Внешняя табличная модель",
+      "title": "Внешняя модель",
+      "title_ru": "Внешняя модель",
       "trace_ref": "adapted_input",
       "value": "p=0.679119; class=0",
       "value_source": "external_model_payload"
@@ -298,7 +331,7 @@
       "raw": {
         "value_source": "computed"
       },
-      "source_commit": "be2a30096b275d3365a92cb69b165e57e99e90de",
+      "source_commit": "11955855fb111912239f83500af5349fba895ee5",
       "status": "passed",
       "status_reason_ru": "Объект объяснения содержит вероятность, признаки и атрибуции.",
       "threshold": "",
@@ -311,27 +344,39 @@
     },
     {
       "components": {
+        "conflict_component": 0.0,
         "input_conditions": [
-          "single_probability",
-          "top_k_feature_importance"
-        ]
+          "tabular_classification",
+          "external_payload"
+        ],
+        "interval_width": 0.0,
+        "quality_penalty": 0.0
       },
       "details": {},
       "explanation": "Табличный результат представлен через обычное нечёткое представление.",
       "formula_id": "F0-selection",
       "formula_latex": null,
       "formula_ref": "F",
-      "formula_text": "class_id = F0 для табличной модели с одной вероятностью и редуцированным объяснением",
+      "formula_text": "class_id выбирается по task_type, interval, source/quality conflict и multilevel context",
       "input_refs": [
         "explanation_object"
       ],
       "input_summary": "предыдущее состояние маршрута",
       "input_values": {
+        "context": {
+          "external_task": true,
+          "model_key": "gradient_boosting",
+          "sample_index": 14,
+          "test_size": 63,
+          "top_k_importance": 2,
+          "train_size": 115
+        },
         "has_single_probability": true,
         "has_top_k_importance": true,
-        "source_type": "tabular"
+        "source_type": "tabular",
+        "task_type": "tabular_classification"
       },
-      "interpretation_ru": "F0 достаточно для внешней табличной классификации с одной вероятностью класса.",
+      "interpretation_ru": "Базовое представление достаточно для одной уверенности и top-k объяснения.",
       "next_node_ids": [
         "alignment",
         "reduction"
@@ -346,14 +391,14 @@
       "output_values": {
         "class_id": "F0",
         "class_title_ru": "обычное нечёткое представление",
-        "output_representation": "probability + top-k feature importance"
+        "output_representation": "confidence + top-k attribution + context metrics"
       },
       "raw": {
         "value_source": "computed"
       },
-      "source_commit": "be2a30096b275d3365a92cb69b165e57e99e90de",
+      "source_commit": "11955855fb111912239f83500af5349fba895ee5",
       "status": "passed",
-      "status_reason_ru": "Интервальная или многоуровневая структура не требуется.",
+      "status_reason_ru": "Выбран класс F0.",
       "threshold": "",
       "thresholds": {},
       "title": "Класс представления F",
@@ -364,23 +409,27 @@
     },
     {
       "components": {
-        "calculation": "max(0.320881, 0.0) = 0.320881",
+        "calculation": "max(0.320881, 0.0, 0.0, 0.0) = 0.320881",
+        "conflict_component": 0.0,
+        "interval_width": 0.0,
         "quality_penalty": 0.0,
         "uncertainty": 0.320881
       },
       "details": {},
-      "explanation": "gamma=max(1-p, quality_penalty).",
+      "explanation": "gamma=max(1-p, quality_penalty, conflict_component, interval_width).",
       "formula_id": "external_tabular_gamma",
-      "formula_latex": "\\gamma=\\max(1-p,\\max(missing,range))",
+      "formula_latex": "\\gamma=\\max(1-p,q,c,w)",
       "formula_ref": "gamma",
-      "formula_text": "gamma = max(1 - class_probability, max(missing_rate, feature_range_violation))",
+      "formula_text": "gamma = max(1 - class_probability, quality_penalty, conflict_component, interval_width)",
       "input_refs": [
         "representation"
       ],
       "input_summary": "предыдущее состояние маршрута",
       "input_values": {
         "class_probability": 0.679119,
+        "conflict_component": 0.0,
         "feature_range_violation": 0.0,
+        "interval_width": 0.0,
         "missing_rate": 0.0
       },
       "interpretation_ru": "Уверенность модели неполная; это ограничивает автоматическое доверие.",
@@ -397,12 +446,14 @@
         "gamma": 0.320881
       },
       "raw": {
+        "conflict_component": 0.0,
         "gamma": 0.320881,
+        "interval_width": 0.0,
         "quality_penalty": 0.0,
         "uncertainty": 0.320881,
         "value_source": "computed"
       },
-      "source_commit": "be2a30096b275d3365a92cb69b165e57e99e90de",
+      "source_commit": "11955855fb111912239f83500af5349fba895ee5",
       "status": "passed",
       "status_reason_ru": "Рассогласование ненулевое, потому что вероятность класса меньше 1.",
       "threshold": "",
@@ -464,7 +515,7 @@
         "importance_sum": 0.570156,
         "value_source": "computed"
       },
-      "source_commit": "be2a30096b275d3365a92cb69b165e57e99e90de",
+      "source_commit": "11955855fb111912239f83500af5349fba895ee5",
       "status": "warning",
       "status_reason_ru": "Часть объяснения потеряна при top-k редукции.",
       "threshold": "",
@@ -479,26 +530,30 @@
     },
     {
       "components": {
-        "calculation": "max(0.320881, 0.429844) = 0.429844",
+        "calculation": "max(0.320881, 0.429844, 0.0, 0.0) = 0.429844",
+        "conflict_component": 0.0,
         "delta": 0.429844,
-        "gamma": 0.320881
+        "gamma": 0.320881,
+        "quality_component": 0.0
       },
       "details": {},
-      "explanation": "rho=max(gamma, Delta).",
+      "explanation": "rho=max(gamma, Delta, quality_component, conflict_component).",
       "formula_id": "external_tabular_rho",
       "formula_latex": "\\rho=\\max(\\gamma,\\Delta)",
       "formula_ref": "rho",
-      "formula_text": "rho = max(gamma, delta)",
+      "formula_text": "rho = max(gamma, delta, quality_component, conflict_component)",
       "input_refs": [
         "alignment",
         "reduction"
       ],
       "input_summary": "предыдущее состояние маршрута",
       "input_values": {
+        "conflict_component": 0.0,
         "delta": 0.429844,
-        "gamma": 0.320881
+        "gamma": 0.320881,
+        "quality_component": 0.0
       },
-      "interpretation_ru": "Основной вклад в риск дала потеря редуцированного объяснения.",
+      "interpretation_ru": "Основной вклад в риск: delta.",
       "next_node_ids": [
         "diagnostics"
       ],
@@ -519,7 +574,7 @@
         "theta_warning": 0.6,
         "value_source": "computed"
       },
-      "source_commit": "be2a30096b275d3365a92cb69b165e57e99e90de",
+      "source_commit": "11955855fb111912239f83500af5349fba895ee5",
       "status": "warning",
       "status_reason_ru": "rho попал в зону lower_confidence.",
       "threshold": "",
@@ -537,8 +592,10 @@
       "components": {
         "reason_components": {
           "delta": 0.429844,
+          "dominant_component": "delta",
           "gamma": 0.320881,
-          "rho": 0.429844
+          "rho": 0.429844,
+          "task_type": "tabular_classification"
         }
       },
       "details": {},
@@ -546,16 +603,18 @@
       "formula_id": "diagnostic-policy",
       "formula_latex": null,
       "formula_ref": "D",
-      "formula_text": "diagnostic_id выбирается по risk_zone и ненулевым компонентам gamma/delta",
+      "formula_text": "diagnostic_id выбирается по task_type, risk_zone и доминирующему компоненту риска",
       "input_refs": [
         "risk"
       ],
       "input_summary": "предыдущее состояние маршрута",
       "input_values": {
         "delta": 0.429844,
+        "dominant_component": "delta",
         "gamma": 0.320881,
         "rho": 0.429844,
-        "risk_zone": "lower_confidence"
+        "risk_zone": "lower_confidence",
+        "task_type": "tabular_classification"
       },
       "interpretation_ru": "Диагностика означает ограничение доверия, а не запрет или утверждение о плохой модели.",
       "next_node_ids": [
@@ -586,7 +645,7 @@
         ],
         "value_source": "computed"
       },
-      "source_commit": "be2a30096b275d3365a92cb69b165e57e99e90de",
+      "source_commit": "11955855fb111912239f83500af5349fba895ee5",
       "status": "warning",
       "status_reason_ru": "ограниченная уверенность внешней табличной модели",
       "threshold": "",
@@ -640,7 +699,7 @@
         "action": "lower_confidence",
         "value_source": "computed"
       },
-      "source_commit": "be2a30096b275d3365a92cb69b165e57e99e90de",
+      "source_commit": "11955855fb111912239f83500af5349fba895ee5",
       "status": "warning",
       "status_reason_ru": "Риск ненулевой, но не критический.",
       "threshold": "",
@@ -657,7 +716,7 @@
     {
       "components": {
         "scenario_id": "external_wine_classification",
-        "source_commit": "be2a30096b275d3365a92cb69b165e57e99e90de"
+        "source_commit": "11955855fb111912239f83500af5349fba895ee5"
       },
       "details": {},
       "explanation": "Маршрут сохраняется как проверяемый доказательный след.",
@@ -675,12 +734,23 @@
           "action": "lower_confidence",
           "action_id": "lower_confidence",
           "class_probability": 0.679119,
+          "conflict_component": 0.0,
+          "dataset_name": "sklearn_wine",
           "delta": 0.429844,
           "diagnostic_id": "D_external_tabular_uncertainty",
           "gamma": 0.320881,
+          "interval_component": 0.0,
+          "model_name": "GradientBoostingClassifier",
+          "perturbation": "external_payload",
+          "quality_component": 0.0,
           "quality_penalty": 0.0,
+          "reduction_component": 0.429844,
+          "representation_class": "F0",
           "rho": 0.429844,
-          "uncertainty": 0.320881
+          "risk_dominant_component": "delta",
+          "task_type": "tabular_classification",
+          "uncertainty": 0.320881,
+          "uncertainty_component": 0.320881
         },
         "diagnostics": [
           {
@@ -700,13 +770,13 @@
       "output_refs": [],
       "output_summary": "выход оператора",
       "output_values": {
-        "source_commit": "be2a30096b275d3365a92cb69b165e57e99e90de",
+        "source_commit": "11955855fb111912239f83500af5349fba895ee5",
         "verification_status": "PASS"
       },
       "raw": {
         "value_source": "computed"
       },
-      "source_commit": "be2a30096b275d3365a92cb69b165e57e99e90de",
+      "source_commit": "11955855fb111912239f83500af5349fba895ee5",
       "status": "passed",
       "status_reason_ru": "Proof trace содержит значения маршрута и source_commit.",
       "threshold": "",
@@ -718,13 +788,13 @@
       "value_source": "computed"
     }
   ],
-  "proof_hash": "7cad9bfb3a4794404e6714eed9db0c82dafcfe48688bacf181d5f91dd5cf8fe5",
-  "route_hash": "15746f06ce634e7b74c1a21a3ac28cddd28aa422959333e1156c2405e47f48f5",
-  "route_id": "external_wine_classification:GradientBoostingClassifier",
+  "proof_hash": "ebb945671bb8ba3b830eeca9fb991fd7baafd9e76d0a19aebc84d217a39ef49d",
+  "route_hash": "ddd84eca849a6d5c9b35f3076530f255d7b27fae48cadbcee07313050ae1c8ca",
+  "route_id": "external_wine_classification:sklearn_wine:GradientBoostingClassifier:external_payload",
   "scenario_id": "external_wine_classification",
-  "scenario_title_ru": "Внешняя классификация sklearn wine",
-  "source_commit": "be2a30096b275d3365a92cb69b165e57e99e90de",
-  "title": "External Wine Classification FuzzyXAI OperatorRoute",
+  "scenario_title_ru": "Research validation: tabular_classification",
+  "source_commit": "11955855fb111912239f83500af5349fba895ee5",
+  "title": "External Research Validation FuzzyXAI OperatorRoute",
   "verifier_report": {
     "checks": [
       {

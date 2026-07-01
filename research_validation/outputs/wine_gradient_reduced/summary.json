@@ -1,0 +1,21 @@
+{
+  "experiment_id": "wine_gradient_reduced",
+  "task_type": "tabular_classification",
+  "dataset": "sklearn_wine",
+  "model": "GradientBoostingClassifier",
+  "perturbation": "top_k_reduction",
+  "representation_class": "F0",
+  "gamma": 0.32,
+  "delta": 0.43,
+  "rho": 0.43,
+  "dominant_component": "delta",
+  "diagnostic_id": "D_external_tabular_uncertainty",
+  "action_id": "lower_confidence",
+  "verifier_status": "passed",
+  "traceability_status": "passed",
+  "source_commit": "11955855fb111912239f83500af5349fba895ee5",
+  "uncertainty_component": 0.32,
+  "quality_component": 0.0,
+  "reduction_component": 0.43,
+  "conflict_component": 0.0
+}
