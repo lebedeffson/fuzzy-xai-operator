@@ -137,3 +137,9 @@ def render_operator_dashboard(route: OperatorRouteState, output_path: str | Path
     fig.savefig(output_path, dpi=180, bbox_inches="tight")
     plt.close(fig)
     return output_path
+
+
+def render_dashboard(route: OperatorRouteState, output_path: str | Path) -> Path:
+    """Public framework alias: render a dashboard from an already computed route."""
+
+    return render_operator_dashboard(route, output_path)

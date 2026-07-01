@@ -27,6 +27,20 @@ The site is intentionally separated from the framework. FuzzyXAI computes; Dubna
 ### Framework Layer
 
 - Added public framework API in `framework/fuzzyxai/fuzzyxai/__init__.py`.
+- Added v0.3 framework-core API:
+  - `build_explainable_object`
+  - `build_route`
+  - `build_proof_trace`
+  - `verify_proof_trace`
+  - `render_dashboard`
+  - `save_route_json`
+- Added framework dataclasses:
+  - `AdaptedInput`
+  - `ExplainableObject`
+  - `OperatorNode`
+  - `OperatorRoute`
+  - `ProofTrace`
+- Added HYBRID-XIRIS adapter and operator modules for alignment, reduction, risk, diagnostics and actions.
 - Added route visualization layer:
   - `framework/fuzzyxai/fuzzyxai/viz/operator_state.py`
   - `framework/fuzzyxai/fuzzyxai/viz/route_builder.py`
@@ -34,6 +48,8 @@ The site is intentionally separated from the framework. FuzzyXAI computes; Dubna
 - Added example:
   - `framework/fuzzyxai/examples/show_hybrid_xiris_dashboard.py`
 - Generated:
+  - `reports/framework/hybrid_xiris_route.json`
+  - `reports/framework/hybrid_xiris_proof_trace.json`
   - `reports/routes/hybrid_xiris_route.json`
   - `reports/figures/hybrid_xiris_operator_dashboard.png`
 
@@ -151,6 +167,8 @@ The check runs:
 - research repository inventory
 - editable framework install
 - public framework import/API smoke
+- HYBRID-XIRIS framework example
+- framework-core tests
 - all application scenarios
 - HYBRID-XIRIS operator dashboard export
 - all scenario operator route export
@@ -166,6 +184,8 @@ The check runs:
 - Repository report: `reports/validation/repository_inventory/repository_inventory.md`
 - Operator route JSON: `reports/routes/hybrid_xiris_route.json`
 - Operator dashboard PNG: `reports/figures/hybrid_xiris_operator_dashboard.png`
+- Framework route JSON: `reports/framework/hybrid_xiris_route.json`
+- Framework proof trace JSON: `reports/framework/hybrid_xiris_proof_trace.json`
 
 ## Chapter Mapping
 

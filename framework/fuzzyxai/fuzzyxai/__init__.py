@@ -130,3 +130,20 @@ __all__ += [
     "verify_proof_trace",
     "show_operator_route",
 ]
+
+# v0.3 framework-core public API.
+from .core.explanation import build_explainable_object
+from .core.route import build_route
+from .proof.trace import build_proof_trace
+from .proof.verifier import verify_proof_trace
+from .viz.export import save_route_json
+from .viz.matplotlib_dashboard import render_dashboard
+
+__all__ += [
+    "build_explainable_object",
+    "build_route",
+    "build_proof_trace",
+    "verify_proof_trace",
+    "render_dashboard",
+    "save_route_json",
+]

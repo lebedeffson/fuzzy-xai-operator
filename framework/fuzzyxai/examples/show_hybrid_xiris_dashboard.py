@@ -1,6 +1,3 @@
-from __future__ import annotations
-
-import shutil
 import sys
 from pathlib import Path
 
@@ -9,23 +6,28 @@ FRAMEWORK = ROOT / "framework" / "fuzzyxai"
 if str(FRAMEWORK) not in sys.path:
     sys.path.insert(0, str(FRAMEWORK))
 
-from fuzzyxai.viz import load_route_from_proof, render_operator_dashboard
+from fuzzyxai import build_proof_trace, build_route, render_dashboard, save_route_json, verify_proof_trace
+from fuzzyxai.examples.hybrid_xiris import get_input
+from fuzzyxai.viz import save_proof_trace_json
 
 
 def main() -> None:
-    proof_path = ROOT / "applications/scenarios/hybrid_xiris/proof/hybrid_xiris_proof_package.json"
-    route = load_route_from_proof(proof_path)
-    route_json = ROOT / "reports/routes/hybrid_xiris_route.json"
-    route.write_json(route_json)
-    site_route = ROOT / "site/dubnaxai/public/routes/hybrid_xiris_route.json"
-    site_route.parent.mkdir(parents=True, exist_ok=True)
-    shutil.copy2(route_json, site_route)
+    route = build_route(get_input())
+    trace = build_proof_trace(route)
+    verification = verify_proof_trace(trace)
+    if not verification.valid:
+        raise SystemExit(f"proof trace failed: {verification.errors}")
+
+    route_json = ROOT / "reports/framework/hybrid_xiris_route.json"
+    proof_json = ROOT / "reports/framework/hybrid_xiris_proof_trace.json"
     figure = ROOT / "reports/figures/hybrid_xiris_operator_dashboard.png"
-    render_operator_dashboard(route, figure)
+    save_route_json(route, route_json)
+    save_proof_trace_json(trace, proof_json)
+    render_dashboard(route, figure)
     print(figure)
     print(route_json)
+    print(proof_json)
 
 
 if __name__ == "__main__":
     main()
-

@@ -1,0 +1,220 @@
+{
+  "scenario_id": "hybrid_xiris",
+  "title": "HYBRID-XIRIS FuzzyXAI OperatorRoute",
+  "nodes": [
+    {
+      "node_id": "input",
+      "title": "Входной артефакт",
+      "input_summary": "выход внешней модели и признаки качества",
+      "output_summary": "AdaptedInput",
+      "value": "Q_img=0.31; Q_seg=0.27; p=0.88",
+      "threshold": "",
+      "status": "warning",
+      "explanation": "Адаптер принимает внешний результат HYBRID-XIRIS.",
+      "formula_ref": "adapter",
+      "trace_ref": "adapted_input",
+      "value_source": "external_model_payload",
+      "raw": {
+        "image_quality": 0.31,
+        "segmentation_quality": 0.27,
+        "model_match_signal": 0.88,
+        "alpha_accept": 0.82,
+        "alpha_block": 0.91
+      }
+    },
+    {
+      "node_id": "explanation",
+      "title": "Объяснительный объект E_k",
+      "input_summary": "предыдущее состояние маршрута",
+      "output_summary": "выход оператора",
+      "value": "E_k сформирован",
+      "threshold": "",
+      "status": "passed",
+      "explanation": "Вход переведён в объяснительный объект.",
+      "formula_ref": "E_k",
+      "trace_ref": "explanation",
+      "value_source": "computed",
+      "raw": {
+        "model_signal": 0.88,
+        "image_quality": 0.31,
+        "segmentation_quality": 0.27,
+        "alpha_accept": 0.82,
+        "alpha_block": 0.91
+      }
+    },
+    {
+      "node_id": "alignment",
+      "title": "Согласование T_ij",
+      "input_summary": "предыдущее состояние маршрута",
+      "output_summary": "выход оператора",
+      "value": "gamma=0.351",
+      "threshold": "",
+      "status": "warning",
+      "explanation": "Рассогласование качества источника и модельного сигнала.",
+      "formula_ref": "T_ij",
+      "trace_ref": "alignment",
+      "value_source": "computed",
+      "raw": {
+        "gamma": 0.351,
+        "gamma_max": 0.4,
+        "status": "warning",
+        "value_source": "computed",
+        "components": {
+          "d_mu": 0.39,
+          "d_R": 0.4,
+          "d_u": 0.5675,
+          "d_tau": 0.0
+        },
+        "weights": {
+          "d_mu": 0.25,
+          "d_R": 0.35,
+          "d_u": 0.2,
+          "d_tau": 0.2
+        }
+      }
+    },
+    {
+      "node_id": "representation",
+      "title": "Выбор класса F",
+      "input_summary": "предыдущее состояние маршрута",
+      "output_summary": "выход оператора",
+      "value": "FML-audit",
+      "threshold": "",
+      "status": "warning",
+      "explanation": "Критический конфликт требует расширенного представления.",
+      "formula_ref": "F",
+      "trace_ref": "representation",
+      "value_source": "computed",
+      "raw": {
+        "value_source": "computed"
+      }
+    },
+    {
+      "node_id": "reduction",
+      "title": "Потери представления",
+      "input_summary": "предыдущее состояние маршрута",
+      "output_summary": "выход оператора",
+      "value": "Delta=0.106811; r_Delta=0.3225",
+      "threshold": "",
+      "status": "passed",
+      "explanation": "Потеря редукции сохраняется в маршруте.",
+      "formula_ref": "Delta",
+      "trace_ref": "reduction",
+      "value_source": "computed",
+      "raw": {
+        "delta": 0.106811,
+        "r_delta": 0.3225,
+        "delta_max": 0.35,
+        "kappa_delta": 3.01935193940699,
+        "status": "passed",
+        "value_source": "computed",
+        "components": {
+          "hybrid_delta": 0.106811
+        },
+        "weights": {
+          "hybrid_delta": 1.0
+        }
+      }
+    },
+    {
+      "node_id": "risk",
+      "title": "Риск rho",
+      "input_summary": "предыдущее состояние маршрута",
+      "output_summary": "выход оператора",
+      "value": "rho=0.8; chi_crit=1",
+      "threshold": "",
+      "status": "blocked",
+      "explanation": "критический конфликт качества источника и модельного сигнала",
+      "formula_ref": "rho, chi_crit",
+      "trace_ref": "risk",
+      "value_source": "computed",
+      "raw": {
+        "rho": 0.8,
+        "chi_crit": 1,
+        "risk_zone": "critical",
+        "status": "blocked",
+        "reason_ru": "критический конфликт качества источника и модельного сигнала",
+        "value_source": "computed",
+        "components": {
+          "model_signal": 0.88,
+          "block_rule": 0.91,
+          "source_conflict": 1.0,
+          "reduction_component": 0.3225
+        },
+        "weights": {
+          "model_signal": 0.35,
+          "block_rule": 0.25,
+          "source_conflict": 0.2,
+          "reduction_component": 0.2
+        }
+      }
+    },
+    {
+      "node_id": "diagnostics",
+      "title": "Диагностика D",
+      "input_summary": "предыдущее состояние маршрута",
+      "output_summary": "выход оператора",
+      "value": "D_quality_source_conflict",
+      "threshold": "",
+      "status": "blocked",
+      "explanation": "Диагностика объясняет запрет автоматического принятия.",
+      "formula_ref": "D",
+      "trace_ref": "diagnostics",
+      "value_source": "computed",
+      "raw": {
+        "diagnostics": [
+          {
+            "diagnostic_id": "D_quality_source_conflict",
+            "diagnostic_type": "quality_source_conflict",
+            "source": "image_and_segmentation_quality",
+            "criticality": "high",
+            "message_ru": "конфликт качества источника и модельного сигнала",
+            "recommended_action": "block"
+          }
+        ],
+        "value_source": "computed"
+      }
+    },
+    {
+      "node_id": "action",
+      "title": "Действие",
+      "input_summary": "предыдущее состояние маршрута",
+      "output_summary": "выход оператора",
+      "value": "block",
+      "threshold": "",
+      "status": "blocked",
+      "explanation": "автоматическое принятие запрещено при chi_crit = 1",
+      "formula_ref": "action policy",
+      "trace_ref": "action",
+      "value_source": "computed",
+      "raw": {
+        "action": "block",
+        "status": "blocked",
+        "reason_ru": "автоматическое принятие запрещено при chi_crit = 1"
+      }
+    }
+  ],
+  "computed_result": {
+    "gamma": 0.351,
+    "delta": 0.106811,
+    "r_delta": 0.3225,
+    "rho": 0.8,
+    "chi_crit": 1,
+    "selected_class": "FML-audit",
+    "diagnostic_id": "D_quality_source_conflict",
+    "action": "block"
+  },
+  "diagnostics": [
+    {
+      "diagnostic_id": "D_quality_source_conflict",
+      "diagnostic_type": "quality_source_conflict",
+      "source": "image_and_segmentation_quality",
+      "criticality": "high",
+      "message_ru": "конфликт качества источника и модельного сигнала",
+      "recommended_action": "block"
+    }
+  ],
+  "final_action": "block",
+  "verifier_status": "UNVERIFIED",
+  "source_commit": ""
+}
