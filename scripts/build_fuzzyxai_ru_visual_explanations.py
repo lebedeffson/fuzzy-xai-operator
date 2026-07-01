@@ -622,6 +622,33 @@ def verify_package(chapter: Path, report: Path, manifest_path: Path) -> None:
             raise SystemExit(f"sha256 mismatch: {item['path']}")
 
 
+def verify_zip_package(zip_path: Path) -> None:
+    head = must(["git", "rev-parse", "HEAD"]).stdout.strip()
+    forbidden = (
+        "ExternalDemoModel",
+        "manual_payload",
+        "lower_confidence",
+        "defer_to_human",
+        "source_commit=",
+        "route_id=external_wine_classification",
+    )
+    with zipfile.ZipFile(zip_path) as archive:
+        names = archive.namelist()
+        root = names[0].split("/")[0]
+        manifest = json.loads(archive.read(f"{root}/manifest.json").decode("utf-8"))
+        if manifest.get("source_commit") != head:
+            raise SystemExit(f"zip manifest source_commit is stale: {manifest.get('source_commit')} != {head}")
+        for name in names:
+            if not name.startswith(f"{root}/chapter/") or not name.endswith(".svg"):
+                continue
+            svg = archive.read(name).decode("utf-8", errors="ignore")
+            if "FAIL" in svg:
+                raise SystemExit(f"{name} contains FAIL")
+            for item in forbidden:
+                if item in svg:
+                    raise SystemExit(f"{name} contains stale technical label: {item}")
+
+
 def build() -> dict:
     if OUT.exists():
         shutil.rmtree(OUT)
@@ -689,6 +716,7 @@ def build() -> dict:
         for path in sorted(OUT.rglob("*")):
             if path.is_file():
                 archive.write(path, f"fuzzyxai_ru_explanation_visual_package/{path.relative_to(OUT).as_posix()}")
+    verify_zip_package(ZIP)
     return {
         "commit": commit,
         "package": ZIP.as_posix(),
