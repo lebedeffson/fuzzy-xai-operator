@@ -19,5 +19,11 @@ Assets copied from verified FuzzyXAI framework artifacts.
 | `gamma_delta_action_map_viz.png` | `reports/release/fuzzyxai_visualization_package/research/gamma_delta_action_map.png` |
 | `operator_trace_heatmap.png` | `reports/release/fuzzyxai_visualization_package/research/operator_trace_heatmap.png` |
 | `representation_atlas.png` | `reports/release/fuzzyxai_visualization_package/research/representation_atlas.png` |
+| `gamma_delta_action_map_chapter.png` | `reports/release/fuzzyxai_visualization_package/chapter/gamma_delta_action_map_chapter.png` |
+| `risk_waterfall_chapter.png` | `reports/release/fuzzyxai_visualization_package/chapter/risk_waterfall_chapter.png` |
+| `action_boundary_chapter.png` | `reports/release/fuzzyxai_visualization_package/chapter/action_boundary_chapter.png` |
+| `operator_trace_heatmap_compact.png` | `reports/release/fuzzyxai_visualization_package/chapter/operator_trace_heatmap_compact.png` |
+| `representation_atlas_chapter.png` | `reports/release/fuzzyxai_visualization_package/chapter/representation_atlas_chapter.png` |
+| `proof_consistency_matrix_chapter.png` | `reports/release/fuzzyxai_visualization_package/chapter/proof_consistency_matrix_chapter.png` |
 
 These files are presentation assets for Chapter 4. The source computations remain in `framework/fuzzyxai`, `external_validation`, `research_validation`, and `reports/release/fuzzyxai_framework_rc_package.zip`.

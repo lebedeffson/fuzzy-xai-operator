@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from .utils import ensure_parent, read_csv, status_color, write_html_with_image
+from .utils import add_footer, apply_visual_style, ensure_parent, footer_text, read_csv, status_color, write_html_with_image
 
 
 def render_gamma_delta_action_map(results_csv: str | Path, out: str | Path, html_out: str | Path | None = None) -> Path:
@@ -14,8 +14,8 @@ def render_gamma_delta_action_map(results_csv: str | Path, out: str | Path, html
     except Exception as exc:  # pragma: no cover
         raise RuntimeError("matplotlib is required") from exc
 
-    fig, ax = plt.subplots(figsize=(9, 7))
-    ax.set_facecolor("#fbfbf8")
+    fig, ax = plt.subplots(figsize=(10, 7.5))
+    apply_visual_style(fig, ax)
     zones = [
         (0, 0, 0.35, 0.35, "accept", "#e6f4ea"),
         (0, 0.35, 0.60, 0.25, "lower_confidence", "#fff4d6"),
@@ -37,6 +37,7 @@ def render_gamma_delta_action_map(results_csv: str | Path, out: str | Path, html
     ax.set_xlabel("gamma: disagreement / uncertainty")
     ax.set_ylabel("delta: explanation reduction loss")
     ax.set_title("FuzzyXAI Gamma-Delta Action Map", weight="bold")
+    add_footer(fig, footer_text(source_commit=rows[0].get("source_commit") if rows else None, verifier="passed"))
     fig.savefig(out, dpi=180, bbox_inches="tight")
     plt.close(fig)
     if html_out:

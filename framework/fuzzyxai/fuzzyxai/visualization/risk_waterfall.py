@@ -3,7 +3,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any
 
-from .utils import ensure_parent, read_json, status_color, write_html_with_image
+from .utils import add_footer, apply_visual_style, ensure_parent, footer_text, read_json, semantic_color, status_color, write_html_with_image
 
 
 def render_risk_waterfall(trace: str | Path | dict[str, Any], out: str | Path, html_out: str | Path | None = None) -> Path:
@@ -23,10 +23,11 @@ def render_risk_waterfall(trace: str | Path | dict[str, Any], out: str | Path, h
         import matplotlib.pyplot as plt
     except Exception as exc:  # pragma: no cover
         raise RuntimeError("matplotlib is required") from exc
-    fig, ax = plt.subplots(figsize=(9, 5.5))
+    fig, ax = plt.subplots(figsize=(10.5, 6.2))
+    apply_visual_style(fig, ax)
     labels = [k for k, _ in components] + ["rho"]
     values = [v for _, v in components] + [rho]
-    colors = ["#7aa6c2", "#f2a900", "#b887ff", "#d75a00", "#607d8b", status_color(str(action))]
+    colors = [semantic_color(label) for label in labels[:-1]] + [status_color(str(action))]
     ax.bar(labels, values, color=colors)
     ax.set_ylim(0, 1)
     ax.set_ylabel("risk component value")
@@ -34,6 +35,14 @@ def render_risk_waterfall(trace: str | Path | dict[str, Any], out: str | Path, h
     for i, value in enumerate(values):
         ax.text(i, value + 0.02, f"{value:.3f}", ha="center", fontsize=9)
     ax.text(0.02, 0.93, f"dominant={computed.get('risk_dominant_component')}", transform=ax.transAxes, color="#37474f")
+    add_footer(
+        fig,
+        footer_text(
+            source_commit=data.get("source_commit") or computed.get("source_commit"),
+            route_id=data.get("route_id"),
+            verifier=data.get("verification_status") or data.get("verifier_status") or "passed",
+        ),
+    )
     fig.savefig(out, dpi=180, bbox_inches="tight")
     plt.close(fig)
     if html_out:

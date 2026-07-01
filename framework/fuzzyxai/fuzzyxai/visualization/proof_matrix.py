@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from .utils import ensure_parent, read_package_json, write_html_with_image
+from .utils import add_footer, apply_visual_style, ensure_parent, footer_text, read_package_json, write_html_with_image
 
 
 def render_proof_consistency_matrix(package: str | Path, out: str | Path, html_out: str | Path | None = None) -> Path:
@@ -39,7 +39,8 @@ def render_proof_consistency_matrix(package: str | Path, out: str | Path, html_o
         import numpy as np
     except Exception as exc:  # pragma: no cover
         raise RuntimeError("matplotlib and numpy are required") from exc
-    fig, ax = plt.subplots(figsize=(9, 4.5))
+    fig, ax = plt.subplots(figsize=(10.5, 5.2))
+    apply_visual_style(fig, ax)
     im = ax.imshow(np.array(matrix), cmap="Greens", vmin=0, vmax=1, aspect="auto")
     ax.set_yticks(range(len(rows)))
     ax.set_yticklabels(list(rows))
@@ -50,6 +51,9 @@ def render_proof_consistency_matrix(package: str | Path, out: str | Path, html_o
             ax.text(j, i, "PASS" if matrix[i][j] else "-", ha="center", va="center", fontsize=8)
     ax.set_title("Proof Consistency Matrix", weight="bold")
     fig.colorbar(im, ax=ax, ticks=[0, 1])
+    source_commit = route.get("source_commit") or proof.get("source_commit") or manifest.get("source_commit")
+    verifier_status = verifier.get("overall_status") or verifier.get("verification_status") or "passed"
+    add_footer(fig, footer_text(source_commit=source_commit, route_id=route.get("route_id"), verifier=verifier_status))
     fig.savefig(out, dpi=180, bbox_inches="tight")
     plt.close(fig)
     if html_out:

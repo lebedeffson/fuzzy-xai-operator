@@ -275,11 +275,13 @@ Added a canonical visualization layer for operator-risk-action traces:
 - `fuzzyxai visualize ...`
 - `make fuzzyxai-visualization-check`
 - `make fuzzyxai-visualization-package`
+- `make fuzzyxai-visual-quality-check`
 - `reports/release/fuzzyxai_visualization_package.zip`
+- `docs/chapter_4_framework/visualization_figures.md`
 
 Canonical visualizations:
 
-- V1 Operator Route Sankey
+- V1 Operator Route Flow
 - V2 Gamma-Delta Action Map
 - V3 Risk Waterfall
 - V4 Operator Trace Heatmap
@@ -291,6 +293,10 @@ Canonical visualizations:
 The visual layer displays operator trace, risk components, action boundaries and
 proof consistency. It does not recompute route values and does not depend on
 the DubnaXAI site.
+
+Visual hardening added chapter-ready compact figures, unified semantic colors
+for actions/statuses, provenance footers with `source_commit` and verifier
+markers, a long-form visualization report and sha256-backed package validation.
 
 ### Operator Traceability v2
 
@@ -384,7 +390,7 @@ The check runs:
 - FuzzyXAI schema check
 - FuzzyXAI adapter SDK check
 - FuzzyXAI framework RC acceptance check/package
-- FuzzyXAI visualization check/package
+- FuzzyXAI visualization check/package/quality gate
 - operator traceability check
 - research validation is available through `make research-validation` and
   `make research-validation-check`; research analysis is available through

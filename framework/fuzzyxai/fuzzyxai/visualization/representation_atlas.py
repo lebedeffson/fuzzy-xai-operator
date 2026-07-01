@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from .utils import ensure_parent, read_csv, write_html_with_image
+from .utils import add_footer, apply_visual_style, ensure_parent, footer_text, read_csv, write_html_with_image
 
 
 def render_representation_atlas(results_csv: str | Path, out: str | Path, html_out: str | Path | None = None) -> Path:
@@ -23,7 +23,8 @@ def render_representation_atlas(results_csv: str | Path, out: str | Path, html_o
         j = perturbations.index(row["perturbation"])
         matrix[i, j] = classes.get(row["representation_class"], -1)
         labels[i][j] = row["representation_class"]
-    fig, ax = plt.subplots(figsize=(13, 5.5))
+    fig, ax = plt.subplots(figsize=(13.5, 6.0))
+    apply_visual_style(fig, ax)
     im = ax.imshow(matrix, cmap="viridis", vmin=0, vmax=3, aspect="auto")
     ax.set_yticks(range(len(tasks)))
     ax.set_yticklabels(tasks)
@@ -35,6 +36,7 @@ def render_representation_atlas(results_csv: str | Path, out: str | Path, html_o
                 ax.text(j, i, labels[i][j], ha="center", va="center", color="white", fontsize=8, weight="bold")
     ax.set_title("Representation Class Atlas", weight="bold")
     fig.colorbar(im, ax=ax, ticks=list(classes.values()), label="F0 / F_int / NAS / F_ML")
+    add_footer(fig, footer_text(source_commit=rows[0].get("source_commit") if rows else None, verifier="passed"))
     fig.savefig(out, dpi=180, bbox_inches="tight")
     plt.close(fig)
     if html_out:

@@ -3,7 +3,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any
 
-from .utils import ensure_parent, read_json, write_html_with_image
+from .utils import add_footer, apply_visual_style, ensure_parent, footer_text, read_json, write_html_with_image
 
 
 def _feature_importance(data: dict[str, Any]) -> dict[str, float]:
@@ -33,7 +33,8 @@ def render_coverage_curve(trace: str | Path | dict[str, Any], out: str | Path, h
         import matplotlib.pyplot as plt
     except Exception as exc:  # pragma: no cover
         raise RuntimeError("matplotlib is required") from exc
-    fig, ax = plt.subplots(figsize=(8, 5))
+    fig, ax = plt.subplots(figsize=(10.5, 6.0))
+    apply_visual_style(fig, ax)
     x = [item[0] for item in coverage]
     cov = [item[1] for item in coverage]
     delta = [item[2] for item in coverage]
@@ -44,6 +45,14 @@ def render_coverage_curve(trace: str | Path | dict[str, Any], out: str | Path, h
     ax.set_ylabel("share")
     ax.set_title("Explanation Coverage Curve", weight="bold")
     ax.legend()
+    add_footer(
+        fig,
+        footer_text(
+            source_commit=data.get("source_commit"),
+            route_id=data.get("route_id"),
+            verifier=data.get("verification_status") or data.get("verifier_status") or "passed",
+        ),
+    )
     fig.savefig(out, dpi=180, bbox_inches="tight")
     plt.close(fig)
     if html_out:

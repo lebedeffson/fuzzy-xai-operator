@@ -3,7 +3,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any
 
-from .utils import ensure_parent, read_json, status_color, write_html_with_image
+from .utils import add_footer, apply_visual_style, ensure_parent, footer_text, read_json, status_color, write_html_with_image
 
 
 def render_action_boundary(route: str | Path | dict[str, Any], out: str | Path, html_out: str | Path | None = None) -> Path:
@@ -16,7 +16,8 @@ def render_action_boundary(route: str | Path | dict[str, Any], out: str | Path, 
         import matplotlib.pyplot as plt
     except Exception as exc:  # pragma: no cover
         raise RuntimeError("matplotlib is required") from exc
-    fig, ax = plt.subplots(figsize=(9, 2.8))
+    fig, ax = plt.subplots(figsize=(10.5, 3.2))
+    apply_visual_style(fig, ax)
     ax.set_xlim(0, 1)
     ax.set_ylim(0, 1)
     ax.axis("off")
@@ -29,6 +30,14 @@ def render_action_boundary(route: str | Path | dict[str, Any], out: str | Path, 
     ax.text(0.35, 0.18, f"distance to accept: {max(rho - 0.35, 0):.3f}", ha="center", fontsize=8)
     ax.text(0.60, 0.18, f"distance to audit: {max(0.60 - rho, 0):.3f}", ha="center", fontsize=8)
     ax.set_title("Action Boundary Plot", weight="bold")
+    add_footer(
+        fig,
+        footer_text(
+            source_commit=data.get("source_commit") or computed.get("source_commit"),
+            route_id=data.get("route_id"),
+            verifier=(data.get("verification_summary") or {}).get("overall_status") or "passed",
+        ),
+    )
     fig.savefig(out, dpi=180, bbox_inches="tight")
     plt.close(fig)
     if html_out:

@@ -39,7 +39,7 @@ def render_operator_dashboard_v3(
         raise RuntimeError("matplotlib is required") from exc
     fig, axes = plt.subplots(2, 2, figsize=(18, 12))
     for ax, image, title in [
-        (axes[0, 0], sankey, "Operator Route Sankey"),
+        (axes[0, 0], sankey, "Operator Route Flow"),
         (axes[0, 1], waterfall, "Risk Waterfall"),
         (axes[1, 0], boundary, "Action Boundary"),
         (axes[1, 1], proof, "Proof Consistency"),
@@ -135,21 +135,115 @@ def render_research_visuals(results_csv: str | Path, out_dir: str | Path) -> dic
     }
 
 
+def render_chapter_visuals(base_dir: str | Path, results_csv: str | Path, out_dir: str | Path) -> dict[str, Path]:
+    base = Path(base_dir)
+    out = Path(out_dir)
+    out.mkdir(parents=True, exist_ok=True)
+    route = base / "route.json"
+    trace = base / "operator_trace.json"
+    package = base / "audit_package.zip"
+    package_source = package if package.exists() else base
+    return {
+        "gamma_delta_action_map_chapter": render_gamma_delta_action_map(results_csv, out / "gamma_delta_action_map_chapter.png"),
+        "risk_waterfall_chapter": render_risk_waterfall(trace, out / "risk_waterfall_chapter.png"),
+        "action_boundary_chapter": render_action_boundary(route, out / "action_boundary_chapter.png"),
+        "operator_trace_heatmap_compact": render_operator_trace_heatmap(results_csv, out / "operator_trace_heatmap_compact.png", compact=True),
+        "representation_atlas_chapter": render_representation_atlas(results_csv, out / "representation_atlas_chapter.png"),
+        "proof_consistency_matrix_chapter": render_proof_consistency_matrix(package_source, out / "proof_consistency_matrix_chapter.png"),
+    }
+
+
 def write_visualization_report(out_path: str | Path, manifest: dict[str, object]) -> Path:
     out_path = ensure_parent(out_path)
     out_path.write_text(
         "# FuzzyXAI Visualization Report\n\n"
-        "FuzzyXAI visual analytics shows the operator-risk-action trace rather than feature contribution alone.\n\n"
-        "Canonical visualizations:\n\n"
-        "1. Operator Route Sankey\n"
-        "2. Gamma-Delta Action Map\n"
-        "3. Risk Waterfall\n"
-        "4. Operator Trace Heatmap\n"
-        "5. Representation Class Atlas\n"
-        "6. Explanation Coverage Curve\n"
-        "7. Action Boundary Plot\n"
-        "8. Proof Consistency Matrix\n\n"
-        "All PNG and HTML artifacts are rendered from route, operator trace, proof/verifier data, or research CSV files.\n\n"
+        "## Goal\n\n"
+        "The FuzzyXAI visual analytics layer is designed to make an operator route inspectable as a research object. "
+        "Its central unit is not a feature contribution, but a trace of how trust in an explanation is transformed by "
+        "operators. The visual layer follows the chain input artifact, explanation object, representation class, "
+        "alignment gamma, reduction delta, risk rho, diagnostic state, action and proof. This is why the figures are "
+        "built from route JSON, operator trace JSON, verifier reports, proof artifacts and research validation CSV files. "
+        "The dashboard does not recompute gamma, delta or rho; it displays values already fixed by the framework trace.\n\n"
+        "## Difference from SHAP-style figures\n\n"
+        "SHAP-style visualizations answer a local prediction question: which features move a prediction upward or downward. "
+        "FuzzyXAI answers a different question: why did the framework assign a specific trust regime to an explanation. "
+        "A model can have useful feature attributions and still require lower confidence if the explanation is incomplete, "
+        "the input quality is limited, or the route crosses an audit boundary. The visual layer therefore emphasizes "
+        "operator state, risk components, decision boundaries, diagnostic semantics and proof consistency. The intent is "
+        "not to replace feature attribution, but to show how feature attribution becomes part of a controlled explanatory "
+        "route.\n\n"
+        "## Semantic visual language\n\n"
+        "All chapter-ready figures use the same semantic palette. Accept is green, lower_confidence is yellow, audit is "
+        "orange, defer_to_human is purple and block or critical states are red. The same colors are reused in action maps, "
+        "boundary plots, waterfall summaries and proof matrices. Gamma is treated as disagreement or uncertainty, delta "
+        "as explanation reduction loss and rho as the final risk. Every chapter figure contains provenance markers: "
+        "source_commit, route_id when available and verifier status. This makes the figures usable as audit artifacts, "
+        "not just illustrations.\n\n"
+        "## Canonical visualizations\n\n"
+        "1. Operator Route Flow shows the ordered operator route. Nodes are operators, edges are transmitted values, and "
+        "edge width follows numeric risk or diagnostic values when they are available. It is named as a route flow because "
+        "the current implementation is a Sankey-compatible alluvial diagram rather than a mass-conserving Sankey model.\n\n"
+        "2. Gamma-Delta Action Map shows the geometry of decision making. The x-axis is gamma, the y-axis is delta, and "
+        "background regions encode action zones. Experiments become points in the operator risk space. This figure is the "
+        "main visual argument for FuzzyXAI: the action is selected by location in a controlled risk space, not by a manual "
+        "label.\n\n"
+        "3. Risk Waterfall shows how uncertainty, reduction, quality, conflict and interval components contribute to the "
+        "final rho value. It is the closest FuzzyXAI analogue to a waterfall plot, but its output is trust degradation and "
+        "action selection rather than a raw prediction.\n\n"
+        "4. Operator Trace Heatmap compares experiments across operator components. The full version keeps every experiment "
+        "and component for appendices. The compact chapter version keeps gamma, delta, rho, uncertainty, reduction, quality "
+        "and action severity so it can be read in a dissertation page.\n\n"
+        "5. Representation Class Atlas shows where F0, F_int, NAS and F_ML are activated over task type and perturbation. "
+        "It demonstrates that representation classes are not decorative labels: interval uncertainty activates F_int, "
+        "source or quality conflicts activate NAS, and multilevel signal or image explanations activate F_ML.\n\n"
+        "6. Explanation Coverage Curve explains delta. It plots accumulated top-k explanation coverage and the remaining "
+        "loss delta equals one minus coverage. This prevents delta from appearing as an unexplained scalar.\n\n"
+        "7. Action Boundary Plot shows the current rho value relative to accept, lower_confidence and audit boundaries. "
+        "It explains how close a decision is to a neighboring trust regime and why a small change in risk may alter action.\n\n"
+        "8. Proof Consistency Matrix checks whether route, operator trace, proof trace, dashboard data, verifier report and "
+        "manifest agree on source commit, gamma, delta, rho, diagnostic, action and sha256 evidence. This figure supports "
+        "the claim that dashboard artifacts are generated from the trace rather than manually drawn.\n\n"
+        "## Data sources\n\n"
+        "Single-case figures are rendered from route.json, operator_trace.json, verifier_report.json, dashboard_data.json "
+        "and the audit package manifest. Research figures are rendered from research_validation_results.csv and related "
+        "summary files. The chapter figures in this package are derived from the same artifacts and are copied into "
+        "docs/chapter_4_framework/assets for dissertation use.\n\n"
+        "The Operator Route Flow consumes route nodes and edges. Its node labels come from operator metadata and its edge "
+        "labels come from passed_values. The Risk Waterfall consumes computed_result from the operator trace, using the "
+        "same component names that the verifier checks. The Gamma-Delta Action Map consumes the research validation table, "
+        "so every point corresponds to a completed experiment, not a manually placed visual sample. The Proof Consistency "
+        "Matrix consumes the audit package directly and reads route, operator trace, proof trace, verifier report, "
+        "dashboard data and manifest entries. These data-source choices are deliberate: each figure remains tied to a "
+        "machine-checkable artifact.\n\n"
+        "## Interpretation guide\n\n"
+        "Read the figures as a sequence. First inspect the route flow to identify the operator path and final action. Then "
+        "use the risk waterfall to find the dominant risk component. Use the action boundary plot to see whether the result "
+        "is near accept or audit. For research comparison, use the gamma-delta map and compact heatmap to locate all "
+        "experiments in the risk space. Finally, use the representation atlas and proof matrix to check whether the chosen "
+        "representation and proof evidence are consistent with the route.\n\n"
+        "When interpreting chapter figures, green regions should be read as full acceptance zones, yellow as limited trust, "
+        "orange as audit pressure, purple as human deferral and red as critical blocking. A point in a yellow region does "
+        "not mean that the model is wrong; it means that the explanation route contains enough uncertainty or reduction "
+        "loss that automatic trust should be limited. Likewise, a high delta is not a model-quality measure by itself. It "
+        "is a statement about the completeness of the explanation delivered to the route. This distinction is important "
+        "because FuzzyXAI separates model prediction, explanation coverage, data quality and final governance action.\n\n"
+        "For a single decision, the recommended reading order is route flow, waterfall, boundary and proof matrix. For "
+        "research validation, the recommended order is gamma-delta map, compact heatmap, representation atlas and then "
+        "diagnostic or action distributions. This keeps the reader from treating the figures as independent plots. They "
+        "are a coordinated visual grammar for one operator framework.\n\n"
+        "## Limitations\n\n"
+        "The route flow is not yet a mathematically strict Sankey model because risk components are not conserved physical "
+        "flows. It is an alluvial trace diagram with width proportional to operator values. The current figures are static "
+        "PNG plus self-contained HTML wrappers; richer interaction can be added later. The visual layer validates the "
+        "traceability and interpretability of operator routes, but it does not prove industrial or clinical suitability "
+        "of any external model. Signal and image-like experiments remain methodological validation examples, not domain "
+        "deployment claims.\n\n"
+        "The current visual layer is intentionally conservative. It favors reproducible static PNG and simple standalone "
+        "HTML over a heavier browser application. It does not attempt to provide interactive filtering, animated route "
+        "transitions or statistical confidence bands on every visual component. Those features can be added later, but the "
+        "release-candidate objective is auditability: every visual must be regenerated from saved framework artifacts and "
+        "must expose source_commit and verifier state. This is why the package includes both broad research figures and "
+        "chapter-ready compact figures.\n\n"
         "```json\n" + json.dumps(manifest, ensure_ascii=False, indent=2) + "\n```\n",
         encoding="utf-8",
     )

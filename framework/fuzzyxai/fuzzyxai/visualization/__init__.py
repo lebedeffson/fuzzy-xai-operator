@@ -13,8 +13,11 @@ from .risk_waterfall import render_risk_waterfall
 from .route_sankey import render_route_sankey
 from .trace_heatmap import render_operator_trace_heatmap
 
+render_operator_route_flow = render_route_sankey
+
 __all__ = [
     "render_route_sankey",
+    "render_operator_route_flow",
     "render_gamma_delta_action_map",
     "render_risk_waterfall",
     "render_operator_trace_heatmap",

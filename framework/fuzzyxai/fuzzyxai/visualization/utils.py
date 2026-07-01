@@ -18,6 +18,36 @@ ACTION_COLORS = {
     "audit_report": "#5d6d7e",
 }
 
+STATUS_COLORS = {
+    "passed": "#2e7d32",
+    "pass": "#2e7d32",
+    "ok": "#2e7d32",
+    "warning": "#f2a900",
+    "audit": "#d75a00",
+    "failed": "#b71c1c",
+    "fail": "#b71c1c",
+}
+
+COMPONENT_COLORS = {
+    "gamma": "#3366cc",
+    "delta": "#f2a900",
+    "rho": "#b71c1c",
+    "uncertainty": "#3366cc",
+    "uncertainty_component": "#3366cc",
+    "reduction": "#f2a900",
+    "reduction_component": "#f2a900",
+    "quality": "#8e24aa",
+    "quality_component": "#8e24aa",
+    "conflict": "#d75a00",
+    "conflict_component": "#d75a00",
+    "interval": "#5d6d7e",
+    "interval_component": "#5d6d7e",
+}
+
+FIGURE_FACE = "#fbfbf8"
+TEXT_COLOR = "#16202a"
+MUTED_COLOR = "#51606f"
+
 
 def read_json(path: str | Path) -> dict[str, Any]:
     return json.loads(Path(path).read_text(encoding="utf-8"))
@@ -51,6 +81,41 @@ def action_for_rho(rho: float) -> str:
 
 def status_color(action: str) -> str:
     return ACTION_COLORS.get(action, "#607d8b")
+
+
+def semantic_color(value: str) -> str:
+    value = str(value)
+    return ACTION_COLORS.get(value, STATUS_COLORS.get(value.lower(), COMPONENT_COLORS.get(value, "#607d8b")))
+
+
+def apply_visual_style(fig: Any, ax: Any | None = None) -> None:
+    fig.patch.set_facecolor(FIGURE_FACE)
+    if ax is not None:
+        ax.set_facecolor(FIGURE_FACE)
+        ax.tick_params(colors=TEXT_COLOR)
+        for spine in getattr(ax, "spines", {}).values():
+            spine.set_color("#d8dde3")
+
+
+def footer_text(*, source_commit: str | None = None, route_id: str | None = None, verifier: str | None = None) -> str:
+    short_commit = (source_commit or "unknown")[:12]
+    parts = [f"source_commit={short_commit}"]
+    if route_id:
+        parts.append(f"route_id={route_id}")
+    if verifier:
+        parts.append(f"verifier={verifier}")
+    return " | ".join(parts)
+
+
+def add_footer(fig: Any, text: str) -> None:
+    fig.text(0.01, 0.012, text, ha="left", va="bottom", fontsize=8, color=MUTED_COLOR)
+
+
+def png_size(path: str | Path) -> tuple[int, int]:
+    from PIL import Image
+
+    with Image.open(path) as image:
+        return image.size
 
 
 def write_html_with_image(

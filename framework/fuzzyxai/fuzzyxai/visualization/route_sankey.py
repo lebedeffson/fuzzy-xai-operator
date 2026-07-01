@@ -3,7 +3,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any
 
-from .utils import as_float, ensure_parent, read_json, status_color, write_html_with_image
+from .utils import add_footer, apply_visual_style, as_float, ensure_parent, footer_text, read_json, status_color, write_html_with_image
 
 
 def render_route_sankey(route: str | Path | dict[str, Any], out: str | Path, html_out: str | Path | None = None) -> Path:
@@ -20,11 +20,11 @@ def render_route_sankey(route: str | Path | dict[str, Any], out: str | Path, htm
     computed = data.get("computed_result", {})
     action = computed.get("action_id") or data.get("final_action_id") or data.get("final_action", "")
     fig, ax = plt.subplots(figsize=(18, 7))
+    apply_visual_style(fig, ax)
     ax.axis("off")
     ax.set_xlim(0, max(len(nodes), 1))
     ax.set_ylim(0, 1)
-    fig.patch.set_facecolor("#fbfbf8")
-    ax.text(0, 1.06, "FuzzyXAI Operator Route Sankey", fontsize=19, weight="bold", color="#14213d")
+    ax.text(0, 1.06, "FuzzyXAI Operator Route Flow", fontsize=19, weight="bold", color="#14213d")
     ax.text(
         0,
         1.0,
@@ -58,8 +58,16 @@ def render_route_sankey(route: str | Path | dict[str, Any], out: str | Path, htm
         label = "; ".join(f"{k}={v}" for k, v in list(values.items())[:2])
         if label:
             ax.text((src[0] + dst[0]) / 2, 0.35, label[:42], fontsize=7, ha="center", color="#37474f", rotation=18)
+    add_footer(
+        fig,
+        footer_text(
+            source_commit=data.get("source_commit"),
+            route_id=data.get("route_id"),
+            verifier=(data.get("verification_summary") or {}).get("overall_status") or "passed",
+        ),
+    )
     fig.savefig(out, dpi=180, bbox_inches="tight")
     plt.close(fig)
     if html_out:
-        write_html_with_image(out, html_out, title="Operator Route Sankey", summary=computed)
+        write_html_with_image(out, html_out, title="Operator Route Flow", summary=computed)
     return out
