@@ -259,12 +259,38 @@ Prepared dissertation-facing framework materials:
 - `docs/chapter_4_framework/operator_traceability.md`
 - `docs/chapter_4_framework/research_validation_section.md`
 - `docs/chapter_4_framework/research_analysis_section.md`
+- `docs/chapter_4_framework/visual_analytics_layer.md`
 - `docs/chapter_4_framework/assets/`
 - `reports/release/chapter_4_framework_package.zip`
 
 The assets are copied from verified RC, external validation and research
 validation artifacts. They are presentation assets only; source computations
 remain in the framework, validation and release-report layers.
+
+### FuzzyXAI Visual Analytics Layer
+
+Added a canonical visualization layer for operator-risk-action traces:
+
+- `framework/fuzzyxai/fuzzyxai/visualization/`
+- `fuzzyxai visualize ...`
+- `make fuzzyxai-visualization-check`
+- `make fuzzyxai-visualization-package`
+- `reports/release/fuzzyxai_visualization_package.zip`
+
+Canonical visualizations:
+
+- V1 Operator Route Sankey
+- V2 Gamma-Delta Action Map
+- V3 Risk Waterfall
+- V4 Operator Trace Heatmap
+- V5 Representation Class Atlas
+- V6 Explanation Coverage Curve
+- V7 Action Boundary Plot
+- V8 Proof Consistency Matrix
+
+The visual layer displays operator trace, risk components, action boundaries and
+proof consistency. It does not recompute route values and does not depend on
+the DubnaXAI site.
 
 ### Operator Traceability v2
 
@@ -358,6 +384,7 @@ The check runs:
 - FuzzyXAI schema check
 - FuzzyXAI adapter SDK check
 - FuzzyXAI framework RC acceptance check/package
+- FuzzyXAI visualization check/package
 - operator traceability check
 - research validation is available through `make research-validation` and
   `make research-validation-check`; research analysis is available through
@@ -384,6 +411,7 @@ The check runs:
 - Framework proof trace JSON: `reports/framework/hybrid_xiris_proof_trace.json`
 - Framework RC package: `reports/release/fuzzyxai_framework_rc_package.zip`
 - Chapter 4 framework package: `reports/release/chapter_4_framework_package.zip`
+- Visualization package: `reports/release/fuzzyxai_visualization_package.zip`
 
 ## Chapter Mapping
 

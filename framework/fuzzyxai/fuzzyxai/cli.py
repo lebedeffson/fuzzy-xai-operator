@@ -12,6 +12,16 @@ from fuzzyxai.operators import list_operators
 from fuzzyxai.proof.verifier import verify_proof_trace
 from fuzzyxai.runtime import FuzzyXAI
 from fuzzyxai.schemas import list_schemas, validate_file
+from fuzzyxai.visualization import (
+    render_action_boundary,
+    render_coverage_curve,
+    render_gamma_delta_action_map,
+    render_operator_trace_heatmap,
+    render_proof_consistency_matrix,
+    render_representation_atlas,
+    render_risk_waterfall,
+    render_route_sankey,
+)
 from fuzzyxai.viz.matplotlib_dashboard import render_dashboard
 
 
@@ -100,6 +110,30 @@ def cmd_list_operators(_: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_visualize(args: argparse.Namespace) -> int:
+    html_out = args.html_out
+    if args.visual == "route-sankey":
+        render_route_sankey(args.route, args.out, html_out)
+    elif args.visual == "risk-waterfall":
+        render_risk_waterfall(args.trace, args.out, html_out)
+    elif args.visual == "gamma-delta-map":
+        render_gamma_delta_action_map(args.results, args.out, html_out)
+    elif args.visual == "trace-heatmap":
+        render_operator_trace_heatmap(args.results, args.out, html_out)
+    elif args.visual == "representation-atlas":
+        render_representation_atlas(args.results, args.out, html_out)
+    elif args.visual == "coverage-curve":
+        render_coverage_curve(args.trace, args.out, html_out)
+    elif args.visual == "action-boundary":
+        render_action_boundary(args.route, args.out, html_out)
+    elif args.visual == "proof-matrix":
+        render_proof_consistency_matrix(args.package, args.out, html_out)
+    else:  # pragma: no cover
+        raise ValueError(args.visual)
+    print(f"fuzzyxai visualize {args.visual}: PASS {args.out}")
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="fuzzyxai")
     sub = parser.add_subparsers(dest="command", required=True)
@@ -132,6 +166,57 @@ def build_parser() -> argparse.ArgumentParser:
 
     sub.add_parser("list-adapters").set_defaults(func=cmd_list_adapters)
     sub.add_parser("list-operators").set_defaults(func=cmd_list_operators)
+
+    visualize = sub.add_parser("visualize")
+    visual_sub = visualize.add_subparsers(dest="visual", required=True)
+
+    route_sankey = visual_sub.add_parser("route-sankey")
+    route_sankey.add_argument("--route", required=True)
+    route_sankey.add_argument("--out", required=True)
+    route_sankey.add_argument("--html-out")
+    route_sankey.set_defaults(func=cmd_visualize)
+
+    risk_waterfall = visual_sub.add_parser("risk-waterfall")
+    risk_waterfall.add_argument("--trace", required=True)
+    risk_waterfall.add_argument("--out", required=True)
+    risk_waterfall.add_argument("--html-out")
+    risk_waterfall.set_defaults(func=cmd_visualize)
+
+    gamma_delta = visual_sub.add_parser("gamma-delta-map")
+    gamma_delta.add_argument("--results", required=True)
+    gamma_delta.add_argument("--out", required=True)
+    gamma_delta.add_argument("--html-out")
+    gamma_delta.set_defaults(func=cmd_visualize)
+
+    trace_heatmap = visual_sub.add_parser("trace-heatmap")
+    trace_heatmap.add_argument("--results", required=True)
+    trace_heatmap.add_argument("--out", required=True)
+    trace_heatmap.add_argument("--html-out")
+    trace_heatmap.set_defaults(func=cmd_visualize)
+
+    atlas = visual_sub.add_parser("representation-atlas")
+    atlas.add_argument("--results", required=True)
+    atlas.add_argument("--out", required=True)
+    atlas.add_argument("--html-out")
+    atlas.set_defaults(func=cmd_visualize)
+
+    coverage = visual_sub.add_parser("coverage-curve")
+    coverage.add_argument("--trace", required=True)
+    coverage.add_argument("--out", required=True)
+    coverage.add_argument("--html-out")
+    coverage.set_defaults(func=cmd_visualize)
+
+    boundary = visual_sub.add_parser("action-boundary")
+    boundary.add_argument("--route", required=True)
+    boundary.add_argument("--out", required=True)
+    boundary.add_argument("--html-out")
+    boundary.set_defaults(func=cmd_visualize)
+
+    proof_matrix = visual_sub.add_parser("proof-matrix")
+    proof_matrix.add_argument("--package", required=True)
+    proof_matrix.add_argument("--out", required=True)
+    proof_matrix.add_argument("--html-out")
+    proof_matrix.set_defaults(func=cmd_visualize)
     return parser
 
 

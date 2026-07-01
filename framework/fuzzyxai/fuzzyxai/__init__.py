@@ -142,6 +142,16 @@ from .examples import list_examples, load_example
 from .runtime import FuzzyXAI
 from .adapters import BaseAdapter, TabularClassificationAdapter, get_adapter, list_adapters
 from .operators import get_operator, list_operators
+from .visualization import (
+    render_action_boundary,
+    render_coverage_curve,
+    render_gamma_delta_action_map,
+    render_operator_trace_heatmap,
+    render_proof_consistency_matrix,
+    render_representation_atlas,
+    render_risk_waterfall,
+    render_route_sankey,
+)
 
 __all__ += [
     "FuzzyXAI",
@@ -159,4 +169,12 @@ __all__ += [
     "list_adapters",
     "get_operator",
     "list_operators",
+    "render_route_sankey",
+    "render_gamma_delta_action_map",
+    "render_risk_waterfall",
+    "render_operator_trace_heatmap",
+    "render_representation_atlas",
+    "render_coverage_curve",
+    "render_action_boundary",
+    "render_proof_consistency_matrix",
 ]
