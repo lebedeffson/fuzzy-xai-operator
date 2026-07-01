@@ -147,7 +147,7 @@
     ],
     "final_action": "audit",
     "verifier_status": "PASS",
-    "source_commit": ""
+    "source_commit": "00caff9012de7ad74f81ef367a61d012734b40c2"
   },
   "computed_result": {
     "counter_fragments": 30,
@@ -166,5 +166,6 @@
     }
   ],
   "final_action": "audit",
-  "verifier_status": "PASS"
+  "verifier_status": "PASS",
+  "source_commit": "00caff9012de7ad74f81ef367a61d012734b40c2"
 }

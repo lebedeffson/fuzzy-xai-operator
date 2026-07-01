@@ -146,7 +146,7 @@
     ],
     "final_action": "audit",
     "verifier_status": "PASS",
-    "source_commit": ""
+    "source_commit": "00caff9012de7ad74f81ef367a61d012734b40c2"
   },
   "computed_result": {
     "gamma_rule_shap": 0.685,
@@ -164,5 +164,6 @@
     }
   ],
   "final_action": "audit",
-  "verifier_status": "PASS"
+  "verifier_status": "PASS",
+  "source_commit": "00caff9012de7ad74f81ef367a61d012734b40c2"
 }

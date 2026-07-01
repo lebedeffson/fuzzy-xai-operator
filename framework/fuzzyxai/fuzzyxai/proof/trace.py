@@ -13,4 +13,5 @@ def build_proof_trace(route: OperatorRoute) -> ProofTrace:
         diagnostics=route.diagnostics,
         final_action=route.final_action,
         verifier_status="PASS",
+        source_commit=route.source_commit or "unknown",
     )

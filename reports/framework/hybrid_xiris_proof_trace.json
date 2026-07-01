@@ -236,7 +236,7 @@
     ],
     "final_action": "block",
     "verifier_status": "PASS",
-    "source_commit": ""
+    "source_commit": "00caff9012de7ad74f81ef367a61d012734b40c2"
   },
   "computed_result": {
     "gamma": 0.351,
@@ -259,5 +259,6 @@
     }
   ],
   "final_action": "block",
-  "verifier_status": "PASS"
+  "verifier_status": "PASS",
+  "source_commit": "00caff9012de7ad74f81ef367a61d012734b40c2"
 }

@@ -33,7 +33,7 @@ final-readiness-audit: studio-hybrid-batch studio-export-tables
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m fuzzyxai.audit.build_package
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m pytest tests/audit -q
 
-.PHONY: studio-semantic-smoke studio-server-smoke studio-smoke doctorate-release-check fresh-clone-gate practice-demo practice-screenshots practice-package practice-package-with-qa dataset-audit train-all evaluate-all training-audit practice-readiness-check screenshot-qc proof-qc package-self-contained-check real-validation-check full-delivery-package final-delivery-report final-product-check research-repo-inventory framework-check fuzzyxai-framework-check applications-check operator-dashboard operator-route-check site-build sprint-report dubnaxai-release-check
+.PHONY: studio-semantic-smoke studio-server-smoke studio-smoke doctorate-release-check fresh-clone-gate practice-demo practice-screenshots practice-package practice-package-with-qa dataset-audit train-all evaluate-all training-audit practice-readiness-check screenshot-qc proof-qc package-self-contained-check real-validation-check full-delivery-package final-delivery-report final-product-check research-repo-inventory framework-check fuzzyxai-framework-check framework-external-check applications-check operator-dashboard operator-route-check site-build sprint-report dubnaxai-release-check
 studio-semantic-smoke:
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m fuzzyxai.audit.studio_smoke
 
@@ -120,6 +120,10 @@ fuzzyxai-framework-check:
 	$(PYTHON) framework/fuzzyxai/examples/show_hybrid_xiris_dashboard.py
 	$(PYTHON) -m pytest framework/fuzzyxai/tests/test_framework_core_v03.py framework/fuzzyxai/tests/test_framework_all_scenarios_v04.py -q
 
+framework-external-check:
+	$(PYTHON) -m pip install -e framework/fuzzyxai
+	$(PYTHON) scripts/check_framework_external_usage.py
+
 applications-check:
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) applications/run_all_scenarios.py
 
@@ -135,7 +139,7 @@ site-build:
 sprint-report:
 	$(PYTHON) scripts/build_sprint_report.py
 
-dubnaxai-release-check: research-repo-inventory fuzzyxai-framework-check applications-check operator-dashboard operator-route-check site-build sprint-report
+dubnaxai-release-check: research-repo-inventory fuzzyxai-framework-check framework-external-check applications-check operator-dashboard operator-route-check site-build sprint-report
 	@echo "dubnaxai-release-check: PASS"
 
 risk-test:

@@ -27,6 +27,9 @@ The site is intentionally separated from the framework. FuzzyXAI computes; Dubna
 ### Framework Layer
 
 - Added public framework API in `framework/fuzzyxai/fuzzyxai/__init__.py`.
+- Cleaned the package boundary: the old root-level `./fuzzyxai` package was moved to
+  `legacy/fuzzyxai_old`, so `import fuzzyxai` resolves to the installable framework
+  package after `pip install -e framework/fuzzyxai`.
 - Added v0.3 framework-core API:
   - `build_explainable_object`
   - `build_route`
@@ -54,6 +57,10 @@ The site is intentionally separated from the framework. FuzzyXAI computes; Dubna
   - `geospatial_route.py`
   - `fuzzyxai.examples.load_example(...)`
 - Added scenario registry dispatch in `fuzzyxai.core.scenario_registry`.
+- Added generic external tabular support:
+  - `fuzzyxai.adapters.tabular_classification.TabularClassificationAdapter`
+  - `external_wine_classification` route builder
+  - non-empty `source_commit` in `OperatorRoute` and `ProofTrace`
 - Added route visualization layer:
   - `framework/fuzzyxai/fuzzyxai/viz/operator_state.py`
   - `framework/fuzzyxai/fuzzyxai/viz/route_builder.py`
@@ -138,7 +145,24 @@ Added a control reporting layer for sprint and release state:
 
 The report validates all five scenario artifacts, expected actions, diagnostics,
 verifier statuses, key control values, site/framework separation, thin application
-runners and current git state. It is called by `dubnaxai-release-check`.
+runners, external framework validation and current git state. It is called by
+`dubnaxai-release-check`.
+
+### External Framework Validation
+
+Added black-box validation for FuzzyXAI as an installed library:
+
+- `external_validation/run_external_wine_test.py`
+- `external_validation/outputs/external_wine_route.json`
+- `external_validation/outputs/external_wine_proof_trace.json`
+- `external_validation/outputs/external_wine_operator_dashboard.png`
+- `external_validation/outputs/external_wine_summary.json`
+- `scripts/check_framework_external_usage.py`
+- `make framework-external-check`
+
+The external task uses `sklearn.datasets.load_wine` and `RandomForestClassifier`.
+It runs outside the repository root, imports only the installed `fuzzyxai` package,
+uses the generic tabular adapter and does not import `applications/scenarios`.
 
 ### Site Layer
 
@@ -204,6 +228,7 @@ The check runs:
 - research repository inventory
 - editable framework install
 - public framework import/API smoke
+- external framework black-box check
 - HYBRID-XIRIS framework example
 - framework-core and all-scenario tests
 - all application scenarios

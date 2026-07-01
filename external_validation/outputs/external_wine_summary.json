@@ -1,0 +1,22 @@
+{
+  "task": "sklearn_wine_classification",
+  "package": "fuzzyxai",
+  "scenario_id": "external_wine_classification",
+  "action": "accept",
+  "diagnostic": "D_external_tabular_ok",
+  "computed_result": {
+    "class_probability": 1.0,
+    "uncertainty": 0.0,
+    "quality_penalty": 0.0,
+    "gamma": 0.0,
+    "delta": 0.0,
+    "rho": 0.0,
+    "diagnostic_id": "D_external_tabular_ok",
+    "action": "accept"
+  },
+  "verifier": "passed",
+  "source_commit": "00caff9012de7ad74f81ef367a61d012734b40c2",
+  "route": "/home/lebedeffson/Code/fuzzy-xai-operator/external_validation/outputs/external_wine_route.json",
+  "proof_trace": "/home/lebedeffson/Code/fuzzy-xai-operator/external_validation/outputs/external_wine_proof_trace.json",
+  "dashboard": "/home/lebedeffson/Code/fuzzy-xai-operator/external_validation/outputs/external_wine_operator_dashboard.png"
+}

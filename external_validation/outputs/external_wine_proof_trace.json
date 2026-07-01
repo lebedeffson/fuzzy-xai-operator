@@ -1,0 +1,260 @@
+{
+  "package_type": "FuzzyXAIProofTrace",
+  "schema_version": "1.0",
+  "scenario_id": "external_wine_classification",
+  "route": {
+    "scenario_id": "external_wine_classification",
+    "title": "External Wine Classification FuzzyXAI OperatorRoute",
+    "nodes": [
+      {
+        "node_id": "input_artifact",
+        "title": "Внешняя табличная модель",
+        "input_summary": "payload sklearn wine classifier",
+        "output_summary": "AdaptedInput",
+        "value": "p=1.0; class=1",
+        "threshold": "",
+        "status": "passed",
+        "explanation": "Адаптер принимает внешний результат RandomForestClassifier.",
+        "formula_ref": "adapter",
+        "trace_ref": "adapted_input",
+        "value_source": "external_model_payload",
+        "raw": {
+          "model_name": "RandomForestClassifier",
+          "dataset_name": "sklearn_wine",
+          "predicted_class": 1,
+          "class_probability": 1.0,
+          "feature_values": {
+            "alcohol": 11.65,
+            "malic_acid": 1.67,
+            "ash": 2.62,
+            "alcalinity_of_ash": 26.0,
+            "magnesium": 88.0,
+            "total_phenols": 1.92,
+            "flavanoids": 1.61,
+            "nonflavanoid_phenols": 0.4,
+            "proanthocyanins": 1.34,
+            "color_intensity": 2.6,
+            "hue": 1.36,
+            "od280/od315_of_diluted_wines": 3.21,
+            "proline": 562.0
+          },
+          "feature_importance": {
+            "alcohol": 0.13209569943973215,
+            "malic_acid": 0.028671057109002914,
+            "ash": 0.015844198287657176,
+            "alcalinity_of_ash": 0.02684675632022079,
+            "magnesium": 0.031073053621741398,
+            "total_phenols": 0.03532612948607915,
+            "flavanoids": 0.18801481238115658,
+            "nonflavanoid_phenols": 0.012100962610241845,
+            "proanthocyanins": 0.029767357034221422,
+            "color_intensity": 0.18067210423930177,
+            "hue": 0.1012971063310608,
+            "od280/od315_of_diluted_wines": 0.07844572787784164,
+            "proline": 0.13984503526174236
+          },
+          "missing_rate": 0.0,
+          "feature_range_violation": 0.0,
+          "context_values": {
+            "external_task": true,
+            "train_size": 133,
+            "test_size": 45
+          }
+        }
+      },
+      {
+        "node_id": "explanation_object",
+        "title": "Объяснительный объект E_k",
+        "input_summary": "предыдущее состояние маршрута",
+        "output_summary": "выход оператора",
+        "value": "E_k сформирован",
+        "threshold": "",
+        "status": "passed",
+        "explanation": "Внешний payload переведён в объяснительный объект.",
+        "formula_ref": "E_k",
+        "trace_ref": "explanation_object",
+        "value_source": "computed",
+        "raw": {
+          "value_source": "computed"
+        }
+      },
+      {
+        "node_id": "representation",
+        "title": "Класс представления F",
+        "input_summary": "предыдущее состояние маршрута",
+        "output_summary": "выход оператора",
+        "value": "F_tabular",
+        "threshold": "",
+        "status": "passed",
+        "explanation": "Табличный результат представлен через вероятности, признаки и важности.",
+        "formula_ref": "F",
+        "trace_ref": "representation",
+        "value_source": "computed",
+        "raw": {
+          "value_source": "computed"
+        }
+      },
+      {
+        "node_id": "alignment",
+        "title": "Согласование T_ij",
+        "input_summary": "предыдущее состояние маршрута",
+        "output_summary": "выход оператора",
+        "value": "gamma=0.0",
+        "threshold": "",
+        "status": "passed",
+        "explanation": "gamma=max(1-p, quality_penalty).",
+        "formula_ref": "gamma",
+        "trace_ref": "alignment",
+        "value_source": "computed",
+        "raw": {
+          "uncertainty": 0.0,
+          "quality_penalty": 0.0,
+          "gamma": 0.0,
+          "value_source": "computed"
+        }
+      },
+      {
+        "node_id": "reduction",
+        "title": "Потери представления",
+        "input_summary": "предыдущее состояние маршрута",
+        "output_summary": "выход оператора",
+        "value": "Delta=0.0",
+        "threshold": "",
+        "status": "passed",
+        "explanation": "Delta=1-sum(feature_importance) для переданного набора важностей.",
+        "formula_ref": "Delta",
+        "trace_ref": "reduction",
+        "value_source": "computed",
+        "raw": {
+          "delta": 0.0,
+          "importance_sum": 1.0,
+          "value_source": "computed"
+        }
+      },
+      {
+        "node_id": "risk",
+        "title": "Риск rho",
+        "input_summary": "предыдущее состояние маршрута",
+        "output_summary": "выход оператора",
+        "value": "rho=0.0",
+        "threshold": "",
+        "status": "passed",
+        "explanation": "rho=max(gamma, Delta).",
+        "formula_ref": "rho",
+        "trace_ref": "risk",
+        "value_source": "computed",
+        "raw": {
+          "rho": 0.0,
+          "theta_accept": 0.35,
+          "theta_warning": 0.6,
+          "value_source": "computed"
+        }
+      },
+      {
+        "node_id": "diagnostics",
+        "title": "Диагностика D",
+        "input_summary": "предыдущее состояние маршрута",
+        "output_summary": "выход оператора",
+        "value": "D_external_tabular_ok",
+        "threshold": "",
+        "status": "passed",
+        "explanation": "внешняя табличная классификация допустима",
+        "formula_ref": "D",
+        "trace_ref": "diagnostics",
+        "value_source": "computed",
+        "raw": {
+          "diagnostics": [
+            {
+              "diagnostic_id": "D_external_tabular_ok",
+              "diagnostic_type": "external_tabular_ok",
+              "source": "external_tabular_adapter",
+              "criticality": "low",
+              "message_ru": "внешняя табличная классификация допустима",
+              "recommended_action": "accept"
+            }
+          ],
+          "value_source": "computed"
+        }
+      },
+      {
+        "node_id": "action",
+        "title": "Действие",
+        "input_summary": "предыдущее состояние маршрута",
+        "output_summary": "выход оператора",
+        "value": "accept",
+        "threshold": "",
+        "status": "passed",
+        "explanation": "Действие выбрано политикой FuzzyXAI.",
+        "formula_ref": "action policy",
+        "trace_ref": "action",
+        "value_source": "computed",
+        "raw": {
+          "action": "accept",
+          "value_source": "computed"
+        }
+      },
+      {
+        "node_id": "proof",
+        "title": "Доказательный след",
+        "input_summary": "предыдущее состояние маршрута",
+        "output_summary": "выход оператора",
+        "value": "proof trace готов",
+        "threshold": "",
+        "status": "passed",
+        "explanation": "Маршрут сохраняется как проверяемый доказательный след.",
+        "formula_ref": "proof trace",
+        "trace_ref": "proof",
+        "value_source": "computed",
+        "raw": {
+          "value_source": "computed"
+        }
+      }
+    ],
+    "computed_result": {
+      "class_probability": 1.0,
+      "uncertainty": 0.0,
+      "quality_penalty": 0.0,
+      "gamma": 0.0,
+      "delta": 0.0,
+      "rho": 0.0,
+      "diagnostic_id": "D_external_tabular_ok",
+      "action": "accept"
+    },
+    "diagnostics": [
+      {
+        "diagnostic_id": "D_external_tabular_ok",
+        "diagnostic_type": "external_tabular_ok",
+        "source": "external_tabular_adapter",
+        "criticality": "low",
+        "message_ru": "внешняя табличная классификация допустима",
+        "recommended_action": "accept"
+      }
+    ],
+    "final_action": "accept",
+    "verifier_status": "PASS",
+    "source_commit": "00caff9012de7ad74f81ef367a61d012734b40c2"
+  },
+  "computed_result": {
+    "class_probability": 1.0,
+    "uncertainty": 0.0,
+    "quality_penalty": 0.0,
+    "gamma": 0.0,
+    "delta": 0.0,
+    "rho": 0.0,
+    "diagnostic_id": "D_external_tabular_ok",
+    "action": "accept"
+  },
+  "diagnostics": [
+    {
+      "diagnostic_id": "D_external_tabular_ok",
+      "diagnostic_type": "external_tabular_ok",
+      "source": "external_tabular_adapter",
+      "criticality": "low",
+      "message_ru": "внешняя табличная классификация допустима",
+      "recommended_action": "accept"
+    }
+  ],
+  "final_action": "accept",
+  "verifier_status": "PASS",
+  "source_commit": "00caff9012de7ad74f81ef367a61d012734b40c2"
+}

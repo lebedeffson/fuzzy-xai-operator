@@ -1,13 +1,205 @@
-M  DUBNAXAI_FULL_WORK_REPORT.md
-M  Makefile
-M  applications/export_operator_routes.py
-M  applications/run_framework_scenario.py
-M  applications/scenarios/beacon_xai/site_payload/scenario.json
-M  applications/scenarios/gd_anfis_shap/site_payload/scenario.json
-M  applications/scenarios/gis_integro/site_payload/scenario.json
-M  applications/scenarios/hybrid_xiris/site_payload/scenario.json
-M  applications/scenarios/medical_ecg_signal/site_payload/scenario.json
+M Makefile
+ M applications/scenarios/beacon_xai/figures/operator_dashboard.png
+ M applications/scenarios/beacon_xai/proof/proof_trace.json
+ M applications/scenarios/beacon_xai/route/route.json
+ M applications/scenarios/beacon_xai/site_payload/scenario.json
+ M applications/scenarios/gd_anfis_shap/figures/operator_dashboard.png
+ M applications/scenarios/gd_anfis_shap/proof/proof_trace.json
+ M applications/scenarios/gd_anfis_shap/route/route.json
+ M applications/scenarios/gd_anfis_shap/site_payload/scenario.json
+ M applications/scenarios/gis_integro/figures/operator_dashboard.png
+ M applications/scenarios/gis_integro/proof/proof_trace.json
+ M applications/scenarios/gis_integro/route/route.json
+ M applications/scenarios/gis_integro/site_payload/scenario.json
+ M applications/scenarios/hybrid_xiris/figures/operator_dashboard.png
+ M applications/scenarios/hybrid_xiris/proof/proof_trace.json
+ M applications/scenarios/hybrid_xiris/route/route.json
+ M applications/scenarios/hybrid_xiris/site_payload/scenario.json
+ M applications/scenarios/medical_ecg_signal/figures/operator_dashboard.png
+ M applications/scenarios/medical_ecg_signal/proof/proof_trace.json
+ M applications/scenarios/medical_ecg_signal/route/route.json
+ M applications/scenarios/medical_ecg_signal/site_payload/scenario.json
+ M framework/fuzzyxai/fuzzyxai/adapters/__init__.py
+ M framework/fuzzyxai/fuzzyxai/core/route.py
+ M framework/fuzzyxai/fuzzyxai/core/scenario_registry.py
+ M framework/fuzzyxai/fuzzyxai/core/types.py
+ M framework/fuzzyxai/fuzzyxai/proof/trace.py
  M fuzzyxai_final_audit_package.zip
+R  fuzzyxai/__init__.py -> legacy/fuzzyxai_old/__init__.py
+R  fuzzyxai/adapters/__init__.py -> legacy/fuzzyxai_old/adapters/__init__.py
+R  fuzzyxai/adapters/beacon_xai.py -> legacy/fuzzyxai_old/adapters/beacon_xai.py
+R  fuzzyxai/adapters/gd_anfis_shap.py -> legacy/fuzzyxai_old/adapters/gd_anfis_shap.py
+R  fuzzyxai/adapters/gis_integro.py -> legacy/fuzzyxai_old/adapters/gis_integro.py
+R  fuzzyxai/adapters/medical_image_to_explanation.py -> legacy/fuzzyxai_old/adapters/medical_image_to_explanation.py
+R  fuzzyxai/adapters/tabular_to_explanation.py -> legacy/fuzzyxai_old/adapters/tabular_to_explanation.py
+R  fuzzyxai/adapters/text_to_explanation.py -> legacy/fuzzyxai_old/adapters/text_to_explanation.py
+R  fuzzyxai/api.py -> legacy/fuzzyxai_old/api.py
+R  fuzzyxai/audit/__init__.py -> legacy/fuzzyxai_old/audit/__init__.py
+R  fuzzyxai/audit/build_full_delivery.py -> legacy/fuzzyxai_old/audit/build_full_delivery.py
+R  fuzzyxai/audit/build_package.py -> legacy/fuzzyxai_old/audit/build_package.py
+R  fuzzyxai/audit/common.py -> legacy/fuzzyxai_old/audit/common.py
+R  fuzzyxai/audit/dataset_audit.py -> legacy/fuzzyxai_old/audit/dataset_audit.py
+R  fuzzyxai/audit/docx_chapters.py -> legacy/fuzzyxai_old/audit/docx_chapters.py
+R  fuzzyxai/audit/docx_format.py -> legacy/fuzzyxai_old/audit/docx_format.py
+R  fuzzyxai/audit/docx_render_gate.py -> legacy/fuzzyxai_old/audit/docx_render_gate.py
+R  fuzzyxai/audit/final_audit.py -> legacy/fuzzyxai_old/audit/final_audit.py
+R  fuzzyxai/audit/final_delivery_report.py -> legacy/fuzzyxai_old/audit/final_delivery_report.py
+R  fuzzyxai/audit/formula_references.py -> legacy/fuzzyxai_old/audit/formula_references.py
+R  fuzzyxai/audit/fresh_clone_gate.py -> legacy/fuzzyxai_old/audit/fresh_clone_gate.py
+R  fuzzyxai/audit/grep_stale_terms.py -> legacy/fuzzyxai_old/audit/grep_stale_terms.py
+R  fuzzyxai/audit/inventory.py -> legacy/fuzzyxai_old/audit/inventory.py
+R  fuzzyxai/audit/package_self_contained.py -> legacy/fuzzyxai_old/audit/package_self_contained.py
+R  fuzzyxai/audit/practice_demo.py -> legacy/fuzzyxai_old/audit/practice_demo.py
+R  fuzzyxai/audit/proof_qc.py -> legacy/fuzzyxai_old/audit/proof_qc.py
+R  fuzzyxai/audit/real_validation.py -> legacy/fuzzyxai_old/audit/real_validation.py
+R  fuzzyxai/audit/screenshot_qc.py -> legacy/fuzzyxai_old/audit/screenshot_qc.py
+R  fuzzyxai/audit/studio_server_smoke.py -> legacy/fuzzyxai_old/audit/studio_server_smoke.py
+R  fuzzyxai/audit/studio_smoke.py -> legacy/fuzzyxai_old/audit/studio_smoke.py
+R  fuzzyxai/audit/training_audit.py -> legacy/fuzzyxai_old/audit/training_audit.py
+R  fuzzyxai/calibration/__init__.py -> legacy/fuzzyxai_old/calibration/__init__.py
+R  fuzzyxai/calibration/cross_validation.py -> legacy/fuzzyxai_old/calibration/cross_validation.py
+R  fuzzyxai/calibration/dataset.py -> legacy/fuzzyxai_old/calibration/dataset.py
+R  fuzzyxai/calibration/weight_calibration.py -> legacy/fuzzyxai_old/calibration/weight_calibration.py
+R  fuzzyxai/category/__init__.py -> legacy/fuzzyxai_old/category/__init__.py
+R  fuzzyxai/category/certified_path.py -> legacy/fuzzyxai_old/category/certified_path.py
+R  fuzzyxai/category/context_topos.py -> legacy/fuzzyxai_old/category/context_topos.py
+R  fuzzyxai/category/diagnostic_completion.py -> legacy/fuzzyxai_old/category/diagnostic_completion.py
+R  fuzzyxai/category/expl_category.py -> legacy/fuzzyxai_old/category/expl_category.py
+R  fuzzyxai/category/morphism.py -> legacy/fuzzyxai_old/category/morphism.py
+R  fuzzyxai/category/presheaf.py -> legacy/fuzzyxai_old/category/presheaf.py
+R  fuzzyxai/category/subpresheaf.py -> legacy/fuzzyxai_old/category/subpresheaf.py
+R  fuzzyxai/category/yoneda.py -> legacy/fuzzyxai_old/category/yoneda.py
+R  fuzzyxai/config/__init__.py -> legacy/fuzzyxai_old/config/__init__.py
+R  fuzzyxai/config/defaults.py -> legacy/fuzzyxai_old/config/defaults.py
+R  fuzzyxai/core/__init__.py -> legacy/fuzzyxai_old/core/__init__.py
+R  fuzzyxai/core/adapters.py -> legacy/fuzzyxai_old/core/adapters.py
+R  fuzzyxai/core/alignment.py -> legacy/fuzzyxai_old/core/alignment.py
+R  fuzzyxai/core/alignment_synthesis.py -> legacy/fuzzyxai_old/core/alignment_synthesis.py
+R  fuzzyxai/core/composition.py -> legacy/fuzzyxai_old/core/composition.py
+R  fuzzyxai/core/diagnostics.py -> legacy/fuzzyxai_old/core/diagnostics.py
+R  fuzzyxai/core/explain_plan.py -> legacy/fuzzyxai_old/core/explain_plan.py
+R  fuzzyxai/core/explanation_object.py -> legacy/fuzzyxai_old/core/explanation_object.py
+R  fuzzyxai/core/plan_builder.py -> legacy/fuzzyxai_old/core/plan_builder.py
+R  fuzzyxai/core/proof_package.py -> legacy/fuzzyxai_old/core/proof_package.py
+R  fuzzyxai/core/reduction.py -> legacy/fuzzyxai_old/core/reduction.py
+R  fuzzyxai/core/risk_observer.py -> legacy/fuzzyxai_old/core/risk_observer.py
+R  fuzzyxai/core/scenario_engine.py -> legacy/fuzzyxai_old/core/scenario_engine.py
+R  fuzzyxai/core/system_operator.py -> legacy/fuzzyxai_old/core/system_operator.py
+R  fuzzyxai/core/trust_evaluator.py -> legacy/fuzzyxai_old/core/trust_evaluator.py
+R  fuzzyxai/data/__init__.py -> legacy/fuzzyxai_old/data/__init__.py
+R  fuzzyxai/data/breast_cancer_adapter.py -> legacy/fuzzyxai_old/data/breast_cancer_adapter.py
+R  fuzzyxai/data/cit_registry.py -> legacy/fuzzyxai_old/data/cit_registry.py
+R  fuzzyxai/data/citr_loader.py -> legacy/fuzzyxai_old/data/citr_loader.py
+R  fuzzyxai/data/dataset_loader.py -> legacy/fuzzyxai_old/data/dataset_loader.py
+R  fuzzyxai/data/dataset_record.py -> legacy/fuzzyxai_old/data/dataset_record.py
+R  fuzzyxai/data/loader.py -> legacy/fuzzyxai_old/data/loader.py
+R  fuzzyxai/data/loaders.py -> legacy/fuzzyxai_old/data/loaders.py
+R  fuzzyxai/data/preprocess.py -> legacy/fuzzyxai_old/data/preprocess.py
+R  fuzzyxai/data/profile_inference.py -> legacy/fuzzyxai_old/data/profile_inference.py
+R  fuzzyxai/data/registry.py -> legacy/fuzzyxai_old/data/registry.py
+R  fuzzyxai/data/rikord_loader.py -> legacy/fuzzyxai_old/data/rikord_loader.py
+R  fuzzyxai/data/ruccod_loader.py -> legacy/fuzzyxai_old/data/ruccod_loader.py
+R  fuzzyxai/data/validators.py -> legacy/fuzzyxai_old/data/validators.py
+R  fuzzyxai/datasets/__init__.py -> legacy/fuzzyxai_old/datasets/__init__.py
+R  fuzzyxai/datasets/registry.py -> legacy/fuzzyxai_old/datasets/registry.py
+R  fuzzyxai/datasets/registry_mosmed_doctor_analysis.py -> legacy/fuzzyxai_old/datasets/registry_mosmed_doctor_analysis.py
+R  fuzzyxai/datasets/registry_programs.py -> legacy/fuzzyxai_old/datasets/registry_programs.py
+R  fuzzyxai/datasets/registry_steel_ir.py -> legacy/fuzzyxai_old/datasets/registry_steel_ir.py
+R  fuzzyxai/demo/__init__.py -> legacy/fuzzyxai_old/demo/__init__.py
+R  fuzzyxai/demo/synthetic.py -> legacy/fuzzyxai_old/demo/synthetic.py
+R  fuzzyxai/ecosystem/__init__.py -> legacy/fuzzyxai_old/ecosystem/__init__.py
+R  fuzzyxai/ecosystem/registry.json -> legacy/fuzzyxai_old/ecosystem/registry.json
+R  fuzzyxai/ecosystem/registry.py -> legacy/fuzzyxai_old/ecosystem/registry.py
+R  fuzzyxai/evaluate/__init__.py -> legacy/fuzzyxai_old/evaluate/__init__.py
+R  fuzzyxai/evaluate/common.py -> legacy/fuzzyxai_old/evaluate/common.py
+R  fuzzyxai/evaluate/eval_beacon.py -> legacy/fuzzyxai_old/evaluate/eval_beacon.py
+R  fuzzyxai/evaluate/eval_ecg.py -> legacy/fuzzyxai_old/evaluate/eval_ecg.py
+R  fuzzyxai/evaluate/eval_gd_anfis_shap.py -> legacy/fuzzyxai_old/evaluate/eval_gd_anfis_shap.py
+R  fuzzyxai/evaluate/eval_gis.py -> legacy/fuzzyxai_old/evaluate/eval_gis.py
+R  fuzzyxai/evaluate/eval_iris.py -> legacy/fuzzyxai_old/evaluate/eval_iris.py
+R  fuzzyxai/evaluate/evaluate_all.py -> legacy/fuzzyxai_old/evaluate/evaluate_all.py
+R  fuzzyxai/experiments/__init__.py -> legacy/fuzzyxai_old/experiments/__init__.py
+R  fuzzyxai/experiments/chapter2_calibration.py -> legacy/fuzzyxai_old/experiments/chapter2_calibration.py
+R  fuzzyxai/experiments/chapter2_equal_raw_structure.py -> legacy/fuzzyxai_old/experiments/chapter2_equal_raw_structure.py
+R  fuzzyxai/experiments/chapter2_sample113.py -> legacy/fuzzyxai_old/experiments/chapter2_sample113.py
+R  fuzzyxai/experiments/chapter3_critical_ruptures.py -> legacy/fuzzyxai_old/experiments/chapter3_critical_ruptures.py
+R  fuzzyxai/export_tables.py -> legacy/fuzzyxai_old/export_tables.py
+R  fuzzyxai/hierarchy/__init__.py -> legacy/fuzzyxai_old/hierarchy/__init__.py
+R  fuzzyxai/hierarchy/base.py -> legacy/fuzzyxai_old/hierarchy/base.py
+R  fuzzyxai/hierarchy/f0.py -> legacy/fuzzyxai_old/hierarchy/f0.py
+R  fuzzyxai/hierarchy/hesitant.py -> legacy/fuzzyxai_old/hierarchy/hesitant.py
+R  fuzzyxai/hierarchy/interval.py -> legacy/fuzzyxai_old/hierarchy/interval.py
+R  fuzzyxai/hierarchy/meta_reducer.py -> legacy/fuzzyxai_old/hierarchy/meta_reducer.py
+R  fuzzyxai/hierarchy/multilevel.py -> legacy/fuzzyxai_old/hierarchy/multilevel.py
+R  fuzzyxai/hierarchy/neutrosophic.py -> legacy/fuzzyxai_old/hierarchy/neutrosophic.py
+R  fuzzyxai/hierarchy/reductions.py -> legacy/fuzzyxai_old/hierarchy/reductions.py
+R  fuzzyxai/hierarchy/source_annotation.py -> legacy/fuzzyxai_old/hierarchy/source_annotation.py
+R  fuzzyxai/hott/__init__.py -> legacy/fuzzyxai_old/hott/__init__.py
+R  fuzzyxai/hott/drift_path.py -> legacy/fuzzyxai_old/hott/drift_path.py
+R  fuzzyxai/hott/path_certificates.py -> legacy/fuzzyxai_old/hott/path_certificates.py
+R  fuzzyxai/hott/path_type.py -> legacy/fuzzyxai_old/hott/path_type.py
+R  fuzzyxai/hott/rupture_type.py -> legacy/fuzzyxai_old/hott/rupture_type.py
+R  fuzzyxai/pipeline.py -> legacy/fuzzyxai_old/pipeline.py
+R  fuzzyxai/pipelines/__init__.py -> legacy/fuzzyxai_old/pipelines/__init__.py
+R  fuzzyxai/pipelines/dataset_observer_pipeline.py -> legacy/fuzzyxai_old/pipelines/dataset_observer_pipeline.py
+R  fuzzyxai/practice/__init__.py -> legacy/fuzzyxai_old/practice/__init__.py
+R  fuzzyxai/practice/fixtures.py -> legacy/fuzzyxai_old/practice/fixtures.py
+R  fuzzyxai/realdata/__init__.py -> legacy/fuzzyxai_old/realdata/__init__.py
+R  fuzzyxai/realdata/fetch_real_artifacts.py -> legacy/fuzzyxai_old/realdata/fetch_real_artifacts.py
+R  fuzzyxai/reporting/__init__.py -> legacy/fuzzyxai_old/reporting/__init__.py
+R  fuzzyxai/reporting/session_report.py -> legacy/fuzzyxai_old/reporting/session_report.py
+R  fuzzyxai/risk/__init__.py -> legacy/fuzzyxai_old/risk/__init__.py
+R  fuzzyxai/risk/context_acceptance.py -> legacy/fuzzyxai_old/risk/context_acceptance.py
+R  fuzzyxai/risk/decision_policy.py -> legacy/fuzzyxai_old/risk/decision_policy.py
+R  fuzzyxai/risk/metrics.py -> legacy/fuzzyxai_old/risk/metrics.py
+R  fuzzyxai/risk/observer_pipeline.py -> legacy/fuzzyxai_old/risk/observer_pipeline.py
+R  fuzzyxai/risk/proxy_policy.py -> legacy/fuzzyxai_old/risk/proxy_policy.py
+R  fuzzyxai/risk/reduction_graph.py -> legacy/fuzzyxai_old/risk/reduction_graph.py
+R  fuzzyxai/risk/representation_selection.py -> legacy/fuzzyxai_old/risk/representation_selection.py
+R  fuzzyxai/risk/risk_aware_model.py -> legacy/fuzzyxai_old/risk/risk_aware_model.py
+R  fuzzyxai/risk/risk_function.py -> legacy/fuzzyxai_old/risk/risk_function.py
+R  fuzzyxai/risk/risk_observer.py -> legacy/fuzzyxai_old/risk/risk_observer.py
+R  fuzzyxai/risk/risk_observer_config.py -> legacy/fuzzyxai_old/risk/risk_observer_config.py
+R  fuzzyxai/risk/uncertainty.py -> legacy/fuzzyxai_old/risk/uncertainty.py
+R  fuzzyxai/rules/__init__.py -> legacy/fuzzyxai_old/rules/__init__.py
+R  fuzzyxai/rules/lofo_f1.py -> legacy/fuzzyxai_old/rules/lofo_f1.py
+R  fuzzyxai/run_scenario.py -> legacy/fuzzyxai_old/run_scenario.py
+R  fuzzyxai/sdk/__init__.py -> legacy/fuzzyxai_old/sdk/__init__.py
+R  fuzzyxai/sdk/base_adapter.py -> legacy/fuzzyxai_old/sdk/base_adapter.py
+R  fuzzyxai/sdk/contracts.py -> legacy/fuzzyxai_old/sdk/contracts.py
+R  fuzzyxai/sdk/examples/medical_image_adapter.py -> legacy/fuzzyxai_old/sdk/examples/medical_image_adapter.py
+R  fuzzyxai/sdk/examples/simple_tabular_adapter.py -> legacy/fuzzyxai_old/sdk/examples/simple_tabular_adapter.py
+R  fuzzyxai/selection/__init__.py -> legacy/fuzzyxai_old/selection/__init__.py
+R  fuzzyxai/selection/choice_diagnostic.py -> legacy/fuzzyxai_old/selection/choice_diagnostic.py
+R  fuzzyxai/selection/compatibility.py -> legacy/fuzzyxai_old/selection/compatibility.py
+R  fuzzyxai/selection/pareto_selector.py -> legacy/fuzzyxai_old/selection/pareto_selector.py
+R  fuzzyxai/selection/profile_builder.py -> legacy/fuzzyxai_old/selection/profile_builder.py
+R  fuzzyxai/studio/__init__.py -> legacy/fuzzyxai_old/studio/__init__.py
+R  fuzzyxai/studio/charts.py -> legacy/fuzzyxai_old/studio/charts.py
+R  fuzzyxai/studio/demo_runner.py -> legacy/fuzzyxai_old/studio/demo_runner.py
+R  fuzzyxai/studio/explainplan_editor.py -> legacy/fuzzyxai_old/studio/explainplan_editor.py
+R  fuzzyxai/studio/operator_scenarios.py -> legacy/fuzzyxai_old/studio/operator_scenarios.py
+R  fuzzyxai/studio/operators.py -> legacy/fuzzyxai_old/studio/operators.py
+R  fuzzyxai/studio/report_export.py -> legacy/fuzzyxai_old/studio/report_export.py
+R  fuzzyxai/studio/scenario_presets.py -> legacy/fuzzyxai_old/studio/scenario_presets.py
+R  fuzzyxai/studio/state.py -> legacy/fuzzyxai_old/studio/state.py
+R  fuzzyxai/studio/widgets.py -> legacy/fuzzyxai_old/studio/widgets.py
+R  fuzzyxai/text/__init__.py -> legacy/fuzzyxai_old/text/__init__.py
+R  fuzzyxai/text/explanation_generator.py -> legacy/fuzzyxai_old/text/explanation_generator.py
+R  fuzzyxai/train/__init__.py -> legacy/fuzzyxai_old/train/__init__.py
+R  fuzzyxai/train/common.py -> legacy/fuzzyxai_old/train/common.py
+R  fuzzyxai/train/train_all.py -> legacy/fuzzyxai_old/train/train_all.py
+R  fuzzyxai/train/train_beacon_counterevidence.py -> legacy/fuzzyxai_old/train/train_beacon_counterevidence.py
+R  fuzzyxai/train/train_ecg_quality.py -> legacy/fuzzyxai_old/train/train_ecg_quality.py
+R  fuzzyxai/train/train_gd_anfis_shap.py -> legacy/fuzzyxai_old/train/train_gd_anfis_shap.py
+R  fuzzyxai/train/train_gis_route.py -> legacy/fuzzyxai_old/train/train_gis_route.py
+R  fuzzyxai/train/train_iris_quality.py -> legacy/fuzzyxai_old/train/train_iris_quality.py
+R  fuzzyxai/trust/__init__.py -> legacy/fuzzyxai_old/trust/__init__.py
+R  fuzzyxai/trust/trust_evaluator.py -> legacy/fuzzyxai_old/trust/trust_evaluator.py
+R  fuzzyxai/visual/__init__.py -> legacy/fuzzyxai_old/visual/__init__.py
+R  fuzzyxai/visual/composition_graph.py -> legacy/fuzzyxai_old/visual/composition_graph.py
+R  fuzzyxai/visual/interactive_graph.py -> legacy/fuzzyxai_old/visual/interactive_graph.py
+R  fuzzyxai/visual/representation_plots.py -> legacy/fuzzyxai_old/visual/representation_plots.py
  M reports/audit/artifact_inventory.csv
  M reports/audit/docx_format_report.md
  M reports/audit/docx_render/glava_4_FuzzyXAI_corrected_final.pdf
@@ -16,28 +208,54 @@ M  applications/scenarios/medical_ecg_signal/site_payload/scenario.json
  M reports/audit/fuzzyxai_final_audit.json
  M reports/audit/fuzzyxai_final_audit.md
  M reports/audit/stale_terms_report.md
-M  reports/release/DUBNAXAI_FULL_WORK_REPORT.md
-A  reports/release/current/SPRINT_STATUS.md
-A  reports/release/current/artifact_manifest.json
-A  reports/release/current/check_results.json
-A  reports/release/current/git_diff_summary.txt
-A  reports/release/current/git_status.txt
-A  reports/release/current/release_summary.json
-A  reports/release/current/risks_and_todos.md
-A  reports/release/current/scenario_matrix.json
+ M reports/figures/beacon_xai_operator_dashboard.png
+ M reports/figures/gd_anfis_shap_operator_dashboard.png
+ M reports/figures/gis_integro_operator_dashboard.png
+ M reports/figures/hybrid_xiris_operator_dashboard.png
+ M reports/figures/medical_ecg_signal_operator_dashboard.png
+ M reports/framework/hybrid_xiris_proof_trace.json
+ M reports/framework/hybrid_xiris_route.json
+ M reports/release/current/SPRINT_STATUS.md
+ M reports/release/current/artifact_manifest.json
+ M reports/release/current/check_results.json
+ M reports/release/current/git_diff_summary.txt
+ M reports/release/current/git_status.txt
+ M reports/release/current/release_summary.json
+ M reports/routes/beacon_xai_route.json
+ M reports/routes/gd_anfis_shap_route.json
+ M reports/routes/gis_integro_route.json
+ M reports/routes/hybrid_xiris_route.json
+ M reports/routes/medical_ecg_signal_route.json
  M reports/studio_batch/hybrid_xiris_proof_package.json
  M reports/validation/repository_inventory/repository_excluded.json
  M reports/validation/repository_inventory/repository_inventory.json
  M reports/validation/repository_inventory/repository_inventory.md
-A  scripts/build_sprint_report.py
-A  tests/test_sprint_report.py
+ M scripts/build_sprint_report.py
+ M site/dubnaxai/public/figures/beacon_xai_operator_dashboard.png
+ M site/dubnaxai/public/figures/gd_anfis_shap_operator_dashboard.png
+ M site/dubnaxai/public/figures/gis_integro_operator_dashboard.png
+ M site/dubnaxai/public/figures/hybrid_xiris_operator_dashboard.png
+ M site/dubnaxai/public/figures/medical_ecg_signal_operator_dashboard.png
+ M site/dubnaxai/public/routes/beacon_xai_route.json
+ M site/dubnaxai/public/routes/gd_anfis_shap_route.json
+ M site/dubnaxai/public/routes/gis_integro_route.json
+ M site/dubnaxai/public/routes/hybrid_xiris_route.json
+ M site/dubnaxai/public/routes/medical_ecg_signal_route.json
  M visual_artifacts_latest.zip
 ?? FuzzyXAI_FINAL_DELIVERY_REPORT.md
 ?? FuzzyXAI_full_delivery_package.zip
 ?? data/real_public/
+?? external_validation/
+?? framework/fuzzyxai/fuzzyxai/adapters/tabular_classification.py
+?? framework/fuzzyxai/fuzzyxai/core/external_tabular_route.py
+?? framework/fuzzyxai/fuzzyxai/core/git_info.py
 ?? models/
 ?? reports/dataset_audit/
 ?? reports/evaluation/
+?? reports/framework_audit/
 ?? reports/practice_demo/
 ?? reports/real_validation/
+?? reports/release/FuzzyXAI_framework_audit_package.zip
 ?? reports/training/
+?? scripts/check_framework_external_usage.py
+?? tests/test_framework_external_usage.py

@@ -1,15 +1,70 @@
-fuzzyxai_final_audit_package.zip                   | Bin 6099067 -> 6129548 bytes
- reports/audit/artifact_inventory.csv               |  11 ++++----
+Makefile                                           |   8 +-
+ .../beacon_xai/figures/operator_dashboard.png      | Bin 208932 -> 215536 bytes
+ .../scenarios/beacon_xai/proof/proof_trace.json    |   5 +-
+ applications/scenarios/beacon_xai/route/route.json |   2 +-
+ .../beacon_xai/site_payload/scenario.json          |   2 +-
+ .../gd_anfis_shap/figures/operator_dashboard.png   | Bin 194342 -> 201861 bytes
+ .../scenarios/gd_anfis_shap/proof/proof_trace.json |   5 +-
+ .../scenarios/gd_anfis_shap/route/route.json       |   2 +-
+ .../gd_anfis_shap/site_payload/scenario.json       |   2 +-
+ .../gis_integro/figures/operator_dashboard.png     | Bin 208780 -> 216222 bytes
+ .../scenarios/gis_integro/proof/proof_trace.json   |   5 +-
+ .../scenarios/gis_integro/route/route.json         |   2 +-
+ .../gis_integro/site_payload/scenario.json         |   2 +-
+ .../hybrid_xiris/figures/operator_dashboard.png    | Bin 254683 -> 261345 bytes
+ .../scenarios/hybrid_xiris/proof/proof_trace.json  |   5 +-
+ .../scenarios/hybrid_xiris/route/route.json        |   2 +-
+ .../hybrid_xiris/site_payload/scenario.json        |   2 +-
+ .../figures/operator_dashboard.png                 | Bin 198816 -> 205968 bytes
+ .../medical_ecg_signal/proof/proof_trace.json      |   5 +-
+ .../scenarios/medical_ecg_signal/route/route.json  |   2 +-
+ .../medical_ecg_signal/site_payload/scenario.json  |   2 +-
+ framework/fuzzyxai/fuzzyxai/adapters/__init__.py   |   3 +-
+ framework/fuzzyxai/fuzzyxai/core/route.py          |   2 +
+ .../fuzzyxai/fuzzyxai/core/scenario_registry.py    |   4 +
+ framework/fuzzyxai/fuzzyxai/core/types.py          |   1 +
+ framework/fuzzyxai/fuzzyxai/proof/trace.py         |   1 +
+ fuzzyxai_final_audit_package.zip                   | Bin 6099067 -> 6129548 bytes
+ reports/audit/artifact_inventory.csv               |  11 +-
  reports/audit/docx_format_report.md                |   2 +-
  .../glava_4_FuzzyXAI_corrected_final.pdf           | Bin 674182 -> 674182 bytes
  .../glava_5_FuzzyXAI_corrected_final.pdf           | Bin 782995 -> 782995 bytes
  reports/audit/docx_render_report.md                |   2 +-
- reports/audit/fuzzyxai_final_audit.json            |  19 ++++++++++---
- reports/audit/fuzzyxai_final_audit.md              |  16 +++++------
- reports/audit/stale_terms_report.md                |  31 +++++++++++++--------
- .../studio_batch/hybrid_xiris_proof_package.json   |  30 ++++++++++++++------
+ reports/audit/fuzzyxai_final_audit.json            |  19 +-
+ reports/audit/fuzzyxai_final_audit.md              |  16 +-
+ reports/audit/stale_terms_report.md                |  31 ++-
+ reports/figures/beacon_xai_operator_dashboard.png  | Bin 208932 -> 215536 bytes
+ .../figures/gd_anfis_shap_operator_dashboard.png   | Bin 194342 -> 201861 bytes
+ reports/figures/gis_integro_operator_dashboard.png | Bin 208780 -> 216222 bytes
+ .../figures/hybrid_xiris_operator_dashboard.png    | Bin 254683 -> 261345 bytes
+ .../medical_ecg_signal_operator_dashboard.png      | Bin 198816 -> 205968 bytes
+ reports/framework/hybrid_xiris_proof_trace.json    |   5 +-
+ reports/framework/hybrid_xiris_route.json          |   2 +-
+ reports/release/current/SPRINT_STATUS.md           | 276 ++++++++++++++++++---
+ reports/release/current/artifact_manifest.json     |  24 +-
+ reports/release/current/check_results.json         |   6 +-
+ reports/release/current/git_diff_summary.txt       |  32 ++-
+ reports/release/current/git_status.txt             | 219 ++++++++++++++--
+ reports/release/current/release_summary.json       |  12 +-
+ reports/routes/beacon_xai_route.json               |   2 +-
+ reports/routes/gd_anfis_shap_route.json            |   2 +-
+ reports/routes/gis_integro_route.json              |   2 +-
+ reports/routes/hybrid_xiris_route.json             |   2 +-
+ reports/routes/medical_ecg_signal_route.json       |   2 +-
+ .../studio_batch/hybrid_xiris_proof_package.json   |  30 ++-
  .../repository_inventory/repository_excluded.json  |   2 +-
- .../repository_inventory/repository_inventory.json |   6 ++--
+ .../repository_inventory/repository_inventory.json |   6 +-
  .../repository_inventory/repository_inventory.md   |   2 +-
+ scripts/build_sprint_report.py                     |  73 +++++-
+ .../figures/beacon_xai_operator_dashboard.png      | Bin 208932 -> 215536 bytes
+ .../figures/gd_anfis_shap_operator_dashboard.png   | Bin 194342 -> 201861 bytes
+ .../figures/gis_integro_operator_dashboard.png     | Bin 208780 -> 216222 bytes
+ .../figures/hybrid_xiris_operator_dashboard.png    | Bin 254683 -> 261345 bytes
+ .../medical_ecg_signal_operator_dashboard.png      | Bin 198816 -> 205968 bytes
+ site/dubnaxai/public/routes/beacon_xai_route.json  |   2 +-
+ .../public/routes/gd_anfis_shap_route.json         |   2 +-
+ site/dubnaxai/public/routes/gis_integro_route.json |   2 +-
+ .../dubnaxai/public/routes/hybrid_xiris_route.json |   2 +-
+ .../public/routes/medical_ecg_signal_route.json    |   2 +-
  visual_artifacts_latest.zip                        | Bin 2533274 -> 2533446 bytes
- 14 files changed, 77 insertions(+), 44 deletions(-)
+ 69 files changed, 696 insertions(+), 158 deletions(-)

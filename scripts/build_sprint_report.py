@@ -93,6 +93,12 @@ GENERATED_PREFIXES = (
 )
 
 
+EXTERNAL_SUMMARY = ROOT / "external_validation" / "outputs" / "external_wine_summary.json"
+EXTERNAL_ROUTE = ROOT / "external_validation" / "outputs" / "external_wine_route.json"
+EXTERNAL_PROOF = ROOT / "external_validation" / "outputs" / "external_wine_proof_trace.json"
+EXTERNAL_DASHBOARD = ROOT / "external_validation" / "outputs" / "external_wine_operator_dashboard.png"
+
+
 def status_path(line: str) -> str:
     if len(line) >= 3 and line[2] == " ":
         return line[3:]
@@ -227,6 +233,40 @@ def scan_apps() -> tuple[bool, list[str]]:
         if re.search(r"\bif\s+scenario_id\b|\belif\s+scenario_id\b", text):
             issues.append("applications/run_framework_scenario.py: scenario-specific if/elif")
     return bool(issues), issues
+
+
+def validate_external_framework() -> tuple[dict[str, Any], list[str]]:
+    errors: list[str] = []
+    exists = all(path.exists() and path.stat().st_size > 0 for path in (EXTERNAL_SUMMARY, EXTERNAL_ROUTE, EXTERNAL_PROOF, EXTERNAL_DASHBOARD))
+    summary: dict[str, Any] = {}
+    if not exists:
+        errors.append("external framework outputs are missing; run make framework-external-check")
+    else:
+        summary = load_json(EXTERNAL_SUMMARY)
+        if summary.get("task") != "sklearn_wine_classification":
+            errors.append(f"external task expected sklearn_wine_classification, got {summary.get('task')}")
+        if summary.get("scenario_id") != "external_wine_classification":
+            errors.append(f"external scenario_id expected external_wine_classification, got {summary.get('scenario_id')}")
+        if summary.get("action") != "accept":
+            errors.append(f"external action expected accept, got {summary.get('action')}")
+        if summary.get("diagnostic") != "D_external_tabular_ok":
+            errors.append(f"external diagnostic expected D_external_tabular_ok, got {summary.get('diagnostic')}")
+        if summary.get("verifier") != "passed":
+            errors.append(f"external verifier expected passed, got {summary.get('verifier')}")
+        if not summary.get("source_commit"):
+            errors.append("external source_commit is empty")
+    return {
+        "status": "FAIL" if errors else "PASS",
+        "task": summary.get("task", ""),
+        "scenario_id": summary.get("scenario_id", ""),
+        "action": summary.get("action", ""),
+        "diagnostic": summary.get("diagnostic", ""),
+        "verifier": summary.get("verifier", ""),
+        "source_commit": summary.get("source_commit", ""),
+        "route_exists": EXTERNAL_ROUTE.exists(),
+        "proof_exists": EXTERNAL_PROOF.exists(),
+        "dashboard_exists": EXTERNAL_DASHBOARD.exists(),
+    }, errors
 
 
 def validate_scenarios() -> tuple[list[dict[str, Any]], list[dict[str, Any]], dict[str, list[dict[str, Any]]]]:
@@ -412,6 +452,7 @@ def render_md(
     rows: list[dict[str, Any]],
     key_rows: list[dict[str, Any]],
     summary: dict[str, Any],
+    external: dict[str, Any],
     git_status: str,
     diff_summary: str,
 ) -> str:
@@ -429,6 +470,7 @@ def render_md(
     checks = "\n".join(
         [
             "| fuzzyxai-framework-check | UNKNOWN |",
+            f"| framework-external-check | {external['status']} |",
             "| operator-route-check | PASS |",
             "| dubnaxai-release-check | UNKNOWN |",
             f"| sprint-report | {summary['sprint_report_status']} |",
@@ -479,6 +521,21 @@ DubnaXAI/FuzzyXAI has three separated layers: framework computes, applications r
 - site payloads: {summary['site_payloads_total']}
 - site route copies: {summary['site_routes_total']}
 - site dashboard copies: {summary['site_figures_total']}
+
+## External Framework Validation
+
+| Task | Result |
+|---|---|
+| import from /tmp | {external['status']} |
+| package path | framework/fuzzyxai |
+| external task | {external.get('task') or 'sklearn_wine_classification'} |
+| action | {external.get('action') or ''} |
+| diagnostic | {external.get('diagnostic') or ''} |
+| route | {'PASS' if external.get('route_exists') else 'FAIL'} |
+| proof | {'PASS' if external.get('proof_exists') else 'FAIL'} |
+| dashboard | {'PASS' if external.get('dashboard_exists') else 'FAIL'} |
+| verifier | {external.get('verifier') or ''} |
+| source_commit | {external.get('source_commit') or ''} |
 
 ## Site Separation
 
@@ -545,9 +602,10 @@ def main() -> int:
     diff_summary = run(["git", "diff", "--stat"])
 
     rows, key_rows, manifest = validate_scenarios()
+    external, external_errors = validate_external_framework()
     site_bad, site_issues = scan_site()
     apps_bad, app_issues = scan_apps()
-    errors = [err for row in rows for err in row["errors"]] + site_issues + app_issues
+    errors = [err for row in rows for err in row["errors"]] + external_errors + site_issues + app_issues
     warnings = [warn for row in rows for warn in row["warnings"]]
     dirty_sources = dirty_source_files(git_status)
     if dirty_sources:
@@ -571,6 +629,12 @@ def main() -> int:
         "tag": tag,
         "sprint_report_status": "FAIL" if errors else "PASS",
         "framework_check": "UNKNOWN",
+        "framework_external_check": external["status"],
+        "external_task": external.get("task") or "sklearn_wine_classification",
+        "external_task_action": external.get("action"),
+        "external_task_verifier": external.get("verifier"),
+        "package_boundary_ok": external["status"] == "PASS",
+        "source_commit_filled": bool(external.get("source_commit")),
         "operator_route_check": "PASS" if not errors else "FAIL",
         "dubnaxai_release_check": "UNKNOWN",
         "scenarios_total": len(rows),
@@ -595,6 +659,10 @@ def main() -> int:
             "status": "UNKNOWN",
             "source": "not executed by sprint-report; run by dubnaxai-release-check before this target",
         },
+        "framework_external_check": {
+            "status": external["status"],
+            "source": "external_validation/outputs/external_wine_summary.json",
+        },
         "operator_route_check": {
             "status": summary["operator_route_check"],
             "source": "sprint-report artifact validation",
@@ -618,7 +686,7 @@ def main() -> int:
     dump_json(OUT / "release_summary.json", summary)
     dump_json(OUT / "check_results.json", check_results)
     (OUT / "SPRINT_STATUS.md").write_text(
-        render_md(branch, commit, tag, rows, key_rows, summary, git_status, diff_summary),
+        render_md(branch, commit, tag, rows, key_rows, summary, external, git_status, diff_summary),
         encoding="utf-8",
     )
 
@@ -627,6 +695,7 @@ def main() -> int:
     print(f"tag: {tag or 'none'}")
     print("\nchecks:")
     print(f"  sprint-report: {summary['sprint_report_status']}")
+    print(f"  external framework check: {external['status']}")
     print("\nscenarios:")
     for row in rows:
         print(

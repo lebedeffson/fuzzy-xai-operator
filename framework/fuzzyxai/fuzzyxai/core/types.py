@@ -82,6 +82,7 @@ class ProofTrace:
     diagnostics: list[dict[str, Any]]
     final_action: str
     verifier_status: str = "UNVERIFIED"
+    source_commit: str = "unknown"
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)

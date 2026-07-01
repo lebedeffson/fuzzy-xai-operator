@@ -3,6 +3,8 @@ from __future__ import annotations
 from typing import Callable
 
 from .types import AdaptedInput, OperatorNode, OperatorRoute
+from .external_tabular_route import build_external_wine_classification_route
+from .git_info import get_source_commit
 
 
 def _node(node_id: str, title: str, value: str, status: str, explanation: str, raw: dict, formula_ref: str = "") -> OperatorNode:
@@ -52,6 +54,7 @@ def _route(scenario_id: str, title: str, values: dict, computed: dict, diagnosti
         diagnostics=diagnostics,
         final_action=action,
         verifier_status="PASS",
+        source_commit=get_source_commit(),
     )
 
 
@@ -139,4 +142,5 @@ SCENARIO_BUILDERS: dict[str, Callable[[AdaptedInput], OperatorRoute]] = {
     "gd_anfis_shap": build_gd_anfis_shap_route,
     "beacon_xai": build_beacon_xai_route,
     "gis_integro": build_gis_integro_route,
+    "external_wine_classification": build_external_wine_classification_route,
 }

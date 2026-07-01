@@ -156,7 +156,7 @@
     ],
     "final_action": "audit_report",
     "verifier_status": "PASS",
-    "source_commit": ""
+    "source_commit": "00caff9012de7ad74f81ef367a61d012734b40c2"
   },
   "computed_result": {
     "gamma_route": 0.2,
@@ -176,5 +176,6 @@
     }
   ],
   "final_action": "audit_report",
-  "verifier_status": "PASS"
+  "verifier_status": "PASS",
+  "source_commit": "00caff9012de7ad74f81ef367a61d012734b40c2"
 }

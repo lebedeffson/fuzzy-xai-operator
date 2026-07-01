@@ -8,6 +8,7 @@ from fuzzyxai.operators.representation import select_representation_class
 from fuzzyxai.operators.risk import observe_risk
 
 from .explanation import build_explainable_object
+from .git_info import get_source_commit
 from .types import AdaptedInput, OperatorNode, OperatorRoute
 
 
@@ -77,6 +78,7 @@ def build_hybrid_xiris_route(adapted: AdaptedInput) -> OperatorRoute:
         diagnostics=diagnostics,
         final_action=action["action"],
         verifier_status="PASS",
+        source_commit=get_source_commit(),
     )
 
 
