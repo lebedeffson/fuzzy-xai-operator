@@ -61,6 +61,8 @@ FIGURES = [
     "representation_atlas_ru",
 ]
 REQUIRED_SVG_TERMS = ["риск", "доверие", "объяснение", "действие", "γ", "Δ", "ρ"]
+HUMAN_MODEL = "внешний классификатор"
+HUMAN_DATASET = "демонстрационный табличный пример"
 
 
 def must(cmd: list[str]) -> subprocess.CompletedProcess[str]:
@@ -120,26 +122,31 @@ def save_all(fig, out_png: Path) -> None:
     fig.savefig(out_png.with_suffix(".svg"), bbox_inches="tight", facecolor="white")
 
 
+def short_route_id(route: dict) -> str:
+    route_id = str(route.get("route_id", "cli_external"))
+    return "cli_external" if "external_payload" in route_id or len(route_id) > 28 else route_id
+
+
+def short_footer(route: dict, verifier: str = "passed") -> str:
+    status = "PASS" if str(verifier).lower() == "passed" else str(verifier).upper()
+    return f"commit: {str(route.get('source_commit', 'unknown'))[:7]} | route: {short_route_id(route)} | verifier: {status}"
+
+
 def footer(fig, route: dict, verifier: str = "passed") -> None:
-    text = (
-        f"source_commit={str(route.get('source_commit', 'unknown'))[:12]} | "
-        f"route_id={route.get('route_id', 'unknown')} | verifier={verifier}"
-    )
+    text = short_footer(route, verifier)
     fig.text(0.015, 0.012, text, ha="left", va="bottom", fontsize=9, color="#51606f")
-    fig.text(
-        0.985,
-        0.012,
-        "словарь: риск, доверие, объяснение, действие | γ — неуверенность | Δ — потеря объяснения | ρ — итоговый риск",
-        ha="right",
-        va="bottom",
-        fontsize=9,
-        color="#51606f",
-    )
 
 
 def title_block(fig, title: str, what: str) -> None:
     fig.text(0.05, 0.94, title, fontsize=18, fontweight="bold", color="#16202a")
     fig.text(0.05, 0.895, f"Что показывает рисунок: {what}", fontsize=12, color="#334155")
+    fig.text(
+        0.05,
+        0.862,
+        "Как читать: γ — неуверенность; Δ — потеря объяснения; ρ — риск; действие — режим; доверие — уровень принятия; объяснение — причина решения.",
+        fontsize=10.5,
+        color="#51606f",
+    )
 
 
 def case_data() -> tuple[dict, dict, dict, list[dict[str, str]]]:
@@ -166,19 +173,21 @@ def render_explanation_card(route: dict, verifier: dict, out: Path) -> dict:
     rho = f(c.get("rho"))
     action = str(c.get("action_id"))
     dominant_key = max(comps, key=comps.get)
-    fig = plt.figure(figsize=(8.6, 6.2))
+    fig = plt.figure(figsize=(8.8, 7.1))
     title_block(fig, "Карточка объяснения решения FuzzyXAI", "почему результат не принят без ограничений")
-    ax = fig.add_axes([0.05, 0.12, 0.9, 0.72])
+    ax = fig.add_axes([0.05, 0.10, 0.9, 0.74])
     ax.axis("off")
+    risk_values = [comps["uncertainty_component"], comps["reduction_component"], comps["quality_component"], comps["conflict_component"], comps["interval_component"]]
     boxes = [
-        ("Модель и данные", f"Модель: {c.get('model_name')}\nДанные: {c.get('dataset_name')}\nВероятность класса: {f(c.get('class_probability')):.2f}"),
+        ("Модель и данные", f"Модель: {HUMAN_MODEL}\nДанные: {HUMAN_DATASET}\nВероятность класса: {f(c.get('class_probability')):.2f}"),
         ("Что обнаружено", f"1. γ = {f(c.get('gamma')):.2f}: модель уверена не полностью\n2. Δ = {f(c.get('delta')):.2f}: объяснение потеряло часть информации\n3. качество входа = {comps['quality_component']:.2f}: не главная проблема"),
-        ("Итоговый риск", f"ρ = max(γ, Δ, качество, конфликт, интервал) = {rho:.2f}\nГлавная причина: {COMPONENT_RU[dominant_key]}"),
+        ("Итоговый риск", "ρ равен наибольшему из найденных ограничений:\nρ = max(" + ", ".join(f"{v:.2f}" for v in risk_values) + f") = {rho:.2f}\nГлавная причина: {COMPONENT_RU[dominant_key]}"),
         ("Решение", f"{ACTION_RU.get(action, action)}\nρ выше порога полного принятия 0.35,\nно ниже порога аудита 0.60."),
+        ("Как читать", "γ показывает неуверенность модели.\nΔ показывает потерю объяснения.\nρ — итоговый риск; действие выбирается по порогам."),
     ]
     y = 0.86
     for idx, (head, body) in enumerate(boxes):
-        color = "#fff7df" if idx == 3 else "#f8fafc"
+        color = "#fff7df" if idx == 3 else ("#eef6ff" if idx == 4 else "#f8fafc")
         ax.text(0.02, y, head, fontsize=14, fontweight="bold", va="top", color="#16202a")
         ax.text(
             0.02,
@@ -189,7 +198,7 @@ def render_explanation_card(route: dict, verifier: dict, out: Path) -> dict:
             bbox=dict(boxstyle="round,pad=0.55", facecolor=color, edgecolor="#cbd5e1"),
             linespacing=1.45,
         )
-        y -= 0.235
+        y -= 0.19
     footer(fig, route, verifier.get("overall_status", "passed"))
     save_all(fig, out)
     plt.close(fig)
@@ -226,6 +235,8 @@ def render_risk_sources(route: dict, verifier: dict, out: Path) -> None:
         fontsize=11,
         color="#334155",
     )
+    dominant_key = max(comps, key=comps.get)
+    ax.text(0.55, -0.18, f"Главная причина: {COMPONENT_RU[dominant_key]}.", transform=ax.transAxes, fontsize=12, fontweight="bold", color="#16202a")
     footer(fig, route, verifier.get("overall_status", "passed"))
     save_all(fig, out)
     plt.close(fig)
@@ -273,12 +284,12 @@ def render_decision_boundary(route: dict, verifier: dict, out: Path) -> None:
     plt = setup_matplotlib()
     c = route["computed_result"]
     rho = f(c.get("rho"))
-    fig, ax = plt.subplots(figsize=(9, 3.8))
+    fig, ax = plt.subplots(figsize=(10, 4.1))
     title_block(fig, "Шкала границ действий", "насколько решение близко к соседним режимам доверия")
     zones = [(0, 0.35, "принять", "accept"), (0.35, 0.60, "понизить доверие", "lower_confidence"), (0.60, 0.75, "аудит", "audit"), (0.75, 1.0, "критично", "block")]
     for start, end, label, key in zones:
         ax.axvspan(start, end, color=ACTION_COLORS[key], alpha=0.28)
-        ax.text((start + end) / 2, 0.62, label, ha="center", fontsize=12, fontweight="bold")
+        ax.text((start + end) / 2, 0.62, label, ha="center", fontsize=14, fontweight="bold")
     ax.axvline(rho, color="#111827", linewidth=3)
     ax.scatter([rho], [0.5], s=130, color="#111827", zorder=3)
     ax.text(rho, 0.24, f"ρ = {rho:.2f}", ha="center", fontsize=13, fontweight="bold")
@@ -333,7 +344,19 @@ def render_operator_trace_summary(route: dict, verifier: dict, rows: list[dict[s
     plt = setup_matplotlib()
     import numpy as np
 
-    sample = rows[:12]
+    sample = rows[:10]
+    row_names = [
+        "wine clean",
+        "wine reduced",
+        "bc missing",
+        "bc boundary",
+        "diabetes interval",
+        "digits occlusion",
+        "signal noise",
+        "signal missing",
+        "image clean",
+        "regression loss",
+    ]
     cols = [
         ("gamma", "γ\nнеуверенность"),
         ("delta", "Δ\nпотеря\nобъяснения"),
@@ -342,18 +365,26 @@ def render_operator_trace_summary(route: dict, verifier: dict, rows: list[dict[s
         ("conflict_component", "конфликт"),
     ]
     data = np.array([[f(row.get(key)) for key, _ in cols] for row in sample])
-    fig, ax = plt.subplots(figsize=(8.8, 6))
+    fig, ax = plt.subplots(figsize=(10.4, 6))
     title_block(fig, "Компактная карта операторной трассы", "как меняются числовые источники риска в экспериментах")
     im = ax.imshow(data, cmap="YlOrRd", vmin=0, vmax=1, aspect="auto")
     ax.set_xticks(range(len(cols)))
     ax.set_xticklabels([label for _, label in cols], fontsize=11)
     ax.set_yticks(range(len(sample)))
-    ax.set_yticklabels([f"эксп. {i}" for i in range(1, len(sample) + 1)], fontsize=10)
+    ax.set_yticklabels(row_names[: len(sample)], fontsize=10)
     for i in range(data.shape[0]):
         for j in range(data.shape[1]):
             ax.text(j, i, f"{data[i,j]:.2f}", ha="center", va="center", fontsize=9)
     fig.colorbar(im, ax=ax, fraction=0.035, pad=0.02, label="значение риска")
     ax.set_xlabel("операторные показатели", fontsize=12)
+    fig.text(
+        0.76,
+        0.47,
+        "Как читать:\nчем темнее ячейка,\nтем выше вклад риска;\nρ — итоговый риск;\nглавная причина —\nмаксимальное значение.",
+        fontsize=11,
+        color="#334155",
+        bbox=dict(facecolor="#f8fafc", edgecolor="#cbd5e1", boxstyle="round,pad=0.45"),
+    )
     footer(fig, route, verifier.get("overall_status", "passed"))
     save_all(fig, out)
     plt.close(fig)
@@ -361,18 +392,18 @@ def render_operator_trace_summary(route: dict, verifier: dict, rows: list[dict[s
 
 def render_proof_consistency(route: dict, verifier: dict, out: Path) -> None:
     plt = setup_matplotlib()
-    artifacts = ["route", "operator trace", "proof trace", "dashboard data", "verifier report", "manifest"]
+    artifacts = ["маршрут", "операторная трасса", "доказательный след", "данные дашборда", "отчёт проверки", "манифест"]
     invariants = ["commit", "γ", "Δ", "ρ", "диагностика", "действие", "route_id", "sha256", "verifier"]
     matrix = [["PASS" for _ in invariants] for _ in artifacts]
     matrix[4][0] = "N/A"
     matrix[2][6] = "N/A"
     fig, ax = plt.subplots(figsize=(9.2, 5.2))
-    title_block(fig, "Матрица согласованности доказательного следа", "совпадают ли ключевые значения между артефактами")
+    title_block(fig, "Проверка согласованности артефактов", "совпадают ли ключевые значения между артефактами")
     color_map = {"PASS": "#dff1df", "N/A": "#eeeeee"}
     for i, art in enumerate(artifacts):
         for j, inv in enumerate(invariants):
             ax.add_patch(plt.Rectangle((j, i), 1, 1, facecolor=color_map[matrix[i][j]], edgecolor="white"))
-            label = "ОК" if matrix[i][j] == "PASS" else "N/A"
+            label = "согласовано" if matrix[i][j] == "PASS" else "не применяется"
             ax.text(j + 0.5, i + 0.5, label, ha="center", va="center", fontsize=9)
     ax.set_xlim(0, len(invariants))
     ax.set_ylim(0, len(artifacts))
@@ -382,7 +413,7 @@ def render_proof_consistency(route: dict, verifier: dict, out: Path) -> None:
     ax.set_yticks([i + 0.5 for i in range(len(artifacts))])
     ax.set_yticklabels(artifacts, fontsize=10)
     ax.tick_params(length=0)
-    ax.text(0, len(artifacts) + 0.55, "Красных ошибок нет: неприменимые инварианты помечены как N/A.", fontsize=11, color="#334155")
+    ax.text(0, len(artifacts) + 0.55, "Красных ошибок нет: неприменимые инварианты помечены как «не применяется».", fontsize=11, color="#334155")
     footer(fig, route, verifier.get("overall_status", "passed"))
     save_all(fig, out)
     plt.close(fig)
@@ -415,7 +446,7 @@ def render_representation_atlas(route: dict, verifier: dict, rows: list[dict[str
     tasks = list(dict.fromkeys(row.get("task_type", "") for row in rows))
     perts = list(dict.fromkeys(row.get("perturbation", "") for row in rows))
     colors = {"F0": "#4c78a8", "F_int": "#72b7b2", "NAS": "#f58518", "F_ML": "#54a24b", "": "#eeeeee"}
-    fig, ax = plt.subplots(figsize=(10, 5.8))
+    fig, ax = plt.subplots(figsize=(10.5, 6.3))
     title_block(fig, "Атлас классов представления", "где активируются F0, F_int, NAS и F_ML")
     for i, task in enumerate(tasks):
         for j, pert in enumerate(perts):
@@ -431,6 +462,14 @@ def render_representation_atlas(route: dict, verifier: dict, rows: list[dict[str
     ax.set_yticks([i + 0.5 for i in range(len(tasks))])
     ax.set_yticklabels([task_ru.get(t, t) for t in tasks], fontsize=10)
     ax.tick_params(length=0)
+    legend = (
+        "Легенда:\n"
+        "F0 — обычное нечёткое представление\n"
+        "F_int — интервальное представление\n"
+        "NAS — конфликт источников\n"
+        "F_ML — многоуровневое представление"
+    )
+    fig.text(0.67, 0.24, legend, fontsize=10.5, color="#334155", bbox=dict(facecolor="#f8fafc", edgecolor="#cbd5e1", boxstyle="round,pad=0.45"))
     footer(fig, route, verifier.get("overall_status", "passed"))
     save_all(fig, out)
     plt.close(fig)
@@ -538,6 +577,10 @@ def word_count(path: Path) -> int:
 def verify_package(chapter: Path, report: Path, manifest_path: Path) -> None:
     from PIL import Image
 
+    route = read_json(CLI / "route.json")
+    verifier = read_json(CLI / "verifier_report.json")
+    if len(short_footer(route, verifier.get("overall_status", "passed"))) > 90:
+        raise SystemExit("RU figure footer is longer than 90 characters")
     for base in FIGURES:
         for suffix in ("png", "pdf", "svg"):
             require_file(chapter / f"{base}.{suffix}")
@@ -549,9 +592,19 @@ def verify_package(chapter: Path, report: Path, manifest_path: Path) -> None:
         for term in REQUIRED_SVG_TERMS:
             if term not in svg:
                 raise SystemExit(f"SVG {base} lacks Russian term: {term}")
-        for forbidden in ("lower_confidence", "defer_to_human", ">accept<", ">audit<", ">block<"):
-            if forbidden in lower:
-                raise SystemExit(f"SVG {base} contains English action label: {forbidden}")
+        if "Как читать" not in svg and "Что показывает рисунок" not in svg:
+            raise SystemExit(f"SVG {base} lacks explanation block")
+        for forbidden in (
+            "ExternalDemoModel",
+            "manual_payload",
+            "lower_confidence",
+            "defer_to_human",
+            ">accept<",
+            ">audit<",
+            ">block<",
+        ):
+            if forbidden.lower() in lower:
+                raise SystemExit(f"SVG {base} contains forbidden technical label: {forbidden}")
     proof_svg = (chapter / "proof_consistency_ru.svg").read_text(encoding="utf-8", errors="ignore")
     if "FAIL" in proof_svg:
         raise SystemExit("proof_consistency_ru contains FAIL")
