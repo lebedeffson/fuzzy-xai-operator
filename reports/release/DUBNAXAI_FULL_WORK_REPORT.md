@@ -79,6 +79,14 @@ Generated site-facing artifacts are copied to:
 
 The site still does not compute operator values. It only displays prepared routes.
 
+Route QA was added as a release gate:
+
+- `applications/check_operator_routes.py`
+- `make operator-route-check`
+
+It verifies route/proof consistency, expected actions, diagnostics, dashboard files,
+site payload links and the rule that the site does not import or compute FuzzyXAI.
+
 ### Site Layer
 
 The DubnaXAI site reads prepared JSON and images:
@@ -145,6 +153,8 @@ The check runs:
 - public framework import/API smoke
 - all application scenarios
 - HYBRID-XIRIS operator dashboard export
+- all scenario operator route export
+- operator route QA
 - DubnaXAI static site build
 
 ## Key Outputs
