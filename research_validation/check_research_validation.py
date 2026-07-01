@@ -2,6 +2,8 @@
 from __future__ import annotations
 
 import csv
+import hashlib
+import json
 import sys
 from pathlib import Path
 
@@ -14,6 +16,7 @@ OUTPUTS = BASE / "outputs"
 THRESHOLDS = yaml.safe_load((BASE / "configs" / "thresholds.yaml").read_text(encoding="utf-8"))
 RESULTS = REPORTS / "research_validation_results.csv"
 PACKAGE = REPORTS / "fuzzyxai_research_validation_package.zip"
+MANIFEST = REPORTS / "manifest.json"
 FIGURES = [
     "rho_by_experiment.png",
     "gamma_delta_scatter.png",
@@ -52,6 +55,14 @@ def fail(errors: list[str]) -> int:
     return 0
 
 
+def sha256(path: Path) -> str:
+    h = hashlib.sha256()
+    with path.open("rb") as file:
+        for chunk in iter(lambda: file.read(1024 * 1024), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
 def main() -> int:
     errors: list[str] = []
     if not RESULTS.exists():
@@ -88,6 +99,22 @@ def main() -> int:
             errors.append(f"missing figure {figure}")
     if not PACKAGE.exists() or PACKAGE.stat().st_size == 0:
         errors.append("missing fuzzyxai_research_validation_package.zip")
+    if not MANIFEST.exists():
+        errors.append("missing manifest.json")
+    else:
+        manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
+        if manifest.get("manifest_self_hash_policy") != "excluded":
+            errors.append("manifest_self_hash_policy must be excluded")
+        for item in manifest.get("files", []):
+            rel = item.get("path", "")
+            if rel == "reports/manifest.json":
+                errors.append("manifest.json must not be listed in its own sha256 file list")
+                continue
+            path = BASE / rel
+            if not path.exists():
+                errors.append(f"manifest file missing: {rel}")
+            elif sha256(path) != item.get("sha256"):
+                errors.append(f"manifest sha256 mismatch: {rel}")
     for row in rows:
         exp = OUTPUTS / row["experiment_id"]
         for filename in TRACE_FILES:

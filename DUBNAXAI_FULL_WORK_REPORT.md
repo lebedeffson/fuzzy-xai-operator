@@ -193,7 +193,9 @@ Generated artifacts:
 - `research_validation/reports/diagnostic_distribution.csv`
 - `research_validation/reports/representation_class_coverage.csv`
 - `research_validation/reports/risk_component_summary.csv`
+- `research_validation/reports/manifest.json` with `manifest_self_hash_policy = excluded`
 - `research_validation/reports/fuzzyxai_research_validation_package.zip`
+- `docs/chapter_4_framework/research_validation_section.md`
 
 Every experiment exports route, operator trace, operator table, proof trace,
 verifier report, dashboard data, dashboard v2 and operator cards.

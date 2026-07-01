@@ -202,10 +202,10 @@ def build_report(rows: list[dict[str, Any]]) -> None:
         "# FuzzyXAI Research Validation Report",
         "",
         "## Goal",
-        "Проверить переносимость FuzzyXAI на разных классах задач, моделях и типах ограничений.",
+        "Проверить переносимость FuzzyXAI на разных классах задач, моделях и типах ограничений. Проверка показывает работу операторного слоя, а не заявляет промышленную, клиническую или биометрическую применимость.",
         "",
         "## Experiment Matrix",
-        f"Всего экспериментов: {len(rows)}.",
+        f"Всего экспериментов: {len(rows)}. Матрица включает чистые входы, top-k редукцию, missing features, noise, confidence boundary, explanation conflict, wide interval и image/signal quality limits.",
         "",
         "## Models and Task Classes",
         f"Классы задач: {', '.join(sorted({row['task_type'] for row in rows}))}.",
@@ -215,7 +215,7 @@ def build_report(rows: list[dict[str, Any]]) -> None:
         ", ".join(f"{key}: {value}" for key, value in sorted(representations.items())),
         "",
         "## Operator Behavior",
-        "Во всех экспериментах FuzzyXAI сформировал gamma, delta, rho и выбрал действие через operator route.",
+        "Во всех экспериментах FuzzyXAI сформировал gamma, delta, rho и выбрал действие через operator route. Gamma реагирует на неопределённость, качество, конфликт и интервальную ширину; delta фиксирует потери top-k объяснения; rho агрегирует доминирующий компонент риска.",
         "",
         "## Action Distribution",
         ", ".join(f"{key}: {value}" for key, value in sorted(actions.items())),
@@ -244,6 +244,7 @@ def build_report(rows: list[dict[str, Any]]) -> None:
         "- diagnostic_distribution.csv",
         "- representation_class_coverage.csv",
         "- risk_component_summary.csv",
+        "- manifest.json with sha256 checksums; manifest self-hash is excluded by policy",
         "- outputs/<experiment_id>/",
     ]
     (REPORTS / "research_validation_report.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
@@ -251,19 +252,21 @@ def build_report(rows: list[dict[str, Any]]) -> None:
 
 def build_manifest_and_zip() -> None:
     files: list[Path] = []
+    manifest_path = REPORTS / "manifest.json"
     for root in [REPORTS, OUTPUTS]:
         for path in root.rglob("*"):
-            if path.is_file() and path != PACKAGE:
+            if path.is_file() and path not in {PACKAGE, manifest_path}:
                 files.append(path)
     manifest = {
         "package_type": "FuzzyXAIResearchValidationPackage",
+        "manifest_self_hash_policy": "excluded",
         "files": [
             {"path": path.relative_to(BASE).as_posix(), "size_bytes": path.stat().st_size, "sha256": sha256(path)}
             for path in sorted(files)
         ],
     }
-    dump_json(REPORTS / "manifest.json", manifest)
-    files.append(REPORTS / "manifest.json")
+    dump_json(manifest_path, manifest)
+    files.append(manifest_path)
     if PACKAGE.exists():
         PACKAGE.unlink()
     with zipfile.ZipFile(PACKAGE, "w", compression=zipfile.ZIP_DEFLATED) as archive:

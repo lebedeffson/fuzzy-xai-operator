@@ -1,10 +1,10 @@
 # FuzzyXAI Research Validation Report
 
 ## Goal
-Проверить переносимость FuzzyXAI на разных классах задач, моделях и типах ограничений.
+Проверить переносимость FuzzyXAI на разных классах задач, моделях и типах ограничений. Проверка показывает работу операторного слоя, а не заявляет промышленную, клиническую или биометрическую применимость.
 
 ## Experiment Matrix
-Всего экспериментов: 20.
+Всего экспериментов: 20. Матрица включает чистые входы, top-k редукцию, missing features, noise, confidence boundary, explanation conflict, wide interval и image/signal quality limits.
 
 ## Models and Task Classes
 Классы задач: image_like_classification, signal_quality, tabular_classification, tabular_regression.
@@ -14,7 +14,7 @@
 F0: 3, F_ML: 9, F_int: 4, NAS: 4
 
 ## Operator Behavior
-Во всех экспериментах FuzzyXAI сформировал gamma, delta, rho и выбрал действие через operator route.
+Во всех экспериментах FuzzyXAI сформировал gamma, delta, rho и выбрал действие через operator route. Gamma реагирует на неопределённость, качество, конфликт и интервальную ширину; delta фиксирует потери top-k объяснения; rho агрегирует доминирующий компонент риска.
 
 ## Action Distribution
 accept: 4, audit: 3, defer_to_human: 2, lower_confidence: 11
@@ -43,4 +43,5 @@ traceability passed: 20 / 20.
 - diagnostic_distribution.csv
 - representation_class_coverage.csv
 - risk_component_summary.csv
+- manifest.json with sha256 checksums; manifest self-hash is excluded by policy
 - outputs/<experiment_id>/
