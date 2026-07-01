@@ -55,6 +55,8 @@ def word_count(path: Path) -> int:
 
 def verify_manifest(package_root: Path) -> None:
     manifest = json.loads((package_root / "manifest.json").read_text(encoding="utf-8"))
+    if manifest.get("manifest_self_hash_policy") != "excluded":
+        raise SystemExit("manifest_self_hash_policy must be excluded")
     for item in manifest.get("sha256", []):
         if item["path"] == "manifest.json":
             raise SystemExit("manifest must not include itself")
@@ -180,7 +182,11 @@ def write_report(path: Path, manifest: dict[str, object]) -> None:
         "## Files and Reproducibility\n\n"
         "All figures are rendered from real CSV or JSON artifacts. The package includes PNG, PDF and SVG for chapter-ready "
         "figures, plus CSV/JSON source data. The manifest excludes itself from sha256 to avoid self-hash instability. "
-        "The source_commit records the exact code revision used to build this package.\n\n"
+        "The package_source_commit records the code revision that generated the visualization package. The route_source_commit "
+        "records the source revision embedded in the audited route used as visual input. The visualization_source_commit "
+        "records the visualization renderer revision; for this package it matches the package commit. These fields are "
+        "separate because a visualization package can be rebuilt from a previously generated route. That is not a mismatch "
+        "when each role is named explicitly.\n\n"
         "## Limitations\n\n"
         "These figures validate operator-risk-action visualization, not external clinical or industrial deployment. The "
         "default aggregation shown here is max. Other aggregation functions require matching visualization rules. The "
@@ -216,8 +222,10 @@ def build() -> dict[str, object]:
     route = CLI / "route.json"
     trace = CLI / "operator_trace.json"
     package = CLI / "audit_package.zip"
+    route_source_commit = json.loads(route.read_text(encoding="utf-8")).get("source_commit", "")
     contribution_csv = data / "operator_risk_contribution_summary.csv"
     bridge_json = data / "local_risk_evidence_bridge.json"
+    proof_matrix_json = data / "proof_consistency_matrix_v2.json"
 
     render_operator_risk_contribution_summary(RESULTS, chapter / "operator_risk_contribution_summary.png", out_csv=contribution_csv)
     bridge_data = local_risk_evidence_data(trace, aggregation="max")
@@ -230,7 +238,11 @@ def build() -> dict[str, object]:
     render_decision_heatmap_v2(RESULTS, chapter / "categorical_decision_heatmap_v2.png")
     render_representation_class_atlas_v2(RESULTS, chapter / "representation_class_atlas_v2.png")
     render_explanation_coverage_curve_v2(trace, chapter / "explanation_coverage_curve_v2.png")
-    render_proof_consistency_matrix_v2(package if package.exists() else CLI, chapter / "proof_consistency_matrix_v2.png")
+    render_proof_consistency_matrix_v2(
+        package if package.exists() else CLI,
+        chapter / "proof_consistency_matrix_v2.png",
+        out_json=proof_matrix_json,
+    )
     build_operator_risk_contribution_summary(RESULTS, contribution_csv)
 
     source_index = {
@@ -256,12 +268,28 @@ def build() -> dict[str, object]:
     for base in expected_bases:
         for suffix in ("png", "pdf", "svg"):
             require_file(chapter / f"{base}.{suffix}")
-    for extra in [chapter / "categorical_decision_heatmap_v2.png", contribution_csv, bridge_json, data / "visual_source_index.json"]:
+    for extra in [
+        chapter / "categorical_decision_heatmap_v2.png",
+        contribution_csv,
+        bridge_json,
+        proof_matrix_json,
+        data / "visual_source_index.json",
+    ]:
         require_file(extra)
+    proof_matrix = json.loads(proof_matrix_json.read_text(encoding="utf-8"))
+    if proof_matrix.get("fail_count") != 0:
+        raise SystemExit("proof consistency matrix contains FAIL")
+    proof_svg = (chapter / "proof_consistency_matrix_v2.svg").read_text(encoding="utf-8", errors="ignore")
+    if "FAIL" in proof_svg:
+        raise SystemExit("proof_consistency_matrix_v2.svg contains FAIL")
     copy_chapter_pngs(chapter)
 
     manifest = {
         "source_commit": commit,
+        "package_source_commit": commit,
+        "route_source_commit": route_source_commit,
+        "visualization_source_commit": commit,
+        "manifest_self_hash_policy": "excluded",
         "package_type": "fuzzyxai_shap_like_visualization_package",
         "risk_aggregation": "max",
         "checks": {
@@ -269,6 +297,7 @@ def build() -> dict[str, object]:
             "max_evidence_bridge": "PASS",
             "real_csv_json_sources": "PASS",
             "no_cumulative_sum_for_max": "PASS",
+            "proof_matrix_no_fail": "PASS",
             "manifest_self_hash_excluded": "PASS",
         },
         "visualizations": [

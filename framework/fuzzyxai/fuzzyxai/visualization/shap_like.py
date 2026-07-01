@@ -471,7 +471,9 @@ def render_representation_class_atlas_v2(results_csv: str | Path, out_png: str |
     return outputs
 
 
-def render_proof_consistency_matrix_v2(package: str | Path, out_png: str | Path) -> dict[str, Path]:
+def render_proof_consistency_matrix_v2(
+    package: str | Path, out_png: str | Path, out_json: str | Path | None = None
+) -> dict[str, Path]:
     artifacts = {
         "route": read_package_json(package, "route.json") or {},
         "operator_trace": read_package_json(package, "operator_trace.json") or {},
@@ -482,13 +484,17 @@ def render_proof_consistency_matrix_v2(package: str | Path, out_png: str | Path)
     }
     invariants = ["source_commit", "gamma", "delta", "rho", "diagnostic", "action", "route_id", "sha256", "verifier_status"]
     matrix: list[list[int]] = []
+    matrix_records: list[dict[str, str]] = []
     for name, data in artifacts.items():
         computed = data.get("computed_result", {}) if isinstance(data, dict) else {}
         row = []
         for invariant in invariants:
             status = 0
             if invariant == "source_commit":
-                status = 1 if data.get("source_commit") or computed.get("source_commit") or name == "manifest" else -1
+                if name == "verifier_report":
+                    status = 1 if data.get("source_commit") or computed.get("source_commit") else 0
+                else:
+                    status = 1 if data.get("source_commit") or computed.get("source_commit") or name == "manifest" else -1
             elif invariant in {"gamma", "delta", "rho"}:
                 status = 1 if invariant in computed or name in {"verifier_report", "manifest"} else -1
             elif invariant == "diagnostic":
@@ -502,7 +508,31 @@ def render_proof_consistency_matrix_v2(package: str | Path, out_png: str | Path)
             elif invariant == "verifier_status":
                 status = 1 if data.get("overall_status") == "passed" or name != "verifier_report" else -1
             row.append(status)
+            matrix_records.append(
+                {
+                    "artifact": name,
+                    "invariant": invariant,
+                    "status": "PASS" if status == 1 else ("N/A" if status == 0 else "FAIL"),
+                }
+            )
         matrix.append(row)
+    if out_json is not None:
+        Path(out_json).parent.mkdir(parents=True, exist_ok=True)
+        Path(out_json).write_text(
+            json.dumps(
+                {
+                    "artifacts": list(artifacts),
+                    "invariants": invariants,
+                    "records": matrix_records,
+                    "fail_count": sum(1 for item in matrix_records if item["status"] == "FAIL"),
+                    "note": "N/A means the invariant is not carried by that artifact contract.",
+                },
+                ensure_ascii=False,
+                indent=2,
+            )
+            + "\n",
+            encoding="utf-8",
+        )
     try:
         import matplotlib.pyplot as plt
         import numpy as np
