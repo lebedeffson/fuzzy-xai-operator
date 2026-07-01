@@ -1,0 +1,15 @@
+fuzzyxai_final_audit_package.zip                   | Bin 6099067 -> 6129548 bytes
+ reports/audit/artifact_inventory.csv               |  11 ++++----
+ reports/audit/docx_format_report.md                |   2 +-
+ .../glava_4_FuzzyXAI_corrected_final.pdf           | Bin 674182 -> 674182 bytes
+ .../glava_5_FuzzyXAI_corrected_final.pdf           | Bin 782995 -> 782995 bytes
+ reports/audit/docx_render_report.md                |   2 +-
+ reports/audit/fuzzyxai_final_audit.json            |  19 ++++++++++---
+ reports/audit/fuzzyxai_final_audit.md              |  16 +++++------
+ reports/audit/stale_terms_report.md                |  31 +++++++++++++--------
+ .../studio_batch/hybrid_xiris_proof_package.json   |  30 ++++++++++++++------
+ .../repository_inventory/repository_excluded.json  |   2 +-
+ .../repository_inventory/repository_inventory.json |   6 ++--
+ .../repository_inventory/repository_inventory.md   |   2 +-
+ visual_artifacts_latest.zip                        | Bin 2533274 -> 2533446 bytes
+ 14 files changed, 77 insertions(+), 44 deletions(-)

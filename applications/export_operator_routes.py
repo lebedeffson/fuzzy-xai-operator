@@ -45,9 +45,15 @@ def export_scenario(scenario_id: str) -> dict[str, str]:
 
     payload = {
         "scenario_id": scenario_id,
+        "title_ru": route.title,
         "route": route_path.relative_to(scenario_dir).as_posix(),
+        "route_path": route_path.relative_to(scenario_dir).as_posix(),
         "proof_trace": proof_trace_path.relative_to(scenario_dir).as_posix(),
+        "proof_path": proof_trace_path.relative_to(scenario_dir).as_posix(),
         "figure": figure_path.relative_to(scenario_dir).as_posix(),
+        "dashboard_path": figure_path.relative_to(scenario_dir).as_posix(),
+        "action_id": route.final_action,
+        "diagnostic_id": route.computed_result.get("diagnostic_id", ""),
         "final_action": route.final_action,
         "verifier_status": route.verifier_status,
         "source_commit": route.source_commit,

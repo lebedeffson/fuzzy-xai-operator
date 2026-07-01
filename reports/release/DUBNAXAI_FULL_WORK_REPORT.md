@@ -121,6 +121,25 @@ site payload links and the rule that the site does not import or compute FuzzyXA
 It also checks that application scenario runners stay thin and do not reintroduce local
 action-selection logic.
 
+### Sprint Reporting Layer
+
+Added a control reporting layer for sprint and release state:
+
+- `scripts/build_sprint_report.py`
+- `make sprint-report`
+- `reports/release/current/SPRINT_STATUS.md`
+- `reports/release/current/release_summary.json`
+- `reports/release/current/check_results.json`
+- `reports/release/current/scenario_matrix.json`
+- `reports/release/current/artifact_manifest.json`
+- `reports/release/current/git_status.txt`
+- `reports/release/current/git_diff_summary.txt`
+- `reports/release/current/risks_and_todos.md`
+
+The report validates all five scenario artifacts, expected actions, diagnostics,
+verifier statuses, key control values, site/framework separation, thin application
+runners and current git state. It is called by `dubnaxai-release-check`.
+
 ### Site Layer
 
 The DubnaXAI site reads prepared JSON and images:
@@ -192,6 +211,7 @@ The check runs:
 - all scenario operator route export
 - operator route QA
 - DubnaXAI static site build
+- sprint report
 
 ## Key Outputs
 

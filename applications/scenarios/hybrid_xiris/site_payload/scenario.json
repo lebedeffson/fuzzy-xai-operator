@@ -1,8 +1,14 @@
 {
   "scenario_id": "hybrid_xiris",
+  "title_ru": "HYBRID-XIRIS FuzzyXAI OperatorRoute",
   "route": "route/route.json",
+  "route_path": "route/route.json",
   "proof_trace": "proof/proof_trace.json",
+  "proof_path": "proof/proof_trace.json",
   "figure": "figures/operator_dashboard.png",
+  "dashboard_path": "figures/operator_dashboard.png",
+  "action_id": "block",
+  "diagnostic_id": "D_quality_source_conflict",
   "final_action": "block",
   "verifier_status": "PASS",
   "source_commit": ""

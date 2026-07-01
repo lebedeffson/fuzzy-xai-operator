@@ -1,8 +1,14 @@
 {
   "scenario_id": "gis_integro",
+  "title_ru": "GIS INTEGRO FuzzyXAI OperatorRoute",
   "route": "route/route.json",
+  "route_path": "route/route.json",
   "proof_trace": "proof/proof_trace.json",
+  "proof_path": "proof/proof_trace.json",
   "figure": "figures/operator_dashboard.png",
+  "dashboard_path": "figures/operator_dashboard.png",
+  "action_id": "audit_report",
+  "diagnostic_id": "D_route_context_limit",
   "final_action": "audit_report",
   "verifier_status": "PASS",
   "source_commit": ""

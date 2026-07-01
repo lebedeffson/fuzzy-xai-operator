@@ -1,8 +1,14 @@
 {
   "scenario_id": "medical_ecg_signal",
+  "title_ru": "ECG FuzzyXAI OperatorRoute",
   "route": "route/route.json",
+  "route_path": "route/route.json",
   "proof_trace": "proof/proof_trace.json",
+  "proof_path": "proof/proof_trace.json",
   "figure": "figures/operator_dashboard.png",
+  "dashboard_path": "figures/operator_dashboard.png",
+  "action_id": "defer_to_human",
+  "diagnostic_id": "D_signal_quality",
   "final_action": "defer_to_human",
   "verifier_status": "PASS",
   "source_commit": ""

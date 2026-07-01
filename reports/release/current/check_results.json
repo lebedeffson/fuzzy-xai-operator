@@ -1,0 +1,21 @@
+{
+  "fuzzyxai_framework_check": {
+    "status": "UNKNOWN",
+    "source": "not executed by sprint-report; run by dubnaxai-release-check before this target"
+  },
+  "operator_route_check": {
+    "status": "PASS",
+    "source": "sprint-report artifact validation"
+  },
+  "dubnaxai_release_check": {
+    "status": "UNKNOWN",
+    "source": "not executed by sprint-report"
+  },
+  "sprint_report": {
+    "status": "PASS",
+    "errors": [],
+    "warnings": [
+      "dirty source files: DUBNAXAI_FULL_WORK_REPORT.md, Makefile, applications/export_operator_routes.py, applications/run_framework_scenario.py, applications/scenarios/beacon_xai/site_payload/scenario.json, applications/scenarios/gd_anfis_shap/site_payload/scenario.json, applications/scenarios/gis_integro/site_payload/scenario.json, applications/scenarios/hybrid_xiris/site_payload/scenario.json, applications/scenarios/medical_ecg_signal/site_payload/scenario.json, scripts/build_sprint_report.py"
+    ]
+  }
+}

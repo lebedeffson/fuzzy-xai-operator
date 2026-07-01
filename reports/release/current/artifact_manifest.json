@@ -1,0 +1,282 @@
+{
+  "routes": [
+    {
+      "scenario_id": "hybrid_xiris",
+      "path": "applications/scenarios/hybrid_xiris/route/route.json",
+      "exists": true,
+      "size_bytes": 8162,
+      "sha256": "414cc34291ef0ef9ae9c72c4bf3c3ed67f3eb129ab4091aec7e3ad7961564d08"
+    },
+    {
+      "scenario_id": "medical_ecg_signal",
+      "path": "applications/scenarios/medical_ecg_signal/route/route.json",
+      "exists": true,
+      "size_bytes": 4972,
+      "sha256": "9354fccbcabda8fe6e831a0db0d10c7a608bdfcd9c37d706dd863eef33eefb10"
+    },
+    {
+      "scenario_id": "gd_anfis_shap",
+      "path": "applications/scenarios/gd_anfis_shap/route/route.json",
+      "exists": true,
+      "size_bytes": 4988,
+      "sha256": "7563030a59f15540a0301282632279406393b78d94cd390f502ae53a6b071514"
+    },
+    {
+      "scenario_id": "beacon_xai",
+      "path": "applications/scenarios/beacon_xai/route/route.json",
+      "exists": true,
+      "size_bytes": 5233,
+      "sha256": "01f7ddfef324f0b9ef020f52cef48dd2736f6c9aca7aec342582a54b59460f7f"
+    },
+    {
+      "scenario_id": "gis_integro",
+      "path": "applications/scenarios/gis_integro/route/route.json",
+      "exists": true,
+      "size_bytes": 5374,
+      "sha256": "1aff3f64e96876c69ff0af244ec5fe1e870b92c351a30928abdab6201c9564dd"
+    }
+  ],
+  "proofs": [
+    {
+      "scenario_id": "hybrid_xiris",
+      "path": "applications/scenarios/hybrid_xiris/proof/proof_trace.json",
+      "exists": true,
+      "size_bytes": 9409,
+      "sha256": "234ff5148c08544db5bf69fd7aae80f5acc042b758e2bfcc8e44aa92e83fd527"
+    },
+    {
+      "scenario_id": "medical_ecg_signal",
+      "path": "applications/scenarios/medical_ecg_signal/proof/proof_trace.json",
+      "exists": true,
+      "size_bytes": 5912,
+      "sha256": "184b3c012b0d9ad30b41ff237a90005e7cd48801f7881766d51a2b826d34d2b2"
+    },
+    {
+      "scenario_id": "gd_anfis_shap",
+      "path": "applications/scenarios/gd_anfis_shap/proof/proof_trace.json",
+      "exists": true,
+      "size_bytes": 5924,
+      "sha256": "16be003c6b355381a1c144bda8e68a725a5f6e3efa652c693a89daf0d90730a5"
+    },
+    {
+      "scenario_id": "beacon_xai",
+      "path": "applications/scenarios/beacon_xai/proof/proof_trace.json",
+      "exists": true,
+      "size_bytes": 6192,
+      "sha256": "3aca515eb72926e6b95b724b3cac10722f0d36aef61e3af106e9112f089de972"
+    },
+    {
+      "scenario_id": "gis_integro",
+      "path": "applications/scenarios/gis_integro/proof/proof_trace.json",
+      "exists": true,
+      "size_bytes": 6392,
+      "sha256": "5d3e710c393d8cc9ca0aa5f9eea2c7c061dc2f5684c031b98617f03517d0a825"
+    }
+  ],
+  "dashboards": [
+    {
+      "scenario_id": "hybrid_xiris",
+      "path": "applications/scenarios/hybrid_xiris/figures/operator_dashboard.png",
+      "exists": true,
+      "size_bytes": 254683,
+      "sha256": "7621616b10d8cf4d38eee462fa4322f4200b2423bf6d77bee15d58f93ed39b21"
+    },
+    {
+      "scenario_id": "medical_ecg_signal",
+      "path": "applications/scenarios/medical_ecg_signal/figures/operator_dashboard.png",
+      "exists": true,
+      "size_bytes": 198816,
+      "sha256": "10a64d7fce546de981562d32ca1fa7a8af89a431ac52eef8bb823afaf22d1440"
+    },
+    {
+      "scenario_id": "gd_anfis_shap",
+      "path": "applications/scenarios/gd_anfis_shap/figures/operator_dashboard.png",
+      "exists": true,
+      "size_bytes": 194342,
+      "sha256": "a603c68f26a5816876af61b642ac3cd59d8665e57a5d65c77f0137e6bc483d9d"
+    },
+    {
+      "scenario_id": "beacon_xai",
+      "path": "applications/scenarios/beacon_xai/figures/operator_dashboard.png",
+      "exists": true,
+      "size_bytes": 208932,
+      "sha256": "234751b23eedf5a0b2fa3286aecf38a97c75ee6e5687a4f2f9027f946a9baa3b"
+    },
+    {
+      "scenario_id": "gis_integro",
+      "path": "applications/scenarios/gis_integro/figures/operator_dashboard.png",
+      "exists": true,
+      "size_bytes": 208780,
+      "sha256": "5160189c0cc6698a72075b3c0970c7743c446691a1dca393e0f923d98e6c192b"
+    }
+  ],
+  "site_payloads": [
+    {
+      "scenario_id": "hybrid_xiris",
+      "path": "applications/scenarios/hybrid_xiris/site_payload/scenario.json",
+      "exists": true,
+      "size_bytes": 492,
+      "sha256": "5f28058e51ab4f60d12eedde1ec999ee3c4291006c592830c42721ac16177757"
+    },
+    {
+      "scenario_id": "medical_ecg_signal",
+      "path": "applications/scenarios/medical_ecg_signal/site_payload/scenario.json",
+      "exists": true,
+      "size_bytes": 498,
+      "sha256": "bdc7af37e9f2d38b81ab5664c378bb2af39e05a5ea0ba9960c192374abac3c12"
+    },
+    {
+      "scenario_id": "gd_anfis_shap",
+      "path": "applications/scenarios/gd_anfis_shap/site_payload/scenario.json",
+      "exists": true,
+      "size_bytes": 496,
+      "sha256": "e4b43fae21388b3a8fd142f84c11147367265b3cef2539d396872be8eac556aa"
+    },
+    {
+      "scenario_id": "beacon_xai",
+      "path": "applications/scenarios/beacon_xai/site_payload/scenario.json",
+      "exists": true,
+      "size_bytes": 489,
+      "sha256": "97e315ec93a75b200234d54ee26dbcd4fcf8e2773bd1e004d60eb6f2bb2e2ad2"
+    },
+    {
+      "scenario_id": "gis_integro",
+      "path": "applications/scenarios/gis_integro/site_payload/scenario.json",
+      "exists": true,
+      "size_bytes": 500,
+      "sha256": "01d0effda32bfadb4ba5576da4f0e6843701074cf421d2ea2e077f4afc60465d"
+    }
+  ],
+  "site_public_routes": [
+    {
+      "scenario_id": "hybrid_xiris",
+      "path": "site/dubnaxai/public/routes/hybrid_xiris_route.json",
+      "exists": true,
+      "size_bytes": 8162,
+      "sha256": "414cc34291ef0ef9ae9c72c4bf3c3ed67f3eb129ab4091aec7e3ad7961564d08"
+    },
+    {
+      "scenario_id": "medical_ecg_signal",
+      "path": "site/dubnaxai/public/routes/medical_ecg_signal_route.json",
+      "exists": true,
+      "size_bytes": 4972,
+      "sha256": "9354fccbcabda8fe6e831a0db0d10c7a608bdfcd9c37d706dd863eef33eefb10"
+    },
+    {
+      "scenario_id": "gd_anfis_shap",
+      "path": "site/dubnaxai/public/routes/gd_anfis_shap_route.json",
+      "exists": true,
+      "size_bytes": 4988,
+      "sha256": "7563030a59f15540a0301282632279406393b78d94cd390f502ae53a6b071514"
+    },
+    {
+      "scenario_id": "beacon_xai",
+      "path": "site/dubnaxai/public/routes/beacon_xai_route.json",
+      "exists": true,
+      "size_bytes": 5233,
+      "sha256": "01f7ddfef324f0b9ef020f52cef48dd2736f6c9aca7aec342582a54b59460f7f"
+    },
+    {
+      "scenario_id": "gis_integro",
+      "path": "site/dubnaxai/public/routes/gis_integro_route.json",
+      "exists": true,
+      "size_bytes": 5374,
+      "sha256": "1aff3f64e96876c69ff0af244ec5fe1e870b92c351a30928abdab6201c9564dd"
+    }
+  ],
+  "site_public_figures": [
+    {
+      "scenario_id": "hybrid_xiris",
+      "path": "site/dubnaxai/public/figures/hybrid_xiris_operator_dashboard.png",
+      "exists": true,
+      "size_bytes": 254683,
+      "sha256": "7621616b10d8cf4d38eee462fa4322f4200b2423bf6d77bee15d58f93ed39b21"
+    },
+    {
+      "scenario_id": "medical_ecg_signal",
+      "path": "site/dubnaxai/public/figures/medical_ecg_signal_operator_dashboard.png",
+      "exists": true,
+      "size_bytes": 198816,
+      "sha256": "10a64d7fce546de981562d32ca1fa7a8af89a431ac52eef8bb823afaf22d1440"
+    },
+    {
+      "scenario_id": "gd_anfis_shap",
+      "path": "site/dubnaxai/public/figures/gd_anfis_shap_operator_dashboard.png",
+      "exists": true,
+      "size_bytes": 194342,
+      "sha256": "a603c68f26a5816876af61b642ac3cd59d8665e57a5d65c77f0137e6bc483d9d"
+    },
+    {
+      "scenario_id": "beacon_xai",
+      "path": "site/dubnaxai/public/figures/beacon_xai_operator_dashboard.png",
+      "exists": true,
+      "size_bytes": 208932,
+      "sha256": "234751b23eedf5a0b2fa3286aecf38a97c75ee6e5687a4f2f9027f946a9baa3b"
+    },
+    {
+      "scenario_id": "gis_integro",
+      "path": "site/dubnaxai/public/figures/gis_integro_operator_dashboard.png",
+      "exists": true,
+      "size_bytes": 208780,
+      "sha256": "5160189c0cc6698a72075b3c0970c7743c446691a1dca393e0f923d98e6c192b"
+    }
+  ],
+  "release_reports": [
+    {
+      "scenario_id": "release",
+      "path": "reports/release/current/SPRINT_STATUS.md",
+      "exists": true,
+      "size_bytes": 5424,
+      "sha256": "1341192a9ef02ab39d707069151be6629d77b02f709fe31d6abe2a2d02dffa25"
+    },
+    {
+      "scenario_id": "release",
+      "path": "reports/release/current/release_summary.json",
+      "exists": true,
+      "size_bytes": 1175,
+      "sha256": "24fd4c0ab48474a44278a243cba666602ee7bec06735e925c1e0be1b89806bc9"
+    },
+    {
+      "scenario_id": "release",
+      "path": "reports/release/current/check_results.json",
+      "exists": true,
+      "size_bytes": 965,
+      "sha256": "4baf526c0a969d6d7f883b0ef9ef1378d44a6097228f9403701403548c6452b2"
+    },
+    {
+      "scenario_id": "release",
+      "path": "reports/release/current/scenario_matrix.json",
+      "exists": true,
+      "size_bytes": 2574,
+      "sha256": "59dd259a5ba85e4a6bb88eb62cf07ff38ba1ac35dc90844be657d14b6d21798f"
+    },
+    {
+      "scenario_id": "release",
+      "path": "reports/release/current/artifact_manifest.json",
+      "exists": true,
+      "size_bytes": 9862,
+      "sha256": "0c61ff2a552972f535c373f21f427b2d99d07c328c94a25a0da6cea46e38755e"
+    },
+    {
+      "scenario_id": "release",
+      "path": "reports/release/current/git_status.txt",
+      "exists": true,
+      "size_bytes": 1878,
+      "sha256": "d8945eb3cdcb5a2512737865a7f3892a272ad47d939b3841b4d934b2f9465809"
+    },
+    {
+      "scenario_id": "release",
+      "path": "reports/release/current/git_diff_summary.txt",
+      "exists": true,
+      "size_bytes": 1118,
+      "sha256": "a0da0c31bc2741a5035033dbd64d78e8736bdcdf137a5d1d1a0e19c94cd51b75"
+    },
+    {
+      "scenario_id": "release",
+      "path": "reports/release/current/risks_and_todos.md",
+      "exists": true,
+      "size_bytes": 578,
+      "sha256": "5c9cbb9cd706388c363e14b09606eb78b663a43dcb585793ddb4f23f105ba4ab"
+    }
+  ]
+}

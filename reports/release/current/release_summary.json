@@ -1,0 +1,26 @@
+{
+  "branch": "main",
+  "commit": "ed1fe54",
+  "tag": "v0.4-fuzzyxai-framework-all-scenarios",
+  "sprint_report_status": "PASS",
+  "framework_check": "UNKNOWN",
+  "operator_route_check": "PASS",
+  "dubnaxai_release_check": "UNKNOWN",
+  "scenarios_total": 5,
+  "scenarios_passed": 5,
+  "routes_total": 5,
+  "proofs_total": 5,
+  "dashboards_total": 5,
+  "site_payloads_total": 5,
+  "site_routes_total": 5,
+  "site_figures_total": 5,
+  "site_computes_fuzzyxai": false,
+  "applications_choose_actions_directly": false,
+  "dirty_worktree": true,
+  "dirty_source_files": true,
+  "warnings": [
+    "dirty source files: DUBNAXAI_FULL_WORK_REPORT.md, Makefile, applications/export_operator_routes.py, applications/run_framework_scenario.py, applications/scenarios/beacon_xai/site_payload/scenario.json, applications/scenarios/gd_anfis_shap/site_payload/scenario.json, applications/scenarios/gis_integro/site_payload/scenario.json, applications/scenarios/hybrid_xiris/site_payload/scenario.json, applications/scenarios/medical_ecg_signal/site_payload/scenario.json, scripts/build_sprint_report.py"
+  ],
+  "errors": [],
+  "next_step": "external payload schemas and adapter contracts"
+}

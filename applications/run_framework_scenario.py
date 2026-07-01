@@ -28,9 +28,15 @@ def run_framework_scenario(scenario_id: str, scenario_dir: Path) -> dict:
 
     payload = {
         "scenario_id": scenario_id,
+        "title_ru": route.title,
         "route": "route/route.json",
+        "route_path": "route/route.json",
         "proof_trace": "proof/proof_trace.json",
+        "proof_path": "proof/proof_trace.json",
         "figure": "figures/operator_dashboard.png",
+        "dashboard_path": "figures/operator_dashboard.png",
+        "action_id": route.final_action,
+        "diagnostic_id": route.computed_result.get("diagnostic_id", ""),
         "final_action": route.final_action,
         "verifier_status": "PASS",
         "source": "fuzzyxai public API",

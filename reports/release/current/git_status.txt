@@ -1,0 +1,43 @@
+M  DUBNAXAI_FULL_WORK_REPORT.md
+M  Makefile
+M  applications/export_operator_routes.py
+M  applications/run_framework_scenario.py
+M  applications/scenarios/beacon_xai/site_payload/scenario.json
+M  applications/scenarios/gd_anfis_shap/site_payload/scenario.json
+M  applications/scenarios/gis_integro/site_payload/scenario.json
+M  applications/scenarios/hybrid_xiris/site_payload/scenario.json
+M  applications/scenarios/medical_ecg_signal/site_payload/scenario.json
+ M fuzzyxai_final_audit_package.zip
+ M reports/audit/artifact_inventory.csv
+ M reports/audit/docx_format_report.md
+ M reports/audit/docx_render/glava_4_FuzzyXAI_corrected_final.pdf
+ M reports/audit/docx_render/glava_5_FuzzyXAI_corrected_final.pdf
+ M reports/audit/docx_render_report.md
+ M reports/audit/fuzzyxai_final_audit.json
+ M reports/audit/fuzzyxai_final_audit.md
+ M reports/audit/stale_terms_report.md
+M  reports/release/DUBNAXAI_FULL_WORK_REPORT.md
+A  reports/release/current/SPRINT_STATUS.md
+A  reports/release/current/artifact_manifest.json
+A  reports/release/current/check_results.json
+A  reports/release/current/git_diff_summary.txt
+A  reports/release/current/git_status.txt
+A  reports/release/current/release_summary.json
+A  reports/release/current/risks_and_todos.md
+A  reports/release/current/scenario_matrix.json
+ M reports/studio_batch/hybrid_xiris_proof_package.json
+ M reports/validation/repository_inventory/repository_excluded.json
+ M reports/validation/repository_inventory/repository_inventory.json
+ M reports/validation/repository_inventory/repository_inventory.md
+A  scripts/build_sprint_report.py
+A  tests/test_sprint_report.py
+ M visual_artifacts_latest.zip
+?? FuzzyXAI_FINAL_DELIVERY_REPORT.md
+?? FuzzyXAI_full_delivery_package.zip
+?? data/real_public/
+?? models/
+?? reports/dataset_audit/
+?? reports/evaluation/
+?? reports/practice_demo/
+?? reports/real_validation/
+?? reports/training/
