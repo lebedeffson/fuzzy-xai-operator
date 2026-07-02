@@ -161,6 +161,18 @@ from .visualization import (
     render_compact_operator_trace_heatmap_v2,
     render_explanation_coverage_curve_v2,
 )
+from .explain import (
+    OperatorNarrative,
+    OperatorNarrativeCard,
+    build_operator_narrative_ru,
+    build_readable_explanation_ru,
+    build_task_data_passport,
+    explain_action_ru,
+    explain_delta_ru,
+    explain_gamma_ru,
+    explain_main_reason_ru,
+    explain_representation_ru,
+)
 
 __all__ += [
     "FuzzyXAI",
@@ -195,4 +207,14 @@ __all__ += [
     "render_action_boundary",
     "render_proof_consistency_matrix",
     "render_proof_consistency_matrix_v2",
+    "OperatorNarrative",
+    "OperatorNarrativeCard",
+    "build_operator_narrative_ru",
+    "build_readable_explanation_ru",
+    "build_task_data_passport",
+    "explain_action_ru",
+    "explain_delta_ru",
+    "explain_gamma_ru",
+    "explain_main_reason_ru",
+    "explain_representation_ru",
 ]

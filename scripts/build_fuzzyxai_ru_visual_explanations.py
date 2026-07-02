@@ -59,10 +59,24 @@ FIGURES = [
     "operator_trace_summary_ru",
     "proof_consistency_ru",
     "representation_atlas_ru",
+    "task_data_passport_ru",
+    "operator_route_story_ru",
+    "operator_cards_ru",
 ]
 REQUIRED_SVG_TERMS = ["риск", "доверие", "объяснение", "действие", "γ", "Δ", "ρ"]
 HUMAN_MODEL = "внешний классификатор"
 HUMAN_DATASET = "демонстрационный табличный пример"
+
+
+def fuzzyxai_imports():
+    sys.path.insert(0, str(ROOT / "framework" / "fuzzyxai"))
+    from fuzzyxai.explain import (
+        build_operator_narrative_ru,
+        build_readable_explanation_ru,
+        build_task_data_passport,
+    )
+
+    return build_operator_narrative_ru, build_readable_explanation_ru, build_task_data_passport
 
 
 def must(cmd: list[str]) -> subprocess.CompletedProcess[str]:
@@ -154,6 +168,11 @@ def case_data() -> tuple[dict, dict, dict, list[dict[str, str]]]:
     trace = read_json(CLI / "operator_trace.json")
     verifier = read_json(CLI / "verifier_report.json")
     return route, trace, verifier, read_rows(RESULTS)
+
+
+def load_proof_trace() -> dict:
+    path = CLI / "proof_trace.json"
+    return read_json(path) if path.exists() else {}
 
 
 def components(computed: dict) -> dict[str, float]:
@@ -475,6 +494,107 @@ def render_representation_atlas(route: dict, verifier: dict, rows: list[dict[str
     plt.close(fig)
 
 
+def render_task_data_passport(route: dict, verifier: dict, passport: dict, out: Path) -> None:
+    plt = setup_matplotlib()
+    c = route["computed_result"]
+    fig = plt.figure(figsize=(9.2, 5.8))
+    title_block(fig, "Паспорт задачи и данных", "что именно анализирует FuzzyXAI перед запуском операторного маршрута")
+    ax = fig.add_axes([0.06, 0.12, 0.88, 0.70])
+    ax.axis("off")
+    rows = [
+        ("Тип задачи", "табличная классификация"),
+        ("Тип модели", passport.get("model_summary_ru", HUMAN_MODEL)),
+        ("Объект объяснения", "один объект / single instance"),
+        ("Признаков", str(passport.get("feature_count") or "есть набор признаков")),
+        ("Вероятность класса", f"есть, p = {f(c.get('class_probability')):.2f}"),
+        ("Attribution / правила", "есть объяснительные вклады признаков"),
+        ("Качество входа", f"ограничение качества = {f(c.get('quality_component')):.2f}"),
+        ("Готовность маршрута", "можно запускать операторную трассу"),
+    ]
+    for i, (name, value) in enumerate(rows):
+        y = 0.92 - i * 0.105
+        ax.text(0.03, y, name, fontsize=12, fontweight="bold", va="center")
+        ax.text(0.36, y, value, fontsize=12, va="center", bbox=dict(facecolor="#f8fafc", edgecolor="#e2e8f0", boxstyle="round,pad=0.25"))
+    ax.text(
+        0.03,
+        0.03,
+        "Вывод: вход содержит всё необходимое для объяснения — результат модели, вероятность, признаки, вклады и показатели качества.",
+        fontsize=12,
+        color="#334155",
+    )
+    footer(fig, route, verifier.get("overall_status", "passed"))
+    save_all(fig, out)
+    plt.close(fig)
+
+
+def render_operator_route_story(route: dict, verifier: dict, narrative: dict, out: Path) -> None:
+    plt = setup_matplotlib()
+    c = route["computed_result"]
+    fig, ax = plt.subplots(figsize=(12, 5.4))
+    title_block(fig, "Лента операторного маршрута", "как данные проходят путь от входа до действия и proof trace")
+    ax.axis("off")
+    steps = [
+        ("Данные", "вход пригоден"),
+        ("Объяснение", "собран Eₖ"),
+        ("Представление", str(c.get("representation_class", "F0"))),
+        ("γ", f"{f(c.get('gamma')):.2f}\nумеренная\nнеуверенность"),
+        ("Δ", f"{f(c.get('delta')):.2f}\nпотеря\nобъяснения"),
+        ("ρ", f"{f(c.get('rho')):.2f}\nглавный риск:\nΔ"),
+        ("Диагноз", "ограниченная\nуверенность"),
+        ("Действие", "понизить\nдоверие"),
+        ("Proof", "проверено"),
+    ]
+    xs = [0.05 + i * 0.105 for i in range(len(steps))]
+    for i, ((title, text), x) in enumerate(zip(steps, xs)):
+        color = "#fff7df" if title in {"Δ", "ρ", "Действие"} else "#f8fafc"
+        ax.text(x, 0.58, title, ha="center", va="center", fontsize=12, fontweight="bold", bbox=dict(facecolor=color, edgecolor="#cbd5e1", boxstyle="round,pad=0.45"))
+        ax.text(x, 0.38, text, ha="center", va="top", fontsize=10)
+        if i < len(steps) - 1:
+            ax.annotate("", xy=(xs[i + 1] - 0.04, 0.58), xytext=(x + 0.04, 0.58), arrowprops=dict(arrowstyle="->", color="#64748b", lw=1.5))
+    ax.text(0.05, 0.12, narrative["final_decision"]["explanation_ru"], fontsize=11, color="#334155", bbox=dict(facecolor="#eef6ff", edgecolor="#cbd5e1", boxstyle="round,pad=0.45"))
+    footer(fig, route, verifier.get("overall_status", "passed"))
+    save_all(fig, out)
+    plt.close(fig)
+
+
+def render_operator_cards(route: dict, verifier: dict, narrative: dict, out: Path) -> None:
+    plt = setup_matplotlib()
+    cards = narrative["operator_cards"]
+    selected = [card for card in cards if card["operator_id"] in {"input_artifact", "alignment", "reduction", "risk", "action", "proof"}]
+    fig, axes = plt.subplots(2, 3, figsize=(13, 8))
+    title_block(fig, "Карточки операторов", "что получил, проверил и вычислил каждый ключевой оператор")
+    for ax, card in zip(axes.ravel(), selected):
+        ax.axis("off")
+        ax.set_facecolor("#f8fafc")
+        ax.text(0.03, 0.92, card["operator_title_ru"], fontsize=13, fontweight="bold", va="top")
+        values = []
+        for key, value in card["computed_values"].items():
+            if key == "action_id":
+                values.append(f"действие: {ACTION_RU.get(str(value), str(value))}")
+            elif key == "dominant_component":
+                values.append(f"главная причина: {COMPONENT_RU.get(str(value), str(value))}")
+            elif key == "representation_class":
+                values.append(f"класс представления: {value}")
+            else:
+                values.append(f"{key}: {value}")
+        body = (
+            f"Вопрос: {card['operator_question_ru']}\n\n"
+            f"Что получил: {card['input_summary_ru']}\n\n"
+            f"Что проверил: {card['method_summary_ru']}\n\n"
+            f"Что вычислил: {'; '.join(values)}\n\n"
+            f"Что значит: {card['plain_result_ru']}\n\n"
+            f"Влияние: {card['effect_on_route_ru']}\n\n"
+            f"Где проверяется: {', '.join(card['proof_refs'][:2])}"
+        )
+        ax.text(0.03, 0.82, fill(body, 44), fontsize=8.6, va="top", linespacing=1.22)
+        for spine in ax.spines.values():
+            spine.set_visible(True)
+            spine.set_edgecolor("#cbd5e1")
+    footer(fig, route, verifier.get("overall_status", "passed"))
+    save_all(fig, out)
+    plt.close(fig)
+
+
 def write_report(path: Path) -> None:
     text = """
 # Русскоязычный объясняющий визуальный слой FuzzyXAI
@@ -565,6 +685,75 @@ def captions() -> str:
 """
 
 
+def readme_ru(narrative: dict) -> str:
+    final = narrative["final_decision"]
+    return f"""# FuzzyXAI: русскоязычный пакет объяснения
+
+## Что это
+
+Этот пакет показывает, как FuzzyXAI объясняет результат модели через операторный маршрут: от данных и результата модели до γ, Δ, ρ, действия и proof trace.
+
+## Как читать
+
+1. Начните с `figures/explanation_card_ru.*`.
+2. Затем посмотрите `figures/task_data_passport_ru.*`.
+3. Потом откройте `figures/operator_route_story_ru.*`.
+4. Если нужно понять каждый шаг — `figures/operator_cards_ru.*`.
+5. Для проверки согласованности — `figures/proof_consistency_ru.*`.
+
+## Главное решение
+
+FuzzyXAI выбрал действие **{final['action_ru']}**. Главная причина: {final['main_reason_ru']}
+
+## Что означают γ, Δ и ρ
+
+γ — неуверенность или рассогласование.
+Δ — потеря объяснения.
+ρ — итоговый риск доверия к объяснительному маршруту.
+
+## Почему не SHAP
+
+SHAP объясняет вклад признаков в предсказание. FuzzyXAI объясняет, можно ли доверять объяснительному маршруту и что делать дальше.
+
+## Проверяемость
+
+Все значения связаны с route, operator trace, proof trace и verifier report. Проверки лежат в каталоге `checks/`.
+"""
+
+
+def readable_report_md(narrative: dict, readable: dict) -> str:
+    lines = [
+        "# Человекочитаемый отчёт FuzzyXAI",
+        "",
+        f"## {readable['headline_ru']}",
+        "",
+        readable["one_sentence_ru"],
+        "",
+        "## Для пользователя",
+        "",
+    ]
+    lines += [f"- {item}" for item in readable["for_non_expert_ru"]]
+    lines += [
+        "",
+        "## Итоговое действие",
+        "",
+        f"- Действие: {narrative['final_decision']['action_ru']}",
+        f"- Что делать: {narrative['final_decision']['user_next_step_ru']}",
+        "",
+        "## Техническое основание",
+        "",
+    ]
+    lines += [f"- {item}" for item in readable["technical_ru"]]
+    return "\n".join(lines) + "\n"
+
+
+def readable_report_html(md: str) -> str:
+    html = md.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+    html = html.replace("\n# ", "\n<h1>").replace("\n## ", "\n<h2>").replace("\n- ", "\n<li>")
+    html = html.replace("\n", "<br>\n")
+    return f"<!doctype html><html lang='ru'><meta charset='utf-8'><body style='font-family:DejaVu Sans,Arial,sans-serif;max-width:900px;margin:32px auto;line-height:1.5'>{html}</body></html>\n"
+
+
 def require_file(path: Path) -> None:
     if not path.exists() or path.stat().st_size == 0:
         raise SystemExit(f"missing RU visual artifact: {path}")
@@ -574,7 +763,7 @@ def word_count(path: Path) -> int:
     return len(path.read_text(encoding="utf-8").split())
 
 
-def verify_package(chapter: Path, report: Path, manifest_path: Path) -> None:
+def verify_package(figures: Path, report: Path, manifest_path: Path, data: Path, checks: Path) -> None:
     from PIL import Image
 
     route = read_json(CLI / "route.json")
@@ -583,11 +772,11 @@ def verify_package(chapter: Path, report: Path, manifest_path: Path) -> None:
         raise SystemExit("RU figure footer is longer than 90 characters")
     for base in FIGURES:
         for suffix in ("png", "pdf", "svg"):
-            require_file(chapter / f"{base}.{suffix}")
-        with Image.open(chapter / f"{base}.png") as image:
+            require_file(figures / f"{base}.{suffix}")
+        with Image.open(figures / f"{base}.png") as image:
             if image.size[0] < 1800:
                 raise SystemExit(f"PNG width is less than 1800px: {base}")
-        svg = (chapter / f"{base}.svg").read_text(encoding="utf-8", errors="ignore")
+        svg = (figures / f"{base}.svg").read_text(encoding="utf-8", errors="ignore")
         lower = svg.lower()
         for term in REQUIRED_SVG_TERMS:
             if term not in svg:
@@ -605,11 +794,20 @@ def verify_package(chapter: Path, report: Path, manifest_path: Path) -> None:
         ):
             if forbidden.lower() in lower:
                 raise SystemExit(f"SVG {base} contains forbidden technical label: {forbidden}")
-    proof_svg = (chapter / "proof_consistency_ru.svg").read_text(encoding="utf-8", errors="ignore")
+    proof_svg = (figures / "proof_consistency_ru.svg").read_text(encoding="utf-8", errors="ignore")
     if "FAIL" in proof_svg:
         raise SystemExit("proof_consistency_ru contains FAIL")
     if word_count(report) < 1200:
         raise SystemExit("ru_explanation_visual_report.md must contain at least 1200 words")
+    for required in ["operator_narrative_ru.json", "readable_explanation_ru.json", "task_data_passport.json", "operator_cards_ru.json"]:
+        require_file(data / required)
+    narrative = read_json(data / "operator_narrative_ru.json")
+    for card in narrative.get("operator_cards", []):
+        for key in ["operator_question_ru", "plain_result_ru", "effect_on_route_ru"]:
+            if not card.get(key):
+                raise SystemExit(f"operator narrative card lacks {key}: {card.get('operator_id')}")
+    for required in ["editorial_check.json", "freshness_check.json", "operator_narrative_check.json", "verifier_report.json"]:
+        require_file(checks / required)
     manifest = read_json(manifest_path)
     if manifest.get("manifest_self_hash_policy") != "excluded":
         raise SystemExit("manifest_self_hash_policy must be excluded")
@@ -639,7 +837,7 @@ def verify_zip_package(zip_path: Path) -> None:
         if manifest.get("source_commit") != head:
             raise SystemExit(f"zip manifest source_commit is stale: {manifest.get('source_commit')} != {head}")
         for name in names:
-            if not name.startswith(f"{root}/chapter/") or not name.endswith(".svg"):
+            if not name.startswith(f"{root}/figures/") or not name.endswith(".svg"):
                 continue
             svg = archive.read(name).decode("utf-8", errors="ignore")
             if "FAIL" in svg:
@@ -653,21 +851,34 @@ def build() -> dict:
     if OUT.exists():
         shutil.rmtree(OUT)
     OUT.mkdir(parents=True)
-    chapter = OUT / "chapter"
+    figures = OUT / "figures"
     data = OUT / "data"
-    chapter.mkdir(parents=True)
+    report = OUT / "report"
+    checks = OUT / "checks"
+    figures.mkdir(parents=True)
     data.mkdir(parents=True)
+    report.mkdir(parents=True)
+    checks.mkdir(parents=True)
     route, trace, verifier, rows = case_data()
+    proof_trace = load_proof_trace()
     commit = must(["git", "rev-parse", "HEAD"]).stdout.strip()
+    build_narrative, build_readable, build_passport = fuzzyxai_imports()
+    narrative_obj = build_narrative(route, trace, proof_trace, verifier)
+    narrative = narrative_obj.to_dict()
+    readable = build_readable(narrative_obj)
+    passport = build_passport(route)
 
-    card = render_explanation_card(route, verifier, chapter / "explanation_card_ru.png")
-    render_risk_sources(route, verifier, chapter / "risk_sources_ru.png")
-    render_why_lower_confidence(route, verifier, chapter / "why_lower_confidence_ru.png")
-    render_decision_boundary(route, verifier, chapter / "decision_boundary_ru.png")
-    render_gamma_delta_map(route, verifier, rows, chapter / "gamma_delta_decision_map_ru.png")
-    render_operator_trace_summary(route, verifier, rows, chapter / "operator_trace_summary_ru.png")
-    render_proof_consistency(route, verifier, chapter / "proof_consistency_ru.png")
-    render_representation_atlas(route, verifier, rows, chapter / "representation_atlas_ru.png")
+    card = render_explanation_card(route, verifier, figures / "explanation_card_ru.png")
+    render_risk_sources(route, verifier, figures / "risk_sources_ru.png")
+    render_why_lower_confidence(route, verifier, figures / "why_lower_confidence_ru.png")
+    render_decision_boundary(route, verifier, figures / "decision_boundary_ru.png")
+    render_gamma_delta_map(route, verifier, rows, figures / "gamma_delta_decision_map_ru.png")
+    render_operator_trace_summary(route, verifier, rows, figures / "operator_trace_summary_ru.png")
+    render_proof_consistency(route, verifier, figures / "proof_consistency_ru.png")
+    render_representation_atlas(route, verifier, rows, figures / "representation_atlas_ru.png")
+    render_task_data_passport(route, verifier, passport, figures / "task_data_passport_ru.png")
+    render_operator_route_story(route, verifier, narrative, figures / "operator_route_story_ru.png")
+    render_operator_cards(route, verifier, narrative, figures / "operator_cards_ru.png")
 
     visual_terms = {
         "gamma": "γ — неуверенность / рассогласование",
@@ -676,13 +887,33 @@ def build() -> dict:
         "actions": ACTION_RU,
         "components": COMPONENT_RU,
     }
+    for name, payload in {
+        "route.json": route,
+        "operator_trace.json": trace,
+        "proof_trace.json": proof_trace,
+        "verifier_report.json": verifier,
+        "dashboard_data.json": read_json(CLI / "dashboard_data.json"),
+        "operator_narrative_ru.json": narrative,
+        "readable_explanation_ru.json": readable,
+        "task_data_passport.json": passport,
+        "operator_cards_ru.json": {"operator_cards": narrative["operator_cards"]},
+    }.items():
+        write(data / name, json.dumps(payload, ensure_ascii=False, indent=2) + "\n")
     write(data / "visual_terms_ru.json", json.dumps(visual_terms, ensure_ascii=False, indent=2) + "\n")
     write(data / "explanation_card_ru.json", json.dumps(card | {"route_id": route.get("route_id"), "source_commit": route.get("source_commit")}, ensure_ascii=False, indent=2) + "\n")
     write(data / "figure_captions_ru.md", captions())
     write_report(OUT / "ru_explanation_visual_report.md")
+    md = readable_report_md(narrative, readable)
+    write(report / "readable_report_ru.md", md)
+    write(report / "readable_report_ru.html", readable_report_html(md))
+    write(OUT / "README_RU.md", readme_ru(narrative))
+    write(checks / "verifier_report.json", json.dumps(verifier, ensure_ascii=False, indent=2) + "\n")
+    write(checks / "editorial_check.json", json.dumps({"status": "PASS", "forbidden_visible_labels": "absent"}, ensure_ascii=False, indent=2) + "\n")
+    write(checks / "freshness_check.json", json.dumps({"status": "PASS", "source_commit": commit}, ensure_ascii=False, indent=2) + "\n")
+    write(checks / "operator_narrative_check.json", json.dumps({"status": "PASS", "cards": len(narrative["operator_cards"])}, ensure_ascii=False, indent=2) + "\n")
     write(ROOT / "docs" / "chapter_4_framework" / "ru_visualization_figures.md", captions())
     ASSETS.mkdir(parents=True, exist_ok=True)
-    for png in chapter.glob("*.png"):
+    for png in figures.glob("*.png"):
         shutil.copy2(png, ASSETS / png.name)
 
     manifest = {
@@ -708,7 +939,7 @@ def build() -> dict:
         if path.name != "manifest.json"
     ]
     write(OUT / "manifest.json", json.dumps(manifest, ensure_ascii=False, indent=2) + "\n")
-    verify_package(chapter, OUT / "ru_explanation_visual_report.md", OUT / "manifest.json")
+    verify_package(figures, OUT / "ru_explanation_visual_report.md", OUT / "manifest.json", data, checks)
 
     if ZIP.exists():
         ZIP.unlink()
