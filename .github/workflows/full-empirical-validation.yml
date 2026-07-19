@@ -102,7 +102,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Build locked reproduction image
-        run: docker build -t fuzzyxai:full-empirical .
+        run: docker build --build-arg FUZZYXAI_COMMIT="${{ github.sha }}" --build-arg FUZZYXAI_BRANCH="${{ github.ref_name }}" -t fuzzyxai:full-empirical .
       - name: Run complete reproduction in container
         run: |
           set -o pipefail

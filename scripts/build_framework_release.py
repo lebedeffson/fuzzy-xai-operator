@@ -39,6 +39,7 @@ ALLOWED_ROOTS = {
 }
 ALLOWED_EXACT = {
     "AGENTS.md",
+    ".dockerignore",
     "CHANGELOG.md",
     "CITATION.cff",
     "CONTRIBUTING.md",

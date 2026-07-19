@@ -59,7 +59,14 @@ def write_csv(path: Path, rows: Sequence[Mapping[str, object]]) -> None:
 
 
 def git_value(*args: str) -> str:
-    return subprocess.check_output(["git", *args], cwd=ROOT, text=True).strip()
+    if args == ("rev-parse", "HEAD") and os.environ.get("FUZZYXAI_COMMIT"):
+        return os.environ["FUZZYXAI_COMMIT"]
+    if args == ("branch", "--show-current") and os.environ.get("FUZZYXAI_BRANCH"):
+        return os.environ["FUZZYXAI_BRANCH"]
+    try:
+        return subprocess.check_output(["git", *args], cwd=ROOT, text=True).strip()
+    except (FileNotFoundError, subprocess.CalledProcessError):
+        return "unknown"
 
 
 def load_config(profile: str) -> tuple[dict[str, Any], dict[str, Any]]:

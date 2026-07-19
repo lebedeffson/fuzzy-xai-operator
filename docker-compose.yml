@@ -3,6 +3,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        FUZZYXAI_COMMIT: ${FUZZYXAI_COMMIT:-container-unpinned}
+        FUZZYXAI_BRANCH: ${FUZZYXAI_BRANCH:-container}
     command: make reproduce-dissertation
     environment:
       OMP_NUM_THREADS: "1"

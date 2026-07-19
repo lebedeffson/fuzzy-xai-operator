@@ -7,6 +7,7 @@ import argparse
 import csv
 import hashlib
 import json
+import os
 import subprocess
 from pathlib import Path
 from typing import Any, Mapping, Sequence
@@ -96,7 +97,7 @@ def build(evidence: Path, output_root: Path) -> dict[str, object]:
     generated = [*chapter3.glob("table_*"), *chapter4.glob("table_*")]
     manifest = {
         "schema_version": "1.0",
-        "commit": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip(),
+        "commit": os.environ.get("FUZZYXAI_COMMIT") or _git_commit(),
         "source_evidence": str(evidence),
         "tables": {
             str(path.relative_to(output_root)): hashlib.sha256(path.read_bytes()).hexdigest() for path in sorted(generated)
@@ -105,6 +106,13 @@ def build(evidence: Path, output_root: Path) -> dict[str, object]:
     (output_root / "tables_manifest.json").write_text(json.dumps(manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     print(f"PASS: dissertation_tables count={len(generated)}")
     return manifest
+
+
+def _git_commit() -> str:
+    try:
+        return subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
+    except (FileNotFoundError, subprocess.CalledProcessError):
+        return "unknown"
 
 
 if __name__ == "__main__":
