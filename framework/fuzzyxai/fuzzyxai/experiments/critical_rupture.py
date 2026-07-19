@@ -85,7 +85,7 @@ def rupture_error_association(
     rupture_flags: Sequence[bool],
     wrong_automatic_flags: Sequence[bool],
 ) -> dict[str, float | int | str]:
-    if len(rupture_flags) != len(wrong_automatic_flags) or not rupture_flags:
+    if len(rupture_flags) != len(wrong_automatic_flags) or len(rupture_flags) == 0:
         raise ValueError("rupture and error flags must be non-empty and aligned")
     counts = Counter((bool(rupture), bool(error)) for rupture, error in zip(rupture_flags, wrong_automatic_flags))
     with_rupture = counts[(True, True)] + counts[(True, False)]
