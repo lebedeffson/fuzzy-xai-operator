@@ -1,48 +1,43 @@
 # FuzzyXAI Framework Release Status
 
-Status: `v1.1.0rc3` is a feature-branch release candidate for the Explanation Experience milestone. Local framework, cross-model, visualization, packaging, and Chapter 4 evidence gates pass. Public Python 3.11/3.12 and Octave CI pass. The external comprehension pilot remains open, so no `v1.1.0-rc3` tag has been created.
+Status: `v1.2.0rc1` is a green feature-branch candidate for the Human Explanation Layer milestone. Local framework, deterministic evidence, wheel, and public cross-platform CI gates pass. The external comprehension pilot remains open, so no `v1.2.0-rc1` tag has been created.
 
 ## Completed
 
-- typed evidence, claim, diagnostic, action, and provenance contracts;
-- separate claim evidence status, semantic effect, and severity;
-- validated `ExplanationGraph` routes from evidence to action;
-- E0-E5 capability disclosure with native, surrogate, available, and missing channels;
-- typed inspection for claims, rules, concepts, objects, evidence, diagnostics, and actions;
-- one typed `ExplanationVisualSpec` shared by ten Matplotlib and ten Plotly views;
-- 12-checkpoint object 85 trajectory with a controlled forgetting event;
-- measured train, validation, test, subgroup, critical-error, and calibration rule ablation;
-- controlled black-box, sklearn linear, tree, ANFIS, and research-only image scenarios;
-- deterministic golden evidence and a 30/30 operator-to-evidence matrix;
-- Chapter 4 evidence archive with 12 figures and machine-readable tables;
-- full committed-tree release packaging with the generated website quarantined.
+- typed human cards for decision, reasons, concerns, reliability, action, and tested changes;
+- domain dictionary in `ExplainPlan` for features, classes, and actions;
+- separate evidence-depth and audience contracts;
+- claim grouping, deduplication, comparative language, and domain-user limits;
+- support, contradiction, and trust-limitation separation;
+- traceability from every visible card to claims and evidence;
+- domain-user technical-term exclusion with negative tests;
+- object 85 epoch-16 human explanation;
+- research-only medical mask-IoU explanation with explicit probability limitation and counterexample;
+- four audience profiles plus one-cycle aliases;
+- JSON schema and wheel packaging;
+- deterministic golden evidence and a `30/30` operator-to-evidence manifest.
 
-## Verified Locally
+## Verified
 
-- Python 3.14 working tree: `304 passed`;
-- clean committed snapshot on Python 3.12: `304 passed`;
-- public-contract Ruff gate: PASS;
-- strict MyPy contract gate: PASS;
+- local Python 3.14: `308 passed`;
+- Ruff: PASS;
+- MyPy: PASS;
 - `make framework-release-check`: PASS;
-- operator manifest: `30/30`, PASS;
-- deterministic golden evidence double build: PASS;
-- explanation experience verifier: PASS;
-- wheel and sdist build: PASS;
-- installed wheel import outside checkout: `1.1.0rc3`, PASS.
-- public GitHub Actions run `29685440340`: Python 3.11, Python 3.12, and Octave PASS.
+- release subset: `26 passed`;
+- deterministic evidence build and verifier: PASS;
+- isolated wheel import as `1.2.0rc1`: PASS;
+- public GitHub Actions run `29691191720`: Python 3.11, Python 3.12, and Octave PASS;
+- validated implementation commit: `8b4a865c93b9`.
 
-## Open Gates
+## Open Gate
 
-- documented comprehension pilot with at least six external participants.
-
-The pilot is `planned_not_run`. No user-comprehension claim is made. Public run `29685440340` validates implementation commit `db7a174`.
+The documented comprehension pilot with at least six independent participants remains `planned_not_run`. No demonstrated-comprehensibility claim is made.
 
 ## Claim Boundary
 
 - no universal-model-support claim;
 - no native Torch, Keras, or ONNX adapter claim;
-- surrogate channels are labeled and carry fidelity limitations;
-- similarity identifies representation and metric and is not a diagnosis probability;
-- the medical fixture is research-only;
-- missing evidence produces `insufficient_evidence` or review, never invented metrics;
-- E0-E5 describes evidence depth, not model quality.
+- no clinical or production-use claim for medical fixtures;
+- no interpretation of similarity as diagnosis probability;
+- no claim that E0-E5 measures reliability or user comprehension;
+- no fabricated statement when evidence or domain language is unavailable.
