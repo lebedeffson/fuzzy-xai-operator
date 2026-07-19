@@ -12,6 +12,8 @@ import zipfile
 from datetime import datetime, timezone
 from pathlib import Path
 
+import yaml
+
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT_DIR = ROOT / "release_artifacts"
@@ -107,11 +109,34 @@ def sha256(path: Path) -> str:
     return digest.hexdigest()
 
 
-def validate_archive(path: Path) -> tuple[int, list[str]]:
+def manifest_artifact_paths(export_root: Path) -> set[str]:
+    """Return repository-relative evidence paths declared by the operator manifest."""
+
+    manifest_path = export_root / "framework/fuzzyxai/operators_manifest.yaml"
+    payload = yaml.safe_load(manifest_path.read_text(encoding="utf-8"))
+    rows = payload.get("operators", []) if isinstance(payload, dict) else []
+    artifacts: set[str] = set()
+    for row in rows:
+        if not isinstance(row, dict):
+            continue
+        for value in row.get("artifacts", []):
+            relative = Path(str(value))
+            if relative.is_absolute() or ".." in relative.parts:
+                raise RuntimeError(f"operator manifest contains unsafe artifact path: {value}")
+            if not (export_root / relative).is_file():
+                raise RuntimeError(f"operator manifest artifact is missing from HEAD: {value}")
+            artifacts.add(relative.as_posix())
+    if not artifacts:
+        raise RuntimeError("operator manifest does not declare any evidence artifacts")
+    return artifacts
+
+
+def validate_archive(path: Path, manifest_artifacts: set[str]) -> tuple[int, list[str]]:
     with zipfile.ZipFile(path) as archive:
         names = archive.namelist()
         name_set = set(names)
-        missing = sorted(REQUIRED_PATHS - name_set)
+        manifest_paths = {f"fuzzy-xai-operator/{item}" for item in manifest_artifacts}
+        missing = sorted((REQUIRED_PATHS | manifest_paths) - name_set)
         if missing:
             raise RuntimeError(f"release archive is missing required files: {missing}")
         forbidden = []
@@ -131,11 +156,13 @@ def validate_archive(path: Path) -> tuple[int, list[str]]:
     return len(names), missing
 
 
-def include_in_source_release(path: Path) -> bool:
+def include_in_source_release(path: Path, manifest_artifacts: set[str]) -> bool:
     relative = path.as_posix()
     if path.suffix.lower() in FORBIDDEN_SUFFIXES:
         return False
     if relative in ALLOWED_EXACT:
+        return True
+    if relative in manifest_artifacts:
         return True
     if path.parts and path.parts[0] in ALLOWED_ROOTS:
         return True
@@ -163,12 +190,13 @@ def main() -> None:
         # framework release, while tracked evidence remains available to tests.
         shutil.rmtree(export_root / "site" / "dubnaxai", ignore_errors=True)
         shutil.rmtree(export_root / ".vscode", ignore_errors=True)
+        manifest_artifacts = manifest_artifact_paths(export_root)
         with zipfile.ZipFile(archive_path, "w", compression=zipfile.ZIP_DEFLATED) as archive:
             for source in sorted(path for path in export_root.rglob("*") if path.is_file()):
-                if not include_in_source_release(source.relative_to(export_root)):
+                if not include_in_source_release(source.relative_to(export_root), manifest_artifacts):
                     continue
                 archive.write(source, source.relative_to(export_root.parent))
-    file_count, _ = validate_archive(archive_path)
+    file_count, _ = validate_archive(archive_path, manifest_artifacts)
     archive_hash = sha256(archive_path)
     checksum_path = archive_path.with_suffix(".zip.sha256")
     checksum_path.write_text(f"{archive_hash}  {archive_path.name}\n", encoding="ascii")
