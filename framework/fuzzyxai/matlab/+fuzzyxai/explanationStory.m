@@ -21,10 +21,11 @@ boxWidth = 0.16; gap = 0.035;
 for index = 1:count
     if iscell(stages), stage = stages{index}; else, stage = stages(index); end
     x = 0.025 + (index - 1) * (boxWidth + gap);
-    color = localStatusColor(char(stage.status));
+    status = localEvidenceStatus(stage);
+    color = localStatusColor(status);
     rectangle("Position", [x 0.30 boxWidth 0.42], "EdgeColor", color, "LineWidth", 2, "Curvature", 0.05);
     text(x + 0.01, 0.67, char(stage.title), "FontWeight", "bold", "Interpreter", "none");
-    text(x + 0.01, 0.62, upper(char(stage.status)), "Color", color, "Interpreter", "none");
+    text(x + 0.01, 0.62, upper(status), "Color", color, "Interpreter", "none");
     facts = stage.facts;
     if iscell(facts), factCount = numel(facts); else, factCount = numel(facts); end
     for factIndex = 1:min(factCount, 3)
@@ -37,6 +38,16 @@ for index = 1:count
 end
 text(0.025, 0.16, "Every displayed statement is linked to an ExplanationClaim and evidence reference.", "Color", [0.2 0.36 0.45]);
 hold off;
+end
+
+function status = localEvidenceStatus(stage)
+if isfield(stage, "evidence_status")
+    status = char(stage.evidence_status);
+elseif isfield(stage, "status")
+    status = char(stage.status);
+else
+    status = "insufficient_evidence";
+end
 end
 
 function color = localStatusColor(status)

@@ -68,6 +68,9 @@ def test_matlab_transport_surface_is_complete() -> None:
     }
     assert expected <= {path.name for path in matlab.glob("*.m")}
     assert "schema_version must be 2.0" in (matlab / "validateResult.m").read_text(encoding="utf-8")
+    story = (matlab / "explanationStory.m").read_text(encoding="utf-8")
+    assert 'isfield(stage, "evidence_status")' in story
+    assert 'isfield(stage, "status")' in story
 
 
 def test_site_is_quarantined_and_not_part_of_framework_tree() -> None:
