@@ -1,92 +1,77 @@
 # Project Memory
 
 - Date: 2026-07-19
-- Branch: `feat/human-explanation-layer`
-- Previous green baseline: `884409f4cb1b`
-- Human Explanation Quality Gate implementation: `97e25e3990f4`
-- Candidate version: `1.2.0rc2`
-- Public CI run: `29693479788`
+- Branch: `feat/empirical-validation-gate`
+- Base release candidate: `1ef84d88733bdc94d1221b6f2bb6992452d0347d`
+- Empirical implementation commit: `cb4b433b414efdc2b6fa1346fc7086576dd52c26`
+- Candidate version: `1.2.0rc3`
 - Release tag: not created
 
 ## Current Focus
 
-The primary product is the installable FuzzyXAI research framework and its reproducible evidence-first explanation pipeline. The generated DubnaXAI website remains quarantined. The current milestone adds a human communication contract above the verified claim graph without weakening traceability.
+The primary product remains the installable FuzzyXAI research framework. The website is quarantined. The current milestone validates the evidence pipeline on real checkpoint training while preserving explicit blockers for external human comprehension and regulated-domain semantics.
 
-## Canonical Public API
+## Measured Experiment
 
-```python
-fx = FuzzyXAI.wrap(model, adapter="auto", explain_plan=plan)
-result = fx.explain_one(item, object_id="85", reference_data=X_train)
+- BCDW dataset through the scikit-learn bundled loader: 569 objects, 30 features, CC BY 4.0;
+- fixed seed-42 split: 341 train, 114 validation, 114 test;
+- train-only standardization and a rare subgroup defined before training as the smallest of three train KMeans clusters;
+- 30 unique SGD checkpoint fingerprints;
+- validation case selected automatically after training as `case_real_001` (source row `bcwd_0215`);
+- measured correct-to-wrong forgetting event at epoch 9;
+- native tree leaf `tree_leaf_11` suppressed with an explicit sibling-branch fallback;
+- target prediction changes `1 -> 0`;
+- test accuracy changes `0.947368 -> 0.903509`;
+- validation subgroup recall changes `0.923077 -> 0.615385`;
+- every number is generated from the run and serialized, not inserted into a golden JSON.
 
-human = result.explain_for(audience="domain_user", language="ru")
-result.summary(audience="domain_user", detail="short")
-result.summary(audience="ml_engineer", detail="full")
-result.inspect("claim:C004").provenance()
-result.audit()
-```
+## Empirical Contracts
 
-`ExplainPlan.domain_language` is the canonical mapping from feature names, class codes, and action codes to domain wording. E0-E5 states the available evidence depth. `domain_user`, `ml_engineer`, `researcher`, and `auditor` state how that evidence is communicated. These concepts must not be conflated.
+- typed `TrainingCheckpointEvidence` and `RuleAblationEvidence`;
+- typed domain feature, semantic validation, comparison, similar-case, and counterfactual explanation contracts;
+- sample-size-aware wording suppresses percentile claims for small references;
+- semantic direction conflicts are rejected;
+- unreviewed regulated-domain language yields `insufficient_domain_language`;
+- similar-case output is limited to one support and one counterexample;
+- sensitivity analysis is separate from a domain-validated actionable counterfactual;
+- black-box callable receives no native rules;
+- tree and fitted Sugeno-rule models expose measured native structures.
 
-## Implemented Boundary
+## Scenario Boundary
 
-- typed `HumanExplanation`, statement cards, `ExplanationDetails`, and `AudienceProfile`;
-- decision, at most three reasons, at most two concerns, reliability, action, and at most one tested change for `domain_user`;
-- grouping, deduplication, comparative wording, and evidence-aware claim ranking;
-- separate supports, contradictions, and trust limitations;
-- internal rule/subgroup/claim IDs, E0-E5, operator symbols, and raw action codes excluded from domain-user text;
-- every visible card retains non-empty `claim_refs` and `evidence_refs`;
-- user, engineer, researcher, and auditor profiles serialized in `ExplanationViewModel`;
-- one-cycle compatibility aliases `user`, `expert`, and `audit`;
-- feature contribution claims and contribution nodes in the explanation graph;
-- similar-case support evaluated against the current prediction; counterexamples do not enter the support block;
-- image-mask similarity described as geometric overlap, never diagnosis probability;
-- object 85 human explanation reports the observed epoch-16 transition and hidden rare-subtype degradation;
-- every first-level reason names a subject, effect direction, and comparison;
-- reliability separates concrete support, limitations, and missing evidence;
-- incomplete counterfactuals remain audit evidence and are not exposed to domain users;
-- direct feature effects outrank native rules, concepts, similar cases, and surrogate patterns;
-- undefined class semantics produce `insufficient_domain_language`, not a translated technical code;
-- the object 85 fixture exposes computed feature effects, an 18 percentage-point rare-group loss, and a complete class-changing intervention;
-- the medical fixture states that its research group lacks medical meaning and cannot be interpreted as a diagnosis;
-- the executable comprehension scorer preserves `planned_not_run` until at least six independent participants provide both comparison conditions;
-- `HumanExplanation` JSON schema included in the wheel;
-- operator manifest remains `30/30` and maps the human layer to tests and golden evidence.
-- Chapter 4 evidence contains `30/30` operator rows, `12/12` figures, and `4/4` embedded human-explanation files.
+- `object_85_controlled_story_fixture`: controlled contract/visualization fixture, never a measured result;
+- `case_real_001`: measured validation case selected by the forgetting algorithm;
+- medical image evidence remains a controlled research-only channel test;
+- every Chapter 4 result must declare `result_origin`.
 
 ## Validation
 
-- local Python 3.14 regression: `311 passed`;
-- strict Ruff gate: PASS;
-- strict MyPy gate: PASS;
-- `make framework-release-check`: PASS, release subset `26 passed`;
+- full local Python 3.14 regression: `315 passed`;
+- empirical focused suite: `16 passed`;
+- release focused suite: `17 passed`;
+- Ruff and strict MyPy: PASS;
 - operator manifest: `30/30`, PASS;
-- deterministic golden rebuild and checksum comparison: PASS;
-- Human Explanation verifier: object 85 cards, medical similarity semantics, cross-model evidence, PASS;
-- wheel/sdist build as `1.2.0rc2`: PASS;
-- isolated wheel import and `explain_for()` smoke: PASS;
-- wheel content check includes runtime, human layer, and JSON schema: PASS;
-- deterministic Chapter 4 evidence ZIP: PASS, SHA256 `e5cfe3ba290ba7966e74a4dddb28ead16a9a8846eb9d184d518facb2a499b965`;
-- public GitHub Actions run `29693479788`: Python 3.11, Python 3.12, and Octave PASS for `97e25e3990f4`;
-- comprehension pilot: `planned_not_run`.
+- deterministic empirical manifest after two runs: PASS;
+- Chapter 4 empirical package and manifest verifier: PASS;
+- Chapter 4 empirical ZIP SHA256: `f80aa4ba799e91b492a10553e7f12c6ebe0e7572a226d6dd562cb8be3973b9e4`;
+- measured figures: `3/3`, visually inspected;
+- public feature CI: pending push;
+- public main CI: not run for this candidate.
 
-## Claim Boundary
+## Open Gates
 
-- Do not claim demonstrated comprehensibility until the external pilot is complete.
-- Do not claim support for literally every model; native Torch, Keras, and ONNX adapters are not implemented.
-- Surrogate rules remain labeled `surrogate` and include fidelity limitations.
-- Similarity names its representation and metric and is not a probability or causal statement.
-- Missing evidence results in an explicit limitation or review, never an invented metric or sentence.
-- Medical examples are controlled research-only fixtures, not clinical conclusions or certification evidence.
-- E0-E5 describes evidence depth, not model quality, reliability, or audience.
-- MATLAB/Octave renders canonical JSON but does not independently implement the Python operator core.
+- independent A/B comprehension pilot: `planned_not_run`, zero participants recorded;
+- regulated-domain dictionary review: `insufficient_domain_language`, external reviewer required;
+- release gate: `BLOCKED`;
+- tag: forbidden until pilot, semantic review, feature CI, and main CI pass.
 
-## Repository And Release Policy
+## Archive Policy
 
-- Keep the generated website quarantined.
-- Build the analysis ZIP only from the committed Git index with `python scripts/build_framework_release.py`.
-- Never package the dirty working tree.
-- Do not create `v1.2.0-rc2` until the documented comprehension pilot passes and the release is approved for tagging.
+- build the clean source release with `python scripts/build_framework_release.py` only from a committed index;
+- build the separate historical archive with `python scripts/build_doctoral_research_archive.py`;
+- do not package the dirty worktree;
+- publish each archive's commit, file count, manifest, and SHA256.
 
 ## Next Step
 
-Run the documented comprehension pilot with independent domain users and model integrators. Until its raw responses and scoring are archived, use this candidate as a machine-verified Human Explanation Layer, not as evidence of universal human comprehensibility.
+Push the feature branch and verify public Python 3.11/3.12 and Octave CI. Then run the independent pilot and obtain an external semantic review. Do not merge, tag, or finalize Chapter 4 claims before those external gates are recorded.

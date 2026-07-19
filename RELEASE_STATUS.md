@@ -37,6 +37,7 @@ Status: `v1.2.0rc3` is an untagged Empirical Validation Gate candidate. The meas
 - deterministic empirical rebuild: PASS;
 - Chapter 4 empirical builder/verifier: PASS;
 - Chapter 4 measured figures: `3/3` visually inspected;
+- Chapter 4 empirical ZIP SHA256: `f80aa4ba799e91b492a10553e7f12c6ebe0e7572a226d6dd562cb8be3973b9e4`;
 - public feature CI: pending push;
 - public main CI: not run for this candidate.
 

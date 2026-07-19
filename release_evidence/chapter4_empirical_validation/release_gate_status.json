@@ -1,0 +1,19 @@
+{
+  "computed_gates": {
+    "chapter4_artifacts": "PASS",
+    "checkpoint_count": 30,
+    "cross_model": "PASS",
+    "forgetting_selection": "PASS",
+    "measured_rule_ablation": "PASS",
+    "predefined_subgroup": "PASS",
+    "real_training": "PASS"
+  },
+  "external_gates": {
+    "comprehension_pilot": "planned_not_run",
+    "domain_semantic_review": "insufficient_domain_language"
+  },
+  "reason": "independent comprehension pilot and regulated-domain dictionary review are incomplete",
+  "release_gate": "BLOCKED",
+  "schema_version": "1.0",
+  "tag_allowed": false
+}

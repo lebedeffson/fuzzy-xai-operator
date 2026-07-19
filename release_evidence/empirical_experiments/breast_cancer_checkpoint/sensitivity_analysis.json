@@ -1,0 +1,31 @@
+[
+  {
+    "actionability": "requires domain review",
+    "actionable": null,
+    "changed_features": {
+      "worst texture": {
+        "from": 26.93,
+        "to": 30.38
+      }
+    },
+    "changed_regions": [],
+    "changed_rules": [],
+    "evidence_refs": [
+      "model prediction before and after feature intervention"
+    ],
+    "expected_effect": null,
+    "limitations": [
+      "quantile search tests association, not causal feasibility",
+      "observed_effect is the change in maximum predicted probability, not a causal effect"
+    ],
+    "minimality": 0.560735,
+    "mode": "sensitivity_analysis",
+    "observed_effect": -0.096824,
+    "plausibility": 1.0,
+    "probability_after": 0.5199243644008539,
+    "probability_before": 0.6167479168410935,
+    "source_prediction": 0,
+    "stability": null,
+    "target_prediction": 1
+  }
+]

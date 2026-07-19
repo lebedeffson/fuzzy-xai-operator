@@ -1,0 +1,34 @@
+{
+  "actions": {
+    "review": {
+      "explanation": "Не использовать классификацию как медицинское заключение; проверить evidence и ограничения протокола.",
+      "label": "Проверить исследовательский результат"
+    }
+  },
+  "classes": {
+    "0": {
+      "domain_defined": true,
+      "label": "метка benign в исследовательском наборе"
+    },
+    "1": {
+      "domain_defined": true,
+      "label": "метка malignant в исследовательском наборе"
+    }
+  },
+  "features": {
+    "worst concave points": {
+      "expected_direction": "unknown",
+      "expert_review_status": "not_reviewed",
+      "label": "максимальная выраженность вогнутых участков контура",
+      "meaning": "измеренный геометрический признак ядер клеток в наборе BCDW"
+    },
+    "worst perimeter": {
+      "expected_direction": "unknown",
+      "expert_review_status": "not_reviewed",
+      "label": "максимальный периметр",
+      "meaning": "измеренный размер контура ядер клеток в наборе BCDW"
+    }
+  },
+  "scope": "medical_research",
+  "version": "bcwd-neutral-methodological-v1"
+}
