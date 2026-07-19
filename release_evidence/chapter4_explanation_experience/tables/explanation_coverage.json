@@ -1,0 +1,12 @@
+{
+  "calibration": null,
+  "consistency": null,
+  "counterfactual_validity": 1.0,
+  "coverage": null,
+  "fidelity": null,
+  "prototype_representativeness": null,
+  "rule_complexity": 2.0,
+  "sparsity": null,
+  "stability": null,
+  "trace_completeness": 0.8076923076923077
+}

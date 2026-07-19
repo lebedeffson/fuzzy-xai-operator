@@ -1,0 +1,28 @@
+{
+  "all_operators_pass": true,
+  "files": {
+    "figures/01_framework_architecture.png": "66a1dad8537bac54b2ccf1c874efe6ef7f3aab8263e0282314683273f6add02d",
+    "figures/02_evidence_claim_diagnostic_action.png": "4a79cc81f5aa7ddeb7ed1a9b17e5e27ab809540acbc32c5cc28e22d0c62267ec",
+    "figures/03_explanation_levels_e0_e5.png": "f2f6126c55be6eca26806a206de2ea1ecf5e36eef60276c20bfb0137ac056f26",
+    "figures/04_object85_explanation_story.png": "676c6d2c2a528e96acc2c2347765c028ebcbb9b2e07fd7b6d102b75d2856dd2d",
+    "figures/05_object85_data_profile.png": "58f9247cb9d14a963fc41d73f01beba862aecd57a56ebaa7eeb0db6138adac69",
+    "figures/06_object85_training_trace.png": "35fb05463e6538eb75902fd4971ff03e0389c22af6686c7202cff84a8ddffa73",
+    "figures/07_anfis_knowledge_atlas.png": "2abed053e4edfb9657b221f2d9f7bc608d0a5d8f67f441b0ff07e21625dc1cc4",
+    "figures/08_rule_ablation.png": "2035d861c3f52e59811c1168c51bc270dbf029da6b351b6c3d768df5f357203f",
+    "figures/09_similar_cases.png": "fce330d8ca98b5ca4013d09eb663fb1be91196727be9cca6e715e2ee639b23c9",
+    "figures/10_provenance.png": "4a79cc81f5aa7ddeb7ed1a9b17e5e27ab809540acbc32c5cc28e22d0c62267ec",
+    "figures/11_medical_research_only_comparison.png": "d4c210f735460cbf065d3d66784571f1bd72c08db763a9544d1c3b063a3ab273",
+    "figures/12_missing_evidence_state.png": "ea874c5fc80c33c24a297647629f7eb8ffa79dc2dda451316a019a202620272b",
+    "tables/comprehension_pilot_status.json": "0545be6fd06e7fe18bfadc1ded344eee749d14da776ee5665321c435815edf31",
+    "tables/explanation_coverage.json": "81c2938879a8f499713b07ed92a1e42110a2b44b663c979c4135db24aea7a83a",
+    "tables/golden_sha256.json": "7cd90792c4a9c88670a155d6fafd89ff6c80c9aed5fdde2fef73fb5ea648b133",
+    "tables/model_capability_matrix.json": "7b2234ea4208a315598d39871b3ae18c2c20281252f7aa1bb9883499523adfee",
+    "tables/operator_implementation_matrix.csv": "69ee934f5ea8fa24f11309632caa6f6e2dd004806404b981033fb87c3e03dde4",
+    "tables/operator_implementation_matrix.json": "765e265211b5dfee2eae23660eb2158e82bde9f48fa7a498e17e73b4cb8e9522",
+    "tables/operator_implementation_matrix.md": "2bd8559f4e4fcdc4e42a1bd32c16403f03fa827d4a5e064679d95f422d83e955",
+    "tables/rule_ablation_results.json": "1afed5d9170a6c68e83153662b967930eb77d4e9b60deaff78f8f5fd862b4fca",
+    "tables/test_matrix.json": "22af51b8d2606737ec69e120fe957e8d4d10f906a36f5225eb8904fbbcaa8d7c"
+  },
+  "operator_rows": 30,
+  "schema_version": "1.0"
+}

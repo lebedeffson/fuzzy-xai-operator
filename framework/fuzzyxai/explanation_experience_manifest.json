@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "milestone": "v1.1.0-rc2 Visual Evidence Completion",
+  "milestone": "v1.1.0-rc3 Cross-model Explanation Validation",
   "status": "local_validation_complete_external_gates_pending",
   "contracts": [
     "fuzzyxai.evidence.ExplanationClaim",

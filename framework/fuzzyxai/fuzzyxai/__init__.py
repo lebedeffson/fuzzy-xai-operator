@@ -30,7 +30,7 @@ __all__ += ['DatasetRecord', 'infer_dataset_profile']
 __all__ += ['lofo_f1_importance', 'bootstrap_lofo_f1_importance', 'select_top_rules_by_lofo_f1']
 __all__ += ['compute_interpretability_index']
 
-__version__ = "1.1.0rc1"
+__version__ = "1.1.0rc3"
 
 
 def build_explanation(*, terms, representation, rules=None, activations=None, uncertainty=0.0, trace=None, metadata=None):

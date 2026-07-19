@@ -541,3 +541,7 @@ clean:
 explanation-experience-evidence:
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/build_explanation_experience_evidence.py
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/verify_explanation_experience.py
+
+.PHONY: chapter4-explanation-evidence
+chapter4-explanation-evidence: explanation-experience-evidence
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/build_chapter4_explanation_evidence.py

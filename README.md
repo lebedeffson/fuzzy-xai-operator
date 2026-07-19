@@ -123,3 +123,9 @@ The generated DubnaXAI website prototype is quarantined in the git branch `archi
 ## Research scope
 
 This software is a research framework. Medical examples are not clinical conclusions, surrogate rules are labelled as surrogate, similarity is not causality, and model quality must be established by a separate benchmark.
+
+## Explanation Experience release boundary
+
+The ten focused Matplotlib and Plotly views consume `ExplanationVisualSpec` schema `1.1`. `result.inspect(...)` returns a typed `InspectionResult`; `result.explanation_graph.validate_reachability()` verifies the evidence-to-action route. Cross-model controlled evidence is generated under `release_evidence/explanation_experience/cross_model/`.
+
+The comprehension study is still `planned_not_run`; the repository therefore claims a testable explanation interface, not demonstrated universal human comprehensibility. Release tag `v1.1.0` is blocked until the external pilot and green `main` CI are recorded.

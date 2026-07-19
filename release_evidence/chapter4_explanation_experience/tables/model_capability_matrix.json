@@ -1,0 +1,105 @@
+[
+  {
+    "action": "review",
+    "adapter_id": "callable",
+    "capabilities": {
+      "checkpoints": false,
+      "embeddings": false,
+      "feature_importance": false,
+      "gradients": false,
+      "predict": true,
+      "predict_proba": false,
+      "rules": false,
+      "training_history": false
+    },
+    "explanation_level": "E3",
+    "graph_valid": true,
+    "missing_channels": [
+      "alignment",
+      "local_contributions",
+      "reduction",
+      "risk",
+      "rules",
+      "training_history"
+    ],
+    "native_channels": [
+      "prediction",
+      "call_trace",
+      "data_profile",
+      "class_concepts",
+      "similar_cases",
+      "counterfactuals"
+    ],
+    "scenario": "black_box_callable",
+    "surrogate_channels": []
+  },
+  {
+    "action": "review",
+    "adapter_id": "sklearn",
+    "capabilities": {
+      "checkpoints": false,
+      "embeddings": false,
+      "feature_importance": true,
+      "gradients": false,
+      "predict": true,
+      "predict_proba": true,
+      "rules": true,
+      "training_history": false
+    },
+    "explanation_level": "E3",
+    "graph_valid": true,
+    "missing_channels": [
+      "alignment",
+      "reduction",
+      "risk",
+      "training_history"
+    ],
+    "native_channels": [
+      "prediction",
+      "call_trace",
+      "data_profile",
+      "local_contributions",
+      "class_concepts",
+      "similar_cases",
+      "counterfactuals"
+    ],
+    "scenario": "sklearn_linear",
+    "surrogate_channels": [
+      "rules"
+    ]
+  },
+  {
+    "action": "review",
+    "adapter_id": "sklearn",
+    "capabilities": {
+      "checkpoints": false,
+      "embeddings": false,
+      "feature_importance": true,
+      "gradients": false,
+      "predict": true,
+      "predict_proba": true,
+      "rules": true,
+      "training_history": false
+    },
+    "explanation_level": "E3",
+    "graph_valid": true,
+    "missing_channels": [
+      "alignment",
+      "reduction",
+      "risk",
+      "training_history"
+    ],
+    "native_channels": [
+      "prediction",
+      "call_trace",
+      "data_profile",
+      "local_contributions",
+      "rules",
+      "class_concepts",
+      "similar_cases",
+      "counterfactuals"
+    ],
+    "scenario": "tree_native_paths",
+    "surrogate_channels": []
+  }
+]

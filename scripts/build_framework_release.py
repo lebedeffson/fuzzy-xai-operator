@@ -29,13 +29,21 @@ REQUIRED_PATHS = {
     "fuzzy-xai-operator/framework/fuzzyxai/operators_manifest.yaml",
     "fuzzy-xai-operator/framework/fuzzyxai/fuzzyxai/evidence/contracts.py",
     "fuzzy-xai-operator/framework/fuzzyxai/fuzzyxai/evidence/claims.py",
+    "fuzzy-xai-operator/framework/fuzzyxai/fuzzyxai/evidence/graph.py",
+    "fuzzy-xai-operator/framework/fuzzyxai/fuzzyxai/inspection.py",
+    "fuzzy-xai-operator/framework/fuzzyxai/fuzzyxai/schemas/explanation_visual_spec.schema.json",
     "fuzzy-xai-operator/framework/fuzzyxai/fuzzyxai/visualization/explanation_dashboard.py",
+    "fuzzy-xai-operator/framework/fuzzyxai/fuzzyxai/visualization/matplotlib_renderer.py",
+    "fuzzy-xai-operator/framework/fuzzyxai/fuzzyxai/visualization/plotly_renderer.py",
     "fuzzy-xai-operator/framework/fuzzyxai/fuzzyxai/visualization/spec.py",
     "fuzzy-xai-operator/framework/fuzzyxai/explanation_experience_manifest.json",
     "fuzzy-xai-operator/framework/fuzzyxai/matlab/+fuzzyxai/dashboard.m",
     "fuzzy-xai-operator/framework/fuzzyxai/matlab/+fuzzyxai/explanationStory.m",
     "fuzzy-xai-operator/examples/object_85_training_trace.py",
     "fuzzy-xai-operator/scripts/verify_explanation_experience.py",
+    "fuzzy-xai-operator/scripts/build_chapter4_explanation_evidence.py",
+    "fuzzy-xai-operator/docs/user_comprehension_study.md",
+    "fuzzy-xai-operator/release_evidence/chapter4_explanation_experience/manifest_sha256.json",
 }
 
 
