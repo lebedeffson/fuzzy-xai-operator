@@ -131,15 +131,24 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: fuzzyxai-full-empirical-raw-${{ github.sha }}
-          path: .
+          path: /tmp/raw-empirical
       - uses: actions/download-artifact@v4
         with:
           name: fuzzyxai-docker-reproduction-${{ github.sha }}
           path: /tmp/docker-status
       - name: Merge CI and Docker evidence
         run: |
+          run_manifest="$(find /tmp/raw-empirical -path '*/release_evidence/full_empirical_validation/run_manifest.json' -type f -print -quit)"
           docker_status="$(find /tmp/docker-status -name docker_reproduction.json -type f -print -quit)"
+          test -n "$run_manifest"
           test -n "$docker_status"
+          raw_root="$(dirname "$(dirname "$(dirname "$run_manifest")")")"
+          cp -a "$raw_root/release_evidence/full_empirical_validation" release_evidence/
+          cp -a "$raw_root/dissertation_artifacts/chapter3" dissertation_artifacts/
+          cp -a "$raw_root/dissertation_artifacts/chapter4" dissertation_artifacts/
+          cp -a "$raw_root/dissertation_artifacts/claims" dissertation_artifacts/
+          cp -a "$raw_root/reports/empirical_validation" reports/
+          cp -a "$raw_root/release_artifacts/." release_artifacts/
           cp "$docker_status" release_evidence/full_empirical_validation/docker_reproduction.json
           printf '%s\n' '{"schema_version":"1.0","status":"PASS","job":"protocol-smoke","commit":"${{ github.sha }}"}' > release_evidence/full_empirical_validation/ci_fast_status.json
           printf '%s\n' '{"schema_version":"1.0","status":"PASS","job":"full-e1-e8","commit":"${{ github.sha }}"}' > release_evidence/full_empirical_validation/ci_heavy_status.json
