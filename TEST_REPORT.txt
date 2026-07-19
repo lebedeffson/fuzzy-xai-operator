@@ -1,21 +1,26 @@
-FuzzyXAI v1.2.0rc3 empirical validation candidate
+FuzzyXAI v1.3.0rc1 universal model integration candidate
 Date: 2026-07-19
 
-PASS: full local regression, Python 3.14, 315 passed
-PASS: empirical focused suite, 16 passed
-PASS: release focused suite, 17 passed
-PASS: Ruff
-PASS: strict MyPy
-PASS: operator manifest 30/30
-PASS: deterministic 30-checkpoint empirical rebuild
-PASS: automatic forgetting-case selection
-PASS: measured native tree-rule ablation
-PASS: cross-model matrix, 5 models
-PASS: Chapter 4 empirical evidence verifier
-PASS: Chapter 4 empirical ZIP SHA256 f80aa4ba799e91b492a10553e7f12c6ebe0e7572a226d6dd562cb8be3973b9e4
-PASS: public feature CI Python 3.11, Python 3.12, and Octave, run 29695395925
-BLOCKED: independent comprehension pilot planned_not_run
-BLOCKED: regulated-domain dictionary external review
-BLOCKED: release tag
+PASS: focused compatibility/model/external-gate suite, 48 passed
+SKIP: optional runtime tests, 6 skipped because runtimes are not installed locally
+PASS: Ruff on changed framework, scripts, and tests
+PASS: strict MyPy on 8 typed contract modules
+PASS: Python compile check
+PASS: 34 deterministic core model configurations
+PASS: 24 classification configurations
+PASS: 10 regression configurations
+PASS: prediction parity rate 1.0
+PASS: adapter conformance rate 1.0
+PASS: explanation graph validation rate 1.0
+PASS: universality checksum manifest
+PASS: external validation package integrity
+PASS: Chapter 4 candidate manifest and computed gates
 
-Warnings: 409 warnings from third-party SHAP/scikit-learn code; no project test failures.
+NOT RERUN LOCALLY: full regression suite, stopped to avoid workstation/Cursor instability
+PENDING: public branch CI Python 3.11 and 3.12
+PENDING: XGBoost, LightGBM, CatBoost, Torch, TensorFlow, and ONNX CI jobs
+BLOCKED: independent comprehension pilot planned_not_run
+BLOCKED: regulated-domain dictionary pending_external_review
+BLOCKED: merge to main and release tag
+
+Warnings in focused tests are scikit-learn feature-name warnings; no focused project test failures.

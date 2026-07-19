@@ -1,4 +1,25 @@
-# FuzzyXAI v1.2.0rc3 Empirical Validation Candidate
+# FuzzyXAI v1.3.0rc1 Universal Model Integration Candidate
+
+This candidate adds a capability-based adapter registry, family-specific sklearn evidence, optional boosting/neural
+adapters, explanation planning, quality gates, conformance reports, and batch/global/why-not/model-comparison APIs.
+The deterministic core benchmark records 34 verified configurations. Optional runtimes are not claimed until their
+dedicated public CI jobs pass.
+
+The candidate does not close the `v1.2.0` external human gates. The independent comprehension pilot remains
+`planned_not_run` and the regulated-domain dictionary remains `pending_external_review`; therefore no final tag is
+created.
+
+Canonical evidence:
+
+- `release_evidence/model_universality/summary.json`;
+- `release_evidence/model_universality/support_matrix.csv`;
+- `release_evidence/chapter4_final_candidate/report.md`;
+- `release_evidence/user_study/comprehension_pilot/scoring_report.json`;
+- `release_evidence/domain_language_review/review_record.json`.
+
+---
+
+## FuzzyXAI v1.2.0rc3 Empirical Validation Candidate
 
 ## Scope
 

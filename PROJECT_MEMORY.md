@@ -1,79 +1,70 @@
 # Project Memory
 
 - Date: 2026-07-19
-- Branch: `feat/empirical-validation-gate`
-- Base release candidate: `1ef84d88733bdc94d1221b6f2bb6992452d0347d`
-- Empirical implementation commit: `cb4b433b414efdc2b6fa1346fc7086576dd52c26`
-- Empirical evidence commit: `92af24ce43d8fcf67e94f87091c07ac29e6c3933`
-- Source-release completeness commit: `c8c34b1c6745716337d30e6b7b9c25cb4d3ee287`
-- Candidate version: `1.2.0rc3`
+- Branch: `feat/universal-model-integration`
+- Base: `79d39f61f02df1cf1d63fc92dd2a1ebebfef7de7`
+- Universal API commit: `3dda3e3`
+- Model evidence commit: `a76677a`
+- Candidate version: `1.3.0rc1`
 - Release tag: not created
 
 ## Current Focus
 
-The primary product remains the installable FuzzyXAI research framework. The website is quarantined. The current milestone validates the evidence pipeline on real checkpoint training while preserving explicit blockers for external human comprehension and regulated-domain semantics.
+The installable research framework remains the primary product. The generated DubnaXAI site stays quarantined.
+This milestone adds capability-based model integration and measured explanation-quality disclosure without changing
+the defended chapter 2-3 operator semantics.
 
-## Measured Experiment
+## Implemented
 
-- BCDW dataset through the scikit-learn bundled loader: 569 objects, 30 features, CC BY 4.0;
-- fixed seed-42 split: 341 train, 114 validation, 114 test;
-- train-only standardization and a rare subgroup defined before training as the smallest of three train KMeans clusters;
-- 30 unique SGD checkpoint fingerprints;
-- validation case selected automatically after training as `case_real_001` (source row `bcwd_0215`);
-- measured correct-to-wrong forgetting event at epoch 9;
-- native tree leaf `tree_leaf_11` suppressed with an explicit sibling-branch fallback;
-- target prediction changes `1 -> 0`;
-- test accuracy changes `0.947368 -> 0.903509`;
-- validation subgroup recall changes `0.923077 -> 0.615385`;
-- every number is generated from the run and serialized, not inserted into a golden JSON.
+- `ModelAdapterV2`, task/input/output contracts, capability descriptors, and native/derived/surrogate/external origin;
+- priority adapter registry, explicit resolution report, lazy optional imports, and plugin entry-point discovery;
+- sklearn linear, tree, ensemble, SVM, KNN, Naive Bayes, regression, and Pipeline adapters;
+- optional XGBoost, LightGBM, CatBoost, PyTorch, TensorFlow/Keras, and ONNX adapters with separate tests;
+- `ExplanationPlanner`, surrogate-fidelity blocking, adapter conformance, and quality reports;
+- `explain_batch()`, `explain_global()`, `why_not()`, `compare_models()`, and capability reporting;
+- deterministic benchmark with 24 classification and 10 regression configurations;
+- frozen external A/B pilot package and external domain-language review package;
+- aggregate Chapter 4 candidate evidence package.
 
-## Empirical Contracts
+## Measured Validation
 
-- typed `TrainingCheckpointEvidence` and `RuleAblationEvidence`;
-- typed domain feature, semantic validation, comparison, similar-case, and counterfactual explanation contracts;
-- sample-size-aware wording suppresses percentile claims for small references;
-- semantic direction conflicts are rejected;
-- unreviewed regulated-domain language yields `insufficient_domain_language`;
-- similar-case output is limited to one support and one counterexample;
-- sensitivity analysis is separate from a domain-validated actionable counterfactual;
-- black-box callable receives no native rules;
-- tree and fitted Sugeno-rule models expose measured native structures.
+- 34 core model configurations verified;
+- prediction parity rate: `1.0`;
+- adapter conformance rate: `1.0`;
+- explanation graph validation rate: `1.0`;
+- strict MyPy: PASS;
+- Ruff and compile checks: PASS;
+- focused compatibility/model/external-gate suite: `48 passed`, `6 skipped` optional runtimes;
+- existing measured checkpoint experiment and native rule ablation retained;
+- model, pilot, domain-review, and Chapter 4 manifests: PASS.
 
-## Scenario Boundary
+The full regression suite was deliberately not rerun after the user reported Cursor instability. It must run in CI
+and before any merge or tag. Optional runtime jobs are pending public CI.
 
-- `object_85_controlled_story_fixture`: controlled contract/visualization fixture, never a measured result;
-- `case_real_001`: measured validation case selected by the forgetting algorithm;
-- medical image evidence remains a controlled research-only channel test;
-- every Chapter 4 result must declare `result_origin`.
+## External Gates
 
-## Validation
-
-- full local Python 3.14 regression: `315 passed`;
-- empirical focused suite: `16 passed`;
-- release focused suite: `17 passed`;
-- Ruff and strict MyPy: PASS;
-- operator manifest: `30/30`, PASS;
-- deterministic empirical manifest after two runs: PASS;
-- Chapter 4 empirical package and manifest verifier: PASS;
-- Chapter 4 empirical ZIP SHA256: `f80aa4ba799e91b492a10553e7f12c6ebe0e7572a226d6dd562cb8be3973b9e4`;
-- measured figures: `3/3`, visually inspected;
-- public feature CI: PASS for Python 3.11, Python 3.12, and Octave ([run 29695395925](https://github.com/lebedeffson/fuzzy-xai-operator/actions/runs/29695395925));
-- public main CI: not run for this candidate.
-
-## Open Gates
-
-- independent A/B comprehension pilot: `planned_not_run`, zero participants recorded;
-- regulated-domain dictionary review: `insufficient_domain_language`, external reviewer required;
+- independent A/B comprehension pilot: `planned_not_run`, zero participants;
+- regulated-domain dictionary review: `pending_external_review`;
+- Chapter 4 computed evidence: PASS;
+- demonstrated human comprehension: not claimed;
 - release gate: `BLOCKED`;
-- tag: forbidden until pilot, semantic review, merge review, and main CI pass.
+- `v1.2.0` tag and merge to `main`: forbidden until external gates and main CI pass.
+
+## Version Boundary
+
+- `v1.2.0`: Human Explanation and empirical computational gate implemented; final tag blocked externally.
+- `v1.3.0rc1`: universal tabular model integration candidate implemented on this branch.
+- `v1.4.0`: anomaly, forecasting, text, image, and richer checkpoint integrations remain future scope.
 
 ## Archive Policy
 
-- build the clean source release with `python scripts/build_framework_release.py` only from a committed index;
-- build the separate historical archive with `python scripts/build_doctoral_research_archive.py`;
-- do not package the dirty worktree;
-- publish each archive's commit, file count, manifest, and SHA256.
+- source archive is built only from a committed Git index with `python scripts/build_framework_release.py`;
+- Chapter 4 candidate ZIP is reproducible but not a final-release claim;
+- doctoral historical archive remains separate;
+- generated site content and unrelated dirty-worktree artifacts must not enter the source archive.
 
 ## Next Step
 
-Run the independent pilot and obtain an external semantic review. Then review the feature branch for merge and require green main CI. Do not merge, tag, or finalize demonstrated-comprehensibility claims before those external gates are recorded.
+Push the branch, require green core and optional-runtime CI, fix only measured failures, and rebuild committed-index
+archives. Separately run the real external pilot and domain review. Only then review merge to `main` and create a
+release tag. Do not claim `v1.4.0` support before modality-specific adapters and benchmarks exist.

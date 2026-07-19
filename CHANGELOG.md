@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.3.0rc1 - Universal Model Integration candidate
+
+- introduced `ModelAdapterV2`, typed capability/origin contracts, registry resolution reports, and plugin discovery;
+- added model-specific sklearn classification/regression/Pipeline adapters;
+- added lazy optional boosting, PyTorch, TensorFlow/Keras, and ONNX integrations with separate CI tests;
+- added capability-based explanation planning and quality/fidelity blocking;
+- added batch, global, why-not, model-comparison, conformance, and capability APIs;
+- measured 24 classification and 10 regression core configurations with full parity/conformance/graph validation;
+- froze external comprehension and domain-language packages without fabricated participants or review;
+- generated a Chapter 4 candidate package with an explicit `BLOCKED` external release gate.
+
 ## 1.2.0rc3 - Empirical Validation Gate candidate
 
 - controlled `object_85` story and measured `case_real_001` training experiment separated by origin;

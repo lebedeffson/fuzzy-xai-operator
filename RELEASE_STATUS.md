@@ -1,5 +1,30 @@
 # FuzzyXAI Framework Release Status
 
+Status: `v1.3.0rc1` universal-model integration candidate on `feat/universal-model-integration`. Core tabular model
+contracts and 34 configurations are measured locally. Public branch CI, optional-runtime jobs, external comprehension,
+and domain-language review are not complete; merge and release tags remain blocked.
+
+## Universal Model Candidate
+
+- 24 classification and 10 regression configurations;
+- prediction parity, adapter conformance, and graph validation: `1.0` on the recorded core matrix;
+- model-specific evidence for sklearn families and generic callable/probability/rule contracts;
+- optional boosting, Torch, TensorFlow, and ONNX code is present but verified only after its dedicated CI job passes;
+- no claim of identical evidence channels or universal arbitrary-model support.
+
+## Release Decision
+
+- computed Chapter 4 evidence: PASS;
+- comprehension pilot: `planned_not_run`;
+- regulated-domain review: `pending_external_review`;
+- full current-branch regression and public CI: pending;
+- release gate: `BLOCKED`;
+- tag allowed: no.
+
+---
+
+## Previous v1.2.0rc3 Boundary
+
 Status: `v1.2.0rc3` is an untagged Empirical Validation Gate candidate. The measured computational pipeline passes locally and on the public feature-branch CI. The independent comprehension pilot is `planned_not_run`, and the regulated-domain dictionary is awaiting external semantic review; therefore the release gate is `BLOCKED` and no tag is allowed.
 
 ## Measured Computational Gate
