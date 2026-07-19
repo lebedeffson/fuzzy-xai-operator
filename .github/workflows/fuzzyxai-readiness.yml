@@ -40,7 +40,9 @@ jobs:
       - name: Public contract quality gates
         run: |
           ruff check framework/fuzzyxai/fuzzyxai/adapters/model.py framework/fuzzyxai/fuzzyxai/evidence framework/fuzzyxai/fuzzyxai/visualization tests/test_explanation_experience.py
-          mypy
+          if [ "${{ matrix.python-version }}" = "3.11" ]; then
+            mypy
+          fi
       - name: Deterministic Explanation Experience evidence
         run: |
           python scripts/build_explanation_experience_evidence.py
