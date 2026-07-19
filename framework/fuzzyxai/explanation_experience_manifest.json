@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "milestone": "v1.2.0-rc2 Human Explanation Quality Gate",
+  "milestone": "v1.2.0rc3 Empirical Validation Gate",
   "status": "local_validation_complete_external_gates_pending",
   "contracts": [
     "fuzzyxai.evidence.ExplanationClaim",

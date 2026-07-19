@@ -10,6 +10,9 @@ Severity = Literal["info", "warning", "critical"]
 AudienceName = Literal["domain_user", "ml_engineer", "auditor", "researcher"]
 DomainLanguageStatus = Literal["available", "insufficient_domain_language"]
 ReasonEffectDirection = Literal["supports", "opposes", "mixed", "additional_support"]
+ResultOrigin = Literal["measured", "controlled_fixture", "derived", "expert_defined"]
+CounterfactualMode = Literal["sensitivity_analysis", "actionable_counterfactual"]
+ReviewStatus = Literal["not_reviewed", "reviewed", "rejected"]
 
 
 def _jsonable(value: Any) -> Any:
@@ -69,6 +72,37 @@ class TrainingObjectTrace(EvidenceContract):
     first_learned_epoch: int | None
     last_correct_epoch: int | None
     warnings: Sequence[str] = field(default_factory=tuple)
+
+
+@dataclass(frozen=True)
+class TrainingCheckpointEvidence(EvidenceContract):
+    """Measured state of one training run at one checkpoint."""
+
+    run_id: str
+    checkpoint_id: str
+    epoch: int
+    model_fingerprint: str
+    train_metric: float
+    validation_metric: float
+    test_metric: float
+    subgroup_metric: float | None
+    object_predictions: Mapping[str, Any]
+    object_confidences: Mapping[str, float]
+    object_losses: Mapping[str, float]
+    object_margins: Mapping[str, float]
+    active_rules: Mapping[str, Sequence[str]]
+    nearest_neighbors: Mapping[str, Sequence[str]]
+    random_seed: int
+    captured_at: str
+    result_origin: ResultOrigin = "measured"
+
+    def __post_init__(self) -> None:
+        if self.result_origin != "measured":
+            raise ValueError("training checkpoints must be measured")
+        if self.epoch < 1:
+            raise ValueError("checkpoint epoch must be positive")
+        if not self.model_fingerprint:
+            raise ValueError("checkpoint requires a model fingerprint")
 
 
 @dataclass(frozen=True)
@@ -166,6 +200,124 @@ class CounterfactualEvidence(EvidenceContract):
     actionability: str
     limitations: Sequence[str]
     evidence_refs: Sequence[str] = field(default_factory=tuple)
+    mode: CounterfactualMode = "sensitivity_analysis"
+    actionable: bool | None = None
+    probability_before: float | None = None
+    probability_after: float | None = None
+
+    def __post_init__(self) -> None:
+        if self.mode == "actionable_counterfactual" and self.actionable is not True:
+            raise ValueError("actionable_counterfactual requires actionable=True")
+        if self.mode == "actionable_counterfactual" and (self.minimality is None or self.plausibility is None):
+            raise ValueError("actionable_counterfactual requires minimality and plausibility")
+
+
+@dataclass(frozen=True)
+class RuleAblationEvidence(EvidenceContract):
+    """Before/after metrics measured by suppressing one rule or concept."""
+
+    run_id: str
+    rule_id: str
+    model_fingerprint: str
+    native: bool
+    surrogate: bool
+    fidelity: float | None
+    train_metrics_with_rule: Mapping[str, float]
+    validation_metrics_with_rule: Mapping[str, float]
+    test_metrics_with_rule: Mapping[str, float]
+    train_metrics_without_rule: Mapping[str, float]
+    validation_metrics_without_rule: Mapping[str, float]
+    test_metrics_without_rule: Mapping[str, float]
+    subgroup_metrics_with_rule: Mapping[str, float]
+    subgroup_metrics_without_rule: Mapping[str, float]
+    critical_errors_with_rule: int
+    critical_errors_without_rule: int
+    target_prediction_with_rule: Any
+    target_prediction_without_rule: Any
+    limitations: Sequence[str]
+    result_origin: ResultOrigin = "measured"
+
+    def __post_init__(self) -> None:
+        if self.surrogate and self.fidelity is None:
+            raise ValueError("surrogate ablation requires fidelity")
+        if self.native and self.surrogate:
+            raise ValueError("ablation cannot be both native and surrogate")
+
+
+@dataclass(frozen=True)
+class DomainFeatureLanguage(EvidenceContract):
+    label: str
+    meaning: str
+    unit: str | None = None
+    high_text: str | None = None
+    low_text: str | None = None
+    positive_effect_text: str | None = None
+    negative_effect_text: str | None = None
+    expected_direction: Literal["increases_target", "decreases_target", "non_monotonic", "unknown"] = "unknown"
+    expert_review_status: ReviewStatus = "not_reviewed"
+    reviewer_role: str | None = None
+    reviewed_at: str | None = None
+
+    def __post_init__(self) -> None:
+        if self.expert_review_status == "reviewed" and not (self.reviewer_role and self.reviewed_at):
+            raise ValueError("reviewed domain language requires reviewer role and review timestamp")
+
+
+@dataclass(frozen=True)
+class DomainLanguageValidation(EvidenceContract):
+    version: str
+    language_hash: str
+    status: Literal["pass", "insufficient_domain_language", "rejected"]
+    checked_features: int
+    errors: Sequence[str]
+    warnings: Sequence[str]
+    expert_review_required: bool
+
+
+@dataclass(frozen=True)
+class ComparisonStatement(EvidenceContract):
+    sample_size: int
+    reference_label: str
+    representation: str
+    percentile: float | None
+    rank: int | None
+    wording_policy: Literal["small_sample_rank", "medium_sample_tail", "large_sample_percentile", "insufficient_evidence"]
+    text: str
+    limitations: Sequence[str] = field(default_factory=tuple)
+
+
+@dataclass(frozen=True)
+class SimilarCaseExplanation(EvidenceContract):
+    object_id: str
+    role: Literal["support", "counterexample"]
+    similarity_score: float
+    similarity_method: str
+    representation: str
+    matched_features: Sequence[str]
+    differing_features: Sequence[str]
+    limitations: Sequence[str]
+
+
+@dataclass(frozen=True)
+class CounterfactualExplanation(EvidenceContract):
+    mode: CounterfactualMode
+    feature: str
+    original_value: float
+    changed_value: float
+    unit: str | None
+    prediction_before: Any
+    prediction_after: Any
+    probability_before: float | None
+    probability_after: float | None
+    minimality: float | None
+    plausibility: float | None
+    actionable: bool | None
+    observed_effect: bool
+    limitations: Sequence[str]
+
+    def __post_init__(self) -> None:
+        if self.mode == "actionable_counterfactual" and self.actionable is not True:
+            raise ValueError("actionable counterfactual explanation requires domain-validated actionability")
 
 
 @dataclass(frozen=True)

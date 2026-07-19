@@ -61,6 +61,10 @@ def find_tabular_counterfactuals(
                             "observed_effect is the change in maximum predicted probability, not a causal effect",
                         ],
                         evidence_refs=["model prediction before and after feature intervention"],
+                        mode="sensitivity_analysis",
+                        actionable=None,
+                        probability_before=score_before,
+                        probability_after=score_after,
                     ),
                 )
             )

@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.2.0rc3 - Empirical Validation Gate candidate
+
+- controlled `object_85` story and measured `case_real_001` training experiment separated by origin;
+- 30 real SGD checkpoints on the CC BY 4.0 BCDW methodological benchmark;
+- automatic validation-case forgetting selection and a subgroup fixed before model training;
+- measured native tree-leaf ablation with train, validation, test, subgroup, calibration, and critical-error metrics;
+- reproducible five-model capability matrix with honest native/surrogate/missing channels;
+- semantic domain-language validator and sample-size-aware comparison wording;
+- explicit sensitivity analysis distinct from domain-validated actionable counterfactuals;
+- one supporting similar case and one counterexample with method and representation;
+- automatic Chapter 4 empirical evidence package plus separate source and doctoral archive builders;
+- independent comprehension pilot and regulated-domain review remain blocking external gates; no release tag.
+
 ## 1.1.0rc1 - Explanation Experience candidate
 
 - claim-centered `ExplanationGraph` with typed `ExplanationClaim` records;

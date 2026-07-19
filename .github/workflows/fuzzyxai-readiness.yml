@@ -9,6 +9,7 @@ on:
       - feat/explanation-experience
       - feat/explanation-experience-completion
       - feat/human-explanation-layer
+      - feat/empirical-validation-gate
   pull_request:
 
 jobs:
@@ -45,6 +46,11 @@ jobs:
           cp release_evidence/explanation_experience/manifest_sha256.json /tmp/manifest-first.json
           python scripts/build_explanation_experience_evidence.py
           cmp /tmp/manifest-first.json release_evidence/explanation_experience/manifest_sha256.json
+      - name: Measured empirical validation gate
+        run: |
+          python experiments/real_training_experiment/run_empirical_validation.py
+          python scripts/build_empirical_chapter4_evidence.py
+          python scripts/verify_empirical_validation.py
       - name: Build wheel and sdist
         run: python -m build
       - name: Wheel import smoke

@@ -147,3 +147,19 @@ This software is a research framework. Medical examples are not clinical conclus
 The ten focused Matplotlib and Plotly views consume `ExplanationVisualSpec` schema `1.1`. `result.inspect(...)` returns a typed `InspectionResult`; `result.explanation_graph.validate_reachability()` verifies the evidence-to-action route. Cross-model controlled evidence is generated under `release_evidence/explanation_experience/cross_model/`.
 
 The comprehension study is still `planned_not_run`; the repository therefore claims a testable human-explanation interface, not demonstrated universal human comprehensibility. Release tag `v1.2.0` is blocked until the external pilot and green `main` CI are recorded.
+
+## Empirical validation gate
+
+The controlled object-85 story is now explicitly separated from the measured case `case_real_001`.
+Reproduce the 30-checkpoint training run, automatic forgetting selection, native tree-rule ablation,
+cross-model capability matrix, and Chapter 4 package with:
+
+```bash
+make empirical-validation-check
+```
+
+Measured artifacts are written under `release_evidence/empirical_experiments/` and
+`release_evidence/chapter4_empirical_validation/`. The benchmark uses the UCI Breast Cancer Wisconsin
+(Diagnostic) data only as a methodological research task; it is not clinical validation. The independent
+comprehension pilot and regulated-domain dictionary review remain incomplete, so `v1.2.0rc3` is an
+untagged computational candidate rather than a completed human-validation release.

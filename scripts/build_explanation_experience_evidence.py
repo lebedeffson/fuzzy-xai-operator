@@ -156,6 +156,14 @@ class ControlledRuleModel:
 def stable_payload(result) -> dict:
     payload = result.to_dict()
     payload["trace"]["generated_at"] = "controlled_fixture"
+    payload["scenario_metadata"] = {
+        "scenario_id": "object_85_controlled_story_fixture",
+        "fixture_type": "controlled_research_fixture",
+        "empirical_status": "not_real_training_result",
+        "source_type": "controlled",
+        "result_origin": "controlled_fixture",
+        "run_id": "controlled_object85_v1",
+    }
     return payload
 
 
@@ -215,9 +223,16 @@ def build_object_85() -> dict:
             },
         },
     )
-    write_json(OUTPUT / "object_85_explanation.json", stable_payload(result))
+    controlled_payload = stable_payload(result)
+    write_json(OUTPUT / "object_85_controlled_story_fixture.json", controlled_payload)
+    # Compatibility alias retained for one release cycle; metadata prevents empirical use.
+    write_json(OUTPUT / "object_85_explanation.json", controlled_payload)
     human = result.explain_for("domain_user")
-    write_json(OUTPUT / "object_85_human_explanation.json", human.to_dict(include_technical_trace=False))
+    human_payload = human.to_dict(include_technical_trace=False)
+    human_payload["scenario_metadata"] = controlled_payload["scenario_metadata"]
+    write_json(OUTPUT / "object_85_controlled_story_fixture_human.json", human_payload)
+    write_json(OUTPUT / "object_85_human_explanation.json", human_payload)
+    (OUTPUT / "object_85_controlled_story_fixture_human.md").write_text(human.user_text, encoding="utf-8")
     (OUTPUT / "object_85_human_explanation.md").write_text(human.user_text, encoding="utf-8")
     (OUTPUT / "object_85_overview.md").write_text(result.overview() + "\n" + result.story(), encoding="utf-8")
     result.visualize(view="explanation_story", output=OUTPUT / "object_85_story.png")
@@ -490,7 +505,7 @@ def main() -> None:
     summary = {
         "schema_version": "1.2",
         "status": "controlled_golden_explanations",
-        "object_85": build_object_85(),
+        "object_85_controlled_story_fixture": build_object_85(),
         "anfis": build_anfis(),
         "medical_research": build_medical_research_fixture(),
         "cross_model": build_cross_model_matrix(),

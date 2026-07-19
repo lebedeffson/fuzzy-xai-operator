@@ -4,7 +4,7 @@ from typing import Any, Sequence
 
 import numpy as np
 
-from .contracts import SimilarCaseEvidence
+from .contracts import SimilarCaseEvidence, SimilarCaseExplanation
 
 
 def find_similar_tabular_cases(
@@ -91,6 +91,49 @@ def compare_region_masks(
         limitations=["mask overlap does not measure semantic or diagnostic equivalence"],
         trace={"intersection_pixels": intersection, "union_pixels": union},
     )
+
+
+def select_explanatory_cases(
+    cases: Sequence[SimilarCaseEvidence],
+    *,
+    predicted_label: Any,
+) -> tuple[SimilarCaseExplanation, ...]:
+    """Select one supporting case and one counterexample with explicit semantics."""
+
+    ranked = sorted(cases, key=lambda item: (-item.similarity_score, item.reference_object_id))
+    support = next(
+        (
+            item
+            for item in ranked
+            if item.reference_label == predicted_label or item.reference_prediction == predicted_label
+        ),
+        None,
+    )
+    counterexample = next(
+        (
+            item
+            for item in ranked
+            if item.reference_label is not None and item.reference_label != predicted_label
+        ),
+        None,
+    )
+    selected: list[SimilarCaseExplanation] = []
+    for role, item in (("support", support), ("counterexample", counterexample)):
+        if item is None:
+            continue
+        selected.append(
+            SimilarCaseExplanation(
+                object_id=item.reference_object_id,
+                role=role,  # type: ignore[arg-type]
+                similarity_score=item.similarity_score,
+                similarity_method=item.similarity_method,
+                representation=item.compared_representation,
+                matched_features=tuple(item.matched_features),
+                differing_features=tuple(item.different_features),
+                limitations=tuple(item.limitations),
+            )
+        )
+    return tuple(selected)
 
 
 def _at(values: Sequence[Any] | None, index: int) -> Any:

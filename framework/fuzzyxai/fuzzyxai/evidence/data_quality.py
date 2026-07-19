@@ -68,6 +68,7 @@ def collect_data_evidence(
                 "median": None if not np.isfinite(median[index]) else float(median[index]),
                 "q95": None if not np.isfinite(q95[index]) else float(q95[index]),
                 "percentile": percentile,
+                "sample_size": float(finite.size),
             }
         if missing_features:
             warnings.append("missing values: " + ", ".join(missing_features))

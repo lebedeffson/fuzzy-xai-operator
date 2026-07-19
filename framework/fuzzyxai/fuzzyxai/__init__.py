@@ -30,7 +30,7 @@ __all__ += ['DatasetRecord', 'infer_dataset_profile']
 __all__ += ['lofo_f1_importance', 'bootstrap_lofo_f1_importance', 'select_top_rules_by_lofo_f1']
 __all__ += ['compute_interpretability_index']
 
-__version__ = "1.2.0rc2"
+__version__ = "1.2.0rc3"
 
 
 def build_explanation(*, terms, representation, rules=None, activations=None, uncertainty=0.0, trace=None, metadata=None):
@@ -193,10 +193,14 @@ from .evidence import (
     AudienceProfile,
     ClassConcept,
     ChangeStatement,
+    ComparisonStatement,
     ConcernStatement,
+    CounterfactualExplanation,
     CounterfactualEvidence,
     DataEvidence,
     DecisionStatement,
+    DomainFeatureLanguage,
+    DomainLanguageValidation,
     DomainLanguageStatus,
     ExplanationDetails,
     ExplanationEvidence,
@@ -209,8 +213,11 @@ from .evidence import (
     ReasonStatement,
     ReasonEffectDirection,
     ReliabilityStatement,
+    RuleAblationEvidence,
     SimilarCaseEvidence,
+    SimilarCaseExplanation,
     SubgroupAveragingEvidence,
+    TrainingCheckpointEvidence,
     TrainingObjectTrace,
     TrainingRunAnalysis,
     build_class_concepts,
@@ -221,9 +228,12 @@ from .evidence import (
     build_explanation_graph,
     compose_human_explanation,
     compare_region_masks,
+    comparison_statement,
     find_similar_tabular_cases,
     find_tabular_counterfactuals,
     rule_complexity,
+    select_explanatory_cases,
+    validate_domain_language,
 )
 
 __all__ += [
@@ -294,13 +304,20 @@ __all__ += [
     "ReliabilityStatement",
     "ActionStatement",
     "ChangeStatement",
+    "ComparisonStatement",
+    "CounterfactualExplanation",
     "ExplanationDetails",
+    "DomainFeatureLanguage",
+    "DomainLanguageValidation",
     "TrainingObjectTrace",
+    "TrainingCheckpointEvidence",
     "SubgroupAveragingEvidence",
     "LearnedRule",
     "ClassConcept",
     "SimilarCaseEvidence",
+    "SimilarCaseExplanation",
     "CounterfactualEvidence",
+    "RuleAblationEvidence",
     "ExplanationGraph",
     "ExplanationClaim",
     "ExplanationLevel",
@@ -314,8 +331,11 @@ __all__ += [
     "build_explanation_graph",
     "compose_human_explanation",
     "compare_region_masks",
+    "comparison_statement",
     "rule_complexity",
     "build_class_concepts",
     "find_similar_tabular_cases",
     "find_tabular_counterfactuals",
+    "select_explanatory_cases",
+    "validate_domain_language",
 ]

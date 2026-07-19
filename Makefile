@@ -542,6 +542,15 @@ explanation-experience-evidence:
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/build_explanation_experience_evidence.py
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/verify_explanation_experience.py
 
-.PHONY: chapter4-explanation-evidence
+.PHONY: chapter4-explanation-evidence empirical-validation empirical-validation-check chapter4-empirical-evidence
 chapter4-explanation-evidence: explanation-experience-evidence
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/build_chapter4_explanation_evidence.py
+
+empirical-validation:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) experiments/real_training_experiment/run_empirical_validation.py
+
+chapter4-empirical-evidence: empirical-validation
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/build_empirical_chapter4_evidence.py
+
+empirical-validation-check: chapter4-empirical-evidence
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/verify_empirical_validation.py

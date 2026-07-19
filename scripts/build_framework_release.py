@@ -23,7 +23,39 @@ FORBIDDEN_PARTS = {
     "__pycache__",
     "site/dubnaxai",
 }
-FORBIDDEN_SUFFIXES = {".pyc", ".pyo"}
+FORBIDDEN_SUFFIXES = {".docx", ".pdf", ".pyc", ".pyo", ".zip"}
+ALLOWED_ROOTS = {
+    ".github",
+    "docs",
+    "examples",
+    "framework",
+    "scripts",
+    "tests",
+}
+ALLOWED_EXACT = {
+    "AGENTS.md",
+    "CHANGELOG.md",
+    "CITATION.cff",
+    "CONTRIBUTING.md",
+    "LICENSE",
+    "Makefile",
+    "PROJECT_MEMORY.md",
+    "README.md",
+    "RELEASE_NOTES.md",
+    "RELEASE_STATUS.md",
+    "TEST_REPORT.txt",
+    "pyproject.toml",
+    "requirements.txt",
+}
+ALLOWED_PREFIXES = (
+    "experiments/real_training_experiment/",
+    "release_evidence/explanation_experience/",
+    "release_evidence/chapter4_explanation_experience/",
+    "release_evidence/controlled_fixtures/",
+    "release_evidence/empirical_experiments/",
+    "release_evidence/user_study/",
+    "release_evidence/chapter4_empirical_validation/",
+)
 REQUIRED_PATHS = {
     "fuzzy-xai-operator/PROJECT_MEMORY.md",
     "fuzzy-xai-operator/RELEASE_STATUS.md",
@@ -54,6 +86,12 @@ REQUIRED_PATHS = {
     "fuzzy-xai-operator/release_evidence/explanation_experience/medical_research_human_explanation.json",
     "fuzzy-xai-operator/release_evidence/explanation_experience/comprehension_pilot/response_template.csv",
     "fuzzy-xai-operator/release_evidence/chapter4_explanation_experience/manifest_sha256.json",
+    "fuzzy-xai-operator/experiments/real_training_experiment/run_empirical_validation.py",
+    "fuzzy-xai-operator/scripts/build_empirical_chapter4_evidence.py",
+    "fuzzy-xai-operator/scripts/verify_empirical_validation.py",
+    "fuzzy-xai-operator/release_evidence/empirical_experiments/breast_cancer_checkpoint/empirical_summary.json",
+    "fuzzy-xai-operator/release_evidence/chapter4_empirical_validation/manifest_sha256.json",
+    "fuzzy-xai-operator/release_evidence/user_study/comprehension_pilot/scoring_report.json",
 }
 
 
@@ -93,6 +131,17 @@ def validate_archive(path: Path) -> tuple[int, list[str]]:
     return len(names), missing
 
 
+def include_in_source_release(path: Path) -> bool:
+    relative = path.as_posix()
+    if path.suffix.lower() in FORBIDDEN_SUFFIXES:
+        return False
+    if relative in ALLOWED_EXACT:
+        return True
+    if path.parts and path.parts[0] in ALLOWED_ROOTS:
+        return True
+    return relative.startswith(ALLOWED_PREFIXES)
+
+
 def main() -> None:
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     commit = run_git("rev-parse", "HEAD")
@@ -101,7 +150,7 @@ def main() -> None:
     if index_tree != head_tree:
         raise RuntimeError("release index differs from HEAD; commit staged changes before packaging")
     short_commit = commit[:12]
-    archive_path = OUTPUT_DIR / f"fuzzy-xai-operator-full-{short_commit}.zip"
+    archive_path = OUTPUT_DIR / f"fuzzyxai-source-release-{short_commit}.zip"
     with tempfile.TemporaryDirectory() as temp_dir:
         export_root = Path(temp_dir) / "fuzzy-xai-operator"
         export_root.mkdir()
@@ -116,6 +165,8 @@ def main() -> None:
         shutil.rmtree(export_root / ".vscode", ignore_errors=True)
         with zipfile.ZipFile(archive_path, "w", compression=zipfile.ZIP_DEFLATED) as archive:
             for source in sorted(path for path in export_root.rglob("*") if path.is_file()):
+                if not include_in_source_release(source.relative_to(export_root)):
+                    continue
                 archive.write(source, source.relative_to(export_root.parent))
     file_count, _ = validate_archive(archive_path)
     archive_hash = sha256(archive_path)
@@ -132,11 +183,11 @@ def main() -> None:
         "source": "git checkout-index at HEAD; quarantined site and editor state pruned",
         "quarantined_site_included": False,
     }
-    manifest_path = OUTPUT_DIR / "framework_release_manifest.json"
+    manifest_path = OUTPUT_DIR / "source_release_manifest.json"
     manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(f"PASS: release_archive {archive_path}")
-    print(f"PASS: release_sha256 {archive_hash}")
-    print(f"PASS: release_cleanliness files={file_count}")
+    print(f"PASS: source_release_archive {archive_path}")
+    print(f"PASS: source_release_sha256 {archive_hash}")
+    print(f"PASS: source_release_cleanliness files={file_count}")
 
 
 if __name__ == "__main__":

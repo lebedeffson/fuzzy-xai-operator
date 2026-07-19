@@ -21,6 +21,7 @@ from .contracts import (
     ReasonEffectDirection,
     ReliabilityStatement,
 )
+from .validation import comparison_from_percentile
 
 
 AUDIENCE_PROFILES: dict[AudienceName, AudienceProfile] = {
@@ -228,13 +229,15 @@ def _feature_reason(
     value, profile, subgroup = _feature_profile(evidence, claim.subject_id)
     percentile = profile.get("percentile")
     median = profile.get("median")
-    if isinstance(percentile, (int, float)):
-        if percentile >= 50:
-            comparison = f"Значение выше, чем у {percentile:.0f}% объектов обучающей выборки."
-            domain_text = str(entry.get("high_text", ""))
-        else:
-            comparison = f"Значение ниже, чем у {100 - percentile:.0f}% объектов обучающей выборки."
-            domain_text = str(entry.get("low_text", ""))
+    sample_size = profile.get("sample_size")
+    if isinstance(percentile, (int, float)) and isinstance(sample_size, (int, float)) and value is not None:
+        comparison = comparison_from_percentile(
+            int(sample_size),
+            float(percentile),
+            reference_label="обучающая выборка",
+            representation="исходные признаки",
+        ).text
+        domain_text = str(entry.get("high_text" if percentile >= 50 else "low_text", ""))
     else:
         comparison = "Признак входит в число наиболее важных для текущего решения."
         domain_text = ""
@@ -442,9 +445,14 @@ def _training_concern(claims: Sequence[ExplanationClaim], evidence: ExplanationE
                 break
     event = label_loss_event or (trace.forgetting_events[0] if trace and trace.forgetting_events else None)
     object_id = forgetting.subject_id if forgetting else "рассматриваемый объект"
+    object_label = (
+        f"исследуемый объект {object_id}"
+        if str(object_id).startswith("case_")
+        else f"объект №{object_id}"
+    )
     if event is not None:
         explanation = (
-            f"Модель сначала научилась правильно распознавать объект №{object_id}. "
+            f"Модель сначала научилась правильно распознавать {object_label}. "
             f"После {event}-го этапа обучения она снова начала ошибаться и стала хуже различать редкие случаи этого типа."
         )
     else:
@@ -520,15 +528,20 @@ def _change_statement(
         f"Если {direction_text} показатель «{feature_label}» с {original_text} до {changed_text}, "
         f"повторный запуск модели меняет прогноз с «{before}» на «{after}»."
     )
-    if item.observed_effect is not None:
+    if item.probability_before is not None and item.probability_after is not None:
+        text += (
+            f" Оценка выбранного класса изменилась с {item.probability_before * 100:.0f}% "
+            f"до {item.probability_after * 100:.0f}%."
+        )
+    elif item.observed_effect is not None:
         effect_text = f"{item.observed_effect:+.3f}".replace(".", ",")
-        text += f" Максимальная оценка класса при этом изменилась на {effect_text}."
-    actionability = (
-        "Расчёт показывает чувствительность модели, но не означает, что этот показатель можно изменить на практике."
-    )
-    if item.plausibility is not None and item.plausibility >= 0.8:
+        text += f" Техническая оценка модели изменилась на {effect_text}."
+    if item.mode == "actionable_counterfactual" and item.actionable is True:
+        actionability = "Изменение прошло предметную проверку выполнимости и может рассматриваться как практический вариант."
+    else:
         actionability = (
-            "Новое значение встречается в обучающих данных, но физическая возможность такого изменения должна быть проверена специалистом."
+            "Это анализ чувствительности модели, а не рекомендация изменить реальный объект. "
+            "Практическая выполнимость изменения не подтверждена."
         )
     text += f" {actionability}"
     title = f"Что изменится при изменении показателя «{feature_label}»"
