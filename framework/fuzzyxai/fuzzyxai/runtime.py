@@ -215,6 +215,18 @@ class ModelExplanationResult:
     view_model: ExplanationViewModel
 
     @property
+    def adapter_id(self) -> str:
+        """Return the adapter that produced the canonical prediction."""
+
+        return self.prediction.adapter_id
+
+    @property
+    def model_evidence(self) -> Mapping[str, Any]:
+        """Expose serialized model evidence without leaking the adapter instance."""
+
+        return self.view_model.model
+
+    @property
     def action(self) -> str:
         return str(self.view_model.risk.get("action", "review"))
 
