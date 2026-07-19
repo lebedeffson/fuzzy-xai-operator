@@ -1,6 +1,6 @@
 # FuzzyXAI Framework Release Status
 
-Status: `v1.1.0rc3` is a feature-branch release candidate for the Explanation Experience milestone. Local framework, cross-model, visualization, packaging, and Chapter 4 evidence gates pass. Public branch CI and the external comprehension pilot remain open gates, so no `v1.1.0-rc3` tag has been created.
+Status: `v1.1.0rc3` is a feature-branch release candidate for the Explanation Experience milestone. Local framework, cross-model, visualization, packaging, and Chapter 4 evidence gates pass. Public Python 3.11/3.12 and Octave CI pass. The external comprehension pilot remains open, so no `v1.1.0-rc3` tag has been created.
 
 ## Completed
 
@@ -29,15 +29,13 @@ Status: `v1.1.0rc3` is a feature-branch release candidate for the Explanation Ex
 - explanation experience verifier: PASS;
 - wheel and sdist build: PASS;
 - installed wheel import outside checkout: `1.1.0rc3`, PASS.
+- public GitHub Actions run `29685440340`: Python 3.11, Python 3.12, and Octave PASS.
 
 ## Open Gates
 
-- public GitHub Actions for this branch and final commit;
-- Python 3.11 confirmation in public CI;
-- Octave JSON/dashboard confirmation in public CI;
 - documented comprehension pilot with at least six external participants.
 
-The pilot is `planned_not_run`. No user-comprehension claim is made. Existing public runs validate `v1.0.0-rc1`, not this candidate.
+The pilot is `planned_not_run`. No user-comprehension claim is made. Public run `29685440340` validates implementation commit `db7a174`.
 
 ## Claim Boundary
 

@@ -5,6 +5,7 @@ Version: 1.1.0rc3
 Implementation commits: 3b51ca5, 4a820f4, 0d8754b
 Release packaging commits: d1b75bc, a490c09
 Release-status commit: f34532b
+MATLAB typed-status compatibility fix: db7a174
 
 PASS: full local Python 3.14 regression - 304 passed
 PASS: full clean committed-snapshot Python 3.12 regression - 304 passed
@@ -22,13 +23,14 @@ PASS: research-only image fixture with computed mask IoU
 PASS: Chapter 4 evidence package - 12 figures and 30/30 matrix
 PASS: Python 3.12 wheel and sdist build
 PASS: installed-wheel import outside checkout - 1.1.0rc3
+PASS: public GitHub Actions Python 3.11
+PASS: public GitHub Actions Python 3.12
+PASS: public GitHub Actions Octave JSON/dashboard smoke
+Public run: https://github.com/lebedeffson/fuzzy-xai-operator/actions/runs/29685440340
 
 Warnings in the full suites are third-party sklearn feature-name warnings only.
 
-PENDING: public GitHub Actions for the final feature-branch commit
-PENDING: Python 3.11 public-CI confirmation
-PENDING: Octave JSON/dashboard public-CI confirmation
 PLANNED_NOT_RUN: comprehension pilot with external participants
 
 Release tag: NOT CREATED
-Reason: public CI and external comprehension gates are not both complete.
+Reason: the external comprehension gate is not complete.

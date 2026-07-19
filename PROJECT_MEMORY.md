@@ -6,6 +6,7 @@
 - Implementation commits: `3b51ca5`, `4a820f4`, `0d8754b`
 - Release packaging commits: `d1b75bc`, `a490c09`
 - Release-status commit: `f34532b`
+- MATLAB typed-status compatibility fix: `db7a174`
 - Candidate version: `1.1.0rc3`
 - Release tag: not created
 
@@ -52,8 +53,8 @@ The canonical adapter contract is `ModelAdapter`. The canonical visualization na
 - operator manifest: `30/30`, PASS;
 - deterministic golden rebuild: PASS;
 - wheel/sdist and isolated wheel import as `1.1.0rc3`: PASS;
-- public CI for the final branch commit: pending;
-- local Octave: unavailable; public CI confirmation pending;
+- public CI run `29685440340`: Python 3.11, Python 3.12, and Octave PASS for `db7a174`;
+- local Octave: unavailable; public Octave confirmation PASS;
 - comprehension pilot: `planned_not_run`.
 
 ## Claim Boundary
@@ -75,4 +76,4 @@ The canonical adapter contract is `ModelAdapter`. The canonical visualization na
 
 ## Next Step
 
-Push the feature branch, record the public CI result, and run the documented comprehension pilot. If both gates pass, merge according to repository policy, create the release tag, rebuild the committed-tree ZIP, and use the generated operator/evidence matrix and figures as the implementation basis for dissertation Chapter 4.
+Run the documented comprehension pilot. If that gate passes, merge according to repository policy, create the release tag, rebuild the committed-tree ZIP, and use the generated operator/evidence matrix and figures as the implementation basis for dissertation Chapter 4.
