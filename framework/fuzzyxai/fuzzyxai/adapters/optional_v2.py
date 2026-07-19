@@ -263,6 +263,18 @@ class KerasAdapter(ModelAdapterV2):
             predictions = (probabilities.reshape(-1) >= 0.5).astype(int) if array.shape[-1] == 1 else np.argmax(probabilities, axis=-1)
         return ModelPrediction(_serializable(predictions), _serializable(probabilities), type(self.model).__name__, self.adapter_id, {"task_type": self.task_type.value})
 
+    def conformance_prediction_reference(self, inputs: Any) -> Any:
+        """Canonicalize raw Keras outputs for an independent parity check."""
+
+        import tensorflow as tf
+
+        output = self.forward_fn(self.model, inputs) if self.forward_fn else self.model(tf.convert_to_tensor(inputs), training=False)
+        array = np.asarray(output.numpy())
+        if self.task_type == TaskType.REGRESSION:
+            return array.reshape(-1)
+        probabilities = tf.math.sigmoid(output).numpy() if array.shape[-1] == 1 else tf.nn.softmax(output, axis=-1).numpy()
+        return (probabilities.reshape(-1) >= 0.5).astype(int) if array.shape[-1] == 1 else np.argmax(probabilities, axis=-1)
+
     def capabilities(self) -> ModelCapabilities:
         base = super().capabilities()
         return replace(

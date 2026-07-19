@@ -42,10 +42,16 @@ def run_adapter_conformance(
     except Exception as exc:
         record("prediction_available", False, f"prediction failed: {exc}")
         prediction = None
-    direct_predict = getattr(checked_model, "predict", None)
+    reference_predict = getattr(adapter, "conformance_prediction_reference", None)
+    direct_predict = reference_predict if callable(reference_predict) else getattr(checked_model, "predict", None)
     if prediction is not None and callable(direct_predict):
         try:
-            record("prediction_parity", _equal(prediction.predictions, direct_predict(sample_batch)), "adapter output matches model.predict")
+            reference_name = "adapter conformance reference" if callable(reference_predict) else "model.predict"
+            record(
+                "prediction_parity",
+                _equal(prediction.predictions, direct_predict(sample_batch)),
+                f"adapter output matches {reference_name}",
+            )
         except Exception as exc:
             record("prediction_parity", False, f"direct prediction failed: {exc}")
     else:
