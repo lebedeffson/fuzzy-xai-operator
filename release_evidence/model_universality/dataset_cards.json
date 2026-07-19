@@ -1,0 +1,35 @@
+{
+  "binary": {
+    "data_sha256": "2b485e3ccdaf0e84bee8c71e598ad4cb810a267f9984cebc51835d8faba0f978",
+    "dataset_id": "synthetic_binary_imbalanced_seed42",
+    "features": 8,
+    "license": "synthetic generated data; no external records",
+    "objects": 180,
+    "preprocessing": "none; pipeline cases declare StandardScaler separately",
+    "source": "sklearn.datasets.make_classification",
+    "split_seed": 42,
+    "task": "binary_classification"
+  },
+  "multiclass": {
+    "data_sha256": "46c1479ab41ac7a202cd497114f2147743bf41b9b302016248307410aa7023d7",
+    "dataset_id": "synthetic_multiclass_seed42",
+    "features": 8,
+    "license": "synthetic generated data; no external records",
+    "objects": 180,
+    "preprocessing": "none; pipeline cases declare StandardScaler separately",
+    "source": "sklearn.datasets.make_classification",
+    "split_seed": 42,
+    "task": "multiclass_classification"
+  },
+  "regression": {
+    "data_sha256": "fa07aa6bc1cdb65a75662927ccb29e8f8fb326d62acf9a5f5dc61369b88d6d33",
+    "dataset_id": "synthetic_regression_seed42",
+    "features": 8,
+    "license": "synthetic generated data; no external records",
+    "objects": 180,
+    "preprocessing": "none; pipeline cases declare StandardScaler separately",
+    "source": "sklearn.datasets.make_regression",
+    "split_seed": 42,
+    "task": "regression"
+  }
+}

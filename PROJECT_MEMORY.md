@@ -1,66 +1,84 @@
 # Project Memory
 
 - Date: 2026-07-19
-- Branch: `feat/research-framework-completion`
-- Implementation commit: `17e43f750c5100fd25148dd52aa49abbdc24f644`
-- Release-check commits: `62b58f9`, `b0ae0c0`
-- Release tag: `v1.0.0-rc1`
+- Branch: `feat/universal-model-integration`
+- Base: `79d39f61f02df1cf1d63fc92dd2a1ebebfef7de7`
+- Universal API commit: `3dda3e3`
+- Model evidence commit: `a76677a`
+- CI correction commit: `fbfcdd3`
+- Cross-runtime evidence commit: `39067b3`
+- Candidate version: `1.3.0rc1`
+- Release tag: not created
 
-## Current focus
+## Current Focus
 
-The primary product is the installable FuzzyXAI research framework and its reproducible evidence-first explanation pipeline. The generated DubnaXAI website is frozen and archived until the framework API, traceability, cross-model validation, and visual explanations are stable.
+The installable research framework remains the primary product. The generated DubnaXAI site stays quarantined.
+This milestone adds capability-based model integration and measured explanation-quality disclosure without changing
+the defended chapter 2-3 operator semantics.
 
-## Canonical public API
+## Implemented
 
-```python
-fx = FuzzyXAI.wrap(model, adapter="auto", explain_plan=plan)
-result = fx.explain(X)
-result.plot()
-result.export_json("explanation.json")
-```
+- `ModelAdapterV2`, task/input/output contracts, capability descriptors, and native/derived/surrogate/external origin;
+- priority adapter registry, explicit resolution report, lazy optional imports, and plugin entry-point discovery;
+- sklearn linear, tree, ensemble, SVM, KNN, Naive Bayes, regression, and Pipeline adapters;
+- optional XGBoost, LightGBM, CatBoost, PyTorch, TensorFlow/Keras, and ONNX adapters with separate tests;
+- `ExplanationPlanner`, surrogate-fidelity blocking, adapter conformance, and quality reports;
+- `explain_batch()`, `explain_global()`, `why_not()`, `compare_models()`, and capability reporting;
+- deterministic benchmark with 24 classification and 10 regression configurations;
+- checksummed runtime reports for sklearn, XGBoost, LightGBM, CatBoost, PyTorch, TensorFlow/Keras, and ONNX;
+- automatic report merge, cross-version conflict detection, unified support matrix, API report, and quality report;
+- frozen external A/B pilot package and external domain-language review package;
+- aggregate Chapter 4 candidate evidence package.
 
-The canonical adapter contract is `ModelAdapter`. The canonical visualization namespace is `fuzzyxai.visualization`; `visual` and `viz` remain compatibility shims for one migration cycle.
+## Measured Validation
 
-## Implemented boundary
+- 34 core model configurations and six optional runtime integrations verified;
+- unified model support matrix: `40/40 pass`;
+- runtime reports: `14/14 pass` across Python 3.11 and Python 3.12;
+- prediction parity rate: `1.0`;
+- adapter conformance rate: `1.0`;
+- explanation graph validation rate: `1.0`;
+- strict MyPy: PASS;
+- Ruff and compile checks: PASS;
+- focused local compatibility/model/external-gate suite: `48 passed`, `6 skipped` optional runtimes;
+- public readiness CI: `338 passed`, `6 skipped` on Python 3.11 and Python 3.12;
+- public Octave JSON/dashboard smoke: PASS;
+- public optional runtime CI: XGBoost, LightGBM, CatBoost, PyTorch, TensorFlow/Keras, and ONNX PASS on both Python versions;
+- five public explanation APIs: PASS in all runtime reports;
+- explanation-quality matrix: `40/40 pass`; measured top-reason stability in 36 configurations;
+- readiness run: `29700288436`;
+- universal model run: `29700288413`;
+- existing measured checkpoint experiment and native rule ablation retained;
+- model, pilot, domain-review, and Chapter 4 manifests: PASS.
 
-- callable, generic `predict_proba`, scikit-learn, and native-rule adapters;
-- typed chapter 2-3 operator facade backed by the research core;
-- machine-checkable operator manifest;
-- data-quality evidence and explicit anomaly semantics;
-- per-object training trajectories, forgetting events, and subgroup averaging diagnostics;
-- native and surrogate rule extraction with provenance and limitations;
-- measured rule ablation, class concepts, prototypes, coverage, similar cases, and counterfactual evidence;
-- one `ExplanationGraph`, user/expert/audit narratives, provenance, and explanation-quality fields;
-- one serializable `ExplanationViewModel` for Matplotlib and MATLAB/Octave;
-- controlled object 85 protocol with measured global and rare-subgroup restoration effects.
+The full regression suite was moved from the workstation to GitHub runners after the user reported Cursor
+instability. Both supported Python jobs passed. This validates the feature branch, not `main` after merge.
 
-## Claim boundary
+## External Gates
 
-- Do not claim universal model support. Native Torch, Keras, and ONNX adapters are not implemented.
-- A surrogate rule is always labeled `surrogate`; it is not presented as model-internal knowledge.
-- Similarity always states the compared representation and metric. It is not a probability or causal statement.
-- Missing requested evidence produces `insufficient_evidence`; missing optional operator evidence produces `review` and explicit diagnostics.
-- Medical examples are research demonstrations and have no clinical or production certification claim.
-- MATLAB compatibility is limited to loading the canonical JSON and reproducing visual panels; the mathematical core remains Python.
+- independent A/B comprehension pilot: `planned_not_run`, zero participants;
+- regulated-domain dictionary review: `pending_external_review`;
+- Chapter 4 computed evidence: PASS;
+- demonstrated human comprehension: not claimed;
+- release gate: `BLOCKED`;
+- `v1.2.0` tag and merge to `main`: forbidden until external gates and main CI pass.
 
-## Repository policy
+## Version Boundary
 
-- The historical generated site is preserved by the archive branch `archive/site-prototype-cab4018` and excluded from source releases.
-- Generated reports, caches, virtual environments, and local IDE state must not enter release ZIP files.
-- Build a source release only from a committed tree with `python scripts/build_framework_release.py`.
-- Create a release tag only after the public Python 3.11/3.12 and Octave GitHub Actions jobs are green.
+- `v1.2.0`: Human Explanation and empirical computational gate implemented; final tag blocked externally.
+- `v1.3.0rc1`: universal tabular model integration and merged cross-runtime evidence candidate implemented on this branch.
+- version path B selected: no retroactive stable `v1.2.0`; next allowed tag after external gates, main merge, and main CI is `v1.3.0rc2`.
+- `v1.4.0`: anomaly, forecasting, text, image, and richer checkpoint integrations remain future scope.
 
-## Validation
+## Archive Policy
 
-- local regression environment: `299 passed`;
-- clean Python 3.11 checkout: `299 passed`, framework gate PASS, wheel/sdist PASS, wheel import PASS;
-- clean Python 3.12 checkout: `299 passed`, framework gate PASS, wheel/sdist PASS, wheel import PASS;
-- operator manifest: `30/30`, PASS;
-- controlled object 85 protocol: PASS;
-- MATLAB files included in the wheel: PASS;
-- MATLAB/Octave execution: PASS in public GitHub Actions;
-- public GitHub Actions runs `29668215392` and `29668320459`: Python 3.11 PASS, Python 3.12 PASS, Octave PASS.
+- source archive is built only from a committed Git index with `python scripts/build_framework_release.py`;
+- Chapter 4 candidate ZIP is reproducible but not a final-release claim;
+- doctoral historical archive remains separate;
+- generated site content and unrelated dirty-worktree artifacts must not enter the source archive.
 
-## Next step
+## Next Step
 
-Use the implementation evidence to write dissertation chapter 4 as a formula-to-code-to-test-to-artifact argument. Resume the DubnaXAI ecosystem and chapter 5 only after the framework release boundary is stable.
+Run the real external pilot and domain review. After both pass, review merge to `main`, require green main CI, rebuild
+committed-index archives, and only then create a release tag. Do not claim `v1.4.0` support before modality-specific
+adapters and benchmarks exist.

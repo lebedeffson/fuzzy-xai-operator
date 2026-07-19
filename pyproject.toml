@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "fuzzyxai-operator"
-version = "1.0.0"
+version = "1.3.0rc1"
 description = "FuzzyXAI operator engine, Studio, proof package, and doctoral readiness audit."
 readme = "README.md"
 requires-python = ">=3.10"
@@ -19,10 +19,53 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
+sklearn = ["scikit-learn>=1.2"]
+xgboost = ["xgboost>=1.7"]
+lightgbm = ["lightgbm>=4.0"]
+catboost = ["catboost>=1.2"]
+torch = ["torch>=2.1"]
+tensorflow = ["tensorflow>=2.14"]
+onnx = ["onnx>=1.15", "onnxruntime>=1.16"]
+images = ["pillow>=10.0"]
+all-models = [
+    "xgboost>=1.7",
+    "lightgbm>=4.0",
+    "catboost>=1.2",
+    "torch>=2.1",
+    "tensorflow>=2.14",
+    "onnx>=1.15",
+    "onnxruntime>=1.16",
+    "pillow>=10.0",
+]
 dev = [
     "pytest>=7.0",
     "playwright>=1.40",
     "build>=1.2",
+    "ruff>=0.5",
+    "mypy>=1.10",
+]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 160
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+ignore_missing_imports = true
+follow_imports = "skip"
+files = [
+    "framework/fuzzyxai/fuzzyxai/adapters/model.py",
+    "framework/fuzzyxai/fuzzyxai/adapters/contracts_v2.py",
+    "framework/fuzzyxai/fuzzyxai/adapters/model_v2.py",
+    "framework/fuzzyxai/fuzzyxai/adapters/model_registry.py",
+    "framework/fuzzyxai/fuzzyxai/adapters/sklearn_v2.py",
+    "framework/fuzzyxai/fuzzyxai/adapter_conformance.py",
+    "framework/fuzzyxai/fuzzyxai/planner.py",
+    "framework/fuzzyxai/fuzzyxai/explanation_quality.py",
+    "framework/fuzzyxai/fuzzyxai/evidence/contracts.py",
+    "framework/fuzzyxai/fuzzyxai/evidence/human.py",
+    "framework/fuzzyxai/fuzzyxai/visualization/spec.py",
 ]
 
 [tool.setuptools]
@@ -31,6 +74,9 @@ package-dir = {"" = "framework/fuzzyxai"}
 [tool.setuptools.packages.find]
 where = ["framework/fuzzyxai"]
 include = ["fuzzyxai*"]
+
+[tool.setuptools.package-data]
+fuzzyxai = ["schemas/*.json"]
 
 [tool.setuptools.data-files]
 "share/fuzzyxai/matlab/+fuzzyxai" = ["framework/fuzzyxai/matlab/+fuzzyxai/*.m"]

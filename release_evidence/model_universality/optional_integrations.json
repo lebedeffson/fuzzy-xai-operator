@@ -1,0 +1,73 @@
+{
+  "claim_scope": "Only CI runtime reports with valid checksums produce status=pass.",
+  "integrations": [
+    {
+      "config_id": "xgboost_runtime",
+      "evidence_report": "adapter_reports/adapter_report_xgboost_py312.json",
+      "package": "xgboost",
+      "python_versions": [
+        "3.11.15",
+        "3.12.13"
+      ],
+      "status": "pass",
+      "version": "3.3.0"
+    },
+    {
+      "config_id": "lightgbm_runtime",
+      "evidence_report": "adapter_reports/adapter_report_lightgbm_py312.json",
+      "package": "lightgbm",
+      "python_versions": [
+        "3.11.15",
+        "3.12.13"
+      ],
+      "status": "pass",
+      "version": "4.7.0"
+    },
+    {
+      "config_id": "catboost_runtime",
+      "evidence_report": "adapter_reports/adapter_report_catboost_py312.json",
+      "package": "catboost",
+      "python_versions": [
+        "3.11.15",
+        "3.12.13"
+      ],
+      "status": "pass",
+      "version": "1.2.10"
+    },
+    {
+      "config_id": "torch_runtime",
+      "evidence_report": "adapter_reports/adapter_report_torch_py312.json",
+      "package": "torch",
+      "python_versions": [
+        "3.11.15",
+        "3.12.13"
+      ],
+      "status": "pass",
+      "version": "2.13.0"
+    },
+    {
+      "config_id": "tensorflow_runtime",
+      "evidence_report": "adapter_reports/adapter_report_tensorflow_py312.json",
+      "package": "tensorflow",
+      "python_versions": [
+        "3.11.15",
+        "3.12.13"
+      ],
+      "status": "pass",
+      "version": "2.21.0"
+    },
+    {
+      "config_id": "onnx_runtime",
+      "evidence_report": "adapter_reports/adapter_report_onnx_py312.json",
+      "package": "onnx",
+      "python_versions": [
+        "3.11.15",
+        "3.12.13"
+      ],
+      "status": "pass",
+      "version": "1.27.0"
+    }
+  ],
+  "legacy_untyped_statuses_superseded": true,
+  "schema_version": "2.0"
+}

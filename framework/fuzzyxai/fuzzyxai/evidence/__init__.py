@@ -1,40 +1,82 @@
 from .contracts import (
+    ActionStatement,
+    AudienceProfile,
     ClassConcept,
+    ChangeStatement,
+    ComparisonStatement,
+    ConcernStatement,
+    CounterfactualExplanation,
     CounterfactualEvidence,
     DataEvidence,
+    DecisionStatement,
+    DomainFeatureLanguage,
+    DomainLanguageValidation,
+    DomainLanguageStatus,
     EvidenceContract,
     ExplanationEdge,
+    ExplanationDetails,
     ExplanationEvidence,
     ExplanationGraph,
+    ExplanationClaim,
+    ExplanationLevel,
     ExplanationNode,
     HumanExplanation,
+    HumanStatement,
     LearnedRule,
+    ReasonStatement,
+    ReasonEffectDirection,
+    ReliabilityStatement,
+    RuleAblationEvidence,
     SimilarCaseEvidence,
+    SimilarCaseExplanation,
     SubgroupAveragingEvidence,
+    TrainingCheckpointEvidence,
     TrainingObjectTrace,
 )
 from .data_quality import collect_data_evidence
 from .concepts import build_class_concepts
 from .counterfactual import find_tabular_counterfactuals
 from .graph import build_explanation_graph
+from .claims import build_explanation_claims, determine_explanation_level
 from .human import compose_human_explanation, explanation_to_text
 from .metrics import evaluate_explanation_quality
 from .rules import evaluate_rule_ablation, extract_rules, rank_rules, rule_complexity
-from .similarity import compare_region_masks, find_similar_tabular_cases
+from .similarity import compare_region_masks, find_similar_tabular_cases, select_explanatory_cases
 from .training import TrainingRunAnalysis, build_object_trace, detect_subgroup_averaging, find_forgetting_events
+from .validation import comparison_from_percentile, comparison_statement, validate_domain_language
 
 __all__ = [
+    "ActionStatement",
+    "AudienceProfile",
+    "ChangeStatement",
+    "ComparisonStatement",
+    "ConcernStatement",
+    "CounterfactualExplanation",
+    "DecisionStatement",
+    "DomainFeatureLanguage",
+    "DomainLanguageValidation",
+    "DomainLanguageStatus",
+    "ExplanationDetails",
+    "HumanStatement",
+    "ReasonStatement",
+    "ReasonEffectDirection",
+    "ReliabilityStatement",
+    "RuleAblationEvidence",
     "EvidenceContract",
     "DataEvidence",
     "TrainingObjectTrace",
+    "TrainingCheckpointEvidence",
     "SubgroupAveragingEvidence",
     "LearnedRule",
     "ClassConcept",
     "SimilarCaseEvidence",
+    "SimilarCaseExplanation",
     "CounterfactualEvidence",
     "ExplanationNode",
     "ExplanationEdge",
     "ExplanationGraph",
+    "ExplanationClaim",
+    "ExplanationLevel",
     "HumanExplanation",
     "ExplanationEvidence",
     "collect_data_evidence",
@@ -45,8 +87,11 @@ __all__ = [
     "build_class_concepts",
     "find_similar_tabular_cases",
     "compare_region_masks",
+    "select_explanatory_cases",
     "find_tabular_counterfactuals",
     "build_explanation_graph",
+    "build_explanation_claims",
+    "determine_explanation_level",
     "compose_human_explanation",
     "explanation_to_text",
     "evaluate_explanation_quality",
@@ -54,4 +99,7 @@ __all__ = [
     "find_forgetting_events",
     "detect_subgroup_averaging",
     "TrainingRunAnalysis",
+    "comparison_statement",
+    "comparison_from_percentile",
+    "validate_domain_language",
 ]

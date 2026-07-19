@@ -1,0 +1,190 @@
+{
+  "all_checks_pass": true,
+  "claim_scope": "API checks establish execution and result-contract integrity, not domain validity.",
+  "report_count": 14,
+  "reports": [
+    {
+      "checks": {
+        "compare_models": true,
+        "explain_batch": true,
+        "explain_global": true,
+        "explain_one": true,
+        "why_not": true
+      },
+      "library": "catboost",
+      "python_version": "3.11.15",
+      "report_id": "catboost_py311",
+      "status": "pass"
+    },
+    {
+      "checks": {
+        "compare_models": true,
+        "explain_batch": true,
+        "explain_global": true,
+        "explain_one": true,
+        "why_not": true
+      },
+      "library": "catboost",
+      "python_version": "3.12.13",
+      "report_id": "catboost_py312",
+      "status": "pass"
+    },
+    {
+      "checks": {
+        "compare_models": true,
+        "explain_batch": true,
+        "explain_global": true,
+        "explain_one": true,
+        "why_not": true
+      },
+      "library": "lightgbm",
+      "python_version": "3.11.15",
+      "report_id": "lightgbm_py311",
+      "status": "pass"
+    },
+    {
+      "checks": {
+        "compare_models": true,
+        "explain_batch": true,
+        "explain_global": true,
+        "explain_one": true,
+        "why_not": true
+      },
+      "library": "lightgbm",
+      "python_version": "3.12.13",
+      "report_id": "lightgbm_py312",
+      "status": "pass"
+    },
+    {
+      "checks": {
+        "compare_models": true,
+        "explain_batch": true,
+        "explain_global": true,
+        "explain_one": true,
+        "why_not": true
+      },
+      "library": "onnx",
+      "python_version": "3.11.15",
+      "report_id": "onnx_py311",
+      "status": "pass"
+    },
+    {
+      "checks": {
+        "compare_models": true,
+        "explain_batch": true,
+        "explain_global": true,
+        "explain_one": true,
+        "why_not": true
+      },
+      "library": "onnx",
+      "python_version": "3.12.13",
+      "report_id": "onnx_py312",
+      "status": "pass"
+    },
+    {
+      "checks": {
+        "compare_models": true,
+        "explain_batch": true,
+        "explain_global": true,
+        "explain_one": true,
+        "why_not": true
+      },
+      "library": "sklearn",
+      "python_version": "3.11.15",
+      "report_id": "sklearn_py311",
+      "status": "pass"
+    },
+    {
+      "checks": {
+        "compare_models": true,
+        "explain_batch": true,
+        "explain_global": true,
+        "explain_one": true,
+        "why_not": true
+      },
+      "library": "sklearn",
+      "python_version": "3.12.13",
+      "report_id": "sklearn_py312",
+      "status": "pass"
+    },
+    {
+      "checks": {
+        "compare_models": true,
+        "explain_batch": true,
+        "explain_global": true,
+        "explain_one": true,
+        "why_not": true
+      },
+      "library": "tensorflow",
+      "python_version": "3.11.15",
+      "report_id": "tensorflow_py311",
+      "status": "pass"
+    },
+    {
+      "checks": {
+        "compare_models": true,
+        "explain_batch": true,
+        "explain_global": true,
+        "explain_one": true,
+        "why_not": true
+      },
+      "library": "tensorflow",
+      "python_version": "3.12.13",
+      "report_id": "tensorflow_py312",
+      "status": "pass"
+    },
+    {
+      "checks": {
+        "compare_models": true,
+        "explain_batch": true,
+        "explain_global": true,
+        "explain_one": true,
+        "why_not": true
+      },
+      "library": "torch",
+      "python_version": "3.11.15",
+      "report_id": "torch_py311",
+      "status": "pass"
+    },
+    {
+      "checks": {
+        "compare_models": true,
+        "explain_batch": true,
+        "explain_global": true,
+        "explain_one": true,
+        "why_not": true
+      },
+      "library": "torch",
+      "python_version": "3.12.13",
+      "report_id": "torch_py312",
+      "status": "pass"
+    },
+    {
+      "checks": {
+        "compare_models": true,
+        "explain_batch": true,
+        "explain_global": true,
+        "explain_one": true,
+        "why_not": true
+      },
+      "library": "xgboost",
+      "python_version": "3.11.15",
+      "report_id": "xgboost_py311",
+      "status": "pass"
+    },
+    {
+      "checks": {
+        "compare_models": true,
+        "explain_batch": true,
+        "explain_global": true,
+        "explain_one": true,
+        "why_not": true
+      },
+      "library": "xgboost",
+      "python_version": "3.12.13",
+      "report_id": "xgboost_py312",
+      "status": "pass"
+    }
+  ],
+  "schema_version": "1.0"
+}

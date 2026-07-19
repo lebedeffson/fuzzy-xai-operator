@@ -1,0 +1,90 @@
+[
+  {
+    "differing_features": [
+      "mean symmetry",
+      "area error",
+      "worst texture"
+    ],
+    "limitations": [
+      "feature distance does not establish causal or clinical similarity"
+    ],
+    "matched_features": [
+      "mean radius",
+      "mean texture",
+      "mean perimeter",
+      "mean area",
+      "mean smoothness",
+      "mean compactness",
+      "mean concavity",
+      "mean concave points",
+      "mean fractal dimension",
+      "radius error",
+      "texture error",
+      "perimeter error",
+      "smoothness error",
+      "compactness error",
+      "concavity error",
+      "concave points error",
+      "symmetry error",
+      "fractal dimension error",
+      "worst radius",
+      "worst perimeter",
+      "worst area",
+      "worst smoothness",
+      "worst compactness",
+      "worst concavity",
+      "worst concave points",
+      "worst symmetry",
+      "worst fractal dimension"
+    ],
+    "object_id": "bcwd_0081",
+    "representation": "normalized tabular feature vector",
+    "role": "support",
+    "similarity_method": "robust_standardized_euclidean",
+    "similarity_score": 0.722488
+  },
+  {
+    "differing_features": [
+      "mean smoothness",
+      "mean compactness",
+      "mean concave points",
+      "texture error",
+      "compactness error",
+      "concavity error",
+      "fractal dimension error",
+      "worst smoothness",
+      "worst concave points",
+      "worst symmetry",
+      "worst fractal dimension"
+    ],
+    "limitations": [
+      "feature distance does not establish causal or clinical similarity"
+    ],
+    "matched_features": [
+      "mean radius",
+      "mean texture",
+      "mean perimeter",
+      "mean area",
+      "mean concavity",
+      "mean symmetry",
+      "mean fractal dimension",
+      "radius error",
+      "perimeter error",
+      "area error",
+      "smoothness error",
+      "concave points error",
+      "symmetry error",
+      "worst radius",
+      "worst texture",
+      "worst perimeter",
+      "worst area",
+      "worst compactness",
+      "worst concavity"
+    ],
+    "object_id": "bcwd_0047",
+    "representation": "normalized tabular feature vector",
+    "role": "counterexample",
+    "similarity_method": "robust_standardized_euclidean",
+    "similarity_score": 0.597572
+  }
+]

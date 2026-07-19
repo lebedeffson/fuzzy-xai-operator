@@ -28,6 +28,7 @@ def evaluate_explanation_quality(
     valid_counterfactuals = [item.source_prediction != item.target_prediction for item in counterfactuals]
     variability = [item.intra_class_variability for item in concepts if item.intra_class_variability is not None]
     return {
+        "faithfulness": supplied.get("faithfulness"),
         "fidelity": supplied.get("fidelity"),
         "stability": supplied.get("stability"),
         "coverage": None if not known_coverage else float(np.mean(known_coverage)),
@@ -38,4 +39,5 @@ def evaluate_explanation_quality(
         "counterfactual_validity": None if not valid_counterfactuals else float(np.mean(valid_counterfactuals)),
         "prototype_representativeness": None if not variability else 1.0 / (1.0 + float(np.mean(variability))),
         "trace_completeness": None if trace_nodes == 0 else traced_nodes / trace_nodes,
+        "reconstruction_error": supplied.get("reconstruction_error"),
     }

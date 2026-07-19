@@ -91,6 +91,14 @@ def validate_explain_plan(plan: Mapping[str, Any]) -> None:
     if not (0.0 <= t1 < t2 < t3 < t4 <= 1.0):
         raise ValueError('risk_observer.thresholds must be ordered in [0,1]')
 
+    domain_language = plan.get('domain_language', {})
+    if not isinstance(domain_language, Mapping):
+        raise ValueError('ExplainPlan.domain_language must be a mapping')
+    for section in ('features', 'classes', 'actions'):
+        values = domain_language.get(section, {})
+        if not isinstance(values, Mapping):
+            raise ValueError(f'ExplainPlan.domain_language.{section} must be a mapping')
+
 
 def canonicalize_explain_plan(plan: Mapping[str, Any]) -> str:
     """Deterministic JSON serialization used as the hash source."""
@@ -133,6 +141,7 @@ class ExplainPlan:
     top_k: int = 5
     representation_policy: str = "auto"
     action_policy: str = "risk_zone"
+    domain_language: Dict[str, Any] = field(default_factory=dict)
     metadata: Dict[str, Any] = field(default_factory=dict)
 
     def validate(self) -> None:
@@ -154,6 +163,11 @@ class ExplainPlan:
             raise ValueError('rho thresholds must be ordered in [0,1]')
         if self.top_k <= 0:
             raise ValueError('top_k must be positive')
+        if not isinstance(self.domain_language, dict):
+            raise ValueError('domain_language must be a mapping')
+        for section in ('features', 'classes', 'actions'):
+            if not isinstance(self.domain_language.get(section, {}), Mapping):
+                raise ValueError(f'domain_language.{section} must be a mapping')
 
     def with_reduction_weight(self, beta_delta: float) -> 'ExplainPlan':
         if not 0 <= beta_delta < 1:
@@ -178,6 +192,7 @@ class ExplainPlan:
             top_k=self.top_k,
             representation_policy=self.representation_policy,
             action_policy=self.action_policy,
+            domain_language=dict(self.domain_language),
             metadata=dict(self.metadata),
         )
 
@@ -200,6 +215,7 @@ class ExplainPlan:
             'top_k': self.top_k,
             'representation_policy': self.representation_policy,
             'action_policy': self.action_policy,
+            'domain_language': self.domain_language,
             'metadata': self.metadata,
         }
 
@@ -225,6 +241,7 @@ class ExplainPlan:
             plan.top_k = int(data['top_k'])
         plan.representation_policy = str(data.get('representation_policy', plan.representation_policy))
         plan.action_policy = str(data.get('action_policy', plan.action_policy))
+        plan.domain_language = dict(data.get('domain_language', {}))
         plan.metadata = dict(data.get('metadata', {}))
         plan.validate()
         return plan

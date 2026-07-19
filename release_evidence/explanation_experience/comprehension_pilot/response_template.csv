@@ -1,0 +1,1 @@
+participant_id,role,condition_order,scenario_id,mode,decision_correct,reasons_correct,concern_correct,reliability_correct,action_correct,limitation_correct,unsupported_inference_count,completion_time_sec,notes

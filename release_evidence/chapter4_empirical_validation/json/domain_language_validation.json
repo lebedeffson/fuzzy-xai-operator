@@ -1,0 +1,13 @@
+{
+  "checked_features": 2,
+  "errors": [],
+  "expert_review_required": true,
+  "language_hash": "206e0e5985763e834af9f6006f6164867faa896ba319a522a4fd7e51235ff445",
+  "status": "insufficient_domain_language",
+  "version": "bcwd-neutral-methodological-v1",
+  "warnings": [
+    "feature worst concave points: semantic wording has not been externally reviewed",
+    "feature worst perimeter: semantic wording has not been externally reviewed",
+    "regulated domain requires external expert review before categorical domain-user wording"
+  ]
+}

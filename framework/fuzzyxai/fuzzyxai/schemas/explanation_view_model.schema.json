@@ -26,7 +26,12 @@
       "properties": {"action": {"type": "string"}}
     },
     "diagnostics": {"type": "array", "items": {"type": "object"}},
-    "claims": {"type": "object"},
+    "claims": {
+      "oneOf": [
+        {"type": "object"},
+        {"type": "array", "items": {"type": "object"}}
+      ]
+    },
     "narrative": {"type": "string"},
     "trace": {
       "type": "object",
@@ -42,9 +47,20 @@
     },
     "human_explanations": {
       "type": "object",
-      "required": ["user", "expert", "audit"]
+      "required": ["domain_user", "ml_engineer", "researcher", "auditor"]
     },
-    "quality_metrics": {"type": "object"}
+    "quality_metrics": {"type": "object"},
+    "explanation_level": {
+      "type": "object",
+      "properties": {
+        "level": {"enum": ["E0", "E1", "E2", "E3", "E4", "E5"]},
+        "available_channels": {"type": "array"},
+        "missing_channels": {"type": "array"},
+        "native_channels": {"type": "array"},
+        "surrogate_channels": {"type": "array"}
+      }
+    },
+    "visual_spec": {"type": "object"}
   },
   "additionalProperties": true
 }

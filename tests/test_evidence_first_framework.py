@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import json
 
-import numpy as np
 import pytest
 from sklearn.datasets import make_classification
 from sklearn.ensemble import GradientBoostingClassifier, HistGradientBoostingClassifier, RandomForestClassifier
@@ -92,7 +91,8 @@ def test_public_api_runs_across_sklearn_model_families(model) -> None:
     assert result.prediction.predictions is not None
     assert result.action in {"review", "insufficient_evidence"}
     assert result.view_model.explanation_graph["nodes"]
-    assert "Рекомендуемое действие" in result.summary("user")
+    assert "## Что делать" in result.summary("user")
+    assert result.explain_for().recommended_action.action == result.action
 
 
 def test_native_anfis_rule_is_not_labelled_surrogate() -> None:
@@ -161,5 +161,7 @@ def test_serialization_html_dashboard_and_three_text_levels(tmp_path) -> None:
     restored = ExplanationViewModel.load_json(json_path)
     assert restored.to_dict() == result.view_model.to_dict()
     assert html_path.stat().st_size > 0 and png_path.stat().st_size > 0
-    assert {"user", "expert", "audit"} == set(result.view_model.human_explanations)
+    assert {"user", "expert", "audit", "domain_user", "ml_engineer", "researcher", "auditor"} == set(
+        result.view_model.human_explanations
+    )
     assert json.loads(json_path.read_text())["schema_version"] == "2.0"

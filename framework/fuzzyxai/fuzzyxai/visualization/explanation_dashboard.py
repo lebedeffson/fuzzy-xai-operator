@@ -28,11 +28,15 @@ def render_explanation_dashboard(
     view_model: ExplanationViewModel,
     output_path: str | Path | None = None,
 ):
-    """Render the five evidence layers from one canonical view model."""
+    """Render the claim-centered story, with the v1 dashboard as fallback."""
+
+    if view_model.visual_spec:
+        from .matplotlib_renderer import render_visual_spec
+
+        return render_visual_spec(view_model.visual_spec, view="explanation_story", output_path=output_path)
 
     try:
         import matplotlib.pyplot as plt
-        import numpy as np
     except Exception as exc:  # pragma: no cover
         raise RuntimeError("matplotlib and numpy are required for dashboard rendering") from exc
 
@@ -129,11 +133,17 @@ def render_explanation_dashboard(
 
     # Human explanation
     axes[5].set_axis_off()
-    user = view_model.human_explanations.get("user", {})
+    user = view_model.human_explanations.get("domain_user", view_model.human_explanations.get("user", {}))
     lines = [str(user.get("summary", view_model.narrative or "No narrative available."))]
     reasons = list(user.get("main_reasons", []))[:3]
     if reasons:
-        lines.extend(["", "Main reasons:", *[f"• {item}" for item in reasons]])
+        lines.extend(
+            [
+                "",
+                "Main reasons:",
+                *[f"• {item.get('explanation', '') if isinstance(item, Mapping) else item}" for item in reasons],
+            ]
+        )
     limitations = list(user.get("limitations", []))[:3]
     if limitations:
         lines.extend(["", "Limits:", *[f"• {item}" for item in limitations]])

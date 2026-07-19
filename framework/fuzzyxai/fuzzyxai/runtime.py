@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 import shutil
 import zipfile
-from dataclasses import dataclass
+from dataclasses import asdict, dataclass
 from datetime import datetime, timezone
 from html import escape
 from hashlib import sha256
@@ -11,7 +11,10 @@ from pathlib import Path
 from typing import Any, Mapping
 
 from fuzzyxai.adapters.base import BaseAdapter
-from fuzzyxai.adapters.model import ModelAdapter, ModelPrediction, resolve_model_adapter
+from fuzzyxai.adapters.model import ModelAdapter, ModelPrediction
+from fuzzyxai.adapters.contracts_v2 import AdapterResolutionReport, ExplanationContext, ModelCapabilities, TaskType
+from fuzzyxai.adapters.model_registry import MODEL_ADAPTER_REGISTRY, resolve_model_adapter_v2
+from fuzzyxai.adapters.model_v2 import ModelAdapterV2
 from fuzzyxai.core.explain_plan import ExplainPlan
 from fuzzyxai.core.types import AdaptedInput, OperatorRoute
 from fuzzyxai.operators import AlignmentInput, ReductionInput, RiskInput
@@ -20,26 +23,36 @@ from fuzzyxai.operators import compute_reduction as compute_operator_reduction
 from fuzzyxai.operators import observe_risk as observe_operator_risk
 from fuzzyxai.proof.trace import build_proof_trace
 from fuzzyxai.proof.verifier import VerificationResult, verify_proof_trace
-from fuzzyxai.viz import save_proof_trace_json, save_route_json, write_traceability_artifacts
-from fuzzyxai.viz.matplotlib_dashboard import render_dashboard
+from fuzzyxai.visualization.operator_dashboard import render_dashboard
+from fuzzyxai.visualization.route_artifacts import save_proof_trace_json, save_route_json
+from fuzzyxai.visualization.traceability import write_traceability_artifacts
 from fuzzyxai.core.route import build_route
 from fuzzyxai.evidence import (
+    ExplanationClaim,
+    ExplanationEdge,
     ExplanationEvidence,
+    ExplanationGraph,
+    HumanExplanation,
+    ExplanationNode,
     TrainingRunAnalysis,
     build_class_concepts,
     build_explanation_graph,
+    build_explanation_claims,
     build_object_trace,
     collect_data_evidence,
     compose_human_explanation,
     detect_subgroup_averaging,
+    determine_explanation_level,
     explanation_to_text,
     evaluate_explanation_quality,
     extract_rules,
     find_similar_tabular_cases,
     find_tabular_counterfactuals,
 )
-from fuzzyxai.visualization.explanation_dashboard import render_explanation_dashboard
+from fuzzyxai.visualization.spec import build_visual_spec
 from fuzzyxai.visualization.view_model import ExplanationViewModel
+from fuzzyxai.explanation_quality import ExplanationQualityReport, build_quality_report
+from fuzzyxai.planner import ExplanationPlanner
 
 
 def _as_rows(values: Any) -> list[list[Any]]:
@@ -77,6 +90,124 @@ def _with_feature_names(internal: Mapping[str, Any], names: list[str]) -> dict[s
 
 
 @dataclass(frozen=True)
+class InspectionResult:
+    """Typed focused view of one claim, rule, object, concept, or graph node."""
+
+    selector: str
+    target_type: str
+    target_id: str
+    target: dict[str, object]
+    related_claims: tuple[ExplanationClaim, ...]
+    related_nodes: tuple[ExplanationNode, ...]
+    related_edges: tuple[ExplanationEdge, ...]
+    visual_spec: dict[str, object]
+
+    def to_dict(self) -> dict[str, object]:
+        return {
+            "selector": self.selector,
+            "target_type": self.target_type,
+            "target_id": self.target_id,
+            "target": self.target,
+            "related_claims": [item.to_dict() for item in self.related_claims],
+            "provenance": self.provenance(),
+            "limitations": list(self.limitations()),
+        }
+
+    def summary(self) -> str:
+        label = self.target.get("statement", self.target.get("label", self.target_id))
+        return f"{self.target_type} {self.target_id}: {label}"
+
+    def evidence(self) -> tuple[ExplanationNode, ...]:
+        return self.related_nodes
+
+    def limitations(self) -> tuple[str, ...]:
+        values = [str(item) for item in self.target.get("limitations", ())]
+        for claim in self.related_claims:
+            values.extend(str(item) for item in claim.limitations)
+        return tuple(dict.fromkeys(values))
+
+    def provenance(self) -> dict[str, object]:
+        return {
+            "nodes": [item.to_dict() for item in self.related_nodes],
+            "edges": [item.to_dict() for item in self.related_edges],
+        }
+
+    def audit(self) -> dict[str, object]:
+        return {
+            "selector": self.selector,
+            "claim_ids": [item.claim_id for item in self.related_claims],
+            "evidence_node_ids": [item.node_id for item in self.related_nodes],
+            "relations": [item.relation for item in self.related_edges],
+            "limitations": list(self.limitations()),
+        }
+
+    def visualize(
+        self,
+        *,
+        view: str | None = None,
+        backend: str = "matplotlib",
+        output: str | Path | None = None,
+    ):
+        selected_view = view or ("rule_ablation" if self.selector.startswith("rule:") else "provenance")
+        if backend == "matplotlib":
+            from fuzzyxai.visualization.matplotlib_renderer import render_visual_spec
+        elif backend == "plotly":
+            from fuzzyxai.visualization.plotly_renderer import render_visual_spec
+        else:
+            raise ValueError(f"unsupported visualization backend: {backend}")
+        return render_visual_spec(self.visual_spec, view=selected_view, output_path=output)
+
+
+ExplanationInspection = InspectionResult
+
+
+@dataclass(frozen=True)
+class WhyNotExplanation:
+    target_class: Any
+    selected_prediction: Any
+    status: str
+    supports_selected: tuple[dict[str, Any], ...]
+    supports_alternative: tuple[dict[str, Any], ...]
+    key_difference: str
+    required_change: str | None
+    limitations: tuple[str, ...]
+
+    def to_dict(self) -> dict[str, Any]:
+        return asdict(self)
+
+
+@dataclass(frozen=True)
+class GlobalExplanationResult:
+    task_type: str
+    sample_count: int
+    prediction_distribution: Mapping[str, int]
+    global_evidence: Mapping[str, Any]
+    capabilities: Mapping[str, Any]
+    limitations: tuple[str, ...]
+
+    def to_dict(self) -> dict[str, Any]:
+        return asdict(self)
+
+
+@dataclass(frozen=True)
+class ModelComparisonResult:
+    model_results: Mapping[str, "ModelExplanationResult"]
+    prediction_agreement: bool
+    reason_overlap: float | None
+    disagreements: tuple[str, ...]
+    limitations: tuple[str, ...]
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "models": {name: result.to_dict() for name, result in self.model_results.items()},
+            "prediction_agreement": self.prediction_agreement,
+            "reason_overlap": self.reason_overlap,
+            "disagreements": list(self.disagreements),
+            "limitations": list(self.limitations),
+        }
+
+
+@dataclass(frozen=True)
 class ModelExplanationResult:
     """Public result returned by ``FuzzyXAI.wrap(...).explain(...)``."""
 
@@ -84,8 +215,45 @@ class ModelExplanationResult:
     view_model: ExplanationViewModel
 
     @property
+    def adapter_id(self) -> str:
+        """Return the adapter that produced the canonical prediction."""
+
+        return self.prediction.adapter_id
+
+    @property
+    def model_evidence(self) -> Mapping[str, Any]:
+        """Expose serialized model evidence without leaking the adapter instance."""
+
+        return self.view_model.model
+
+    @property
     def action(self) -> str:
         return str(self.view_model.risk.get("action", "review"))
+
+    @property
+    def claims(self) -> tuple[ExplanationClaim, ...]:
+        values = self.view_model.claims
+        return tuple(ExplanationClaim.from_dict(item) for item in values) if isinstance(values, (list, tuple)) else tuple()
+
+    @property
+    def explanation_level(self) -> str:
+        return str(self.view_model.explanation_level.get("level", "E0"))
+
+    @property
+    def available_channels(self) -> tuple[str, ...]:
+        return tuple(self.view_model.explanation_level.get("available_channels", ()))
+
+    @property
+    def missing_channels(self) -> tuple[str, ...]:
+        return tuple(self.view_model.explanation_level.get("missing_channels", ()))
+
+    @property
+    def native_channels(self) -> tuple[str, ...]:
+        return tuple(self.view_model.explanation_level.get("native_channels", ()))
+
+    @property
+    def surrogate_channels(self) -> tuple[str, ...]:
+        return tuple(self.view_model.explanation_level.get("surrogate_channels", ()))
 
     def to_dict(self) -> dict[str, Any]:
         return self.view_model.to_dict()
@@ -94,18 +262,170 @@ class ModelExplanationResult:
         return self.view_model.export_json(path)
 
     @property
-    def explanation_graph(self) -> Mapping[str, Any]:
-        return self.view_model.explanation_graph
+    def explanation_graph(self) -> ExplanationGraph:
+        return ExplanationGraph.from_dict(self.view_model.explanation_graph)
 
-    def summary(self, level: str = "user") -> str:
-        """Return evidence-backed user, expert, or audit text."""
+    def explain_for(
+        self,
+        audience: str = "domain_user",
+        *,
+        language: str = "ru",
+    ) -> HumanExplanation:
+        """Return typed, claim-grounded cards for the selected audience."""
 
-        payload = self.view_model.human_explanations.get(level)
+        aliases = {"user": "domain_user", "expert": "ml_engineer", "audit": "auditor"}
+        normalized = aliases.get(audience, audience)
+        if language != "ru":
+            raise ValueError("only the verified Russian human-explanation templates are available")
+        payload = self.view_model.human_explanations.get(normalized)
         if not isinstance(payload, Mapping):
-            raise ValueError(f"unknown or unavailable explanation level: {level}")
-        from fuzzyxai.evidence.contracts import HumanExplanation
+            raise ValueError(f"unknown or unavailable audience profile: {audience}")
+        return HumanExplanation.from_dict(payload, graph=self.explanation_graph)
 
-        return explanation_to_text(HumanExplanation(**payload))
+    def summary(
+        self,
+        audience: str = "domain_user",
+        detail: str = "short",
+        *,
+        level: str | None = None,
+    ) -> str:
+        """Render audience-specific text; technical details require ``detail='full'``."""
+
+        return explanation_to_text(self.explain_for(level or audience), detail=detail)
+
+    def overview(self) -> str:
+        """Answer the five operational questions using claim-grounded text."""
+
+        return self.summary(audience="domain_user", detail="short")
+
+    def story(self) -> str:
+        """Render the evidence route as data, training, knowledge, decision, action."""
+
+        lines = [f"# История решения ({self.explanation_level})"]
+        for stage in self.view_model.visual_spec.get("story", []):
+            refs = ", ".join(stage.get("claim_refs", [])) or "нет claims"
+            lines.append(f"\n## {stage.get('title')} [{stage.get('evidence_status')} / {stage.get('effect')}] ({refs})")
+            facts = stage.get("facts", []) or ["Evidence для этапа отсутствует."]
+            lines.extend(f"- {fact}" for fact in facts)
+        return "\n".join(lines) + "\n"
+
+    def inspect(self, selector: str) -> InspectionResult:
+        """Inspect claim/rule/concept/object/evidence/diagnostic/action provenance."""
+
+        prefix, separator, identifier = selector.partition(":")
+        if selector == "action":
+            prefix, identifier, separator = "action", "action", ":"
+        if not separator or prefix not in {"claim", "rule", "concept", "object", "evidence", "node", "diagnostic", "action"}:
+            raise ValueError("selector must identify claim, rule, concept, object, evidence, diagnostic, or action")
+        graph = self.explanation_graph
+        nodes = list(graph.nodes)
+        edges = list(graph.edges)
+        claims = list(self.claims)
+        target: dict[str, object] | None = None
+        anchors: set[str] = set()
+        if prefix == "claim":
+            normalized = identifier.upper().replace("C", "C-") if identifier.upper().startswith("C") and "-" not in identifier else identifier.upper()
+            selected_claim = next((claim for claim in claims if claim.claim_id.upper() == normalized), None)
+            target = selected_claim.to_dict() if selected_claim else None
+            if selected_claim:
+                anchors.add(f"claim:{selected_claim.claim_id}")
+                anchors.update(str(item) for item in selected_claim.evidence_refs)
+        elif prefix == "rule":
+            target = next((rule for rule in self.view_model.layers.get("rules", []) if str(rule.get("rule_id")) == identifier), None)
+            anchors.add(f"rule:{identifier}")
+        elif prefix == "concept":
+            node_id = f"concept:{identifier}"
+            selected_node = next((node for node in nodes if node.node_id == node_id), None)
+            target = selected_node.to_dict() if selected_node else None
+            anchors.add(node_id)
+        elif prefix == "object":
+            candidates = {f"data:{identifier}", f"training:{identifier}"}
+            selected_node = next((node for node in nodes if node.node_id in candidates), None)
+            target = selected_node.to_dict() if selected_node else None
+            anchors.update(candidates)
+        elif prefix == "diagnostic":
+            node_id = f"diagnostic:{identifier}"
+            selected_node = next((node for node in nodes if node.node_id == node_id), None)
+            target = selected_node.to_dict() if selected_node else None
+            anchors.add(node_id)
+        elif prefix == "action":
+            selected_node = next((node for node in nodes if node.node_id == "action"), None)
+            target = selected_node.to_dict() if selected_node else None
+            anchors.add("action")
+        else:
+            node_id = identifier if prefix == "node" else selector.removeprefix("evidence:")
+            selected_node = next((node for node in nodes if node.node_id == node_id), None)
+            target = selected_node.to_dict() if selected_node else None
+            anchors.add(node_id)
+        if target is None:
+            raise KeyError(f"unknown inspection target: {selector}")
+        related_edges = [edge for edge in edges if edge.source in anchors or edge.target in anchors]
+        related_ids = set(anchors)
+        for edge in related_edges:
+            related_ids.update((edge.source, edge.target))
+        related_nodes = [node for node in nodes if node.node_id in related_ids]
+        related_claims = [
+            claim
+            for claim in claims
+            if f"claim:{claim.claim_id}" in related_ids
+            or any(str(ref) in related_ids for ref in claim.evidence_refs)
+        ]
+        return InspectionResult(selector, prefix, identifier, target, tuple(related_claims), tuple(related_nodes), tuple(related_edges), dict(self.view_model.visual_spec))
+
+    def audit(self) -> dict[str, Any]:
+        """Return full provenance and channel disclosure without presentation text."""
+
+        return {
+            "explanation_level": dict(self.view_model.explanation_level),
+            "claims": [claim.to_dict() for claim in self.claims],
+            "graph": dict(self.view_model.explanation_graph),
+            "diagnostics": list(self.view_model.diagnostics),
+            "action": self.action,
+            "trace": dict(self.view_model.trace),
+            "quality_metrics": dict(self.view_model.quality_metrics),
+        }
+
+    def quality_report(self) -> ExplanationQualityReport:
+        task_type = str(self.prediction.metadata.get("task_type", ""))
+        return build_quality_report(self.view_model.quality_metrics, regression=task_type == TaskType.REGRESSION.value)
+
+    def capability_report(self) -> dict[str, Any]:
+        return {
+            "adapter_id": self.view_model.trace.get("adapter_id"),
+            "model_type": self.view_model.trace.get("model_type"),
+            "task_type": self.prediction.metadata.get("task_type"),
+            "capabilities": dict(self.view_model.trace.get("adapter_capabilities", {})),
+            "resolution": dict(self.view_model.trace.get("adapter_resolution", {})),
+            "planner": dict(self.view_model.trace.get("explanation_plan", {})),
+        }
+
+    def why_not(self, target_class: Any) -> WhyNotExplanation:
+        predictions = self.prediction.predictions
+        selected = predictions[0] if isinstance(predictions, list) and predictions else predictions
+        contributions = self.view_model.model.get("contributions", {})
+        if not isinstance(contributions, Mapping) or not contributions:
+            return WhyNotExplanation(
+                target_class,
+                selected,
+                "insufficient_evidence",
+                (),
+                (),
+                "Локальные вклады для сравнения классов недоступны.",
+                None,
+                ("Alternative-class evidence was not measured.",),
+            )
+        ranked = sorted(((str(name), float(value)) for name, value in contributions.items()), key=lambda item: abs(item[1]), reverse=True)
+        supports_selected = tuple({"feature": name, "value": value} for name, value in ranked if value >= 0)[:3]
+        supports_alternative = tuple({"feature": name, "value": value} for name, value in ranked if value < 0)[:3]
+        difference = (
+            f"Выбранный класс {selected} сильнее поддержан положительными локальными вкладами; "
+            f"для класса {target_class} доступны только противоречащие факторы."
+        )
+        counterfactuals = self.view_model.layers.get("counterfactuals", [])
+        checked = next((item for item in counterfactuals if item.get("target_prediction") == target_class), None)
+        required_change = None if checked is None else str(checked.get("changed_features") or checked.get("changed_rules"))
+        limitations = () if checked is not None else ("A class-changing intervention was not measured; no required change is asserted.",)
+        return WhyNotExplanation(target_class, selected, "supported", supports_selected, supports_alternative, difference, required_change, limitations)
 
     def plot(
         self,
@@ -114,20 +434,26 @@ class ModelExplanationResult:
         kind: str = "dashboard",
         backend: str = "matplotlib",
     ):
-        if kind != "dashboard":
-            raise ValueError(f"unsupported visualization kind: {kind}")
-        if backend != "matplotlib":
-            raise ValueError(f"unsupported visualization backend: {backend}")
-        return render_explanation_dashboard(self.view_model, output_path)
+        return self.visualize(view=kind, backend=backend, output=output_path)
 
     def visualize(
         self,
         *,
-        kind: str = "dashboard",
+        view: str = "explanation_story",
+        kind: str | None = None,
         backend: str = "matplotlib",
+        output: str | Path | None = None,
         output_path: str | Path | None = None,
     ):
-        return self.plot(output_path, kind=kind, backend=backend)
+        selected_view = kind or view
+        selected_output = output if output is not None else output_path
+        if backend == "matplotlib":
+            from fuzzyxai.visualization.matplotlib_renderer import render_visual_spec
+        elif backend == "plotly":
+            from fuzzyxai.visualization.plotly_renderer import render_visual_spec
+        else:
+            raise ValueError(f"unsupported visualization backend: {backend}")
+        return render_visual_spec(self.view_model.visual_spec, view=selected_view, output_path=selected_output)
 
     def export_html(self, path: str | Path) -> Path:
         """Export a self-contained evidence report without recomputing metrics."""
@@ -135,9 +461,9 @@ class ModelExplanationResult:
         output = Path(path)
         output.parent.mkdir(parents=True, exist_ok=True)
         summaries = "\n".join(
-            f"<section><h2>{escape(level.title())}</h2><pre>{escape(self.summary(level))}</pre></section>"
-            for level in ("user", "expert", "audit")
-            if level in self.view_model.human_explanations
+            f"<section><h2>{escape(audience.title())}</h2><pre>{escape(self.summary(audience))}</pre></section>"
+            for audience in ("domain_user", "ml_engineer", "researcher", "auditor")
+            if audience in self.view_model.human_explanations
         )
         output.write_text(
             "<!doctype html><html lang='ru'><meta charset='utf-8'>"
@@ -157,9 +483,15 @@ class ModelExplanationResult:
 class FuzzyXAI:
     """Runtime facade for using FuzzyXAI as an installable framework."""
 
-    def __init__(self, plan: ExplainPlan | None = None, model_adapter: ModelAdapter | None = None):
+    def __init__(
+        self,
+        plan: ExplainPlan | None = None,
+        model_adapter: ModelAdapter | None = None,
+        resolution_report: AdapterResolutionReport | None = None,
+    ):
         self.plan = plan or ExplainPlan.default()
         self._model_adapter = model_adapter
+        self._resolution_report = resolution_report
 
     @property
     def model_adapter(self) -> ModelAdapter:
@@ -174,10 +506,44 @@ class FuzzyXAI:
         *,
         adapter: str | ModelAdapter = "auto",
         explain_plan: ExplainPlan | None = None,
+        task: str | TaskType = "auto",
+        output_decoder: Any = None,
     ) -> "FuzzyXAI":
-        """Wrap a callable or predict-proba model with the canonical adapter contract."""
+        """Wrap a supported model using capability-based adapter resolution."""
 
-        return cls(plan=explain_plan, model_adapter=resolve_model_adapter(model, adapter))
+        resolved, report = resolve_model_adapter_v2(
+            model,
+            task=task,
+            adapter=adapter,
+            output_decoder=output_decoder,
+        )
+        return cls(plan=explain_plan, model_adapter=resolved, resolution_report=report)
+
+    @classmethod
+    def register_adapter(
+        cls,
+        *,
+        adapter_class: Any,
+        predicate: Any,
+        priority: int = 100,
+        name: str | None = None,
+    ) -> None:
+        del cls
+        MODEL_ADAPTER_REGISTRY.register(adapter_class=adapter_class, predicate=predicate, priority=priority, name=name)
+
+    def capability_report(self) -> dict[str, Any]:
+        capabilities = self.model_adapter.capabilities()
+        input_schema = self.model_adapter.input_schema() if isinstance(self.model_adapter, ModelAdapterV2) else None
+        output_schema = self.model_adapter.output_schema() if isinstance(self.model_adapter, ModelAdapterV2) else None
+        return {
+            "adapter_id": self.model_adapter.adapter_id,
+            "model_family": str(getattr(self.model_adapter, "model_family", "legacy")),
+            "task_type": str(getattr(getattr(self.model_adapter, "task_type", None), "value", "unknown")),
+            "capabilities": capabilities.to_dict(),
+            "input_schema": asdict(input_schema) if input_schema else None,
+            "output_schema": {**asdict(output_schema), "task_type": output_schema.task_type.value} if output_schema else None,
+            "resolution": self._resolution_report.to_dict() if self._resolution_report else None,
+        }
 
     def explain(
         self,
@@ -216,6 +582,33 @@ class FuzzyXAI:
         names = list(feature_names or self._model_adapter.feature_names() or _default_feature_names(rows))
         ids = list(object_ids or [f"object_{index}" for index in range(len(rows))])
         internal_evidence = _with_feature_names(self._model_adapter.extract_internal_evidence(inputs), names)
+        adapter_capabilities = self._model_adapter.capabilities()
+        planner = ExplanationPlanner()
+        planner_decision = planner.plan(
+            adapter_capabilities if isinstance(adapter_capabilities, ModelCapabilities) else ModelCapabilities(
+                predict=True,
+                predict_proba=adapter_capabilities.get("predict_proba"),
+                local_contributions=adapter_capabilities.get("feature_importance"),
+                native_rules=adapter_capabilities.get("rules"),
+            ),
+            budget=str((run_parameters or {}).get("budget", "standard")),
+            regression=prediction.metadata.get("task_type") == TaskType.REGRESSION.value,
+        )
+        internal_descriptors = internal_evidence.get("evidence_descriptors", [])
+        surrogate_fidelity = internal_evidence.get("surrogate_fidelity")
+        low_fidelity_surrogate = any(
+            isinstance(item, Mapping) and item.get("origin") == "surrogate" and item.get("name") == "local_contributions"
+            for item in internal_descriptors
+        ) and (surrogate_fidelity is None or float(surrogate_fidelity) < (0.8 if prediction.metadata.get("task_type") == TaskType.REGRESSION.value else 0.9))
+        if low_fidelity_surrogate:
+            internal_evidence.pop("contributions", None)
+            diagnostics.append(
+                {
+                    "code": "D_surrogate_fidelity",
+                    "reason": "surrogate local explanation fidelity is missing or below the configured threshold",
+                    "severity": "warning",
+                }
+            )
 
         alignment_data = evidence.get("alignment")
         alignment = None
@@ -308,12 +701,6 @@ class FuzzyXAI:
             {"id": "action", "label": action, "status": "blocked" if action == "block" else "passed"},
         ]
         plan_json = json.dumps(self.plan.to_dict(), ensure_ascii=False, sort_keys=True, separators=(",", ":"))
-        narrative = str(
-            evidence.get(
-                "narrative",
-                f"Model score {score:.3f}; action {action}." if score is not None else f"Model prediction obtained; action {action}.",
-            )
-        )
         data_evidence = collect_data_evidence(
             rows,
             object_ids=ids,
@@ -396,34 +783,83 @@ class FuzzyXAI:
             counterfactuals=[*counterfactuals, *additional.counterfactuals],
             missing=list(dict.fromkeys([*missing, *additional.missing])),
         )
-        graph = build_explanation_graph(
+        contributions = dict(evidence.get("contributions", internal_evidence.get("contributions", {})))
+        contribution_method = evidence.get("contribution_method", internal_evidence.get("contribution_method"))
+        prediction_payload = {
+            **prediction.to_dict(),
+            "score": score,
+            "contributions": contributions,
+            "contribution_method": contribution_method,
+        }
+        claims = build_explanation_claims(
             explanation_evidence,
-            prediction={**prediction.to_dict(), "score": score},
+            prediction=prediction_payload,
             diagnostics=diagnostics,
             action=action,
         )
+        graph = build_explanation_graph(
+            explanation_evidence,
+            prediction=prediction_payload,
+            diagnostics=diagnostics,
+            action=action,
+            claims=claims,
+        )
+        explanation_level = determine_explanation_level(
+            explanation_evidence,
+            contribution_method=str(contribution_method) if contribution_method else None,
+            operator_channels={
+                "alignment": alignment is not None,
+                "reduction": reduction is not None,
+                "risk": risk is not None,
+            },
+        )
         human = {
-            level: compose_human_explanation(
-                explanation_evidence,
+            audience: compose_human_explanation(
+                claims,
                 graph,
-                prediction={**prediction.to_dict(), "score": score},
                 action=action,
-                level=level,
-            ).to_dict()
-            for level in ("user", "expert", "audit")
+                audience=audience,
+                evidence=explanation_evidence,
+                domain_language=self.plan.domain_language,
+            ).to_dict(include_technical_trace=False)
+            for audience in ("domain_user", "ml_engineer", "researcher", "auditor")
         }
+        human.update(
+            {
+                "user": human["domain_user"],
+                "expert": human["ml_engineer"],
+                "audit": human["auditor"],
+            }
+        )
         quality_metrics = evaluate_explanation_quality(
             explanation_evidence,
             graph,
             contributions=dict(evidence.get("contributions", internal_evidence.get("contributions", {}))),
-            supplied_metrics=dict(evidence.get("quality_metrics", {})),
+            supplied_metrics={
+                **dict(evidence.get("quality_metrics", {})),
+                **({"fidelity": float(surrogate_fidelity)} if surrogate_fidelity is not None else {}),
+                **(
+                    {"reconstruction_error": float(internal_evidence["reconstruction_error"])}
+                    if internal_evidence.get("reconstruction_error") is not None
+                    else {}
+                ),
+            },
+        )
+        visual_spec = build_visual_spec(
+            explanation_evidence,
+            claims,
+            graph,
+            prediction=prediction_payload,
+            action=action,
+            contributions=contributions,
+            explanation_level=explanation_level.to_dict(),
         )
         view_model = ExplanationViewModel(
             model={
                 **prediction.to_dict(),
                 "score": score,
-                "contributions": dict(evidence.get("contributions", internal_evidence.get("contributions", {}))),
-                "contribution_method": evidence.get("contribution_method", internal_evidence.get("contribution_method")),
+                "contributions": contributions,
+                "contribution_method": contribution_method,
                 "contribution_limitations": list(internal_evidence.get("limitations", [])),
             },
             fuzzy={"memberships": dict(evidence.get("memberships", {}))},
@@ -442,16 +878,15 @@ class FuzzyXAI:
                 "action": action,
             },
             diagnostics=diagnostics,
-            claims={
-                "allowed": ["model prediction was executed", "supplied operator evidence was computed by the canonical core"],
-                "forbidden": ["external model quality is proven", "missing explanation channels were inferred"],
-            },
-            narrative=narrative,
+            claims=[claim.to_dict() for claim in claims],
+            narrative=" ".join(claim.statement for claim in claims if claim.claim_type in {"prediction", "recommended_action"}),
             trace={
                 "adapter_id": prediction.adapter_id,
                 "model_type": prediction.model_type,
                 "model_fingerprint": self._model_adapter.model_fingerprint(),
-                "adapter_capabilities": self._model_adapter.capabilities(),
+                "adapter_capabilities": adapter_capabilities.to_dict(),
+                "adapter_resolution": self._resolution_report.to_dict() if self._resolution_report else {},
+                "explanation_plan": planner_decision.to_dict(),
                 "object_ids": ids,
                 "dataset_version": dataset_version,
                 "input_sha256": _payload_sha256(rows),
@@ -464,6 +899,8 @@ class FuzzyXAI:
             explanation_graph=graph.to_dict(),
             human_explanations=human,
             quality_metrics=quality_metrics,
+            explanation_level=explanation_level.to_dict(),
+            visual_spec=visual_spec.to_dict(),
         )
         return ModelExplanationResult(prediction=prediction, view_model=view_model)
 
@@ -471,7 +908,7 @@ class FuzzyXAI:
         self,
         input_object: Any,
         *,
-        object_id: str,
+        object_id: str = "object_0",
         include_similar_cases: bool = False,
         include_counterfactuals: bool = False,
         include_training_trace: bool = False,
@@ -486,6 +923,94 @@ class FuzzyXAI:
             include_counterfactuals=include_counterfactuals,
             include_training_trace=include_training_trace,
             **kwargs,
+        )
+
+    def explain_batch(
+        self,
+        inputs: Any,
+        *,
+        object_ids: list[str] | None = None,
+        **kwargs: Any,
+    ) -> ModelExplanationResult:
+        rows = _as_rows(inputs)
+        ids = object_ids or [f"object_{index}" for index in range(len(rows))]
+        return self.explain(rows, object_ids=ids, **kwargs)
+
+    def explain_global(
+        self,
+        reference_data: Any,
+        reference_labels: Any = None,
+        *,
+        feature_names: list[str] | None = None,
+    ) -> GlobalExplanationResult:
+        rows = _as_rows(reference_data)
+        prediction = self.model_adapter.predict(rows)
+        values = prediction.predictions if isinstance(prediction.predictions, list) else [prediction.predictions]
+        distribution: dict[str, int] = {}
+        for value in values:
+            key = str(value)
+            distribution[key] = distribution.get(key, 0) + 1
+        if isinstance(self.model_adapter, ModelAdapterV2):
+            context = ExplanationContext(
+                reference_data=rows,
+                reference_labels=reference_labels,
+                feature_names=tuple(feature_names or self.model_adapter.feature_names()),
+            )
+            global_evidence = self.model_adapter.extract_global_evidence(context)
+            payload = dict(global_evidence.channels)
+            limitations = global_evidence.limitations
+            task_type = self.model_adapter.task_type.value
+        else:
+            payload = {}
+            limitations = ("Legacy adapter exposes no typed global evidence.",)
+            task_type = "unknown"
+        return GlobalExplanationResult(task_type, len(rows), distribution, payload, self.model_adapter.capabilities().to_dict(), limitations)
+
+    @classmethod
+    def compare_models(
+        cls,
+        models: Mapping[str, Any],
+        *,
+        item: Any,
+        reference_data: Any = None,
+        reference_labels: Any = None,
+        task: str | TaskType = "auto",
+        feature_names: list[str] | None = None,
+    ) -> ModelComparisonResult:
+        results = {
+            name: cls.wrap(model, task=task).explain_one(
+                item,
+                object_id="comparison_object",
+                reference_data=reference_data,
+                reference_labels=reference_labels,
+                feature_names=feature_names,
+            )
+            for name, model in models.items()
+        }
+        predictions = []
+        reason_sets = []
+        for result in results.values():
+            value = result.prediction.predictions
+            predictions.append(value[0] if isinstance(value, list) and value else value)
+            reason_sets.append({item.subject_id for item in result.claims if item.claim_type == "feature_contribution"})
+        agreement = len({str(item) for item in predictions}) <= 1
+        if len(reason_sets) < 2 or not any(reason_sets):
+            overlap = None
+        else:
+            union = set.union(*reason_sets)
+            intersection = set.intersection(*reason_sets)
+            overlap = len(intersection) / len(union) if union else None
+        disagreements = tuple(
+            f"{name}: prediction={prediction}"
+            for (name, _), prediction in zip(results.items(), predictions)
+            if not agreement
+        )
+        return ModelComparisonResult(
+            results,
+            agreement,
+            overlap,
+            disagreements,
+            ("Reason agreement compares disclosed local evidence channels; missing channels are not imputed.",),
         )
 
     def observe_training(

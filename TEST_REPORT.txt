@@ -1,32 +1,36 @@
-FuzzyXAI framework release verification
+FuzzyXAI v1.3.0rc1 universal model integration candidate
 Date: 2026-07-19
-Branch: feat/research-framework-completion
 
-PASS: targeted framework contracts - 27 passed
-PASS: full local regression suite - 299 passed
-PASS: operator manifest - 30/30 entries
-PASS: object 85 controlled protocol generated
-PASS: git diff whitespace check
-PASS: clean Python 3.11 checkout - 299 passed
-PASS: clean Python 3.11 framework gate
-PASS: clean Python 3.11 wheel and sdist build
-PASS: clean Python 3.11 installed-wheel import
-PASS: clean Python 3.12 checkout - 299 passed
-PASS: clean Python 3.12 framework gate
-PASS: clean Python 3.12 wheel and sdist build
-PASS: clean Python 3.12 installed-wheel import
-PASS: public GitHub Actions Python 3.11
-PASS: public GitHub Actions Python 3.12
-PASS: public GitHub Actions Octave JSON/dashboard smoke
-Public runs:
-- https://github.com/lebedeffson/fuzzy-xai-operator/actions/runs/29668215392
-- https://github.com/lebedeffson/fuzzy-xai-operator/actions/runs/29668320459
+PASS: focused local compatibility/model/external-gate suite, 48 passed
+SKIP: local optional runtime tests, 6 skipped because runtimes were not installed locally
+PASS: Ruff on changed framework, scripts, and tests
+PASS: strict MyPy on 8 typed contract modules
+PASS: Python compile check
+PASS: 34 deterministic core model configurations
+PASS: 24 classification configurations
+PASS: 10 regression configurations
+PASS: prediction parity rate 1.0
+PASS: adapter conformance rate 1.0
+PASS: explanation graph validation rate 1.0
+PASS: universality checksum manifest
+PASS: external validation package integrity
+PASS: Chapter 4 candidate manifest and computed gates
 
-Environment used for the full local regression suite:
-- local project virtual environment
-- Python 3.14
+PASS: public Python 3.11 full regression, 338 passed, 6 skipped
+PASS: public Python 3.12 full regression, 338 passed, 6 skipped
+PASS: public Octave JSON loader and dashboard
+PASS: public wheel build and clean wheel import
+PASS: XGBoost native contribution adapter
+PASS: LightGBM native contribution adapter
+PASS: CatBoost native contribution adapter
+PASS: PyTorch integrated-gradient adapter
+PASS: TensorFlow/Keras gradient adapter
+PASS: ONNX Runtime prediction-only capability contract
+PASS: readiness workflow https://github.com/lebedeffson/fuzzy-xai-operator/actions/runs/29698737386
+PASS: universal model workflow https://github.com/lebedeffson/fuzzy-xai-operator/actions/runs/29698737408
 
-Release tag: v1.0.0-rc1
+BLOCKED: independent comprehension pilot planned_not_run
+BLOCKED: regulated-domain dictionary pending_external_review
+BLOCKED: merge to main and release tag
 
-Warnings in the full suite are limited to third-party sklearn feature-name and
-SHAP/Matplotlib deprecation warnings; no framework test failed.
+Warnings are third-party scikit-learn/SHAP warnings; no project test failures in final public runs.

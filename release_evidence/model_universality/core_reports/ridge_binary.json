@@ -1,0 +1,748 @@
+{
+  "adapter_id": "sklearn_linear_v2",
+  "capabilities": {
+    "adapter_id": "sklearn_linear_v2",
+    "capabilities": {
+      "attention": false,
+      "calibration": false,
+      "channels": [
+        {
+          "available": true,
+          "fidelity": null,
+          "fidelity_status": "not_applicable",
+          "limitations": [],
+          "method": "model.predict",
+          "name": "prediction",
+          "origin": "native"
+        },
+        {
+          "available": true,
+          "fidelity": null,
+          "fidelity_status": "not_applicable",
+          "limitations": [
+            "Perturbation is not a domain-validated intervention."
+          ],
+          "method": "model_re_evaluation",
+          "name": "perturbation_counterfactual",
+          "origin": "derived"
+        },
+        {
+          "available": true,
+          "fidelity": null,
+          "fidelity_status": "not_applicable",
+          "limitations": [
+            "Decision score is not a calibrated probability."
+          ],
+          "method": "model.decision_function",
+          "name": "decision_function",
+          "origin": "native"
+        },
+        {
+          "available": true,
+          "fidelity": null,
+          "fidelity_status": "not_applicable",
+          "limitations": [],
+          "method": "model.coef_",
+          "name": "coefficients",
+          "origin": "native"
+        },
+        {
+          "available": true,
+          "fidelity": null,
+          "fidelity_status": "not_applicable",
+          "limitations": [],
+          "method": "x_i * coefficient_i",
+          "name": "local_contributions",
+          "origin": "derived_from_native"
+        }
+      ],
+      "checkpoints": false,
+      "class_names": true,
+      "decision_function": true,
+      "decision_path": false,
+      "embeddings": false,
+      "feature_importance": true,
+      "feature_names": false,
+      "global_importance": true,
+      "gradients": false,
+      "input_constraints": false,
+      "integrated_gradients": false,
+      "local_contributions": true,
+      "native_counterfactual": false,
+      "native_rules": false,
+      "nearest_neighbors": false,
+      "occlusion": false,
+      "per_sample_loss": false,
+      "perturbation_counterfactual": true,
+      "predict": true,
+      "predict_proba": false,
+      "rules": false,
+      "support_examples": false,
+      "training_history": false,
+      "uncertainty": false
+    },
+    "input_schema": {
+      "constraints": {},
+      "dtype": "unknown",
+      "feature_names": [],
+      "feature_provenance": {},
+      "shape": [],
+      "transformed_feature_names": []
+    },
+    "model_family": "sklearn_linear",
+    "output_schema": {
+      "calibrated_probability": false,
+      "classes": [
+        0,
+        1
+      ],
+      "output_names": [],
+      "score_semantics": "model_output",
+      "task_type": "binary_classification"
+    },
+    "resolution": {
+      "matched_predicates": [
+        "sklearn_exact",
+        "decision_function_v2"
+      ],
+      "rejected_adapters": [
+        "native_rules_v2",
+        "catboost",
+        "lightgbm",
+        "xgboost",
+        "keras",
+        "onnx",
+        "torch",
+        "predict_proba_v2",
+        "callable_v2"
+      ],
+      "selected_adapter": "sklearn_linear_v2",
+      "selected_family": "sklearn_linear",
+      "task_type": "binary_classification",
+      "warnings": []
+    },
+    "task_type": "binary_classification"
+  },
+  "config_id": "ridge_binary",
+  "conformance": {
+    "adapter_id": "sklearn_linear_v2",
+    "checks": [
+      {
+        "check_id": "prediction_available",
+        "detail": "canonical prediction returned",
+        "status": "pass"
+      },
+      {
+        "check_id": "prediction_parity",
+        "detail": "adapter output matches model.predict",
+        "status": "pass"
+      },
+      {
+        "check_id": "capabilities_serializable",
+        "detail": "capability report is JSON serializable",
+        "status": "pass"
+      },
+      {
+        "check_id": "capability_truthfulness",
+        "detail": "all available channels have explicit descriptors",
+        "status": "pass"
+      },
+      {
+        "check_id": "fingerprint_stable",
+        "detail": "fingerprint is stable SHA256",
+        "status": "pass"
+      },
+      {
+        "check_id": "local_evidence_serializable",
+        "detail": "local evidence is deterministic JSON data",
+        "status": "pass"
+      }
+    ],
+    "errors": [],
+    "model_family": "sklearn_linear",
+    "status": "pass",
+    "task_type": "binary_classification",
+    "warnings": []
+  },
+  "graph_errors": [],
+  "human_explanation": {
+    "audience": "domain_user",
+    "claim_refs": {
+      "changes": [],
+      "concerns": [
+        "C-023",
+        "C-002"
+      ],
+      "decision": [
+        "C-001"
+      ],
+      "main_reasons": [
+        "C-008",
+        "C-020",
+        "C-019"
+      ],
+      "recommended_action": [
+        "C-024"
+      ],
+      "reliability": [
+        "C-024",
+        "C-008",
+        "C-020",
+        "C-019",
+        "C-023",
+        "C-002",
+        "C-010",
+        "C-022",
+        "C-021"
+      ]
+    },
+    "concerns": [
+      {
+        "claim_refs": [
+          "C-023"
+        ],
+        "evidence_refs": [
+          "diagnostic:2"
+        ],
+        "explanation": "Для части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено.",
+        "title": "Не все проверки подтверждены"
+      },
+      {
+        "claim_refs": [
+          "C-002"
+        ],
+        "evidence_refs": [
+          "contribution:feature_2"
+        ],
+        "explanation": "Значение входит в число наиболее высоких в контрольной выборке из 40 объектов (обучающая выборка). Модель использует для этого показателя измеренный линейный коэффициент. Поэтому этот показатель противоречит прогнозу.",
+        "title": "Feature 2"
+      }
+    ],
+    "decision": {
+      "claim_refs": [
+        "C-001"
+      ],
+      "domain_language_status": "insufficient_domain_language",
+      "evidence_refs": [
+        "prediction"
+      ],
+      "explanation": "Модель сформировала результат, но человеко-понятное название класса в плане объяснения не задано. До заполнения предметного словаря этот результат нельзя использовать как предметное заключение.",
+      "title": "Предметное значение класса не задано"
+    },
+    "decision_changes": [],
+    "details": {
+      "contradicts": [
+        {
+          "claim_refs": [
+            "C-002"
+          ],
+          "evidence_refs": [
+            "contribution:feature_2"
+          ],
+          "explanation": "Значение входит в число наиболее высоких в контрольной выборке из 40 объектов (обучающая выборка). Модель использует для этого показателя измеренный линейный коэффициент. Поэтому этот показатель противоречит прогнозу.",
+          "title": "Feature 2"
+        },
+        {
+          "claim_refs": [
+            "C-003"
+          ],
+          "evidence_refs": [
+            "contribution:feature_6"
+          ],
+          "explanation": "Значение входит в число наиболее высоких в контрольной выборке из 40 объектов (обучающая выборка). Модель использует для этого показателя измеренный линейный коэффициент. Поэтому этот показатель противоречит прогнозу.",
+          "title": "Feature 6"
+        },
+        {
+          "claim_refs": [
+            "C-004"
+          ],
+          "evidence_refs": [
+            "contribution:feature_3"
+          ],
+          "explanation": "Значение входит в число наиболее высоких в контрольной выборке из 40 объектов (обучающая выборка). Модель использует для этого показателя измеренный линейный коэффициент. Поэтому этот показатель противоречит прогнозу.",
+          "title": "Feature 3"
+        },
+        {
+          "claim_refs": [
+            "C-005"
+          ],
+          "evidence_refs": [
+            "contribution:feature_1"
+          ],
+          "explanation": "Значение входит в число наиболее высоких в контрольной выборке из 40 объектов (обучающая выборка). Модель использует для этого показателя измеренный линейный коэффициент. Поэтому этот показатель противоречит прогнозу.",
+          "title": "Feature 1"
+        },
+        {
+          "claim_refs": [
+            "C-006"
+          ],
+          "evidence_refs": [
+            "contribution:feature_0"
+          ],
+          "explanation": "Значение входит в число наиболее высоких в контрольной выборке из 40 объектов (обучающая выборка). Модель использует для этого показателя измеренный линейный коэффициент. Поэтому этот показатель противоречит прогнозу.",
+          "title": "Feature 0"
+        },
+        {
+          "claim_refs": [
+            "C-007"
+          ],
+          "evidence_refs": [
+            "contribution:feature_4"
+          ],
+          "explanation": "Значение входит в число наиболее высоких в контрольной выборке из 40 объектов (обучающая выборка). Модель использует для этого показателя измеренный линейный коэффициент. Поэтому этот показатель противоречит прогнозу.",
+          "title": "Feature 4"
+        },
+        {
+          "claim_refs": [
+            "C-009"
+          ],
+          "evidence_refs": [
+            "contribution:feature_5"
+          ],
+          "explanation": "Значение входит в число наиболее высоких в контрольной выборке из 40 объектов (обучающая выборка). Модель использует для этого показателя измеренный линейный коэффициент. Поэтому этот показатель противоречит прогнозу.",
+          "title": "Feature 5"
+        }
+      ],
+      "limitations": [
+        {
+          "claim_refs": [
+            "C-023"
+          ],
+          "evidence_refs": [
+            "diagnostic:2"
+          ],
+          "explanation": "Для части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено.",
+          "title": "Не все проверки подтверждены"
+        },
+        {
+          "claim_refs": [
+            "C-002"
+          ],
+          "evidence_refs": [
+            "contribution:feature_2"
+          ],
+          "explanation": "Значение входит в число наиболее высоких в контрольной выборке из 40 объектов (обучающая выборка). Модель использует для этого показателя измеренный линейный коэффициент. Поэтому этот показатель противоречит прогнозу.",
+          "title": "Feature 2"
+        },
+        {
+          "claim_refs": [
+            "C-003"
+          ],
+          "evidence_refs": [
+            "contribution:feature_6"
+          ],
+          "explanation": "Значение входит в число наиболее высоких в контрольной выборке из 40 объектов (обучающая выборка). Модель использует для этого показателя измеренный линейный коэффициент. Поэтому этот показатель противоречит прогнозу.",
+          "title": "Feature 6"
+        },
+        {
+          "claim_refs": [
+            "C-004"
+          ],
+          "evidence_refs": [
+            "contribution:feature_3"
+          ],
+          "explanation": "Значение входит в число наиболее высоких в контрольной выборке из 40 объектов (обучающая выборка). Модель использует для этого показателя измеренный линейный коэффициент. Поэтому этот показатель противоречит прогнозу.",
+          "title": "Feature 3"
+        },
+        {
+          "claim_refs": [
+            "C-005"
+          ],
+          "evidence_refs": [
+            "contribution:feature_1"
+          ],
+          "explanation": "Значение входит в число наиболее высоких в контрольной выборке из 40 объектов (обучающая выборка). Модель использует для этого показателя измеренный линейный коэффициент. Поэтому этот показатель противоречит прогнозу.",
+          "title": "Feature 1"
+        },
+        {
+          "claim_refs": [
+            "C-006"
+          ],
+          "evidence_refs": [
+            "contribution:feature_0"
+          ],
+          "explanation": "Значение входит в число наиболее высоких в контрольной выборке из 40 объектов (обучающая выборка). Модель использует для этого показателя измеренный линейный коэффициент. Поэтому этот показатель противоречит прогнозу.",
+          "title": "Feature 0"
+        },
+        {
+          "claim_refs": [
+            "C-007"
+          ],
+          "evidence_refs": [
+            "contribution:feature_4"
+          ],
+          "explanation": "Значение входит в число наиболее высоких в контрольной выборке из 40 объектов (обучающая выборка). Модель использует для этого показателя измеренный линейный коэффициент. Поэтому этот показатель противоречит прогнозу.",
+          "title": "Feature 4"
+        },
+        {
+          "claim_refs": [
+            "C-009"
+          ],
+          "evidence_refs": [
+            "contribution:feature_5"
+          ],
+          "explanation": "Значение входит в число наиболее высоких в контрольной выборке из 40 объектов (обучающая выборка). Модель использует для этого показателя измеренный линейный коэффициент. Поэтому этот показатель противоречит прогнозу.",
+          "title": "Feature 5"
+        }
+      ],
+      "similar_cases": [],
+      "supports": [
+        {
+          "claim_refs": [
+            "C-008"
+          ],
+          "comparison_text": "Значение входит в число наиболее высоких в контрольной выборке из 40 объектов (обучающая выборка).",
+          "effect_direction": "supports",
+          "evidence_refs": [
+            "contribution:feature_7"
+          ],
+          "explanation": "Значение входит в число наиболее высоких в контрольной выборке из 40 объектов (обучающая выборка). Модель использует для этого показателя измеренный линейный коэффициент. Поэтому этот показатель поддерживает прогноз.",
+          "subject_label": "feature 7",
+          "title": "Feature 7"
+        },
+        {
+          "claim_refs": [
+            "C-020"
+          ],
+          "comparison_text": "Объект сопоставлен с типичным профилем группы «1» по обучающей выборке.",
+          "effect_direction": "supports",
+          "evidence_refs": [
+            "concept:1"
+          ],
+          "explanation": "По сравнению с референсной выборкой объект близок к типичному профилю группы «1». Такое сходство поддерживает результат, но не заменяет проверку ограничений.",
+          "subject_label": "1",
+          "title": "Типичный профиль группы 1"
+        },
+        {
+          "claim_refs": [
+            "C-019"
+          ],
+          "comparison_text": "Объект сопоставлен с типичным профилем группы «0» по обучающей выборке.",
+          "effect_direction": "supports",
+          "evidence_refs": [
+            "concept:0"
+          ],
+          "explanation": "По сравнению с референсной выборкой объект близок к типичному профилю группы «0». Такое сходство поддерживает результат, но не заменяет проверку ограничений.",
+          "subject_label": "0",
+          "title": "Типичный профиль группы 0"
+        }
+      ],
+      "technical_metrics": [
+        {
+          "claim_refs": [
+            "C-002"
+          ],
+          "evidence_refs": [
+            "contribution:feature_2"
+          ],
+          "explanation": "-0.396; сравнение: zero local contribution",
+          "title": "local_contribution"
+        },
+        {
+          "claim_refs": [
+            "C-003"
+          ],
+          "evidence_refs": [
+            "contribution:feature_6"
+          ],
+          "explanation": "-0.262; сравнение: zero local contribution",
+          "title": "local_contribution"
+        },
+        {
+          "claim_refs": [
+            "C-004"
+          ],
+          "evidence_refs": [
+            "contribution:feature_3"
+          ],
+          "explanation": "-0.209; сравнение: zero local contribution",
+          "title": "local_contribution"
+        },
+        {
+          "claim_refs": [
+            "C-005"
+          ],
+          "evidence_refs": [
+            "contribution:feature_1"
+          ],
+          "explanation": "-0.064; сравнение: zero local contribution",
+          "title": "local_contribution"
+        },
+        {
+          "claim_refs": [
+            "C-006"
+          ],
+          "evidence_refs": [
+            "contribution:feature_0"
+          ],
+          "explanation": "-0.027; сравнение: zero local contribution",
+          "title": "local_contribution"
+        },
+        {
+          "claim_refs": [
+            "C-007"
+          ],
+          "evidence_refs": [
+            "contribution:feature_4"
+          ],
+          "explanation": "-0.016; сравнение: zero local contribution",
+          "title": "local_contribution"
+        },
+        {
+          "claim_refs": [
+            "C-008"
+          ],
+          "evidence_refs": [
+            "contribution:feature_7"
+          ],
+          "explanation": "0.006; сравнение: zero local contribution",
+          "title": "local_contribution"
+        },
+        {
+          "claim_refs": [
+            "C-009"
+          ],
+          "evidence_refs": [
+            "contribution:feature_5"
+          ],
+          "explanation": "-0.005; сравнение: zero local contribution",
+          "title": "local_contribution"
+        },
+        {
+          "claim_refs": [
+            "C-010"
+          ],
+          "evidence_refs": [
+            "data:ridge_binary_object"
+          ],
+          "explanation": "1.000",
+          "title": "data_quality"
+        },
+        {
+          "claim_refs": [
+            "C-011"
+          ],
+          "evidence_refs": [
+            "rule:linear_0_6"
+          ],
+          "explanation": "0.332",
+          "title": "rule_importance"
+        },
+        {
+          "claim_refs": [
+            "C-012"
+          ],
+          "evidence_refs": [
+            "rule:linear_0_2"
+          ],
+          "explanation": "0.320",
+          "title": "rule_importance"
+        },
+        {
+          "claim_refs": [
+            "C-013"
+          ],
+          "evidence_refs": [
+            "rule:linear_0_3"
+          ],
+          "explanation": "0.137",
+          "title": "rule_importance"
+        },
+        {
+          "claim_refs": [
+            "C-014"
+          ],
+          "evidence_refs": [
+            "rule:linear_0_1"
+          ],
+          "explanation": "0.052",
+          "title": "rule_importance"
+        },
+        {
+          "claim_refs": [
+            "C-015"
+          ],
+          "evidence_refs": [
+            "rule:linear_0_4"
+          ],
+          "explanation": "0.048",
+          "title": "rule_importance"
+        },
+        {
+          "claim_refs": [
+            "C-016"
+          ],
+          "evidence_refs": [
+            "rule:linear_0_0"
+          ],
+          "explanation": "0.017",
+          "title": "rule_importance"
+        },
+        {
+          "claim_refs": [
+            "C-017"
+          ],
+          "evidence_refs": [
+            "rule:linear_0_5"
+          ],
+          "explanation": "0.007",
+          "title": "rule_importance"
+        },
+        {
+          "claim_refs": [
+            "C-018"
+          ],
+          "evidence_refs": [
+            "rule:linear_0_7"
+          ],
+          "explanation": "0.003",
+          "title": "rule_importance"
+        }
+      ],
+      "training": []
+    },
+    "evidence_trace": [],
+    "language": "ru",
+    "level": "user",
+    "limitations": [
+      "Для части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено.",
+      "Значение входит в число наиболее высоких в контрольной выборке из 40 объектов (обучающая выборка). Модель использует для этого показателя измеренный линейный коэффициент. Поэтому этот показатель противоречит прогнозу.",
+      "Значение входит в число наиболее высоких в контрольной выборке из 40 объектов (обучающая выборка). Модель использует для этого показателя измеренный линейный коэффициент. Поэтому этот показатель противоречит прогнозу.",
+      "Значение входит в число наиболее высоких в контрольной выборке из 40 объектов (обучающая выборка). Модель использует для этого показателя измеренный линейный коэффициент. Поэтому этот показатель противоречит прогнозу.",
+      "Значение входит в число наиболее высоких в контрольной выборке из 40 объектов (обучающая выборка). Модель использует для этого показателя измеренный линейный коэффициент. Поэтому этот показатель противоречит прогнозу.",
+      "Значение входит в число наиболее высоких в контрольной выборке из 40 объектов (обучающая выборка). Модель использует для этого показателя измеренный линейный коэффициент. Поэтому этот показатель противоречит прогнозу.",
+      "Значение входит в число наиболее высоких в контрольной выборке из 40 объектов (обучающая выборка). Модель использует для этого показателя измеренный линейный коэффициент. Поэтому этот показатель противоречит прогнозу.",
+      "Значение входит в число наиболее высоких в контрольной выборке из 40 объектов (обучающая выборка). Модель использует для этого показателя измеренный линейный коэффициент. Поэтому этот показатель противоречит прогнозу."
+    ],
+    "lost_or_averaged": [
+      "Для части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено.",
+      "Значение входит в число наиболее высоких в контрольной выборке из 40 объектов (обучающая выборка). Модель использует для этого показателя измеренный линейный коэффициент. Поэтому этот показатель противоречит прогнозу."
+    ],
+    "main_reasons": [
+      {
+        "claim_refs": [
+          "C-008"
+        ],
+        "comparison_text": "Значение входит в число наиболее высоких в контрольной выборке из 40 объектов (обучающая выборка).",
+        "effect_direction": "supports",
+        "evidence_refs": [
+          "contribution:feature_7"
+        ],
+        "explanation": "Значение входит в число наиболее высоких в контрольной выборке из 40 объектов (обучающая выборка). Модель использует для этого показателя измеренный линейный коэффициент. Поэтому этот показатель поддерживает прогноз.",
+        "subject_label": "feature 7",
+        "title": "Feature 7"
+      },
+      {
+        "claim_refs": [
+          "C-020"
+        ],
+        "comparison_text": "Объект сопоставлен с типичным профилем группы «1» по обучающей выборке.",
+        "effect_direction": "supports",
+        "evidence_refs": [
+          "concept:1"
+        ],
+        "explanation": "По сравнению с референсной выборкой объект близок к типичному профилю группы «1». Такое сходство поддерживает результат, но не заменяет проверку ограничений.",
+        "subject_label": "1",
+        "title": "Типичный профиль группы 1"
+      },
+      {
+        "claim_refs": [
+          "C-019"
+        ],
+        "comparison_text": "Объект сопоставлен с типичным профилем группы «0» по обучающей выборке.",
+        "effect_direction": "supports",
+        "evidence_refs": [
+          "concept:0"
+        ],
+        "explanation": "По сравнению с референсной выборкой объект близок к типичному профилю группы «0». Такое сходство поддерживает результат, но не заменяет проверку ограничений.",
+        "subject_label": "0",
+        "title": "Типичный профиль группы 0"
+      }
+    ],
+    "model_observed": [
+      "Модель сформировала результат, но человеко-понятное название класса в плане объяснения не задано. До заполнения предметного словаря этот результат нельзя использовать как предметное заключение."
+    ],
+    "recommended_action": {
+      "action": "review",
+      "claim_refs": [
+        "C-024"
+      ],
+      "evidence_refs": [
+        "diagnostic:0",
+        "diagnostic:1",
+        "diagnostic:2"
+      ],
+      "explanation": "Результат недостаточно надёжен для автоматического решения.",
+      "title": "Проверить специалистом"
+    },
+    "reliability": {
+      "claim_refs": [
+        "C-024",
+        "C-008",
+        "C-020",
+        "C-019",
+        "C-023",
+        "C-002",
+        "C-010",
+        "C-022",
+        "C-021"
+      ],
+      "conclusion": "Эти ограничения не позволяют использовать результат автоматически.",
+      "evidence_refs": [
+        "diagnostic:0",
+        "diagnostic:1",
+        "diagnostic:2",
+        "contribution:feature_7",
+        "concept:1",
+        "concept:0",
+        "contribution:feature_2",
+        "data:ridge_binary_object"
+      ],
+      "explanation": "Решение поддерживают: feature 7, 1, 0. Доверие ограничивают: не все проверки подтверждены, feature 2. Не хватает данных для проверок: предметное значение прогнозируемой группы. Эти ограничения не позволяют использовать результат автоматически.",
+      "limited_by": [
+        "Не все проверки подтверждены",
+        "Feature 2"
+      ],
+      "missing_evidence": [
+        "предметное значение прогнозируемой группы"
+      ],
+      "supported_by": [
+        "feature 7",
+        "1",
+        "0"
+      ],
+      "title": "Требуется дополнительная проверка"
+    },
+    "similar_cases": [],
+    "summary": "## Решение\nМодель сформировала результат, но человеко-понятное название класса в плане объяснения не задано. До заполнения предметного словаря этот результат нельзя использовать как предметное заключение.\n\n## Почему\nЗначение входит в число наиболее высоких в контрольной выборке из 40 объектов (обучающая выборка). Модель использует для этого показателя измеренный линейный коэффициент. Поэтому этот показатель поддерживает прогноз.\nПо сравнению с референсной выборкой объект близок к типичному профилю группы «1». Такое сходство поддерживает результат, но не заменяет проверку ограничений.\nПо сравнению с референсной выборкой объект близок к типичному профилю группы «0». Такое сходство поддерживает результат, но не заменяет проверку ограничений.\n\n## Что вызывает сомнение\nДля части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено.\nЗначение входит в число наиболее высоких в контрольной выборке из 40 объектов (обучающая выборка). Модель использует для этого показателя измеренный линейный коэффициент. Поэтому этот показатель противоречит прогнозу.\n\n## Насколько можно доверять\nРешение поддерживают: feature 7, 1, 0. Доверие ограничивают: не все проверки подтверждены, feature 2. Не хватает данных для проверок: предметное значение прогнозируемой группы. Эти ограничения не позволяют использовать результат автоматически.\n\n## Что делать\nРезультат недостаточно надёжен для автоматического решения.\n",
+    "trust": [
+      "Решение поддерживают: feature 7, 1, 0. Доверие ограничивают: не все проверки подтверждены, feature 2. Не хватает данных для проверок: предметное значение прогнозируемой группы. Эти ограничения не позволяют использовать результат автоматически.",
+      "Результат недостаточно надёжен для автоматического решения."
+    ],
+    "what_would_change_result": []
+  },
+  "missing_channels": [
+    "alignment",
+    "counterfactuals",
+    "reduction",
+    "risk",
+    "similar_cases",
+    "training_history"
+  ],
+  "model_class": "sklearn.linear_model._ridge.RidgeClassifier",
+  "model_family": "sklearn_linear",
+  "prediction_parity": true,
+  "quality": {
+    "blocked_channels": [],
+    "completeness": 0.7291666666666666,
+    "faithfulness": null,
+    "fidelity": null,
+    "limitations": [],
+    "reconstruction_error": null,
+    "sparsity": 0.125,
+    "stability": null,
+    "status": "pass"
+  },
+  "status": "pass",
+  "task": "binary_classification"
+}

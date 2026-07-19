@@ -1,0 +1,15 @@
+{
+  "files": {
+    "analysis.md": "0a9b8f2903ef0e47a89a7bb4d9582987c4088f02636e13bbbf27d91ba826f4cb",
+    "anonymized_responses.csv": "f1d41fa082099f6589a9f0e383a30b77acee67bcee2b3f262a429d8f6ba6fdd6",
+    "consent_template.md": "c888448e6b0e8e05734d5e9fd1ad037c11f3699d85882bbf02c22ffaf346a3b7",
+    "limitations.md": "46be22af71e8db61b5d4c9957f8f8df4658956bd3ec313b8e4e26a9b58e6edac",
+    "participant_information.md": "6638e936e0357a1dfe1fdbd484faf9922dec39bf504e37f6c3d1dc92cc122ce9",
+    "protocol.md": "d507123a8d1c7c21fc32d3efe8c7b74a54d6ffc83e6232b7439fd420b542eb75",
+    "response_template.csv": "f1d41fa082099f6589a9f0e383a30b77acee67bcee2b3f262a429d8f6ba6fdd6",
+    "scenario_manifest.json": "3cddadc5ac53c2b8f0eacf5cb99b5b3b7828a0d4003bff48fddb49a434b51eca",
+    "score_comprehension_pilot.py": "96827a48a1126098ac0168644c3a748fd1dfc73cf7d627b9891e4f8b9b2e71d5",
+    "scoring_report.json": "4bd5ce3957b7e16f82e03dddb5384bb750ed165bb4b7040c63f1a53585444148"
+  },
+  "schema_version": "1.0"
+}

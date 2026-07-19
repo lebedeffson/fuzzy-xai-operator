@@ -1,0 +1,11 @@
+{
+  "blocked_channels": [],
+  "completeness": 0.5882352941176471,
+  "faithfulness": null,
+  "fidelity": 0.9999821665030704,
+  "limitations": [],
+  "reconstruction_error": null,
+  "sparsity": 0.125,
+  "stability": null,
+  "status": "pass"
+}

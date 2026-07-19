@@ -1,31 +1,96 @@
 # FuzzyXAI Framework Release Status
 
-Status: release candidate validated by public GitHub Actions.
+Status: `v1.3.0rc1` universal-model integration candidate on `feat/universal-model-integration`. The merged evidence
+matrix contains 40/40 passing configurations: 34 deterministic core configurations and six optional runtime
+integrations measured independently on Python 3.11 and Python 3.12. External comprehension and domain-language
+review are not complete, so merge and release tags remain blocked.
 
-## Completed
+## Universal Model Candidate
 
-- one installable public framework API;
-- 30-entry operator/evidence manifest;
-- evidence-first data, training, model-knowledge, decision, counterfactual, and action layers;
-- five-panel Matplotlib explanation passport;
-- canonical JSON plus MATLAB/Octave loader and dashboard;
-- controlled object 85 restoration protocol;
-- quarantined generated website;
-- clean archive builder based on committed Git state.
+- 24 classification and 10 regression configurations;
+- prediction parity, adapter conformance, and graph validation: `1.0` on the recorded core matrix;
+- model-specific evidence for sklearn families and generic callable/probability/rule contracts;
+- optional XGBoost, LightGBM, CatBoost, Torch, TensorFlow/Keras, and ONNX reports: 12/12 PASS;
+- runtime reports including sklearn: 14/14 PASS with valid report checksums;
+- public API verification: `explain_one`, `explain_batch`, `explain_global`, `why_not`, and `compare_models` PASS;
+- explanation-quality matrix: 40/40 PASS; top-reason stability measured for 36 configurations;
+- universal evidence CI: PASS on run `29700288413`;
+- readiness Python 3.11/3.12, Octave, wheel, and full regression: PASS on run `29700288436`;
+- no claim of identical evidence channels or universal arbitrary-model support.
 
-## Acceptance gates
+## Version Sequence
 
-See `TEST_REPORT.txt` for the latest local and public results. Public run
-`29668215392` and final metadata run `29668320459` passed the Python 3.11,
-Python 3.12, and Octave jobs. The validated release tag is `v1.0.0-rc1`.
+The project follows version path B: the existing functional branches remain combined in the technical
+`v1.3.0rc1` candidate. No separate stable `v1.2.0` tag will be created retroactively. After both external gates,
+reviewed merge to `main`, and green `main` CI, the next allowed tag is `v1.3.0rc2`; stable `v1.3.0` requires a
+subsequent release review. `v1.4.0` remains reserved for modality-specific anomaly, forecasting, text, and image
+support.
 
-The clean-checkout acceptance was completed independently on Python 3.11 and
-3.12. Both environments reported 299 passing tests, built wheel and sdist
-artifacts, and imported the installed wheel outside the source checkout.
+## Release Decision
 
-## Known limitations
+- computed Chapter 4 evidence: PASS;
+- comprehension pilot: `planned_not_run`;
+- regulated-domain review: `pending_external_review`;
+- full current-branch regression and public CI: PASS;
+- public `main` CI after merge: not run;
+- release gate: `BLOCKED`;
+- tag allowed: no.
 
-- no native Torch, Keras, or ONNX adapters;
-- no claim of support for literally every model;
-- MATLAB/Octave consumes the canonical result JSON but does not reimplement the Python operator core;
-- domain claims remain limited by the supplied datasets and evidence provenance.
+---
+
+## Previous v1.2.0rc3 Boundary
+
+Status: `v1.2.0rc3` is an untagged Empirical Validation Gate candidate. The measured computational pipeline passes locally and on the public feature-branch CI. The independent comprehension pilot is `planned_not_run`, and the regulated-domain dictionary is awaiting external semantic review; therefore the release gate is `BLOCKED` and no tag is allowed.
+
+## Measured Computational Gate
+
+- dataset: Breast Cancer Wisconsin (Diagnostic), 569 objects, 30 features, CC BY 4.0;
+- split: train 341, validation 114, test 114, seed 42;
+- checkpoint model: 30 unique measured SGD states;
+- selected case: `case_real_001`, chosen automatically from validation after training;
+- forgetting event: epoch 9;
+- rare subgroup: smallest of three train-only KMeans clusters, fixed before training/case selection;
+- measured native tree rule: `tree_leaf_11`;
+- target prediction after leaf suppression: `1 -> 0`;
+- test accuracy: `0.947368 -> 0.903509`;
+- validation subgroup recall: `0.923077 -> 0.615385`;
+- cross-model contracts: logistic regression, decision tree, random forest, fitted Sugeno rules, callable black box;
+- black box native rules: 0; tree and Sugeno native rules: present;
+- similar-case evidence: one support and one counterexample;
+- intervention mode: `sensitivity_analysis`, not an actionable recommendation.
+
+## Controlled Boundary
+
+- `object_85_controlled_story_fixture`: controlled contract and visualization fixture;
+- `case_real_001`: measured checkpoint experiment;
+- controlled and measured results have different run IDs, directories, and `result_origin` values;
+- the research-only image fixture remains controlled and is not medical validation.
+
+## Local Validation
+
+- full Python 3.14 regression: `315 passed`, 409 third-party warnings;
+- empirical-focused tests: `16 passed`;
+- release-focused tests: `17 passed`;
+- Ruff: PASS;
+- strict MyPy: PASS;
+- operator manifest: `30/30`, PASS;
+- deterministic empirical rebuild: PASS;
+- Chapter 4 empirical builder/verifier: PASS;
+- Chapter 4 measured figures: `3/3` visually inspected;
+- Chapter 4 empirical ZIP SHA256: `f80aa4ba799e91b492a10553e7f12c6ebe0e7572a226d6dd562cb8be3973b9e4`;
+- public feature CI: PASS for Python 3.11, Python 3.12, and Octave ([run 29695395925](https://github.com/lebedeffson/fuzzy-xai-operator/actions/runs/29695395925));
+- public main CI: not run for this candidate.
+
+## Open External Gates
+
+1. A/B comprehension pilot with at least six independent participants.
+2. External subject-matter review of the regulated-domain dictionary.
+
+No demonstrated-comprehensibility, clinical-validity, or release-readiness claim is made while either gate is open.
+
+## Archive Policy
+
+- source archive: clean allowlist from committed Git index;
+- doctoral archive: separate full historical Git-index export;
+- archives must be built only after the release documentation commit;
+- no `v1.2.0rc3` tag before all external gates and green feature/main CI.

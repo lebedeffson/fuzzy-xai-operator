@@ -1,9 +1,9 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from dataclasses import asdict, dataclass, field
+from dataclasses import asdict, dataclass, field, replace
 from hashlib import sha256
-from typing import Any, Callable, Mapping
+from typing import Any, Callable, Mapping, cast
 
 
 def _serializable(value: Any) -> Any:
@@ -29,7 +29,7 @@ class ModelPrediction:
     metadata: Mapping[str, Any] = field(default_factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
-        return _serializable(asdict(self))
+        return cast(dict[str, Any], _serializable(asdict(self)))
 
     def primary_score(self) -> float | None:
         values = _serializable(self.probabilities)
@@ -40,6 +40,26 @@ class ModelPrediction:
                 return float(max(values))
             values = values[0]
         return float(values) if isinstance(values, (int, float)) else None
+
+
+@dataclass(frozen=True)
+class AdapterCapabilities:
+    """Typed disclosure of native evidence channels exposed by an adapter."""
+
+    predict: bool = True
+    predict_proba: bool = False
+    feature_importance: bool = False
+    gradients: bool = False
+    rules: bool = False
+    embeddings: bool = False
+    training_history: bool = False
+    checkpoints: bool = False
+
+    def get(self, name: str, default: bool = False) -> bool:
+        return bool(getattr(self, name, default))
+
+    def to_dict(self) -> dict[str, bool]:
+        return {name: bool(value) for name, value in asdict(self).items()}
 
 
 class ModelAdapter(ABC):
@@ -54,19 +74,10 @@ class ModelAdapter(ABC):
     def predict(self, inputs: Any) -> ModelPrediction:
         """Run the model and return a canonical prediction artifact."""
 
-    def capabilities(self) -> dict[str, bool]:
+    def capabilities(self) -> AdapterCapabilities:
         """Declare evidence channels that the adapter can provide."""
 
-        return {
-            "predict": True,
-            "predict_proba": False,
-            "feature_importance": False,
-            "gradients": False,
-            "rules": False,
-            "embeddings": False,
-            "training_history": False,
-            "checkpoints": False,
-        }
+        return AdapterCapabilities()
 
     def feature_names(self) -> list[str]:
         names = getattr(self.model, "feature_names_in_", None)
@@ -128,10 +139,8 @@ class PredictProbaAdapter(ModelAdapter):
             metadata={"classes": _serializable(getattr(self.model, "classes_", None))},
         )
 
-    def capabilities(self) -> dict[str, bool]:
-        capabilities = super().capabilities()
-        capabilities["predict_proba"] = True
-        return capabilities
+    def capabilities(self) -> AdapterCapabilities:
+        return replace(super().capabilities(), predict_proba=True)
 
 
 class SklearnAdapter(PredictProbaAdapter):
@@ -139,10 +148,13 @@ class SklearnAdapter(PredictProbaAdapter):
 
     adapter_id = "sklearn"
 
-    def capabilities(self) -> dict[str, bool]:
-        capabilities = super().capabilities()
-        capabilities["feature_importance"] = hasattr(self.model, "feature_importances_") or hasattr(self.model, "coef_")
-        return capabilities
+    def capabilities(self) -> AdapterCapabilities:
+        has_rule_like_structure = any(hasattr(self.model, name) for name in ("tree_", "estimators_", "coef_"))
+        return replace(
+            super().capabilities(),
+            feature_importance=hasattr(self.model, "feature_importances_") or hasattr(self.model, "coef_"),
+            rules=has_rule_like_structure,
+        )
 
     def extract_internal_evidence(self, inputs: Any) -> Mapping[str, Any]:
         values = inputs.to_numpy() if hasattr(inputs, "to_numpy") else inputs
@@ -178,11 +190,8 @@ class NativeRuleAdapter(PredictProbaAdapter):
         if not hasattr(model, "rules_"):
             raise TypeError("NativeRuleAdapter requires model.rules_")
 
-    def capabilities(self) -> dict[str, bool]:
-        capabilities = super().capabilities()
-        capabilities["rules"] = True
-        capabilities["feature_importance"] = True
-        return capabilities
+    def capabilities(self) -> AdapterCapabilities:
+        return replace(super().capabilities(), rules=True, feature_importance=True)
 
     def extract_rules(self) -> list[Mapping[str, Any]]:
         return [dict(item) for item in getattr(self.model, "rules_", [])]

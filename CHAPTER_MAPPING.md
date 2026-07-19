@@ -1,5 +1,21 @@
 # Связь глав диссертации и реализации
 
+## Глава 4: универсальный framework API
+
+| Конструкция | Реализация | Проверка / evidence |
+|---|---|---|
+| Модельно-независимый контракт | `fuzzyxai.adapters.ModelAdapterV2` | `tests/test_universal_model_adapters.py` |
+| Реестр и выбор адаптера | `fuzzyxai.adapters.model_registry` | conformance reports |
+| Capability-based план | `fuzzyxai.ExplanationPlanner` | planner tests |
+| Качество объяснения | `fuzzyxai.explanation_quality` | quality reports |
+| Классификация и регрессия sklearn | `fuzzyxai.adapters.sklearn_v2` | 34-config support matrix |
+| Optional runtimes | `fuzzyxai.adapters.optional_v2` | separate CI jobs; no claim before PASS |
+| Внешняя понятность | comprehension pilot package | `planned_not_run`, release blocker |
+| Предметный язык | domain review package | `pending_external_review`, release blocker |
+
+Канонический пакет: `release_evidence/chapter4_final_candidate/`. Он подтверждает вычислительную реализацию, но не
+заменяет внешнюю пользовательскую и предметную валидацию.
+
 ## Глава 2
 
 | Объект диссертации | Реализация | Проверка |
