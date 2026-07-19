@@ -22,7 +22,15 @@ dependencies = [
 dev = [
     "pytest>=7.0",
     "playwright>=1.40",
+    "build>=1.2",
 ]
 
+[tool.setuptools]
+package-dir = {"" = "framework/fuzzyxai"}
+
 [tool.setuptools.packages.find]
+where = ["framework/fuzzyxai"]
 include = ["fuzzyxai*"]
+
+[tool.setuptools.data-files]
+"share/fuzzyxai/matlab/+fuzzyxai" = ["framework/fuzzyxai/matlab/+fuzzyxai/*.m"]

@@ -3,6 +3,7 @@ from .route_builder import build_route_from_proof, load_route_from_proof
 from .matplotlib_dashboard import render_dashboard, render_operator_dashboard
 from .export import save_proof_trace_json, save_route_json
 from .traceability import write_traceability_artifacts
+from fuzzyxai.visualization import ExplanationViewModel, render_explanation_dashboard
 
 __all__ = [
     "OperatorNodeState",
@@ -14,4 +15,6 @@ __all__ = [
     "save_proof_trace_json",
     "save_route_json",
     "write_traceability_artifacts",
+    "ExplanationViewModel",
+    "render_explanation_dashboard",
 ]

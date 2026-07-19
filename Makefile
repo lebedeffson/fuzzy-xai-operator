@@ -33,7 +33,7 @@ final-readiness-audit: studio-hybrid-batch studio-export-tables
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m fuzzyxai.audit.build_package
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m pytest tests/audit -q
 
-.PHONY: studio-semantic-smoke studio-server-smoke studio-smoke doctorate-release-check fresh-clone-gate practice-demo practice-screenshots practice-package practice-package-with-qa dataset-audit train-all evaluate-all training-audit practice-readiness-check screenshot-qc proof-qc package-self-contained-check real-validation-check full-delivery-package final-delivery-report final-product-check research-repo-inventory framework-check fuzzyxai-framework-check framework-external-check fuzzyxai-cli-check fuzzyxai-schema-check fuzzyxai-adapter-sdk-check fuzzyxai-framework-rc-check fuzzyxai-framework-rc-package fuzzyxai-visualization-check fuzzyxai-visualization-package fuzzyxai-visual-quality-check fuzzyxai-shap-like-visualization-check fuzzyxai-shap-like-visualization-package fuzzyxai-ru-visual-explanation-check fuzzyxai-ru-visual-explanation-package fuzzyxai-ru-visual-editorial-check fuzzyxai-ru-operator-explanation-check fuzzyxai-ru-explanation-framework-check operator-traceability-check research-validation research-validation-check fuzzyxai-research-analysis fuzzyxai-research-analysis-check applications-check operator-dashboard operator-route-check site-build sprint-report dubnaxai-release-check
+.PHONY: studio-semantic-smoke studio-server-smoke studio-smoke operator-manifest-check framework-release-check framework-source-release doctorate-release-check fresh-clone-gate practice-demo practice-screenshots practice-package practice-package-with-qa dataset-audit train-all evaluate-all training-audit practice-readiness-check screenshot-qc proof-qc package-self-contained-check real-validation-check full-delivery-package final-delivery-report final-product-check research-repo-inventory framework-check fuzzyxai-framework-check framework-external-check fuzzyxai-cli-check fuzzyxai-schema-check fuzzyxai-adapter-sdk-check fuzzyxai-framework-rc-check fuzzyxai-framework-rc-package fuzzyxai-visualization-check fuzzyxai-visualization-package fuzzyxai-visual-quality-check fuzzyxai-shap-like-visualization-check fuzzyxai-shap-like-visualization-package fuzzyxai-ru-visual-explanation-check fuzzyxai-ru-visual-explanation-package fuzzyxai-ru-visual-editorial-check fuzzyxai-ru-operator-explanation-check fuzzyxai-ru-explanation-framework-check operator-traceability-check research-validation research-validation-check fuzzyxai-research-analysis fuzzyxai-research-analysis-check applications-check operator-dashboard operator-route-check site-build sprint-report dubnaxai-release-check
 studio-semantic-smoke:
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m fuzzyxai.audit.studio_smoke
 
@@ -42,7 +42,18 @@ studio-server-smoke:
 
 studio-smoke: studio-semantic-smoke studio-server-smoke
 
-doctorate-release-check: studio-hybrid-batch studio-export-tables
+operator-manifest-check:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m fuzzyxai.audit.operators_manifest --output reports/audit/operators_manifest_report.json
+
+framework-release-check: operator-manifest-check
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m pytest tests/test_public_framework_api.py tests/test_evidence_first_framework.py tests/test_framework_release_contract.py -q
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) examples/object_85_training_trace.py --output-dir release_evidence/generated/object_85
+	@echo "framework-release-check: PASS"
+
+framework-source-release: framework-release-check
+	$(PYTHON) scripts/build_framework_release.py
+
+doctorate-release-check: operator-manifest-check studio-hybrid-batch studio-export-tables
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m fuzzyxai.audit.inventory
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m fuzzyxai.audit.grep_stale_terms
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m fuzzyxai.audit.formula_references
@@ -51,7 +62,7 @@ doctorate-release-check: studio-hybrid-batch studio-export-tables
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m fuzzyxai.audit.docx_render_gate --chapter4 docs/chapters/glava_4_FuzzyXAI_corrected_final.docx --chapter5 docs/chapters/glava_5_FuzzyXAI_corrected_final.docx
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m fuzzyxai.audit.final_audit
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m fuzzyxai.audit.build_package
-	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m pytest tests/audit tests/test_studio_operator_engine.py tests/test_fuzzyxai_studio_demo_readiness.py -q
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m pytest tests/audit tests/test_studio_operator_engine.py tests/test_fuzzyxai_studio_demo_readiness.py tests/test_public_framework_api.py tests/test_evidence_first_framework.py tests/test_framework_release_contract.py -q
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m fuzzyxai.audit.studio_smoke
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m fuzzyxai.audit.studio_server_smoke
 
@@ -198,13 +209,13 @@ operator-route-check:
 	$(PYTHON) applications/check_operator_routes.py
 
 site-build:
-	$(PYTHON) site/dubnaxai/build.py
+	@echo "site-build: QUARANTINED (see archive/site-prototype-cab4018)"
 
 sprint-report:
 	$(PYTHON) scripts/build_sprint_report.py
 
-dubnaxai-release-check: research-repo-inventory fuzzyxai-framework-check framework-external-check fuzzyxai-cli-check fuzzyxai-schema-check fuzzyxai-adapter-sdk-check operator-traceability-check fuzzyxai-visual-quality-check fuzzyxai-shap-like-visualization-check applications-check operator-dashboard operator-route-check site-build sprint-report
-	@echo "dubnaxai-release-check: PASS"
+dubnaxai-release-check:
+	@echo "dubnaxai-release-check: QUARANTINED; run doctorate-release-check for the framework"
 
 risk-test:
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m pytest tests/test_risk_*.py -q

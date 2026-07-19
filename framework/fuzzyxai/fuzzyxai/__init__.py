@@ -9,7 +9,6 @@ from .hierarchy.hesitant import HesitantFS
 from .hierarchy.neutrosophic import NeutrosophicFS
 from .hierarchy.multilevel import MultiLevelFS
 from .hierarchy.reductions import reduce_to_f0, reduction_loss
-from .hierarchy.reductions import reduce_to_f0, reduction_loss
 from .selection.profile_builder import build_profile
 from .selection.pareto_selector import Candidate, select_minimal_sufficient, pareto_front
 
@@ -139,10 +138,25 @@ from .proof.verifier import verify_proof_trace
 from .viz.export import save_route_json
 from .viz.matplotlib_dashboard import render_dashboard
 from .examples import list_examples, load_example
-from .runtime import FuzzyXAI
-from .adapters import BaseAdapter, TabularClassificationAdapter, get_adapter, list_adapters
+from .runtime import FuzzyXAI, ModelExplanationResult
+from .adapters import (
+    BaseAdapter,
+    CallableAdapter,
+    CustomAdapter,
+    ModelAdapter,
+    ModelPrediction,
+    NativeRuleAdapter,
+    PredictProbaAdapter,
+    SklearnAdapter,
+    TabularClassificationAdapter,
+    get_adapter,
+    list_adapters,
+    resolve_model_adapter,
+)
 from .operators import get_operator, list_operators
 from .visualization import (
+    ExplanationViewModel,
+    render_explanation_dashboard,
     render_action_boundary,
     render_coverage_curve,
     render_gamma_delta_action_map,
@@ -173,9 +187,34 @@ from .explain import (
     explain_main_reason_ru,
     explain_representation_ru,
 )
+from .evidence import (
+    ClassConcept,
+    CounterfactualEvidence,
+    DataEvidence,
+    ExplanationEvidence,
+    ExplanationGraph,
+    HumanExplanation,
+    LearnedRule,
+    SimilarCaseEvidence,
+    SubgroupAveragingEvidence,
+    TrainingObjectTrace,
+    TrainingRunAnalysis,
+    build_class_concepts,
+    collect_data_evidence,
+    evaluate_rule_ablation,
+    evaluate_explanation_quality,
+    extract_rules,
+    build_explanation_graph,
+    compose_human_explanation,
+    compare_region_masks,
+    find_similar_tabular_cases,
+    find_tabular_counterfactuals,
+    rule_complexity,
+)
 
 __all__ += [
     "FuzzyXAI",
+    "ModelExplanationResult",
     "build_explainable_object",
     "build_route",
     "build_proof_trace",
@@ -185,12 +224,22 @@ __all__ += [
     "list_examples",
     "load_example",
     "BaseAdapter",
+    "ModelAdapter",
+    "ModelPrediction",
+    "CallableAdapter",
+    "PredictProbaAdapter",
+    "SklearnAdapter",
+    "NativeRuleAdapter",
+    "CustomAdapter",
+    "resolve_model_adapter",
     "TabularClassificationAdapter",
     "get_adapter",
     "list_adapters",
     "get_operator",
     "list_operators",
     "render_route_sankey",
+    "ExplanationViewModel",
+    "render_explanation_dashboard",
     "render_operator_route_flow",
     "render_operator_risk_contribution_summary",
     "render_local_risk_evidence_bridge",
@@ -217,4 +266,26 @@ __all__ += [
     "explain_gamma_ru",
     "explain_main_reason_ru",
     "explain_representation_ru",
+    "DataEvidence",
+    "TrainingObjectTrace",
+    "SubgroupAveragingEvidence",
+    "LearnedRule",
+    "ClassConcept",
+    "SimilarCaseEvidence",
+    "CounterfactualEvidence",
+    "ExplanationGraph",
+    "HumanExplanation",
+    "ExplanationEvidence",
+    "TrainingRunAnalysis",
+    "collect_data_evidence",
+    "extract_rules",
+    "evaluate_rule_ablation",
+    "evaluate_explanation_quality",
+    "build_explanation_graph",
+    "compose_human_explanation",
+    "compare_region_masks",
+    "rule_complexity",
+    "build_class_concepts",
+    "find_similar_tabular_cases",
+    "find_tabular_counterfactuals",
 ]

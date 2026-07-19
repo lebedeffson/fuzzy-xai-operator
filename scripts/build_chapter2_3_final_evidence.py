@@ -160,8 +160,17 @@ def sha256_file(path: Path) -> str:
     return h.hexdigest()
 
 
+def _resolve_path(path: str) -> Path:
+    direct = ROOT / path
+    if direct.exists():
+        return direct
+    if path.startswith('fuzzyxai/'):
+        return ROOT / 'framework' / 'fuzzyxai' / path
+    return direct
+
+
 def _exists_all(paths: list[str]) -> bool:
-    return all((ROOT / p).exists() for p in paths)
+    return all(_resolve_path(path).exists() for path in paths)
 
 
 def _status(row: dict[str, Any]) -> str:
@@ -170,7 +179,7 @@ def _status(row: dict[str, Any]) -> str:
 
 def _missing(row: dict[str, Any]) -> list[str]:
     paths = row['code_paths'] + row['test_paths'] + row['artifact_paths']
-    return [p for p in paths if not (ROOT / p).exists()]
+    return [path for path in paths if not _resolve_path(path).exists()]
 
 
 def _join(paths: list[str]) -> str:

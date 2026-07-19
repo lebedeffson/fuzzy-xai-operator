@@ -1,14 +1,12 @@
 from __future__ import annotations
 
-from fuzzyxai.operators.actions import select_action
-from fuzzyxai.operators.alignment import compute_alignment
-from fuzzyxai.operators.diagnostics import diagnose_route
-from fuzzyxai.operators.reduction import compute_reduction
-from fuzzyxai.operators.representation import select_representation_class
-from fuzzyxai.operators.risk import observe_risk
-
+from .alignment import compute_alignment
 from .explanation import build_explainable_object
 from .git_info import get_source_commit
+from .reduction import compute_reduction
+from .risk_observer import observe_risk
+from .scenario_engine import DEFAULT_HYBRID_PLAN
+from .thresholds import HYBRID_XIRIS_THRESHOLDS
 from .types import AdaptedInput, OperatorNode, OperatorRoute
 
 
@@ -28,15 +26,100 @@ def _node(node_id: str, title: str, value: str, status: str, explanation: str, r
     )
 
 
+def _hybrid_operator_values(values: dict) -> tuple[dict, dict, dict, list[dict], str, dict]:
+    """Translate the HYBRID fixture into core operator calls.
+
+    Scenario defaults stay here; the public operator facade never injects them.
+    """
+
+    plan = DEFAULT_HYBRID_PLAN
+    alignment_components = values.get("alignment_components", plan.gamma_components)
+    alignment_weights = values.get("alignment_weights", plan.gamma_weights)
+    gamma_max = float(values.get("gamma_max", plan.gamma_max))
+    delta_t = float(values.get("delta_t", plan.delta_t))
+    delta_max = float(values.get("delta_max", plan.delta_max))
+    alignment_result = compute_alignment(
+        alignment_components,
+        alignment_weights,
+        gamma_max=gamma_max,
+        delta_t=delta_t,
+        delta_max=delta_max,
+    )
+    alignment = {
+        "gamma": alignment_result.gamma,
+        "gamma_max": alignment_result.gamma_max,
+        "status": "warning" if alignment_result.gamma > gamma_max * 0.75 else "passed",
+        "value_source": "computed",
+        "components": dict(alignment_components),
+        "weights": dict(alignment_weights),
+    }
+
+    reduction_components = values.get("reduction_components", {"hybrid_delta": 0.106811})
+    reduction_weights = values.get("reduction_weights", {"hybrid_delta": 1.0})
+    reduction_result = compute_reduction(reduction_components, reduction_weights, delta_max)
+    kappa_delta = float(values.get("kappa_delta", HYBRID_XIRIS_THRESHOLDS["kappa_delta"]))
+    reduction = {
+        "delta": reduction_result.delta,
+        "r_delta": round(min(1.0, kappa_delta * reduction_result.delta), 4),
+        "delta_max": reduction_result.delta_max,
+        "kappa_delta": kappa_delta,
+        "status": "passed" if reduction_result.allowed else "blocked",
+        "value_source": "computed",
+        "components": dict(reduction_components),
+        "weights": dict(reduction_weights),
+    }
+
+    source_conflict = (
+        float(values["model_match_signal"]) >= float(values["alpha_accept"])
+        and float(values["image_quality"]) < 0.5
+        and float(values["segmentation_quality"]) < 0.5
+    )
+    risk_components = values.get(
+        "risk_components",
+        {
+            "model_signal": float(values["model_match_signal"]),
+            "block_rule": float(values["alpha_block"]),
+            "source_conflict": float(source_conflict),
+            "reduction_component": reduction["r_delta"],
+        },
+    )
+    risk_weights = values.get("risk_weights", plan.risk_weights)
+    risk_result = observe_risk(risk_components, risk_weights, plan.thresholds, int(source_conflict))
+    risk = {
+        "rho": round(risk_result.rho, 3),
+        "chi_crit": risk_result.chi_r_crit,
+        "risk_zone": "critical" if risk_result.chi_r_crit else "normal",
+        "status": "blocked" if risk_result.chi_r_crit else "passed",
+        "reason_ru": "критический конфликт качества источника и модельного сигнала" if risk_result.chi_r_crit else "критическая зона не активна",
+        "value_source": "computed",
+        "components": dict(risk_components),
+        "weights": dict(risk_weights),
+    }
+    diagnostics = []
+    if risk_result.chi_r_crit:
+        diagnostics.append(
+            {
+                "diagnostic_id": "D_quality_source_conflict",
+                "diagnostic_type": "quality_source_conflict",
+                "source": "image_and_segmentation_quality",
+                "criticality": "high",
+                "message_ru": "конфликт качества источника и модельного сигнала",
+                "recommended_action": "block",
+            }
+        )
+    representation = "FML-audit" if diagnostics else "F0"
+    action = {
+        "action": risk_result.action,
+        "status": "blocked" if risk_result.action == "block" else "passed",
+        "reason_ru": "автоматическое принятие запрещено при chi_crit = 1" if risk_result.chi_r_crit else "критических диагностик нет",
+    }
+    return alignment, reduction, risk, diagnostics, representation, action
+
+
 def build_hybrid_xiris_route(adapted: AdaptedInput) -> OperatorRoute:
     explanation = build_explainable_object(adapted)
     values = adapted.values
-    alignment = compute_alignment(values)
-    reduction = compute_reduction(values)
-    risk = observe_risk(values, reduction)
-    diagnostics = diagnose_route(risk)
-    representation = select_representation_class(diagnostics)
-    action = select_action(risk, diagnostics)
+    alignment, reduction, risk, diagnostics, representation, action = _hybrid_operator_values(values)
     computed_result = {
         "gamma": alignment["gamma"],
         "delta": reduction["delta"],

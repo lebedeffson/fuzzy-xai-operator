@@ -534,6 +534,36 @@ result = pipe.explain_scalar_risk(
 print(result.report)
 ```
 
+## Model-independent SDK
+
+The public adapter contract does not depend on a particular ML library:
+
+```python
+from fuzzyxai import FuzzyXAI
+
+fx = FuzzyXAI.wrap(model, adapter="auto", explain_plan=plan)
+result = fx.explain(X, evidence=operator_evidence)
+result.plot("operator_passport.png")
+result.export_json("explanation.json")
+```
+
+Supported base adapters are `CallableAdapter`, `PredictProbaAdapter`, and
+`SklearnAdapter`; custom integrations implement `ModelAdapter`. If operator
+evidence is absent, FuzzyXAI returns the prediction with an explicit diagnostic
+and `review` action. It does not synthesize `gamma`, `Delta`, or `rho` from
+demonstration constants.
+
+The canonical visualization contract is `ExplanationViewModel`. Matplotlib and
+MATLAB render the same JSON; see `framework/fuzzyxai/VISUALIZATION_API.md`.
+
+Operator coverage for chapters 2-3 is checked with:
+
+```bash
+make operator-manifest-check
+```
+
+The source of truth is `framework/fuzzyxai/operators_manifest.yaml`.
+
 ## Структура проекта
 
 ```text

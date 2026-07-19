@@ -55,6 +55,17 @@ REQUIRED: dict[str, tuple[str, ...]] = {
     "route": ("scenario_id", "nodes", "computed_result", "final_action"),
     "proof_trace": ("package_type", "scenario_id", "route", "computed_result", "final_action"),
     "operator_trace": ("scenario_id", "nodes", "edges", "computed_result"),
+    "explanation_view_model": (
+        "schema_version",
+        "model",
+        "route",
+        "risk",
+        "diagnostics",
+        "trace",
+        "layers",
+        "explanation_graph",
+        "human_explanations",
+    ),
 }
 
 
@@ -78,6 +89,12 @@ def validate_payload(payload: dict[str, Any], schema: str) -> ValidationResult:
             errors.append(f"{object_field} must be object")
     if schema in {"route", "operator_trace"} and "nodes" in payload and not isinstance(payload["nodes"], list):
         errors.append("nodes must be array")
+    if schema == "explanation_view_model":
+        if payload.get("schema_version") != "2.0":
+            errors.append("schema_version must be 2.0")
+        for object_field in ("model", "risk", "trace", "layers", "explanation_graph", "human_explanations"):
+            if object_field in payload and not isinstance(payload[object_field], dict):
+                errors.append(f"{object_field} must be object")
     return ValidationResult(not errors, errors, schema)
 
 

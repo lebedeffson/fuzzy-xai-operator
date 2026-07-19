@@ -1,0 +1,57 @@
+from .contracts import (
+    ClassConcept,
+    CounterfactualEvidence,
+    DataEvidence,
+    EvidenceContract,
+    ExplanationEdge,
+    ExplanationEvidence,
+    ExplanationGraph,
+    ExplanationNode,
+    HumanExplanation,
+    LearnedRule,
+    SimilarCaseEvidence,
+    SubgroupAveragingEvidence,
+    TrainingObjectTrace,
+)
+from .data_quality import collect_data_evidence
+from .concepts import build_class_concepts
+from .counterfactual import find_tabular_counterfactuals
+from .graph import build_explanation_graph
+from .human import compose_human_explanation, explanation_to_text
+from .metrics import evaluate_explanation_quality
+from .rules import evaluate_rule_ablation, extract_rules, rank_rules, rule_complexity
+from .similarity import compare_region_masks, find_similar_tabular_cases
+from .training import TrainingRunAnalysis, build_object_trace, detect_subgroup_averaging, find_forgetting_events
+
+__all__ = [
+    "EvidenceContract",
+    "DataEvidence",
+    "TrainingObjectTrace",
+    "SubgroupAveragingEvidence",
+    "LearnedRule",
+    "ClassConcept",
+    "SimilarCaseEvidence",
+    "CounterfactualEvidence",
+    "ExplanationNode",
+    "ExplanationEdge",
+    "ExplanationGraph",
+    "HumanExplanation",
+    "ExplanationEvidence",
+    "collect_data_evidence",
+    "extract_rules",
+    "rank_rules",
+    "rule_complexity",
+    "evaluate_rule_ablation",
+    "build_class_concepts",
+    "find_similar_tabular_cases",
+    "compare_region_masks",
+    "find_tabular_counterfactuals",
+    "build_explanation_graph",
+    "compose_human_explanation",
+    "explanation_to_text",
+    "evaluate_explanation_quality",
+    "build_object_trace",
+    "find_forgetting_events",
+    "detect_subgroup_averaging",
+    "TrainingRunAnalysis",
+]

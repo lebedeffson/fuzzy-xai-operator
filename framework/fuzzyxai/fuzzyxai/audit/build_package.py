@@ -7,9 +7,10 @@ from pathlib import Path
 from .common import ROOT, release_metadata
 
 
-PACKAGE = ROOT / "fuzzyxai_final_audit_package.zip"
-RUNTIME_PACKAGE = ROOT / "fuzzyxai_doctoral_runtime_release.zip"
-VISUAL = ROOT / "visual_artifacts_latest.zip"
+OUTPUT_ROOT = Path.cwd()
+PACKAGE = OUTPUT_ROOT / "fuzzyxai_final_audit_package.zip"
+RUNTIME_PACKAGE = OUTPUT_ROOT / "fuzzyxai_doctoral_runtime_release.zip"
+VISUAL = OUTPUT_ROOT / "visual_artifacts_latest.zip"
 
 INCLUDE = [
     "fuzzyxai/audit",
@@ -20,6 +21,7 @@ INCLUDE = [
     "reports/chapter5/studio_tables",
     "configs/studio_scenarios",
     "docs/chapters",
+    "matlab",
     "figures",
     "visual_artifacts_latest.zip",
 ]
@@ -35,6 +37,7 @@ RUNTIME_INCLUDE = [
     "reports/studio_batch",
     "reports/chapter5/studio_tables",
     "docs/chapters",
+    "matlab",
     "docs/DATA_AND_SCENARIO_POLICY.md",
     "tests/audit",
     "tests/test_studio_operator_engine.py",
@@ -106,7 +109,9 @@ def build_audit_package() -> Path:
         PACKAGE.unlink()
     with zipfile.ZipFile(PACKAGE, "w", zipfile.ZIP_DEFLATED) as zf:
         for rel in INCLUDE:
-            _add_path(zf, ROOT / rel)
+            if rel != "visual_artifacts_latest.zip":
+                _add_path(zf, ROOT / rel)
+        _write_file(zf, VISUAL, VISUAL.name)
     return PACKAGE
 
 
@@ -116,8 +121,8 @@ def build_runtime_release() -> Path:
     with zipfile.ZipFile(RUNTIME_PACKAGE, "w", zipfile.ZIP_DEFLATED) as zf:
         for rel in RUNTIME_INCLUDE:
             _add_path(zf, ROOT / rel)
-        _add_path(zf, PACKAGE)
-        _add_path(zf, VISUAL)
+        _write_file(zf, PACKAGE, PACKAGE.name)
+        _write_file(zf, VISUAL, VISUAL.name)
         _write_text(zf, "RELEASE_METADATA.json", json.dumps(release_metadata(), ensure_ascii=False, indent=2))
     return RUNTIME_PACKAGE
 
