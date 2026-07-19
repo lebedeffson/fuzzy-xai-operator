@@ -20,6 +20,19 @@ def read(path: Path) -> dict[str, Any]:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+def group_policy_points(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Combine policies with identical measured coordinates before plotting."""
+
+    grouped: dict[tuple[float, float], list[str]] = {}
+    for row in rows:
+        key = (float(row["automatic_coverage"]), float(row["mean_cost"]))
+        grouped.setdefault(key, []).append(str(row["policy_id"]))
+    return [
+        {"automatic_coverage": coverage, "mean_cost": cost, "label": " / ".join(sorted(labels))}
+        for (coverage, cost), labels in sorted(grouped.items())
+    ]
+
+
 def build(evidence: Path, output: Path) -> list[Path]:
     chapter3 = output / "chapter3"
     chapter4 = output / "chapter4"
@@ -43,10 +56,16 @@ def build(evidence: Path, output: Path) -> list[Path]:
 
     policies = read(evidence / "policies/policy_comparison.json")
     balanced = [row for row in policies["policies"] if row["cost_scenario"] == "balanced"]
+    policy_points = group_policy_points(balanced)
     fig, ax = plt.subplots(figsize=(8.2, 4.8))
-    ax.plot([row["automatic_coverage"] for row in balanced], [row["mean_cost"] for row in balanced], marker="o", color="#1d4e89")
-    for row in balanced:
-        ax.annotate(row["policy_id"], (row["automatic_coverage"], row["mean_cost"]), xytext=(4, 4), textcoords="offset points")
+    ax.plot(
+        [row["automatic_coverage"] for row in policy_points],
+        [row["mean_cost"] for row in policy_points],
+        marker="o",
+        color="#1d4e89",
+    )
+    for row in policy_points:
+        ax.annotate(row["label"], (row["automatic_coverage"], row["mean_cost"]), xytext=(4, 4), textcoords="offset points")
     ax.set(xlabel="Automatic coverage", ylabel="Mean predeclared cost", title="Risk-coverage curve, balanced scenario")
     ax.grid(alpha=0.25)
     fig.tight_layout()
