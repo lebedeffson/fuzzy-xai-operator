@@ -57,7 +57,7 @@ gamma = localField(result.disagreement, "gamma", 0);
 delta = localField(result.disagreement, "delta", 0);
 rho = localField(result.risk, "rho", 0);
 imagesc([gamma delta rho], [0 1]); colormap(gca, hot); colorbar;
-xticks([1 2 3]); xticklabels(["gamma", "Delta", "rho"]); yticks([]);
+xticks([1 2 3]); xticklabels({'gamma', 'Delta', 'rho'}); yticks([]);
 title(["5. Trust and action: " char(result.risk.action)]);
 
 subplot(3, 2, 6); axis off;
