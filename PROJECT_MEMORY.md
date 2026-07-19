@@ -3,7 +3,9 @@
 - Date: 2026-07-19
 - Branch: `feat/explanation-experience-completion`
 - Baseline commit: `83d3b0016e38`
-- Implementation commits: `3b51ca5`, `4a820f4`, `0d8754b`, `d1b75bc`
+- Implementation commits: `3b51ca5`, `4a820f4`, `0d8754b`
+- Release packaging commits: `d1b75bc`, `a490c09`
+- Release-status commit: `f34532b`
 - Candidate version: `1.1.0rc3`
 - Release tag: not created
 

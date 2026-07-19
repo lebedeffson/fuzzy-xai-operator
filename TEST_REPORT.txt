@@ -2,7 +2,9 @@ FuzzyXAI Explanation Experience release verification
 Date: 2026-07-19
 Branch: feat/explanation-experience-completion
 Version: 1.1.0rc3
-Implementation commits: 3b51ca5, 4a820f4, 0d8754b, d1b75bc
+Implementation commits: 3b51ca5, 4a820f4, 0d8754b
+Release packaging commits: d1b75bc, a490c09
+Release-status commit: f34532b
 
 PASS: full local Python 3.14 regression - 304 passed
 PASS: full clean committed-snapshot Python 3.12 regression - 304 passed
