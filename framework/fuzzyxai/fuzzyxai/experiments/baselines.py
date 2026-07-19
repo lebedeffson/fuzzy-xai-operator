@@ -99,8 +99,17 @@ def _shap_values(model: Any, train_values: np.ndarray, sample: np.ndarray) -> np
     import shap
 
     background = np.asarray(train_values[: min(200, len(train_values))], dtype=float)
-    explainer = shap.Explainer(model, background)
-    values = np.asarray(explainer(sample).values)
+    named_steps = getattr(model, "named_steps", {})
+    scaler = named_steps.get("standardscaler")
+    estimator = named_steps.get("logisticregression")
+    if scaler is not None and estimator is not None:
+        transformed_background = scaler.transform(background)
+        transformed_sample = scaler.transform(sample)
+        explainer = shap.LinearExplainer(estimator, transformed_background)
+        values = np.asarray(explainer(transformed_sample).values)
+    else:
+        explainer = shap.Explainer(model.predict_proba, background, algorithm="permutation")
+        values = np.asarray(explainer(sample).values)
     if values.ndim == 3:
         values = values[:, :, -1]
     return values
