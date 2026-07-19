@@ -1,0 +1,27 @@
+fuzzy-xai-operator/
+|-- framework/fuzzyxai/
+|   |-- fuzzyxai/
+|   |   |-- adapters/          canonical model adapters
+|   |   |-- core/              mathematical research core
+|   |   |-- evidence/          typed evidence-first contracts and operators
+|   |   |-- operators/         public chapter 2-3 facade
+|   |   |-- schemas/           canonical JSON schemas
+|   |   `-- visualization/     canonical Python visualization namespace
+|   |-- matlab/+fuzzyxai/      canonical JSON loader and MATLAB/Octave views
+|   `-- operators_manifest.yaml
+|-- examples/
+|   `-- object_85_training_trace.py
+|-- release_evidence/
+|   `-- framework_completion/  controlled, claim-scoped evidence
+|-- tests/                     unit, integration, release, and audit checks
+|-- docs/                      architecture, contracts, adapters, and limits
+|-- scripts/
+|   `-- build_framework_release.py
+|-- .github/workflows/         Python 3.11/3.12 and Octave readiness jobs
+|-- PROJECT_MEMORY.md
+|-- RELEASE_STATUS.md
+|-- TEST_REPORT.txt
+`-- pyproject.toml
+
+The generated DubnaXAI prototype is not part of this tree. Its last historical
+state is preserved in git branch archive/site-prototype-cab4018.

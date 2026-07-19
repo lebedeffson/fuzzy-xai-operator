@@ -1,5 +1,11 @@
 # Project Memory
 
+- Date: 2026-07-19
+- Branch: `feat/research-framework-completion`
+- Implementation commit: `17e43f750c5100fd25148dd52aa49abbdc24f644`
+- Release-check fix commit: `62b58f9`
+- Tag: pending green public GitHub Actions
+
 ## Current focus
 
 The primary product is the installable FuzzyXAI research framework and its reproducible evidence-first explanation pipeline. The generated DubnaXAI website is frozen and archived until the framework API, traceability, cross-model validation, and visual explanations are stable.
@@ -43,6 +49,17 @@ The canonical adapter contract is `ModelAdapter`. The canonical visualization na
 - Generated reports, caches, virtual environments, and local IDE state must not enter release ZIP files.
 - Build a source release only from a committed tree with `python scripts/build_framework_release.py`.
 - Create a release tag only after the public Python 3.11/3.12 and Octave GitHub Actions jobs are green.
+
+## Validation
+
+- local regression environment: `299 passed`;
+- clean Python 3.11 checkout: `299 passed`, framework gate PASS, wheel/sdist PASS, wheel import PASS;
+- clean Python 3.12 checkout: `299 passed`, framework gate PASS, wheel/sdist PASS, wheel import PASS;
+- operator manifest: `30/30`, PASS;
+- controlled object 85 protocol: PASS;
+- MATLAB files included in the wheel: PASS;
+- MATLAB/Octave execution: delegated to the public GitHub Actions job because neither runtime is installed locally;
+- public GitHub Actions: pending push.
 
 ## Next step
 

@@ -7,14 +7,20 @@ PASS: full local regression suite - 299 passed
 PASS: operator manifest - 30/30 entries
 PASS: object 85 controlled protocol generated
 PASS: git diff whitespace check
+PASS: clean Python 3.11 checkout - 299 passed
+PASS: clean Python 3.11 framework gate
+PASS: clean Python 3.11 wheel and sdist build
+PASS: clean Python 3.11 installed-wheel import
+PASS: clean Python 3.12 checkout - 299 passed
+PASS: clean Python 3.12 framework gate
+PASS: clean Python 3.12 wheel and sdist build
+PASS: clean Python 3.12 installed-wheel import
 
 Environment used for the full local regression suite:
 - local project virtual environment
 - Python 3.14
 
 Pending before release tag:
-- clean Python 3.11 checkout
-- clean Python 3.12 checkout
 - public GitHub Actions Python matrix
 - public GitHub Actions Octave JSON/dashboard smoke
 
