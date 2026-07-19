@@ -40,6 +40,8 @@ def collect_data_evidence(
         raise ValueError("object_ids length must match the number of rows")
 
     median = np.nanmedian(reference, axis=0)
+    q05 = np.nanpercentile(reference, 5, axis=0)
+    q95 = np.nanpercentile(reference, 95, axis=0)
     mad = np.nanmedian(np.abs(reference - median), axis=0)
     fallback = np.nanstd(reference, axis=0)
     scale = np.where(mad > 1e-12, 1.4826 * mad, np.where(fallback > 1e-12, fallback, 1.0))
@@ -55,6 +57,18 @@ def collect_data_evidence(
         anomaly_fraction = float(len(anomaly_features) / max(len(names), 1))
         quality = max(0.0, min(1.0, 1.0 - missing_fraction - 0.5 * anomaly_fraction))
         warnings: list[str] = []
+        reference_profiles = {}
+        for index, name in enumerate(names):
+            finite = reference[:, index][np.isfinite(reference[:, index])]
+            percentile = None
+            if finite.size and np.isfinite(row[index]):
+                percentile = float(100.0 * np.mean(finite <= row[index]))
+            reference_profiles[name] = {
+                "q05": None if not np.isfinite(q05[index]) else float(q05[index]),
+                "median": None if not np.isfinite(median[index]) else float(median[index]),
+                "q95": None if not np.isfinite(q95[index]) else float(q95[index]),
+                "percentile": percentile,
+            }
         if missing_features:
             warnings.append("missing values: " + ", ".join(missing_features))
         if anomaly_features:
@@ -74,6 +88,7 @@ def collect_data_evidence(
                 source_trace=dict(source_trace or {}),
                 warnings=warnings,
                 evidence_refs=["robust_median_mad_profile"],
+                reference_profiles=reference_profiles,
             )
         )
     return results

@@ -1,0 +1,33 @@
+{
+  "schema_version": "1.0",
+  "milestone": "v1.1.0-rc1 Explanation Experience",
+  "status": "implementation_candidate",
+  "contracts": [
+    "fuzzyxai.evidence.ExplanationClaim",
+    "fuzzyxai.evidence.ExplanationLevel",
+    "fuzzyxai.visualization.ExplanationVisualSpec"
+  ],
+  "result_api": ["overview", "story", "inspect", "audit", "visualize"],
+  "views": [
+    "explanation_story",
+    "data_profile",
+    "training_trace",
+    "knowledge_atlas",
+    "decision_evidence",
+    "similar_cases",
+    "counterfactual",
+    "rule_ablation",
+    "provenance",
+    "audit"
+  ],
+  "backends": ["matplotlib", "plotly", "matlab_json_transport"],
+  "golden_explanations": [
+    "release_evidence/explanation_experience/object_85_explanation.json",
+    "release_evidence/explanation_experience/anfis_native_rules_explanation.json",
+    "release_evidence/explanation_experience/medical_research_similarity_explanation.json"
+  ],
+  "human_validation": {
+    "protocol": "docs/explanation_comprehension_protocol.md",
+    "status": "planned_not_run"
+  }
+}

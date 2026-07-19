@@ -8,7 +8,7 @@ from datetime import datetime, timezone
 from html import escape
 from hashlib import sha256
 from pathlib import Path
-from typing import Any, Mapping
+from typing import Any, Mapping, Sequence
 
 from fuzzyxai.adapters.base import BaseAdapter
 from fuzzyxai.adapters.model import ModelAdapter, ModelPrediction, resolve_model_adapter
@@ -28,17 +28,19 @@ from fuzzyxai.evidence import (
     TrainingRunAnalysis,
     build_class_concepts,
     build_explanation_graph,
+    build_explanation_claims,
     build_object_trace,
     collect_data_evidence,
     compose_human_explanation,
     detect_subgroup_averaging,
+    determine_explanation_level,
     explanation_to_text,
     evaluate_explanation_quality,
     extract_rules,
     find_similar_tabular_cases,
     find_tabular_counterfactuals,
 )
-from fuzzyxai.visualization.explanation_dashboard import render_explanation_dashboard
+from fuzzyxai.visualization.spec import build_visual_spec
 from fuzzyxai.visualization.view_model import ExplanationViewModel
 
 
@@ -77,6 +79,48 @@ def _with_feature_names(internal: Mapping[str, Any], names: list[str]) -> dict[s
 
 
 @dataclass(frozen=True)
+class ExplanationInspection:
+    """Focused, serializable view of one claim, rule, or evidence node."""
+
+    selector: str
+    target: Mapping[str, Any]
+    related_claims: Sequence[Mapping[str, Any]]
+    related_nodes: Sequence[Mapping[str, Any]]
+    related_edges: Sequence[Mapping[str, Any]]
+    visual_spec: Mapping[str, Any]
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "selector": self.selector,
+            "target": dict(self.target),
+            "related_claims": [dict(item) for item in self.related_claims],
+            "provenance": self.provenance(),
+        }
+
+    def provenance(self) -> dict[str, Any]:
+        return {
+            "nodes": [dict(item) for item in self.related_nodes],
+            "edges": [dict(item) for item in self.related_edges],
+        }
+
+    def visualize(
+        self,
+        *,
+        view: str | None = None,
+        backend: str = "matplotlib",
+        output: str | Path | None = None,
+    ):
+        selected_view = view or ("rule_ablation" if self.selector.startswith("rule:") else "provenance")
+        if backend == "matplotlib":
+            from fuzzyxai.visualization.matplotlib_renderer import render_visual_spec
+        elif backend == "plotly":
+            from fuzzyxai.visualization.plotly_renderer import render_visual_spec
+        else:
+            raise ValueError(f"unsupported visualization backend: {backend}")
+        return render_visual_spec(self.visual_spec, view=selected_view, output_path=output)
+
+
+@dataclass(frozen=True)
 class ModelExplanationResult:
     """Public result returned by ``FuzzyXAI.wrap(...).explain(...)``."""
 
@@ -86,6 +130,31 @@ class ModelExplanationResult:
     @property
     def action(self) -> str:
         return str(self.view_model.risk.get("action", "review"))
+
+    @property
+    def claims(self) -> tuple[Mapping[str, Any], ...]:
+        values = self.view_model.claims
+        return tuple(values) if isinstance(values, (list, tuple)) else tuple()
+
+    @property
+    def explanation_level(self) -> str:
+        return str(self.view_model.explanation_level.get("level", "E0"))
+
+    @property
+    def available_channels(self) -> tuple[str, ...]:
+        return tuple(self.view_model.explanation_level.get("available_channels", ()))
+
+    @property
+    def missing_channels(self) -> tuple[str, ...]:
+        return tuple(self.view_model.explanation_level.get("missing_channels", ()))
+
+    @property
+    def native_channels(self) -> tuple[str, ...]:
+        return tuple(self.view_model.explanation_level.get("native_channels", ()))
+
+    @property
+    def surrogate_channels(self) -> tuple[str, ...]:
+        return tuple(self.view_model.explanation_level.get("surrogate_channels", ()))
 
     def to_dict(self) -> dict[str, Any]:
         return self.view_model.to_dict()
@@ -107,6 +176,94 @@ class ModelExplanationResult:
 
         return explanation_to_text(HumanExplanation(**payload))
 
+    def overview(self) -> str:
+        """Answer the five operational questions using claim-grounded text."""
+
+        groups: dict[str, list[Mapping[str, Any]]] = {}
+        for claim in self.claims:
+            groups.setdefault(str(claim.get("claim_type")), []).append(claim)
+
+        def line(title: str, candidates: Sequence[str], fallback: str) -> str:
+            selected = [claim for kind in candidates for claim in groups.get(kind, [])]
+            if not selected:
+                return f"**{title}.** {fallback}"
+            claim = selected[0]
+            return f"**{title}.** {claim.get('statement')} [{claim.get('claim_id')}]"
+
+        return "\n\n".join(
+            [
+                line("Что решила модель", ["prediction"], "Прогноз недоступен."),
+                line("Почему", ["model_rule", "class_concept", "similar_case", "data_quality"], "Объясняющий канал отсутствует."),
+                line("Что противоречит", ["forgetting", "subgroup_averaging", "data_deviation", "diagnostic"], "Измеренное противоречие не обнаружено."),
+                f"**Применимость.** Получено объяснение уровня {self.explanation_level}. {self.view_model.explanation_level.get('rationale', '')}",
+                line("Что делать дальше", ["recommended_action"], f"Действие: {self.action}."),
+            ]
+        ) + "\n"
+
+    def story(self) -> str:
+        """Render the evidence route as data, training, knowledge, decision, action."""
+
+        lines = [f"# История решения ({self.explanation_level})"]
+        for stage in self.view_model.visual_spec.get("story", []):
+            refs = ", ".join(stage.get("claim_refs", [])) or "нет claims"
+            lines.append(f"\n## {stage.get('title')} [{stage.get('status')}] ({refs})")
+            facts = stage.get("facts", []) or ["Evidence для этапа отсутствует."]
+            lines.extend(f"- {fact}" for fact in facts)
+        return "\n".join(lines) + "\n"
+
+    def inspect(self, selector: str) -> ExplanationInspection:
+        """Inspect a claim or model rule and return its local provenance."""
+
+        prefix, separator, identifier = selector.partition(":")
+        if not separator or prefix not in {"claim", "rule", "evidence", "node"}:
+            raise ValueError("selector must be claim:<id>, rule:<id>, or evidence:<node_id>")
+        graph = self.view_model.explanation_graph
+        nodes = list(graph.get("nodes", []))
+        edges = list(graph.get("edges", []))
+        claims = list(self.claims)
+        target: Mapping[str, Any] | None = None
+        anchors: set[str] = set()
+        if prefix == "claim":
+            normalized = identifier.upper().replace("C", "C-") if identifier.upper().startswith("C") and "-" not in identifier else identifier.upper()
+            target = next((claim for claim in claims if str(claim.get("claim_id", "")).upper() == normalized), None)
+            if target:
+                anchors.add(f"claim:{target.get('claim_id')}")
+                anchors.update(str(item) for item in target.get("evidence_refs", []))
+        elif prefix == "rule":
+            target = next((rule for rule in self.view_model.layers.get("rules", []) if str(rule.get("rule_id")) == identifier), None)
+            anchors.add(f"rule:{identifier}")
+        else:
+            node_id = identifier if prefix == "node" else selector.removeprefix("evidence:")
+            target = next((node for node in nodes if str(node.get("node_id")) == node_id), None)
+            anchors.add(node_id)
+        if target is None:
+            raise KeyError(f"unknown inspection target: {selector}")
+        related_edges = [edge for edge in edges if edge.get("source") in anchors or edge.get("target") in anchors]
+        related_ids = set(anchors)
+        for edge in related_edges:
+            related_ids.update((str(edge.get("source")), str(edge.get("target"))))
+        related_nodes = [node for node in nodes if node.get("node_id") in related_ids]
+        related_claims = [
+            claim
+            for claim in claims
+            if f"claim:{claim.get('claim_id')}" in related_ids
+            or any(str(ref) in related_ids for ref in claim.get("evidence_refs", []))
+        ]
+        return ExplanationInspection(selector, target, related_claims, related_nodes, related_edges, self.view_model.visual_spec)
+
+    def audit(self) -> dict[str, Any]:
+        """Return full provenance and channel disclosure without presentation text."""
+
+        return {
+            "explanation_level": dict(self.view_model.explanation_level),
+            "claims": [dict(claim) for claim in self.claims],
+            "graph": dict(self.view_model.explanation_graph),
+            "diagnostics": list(self.view_model.diagnostics),
+            "action": self.action,
+            "trace": dict(self.view_model.trace),
+            "quality_metrics": dict(self.view_model.quality_metrics),
+        }
+
     def plot(
         self,
         output_path: str | Path | None = None,
@@ -114,20 +271,26 @@ class ModelExplanationResult:
         kind: str = "dashboard",
         backend: str = "matplotlib",
     ):
-        if kind != "dashboard":
-            raise ValueError(f"unsupported visualization kind: {kind}")
-        if backend != "matplotlib":
-            raise ValueError(f"unsupported visualization backend: {backend}")
-        return render_explanation_dashboard(self.view_model, output_path)
+        return self.visualize(view=kind, backend=backend, output=output_path)
 
     def visualize(
         self,
         *,
-        kind: str = "dashboard",
+        view: str = "explanation_story",
+        kind: str | None = None,
         backend: str = "matplotlib",
+        output: str | Path | None = None,
         output_path: str | Path | None = None,
     ):
-        return self.plot(output_path, kind=kind, backend=backend)
+        selected_view = kind or view
+        selected_output = output if output is not None else output_path
+        if backend == "matplotlib":
+            from fuzzyxai.visualization.matplotlib_renderer import render_visual_spec
+        elif backend == "plotly":
+            from fuzzyxai.visualization.plotly_renderer import render_visual_spec
+        else:
+            raise ValueError(f"unsupported visualization backend: {backend}")
+        return render_visual_spec(self.view_model.visual_spec, view=selected_view, output_path=selected_output)
 
     def export_html(self, path: str | Path) -> Path:
         """Export a self-contained evidence report without recomputing metrics."""
@@ -308,12 +471,6 @@ class FuzzyXAI:
             {"id": "action", "label": action, "status": "blocked" if action == "block" else "passed"},
         ]
         plan_json = json.dumps(self.plan.to_dict(), ensure_ascii=False, sort_keys=True, separators=(",", ":"))
-        narrative = str(
-            evidence.get(
-                "narrative",
-                f"Model score {score:.3f}; action {action}." if score is not None else f"Model prediction obtained; action {action}.",
-            )
-        )
         data_evidence = collect_data_evidence(
             rows,
             object_ids=ids,
@@ -396,17 +553,34 @@ class FuzzyXAI:
             counterfactuals=[*counterfactuals, *additional.counterfactuals],
             missing=list(dict.fromkeys([*missing, *additional.missing])),
         )
-        graph = build_explanation_graph(
+        prediction_payload = {**prediction.to_dict(), "score": score}
+        claims = build_explanation_claims(
             explanation_evidence,
-            prediction={**prediction.to_dict(), "score": score},
+            prediction=prediction_payload,
             diagnostics=diagnostics,
             action=action,
         )
+        graph = build_explanation_graph(
+            explanation_evidence,
+            prediction=prediction_payload,
+            diagnostics=diagnostics,
+            action=action,
+            claims=claims,
+        )
+        contribution_method = evidence.get("contribution_method", internal_evidence.get("contribution_method"))
+        explanation_level = determine_explanation_level(
+            explanation_evidence,
+            contribution_method=str(contribution_method) if contribution_method else None,
+            operator_channels={
+                "alignment": alignment is not None,
+                "reduction": reduction is not None,
+                "risk": risk is not None,
+            },
+        )
         human = {
             level: compose_human_explanation(
-                explanation_evidence,
+                claims,
                 graph,
-                prediction={**prediction.to_dict(), "score": score},
                 action=action,
                 level=level,
             ).to_dict()
@@ -418,12 +592,22 @@ class FuzzyXAI:
             contributions=dict(evidence.get("contributions", internal_evidence.get("contributions", {}))),
             supplied_metrics=dict(evidence.get("quality_metrics", {})),
         )
+        contributions = dict(evidence.get("contributions", internal_evidence.get("contributions", {})))
+        visual_spec = build_visual_spec(
+            explanation_evidence,
+            claims,
+            graph,
+            prediction=prediction_payload,
+            action=action,
+            contributions=contributions,
+            explanation_level=explanation_level.to_dict(),
+        )
         view_model = ExplanationViewModel(
             model={
                 **prediction.to_dict(),
                 "score": score,
-                "contributions": dict(evidence.get("contributions", internal_evidence.get("contributions", {}))),
-                "contribution_method": evidence.get("contribution_method", internal_evidence.get("contribution_method")),
+                "contributions": contributions,
+                "contribution_method": contribution_method,
                 "contribution_limitations": list(internal_evidence.get("limitations", [])),
             },
             fuzzy={"memberships": dict(evidence.get("memberships", {}))},
@@ -442,11 +626,8 @@ class FuzzyXAI:
                 "action": action,
             },
             diagnostics=diagnostics,
-            claims={
-                "allowed": ["model prediction was executed", "supplied operator evidence was computed by the canonical core"],
-                "forbidden": ["external model quality is proven", "missing explanation channels were inferred"],
-            },
-            narrative=narrative,
+            claims=[claim.to_dict() for claim in claims],
+            narrative=" ".join(claim.statement for claim in claims if claim.claim_type in {"prediction", "recommended_action"}),
             trace={
                 "adapter_id": prediction.adapter_id,
                 "model_type": prediction.model_type,
@@ -464,6 +645,8 @@ class FuzzyXAI:
             explanation_graph=graph.to_dict(),
             human_explanations=human,
             quality_metrics=quality_metrics,
+            explanation_level=explanation_level.to_dict(),
+            visual_spec=visual_spec.to_dict(),
         )
         return ModelExplanationResult(prediction=prediction, view_model=view_model)
 

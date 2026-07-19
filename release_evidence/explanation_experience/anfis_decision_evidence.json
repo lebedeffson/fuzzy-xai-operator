@@ -1,0 +1,100 @@
+{
+  "contradicts": [],
+  "limitations": [
+    {
+      "claim_id": "C-010",
+      "limitations": [
+        "Автоматическое принятие ограничено до устранения диагностики."
+      ],
+      "statement": "alignment evidence was not supplied",
+      "status": "insufficient_evidence",
+      "strength": null
+    },
+    {
+      "claim_id": "C-011",
+      "limitations": [
+        "Автоматическое принятие ограничено до устранения диагностики."
+      ],
+      "statement": "reduction evidence was not supplied",
+      "status": "insufficient_evidence",
+      "strength": null
+    },
+    {
+      "claim_id": "C-012",
+      "limitations": [
+        "Автоматическое принятие ограничено до устранения диагностики."
+      ],
+      "statement": "risk evidence was not supplied",
+      "status": "insufficient_evidence",
+      "strength": null
+    }
+  ],
+  "supports": [
+    {
+      "claim_id": "C-001",
+      "limitations": [],
+      "statement": "Прогноз: [1]",
+      "status": "supported",
+      "strength": 0.82
+    },
+    {
+      "claim_id": "C-003",
+      "limitations": [],
+      "statement": "R31: fracture_density is high and distance is low -> 1",
+      "status": "supported",
+      "strength": 0.84
+    },
+    {
+      "claim_id": "C-004",
+      "limitations": [],
+      "statement": "R12: water_saturation is high -> 1",
+      "status": "supported",
+      "strength": 0.67
+    },
+    {
+      "claim_id": "C-005",
+      "limitations": [
+        "primary-rule coverage is unavailable"
+      ],
+      "statement": "Концепт класса 0",
+      "status": "supported",
+      "strength": null
+    },
+    {
+      "claim_id": "C-006",
+      "limitations": [
+        "coverage is a lower bound because overlap between rules is unavailable"
+      ],
+      "statement": "Концепт класса 1",
+      "status": "supported",
+      "strength": null
+    },
+    {
+      "claim_id": "C-007",
+      "limitations": [
+        "feature distance does not establish causal or clinical similarity"
+      ],
+      "statement": "Похожий случай reference_3: 0.871",
+      "status": "supported",
+      "strength": 0.871474
+    },
+    {
+      "claim_id": "C-008",
+      "limitations": [
+        "feature distance does not establish causal or clinical similarity"
+      ],
+      "statement": "Похожий случай reference_2: 0.722",
+      "status": "supported",
+      "strength": 0.721808
+    },
+    {
+      "claim_id": "C-009",
+      "limitations": [
+        "feature distance does not establish causal or clinical similarity"
+      ],
+      "statement": "Похожий случай reference_1: 0.251",
+      "status": "supported",
+      "strength": 0.250936
+    }
+  ]
+}

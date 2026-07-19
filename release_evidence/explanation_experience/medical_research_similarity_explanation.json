@@ -1,0 +1,101 @@
+{
+  "claims": [
+    {
+      "applicability": null,
+      "claim_id": "C-MED-001",
+      "claim_type": "similar_case",
+      "comparison_baseline": null,
+      "counter_evidence_refs": [],
+      "evidence_refs": [
+        "similar:research_image_query:67:iou"
+      ],
+      "limitations": [
+        "IoU характеризует геометрию масок, а не вероятность диагноза."
+      ],
+      "metric_name": "mask_iou",
+      "metric_unit": null,
+      "metric_value": 0.89,
+      "scope": "object",
+      "short_statement": "Mask IoU with object 67: 0.89",
+      "statement": "Пересечение сегментационных масок объекта и примера 67 по IoU равно 0.89.",
+      "status": "supported",
+      "strength": 0.89,
+      "subject_id": "research_image_query"
+    },
+    {
+      "applicability": null,
+      "claim_id": "C-MED-002",
+      "claim_type": "similar_case",
+      "comparison_baseline": null,
+      "counter_evidence_refs": [],
+      "evidence_refs": [
+        "similar:research_image_query:67:embedding"
+      ],
+      "limitations": [
+        "Метрика зависит от версии модели и не является клиническим выводом."
+      ],
+      "metric_name": "embedding_cosine_similarity",
+      "metric_unit": null,
+      "metric_value": 0.82,
+      "scope": "object",
+      "short_statement": "Embedding similarity with object 67: 0.82",
+      "statement": "Косинусное сходство embedding объекта и примера 67 равно 0.82.",
+      "status": "supported",
+      "strength": 0.82,
+      "subject_id": "research_image_query"
+    }
+  ],
+  "clinical_claims": false,
+  "required_user_message": "Similarity supports inspection but is not a probability of the same diagnosis.",
+  "similar_cases": [
+    {
+      "compared_representation": "segmentation masks",
+      "coverage_score": 0.89,
+      "different_features": [
+        "surrounding_tissue_density"
+      ],
+      "limitations": [
+        "Mask overlap is not the probability of an identical diagnosis."
+      ],
+      "matched_features": [],
+      "matched_regions": [
+        "segmented_region"
+      ],
+      "query_object_id": "research_image_query",
+      "reference_label": "research_class_B",
+      "reference_object_id": "67",
+      "reference_outcome": null,
+      "reference_prediction": "research_class_B",
+      "similarity_method": "intersection_over_union",
+      "similarity_score": 0.89,
+      "trace": {
+        "fixture": "controlled_medical_similarity_v1"
+      }
+    },
+    {
+      "compared_representation": "model embedding vector",
+      "coverage_score": null,
+      "different_features": [
+        "surrounding_tissue_density"
+      ],
+      "limitations": [
+        "Embedding similarity is model-dependent and is not a clinical conclusion."
+      ],
+      "matched_features": [
+        "boundary_shape"
+      ],
+      "matched_regions": [],
+      "query_object_id": "research_image_query",
+      "reference_label": "research_class_B",
+      "reference_object_id": "67",
+      "reference_outcome": null,
+      "reference_prediction": "research_class_B",
+      "similarity_method": "cosine_similarity",
+      "similarity_score": 0.82,
+      "trace": {
+        "fixture": "controlled_medical_similarity_v1"
+      }
+    }
+  ],
+  "status": "controlled_fixture_research_only"
+}

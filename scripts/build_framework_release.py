@@ -28,9 +28,14 @@ REQUIRED_PATHS = {
     "fuzzy-xai-operator/TEST_REPORT.txt",
     "fuzzy-xai-operator/framework/fuzzyxai/operators_manifest.yaml",
     "fuzzy-xai-operator/framework/fuzzyxai/fuzzyxai/evidence/contracts.py",
+    "fuzzy-xai-operator/framework/fuzzyxai/fuzzyxai/evidence/claims.py",
     "fuzzy-xai-operator/framework/fuzzyxai/fuzzyxai/visualization/explanation_dashboard.py",
+    "fuzzy-xai-operator/framework/fuzzyxai/fuzzyxai/visualization/spec.py",
+    "fuzzy-xai-operator/framework/fuzzyxai/explanation_experience_manifest.json",
     "fuzzy-xai-operator/framework/fuzzyxai/matlab/+fuzzyxai/dashboard.m",
+    "fuzzy-xai-operator/framework/fuzzyxai/matlab/+fuzzyxai/explanationStory.m",
     "fuzzy-xai-operator/examples/object_85_training_trace.py",
+    "fuzzy-xai-operator/scripts/verify_explanation_experience.py",
 }
 
 

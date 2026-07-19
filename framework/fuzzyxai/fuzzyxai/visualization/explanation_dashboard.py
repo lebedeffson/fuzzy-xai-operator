@@ -28,7 +28,12 @@ def render_explanation_dashboard(
     view_model: ExplanationViewModel,
     output_path: str | Path | None = None,
 ):
-    """Render the five evidence layers from one canonical view model."""
+    """Render the claim-centered story, with the v1 dashboard as fallback."""
+
+    if view_model.visual_spec:
+        from .matplotlib_renderer import render_visual_spec
+
+        return render_visual_spec(view_model.visual_spec, view="explanation_story", output_path=output_path)
 
     try:
         import matplotlib.pyplot as plt

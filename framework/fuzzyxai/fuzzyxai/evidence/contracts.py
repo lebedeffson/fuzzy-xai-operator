@@ -36,6 +36,8 @@ class DataEvidence(EvidenceContract):
     source_trace: Mapping[str, Any]
     warnings: Sequence[str] = field(default_factory=tuple)
     evidence_refs: Sequence[str] = field(default_factory=tuple)
+    reference_profiles: Mapping[str, Mapping[str, float | None]] = field(default_factory=dict)
+    subgroup_profiles: Mapping[str, Mapping[str, float | None]] = field(default_factory=dict)
 
 
 @dataclass(frozen=True)
@@ -165,11 +167,58 @@ class ExplanationEdge(EvidenceContract):
 
 
 @dataclass(frozen=True)
+class ExplanationClaim(EvidenceContract):
+    """One auditable statement derived from explicit evidence references."""
+
+    claim_id: str
+    claim_type: str
+    scope: str
+    subject_id: str
+    statement: str
+    short_statement: str
+    status: str
+    strength: float | None
+    evidence_refs: Sequence[str]
+    counter_evidence_refs: Sequence[str] = field(default_factory=tuple)
+    limitations: Sequence[str] = field(default_factory=tuple)
+    applicability: str | None = None
+    metric_name: str | None = None
+    metric_value: float | None = None
+    metric_unit: str | None = None
+    comparison_baseline: str | None = None
+
+    def __post_init__(self) -> None:
+        if self.status not in {"supported", "contested", "insufficient_evidence"}:
+            raise ValueError(f"unsupported claim status: {self.status}")
+        if not self.evidence_refs:
+            raise ValueError("every ExplanationClaim requires at least one evidence reference")
+        if self.strength is not None and not 0.0 <= self.strength <= 1.0:
+            raise ValueError("claim strength must be between 0 and 1")
+
+
+@dataclass(frozen=True)
+class ExplanationLevel(EvidenceContract):
+    """Honest disclosure of explanation depth and channel provenance."""
+
+    level: str
+    available_channels: Sequence[str]
+    missing_channels: Sequence[str]
+    native_channels: Sequence[str]
+    surrogate_channels: Sequence[str]
+    rationale: str
+
+    def __post_init__(self) -> None:
+        if self.level not in {"E0", "E1", "E2", "E3", "E4", "E5"}:
+            raise ValueError(f"unsupported explanation level: {self.level}")
+
+
+@dataclass(frozen=True)
 class ExplanationGraph(EvidenceContract):
     nodes: Sequence[ExplanationNode]
     edges: Sequence[ExplanationEdge]
+    claims: Sequence[ExplanationClaim] = field(default_factory=tuple)
     missing_evidence: Sequence[str] = field(default_factory=tuple)
-    schema_version: str = "1.0"
+    schema_version: str = "2.0"
 
 
 @dataclass(frozen=True)
@@ -185,6 +234,7 @@ class HumanExplanation(EvidenceContract):
     limitations: Sequence[str]
     recommended_action: str
     evidence_trace: Sequence[str]
+    claim_refs: Mapping[str, Sequence[str]] = field(default_factory=dict)
 
 
 @dataclass(frozen=True)

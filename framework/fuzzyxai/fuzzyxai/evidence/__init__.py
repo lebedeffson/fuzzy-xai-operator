@@ -6,6 +6,8 @@ from .contracts import (
     ExplanationEdge,
     ExplanationEvidence,
     ExplanationGraph,
+    ExplanationClaim,
+    ExplanationLevel,
     ExplanationNode,
     HumanExplanation,
     LearnedRule,
@@ -17,6 +19,7 @@ from .data_quality import collect_data_evidence
 from .concepts import build_class_concepts
 from .counterfactual import find_tabular_counterfactuals
 from .graph import build_explanation_graph
+from .claims import build_explanation_claims, determine_explanation_level
 from .human import compose_human_explanation, explanation_to_text
 from .metrics import evaluate_explanation_quality
 from .rules import evaluate_rule_ablation, extract_rules, rank_rules, rule_complexity
@@ -35,6 +38,8 @@ __all__ = [
     "ExplanationNode",
     "ExplanationEdge",
     "ExplanationGraph",
+    "ExplanationClaim",
+    "ExplanationLevel",
     "HumanExplanation",
     "ExplanationEvidence",
     "collect_data_evidence",
@@ -47,6 +52,8 @@ __all__ = [
     "compare_region_masks",
     "find_tabular_counterfactuals",
     "build_explanation_graph",
+    "build_explanation_claims",
+    "determine_explanation_level",
     "compose_human_explanation",
     "explanation_to_text",
     "evaluate_explanation_quality",

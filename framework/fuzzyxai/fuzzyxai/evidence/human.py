@@ -1,118 +1,112 @@
 from __future__ import annotations
 
-from typing import Any, Mapping
+from typing import Sequence
 
-from .contracts import ExplanationEvidence, ExplanationGraph, HumanExplanation
+from .contracts import ExplanationClaim, ExplanationGraph, HumanExplanation
+
+
+def _grounded(claim: ExplanationClaim) -> str:
+    return f"{claim.statement} [{claim.claim_id}]"
 
 
 def compose_human_explanation(
-    evidence: ExplanationEvidence,
+    claims: Sequence[ExplanationClaim],
     graph: ExplanationGraph,
     *,
-    prediction: Mapping[str, Any],
     action: str,
     level: str,
 ) -> HumanExplanation:
-    """Generate user/expert/audit text using facts present in the graph only."""
+    """Compose text exclusively from auditable claims.
+
+    Claim identifiers remain visible in every sentence, so a renderer can link
+    prose back to evidence without reverse-engineering a free-text template.
+    """
 
     if level not in {"user", "expert", "audit"}:
         raise ValueError("level must be user, expert, or audit")
-    score = prediction.get("score")
-    predictions = prediction.get("predictions")
-    summary = f"Модель сформировала прогноз {predictions}."
-    if isinstance(score, (int, float)):
-        summary += f" Максимальный модельный балл равен {score:.3f}."
-    summary += f" Рекомендуемое действие: {action}."
+    by_type: dict[str, list[ExplanationClaim]] = {}
+    for claim in claims:
+        by_type.setdefault(claim.claim_type, []).append(claim)
 
-    reasons: list[str] = []
-    observed: list[str] = []
-    lost: list[str] = []
-    similar_text: list[str] = []
-    changes: list[str] = []
-    trust: list[str] = []
-    limitations: list[str] = []
-    trace: list[str] = []
+    prediction = by_type.get("prediction", [])[:1]
+    action_claim = by_type.get("recommended_action", [])[:1]
+    summary_claims = [*prediction, *action_claim]
+    summary = " ".join(_grounded(claim) for claim in summary_claims)
+    if action_claim:
+        summary += f" Рекомендуемое действие: {action}. [{action_claim[0].claim_id}]"
 
-    for data in evidence.data:
-        if data.anomaly_labels:
-            reasons.append(
-                f"Объект {data.object_id} отличается от медианного профиля по признакам {', '.join(data.anomaly_labels)}."
-            )
-        observed.append(f"Качество входных данных объекта {data.object_id}: {data.data_quality:.3f}.")
-        limitations.extend(data.warnings)
-        trace.extend(data.evidence_refs)
-    for item in evidence.training:
-        if item.first_learned_epoch is not None:
-            observed.append(f"Объект {item.object_id} впервые устойчиво распознан на эпохе {item.first_learned_epoch}.")
-        if item.forgetting_events:
-            lost.append(f"Для объекта {item.object_id} обнаружены события забывания на эпохах {list(item.forgetting_events)}.")
-    for subgroup in evidence.subgroups:
-        if subgroup.averaged:
-            lost.append(
-                f"При росте общей метрики на {subgroup.global_metric_change:+.3f} метрика подгруппы {subgroup.subgroup_id} изменилась на {subgroup.subgroup_metric_change:+.3f}."
-            )
-            if subgroup.disappeared_rules:
-                lost.append(f"Перестали наблюдаться правила: {', '.join(subgroup.disappeared_rules)}.")
-        limitations.extend(subgroup.limitations)
-    primary_rules = [rule for rule in evidence.rules if rule.is_primary][:7]
-    for rule in primary_rules:
-        kind = "нативное" if rule.native else "суррогатное"
-        importance = "не измерена" if rule.importance is None else f"{rule.importance:.3f}"
-        reasons.append(f"Правило {rule.rule_id} ({kind}): {rule.human_text}; значимость {importance}.")
-        trace.extend(rule.evidence_refs)
-    for concept in evidence.concepts:
-        observed.append(concept.human_description)
-        limitations.extend(concept.limitations)
-    for case in evidence.similar_cases:
-        similar_text.append(
-            f"Объект {case.reference_object_id}: сходство {case.similarity_score:.3f} по методу {case.similarity_method}; сравнивались {case.compared_representation}."
-        )
-        limitations.extend(case.limitations)
-    for counterfactual in evidence.counterfactuals:
-        change = (
-            f"признаков {dict(counterfactual.changed_features)}"
-            if counterfactual.changed_features
-            else f"правил {list(counterfactual.changed_rules)}"
-        )
-        changes.append(
-            f"Изменение {change} переводит прогноз из {counterfactual.source_prediction} в {counterfactual.target_prediction}; наблюдаемый эффект {counterfactual.observed_effect}."
-        )
-        limitations.extend(counterfactual.limitations)
-        trace.extend(counterfactual.evidence_refs)
-    if evidence.missing:
-        limitations.append("Недоступны доказательства: " + ", ".join(evidence.missing) + ".")
-        trust.append("Неполный evidence не позволяет автоматически принимать решение.")
-    else:
-        trust.append("Все заявленные факты связаны с узлами ExplanationGraph.")
+    reasons = [
+        *by_type.get("data_deviation", []),
+        *by_type.get("model_rule", []),
+        *by_type.get("class_concept", []),
+    ]
+    observed = [
+        *by_type.get("data_quality", []),
+        *by_type.get("first_learned", []),
+        *by_type.get("prediction", []),
+    ]
+    lost = [
+        *by_type.get("forgetting", []),
+        *by_type.get("subgroup_averaging", []),
+        *by_type.get("lost_rules", []),
+    ]
+    similar = by_type.get("similar_case", [])
+    changes = by_type.get("counterfactual", [])
+    trust = [*by_type.get("diagnostic", []), *by_type.get("recommended_action", [])]
+    limitation_claims = [
+        claim
+        for claim in claims
+        if claim.status in {"contested", "insufficient_evidence"} or claim.limitations
+    ]
 
     if level == "user":
-        reasons = reasons[:3]
-        observed = observed[:3]
-        lost = lost[:2]
-        similar_text = similar_text[:2]
-        changes = changes[:2]
-        trace = []
+        reasons, observed, lost = reasons[:3], observed[:3], lost[:2]
+        similar, changes, trust = similar[:2], changes[:2], trust[:2]
     elif level == "expert":
-        trace = sorted(set(trace))[:12]
-    else:
-        trace = [node.node_id for node in graph.nodes] + sorted(set(trace))
+        reasons, observed = reasons[:7], observed[:7]
+        similar, changes = similar[:5], changes[:5]
+
+    limitations: list[str] = []
+    for claim in limitation_claims:
+        if claim.limitations:
+            limitations.extend(f"{text} [{claim.claim_id}]" for text in claim.limitations)
+        elif claim.status == "insufficient_evidence":
+            limitations.append(_grounded(claim))
+
+    def rendered(items: Sequence[ExplanationClaim]) -> list[str]:
+        return [_grounded(item) for item in items]
+
+    sections = {
+        "summary": [claim.claim_id for claim in summary_claims],
+        "main_reasons": [claim.claim_id for claim in reasons],
+        "model_observed": [claim.claim_id for claim in observed],
+        "lost_or_averaged": [claim.claim_id for claim in lost],
+        "similar_cases": [claim.claim_id for claim in similar],
+        "decision_changes": [claim.claim_id for claim in changes],
+        "trust": [claim.claim_id for claim in trust],
+        "limitations": [claim.claim_id for claim in limitation_claims],
+    }
+    trace = [] if level == "user" else [claim.claim_id for claim in claims]
+    if level == "audit":
+        trace.extend(node.node_id for node in graph.nodes)
     return HumanExplanation(
         level=level,
         summary=summary,
-        main_reasons=reasons,
-        model_observed=observed,
-        lost_or_averaged=lost,
-        similar_cases=similar_text,
-        decision_changes=changes,
-        trust=trust,
+        main_reasons=rendered(reasons),
+        model_observed=rendered(observed),
+        lost_or_averaged=rendered(lost),
+        similar_cases=rendered(similar),
+        decision_changes=rendered(changes),
+        trust=rendered(trust),
         limitations=list(dict.fromkeys(limitations)),
         recommended_action=action,
         evidence_trace=list(dict.fromkeys(trace)),
+        claim_refs=sections,
     )
 
 
 def explanation_to_text(explanation: HumanExplanation) -> str:
-    """Render a structured explanation as readable Markdown text."""
+    """Render a claim-grounded explanation as readable Markdown text."""
 
     sections = [
         ("Итог", [explanation.summary]),

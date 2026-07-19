@@ -28,6 +28,12 @@ from .trace_heatmap import render_operator_trace_heatmap
 from .explanation_dashboard import render_explanation_dashboard
 from .training import render_training_trajectory
 from .view_model import ExplanationViewModel
+from .spec import (
+    ExplanationVisualSpec,
+    FeatureProfileSpec,
+    build_visual_spec,
+)
+from .matplotlib_renderer import render_visual_spec as render_explanation_view
 
 render_operator_route_flow = render_route_sankey
 
@@ -59,4 +65,8 @@ __all__ = [
     "ExplanationViewModel",
     "render_explanation_dashboard",
     "render_training_trajectory",
+    "ExplanationVisualSpec",
+    "FeatureProfileSpec",
+    "build_visual_spec",
+    "render_explanation_view",
 ]

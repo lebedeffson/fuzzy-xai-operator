@@ -30,7 +30,7 @@ __all__ += ['DatasetRecord', 'infer_dataset_profile']
 __all__ += ['lofo_f1_importance', 'bootstrap_lofo_f1_importance', 'select_top_rules_by_lofo_f1']
 __all__ += ['compute_interpretability_index']
 
-__version__ = "1.0.0"
+__version__ = "1.1.0rc1"
 
 
 def build_explanation(*, terms, representation, rules=None, activations=None, uncertainty=0.0, trace=None, metadata=None):
@@ -138,7 +138,7 @@ from .proof.verifier import verify_proof_trace
 from .viz.export import save_route_json
 from .viz.matplotlib_dashboard import render_dashboard
 from .examples import list_examples, load_example
-from .runtime import FuzzyXAI, ModelExplanationResult
+from .runtime import ExplanationInspection, FuzzyXAI, ModelExplanationResult
 from .adapters import (
     BaseAdapter,
     CallableAdapter,
@@ -193,6 +193,8 @@ from .evidence import (
     DataEvidence,
     ExplanationEvidence,
     ExplanationGraph,
+    ExplanationClaim,
+    ExplanationLevel,
     HumanExplanation,
     LearnedRule,
     SimilarCaseEvidence,
@@ -215,6 +217,7 @@ from .evidence import (
 __all__ += [
     "FuzzyXAI",
     "ModelExplanationResult",
+    "ExplanationInspection",
     "build_explainable_object",
     "build_route",
     "build_proof_trace",
@@ -274,6 +277,8 @@ __all__ += [
     "SimilarCaseEvidence",
     "CounterfactualEvidence",
     "ExplanationGraph",
+    "ExplanationClaim",
+    "ExplanationLevel",
     "HumanExplanation",
     "ExplanationEvidence",
     "TrainingRunAnalysis",

@@ -1,0 +1,16 @@
+{
+  "files": {
+    "VALIDATION.md": "204564f8f97fbe06e627aab39143bf988891f403bad91609b2bbb8fd61ceb784",
+    "anfis_decision_evidence.json": "561f2cccbcbb40bff374444c6ce262cde34e13092fb70d685ba22c8126288f43",
+    "anfis_knowledge_atlas.png": "2abed053e4edfb9657b221f2d9f7bc608d0a5d8f67f441b0ff07e21625dc1cc4",
+    "anfis_native_rules_explanation.json": "d3cb41bc573f77f4f0ad1075c7a7fcb6818aff9843c4721217f6a844a451cfc2",
+    "golden_summary.json": "e2b39c12cb908658bdd3f980f5642eb9fc3cb5d80596373aead0d0cb60859628",
+    "medical_research_similarity_explanation.json": "6f7bdf657616f96181b7289a84ea85731132159fcc815b742e7e213dd075dbf8",
+    "object_85_explanation.json": "cc7ca24f00c64eaf13d4b5cb90148593a23e3e5c4c28c93387fd47a519ed9e4f",
+    "object_85_overview.md": "2db702572e18ce870c538ef4a1ec1fe8aae1a9bf0009dc8b9228c73d6537fe1a",
+    "object_85_rule_ablation.png": "1dc84ec49dfb798029119e4f2a26cef9e3d9a42a8b0af99727f14fbb16cd171b",
+    "object_85_story.png": "601cbc68d98f5c1ed3766ce86e9a29f9c7091a15c9da450844bd3431e25bc0ae",
+    "object_85_training_trace.png": "6370de617eac750dbe648ec84682d42954d718fd89b7a79b8d5bcadaa2c2b76b"
+  },
+  "schema_version": "1.0"
+}

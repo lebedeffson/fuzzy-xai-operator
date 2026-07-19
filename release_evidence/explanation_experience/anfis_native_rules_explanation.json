@@ -1,0 +1,3012 @@
+{
+  "claims": [
+    {
+      "applicability": null,
+      "claim_id": "C-001",
+      "claim_type": "prediction",
+      "comparison_baseline": null,
+      "counter_evidence_refs": [],
+      "evidence_refs": [
+        "prediction"
+      ],
+      "limitations": [],
+      "metric_name": "model_score",
+      "metric_unit": null,
+      "metric_value": 0.82,
+      "scope": "object",
+      "short_statement": "Прогноз: [1]",
+      "statement": "Модель сформировала прогноз [1] с максимальным модельным баллом 0.820.",
+      "status": "supported",
+      "strength": 0.82,
+      "subject_id": "[1]"
+    },
+    {
+      "applicability": null,
+      "claim_id": "C-002",
+      "claim_type": "data_quality",
+      "comparison_baseline": null,
+      "counter_evidence_refs": [],
+      "evidence_refs": [
+        "data:anfis-fixture-1"
+      ],
+      "limitations": [],
+      "metric_name": "data_quality",
+      "metric_unit": null,
+      "metric_value": 1.0,
+      "scope": "object",
+      "short_statement": "Качество данных: 1.000",
+      "statement": "Качество доступных входных данных объекта anfis-fixture-1 равно 1.000.",
+      "status": "supported",
+      "strength": 1.0,
+      "subject_id": "anfis-fixture-1"
+    },
+    {
+      "applicability": null,
+      "claim_id": "C-003",
+      "claim_type": "model_rule",
+      "comparison_baseline": null,
+      "counter_evidence_refs": [],
+      "evidence_refs": [
+        "rule:R31"
+      ],
+      "limitations": [],
+      "metric_name": "rule_importance",
+      "metric_unit": null,
+      "metric_value": 0.84,
+      "scope": "model",
+      "short_statement": "R31: fracture_density is high and distance is low -> 1",
+      "statement": "Правило R31 является нативным: fracture_density is high and distance is low -> 1.",
+      "status": "supported",
+      "strength": 0.84,
+      "subject_id": "R31"
+    },
+    {
+      "applicability": null,
+      "claim_id": "C-004",
+      "claim_type": "model_rule",
+      "comparison_baseline": null,
+      "counter_evidence_refs": [],
+      "evidence_refs": [
+        "rule:R12"
+      ],
+      "limitations": [],
+      "metric_name": "rule_importance",
+      "metric_unit": null,
+      "metric_value": 0.67,
+      "scope": "model",
+      "short_statement": "R12: water_saturation is high -> 1",
+      "statement": "Правило R12 является нативным: water_saturation is high -> 1.",
+      "status": "supported",
+      "strength": 0.67,
+      "subject_id": "R12"
+    },
+    {
+      "applicability": null,
+      "claim_id": "C-005",
+      "claim_type": "class_concept",
+      "comparison_baseline": null,
+      "counter_evidence_refs": [],
+      "evidence_refs": [
+        "concept:0"
+      ],
+      "limitations": [
+        "primary-rule coverage is unavailable"
+      ],
+      "metric_name": null,
+      "metric_unit": null,
+      "metric_value": null,
+      "scope": "class",
+      "short_statement": "Концепт класса 0",
+      "statement": "Class 0: no supported primary rules; coverage unavailable.",
+      "status": "supported",
+      "strength": null,
+      "subject_id": "0"
+    },
+    {
+      "applicability": null,
+      "claim_id": "C-006",
+      "claim_type": "class_concept",
+      "comparison_baseline": null,
+      "counter_evidence_refs": [],
+      "evidence_refs": [
+        "concept:1"
+      ],
+      "limitations": [
+        "coverage is a lower bound because overlap between rules is unavailable"
+      ],
+      "metric_name": "primary_rule_coverage",
+      "metric_unit": null,
+      "metric_value": 0.46,
+      "scope": "class",
+      "short_statement": "Концепт класса 1",
+      "statement": "Class 1: fracture_density is high and distance is low -> 1; water_saturation is high -> 1; supported primary-rule coverage 46.0%.",
+      "status": "supported",
+      "strength": null,
+      "subject_id": "1"
+    },
+    {
+      "applicability": null,
+      "claim_id": "C-007",
+      "claim_type": "similar_case",
+      "comparison_baseline": "normalized tabular feature vector",
+      "counter_evidence_refs": [],
+      "evidence_refs": [
+        "similar:anfis-fixture-1:reference_3"
+      ],
+      "limitations": [
+        "feature distance does not establish causal or clinical similarity"
+      ],
+      "metric_name": "similarity",
+      "metric_unit": null,
+      "metric_value": 0.871474,
+      "scope": "object",
+      "short_statement": "Похожий случай reference_3: 0.871",
+      "statement": "Объект reference_3 имеет сходство 0.871 с объектом anfis-fixture-1; использован метод robust_standardized_euclidean для представления «normalized tabular feature vector».",
+      "status": "supported",
+      "strength": 0.871474,
+      "subject_id": "anfis-fixture-1"
+    },
+    {
+      "applicability": null,
+      "claim_id": "C-008",
+      "claim_type": "similar_case",
+      "comparison_baseline": "normalized tabular feature vector",
+      "counter_evidence_refs": [],
+      "evidence_refs": [
+        "similar:anfis-fixture-1:reference_2"
+      ],
+      "limitations": [
+        "feature distance does not establish causal or clinical similarity"
+      ],
+      "metric_name": "similarity",
+      "metric_unit": null,
+      "metric_value": 0.721808,
+      "scope": "object",
+      "short_statement": "Похожий случай reference_2: 0.722",
+      "statement": "Объект reference_2 имеет сходство 0.722 с объектом anfis-fixture-1; использован метод robust_standardized_euclidean для представления «normalized tabular feature vector».",
+      "status": "supported",
+      "strength": 0.721808,
+      "subject_id": "anfis-fixture-1"
+    },
+    {
+      "applicability": null,
+      "claim_id": "C-009",
+      "claim_type": "similar_case",
+      "comparison_baseline": "normalized tabular feature vector",
+      "counter_evidence_refs": [],
+      "evidence_refs": [
+        "similar:anfis-fixture-1:reference_1"
+      ],
+      "limitations": [
+        "feature distance does not establish causal or clinical similarity"
+      ],
+      "metric_name": "similarity",
+      "metric_unit": null,
+      "metric_value": 0.250936,
+      "scope": "object",
+      "short_statement": "Похожий случай reference_1: 0.251",
+      "statement": "Объект reference_1 имеет сходство 0.251 с объектом anfis-fixture-1; использован метод robust_standardized_euclidean для представления «normalized tabular feature vector».",
+      "status": "supported",
+      "strength": 0.250936,
+      "subject_id": "anfis-fixture-1"
+    },
+    {
+      "applicability": null,
+      "claim_id": "C-010",
+      "claim_type": "diagnostic",
+      "comparison_baseline": null,
+      "counter_evidence_refs": [],
+      "evidence_refs": [
+        "diagnostic:0"
+      ],
+      "limitations": [
+        "Автоматическое принятие ограничено до устранения диагностики."
+      ],
+      "metric_name": null,
+      "metric_unit": null,
+      "metric_value": null,
+      "scope": "model",
+      "short_statement": "alignment evidence was not supplied",
+      "statement": "Диагностика: alignment evidence was not supplied.",
+      "status": "insufficient_evidence",
+      "strength": null,
+      "subject_id": "D_k_alignment_missing"
+    },
+    {
+      "applicability": null,
+      "claim_id": "C-011",
+      "claim_type": "diagnostic",
+      "comparison_baseline": null,
+      "counter_evidence_refs": [],
+      "evidence_refs": [
+        "diagnostic:1"
+      ],
+      "limitations": [
+        "Автоматическое принятие ограничено до устранения диагностики."
+      ],
+      "metric_name": null,
+      "metric_unit": null,
+      "metric_value": null,
+      "scope": "model",
+      "short_statement": "reduction evidence was not supplied",
+      "statement": "Диагностика: reduction evidence was not supplied.",
+      "status": "insufficient_evidence",
+      "strength": null,
+      "subject_id": "D_k_reduction_missing"
+    },
+    {
+      "applicability": null,
+      "claim_id": "C-012",
+      "claim_type": "diagnostic",
+      "comparison_baseline": null,
+      "counter_evidence_refs": [],
+      "evidence_refs": [
+        "diagnostic:2"
+      ],
+      "limitations": [
+        "Автоматическое принятие ограничено до устранения диагностики."
+      ],
+      "metric_name": null,
+      "metric_unit": null,
+      "metric_value": null,
+      "scope": "model",
+      "short_statement": "risk evidence was not supplied",
+      "statement": "Диагностика: risk evidence was not supplied.",
+      "status": "insufficient_evidence",
+      "strength": null,
+      "subject_id": "D_k_risk_missing"
+    },
+    {
+      "applicability": "review",
+      "claim_id": "C-013",
+      "claim_type": "recommended_action",
+      "comparison_baseline": null,
+      "counter_evidence_refs": [],
+      "evidence_refs": [
+        "diagnostic:0",
+        "diagnostic:1",
+        "diagnostic:2"
+      ],
+      "limitations": [],
+      "metric_name": null,
+      "metric_unit": null,
+      "metric_value": null,
+      "scope": "object",
+      "short_statement": "Действие: review",
+      "statement": "На основании доступных claims рекомендовано действие review.",
+      "status": "supported",
+      "strength": null,
+      "subject_id": "[1]"
+    }
+  ],
+  "diagnostics": [
+    {
+      "code": "D_k_alignment_missing",
+      "reason": "alignment evidence was not supplied",
+      "severity": "warning"
+    },
+    {
+      "code": "D_k_reduction_missing",
+      "reason": "reduction evidence was not supplied",
+      "severity": "warning"
+    },
+    {
+      "code": "D_k_risk_missing",
+      "reason": "risk evidence was not supplied",
+      "severity": "warning"
+    }
+  ],
+  "disagreement": {
+    "components": {},
+    "delta": null,
+    "delta_t": null,
+    "gamma": null,
+    "r_delta": null
+  },
+  "explanation_graph": {
+    "claims": [
+      {
+        "applicability": null,
+        "claim_id": "C-001",
+        "claim_type": "prediction",
+        "comparison_baseline": null,
+        "counter_evidence_refs": [],
+        "evidence_refs": [
+          "prediction"
+        ],
+        "limitations": [],
+        "metric_name": "model_score",
+        "metric_unit": null,
+        "metric_value": 0.82,
+        "scope": "object",
+        "short_statement": "Прогноз: [1]",
+        "statement": "Модель сформировала прогноз [1] с максимальным модельным баллом 0.820.",
+        "status": "supported",
+        "strength": 0.82,
+        "subject_id": "[1]"
+      },
+      {
+        "applicability": null,
+        "claim_id": "C-002",
+        "claim_type": "data_quality",
+        "comparison_baseline": null,
+        "counter_evidence_refs": [],
+        "evidence_refs": [
+          "data:anfis-fixture-1"
+        ],
+        "limitations": [],
+        "metric_name": "data_quality",
+        "metric_unit": null,
+        "metric_value": 1.0,
+        "scope": "object",
+        "short_statement": "Качество данных: 1.000",
+        "statement": "Качество доступных входных данных объекта anfis-fixture-1 равно 1.000.",
+        "status": "supported",
+        "strength": 1.0,
+        "subject_id": "anfis-fixture-1"
+      },
+      {
+        "applicability": null,
+        "claim_id": "C-003",
+        "claim_type": "model_rule",
+        "comparison_baseline": null,
+        "counter_evidence_refs": [],
+        "evidence_refs": [
+          "rule:R31"
+        ],
+        "limitations": [],
+        "metric_name": "rule_importance",
+        "metric_unit": null,
+        "metric_value": 0.84,
+        "scope": "model",
+        "short_statement": "R31: fracture_density is high and distance is low -> 1",
+        "statement": "Правило R31 является нативным: fracture_density is high and distance is low -> 1.",
+        "status": "supported",
+        "strength": 0.84,
+        "subject_id": "R31"
+      },
+      {
+        "applicability": null,
+        "claim_id": "C-004",
+        "claim_type": "model_rule",
+        "comparison_baseline": null,
+        "counter_evidence_refs": [],
+        "evidence_refs": [
+          "rule:R12"
+        ],
+        "limitations": [],
+        "metric_name": "rule_importance",
+        "metric_unit": null,
+        "metric_value": 0.67,
+        "scope": "model",
+        "short_statement": "R12: water_saturation is high -> 1",
+        "statement": "Правило R12 является нативным: water_saturation is high -> 1.",
+        "status": "supported",
+        "strength": 0.67,
+        "subject_id": "R12"
+      },
+      {
+        "applicability": null,
+        "claim_id": "C-005",
+        "claim_type": "class_concept",
+        "comparison_baseline": null,
+        "counter_evidence_refs": [],
+        "evidence_refs": [
+          "concept:0"
+        ],
+        "limitations": [
+          "primary-rule coverage is unavailable"
+        ],
+        "metric_name": null,
+        "metric_unit": null,
+        "metric_value": null,
+        "scope": "class",
+        "short_statement": "Концепт класса 0",
+        "statement": "Class 0: no supported primary rules; coverage unavailable.",
+        "status": "supported",
+        "strength": null,
+        "subject_id": "0"
+      },
+      {
+        "applicability": null,
+        "claim_id": "C-006",
+        "claim_type": "class_concept",
+        "comparison_baseline": null,
+        "counter_evidence_refs": [],
+        "evidence_refs": [
+          "concept:1"
+        ],
+        "limitations": [
+          "coverage is a lower bound because overlap between rules is unavailable"
+        ],
+        "metric_name": "primary_rule_coverage",
+        "metric_unit": null,
+        "metric_value": 0.46,
+        "scope": "class",
+        "short_statement": "Концепт класса 1",
+        "statement": "Class 1: fracture_density is high and distance is low -> 1; water_saturation is high -> 1; supported primary-rule coverage 46.0%.",
+        "status": "supported",
+        "strength": null,
+        "subject_id": "1"
+      },
+      {
+        "applicability": null,
+        "claim_id": "C-007",
+        "claim_type": "similar_case",
+        "comparison_baseline": "normalized tabular feature vector",
+        "counter_evidence_refs": [],
+        "evidence_refs": [
+          "similar:anfis-fixture-1:reference_3"
+        ],
+        "limitations": [
+          "feature distance does not establish causal or clinical similarity"
+        ],
+        "metric_name": "similarity",
+        "metric_unit": null,
+        "metric_value": 0.871474,
+        "scope": "object",
+        "short_statement": "Похожий случай reference_3: 0.871",
+        "statement": "Объект reference_3 имеет сходство 0.871 с объектом anfis-fixture-1; использован метод robust_standardized_euclidean для представления «normalized tabular feature vector».",
+        "status": "supported",
+        "strength": 0.871474,
+        "subject_id": "anfis-fixture-1"
+      },
+      {
+        "applicability": null,
+        "claim_id": "C-008",
+        "claim_type": "similar_case",
+        "comparison_baseline": "normalized tabular feature vector",
+        "counter_evidence_refs": [],
+        "evidence_refs": [
+          "similar:anfis-fixture-1:reference_2"
+        ],
+        "limitations": [
+          "feature distance does not establish causal or clinical similarity"
+        ],
+        "metric_name": "similarity",
+        "metric_unit": null,
+        "metric_value": 0.721808,
+        "scope": "object",
+        "short_statement": "Похожий случай reference_2: 0.722",
+        "statement": "Объект reference_2 имеет сходство 0.722 с объектом anfis-fixture-1; использован метод robust_standardized_euclidean для представления «normalized tabular feature vector».",
+        "status": "supported",
+        "strength": 0.721808,
+        "subject_id": "anfis-fixture-1"
+      },
+      {
+        "applicability": null,
+        "claim_id": "C-009",
+        "claim_type": "similar_case",
+        "comparison_baseline": "normalized tabular feature vector",
+        "counter_evidence_refs": [],
+        "evidence_refs": [
+          "similar:anfis-fixture-1:reference_1"
+        ],
+        "limitations": [
+          "feature distance does not establish causal or clinical similarity"
+        ],
+        "metric_name": "similarity",
+        "metric_unit": null,
+        "metric_value": 0.250936,
+        "scope": "object",
+        "short_statement": "Похожий случай reference_1: 0.251",
+        "statement": "Объект reference_1 имеет сходство 0.251 с объектом anfis-fixture-1; использован метод robust_standardized_euclidean для представления «normalized tabular feature vector».",
+        "status": "supported",
+        "strength": 0.250936,
+        "subject_id": "anfis-fixture-1"
+      },
+      {
+        "applicability": null,
+        "claim_id": "C-010",
+        "claim_type": "diagnostic",
+        "comparison_baseline": null,
+        "counter_evidence_refs": [],
+        "evidence_refs": [
+          "diagnostic:0"
+        ],
+        "limitations": [
+          "Автоматическое принятие ограничено до устранения диагностики."
+        ],
+        "metric_name": null,
+        "metric_unit": null,
+        "metric_value": null,
+        "scope": "model",
+        "short_statement": "alignment evidence was not supplied",
+        "statement": "Диагностика: alignment evidence was not supplied.",
+        "status": "insufficient_evidence",
+        "strength": null,
+        "subject_id": "D_k_alignment_missing"
+      },
+      {
+        "applicability": null,
+        "claim_id": "C-011",
+        "claim_type": "diagnostic",
+        "comparison_baseline": null,
+        "counter_evidence_refs": [],
+        "evidence_refs": [
+          "diagnostic:1"
+        ],
+        "limitations": [
+          "Автоматическое принятие ограничено до устранения диагностики."
+        ],
+        "metric_name": null,
+        "metric_unit": null,
+        "metric_value": null,
+        "scope": "model",
+        "short_statement": "reduction evidence was not supplied",
+        "statement": "Диагностика: reduction evidence was not supplied.",
+        "status": "insufficient_evidence",
+        "strength": null,
+        "subject_id": "D_k_reduction_missing"
+      },
+      {
+        "applicability": null,
+        "claim_id": "C-012",
+        "claim_type": "diagnostic",
+        "comparison_baseline": null,
+        "counter_evidence_refs": [],
+        "evidence_refs": [
+          "diagnostic:2"
+        ],
+        "limitations": [
+          "Автоматическое принятие ограничено до устранения диагностики."
+        ],
+        "metric_name": null,
+        "metric_unit": null,
+        "metric_value": null,
+        "scope": "model",
+        "short_statement": "risk evidence was not supplied",
+        "statement": "Диагностика: risk evidence was not supplied.",
+        "status": "insufficient_evidence",
+        "strength": null,
+        "subject_id": "D_k_risk_missing"
+      },
+      {
+        "applicability": "review",
+        "claim_id": "C-013",
+        "claim_type": "recommended_action",
+        "comparison_baseline": null,
+        "counter_evidence_refs": [],
+        "evidence_refs": [
+          "diagnostic:0",
+          "diagnostic:1",
+          "diagnostic:2"
+        ],
+        "limitations": [],
+        "metric_name": null,
+        "metric_unit": null,
+        "metric_value": null,
+        "scope": "object",
+        "short_statement": "Действие: review",
+        "statement": "На основании доступных claims рекомендовано действие review.",
+        "status": "supported",
+        "strength": null,
+        "subject_id": "[1]"
+      }
+    ],
+    "edges": [
+      {
+        "evidence_refs": [],
+        "relation": "supports",
+        "source": "rule:R31",
+        "target": "concept:1"
+      },
+      {
+        "evidence_refs": [],
+        "relation": "supports",
+        "source": "rule:R12",
+        "target": "concept:1"
+      },
+      {
+        "evidence_refs": [],
+        "relation": "compared_with",
+        "source": "data:anfis-fixture-1",
+        "target": "similar:anfis-fixture-1:reference_3"
+      },
+      {
+        "evidence_refs": [],
+        "relation": "compared_with",
+        "source": "data:anfis-fixture-1",
+        "target": "similar:anfis-fixture-1:reference_2"
+      },
+      {
+        "evidence_refs": [],
+        "relation": "compared_with",
+        "source": "data:anfis-fixture-1",
+        "target": "similar:anfis-fixture-1:reference_1"
+      },
+      {
+        "evidence_refs": [
+          "robust_median_mad_profile"
+        ],
+        "relation": "supported_by",
+        "source": "data:anfis-fixture-1",
+        "target": "prediction"
+      },
+      {
+        "evidence_refs": [
+          "adapter.extract_rules"
+        ],
+        "relation": "supported_by",
+        "source": "rule:R31",
+        "target": "prediction"
+      },
+      {
+        "evidence_refs": [
+          "adapter.extract_rules"
+        ],
+        "relation": "supported_by",
+        "source": "rule:R12",
+        "target": "prediction"
+      },
+      {
+        "evidence_refs": [],
+        "relation": "supported_by",
+        "source": "concept:0",
+        "target": "prediction"
+      },
+      {
+        "evidence_refs": [],
+        "relation": "supported_by",
+        "source": "concept:1",
+        "target": "prediction"
+      },
+      {
+        "evidence_refs": [],
+        "relation": "supported_by",
+        "source": "similar:anfis-fixture-1:reference_3",
+        "target": "prediction"
+      },
+      {
+        "evidence_refs": [],
+        "relation": "supported_by",
+        "source": "similar:anfis-fixture-1:reference_2",
+        "target": "prediction"
+      },
+      {
+        "evidence_refs": [],
+        "relation": "supported_by",
+        "source": "similar:anfis-fixture-1:reference_1",
+        "target": "prediction"
+      },
+      {
+        "evidence_refs": [],
+        "relation": "checked_by",
+        "source": "prediction",
+        "target": "diagnostic:0"
+      },
+      {
+        "evidence_refs": [],
+        "relation": "checked_by",
+        "source": "prediction",
+        "target": "diagnostic:1"
+      },
+      {
+        "evidence_refs": [],
+        "relation": "checked_by",
+        "source": "prediction",
+        "target": "diagnostic:2"
+      },
+      {
+        "evidence_refs": [
+          "prediction"
+        ],
+        "relation": "supports_claim",
+        "source": "prediction",
+        "target": "claim:C-001"
+      },
+      {
+        "evidence_refs": [
+          "data:anfis-fixture-1"
+        ],
+        "relation": "supports_claim",
+        "source": "data:anfis-fixture-1",
+        "target": "claim:C-002"
+      },
+      {
+        "evidence_refs": [
+          "rule:R31"
+        ],
+        "relation": "supports_claim",
+        "source": "rule:R31",
+        "target": "claim:C-003"
+      },
+      {
+        "evidence_refs": [
+          "rule:R12"
+        ],
+        "relation": "supports_claim",
+        "source": "rule:R12",
+        "target": "claim:C-004"
+      },
+      {
+        "evidence_refs": [
+          "concept:0"
+        ],
+        "relation": "supports_claim",
+        "source": "concept:0",
+        "target": "claim:C-005"
+      },
+      {
+        "evidence_refs": [
+          "concept:1"
+        ],
+        "relation": "supports_claim",
+        "source": "concept:1",
+        "target": "claim:C-006"
+      },
+      {
+        "evidence_refs": [
+          "similar:anfis-fixture-1:reference_3"
+        ],
+        "relation": "supports_claim",
+        "source": "similar:anfis-fixture-1:reference_3",
+        "target": "claim:C-007"
+      },
+      {
+        "evidence_refs": [
+          "similar:anfis-fixture-1:reference_2"
+        ],
+        "relation": "supports_claim",
+        "source": "similar:anfis-fixture-1:reference_2",
+        "target": "claim:C-008"
+      },
+      {
+        "evidence_refs": [
+          "similar:anfis-fixture-1:reference_1"
+        ],
+        "relation": "supports_claim",
+        "source": "similar:anfis-fixture-1:reference_1",
+        "target": "claim:C-009"
+      },
+      {
+        "evidence_refs": [
+          "diagnostic:0"
+        ],
+        "relation": "supports_claim",
+        "source": "diagnostic:0",
+        "target": "claim:C-010"
+      },
+      {
+        "evidence_refs": [],
+        "relation": "constrains",
+        "source": "claim:C-010",
+        "target": "action"
+      },
+      {
+        "evidence_refs": [
+          "diagnostic:1"
+        ],
+        "relation": "supports_claim",
+        "source": "diagnostic:1",
+        "target": "claim:C-011"
+      },
+      {
+        "evidence_refs": [],
+        "relation": "constrains",
+        "source": "claim:C-011",
+        "target": "action"
+      },
+      {
+        "evidence_refs": [
+          "diagnostic:2"
+        ],
+        "relation": "supports_claim",
+        "source": "diagnostic:2",
+        "target": "claim:C-012"
+      },
+      {
+        "evidence_refs": [],
+        "relation": "constrains",
+        "source": "claim:C-012",
+        "target": "action"
+      },
+      {
+        "evidence_refs": [
+          "diagnostic:0"
+        ],
+        "relation": "supports_claim",
+        "source": "diagnostic:0",
+        "target": "claim:C-013"
+      },
+      {
+        "evidence_refs": [
+          "diagnostic:1"
+        ],
+        "relation": "supports_claim",
+        "source": "diagnostic:1",
+        "target": "claim:C-013"
+      },
+      {
+        "evidence_refs": [
+          "diagnostic:2"
+        ],
+        "relation": "supports_claim",
+        "source": "diagnostic:2",
+        "target": "claim:C-013"
+      },
+      {
+        "evidence_refs": [],
+        "relation": "leads_to",
+        "source": "prediction",
+        "target": "action"
+      },
+      {
+        "evidence_refs": [],
+        "relation": "constrains",
+        "source": "diagnostic:0",
+        "target": "action"
+      },
+      {
+        "evidence_refs": [],
+        "relation": "constrains",
+        "source": "diagnostic:1",
+        "target": "action"
+      },
+      {
+        "evidence_refs": [],
+        "relation": "constrains",
+        "source": "diagnostic:2",
+        "target": "action"
+      },
+      {
+        "evidence_refs": [],
+        "relation": "recommends",
+        "source": "claim:C-013",
+        "target": "action"
+      }
+    ],
+    "missing_evidence": [],
+    "nodes": [
+      {
+        "evidence_refs": [
+          "robust_median_mad_profile"
+        ],
+        "label": "Data anfis-fixture-1",
+        "node_id": "data:anfis-fixture-1",
+        "node_type": "data",
+        "payload": {
+          "anomaly_labels": [],
+          "data_quality": 1.0,
+          "evidence_refs": [
+            "robust_median_mad_profile"
+          ],
+          "feature_names": [
+            "fracture_density",
+            "distance"
+          ],
+          "missingness": {
+            "distance": false,
+            "fracture_density": false
+          },
+          "normalized_values": [
+            0.9712666936462973,
+            -0.701470389855659
+          ],
+          "object_id": "anfis-fixture-1",
+          "outlier_scores": {
+            "distance": 0.701470389855659,
+            "fracture_density": 0.9712666936462973
+          },
+          "raw_values": [
+            0.76,
+            0.24
+          ],
+          "reference_profiles": {
+            "distance": {
+              "median": 0.5,
+              "percentile": 25.0,
+              "q05": 0.21500000000000002,
+              "q95": 0.785
+            },
+            "fracture_density": {
+              "median": 0.4,
+              "percentile": 100.0,
+              "q05": 0.115,
+              "q95": 0.6849999999999999
+            }
+          },
+          "source_trace": {
+            "adapter_id": "native_rules",
+            "model_fingerprint": "19e2d57dafdd294e62d20eb2ff1d5bd2d5f3f9cd28e250087100af203cb15685"
+          },
+          "subgroup_profiles": {},
+          "warnings": []
+        }
+      },
+      {
+        "evidence_refs": [
+          "adapter.extract_rules"
+        ],
+        "label": "fracture_density is high and distance is low -> 1",
+        "node_id": "rule:R31",
+        "node_type": "rule",
+        "payload": {
+          "activation": 0.71,
+          "antecedents": [
+            "fracture_density is high",
+            "distance is low"
+          ],
+          "class_distribution": {},
+          "complexity": 2.0,
+          "consequent": "1",
+          "counterfactual_effect": {},
+          "coverage": 0.08,
+          "evidence_refs": [
+            "adapter.extract_rules"
+          ],
+          "fidelity": null,
+          "human_text": "fracture_density is high and distance is low -> 1",
+          "importance": 0.84,
+          "is_conflicting": false,
+          "is_primary": true,
+          "is_redundant": false,
+          "model_version": "19e2d57dafdd",
+          "native": true,
+          "precision": 0.91,
+          "rule_id": "R31",
+          "source_objects": [],
+          "stability": 0.42,
+          "support": 8,
+          "surrogate": false
+        }
+      },
+      {
+        "evidence_refs": [
+          "adapter.extract_rules"
+        ],
+        "label": "water_saturation is high -> 1",
+        "node_id": "rule:R12",
+        "node_type": "rule",
+        "payload": {
+          "activation": 0.82,
+          "antecedents": [
+            "water_saturation is high"
+          ],
+          "class_distribution": {},
+          "complexity": 1.0,
+          "consequent": "1",
+          "counterfactual_effect": {},
+          "coverage": 0.46,
+          "evidence_refs": [
+            "adapter.extract_rules"
+          ],
+          "fidelity": null,
+          "human_text": "water_saturation is high -> 1",
+          "importance": 0.67,
+          "is_conflicting": false,
+          "is_primary": true,
+          "is_redundant": false,
+          "model_version": "19e2d57dafdd",
+          "native": true,
+          "precision": 0.86,
+          "rule_id": "R12",
+          "source_objects": [],
+          "stability": 0.88,
+          "support": 46,
+          "surrogate": false
+        }
+      },
+      {
+        "evidence_refs": [],
+        "label": "Class 0: no supported primary rules; coverage unavailable.",
+        "node_id": "concept:0",
+        "node_type": "concept",
+        "payload": {
+          "boundary_objects": [
+            "object_1",
+            "object_0"
+          ],
+          "class_id": "0",
+          "class_name": "0",
+          "counterexamples": [
+            "object_2",
+            "object_3"
+          ],
+          "human_description": "Class 0: no supported primary rules; coverage unavailable.",
+          "intra_class_variability": 0.07071067811865478,
+          "limitations": [
+            "primary-rule coverage is unavailable"
+          ],
+          "primary_rule_coverage": null,
+          "primary_rules": [],
+          "prototype_embedding": [],
+          "prototype_features": {
+            "distance": 0.75,
+            "fracture_density": 0.15000000000000002
+          },
+          "representative_objects": [
+            "object_1",
+            "object_0"
+          ],
+          "uncovered_fraction": null
+        }
+      },
+      {
+        "evidence_refs": [],
+        "label": "Class 1: fracture_density is high and distance is low -> 1; water_saturation is high -> 1; supported primary-rule coverage 46.0%.",
+        "node_id": "concept:1",
+        "node_type": "concept",
+        "payload": {
+          "boundary_objects": [
+            "object_2",
+            "object_3"
+          ],
+          "class_id": "1",
+          "class_name": "1",
+          "counterexamples": [
+            "object_1",
+            "object_0"
+          ],
+          "human_description": "Class 1: fracture_density is high and distance is low -> 1; water_saturation is high -> 1; supported primary-rule coverage 46.0%.",
+          "intra_class_variability": 0.07071067811865472,
+          "limitations": [
+            "coverage is a lower bound because overlap between rules is unavailable"
+          ],
+          "primary_rule_coverage": 0.46,
+          "primary_rules": [
+            "R31",
+            "R12"
+          ],
+          "prototype_embedding": [],
+          "prototype_features": {
+            "distance": 0.25,
+            "fracture_density": 0.6499999999999999
+          },
+          "representative_objects": [
+            "object_2",
+            "object_3"
+          ],
+          "uncovered_fraction": 0.54
+        }
+      },
+      {
+        "evidence_refs": [],
+        "label": "reference_3: robust_standardized_euclidean",
+        "node_id": "similar:anfis-fixture-1:reference_3",
+        "node_type": "similar_case",
+        "payload": {
+          "compared_representation": "normalized tabular feature vector",
+          "coverage_score": 1.0,
+          "different_features": [],
+          "limitations": [
+            "feature distance does not establish causal or clinical similarity"
+          ],
+          "matched_features": [
+            "fracture_density",
+            "distance"
+          ],
+          "matched_regions": [],
+          "query_object_id": "anfis-fixture-1",
+          "reference_label": 1,
+          "reference_object_id": "reference_3",
+          "reference_outcome": null,
+          "reference_prediction": null,
+          "similarity_method": "robust_standardized_euclidean",
+          "similarity_score": 0.871474,
+          "trace": {
+            "reference_index": 3,
+            "scale": "median absolute deviation"
+          }
+        }
+      },
+      {
+        "evidence_refs": [],
+        "label": "reference_2: robust_standardized_euclidean",
+        "node_id": "similar:anfis-fixture-1:reference_2",
+        "node_type": "similar_case",
+        "payload": {
+          "compared_representation": "normalized tabular feature vector",
+          "coverage_score": 1.0,
+          "different_features": [],
+          "limitations": [
+            "feature distance does not establish causal or clinical similarity"
+          ],
+          "matched_features": [
+            "fracture_density",
+            "distance"
+          ],
+          "matched_regions": [],
+          "query_object_id": "anfis-fixture-1",
+          "reference_label": 1,
+          "reference_object_id": "reference_2",
+          "reference_outcome": null,
+          "reference_prediction": null,
+          "similarity_method": "robust_standardized_euclidean",
+          "similarity_score": 0.721808,
+          "trace": {
+            "reference_index": 2,
+            "scale": "median absolute deviation"
+          }
+        }
+      },
+      {
+        "evidence_refs": [],
+        "label": "reference_1: robust_standardized_euclidean",
+        "node_id": "similar:anfis-fixture-1:reference_1",
+        "node_type": "similar_case",
+        "payload": {
+          "compared_representation": "normalized tabular feature vector",
+          "coverage_score": 0.0,
+          "different_features": [
+            "fracture_density",
+            "distance"
+          ],
+          "limitations": [
+            "feature distance does not establish causal or clinical similarity"
+          ],
+          "matched_features": [],
+          "matched_regions": [],
+          "query_object_id": "anfis-fixture-1",
+          "reference_label": 0,
+          "reference_object_id": "reference_1",
+          "reference_outcome": null,
+          "reference_prediction": null,
+          "similarity_method": "robust_standardized_euclidean",
+          "similarity_score": 0.250936,
+          "trace": {
+            "reference_index": 1,
+            "scale": "median absolute deviation"
+          }
+        }
+      },
+      {
+        "evidence_refs": [],
+        "label": "Model prediction",
+        "node_id": "prediction",
+        "node_type": "prediction",
+        "payload": {
+          "adapter_id": "native_rules",
+          "metadata": {
+            "classes": [
+              0,
+              1
+            ]
+          },
+          "model_type": "ControlledRuleModel",
+          "predictions": [
+            1
+          ],
+          "probabilities": [
+            [
+              0.18,
+              0.82
+            ]
+          ],
+          "score": 0.82
+        }
+      },
+      {
+        "evidence_refs": [],
+        "label": "alignment evidence was not supplied",
+        "node_id": "diagnostic:0",
+        "node_type": "diagnostic",
+        "payload": {
+          "code": "D_k_alignment_missing",
+          "reason": "alignment evidence was not supplied",
+          "severity": "warning"
+        }
+      },
+      {
+        "evidence_refs": [],
+        "label": "reduction evidence was not supplied",
+        "node_id": "diagnostic:1",
+        "node_type": "diagnostic",
+        "payload": {
+          "code": "D_k_reduction_missing",
+          "reason": "reduction evidence was not supplied",
+          "severity": "warning"
+        }
+      },
+      {
+        "evidence_refs": [],
+        "label": "risk evidence was not supplied",
+        "node_id": "diagnostic:2",
+        "node_type": "diagnostic",
+        "payload": {
+          "code": "D_k_risk_missing",
+          "reason": "risk evidence was not supplied",
+          "severity": "warning"
+        }
+      },
+      {
+        "evidence_refs": [
+          "prediction"
+        ],
+        "label": "Прогноз: [1]",
+        "node_id": "claim:C-001",
+        "node_type": "claim",
+        "payload": {
+          "applicability": null,
+          "claim_id": "C-001",
+          "claim_type": "prediction",
+          "comparison_baseline": null,
+          "counter_evidence_refs": [],
+          "evidence_refs": [
+            "prediction"
+          ],
+          "limitations": [],
+          "metric_name": "model_score",
+          "metric_unit": null,
+          "metric_value": 0.82,
+          "scope": "object",
+          "short_statement": "Прогноз: [1]",
+          "statement": "Модель сформировала прогноз [1] с максимальным модельным баллом 0.820.",
+          "status": "supported",
+          "strength": 0.82,
+          "subject_id": "[1]"
+        }
+      },
+      {
+        "evidence_refs": [
+          "data:anfis-fixture-1"
+        ],
+        "label": "Качество данных: 1.000",
+        "node_id": "claim:C-002",
+        "node_type": "claim",
+        "payload": {
+          "applicability": null,
+          "claim_id": "C-002",
+          "claim_type": "data_quality",
+          "comparison_baseline": null,
+          "counter_evidence_refs": [],
+          "evidence_refs": [
+            "data:anfis-fixture-1"
+          ],
+          "limitations": [],
+          "metric_name": "data_quality",
+          "metric_unit": null,
+          "metric_value": 1.0,
+          "scope": "object",
+          "short_statement": "Качество данных: 1.000",
+          "statement": "Качество доступных входных данных объекта anfis-fixture-1 равно 1.000.",
+          "status": "supported",
+          "strength": 1.0,
+          "subject_id": "anfis-fixture-1"
+        }
+      },
+      {
+        "evidence_refs": [
+          "rule:R31"
+        ],
+        "label": "R31: fracture_density is high and distance is low -> 1",
+        "node_id": "claim:C-003",
+        "node_type": "claim",
+        "payload": {
+          "applicability": null,
+          "claim_id": "C-003",
+          "claim_type": "model_rule",
+          "comparison_baseline": null,
+          "counter_evidence_refs": [],
+          "evidence_refs": [
+            "rule:R31"
+          ],
+          "limitations": [],
+          "metric_name": "rule_importance",
+          "metric_unit": null,
+          "metric_value": 0.84,
+          "scope": "model",
+          "short_statement": "R31: fracture_density is high and distance is low -> 1",
+          "statement": "Правило R31 является нативным: fracture_density is high and distance is low -> 1.",
+          "status": "supported",
+          "strength": 0.84,
+          "subject_id": "R31"
+        }
+      },
+      {
+        "evidence_refs": [
+          "rule:R12"
+        ],
+        "label": "R12: water_saturation is high -> 1",
+        "node_id": "claim:C-004",
+        "node_type": "claim",
+        "payload": {
+          "applicability": null,
+          "claim_id": "C-004",
+          "claim_type": "model_rule",
+          "comparison_baseline": null,
+          "counter_evidence_refs": [],
+          "evidence_refs": [
+            "rule:R12"
+          ],
+          "limitations": [],
+          "metric_name": "rule_importance",
+          "metric_unit": null,
+          "metric_value": 0.67,
+          "scope": "model",
+          "short_statement": "R12: water_saturation is high -> 1",
+          "statement": "Правило R12 является нативным: water_saturation is high -> 1.",
+          "status": "supported",
+          "strength": 0.67,
+          "subject_id": "R12"
+        }
+      },
+      {
+        "evidence_refs": [
+          "concept:0"
+        ],
+        "label": "Концепт класса 0",
+        "node_id": "claim:C-005",
+        "node_type": "claim",
+        "payload": {
+          "applicability": null,
+          "claim_id": "C-005",
+          "claim_type": "class_concept",
+          "comparison_baseline": null,
+          "counter_evidence_refs": [],
+          "evidence_refs": [
+            "concept:0"
+          ],
+          "limitations": [
+            "primary-rule coverage is unavailable"
+          ],
+          "metric_name": null,
+          "metric_unit": null,
+          "metric_value": null,
+          "scope": "class",
+          "short_statement": "Концепт класса 0",
+          "statement": "Class 0: no supported primary rules; coverage unavailable.",
+          "status": "supported",
+          "strength": null,
+          "subject_id": "0"
+        }
+      },
+      {
+        "evidence_refs": [
+          "concept:1"
+        ],
+        "label": "Концепт класса 1",
+        "node_id": "claim:C-006",
+        "node_type": "claim",
+        "payload": {
+          "applicability": null,
+          "claim_id": "C-006",
+          "claim_type": "class_concept",
+          "comparison_baseline": null,
+          "counter_evidence_refs": [],
+          "evidence_refs": [
+            "concept:1"
+          ],
+          "limitations": [
+            "coverage is a lower bound because overlap between rules is unavailable"
+          ],
+          "metric_name": "primary_rule_coverage",
+          "metric_unit": null,
+          "metric_value": 0.46,
+          "scope": "class",
+          "short_statement": "Концепт класса 1",
+          "statement": "Class 1: fracture_density is high and distance is low -> 1; water_saturation is high -> 1; supported primary-rule coverage 46.0%.",
+          "status": "supported",
+          "strength": null,
+          "subject_id": "1"
+        }
+      },
+      {
+        "evidence_refs": [
+          "similar:anfis-fixture-1:reference_3"
+        ],
+        "label": "Похожий случай reference_3: 0.871",
+        "node_id": "claim:C-007",
+        "node_type": "claim",
+        "payload": {
+          "applicability": null,
+          "claim_id": "C-007",
+          "claim_type": "similar_case",
+          "comparison_baseline": "normalized tabular feature vector",
+          "counter_evidence_refs": [],
+          "evidence_refs": [
+            "similar:anfis-fixture-1:reference_3"
+          ],
+          "limitations": [
+            "feature distance does not establish causal or clinical similarity"
+          ],
+          "metric_name": "similarity",
+          "metric_unit": null,
+          "metric_value": 0.871474,
+          "scope": "object",
+          "short_statement": "Похожий случай reference_3: 0.871",
+          "statement": "Объект reference_3 имеет сходство 0.871 с объектом anfis-fixture-1; использован метод robust_standardized_euclidean для представления «normalized tabular feature vector».",
+          "status": "supported",
+          "strength": 0.871474,
+          "subject_id": "anfis-fixture-1"
+        }
+      },
+      {
+        "evidence_refs": [
+          "similar:anfis-fixture-1:reference_2"
+        ],
+        "label": "Похожий случай reference_2: 0.722",
+        "node_id": "claim:C-008",
+        "node_type": "claim",
+        "payload": {
+          "applicability": null,
+          "claim_id": "C-008",
+          "claim_type": "similar_case",
+          "comparison_baseline": "normalized tabular feature vector",
+          "counter_evidence_refs": [],
+          "evidence_refs": [
+            "similar:anfis-fixture-1:reference_2"
+          ],
+          "limitations": [
+            "feature distance does not establish causal or clinical similarity"
+          ],
+          "metric_name": "similarity",
+          "metric_unit": null,
+          "metric_value": 0.721808,
+          "scope": "object",
+          "short_statement": "Похожий случай reference_2: 0.722",
+          "statement": "Объект reference_2 имеет сходство 0.722 с объектом anfis-fixture-1; использован метод robust_standardized_euclidean для представления «normalized tabular feature vector».",
+          "status": "supported",
+          "strength": 0.721808,
+          "subject_id": "anfis-fixture-1"
+        }
+      },
+      {
+        "evidence_refs": [
+          "similar:anfis-fixture-1:reference_1"
+        ],
+        "label": "Похожий случай reference_1: 0.251",
+        "node_id": "claim:C-009",
+        "node_type": "claim",
+        "payload": {
+          "applicability": null,
+          "claim_id": "C-009",
+          "claim_type": "similar_case",
+          "comparison_baseline": "normalized tabular feature vector",
+          "counter_evidence_refs": [],
+          "evidence_refs": [
+            "similar:anfis-fixture-1:reference_1"
+          ],
+          "limitations": [
+            "feature distance does not establish causal or clinical similarity"
+          ],
+          "metric_name": "similarity",
+          "metric_unit": null,
+          "metric_value": 0.250936,
+          "scope": "object",
+          "short_statement": "Похожий случай reference_1: 0.251",
+          "statement": "Объект reference_1 имеет сходство 0.251 с объектом anfis-fixture-1; использован метод robust_standardized_euclidean для представления «normalized tabular feature vector».",
+          "status": "supported",
+          "strength": 0.250936,
+          "subject_id": "anfis-fixture-1"
+        }
+      },
+      {
+        "evidence_refs": [
+          "diagnostic:0"
+        ],
+        "label": "alignment evidence was not supplied",
+        "node_id": "claim:C-010",
+        "node_type": "claim",
+        "payload": {
+          "applicability": null,
+          "claim_id": "C-010",
+          "claim_type": "diagnostic",
+          "comparison_baseline": null,
+          "counter_evidence_refs": [],
+          "evidence_refs": [
+            "diagnostic:0"
+          ],
+          "limitations": [
+            "Автоматическое принятие ограничено до устранения диагностики."
+          ],
+          "metric_name": null,
+          "metric_unit": null,
+          "metric_value": null,
+          "scope": "model",
+          "short_statement": "alignment evidence was not supplied",
+          "statement": "Диагностика: alignment evidence was not supplied.",
+          "status": "insufficient_evidence",
+          "strength": null,
+          "subject_id": "D_k_alignment_missing"
+        }
+      },
+      {
+        "evidence_refs": [
+          "diagnostic:1"
+        ],
+        "label": "reduction evidence was not supplied",
+        "node_id": "claim:C-011",
+        "node_type": "claim",
+        "payload": {
+          "applicability": null,
+          "claim_id": "C-011",
+          "claim_type": "diagnostic",
+          "comparison_baseline": null,
+          "counter_evidence_refs": [],
+          "evidence_refs": [
+            "diagnostic:1"
+          ],
+          "limitations": [
+            "Автоматическое принятие ограничено до устранения диагностики."
+          ],
+          "metric_name": null,
+          "metric_unit": null,
+          "metric_value": null,
+          "scope": "model",
+          "short_statement": "reduction evidence was not supplied",
+          "statement": "Диагностика: reduction evidence was not supplied.",
+          "status": "insufficient_evidence",
+          "strength": null,
+          "subject_id": "D_k_reduction_missing"
+        }
+      },
+      {
+        "evidence_refs": [
+          "diagnostic:2"
+        ],
+        "label": "risk evidence was not supplied",
+        "node_id": "claim:C-012",
+        "node_type": "claim",
+        "payload": {
+          "applicability": null,
+          "claim_id": "C-012",
+          "claim_type": "diagnostic",
+          "comparison_baseline": null,
+          "counter_evidence_refs": [],
+          "evidence_refs": [
+            "diagnostic:2"
+          ],
+          "limitations": [
+            "Автоматическое принятие ограничено до устранения диагностики."
+          ],
+          "metric_name": null,
+          "metric_unit": null,
+          "metric_value": null,
+          "scope": "model",
+          "short_statement": "risk evidence was not supplied",
+          "statement": "Диагностика: risk evidence was not supplied.",
+          "status": "insufficient_evidence",
+          "strength": null,
+          "subject_id": "D_k_risk_missing"
+        }
+      },
+      {
+        "evidence_refs": [
+          "diagnostic:0",
+          "diagnostic:1",
+          "diagnostic:2"
+        ],
+        "label": "Действие: review",
+        "node_id": "claim:C-013",
+        "node_type": "claim",
+        "payload": {
+          "applicability": "review",
+          "claim_id": "C-013",
+          "claim_type": "recommended_action",
+          "comparison_baseline": null,
+          "counter_evidence_refs": [],
+          "evidence_refs": [
+            "diagnostic:0",
+            "diagnostic:1",
+            "diagnostic:2"
+          ],
+          "limitations": [],
+          "metric_name": null,
+          "metric_unit": null,
+          "metric_value": null,
+          "scope": "object",
+          "short_statement": "Действие: review",
+          "statement": "На основании доступных claims рекомендовано действие review.",
+          "status": "supported",
+          "strength": null,
+          "subject_id": "[1]"
+        }
+      },
+      {
+        "evidence_refs": [],
+        "label": "review",
+        "node_id": "action",
+        "node_type": "action",
+        "payload": {
+          "action": "review"
+        }
+      }
+    ],
+    "schema_version": "2.0"
+  },
+  "explanation_level": {
+    "available_channels": [
+      "prediction",
+      "call_trace",
+      "data_profile",
+      "rules",
+      "class_concepts",
+      "similar_cases"
+    ],
+    "level": "E3",
+    "missing_channels": [
+      "alignment",
+      "counterfactuals",
+      "local_contributions",
+      "reduction",
+      "risk",
+      "training_history"
+    ],
+    "native_channels": [
+      "prediction",
+      "call_trace",
+      "data_profile",
+      "rules",
+      "class_concepts",
+      "similar_cases"
+    ],
+    "rationale": "Доступны концепты классов или похожие случаи.",
+    "surrogate_channels": []
+  },
+  "fuzzy": {
+    "memberships": {}
+  },
+  "human_explanations": {
+    "audit": {
+      "claim_refs": {
+        "decision_changes": [],
+        "limitations": [
+          "C-005",
+          "C-006",
+          "C-007",
+          "C-008",
+          "C-009",
+          "C-010",
+          "C-011",
+          "C-012"
+        ],
+        "lost_or_averaged": [],
+        "main_reasons": [
+          "C-003",
+          "C-004",
+          "C-005",
+          "C-006"
+        ],
+        "model_observed": [
+          "C-002",
+          "C-001"
+        ],
+        "similar_cases": [
+          "C-007",
+          "C-008",
+          "C-009"
+        ],
+        "summary": [
+          "C-001",
+          "C-013"
+        ],
+        "trust": [
+          "C-010",
+          "C-011",
+          "C-012",
+          "C-013"
+        ]
+      },
+      "decision_changes": [],
+      "evidence_trace": [
+        "C-001",
+        "C-002",
+        "C-003",
+        "C-004",
+        "C-005",
+        "C-006",
+        "C-007",
+        "C-008",
+        "C-009",
+        "C-010",
+        "C-011",
+        "C-012",
+        "C-013",
+        "data:anfis-fixture-1",
+        "rule:R31",
+        "rule:R12",
+        "concept:0",
+        "concept:1",
+        "similar:anfis-fixture-1:reference_3",
+        "similar:anfis-fixture-1:reference_2",
+        "similar:anfis-fixture-1:reference_1",
+        "prediction",
+        "diagnostic:0",
+        "diagnostic:1",
+        "diagnostic:2",
+        "claim:C-001",
+        "claim:C-002",
+        "claim:C-003",
+        "claim:C-004",
+        "claim:C-005",
+        "claim:C-006",
+        "claim:C-007",
+        "claim:C-008",
+        "claim:C-009",
+        "claim:C-010",
+        "claim:C-011",
+        "claim:C-012",
+        "claim:C-013",
+        "action"
+      ],
+      "level": "audit",
+      "limitations": [
+        "primary-rule coverage is unavailable [C-005]",
+        "coverage is a lower bound because overlap between rules is unavailable [C-006]",
+        "feature distance does not establish causal or clinical similarity [C-007]",
+        "feature distance does not establish causal or clinical similarity [C-008]",
+        "feature distance does not establish causal or clinical similarity [C-009]",
+        "Автоматическое принятие ограничено до устранения диагностики. [C-010]",
+        "Автоматическое принятие ограничено до устранения диагностики. [C-011]",
+        "Автоматическое принятие ограничено до устранения диагностики. [C-012]"
+      ],
+      "lost_or_averaged": [],
+      "main_reasons": [
+        "Правило R31 является нативным: fracture_density is high and distance is low -> 1. [C-003]",
+        "Правило R12 является нативным: water_saturation is high -> 1. [C-004]",
+        "Class 0: no supported primary rules; coverage unavailable. [C-005]",
+        "Class 1: fracture_density is high and distance is low -> 1; water_saturation is high -> 1; supported primary-rule coverage 46.0%. [C-006]"
+      ],
+      "model_observed": [
+        "Качество доступных входных данных объекта anfis-fixture-1 равно 1.000. [C-002]",
+        "Модель сформировала прогноз [1] с максимальным модельным баллом 0.820. [C-001]"
+      ],
+      "recommended_action": "review",
+      "similar_cases": [
+        "Объект reference_3 имеет сходство 0.871 с объектом anfis-fixture-1; использован метод robust_standardized_euclidean для представления «normalized tabular feature vector». [C-007]",
+        "Объект reference_2 имеет сходство 0.722 с объектом anfis-fixture-1; использован метод robust_standardized_euclidean для представления «normalized tabular feature vector». [C-008]",
+        "Объект reference_1 имеет сходство 0.251 с объектом anfis-fixture-1; использован метод robust_standardized_euclidean для представления «normalized tabular feature vector». [C-009]"
+      ],
+      "summary": "Модель сформировала прогноз [1] с максимальным модельным баллом 0.820. [C-001] На основании доступных claims рекомендовано действие review. [C-013] Рекомендуемое действие: review. [C-013]",
+      "trust": [
+        "Диагностика: alignment evidence was not supplied. [C-010]",
+        "Диагностика: reduction evidence was not supplied. [C-011]",
+        "Диагностика: risk evidence was not supplied. [C-012]",
+        "На основании доступных claims рекомендовано действие review. [C-013]"
+      ]
+    },
+    "expert": {
+      "claim_refs": {
+        "decision_changes": [],
+        "limitations": [
+          "C-005",
+          "C-006",
+          "C-007",
+          "C-008",
+          "C-009",
+          "C-010",
+          "C-011",
+          "C-012"
+        ],
+        "lost_or_averaged": [],
+        "main_reasons": [
+          "C-003",
+          "C-004",
+          "C-005",
+          "C-006"
+        ],
+        "model_observed": [
+          "C-002",
+          "C-001"
+        ],
+        "similar_cases": [
+          "C-007",
+          "C-008",
+          "C-009"
+        ],
+        "summary": [
+          "C-001",
+          "C-013"
+        ],
+        "trust": [
+          "C-010",
+          "C-011",
+          "C-012",
+          "C-013"
+        ]
+      },
+      "decision_changes": [],
+      "evidence_trace": [
+        "C-001",
+        "C-002",
+        "C-003",
+        "C-004",
+        "C-005",
+        "C-006",
+        "C-007",
+        "C-008",
+        "C-009",
+        "C-010",
+        "C-011",
+        "C-012",
+        "C-013"
+      ],
+      "level": "expert",
+      "limitations": [
+        "primary-rule coverage is unavailable [C-005]",
+        "coverage is a lower bound because overlap between rules is unavailable [C-006]",
+        "feature distance does not establish causal or clinical similarity [C-007]",
+        "feature distance does not establish causal or clinical similarity [C-008]",
+        "feature distance does not establish causal or clinical similarity [C-009]",
+        "Автоматическое принятие ограничено до устранения диагностики. [C-010]",
+        "Автоматическое принятие ограничено до устранения диагностики. [C-011]",
+        "Автоматическое принятие ограничено до устранения диагностики. [C-012]"
+      ],
+      "lost_or_averaged": [],
+      "main_reasons": [
+        "Правило R31 является нативным: fracture_density is high and distance is low -> 1. [C-003]",
+        "Правило R12 является нативным: water_saturation is high -> 1. [C-004]",
+        "Class 0: no supported primary rules; coverage unavailable. [C-005]",
+        "Class 1: fracture_density is high and distance is low -> 1; water_saturation is high -> 1; supported primary-rule coverage 46.0%. [C-006]"
+      ],
+      "model_observed": [
+        "Качество доступных входных данных объекта anfis-fixture-1 равно 1.000. [C-002]",
+        "Модель сформировала прогноз [1] с максимальным модельным баллом 0.820. [C-001]"
+      ],
+      "recommended_action": "review",
+      "similar_cases": [
+        "Объект reference_3 имеет сходство 0.871 с объектом anfis-fixture-1; использован метод robust_standardized_euclidean для представления «normalized tabular feature vector». [C-007]",
+        "Объект reference_2 имеет сходство 0.722 с объектом anfis-fixture-1; использован метод robust_standardized_euclidean для представления «normalized tabular feature vector». [C-008]",
+        "Объект reference_1 имеет сходство 0.251 с объектом anfis-fixture-1; использован метод robust_standardized_euclidean для представления «normalized tabular feature vector». [C-009]"
+      ],
+      "summary": "Модель сформировала прогноз [1] с максимальным модельным баллом 0.820. [C-001] На основании доступных claims рекомендовано действие review. [C-013] Рекомендуемое действие: review. [C-013]",
+      "trust": [
+        "Диагностика: alignment evidence was not supplied. [C-010]",
+        "Диагностика: reduction evidence was not supplied. [C-011]",
+        "Диагностика: risk evidence was not supplied. [C-012]",
+        "На основании доступных claims рекомендовано действие review. [C-013]"
+      ]
+    },
+    "user": {
+      "claim_refs": {
+        "decision_changes": [],
+        "limitations": [
+          "C-005",
+          "C-006",
+          "C-007",
+          "C-008",
+          "C-009",
+          "C-010",
+          "C-011",
+          "C-012"
+        ],
+        "lost_or_averaged": [],
+        "main_reasons": [
+          "C-003",
+          "C-004",
+          "C-005"
+        ],
+        "model_observed": [
+          "C-002",
+          "C-001"
+        ],
+        "similar_cases": [
+          "C-007",
+          "C-008"
+        ],
+        "summary": [
+          "C-001",
+          "C-013"
+        ],
+        "trust": [
+          "C-010",
+          "C-011"
+        ]
+      },
+      "decision_changes": [],
+      "evidence_trace": [],
+      "level": "user",
+      "limitations": [
+        "primary-rule coverage is unavailable [C-005]",
+        "coverage is a lower bound because overlap between rules is unavailable [C-006]",
+        "feature distance does not establish causal or clinical similarity [C-007]",
+        "feature distance does not establish causal or clinical similarity [C-008]",
+        "feature distance does not establish causal or clinical similarity [C-009]",
+        "Автоматическое принятие ограничено до устранения диагностики. [C-010]",
+        "Автоматическое принятие ограничено до устранения диагностики. [C-011]",
+        "Автоматическое принятие ограничено до устранения диагностики. [C-012]"
+      ],
+      "lost_or_averaged": [],
+      "main_reasons": [
+        "Правило R31 является нативным: fracture_density is high and distance is low -> 1. [C-003]",
+        "Правило R12 является нативным: water_saturation is high -> 1. [C-004]",
+        "Class 0: no supported primary rules; coverage unavailable. [C-005]"
+      ],
+      "model_observed": [
+        "Качество доступных входных данных объекта anfis-fixture-1 равно 1.000. [C-002]",
+        "Модель сформировала прогноз [1] с максимальным модельным баллом 0.820. [C-001]"
+      ],
+      "recommended_action": "review",
+      "similar_cases": [
+        "Объект reference_3 имеет сходство 0.871 с объектом anfis-fixture-1; использован метод robust_standardized_euclidean для представления «normalized tabular feature vector». [C-007]",
+        "Объект reference_2 имеет сходство 0.722 с объектом anfis-fixture-1; использован метод robust_standardized_euclidean для представления «normalized tabular feature vector». [C-008]"
+      ],
+      "summary": "Модель сформировала прогноз [1] с максимальным модельным баллом 0.820. [C-001] На основании доступных claims рекомендовано действие review. [C-013] Рекомендуемое действие: review. [C-013]",
+      "trust": [
+        "Диагностика: alignment evidence was not supplied. [C-010]",
+        "Диагностика: reduction evidence was not supplied. [C-011]"
+      ]
+    }
+  },
+  "layers": {
+    "concepts": [
+      {
+        "boundary_objects": [
+          "object_1",
+          "object_0"
+        ],
+        "class_id": "0",
+        "class_name": "0",
+        "counterexamples": [
+          "object_2",
+          "object_3"
+        ],
+        "human_description": "Class 0: no supported primary rules; coverage unavailable.",
+        "intra_class_variability": 0.07071067811865478,
+        "limitations": [
+          "primary-rule coverage is unavailable"
+        ],
+        "primary_rule_coverage": null,
+        "primary_rules": [],
+        "prototype_embedding": [],
+        "prototype_features": {
+          "distance": 0.75,
+          "fracture_density": 0.15000000000000002
+        },
+        "representative_objects": [
+          "object_1",
+          "object_0"
+        ],
+        "uncovered_fraction": null
+      },
+      {
+        "boundary_objects": [
+          "object_2",
+          "object_3"
+        ],
+        "class_id": "1",
+        "class_name": "1",
+        "counterexamples": [
+          "object_1",
+          "object_0"
+        ],
+        "human_description": "Class 1: fracture_density is high and distance is low -> 1; water_saturation is high -> 1; supported primary-rule coverage 46.0%.",
+        "intra_class_variability": 0.07071067811865472,
+        "limitations": [
+          "coverage is a lower bound because overlap between rules is unavailable"
+        ],
+        "primary_rule_coverage": 0.46,
+        "primary_rules": [
+          "R31",
+          "R12"
+        ],
+        "prototype_embedding": [],
+        "prototype_features": {
+          "distance": 0.25,
+          "fracture_density": 0.6499999999999999
+        },
+        "representative_objects": [
+          "object_2",
+          "object_3"
+        ],
+        "uncovered_fraction": 0.54
+      }
+    ],
+    "counterfactuals": [],
+    "data": [
+      {
+        "anomaly_labels": [],
+        "data_quality": 1.0,
+        "evidence_refs": [
+          "robust_median_mad_profile"
+        ],
+        "feature_names": [
+          "fracture_density",
+          "distance"
+        ],
+        "missingness": {
+          "distance": false,
+          "fracture_density": false
+        },
+        "normalized_values": [
+          0.9712666936462973,
+          -0.701470389855659
+        ],
+        "object_id": "anfis-fixture-1",
+        "outlier_scores": {
+          "distance": 0.701470389855659,
+          "fracture_density": 0.9712666936462973
+        },
+        "raw_values": [
+          0.76,
+          0.24
+        ],
+        "reference_profiles": {
+          "distance": {
+            "median": 0.5,
+            "percentile": 25.0,
+            "q05": 0.21500000000000002,
+            "q95": 0.785
+          },
+          "fracture_density": {
+            "median": 0.4,
+            "percentile": 100.0,
+            "q05": 0.115,
+            "q95": 0.6849999999999999
+          }
+        },
+        "source_trace": {
+          "adapter_id": "native_rules",
+          "model_fingerprint": "19e2d57dafdd294e62d20eb2ff1d5bd2d5f3f9cd28e250087100af203cb15685"
+        },
+        "subgroup_profiles": {},
+        "warnings": []
+      }
+    ],
+    "missing": [],
+    "rules": [
+      {
+        "activation": 0.71,
+        "antecedents": [
+          "fracture_density is high",
+          "distance is low"
+        ],
+        "class_distribution": {},
+        "complexity": 2.0,
+        "consequent": "1",
+        "counterfactual_effect": {},
+        "coverage": 0.08,
+        "evidence_refs": [
+          "adapter.extract_rules"
+        ],
+        "fidelity": null,
+        "human_text": "fracture_density is high and distance is low -> 1",
+        "importance": 0.84,
+        "is_conflicting": false,
+        "is_primary": true,
+        "is_redundant": false,
+        "model_version": "19e2d57dafdd",
+        "native": true,
+        "precision": 0.91,
+        "rule_id": "R31",
+        "source_objects": [],
+        "stability": 0.42,
+        "support": 8,
+        "surrogate": false
+      },
+      {
+        "activation": 0.82,
+        "antecedents": [
+          "water_saturation is high"
+        ],
+        "class_distribution": {},
+        "complexity": 1.0,
+        "consequent": "1",
+        "counterfactual_effect": {},
+        "coverage": 0.46,
+        "evidence_refs": [
+          "adapter.extract_rules"
+        ],
+        "fidelity": null,
+        "human_text": "water_saturation is high -> 1",
+        "importance": 0.67,
+        "is_conflicting": false,
+        "is_primary": true,
+        "is_redundant": false,
+        "model_version": "19e2d57dafdd",
+        "native": true,
+        "precision": 0.86,
+        "rule_id": "R12",
+        "source_objects": [],
+        "stability": 0.88,
+        "support": 46,
+        "surrogate": false
+      }
+    ],
+    "similar_cases": [
+      {
+        "compared_representation": "normalized tabular feature vector",
+        "coverage_score": 1.0,
+        "different_features": [],
+        "limitations": [
+          "feature distance does not establish causal or clinical similarity"
+        ],
+        "matched_features": [
+          "fracture_density",
+          "distance"
+        ],
+        "matched_regions": [],
+        "query_object_id": "anfis-fixture-1",
+        "reference_label": 1,
+        "reference_object_id": "reference_3",
+        "reference_outcome": null,
+        "reference_prediction": null,
+        "similarity_method": "robust_standardized_euclidean",
+        "similarity_score": 0.871474,
+        "trace": {
+          "reference_index": 3,
+          "scale": "median absolute deviation"
+        }
+      },
+      {
+        "compared_representation": "normalized tabular feature vector",
+        "coverage_score": 1.0,
+        "different_features": [],
+        "limitations": [
+          "feature distance does not establish causal or clinical similarity"
+        ],
+        "matched_features": [
+          "fracture_density",
+          "distance"
+        ],
+        "matched_regions": [],
+        "query_object_id": "anfis-fixture-1",
+        "reference_label": 1,
+        "reference_object_id": "reference_2",
+        "reference_outcome": null,
+        "reference_prediction": null,
+        "similarity_method": "robust_standardized_euclidean",
+        "similarity_score": 0.721808,
+        "trace": {
+          "reference_index": 2,
+          "scale": "median absolute deviation"
+        }
+      },
+      {
+        "compared_representation": "normalized tabular feature vector",
+        "coverage_score": 0.0,
+        "different_features": [
+          "fracture_density",
+          "distance"
+        ],
+        "limitations": [
+          "feature distance does not establish causal or clinical similarity"
+        ],
+        "matched_features": [],
+        "matched_regions": [],
+        "query_object_id": "anfis-fixture-1",
+        "reference_label": 0,
+        "reference_object_id": "reference_1",
+        "reference_outcome": null,
+        "reference_prediction": null,
+        "similarity_method": "robust_standardized_euclidean",
+        "similarity_score": 0.250936,
+        "trace": {
+          "reference_index": 1,
+          "scale": "median absolute deviation"
+        }
+      }
+    ],
+    "subgroups": [],
+    "training": []
+  },
+  "model": {
+    "adapter_id": "native_rules",
+    "contribution_limitations": [],
+    "contribution_method": null,
+    "contributions": {},
+    "metadata": {
+      "classes": [
+        0,
+        1
+      ]
+    },
+    "model_type": "ControlledRuleModel",
+    "predictions": [
+      1
+    ],
+    "probabilities": [
+      [
+        0.18,
+        0.82
+      ]
+    ],
+    "score": 0.82
+  },
+  "narrative": "Модель сформировала прогноз [1] с максимальным модельным баллом 0.820. На основании доступных claims рекомендовано действие review.",
+  "quality_metrics": {
+    "calibration": null,
+    "consistency": null,
+    "counterfactual_validity": null,
+    "coverage": 0.46,
+    "fidelity": null,
+    "prototype_representativeness": 0.9339591174686886,
+    "rule_complexity": 1.5,
+    "sparsity": null,
+    "stability": null,
+    "trace_completeness": 0.6923076923076923
+  },
+  "risk": {
+    "action": "review",
+    "chi_r_crit": null,
+    "components": {},
+    "rho": null
+  },
+  "route": [
+    {
+      "id": "model",
+      "label": "Model",
+      "status": "passed"
+    },
+    {
+      "id": "adapter",
+      "label": "native_rules",
+      "status": "passed"
+    },
+    {
+      "id": "alignment",
+      "label": "T_ij",
+      "status": "warning"
+    },
+    {
+      "id": "reduction",
+      "label": "Delta",
+      "status": "warning"
+    },
+    {
+      "id": "risk",
+      "label": "Risk",
+      "status": "warning"
+    },
+    {
+      "id": "action",
+      "label": "review",
+      "status": "passed"
+    }
+  ],
+  "schema_version": "2.0",
+  "trace": {
+    "adapter_capabilities": {
+      "checkpoints": false,
+      "embeddings": false,
+      "feature_importance": true,
+      "gradients": false,
+      "predict": true,
+      "predict_proba": true,
+      "rules": true,
+      "training_history": false
+    },
+    "adapter_id": "native_rules",
+    "dataset_version": "controlled_anfis_v1",
+    "explain_plan_sha256": "0680e714ca3d2ef5e360f69b8842776937a8079421274a637dfdfac336bba11c",
+    "generated_at": "controlled_fixture",
+    "input_sha256": "93799d894b6b232584b431f614e92be388f0475dde56185492af2fd5f729954d",
+    "missing_evidence": [],
+    "model_fingerprint": "19e2d57dafdd294e62d20eb2ff1d5bd2d5f3f9cd28e250087100af203cb15685",
+    "model_type": "ControlledRuleModel",
+    "object_ids": [
+      "anfis-fixture-1"
+    ],
+    "run_parameters": {}
+  },
+  "visual_spec": {
+    "counterfactuals": [],
+    "data_profile": [
+      {
+        "anomaly_status": "within_reference",
+        "claim_refs": [
+          "C-002"
+        ],
+        "contribution": null,
+        "explanation": "Значение находится в наблюдаемом референсном профиле.",
+        "feature": "fracture_density",
+        "object_value": 0.76,
+        "percentile": 100.0,
+        "reference_interval": [
+          0.115,
+          0.6849999999999999
+        ],
+        "reference_median": 0.4,
+        "subgroup_interval": null
+      },
+      {
+        "anomaly_status": "within_reference",
+        "claim_refs": [
+          "C-002"
+        ],
+        "contribution": null,
+        "explanation": "Значение находится в наблюдаемом референсном профиле.",
+        "feature": "distance",
+        "object_value": 0.24,
+        "percentile": 25.0,
+        "reference_interval": [
+          0.21500000000000002,
+          0.785
+        ],
+        "reference_median": 0.5,
+        "subgroup_interval": null
+      }
+    ],
+    "decision_evidence": {
+      "contradicts": [],
+      "limitations": [
+        {
+          "claim_id": "C-010",
+          "limitations": [
+            "Автоматическое принятие ограничено до устранения диагностики."
+          ],
+          "statement": "alignment evidence was not supplied",
+          "status": "insufficient_evidence",
+          "strength": null
+        },
+        {
+          "claim_id": "C-011",
+          "limitations": [
+            "Автоматическое принятие ограничено до устранения диагностики."
+          ],
+          "statement": "reduction evidence was not supplied",
+          "status": "insufficient_evidence",
+          "strength": null
+        },
+        {
+          "claim_id": "C-012",
+          "limitations": [
+            "Автоматическое принятие ограничено до устранения диагностики."
+          ],
+          "statement": "risk evidence was not supplied",
+          "status": "insufficient_evidence",
+          "strength": null
+        }
+      ],
+      "supports": [
+        {
+          "claim_id": "C-001",
+          "limitations": [],
+          "statement": "Прогноз: [1]",
+          "status": "supported",
+          "strength": 0.82
+        },
+        {
+          "claim_id": "C-003",
+          "limitations": [],
+          "statement": "R31: fracture_density is high and distance is low -> 1",
+          "status": "supported",
+          "strength": 0.84
+        },
+        {
+          "claim_id": "C-004",
+          "limitations": [],
+          "statement": "R12: water_saturation is high -> 1",
+          "status": "supported",
+          "strength": 0.67
+        },
+        {
+          "claim_id": "C-005",
+          "limitations": [
+            "primary-rule coverage is unavailable"
+          ],
+          "statement": "Концепт класса 0",
+          "status": "supported",
+          "strength": null
+        },
+        {
+          "claim_id": "C-006",
+          "limitations": [
+            "coverage is a lower bound because overlap between rules is unavailable"
+          ],
+          "statement": "Концепт класса 1",
+          "status": "supported",
+          "strength": null
+        },
+        {
+          "claim_id": "C-007",
+          "limitations": [
+            "feature distance does not establish causal or clinical similarity"
+          ],
+          "statement": "Похожий случай reference_3: 0.871",
+          "status": "supported",
+          "strength": 0.871474
+        },
+        {
+          "claim_id": "C-008",
+          "limitations": [
+            "feature distance does not establish causal or clinical similarity"
+          ],
+          "statement": "Похожий случай reference_2: 0.722",
+          "status": "supported",
+          "strength": 0.721808
+        },
+        {
+          "claim_id": "C-009",
+          "limitations": [
+            "feature distance does not establish causal or clinical similarity"
+          ],
+          "statement": "Похожий случай reference_1: 0.251",
+          "status": "supported",
+          "strength": 0.250936
+        }
+      ]
+    },
+    "knowledge_atlas": {
+      "concepts": [
+        {
+          "boundary_objects": [
+            "object_1",
+            "object_0"
+          ],
+          "claim_refs": [
+            "C-005"
+          ],
+          "class_id": "0",
+          "class_name": "0",
+          "description": "Class 0: no supported primary rules; coverage unavailable.",
+          "primary_rule_coverage": null,
+          "primary_rules": [],
+          "representative_objects": [
+            "object_1",
+            "object_0"
+          ],
+          "uncovered_fraction": null
+        },
+        {
+          "boundary_objects": [
+            "object_2",
+            "object_3"
+          ],
+          "claim_refs": [
+            "C-006"
+          ],
+          "class_id": "1",
+          "class_name": "1",
+          "description": "Class 1: fracture_density is high and distance is low -> 1; water_saturation is high -> 1; supported primary-rule coverage 46.0%.",
+          "primary_rule_coverage": 0.46,
+          "primary_rules": [
+            "R31",
+            "R12"
+          ],
+          "representative_objects": [
+            "object_2",
+            "object_3"
+          ],
+          "uncovered_fraction": 0.54
+        }
+      ],
+      "rules": [
+        {
+          "claim_refs": [
+            "C-003"
+          ],
+          "counterfactual_effect": {},
+          "coverage": 0.08,
+          "importance": 0.84,
+          "native": true,
+          "precision": 0.91,
+          "rule_id": "R31",
+          "stability": 0.42,
+          "status": "stable",
+          "surrogate": false,
+          "text": "fracture_density is high and distance is low -> 1"
+        },
+        {
+          "claim_refs": [
+            "C-004"
+          ],
+          "counterfactual_effect": {},
+          "coverage": 0.46,
+          "importance": 0.67,
+          "native": true,
+          "precision": 0.86,
+          "rule_id": "R12",
+          "stability": 0.88,
+          "status": "stable",
+          "surrogate": false,
+          "text": "water_saturation is high -> 1"
+        }
+      ]
+    },
+    "overview": {
+      "action": "review",
+      "available_claim_types": [
+        "class_concept",
+        "data_quality",
+        "diagnostic",
+        "model_rule",
+        "prediction",
+        "recommended_action",
+        "similar_case"
+      ],
+      "claim_count": 13,
+      "contested_claims": 0,
+      "explanation_level": {
+        "available_channels": [
+          "prediction",
+          "call_trace",
+          "data_profile",
+          "rules",
+          "class_concepts",
+          "similar_cases"
+        ],
+        "level": "E3",
+        "missing_channels": [
+          "alignment",
+          "counterfactuals",
+          "local_contributions",
+          "reduction",
+          "risk",
+          "training_history"
+        ],
+        "native_channels": [
+          "prediction",
+          "call_trace",
+          "data_profile",
+          "rules",
+          "class_concepts",
+          "similar_cases"
+        ],
+        "rationale": "Доступны концепты классов или похожие случаи.",
+        "surrogate_channels": []
+      },
+      "insufficient_claims": 3,
+      "prediction": {
+        "adapter_id": "native_rules",
+        "metadata": {
+          "classes": [
+            0,
+            1
+          ]
+        },
+        "model_type": "ControlledRuleModel",
+        "predictions": [
+          1
+        ],
+        "probabilities": [
+          [
+            0.18,
+            0.82
+          ]
+        ],
+        "score": 0.82
+      },
+      "supported_claims": 10
+    },
+    "provenance_edges": [
+      {
+        "relation": "supports",
+        "source": "rule:R31",
+        "target": "concept:1"
+      },
+      {
+        "relation": "supports",
+        "source": "rule:R12",
+        "target": "concept:1"
+      },
+      {
+        "relation": "compared_with",
+        "source": "data:anfis-fixture-1",
+        "target": "similar:anfis-fixture-1:reference_3"
+      },
+      {
+        "relation": "compared_with",
+        "source": "data:anfis-fixture-1",
+        "target": "similar:anfis-fixture-1:reference_2"
+      },
+      {
+        "relation": "compared_with",
+        "source": "data:anfis-fixture-1",
+        "target": "similar:anfis-fixture-1:reference_1"
+      },
+      {
+        "relation": "supported_by",
+        "source": "data:anfis-fixture-1",
+        "target": "prediction"
+      },
+      {
+        "relation": "supported_by",
+        "source": "rule:R31",
+        "target": "prediction"
+      },
+      {
+        "relation": "supported_by",
+        "source": "rule:R12",
+        "target": "prediction"
+      },
+      {
+        "relation": "supported_by",
+        "source": "concept:0",
+        "target": "prediction"
+      },
+      {
+        "relation": "supported_by",
+        "source": "concept:1",
+        "target": "prediction"
+      },
+      {
+        "relation": "supported_by",
+        "source": "similar:anfis-fixture-1:reference_3",
+        "target": "prediction"
+      },
+      {
+        "relation": "supported_by",
+        "source": "similar:anfis-fixture-1:reference_2",
+        "target": "prediction"
+      },
+      {
+        "relation": "supported_by",
+        "source": "similar:anfis-fixture-1:reference_1",
+        "target": "prediction"
+      },
+      {
+        "relation": "checked_by",
+        "source": "prediction",
+        "target": "diagnostic:0"
+      },
+      {
+        "relation": "checked_by",
+        "source": "prediction",
+        "target": "diagnostic:1"
+      },
+      {
+        "relation": "checked_by",
+        "source": "prediction",
+        "target": "diagnostic:2"
+      },
+      {
+        "relation": "supports_claim",
+        "source": "prediction",
+        "target": "claim:C-001"
+      },
+      {
+        "relation": "supports_claim",
+        "source": "data:anfis-fixture-1",
+        "target": "claim:C-002"
+      },
+      {
+        "relation": "supports_claim",
+        "source": "rule:R31",
+        "target": "claim:C-003"
+      },
+      {
+        "relation": "supports_claim",
+        "source": "rule:R12",
+        "target": "claim:C-004"
+      },
+      {
+        "relation": "supports_claim",
+        "source": "concept:0",
+        "target": "claim:C-005"
+      },
+      {
+        "relation": "supports_claim",
+        "source": "concept:1",
+        "target": "claim:C-006"
+      },
+      {
+        "relation": "supports_claim",
+        "source": "similar:anfis-fixture-1:reference_3",
+        "target": "claim:C-007"
+      },
+      {
+        "relation": "supports_claim",
+        "source": "similar:anfis-fixture-1:reference_2",
+        "target": "claim:C-008"
+      },
+      {
+        "relation": "supports_claim",
+        "source": "similar:anfis-fixture-1:reference_1",
+        "target": "claim:C-009"
+      },
+      {
+        "relation": "supports_claim",
+        "source": "diagnostic:0",
+        "target": "claim:C-010"
+      },
+      {
+        "relation": "constrains",
+        "source": "claim:C-010",
+        "target": "action"
+      },
+      {
+        "relation": "supports_claim",
+        "source": "diagnostic:1",
+        "target": "claim:C-011"
+      },
+      {
+        "relation": "constrains",
+        "source": "claim:C-011",
+        "target": "action"
+      },
+      {
+        "relation": "supports_claim",
+        "source": "diagnostic:2",
+        "target": "claim:C-012"
+      },
+      {
+        "relation": "constrains",
+        "source": "claim:C-012",
+        "target": "action"
+      },
+      {
+        "relation": "supports_claim",
+        "source": "diagnostic:0",
+        "target": "claim:C-013"
+      },
+      {
+        "relation": "supports_claim",
+        "source": "diagnostic:1",
+        "target": "claim:C-013"
+      },
+      {
+        "relation": "supports_claim",
+        "source": "diagnostic:2",
+        "target": "claim:C-013"
+      },
+      {
+        "relation": "leads_to",
+        "source": "prediction",
+        "target": "action"
+      },
+      {
+        "relation": "constrains",
+        "source": "diagnostic:0",
+        "target": "action"
+      },
+      {
+        "relation": "constrains",
+        "source": "diagnostic:1",
+        "target": "action"
+      },
+      {
+        "relation": "constrains",
+        "source": "diagnostic:2",
+        "target": "action"
+      },
+      {
+        "relation": "recommends",
+        "source": "claim:C-013",
+        "target": "action"
+      }
+    ],
+    "provenance_nodes": [
+      {
+        "label": "Data anfis-fixture-1",
+        "node_id": "data:anfis-fixture-1",
+        "node_type": "data"
+      },
+      {
+        "label": "fracture_density is high and distance is low -> 1",
+        "node_id": "rule:R31",
+        "node_type": "rule"
+      },
+      {
+        "label": "water_saturation is high -> 1",
+        "node_id": "rule:R12",
+        "node_type": "rule"
+      },
+      {
+        "label": "Class 0: no supported primary rules; coverage unavailable.",
+        "node_id": "concept:0",
+        "node_type": "concept"
+      },
+      {
+        "label": "Class 1: fracture_density is high and distance is low -> 1; water_saturation is high -> 1; supported primary-rule coverage 46.0%.",
+        "node_id": "concept:1",
+        "node_type": "concept"
+      },
+      {
+        "label": "reference_3: robust_standardized_euclidean",
+        "node_id": "similar:anfis-fixture-1:reference_3",
+        "node_type": "similar_case"
+      },
+      {
+        "label": "reference_2: robust_standardized_euclidean",
+        "node_id": "similar:anfis-fixture-1:reference_2",
+        "node_type": "similar_case"
+      },
+      {
+        "label": "reference_1: robust_standardized_euclidean",
+        "node_id": "similar:anfis-fixture-1:reference_1",
+        "node_type": "similar_case"
+      },
+      {
+        "label": "Model prediction",
+        "node_id": "prediction",
+        "node_type": "prediction"
+      },
+      {
+        "label": "alignment evidence was not supplied",
+        "node_id": "diagnostic:0",
+        "node_type": "diagnostic"
+      },
+      {
+        "label": "reduction evidence was not supplied",
+        "node_id": "diagnostic:1",
+        "node_type": "diagnostic"
+      },
+      {
+        "label": "risk evidence was not supplied",
+        "node_id": "diagnostic:2",
+        "node_type": "diagnostic"
+      },
+      {
+        "label": "Прогноз: [1]",
+        "node_id": "claim:C-001",
+        "node_type": "claim"
+      },
+      {
+        "label": "Качество данных: 1.000",
+        "node_id": "claim:C-002",
+        "node_type": "claim"
+      },
+      {
+        "label": "R31: fracture_density is high and distance is low -> 1",
+        "node_id": "claim:C-003",
+        "node_type": "claim"
+      },
+      {
+        "label": "R12: water_saturation is high -> 1",
+        "node_id": "claim:C-004",
+        "node_type": "claim"
+      },
+      {
+        "label": "Концепт класса 0",
+        "node_id": "claim:C-005",
+        "node_type": "claim"
+      },
+      {
+        "label": "Концепт класса 1",
+        "node_id": "claim:C-006",
+        "node_type": "claim"
+      },
+      {
+        "label": "Похожий случай reference_3: 0.871",
+        "node_id": "claim:C-007",
+        "node_type": "claim"
+      },
+      {
+        "label": "Похожий случай reference_2: 0.722",
+        "node_id": "claim:C-008",
+        "node_type": "claim"
+      },
+      {
+        "label": "Похожий случай reference_1: 0.251",
+        "node_id": "claim:C-009",
+        "node_type": "claim"
+      },
+      {
+        "label": "alignment evidence was not supplied",
+        "node_id": "claim:C-010",
+        "node_type": "claim"
+      },
+      {
+        "label": "reduction evidence was not supplied",
+        "node_id": "claim:C-011",
+        "node_type": "claim"
+      },
+      {
+        "label": "risk evidence was not supplied",
+        "node_id": "claim:C-012",
+        "node_type": "claim"
+      },
+      {
+        "label": "Действие: review",
+        "node_id": "claim:C-013",
+        "node_type": "claim"
+      },
+      {
+        "label": "review",
+        "node_id": "action",
+        "node_type": "action"
+      }
+    ],
+    "schema_version": "1.0",
+    "similar_cases": [
+      {
+        "claim_refs": [
+          "C-007",
+          "C-008",
+          "C-009"
+        ],
+        "different_features": [],
+        "limitations": [
+          "feature distance does not establish causal or clinical similarity"
+        ],
+        "matched_features": [
+          "fracture_density",
+          "distance"
+        ],
+        "method": "robust_standardized_euclidean",
+        "reference_object_id": "reference_3",
+        "representation": "normalized tabular feature vector",
+        "score": 0.871474
+      },
+      {
+        "claim_refs": [
+          "C-007",
+          "C-008",
+          "C-009"
+        ],
+        "different_features": [],
+        "limitations": [
+          "feature distance does not establish causal or clinical similarity"
+        ],
+        "matched_features": [
+          "fracture_density",
+          "distance"
+        ],
+        "method": "robust_standardized_euclidean",
+        "reference_object_id": "reference_2",
+        "representation": "normalized tabular feature vector",
+        "score": 0.721808
+      },
+      {
+        "claim_refs": [
+          "C-007",
+          "C-008",
+          "C-009"
+        ],
+        "different_features": [
+          "fracture_density",
+          "distance"
+        ],
+        "limitations": [
+          "feature distance does not establish causal or clinical similarity"
+        ],
+        "matched_features": [],
+        "method": "robust_standardized_euclidean",
+        "reference_object_id": "reference_1",
+        "representation": "normalized tabular feature vector",
+        "score": 0.250936
+      }
+    ],
+    "story": [
+      {
+        "claim_refs": [
+          "C-002"
+        ],
+        "facts": [
+          "Качество данных: 1.000"
+        ],
+        "stage_id": "data",
+        "status": "supported",
+        "title": "Данные"
+      },
+      {
+        "claim_refs": [],
+        "facts": [],
+        "stage_id": "training",
+        "status": "missing",
+        "title": "Обучение"
+      },
+      {
+        "claim_refs": [
+          "C-003",
+          "C-004",
+          "C-005",
+          "C-006"
+        ],
+        "facts": [
+          "R31: fracture_density is high and distance is low -> 1",
+          "R12: water_saturation is high -> 1",
+          "Концепт класса 0",
+          "Концепт класса 1"
+        ],
+        "stage_id": "knowledge",
+        "status": "supported",
+        "title": "Знания модели"
+      },
+      {
+        "claim_refs": [
+          "C-001",
+          "C-007",
+          "C-008",
+          "C-009",
+          "C-010",
+          "C-011",
+          "C-012"
+        ],
+        "facts": [
+          "Прогноз: [1]",
+          "Похожий случай reference_3: 0.871",
+          "Похожий случай reference_2: 0.722",
+          "Похожий случай reference_1: 0.251"
+        ],
+        "stage_id": "decision",
+        "status": "limitation",
+        "title": "Решение"
+      },
+      {
+        "claim_refs": [
+          "C-013"
+        ],
+        "facts": [
+          "Действие: review"
+        ],
+        "stage_id": "action",
+        "status": "supported",
+        "title": "Действие"
+      }
+    ],
+    "training_timeline": []
+  }
+}

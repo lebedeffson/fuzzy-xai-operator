@@ -36,7 +36,12 @@ result = fx.explain_one(
 print(result.summary("user"))
 print(result.summary("expert"))
 print(result.summary("audit"))
-result.plot("explanation.png")
+print(result.explanation_level)
+print(result.overview())
+print(result.story())
+result.visualize(view="explanation_story", backend="matplotlib", output="explanation.png")
+result.visualize(view="decision_evidence", backend="plotly", output="decision.html")
+result.inspect("rule:R31").visualize(view="rule_ablation", output="rule_R31.png")
 result.export_json("explanation.json")
 result.export_html("explanation.html")
 ```
@@ -89,6 +94,15 @@ python -m build
 
 The machine-verifiable implementation map is [framework/fuzzyxai/operators_manifest.yaml](framework/fuzzyxai/operators_manifest.yaml). The canonical transport object is `ExplanationViewModel` schema `2.0`, shared by Matplotlib, HTML, and MATLAB.
 
+The v1.1 explanation surface is claim-centered: `ExplanationClaim` links every displayed statement to evidence, `ExplanationGraph` is the primary provenance object, and `ExplanationVisualSpec` feeds focused Matplotlib, Plotly, and MATLAB views. Run its controlled evidence gate with:
+
+```bash
+make explanation-experience-evidence
+pytest -q tests/test_explanation_experience.py
+```
+
+The available views are `explanation_story`, `data_profile`, `training_trace`, `knowledge_atlas`, `decision_evidence`, `similar_cases`, `counterfactual`, `rule_ablation`, `provenance`, and `audit`. Missing channels are disclosed through E0-E5 rather than replaced by an aggregate interpretability score.
+
 ## Documentation
 
 - [Architecture](docs/architecture.md)
@@ -97,6 +111,7 @@ The machine-verifiable implementation map is [framework/fuzzyxai/operators_manif
 - [Explanation contract](docs/explanation_contract.md)
 - [Training observer](docs/training_observer.md)
 - [Visualization](docs/visualization.md)
+- [Comprehension study protocol](docs/explanation_comprehension_protocol.md)
 - [Traceability](docs/traceability.md)
 - [Reproducibility](docs/reproducibility.md)
 - [Research limitations](docs/research_limitations.md)

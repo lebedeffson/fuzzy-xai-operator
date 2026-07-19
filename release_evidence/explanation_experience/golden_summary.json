@@ -1,0 +1,19 @@
+{
+  "anfis": {
+    "action": "review",
+    "claim_count": 13,
+    "level": "E3"
+  },
+  "comprehension_study": "planned_not_run",
+  "medical_research": {
+    "claim_count": 2,
+    "status": "controlled_fixture_research_only"
+  },
+  "object_85": {
+    "action": "defer_to_human",
+    "claim_count": 14,
+    "level": "E5"
+  },
+  "schema_version": "1.0",
+  "status": "controlled_golden_explanations"
+}

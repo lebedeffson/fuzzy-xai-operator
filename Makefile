@@ -537,3 +537,7 @@ lofo-f1-demo:
 clean:
 	find . -type d -name __pycache__ -prune -exec rm -rf {} +
 	find . -type d -name .pytest_cache -prune -exec rm -rf {} +
+
+explanation-experience-evidence:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/build_explanation_experience_evidence.py
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/verify_explanation_experience.py

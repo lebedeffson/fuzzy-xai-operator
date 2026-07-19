@@ -1,14 +1,16 @@
 # Project Memory
 
 - Date: 2026-07-19
-- Branch: `feat/research-framework-completion`
+- Branch: `feat/explanation-experience`
 - Implementation commit: `17e43f750c5100fd25148dd52aa49abbdc24f644`
 - Release-check commits: `62b58f9`, `b0ae0c0`
 - Release tag: `v1.0.0-rc1`
+- Explanation Experience base commit: `e84373881e602f6fb92ffe4874baa5bc9c21db33`
+- v1.1 candidate commit: pending validation and commit
 
 ## Current focus
 
-The primary product is the installable FuzzyXAI research framework and its reproducible evidence-first explanation pipeline. The generated DubnaXAI website is frozen and archived until the framework API, traceability, cross-model validation, and visual explanations are stable.
+The primary product is the installable FuzzyXAI research framework and its reproducible evidence-first explanation pipeline. The current milestone is `v1.1.0-rc1: Explanation Experience`: turn correct evidence operators into a coherent, inspectable story of how data became a decision. The generated DubnaXAI website remains frozen and archived.
 
 ## Canonical public API
 
@@ -18,6 +20,8 @@ result = fx.explain(X)
 result.plot()
 result.export_json("explanation.json")
 ```
+
+The preferred v1.1 surface is `result.overview()`, `result.story()`, `result.inspect(...)`, `result.audit()`, and `result.visualize(view=..., backend=...)`.
 
 The canonical adapter contract is `ModelAdapter`. The canonical visualization namespace is `fuzzyxai.visualization`; `visual` and `viz` remain compatibility shims for one migration cycle.
 
@@ -34,6 +38,17 @@ The canonical adapter contract is `ModelAdapter`. The canonical visualization na
 - one serializable `ExplanationViewModel` for Matplotlib and MATLAB/Octave;
 - controlled object 85 protocol with measured global and rare-subgroup restoration effects.
 
+## Explanation Experience candidate
+
+- `ExplanationClaim` is the only source of user/expert/audit sentences;
+- `ExplanationGraph` explicitly links evidence to claims, diagnostics, and action;
+- E0-E5 disclose available, missing, native, and surrogate channels;
+- `ExplanationVisualSpec` separates scientific results from renderer input;
+- focused views cover story, percentile data profile, training trace, knowledge atlas, decision evidence, similar cases, counterfactuals, rule ablation, provenance, and audit;
+- Matplotlib and Plotly consume the same VisualSpec; MATLAB consumes the same JSON;
+- controlled golden explanations cover object 85, native-rule ANFIS, and a research-only medical similarity fixture;
+- the comprehension protocol exists, but its status is `planned_not_run`.
+
 ## Claim boundary
 
 - Do not claim universal model support. Native Torch, Keras, and ONNX adapters are not implemented.
@@ -42,6 +57,8 @@ The canonical adapter contract is `ModelAdapter`. The canonical visualization na
 - Missing requested evidence produces `insufficient_evidence`; missing optional operator evidence produces `review` and explicit diagnostics.
 - Medical examples are research demonstrations and have no clinical or production certification claim.
 - MATLAB compatibility is limited to loading the canonical JSON and reproducing visual panels; the mathematical core remains Python.
+- E0-E5 report evidence depth, not model quality or a universal interpretability score.
+- Medical IoU and embedding similarity are distinct metrics and never a probability of the same diagnosis.
 
 ## Repository policy
 
@@ -63,4 +80,4 @@ The canonical adapter contract is `ModelAdapter`. The canonical visualization na
 
 ## Next step
 
-Use the implementation evidence to write dissertation chapter 4 as a formula-to-code-to-test-to-artifact argument. Resume the DubnaXAI ecosystem and chapter 5 only after the framework release boundary is stable.
+Run full regression, clean-checkout wheel/Octave validation, public CI, and the documented comprehension study. Create the `v1.1.0-rc1` tag only after the public checks are green. Then use the claim/graph/VisualSpec evidence to write dissertation chapter 4. Keep DubnaXAI quarantined until this release boundary is stable.
