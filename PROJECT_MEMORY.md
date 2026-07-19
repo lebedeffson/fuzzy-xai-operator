@@ -6,7 +6,7 @@
 - Release-check commits: `62b58f9`, `b0ae0c0`
 - Release tag: `v1.0.0-rc1`
 - Explanation Experience base commit: `e84373881e602f6fb92ffe4874baa5bc9c21db33`
-- v1.1 candidate commit: pending validation and commit
+- v1.1 candidate implementation commit: `60b86ee`
 
 ## Current focus
 
@@ -69,6 +69,10 @@ The canonical adapter contract is `ModelAdapter`. The canonical visualization na
 
 ## Validation
 
+- current local regression: `303 passed` on Python 3.14;
+- Explanation Experience focused suite: `24 passed`;
+- deterministic golden rebuild and SHA256 verification: PASS;
+- `1.1.0rc1` wheel build and isolated import: PASS;
 - local regression environment: `299 passed`;
 - clean Python 3.11 checkout: `299 passed`, framework gate PASS, wheel/sdist PASS, wheel import PASS;
 - clean Python 3.12 checkout: `299 passed`, framework gate PASS, wheel/sdist PASS, wheel import PASS;
@@ -77,6 +81,8 @@ The canonical adapter contract is `ModelAdapter`. The canonical visualization na
 - MATLAB files included in the wheel: PASS;
 - MATLAB/Octave execution: PASS in public GitHub Actions;
 - public GitHub Actions runs `29668215392` and `29668320459`: Python 3.11 PASS, Python 3.12 PASS, Octave PASS.
+
+The public runs above validate `v1.0.0-rc1`; public CI for commit `60b86ee` is still pending. Octave was not installed in the local v1.1 environment.
 
 ## Next step
 
