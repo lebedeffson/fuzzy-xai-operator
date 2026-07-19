@@ -1,0 +1,50 @@
+{
+  "protocol": "controlled rare-subtype forgetting and restoration",
+  "seed": 42,
+  "object_id": "85",
+  "first_learned_epoch": 0,
+  "forgetting_events": [
+    16
+  ],
+  "averaged_subgroups": [
+    {
+      "subgroup_id": "rare_positive",
+      "size": 8,
+      "global_metric_change": 0.004386,
+      "subgroup_metric_change": -1.0,
+      "minority_recall_change": -1.0,
+      "embedding_collapse": null,
+      "prototype_distance_change": null,
+      "disappeared_rules": [
+        "R_rare_subtype_surrogate"
+      ],
+      "affected_objects": [
+        "85",
+        "rare_1",
+        "rare_2",
+        "rare_3",
+        "rare_4",
+        "rare_5",
+        "rare_6",
+        "rare_7"
+      ],
+      "averaged": true,
+      "limitations": [
+        "embedding spread unavailable"
+      ]
+    }
+  ],
+  "before_restoration": {
+    "test_accuracy": 0.9605263157894737,
+    "rare_subtype_recall": 0.0
+  },
+  "after_restoration": {
+    "test_accuracy": 0.956140350877193,
+    "rare_subtype_recall": 1.0
+  },
+  "effect": {
+    "test_accuracy": -0.004385964912280715,
+    "rare_subtype_recall": 1.0
+  },
+  "claim_scope": "controlled protocol; not a clinical or production benchmark"
+}

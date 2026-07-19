@@ -1,0 +1,22 @@
+FuzzyXAI framework release verification
+Date: 2026-07-19
+Branch: feat/research-framework-completion
+
+PASS: targeted framework contracts - 27 passed
+PASS: full local regression suite - 299 passed
+PASS: operator manifest - 30/30 entries
+PASS: object 85 controlled protocol generated
+PASS: git diff whitespace check
+
+Environment used for the full local regression suite:
+- local project virtual environment
+- Python 3.14
+
+Pending before release tag:
+- clean Python 3.11 checkout
+- clean Python 3.12 checkout
+- public GitHub Actions Python matrix
+- public GitHub Actions Octave JSON/dashboard smoke
+
+Warnings in the full suite are limited to third-party sklearn feature-name and
+SHAP/Matplotlib deprecation warnings; no framework test failed.

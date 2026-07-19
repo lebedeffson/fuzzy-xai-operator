@@ -25,6 +25,9 @@ from .shap_like import (
     render_representation_class_atlas_v2,
 )
 from .trace_heatmap import render_operator_trace_heatmap
+from .explanation_dashboard import render_explanation_dashboard
+from .training import render_training_trajectory
+from .view_model import ExplanationViewModel
 
 render_operator_route_flow = render_route_sankey
 
@@ -53,4 +56,7 @@ __all__ = [
     "render_explanation_coverage_curve_v2",
     "render_representation_class_atlas_v2",
     "render_proof_consistency_matrix_v2",
+    "ExplanationViewModel",
+    "render_explanation_dashboard",
+    "render_training_trajectory",
 ]

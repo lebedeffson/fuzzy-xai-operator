@@ -52,7 +52,11 @@ def _branch() -> str:
         branch = subprocess.check_output(["git", "branch", "--show-current"], text=True, stderr=subprocess.DEVNULL).strip()
         return branch or f"detached:{_code_version()}"
     except Exception:
-        return _packaged_metadata().get("audit_branch", "runtime_release")
+        packaged = _packaged_metadata()
+        branch = packaged.get("audit_branch")
+        if branch and branch != "runtime_release":
+            return str(branch)
+        return f"detached:{packaged.get('source_commit', _code_version())}"
 
 
 def _dirty_paths() -> list[str]:

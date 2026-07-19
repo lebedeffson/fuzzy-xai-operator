@@ -9,7 +9,8 @@ import urllib.request
 from pathlib import Path
 
 
-ROOT = Path(__file__).resolve().parents[2]
+FRAMEWORK_ROOT = Path(__file__).resolve().parents[2]
+REPOSITORY_ROOT = FRAMEWORK_ROOT.parents[1]
 
 
 def _port_is_open(port: int) -> bool:
@@ -30,7 +31,7 @@ def main() -> None:
     cmd = [sys.executable, "apps/fuzzyxai_studio.py", "--port", str(args.port)]
     proc = subprocess.Popen(
         cmd,
-        cwd=ROOT,
+        cwd=REPOSITORY_ROOT,
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,
         text=True,

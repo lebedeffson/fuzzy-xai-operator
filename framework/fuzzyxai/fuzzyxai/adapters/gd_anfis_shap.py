@@ -7,10 +7,11 @@ from pathlib import Path
 from typing import Any
 
 from fuzzyxai.core.explanation_object import ExplanationObject, Rule, Trace
+from fuzzyxai.core.paths import repository_root
 from fuzzyxai.hierarchy.f0 import F0
 from fuzzyxai.sdk import BaseAdapter, ExplanationArtifact
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = repository_root()
 DEFAULT_FIXTURE = ROOT / 'data' / 'article_fixtures' / 'gd_anfis_shap_output.json'
 REPORT_PATH = ROOT / 'reports' / 'chapter5' / 'scenario_reports' / 'gd_anfis_shap_action_report.md'
 

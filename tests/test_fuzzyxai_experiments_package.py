@@ -44,8 +44,8 @@ def test_fuzzyxai_experiments_key_chapter5_numbers_are_from_reports() -> None:
 
     hybrid = _read('ch5_hybrid.json')
     assert hybrid['n_images'] == 1000
-    assert hybrid['fuzzyxai_missed_critical_quality_cases'] == 0
-    assert hybrid['baseline_missed_critical_quality_cases'] > 0
+    assert hybrid['fuzzyxai_missed'] == 0
+    assert hybrid['baseline_missed'] > 0
 
 
 def test_fuzzyxai_experiments_core_smoke() -> None:

@@ -29,3 +29,12 @@ fuzzyxai_doctoral_runtime_release.zip
 
 # Reproducibility package timestamp copies
 fuzzyxai_experiments/reports/*_20*.json
+
+# Framework completion: generated evidence and release archives
+release_evidence/generated/
+release_artifacts/
+*.whl
+*.tar.gz
+
+# Quarantined/generated ecosystem content must not return to main
+site/dubnaxai/
