@@ -71,14 +71,18 @@ jobs:
           python -m pip install -r requirements.lock
           python -m pip install --no-deps -e .
       - name: Run full E1-E8 reproduction
-        run: python scripts/reproduce_all.py --profile full
+        run: |
+          set -o pipefail
+          python scripts/reproduce_all.py --profile full 2>&1 | tee /tmp/full-empirical.log
       - name: Verify clean evidence checksums
         run: python scripts/verify_reproduction.py --profile full
       - name: Upload raw empirical evidence
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: fuzzyxai-full-empirical-raw-${{ github.sha }}
           path: |
+            /tmp/full-empirical.log
             release_evidence/full_empirical_validation
             dissertation_artifacts/chapter3
             dissertation_artifacts/chapter4
@@ -100,14 +104,19 @@ jobs:
       - name: Build locked reproduction image
         run: docker build -t fuzzyxai:full-empirical .
       - name: Run complete reproduction in container
-        run: docker run --rm fuzzyxai:full-empirical make reproduce-dissertation
+        run: |
+          set -o pipefail
+          docker run --rm fuzzyxai:full-empirical make reproduce-dissertation 2>&1 | tee /tmp/docker-reproduction.log
       - name: Record successful Docker execution
         run: |
           printf '%s\n' '{"schema_version":"1.0","status":"PASS","command":"docker run --rm fuzzyxai:full-empirical make reproduce-dissertation","commit":"${{ github.sha }}"}' > docker_reproduction.json
       - uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: fuzzyxai-docker-reproduction-${{ github.sha }}
-          path: docker_reproduction.json
+          path: |
+            docker_reproduction.json
+            /tmp/docker-reproduction.log
           retention-days: 30
 
   aggregate-evidence:
