@@ -1,0 +1,236 @@
+{
+  "base_commit": "cafe403c7d60e36b08f56a5325ba380718a5be35",
+  "file_count": 44,
+  "files": [
+    {
+      "bytes": 1760,
+      "path": "release_evidence/full_empirical_validation/baselines/baseline_quality_matrix.csv",
+      "sha256": "40cdd16926a27c3873abe8a1cbd07c3da1c2ed963961d10978c39970e7ee600b"
+    },
+    {
+      "bytes": 66100,
+      "path": "release_evidence/full_empirical_validation/baselines/object_level_results.csv",
+      "sha256": "18c819a06c58f19fed236c88a8a9295275a0c9be364c58f43b12e6a4d49e5dc9"
+    },
+    {
+      "bytes": 6152,
+      "path": "release_evidence/full_empirical_validation/baselines/object_level_results.parquet",
+      "sha256": "41ac976b7b3c24d350371025a1436ffe4725d3514d42c35a0a3ff0ddcc2b9481"
+    },
+    {
+      "bytes": 5724,
+      "path": "release_evidence/full_empirical_validation/baselines/statistical_comparison.json",
+      "sha256": "7364410a4ae582b2777df51a70435aa31b40d1e52eff4df6fb95db4b9b550551"
+    },
+    {
+      "bytes": 1186,
+      "path": "release_evidence/full_empirical_validation/calibration/all_trials.csv",
+      "sha256": "143f5ed09d0a5340a0323d604fd86613a3e2ee3806892667026a804ca239ba51"
+    },
+    {
+      "bytes": 809,
+      "path": "release_evidence/full_empirical_validation/calibration/best_config.json",
+      "sha256": "cd2c6b206da66de92f60982ae47ac1fa6e9234bedcd9fa66b110328318dcf732"
+    },
+    {
+      "bytes": 1186,
+      "path": "release_evidence/full_empirical_validation/calibration/calibration_curve.csv",
+      "sha256": "583903253d99962683548ae4b1b05c4a46b9d17594f6e89ba322827807de0274"
+    },
+    {
+      "bytes": 1055,
+      "path": "release_evidence/full_empirical_validation/calibration/calibration_manifest.json",
+      "sha256": "a0e2865b00b96bfbf46c9884b7ab775bb6275452ffd96e544bd1cd8d65ae4654"
+    },
+    {
+      "bytes": 116,
+      "path": "release_evidence/full_empirical_validation/ci_fast_status.json",
+      "sha256": "238240508ab32116904b688320e10ed56633ca5b43eca8c971dcc92db49cf6aa"
+    },
+    {
+      "bytes": 112,
+      "path": "release_evidence/full_empirical_validation/ci_heavy_status.json",
+      "sha256": "7117afb07a060c49cdffdf3506e2c9ff020094d001f3d9fb1c25e4ca5a50f1b8"
+    },
+    {
+      "bytes": 3693,
+      "path": "release_evidence/full_empirical_validation/critical_rupture_scalability/critical_rupture_and_scalability.json",
+      "sha256": "357963294f27daae978073dfa4e5c2f4e41caf261bed9682c360ba89aada245b"
+    },
+    {
+      "bytes": 296,
+      "path": "release_evidence/full_empirical_validation/critical_rupture_scalability/scalability.csv",
+      "sha256": "d66daeca536a12aefb74c856db08bd89cbb8567e3be3c08315c6133f7a572aac"
+    },
+    {
+      "bytes": 173,
+      "path": "release_evidence/full_empirical_validation/docker_reproduction.json",
+      "sha256": "b56f61061720284fdc6a16b383e9e802a5294a1a42a9124acd12e3e0347c79bb"
+    },
+    {
+      "bytes": 8980,
+      "path": "release_evidence/full_empirical_validation/dod_90.json",
+      "sha256": "55f75537c3895a895f9f0e3a72c41dd06aefafdd217a0c757b3466c7f4b79511"
+    },
+    {
+      "bytes": 1385542,
+      "path": "release_evidence/full_empirical_validation/empirical_validation/data/controlled_geological_notes_v1.jsonl",
+      "sha256": "f9969d6e31e2a92d1e3643c9b6c9440dda5cf27970251130b3eea6b4f922357f"
+    },
+    {
+      "bytes": 6131359,
+      "path": "release_evidence/full_empirical_validation/empirical_validation/data/controlled_geometric_images_v1.npz",
+      "sha256": "ab6dadec083dd0ab9d2784ad9a58c06282d91eecabb70ed29c5a0716578459b0"
+    },
+    {
+      "bytes": 2374971,
+      "path": "release_evidence/full_empirical_validation/empirical_validation/data/controlled_sensor_windows_v1.npz",
+      "sha256": "a7ed6d1ef39680bb2e14a395c0591b82eccb64f020f4e123b520d895fb2dda90"
+    },
+    {
+      "bytes": 1258939,
+      "path": "release_evidence/full_empirical_validation/empirical_validation/data/controlled_tabular_risk_v1.npz",
+      "sha256": "e4f706116cb0e218b17fc04ea429a2d00c6ab6ebab7e0d267346d50f7501ef06"
+    },
+    {
+      "bytes": 3807,
+      "path": "release_evidence/full_empirical_validation/empirical_validation/datasets_manifest.json",
+      "sha256": "8b383a4af4613995de53352f51c2d57566730ddea75e7912816129be480c8973"
+    },
+    {
+      "bytes": 4956,
+      "path": "release_evidence/full_empirical_validation/empirical_validation/multimodal_results.csv",
+      "sha256": "9b9566b1f423e0103ba6916bb2d1e409b5861afbeeea1d7da3f2be6dbd562e8d"
+    },
+    {
+      "bytes": 16947,
+      "path": "release_evidence/full_empirical_validation/empirical_validation/multimodal_results.json",
+      "sha256": "5507a8507a340bd31bc9e757a9cd8a0f2d55df0d0703836e44e621be60ef136c"
+    },
+    {
+      "bytes": 5102,
+      "path": "release_evidence/full_empirical_validation/external_review/blinded_packets/packet_01.json",
+      "sha256": "3e84492814961cc9f7d9ec81fec2fe391a6ba1c4a4335214ba3878cd199cb8ad"
+    },
+    {
+      "bytes": 5105,
+      "path": "release_evidence/full_empirical_validation/external_review/blinded_packets/packet_02.json",
+      "sha256": "e12362fb6204e0fbecbb18e28f9a3faf574ea163ef67cd4516b3a3bf54f1b85a"
+    },
+    {
+      "bytes": 5101,
+      "path": "release_evidence/full_empirical_validation/external_review/blinded_packets/packet_03.json",
+      "sha256": "268bfcc6628f267a4e20edeba3f63085d2a50b17f65768cddec656580ac80384"
+    },
+    {
+      "bytes": 5105,
+      "path": "release_evidence/full_empirical_validation/external_review/blinded_packets/packet_04.json",
+      "sha256": "e2bed84d213dc792566529cfa06d7419fba40324d055d7eb22b76b256b885deb"
+    },
+    {
+      "bytes": 122,
+      "path": "release_evidence/full_empirical_validation/external_review/review_status.json",
+      "sha256": "5f7115729081e022948fc62c97beeab10d6e26c201c371c6b0d0c7a5c4cf9045"
+    },
+    {
+      "bytes": 20394,
+      "path": "release_evidence/full_empirical_validation/external_review/sample_100.json",
+      "sha256": "ce2eeec53f9d50c21411009fa7bebc3dc0530e76cd040064cb345b28cc8cd337"
+    },
+    {
+      "bytes": 4978,
+      "path": "release_evidence/full_empirical_validation/manifest_sha256.json",
+      "sha256": "fed0c283a927e8cd4cd2840c5937c24a5c78726032a17f2158cb00d0ed5fa166"
+    },
+    {
+      "bytes": 839057,
+      "path": "release_evidence/full_empirical_validation/object_level/all_objects.csv",
+      "sha256": "8da34cc0d7fa4367b5377d2ce255ca7101c24f62e73e5c1ef773d69b4b450fd5"
+    },
+    {
+      "bytes": 275733,
+      "path": "release_evidence/full_empirical_validation/object_level/all_objects.parquet",
+      "sha256": "353c4a162718180956b8da7fea5b3efd7267d3478d7816780e3e73699669a436"
+    },
+    {
+      "bytes": 9349,
+      "path": "release_evidence/full_empirical_validation/object_level/full_population_summary.json",
+      "sha256": "dfa178875992b6eb4b13857668f073e507232047f20efaa6a08ca8fc50680ca1"
+    },
+    {
+      "bytes": 4312,
+      "path": "release_evidence/full_empirical_validation/optional_runtime/controlled_image_cnn.onnx",
+      "sha256": "276c95c1dde6848057a8d2a779117ef249adce6dea58d83f76526b7627ca5910"
+    },
+    {
+      "bytes": 3859,
+      "path": "release_evidence/full_empirical_validation/optional_runtime/multimodal_neural_runtime.json",
+      "sha256": "1347e38368995dafa30bc08f8f018d7b7d18b6f6ac90f790bab683d42c5dbfd1"
+    },
+    {
+      "bytes": 8992,
+      "path": "release_evidence/full_empirical_validation/policies/policy_comparison.json",
+      "sha256": "ad8b6e5c2e7756e13e3b1f23b23edc329f4cb35e0daafc7299badc07a55fa987"
+    },
+    {
+      "bytes": 1645,
+      "path": "release_evidence/full_empirical_validation/policies/risk_coverage_curve.csv",
+      "sha256": "b809c3d154c1e27782562dc637f73be36360decc7c569682d8df1ddcb62246f6"
+    },
+    {
+      "bytes": 22542,
+      "path": "release_evidence/full_empirical_validation/rule_ablation/repeated_cv_metrics.csv",
+      "sha256": "bb380a10754ab8a2c3c018d9ed12dd9cfb4a07089178b0162d37c04f872c9a9d"
+    },
+    {
+      "bytes": 3922195,
+      "path": "release_evidence/full_empirical_validation/rule_ablation/repeated_cv_predictions.csv",
+      "sha256": "a6fe5e3082da5c49bbb1484a73055fab38ce4039ff5b3b5dfd620673ba2736a6"
+    },
+    {
+      "bytes": 1176450,
+      "path": "release_evidence/full_empirical_validation/rule_ablation/repeated_cv_predictions.parquet",
+      "sha256": "1ed396daa9ea265316c3650a066ed45d3fe36e1e20726d0a97721c2818f1f12a"
+    },
+    {
+      "bytes": 5366,
+      "path": "release_evidence/full_empirical_validation/rule_ablation/statistical_report.json",
+      "sha256": "732a2d8cac673720e8b633ef0030bffe40bdfa4c16bfd436fc358aa011624d14"
+    },
+    {
+      "bytes": 5118,
+      "path": "release_evidence/full_empirical_validation/run_manifest.json",
+      "sha256": "81906a6320416456d34b485ddbfb08f5b488a66550bfd54406edf4c9b5962963"
+    },
+    {
+      "bytes": 1206,
+      "path": "release_evidence/full_empirical_validation/sensitivity/sensitivity_points.csv",
+      "sha256": "e0761e5ee88b3edf8605f01b789670000e600f396f64fc91101a7d0f90702d68"
+    },
+    {
+      "bytes": 5712,
+      "path": "release_evidence/full_empirical_validation/sensitivity/sensitivity_report.json",
+      "sha256": "9f5a84ea461f68a9f630e4060717180058e2402c7d57c278c1e2478ff508b4b2"
+    },
+    {
+      "bytes": 1346,
+      "path": "release_evidence/full_empirical_validation/uncertainty_hierarchy/hierarchy_results.json",
+      "sha256": "ebf291e650b4d9245303e2ae14f14e4c196f29efa98e89bc59515ecb559a6126"
+    },
+    {
+      "bytes": 300,
+      "path": "release_evidence/full_empirical_validation/uncertainty_hierarchy/representation_distribution.csv",
+      "sha256": "3da8f69a5163d81a8ed8c4841ce9774cf0f329b6be5513267170dc1df05bd783"
+    }
+  ],
+  "immutable": true,
+  "preserved_negative_results": {
+    "critical_rupture_incremental_auprc": -0.12556024709557384,
+    "critical_rupture_interpretation": "structural_diagnostic_only",
+    "external_studies": "open",
+    "rule_ablation_general_effect": "not_confirmed"
+  },
+  "schema_version": "1.0",
+  "source_mode": "git_objects",
+  "source_prefix": "release_evidence/full_empirical_validation/"
+}
