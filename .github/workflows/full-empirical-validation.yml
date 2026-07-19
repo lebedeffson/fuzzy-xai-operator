@@ -138,7 +138,9 @@ jobs:
           path: /tmp/docker-status
       - name: Merge CI and Docker evidence
         run: |
-          cp /tmp/docker-status/docker_reproduction.json release_evidence/full_empirical_validation/docker_reproduction.json
+          docker_status="$(find /tmp/docker-status -name docker_reproduction.json -type f -print -quit)"
+          test -n "$docker_status"
+          cp "$docker_status" release_evidence/full_empirical_validation/docker_reproduction.json
           printf '%s\n' '{"schema_version":"1.0","status":"PASS","job":"protocol-smoke","commit":"${{ github.sha }}"}' > release_evidence/full_empirical_validation/ci_fast_status.json
           printf '%s\n' '{"schema_version":"1.0","status":"PASS","job":"full-e1-e8","commit":"${{ github.sha }}"}' > release_evidence/full_empirical_validation/ci_heavy_status.json
       - name: Freeze final DoD and checksums
