@@ -34,6 +34,9 @@ from .spec import (
     build_visual_spec,
 )
 from .matplotlib_renderer import render_visual_spec as render_explanation_view
+from .operator_dashboard import render_dashboard, render_operator_dashboard
+from .route_artifacts import save_proof_trace_json, save_route_json
+from .traceability import write_traceability_artifacts
 
 render_operator_route_flow = render_route_sankey
 
@@ -69,4 +72,9 @@ __all__ = [
     "FeatureProfileSpec",
     "build_visual_spec",
     "render_explanation_view",
+    "render_dashboard",
+    "render_operator_dashboard",
+    "save_route_json",
+    "save_proof_trace_json",
+    "write_traceability_artifacts",
 ]

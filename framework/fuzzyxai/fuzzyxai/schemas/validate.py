@@ -66,6 +66,21 @@ REQUIRED: dict[str, tuple[str, ...]] = {
         "explanation_graph",
         "human_explanations",
     ),
+    "explanation_visual_spec": (
+        "schema_version",
+        "overview",
+        "story",
+        "data_profile",
+        "training_timeline",
+        "knowledge_atlas",
+        "decision_evidence",
+        "similar_cases",
+        "counterfactuals",
+        "rule_ablations",
+        "provenance_nodes",
+        "provenance_edges",
+        "audit",
+    ),
 }
 
 
@@ -95,6 +110,15 @@ def validate_payload(payload: dict[str, Any], schema: str) -> ValidationResult:
         for object_field in ("model", "risk", "trace", "layers", "explanation_graph", "human_explanations"):
             if object_field in payload and not isinstance(payload[object_field], dict):
                 errors.append(f"{object_field} must be object")
+    if schema == "explanation_visual_spec":
+        if payload.get("schema_version") != "1.1":
+            errors.append("schema_version must be 1.1")
+        for object_field in ("overview", "knowledge_atlas", "decision_evidence", "audit"):
+            if object_field in payload and not isinstance(payload[object_field], dict):
+                errors.append(f"{object_field} must be object")
+        for array_field in ("story", "data_profile", "training_timeline", "similar_cases", "counterfactuals", "rule_ablations", "provenance_nodes", "provenance_edges"):
+            if array_field in payload and not isinstance(payload[array_field], (list, tuple)):
+                errors.append(f"{array_field} must be array")
     return ValidationResult(not errors, errors, schema)
 
 

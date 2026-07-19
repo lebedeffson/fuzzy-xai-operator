@@ -37,7 +37,6 @@ def render_explanation_dashboard(
 
     try:
         import matplotlib.pyplot as plt
-        import numpy as np
     except Exception as exc:  # pragma: no cover
         raise RuntimeError("matplotlib and numpy are required for dashboard rendering") from exc
 

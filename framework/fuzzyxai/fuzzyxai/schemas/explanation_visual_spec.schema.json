@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fuzzyxai.org/schemas/explanation_visual_spec.schema.json",
+  "title": "FuzzyXAI ExplanationVisualSpec 1.1",
+  "type": "object",
+  "required": [
+    "schema_version", "overview", "story", "data_profile", "training_timeline",
+    "knowledge_atlas", "decision_evidence", "similar_cases", "counterfactuals",
+    "rule_ablations", "provenance_nodes", "provenance_edges", "audit"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.1"},
+    "overview": {
+      "type": "object",
+      "required": ["prediction", "action", "explanation_level", "claim_counts", "available_claim_types"]
+    },
+    "story": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["stage_id", "title", "evidence_status", "effect", "severity", "facts", "claim_refs"]
+      }
+    },
+    "data_profile": {"type": "array", "items": {"type": "object"}},
+    "training_timeline": {"type": "array", "items": {"type": "object"}},
+    "knowledge_atlas": {"type": "object", "required": ["rules", "concepts", "source_rule_count", "displayed_rule_count", "primary_rule_count"]},
+    "decision_evidence": {"type": "object", "required": ["supports", "contradicts", "limitations"]},
+    "similar_cases": {"type": "array", "items": {"type": "object"}},
+    "counterfactuals": {"type": "array", "items": {"type": "object"}},
+    "rule_ablations": {"type": "array", "items": {"type": "object"}},
+    "provenance_nodes": {"type": "array", "items": {"type": "object", "required": ["node_id", "node_type", "label"]}},
+    "provenance_edges": {"type": "array", "items": {"type": "object", "required": ["source", "target", "relation"]}},
+    "audit": {"type": "object", "required": ["graph_valid", "graph_errors", "node_count", "edge_count", "claim_count", "missing_evidence"]}
+  },
+  "additionalProperties": false
+}

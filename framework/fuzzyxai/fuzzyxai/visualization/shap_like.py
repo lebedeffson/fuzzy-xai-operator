@@ -10,7 +10,6 @@ from typing import Any
 from fuzzyxai.core.explain_plan import ExplainPlan
 
 from .utils import (
-    ACTION_COLORS,
     add_footer,
     aggregate_risk,
     apply_visual_style,
@@ -23,7 +22,6 @@ from .utils import (
     save_figure_all,
     semantic_color,
     status_color,
-    write_html_with_image,
 )
 
 

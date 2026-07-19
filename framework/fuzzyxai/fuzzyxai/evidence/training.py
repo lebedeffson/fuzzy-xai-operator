@@ -3,8 +3,6 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Any, Mapping, Sequence
 
-import numpy as np
-
 from .contracts import SubgroupAveragingEvidence, TrainingObjectTrace
 
 

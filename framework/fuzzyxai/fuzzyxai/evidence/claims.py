@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Any, Mapping, Sequence
 
-from .contracts import ExplanationClaim, ExplanationEvidence, ExplanationLevel
+from .contracts import EffectDirection, ExplanationClaim, ExplanationEvidence, ExplanationLevel, Severity
 
 
 def build_explanation_claims(
@@ -25,6 +25,8 @@ def build_explanation_claims(
         refs: Sequence[str],
         *,
         status: str = "supported",
+        effect: EffectDirection = "neutral",
+        severity: Severity = "info",
         strength: float | None = None,
         limitations: Sequence[str] = (),
         applicability: str | None = None,
@@ -33,6 +35,8 @@ def build_explanation_claims(
         metric_unit: str | None = None,
         comparison_baseline: str | None = None,
         counter_refs: Sequence[str] = (),
+        native: bool | None = None,
+        surrogate: bool | None = None,
     ) -> None:
         claims.append(
             ExplanationClaim(
@@ -42,7 +46,9 @@ def build_explanation_claims(
                 subject_id=subject_id,
                 statement=statement,
                 short_statement=short_statement,
-                status=status,
+                evidence_status=status,
+                effect=effect,
+                severity=severity,
                 strength=strength,
                 evidence_refs=tuple(refs),
                 counter_evidence_refs=tuple(counter_refs),
@@ -52,6 +58,8 @@ def build_explanation_claims(
                 metric_value=metric_value,
                 metric_unit=metric_unit,
                 comparison_baseline=comparison_baseline,
+                native=native,
+                surrogate=surrogate,
             )
         )
 
@@ -68,6 +76,7 @@ def build_explanation_claims(
         strength=float(score) if isinstance(score, (int, float)) and 0.0 <= float(score) <= 1.0 else None,
         metric_name="model_score" if isinstance(score, (int, float)) else None,
         metric_value=float(score) if isinstance(score, (int, float)) else None,
+        effect="neutral",
     )
 
     for item in evidence.data:
@@ -82,6 +91,8 @@ def build_explanation_claims(
             strength=item.data_quality,
             metric_name="data_quality",
             metric_value=item.data_quality,
+            effect="favorable" if item.data_quality >= 0.8 else "adverse",
+            severity="info" if item.data_quality >= 0.8 else "warning",
         )
         if item.anomaly_labels:
             features = ", ".join(item.anomaly_labels)
@@ -95,6 +106,8 @@ def build_explanation_claims(
                 refs,
                 limitations=("Отклонение само по себе не доказывает ошибку данных.",),
                 applicability="rare_or_anomalous_input",
+                effect="adverse",
+                severity="warning",
             )
             add(
                 "data_error_status",
@@ -105,6 +118,8 @@ def build_explanation_claims(
                 refs,
                 status="contested",
                 limitations=("Для различения ошибки и редкого подтипа требуется предметная проверка.",),
+                effect="mixed",
+                severity="warning",
             )
 
     for trace in evidence.training:
@@ -120,6 +135,7 @@ def build_explanation_claims(
                 metric_name="first_learned_epoch",
                 metric_value=float(trace.first_learned_epoch),
                 metric_unit="epoch",
+                effect="favorable",
             )
         if trace.forgetting_events:
             epochs = ", ".join(str(item) for item in trace.forgetting_events)
@@ -134,6 +150,8 @@ def build_explanation_claims(
                 metric_name="forgetting_event_count",
                 metric_value=float(len(trace.forgetting_events)),
                 metric_unit="events",
+                effect="adverse",
+                severity="warning",
             )
 
     for subgroup in evidence.subgroups:
@@ -150,6 +168,8 @@ def build_explanation_claims(
                 metric_name="subgroup_metric_change",
                 metric_value=subgroup.subgroup_metric_change,
                 comparison_baseline=f"global_metric_change={subgroup.global_metric_change:+.3f}",
+                effect="adverse",
+                severity="warning",
             )
         if subgroup.disappeared_rules:
             add(
@@ -160,6 +180,8 @@ def build_explanation_claims(
                 f"Потеряны правила: {', '.join(subgroup.disappeared_rules)}",
                 [ref],
                 limitations=subgroup.limitations,
+                effect="adverse",
+                severity="warning",
             )
 
     for rule in evidence.rules:
@@ -179,6 +201,10 @@ def build_explanation_claims(
             limitations=limitations,
             metric_name="rule_importance" if rule.importance is not None else None,
             metric_value=rule.importance,
+            effect="mixed" if rule.is_conflicting else "favorable",
+            severity="warning" if rule.is_conflicting else "info",
+            native=rule.native,
+            surrogate=rule.surrogate,
         )
 
     for concept in evidence.concepts:
@@ -193,6 +219,7 @@ def build_explanation_claims(
             limitations=concept.limitations,
             metric_name="primary_rule_coverage" if concept.primary_rule_coverage is not None else None,
             metric_value=concept.primary_rule_coverage,
+            effect="favorable",
         )
 
     for case in evidence.similar_cases:
@@ -209,6 +236,7 @@ def build_explanation_claims(
             metric_name="similarity",
             metric_value=case.similarity_score,
             comparison_baseline=case.compared_representation,
+            effect="favorable" if case.reference_label == case.reference_prediction else "mixed",
         )
 
     for index, counterfactual in enumerate(evidence.counterfactuals):
@@ -226,6 +254,7 @@ def build_explanation_claims(
             applicability=counterfactual.actionability,
             metric_name="observed_effect" if counterfactual.observed_effect is not None else None,
             metric_value=counterfactual.observed_effect,
+            effect="mixed",
         )
 
     diagnostic_refs: list[str] = []
@@ -243,6 +272,8 @@ def build_explanation_claims(
             [ref],
             status=status,
             limitations=("Автоматическое принятие ограничено до устранения диагностики.",),
+            effect="adverse",
+            severity="critical" if diagnostic.get("severity") == "critical" else "warning",
         )
 
     for missing in evidence.missing:
@@ -254,6 +285,9 @@ def build_explanation_claims(
             f"Нет evidence: {missing}",
             ["trace:missing_evidence"],
             status="insufficient_evidence",
+            effect="unknown",
+            severity="warning",
+            limitations=(f"Канал evidence «{missing}» отсутствует.",),
         )
 
     add(
@@ -265,6 +299,9 @@ def build_explanation_claims(
         diagnostic_refs or ["prediction"],
         status="insufficient_evidence" if action == "insufficient_evidence" else "supported",
         applicability=action,
+        effect="adverse" if action in {"review", "audit", "block", "insufficient_evidence", "defer_to_human"} else "favorable",
+        severity="critical" if action == "block" else "warning" if action != "accept" else "info",
+        limitations=("Действие ограничено доступными evidence-каналами.",) if action == "insufficient_evidence" else (),
     )
     return claims
 

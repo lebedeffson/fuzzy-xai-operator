@@ -135,12 +135,13 @@ from .core.explanation import build_explainable_object
 from .core.route import build_route
 from .proof.trace import build_proof_trace
 from .proof.verifier import verify_proof_trace
-from .viz.export import save_route_json
-from .viz.matplotlib_dashboard import render_dashboard
+from .visualization.route_artifacts import save_route_json
+from .visualization.operator_dashboard import render_dashboard
 from .examples import list_examples, load_example
-from .runtime import ExplanationInspection, FuzzyXAI, ModelExplanationResult
+from .runtime import ExplanationInspection, FuzzyXAI, InspectionResult, ModelExplanationResult
 from .adapters import (
     BaseAdapter,
+    AdapterCapabilities,
     CallableAdapter,
     CustomAdapter,
     ModelAdapter,
@@ -218,6 +219,7 @@ __all__ += [
     "FuzzyXAI",
     "ModelExplanationResult",
     "ExplanationInspection",
+    "InspectionResult",
     "build_explainable_object",
     "build_route",
     "build_proof_trace",
@@ -228,6 +230,7 @@ __all__ += [
     "load_example",
     "BaseAdapter",
     "ModelAdapter",
+    "AdapterCapabilities",
     "ModelPrediction",
     "CallableAdapter",
     "PredictProbaAdapter",

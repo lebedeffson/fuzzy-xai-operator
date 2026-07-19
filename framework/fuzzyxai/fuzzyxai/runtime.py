@@ -20,11 +20,16 @@ from fuzzyxai.operators import compute_reduction as compute_operator_reduction
 from fuzzyxai.operators import observe_risk as observe_operator_risk
 from fuzzyxai.proof.trace import build_proof_trace
 from fuzzyxai.proof.verifier import VerificationResult, verify_proof_trace
-from fuzzyxai.viz import save_proof_trace_json, save_route_json, write_traceability_artifacts
-from fuzzyxai.viz.matplotlib_dashboard import render_dashboard
+from fuzzyxai.visualization.operator_dashboard import render_dashboard
+from fuzzyxai.visualization.route_artifacts import save_proof_trace_json, save_route_json
+from fuzzyxai.visualization.traceability import write_traceability_artifacts
 from fuzzyxai.core.route import build_route
 from fuzzyxai.evidence import (
+    ExplanationClaim,
+    ExplanationEdge,
     ExplanationEvidence,
+    ExplanationGraph,
+    ExplanationNode,
     TrainingRunAnalysis,
     build_class_concepts,
     build_explanation_graph,
@@ -79,28 +84,55 @@ def _with_feature_names(internal: Mapping[str, Any], names: list[str]) -> dict[s
 
 
 @dataclass(frozen=True)
-class ExplanationInspection:
-    """Focused, serializable view of one claim, rule, or evidence node."""
+class InspectionResult:
+    """Typed focused view of one claim, rule, object, concept, or graph node."""
 
     selector: str
-    target: Mapping[str, Any]
-    related_claims: Sequence[Mapping[str, Any]]
-    related_nodes: Sequence[Mapping[str, Any]]
-    related_edges: Sequence[Mapping[str, Any]]
-    visual_spec: Mapping[str, Any]
+    target_type: str
+    target_id: str
+    target: dict[str, object]
+    related_claims: tuple[ExplanationClaim, ...]
+    related_nodes: tuple[ExplanationNode, ...]
+    related_edges: tuple[ExplanationEdge, ...]
+    visual_spec: dict[str, object]
 
-    def to_dict(self) -> dict[str, Any]:
+    def to_dict(self) -> dict[str, object]:
         return {
             "selector": self.selector,
-            "target": dict(self.target),
-            "related_claims": [dict(item) for item in self.related_claims],
+            "target_type": self.target_type,
+            "target_id": self.target_id,
+            "target": self.target,
+            "related_claims": [item.to_dict() for item in self.related_claims],
             "provenance": self.provenance(),
+            "limitations": list(self.limitations()),
         }
 
-    def provenance(self) -> dict[str, Any]:
+    def summary(self) -> str:
+        label = self.target.get("statement", self.target.get("label", self.target_id))
+        return f"{self.target_type} {self.target_id}: {label}"
+
+    def evidence(self) -> tuple[ExplanationNode, ...]:
+        return self.related_nodes
+
+    def limitations(self) -> tuple[str, ...]:
+        values = [str(item) for item in self.target.get("limitations", ())]
+        for claim in self.related_claims:
+            values.extend(str(item) for item in claim.limitations)
+        return tuple(dict.fromkeys(values))
+
+    def provenance(self) -> dict[str, object]:
         return {
-            "nodes": [dict(item) for item in self.related_nodes],
-            "edges": [dict(item) for item in self.related_edges],
+            "nodes": [item.to_dict() for item in self.related_nodes],
+            "edges": [item.to_dict() for item in self.related_edges],
+        }
+
+    def audit(self) -> dict[str, object]:
+        return {
+            "selector": self.selector,
+            "claim_ids": [item.claim_id for item in self.related_claims],
+            "evidence_node_ids": [item.node_id for item in self.related_nodes],
+            "relations": [item.relation for item in self.related_edges],
+            "limitations": list(self.limitations()),
         }
 
     def visualize(
@@ -120,6 +152,9 @@ class ExplanationInspection:
         return render_visual_spec(self.visual_spec, view=selected_view, output_path=output)
 
 
+ExplanationInspection = InspectionResult
+
+
 @dataclass(frozen=True)
 class ModelExplanationResult:
     """Public result returned by ``FuzzyXAI.wrap(...).explain(...)``."""
@@ -132,9 +167,9 @@ class ModelExplanationResult:
         return str(self.view_model.risk.get("action", "review"))
 
     @property
-    def claims(self) -> tuple[Mapping[str, Any], ...]:
+    def claims(self) -> tuple[ExplanationClaim, ...]:
         values = self.view_model.claims
-        return tuple(values) if isinstance(values, (list, tuple)) else tuple()
+        return tuple(ExplanationClaim.from_dict(item) for item in values) if isinstance(values, (list, tuple)) else tuple()
 
     @property
     def explanation_level(self) -> str:
@@ -163,8 +198,8 @@ class ModelExplanationResult:
         return self.view_model.export_json(path)
 
     @property
-    def explanation_graph(self) -> Mapping[str, Any]:
-        return self.view_model.explanation_graph
+    def explanation_graph(self) -> ExplanationGraph:
+        return ExplanationGraph.from_dict(self.view_model.explanation_graph)
 
     def summary(self, level: str = "user") -> str:
         """Return evidence-backed user, expert, or audit text."""
@@ -179,16 +214,16 @@ class ModelExplanationResult:
     def overview(self) -> str:
         """Answer the five operational questions using claim-grounded text."""
 
-        groups: dict[str, list[Mapping[str, Any]]] = {}
+        groups: dict[str, list[ExplanationClaim]] = {}
         for claim in self.claims:
-            groups.setdefault(str(claim.get("claim_type")), []).append(claim)
+            groups.setdefault(claim.claim_type, []).append(claim)
 
         def line(title: str, candidates: Sequence[str], fallback: str) -> str:
             selected = [claim for kind in candidates for claim in groups.get(kind, [])]
             if not selected:
                 return f"**{title}.** {fallback}"
             claim = selected[0]
-            return f"**{title}.** {claim.get('statement')} [{claim.get('claim_id')}]"
+            return f"**{title}.** {claim.statement} [{claim.claim_id}]"
 
         return "\n\n".join(
             [
@@ -206,57 +241,80 @@ class ModelExplanationResult:
         lines = [f"# История решения ({self.explanation_level})"]
         for stage in self.view_model.visual_spec.get("story", []):
             refs = ", ".join(stage.get("claim_refs", [])) or "нет claims"
-            lines.append(f"\n## {stage.get('title')} [{stage.get('status')}] ({refs})")
+            lines.append(f"\n## {stage.get('title')} [{stage.get('evidence_status')} / {stage.get('effect')}] ({refs})")
             facts = stage.get("facts", []) or ["Evidence для этапа отсутствует."]
             lines.extend(f"- {fact}" for fact in facts)
         return "\n".join(lines) + "\n"
 
-    def inspect(self, selector: str) -> ExplanationInspection:
-        """Inspect a claim or model rule and return its local provenance."""
+    def inspect(self, selector: str) -> InspectionResult:
+        """Inspect claim/rule/concept/object/evidence/diagnostic/action provenance."""
 
         prefix, separator, identifier = selector.partition(":")
-        if not separator or prefix not in {"claim", "rule", "evidence", "node"}:
-            raise ValueError("selector must be claim:<id>, rule:<id>, or evidence:<node_id>")
-        graph = self.view_model.explanation_graph
-        nodes = list(graph.get("nodes", []))
-        edges = list(graph.get("edges", []))
+        if selector == "action":
+            prefix, identifier, separator = "action", "action", ":"
+        if not separator or prefix not in {"claim", "rule", "concept", "object", "evidence", "node", "diagnostic", "action"}:
+            raise ValueError("selector must identify claim, rule, concept, object, evidence, diagnostic, or action")
+        graph = self.explanation_graph
+        nodes = list(graph.nodes)
+        edges = list(graph.edges)
         claims = list(self.claims)
-        target: Mapping[str, Any] | None = None
+        target: dict[str, object] | None = None
         anchors: set[str] = set()
         if prefix == "claim":
             normalized = identifier.upper().replace("C", "C-") if identifier.upper().startswith("C") and "-" not in identifier else identifier.upper()
-            target = next((claim for claim in claims if str(claim.get("claim_id", "")).upper() == normalized), None)
-            if target:
-                anchors.add(f"claim:{target.get('claim_id')}")
-                anchors.update(str(item) for item in target.get("evidence_refs", []))
+            selected_claim = next((claim for claim in claims if claim.claim_id.upper() == normalized), None)
+            target = selected_claim.to_dict() if selected_claim else None
+            if selected_claim:
+                anchors.add(f"claim:{selected_claim.claim_id}")
+                anchors.update(str(item) for item in selected_claim.evidence_refs)
         elif prefix == "rule":
             target = next((rule for rule in self.view_model.layers.get("rules", []) if str(rule.get("rule_id")) == identifier), None)
             anchors.add(f"rule:{identifier}")
+        elif prefix == "concept":
+            node_id = f"concept:{identifier}"
+            selected_node = next((node for node in nodes if node.node_id == node_id), None)
+            target = selected_node.to_dict() if selected_node else None
+            anchors.add(node_id)
+        elif prefix == "object":
+            candidates = {f"data:{identifier}", f"training:{identifier}"}
+            selected_node = next((node for node in nodes if node.node_id in candidates), None)
+            target = selected_node.to_dict() if selected_node else None
+            anchors.update(candidates)
+        elif prefix == "diagnostic":
+            node_id = f"diagnostic:{identifier}"
+            selected_node = next((node for node in nodes if node.node_id == node_id), None)
+            target = selected_node.to_dict() if selected_node else None
+            anchors.add(node_id)
+        elif prefix == "action":
+            selected_node = next((node for node in nodes if node.node_id == "action"), None)
+            target = selected_node.to_dict() if selected_node else None
+            anchors.add("action")
         else:
             node_id = identifier if prefix == "node" else selector.removeprefix("evidence:")
-            target = next((node for node in nodes if str(node.get("node_id")) == node_id), None)
+            selected_node = next((node for node in nodes if node.node_id == node_id), None)
+            target = selected_node.to_dict() if selected_node else None
             anchors.add(node_id)
         if target is None:
             raise KeyError(f"unknown inspection target: {selector}")
-        related_edges = [edge for edge in edges if edge.get("source") in anchors or edge.get("target") in anchors]
+        related_edges = [edge for edge in edges if edge.source in anchors or edge.target in anchors]
         related_ids = set(anchors)
         for edge in related_edges:
-            related_ids.update((str(edge.get("source")), str(edge.get("target"))))
-        related_nodes = [node for node in nodes if node.get("node_id") in related_ids]
+            related_ids.update((edge.source, edge.target))
+        related_nodes = [node for node in nodes if node.node_id in related_ids]
         related_claims = [
             claim
             for claim in claims
-            if f"claim:{claim.get('claim_id')}" in related_ids
-            or any(str(ref) in related_ids for ref in claim.get("evidence_refs", []))
+            if f"claim:{claim.claim_id}" in related_ids
+            or any(str(ref) in related_ids for ref in claim.evidence_refs)
         ]
-        return ExplanationInspection(selector, target, related_claims, related_nodes, related_edges, self.view_model.visual_spec)
+        return InspectionResult(selector, prefix, identifier, target, tuple(related_claims), tuple(related_nodes), tuple(related_edges), dict(self.view_model.visual_spec))
 
     def audit(self) -> dict[str, Any]:
         """Return full provenance and channel disclosure without presentation text."""
 
         return {
             "explanation_level": dict(self.view_model.explanation_level),
-            "claims": [dict(claim) for claim in self.claims],
+            "claims": [claim.to_dict() for claim in self.claims],
             "graph": dict(self.view_model.explanation_graph),
             "diagnostics": list(self.view_model.diagnostics),
             "action": self.action,
@@ -632,7 +690,7 @@ class FuzzyXAI:
                 "adapter_id": prediction.adapter_id,
                 "model_type": prediction.model_type,
                 "model_fingerprint": self._model_adapter.model_fingerprint(),
-                "adapter_capabilities": self._model_adapter.capabilities(),
+                "adapter_capabilities": self._model_adapter.capabilities().to_dict(),
                 "object_ids": ids,
                 "dataset_version": dataset_version,
                 "input_sha256": _payload_sha256(rows),

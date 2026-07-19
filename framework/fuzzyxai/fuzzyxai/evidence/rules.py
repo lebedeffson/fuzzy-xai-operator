@@ -205,7 +205,7 @@ def extract_rules(
     names = list(feature_names or adapter.feature_names())
     model = adapter.model
     rules: list[LearnedRule] = []
-    if adapter.capabilities().get("rules", False):
+    if adapter.extract_rules():
         rules.extend(_native_rules(adapter, model_version))
     elif hasattr(model, "tree_"):
         rules.extend(_tree_rules(model, names, model_version=model_version, prefix="tree", max_rules=max_rules))
@@ -247,6 +247,8 @@ def evaluate_rule_ablation(
     return replace(
         rule,
         counterfactual_effect={name: round(value, 6) for name, value in effects.items()},
+        ablation_baseline={name: round(float(baseline_metrics[name]), 6) for name in shared},
+        ablation_without_rule={name: round(float(ablated_metrics[name]), 6) for name in shared},
         importance=round(float(importance), 6),
         evidence_refs=[*rule.evidence_refs, "measured_rule_ablation"],
     )

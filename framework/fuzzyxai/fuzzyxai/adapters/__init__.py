@@ -5,6 +5,7 @@ from .tabular_classification import TabularClassificationAdapter
 
 from .base import BaseAdapter, ValidationResult
 from .model import (
+    AdapterCapabilities,
     CallableAdapter,
     CustomAdapter,
     ModelAdapter,
@@ -20,6 +21,7 @@ __all__ = [
     "BaseAdapter",
     "ValidationResult",
     "ModelAdapter",
+    "AdapterCapabilities",
     "ModelPrediction",
     "CallableAdapter",
     "PredictProbaAdapter",

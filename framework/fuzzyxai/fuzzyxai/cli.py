@@ -22,7 +22,7 @@ from fuzzyxai.visualization import (
     render_risk_waterfall,
     render_route_sankey,
 )
-from fuzzyxai.viz.matplotlib_dashboard import render_dashboard
+from fuzzyxai.visualization.operator_dashboard import render_dashboard
 
 
 def _read_json(path: str | Path) -> dict:

@@ -33,7 +33,7 @@ def build_explanation_graph(
         for feature in item.anomaly_labels:
             anomaly_id = f"anomaly:{item.object_id}:{feature}"
             add_node(anomaly_id, "anomaly", f"Deviation in {feature}", {"feature": feature, "score": item.outlier_scores.get(feature)})
-            edges.append(ExplanationEdge(node_id, anomaly_id, "derived_into"))
+            edges.append(ExplanationEdge(node_id, anomaly_id, "derived_from"))
 
     for trace in evidence.training:
         node_id = f"training:{trace.object_id}"
@@ -52,13 +52,16 @@ def build_explanation_graph(
         for object_id in rule.source_objects:
             data_id = f"data:{object_id}"
             if any(node.node_id == data_id for node in nodes):
-                edges.append(ExplanationEdge(data_id, node_id, "supports", rule.evidence_refs))
+                edges.append(ExplanationEdge(data_id, node_id, "derived_from", rule.evidence_refs))
 
     for concept in evidence.concepts:
         node_id = f"concept:{concept.class_id}"
         add_node(node_id, "concept", concept.human_description, concept.to_dict())
+        rule_node_ids = {node.node_id for node in nodes if node.node_type == "rule"}
         for rule_id in concept.primary_rules:
-            edges.append(ExplanationEdge(f"rule:{rule_id}", node_id, "supports"))
+            rule_node = f"rule:{rule_id}"
+            if rule_node in rule_node_ids:
+                edges.append(ExplanationEdge(rule_node, node_id, "derived_from"))
 
     for similar in evidence.similar_cases:
         node_id = f"similar:{similar.query_object_id}:{similar.reference_object_id}"
@@ -68,7 +71,9 @@ def build_explanation_graph(
             f"{similar.reference_object_id}: {similar.similarity_method}",
             similar.to_dict(),
         )
-        edges.append(ExplanationEdge(f"data:{similar.query_object_id}", node_id, "compared_with"))
+        data_id = f"data:{similar.query_object_id}"
+        if any(node.node_id == data_id for node in nodes):
+            edges.append(ExplanationEdge(data_id, node_id, "derived_from"))
 
     for index, counterfactual in enumerate(evidence.counterfactuals):
         node_id = f"counterfactual:{index}"
@@ -77,7 +82,7 @@ def build_explanation_graph(
     add_node("prediction", "prediction", "Model prediction", prediction)
     for node in list(nodes):
         if node.node_type in {"data", "rule", "concept", "similar_case", "counterfactual"}:
-            relation = "changed_by" if node.node_type == "counterfactual" else "supported_by"
+            relation = "changed_by" if node.node_type == "counterfactual" else "derived_from"
             edges.append(ExplanationEdge(node.node_id, "prediction", relation, node.evidence_refs))
 
     for index, diagnostic in enumerate(diagnostics):
@@ -93,6 +98,7 @@ def build_explanation_graph(
             {"missing": list(evidence.missing)},
         )
 
+    add_node("action", "action", action, {"action": action})
     node_ids = {node.node_id for node in nodes}
     for claim in claims:
         claim_node = f"claim:{claim.claim_id}"
@@ -100,11 +106,13 @@ def build_explanation_graph(
         for ref in claim.evidence_refs:
             if ref in node_ids:
                 edges.append(ExplanationEdge(ref, claim_node, "supports_claim", [ref]))
+        for ref in claim.counter_evidence_refs:
+            if ref in node_ids:
+                edges.append(ExplanationEdge(ref, claim_node, "contradicts_claim", [ref]))
         if claim.claim_type == "diagnostic":
             edges.append(ExplanationEdge(claim_node, "action", "constrains"))
 
-    add_node("action", "action", action, {"action": action})
-    edges.append(ExplanationEdge("prediction", "action", "leads_to"))
+    edges.append(ExplanationEdge("prediction", "action", "recommends"))
     for index in range(len(diagnostics)):
         edges.append(ExplanationEdge(f"diagnostic:{index}", "action", "constrains"))
     for claim in claims:
