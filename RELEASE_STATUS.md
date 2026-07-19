@@ -1,17 +1,30 @@
 # FuzzyXAI Framework Release Status
 
-Status: `v1.3.0rc1` universal-model integration candidate on `feat/universal-model-integration`. Core tabular model
-contracts and 34 configurations are measured. Public branch readiness and optional-runtime CI pass; external
-comprehension and domain-language review are not complete, so merge and release tags remain blocked.
+Status: `v1.3.0rc1` universal-model integration candidate on `feat/universal-model-integration`. The merged evidence
+matrix contains 40/40 passing configurations: 34 deterministic core configurations and six optional runtime
+integrations measured independently on Python 3.11 and Python 3.12. External comprehension and domain-language
+review are not complete, so merge and release tags remain blocked.
 
 ## Universal Model Candidate
 
 - 24 classification and 10 regression configurations;
 - prediction parity, adapter conformance, and graph validation: `1.0` on the recorded core matrix;
 - model-specific evidence for sklearn families and generic callable/probability/rule contracts;
-- optional XGBoost, LightGBM, CatBoost, Torch, TensorFlow/Keras, and ONNX jobs: PASS on run `29698737408`;
-- readiness Python 3.11/3.12, Octave, wheel, and full regression: PASS on run `29698737386`;
+- optional XGBoost, LightGBM, CatBoost, Torch, TensorFlow/Keras, and ONNX reports: 12/12 PASS;
+- runtime reports including sklearn: 14/14 PASS with valid report checksums;
+- public API verification: `explain_one`, `explain_batch`, `explain_global`, `why_not`, and `compare_models` PASS;
+- explanation-quality matrix: 40/40 PASS; top-reason stability measured for 36 configurations;
+- universal evidence CI: PASS on run `29700288413`;
+- readiness Python 3.11/3.12, Octave, wheel, and full regression: PASS on run `29700288436`;
 - no claim of identical evidence channels or universal arbitrary-model support.
+
+## Version Sequence
+
+The project follows version path B: the existing functional branches remain combined in the technical
+`v1.3.0rc1` candidate. No separate stable `v1.2.0` tag will be created retroactively. After both external gates,
+reviewed merge to `main`, and green `main` CI, the next allowed tag is `v1.3.0rc2`; stable `v1.3.0` requires a
+subsequent release review. `v1.4.0` remains reserved for modality-specific anomaly, forecasting, text, and image
+support.
 
 ## Release Decision
 

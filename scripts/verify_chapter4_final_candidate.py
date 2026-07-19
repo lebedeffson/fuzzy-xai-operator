@@ -25,8 +25,12 @@ def main() -> None:
     computed = status["computed_gates"]
     if computed["prediction_parity_rate"] != 1.0 or computed["conformance_rate"] != 1.0:
         raise SystemExit("FAIL: universal model contract rates")
-    if computed["model_universality_verified_configurations"] < 27:
-        raise SystemExit("FAIL: insufficient model benchmark coverage")
+    if computed["model_universality_verified_configurations"] != 40:
+        raise SystemExit("FAIL: unified model matrix is incomplete")
+    if computed["core_model_configurations"] != 34 or computed["optional_runtime_libraries"] != 6:
+        raise SystemExit("FAIL: core/optional model evidence boundary")
+    if computed["explanation_quality_pass"] != 40:
+        raise SystemExit("FAIL: explanation quality matrix")
     print("PASS: chapter4_candidate_manifest")
     print("PASS: chapter4_computed_gates")
     print(f"{status['release_gate']}: chapter4_release_gate")

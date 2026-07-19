@@ -6,6 +6,7 @@
 - Universal API commit: `3dda3e3`
 - Model evidence commit: `a76677a`
 - CI correction commit: `fbfcdd3`
+- Cross-runtime evidence commit: `39067b3`
 - Candidate version: `1.3.0rc1`
 - Release tag: not created
 
@@ -24,12 +25,16 @@ the defended chapter 2-3 operator semantics.
 - `ExplanationPlanner`, surrogate-fidelity blocking, adapter conformance, and quality reports;
 - `explain_batch()`, `explain_global()`, `why_not()`, `compare_models()`, and capability reporting;
 - deterministic benchmark with 24 classification and 10 regression configurations;
+- checksummed runtime reports for sklearn, XGBoost, LightGBM, CatBoost, PyTorch, TensorFlow/Keras, and ONNX;
+- automatic report merge, cross-version conflict detection, unified support matrix, API report, and quality report;
 - frozen external A/B pilot package and external domain-language review package;
 - aggregate Chapter 4 candidate evidence package.
 
 ## Measured Validation
 
-- 34 core model configurations verified;
+- 34 core model configurations and six optional runtime integrations verified;
+- unified model support matrix: `40/40 pass`;
+- runtime reports: `14/14 pass` across Python 3.11 and Python 3.12;
 - prediction parity rate: `1.0`;
 - adapter conformance rate: `1.0`;
 - explanation graph validation rate: `1.0`;
@@ -38,9 +43,11 @@ the defended chapter 2-3 operator semantics.
 - focused local compatibility/model/external-gate suite: `48 passed`, `6 skipped` optional runtimes;
 - public readiness CI: `338 passed`, `6 skipped` on Python 3.11 and Python 3.12;
 - public Octave JSON/dashboard smoke: PASS;
-- public optional runtime CI: XGBoost, LightGBM, CatBoost, PyTorch, TensorFlow/Keras, and ONNX PASS;
-- readiness run: `29698737386`;
-- universal model run: `29698737408`;
+- public optional runtime CI: XGBoost, LightGBM, CatBoost, PyTorch, TensorFlow/Keras, and ONNX PASS on both Python versions;
+- five public explanation APIs: PASS in all runtime reports;
+- explanation-quality matrix: `40/40 pass`; measured top-reason stability in 36 configurations;
+- readiness run: `29700288436`;
+- universal model run: `29700288413`;
 - existing measured checkpoint experiment and native rule ablation retained;
 - model, pilot, domain-review, and Chapter 4 manifests: PASS.
 
@@ -59,7 +66,8 @@ instability. Both supported Python jobs passed. This validates the feature branc
 ## Version Boundary
 
 - `v1.2.0`: Human Explanation and empirical computational gate implemented; final tag blocked externally.
-- `v1.3.0rc1`: universal tabular model integration candidate implemented on this branch.
+- `v1.3.0rc1`: universal tabular model integration and merged cross-runtime evidence candidate implemented on this branch.
+- version path B selected: no retroactive stable `v1.2.0`; next allowed tag after external gates, main merge, and main CI is `v1.3.0rc2`.
 - `v1.4.0`: anomaly, forecasting, text, image, and richer checkpoint integrations remain future scope.
 
 ## Archive Policy

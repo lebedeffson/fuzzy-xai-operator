@@ -1,12 +1,15 @@
 {
   "candidate_version": "1.3.0rc1",
   "claim_boundary": "Chapter 4 computational evidence is reproducible; demonstrated comprehensibility and regulated-domain semantics remain unclaimed until both external gates pass.",
-  "commit": "3dda3e3952e5cb773a625c542e23391eb67f048e",
+  "commit": "39067b3f066b0718302194a1a1d740d30fffcd70",
   "computed_gates": {
     "conformance_rate": 1.0,
+    "core_model_configurations": 34,
+    "explanation_quality_pass": 40,
     "graph_validation_rate": 1.0,
     "measured_rule_ablation": "PASS",
-    "model_universality_verified_configurations": 34,
+    "model_universality_verified_configurations": 40,
+    "optional_runtime_libraries": 6,
     "prediction_parity_rate": 1.0,
     "real_training": "PASS"
   },
@@ -17,5 +20,5 @@
   "release_gate": "BLOCKED",
   "schema_version": "1.0",
   "tag_allowed": false,
-  "verified_model_rows": 0
+  "verified_model_rows": 40
 }

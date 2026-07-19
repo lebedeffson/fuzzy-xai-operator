@@ -1,0 +1,156 @@
+{
+  "adapter": "ONNXRuntimeAdapter",
+  "adapter_id": "onnxruntime_v2",
+  "api_checks": {
+    "compare_models": true,
+    "explain_batch": true,
+    "explain_global": true,
+    "explain_one": true,
+    "why_not": true
+  },
+  "artifact_sha256": "20591ce825bfe3585e46ad51d75fc0327a9c9f88f7951eb9addfd224096ad7a9",
+  "available_evidence_sources": [
+    {
+      "available": true,
+      "fidelity": null,
+      "fidelity_status": "not_applicable",
+      "limitations": [],
+      "method": "model.predict",
+      "name": "prediction",
+      "origin": "native"
+    },
+    {
+      "available": true,
+      "fidelity": null,
+      "fidelity_status": "not_applicable",
+      "limitations": [
+        "Perturbation is not a domain-validated intervention."
+      ],
+      "method": "model_re_evaluation",
+      "name": "perturbation_counterfactual",
+      "origin": "derived"
+    },
+    {
+      "available": true,
+      "fidelity": null,
+      "fidelity_status": "not_applicable",
+      "limitations": [],
+      "method": "InferenceSession.run",
+      "name": "onnx_outputs",
+      "origin": "native"
+    },
+    {
+      "available": false,
+      "fidelity": null,
+      "fidelity_status": "not_applicable",
+      "limitations": [
+        "ONNX gradients are unavailable unless explicitly exported."
+      ],
+      "method": "not exported",
+      "name": "gradients",
+      "origin": "derived"
+    }
+  ],
+  "conformance": 1.0,
+  "conformance_report": {
+    "adapter_id": "onnxruntime_v2",
+    "checks": [
+      {
+        "check_id": "prediction_available",
+        "detail": "canonical prediction returned",
+        "status": "pass"
+      },
+      {
+        "check_id": "prediction_parity",
+        "detail": "model.predict is unavailable",
+        "status": "not_applicable"
+      },
+      {
+        "check_id": "capabilities_serializable",
+        "detail": "capability report is JSON serializable",
+        "status": "pass"
+      },
+      {
+        "check_id": "capability_truthfulness",
+        "detail": "all available channels have explicit descriptors",
+        "status": "pass"
+      },
+      {
+        "check_id": "fingerprint_stable",
+        "detail": "fingerprint is stable SHA256",
+        "status": "pass"
+      },
+      {
+        "check_id": "local_evidence_serializable",
+        "detail": "local evidence is deterministic JSON data",
+        "status": "pass"
+      }
+    ],
+    "errors": [],
+    "model_family": "onnxruntime",
+    "status": "pass",
+    "task_type": "binary_classification",
+    "warnings": []
+  },
+  "derived_channels": [
+    "perturbation_counterfactual"
+  ],
+  "duration_seconds": 0.133268,
+  "environment": "optional-runtime-onnx",
+  "graph_errors": [],
+  "graph_validation": 1.0,
+  "human_explanation_checks": {
+    "all_fragments_grounded": true,
+    "comparisons_present": true,
+    "concern_count_valid": true,
+    "decision_present": true,
+    "reason_count_valid": true,
+    "recommended_action_present": true,
+    "reliability_present": true,
+    "technical_terms_hidden": true
+  },
+  "library": "onnx",
+  "library_package": "onnxruntime",
+  "library_version": "1.27.0",
+  "missing_channels": [
+    "alignment",
+    "counterfactuals",
+    "local_contributions",
+    "reduction",
+    "risk",
+    "rules",
+    "similar_cases",
+    "training_history"
+  ],
+  "model_class": "ONNXModel",
+  "model_family": "onnxruntime",
+  "native_channels": [
+    "prediction",
+    "onnx_outputs"
+  ],
+  "operating_system": "Linux-6.17.0-1020-azure-x86_64-with-glibc2.39",
+  "prediction_parity": 1.0,
+  "python_version": "3.11.15",
+  "quality": {
+    "blocked_channels": [],
+    "completeness": 0.6666666666666666,
+    "faithfulness": null,
+    "fidelity": null,
+    "limitations": [],
+    "measured_top_reason_stability": null,
+    "reconstruction_error": null,
+    "sparsity": null,
+    "stability": null,
+    "status": "pass"
+  },
+  "quality_gate": "pass",
+  "report_id": "onnx_py311",
+  "sample_size": 32,
+  "schema_version": "1.0",
+  "status": "pass",
+  "surrogate_channels": [],
+  "task_type": "binary_classification",
+  "warnings": [
+    "Top-reason stability is not applicable because this adapter disclosed no local contributions."
+  ]
+}

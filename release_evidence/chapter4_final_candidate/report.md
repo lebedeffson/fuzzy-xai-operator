@@ -4,11 +4,14 @@
 
 - Measured checkpoint experiment: PASS; selected case `case_real_001`.
 - Measured native rule ablation: PASS; rule `tree_leaf_11`.
-- Universal-model benchmark: 34 verified configurations
-  (24 classification, 10 regression).
+- Universal-model evidence: 40 verified configurations
+  (30 classification, 10 regression).
+- Core deterministic matrix: 34 configurations.
+- Optional runtime integrations: 6 libraries, each verified on Python 3.11 and 3.12.
 - Prediction parity: 1.000.
 - Adapter conformance: 1.000.
 - Explanation graph validation: 1.000.
+- Explanation quality gate: 40 / 40.
 
 ## External release gates
 
@@ -17,5 +20,4 @@
 - Release gate: `BLOCKED`.
 
 The package proves the current computational contracts and measured benchmark only. It does not claim
-demonstrated human comprehensibility, clinical validity, or verified support for optional runtimes recorded as
-`not_installed_not_verified`.
+demonstrated human comprehensibility, clinical validity, or support beyond the explicitly listed model families.

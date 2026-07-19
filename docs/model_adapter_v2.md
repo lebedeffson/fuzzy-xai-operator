@@ -33,5 +33,7 @@ parity, deterministic fingerprinting, serializability, and capability truthfulne
 ## Optional runtimes
 
 XGBoost, LightGBM, CatBoost, PyTorch, TensorFlow/Keras, and ONNX Runtime are lazy optional dependencies. Importing
-`fuzzyxai` does not import them. A family is reported as `not_installed_not_verified` until its dedicated integration
-test runs in an environment containing that runtime.
+`fuzzyxai` does not import them. Runtime evidence uses typed statuses: `pass`, `implemented_not_executed`,
+`dependency_unavailable`, `unsupported`, or `failed`. A successful source-code inspection is never promoted to
+`pass`; that status requires a checksummed runtime report. The release candidate records each optional family on
+Python 3.11 and Python 3.12 and rejects cross-version inconsistencies.
