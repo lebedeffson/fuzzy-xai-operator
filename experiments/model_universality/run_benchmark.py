@@ -229,10 +229,10 @@ def run(output: Path = DEFAULT_OUTPUT) -> dict[str, Any]:
     }.items():
         try:
             module = __import__(package)
-            status = "installed_not_run_by_core_benchmark"
+            status = "implemented_not_executed"
             version = getattr(module, "__version__", "unknown")
         except ImportError:
-            status = "not_installed_not_verified"
+            status = "dependency_unavailable"
             version = None
         optional.extend({"config_id": item, "package": package, "status": status, "version": version} for item in adapters)
     write_json(output / "optional_integrations.json", optional)
@@ -254,7 +254,7 @@ def run(output: Path = DEFAULT_OUTPUT) -> dict[str, Any]:
         "graph_validation_rate": float(np.mean([not row["graph_errors"] for row in rows])),
         "conformance_rate": float(np.mean([row["status"] == "pass" for row in rows])),
         "optional_integrations": optional,
-        "release_claim": "Only configurations with status=pass are verified; not-installed optional integrations are not claimed.",
+        "release_claim": "Only configurations with status=pass are verified; unavailable or unexecuted optional integrations are not claimed.",
     }
     write_json(output / "summary.json", summary)
     manifest_entries = []
