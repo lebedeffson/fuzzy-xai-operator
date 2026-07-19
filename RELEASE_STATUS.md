@@ -1,35 +1,50 @@
 # FuzzyXAI Framework Release Status
 
-Status: `v1.0.0-rc1` remains the validated public baseline; `v1.1.0rc1` Explanation Experience is a local implementation candidate pending public CI.
+Status: `v1.1.0rc3` is a feature-branch release candidate for the Explanation Experience milestone. Local framework, cross-model, visualization, packaging, and Chapter 4 evidence gates pass. Public branch CI and the external comprehension pilot remain open gates, so no `v1.1.0-rc3` tag has been created.
 
 ## Completed
 
-- one installable public framework API;
-- 30-entry operator/evidence manifest;
-- evidence-first data, training, model-knowledge, decision, counterfactual, and action layers;
-- claim-centered `ExplanationGraph` and `ExplanationClaim` contract;
-- E0-E5 explanation-level and channel disclosure;
-- focused Matplotlib/Plotly views driven by `ExplanationVisualSpec`;
-- canonical JSON plus MATLAB/Octave loader and dashboard;
-- controlled object 85 restoration protocol;
-- quarantined generated website;
-- clean archive builder based on committed Git state.
+- typed evidence, claim, diagnostic, action, and provenance contracts;
+- separate claim evidence status, semantic effect, and severity;
+- validated `ExplanationGraph` routes from evidence to action;
+- E0-E5 capability disclosure with native, surrogate, available, and missing channels;
+- typed inspection for claims, rules, concepts, objects, evidence, diagnostics, and actions;
+- one typed `ExplanationVisualSpec` shared by ten Matplotlib and ten Plotly views;
+- 12-checkpoint object 85 trajectory with a controlled forgetting event;
+- measured train, validation, test, subgroup, critical-error, and calibration rule ablation;
+- controlled black-box, sklearn linear, tree, ANFIS, and research-only image scenarios;
+- deterministic golden evidence and a 30/30 operator-to-evidence matrix;
+- Chapter 4 evidence archive with 12 figures and machine-readable tables;
+- full committed-tree release packaging with the generated website quarantined.
 
-## Acceptance gates
+## Verified Locally
 
-See `TEST_REPORT.txt` for the latest local and public results. Public run
-`29668215392` and final metadata run `29668320459` passed the Python 3.11,
-Python 3.12, and Octave jobs. The validated release tag is `v1.0.0-rc1`.
+- Python 3.14 working tree: `304 passed`;
+- clean committed snapshot on Python 3.12: `304 passed`;
+- public-contract Ruff gate: PASS;
+- strict MyPy contract gate: PASS;
+- `make framework-release-check`: PASS;
+- operator manifest: `30/30`, PASS;
+- deterministic golden evidence double build: PASS;
+- explanation experience verifier: PASS;
+- wheel and sdist build: PASS;
+- installed wheel import outside checkout: `1.1.0rc3`, PASS.
 
-The `v1.0.0-rc1` clean-checkout acceptance was completed independently on Python 3.11 and
-3.12. Both environments reported 299 passing tests, built wheel and sdist
-artifacts, and imported the installed wheel outside the source checkout.
+## Open Gates
 
-The v1.1 candidate adds controlled object-85, ANFIS, and research-only medical golden explanations. Its comprehension study is explicitly `planned_not_run`; no user-understanding claim is made yet. A `v1.1.0-rc1` tag must not be created until the branch is committed, pushed, and public Python/Octave CI is green.
+- public GitHub Actions for this branch and final commit;
+- Python 3.11 confirmation in public CI;
+- Octave JSON/dashboard confirmation in public CI;
+- documented comprehension pilot with at least six external participants.
 
-## Known limitations
+The pilot is `planned_not_run`. No user-comprehension claim is made. Existing public runs validate `v1.0.0-rc1`, not this candidate.
 
-- no native Torch, Keras, or ONNX adapters;
-- no claim of support for literally every model;
-- MATLAB/Octave consumes the canonical result JSON but does not reimplement the Python operator core;
-- domain claims remain limited by the supplied datasets and evidence provenance.
+## Claim Boundary
+
+- no universal-model-support claim;
+- no native Torch, Keras, or ONNX adapter claim;
+- surrogate channels are labeled and carry fidelity limitations;
+- similarity identifies representation and metric and is not a diagnosis probability;
+- the medical fixture is research-only;
+- missing evidence produces `insufficient_evidence` or review, never invented metrics;
+- E0-E5 describes evidence depth, not model quality.

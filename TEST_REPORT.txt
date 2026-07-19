@@ -1,32 +1,32 @@
-FuzzyXAI framework release verification
+FuzzyXAI Explanation Experience release verification
 Date: 2026-07-19
-Branch: feat/research-framework-completion
+Branch: feat/explanation-experience-completion
+Version: 1.1.0rc3
+Implementation commits: 3b51ca5, 4a820f4, 0d8754b, d1b75bc
 
-PASS: targeted framework contracts - 27 passed
-PASS: full local regression suite - 299 passed
+PASS: full local Python 3.14 regression - 304 passed
+PASS: full clean committed-snapshot Python 3.12 regression - 304 passed
+PASS: public-contract Ruff gate
+PASS: strict MyPy contract gate
+PASS: framework release check
 PASS: operator manifest - 30/30 entries
-PASS: object 85 controlled protocol generated
-PASS: git diff whitespace check
-PASS: clean Python 3.11 checkout - 299 passed
-PASS: clean Python 3.11 framework gate
-PASS: clean Python 3.11 wheel and sdist build
-PASS: clean Python 3.11 installed-wheel import
-PASS: clean Python 3.12 checkout - 299 passed
-PASS: clean Python 3.12 framework gate
-PASS: clean Python 3.12 wheel and sdist build
-PASS: clean Python 3.12 installed-wheel import
-PASS: public GitHub Actions Python 3.11
-PASS: public GitHub Actions Python 3.12
-PASS: public GitHub Actions Octave JSON/dashboard smoke
-Public runs:
-- https://github.com/lebedeffson/fuzzy-xai-operator/actions/runs/29668215392
-- https://github.com/lebedeffson/fuzzy-xai-operator/actions/runs/29668320459
+PASS: Explanation Experience verifier
+PASS: object 85 trajectory - 12 checkpoints
+PASS: all 10 Matplotlib views
+PASS: all 10 Plotly views
+PASS: deterministic golden evidence double build
+PASS: cross-model controlled scenarios
+PASS: research-only image fixture with computed mask IoU
+PASS: Chapter 4 evidence package - 12 figures and 30/30 matrix
+PASS: Python 3.12 wheel and sdist build
+PASS: installed-wheel import outside checkout - 1.1.0rc3
 
-Environment used for the full local regression suite:
-- local project virtual environment
-- Python 3.14
+Warnings in the full suites are third-party sklearn feature-name warnings only.
 
-Release tag: v1.0.0-rc1
+PENDING: public GitHub Actions for the final feature-branch commit
+PENDING: Python 3.11 public-CI confirmation
+PENDING: Octave JSON/dashboard public-CI confirmation
+PLANNED_NOT_RUN: comprehension pilot with external participants
 
-Warnings in the full suite are limited to third-party sklearn feature-name and
-SHAP/Matplotlib deprecation warnings; no framework test failed.
+Release tag: NOT CREATED
+Reason: public CI and external comprehension gates are not both complete.
