@@ -7,6 +7,7 @@
 - Release tag: `v1.0.0-rc1`
 - Explanation Experience base commit: `e84373881e602f6fb92ffe4874baa5bc9c21db33`
 - v1.1 candidate implementation commit: `60b86ee`
+- source-release quarantine-marker fix: `fbe27da`
 
 ## Current focus
 
