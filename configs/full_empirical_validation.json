@@ -1,0 +1,31 @@
+{
+  "schema_version": "1.0",
+  "base_commit": "1907ab73105c53136d8333c1d6d3c509af55b770",
+  "seed": 42,
+  "threads": 1,
+  "profiles": {
+    "smoke": {
+      "objects_per_modality": 1000,
+      "rule_ablation_folds": 2,
+      "rule_ablation_seeds": 1,
+      "bootstrap_repetitions": 200
+    },
+    "full": {
+      "objects_per_modality": 10000,
+      "rule_ablation_folds": 10,
+      "rule_ablation_seeds": 5,
+      "bootstrap_repetitions": 4000
+    }
+  },
+  "predeclared_cost_scenarios": {
+    "critical_errors_expensive": {"critical_error": 25.0, "wrong_auto": 5.0, "review": 1.0, "false_block": 2.0},
+    "balanced": {"critical_error": 10.0, "wrong_auto": 4.0, "review": 1.5, "false_block": 2.5},
+    "manual_review_expensive": {"critical_error": 12.0, "wrong_auto": 4.0, "review": 5.0, "false_block": 3.0}
+  },
+  "hierarchy_non_inferiority_epsilon": 0.01,
+  "external_gates": {
+    "expert_review": "planned_not_run",
+    "comprehension_pilot": "planned_not_run",
+    "domain_semantic_review": "pending_external_review"
+  }
+}
