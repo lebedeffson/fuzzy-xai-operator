@@ -1,0 +1,74 @@
+[
+  {
+    "config_id": "xgboost_classifier",
+    "package": "xgboost",
+    "status": "not_installed_not_verified",
+    "version": null
+  },
+  {
+    "config_id": "xgboost_regressor",
+    "package": "xgboost",
+    "status": "not_installed_not_verified",
+    "version": null
+  },
+  {
+    "config_id": "lightgbm_classifier",
+    "package": "lightgbm",
+    "status": "not_installed_not_verified",
+    "version": null
+  },
+  {
+    "config_id": "lightgbm_regressor",
+    "package": "lightgbm",
+    "status": "not_installed_not_verified",
+    "version": null
+  },
+  {
+    "config_id": "catboost_classifier",
+    "package": "catboost",
+    "status": "not_installed_not_verified",
+    "version": null
+  },
+  {
+    "config_id": "catboost_regressor",
+    "package": "catboost",
+    "status": "not_installed_not_verified",
+    "version": null
+  },
+  {
+    "config_id": "torch_classifier",
+    "package": "torch",
+    "status": "not_installed_not_verified",
+    "version": null
+  },
+  {
+    "config_id": "torch_regressor",
+    "package": "torch",
+    "status": "not_installed_not_verified",
+    "version": null
+  },
+  {
+    "config_id": "keras_classifier",
+    "package": "tensorflow",
+    "status": "not_installed_not_verified",
+    "version": null
+  },
+  {
+    "config_id": "keras_regressor",
+    "package": "tensorflow",
+    "status": "not_installed_not_verified",
+    "version": null
+  },
+  {
+    "config_id": "onnx_classifier",
+    "package": "onnxruntime",
+    "status": "not_installed_not_verified",
+    "version": null
+  },
+  {
+    "config_id": "onnx_regressor",
+    "package": "onnxruntime",
+    "status": "not_installed_not_verified",
+    "version": null
+  }
+]

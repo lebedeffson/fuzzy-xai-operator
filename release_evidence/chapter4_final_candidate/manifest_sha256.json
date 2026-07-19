@@ -1,0 +1,16 @@
+{
+  "files": {
+    "domain_review/review_record.json": "eabdcd9d8c68d34d310acc1316a0b53b708559e5e518bbd56ea6da36750d5a6d",
+    "json/empirical_summary.json": "a24d98cf9ef5bbcd8907d2fbe5cf3133a2c03f5858c16b6a7d22b8175fb38aea",
+    "json/model_universality_summary.json": "5d5600961fc0e4e9d77438e87917232ac64a8eabb91bfd25228cd8af9fc63c8a",
+    "json/rule_ablation.json": "c7c6a493bdd21d3c6e063650dceb437559cff6b789746f0ebbe993162d241692",
+    "json/selected_forgetting_case.json": "d1b23ff3cea8ef95ee0e6eab46f575256a4b4e492cc14ea0294d77a808d138f9",
+    "json/similar_cases.json": "9cf215cd2a0f0ad8dfb7a6e062610c732127448ed57a552cf5afa016c01c40b6",
+    "pilot/scenario_manifest.json": "3cddadc5ac53c2b8f0eacf5cb99b5b3b7828a0d4003bff48fddb49a434b51eca",
+    "pilot/scoring_report.json": "4bd5ce3957b7e16f82e03dddb5384bb750ed165bb4b7040c63f1a53585444148",
+    "release_gate_status.json": "6addafba0e8ffbca434fca16956384a92c75980439278248dab16588e6507df2",
+    "report.md": "ae9874f2244b7d94f97a3e255b933ab8946510b633f433db171365ee33ad8cdf",
+    "tables/model_support_matrix.csv": "e0dccd0e972d5bf7562b52ceb192daa9222e333c1d009b371f1b2e6702df04aa"
+  },
+  "schema_version": "1.0"
+}

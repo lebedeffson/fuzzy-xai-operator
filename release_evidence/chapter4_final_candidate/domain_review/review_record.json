@@ -1,0 +1,14 @@
+{
+  "approved_terms": [],
+  "claim_allowed": false,
+  "comments": [],
+  "domain_language_artifact": "release_evidence/empirical_experiments/breast_cancer_checkpoint/domain_language.json",
+  "domain_language_sha256": "20fd36cda8a09bb4b0003649df38bbdbc9b3aed8103ed37ebf9111944d9625d0",
+  "independent_of_project": null,
+  "rejected_terms": [],
+  "review_date": null,
+  "reviewer_id": null,
+  "reviewer_role": null,
+  "schema_version": "1.0",
+  "status": "pending_external_review"
+}

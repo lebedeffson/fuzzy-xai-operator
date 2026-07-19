@@ -239,7 +239,7 @@ def run(output: Path = DEFAULT_OUTPUT) -> dict[str, Any]:
 
     support_fields = ["config_id", "task", "model_class", "adapter_id", "model_family", "prediction_parity", "status"]
     with (output / "support_matrix.csv").open("w", encoding="utf-8", newline="") as handle:
-        writer = csv.DictWriter(handle, fieldnames=support_fields)
+        writer = csv.DictWriter(handle, fieldnames=support_fields, lineterminator="\n")
         writer.writeheader()
         writer.writerows({field: row[field] for field in support_fields} for row in rows)
     summary = {

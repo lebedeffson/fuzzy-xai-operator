@@ -1,3 +1,4 @@
 # Participant information
 
-This study evaluates explanation comprehension, not participant ability. Participation is voluntary and anonymous.
+This voluntary study compares two explanation formats. Participation can stop at any time. Only an anonymous
+participant ID, role group, answers, timings, and optional non-identifying notes are retained.

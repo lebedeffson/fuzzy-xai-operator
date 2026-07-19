@@ -1,3 +1,3 @@
 # Limitations
 
-No user-comprehension claim is allowed while status is `planned_not_run`.
+A prepared protocol is not user evidence. External responses and independent domain review remain mandatory release gates.

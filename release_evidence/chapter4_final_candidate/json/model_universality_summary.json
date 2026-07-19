@@ -1,0 +1,87 @@
+{
+  "classification_configurations": 24,
+  "conformance_rate": 1.0,
+  "framework_version": "1.3.0rc1",
+  "graph_validation_rate": 1.0,
+  "optional_integrations": [
+    {
+      "config_id": "xgboost_classifier",
+      "package": "xgboost",
+      "status": "not_installed_not_verified",
+      "version": null
+    },
+    {
+      "config_id": "xgboost_regressor",
+      "package": "xgboost",
+      "status": "not_installed_not_verified",
+      "version": null
+    },
+    {
+      "config_id": "lightgbm_classifier",
+      "package": "lightgbm",
+      "status": "not_installed_not_verified",
+      "version": null
+    },
+    {
+      "config_id": "lightgbm_regressor",
+      "package": "lightgbm",
+      "status": "not_installed_not_verified",
+      "version": null
+    },
+    {
+      "config_id": "catboost_classifier",
+      "package": "catboost",
+      "status": "not_installed_not_verified",
+      "version": null
+    },
+    {
+      "config_id": "catboost_regressor",
+      "package": "catboost",
+      "status": "not_installed_not_verified",
+      "version": null
+    },
+    {
+      "config_id": "torch_classifier",
+      "package": "torch",
+      "status": "not_installed_not_verified",
+      "version": null
+    },
+    {
+      "config_id": "torch_regressor",
+      "package": "torch",
+      "status": "not_installed_not_verified",
+      "version": null
+    },
+    {
+      "config_id": "keras_classifier",
+      "package": "tensorflow",
+      "status": "not_installed_not_verified",
+      "version": null
+    },
+    {
+      "config_id": "keras_regressor",
+      "package": "tensorflow",
+      "status": "not_installed_not_verified",
+      "version": null
+    },
+    {
+      "config_id": "onnx_classifier",
+      "package": "onnxruntime",
+      "status": "not_installed_not_verified",
+      "version": null
+    },
+    {
+      "config_id": "onnx_regressor",
+      "package": "onnxruntime",
+      "status": "not_installed_not_verified",
+      "version": null
+    }
+  ],
+  "prediction_parity_rate": 1.0,
+  "regression_configurations": 10,
+  "release_claim": "Only configurations with status=pass are verified; not-installed optional integrations are not claimed.",
+  "schema_version": "1.0",
+  "seed": 42,
+  "sklearn_version": "1.8.0",
+  "verified_configurations": 34
+}

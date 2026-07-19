@@ -1,0 +1,711 @@
+{
+  "audience": "domain_user",
+  "claim_refs": {
+    "changes": [],
+    "concerns": [
+      "C-057"
+    ],
+    "decision": [
+      "C-001"
+    ],
+    "main_reasons": [
+      "C-054",
+      "C-053"
+    ],
+    "recommended_action": [
+      "C-058"
+    ],
+    "reliability": [
+      "C-058",
+      "C-054",
+      "C-053",
+      "C-057",
+      "C-002",
+      "C-056",
+      "C-055"
+    ]
+  },
+  "concerns": [
+    {
+      "claim_refs": [
+        "C-057"
+      ],
+      "evidence_refs": [
+        "diagnostic:2"
+      ],
+      "explanation": "Для части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено.",
+      "title": "Не все проверки подтверждены"
+    }
+  ],
+  "decision": {
+    "claim_refs": [
+      "C-001"
+    ],
+    "domain_language_status": "insufficient_domain_language",
+    "evidence_refs": [
+      "prediction"
+    ],
+    "explanation": "Модель сформировала результат, но человеко-понятное название класса в плане объяснения не задано. До заполнения предметного словаря этот результат нельзя использовать как предметное заключение.",
+    "title": "Предметное значение класса не задано"
+  },
+  "decision_changes": [],
+  "details": {
+    "contradicts": [],
+    "limitations": [
+      {
+        "claim_refs": [
+          "C-057"
+        ],
+        "evidence_refs": [
+          "diagnostic:2"
+        ],
+        "explanation": "Для части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено.",
+        "title": "Не все проверки подтверждены"
+      }
+    ],
+    "similar_cases": [],
+    "supports": [
+      {
+        "claim_refs": [
+          "C-054"
+        ],
+        "comparison_text": "Объект сопоставлен с типичным профилем группы «1» по обучающей выборке.",
+        "effect_direction": "supports",
+        "evidence_refs": [
+          "concept:1"
+        ],
+        "explanation": "По сравнению с референсной выборкой объект близок к типичному профилю группы «1». Такое сходство поддерживает результат, но не заменяет проверку ограничений.",
+        "subject_label": "1",
+        "title": "Типичный профиль группы 1"
+      },
+      {
+        "claim_refs": [
+          "C-053"
+        ],
+        "comparison_text": "Объект сопоставлен с типичным профилем группы «0» по обучающей выборке.",
+        "effect_direction": "supports",
+        "evidence_refs": [
+          "concept:0"
+        ],
+        "explanation": "По сравнению с референсной выборкой объект близок к типичному профилю группы «0». Такое сходство поддерживает результат, но не заменяет проверку ограничений.",
+        "subject_label": "0",
+        "title": "Типичный профиль группы 0"
+      }
+    ],
+    "technical_metrics": [
+      {
+        "claim_refs": [
+          "C-001"
+        ],
+        "evidence_refs": [
+          "prediction"
+        ],
+        "explanation": "0.907",
+        "title": "model_score"
+      },
+      {
+        "claim_refs": [
+          "C-003"
+        ],
+        "evidence_refs": [
+          "rule:tree_1_001"
+        ],
+        "explanation": "0.767",
+        "title": "rule_importance"
+      },
+      {
+        "claim_refs": [
+          "C-004"
+        ],
+        "evidence_refs": [
+          "rule:tree_5_001"
+        ],
+        "explanation": "0.757",
+        "title": "rule_importance"
+      },
+      {
+        "claim_refs": [
+          "C-005"
+        ],
+        "evidence_refs": [
+          "rule:tree_4_002"
+        ],
+        "explanation": "0.733",
+        "title": "rule_importance"
+      },
+      {
+        "claim_refs": [
+          "C-006"
+        ],
+        "evidence_refs": [
+          "rule:tree_3_002"
+        ],
+        "explanation": "0.669",
+        "title": "rule_importance"
+      },
+      {
+        "claim_refs": [
+          "C-007"
+        ],
+        "evidence_refs": [
+          "rule:tree_0_000"
+        ],
+        "explanation": "0.660",
+        "title": "rule_importance"
+      },
+      {
+        "claim_refs": [
+          "C-008"
+        ],
+        "evidence_refs": [
+          "rule:tree_2_000"
+        ],
+        "explanation": "0.639",
+        "title": "rule_importance"
+      },
+      {
+        "claim_refs": [
+          "C-009"
+        ],
+        "evidence_refs": [
+          "rule:tree_2_001"
+        ],
+        "explanation": "0.608",
+        "title": "rule_importance"
+      },
+      {
+        "claim_refs": [
+          "C-010"
+        ],
+        "evidence_refs": [
+          "rule:tree_0_002"
+        ],
+        "explanation": "0.604",
+        "title": "rule_importance"
+      },
+      {
+        "claim_refs": [
+          "C-011"
+        ],
+        "evidence_refs": [
+          "rule:tree_4_008"
+        ],
+        "explanation": "0.593",
+        "title": "rule_importance"
+      },
+      {
+        "claim_refs": [
+          "C-012"
+        ],
+        "evidence_refs": [
+          "rule:tree_1_008"
+        ],
+        "explanation": "0.582",
+        "title": "rule_importance"
+      },
+      {
+        "claim_refs": [
+          "C-013"
+        ],
+        "evidence_refs": [
+          "rule:tree_2_007"
+        ],
+        "explanation": "0.578",
+        "title": "rule_importance"
+      },
+      {
+        "claim_refs": [
+          "C-014"
+        ],
+        "evidence_refs": [
+          "rule:tree_3_001"
+        ],
+        "explanation": "0.563",
+        "title": "rule_importance"
+      },
+      {
+        "claim_refs": [
+          "C-015"
+        ],
+        "evidence_refs": [
+          "rule:tree_3_007"
+        ],
+        "explanation": "0.563",
+        "title": "rule_importance"
+      },
+      {
+        "claim_refs": [
+          "C-016"
+        ],
+        "evidence_refs": [
+          "rule:tree_0_007"
+        ],
+        "explanation": "0.548",
+        "title": "rule_importance"
+      },
+      {
+        "claim_refs": [
+          "C-017"
+        ],
+        "evidence_refs": [
+          "rule:tree_0_008"
+        ],
+        "explanation": "0.537",
+        "title": "rule_importance"
+      },
+      {
+        "claim_refs": [
+          "C-018"
+        ],
+        "evidence_refs": [
+          "rule:tree_3_011"
+        ],
+        "explanation": "0.534",
+        "title": "rule_importance"
+      },
+      {
+        "claim_refs": [
+          "C-019"
+        ],
+        "evidence_refs": [
+          "rule:tree_2_004"
+        ],
+        "explanation": "0.530",
+        "title": "rule_importance"
+      },
+      {
+        "claim_refs": [
+          "C-021"
+        ],
+        "evidence_refs": [
+          "rule:tree_4_001"
+        ],
+        "explanation": "0.529",
+        "title": "rule_importance"
+      },
+      {
+        "claim_refs": [
+          "C-020"
+        ],
+        "evidence_refs": [
+          "rule:tree_4_007"
+        ],
+        "explanation": "0.529",
+        "title": "rule_importance"
+      },
+      {
+        "claim_refs": [
+          "C-022"
+        ],
+        "evidence_refs": [
+          "rule:tree_3_006"
+        ],
+        "explanation": "0.528",
+        "title": "rule_importance"
+      },
+      {
+        "claim_refs": [
+          "C-023"
+        ],
+        "evidence_refs": [
+          "rule:tree_3_008"
+        ],
+        "explanation": "0.522",
+        "title": "rule_importance"
+      },
+      {
+        "claim_refs": [
+          "C-025"
+        ],
+        "evidence_refs": [
+          "rule:tree_1_004"
+        ],
+        "explanation": "0.522",
+        "title": "rule_importance"
+      },
+      {
+        "claim_refs": [
+          "C-024"
+        ],
+        "evidence_refs": [
+          "rule:tree_1_007"
+        ],
+        "explanation": "0.522",
+        "title": "rule_importance"
+      },
+      {
+        "claim_refs": [
+          "C-026"
+        ],
+        "evidence_refs": [
+          "rule:tree_0_005"
+        ],
+        "explanation": "0.521",
+        "title": "rule_importance"
+      },
+      {
+        "claim_refs": [
+          "C-027"
+        ],
+        "evidence_refs": [
+          "rule:tree_2_005"
+        ],
+        "explanation": "0.518",
+        "title": "rule_importance"
+      },
+      {
+        "claim_refs": [
+          "C-028"
+        ],
+        "evidence_refs": [
+          "rule:tree_4_003"
+        ],
+        "explanation": "0.517",
+        "title": "rule_importance"
+      },
+      {
+        "claim_refs": [
+          "C-029"
+        ],
+        "evidence_refs": [
+          "rule:tree_3_005"
+        ],
+        "explanation": "0.511",
+        "title": "rule_importance"
+      },
+      {
+        "claim_refs": [
+          "C-031"
+        ],
+        "evidence_refs": [
+          "rule:tree_1_000"
+        ],
+        "explanation": "0.511",
+        "title": "rule_importance"
+      },
+      {
+        "claim_refs": [
+          "C-030"
+        ],
+        "evidence_refs": [
+          "rule:tree_1_006"
+        ],
+        "explanation": "0.511",
+        "title": "rule_importance"
+      },
+      {
+        "claim_refs": [
+          "C-032"
+        ],
+        "evidence_refs": [
+          "rule:tree_0_004"
+        ],
+        "explanation": "0.511",
+        "title": "rule_importance"
+      },
+      {
+        "claim_refs": [
+          "C-034"
+        ],
+        "evidence_refs": [
+          "rule:tree_2_002"
+        ],
+        "explanation": "0.506",
+        "title": "rule_importance"
+      },
+      {
+        "claim_refs": [
+          "C-033"
+        ],
+        "evidence_refs": [
+          "rule:tree_2_003"
+        ],
+        "explanation": "0.506",
+        "title": "rule_importance"
+      },
+      {
+        "claim_refs": [
+          "C-035"
+        ],
+        "evidence_refs": [
+          "rule:tree_5_000"
+        ],
+        "explanation": "0.506",
+        "title": "rule_importance"
+      },
+      {
+        "claim_refs": [
+          "C-036"
+        ],
+        "evidence_refs": [
+          "rule:tree_4_004"
+        ],
+        "explanation": "0.506",
+        "title": "rule_importance"
+      },
+      {
+        "claim_refs": [
+          "C-040"
+        ],
+        "evidence_refs": [
+          "rule:tree_3_012"
+        ],
+        "explanation": "0.506",
+        "title": "rule_importance"
+      },
+      {
+        "claim_refs": [
+          "C-039"
+        ],
+        "evidence_refs": [
+          "rule:tree_3_009"
+        ],
+        "explanation": "0.506",
+        "title": "rule_importance"
+      },
+      {
+        "claim_refs": [
+          "C-038"
+        ],
+        "evidence_refs": [
+          "rule:tree_3_010"
+        ],
+        "explanation": "0.506",
+        "title": "rule_importance"
+      },
+      {
+        "claim_refs": [
+          "C-037"
+        ],
+        "evidence_refs": [
+          "rule:tree_3_004"
+        ],
+        "explanation": "0.506",
+        "title": "rule_importance"
+      },
+      {
+        "claim_refs": [
+          "C-043"
+        ],
+        "evidence_refs": [
+          "rule:tree_1_003"
+        ],
+        "explanation": "0.505",
+        "title": "rule_importance"
+      },
+      {
+        "claim_refs": [
+          "C-042"
+        ],
+        "evidence_refs": [
+          "rule:tree_1_002"
+        ],
+        "explanation": "0.505",
+        "title": "rule_importance"
+      },
+      {
+        "claim_refs": [
+          "C-041"
+        ],
+        "evidence_refs": [
+          "rule:tree_1_005"
+        ],
+        "explanation": "0.505",
+        "title": "rule_importance"
+      },
+      {
+        "claim_refs": [
+          "C-044"
+        ],
+        "evidence_refs": [
+          "rule:tree_0_003"
+        ],
+        "explanation": "0.505",
+        "title": "rule_importance"
+      },
+      {
+        "claim_refs": [
+          "C-045"
+        ],
+        "evidence_refs": [
+          "rule:tree_4_006"
+        ],
+        "explanation": "0.502",
+        "title": "rule_importance"
+      },
+      {
+        "claim_refs": [
+          "C-046"
+        ],
+        "evidence_refs": [
+          "rule:tree_4_000"
+        ],
+        "explanation": "0.446",
+        "title": "rule_importance"
+      },
+      {
+        "claim_refs": [
+          "C-047"
+        ],
+        "evidence_refs": [
+          "rule:tree_0_001"
+        ],
+        "explanation": "0.444",
+        "title": "rule_importance"
+      },
+      {
+        "claim_refs": [
+          "C-048"
+        ],
+        "evidence_refs": [
+          "rule:tree_3_003"
+        ],
+        "explanation": "0.411",
+        "title": "rule_importance"
+      },
+      {
+        "claim_refs": [
+          "C-049"
+        ],
+        "evidence_refs": [
+          "rule:tree_2_006"
+        ],
+        "explanation": "0.402",
+        "title": "rule_importance"
+      },
+      {
+        "claim_refs": [
+          "C-050"
+        ],
+        "evidence_refs": [
+          "rule:tree_0_006"
+        ],
+        "explanation": "0.365",
+        "title": "rule_importance"
+      },
+      {
+        "claim_refs": [
+          "C-051"
+        ],
+        "evidence_refs": [
+          "rule:tree_3_000"
+        ],
+        "explanation": "0.317",
+        "title": "rule_importance"
+      },
+      {
+        "claim_refs": [
+          "C-052"
+        ],
+        "evidence_refs": [
+          "rule:tree_4_005"
+        ],
+        "explanation": "0.315",
+        "title": "rule_importance"
+      },
+      {
+        "claim_refs": [
+          "C-002"
+        ],
+        "evidence_refs": [
+          "data:random_forest_binary_object"
+        ],
+        "explanation": "1.000",
+        "title": "data_quality"
+      }
+    ],
+    "training": []
+  },
+  "evidence_trace": [],
+  "language": "ru",
+  "level": "user",
+  "limitations": [
+    "Для части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено."
+  ],
+  "lost_or_averaged": [
+    "Для части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено."
+  ],
+  "main_reasons": [
+    {
+      "claim_refs": [
+        "C-054"
+      ],
+      "comparison_text": "Объект сопоставлен с типичным профилем группы «1» по обучающей выборке.",
+      "effect_direction": "supports",
+      "evidence_refs": [
+        "concept:1"
+      ],
+      "explanation": "По сравнению с референсной выборкой объект близок к типичному профилю группы «1». Такое сходство поддерживает результат, но не заменяет проверку ограничений.",
+      "subject_label": "1",
+      "title": "Типичный профиль группы 1"
+    },
+    {
+      "claim_refs": [
+        "C-053"
+      ],
+      "comparison_text": "Объект сопоставлен с типичным профилем группы «0» по обучающей выборке.",
+      "effect_direction": "supports",
+      "evidence_refs": [
+        "concept:0"
+      ],
+      "explanation": "По сравнению с референсной выборкой объект близок к типичному профилю группы «0». Такое сходство поддерживает результат, но не заменяет проверку ограничений.",
+      "subject_label": "0",
+      "title": "Типичный профиль группы 0"
+    }
+  ],
+  "model_observed": [
+    "Модель сформировала результат, но человеко-понятное название класса в плане объяснения не задано. До заполнения предметного словаря этот результат нельзя использовать как предметное заключение."
+  ],
+  "recommended_action": {
+    "action": "review",
+    "claim_refs": [
+      "C-058"
+    ],
+    "evidence_refs": [
+      "diagnostic:0",
+      "diagnostic:1",
+      "diagnostic:2"
+    ],
+    "explanation": "Результат недостаточно надёжен для автоматического решения.",
+    "title": "Проверить специалистом"
+  },
+  "reliability": {
+    "claim_refs": [
+      "C-058",
+      "C-054",
+      "C-053",
+      "C-057",
+      "C-002",
+      "C-056",
+      "C-055"
+    ],
+    "conclusion": "Эти ограничения не позволяют использовать результат автоматически.",
+    "evidence_refs": [
+      "diagnostic:0",
+      "diagnostic:1",
+      "diagnostic:2",
+      "concept:1",
+      "concept:0",
+      "data:random_forest_binary_object"
+    ],
+    "explanation": "Решение поддерживают: 1, 0. Доверие ограничивают: не все проверки подтверждены. Не хватает данных для проверок: предметное значение прогнозируемой группы. Эти ограничения не позволяют использовать результат автоматически.",
+    "limited_by": [
+      "Не все проверки подтверждены"
+    ],
+    "missing_evidence": [
+      "предметное значение прогнозируемой группы"
+    ],
+    "supported_by": [
+      "1",
+      "0"
+    ],
+    "title": "Требуется дополнительная проверка"
+  },
+  "similar_cases": [],
+  "summary": "## Решение\nМодель сформировала результат, но человеко-понятное название класса в плане объяснения не задано. До заполнения предметного словаря этот результат нельзя использовать как предметное заключение.\n\n## Почему\nПо сравнению с референсной выборкой объект близок к типичному профилю группы «1». Такое сходство поддерживает результат, но не заменяет проверку ограничений.\nПо сравнению с референсной выборкой объект близок к типичному профилю группы «0». Такое сходство поддерживает результат, но не заменяет проверку ограничений.\n\n## Что вызывает сомнение\nДля части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено.\n\n## Насколько можно доверять\nРешение поддерживают: 1, 0. Доверие ограничивают: не все проверки подтверждены. Не хватает данных для проверок: предметное значение прогнозируемой группы. Эти ограничения не позволяют использовать результат автоматически.\n\n## Что делать\nРезультат недостаточно надёжен для автоматического решения.\n",
+  "trust": [
+    "Решение поддерживают: 1, 0. Доверие ограничивают: не все проверки подтверждены. Не хватает данных для проверок: предметное значение прогнозируемой группы. Эти ограничения не позволяют использовать результат автоматически.",
+    "Результат недостаточно надёжен для автоматического решения."
+  ],
+  "what_would_change_result": []
+}
