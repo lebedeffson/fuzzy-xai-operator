@@ -260,7 +260,20 @@ def _feature_reason(
         else "Поэтому этот показатель противоречит прогнозу."
     )
     effect_text = str(entry.get("effect_text", default_effect))
-    explanation = " ".join(part for part in (comparison, domain_text, effect_text) if part)
+    technical_statement = claim.statement.lower()
+    if "linear_term" in technical_statement or "coefficient" in technical_statement:
+        source_text = "Модель использует для этого показателя измеренный линейный коэффициент."
+    elif "tree_path" in technical_statement:
+        source_text = "Объект прошёл по ветви дерева, где этот показатель сравнивался с обученным порогом."
+    elif "gaussian_log_likelihood" in technical_statement:
+        source_text = "Значение сопоставлено с распределением этого показателя внутри выбранного класса."
+    elif "integrated_gradients" in technical_statement or "input_gradient" in technical_statement:
+        source_text = "Вывод получен проверкой чувствительности выхода модели и не является предметной причинностью."
+    elif "surrogate_local_linear" in technical_statement:
+        source_text = "Влияние оценено локальной приближённой моделью; его точность проверяется отдельно."
+    else:
+        source_text = "Основание получено из доступного локального канала модели."
+    explanation = " ".join(part for part in (comparison, domain_text, source_text, effect_text) if part)
     if technical and claim.metric_value is not None:
         explanation += f" Локальный вклад: {claim.metric_value:+.3f}; медиана: {median}."
     claim_refs, evidence_refs = _refs((claim,))

@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 import shutil
 import zipfile
-from dataclasses import dataclass
+from dataclasses import asdict, dataclass
 from datetime import datetime, timezone
 from html import escape
 from hashlib import sha256
@@ -11,7 +11,10 @@ from pathlib import Path
 from typing import Any, Mapping
 
 from fuzzyxai.adapters.base import BaseAdapter
-from fuzzyxai.adapters.model import ModelAdapter, ModelPrediction, resolve_model_adapter
+from fuzzyxai.adapters.model import ModelAdapter, ModelPrediction
+from fuzzyxai.adapters.contracts_v2 import AdapterResolutionReport, ExplanationContext, ModelCapabilities, TaskType
+from fuzzyxai.adapters.model_registry import MODEL_ADAPTER_REGISTRY, resolve_model_adapter_v2
+from fuzzyxai.adapters.model_v2 import ModelAdapterV2
 from fuzzyxai.core.explain_plan import ExplainPlan
 from fuzzyxai.core.types import AdaptedInput, OperatorRoute
 from fuzzyxai.operators import AlignmentInput, ReductionInput, RiskInput
@@ -48,6 +51,8 @@ from fuzzyxai.evidence import (
 )
 from fuzzyxai.visualization.spec import build_visual_spec
 from fuzzyxai.visualization.view_model import ExplanationViewModel
+from fuzzyxai.explanation_quality import ExplanationQualityReport, build_quality_report
+from fuzzyxai.planner import ExplanationPlanner
 
 
 def _as_rows(values: Any) -> list[list[Any]]:
@@ -154,6 +159,52 @@ class InspectionResult:
 
 
 ExplanationInspection = InspectionResult
+
+
+@dataclass(frozen=True)
+class WhyNotExplanation:
+    target_class: Any
+    selected_prediction: Any
+    status: str
+    supports_selected: tuple[dict[str, Any], ...]
+    supports_alternative: tuple[dict[str, Any], ...]
+    key_difference: str
+    required_change: str | None
+    limitations: tuple[str, ...]
+
+    def to_dict(self) -> dict[str, Any]:
+        return asdict(self)
+
+
+@dataclass(frozen=True)
+class GlobalExplanationResult:
+    task_type: str
+    sample_count: int
+    prediction_distribution: Mapping[str, int]
+    global_evidence: Mapping[str, Any]
+    capabilities: Mapping[str, Any]
+    limitations: tuple[str, ...]
+
+    def to_dict(self) -> dict[str, Any]:
+        return asdict(self)
+
+
+@dataclass(frozen=True)
+class ModelComparisonResult:
+    model_results: Mapping[str, "ModelExplanationResult"]
+    prediction_agreement: bool
+    reason_overlap: float | None
+    disagreements: tuple[str, ...]
+    limitations: tuple[str, ...]
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "models": {name: result.to_dict() for name, result in self.model_results.items()},
+            "prediction_agreement": self.prediction_agreement,
+            "reason_overlap": self.reason_overlap,
+            "disagreements": list(self.disagreements),
+            "limitations": list(self.limitations),
+        }
 
 
 @dataclass(frozen=True)
@@ -322,6 +373,48 @@ class ModelExplanationResult:
             "quality_metrics": dict(self.view_model.quality_metrics),
         }
 
+    def quality_report(self) -> ExplanationQualityReport:
+        task_type = str(self.prediction.metadata.get("task_type", ""))
+        return build_quality_report(self.view_model.quality_metrics, regression=task_type == TaskType.REGRESSION.value)
+
+    def capability_report(self) -> dict[str, Any]:
+        return {
+            "adapter_id": self.view_model.trace.get("adapter_id"),
+            "model_type": self.view_model.trace.get("model_type"),
+            "task_type": self.prediction.metadata.get("task_type"),
+            "capabilities": dict(self.view_model.trace.get("adapter_capabilities", {})),
+            "resolution": dict(self.view_model.trace.get("adapter_resolution", {})),
+            "planner": dict(self.view_model.trace.get("explanation_plan", {})),
+        }
+
+    def why_not(self, target_class: Any) -> WhyNotExplanation:
+        predictions = self.prediction.predictions
+        selected = predictions[0] if isinstance(predictions, list) and predictions else predictions
+        contributions = self.view_model.model.get("contributions", {})
+        if not isinstance(contributions, Mapping) or not contributions:
+            return WhyNotExplanation(
+                target_class,
+                selected,
+                "insufficient_evidence",
+                (),
+                (),
+                "Локальные вклады для сравнения классов недоступны.",
+                None,
+                ("Alternative-class evidence was not measured.",),
+            )
+        ranked = sorted(((str(name), float(value)) for name, value in contributions.items()), key=lambda item: abs(item[1]), reverse=True)
+        supports_selected = tuple({"feature": name, "value": value} for name, value in ranked if value >= 0)[:3]
+        supports_alternative = tuple({"feature": name, "value": value} for name, value in ranked if value < 0)[:3]
+        difference = (
+            f"Выбранный класс {selected} сильнее поддержан положительными локальными вкладами; "
+            f"для класса {target_class} доступны только противоречащие факторы."
+        )
+        counterfactuals = self.view_model.layers.get("counterfactuals", [])
+        checked = next((item for item in counterfactuals if item.get("target_prediction") == target_class), None)
+        required_change = None if checked is None else str(checked.get("changed_features") or checked.get("changed_rules"))
+        limitations = () if checked is not None else ("A class-changing intervention was not measured; no required change is asserted.",)
+        return WhyNotExplanation(target_class, selected, "supported", supports_selected, supports_alternative, difference, required_change, limitations)
+
     def plot(
         self,
         output_path: str | Path | None = None,
@@ -378,9 +471,15 @@ class ModelExplanationResult:
 class FuzzyXAI:
     """Runtime facade for using FuzzyXAI as an installable framework."""
 
-    def __init__(self, plan: ExplainPlan | None = None, model_adapter: ModelAdapter | None = None):
+    def __init__(
+        self,
+        plan: ExplainPlan | None = None,
+        model_adapter: ModelAdapter | None = None,
+        resolution_report: AdapterResolutionReport | None = None,
+    ):
         self.plan = plan or ExplainPlan.default()
         self._model_adapter = model_adapter
+        self._resolution_report = resolution_report
 
     @property
     def model_adapter(self) -> ModelAdapter:
@@ -395,10 +494,44 @@ class FuzzyXAI:
         *,
         adapter: str | ModelAdapter = "auto",
         explain_plan: ExplainPlan | None = None,
+        task: str | TaskType = "auto",
+        output_decoder: Any = None,
     ) -> "FuzzyXAI":
-        """Wrap a callable or predict-proba model with the canonical adapter contract."""
+        """Wrap a supported model using capability-based adapter resolution."""
 
-        return cls(plan=explain_plan, model_adapter=resolve_model_adapter(model, adapter))
+        resolved, report = resolve_model_adapter_v2(
+            model,
+            task=task,
+            adapter=adapter,
+            output_decoder=output_decoder,
+        )
+        return cls(plan=explain_plan, model_adapter=resolved, resolution_report=report)
+
+    @classmethod
+    def register_adapter(
+        cls,
+        *,
+        adapter_class: Any,
+        predicate: Any,
+        priority: int = 100,
+        name: str | None = None,
+    ) -> None:
+        del cls
+        MODEL_ADAPTER_REGISTRY.register(adapter_class=adapter_class, predicate=predicate, priority=priority, name=name)
+
+    def capability_report(self) -> dict[str, Any]:
+        capabilities = self.model_adapter.capabilities()
+        input_schema = self.model_adapter.input_schema() if isinstance(self.model_adapter, ModelAdapterV2) else None
+        output_schema = self.model_adapter.output_schema() if isinstance(self.model_adapter, ModelAdapterV2) else None
+        return {
+            "adapter_id": self.model_adapter.adapter_id,
+            "model_family": str(getattr(self.model_adapter, "model_family", "legacy")),
+            "task_type": str(getattr(getattr(self.model_adapter, "task_type", None), "value", "unknown")),
+            "capabilities": capabilities.to_dict(),
+            "input_schema": asdict(input_schema) if input_schema else None,
+            "output_schema": {**asdict(output_schema), "task_type": output_schema.task_type.value} if output_schema else None,
+            "resolution": self._resolution_report.to_dict() if self._resolution_report else None,
+        }
 
     def explain(
         self,
@@ -437,6 +570,33 @@ class FuzzyXAI:
         names = list(feature_names or self._model_adapter.feature_names() or _default_feature_names(rows))
         ids = list(object_ids or [f"object_{index}" for index in range(len(rows))])
         internal_evidence = _with_feature_names(self._model_adapter.extract_internal_evidence(inputs), names)
+        adapter_capabilities = self._model_adapter.capabilities()
+        planner = ExplanationPlanner()
+        planner_decision = planner.plan(
+            adapter_capabilities if isinstance(adapter_capabilities, ModelCapabilities) else ModelCapabilities(
+                predict=True,
+                predict_proba=adapter_capabilities.get("predict_proba"),
+                local_contributions=adapter_capabilities.get("feature_importance"),
+                native_rules=adapter_capabilities.get("rules"),
+            ),
+            budget=str((run_parameters or {}).get("budget", "standard")),
+            regression=prediction.metadata.get("task_type") == TaskType.REGRESSION.value,
+        )
+        internal_descriptors = internal_evidence.get("evidence_descriptors", [])
+        surrogate_fidelity = internal_evidence.get("surrogate_fidelity")
+        low_fidelity_surrogate = any(
+            isinstance(item, Mapping) and item.get("origin") == "surrogate" and item.get("name") == "local_contributions"
+            for item in internal_descriptors
+        ) and (surrogate_fidelity is None or float(surrogate_fidelity) < (0.8 if prediction.metadata.get("task_type") == TaskType.REGRESSION.value else 0.9))
+        if low_fidelity_surrogate:
+            internal_evidence.pop("contributions", None)
+            diagnostics.append(
+                {
+                    "code": "D_surrogate_fidelity",
+                    "reason": "surrogate local explanation fidelity is missing or below the configured threshold",
+                    "severity": "warning",
+                }
+            )
 
         alignment_data = evidence.get("alignment")
         alignment = None
@@ -663,7 +823,15 @@ class FuzzyXAI:
             explanation_evidence,
             graph,
             contributions=dict(evidence.get("contributions", internal_evidence.get("contributions", {}))),
-            supplied_metrics=dict(evidence.get("quality_metrics", {})),
+            supplied_metrics={
+                **dict(evidence.get("quality_metrics", {})),
+                **({"fidelity": float(surrogate_fidelity)} if surrogate_fidelity is not None else {}),
+                **(
+                    {"reconstruction_error": float(internal_evidence["reconstruction_error"])}
+                    if internal_evidence.get("reconstruction_error") is not None
+                    else {}
+                ),
+            },
         )
         visual_spec = build_visual_spec(
             explanation_evidence,
@@ -704,7 +872,9 @@ class FuzzyXAI:
                 "adapter_id": prediction.adapter_id,
                 "model_type": prediction.model_type,
                 "model_fingerprint": self._model_adapter.model_fingerprint(),
-                "adapter_capabilities": self._model_adapter.capabilities().to_dict(),
+                "adapter_capabilities": adapter_capabilities.to_dict(),
+                "adapter_resolution": self._resolution_report.to_dict() if self._resolution_report else {},
+                "explanation_plan": planner_decision.to_dict(),
                 "object_ids": ids,
                 "dataset_version": dataset_version,
                 "input_sha256": _payload_sha256(rows),
@@ -726,7 +896,7 @@ class FuzzyXAI:
         self,
         input_object: Any,
         *,
-        object_id: str,
+        object_id: str = "object_0",
         include_similar_cases: bool = False,
         include_counterfactuals: bool = False,
         include_training_trace: bool = False,
@@ -741,6 +911,94 @@ class FuzzyXAI:
             include_counterfactuals=include_counterfactuals,
             include_training_trace=include_training_trace,
             **kwargs,
+        )
+
+    def explain_batch(
+        self,
+        inputs: Any,
+        *,
+        object_ids: list[str] | None = None,
+        **kwargs: Any,
+    ) -> ModelExplanationResult:
+        rows = _as_rows(inputs)
+        ids = object_ids or [f"object_{index}" for index in range(len(rows))]
+        return self.explain(rows, object_ids=ids, **kwargs)
+
+    def explain_global(
+        self,
+        reference_data: Any,
+        reference_labels: Any = None,
+        *,
+        feature_names: list[str] | None = None,
+    ) -> GlobalExplanationResult:
+        rows = _as_rows(reference_data)
+        prediction = self.model_adapter.predict(rows)
+        values = prediction.predictions if isinstance(prediction.predictions, list) else [prediction.predictions]
+        distribution: dict[str, int] = {}
+        for value in values:
+            key = str(value)
+            distribution[key] = distribution.get(key, 0) + 1
+        if isinstance(self.model_adapter, ModelAdapterV2):
+            context = ExplanationContext(
+                reference_data=rows,
+                reference_labels=reference_labels,
+                feature_names=tuple(feature_names or self.model_adapter.feature_names()),
+            )
+            global_evidence = self.model_adapter.extract_global_evidence(context)
+            payload = dict(global_evidence.channels)
+            limitations = global_evidence.limitations
+            task_type = self.model_adapter.task_type.value
+        else:
+            payload = {}
+            limitations = ("Legacy adapter exposes no typed global evidence.",)
+            task_type = "unknown"
+        return GlobalExplanationResult(task_type, len(rows), distribution, payload, self.model_adapter.capabilities().to_dict(), limitations)
+
+    @classmethod
+    def compare_models(
+        cls,
+        models: Mapping[str, Any],
+        *,
+        item: Any,
+        reference_data: Any = None,
+        reference_labels: Any = None,
+        task: str | TaskType = "auto",
+        feature_names: list[str] | None = None,
+    ) -> ModelComparisonResult:
+        results = {
+            name: cls.wrap(model, task=task).explain_one(
+                item,
+                object_id="comparison_object",
+                reference_data=reference_data,
+                reference_labels=reference_labels,
+                feature_names=feature_names,
+            )
+            for name, model in models.items()
+        }
+        predictions = []
+        reason_sets = []
+        for result in results.values():
+            value = result.prediction.predictions
+            predictions.append(value[0] if isinstance(value, list) and value else value)
+            reason_sets.append({item.subject_id for item in result.claims if item.claim_type == "feature_contribution"})
+        agreement = len({str(item) for item in predictions}) <= 1
+        if len(reason_sets) < 2 or not any(reason_sets):
+            overlap = None
+        else:
+            union = set.union(*reason_sets)
+            intersection = set.intersection(*reason_sets)
+            overlap = len(intersection) / len(union) if union else None
+        disagreements = tuple(
+            f"{name}: prediction={prediction}"
+            for (name, _), prediction in zip(results.items(), predictions)
+            if not agreement
+        )
+        return ModelComparisonResult(
+            results,
+            agreement,
+            overlap,
+            disagreements,
+            ("Reason agreement compares disclosed local evidence channels; missing channels are not imputed.",),
         )
 
     def observe_training(

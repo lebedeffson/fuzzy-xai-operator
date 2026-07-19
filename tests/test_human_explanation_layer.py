@@ -232,25 +232,35 @@ def test_comprehension_scorer_preserves_not_run_and_scores_complete_pilot() -> N
     rows = []
     for index in range(6):
         role = "domain_specialist" if index < 3 else "model_integrator"
-        for mode in ("technical_baseline", "human_explanation"):
-            rows.append(
-                {
+        for scenario in ("forgetting_case", "rule_ablation", "image_similarity"):
+            for mode in ("technical_baseline", "human_explanation"):
+                rows.append(
+                    {
                     "participant_id": f"P{index + 1}",
                     "role": role,
                     "condition_order": "AB" if index % 2 == 0 else "BA",
-                    "scenario_id": "object_85",
+                    "scenario_id": scenario,
                     "mode": mode,
                     "decision_correct": "true",
                     "reasons_correct": "true",
-                    "concern_correct": "true",
+                    "concern_correct": "false" if mode == "technical_baseline" else "true",
                     "reliability_correct": "true",
                     "action_correct": "true",
                     "limitation_correct": "true",
+                    "provenance_correct": "true",
+                    "similarity_correct": "true",
+                    "counterfactual_correct": "true",
+                    "native_surrogate_correct": "true",
+                    "overtrust_error": "false",
+                    "iou_misinterpreted_as_probability": "false",
+                    "sensitivity_misinterpreted_as_recommendation": "false",
                     "unsupported_inference_count": "0",
-                    "completion_time_sec": "30",
+                    "completion_time_sec": "32" if mode == "technical_baseline" else "30",
+                    "subjective_clarity_1_5": "4",
+                    "cognitive_load_1_5": "2",
                     "notes": "controlled unit-test row",
-                }
-            )
+                    }
+                )
     scored = score_rows(rows)
     assert scored["status"] == "pass"
     assert scored["participant_count"] == 6

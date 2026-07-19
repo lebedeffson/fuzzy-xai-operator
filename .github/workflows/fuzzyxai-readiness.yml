@@ -10,6 +10,7 @@ on:
       - feat/explanation-experience-completion
       - feat/human-explanation-layer
       - feat/empirical-validation-gate
+      - feat/universal-model-integration
   pull_request:
 
 jobs:

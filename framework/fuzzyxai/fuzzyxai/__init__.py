@@ -30,7 +30,7 @@ __all__ += ['DatasetRecord', 'infer_dataset_profile']
 __all__ += ['lofo_f1_importance', 'bootstrap_lofo_f1_importance', 'select_top_rules_by_lofo_f1']
 __all__ += ['compute_interpretability_index']
 
-__version__ = "1.2.0rc3"
+__version__ = "1.3.0rc1"
 
 
 def build_explanation(*, terms, representation, rules=None, activations=None, uncertainty=0.0, trace=None, metadata=None):
@@ -140,20 +140,49 @@ from .visualization.operator_dashboard import render_dashboard
 from .examples import list_examples, load_example
 from .runtime import ExplanationInspection, FuzzyXAI, InspectionResult, ModelExplanationResult
 from .adapters import (
+    AdapterConformanceReport,
+    AdapterRegistry,
+    AdapterResolutionReport,
     BaseAdapter,
     AdapterCapabilities,
     CallableAdapter,
+    CallableAdapterV2,
     CustomAdapter,
+    DecisionFunctionAdapter,
+    EvidenceChannelDescriptor,
+    ExplanationContext,
+    ExplanationPlanDecision,
+    GlobalModelEvidence,
+    LocalModelEvidence,
     ModelAdapter,
+    ModelAdapterV2,
+    ModelCapabilities,
+    ModelInputSchema,
+    ModelOutputSchema,
     ModelPrediction,
     NativeRuleAdapter,
+    NativeRuleAdapterV2,
     PredictProbaAdapter,
+    PredictProbaAdapterV2,
+    SklearnEnsembleAdapter,
+    SklearnKNNAdapter,
+    SklearnLinearAdapter,
+    SklearnNaiveBayesAdapter,
+    SklearnPipelineAdapter,
+    SklearnRegressorAdapter,
+    SklearnSVMAdapter,
     SklearnAdapter,
+    SklearnTreeAdapter,
     TabularClassificationAdapter,
+    TaskType,
     get_adapter,
     list_adapters,
     resolve_model_adapter,
+    resolve_model_adapter_v2,
 )
+from .adapter_conformance import run_adapter_conformance
+from .explanation_quality import ExplanationQualityReport, build_quality_report
+from .planner import ExplanationPlanner
 from .operators import get_operator, list_operators
 from .visualization import (
     ExplanationViewModel,
@@ -259,6 +288,36 @@ __all__ += [
     "NativeRuleAdapter",
     "CustomAdapter",
     "resolve_model_adapter",
+    "TaskType",
+    "EvidenceChannelDescriptor",
+    "ModelCapabilities",
+    "ModelInputSchema",
+    "ModelOutputSchema",
+    "ExplanationContext",
+    "LocalModelEvidence",
+    "GlobalModelEvidence",
+    "AdapterResolutionReport",
+    "AdapterConformanceReport",
+    "ExplanationPlanDecision",
+    "ModelAdapterV2",
+    "CallableAdapterV2",
+    "PredictProbaAdapterV2",
+    "DecisionFunctionAdapter",
+    "NativeRuleAdapterV2",
+    "AdapterRegistry",
+    "resolve_model_adapter_v2",
+    "SklearnLinearAdapter",
+    "SklearnTreeAdapter",
+    "SklearnEnsembleAdapter",
+    "SklearnSVMAdapter",
+    "SklearnKNNAdapter",
+    "SklearnNaiveBayesAdapter",
+    "SklearnRegressorAdapter",
+    "SklearnPipelineAdapter",
+    "run_adapter_conformance",
+    "ExplanationPlanner",
+    "ExplanationQualityReport",
+    "build_quality_report",
     "TabularClassificationAdapter",
     "get_adapter",
     "list_adapters",

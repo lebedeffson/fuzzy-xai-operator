@@ -57,6 +57,10 @@ ALLOWED_PREFIXES = (
     "release_evidence/empirical_experiments/",
     "release_evidence/user_study/",
     "release_evidence/chapter4_empirical_validation/",
+    "release_evidence/model_universality/",
+    "release_evidence/domain_language_review/",
+    "release_evidence/chapter4_final_candidate/",
+    "experiments/model_universality/",
 )
 REQUIRED_PATHS = {
     "fuzzy-xai-operator/PROJECT_MEMORY.md",
@@ -94,6 +98,24 @@ REQUIRED_PATHS = {
     "fuzzy-xai-operator/release_evidence/empirical_experiments/breast_cancer_checkpoint/empirical_summary.json",
     "fuzzy-xai-operator/release_evidence/chapter4_empirical_validation/manifest_sha256.json",
     "fuzzy-xai-operator/release_evidence/user_study/comprehension_pilot/scoring_report.json",
+    "fuzzy-xai-operator/framework/fuzzyxai/fuzzyxai/adapters/contracts_v2.py",
+    "fuzzy-xai-operator/framework/fuzzyxai/fuzzyxai/adapters/model_v2.py",
+    "fuzzy-xai-operator/framework/fuzzyxai/fuzzyxai/adapters/model_registry.py",
+    "fuzzy-xai-operator/framework/fuzzyxai/fuzzyxai/adapters/sklearn_v2.py",
+    "fuzzy-xai-operator/framework/fuzzyxai/fuzzyxai/adapters/optional_v2.py",
+    "fuzzy-xai-operator/framework/fuzzyxai/fuzzyxai/adapter_conformance.py",
+    "fuzzy-xai-operator/framework/fuzzyxai/fuzzyxai/planner.py",
+    "fuzzy-xai-operator/framework/fuzzyxai/fuzzyxai/explanation_quality.py",
+    "fuzzy-xai-operator/experiments/model_universality/run_benchmark.py",
+    "fuzzy-xai-operator/release_evidence/model_universality/summary.json",
+    "fuzzy-xai-operator/release_evidence/model_universality/support_matrix.csv",
+    "fuzzy-xai-operator/release_evidence/model_universality/manifest.json",
+    "fuzzy-xai-operator/scripts/build_external_validation_package.py",
+    "fuzzy-xai-operator/scripts/verify_external_release_gates.py",
+    "fuzzy-xai-operator/release_evidence/domain_language_review/review_record.json",
+    "fuzzy-xai-operator/scripts/build_chapter4_final_candidate.py",
+    "fuzzy-xai-operator/scripts/verify_chapter4_final_candidate.py",
+    "fuzzy-xai-operator/release_evidence/chapter4_final_candidate/manifest_sha256.json",
 }
 
 

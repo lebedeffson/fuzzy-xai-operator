@@ -542,7 +542,7 @@ explanation-experience-evidence:
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/build_explanation_experience_evidence.py
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/verify_explanation_experience.py
 
-.PHONY: chapter4-explanation-evidence empirical-validation empirical-validation-check chapter4-empirical-evidence
+.PHONY: chapter4-explanation-evidence empirical-validation empirical-validation-check chapter4-empirical-evidence model-universality external-validation-gates chapter4-final-candidate
 chapter4-explanation-evidence: explanation-experience-evidence
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/build_chapter4_explanation_evidence.py
 
@@ -554,3 +554,15 @@ chapter4-empirical-evidence: empirical-validation
 
 empirical-validation-check: chapter4-empirical-evidence
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/verify_empirical_validation.py
+
+model-universality:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) experiments/model_universality/run_benchmark.py
+	cd release_evidence/model_universality && sha256sum -c checksums.sha256
+
+external-validation-gates:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/build_external_validation_package.py
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/verify_external_release_gates.py
+
+chapter4-final-candidate: model-universality external-validation-gates
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/build_chapter4_final_candidate.py
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/verify_chapter4_final_candidate.py

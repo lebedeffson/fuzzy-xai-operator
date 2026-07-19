@@ -1,0 +1,80 @@
+name: Universal model integration
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - feat/universal-model-integration
+  pull_request:
+
+jobs:
+  core-model-contracts:
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12"]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - run: python -m pip install -U pip
+      - run: python -m pip install -e ".[dev]"
+      - name: Typed adapter contracts
+        run: |
+          ruff check framework/fuzzyxai/fuzzyxai/adapters/contracts_v2.py framework/fuzzyxai/fuzzyxai/adapters/model_v2.py framework/fuzzyxai/fuzzyxai/adapters/model_registry.py framework/fuzzyxai/fuzzyxai/adapters/sklearn_v2.py framework/fuzzyxai/fuzzyxai/adapter_conformance.py framework/fuzzyxai/fuzzyxai/planner.py framework/fuzzyxai/fuzzyxai/explanation_quality.py
+          mypy
+      - name: Core model tests
+        run: python -m pytest -q tests/test_universal_model_adapters.py tests/test_external_release_gates.py
+      - name: Deterministic universality benchmark
+        run: |
+          python experiments/model_universality/run_benchmark.py --output /tmp/model-universality
+          cd /tmp/model-universality
+          sha256sum -c checksums.sha256
+      - name: External gate integrity without fabricated pass
+        run: |
+          python scripts/build_external_validation_package.py
+          python scripts/verify_external_release_gates.py
+
+  optional-runtime:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - extra: xgboost
+            test: tests/optional/test_boosting_adapters.py
+            expression: xgboost
+          - extra: lightgbm
+            test: tests/optional/test_boosting_adapters.py
+            expression: lightgbm
+          - extra: catboost
+            test: tests/optional/test_boosting_adapters.py
+            expression: catboost
+          - extra: torch
+            test: tests/optional/test_torch_adapter.py
+            expression: ""
+          - extra: tensorflow
+            test: tests/optional/test_tensorflow_adapter.py
+            expression: ""
+          - extra: onnx
+            test: tests/optional/test_onnx_adapter.py
+            expression: ""
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - run: python -m pip install -U pip
+      - run: python -m pip install -e ".[dev,${{ matrix.extra }}]"
+      - name: Runtime-specific adapter smoke
+        run: |
+          if [ -n "${{ matrix.expression }}" ]; then
+            python -m pytest -q "${{ matrix.test }}" -k "${{ matrix.expression }}"
+          else
+            python -m pytest -q "${{ matrix.test }}"
+          fi
