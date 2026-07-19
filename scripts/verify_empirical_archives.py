@@ -20,6 +20,7 @@ ARCHIVE_REQUIREMENTS = {
     ),
     "fuzzyxai-dissertation-artifacts-*.zip": (
         "fuzzy-xai-operator/archive_manifest.json",
+        "fuzzy-xai-operator/dissertation_artifacts/tables_manifest.json",
         "fuzzy-xai-operator/dissertation_artifacts/chapter4/table_4_multimodal_models.csv",
         "fuzzy-xai-operator/reports/empirical_validation/full_empirical_validation.md",
     ),

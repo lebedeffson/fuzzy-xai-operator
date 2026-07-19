@@ -69,6 +69,7 @@ def build() -> dict[str, object]:
         *list((ROOT / "dissertation_artifacts/chapter3").rglob("*")),
         *list((ROOT / "dissertation_artifacts/chapter4").rglob("*")),
         *list((ROOT / "dissertation_artifacts/claims").rglob("*")),
+        ROOT / "dissertation_artifacts/tables_manifest.json",
         *list((ROOT / "reports/empirical_validation").rglob("*")),
     ]
     dissertation = build_archive(f"fuzzyxai-dissertation-artifacts-{short}.zip", dissertation_files, common)

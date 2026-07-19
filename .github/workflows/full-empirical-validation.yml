@@ -87,6 +87,7 @@ jobs:
             dissertation_artifacts/chapter3
             dissertation_artifacts/chapter4
             dissertation_artifacts/claims
+            dissertation_artifacts/tables_manifest.json
             reports/empirical_validation
             release_artifacts/fuzzyxai-full-empirical-evidence-*.zip
             release_artifacts/fuzzyxai-full-empirical-evidence-*.zip.sha256
@@ -148,6 +149,7 @@ jobs:
           cp -a "$raw_root/dissertation_artifacts/chapter3" dissertation_artifacts/
           cp -a "$raw_root/dissertation_artifacts/chapter4" dissertation_artifacts/
           cp -a "$raw_root/dissertation_artifacts/claims" dissertation_artifacts/
+          cp "$raw_root/dissertation_artifacts/tables_manifest.json" dissertation_artifacts/tables_manifest.json
           cp -a "$raw_root/reports/empirical_validation" reports/
           cp -a "$raw_root/release_artifacts/." release_artifacts/
           cp "$docker_status" release_evidence/full_empirical_validation/docker_reproduction.json
@@ -172,6 +174,7 @@ jobs:
             dissertation_artifacts/chapter3
             dissertation_artifacts/chapter4
             dissertation_artifacts/claims
+            dissertation_artifacts/tables_manifest.json
             reports/empirical_validation
             release_artifacts/fuzzyxai-full-empirical-evidence-*.zip
             release_artifacts/fuzzyxai-full-empirical-evidence-*.zip.sha256
