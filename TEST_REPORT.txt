@@ -1,34 +1,34 @@
-FuzzyXAI Explanation Experience release verification
+FuzzyXAI Human Explanation Layer release verification
 Date: 2026-07-19
-Branch: feat/explanation-experience-completion
-Version: 1.1.0rc3
-Implementation commits: 3b51ca5, 4a820f4, 0d8754b
-Release packaging commits: d1b75bc, a490c09
-Release-status commit: f34532b
-MATLAB typed-status compatibility fix: db7a174
+Branch: feat/human-explanation-layer
+Version: 1.2.0rc1
+Previous green baseline: 884409f4cb1b
+Implementation commit: 8b4a865c93b9
+Release-status commit: 0a9f5a2a6904
 
-PASS: full local Python 3.14 regression - 304 passed
-PASS: full clean committed-snapshot Python 3.12 regression - 304 passed
+PASS: full local Python 3.14 regression - 308 passed
 PASS: public-contract Ruff gate
 PASS: strict MyPy contract gate
 PASS: framework release check
+PASS: framework release subset - 26 passed
 PASS: operator manifest - 30/30 entries
-PASS: Explanation Experience verifier
-PASS: object 85 trajectory - 12 checkpoints
-PASS: all 10 Matplotlib views
-PASS: all 10 Plotly views
-PASS: deterministic golden evidence double build
-PASS: cross-model controlled scenarios
-PASS: research-only image fixture with computed mask IoU
-PASS: Chapter 4 evidence package - 12 figures and 30/30 matrix
-PASS: Python 3.12 wheel and sdist build
-PASS: installed-wheel import outside checkout - 1.1.0rc3
+PASS: deterministic Explanation Experience evidence double build
+PASS: HumanExplanation schema and typed result API
+PASS: domain-user limit - at most 3 reasons and 2 concerns
+PASS: every visible card references claims and evidence
+PASS: domain-user technical-term exclusion
+PASS: object 85 human explanation - observed epoch-16 transition
+PASS: medical research similarity semantics - mask IoU is not diagnosis probability
+PASS: cross-model controlled explanations
+PASS: wheel and sdist build - 1.2.0rc1
+PASS: isolated installed-wheel explain_for smoke
+PASS: wheel contains Human Explanation runtime and JSON schema
 PASS: public GitHub Actions Python 3.11
 PASS: public GitHub Actions Python 3.12
 PASS: public GitHub Actions Octave JSON/dashboard smoke
-Public run: https://github.com/lebedeffson/fuzzy-xai-operator/actions/runs/29685440340
+Public implementation run: https://github.com/lebedeffson/fuzzy-xai-operator/actions/runs/29691191720
 
-Warnings in the full suites are third-party sklearn feature-name warnings only.
+Warnings in the full local suite are third-party sklearn feature-name and SHAP/Matplotlib deprecation warnings only.
 
 PLANNED_NOT_RUN: comprehension pilot with external participants
 

@@ -32,7 +32,9 @@ REQUIRED_PATHS = {
     "fuzzy-xai-operator/framework/fuzzyxai/fuzzyxai/evidence/contracts.py",
     "fuzzy-xai-operator/framework/fuzzyxai/fuzzyxai/evidence/claims.py",
     "fuzzy-xai-operator/framework/fuzzyxai/fuzzyxai/evidence/graph.py",
+    "fuzzy-xai-operator/framework/fuzzyxai/fuzzyxai/evidence/human.py",
     "fuzzy-xai-operator/framework/fuzzyxai/fuzzyxai/runtime.py",
+    "fuzzy-xai-operator/framework/fuzzyxai/fuzzyxai/schemas/human_explanation.schema.json",
     "fuzzy-xai-operator/framework/fuzzyxai/fuzzyxai/schemas/explanation_visual_spec.schema.json",
     "fuzzy-xai-operator/framework/fuzzyxai/fuzzyxai/visualization/explanation_dashboard.py",
     "fuzzy-xai-operator/framework/fuzzyxai/fuzzyxai/visualization/matplotlib_renderer.py",
@@ -45,6 +47,10 @@ REQUIRED_PATHS = {
     "fuzzy-xai-operator/scripts/verify_explanation_experience.py",
     "fuzzy-xai-operator/scripts/build_chapter4_explanation_evidence.py",
     "fuzzy-xai-operator/docs/user_comprehension_study.md",
+    "fuzzy-xai-operator/docs/human_explanation_layer.md",
+    "fuzzy-xai-operator/tests/test_human_explanation_layer.py",
+    "fuzzy-xai-operator/release_evidence/explanation_experience/object_85_human_explanation.json",
+    "fuzzy-xai-operator/release_evidence/explanation_experience/medical_research_human_explanation.json",
     "fuzzy-xai-operator/release_evidence/chapter4_explanation_experience/manifest_sha256.json",
 }
 
