@@ -5,6 +5,7 @@
 - Base: `79d39f61f02df1cf1d63fc92dd2a1ebebfef7de7`
 - Universal API commit: `3dda3e3`
 - Model evidence commit: `a76677a`
+- CI correction commit: `fbfcdd3`
 - Candidate version: `1.3.0rc1`
 - Release tag: not created
 
@@ -34,12 +35,17 @@ the defended chapter 2-3 operator semantics.
 - explanation graph validation rate: `1.0`;
 - strict MyPy: PASS;
 - Ruff and compile checks: PASS;
-- focused compatibility/model/external-gate suite: `48 passed`, `6 skipped` optional runtimes;
+- focused local compatibility/model/external-gate suite: `48 passed`, `6 skipped` optional runtimes;
+- public readiness CI: `338 passed`, `6 skipped` on Python 3.11 and Python 3.12;
+- public Octave JSON/dashboard smoke: PASS;
+- public optional runtime CI: XGBoost, LightGBM, CatBoost, PyTorch, TensorFlow/Keras, and ONNX PASS;
+- readiness run: `29698737386`;
+- universal model run: `29698737408`;
 - existing measured checkpoint experiment and native rule ablation retained;
 - model, pilot, domain-review, and Chapter 4 manifests: PASS.
 
-The full regression suite was deliberately not rerun after the user reported Cursor instability. It must run in CI
-and before any merge or tag. Optional runtime jobs are pending public CI.
+The full regression suite was moved from the workstation to GitHub runners after the user reported Cursor
+instability. Both supported Python jobs passed. This validates the feature branch, not `main` after merge.
 
 ## External Gates
 
@@ -65,6 +71,6 @@ and before any merge or tag. Optional runtime jobs are pending public CI.
 
 ## Next Step
 
-Push the branch, require green core and optional-runtime CI, fix only measured failures, and rebuild committed-index
-archives. Separately run the real external pilot and domain review. Only then review merge to `main` and create a
-release tag. Do not claim `v1.4.0` support before modality-specific adapters and benchmarks exist.
+Run the real external pilot and domain review. After both pass, review merge to `main`, require green main CI, rebuild
+committed-index archives, and only then create a release tag. Do not claim `v1.4.0` support before modality-specific
+adapters and benchmarks exist.

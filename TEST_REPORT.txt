@@ -1,8 +1,8 @@
 FuzzyXAI v1.3.0rc1 universal model integration candidate
 Date: 2026-07-19
 
-PASS: focused compatibility/model/external-gate suite, 48 passed
-SKIP: optional runtime tests, 6 skipped because runtimes are not installed locally
+PASS: focused local compatibility/model/external-gate suite, 48 passed
+SKIP: local optional runtime tests, 6 skipped because runtimes were not installed locally
 PASS: Ruff on changed framework, scripts, and tests
 PASS: strict MyPy on 8 typed contract modules
 PASS: Python compile check
@@ -16,11 +16,21 @@ PASS: universality checksum manifest
 PASS: external validation package integrity
 PASS: Chapter 4 candidate manifest and computed gates
 
-NOT RERUN LOCALLY: full regression suite, stopped to avoid workstation/Cursor instability
-PENDING: public branch CI Python 3.11 and 3.12
-PENDING: XGBoost, LightGBM, CatBoost, Torch, TensorFlow, and ONNX CI jobs
+PASS: public Python 3.11 full regression, 338 passed, 6 skipped
+PASS: public Python 3.12 full regression, 338 passed, 6 skipped
+PASS: public Octave JSON loader and dashboard
+PASS: public wheel build and clean wheel import
+PASS: XGBoost native contribution adapter
+PASS: LightGBM native contribution adapter
+PASS: CatBoost native contribution adapter
+PASS: PyTorch integrated-gradient adapter
+PASS: TensorFlow/Keras gradient adapter
+PASS: ONNX Runtime prediction-only capability contract
+PASS: readiness workflow https://github.com/lebedeffson/fuzzy-xai-operator/actions/runs/29698737386
+PASS: universal model workflow https://github.com/lebedeffson/fuzzy-xai-operator/actions/runs/29698737408
+
 BLOCKED: independent comprehension pilot planned_not_run
 BLOCKED: regulated-domain dictionary pending_external_review
 BLOCKED: merge to main and release tag
 
-Warnings in focused tests are scikit-learn feature-name warnings; no focused project test failures.
+Warnings are third-party scikit-learn/SHAP warnings; no project test failures in final public runs.
