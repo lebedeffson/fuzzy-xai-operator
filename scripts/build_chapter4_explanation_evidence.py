@@ -5,6 +5,7 @@ from __future__ import annotations
 import csv
 import hashlib
 import json
+import re
 import shutil
 import subprocess
 import sys
@@ -22,6 +23,7 @@ SOURCE = ROOT / "release_evidence/explanation_experience"
 OUTPUT = ROOT / "release_evidence/chapter4_explanation_experience"
 FIGURES = OUTPUT / "figures"
 TABLES = OUTPUT / "tables"
+HUMAN = OUTPUT / "human_explanations"
 
 
 def write_json(path: Path, payload: object) -> None:
@@ -31,6 +33,13 @@ def write_json(path: Path, payload: object) -> None:
 
 def sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def write_deterministic_zip_file(handle: zipfile.ZipFile, source: Path, archive_name: Path) -> None:
+    info = zipfile.ZipInfo(str(archive_name), date_time=(2020, 1, 1, 0, 0, 0))
+    info.compress_type = zipfile.ZIP_DEFLATED
+    info.external_attr = 0o100644 << 16
+    handle.writestr(info, source.read_bytes())
 
 
 def build_architecture(path: Path) -> None:
@@ -115,7 +124,15 @@ def write_table(path: Path, rows: list[dict[str, object]]) -> None:
 def main() -> None:
     subprocess.run([sys.executable, str(ROOT / "scripts/build_explanation_experience_evidence.py")], cwd=ROOT, check=True)
     if OUTPUT.exists(): shutil.rmtree(OUTPUT)
-    FIGURES.mkdir(parents=True); TABLES.mkdir(parents=True)
+    FIGURES.mkdir(parents=True); TABLES.mkdir(parents=True); HUMAN.mkdir(parents=True)
+
+    for name in (
+        "object_85_human_explanation.json",
+        "object_85_human_explanation.md",
+        "medical_research_human_explanation.json",
+        "medical_research_human_explanation.md",
+    ):
+        shutil.copy2(SOURCE / name, HUMAN / name)
 
     build_architecture(FIGURES / "01_framework_architecture.png")
     render_fixture(SOURCE / "object_85_explanation.json", "provenance", FIGURES / "02_evidence_claim_diagnostic_action.png")
@@ -146,8 +163,23 @@ def main() -> None:
     shutil.copy2(SOURCE / "manifest_sha256.json", TABLES / "golden_sha256.json")
     write_json(TABLES / "comprehension_pilot_status.json", {"status": "planned_not_run", "required_participants": 6, "claim_allowed": False, "protocol": "docs/user_comprehension_study.md"})
 
-    tests = subprocess.run([sys.executable, "-m", "pytest", "-q", "tests/test_explanation_experience.py", "tests/test_evidence_first_framework.py", "tests/test_public_framework_api.py"], cwd=ROOT, text=True, capture_output=True)
-    write_json(TABLES / "test_matrix.json", {"command": tests.args, "exit_code": tests.returncode, "status": "PASS" if tests.returncode == 0 else "FAIL", "output": tests.stdout.strip(), "errors": tests.stderr.strip()})
+    tests = subprocess.run(
+        [
+            sys.executable,
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_human_explanation_layer.py",
+            "tests/test_explanation_experience.py",
+            "tests/test_evidence_first_framework.py",
+            "tests/test_public_framework_api.py",
+        ],
+        cwd=ROOT,
+        text=True,
+        capture_output=True,
+    )
+    stable_test_output = re.sub(r" in \d+(?:\.\d+)?s", "", tests.stdout.strip())
+    write_json(TABLES / "test_matrix.json", {"command": tests.args, "exit_code": tests.returncode, "status": "PASS" if tests.returncode == 0 else "FAIL", "output": stable_test_output, "errors": tests.stderr.strip()})
     if tests.returncode: raise RuntimeError("chapter 4 evidence tests failed")
 
     files = {str(path.relative_to(OUTPUT)): sha256(path) for path in sorted(OUTPUT.rglob("*")) if path.is_file() and path.name not in {"manifest_sha256.json", "chapter4_explanation_evidence.zip"}}
@@ -155,10 +187,16 @@ def main() -> None:
     archive = ROOT / "release_evidence/chapter4_explanation_evidence.zip"
     with zipfile.ZipFile(archive, "w", zipfile.ZIP_DEFLATED) as handle:
         for path in sorted(OUTPUT.rglob("*")):
-            if path.is_file(): handle.write(path, Path("chapter4_explanation_experience") / path.relative_to(OUTPUT))
+            if path.is_file():
+                write_deterministic_zip_file(
+                    handle,
+                    path,
+                    Path("chapter4_explanation_experience") / path.relative_to(OUTPUT),
+                )
     (archive.with_suffix(".zip.sha256")).write_text(f"{sha256(archive)}  {archive.name}\n", encoding="ascii")
     print(f"PASS: chapter4_operator_matrix {len(matrix)}/30")
     print("PASS: chapter4_figures 12/12")
+    print("PASS: chapter4_human_explanations 4/4")
     print(f"PASS: chapter4_evidence_archive {archive}")
 
 

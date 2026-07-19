@@ -353,15 +353,15 @@
   {
     "callable": "fuzzyxai.evidence.human:compose_human_explanation",
     "claim": "claim-grounded",
-    "dissertation_ref": "chapter 4, user expert audit narratives",
-    "evidence": "release_evidence/framework_completion/object_85_user.md",
+    "dissertation_ref": "chapter 4, Human Explanation Layer",
+    "evidence": "release_evidence/explanation_experience/object_85_human_explanation.json; release_evidence/explanation_experience/medical_research_human_explanation.json",
     "id": "framework.human_explanation",
     "input_schema": "ExplanationEvidenceAndGraph",
     "output_schema": "HumanExplanation",
     "release_artifact": "release_evidence/chapter4_explanation_experience",
     "status": "PASS",
-    "tests": "tests/test_evidence_first_framework.py",
-    "visualization": "plain_language_panel"
+    "tests": "tests/test_human_explanation_layer.py; tests/test_explanation_experience.py",
+    "visualization": "human_explanation_cards"
   },
   {
     "callable": "fuzzyxai.evidence.metrics:evaluate_explanation_quality",

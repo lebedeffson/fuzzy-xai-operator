@@ -16,6 +16,7 @@ Status: `v1.2.0rc1` is a green feature-branch candidate for the Human Explanatio
 - four audience profiles plus one-cycle aliases;
 - JSON schema and wheel packaging;
 - deterministic golden evidence and a `30/30` operator-to-evidence manifest.
+- deterministic Chapter 4 archive with `12/12` figures and `4/4` embedded human explanations.
 
 ## Verified
 
@@ -26,6 +27,7 @@ Status: `v1.2.0rc1` is a green feature-branch candidate for the Human Explanatio
 - release subset: `26 passed`;
 - deterministic evidence build and verifier: PASS;
 - isolated wheel import as `1.2.0rc1`: PASS;
+- Chapter 4 evidence ZIP SHA256: `6f6b5a444bd492734a74e8fdfcbbf1580b4e97cbc3b952f23a9cc63a00178786`;
 - public GitHub Actions run `29691191720`: Python 3.11, Python 3.12, and Octave PASS;
 - validated implementation commit: `8b4a865c93b9`.
 

@@ -23,6 +23,10 @@ PASS: cross-model controlled explanations
 PASS: wheel and sdist build - 1.2.0rc1
 PASS: isolated installed-wheel explain_for smoke
 PASS: wheel contains Human Explanation runtime and JSON schema
+PASS: Chapter 4 operator matrix - 30/30
+PASS: Chapter 4 figures - 12/12
+PASS: Chapter 4 embedded human explanations - 4/4
+PASS: deterministic Chapter 4 ZIP - SHA256 6f6b5a444bd492734a74e8fdfcbbf1580b4e97cbc3b952f23a9cc63a00178786
 PASS: public GitHub Actions Python 3.11
 PASS: public GitHub Actions Python 3.12
 PASS: public GitHub Actions Octave JSON/dashboard smoke

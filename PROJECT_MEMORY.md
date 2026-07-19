@@ -43,6 +43,7 @@ result.audit()
 - object 85 human explanation reports the observed epoch-16 transition and hidden rare-subtype degradation;
 - `HumanExplanation` JSON schema included in the wheel;
 - operator manifest remains `30/30` and maps the human layer to tests and golden evidence.
+- Chapter 4 evidence contains `30/30` operator rows, `12/12` figures, and `4/4` embedded human-explanation files.
 
 ## Validation
 
@@ -56,6 +57,7 @@ result.audit()
 - wheel/sdist build as `1.2.0rc1`: PASS;
 - isolated wheel import and `explain_for()` smoke: PASS;
 - wheel content check includes runtime, human layer, and JSON schema: PASS;
+- deterministic Chapter 4 evidence ZIP: PASS, SHA256 `6f6b5a444bd492734a74e8fdfcbbf1580b4e97cbc3b952f23a9cc63a00178786`;
 - public GitHub Actions run `29691191720`: Python 3.11, Python 3.12, and Octave PASS for `8b4a865c93b9`;
 - comprehension pilot: `planned_not_run`.
 
