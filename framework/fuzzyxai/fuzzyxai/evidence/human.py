@@ -18,6 +18,7 @@ from .contracts import (
     HumanExplanation,
     HumanStatement,
     ReasonStatement,
+    ReasonEffectDirection,
     ReliabilityStatement,
 )
 
@@ -39,16 +40,16 @@ TECHNICAL_TERMS = (
 
 _TYPE_WEIGHT = {
     "recommended_action": 1.00,
-    "counterfactual": 0.98,
+    "feature_contribution": 1.00,
+    "counterfactual": 0.90,
     "forgetting": 0.97,
     "subgroup_averaging": 0.96,
     "lost_rules": 0.95,
     "diagnostic": 0.93,
-    "feature_contribution": 0.92,
     "data_deviation": 0.88,
-    "model_rule": 0.84,
-    "class_concept": 0.80,
-    "similar_case": 0.72,
+    "model_rule": 0.90,
+    "class_concept": 0.82,
+    "similar_case": 0.62,
     "data_quality": 0.45,
     "prediction": 1.00,
 }
@@ -64,10 +65,21 @@ _ACTION_TEXT = {
 }
 
 _REPRESENTATION_TEXT = {
-    "normalized tabular feature vector": "нормализованные значения признаков",
-    "model embedding vector": "внутреннее представление модели",
-    "segmentation masks": "сегментационные маски",
+    "normalized tabular feature vector": "значения исходных показателей",
+    "model embedding vector": "форма и структура, которые модель выделила в данных",
+    "segmentation masks": "контуры выделенных областей",
 }
+
+VAGUE_DOMAIN_PHRASES = (
+    "часть доступных сведений",
+    "подтверждённая закономерность",
+    "внутреннее представление модели",
+    "нормализованные значения признаков",
+    "проверенный контрфактический расчёт",
+    "референсная выборка",
+    "соответствующий результат",
+    "выбранный класс",
+)
 
 
 def audience_profile(name: str) -> AudienceProfile:
@@ -90,6 +102,8 @@ def rank_human_claims(
 
     def score(claim: ExplanationClaim) -> tuple[float, str]:
         importance = _TYPE_WEIGHT.get(claim.claim_type, 0.50)
+        if claim.claim_type == "model_rule":
+            importance *= 1.0 if claim.native else 0.58
         understandable = 0.85 if claim.claim_type not in {"diagnostic", "missing_channel"} else 0.55
         confirmation = {"supported": 1.0, "contested": 0.72, "insufficient_evidence": 0.60, "not_applicable": 0.20}[claim.evidence_status]
         domain_significance = 1.0 if claim.subject_id in domain_features or claim.severity == "critical" else 0.82
@@ -139,16 +153,57 @@ def _clean_internal_identifiers(text: str) -> str:
     return value
 
 
+def _technical_class_label(class_id: str, entry: Mapping[str, Any]) -> bool:
+    label = str(entry.get("label", "")).strip()
+    if not label:
+        return True
+    if entry.get("meaning") or entry.get("domain_defined") is True:
+        return False
+    normalized = label.lower()
+    return bool(
+        "research" in normalized
+        or "исследовательск" in normalized
+        or "_" in label
+        or re.fullmatch(r"(?:класс|группа|class|group)\s*[a-z0-9_-]+", normalized)
+        or label == class_id
+    )
+
+
 def _decision_statement(claim: ExplanationClaim, domain: Mapping[str, Any], technical: bool) -> DecisionStatement:
     class_id = _prediction_value(claim.subject_id)
     class_entry = _domain_entry(_domain_section(domain, "classes"), class_id)
-    label = str(class_entry.get("label", f"класс {class_id}"))
-    text = f"Модель определила: {label}."
+    raw_label = str(class_entry.get("label", "")).strip()
+    language_available = not _technical_class_label(class_id, class_entry)
+    if technical:
+        label = raw_label or f"класс {class_id}"
+        text = f"Модель определила: {label}."
+    elif language_available:
+        label = raw_label
+        text = f"Модель определила: {label}."
+    elif claim.scope == "medical" or domain.get("scope") == "medical":
+        label = raw_label or "техническая исследовательская группа"
+        text = (
+            f"Модель отнесла изображение к категории «{label}». "
+            "Предметное медицинское значение этой группы в плане объяснения не задано, "
+            "поэтому результат нельзя трактовать как диагноз."
+        )
+    else:
+        label = "Предметное значение класса не задано"
+        text = (
+            "Модель сформировала результат, но человеко-понятное название класса в плане объяснения не задано. "
+            "До заполнения предметного словаря этот результат нельзя использовать как предметное заключение."
+        )
     if technical and claim.metric_value is not None:
         text += f" Модельный балл: {claim.metric_value:.3f}."
     claim_refs, evidence_refs = _refs((claim,))
     title = label[:1].upper() + label[1:]
-    return DecisionStatement(title, text, claim_refs, evidence_refs)
+    return DecisionStatement(
+        title,
+        text,
+        claim_refs,
+        evidence_refs,
+        "available" if language_available else "insufficient_domain_language",
+    )
 
 
 def _feature_profile(evidence: ExplanationEvidence, feature: str) -> tuple[float | None, Mapping[str, float | None], Mapping[str, float | None]]:
@@ -175,10 +230,10 @@ def _feature_reason(
     median = profile.get("median")
     if isinstance(percentile, (int, float)):
         if percentile >= 50:
-            comparison = f"Значение выше, чем у {percentile:.0f}% объектов референсной выборки."
+            comparison = f"Значение выше, чем у {percentile:.0f}% объектов обучающей выборки."
             domain_text = str(entry.get("high_text", ""))
         else:
-            comparison = f"Значение ниже, чем у {100 - percentile:.0f}% объектов референсной выборки."
+            comparison = f"Значение ниже, чем у {100 - percentile:.0f}% объектов обучающей выборки."
             domain_text = str(entry.get("low_text", ""))
     else:
         comparison = "Признак входит в число наиболее важных для текущего решения."
@@ -195,28 +250,73 @@ def _feature_reason(
             and not overall_low <= value <= overall_high
         ):
             comparison = "Значение необычно для всей выборки, но типично для редкой группы, к которой относится объект."
-    effect = "поддерживает" if claim.effect == "favorable" else "противоречит"
-    explanation = " ".join(part for part in (comparison, domain_text, f"Этот признак {effect} текущему решению.") if part)
+    effect_direction: ReasonEffectDirection = "supports" if claim.effect == "favorable" else "opposes"
+    default_effect = (
+        "Поэтому этот показатель поддерживает прогноз."
+        if effect_direction == "supports"
+        else "Поэтому этот показатель противоречит прогнозу."
+    )
+    effect_text = str(entry.get("effect_text", default_effect))
+    explanation = " ".join(part for part in (comparison, domain_text, effect_text) if part)
     if technical and claim.metric_value is not None:
         explanation += f" Локальный вклад: {claim.metric_value:+.3f}; медиана: {median}."
     claim_refs, evidence_refs = _refs((claim,))
-    return ReasonStatement(label.capitalize(), explanation, claim_refs, evidence_refs)
+    return ReasonStatement(
+        label.capitalize(),
+        explanation,
+        claim_refs,
+        evidence_refs,
+        label,
+        effect_direction,
+        comparison,
+    )
 
 
-def _rule_reason(claim: ExplanationClaim, evidence: ExplanationEvidence, technical: bool) -> ReasonStatement:
+def _rule_terms(rule: Any, domain: Mapping[str, Any]) -> list[str]:
+    features = _domain_section(domain, "features")
+    terms: list[str] = []
+    for antecedent in getattr(rule, "antecedents", ()):
+        match = re.fullmatch(r"(.+?)\s+is\s+(high|low)", str(antecedent), flags=re.IGNORECASE)
+        if not match:
+            continue
+        feature, level = match.groups()
+        entry = _domain_entry(features, feature)
+        label = str(entry.get("label", "")).strip()
+        if not label:
+            continue
+        level_text = str(entry.get(f"{level.lower()}_label", "")).strip()
+        terms.append(level_text or f"{label}: {'высокое значение' if level.lower() == 'high' else 'низкое значение'}")
+    return terms
+
+
+def _rule_reason(
+    claim: ExplanationClaim,
+    evidence: ExplanationEvidence,
+    domain: Mapping[str, Any],
+    technical: bool,
+) -> ReasonStatement | None:
     rule = next((item for item in evidence.rules if item.rule_id == claim.subject_id), None)
     title = f"Правило {claim.subject_id}" if technical else "Закономерность, найденная моделью"
     if technical:
         description = rule.human_text if rule else claim.statement
-    elif rule and re.search(r"[А-Яа-яЁё]", rule.human_text):
-        description = _clean_internal_identifiers(rule.human_text)
     else:
-        description = "Подтверждённая закономерность связывает значения признаков с выбранным результатом и"
-    explanation = f"{description.rstrip('.')} поддерживает текущее решение."
+        terms = _rule_terms(rule, domain) if rule else []
+        if terms:
+            description = f"Модель использовала сочетание условий: {', '.join(terms)}"
+            title = "Сочетание геологических условий"
+        elif rule and re.search(r"[А-Яа-яЁё]", rule.human_text):
+            description = _clean_internal_identifiers(rule.human_text)
+        else:
+            return None
+    if rule and isinstance(rule.coverage, (int, float)):
+        comparison = f"Эта закономерность встречается у {rule.coverage * 100:.0f}% объектов, поддерживающих данный результат."
+    else:
+        comparison = "Закономерность подтверждена наблюдениями, указанными в доказательном следе."
+    explanation = f"{description.rstrip('.')}. {comparison} Она поддерживает текущий прогноз."
     if technical and rule and rule.importance is not None:
         explanation += f" Измеренная значимость: {rule.importance:.3f}."
     claim_refs, evidence_refs = _refs((claim,))
-    return ReasonStatement(title, explanation, claim_refs, evidence_refs)
+    return ReasonStatement(title, explanation, claim_refs, evidence_refs, title, "supports", comparison)
 
 
 def _concept_reason(
@@ -238,10 +338,24 @@ def _concept_reason(
             "Такое сходство поддерживает результат, но не заменяет проверку ограничений."
         )
     claim_refs, evidence_refs = _refs((claim,))
-    return ReasonStatement(f"Типичный профиль класса {label}", explanation, claim_refs, evidence_refs)
+    comparison = f"Объект сопоставлен с типичным профилем группы «{label}» по обучающей выборке."
+    return ReasonStatement(
+        f"Типичный профиль группы {label}",
+        explanation,
+        claim_refs,
+        evidence_refs,
+        label,
+        "supports",
+        comparison,
+    )
 
 
-def _similar_statement(claim: ExplanationClaim, evidence: ExplanationEvidence, technical: bool) -> HumanStatement:
+def _similar_statement(
+    claim: ExplanationClaim,
+    evidence: ExplanationEvidence,
+    domain: Mapping[str, Any],
+    technical: bool,
+) -> ReasonStatement:
     refs = set(claim.evidence_refs)
     candidates = [
         item
@@ -260,7 +374,15 @@ def _similar_statement(claim: ExplanationClaim, evidence: ExplanationEvidence, t
     )
     if case is None:
         claim_refs, evidence_refs = _refs((claim,))
-        return HumanStatement("Похожий случай", _clean_internal_identifiers(claim.statement), claim_refs, evidence_refs)
+        return ReasonStatement(
+            "Похожий случай",
+            _clean_internal_identifiers(claim.statement),
+            claim_refs,
+            evidence_refs,
+            "похожий обучающий случай",
+            "additional_support",
+            "сходство измерено только в указанном представлении данных",
+        )
     representation = case.compared_representation.lower()
     image_similarity = any(token in representation for token in ("mask", "segmentation", "image", "region"))
     if image_similarity:
@@ -270,24 +392,43 @@ def _similar_statement(claim: ExplanationClaim, evidence: ExplanationEvidence, t
             "Этот показатель относится к геометрии выделенных областей и не является вероятностью одинакового диагноза."
         )
         title = "Похожая область изображения"
+        comparison = "с обучающим изображением по пересечению контуров выделенных областей"
     else:
-        representation_text = _REPRESENTATION_TEXT.get(case.compared_representation.lower(), case.compared_representation)
+        representation_entry = _domain_entry(_domain_section(domain, "representations"), case.compared_representation)
+        representation_text = str(
+            representation_entry.get(
+                "label",
+                _REPRESENTATION_TEXT.get(case.compared_representation.lower(), "указанные предметные показатели"),
+            )
+        )
         if case.is_counterexample or claim.effect == "adverse":
             explanation = (
-                f"Найден близкий контрпример; сходство рассчитано по представлению «{representation_text}». "
-                "Он показывает, что отдельное сходство встречается и у другого результата, поэтому ограничивает доверие."
+                f"Найден близкий пример с другим результатом. Объекты сравнивались по характеристикам: {representation_text}. "
+                "Это показывает, что отдельное сходство встречается у разных результатов и ограничивает доверие."
             )
             title = "Похожий контрпример"
+            comparison = f"с примером другого результата по характеристикам: {representation_text}"
         else:
-            explanation = (
-                f"Найден похожий обучающий случай; сходство рассчитано по представлению «{representation_text}». "
-                "Сходство поддерживает результат, но само по себе не доказывает одинаковый исход."
-            )
+            if case.compared_representation.lower() == "model embedding vector" and case.media_artifacts:
+                explanation = (
+                    f"Модель также считает изображения похожими по форме и структуре выделенной области; "
+                    f"измеренное сходство составляет {case.similarity_score * 100:.0f}%. "
+                    "Этот показатель описывает техническое сходство изображений, а не вероятность одинакового заболевания."
+                )
+            else:
+                explanation = (
+                    f"Дополнительным подтверждением служит обучающий объект с похожими характеристиками: {representation_text}. "
+                    "Сходство является вспомогательным основанием и не определяет результат самостоятельно."
+                )
             title = "Похожий обучающий случай"
+            comparison = f"с обучающими объектами по характеристикам: {representation_text}"
     if technical:
         explanation += f" Метод: {case.similarity_method}; значение: {case.similarity_score:.3f}; объект: {case.reference_object_id}."
     claim_refs, evidence_refs = _refs((claim,))
-    return HumanStatement(title, explanation, claim_refs, evidence_refs)
+    direction: ReasonEffectDirection = (
+        "opposes" if case.is_counterexample or claim.effect == "adverse" else "additional_support"
+    )
+    return ReasonStatement(title, explanation, claim_refs, evidence_refs, title.lower(), direction, comparison)
 
 
 def _training_concern(claims: Sequence[ExplanationClaim], evidence: ExplanationEvidence, technical: bool) -> ConcernStatement:
@@ -310,7 +451,11 @@ def _training_concern(claims: Sequence[ExplanationClaim], evidence: ExplanationE
         explanation = "Во время обучения модель стала хуже распознавать редкую группу, хотя общая метрика не показывала эту проблему."
     subgroup = next((item for item in evidence.subgroups if item.averaged), None)
     if subgroup and subgroup.global_metric_change > 0 and subgroup.subgroup_metric_change < 0:
-        explanation += " Общий результат модели при этом улучшился, поэтому проблема не была видна по общей метрике."
+        decrease = abs(subgroup.subgroup_metric_change) * 100
+        explanation += (
+            f" Общий результат модели при этом улучшился, а качество распознавания редкой группы "
+            f"снизилось на {decrease:.0f} процентных пунктов. Поэтому проблема не была видна по общей метрике."
+        )
     if technical:
         disappeared = [rule for item in evidence.subgroups for rule in item.disappeared_rules]
         if disappeared:
@@ -340,30 +485,71 @@ def _change_statement(
     evidence: ExplanationEvidence,
     domain: Mapping[str, Any],
     technical: bool,
-) -> ChangeStatement:
-    item = next((value for value in evidence.counterfactuals if str(value.source_prediction) == claim.subject_id), None)
-    if item and item.changed_rules and not item.changed_features:
-        text = "Проверка показала, что восстановление специального правила улучшает распознавание редкой группы, даже если общая точность почти не меняется."
-        title = "Восстановить знание о редкой группе"
-    elif item and item.changed_features:
-        feature_section = _domain_section(domain, "features")
-        feature_labels = [
-            str(_domain_entry(feature_section, str(name)).get("label", str(name).replace("_", " ")))
-            for name in item.changed_features
-        ]
-        if len(feature_labels) == 1:
-            change_text = f"Изменение значения признака «{feature_labels[0]}»"
-        else:
-            change_text = f"Изменение значений признаков: {', '.join(feature_labels)}"
-        text = f"{change_text} переводит объект в другой класс в проверенном контрфактическом расчёте."
-        title = "Изменить ключевые признаки"
-    else:
-        text = "Проверенное контрфактическое изменение может изменить класс результата."
-        title = "Проверить альтернативный сценарий"
-    if technical and item:
-        text += f" Наблюдаемый эффект: {item.observed_effect}; действие: {item.actionability}."
+) -> ChangeStatement | None:
+    ref = next((value for value in claim.evidence_refs if str(value).startswith("counterfactual:")), None)
+    try:
+        index = int(str(ref).split(":", 1)[1]) if ref is not None else -1
+    except ValueError:
+        return None
+    if not 0 <= index < len(evidence.counterfactuals):
+        return None
+    item = evidence.counterfactuals[index]
+    if len(item.changed_features) != 1:
+        return None
+    feature, change = next(iter(item.changed_features.items()))
+    if not isinstance(change, Mapping) or change.get("from") is None or change.get("to") is None:
+        return None
+    original = change["from"]
+    changed = change["to"]
+    if not isinstance(original, (int, float)) or not isinstance(changed, (int, float)):
+        return None
+    direction = "decrease" if float(changed) < float(original) else "increase"
+    direction_text = "уменьшить" if direction == "decrease" else "увеличить"
+    feature_entry = _domain_entry(_domain_section(domain, "features"), str(feature))
+    feature_label = str(feature_entry.get("label", str(feature).replace("_", " ")))
+
+    def class_label(value: Any) -> str:
+        entry = _domain_entry(_domain_section(domain, "classes"), str(value))
+        return str(entry.get("label", "другой результат"))
+
+    before = class_label(item.source_prediction)
+    after = class_label(item.target_prediction)
+    original_text = f"{float(original):.2f}".replace(".", ",")
+    changed_text = f"{float(changed):.2f}".replace(".", ",")
+    text = (
+        f"Если {direction_text} показатель «{feature_label}» с {original_text} до {changed_text}, "
+        f"повторный запуск модели меняет прогноз с «{before}» на «{after}»."
+    )
+    if item.observed_effect is not None:
+        effect_text = f"{item.observed_effect:+.3f}".replace(".", ",")
+        text += f" Максимальная оценка класса при этом изменилась на {effect_text}."
+    actionability = (
+        "Расчёт показывает чувствительность модели, но не означает, что этот показатель можно изменить на практике."
+    )
+    if item.plausibility is not None and item.plausibility >= 0.8:
+        actionability = (
+            "Новое значение встречается в обучающих данных, но физическая возможность такого изменения должна быть проверена специалистом."
+        )
+    text += f" {actionability}"
+    title = f"Что изменится при изменении показателя «{feature_label}»"
+    if technical:
+        text += f" Код действия: {item.actionability}."
     claim_refs, evidence_refs = _refs((claim,))
-    return ChangeStatement(title, text, claim_refs, evidence_refs)
+    return ChangeStatement(
+        title,
+        text,
+        claim_refs,
+        evidence_refs,
+        str(feature),
+        original,
+        changed,
+        direction,
+        item.source_prediction,
+        item.target_prediction,
+        item.observed_effect,
+        item.plausibility,
+        actionability,
+    )
 
 
 def _deduplicate(statements: Sequence[HumanStatement]) -> list[HumanStatement]:
@@ -383,9 +569,24 @@ def _validate_domain_user(explanation: HumanExplanation) -> None:
         match = term.search(explanation.user_text)
         if match:
             raise ValueError(f"technical term leaked into domain-user explanation: {match.group(0)}")
+    for phrase in VAGUE_DOMAIN_PHRASES:
+        if phrase in explanation.user_text.lower():
+            raise ValueError(f"vague phrase leaked into domain-user explanation: {phrase}")
     for fragment in explanation.fragments:
         if not fragment.claim_refs or not fragment.evidence_refs:
             raise ValueError("every human fragment must be traceable to claims and evidence")
+    for reason in explanation.main_reasons:
+        if not reason.subject_label or not reason.effect_direction or not reason.comparison_text:
+            raise ValueError("every domain-user reason must name subject, direction, and comparison")
+    if not (
+        explanation.reliability.supported_by
+        or explanation.reliability.limited_by
+        or explanation.reliability.missing_evidence
+    ):
+        raise ValueError("domain-user reliability must state concrete support, limitations, or missing evidence")
+    for change in explanation.what_would_change_result:
+        if change.original_value is None or change.changed_value is None or not change.direction:
+            raise ValueError("incomplete counterfactual leaked into domain-user explanation")
 
 
 def compose_human_explanation(
@@ -424,27 +625,18 @@ def compose_human_explanation(
             else:
                 contradicts.append(ConcernStatement(reason.title, reason.explanation, reason.claim_refs, reason.evidence_refs))
         elif claim.claim_type == "model_rule" and claim.effect != "adverse":
-            supports.append(_rule_reason(claim, evidence, technical))
+            rule_reason = _rule_reason(claim, evidence, domain, technical)
+            if rule_reason is not None:
+                supports.append(rule_reason)
         elif claim.claim_type == "class_concept":
             supports.append(_concept_reason(claim, evidence, domain, technical))
         elif claim.claim_type == "similar_case":
-            similar = _similar_statement(claim, evidence, technical)
+            similar = _similar_statement(claim, evidence, domain, technical)
             similar_details.append(similar)
             if claim.effect == "adverse":
                 contradicts.append(ConcernStatement(similar.title, similar.explanation, similar.claim_refs, similar.evidence_refs))
             else:
-                supports.append(ReasonStatement(similar.title, similar.explanation, similar.claim_refs, similar.evidence_refs))
-
-    if not supports:
-        claim_refs, evidence_refs = _refs((prediction,))
-        supports.append(
-            ReasonStatement(
-                "Совокупность доступных признаков",
-                "Доступные признаки в совокупности поддерживают выбранный моделью результат.",
-                claim_refs,
-                evidence_refs,
-            )
-        )
+                supports.append(similar)
     supports = cast(list[ReasonStatement], _deduplicate(supports))
 
     concern_claims = [claim for claim in ranked if claim.claim_type in {"forgetting", "subgroup_averaging", "lost_rules"}]
@@ -458,35 +650,93 @@ def compose_human_explanation(
         if claim.claim_type in {"data_deviation", "diagnostic", "missing_channel"}:
             concerns.append(_generic_concern(claim, technical))
     concerns.extend(contradicts)
+    if not supports:
+        claim_refs, evidence_refs = _refs((prediction,))
+        concerns.append(
+            ConcernStatement(
+                "Причины прогноза не раскрыты",
+                "Доступен итог модели, но нет подтверждённых данных о конкретных признаках, правилах или примерах, которые его поддержали.",
+                claim_refs,
+                evidence_refs,
+            )
+        )
     concerns = cast(list[ConcernStatement], _deduplicate(concerns))
 
     action_entry = _domain_entry(_domain_section(domain, "actions"), action)
-    default_action = _ACTION_TEXT.get(action, ("Проверить результат", "Перед применением результата требуется дополнительная проверка."))
+    default_action = _ACTION_TEXT.get(
+        action,
+        (
+            "Проверить результат",
+            "Передать результат предметному специалисту и проверить исходные данные, основные причины и ограничения модели.",
+        ),
+    )
     action_title = str(action_entry.get("label", default_action[0]))
     action_explanation = str(action_entry.get("explanation", default_action[1]))
     action_refs, action_evidence = _refs((action_claim,))
     action_statement = ActionStatement(action_title, action_explanation, action_refs, action_evidence, action)
 
-    reliability_claims = [action_claim, *[claim for claim in ranked if claim.claim_type in {"diagnostic", "data_quality", "forgetting"}][:2]]
-    reliability_refs, reliability_evidence = _refs(reliability_claims)
-    if action == "accept":
-        reliability_text = "Большинство доступных проверок поддерживает результат; сохраняется обычное ограничение применимости модели."
-        reliability_title = "Достаточно для контролируемого применения"
-    elif action == "block":
-        reliability_text = "Обнаружено критическое противоречие, поэтому результат нельзя применять автоматически."
-        reliability_title = "Недостаточно для применения"
-    elif action == "insufficient_evidence":
-        reliability_text = "Доступных подтверждений недостаточно, чтобы оценить результат как надёжный."
-        reliability_title = "Недостаточно подтверждений"
-    else:
-        reliability_text = "Результат подтверждается частью доступных сведений, но недостаточно надёжен для автоматического решения."
-        reliability_title = "Требуется дополнительная проверка"
-    reliability = ReliabilityStatement(reliability_title, reliability_text, reliability_refs, reliability_evidence)
-
-    changes = [_change_statement(claim, evidence, domain, technical) for claim in ranked if claim.claim_type == "counterfactual"]
-    changes = cast(list[ChangeStatement], _deduplicate(changes))[: profile.max_changes]
     main_reasons = supports[: profile.max_reasons]
     visible_concerns = concerns[: profile.max_concerns]
+    visible_claim_ids = tuple(
+        dict.fromkeys(
+            ref
+            for statement in (*main_reasons, *visible_concerns)
+            for ref in statement.claim_refs
+        )
+    )
+    claim_by_id = {claim.claim_id: claim for claim in claims}
+    reliability_claims = [action_claim, *[claim_by_id[ref] for ref in visible_claim_ids if ref in claim_by_id]]
+    reliability_claims.extend(
+        claim
+        for claim in ranked
+        if claim.claim_type in {"diagnostic", "data_quality", "forgetting", "missing_channel"}
+        and claim not in reliability_claims
+    )
+    reliability_refs, reliability_evidence = _refs(reliability_claims)
+    supported_by = tuple(reason.subject_label for reason in main_reasons[:3])
+    limited_by = tuple(concern.title for concern in visible_concerns[:2])
+    missing_items = [str(item).replace("_", " ") for item in evidence.missing]
+    if decision.domain_language_status == "insufficient_domain_language":
+        missing_items.append("предметное значение прогнозируемой группы")
+    missing_evidence = tuple(dict.fromkeys(missing_items))
+    reliability_parts: list[str] = []
+    if supported_by:
+        reliability_parts.append(f"Решение поддерживают: {', '.join(item.lower() for item in supported_by)}.")
+    if limited_by:
+        reliability_parts.append(f"Доверие ограничивают: {', '.join(item.lower() for item in limited_by)}.")
+    if missing_evidence:
+        reliability_parts.append(f"Не хватает данных для проверок: {', '.join(missing_evidence)}.")
+    if action == "accept":
+        conclusion = "Существенных противоречий для контролируемого применения не обнаружено."
+        reliability_title = "Достаточно для контролируемого применения"
+    elif action == "block":
+        conclusion = "Обнаруженное противоречие запрещает автоматическое применение результата."
+        reliability_title = "Недостаточно для применения"
+    elif action == "insufficient_evidence":
+        conclusion = "Без недостающих данных надёжность результата оценить нельзя."
+        reliability_title = "Недостаточно подтверждений"
+    else:
+        conclusion = "Эти ограничения не позволяют использовать результат автоматически."
+        reliability_title = "Требуется дополнительная проверка"
+    reliability_text = " ".join([*reliability_parts, conclusion])
+    reliability = ReliabilityStatement(
+        reliability_title,
+        reliability_text,
+        reliability_refs,
+        reliability_evidence,
+        supported_by,
+        limited_by,
+        missing_evidence,
+        conclusion,
+    )
+
+    change_candidates = [
+        _change_statement(claim, evidence, domain, technical)
+        for claim in claims
+        if claim.claim_type == "counterfactual"
+    ]
+    changes = [item for item in change_candidates if item is not None]
+    changes = cast(list[ChangeStatement], _deduplicate(changes))[: profile.max_changes]
 
     technical_metrics: list[HumanStatement] = []
     for claim in ranked:

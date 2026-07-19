@@ -8,6 +8,8 @@ EvidenceStatus = Literal["supported", "contested", "insufficient_evidence", "not
 EffectDirection = Literal["favorable", "adverse", "neutral", "mixed", "unknown"]
 Severity = Literal["info", "warning", "critical"]
 AudienceName = Literal["domain_user", "ml_engineer", "auditor", "researcher"]
+DomainLanguageStatus = Literal["available", "insufficient_domain_language"]
+ReasonEffectDirection = Literal["supports", "opposes", "mixed", "additional_support"]
 
 
 def _jsonable(value: Any) -> Any:
@@ -417,12 +419,28 @@ class HumanStatement(EvidenceContract):
 
 @dataclass(frozen=True)
 class DecisionStatement(HumanStatement):
-    pass
+    domain_language_status: DomainLanguageStatus
+
+    def __post_init__(self) -> None:
+        super().__post_init__()
+        if self.domain_language_status not in {"available", "insufficient_domain_language"}:
+            raise ValueError("unsupported domain-language status")
 
 
 @dataclass(frozen=True)
 class ReasonStatement(HumanStatement):
-    pass
+    subject_label: str
+    effect_direction: ReasonEffectDirection
+    comparison_text: str
+
+    def __post_init__(self) -> None:
+        super().__post_init__()
+        if not self.subject_label.strip():
+            raise ValueError("human reason requires a concrete subject label")
+        if self.effect_direction not in {"supports", "opposes", "mixed", "additional_support"}:
+            raise ValueError("unsupported human-reason effect direction")
+        if not self.comparison_text.strip():
+            raise ValueError("human reason requires an explicit comparison")
 
 
 @dataclass(frozen=True)
@@ -432,7 +450,17 @@ class ConcernStatement(HumanStatement):
 
 @dataclass(frozen=True)
 class ReliabilityStatement(HumanStatement):
-    pass
+    supported_by: Sequence[str]
+    limited_by: Sequence[str]
+    missing_evidence: Sequence[str]
+    conclusion: str
+
+    def __post_init__(self) -> None:
+        super().__post_init__()
+        if not self.conclusion.strip():
+            raise ValueError("reliability statement requires a conclusion")
+        if not (self.supported_by or self.limited_by or self.missing_evidence):
+            raise ValueError("reliability statement requires concrete support, limitation, or missing evidence")
 
 
 @dataclass(frozen=True)
@@ -442,7 +470,24 @@ class ActionStatement(HumanStatement):
 
 @dataclass(frozen=True)
 class ChangeStatement(HumanStatement):
-    pass
+    feature: str
+    original_value: Any
+    changed_value: Any
+    direction: str
+    prediction_before: Any
+    prediction_after: Any
+    observed_effect: float | None
+    plausibility: float | None
+    actionability: str
+
+    def __post_init__(self) -> None:
+        super().__post_init__()
+        if not self.feature.strip() or self.original_value is None or self.changed_value is None:
+            raise ValueError("human counterfactual requires feature, original value, and changed value")
+        if not self.direction.strip() or self.prediction_before is None or self.prediction_after is None:
+            raise ValueError("human counterfactual requires direction and predictions before/after")
+        if not self.actionability.strip():
+            raise ValueError("human counterfactual requires an actionability statement")
 
 
 @dataclass(frozen=True)
@@ -533,8 +578,53 @@ class HumanExplanation(EvidenceContract):
             explanation = str(value["explanation"])
             claim_refs = tuple(str(item) for item in value.get("claim_refs", ()))
             evidence_refs = tuple(str(item) for item in value.get("evidence_refs", ()))
+            if kind is DecisionStatement:
+                return DecisionStatement(
+                    title,
+                    explanation,
+                    claim_refs,
+                    evidence_refs,
+                    cast(DomainLanguageStatus, str(value.get("domain_language_status", "available"))),
+                )
+            if kind is ReasonStatement:
+                return ReasonStatement(
+                    title,
+                    explanation,
+                    claim_refs,
+                    evidence_refs,
+                    str(value.get("subject_label", title)),
+                    cast(ReasonEffectDirection, str(value.get("effect_direction", "supports"))),
+                    str(value.get("comparison_text", explanation)),
+                )
+            if kind is ReliabilityStatement:
+                return ReliabilityStatement(
+                    title,
+                    explanation,
+                    claim_refs,
+                    evidence_refs,
+                    tuple(str(item) for item in value.get("supported_by", ())),
+                    tuple(str(item) for item in value.get("limited_by", ())),
+                    tuple(str(item) for item in value.get("missing_evidence", ())),
+                    str(value.get("conclusion", explanation)),
+                )
             if kind is ActionStatement:
                 return ActionStatement(title, explanation, claim_refs, evidence_refs, str(value.get("action", "review")))
+            if kind is ChangeStatement:
+                return ChangeStatement(
+                    title,
+                    explanation,
+                    claim_refs,
+                    evidence_refs,
+                    str(value.get("feature", "")),
+                    value.get("original_value"),
+                    value.get("changed_value"),
+                    str(value.get("direction", "")),
+                    value.get("prediction_before"),
+                    value.get("prediction_after"),
+                    float(value["observed_effect"]) if value.get("observed_effect") is not None else None,
+                    float(value["plausibility"]) if value.get("plausibility") is not None else None,
+                    str(value.get("actionability", "")),
+                )
             return kind(title, explanation, claim_refs, evidence_refs)
 
         details_payload = payload.get("details", {})

@@ -6,7 +6,7 @@
   "fidelity": null,
   "prototype_representativeness": null,
   "rule_complexity": 2.0,
-  "sparsity": null,
+  "sparsity": 0.3333333333333333,
   "stability": null,
-  "trace_completeness": 0.8076923076923077
+  "trace_completeness": 0.7333333333333333
 }

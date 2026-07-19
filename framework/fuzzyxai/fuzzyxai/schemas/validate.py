@@ -139,6 +139,36 @@ def validate_payload(payload: dict[str, Any], schema: str) -> ValidationResult:
         for array_field in ("main_reasons", "concerns", "what_would_change_result"):
             if array_field in payload and not isinstance(payload[array_field], (list, tuple)):
                 errors.append(f"{array_field} must be array")
+        decision = payload.get("decision", {})
+        if isinstance(decision, dict) and decision.get("domain_language_status") not in {
+            "available",
+            "insufficient_domain_language",
+        }:
+            errors.append("decision.domain_language_status is required")
+        for index, reason in enumerate(payload.get("main_reasons", ())):
+            if not isinstance(reason, dict) or not all(
+                reason.get(field) for field in ("subject_label", "effect_direction", "comparison_text")
+            ):
+                errors.append(f"main_reasons[{index}] lacks subject, direction, or comparison")
+        reliability = payload.get("reliability", {})
+        if isinstance(reliability, dict):
+            for field in ("supported_by", "limited_by", "missing_evidence", "conclusion"):
+                if field not in reliability:
+                    errors.append(f"reliability.{field} is required")
+        for index, change in enumerate(payload.get("what_would_change_result", ())):
+            required_change = (
+                "feature",
+                "original_value",
+                "changed_value",
+                "direction",
+                "prediction_before",
+                "prediction_after",
+                "observed_effect",
+                "plausibility",
+                "actionability",
+            )
+            if not isinstance(change, dict) or any(field not in change for field in required_change):
+                errors.append(f"what_would_change_result[{index}] is incomplete")
     return ValidationResult(not errors, errors, schema)
 
 

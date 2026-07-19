@@ -19,6 +19,14 @@ FORBIDDEN_USER_TERMS = re.compile(
     r"\b(?:R\d+|S\d+|E[0-5]|gamma|delta|rho|claim_id|defer_to_human|audit_report)\b|\[C-",
     re.IGNORECASE,
 )
+VAGUE_USER_PHRASES = (
+    "часть доступных сведений",
+    "подтверждённая закономерность",
+    "внутреннее представление модели",
+    "нормализованные значения признаков",
+    "проверенный контрфактический расчёт",
+    "референсная выборка",
+)
 
 
 def resolve(path: str):
@@ -48,6 +56,30 @@ def verify_human_explanation(payload: dict, *, expected_audience: str = "domain_
     user_text = str(payload.get("summary", ""))
     if FORBIDDEN_USER_TERMS.search(user_text):
         raise RuntimeError("technical term leaked into domain-user explanation")
+    if any(phrase in user_text.lower() for phrase in VAGUE_USER_PHRASES):
+        raise RuntimeError("vague phrase leaked into domain-user explanation")
+    for reason in payload["main_reasons"]:
+        if not all(reason.get(field) for field in ("subject_label", "effect_direction", "comparison_text")):
+            raise RuntimeError("domain-user reason lacks subject, direction, or comparison")
+    reliability = payload["reliability"]
+    if not reliability.get("conclusion") or not any(
+        reliability.get(field) for field in ("supported_by", "limited_by", "missing_evidence")
+    ):
+        raise RuntimeError("reliability statement lacks concrete support or limitation")
+    for change in payload["what_would_change_result"]:
+        required = (
+            "feature",
+            "original_value",
+            "changed_value",
+            "direction",
+            "prediction_before",
+            "prediction_after",
+            "observed_effect",
+            "plausibility",
+            "actionability",
+        )
+        if any(field not in change for field in required):
+            raise RuntimeError("incomplete counterfactual leaked into domain-user explanation")
 
 
 def main() -> None:
@@ -77,6 +109,15 @@ def main() -> None:
     verify_human_explanation(object_85_human)
     if "16-го этапа" not in object_85_human["summary"]:
         raise RuntimeError("object 85 human explanation must identify the observed epoch-16 forgetting transition")
+    if [item["subject_label"] for item in object_85_human["main_reasons"][:2]] != [
+        "трещиноватость породы",
+        "водонасыщенность",
+    ]:
+        raise RuntimeError("object 85 must prioritize concrete feature effects")
+    if "18 процентных пунктов" not in object_85_human["summary"]:
+        raise RuntimeError("object 85 must quantify rare-group degradation")
+    if not object_85_human["what_would_change_result"]:
+        raise RuntimeError("object 85 requires a complete class-changing counterfactual")
     medical = json.loads((GOLDEN / "medical_research_similarity_explanation.json").read_text(encoding="utf-8"))
     if medical["clinical_claims"] or not all(claim["limitations"] for claim in medical["claims"]):
         raise RuntimeError("medical fixture must remain research-only and limitation-backed")
@@ -84,6 +125,10 @@ def main() -> None:
         raise RuntimeError("medical fixture requires media artifacts and two counterexamples")
     medical_human = json.loads((GOLDEN / "medical_research_human_explanation.json").read_text(encoding="utf-8"))
     verify_human_explanation(medical_human)
+    if medical_human["decision"].get("domain_language_status") != "insufficient_domain_language":
+        raise RuntimeError("undefined medical class meaning must be explicit")
+    if "нельзя трактовать как диагноз" not in medical_human["summary"]:
+        raise RuntimeError("medical class fallback must prohibit diagnosis interpretation")
     if "геометрии выделенных областей" not in medical_human["summary"] or "не является вероятностью" not in medical_human["summary"]:
         raise RuntimeError("medical user text must define the scope and limitation of mask similarity")
     matrix = json.loads((GOLDEN / "cross_model/cross_model_matrix.json").read_text(encoding="utf-8"))

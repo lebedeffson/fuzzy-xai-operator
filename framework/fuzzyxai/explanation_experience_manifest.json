@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "milestone": "v1.2.0-rc1 Human Explanation Layer",
+  "milestone": "v1.2.0-rc2 Human Explanation Quality Gate",
   "status": "local_validation_complete_external_gates_pending",
   "contracts": [
     "fuzzyxai.evidence.ExplanationClaim",
@@ -35,6 +35,8 @@
   ],
   "human_validation": {
     "protocol": "docs/user_comprehension_study.md",
+    "response_template": "release_evidence/explanation_experience/comprehension_pilot/response_template.csv",
+    "scorer": "scripts/score_comprehension_pilot.py",
     "status": "planned_not_run"
   }
 }

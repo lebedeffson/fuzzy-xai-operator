@@ -1,5 +1,9 @@
 # Human Explanation Layer
 
+Release candidate `v1.2.0rc2` adds a Human Explanation Quality Gate. It rejects a
+first-level reason unless the serialized card names the subject, the direction of
+its effect, and the comparison used to interpret it.
+
 `HumanExplanation` is the verified communication layer above `ExplanationClaim` and `ExplanationGraph`. It does not invent a second explanation. It selects and groups evidence-backed claims around the questions a person needs to answer.
 
 ## First-level contract
@@ -16,6 +20,13 @@ The `domain_user` profile contains:
 Internal rule IDs, subgroup IDs, claim IDs, E0-E5 labels, operator symbols, and raw action codes are forbidden in this first-level text. They remain available through `inspect()`, `audit()`, and technical audience profiles.
 
 Every card contains non-empty `claim_refs` and `evidence_refs`. A renderer may hide those fields, but it must not remove them from the serialized result.
+
+`ReasonStatement` additionally contains `subject_label`, `effect_direction`, and
+`comparison_text`. `ReliabilityStatement` separates `supported_by`, `limited_by`,
+and `missing_evidence`. A visible `ChangeStatement` contains the changed feature,
+values and predictions before/after, measured effect, plausibility, and
+actionability. Incomplete counterfactuals remain in audit evidence but are not
+shown to `domain_user`.
 
 ## Domain language
 
@@ -44,7 +55,10 @@ plan.domain_language = {
 }
 ```
 
-Without this dictionary the framework uses conservative labels based on feature names and must not claim domain meaning it was not given.
+Without this dictionary the framework does not expose a technical class code as if
+it had domain meaning. The decision receives
+`domain_language_status="insufficient_domain_language"` and explicitly says that
+the domain interpretation is unavailable.
 
 ## API
 
@@ -73,6 +87,15 @@ Supported audiences are `domain_user`, `ml_engineer`, `researcher`, and `auditor
 ## Ranking and comparison
 
 Claims are ranked by decision importance, evidence status, domain relevance, and influence on the recommended action. Raw metric magnitude alone is not enough. Repeated claims are grouped. Comparative statements name their reference, such as percentile in the training reference or similarity representation.
+
+For `domain_user`, the ordering is direct feature effect, native rule, class
+concept, complete tested change, similar case, and surrogate pattern. Similarity is
+supporting context and cannot outrank an available direct feature effect.
+
+The quality gate rejects vague first-level phrases such as "часть доступных
+сведений", "подтверждённая закономерность", and "нормализованные значения
+признаков". Technical audience profiles may still inspect exact methods and raw
+metrics.
 
 Similarity text must state what was compared. For image masks, an IoU of 0.89 means 89% overlap of segmented regions. It is not a probability of the same diagnosis. Medical examples in this repository are controlled research-only fixtures.
 

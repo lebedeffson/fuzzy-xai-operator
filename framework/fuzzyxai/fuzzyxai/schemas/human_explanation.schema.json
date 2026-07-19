@@ -25,22 +25,81 @@
         "evidence_refs": {"type": "array", "minItems": 1, "items": {"type": "string"}}
       },
       "additionalProperties": true
+    },
+    "decision": {
+      "allOf": [
+        {"$ref": "#/$defs/statement"},
+        {
+          "type": "object",
+          "required": ["domain_language_status"],
+          "properties": {
+            "domain_language_status": {"enum": ["available", "insufficient_domain_language"]}
+          }
+        }
+      ]
+    },
+    "reason": {
+      "allOf": [
+        {"$ref": "#/$defs/statement"},
+        {
+          "type": "object",
+          "required": ["subject_label", "effect_direction", "comparison_text"],
+          "properties": {
+            "subject_label": {"type": "string", "minLength": 1},
+            "effect_direction": {"enum": ["supports", "opposes", "mixed", "additional_support"]},
+            "comparison_text": {"type": "string", "minLength": 1}
+          }
+        }
+      ]
+    },
+    "reliability": {
+      "allOf": [
+        {"$ref": "#/$defs/statement"},
+        {
+          "type": "object",
+          "required": ["supported_by", "limited_by", "missing_evidence", "conclusion"],
+          "properties": {
+            "supported_by": {"type": "array", "items": {"type": "string"}},
+            "limited_by": {"type": "array", "items": {"type": "string"}},
+            "missing_evidence": {"type": "array", "items": {"type": "string"}},
+            "conclusion": {"type": "string", "minLength": 1}
+          }
+        }
+      ]
+    },
+    "change": {
+      "allOf": [
+        {"$ref": "#/$defs/statement"},
+        {
+          "type": "object",
+          "required": [
+            "feature", "original_value", "changed_value", "direction",
+            "prediction_before", "prediction_after", "observed_effect",
+            "plausibility", "actionability"
+          ],
+          "properties": {
+            "feature": {"type": "string", "minLength": 1},
+            "direction": {"enum": ["increase", "decrease"]},
+            "actionability": {"type": "string", "minLength": 1}
+          }
+        }
+      ]
     }
   },
   "properties": {
     "audience": {"enum": ["domain_user", "ml_engineer", "researcher", "auditor"]},
     "language": {"const": "ru"},
-    "decision": {"$ref": "#/$defs/statement"},
-    "main_reasons": {"type": "array", "items": {"$ref": "#/$defs/statement"}},
+    "decision": {"$ref": "#/$defs/decision"},
+    "main_reasons": {"type": "array", "items": {"$ref": "#/$defs/reason"}},
     "concerns": {"type": "array", "items": {"$ref": "#/$defs/statement"}},
-    "reliability": {"$ref": "#/$defs/statement"},
+    "reliability": {"$ref": "#/$defs/reliability"},
     "recommended_action": {
       "allOf": [
         {"$ref": "#/$defs/statement"},
         {"type": "object", "required": ["action"], "properties": {"action": {"type": "string"}}}
       ]
     },
-    "what_would_change_result": {"type": "array", "items": {"$ref": "#/$defs/statement"}},
+    "what_would_change_result": {"type": "array", "items": {"$ref": "#/$defs/change"}},
     "details": {
       "type": "object",
       "required": ["supports", "contradicts", "limitations", "training", "similar_cases", "technical_metrics"]

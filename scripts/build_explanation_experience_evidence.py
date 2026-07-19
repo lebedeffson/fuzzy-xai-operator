@@ -35,23 +35,41 @@ def groundwater_plan() -> ExplainPlan:
                 "label": "трещиноватость породы",
                 "meaning": "количество и плотность трещин в горном массиве",
                 "high_text": "Трещин больше, чем в большинстве исследованных участков.",
+                "high_label": "высокая трещиноватость породы",
+                "effect_text": "Поэтому этот показатель увеличивает оценку риска.",
             },
             "water_saturation": {
                 "label": "водонасыщенность",
                 "high_text": "Водонасыщенность выше типичного уровня.",
+                "high_label": "повышенная водонасыщенность",
+                "effect_text": "Поэтому этот показатель увеличивает оценку риска.",
             },
-            "distance": {"label": "расстояние до выработки"},
+            "distance": {
+                "label": "расстояние до выработки",
+                "low_label": "небольшое расстояние до выработки",
+                "low_text": "Расстояние до выработки меньше типичного.",
+                "effect_text": "Небольшое расстояние увеличивает оценку риска.",
+            },
             "pressure": {"label": "давление воды"},
         },
-        "classes": {"0": {"label": "низкий риск"}, "1": {"label": "повышенный риск"}},
+        "classes": {
+            "0": {"label": "низкий риск", "meaning": "условия с низкой оценкой риска прорыва подземных вод"},
+            "1": {"label": "повышенный риск", "meaning": "условия с повышенной оценкой риска прорыва подземных вод"},
+        },
+        "representations": {
+            "normalized tabular feature vector": {"label": "значения геологических показателей"}
+        },
         "actions": {
             "review": {
                 "label": "Проверить специалистом",
                 "explanation": "Передать результат специалисту и отдельно проверить трещиноватость и водонасыщенность.",
             },
             "defer_to_human": {
-                "label": "Передать специалисту",
-                "explanation": "Передать результат специалисту и не применять его автоматически до предметной проверки.",
+                "label": "Передать инженеру-геологу",
+                "explanation": (
+                    "Передать результат инженеру-геологу. Отдельно проверить трещиноватость, "
+                    "водонасыщенность и принадлежность объекта к редкому типу."
+                ),
             },
         },
     }
@@ -113,11 +131,26 @@ class ControlledRuleModel:
         },
     ]
 
+    @staticmethod
+    def _risk(row):
+        fracture = float(row[0])
+        water = float(row[1]) if len(row) > 2 else 0.5
+        distance = float(row[2] if len(row) > 2 else row[1])
+        return min(0.99, max(0.01, 0.65 * fracture + 0.25 * water + 0.10 * (1.0 - distance)))
+
+    @staticmethod
+    def local_contributions(row):
+        return {
+            "fracture_density": round(0.65 * float(row[0]), 6),
+            "water_saturation": round(0.25 * float(row[1]), 6),
+            "distance": round(0.10 * (1.0 - float(row[2])), 6),
+        }
+
     def predict_proba(self, values):
-        return [[0.18, 0.82] if row[0] >= 0.5 else [0.78, 0.22] for row in values]
+        return [[1.0 - self._risk(row), self._risk(row)] for row in values]
 
     def predict(self, values):
-        return [1 if row[0] >= 0.5 else 0 for row in values]
+        return [1 if self._risk(row) >= 0.5 else 0 for row in values]
 
 
 def stable_payload(result) -> dict:
@@ -133,7 +166,14 @@ def write_json(path: Path, payload: object) -> None:
 def build_object_85() -> dict:
     model = ControlledRuleModel()
     fx = FuzzyXAI.wrap(model, explain_plan=groundwater_plan())
-    rule = next(rule for rule in extract_rules(NativeRuleAdapter(model), feature_names=["fracture_density", "distance"]) if rule.rule_id == "R31")
+    rule = next(
+        rule
+        for rule in extract_rules(
+            NativeRuleAdapter(model),
+            feature_names=["fracture_density", "water_saturation", "distance"],
+        )
+        if rule.rule_id == "R31"
+    )
     rule = evaluate_rule_ablation(
         rule,
         baseline_metrics={"train": 0.86, "validation": 0.82, "test": 0.84, "subgroup_recall": 0.72, "critical_errors": 2.0, "calibration": 0.11},
@@ -150,10 +190,10 @@ def build_object_85() -> dict:
         }
     )
     result = fx.explain_one(
-        [0.84, 0.2],
+        [0.84, 0.72, 0.2],
         object_id="85",
-        feature_names=["fracture_density", "distance"],
-        reference_data=[[0.1, 0.8], [0.2, 0.7], [0.6, 0.3], [0.7, 0.2]],
+        feature_names=["fracture_density", "water_saturation", "distance"],
+        reference_data=[[0.1, 0.22, 0.8], [0.2, 0.31, 0.7], [0.6, 0.61, 0.3], [0.7, 0.68, 0.2]],
         reference_ids=["11", "12", "67", "68"],
         reference_labels=[0, 0, 1, 1],
         training_run=training,
@@ -164,6 +204,8 @@ def build_object_85() -> dict:
         additional_evidence=ExplanationEvidence(rules=[rule]),
         dataset_version="controlled_object85_v1",
         evidence={
+            "contributions": model.local_contributions([0.84, 0.72, 0.2]),
+            "contribution_method": "native_controlled_rule_score",
             "alignment": {"components": {"rules": 0.10}, "weights": {"rules": 1.0}},
             "reduction": {"components": {"rules": 0.12}, "weights": {"rules": 1.0}},
             "risk": {
@@ -408,11 +450,20 @@ def build_medical_research_fixture() -> dict:
         action="review",
         evidence=human_evidence,
         domain_language={
-            "classes": {"research_class_B": {"label": "исследовательский класс B"}},
+            "scope": "medical",
+            "classes": {"research_class_B": {"label": "исследовательская группа B"}},
+            "representations": {
+                "model embedding vector": {
+                    "label": "форма и структура выделенной области изображения"
+                }
+            },
             "actions": {
                 "review": {
-                    "label": "Проверить специалистом",
-                    "explanation": "Использовать сходство только как исследовательскую подсказку, а не как клинический вывод.",
+                    "label": "Использовать только для исследовательского анализа",
+                    "explanation": (
+                        "Не использовать результат как диагноз. Врач должен отдельно оценить изображение, "
+                        "выделенную область и отличия от похожих случаев."
+                    ),
                 }
             },
         },

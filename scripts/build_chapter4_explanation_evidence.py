@@ -24,6 +24,7 @@ OUTPUT = ROOT / "release_evidence/chapter4_explanation_experience"
 FIGURES = OUTPUT / "figures"
 TABLES = OUTPUT / "tables"
 HUMAN = OUTPUT / "human_explanations"
+PILOT = OUTPUT / "comprehension_pilot"
 
 
 def write_json(path: Path, payload: object) -> None:
@@ -124,7 +125,7 @@ def write_table(path: Path, rows: list[dict[str, object]]) -> None:
 def main() -> None:
     subprocess.run([sys.executable, str(ROOT / "scripts/build_explanation_experience_evidence.py")], cwd=ROOT, check=True)
     if OUTPUT.exists(): shutil.rmtree(OUTPUT)
-    FIGURES.mkdir(parents=True); TABLES.mkdir(parents=True); HUMAN.mkdir(parents=True)
+    FIGURES.mkdir(parents=True); TABLES.mkdir(parents=True); HUMAN.mkdir(parents=True); PILOT.mkdir(parents=True)
 
     for name in (
         "object_85_human_explanation.json",
@@ -133,6 +134,9 @@ def main() -> None:
         "medical_research_human_explanation.md",
     ):
         shutil.copy2(SOURCE / name, HUMAN / name)
+    shutil.copy2(SOURCE / "comprehension_pilot/README.md", PILOT / "README.md")
+    shutil.copy2(SOURCE / "comprehension_pilot/response_template.csv", PILOT / "response_template.csv")
+    shutil.copy2(ROOT / "scripts/score_comprehension_pilot.py", PILOT / "score_comprehension_pilot.py")
 
     build_architecture(FIGURES / "01_framework_architecture.png")
     render_fixture(SOURCE / "object_85_explanation.json", "provenance", FIGURES / "02_evidence_claim_diagnostic_action.png")
@@ -197,6 +201,7 @@ def main() -> None:
     print(f"PASS: chapter4_operator_matrix {len(matrix)}/30")
     print("PASS: chapter4_figures 12/12")
     print("PASS: chapter4_human_explanations 4/4")
+    print("PASS: chapter4_comprehension_pilot_assets 3/3")
     print(f"PASS: chapter4_evidence_archive {archive}")
 
 

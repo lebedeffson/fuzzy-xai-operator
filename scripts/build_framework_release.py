@@ -45,12 +45,14 @@ REQUIRED_PATHS = {
     "fuzzy-xai-operator/framework/fuzzyxai/matlab/+fuzzyxai/explanationStory.m",
     "fuzzy-xai-operator/examples/object_85_training_trace.py",
     "fuzzy-xai-operator/scripts/verify_explanation_experience.py",
+    "fuzzy-xai-operator/scripts/score_comprehension_pilot.py",
     "fuzzy-xai-operator/scripts/build_chapter4_explanation_evidence.py",
     "fuzzy-xai-operator/docs/user_comprehension_study.md",
     "fuzzy-xai-operator/docs/human_explanation_layer.md",
     "fuzzy-xai-operator/tests/test_human_explanation_layer.py",
     "fuzzy-xai-operator/release_evidence/explanation_experience/object_85_human_explanation.json",
     "fuzzy-xai-operator/release_evidence/explanation_experience/medical_research_human_explanation.json",
+    "fuzzy-xai-operator/release_evidence/explanation_experience/comprehension_pilot/response_template.csv",
     "fuzzy-xai-operator/release_evidence/chapter4_explanation_experience/manifest_sha256.json",
 }
 

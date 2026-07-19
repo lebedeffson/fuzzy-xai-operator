@@ -6,8 +6,8 @@ This protocol does not report user-study findings. It defines the gate that must
 
 ## Participants
 
-- 3-5 software developers integrating predictive models;
-- 3-5 domain specialists who did not implement FuzzyXAI;
+- at least 3 software developers integrating predictive models;
+- at least 3 domain specialists who did not implement FuzzyXAI;
 - optional independent auditor familiar with model governance.
 
 ## Domain-user tasks
@@ -33,6 +33,15 @@ After opening technical details, model integrators and auditors identify native,
 - unsupported-inference count;
 - System Usability Scale as a descriptive secondary measure;
 - qualitative failure categories.
+
+## Comparison design
+
+Use a counterbalanced within-participant comparison. Every participant answers
+the same questions first for either the standard prediction with technical plots
+or the Human Explanation cards, then for the other mode. Record the condition
+order to separate presentation-order effects. Use
+`release_evidence/explanation_experience/comprehension_pilot/response_template.csv`
+and score the anonymized rows with `scripts/score_comprehension_pilot.py`.
 
 Record separately whether a participant introduced an unsupported causal, diagnostic, or probability interpretation.
 
