@@ -1,6 +1,6 @@
 # FuzzyXAI Framework Release Status
 
-Status: release candidate pending public GitHub Actions.
+Status: release candidate validated by public GitHub Actions.
 
 ## Completed
 
@@ -15,7 +15,8 @@ Status: release candidate pending public GitHub Actions.
 
 ## Acceptance gates
 
-See `TEST_REPORT.txt` for the latest local results. A release tag is intentionally withheld until the pushed commit passes the public GitHub Actions matrix.
+See `TEST_REPORT.txt` for the latest local and public results. Public run
+`29668215392` passed the Python 3.11, Python 3.12, and Octave jobs.
 
 The clean-checkout acceptance was completed independently on Python 3.11 and
 3.12. Both environments reported 299 passing tests, built wheel and sdist

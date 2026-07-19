@@ -15,14 +15,16 @@ PASS: clean Python 3.12 checkout - 299 passed
 PASS: clean Python 3.12 framework gate
 PASS: clean Python 3.12 wheel and sdist build
 PASS: clean Python 3.12 installed-wheel import
+PASS: public GitHub Actions Python 3.11
+PASS: public GitHub Actions Python 3.12
+PASS: public GitHub Actions Octave JSON/dashboard smoke
+Public run: https://github.com/lebedeffson/fuzzy-xai-operator/actions/runs/29668215392
 
 Environment used for the full local regression suite:
 - local project virtual environment
 - Python 3.14
 
-Pending before release tag:
-- public GitHub Actions Python matrix
-- public GitHub Actions Octave JSON/dashboard smoke
+Release tag candidate: v1.0.0-rc1
 
 Warnings in the full suite are limited to third-party sklearn feature-name and
 SHAP/Matplotlib deprecation warnings; no framework test failed.
