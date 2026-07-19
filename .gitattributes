@@ -1,9 +1,11 @@
 site/ export-ignore
 reports/ export-ignore
+fuzzyxai_experiments/ export-ignore
 research_validation/outputs/ export-ignore
 external_validation/outputs/ export-ignore
 applications/scenarios/ export-ignore
-fuzzyxai_experiments/reports/ export-ignore
 dissertation_artifacts/ export-ignore
 figures/ export-ignore
 .vscode/ export-ignore
+*.zip export-ignore
+*.docx export-ignore
