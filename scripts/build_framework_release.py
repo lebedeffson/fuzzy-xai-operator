@@ -32,7 +32,7 @@ REQUIRED_PATHS = {
     "fuzzy-xai-operator/framework/fuzzyxai/fuzzyxai/evidence/contracts.py",
     "fuzzy-xai-operator/framework/fuzzyxai/fuzzyxai/evidence/claims.py",
     "fuzzy-xai-operator/framework/fuzzyxai/fuzzyxai/evidence/graph.py",
-    "fuzzy-xai-operator/framework/fuzzyxai/fuzzyxai/inspection.py",
+    "fuzzy-xai-operator/framework/fuzzyxai/fuzzyxai/runtime.py",
     "fuzzy-xai-operator/framework/fuzzyxai/fuzzyxai/schemas/explanation_visual_spec.schema.json",
     "fuzzy-xai-operator/framework/fuzzyxai/fuzzyxai/visualization/explanation_dashboard.py",
     "fuzzy-xai-operator/framework/fuzzyxai/fuzzyxai/visualization/matplotlib_renderer.py",
