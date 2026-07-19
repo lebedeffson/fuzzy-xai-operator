@@ -81,6 +81,7 @@ def build() -> dict[str, object]:
         ROOT / "configs/full_empirical_validation.json",
         ROOT / "scripts/reproduce_all.py",
         ROOT / "scripts/verify_reproduction.py",
+        ROOT / "scripts/verify_empirical_archives.py",
         ROOT / "scripts/run_full_empirical_validation.py",
         ROOT / "scripts/run_optional_multimodal_models.py",
         ROOT / "scripts/verify_full_empirical_validation.py",

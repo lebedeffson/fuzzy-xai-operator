@@ -1,5 +1,32 @@
 # Project Memory
 
+## Full Empirical Validation
+
+- Date: 2026-07-20
+- Branch: `feat/full-empirical-validation`
+- Measured implementation commit: `2557ad45ae81214bb51eb23bd88a0e4daaa327ac`
+- Artifact-layout correction: `ae016fd`
+- Candidate status: full E1-E8 technical validation; stable release remains blocked
+
+The current milestone adds a controlled, evidence-first validation layer without changing the defended chapter 2-3
+operator semantics. Four deterministic modality contours contain 10,000 objects each. The full protocol measures
+repeated rule ablation, explanation baselines, P1-P7 action policies, calibration, sensitivity, adaptive uncertainty
+representations, critical-rupture association, and scalability. The Docker image runs the same one-command pipeline.
+
+Measured boundaries must remain explicit:
+
+- SHAP, LIME, Anchors, RuleFit, confidence, disagreement, reduced-history FuzzyXAI, and full FuzzyXAI are measured;
+- the 50-pair rule-ablation experiment does not confirm a general subgroup-recall effect;
+- adaptive selection uses `FML` for 55.22% of controlled objects and is non-inferior to always-FML in the declared risk metric;
+- the critical-rupture indicator has incremental AUPRC `-0.12556024709557384`, so no safety or predictive-gain claim is allowed;
+- the critical rupture remains a structural diagnostic indicator only;
+- controlled multimodal results do not establish external-domain generalization;
+- expert review and comprehension pilot remain `planned_not_run`; domain semantic review remains pending;
+- merge to `main` and a stable tag remain forbidden while those external gates are open.
+
+Public run `29706487011` confirmed the full E1-E8 job and checkout-independent Docker reproduction. Its final aggregation
+exposed an artifact-root layout defect, corrected in `ae016fd`; later runs must be used for the final aggregate archive.
+
 - Date: 2026-07-19
 - Branch: `feat/universal-model-integration`
 - Base: `79d39f61f02df1cf1d63fc92dd2a1ebebfef7de7`

@@ -11,7 +11,6 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_EVIDENCE = ROOT / "release_evidence/full_empirical_validation"
-DEFAULT_EVIDENCE = ROOT / "release_evidence/full_empirical_validation"
 
 
 DESCRIPTIONS = (
@@ -64,9 +63,9 @@ def build(evidence: Path, output: Path) -> dict[str, object]:
         *[any(row["mode"] == mode for row in e7["rows"]) for mode in ("always_F0", "always_Fint", "always_NAS", "always_FML", "adaptive")], all("coverage" in row for row in e7["rows"]), all("mean_complexity" in row for row in e7["rows"]), all("mean_risk" in row for row in e7["rows"]), all("mean_complexity" in row for row in e7["rows"]), "non_inferior_to_fml" in e7, e7["adaptive_fml_fraction"] <= 0.9 or not e7["practical_hierarchy_claim_allowed"],
         True, True, e8["association"]["n_objects"] > 0, len(e8["detector_comparison"]) >= 7, e8["safety_claim_allowed"] or e8["claim_rule"].startswith("without incremental"),
         {1000, 5000, 10000, 50000}.issubset(scaling_sizes), all("peak_memory_bytes" in row for row in e8["scalability"]["measurements"]), all("graph_nodes" in row for row in e8["scalability"]["measurements"]), "log_log_fit" in e8["scalability"],
-        (ROOT / "Dockerfile").is_file(), (ROOT / "requirements.lock").is_file(), (ROOT / "Makefile").is_file(), (ROOT / "scripts/reproduce_all.py").is_file(), _status_pass(evidence / "docker_reproduction.json"), all(row.get("sha256") for row in e1["datasets"]), (evidence / "manifest_sha256.json").is_file(), (ROOT / "dissertation_artifacts/tables_manifest.json").is_file(), (ROOT / "dissertation_artifacts/chapter4/fig_4_risk_coverage.png").is_file(), False,
+        (ROOT / "Dockerfile").is_file(), (ROOT / "requirements.lock").is_file(), (ROOT / "Makefile").is_file(), (ROOT / "scripts/reproduce_all.py").is_file(), _status_pass(evidence / "docker_reproduction.json"), all(row.get("sha256") for row in e1["datasets"]), (evidence / "manifest_sha256.json").is_file(), (ROOT / "dissertation_artifacts/tables_manifest.json").is_file(), (ROOT / "dissertation_artifacts/chapter4/fig_4_risk_coverage.png").is_file(), _status_pass(ROOT / "release_artifacts/empirical_archive_verification.json"),
         review["sample_size"] == 100, (ROOT / "study/expert_review/reviewer_form.md").is_file(), review["packets"] >= 4, review["status"] == "planned_not_run" and not review["claim_allowed"], external["comprehension_pilot"] == "planned_not_run", external["domain_semantic_review"] == "pending_external_review",
-        _status_pass(evidence / "ci_fast_status.json"), _status_pass(evidence / "ci_heavy_status.json"), True, (ROOT / "dissertation_artifacts/claims/chapter3_4_claims.json").is_file(), False, False, run["release_status"] == "BLOCKED", not run["tag_allowed"],
+        _status_pass(evidence / "ci_fast_status.json"), _status_pass(evidence / "ci_heavy_status.json"), True, (ROOT / "dissertation_artifacts/claims/chapter3_4_claims.json").is_file(), _has_release_section(ROOT / "PROJECT_MEMORY.md"), _has_release_section(ROOT / "RELEASE_STATUS.md"), run["release_status"] == "BLOCKED", not run["tag_allowed"],
     ]
     if len(checks) != 90 or len(DESCRIPTIONS) != 90:
         raise RuntimeError(f"DoD definition mismatch: checks={len(checks)} descriptions={len(DESCRIPTIONS)}")
@@ -89,6 +88,10 @@ def build(evidence: Path, output: Path) -> dict[str, object]:
 
 def _status_pass(path: Path) -> bool:
     return path.is_file() and read(path).get("status") == "PASS"
+
+
+def _has_release_section(path: Path) -> bool:
+    return path.is_file() and "## Full Empirical Validation" in path.read_text(encoding="utf-8")
 
 
 if __name__ == "__main__":

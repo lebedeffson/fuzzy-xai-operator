@@ -1,5 +1,23 @@
-FuzzyXAI v1.3.0rc1 universal model integration candidate
-Date: 2026-07-19
+FuzzyXAI full empirical validation technical candidate
+Date: 2026-07-20
+
+FULL EMPIRICAL VALIDATION
+PASS: four controlled modalities, 10000 objects each
+PASS: E1-E8 measured computational protocols
+PASS: 50 paired rule-ablation comparisons
+PASS: SHAP, LIME, Anchors, RuleFit and declared FuzzyXAI baselines measured
+PASS: P1-P7 policies, calibration, sensitivity and adaptive hierarchy
+PASS: full population analysis and 1k/5k/10k/50k scalability
+PASS: public full E1-E8 job in run 29706487011
+PASS: public checkout-independent Docker reproduction in run 29706487011
+NEGATIVE RESULT: rule removal did not confirm a general subgroup-recall effect
+NEGATIVE RESULT: critical-rupture incremental AUPRC -0.12556024709557384
+CLAIM BOUNDARY: critical rupture is a structural diagnostic only; no safety claim
+BLOCKED: external expert/comprehension pilot planned_not_run
+BLOCKED: regulated-domain semantic review pending_external_review
+BLOCKED: main merge and stable tag
+
+UNIVERSAL MODEL INTEGRATION BASELINE
 
 PASS: focused local compatibility/model/external-gate suite, 48 passed
 SKIP: local optional runtime tests, 6 skipped because runtimes were not installed locally

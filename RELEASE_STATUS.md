@@ -1,5 +1,27 @@
 # FuzzyXAI Framework Release Status
 
+## Full Empirical Validation
+
+Status: technical candidate on `feat/full-empirical-validation`; stable release remains `BLOCKED`.
+
+- four controlled modality datasets, 10,000 objects each: PASS;
+- 10-fold by 5-seed rule ablation, 50 paired comparisons: PASS;
+- SHAP, LIME, Anchors, RuleFit, confidence and FuzzyXAI baselines: measured;
+- P1-P7 policy comparison, validation-only calibration and sensitivity analysis: PASS;
+- adaptive hierarchy: `F0=1098`, `Fint=1140`, `NAS=2240`, `FML=5522`, no diagnostic refusals;
+- adaptive FML fraction: `0.5522`; non-inferiority criterion: PASS;
+- critical-rupture incremental AUPRC: `-0.12556024709557384`;
+- safety claim: forbidden; interpretation: structural diagnostic only;
+- 1k/5k/10k/50k scalability contour: PASS;
+- full E1-E8 job and Docker reproduction: PASS in public run `29706487011`;
+- independent expert/comprehension work: `planned_not_run`;
+- regulated-domain language review: `pending_external_review`;
+- merge to `main`: blocked;
+- stable release tag: forbidden.
+
+The datasets in this milestone are controlled protocol datasets. Their results support reproducibility and internal
+contract claims only; they do not establish clinical validity, production safety, or external-domain superiority.
+
 Status: `v1.3.0rc1` universal-model integration candidate on `feat/universal-model-integration`. The merged evidence
 matrix contains 40/40 passing configurations: 34 deterministic core configurations and six optional runtime
 integrations measured independently on Python 3.11 and Python 3.12. External comprehension and domain-language

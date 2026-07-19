@@ -94,6 +94,7 @@ jobs:
             release_artifacts/fuzzyxai-dissertation-artifacts-*.zip.sha256
             release_artifacts/fuzzyxai-reproducibility-bundle-*.zip
             release_artifacts/fuzzyxai-reproducibility-bundle-*.zip.sha256
+            release_artifacts/empirical_archive_verification.json
           retention-days: 30
 
   docker-reproduction:
@@ -158,6 +159,11 @@ jobs:
           python scripts/rebuild_empirical_manifest.py
           python scripts/verify_reproduction.py --profile full
           python scripts/build_empirical_archives.py
+          python scripts/verify_empirical_archives.py
+          python scripts/build_empirical_dod.py
+          python scripts/rebuild_empirical_manifest.py
+          python scripts/build_empirical_archives.py
+          python scripts/verify_empirical_archives.py
       - uses: actions/upload-artifact@v4
         with:
           name: fuzzyxai-full-empirical-final-${{ github.sha }}
@@ -173,4 +179,5 @@ jobs:
             release_artifacts/fuzzyxai-dissertation-artifacts-*.zip.sha256
             release_artifacts/fuzzyxai-reproducibility-bundle-*.zip
             release_artifacts/fuzzyxai-reproducibility-bundle-*.zip.sha256
+            release_artifacts/empirical_archive_verification.json
           retention-days: 30

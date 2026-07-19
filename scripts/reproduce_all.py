@@ -34,6 +34,11 @@ def run(profile: str, *, skip_optional: bool, skip_archives: bool) -> None:
     command(python, "scripts/verify_reproduction.py", "--profile", profile)
     if not skip_archives:
         command(python, "scripts/build_empirical_archives.py")
+        command(python, "scripts/verify_empirical_archives.py")
+        command(python, "scripts/build_empirical_dod.py")
+        command(python, "scripts/rebuild_empirical_manifest.py")
+        command(python, "scripts/build_empirical_archives.py")
+        command(python, "scripts/verify_empirical_archives.py")
     print("PASS: reproduce_dissertation_complete")
 
 

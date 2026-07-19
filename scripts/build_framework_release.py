@@ -145,6 +145,7 @@ REQUIRED_PATHS = {
     "fuzzy-xai-operator/scripts/verify_full_empirical_validation.py",
     "fuzzy-xai-operator/scripts/reproduce_all.py",
     "fuzzy-xai-operator/scripts/verify_reproduction.py",
+    "fuzzy-xai-operator/scripts/verify_empirical_archives.py",
     "fuzzy-xai-operator/tests/test_full_empirical_contracts.py",
     "fuzzy-xai-operator/study/expert_review/reviewer_form.md",
 }
