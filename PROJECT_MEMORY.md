@@ -4,6 +4,8 @@
 - Branch: `feat/empirical-validation-gate`
 - Base release candidate: `1ef84d88733bdc94d1221b6f2bb6992452d0347d`
 - Empirical implementation commit: `cb4b433b414efdc2b6fa1346fc7086576dd52c26`
+- Empirical evidence commit: `92af24ce43d8fcf67e94f87091c07ac29e6c3933`
+- Source-release completeness commit: `c8c34b1c6745716337d30e6b7b9c25cb4d3ee287`
 - Candidate version: `1.2.0rc3`
 - Release tag: not created
 
@@ -55,7 +57,7 @@ The primary product remains the installable FuzzyXAI research framework. The web
 - Chapter 4 empirical package and manifest verifier: PASS;
 - Chapter 4 empirical ZIP SHA256: `f80aa4ba799e91b492a10553e7f12c6ebe0e7572a226d6dd562cb8be3973b9e4`;
 - measured figures: `3/3`, visually inspected;
-- public feature CI: pending push;
+- public feature CI: PASS for Python 3.11, Python 3.12, and Octave ([run 29695395925](https://github.com/lebedeffson/fuzzy-xai-operator/actions/runs/29695395925));
 - public main CI: not run for this candidate.
 
 ## Open Gates
@@ -63,7 +65,7 @@ The primary product remains the installable FuzzyXAI research framework. The web
 - independent A/B comprehension pilot: `planned_not_run`, zero participants recorded;
 - regulated-domain dictionary review: `insufficient_domain_language`, external reviewer required;
 - release gate: `BLOCKED`;
-- tag: forbidden until pilot, semantic review, feature CI, and main CI pass.
+- tag: forbidden until pilot, semantic review, merge review, and main CI pass.
 
 ## Archive Policy
 
@@ -74,4 +76,4 @@ The primary product remains the installable FuzzyXAI research framework. The web
 
 ## Next Step
 
-Push the feature branch and verify public Python 3.11/3.12 and Octave CI. Then run the independent pilot and obtain an external semantic review. Do not merge, tag, or finalize Chapter 4 claims before those external gates are recorded.
+Run the independent pilot and obtain an external semantic review. Then review the feature branch for merge and require green main CI. Do not merge, tag, or finalize demonstrated-comprehensibility claims before those external gates are recorded.

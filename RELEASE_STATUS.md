@@ -1,6 +1,6 @@
 # FuzzyXAI Framework Release Status
 
-Status: `v1.2.0rc3` is an untagged Empirical Validation Gate candidate. The measured computational pipeline passes locally. The independent comprehension pilot is `planned_not_run`, and the regulated-domain dictionary is awaiting external semantic review; therefore the release gate is `BLOCKED` and no tag is allowed.
+Status: `v1.2.0rc3` is an untagged Empirical Validation Gate candidate. The measured computational pipeline passes locally and on the public feature-branch CI. The independent comprehension pilot is `planned_not_run`, and the regulated-domain dictionary is awaiting external semantic review; therefore the release gate is `BLOCKED` and no tag is allowed.
 
 ## Measured Computational Gate
 
@@ -38,7 +38,7 @@ Status: `v1.2.0rc3` is an untagged Empirical Validation Gate candidate. The meas
 - Chapter 4 empirical builder/verifier: PASS;
 - Chapter 4 measured figures: `3/3` visually inspected;
 - Chapter 4 empirical ZIP SHA256: `f80aa4ba799e91b492a10553e7f12c6ebe0e7572a226d6dd562cb8be3973b9e4`;
-- public feature CI: pending push;
+- public feature CI: PASS for Python 3.11, Python 3.12, and Octave ([run 29695395925](https://github.com/lebedeffson/fuzzy-xai-operator/actions/runs/29695395925));
 - public main CI: not run for this candidate.
 
 ## Open External Gates

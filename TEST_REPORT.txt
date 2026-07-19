@@ -13,6 +13,7 @@ PASS: measured native tree-rule ablation
 PASS: cross-model matrix, 5 models
 PASS: Chapter 4 empirical evidence verifier
 PASS: Chapter 4 empirical ZIP SHA256 f80aa4ba799e91b492a10553e7f12c6ebe0e7572a226d6dd562cb8be3973b9e4
+PASS: public feature CI Python 3.11, Python 3.12, and Octave, run 29695395925
 BLOCKED: independent comprehension pilot planned_not_run
 BLOCKED: regulated-domain dictionary external review
 BLOCKED: release tag
