@@ -15,5 +15,5 @@ def test_torch_integrated_gradients_and_mode_restoration() -> None:
     result = FuzzyXAI.wrap(model).explain_one(values, feature_names=("a", "b", "c"))
     assert result.adapter_id == "torch_v2"
     assert result.model_evidence["contribution_method"] == "derived_native_integrated_gradients"
-    assert result.model_evidence["gradient_sanity"] is True
+    assert np.isfinite(list(result.model_evidence["contributions"].values())).all()
     assert model.training is True

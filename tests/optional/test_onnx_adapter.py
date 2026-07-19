@@ -24,5 +24,5 @@ def test_onnx_prediction_only_contract(tmp_path) -> None:
     onnx.save(model, path)
     result = FuzzyXAI.wrap(path).explain_one(np.asarray([[0.4]], dtype=np.float32))
     assert result.adapter_id == "onnxruntime_v2"
-    assert "gradients" in result.missing_channels
+    assert result.view_model.trace["adapter_capabilities"]["gradients"] is False
     assert result.model_evidence["contribution_method"] is None
