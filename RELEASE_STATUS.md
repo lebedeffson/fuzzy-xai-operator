@@ -16,7 +16,8 @@ Status: release candidate validated by public GitHub Actions.
 ## Acceptance gates
 
 See `TEST_REPORT.txt` for the latest local and public results. Public run
-`29668215392` passed the Python 3.11, Python 3.12, and Octave jobs.
+`29668215392` and final metadata run `29668320459` passed the Python 3.11,
+Python 3.12, and Octave jobs. The validated release tag is `v1.0.0-rc1`.
 
 The clean-checkout acceptance was completed independently on Python 3.11 and
 3.12. Both environments reported 299 passing tests, built wheel and sdist

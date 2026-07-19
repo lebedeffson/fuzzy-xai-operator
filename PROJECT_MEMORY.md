@@ -4,7 +4,7 @@
 - Branch: `feat/research-framework-completion`
 - Implementation commit: `17e43f750c5100fd25148dd52aa49abbdc24f644`
 - Release-check commits: `62b58f9`, `b0ae0c0`
-- Tag candidate: `v1.0.0-rc1`
+- Release tag: `v1.0.0-rc1`
 
 ## Current focus
 
@@ -59,7 +59,7 @@ The canonical adapter contract is `ModelAdapter`. The canonical visualization na
 - controlled object 85 protocol: PASS;
 - MATLAB files included in the wheel: PASS;
 - MATLAB/Octave execution: PASS in public GitHub Actions;
-- public GitHub Actions run `29668215392`: Python 3.11 PASS, Python 3.12 PASS, Octave PASS.
+- public GitHub Actions runs `29668215392` and `29668320459`: Python 3.11 PASS, Python 3.12 PASS, Octave PASS.
 
 ## Next step
 
