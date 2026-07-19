@@ -64,6 +64,7 @@ def build_explanation_claims(
         )
 
     predictions = prediction.get("predictions")
+    predicted_value = predictions[0] if isinstance(predictions, (list, tuple)) and predictions else predictions
     score = prediction.get("score")
     score_text = f" с максимальным модельным баллом {score:.3f}" if isinstance(score, (int, float)) else ""
     add(
@@ -78,6 +79,32 @@ def build_explanation_claims(
         metric_value=float(score) if isinstance(score, (int, float)) else None,
         effect="neutral",
     )
+
+    contribution_method = str(prediction.get("contribution_method", "unknown"))
+    contributions = prediction.get("contributions", {})
+    if isinstance(contributions, Mapping):
+        is_surrogate = "surrogate" in contribution_method.lower()
+        for feature, raw_value in sorted(contributions.items(), key=lambda item: abs(float(item[1])), reverse=True):
+            value = float(raw_value)
+            limitations = (
+                "Surrogate contribution fidelity is limited to the measured local approximation.",
+            ) if is_surrogate else ()
+            add(
+                "feature_contribution",
+                "object",
+                str(feature),
+                f"Локальный вклад признака {feature} равен {value:+.3f} по методу {contribution_method}.",
+                f"Вклад {feature}: {value:+.3f}",
+                [f"contribution:{feature}"],
+                strength=min(1.0, abs(value)),
+                limitations=limitations,
+                metric_name="local_contribution",
+                metric_value=value,
+                comparison_baseline="zero local contribution",
+                effect="favorable" if value >= 0 else "adverse",
+                native=not is_surrogate,
+                surrogate=is_surrogate,
+            )
 
     for item in evidence.data:
         data_ref = f"data:{item.object_id}"
@@ -236,7 +263,13 @@ def build_explanation_claims(
             metric_name="similarity",
             metric_value=case.similarity_score,
             comparison_baseline=case.compared_representation,
-            effect="favorable" if case.reference_label == case.reference_prediction else "mixed",
+            effect=(
+                "adverse"
+                if case.is_counterexample
+                else "favorable"
+                if case.reference_label == predicted_value or case.reference_prediction == predicted_value
+                else "mixed"
+            ),
         )
 
     for index, counterfactual in enumerate(evidence.counterfactuals):

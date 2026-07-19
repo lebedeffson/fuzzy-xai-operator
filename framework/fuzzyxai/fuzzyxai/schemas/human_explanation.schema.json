@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://dubnaxai.example/schemas/human_explanation.schema.json",
+  "title": "FuzzyXAI HumanExplanation",
+  "type": "object",
+  "required": [
+    "audience",
+    "language",
+    "decision",
+    "main_reasons",
+    "concerns",
+    "reliability",
+    "recommended_action",
+    "what_would_change_result",
+    "details"
+  ],
+  "$defs": {
+    "statement": {
+      "type": "object",
+      "required": ["title", "explanation", "claim_refs", "evidence_refs"],
+      "properties": {
+        "title": {"type": "string", "minLength": 1},
+        "explanation": {"type": "string", "minLength": 1},
+        "claim_refs": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+        "evidence_refs": {"type": "array", "minItems": 1, "items": {"type": "string"}}
+      },
+      "additionalProperties": true
+    }
+  },
+  "properties": {
+    "audience": {"enum": ["domain_user", "ml_engineer", "researcher", "auditor"]},
+    "language": {"const": "ru"},
+    "decision": {"$ref": "#/$defs/statement"},
+    "main_reasons": {"type": "array", "items": {"$ref": "#/$defs/statement"}},
+    "concerns": {"type": "array", "items": {"$ref": "#/$defs/statement"}},
+    "reliability": {"$ref": "#/$defs/statement"},
+    "recommended_action": {
+      "allOf": [
+        {"$ref": "#/$defs/statement"},
+        {"type": "object", "required": ["action"], "properties": {"action": {"type": "string"}}}
+      ]
+    },
+    "what_would_change_result": {"type": "array", "items": {"$ref": "#/$defs/statement"}},
+    "details": {
+      "type": "object",
+      "required": ["supports", "contradicts", "limitations", "training", "similar_cases", "technical_metrics"]
+    },
+    "technical_trace": {"type": "object"}
+  },
+  "additionalProperties": true
+}

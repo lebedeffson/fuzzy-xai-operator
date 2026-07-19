@@ -81,6 +81,17 @@ REQUIRED: dict[str, tuple[str, ...]] = {
         "provenance_edges",
         "audit",
     ),
+    "human_explanation": (
+        "audience",
+        "language",
+        "decision",
+        "main_reasons",
+        "concerns",
+        "reliability",
+        "recommended_action",
+        "what_would_change_result",
+        "details",
+    ),
 }
 
 
@@ -117,6 +128,15 @@ def validate_payload(payload: dict[str, Any], schema: str) -> ValidationResult:
             if object_field in payload and not isinstance(payload[object_field], dict):
                 errors.append(f"{object_field} must be object")
         for array_field in ("story", "data_profile", "training_timeline", "similar_cases", "counterfactuals", "rule_ablations", "provenance_nodes", "provenance_edges"):
+            if array_field in payload and not isinstance(payload[array_field], (list, tuple)):
+                errors.append(f"{array_field} must be array")
+    if schema == "human_explanation":
+        if payload.get("audience") not in {"domain_user", "ml_engineer", "researcher", "auditor"}:
+            errors.append("audience must be domain_user, ml_engineer, researcher, or auditor")
+        for object_field in ("decision", "reliability", "recommended_action", "details"):
+            if object_field in payload and not isinstance(payload[object_field], dict):
+                errors.append(f"{object_field} must be object")
+        for array_field in ("main_reasons", "concerns", "what_would_change_result"):
             if array_field in payload and not isinstance(payload[array_field], (list, tuple)):
                 errors.append(f"{array_field} must be array")
     return ValidationResult(not errors, errors, schema)

@@ -1,15 +1,17 @@
 {
   "schema_version": "1.0",
-  "milestone": "v1.1.0-rc3 Cross-model Explanation Validation",
+  "milestone": "v1.2.0-rc1 Human Explanation Layer",
   "status": "local_validation_complete_external_gates_pending",
   "contracts": [
     "fuzzyxai.evidence.ExplanationClaim",
     "fuzzyxai.evidence.ExplanationLevel",
+    "fuzzyxai.evidence.HumanExplanation",
+    "fuzzyxai.evidence.AudienceProfile",
     "fuzzyxai.visualization.ExplanationVisualSpec",
     "fuzzyxai.InspectionResult",
     "fuzzyxai.AdapterCapabilities"
   ],
-  "result_api": ["overview", "story", "inspect", "audit", "visualize"],
+  "result_api": ["explain_for", "summary", "overview", "story", "inspect", "audit", "visualize"],
   "views": [
     "explanation_story",
     "data_profile",
@@ -25,8 +27,10 @@
   "backends": ["matplotlib", "plotly", "matlab_json_transport"],
   "golden_explanations": [
     "release_evidence/explanation_experience/object_85_explanation.json",
+    "release_evidence/explanation_experience/object_85_human_explanation.json",
     "release_evidence/explanation_experience/anfis_native_rules_explanation.json",
     "release_evidence/explanation_experience/medical_research_similarity_explanation.json",
+    "release_evidence/explanation_experience/medical_research_human_explanation.json",
     "release_evidence/explanation_experience/cross_model/cross_model_matrix.json"
   ],
   "human_validation": {

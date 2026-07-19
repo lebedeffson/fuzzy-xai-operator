@@ -8,6 +8,7 @@ on:
       - feat/research-framework-completion
       - feat/explanation-experience
       - feat/explanation-experience-completion
+      - feat/human-explanation-layer
   pull_request:
 
 jobs:

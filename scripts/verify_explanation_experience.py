@@ -1,10 +1,11 @@
-"""Verify the v1.1 claim, visual, and golden-evidence release surface."""
+"""Verify the v1.2 claim, human, visual, and golden-evidence release surface."""
 
 from __future__ import annotations
 
 import hashlib
 import importlib
 import json
+import re
 from pathlib import Path
 
 from fuzzyxai.runtime import ModelExplanationResult
@@ -14,11 +15,39 @@ from fuzzyxai.schemas import validate_payload
 ROOT = Path(__file__).resolve().parents[1]
 MANIFEST = ROOT / "framework/fuzzyxai/explanation_experience_manifest.json"
 GOLDEN = ROOT / "release_evidence/explanation_experience"
+FORBIDDEN_USER_TERMS = re.compile(
+    r"\b(?:R\d+|S\d+|E[0-5]|gamma|delta|rho|claim_id|defer_to_human|audit_report)\b|\[C-",
+    re.IGNORECASE,
+)
 
 
 def resolve(path: str):
     module_name, name = path.rsplit(".", 1)
     return getattr(importlib.import_module(module_name), name)
+
+
+def verify_human_explanation(payload: dict, *, expected_audience: str = "domain_user") -> None:
+    validation = validate_payload(payload, "human_explanation")
+    if not validation.valid:
+        raise RuntimeError(f"HumanExplanation validation failed: {validation.errors}")
+    if payload["audience"] != expected_audience:
+        raise RuntimeError(f"unexpected human audience: {payload['audience']}")
+    if len(payload["main_reasons"]) > 3 or len(payload["concerns"]) > 2:
+        raise RuntimeError("domain-user explanation exceeds the card limits")
+    fragments = [
+        payload["decision"],
+        *payload["main_reasons"],
+        *payload["concerns"],
+        payload["reliability"],
+        payload["recommended_action"],
+        *payload["what_would_change_result"],
+    ]
+    for fragment in fragments:
+        if not fragment.get("claim_refs") or not fragment.get("evidence_refs"):
+            raise RuntimeError("human fragment is not grounded in claims and evidence")
+    user_text = str(payload.get("summary", ""))
+    if FORBIDDEN_USER_TERMS.search(user_text):
+        raise RuntimeError("technical term leaked into domain-user explanation")
 
 
 def main() -> None:
@@ -44,11 +73,19 @@ def main() -> None:
     visual_validation = validate_payload(object_85["visual_spec"], "explanation_visual_spec")
     if not visual_validation.valid or not object_85["visual_spec"]["audit"]["graph_valid"]:
         raise RuntimeError(f"VisualSpec/graph validation failed: {visual_validation.errors}")
+    object_85_human = json.loads((GOLDEN / "object_85_human_explanation.json").read_text(encoding="utf-8"))
+    verify_human_explanation(object_85_human)
+    if "16-го этапа" not in object_85_human["summary"]:
+        raise RuntimeError("object 85 human explanation must identify the observed epoch-16 forgetting transition")
     medical = json.loads((GOLDEN / "medical_research_similarity_explanation.json").read_text(encoding="utf-8"))
     if medical["clinical_claims"] or not all(claim["limitations"] for claim in medical["claims"]):
         raise RuntimeError("medical fixture must remain research-only and limitation-backed")
     if medical.get("counterexample_count", 0) < 2 or not medical.get("media_artifacts"):
         raise RuntimeError("medical fixture requires media artifacts and two counterexamples")
+    medical_human = json.loads((GOLDEN / "medical_research_human_explanation.json").read_text(encoding="utf-8"))
+    verify_human_explanation(medical_human)
+    if "геометрии выделенных областей" not in medical_human["summary"] or "не является вероятностью" not in medical_human["summary"]:
+        raise RuntimeError("medical user text must define the scope and limitation of mask similarity")
     matrix = json.loads((GOLDEN / "cross_model/cross_model_matrix.json").read_text(encoding="utf-8"))
     if not all(item["graph_valid"] for item in matrix.values()):
         raise RuntimeError("cross-model graph validation failed")
@@ -65,6 +102,9 @@ def main() -> None:
     print("PASS: golden_checksums")
     print("PASS: cross_model_explanations")
     print("PASS: object85_12_checkpoint_trace")
+    print("PASS: human_explanation_layer")
+    print("PASS: object85_human_cards")
+    print("PASS: medical_similarity_semantics")
     print("PASS: comprehension_study_planned_not_run")
 
 

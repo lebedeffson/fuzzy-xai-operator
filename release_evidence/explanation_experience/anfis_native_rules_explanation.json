@@ -167,7 +167,7 @@
       "comparison_baseline": "normalized tabular feature vector",
       "confidence_interval": null,
       "counter_evidence_refs": [],
-      "effect": "mixed",
+      "effect": "favorable",
       "evidence_refs": [
         "similar:anfis-fixture-1:reference_3"
       ],
@@ -195,7 +195,7 @@
       "comparison_baseline": "normalized tabular feature vector",
       "confidence_interval": null,
       "counter_evidence_refs": [],
-      "effect": "mixed",
+      "effect": "favorable",
       "evidence_refs": [
         "similar:anfis-fixture-1:reference_2"
       ],
@@ -544,7 +544,7 @@
         "comparison_baseline": "normalized tabular feature vector",
         "confidence_interval": null,
         "counter_evidence_refs": [],
-        "effect": "mixed",
+        "effect": "favorable",
         "evidence_refs": [
           "similar:anfis-fixture-1:reference_3"
         ],
@@ -571,7 +571,7 @@
         "comparison_baseline": "normalized tabular feature vector",
         "confidence_interval": null,
         "counter_evidence_refs": [],
-        "effect": "mixed",
+        "effect": "favorable",
         "evidence_refs": [
           "similar:anfis-fixture-1:reference_2"
         ],
@@ -1310,6 +1310,8 @@
         "node_type": "prediction",
         "payload": {
           "adapter_id": "native_rules",
+          "contribution_method": null,
+          "contributions": {},
           "metadata": {
             "classes": [
               0,
@@ -1593,7 +1595,7 @@
           "comparison_baseline": "normalized tabular feature vector",
           "confidence_interval": null,
           "counter_evidence_refs": [],
-          "effect": "mixed",
+          "effect": "favorable",
           "evidence_refs": [
             "similar:anfis-fixture-1:reference_3"
           ],
@@ -1629,7 +1631,7 @@
           "comparison_baseline": "normalized tabular feature vector",
           "confidence_interval": null,
           "counter_evidence_refs": [],
-          "effect": "mixed",
+          "effect": "favorable",
           "evidence_refs": [
             "similar:anfis-fixture-1:reference_2"
           ],
@@ -1870,60 +1872,237 @@
   },
   "human_explanations": {
     "audit": {
+      "audience": "auditor",
       "claim_refs": {
-        "decision_changes": [],
-        "limitations": [
-          "C-005",
-          "C-006",
-          "C-007",
-          "C-008",
-          "C-009",
-          "C-010",
-          "C-011",
+        "changes": [],
+        "concerns": [
           "C-012"
         ],
-        "lost_or_averaged": [],
+        "decision": [
+          "C-001"
+        ],
         "main_reasons": [
           "C-003",
           "C-004",
+          "C-006",
           "C-005",
-          "C-006"
+          "C-007"
         ],
-        "model_observed": [
+        "recommended_action": [
+          "C-013"
+        ],
+        "reliability": [
+          "C-013",
           "C-002",
-          "C-001"
-        ],
-        "similar_cases": [
-          "C-007",
-          "C-008",
-          "C-009"
-        ],
-        "summary": [
-          "C-001",
-          "C-013"
-        ],
-        "trust": [
-          "C-010",
-          "C-011",
-          "C-012",
-          "C-013"
+          "C-012"
         ]
       },
+      "concerns": [
+        {
+          "claim_refs": [
+            "C-012"
+          ],
+          "evidence_refs": [
+            "diagnostic:2"
+          ],
+          "explanation": "Для части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено. Источник: C-012; статус: insufficient_evidence.",
+          "title": "Не все проверки подтверждены"
+        }
+      ],
+      "decision": {
+        "claim_refs": [
+          "C-001"
+        ],
+        "evidence_refs": [
+          "prediction"
+        ],
+        "explanation": "Модель определила: повышенный риск. Модельный балл: 0.820.",
+        "title": "Повышенный риск"
+      },
       "decision_changes": [],
+      "details": {
+        "contradicts": [],
+        "limitations": [
+          {
+            "claim_refs": [
+              "C-012"
+            ],
+            "evidence_refs": [
+              "diagnostic:2"
+            ],
+            "explanation": "Для части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено. Источник: C-012; статус: insufficient_evidence.",
+            "title": "Не все проверки подтверждены"
+          }
+        ],
+        "similar_cases": [
+          {
+            "claim_refs": [
+              "C-007"
+            ],
+            "evidence_refs": [
+              "similar:anfis-fixture-1:reference_3"
+            ],
+            "explanation": "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 0.871; объект: reference_3.",
+            "title": "Похожий обучающий случай"
+          },
+          {
+            "claim_refs": [
+              "C-008"
+            ],
+            "evidence_refs": [
+              "similar:anfis-fixture-1:reference_2"
+            ],
+            "explanation": "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 0.722; объект: reference_2.",
+            "title": "Похожий обучающий случай"
+          },
+          {
+            "claim_refs": [
+              "C-009"
+            ],
+            "evidence_refs": [
+              "similar:anfis-fixture-1:reference_1"
+            ],
+            "explanation": "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 0.251; объект: reference_1.",
+            "title": "Похожий обучающий случай"
+          }
+        ],
+        "supports": [
+          {
+            "claim_refs": [
+              "C-003"
+            ],
+            "evidence_refs": [
+              "rule:R31"
+            ],
+            "explanation": "fracture_density is high and distance is low -> 1 поддерживает текущее решение. Измеренная значимость: 0.840.",
+            "title": "Правило R31"
+          },
+          {
+            "claim_refs": [
+              "C-004"
+            ],
+            "evidence_refs": [
+              "rule:R12"
+            ],
+            "explanation": "water_saturation is high -> 1 поддерживает текущее решение. Измеренная значимость: 0.670.",
+            "title": "Правило R12"
+          },
+          {
+            "claim_refs": [
+              "C-006"
+            ],
+            "evidence_refs": [
+              "concept:1"
+            ],
+            "explanation": "Class 1: fracture_density is high and distance is low -> 1; water_saturation is high -> 1; supported primary-rule coverage 46.0%.",
+            "title": "Типичный профиль класса повышенный риск"
+          },
+          {
+            "claim_refs": [
+              "C-005"
+            ],
+            "evidence_refs": [
+              "concept:0"
+            ],
+            "explanation": "Class 0: no supported primary rules; coverage unavailable.",
+            "title": "Типичный профиль класса низкий риск"
+          },
+          {
+            "claim_refs": [
+              "C-007"
+            ],
+            "evidence_refs": [
+              "similar:anfis-fixture-1:reference_3"
+            ],
+            "explanation": "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 0.871; объект: reference_3.",
+            "title": "Похожий обучающий случай"
+          }
+        ],
+        "technical_metrics": [
+          {
+            "claim_refs": [
+              "C-001"
+            ],
+            "evidence_refs": [
+              "prediction"
+            ],
+            "explanation": "0.820",
+            "title": "model_score"
+          },
+          {
+            "claim_refs": [
+              "C-003"
+            ],
+            "evidence_refs": [
+              "rule:R31"
+            ],
+            "explanation": "0.840",
+            "title": "rule_importance"
+          },
+          {
+            "claim_refs": [
+              "C-004"
+            ],
+            "evidence_refs": [
+              "rule:R12"
+            ],
+            "explanation": "0.670",
+            "title": "rule_importance"
+          },
+          {
+            "claim_refs": [
+              "C-006"
+            ],
+            "evidence_refs": [
+              "concept:1"
+            ],
+            "explanation": "0.460",
+            "title": "primary_rule_coverage"
+          },
+          {
+            "claim_refs": [
+              "C-007"
+            ],
+            "evidence_refs": [
+              "similar:anfis-fixture-1:reference_3"
+            ],
+            "explanation": "0.871; сравнение: normalized tabular feature vector",
+            "title": "similarity"
+          },
+          {
+            "claim_refs": [
+              "C-008"
+            ],
+            "evidence_refs": [
+              "similar:anfis-fixture-1:reference_2"
+            ],
+            "explanation": "0.722; сравнение: normalized tabular feature vector",
+            "title": "similarity"
+          },
+          {
+            "claim_refs": [
+              "C-009"
+            ],
+            "evidence_refs": [
+              "similar:anfis-fixture-1:reference_1"
+            ],
+            "explanation": "0.251; сравнение: normalized tabular feature vector",
+            "title": "similarity"
+          },
+          {
+            "claim_refs": [
+              "C-002"
+            ],
+            "evidence_refs": [
+              "data:anfis-fixture-1"
+            ],
+            "explanation": "1.000",
+            "title": "data_quality"
+          }
+        ],
+        "training": []
+      },
       "evidence_trace": [
-        "C-001",
-        "C-002",
-        "C-003",
-        "C-004",
-        "C-005",
-        "C-006",
-        "C-007",
-        "C-008",
-        "C-009",
-        "C-010",
-        "C-011",
-        "C-012",
-        "C-013",
         "data:anfis-fixture-1",
         "rule:R31",
         "rule:R12",
@@ -1951,203 +2130,2162 @@
         "claim:C-012",
         "claim:C-013"
       ],
+      "language": "ru",
       "level": "audit",
       "limitations": [
-        "primary-rule coverage is unavailable [C-005]",
-        "coverage is a lower bound because overlap between rules is unavailable [C-006]",
-        "feature distance does not establish causal or clinical similarity [C-007]",
-        "feature distance does not establish causal or clinical similarity [C-008]",
-        "feature distance does not establish causal or clinical similarity [C-009]",
-        "Автоматическое принятие ограничено до устранения диагностики. [C-010]",
-        "Автоматическое принятие ограничено до устранения диагностики. [C-011]",
-        "Автоматическое принятие ограничено до устранения диагностики. [C-012]"
+        "Для части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено. Источник: C-012; статус: insufficient_evidence."
       ],
-      "lost_or_averaged": [],
+      "lost_or_averaged": [
+        "Для части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено. Источник: C-012; статус: insufficient_evidence."
+      ],
       "main_reasons": [
-        "Правило R31 является нативным: fracture_density is high and distance is low -> 1. [C-003]",
-        "Правило R12 является нативным: water_saturation is high -> 1. [C-004]",
-        "Class 0: no supported primary rules; coverage unavailable. [C-005]",
-        "Class 1: fracture_density is high and distance is low -> 1; water_saturation is high -> 1; supported primary-rule coverage 46.0%. [C-006]"
+        {
+          "claim_refs": [
+            "C-003"
+          ],
+          "evidence_refs": [
+            "rule:R31"
+          ],
+          "explanation": "fracture_density is high and distance is low -> 1 поддерживает текущее решение. Измеренная значимость: 0.840.",
+          "title": "Правило R31"
+        },
+        {
+          "claim_refs": [
+            "C-004"
+          ],
+          "evidence_refs": [
+            "rule:R12"
+          ],
+          "explanation": "water_saturation is high -> 1 поддерживает текущее решение. Измеренная значимость: 0.670.",
+          "title": "Правило R12"
+        },
+        {
+          "claim_refs": [
+            "C-006"
+          ],
+          "evidence_refs": [
+            "concept:1"
+          ],
+          "explanation": "Class 1: fracture_density is high and distance is low -> 1; water_saturation is high -> 1; supported primary-rule coverage 46.0%.",
+          "title": "Типичный профиль класса повышенный риск"
+        },
+        {
+          "claim_refs": [
+            "C-005"
+          ],
+          "evidence_refs": [
+            "concept:0"
+          ],
+          "explanation": "Class 0: no supported primary rules; coverage unavailable.",
+          "title": "Типичный профиль класса низкий риск"
+        },
+        {
+          "claim_refs": [
+            "C-007"
+          ],
+          "evidence_refs": [
+            "similar:anfis-fixture-1:reference_3"
+          ],
+          "explanation": "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 0.871; объект: reference_3.",
+          "title": "Похожий обучающий случай"
+        }
       ],
       "model_observed": [
-        "Качество доступных входных данных объекта anfis-fixture-1 равно 1.000. [C-002]",
-        "Модель сформировала прогноз [1] с максимальным модельным баллом 0.820. [C-001]"
+        "Модель определила: повышенный риск. Модельный балл: 0.820."
       ],
-      "recommended_action": "review",
-      "similar_cases": [
-        "Объект reference_3 имеет сходство 0.871 с объектом anfis-fixture-1; использован метод robust_standardized_euclidean для представления «normalized tabular feature vector». [C-007]",
-        "Объект reference_2 имеет сходство 0.722 с объектом anfis-fixture-1; использован метод robust_standardized_euclidean для представления «normalized tabular feature vector». [C-008]",
-        "Объект reference_1 имеет сходство 0.251 с объектом anfis-fixture-1; использован метод robust_standardized_euclidean для представления «normalized tabular feature vector». [C-009]"
-      ],
-      "summary": "Модель сформировала прогноз [1] с максимальным модельным баллом 0.820. [C-001] На основании доступных claims рекомендовано действие review. [C-013] Рекомендуемое действие: review. [C-013]",
-      "trust": [
-        "Диагностика: alignment evidence was not supplied. [C-010]",
-        "Диагностика: reduction evidence was not supplied. [C-011]",
-        "Диагностика: risk evidence was not supplied. [C-012]",
-        "На основании доступных claims рекомендовано действие review. [C-013]"
-      ]
-    },
-    "expert": {
-      "claim_refs": {
-        "decision_changes": [],
-        "limitations": [
-          "C-005",
-          "C-006",
-          "C-007",
-          "C-008",
-          "C-009",
-          "C-010",
-          "C-011",
+      "recommended_action": {
+        "action": "review",
+        "claim_refs": [
+          "C-013"
+        ],
+        "evidence_refs": [
+          "diagnostic:0",
+          "diagnostic:1",
+          "diagnostic:2"
+        ],
+        "explanation": "Передать результат специалисту и отдельно проверить трещиноватость и водонасыщенность.",
+        "title": "Проверить специалистом"
+      },
+      "reliability": {
+        "claim_refs": [
+          "C-013",
+          "C-002",
           "C-012"
         ],
-        "lost_or_averaged": [],
-        "main_reasons": [
-          "C-003",
-          "C-004",
-          "C-005",
-          "C-006"
+        "evidence_refs": [
+          "diagnostic:0",
+          "diagnostic:1",
+          "diagnostic:2",
+          "data:anfis-fixture-1"
         ],
-        "model_observed": [
-          "C-002",
+        "explanation": "Результат подтверждается частью доступных сведений, но недостаточно надёжен для автоматического решения.",
+        "title": "Требуется дополнительная проверка"
+      },
+      "similar_cases": [
+        "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 0.871; объект: reference_3.",
+        "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 0.722; объект: reference_2.",
+        "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 0.251; объект: reference_1."
+      ],
+      "summary": "## Решение\nМодель определила: повышенный риск. Модельный балл: 0.820.\n\n## Почему\nfracture_density is high and distance is low -> 1 поддерживает текущее решение. Измеренная значимость: 0.840.\nwater_saturation is high -> 1 поддерживает текущее решение. Измеренная значимость: 0.670.\nClass 1: fracture_density is high and distance is low -> 1; water_saturation is high -> 1; supported primary-rule coverage 46.0%.\nClass 0: no supported primary rules; coverage unavailable.\nНайден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 0.871; объект: reference_3.\n\n## Что вызывает сомнение\nДля части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено. Источник: C-012; статус: insufficient_evidence.\n\n## Насколько можно доверять\nРезультат подтверждается частью доступных сведений, но недостаточно надёжен для автоматического решения.\n\n## Что делать\nПередать результат специалисту и отдельно проверить трещиноватость и водонасыщенность.\n",
+      "trust": [
+        "Результат подтверждается частью доступных сведений, но недостаточно надёжен для автоматического решения.",
+        "Передать результат специалисту и отдельно проверить трещиноватость и водонасыщенность."
+      ],
+      "what_would_change_result": []
+    },
+    "auditor": {
+      "audience": "auditor",
+      "claim_refs": {
+        "changes": [],
+        "concerns": [
+          "C-012"
+        ],
+        "decision": [
           "C-001"
         ],
-        "similar_cases": [
-          "C-007",
-          "C-008",
-          "C-009"
-        ],
-        "summary": [
-          "C-001",
-          "C-013"
-        ],
-        "trust": [
-          "C-010",
-          "C-011",
-          "C-012",
-          "C-013"
-        ]
-      },
-      "decision_changes": [],
-      "evidence_trace": [
-        "C-001",
-        "C-002",
-        "C-003",
-        "C-004",
-        "C-005",
-        "C-006",
-        "C-007",
-        "C-008",
-        "C-009",
-        "C-010",
-        "C-011",
-        "C-012",
-        "C-013"
-      ],
-      "level": "expert",
-      "limitations": [
-        "primary-rule coverage is unavailable [C-005]",
-        "coverage is a lower bound because overlap between rules is unavailable [C-006]",
-        "feature distance does not establish causal or clinical similarity [C-007]",
-        "feature distance does not establish causal or clinical similarity [C-008]",
-        "feature distance does not establish causal or clinical similarity [C-009]",
-        "Автоматическое принятие ограничено до устранения диагностики. [C-010]",
-        "Автоматическое принятие ограничено до устранения диагностики. [C-011]",
-        "Автоматическое принятие ограничено до устранения диагностики. [C-012]"
-      ],
-      "lost_or_averaged": [],
-      "main_reasons": [
-        "Правило R31 является нативным: fracture_density is high and distance is low -> 1. [C-003]",
-        "Правило R12 является нативным: water_saturation is high -> 1. [C-004]",
-        "Class 0: no supported primary rules; coverage unavailable. [C-005]",
-        "Class 1: fracture_density is high and distance is low -> 1; water_saturation is high -> 1; supported primary-rule coverage 46.0%. [C-006]"
-      ],
-      "model_observed": [
-        "Качество доступных входных данных объекта anfis-fixture-1 равно 1.000. [C-002]",
-        "Модель сформировала прогноз [1] с максимальным модельным баллом 0.820. [C-001]"
-      ],
-      "recommended_action": "review",
-      "similar_cases": [
-        "Объект reference_3 имеет сходство 0.871 с объектом anfis-fixture-1; использован метод robust_standardized_euclidean для представления «normalized tabular feature vector». [C-007]",
-        "Объект reference_2 имеет сходство 0.722 с объектом anfis-fixture-1; использован метод robust_standardized_euclidean для представления «normalized tabular feature vector». [C-008]",
-        "Объект reference_1 имеет сходство 0.251 с объектом anfis-fixture-1; использован метод robust_standardized_euclidean для представления «normalized tabular feature vector». [C-009]"
-      ],
-      "summary": "Модель сформировала прогноз [1] с максимальным модельным баллом 0.820. [C-001] На основании доступных claims рекомендовано действие review. [C-013] Рекомендуемое действие: review. [C-013]",
-      "trust": [
-        "Диагностика: alignment evidence was not supplied. [C-010]",
-        "Диагностика: reduction evidence was not supplied. [C-011]",
-        "Диагностика: risk evidence was not supplied. [C-012]",
-        "На основании доступных claims рекомендовано действие review. [C-013]"
-      ]
-    },
-    "user": {
-      "claim_refs": {
-        "decision_changes": [],
-        "limitations": [
-          "C-005",
-          "C-006",
-          "C-007",
-          "C-008",
-          "C-009",
-          "C-010",
-          "C-011",
-          "C-012"
-        ],
-        "lost_or_averaged": [],
         "main_reasons": [
           "C-003",
           "C-004",
+          "C-006",
+          "C-005",
+          "C-007"
+        ],
+        "recommended_action": [
+          "C-013"
+        ],
+        "reliability": [
+          "C-013",
+          "C-002",
+          "C-012"
+        ]
+      },
+      "concerns": [
+        {
+          "claim_refs": [
+            "C-012"
+          ],
+          "evidence_refs": [
+            "diagnostic:2"
+          ],
+          "explanation": "Для части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено. Источник: C-012; статус: insufficient_evidence.",
+          "title": "Не все проверки подтверждены"
+        }
+      ],
+      "decision": {
+        "claim_refs": [
+          "C-001"
+        ],
+        "evidence_refs": [
+          "prediction"
+        ],
+        "explanation": "Модель определила: повышенный риск. Модельный балл: 0.820.",
+        "title": "Повышенный риск"
+      },
+      "decision_changes": [],
+      "details": {
+        "contradicts": [],
+        "limitations": [
+          {
+            "claim_refs": [
+              "C-012"
+            ],
+            "evidence_refs": [
+              "diagnostic:2"
+            ],
+            "explanation": "Для части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено. Источник: C-012; статус: insufficient_evidence.",
+            "title": "Не все проверки подтверждены"
+          }
+        ],
+        "similar_cases": [
+          {
+            "claim_refs": [
+              "C-007"
+            ],
+            "evidence_refs": [
+              "similar:anfis-fixture-1:reference_3"
+            ],
+            "explanation": "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 0.871; объект: reference_3.",
+            "title": "Похожий обучающий случай"
+          },
+          {
+            "claim_refs": [
+              "C-008"
+            ],
+            "evidence_refs": [
+              "similar:anfis-fixture-1:reference_2"
+            ],
+            "explanation": "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 0.722; объект: reference_2.",
+            "title": "Похожий обучающий случай"
+          },
+          {
+            "claim_refs": [
+              "C-009"
+            ],
+            "evidence_refs": [
+              "similar:anfis-fixture-1:reference_1"
+            ],
+            "explanation": "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 0.251; объект: reference_1.",
+            "title": "Похожий обучающий случай"
+          }
+        ],
+        "supports": [
+          {
+            "claim_refs": [
+              "C-003"
+            ],
+            "evidence_refs": [
+              "rule:R31"
+            ],
+            "explanation": "fracture_density is high and distance is low -> 1 поддерживает текущее решение. Измеренная значимость: 0.840.",
+            "title": "Правило R31"
+          },
+          {
+            "claim_refs": [
+              "C-004"
+            ],
+            "evidence_refs": [
+              "rule:R12"
+            ],
+            "explanation": "water_saturation is high -> 1 поддерживает текущее решение. Измеренная значимость: 0.670.",
+            "title": "Правило R12"
+          },
+          {
+            "claim_refs": [
+              "C-006"
+            ],
+            "evidence_refs": [
+              "concept:1"
+            ],
+            "explanation": "Class 1: fracture_density is high and distance is low -> 1; water_saturation is high -> 1; supported primary-rule coverage 46.0%.",
+            "title": "Типичный профиль класса повышенный риск"
+          },
+          {
+            "claim_refs": [
+              "C-005"
+            ],
+            "evidence_refs": [
+              "concept:0"
+            ],
+            "explanation": "Class 0: no supported primary rules; coverage unavailable.",
+            "title": "Типичный профиль класса низкий риск"
+          },
+          {
+            "claim_refs": [
+              "C-007"
+            ],
+            "evidence_refs": [
+              "similar:anfis-fixture-1:reference_3"
+            ],
+            "explanation": "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 0.871; объект: reference_3.",
+            "title": "Похожий обучающий случай"
+          }
+        ],
+        "technical_metrics": [
+          {
+            "claim_refs": [
+              "C-001"
+            ],
+            "evidence_refs": [
+              "prediction"
+            ],
+            "explanation": "0.820",
+            "title": "model_score"
+          },
+          {
+            "claim_refs": [
+              "C-003"
+            ],
+            "evidence_refs": [
+              "rule:R31"
+            ],
+            "explanation": "0.840",
+            "title": "rule_importance"
+          },
+          {
+            "claim_refs": [
+              "C-004"
+            ],
+            "evidence_refs": [
+              "rule:R12"
+            ],
+            "explanation": "0.670",
+            "title": "rule_importance"
+          },
+          {
+            "claim_refs": [
+              "C-006"
+            ],
+            "evidence_refs": [
+              "concept:1"
+            ],
+            "explanation": "0.460",
+            "title": "primary_rule_coverage"
+          },
+          {
+            "claim_refs": [
+              "C-007"
+            ],
+            "evidence_refs": [
+              "similar:anfis-fixture-1:reference_3"
+            ],
+            "explanation": "0.871; сравнение: normalized tabular feature vector",
+            "title": "similarity"
+          },
+          {
+            "claim_refs": [
+              "C-008"
+            ],
+            "evidence_refs": [
+              "similar:anfis-fixture-1:reference_2"
+            ],
+            "explanation": "0.722; сравнение: normalized tabular feature vector",
+            "title": "similarity"
+          },
+          {
+            "claim_refs": [
+              "C-009"
+            ],
+            "evidence_refs": [
+              "similar:anfis-fixture-1:reference_1"
+            ],
+            "explanation": "0.251; сравнение: normalized tabular feature vector",
+            "title": "similarity"
+          },
+          {
+            "claim_refs": [
+              "C-002"
+            ],
+            "evidence_refs": [
+              "data:anfis-fixture-1"
+            ],
+            "explanation": "1.000",
+            "title": "data_quality"
+          }
+        ],
+        "training": []
+      },
+      "evidence_trace": [
+        "data:anfis-fixture-1",
+        "rule:R31",
+        "rule:R12",
+        "concept:0",
+        "concept:1",
+        "similar:anfis-fixture-1:reference_3",
+        "similar:anfis-fixture-1:reference_2",
+        "similar:anfis-fixture-1:reference_1",
+        "prediction",
+        "diagnostic:0",
+        "diagnostic:1",
+        "diagnostic:2",
+        "action",
+        "claim:C-001",
+        "claim:C-002",
+        "claim:C-003",
+        "claim:C-004",
+        "claim:C-005",
+        "claim:C-006",
+        "claim:C-007",
+        "claim:C-008",
+        "claim:C-009",
+        "claim:C-010",
+        "claim:C-011",
+        "claim:C-012",
+        "claim:C-013"
+      ],
+      "language": "ru",
+      "level": "audit",
+      "limitations": [
+        "Для части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено. Источник: C-012; статус: insufficient_evidence."
+      ],
+      "lost_or_averaged": [
+        "Для части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено. Источник: C-012; статус: insufficient_evidence."
+      ],
+      "main_reasons": [
+        {
+          "claim_refs": [
+            "C-003"
+          ],
+          "evidence_refs": [
+            "rule:R31"
+          ],
+          "explanation": "fracture_density is high and distance is low -> 1 поддерживает текущее решение. Измеренная значимость: 0.840.",
+          "title": "Правило R31"
+        },
+        {
+          "claim_refs": [
+            "C-004"
+          ],
+          "evidence_refs": [
+            "rule:R12"
+          ],
+          "explanation": "water_saturation is high -> 1 поддерживает текущее решение. Измеренная значимость: 0.670.",
+          "title": "Правило R12"
+        },
+        {
+          "claim_refs": [
+            "C-006"
+          ],
+          "evidence_refs": [
+            "concept:1"
+          ],
+          "explanation": "Class 1: fracture_density is high and distance is low -> 1; water_saturation is high -> 1; supported primary-rule coverage 46.0%.",
+          "title": "Типичный профиль класса повышенный риск"
+        },
+        {
+          "claim_refs": [
+            "C-005"
+          ],
+          "evidence_refs": [
+            "concept:0"
+          ],
+          "explanation": "Class 0: no supported primary rules; coverage unavailable.",
+          "title": "Типичный профиль класса низкий риск"
+        },
+        {
+          "claim_refs": [
+            "C-007"
+          ],
+          "evidence_refs": [
+            "similar:anfis-fixture-1:reference_3"
+          ],
+          "explanation": "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 0.871; объект: reference_3.",
+          "title": "Похожий обучающий случай"
+        }
+      ],
+      "model_observed": [
+        "Модель определила: повышенный риск. Модельный балл: 0.820."
+      ],
+      "recommended_action": {
+        "action": "review",
+        "claim_refs": [
+          "C-013"
+        ],
+        "evidence_refs": [
+          "diagnostic:0",
+          "diagnostic:1",
+          "diagnostic:2"
+        ],
+        "explanation": "Передать результат специалисту и отдельно проверить трещиноватость и водонасыщенность.",
+        "title": "Проверить специалистом"
+      },
+      "reliability": {
+        "claim_refs": [
+          "C-013",
+          "C-002",
+          "C-012"
+        ],
+        "evidence_refs": [
+          "diagnostic:0",
+          "diagnostic:1",
+          "diagnostic:2",
+          "data:anfis-fixture-1"
+        ],
+        "explanation": "Результат подтверждается частью доступных сведений, но недостаточно надёжен для автоматического решения.",
+        "title": "Требуется дополнительная проверка"
+      },
+      "similar_cases": [
+        "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 0.871; объект: reference_3.",
+        "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 0.722; объект: reference_2.",
+        "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 0.251; объект: reference_1."
+      ],
+      "summary": "## Решение\nМодель определила: повышенный риск. Модельный балл: 0.820.\n\n## Почему\nfracture_density is high and distance is low -> 1 поддерживает текущее решение. Измеренная значимость: 0.840.\nwater_saturation is high -> 1 поддерживает текущее решение. Измеренная значимость: 0.670.\nClass 1: fracture_density is high and distance is low -> 1; water_saturation is high -> 1; supported primary-rule coverage 46.0%.\nClass 0: no supported primary rules; coverage unavailable.\nНайден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 0.871; объект: reference_3.\n\n## Что вызывает сомнение\nДля части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено. Источник: C-012; статус: insufficient_evidence.\n\n## Насколько можно доверять\nРезультат подтверждается частью доступных сведений, но недостаточно надёжен для автоматического решения.\n\n## Что делать\nПередать результат специалисту и отдельно проверить трещиноватость и водонасыщенность.\n",
+      "trust": [
+        "Результат подтверждается частью доступных сведений, но недостаточно надёжен для автоматического решения.",
+        "Передать результат специалисту и отдельно проверить трещиноватость и водонасыщенность."
+      ],
+      "what_would_change_result": []
+    },
+    "domain_user": {
+      "audience": "domain_user",
+      "claim_refs": {
+        "changes": [],
+        "concerns": [
+          "C-012"
+        ],
+        "decision": [
+          "C-001"
+        ],
+        "main_reasons": [
+          "C-003",
+          "C-006",
           "C-005"
         ],
-        "model_observed": [
-          "C-002",
-          "C-001"
-        ],
-        "similar_cases": [
-          "C-007",
-          "C-008"
-        ],
-        "summary": [
-          "C-001",
+        "recommended_action": [
           "C-013"
         ],
-        "trust": [
-          "C-010",
-          "C-011"
+        "reliability": [
+          "C-013",
+          "C-002",
+          "C-012"
         ]
       },
+      "concerns": [
+        {
+          "claim_refs": [
+            "C-012"
+          ],
+          "evidence_refs": [
+            "diagnostic:2"
+          ],
+          "explanation": "Для части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено.",
+          "title": "Не все проверки подтверждены"
+        }
+      ],
+      "decision": {
+        "claim_refs": [
+          "C-001"
+        ],
+        "evidence_refs": [
+          "prediction"
+        ],
+        "explanation": "Модель определила: повышенный риск.",
+        "title": "Повышенный риск"
+      },
       "decision_changes": [],
+      "details": {
+        "contradicts": [],
+        "limitations": [
+          {
+            "claim_refs": [
+              "C-012"
+            ],
+            "evidence_refs": [
+              "diagnostic:2"
+            ],
+            "explanation": "Для части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено.",
+            "title": "Не все проверки подтверждены"
+          }
+        ],
+        "similar_cases": [
+          {
+            "claim_refs": [
+              "C-007"
+            ],
+            "evidence_refs": [
+              "similar:anfis-fixture-1:reference_3"
+            ],
+            "explanation": "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход.",
+            "title": "Похожий обучающий случай"
+          },
+          {
+            "claim_refs": [
+              "C-008"
+            ],
+            "evidence_refs": [
+              "similar:anfis-fixture-1:reference_2"
+            ],
+            "explanation": "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход.",
+            "title": "Похожий обучающий случай"
+          },
+          {
+            "claim_refs": [
+              "C-009"
+            ],
+            "evidence_refs": [
+              "similar:anfis-fixture-1:reference_1"
+            ],
+            "explanation": "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход.",
+            "title": "Похожий обучающий случай"
+          }
+        ],
+        "supports": [
+          {
+            "claim_refs": [
+              "C-003"
+            ],
+            "evidence_refs": [
+              "rule:R31"
+            ],
+            "explanation": "Подтверждённая закономерность связывает значения признаков с выбранным результатом и поддерживает текущее решение.",
+            "title": "Закономерность, найденная моделью"
+          },
+          {
+            "claim_refs": [
+              "C-006"
+            ],
+            "evidence_refs": [
+              "concept:1"
+            ],
+            "explanation": "По сравнению с референсной выборкой объект близок к типичному профилю группы «повышенный риск». Такое сходство поддерживает результат, но не заменяет проверку ограничений.",
+            "title": "Типичный профиль класса повышенный риск"
+          },
+          {
+            "claim_refs": [
+              "C-005"
+            ],
+            "evidence_refs": [
+              "concept:0"
+            ],
+            "explanation": "По сравнению с референсной выборкой объект близок к типичному профилю группы «низкий риск». Такое сходство поддерживает результат, но не заменяет проверку ограничений.",
+            "title": "Типичный профиль класса низкий риск"
+          },
+          {
+            "claim_refs": [
+              "C-007"
+            ],
+            "evidence_refs": [
+              "similar:anfis-fixture-1:reference_3"
+            ],
+            "explanation": "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход.",
+            "title": "Похожий обучающий случай"
+          }
+        ],
+        "technical_metrics": [
+          {
+            "claim_refs": [
+              "C-001"
+            ],
+            "evidence_refs": [
+              "prediction"
+            ],
+            "explanation": "0.820",
+            "title": "model_score"
+          },
+          {
+            "claim_refs": [
+              "C-003"
+            ],
+            "evidence_refs": [
+              "rule:R31"
+            ],
+            "explanation": "0.840",
+            "title": "rule_importance"
+          },
+          {
+            "claim_refs": [
+              "C-004"
+            ],
+            "evidence_refs": [
+              "rule:R12"
+            ],
+            "explanation": "0.670",
+            "title": "rule_importance"
+          },
+          {
+            "claim_refs": [
+              "C-006"
+            ],
+            "evidence_refs": [
+              "concept:1"
+            ],
+            "explanation": "0.460",
+            "title": "primary_rule_coverage"
+          },
+          {
+            "claim_refs": [
+              "C-007"
+            ],
+            "evidence_refs": [
+              "similar:anfis-fixture-1:reference_3"
+            ],
+            "explanation": "0.871; сравнение: normalized tabular feature vector",
+            "title": "similarity"
+          },
+          {
+            "claim_refs": [
+              "C-008"
+            ],
+            "evidence_refs": [
+              "similar:anfis-fixture-1:reference_2"
+            ],
+            "explanation": "0.722; сравнение: normalized tabular feature vector",
+            "title": "similarity"
+          },
+          {
+            "claim_refs": [
+              "C-009"
+            ],
+            "evidence_refs": [
+              "similar:anfis-fixture-1:reference_1"
+            ],
+            "explanation": "0.251; сравнение: normalized tabular feature vector",
+            "title": "similarity"
+          },
+          {
+            "claim_refs": [
+              "C-002"
+            ],
+            "evidence_refs": [
+              "data:anfis-fixture-1"
+            ],
+            "explanation": "1.000",
+            "title": "data_quality"
+          }
+        ],
+        "training": []
+      },
       "evidence_trace": [],
+      "language": "ru",
       "level": "user",
       "limitations": [
-        "primary-rule coverage is unavailable [C-005]",
-        "coverage is a lower bound because overlap between rules is unavailable [C-006]",
-        "feature distance does not establish causal or clinical similarity [C-007]",
-        "feature distance does not establish causal or clinical similarity [C-008]",
-        "feature distance does not establish causal or clinical similarity [C-009]",
-        "Автоматическое принятие ограничено до устранения диагностики. [C-010]",
-        "Автоматическое принятие ограничено до устранения диагностики. [C-011]",
-        "Автоматическое принятие ограничено до устранения диагностики. [C-012]"
+        "Для части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено."
       ],
-      "lost_or_averaged": [],
+      "lost_or_averaged": [
+        "Для части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено."
+      ],
       "main_reasons": [
-        "Правило R31 является нативным: fracture_density is high and distance is low -> 1. [C-003]",
-        "Правило R12 является нативным: water_saturation is high -> 1. [C-004]",
-        "Class 0: no supported primary rules; coverage unavailable. [C-005]"
+        {
+          "claim_refs": [
+            "C-003"
+          ],
+          "evidence_refs": [
+            "rule:R31"
+          ],
+          "explanation": "Подтверждённая закономерность связывает значения признаков с выбранным результатом и поддерживает текущее решение.",
+          "title": "Закономерность, найденная моделью"
+        },
+        {
+          "claim_refs": [
+            "C-006"
+          ],
+          "evidence_refs": [
+            "concept:1"
+          ],
+          "explanation": "По сравнению с референсной выборкой объект близок к типичному профилю группы «повышенный риск». Такое сходство поддерживает результат, но не заменяет проверку ограничений.",
+          "title": "Типичный профиль класса повышенный риск"
+        },
+        {
+          "claim_refs": [
+            "C-005"
+          ],
+          "evidence_refs": [
+            "concept:0"
+          ],
+          "explanation": "По сравнению с референсной выборкой объект близок к типичному профилю группы «низкий риск». Такое сходство поддерживает результат, но не заменяет проверку ограничений.",
+          "title": "Типичный профиль класса низкий риск"
+        }
       ],
       "model_observed": [
-        "Качество доступных входных данных объекта anfis-fixture-1 равно 1.000. [C-002]",
-        "Модель сформировала прогноз [1] с максимальным модельным баллом 0.820. [C-001]"
+        "Модель определила: повышенный риск."
       ],
-      "recommended_action": "review",
+      "recommended_action": {
+        "action": "review",
+        "claim_refs": [
+          "C-013"
+        ],
+        "evidence_refs": [
+          "diagnostic:0",
+          "diagnostic:1",
+          "diagnostic:2"
+        ],
+        "explanation": "Передать результат специалисту и отдельно проверить трещиноватость и водонасыщенность.",
+        "title": "Проверить специалистом"
+      },
+      "reliability": {
+        "claim_refs": [
+          "C-013",
+          "C-002",
+          "C-012"
+        ],
+        "evidence_refs": [
+          "diagnostic:0",
+          "diagnostic:1",
+          "diagnostic:2",
+          "data:anfis-fixture-1"
+        ],
+        "explanation": "Результат подтверждается частью доступных сведений, но недостаточно надёжен для автоматического решения.",
+        "title": "Требуется дополнительная проверка"
+      },
       "similar_cases": [
-        "Объект reference_3 имеет сходство 0.871 с объектом anfis-fixture-1; использован метод robust_standardized_euclidean для представления «normalized tabular feature vector». [C-007]",
-        "Объект reference_2 имеет сходство 0.722 с объектом anfis-fixture-1; использован метод robust_standardized_euclidean для представления «normalized tabular feature vector». [C-008]"
+        "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход.",
+        "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход.",
+        "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход."
       ],
-      "summary": "Модель сформировала прогноз [1] с максимальным модельным баллом 0.820. [C-001] На основании доступных claims рекомендовано действие review. [C-013] Рекомендуемое действие: review. [C-013]",
+      "summary": "## Решение\nМодель определила: повышенный риск.\n\n## Почему\nПодтверждённая закономерность связывает значения признаков с выбранным результатом и поддерживает текущее решение.\nПо сравнению с референсной выборкой объект близок к типичному профилю группы «повышенный риск». Такое сходство поддерживает результат, но не заменяет проверку ограничений.\nПо сравнению с референсной выборкой объект близок к типичному профилю группы «низкий риск». Такое сходство поддерживает результат, но не заменяет проверку ограничений.\n\n## Что вызывает сомнение\nДля части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено.\n\n## Насколько можно доверять\nРезультат подтверждается частью доступных сведений, но недостаточно надёжен для автоматического решения.\n\n## Что делать\nПередать результат специалисту и отдельно проверить трещиноватость и водонасыщенность.\n",
       "trust": [
-        "Диагностика: alignment evidence was not supplied. [C-010]",
-        "Диагностика: reduction evidence was not supplied. [C-011]"
-      ]
+        "Результат подтверждается частью доступных сведений, но недостаточно надёжен для автоматического решения.",
+        "Передать результат специалисту и отдельно проверить трещиноватость и водонасыщенность."
+      ],
+      "what_would_change_result": []
+    },
+    "expert": {
+      "audience": "ml_engineer",
+      "claim_refs": {
+        "changes": [],
+        "concerns": [
+          "C-012"
+        ],
+        "decision": [
+          "C-001"
+        ],
+        "main_reasons": [
+          "C-003",
+          "C-004",
+          "C-006",
+          "C-005",
+          "C-007"
+        ],
+        "recommended_action": [
+          "C-013"
+        ],
+        "reliability": [
+          "C-013",
+          "C-002",
+          "C-012"
+        ]
+      },
+      "concerns": [
+        {
+          "claim_refs": [
+            "C-012"
+          ],
+          "evidence_refs": [
+            "diagnostic:2"
+          ],
+          "explanation": "Для части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено. Источник: C-012; статус: insufficient_evidence.",
+          "title": "Не все проверки подтверждены"
+        }
+      ],
+      "decision": {
+        "claim_refs": [
+          "C-001"
+        ],
+        "evidence_refs": [
+          "prediction"
+        ],
+        "explanation": "Модель определила: повышенный риск. Модельный балл: 0.820.",
+        "title": "Повышенный риск"
+      },
+      "decision_changes": [],
+      "details": {
+        "contradicts": [],
+        "limitations": [
+          {
+            "claim_refs": [
+              "C-012"
+            ],
+            "evidence_refs": [
+              "diagnostic:2"
+            ],
+            "explanation": "Для части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено. Источник: C-012; статус: insufficient_evidence.",
+            "title": "Не все проверки подтверждены"
+          }
+        ],
+        "similar_cases": [
+          {
+            "claim_refs": [
+              "C-007"
+            ],
+            "evidence_refs": [
+              "similar:anfis-fixture-1:reference_3"
+            ],
+            "explanation": "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 0.871; объект: reference_3.",
+            "title": "Похожий обучающий случай"
+          },
+          {
+            "claim_refs": [
+              "C-008"
+            ],
+            "evidence_refs": [
+              "similar:anfis-fixture-1:reference_2"
+            ],
+            "explanation": "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 0.722; объект: reference_2.",
+            "title": "Похожий обучающий случай"
+          },
+          {
+            "claim_refs": [
+              "C-009"
+            ],
+            "evidence_refs": [
+              "similar:anfis-fixture-1:reference_1"
+            ],
+            "explanation": "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 0.251; объект: reference_1.",
+            "title": "Похожий обучающий случай"
+          }
+        ],
+        "supports": [
+          {
+            "claim_refs": [
+              "C-003"
+            ],
+            "evidence_refs": [
+              "rule:R31"
+            ],
+            "explanation": "fracture_density is high and distance is low -> 1 поддерживает текущее решение. Измеренная значимость: 0.840.",
+            "title": "Правило R31"
+          },
+          {
+            "claim_refs": [
+              "C-004"
+            ],
+            "evidence_refs": [
+              "rule:R12"
+            ],
+            "explanation": "water_saturation is high -> 1 поддерживает текущее решение. Измеренная значимость: 0.670.",
+            "title": "Правило R12"
+          },
+          {
+            "claim_refs": [
+              "C-006"
+            ],
+            "evidence_refs": [
+              "concept:1"
+            ],
+            "explanation": "Class 1: fracture_density is high and distance is low -> 1; water_saturation is high -> 1; supported primary-rule coverage 46.0%.",
+            "title": "Типичный профиль класса повышенный риск"
+          },
+          {
+            "claim_refs": [
+              "C-005"
+            ],
+            "evidence_refs": [
+              "concept:0"
+            ],
+            "explanation": "Class 0: no supported primary rules; coverage unavailable.",
+            "title": "Типичный профиль класса низкий риск"
+          },
+          {
+            "claim_refs": [
+              "C-007"
+            ],
+            "evidence_refs": [
+              "similar:anfis-fixture-1:reference_3"
+            ],
+            "explanation": "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 0.871; объект: reference_3.",
+            "title": "Похожий обучающий случай"
+          }
+        ],
+        "technical_metrics": [
+          {
+            "claim_refs": [
+              "C-001"
+            ],
+            "evidence_refs": [
+              "prediction"
+            ],
+            "explanation": "0.820",
+            "title": "model_score"
+          },
+          {
+            "claim_refs": [
+              "C-003"
+            ],
+            "evidence_refs": [
+              "rule:R31"
+            ],
+            "explanation": "0.840",
+            "title": "rule_importance"
+          },
+          {
+            "claim_refs": [
+              "C-004"
+            ],
+            "evidence_refs": [
+              "rule:R12"
+            ],
+            "explanation": "0.670",
+            "title": "rule_importance"
+          },
+          {
+            "claim_refs": [
+              "C-006"
+            ],
+            "evidence_refs": [
+              "concept:1"
+            ],
+            "explanation": "0.460",
+            "title": "primary_rule_coverage"
+          },
+          {
+            "claim_refs": [
+              "C-007"
+            ],
+            "evidence_refs": [
+              "similar:anfis-fixture-1:reference_3"
+            ],
+            "explanation": "0.871; сравнение: normalized tabular feature vector",
+            "title": "similarity"
+          },
+          {
+            "claim_refs": [
+              "C-008"
+            ],
+            "evidence_refs": [
+              "similar:anfis-fixture-1:reference_2"
+            ],
+            "explanation": "0.722; сравнение: normalized tabular feature vector",
+            "title": "similarity"
+          },
+          {
+            "claim_refs": [
+              "C-009"
+            ],
+            "evidence_refs": [
+              "similar:anfis-fixture-1:reference_1"
+            ],
+            "explanation": "0.251; сравнение: normalized tabular feature vector",
+            "title": "similarity"
+          },
+          {
+            "claim_refs": [
+              "C-002"
+            ],
+            "evidence_refs": [
+              "data:anfis-fixture-1"
+            ],
+            "explanation": "1.000",
+            "title": "data_quality"
+          }
+        ],
+        "training": []
+      },
+      "evidence_trace": [
+        "data:anfis-fixture-1",
+        "rule:R31",
+        "rule:R12",
+        "concept:0",
+        "concept:1",
+        "similar:anfis-fixture-1:reference_3",
+        "similar:anfis-fixture-1:reference_2",
+        "similar:anfis-fixture-1:reference_1",
+        "prediction",
+        "diagnostic:0",
+        "diagnostic:1",
+        "diagnostic:2",
+        "action",
+        "claim:C-001",
+        "claim:C-002",
+        "claim:C-003",
+        "claim:C-004",
+        "claim:C-005",
+        "claim:C-006",
+        "claim:C-007",
+        "claim:C-008",
+        "claim:C-009",
+        "claim:C-010",
+        "claim:C-011",
+        "claim:C-012",
+        "claim:C-013"
+      ],
+      "language": "ru",
+      "level": "expert",
+      "limitations": [
+        "Для части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено. Источник: C-012; статус: insufficient_evidence."
+      ],
+      "lost_or_averaged": [
+        "Для части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено. Источник: C-012; статус: insufficient_evidence."
+      ],
+      "main_reasons": [
+        {
+          "claim_refs": [
+            "C-003"
+          ],
+          "evidence_refs": [
+            "rule:R31"
+          ],
+          "explanation": "fracture_density is high and distance is low -> 1 поддерживает текущее решение. Измеренная значимость: 0.840.",
+          "title": "Правило R31"
+        },
+        {
+          "claim_refs": [
+            "C-004"
+          ],
+          "evidence_refs": [
+            "rule:R12"
+          ],
+          "explanation": "water_saturation is high -> 1 поддерживает текущее решение. Измеренная значимость: 0.670.",
+          "title": "Правило R12"
+        },
+        {
+          "claim_refs": [
+            "C-006"
+          ],
+          "evidence_refs": [
+            "concept:1"
+          ],
+          "explanation": "Class 1: fracture_density is high and distance is low -> 1; water_saturation is high -> 1; supported primary-rule coverage 46.0%.",
+          "title": "Типичный профиль класса повышенный риск"
+        },
+        {
+          "claim_refs": [
+            "C-005"
+          ],
+          "evidence_refs": [
+            "concept:0"
+          ],
+          "explanation": "Class 0: no supported primary rules; coverage unavailable.",
+          "title": "Типичный профиль класса низкий риск"
+        },
+        {
+          "claim_refs": [
+            "C-007"
+          ],
+          "evidence_refs": [
+            "similar:anfis-fixture-1:reference_3"
+          ],
+          "explanation": "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 0.871; объект: reference_3.",
+          "title": "Похожий обучающий случай"
+        }
+      ],
+      "model_observed": [
+        "Модель определила: повышенный риск. Модельный балл: 0.820."
+      ],
+      "recommended_action": {
+        "action": "review",
+        "claim_refs": [
+          "C-013"
+        ],
+        "evidence_refs": [
+          "diagnostic:0",
+          "diagnostic:1",
+          "diagnostic:2"
+        ],
+        "explanation": "Передать результат специалисту и отдельно проверить трещиноватость и водонасыщенность.",
+        "title": "Проверить специалистом"
+      },
+      "reliability": {
+        "claim_refs": [
+          "C-013",
+          "C-002",
+          "C-012"
+        ],
+        "evidence_refs": [
+          "diagnostic:0",
+          "diagnostic:1",
+          "diagnostic:2",
+          "data:anfis-fixture-1"
+        ],
+        "explanation": "Результат подтверждается частью доступных сведений, но недостаточно надёжен для автоматического решения.",
+        "title": "Требуется дополнительная проверка"
+      },
+      "similar_cases": [
+        "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 0.871; объект: reference_3.",
+        "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 0.722; объект: reference_2.",
+        "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 0.251; объект: reference_1."
+      ],
+      "summary": "## Решение\nМодель определила: повышенный риск. Модельный балл: 0.820.\n\n## Почему\nfracture_density is high and distance is low -> 1 поддерживает текущее решение. Измеренная значимость: 0.840.\nwater_saturation is high -> 1 поддерживает текущее решение. Измеренная значимость: 0.670.\nClass 1: fracture_density is high and distance is low -> 1; water_saturation is high -> 1; supported primary-rule coverage 46.0%.\nClass 0: no supported primary rules; coverage unavailable.\nНайден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 0.871; объект: reference_3.\n\n## Что вызывает сомнение\nДля части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено. Источник: C-012; статус: insufficient_evidence.\n\n## Насколько можно доверять\nРезультат подтверждается частью доступных сведений, но недостаточно надёжен для автоматического решения.\n\n## Что делать\nПередать результат специалисту и отдельно проверить трещиноватость и водонасыщенность.\n",
+      "trust": [
+        "Результат подтверждается частью доступных сведений, но недостаточно надёжен для автоматического решения.",
+        "Передать результат специалисту и отдельно проверить трещиноватость и водонасыщенность."
+      ],
+      "what_would_change_result": []
+    },
+    "ml_engineer": {
+      "audience": "ml_engineer",
+      "claim_refs": {
+        "changes": [],
+        "concerns": [
+          "C-012"
+        ],
+        "decision": [
+          "C-001"
+        ],
+        "main_reasons": [
+          "C-003",
+          "C-004",
+          "C-006",
+          "C-005",
+          "C-007"
+        ],
+        "recommended_action": [
+          "C-013"
+        ],
+        "reliability": [
+          "C-013",
+          "C-002",
+          "C-012"
+        ]
+      },
+      "concerns": [
+        {
+          "claim_refs": [
+            "C-012"
+          ],
+          "evidence_refs": [
+            "diagnostic:2"
+          ],
+          "explanation": "Для части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено. Источник: C-012; статус: insufficient_evidence.",
+          "title": "Не все проверки подтверждены"
+        }
+      ],
+      "decision": {
+        "claim_refs": [
+          "C-001"
+        ],
+        "evidence_refs": [
+          "prediction"
+        ],
+        "explanation": "Модель определила: повышенный риск. Модельный балл: 0.820.",
+        "title": "Повышенный риск"
+      },
+      "decision_changes": [],
+      "details": {
+        "contradicts": [],
+        "limitations": [
+          {
+            "claim_refs": [
+              "C-012"
+            ],
+            "evidence_refs": [
+              "diagnostic:2"
+            ],
+            "explanation": "Для части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено. Источник: C-012; статус: insufficient_evidence.",
+            "title": "Не все проверки подтверждены"
+          }
+        ],
+        "similar_cases": [
+          {
+            "claim_refs": [
+              "C-007"
+            ],
+            "evidence_refs": [
+              "similar:anfis-fixture-1:reference_3"
+            ],
+            "explanation": "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 0.871; объект: reference_3.",
+            "title": "Похожий обучающий случай"
+          },
+          {
+            "claim_refs": [
+              "C-008"
+            ],
+            "evidence_refs": [
+              "similar:anfis-fixture-1:reference_2"
+            ],
+            "explanation": "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 0.722; объект: reference_2.",
+            "title": "Похожий обучающий случай"
+          },
+          {
+            "claim_refs": [
+              "C-009"
+            ],
+            "evidence_refs": [
+              "similar:anfis-fixture-1:reference_1"
+            ],
+            "explanation": "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 0.251; объект: reference_1.",
+            "title": "Похожий обучающий случай"
+          }
+        ],
+        "supports": [
+          {
+            "claim_refs": [
+              "C-003"
+            ],
+            "evidence_refs": [
+              "rule:R31"
+            ],
+            "explanation": "fracture_density is high and distance is low -> 1 поддерживает текущее решение. Измеренная значимость: 0.840.",
+            "title": "Правило R31"
+          },
+          {
+            "claim_refs": [
+              "C-004"
+            ],
+            "evidence_refs": [
+              "rule:R12"
+            ],
+            "explanation": "water_saturation is high -> 1 поддерживает текущее решение. Измеренная значимость: 0.670.",
+            "title": "Правило R12"
+          },
+          {
+            "claim_refs": [
+              "C-006"
+            ],
+            "evidence_refs": [
+              "concept:1"
+            ],
+            "explanation": "Class 1: fracture_density is high and distance is low -> 1; water_saturation is high -> 1; supported primary-rule coverage 46.0%.",
+            "title": "Типичный профиль класса повышенный риск"
+          },
+          {
+            "claim_refs": [
+              "C-005"
+            ],
+            "evidence_refs": [
+              "concept:0"
+            ],
+            "explanation": "Class 0: no supported primary rules; coverage unavailable.",
+            "title": "Типичный профиль класса низкий риск"
+          },
+          {
+            "claim_refs": [
+              "C-007"
+            ],
+            "evidence_refs": [
+              "similar:anfis-fixture-1:reference_3"
+            ],
+            "explanation": "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 0.871; объект: reference_3.",
+            "title": "Похожий обучающий случай"
+          }
+        ],
+        "technical_metrics": [
+          {
+            "claim_refs": [
+              "C-001"
+            ],
+            "evidence_refs": [
+              "prediction"
+            ],
+            "explanation": "0.820",
+            "title": "model_score"
+          },
+          {
+            "claim_refs": [
+              "C-003"
+            ],
+            "evidence_refs": [
+              "rule:R31"
+            ],
+            "explanation": "0.840",
+            "title": "rule_importance"
+          },
+          {
+            "claim_refs": [
+              "C-004"
+            ],
+            "evidence_refs": [
+              "rule:R12"
+            ],
+            "explanation": "0.670",
+            "title": "rule_importance"
+          },
+          {
+            "claim_refs": [
+              "C-006"
+            ],
+            "evidence_refs": [
+              "concept:1"
+            ],
+            "explanation": "0.460",
+            "title": "primary_rule_coverage"
+          },
+          {
+            "claim_refs": [
+              "C-007"
+            ],
+            "evidence_refs": [
+              "similar:anfis-fixture-1:reference_3"
+            ],
+            "explanation": "0.871; сравнение: normalized tabular feature vector",
+            "title": "similarity"
+          },
+          {
+            "claim_refs": [
+              "C-008"
+            ],
+            "evidence_refs": [
+              "similar:anfis-fixture-1:reference_2"
+            ],
+            "explanation": "0.722; сравнение: normalized tabular feature vector",
+            "title": "similarity"
+          },
+          {
+            "claim_refs": [
+              "C-009"
+            ],
+            "evidence_refs": [
+              "similar:anfis-fixture-1:reference_1"
+            ],
+            "explanation": "0.251; сравнение: normalized tabular feature vector",
+            "title": "similarity"
+          },
+          {
+            "claim_refs": [
+              "C-002"
+            ],
+            "evidence_refs": [
+              "data:anfis-fixture-1"
+            ],
+            "explanation": "1.000",
+            "title": "data_quality"
+          }
+        ],
+        "training": []
+      },
+      "evidence_trace": [
+        "data:anfis-fixture-1",
+        "rule:R31",
+        "rule:R12",
+        "concept:0",
+        "concept:1",
+        "similar:anfis-fixture-1:reference_3",
+        "similar:anfis-fixture-1:reference_2",
+        "similar:anfis-fixture-1:reference_1",
+        "prediction",
+        "diagnostic:0",
+        "diagnostic:1",
+        "diagnostic:2",
+        "action",
+        "claim:C-001",
+        "claim:C-002",
+        "claim:C-003",
+        "claim:C-004",
+        "claim:C-005",
+        "claim:C-006",
+        "claim:C-007",
+        "claim:C-008",
+        "claim:C-009",
+        "claim:C-010",
+        "claim:C-011",
+        "claim:C-012",
+        "claim:C-013"
+      ],
+      "language": "ru",
+      "level": "expert",
+      "limitations": [
+        "Для части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено. Источник: C-012; статус: insufficient_evidence."
+      ],
+      "lost_or_averaged": [
+        "Для части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено. Источник: C-012; статус: insufficient_evidence."
+      ],
+      "main_reasons": [
+        {
+          "claim_refs": [
+            "C-003"
+          ],
+          "evidence_refs": [
+            "rule:R31"
+          ],
+          "explanation": "fracture_density is high and distance is low -> 1 поддерживает текущее решение. Измеренная значимость: 0.840.",
+          "title": "Правило R31"
+        },
+        {
+          "claim_refs": [
+            "C-004"
+          ],
+          "evidence_refs": [
+            "rule:R12"
+          ],
+          "explanation": "water_saturation is high -> 1 поддерживает текущее решение. Измеренная значимость: 0.670.",
+          "title": "Правило R12"
+        },
+        {
+          "claim_refs": [
+            "C-006"
+          ],
+          "evidence_refs": [
+            "concept:1"
+          ],
+          "explanation": "Class 1: fracture_density is high and distance is low -> 1; water_saturation is high -> 1; supported primary-rule coverage 46.0%.",
+          "title": "Типичный профиль класса повышенный риск"
+        },
+        {
+          "claim_refs": [
+            "C-005"
+          ],
+          "evidence_refs": [
+            "concept:0"
+          ],
+          "explanation": "Class 0: no supported primary rules; coverage unavailable.",
+          "title": "Типичный профиль класса низкий риск"
+        },
+        {
+          "claim_refs": [
+            "C-007"
+          ],
+          "evidence_refs": [
+            "similar:anfis-fixture-1:reference_3"
+          ],
+          "explanation": "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 0.871; объект: reference_3.",
+          "title": "Похожий обучающий случай"
+        }
+      ],
+      "model_observed": [
+        "Модель определила: повышенный риск. Модельный балл: 0.820."
+      ],
+      "recommended_action": {
+        "action": "review",
+        "claim_refs": [
+          "C-013"
+        ],
+        "evidence_refs": [
+          "diagnostic:0",
+          "diagnostic:1",
+          "diagnostic:2"
+        ],
+        "explanation": "Передать результат специалисту и отдельно проверить трещиноватость и водонасыщенность.",
+        "title": "Проверить специалистом"
+      },
+      "reliability": {
+        "claim_refs": [
+          "C-013",
+          "C-002",
+          "C-012"
+        ],
+        "evidence_refs": [
+          "diagnostic:0",
+          "diagnostic:1",
+          "diagnostic:2",
+          "data:anfis-fixture-1"
+        ],
+        "explanation": "Результат подтверждается частью доступных сведений, но недостаточно надёжен для автоматического решения.",
+        "title": "Требуется дополнительная проверка"
+      },
+      "similar_cases": [
+        "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 0.871; объект: reference_3.",
+        "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 0.722; объект: reference_2.",
+        "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 0.251; объект: reference_1."
+      ],
+      "summary": "## Решение\nМодель определила: повышенный риск. Модельный балл: 0.820.\n\n## Почему\nfracture_density is high and distance is low -> 1 поддерживает текущее решение. Измеренная значимость: 0.840.\nwater_saturation is high -> 1 поддерживает текущее решение. Измеренная значимость: 0.670.\nClass 1: fracture_density is high and distance is low -> 1; water_saturation is high -> 1; supported primary-rule coverage 46.0%.\nClass 0: no supported primary rules; coverage unavailable.\nНайден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 0.871; объект: reference_3.\n\n## Что вызывает сомнение\nДля части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено. Источник: C-012; статус: insufficient_evidence.\n\n## Насколько можно доверять\nРезультат подтверждается частью доступных сведений, но недостаточно надёжен для автоматического решения.\n\n## Что делать\nПередать результат специалисту и отдельно проверить трещиноватость и водонасыщенность.\n",
+      "trust": [
+        "Результат подтверждается частью доступных сведений, но недостаточно надёжен для автоматического решения.",
+        "Передать результат специалисту и отдельно проверить трещиноватость и водонасыщенность."
+      ],
+      "what_would_change_result": []
+    },
+    "researcher": {
+      "audience": "researcher",
+      "claim_refs": {
+        "changes": [],
+        "concerns": [
+          "C-012"
+        ],
+        "decision": [
+          "C-001"
+        ],
+        "main_reasons": [
+          "C-003",
+          "C-004",
+          "C-006",
+          "C-005",
+          "C-007"
+        ],
+        "recommended_action": [
+          "C-013"
+        ],
+        "reliability": [
+          "C-013",
+          "C-002",
+          "C-012"
+        ]
+      },
+      "concerns": [
+        {
+          "claim_refs": [
+            "C-012"
+          ],
+          "evidence_refs": [
+            "diagnostic:2"
+          ],
+          "explanation": "Для части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено. Источник: C-012; статус: insufficient_evidence.",
+          "title": "Не все проверки подтверждены"
+        }
+      ],
+      "decision": {
+        "claim_refs": [
+          "C-001"
+        ],
+        "evidence_refs": [
+          "prediction"
+        ],
+        "explanation": "Модель определила: повышенный риск. Модельный балл: 0.820.",
+        "title": "Повышенный риск"
+      },
+      "decision_changes": [],
+      "details": {
+        "contradicts": [],
+        "limitations": [
+          {
+            "claim_refs": [
+              "C-012"
+            ],
+            "evidence_refs": [
+              "diagnostic:2"
+            ],
+            "explanation": "Для части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено. Источник: C-012; статус: insufficient_evidence.",
+            "title": "Не все проверки подтверждены"
+          }
+        ],
+        "similar_cases": [
+          {
+            "claim_refs": [
+              "C-007"
+            ],
+            "evidence_refs": [
+              "similar:anfis-fixture-1:reference_3"
+            ],
+            "explanation": "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 0.871; объект: reference_3.",
+            "title": "Похожий обучающий случай"
+          },
+          {
+            "claim_refs": [
+              "C-008"
+            ],
+            "evidence_refs": [
+              "similar:anfis-fixture-1:reference_2"
+            ],
+            "explanation": "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 0.722; объект: reference_2.",
+            "title": "Похожий обучающий случай"
+          },
+          {
+            "claim_refs": [
+              "C-009"
+            ],
+            "evidence_refs": [
+              "similar:anfis-fixture-1:reference_1"
+            ],
+            "explanation": "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 0.251; объект: reference_1.",
+            "title": "Похожий обучающий случай"
+          }
+        ],
+        "supports": [
+          {
+            "claim_refs": [
+              "C-003"
+            ],
+            "evidence_refs": [
+              "rule:R31"
+            ],
+            "explanation": "fracture_density is high and distance is low -> 1 поддерживает текущее решение. Измеренная значимость: 0.840.",
+            "title": "Правило R31"
+          },
+          {
+            "claim_refs": [
+              "C-004"
+            ],
+            "evidence_refs": [
+              "rule:R12"
+            ],
+            "explanation": "water_saturation is high -> 1 поддерживает текущее решение. Измеренная значимость: 0.670.",
+            "title": "Правило R12"
+          },
+          {
+            "claim_refs": [
+              "C-006"
+            ],
+            "evidence_refs": [
+              "concept:1"
+            ],
+            "explanation": "Class 1: fracture_density is high and distance is low -> 1; water_saturation is high -> 1; supported primary-rule coverage 46.0%.",
+            "title": "Типичный профиль класса повышенный риск"
+          },
+          {
+            "claim_refs": [
+              "C-005"
+            ],
+            "evidence_refs": [
+              "concept:0"
+            ],
+            "explanation": "Class 0: no supported primary rules; coverage unavailable.",
+            "title": "Типичный профиль класса низкий риск"
+          },
+          {
+            "claim_refs": [
+              "C-007"
+            ],
+            "evidence_refs": [
+              "similar:anfis-fixture-1:reference_3"
+            ],
+            "explanation": "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 0.871; объект: reference_3.",
+            "title": "Похожий обучающий случай"
+          }
+        ],
+        "technical_metrics": [
+          {
+            "claim_refs": [
+              "C-001"
+            ],
+            "evidence_refs": [
+              "prediction"
+            ],
+            "explanation": "0.820",
+            "title": "model_score"
+          },
+          {
+            "claim_refs": [
+              "C-003"
+            ],
+            "evidence_refs": [
+              "rule:R31"
+            ],
+            "explanation": "0.840",
+            "title": "rule_importance"
+          },
+          {
+            "claim_refs": [
+              "C-004"
+            ],
+            "evidence_refs": [
+              "rule:R12"
+            ],
+            "explanation": "0.670",
+            "title": "rule_importance"
+          },
+          {
+            "claim_refs": [
+              "C-006"
+            ],
+            "evidence_refs": [
+              "concept:1"
+            ],
+            "explanation": "0.460",
+            "title": "primary_rule_coverage"
+          },
+          {
+            "claim_refs": [
+              "C-007"
+            ],
+            "evidence_refs": [
+              "similar:anfis-fixture-1:reference_3"
+            ],
+            "explanation": "0.871; сравнение: normalized tabular feature vector",
+            "title": "similarity"
+          },
+          {
+            "claim_refs": [
+              "C-008"
+            ],
+            "evidence_refs": [
+              "similar:anfis-fixture-1:reference_2"
+            ],
+            "explanation": "0.722; сравнение: normalized tabular feature vector",
+            "title": "similarity"
+          },
+          {
+            "claim_refs": [
+              "C-009"
+            ],
+            "evidence_refs": [
+              "similar:anfis-fixture-1:reference_1"
+            ],
+            "explanation": "0.251; сравнение: normalized tabular feature vector",
+            "title": "similarity"
+          },
+          {
+            "claim_refs": [
+              "C-002"
+            ],
+            "evidence_refs": [
+              "data:anfis-fixture-1"
+            ],
+            "explanation": "1.000",
+            "title": "data_quality"
+          }
+        ],
+        "training": []
+      },
+      "evidence_trace": [
+        "data:anfis-fixture-1",
+        "rule:R31",
+        "rule:R12",
+        "concept:0",
+        "concept:1",
+        "similar:anfis-fixture-1:reference_3",
+        "similar:anfis-fixture-1:reference_2",
+        "similar:anfis-fixture-1:reference_1",
+        "prediction",
+        "diagnostic:0",
+        "diagnostic:1",
+        "diagnostic:2",
+        "action",
+        "claim:C-001",
+        "claim:C-002",
+        "claim:C-003",
+        "claim:C-004",
+        "claim:C-005",
+        "claim:C-006",
+        "claim:C-007",
+        "claim:C-008",
+        "claim:C-009",
+        "claim:C-010",
+        "claim:C-011",
+        "claim:C-012",
+        "claim:C-013"
+      ],
+      "language": "ru",
+      "level": "expert",
+      "limitations": [
+        "Для части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено. Источник: C-012; статус: insufficient_evidence."
+      ],
+      "lost_or_averaged": [
+        "Для части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено. Источник: C-012; статус: insufficient_evidence."
+      ],
+      "main_reasons": [
+        {
+          "claim_refs": [
+            "C-003"
+          ],
+          "evidence_refs": [
+            "rule:R31"
+          ],
+          "explanation": "fracture_density is high and distance is low -> 1 поддерживает текущее решение. Измеренная значимость: 0.840.",
+          "title": "Правило R31"
+        },
+        {
+          "claim_refs": [
+            "C-004"
+          ],
+          "evidence_refs": [
+            "rule:R12"
+          ],
+          "explanation": "water_saturation is high -> 1 поддерживает текущее решение. Измеренная значимость: 0.670.",
+          "title": "Правило R12"
+        },
+        {
+          "claim_refs": [
+            "C-006"
+          ],
+          "evidence_refs": [
+            "concept:1"
+          ],
+          "explanation": "Class 1: fracture_density is high and distance is low -> 1; water_saturation is high -> 1; supported primary-rule coverage 46.0%.",
+          "title": "Типичный профиль класса повышенный риск"
+        },
+        {
+          "claim_refs": [
+            "C-005"
+          ],
+          "evidence_refs": [
+            "concept:0"
+          ],
+          "explanation": "Class 0: no supported primary rules; coverage unavailable.",
+          "title": "Типичный профиль класса низкий риск"
+        },
+        {
+          "claim_refs": [
+            "C-007"
+          ],
+          "evidence_refs": [
+            "similar:anfis-fixture-1:reference_3"
+          ],
+          "explanation": "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 0.871; объект: reference_3.",
+          "title": "Похожий обучающий случай"
+        }
+      ],
+      "model_observed": [
+        "Модель определила: повышенный риск. Модельный балл: 0.820."
+      ],
+      "recommended_action": {
+        "action": "review",
+        "claim_refs": [
+          "C-013"
+        ],
+        "evidence_refs": [
+          "diagnostic:0",
+          "diagnostic:1",
+          "diagnostic:2"
+        ],
+        "explanation": "Передать результат специалисту и отдельно проверить трещиноватость и водонасыщенность.",
+        "title": "Проверить специалистом"
+      },
+      "reliability": {
+        "claim_refs": [
+          "C-013",
+          "C-002",
+          "C-012"
+        ],
+        "evidence_refs": [
+          "diagnostic:0",
+          "diagnostic:1",
+          "diagnostic:2",
+          "data:anfis-fixture-1"
+        ],
+        "explanation": "Результат подтверждается частью доступных сведений, но недостаточно надёжен для автоматического решения.",
+        "title": "Требуется дополнительная проверка"
+      },
+      "similar_cases": [
+        "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 0.871; объект: reference_3.",
+        "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 0.722; объект: reference_2.",
+        "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 0.251; объект: reference_1."
+      ],
+      "summary": "## Решение\nМодель определила: повышенный риск. Модельный балл: 0.820.\n\n## Почему\nfracture_density is high and distance is low -> 1 поддерживает текущее решение. Измеренная значимость: 0.840.\nwater_saturation is high -> 1 поддерживает текущее решение. Измеренная значимость: 0.670.\nClass 1: fracture_density is high and distance is low -> 1; water_saturation is high -> 1; supported primary-rule coverage 46.0%.\nClass 0: no supported primary rules; coverage unavailable.\nНайден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 0.871; объект: reference_3.\n\n## Что вызывает сомнение\nДля части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено. Источник: C-012; статус: insufficient_evidence.\n\n## Насколько можно доверять\nРезультат подтверждается частью доступных сведений, но недостаточно надёжен для автоматического решения.\n\n## Что делать\nПередать результат специалисту и отдельно проверить трещиноватость и водонасыщенность.\n",
+      "trust": [
+        "Результат подтверждается частью доступных сведений, но недостаточно надёжен для автоматического решения.",
+        "Передать результат специалисту и отдельно проверить трещиноватость и водонасыщенность."
+      ],
+      "what_would_change_result": []
+    },
+    "user": {
+      "audience": "domain_user",
+      "claim_refs": {
+        "changes": [],
+        "concerns": [
+          "C-012"
+        ],
+        "decision": [
+          "C-001"
+        ],
+        "main_reasons": [
+          "C-003",
+          "C-006",
+          "C-005"
+        ],
+        "recommended_action": [
+          "C-013"
+        ],
+        "reliability": [
+          "C-013",
+          "C-002",
+          "C-012"
+        ]
+      },
+      "concerns": [
+        {
+          "claim_refs": [
+            "C-012"
+          ],
+          "evidence_refs": [
+            "diagnostic:2"
+          ],
+          "explanation": "Для части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено.",
+          "title": "Не все проверки подтверждены"
+        }
+      ],
+      "decision": {
+        "claim_refs": [
+          "C-001"
+        ],
+        "evidence_refs": [
+          "prediction"
+        ],
+        "explanation": "Модель определила: повышенный риск.",
+        "title": "Повышенный риск"
+      },
+      "decision_changes": [],
+      "details": {
+        "contradicts": [],
+        "limitations": [
+          {
+            "claim_refs": [
+              "C-012"
+            ],
+            "evidence_refs": [
+              "diagnostic:2"
+            ],
+            "explanation": "Для части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено.",
+            "title": "Не все проверки подтверждены"
+          }
+        ],
+        "similar_cases": [
+          {
+            "claim_refs": [
+              "C-007"
+            ],
+            "evidence_refs": [
+              "similar:anfis-fixture-1:reference_3"
+            ],
+            "explanation": "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход.",
+            "title": "Похожий обучающий случай"
+          },
+          {
+            "claim_refs": [
+              "C-008"
+            ],
+            "evidence_refs": [
+              "similar:anfis-fixture-1:reference_2"
+            ],
+            "explanation": "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход.",
+            "title": "Похожий обучающий случай"
+          },
+          {
+            "claim_refs": [
+              "C-009"
+            ],
+            "evidence_refs": [
+              "similar:anfis-fixture-1:reference_1"
+            ],
+            "explanation": "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход.",
+            "title": "Похожий обучающий случай"
+          }
+        ],
+        "supports": [
+          {
+            "claim_refs": [
+              "C-003"
+            ],
+            "evidence_refs": [
+              "rule:R31"
+            ],
+            "explanation": "Подтверждённая закономерность связывает значения признаков с выбранным результатом и поддерживает текущее решение.",
+            "title": "Закономерность, найденная моделью"
+          },
+          {
+            "claim_refs": [
+              "C-006"
+            ],
+            "evidence_refs": [
+              "concept:1"
+            ],
+            "explanation": "По сравнению с референсной выборкой объект близок к типичному профилю группы «повышенный риск». Такое сходство поддерживает результат, но не заменяет проверку ограничений.",
+            "title": "Типичный профиль класса повышенный риск"
+          },
+          {
+            "claim_refs": [
+              "C-005"
+            ],
+            "evidence_refs": [
+              "concept:0"
+            ],
+            "explanation": "По сравнению с референсной выборкой объект близок к типичному профилю группы «низкий риск». Такое сходство поддерживает результат, но не заменяет проверку ограничений.",
+            "title": "Типичный профиль класса низкий риск"
+          },
+          {
+            "claim_refs": [
+              "C-007"
+            ],
+            "evidence_refs": [
+              "similar:anfis-fixture-1:reference_3"
+            ],
+            "explanation": "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход.",
+            "title": "Похожий обучающий случай"
+          }
+        ],
+        "technical_metrics": [
+          {
+            "claim_refs": [
+              "C-001"
+            ],
+            "evidence_refs": [
+              "prediction"
+            ],
+            "explanation": "0.820",
+            "title": "model_score"
+          },
+          {
+            "claim_refs": [
+              "C-003"
+            ],
+            "evidence_refs": [
+              "rule:R31"
+            ],
+            "explanation": "0.840",
+            "title": "rule_importance"
+          },
+          {
+            "claim_refs": [
+              "C-004"
+            ],
+            "evidence_refs": [
+              "rule:R12"
+            ],
+            "explanation": "0.670",
+            "title": "rule_importance"
+          },
+          {
+            "claim_refs": [
+              "C-006"
+            ],
+            "evidence_refs": [
+              "concept:1"
+            ],
+            "explanation": "0.460",
+            "title": "primary_rule_coverage"
+          },
+          {
+            "claim_refs": [
+              "C-007"
+            ],
+            "evidence_refs": [
+              "similar:anfis-fixture-1:reference_3"
+            ],
+            "explanation": "0.871; сравнение: normalized tabular feature vector",
+            "title": "similarity"
+          },
+          {
+            "claim_refs": [
+              "C-008"
+            ],
+            "evidence_refs": [
+              "similar:anfis-fixture-1:reference_2"
+            ],
+            "explanation": "0.722; сравнение: normalized tabular feature vector",
+            "title": "similarity"
+          },
+          {
+            "claim_refs": [
+              "C-009"
+            ],
+            "evidence_refs": [
+              "similar:anfis-fixture-1:reference_1"
+            ],
+            "explanation": "0.251; сравнение: normalized tabular feature vector",
+            "title": "similarity"
+          },
+          {
+            "claim_refs": [
+              "C-002"
+            ],
+            "evidence_refs": [
+              "data:anfis-fixture-1"
+            ],
+            "explanation": "1.000",
+            "title": "data_quality"
+          }
+        ],
+        "training": []
+      },
+      "evidence_trace": [],
+      "language": "ru",
+      "level": "user",
+      "limitations": [
+        "Для части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено."
+      ],
+      "lost_or_averaged": [
+        "Для части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено."
+      ],
+      "main_reasons": [
+        {
+          "claim_refs": [
+            "C-003"
+          ],
+          "evidence_refs": [
+            "rule:R31"
+          ],
+          "explanation": "Подтверждённая закономерность связывает значения признаков с выбранным результатом и поддерживает текущее решение.",
+          "title": "Закономерность, найденная моделью"
+        },
+        {
+          "claim_refs": [
+            "C-006"
+          ],
+          "evidence_refs": [
+            "concept:1"
+          ],
+          "explanation": "По сравнению с референсной выборкой объект близок к типичному профилю группы «повышенный риск». Такое сходство поддерживает результат, но не заменяет проверку ограничений.",
+          "title": "Типичный профиль класса повышенный риск"
+        },
+        {
+          "claim_refs": [
+            "C-005"
+          ],
+          "evidence_refs": [
+            "concept:0"
+          ],
+          "explanation": "По сравнению с референсной выборкой объект близок к типичному профилю группы «низкий риск». Такое сходство поддерживает результат, но не заменяет проверку ограничений.",
+          "title": "Типичный профиль класса низкий риск"
+        }
+      ],
+      "model_observed": [
+        "Модель определила: повышенный риск."
+      ],
+      "recommended_action": {
+        "action": "review",
+        "claim_refs": [
+          "C-013"
+        ],
+        "evidence_refs": [
+          "diagnostic:0",
+          "diagnostic:1",
+          "diagnostic:2"
+        ],
+        "explanation": "Передать результат специалисту и отдельно проверить трещиноватость и водонасыщенность.",
+        "title": "Проверить специалистом"
+      },
+      "reliability": {
+        "claim_refs": [
+          "C-013",
+          "C-002",
+          "C-012"
+        ],
+        "evidence_refs": [
+          "diagnostic:0",
+          "diagnostic:1",
+          "diagnostic:2",
+          "data:anfis-fixture-1"
+        ],
+        "explanation": "Результат подтверждается частью доступных сведений, но недостаточно надёжен для автоматического решения.",
+        "title": "Требуется дополнительная проверка"
+      },
+      "similar_cases": [
+        "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход.",
+        "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход.",
+        "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход."
+      ],
+      "summary": "## Решение\nМодель определила: повышенный риск.\n\n## Почему\nПодтверждённая закономерность связывает значения признаков с выбранным результатом и поддерживает текущее решение.\nПо сравнению с референсной выборкой объект близок к типичному профилю группы «повышенный риск». Такое сходство поддерживает результат, но не заменяет проверку ограничений.\nПо сравнению с референсной выборкой объект близок к типичному профилю группы «низкий риск». Такое сходство поддерживает результат, но не заменяет проверку ограничений.\n\n## Что вызывает сомнение\nДля части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено.\n\n## Насколько можно доверять\nРезультат подтверждается частью доступных сведений, но недостаточно надёжен для автоматического решения.\n\n## Что делать\nПередать результат специалисту и отдельно проверить трещиноватость и водонасыщенность.\n",
+      "trust": [
+        "Результат подтверждается частью доступных сведений, но недостаточно надёжен для автоматического решения.",
+        "Передать результат специалисту и отдельно проверить трещиноватость и водонасыщенность."
+      ],
+      "what_would_change_result": []
     }
   },
   "layers": {
@@ -2500,7 +4638,7 @@
     },
     "adapter_id": "native_rules",
     "dataset_version": "controlled_anfis_v1",
-    "explain_plan_sha256": "0680e714ca3d2ef5e360f69b8842776937a8079421274a637dfdfac336bba11c",
+    "explain_plan_sha256": "1fe8bad53acc74898c7c9d14c21ccebc3c65f192464f4b61c4773e0230a3e695",
     "generated_at": "controlled_fixture",
     "input_sha256": "93799d894b6b232584b431f614e92be388f0475dde56185492af2fd5f729954d",
     "missing_evidence": [],
@@ -2686,7 +4824,7 @@
         },
         {
           "claim_id": "C-007",
-          "effect": "mixed",
+          "effect": "favorable",
           "evidence_refs": [
             "similar:anfis-fixture-1:reference_3"
           ],
@@ -2702,7 +4840,7 @@
         },
         {
           "claim_id": "C-008",
-          "effect": "mixed",
+          "effect": "favorable",
           "evidence_refs": [
             "similar:anfis-fixture-1:reference_2"
           ],

@@ -133,11 +133,17 @@ def render_explanation_dashboard(
 
     # Human explanation
     axes[5].set_axis_off()
-    user = view_model.human_explanations.get("user", {})
+    user = view_model.human_explanations.get("domain_user", view_model.human_explanations.get("user", {}))
     lines = [str(user.get("summary", view_model.narrative or "No narrative available."))]
     reasons = list(user.get("main_reasons", []))[:3]
     if reasons:
-        lines.extend(["", "Main reasons:", *[f"• {item}" for item in reasons]])
+        lines.extend(
+            [
+                "",
+                "Main reasons:",
+                *[f"• {item.get('explanation', '') if isinstance(item, Mapping) else item}" for item in reasons],
+            ]
+        )
     limitations = list(user.get("limitations", []))[:3]
     if limitations:
         lines.extend(["", "Limits:", *[f"• {item}" for item in limitations]])

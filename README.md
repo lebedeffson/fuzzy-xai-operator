@@ -20,7 +20,19 @@ python -m venv .venv
 ## Explain a model
 
 ```python
-from fuzzyxai import FuzzyXAI
+from fuzzyxai import ExplainPlan, FuzzyXAI
+
+plan = ExplainPlan.default()
+plan.domain_language = {
+    "features": {
+        "fracture_density": {
+            "label": "трещиноватость породы",
+            "high_text": "трещин больше, чем в большинстве исследованных участков",
+        }
+    },
+    "classes": {1: {"label": "повышенный риск"}},
+    "actions": {"review": {"label": "проверить специалистом"}},
+}
 
 fx = FuzzyXAI.wrap(model, adapter="auto", explain_plan=plan)
 result = fx.explain_one(
@@ -33,9 +45,14 @@ result = fx.explain_one(
     include_counterfactuals=True,
 )
 
-print(result.summary("user"))
-print(result.summary("expert"))
-print(result.summary("audit"))
+human = result.explain_for(audience="domain_user", language="ru")
+print(human.decision.explanation)
+print([reason.explanation for reason in human.main_reasons])
+print(human.reliability.explanation)
+print(human.recommended_action.explanation)
+
+print(result.summary(audience="domain_user", detail="short"))
+print(result.summary(audience="ml_engineer", detail="full"))
 print(result.explanation_level)
 print(result.overview())
 print(result.story())
@@ -94,7 +111,7 @@ python -m build
 
 The machine-verifiable implementation map is [framework/fuzzyxai/operators_manifest.yaml](framework/fuzzyxai/operators_manifest.yaml). The canonical transport object is `ExplanationViewModel` schema `2.0`, shared by Matplotlib, HTML, and MATLAB.
 
-The v1.1 explanation surface is claim-centered: `ExplanationClaim` links every displayed statement to evidence, `ExplanationGraph` is the primary provenance object, and `ExplanationVisualSpec` feeds focused Matplotlib, Plotly, and MATLAB views. Run its controlled evidence gate with:
+The v1.2 explanation surface adds `HumanExplanation` above the claim graph. The first level answers decision, reasons, concerns, reliability, and action without exposing internal identifiers. Every card still links to claims and evidence for inspection. E0-E5 describes available evidence; `audience` controls how the same evidence is communicated. Run the controlled evidence gate with:
 
 ```bash
 make explanation-experience-evidence
@@ -109,6 +126,7 @@ The available views are `explanation_story`, `data_profile`, `training_trace`, `
 - [Adapters](docs/adapters.md)
 - [Operators](docs/operators.md)
 - [Explanation contract](docs/explanation_contract.md)
+- [Human Explanation Layer](docs/human_explanation_layer.md)
 - [Training observer](docs/training_observer.md)
 - [Visualization](docs/visualization.md)
 - [Comprehension study protocol](docs/explanation_comprehension_protocol.md)
@@ -128,4 +146,4 @@ This software is a research framework. Medical examples are not clinical conclus
 
 The ten focused Matplotlib and Plotly views consume `ExplanationVisualSpec` schema `1.1`. `result.inspect(...)` returns a typed `InspectionResult`; `result.explanation_graph.validate_reachability()` verifies the evidence-to-action route. Cross-model controlled evidence is generated under `release_evidence/explanation_experience/cross_model/`.
 
-The comprehension study is still `planned_not_run`; the repository therefore claims a testable explanation interface, not demonstrated universal human comprehensibility. Release tag `v1.1.0` is blocked until the external pilot and green `main` CI are recorded.
+The comprehension study is still `planned_not_run`; the repository therefore claims a testable human-explanation interface, not demonstrated universal human comprehensibility. Release tag `v1.2.0` is blocked until the external pilot and green `main` CI are recorded.

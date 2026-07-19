@@ -7,6 +7,7 @@ from typing import Any, Literal, Mapping, Sequence, cast
 EvidenceStatus = Literal["supported", "contested", "insufficient_evidence", "not_applicable"]
 EffectDirection = Literal["favorable", "adverse", "neutral", "mixed", "unknown"]
 Severity = Literal["info", "warning", "critical"]
+AudienceName = Literal["domain_user", "ml_engineer", "auditor", "researcher"]
 
 
 def _jsonable(value: Any) -> Any:
@@ -389,19 +390,175 @@ class ExplanationGraph(EvidenceContract):
 
 
 @dataclass(frozen=True)
+class AudienceProfile(EvidenceContract):
+    name: AudienceName
+    max_reasons: int
+    max_concerns: int
+    max_changes: int
+    show_technical_identifiers: bool
+    include_metrics: bool
+
+
+@dataclass(frozen=True)
+class HumanStatement(EvidenceContract):
+    title: str
+    explanation: str
+    claim_refs: Sequence[str]
+    evidence_refs: Sequence[str]
+
+    def __post_init__(self) -> None:
+        if not self.title.strip() or not self.explanation.strip():
+            raise ValueError("human statement requires title and explanation")
+        if not self.claim_refs:
+            raise ValueError("human statement requires at least one claim reference")
+        if not self.evidence_refs:
+            raise ValueError("human statement requires at least one evidence reference")
+
+
+@dataclass(frozen=True)
+class DecisionStatement(HumanStatement):
+    pass
+
+
+@dataclass(frozen=True)
+class ReasonStatement(HumanStatement):
+    pass
+
+
+@dataclass(frozen=True)
+class ConcernStatement(HumanStatement):
+    pass
+
+
+@dataclass(frozen=True)
+class ReliabilityStatement(HumanStatement):
+    pass
+
+
+@dataclass(frozen=True)
+class ActionStatement(HumanStatement):
+    action: str
+
+
+@dataclass(frozen=True)
+class ChangeStatement(HumanStatement):
+    pass
+
+
+@dataclass(frozen=True)
+class ExplanationDetails(EvidenceContract):
+    supports: Sequence[ReasonStatement] = field(default_factory=tuple)
+    contradicts: Sequence[ConcernStatement] = field(default_factory=tuple)
+    limitations: Sequence[ConcernStatement] = field(default_factory=tuple)
+    training: Sequence[HumanStatement] = field(default_factory=tuple)
+    similar_cases: Sequence[HumanStatement] = field(default_factory=tuple)
+    technical_metrics: Sequence[HumanStatement] = field(default_factory=tuple)
+
+
+@dataclass(frozen=True)
 class HumanExplanation(EvidenceContract):
-    level: str
-    summary: str
-    main_reasons: Sequence[str]
-    model_observed: Sequence[str]
-    lost_or_averaged: Sequence[str]
-    similar_cases: Sequence[str]
-    decision_changes: Sequence[str]
-    trust: Sequence[str]
-    limitations: Sequence[str]
-    recommended_action: str
-    evidence_trace: Sequence[str]
-    claim_refs: Mapping[str, Sequence[str]] = field(default_factory=dict)
+    audience: AudienceName
+    language: str
+    decision: DecisionStatement
+    main_reasons: Sequence[ReasonStatement]
+    concerns: Sequence[ConcernStatement]
+    reliability: ReliabilityStatement
+    recommended_action: ActionStatement
+    what_would_change_result: Sequence[ChangeStatement]
+    details: ExplanationDetails
+    technical_trace: ExplanationGraph
+
+    @property
+    def fragments(self) -> tuple[HumanStatement, ...]:
+        return (
+            self.decision,
+            *self.main_reasons,
+            *self.concerns,
+            self.reliability,
+            self.recommended_action,
+            *self.what_would_change_result,
+        )
+
+    @property
+    def user_text(self) -> str:
+        sections = [
+            ("Решение", (self.decision,)),
+            ("Почему", self.main_reasons),
+            ("Что вызывает сомнение", self.concerns),
+            ("Насколько можно доверять", (self.reliability,)),
+            ("Что делать", (self.recommended_action,)),
+            ("Что изменит результат", self.what_would_change_result),
+        ]
+        lines: list[str] = []
+        for heading, statements in sections:
+            if not statements:
+                continue
+            lines.append(f"## {heading}")
+            lines.extend(statement.explanation for statement in statements)
+            lines.append("")
+        return "\n".join(lines).strip() + "\n"
+
+    def to_dict(self, *, include_technical_trace: bool = True) -> dict[str, Any]:
+        payload = super().to_dict()
+        if not include_technical_trace:
+            payload.pop("technical_trace", None)
+        # One-cycle compatibility for existing dashboard and export consumers.
+        payload.update(
+            {
+                "level": {"domain_user": "user", "ml_engineer": "expert", "auditor": "audit", "researcher": "expert"}[self.audience],
+                "summary": self.user_text,
+                "model_observed": [self.decision.explanation],
+                "lost_or_averaged": [item.explanation for item in self.concerns],
+                "similar_cases": [item.explanation for item in self.details.similar_cases],
+                "decision_changes": [item.explanation for item in self.what_would_change_result],
+                "trust": [self.reliability.explanation, self.recommended_action.explanation],
+                "limitations": [item.explanation for item in self.details.limitations],
+                "evidence_trace": [] if self.audience == "domain_user" else [node.node_id for node in self.technical_trace.nodes],
+                "claim_refs": {
+                    "decision": list(self.decision.claim_refs),
+                    "main_reasons": [ref for item in self.main_reasons for ref in item.claim_refs],
+                    "concerns": [ref for item in self.concerns for ref in item.claim_refs],
+                    "reliability": list(self.reliability.claim_refs),
+                    "recommended_action": list(self.recommended_action.claim_refs),
+                    "changes": [ref for item in self.what_would_change_result for ref in item.claim_refs],
+                },
+            }
+        )
+        return payload
+
+    @classmethod
+    def from_dict(cls, payload: Mapping[str, Any], *, graph: ExplanationGraph | None = None) -> "HumanExplanation":
+        def statement(kind: type[HumanStatement], value: Mapping[str, Any]) -> HumanStatement:
+            title = str(value["title"])
+            explanation = str(value["explanation"])
+            claim_refs = tuple(str(item) for item in value.get("claim_refs", ()))
+            evidence_refs = tuple(str(item) for item in value.get("evidence_refs", ()))
+            if kind is ActionStatement:
+                return ActionStatement(title, explanation, claim_refs, evidence_refs, str(value.get("action", "review")))
+            return kind(title, explanation, claim_refs, evidence_refs)
+
+        details_payload = payload.get("details", {})
+        trace_payload = payload.get("technical_trace", {})
+        trace = graph or (ExplanationGraph.from_dict(trace_payload) if isinstance(trace_payload, Mapping) and trace_payload else ExplanationGraph((), (), ()))
+        return cls(
+            audience=cast(AudienceName, str(payload.get("audience", "domain_user"))),
+            language=str(payload.get("language", "ru")),
+            decision=cast(DecisionStatement, statement(DecisionStatement, cast(Mapping[str, Any], payload["decision"]))),
+            main_reasons=tuple(cast(ReasonStatement, statement(ReasonStatement, item)) for item in payload.get("main_reasons", ())),
+            concerns=tuple(cast(ConcernStatement, statement(ConcernStatement, item)) for item in payload.get("concerns", ())),
+            reliability=cast(ReliabilityStatement, statement(ReliabilityStatement, cast(Mapping[str, Any], payload["reliability"]))),
+            recommended_action=cast(ActionStatement, statement(ActionStatement, cast(Mapping[str, Any], payload["recommended_action"]))),
+            what_would_change_result=tuple(cast(ChangeStatement, statement(ChangeStatement, item)) for item in payload.get("what_would_change_result", ())),
+            details=ExplanationDetails(
+                supports=tuple(cast(ReasonStatement, statement(ReasonStatement, item)) for item in details_payload.get("supports", ())),
+                contradicts=tuple(cast(ConcernStatement, statement(ConcernStatement, item)) for item in details_payload.get("contradicts", ())),
+                limitations=tuple(cast(ConcernStatement, statement(ConcernStatement, item)) for item in details_payload.get("limitations", ())),
+                training=tuple(statement(HumanStatement, item) for item in details_payload.get("training", ())),
+                similar_cases=tuple(statement(HumanStatement, item) for item in details_payload.get("similar_cases", ())),
+                technical_metrics=tuple(statement(HumanStatement, item) for item in details_payload.get("technical_metrics", ())),
+            ),
+            technical_trace=trace,
+        )
 
 
 @dataclass(frozen=True)

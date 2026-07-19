@@ -8,7 +8,7 @@ from datetime import datetime, timezone
 from html import escape
 from hashlib import sha256
 from pathlib import Path
-from typing import Any, Mapping, Sequence
+from typing import Any, Mapping
 
 from fuzzyxai.adapters.base import BaseAdapter
 from fuzzyxai.adapters.model import ModelAdapter, ModelPrediction, resolve_model_adapter
@@ -29,6 +29,7 @@ from fuzzyxai.evidence import (
     ExplanationEdge,
     ExplanationEvidence,
     ExplanationGraph,
+    HumanExplanation,
     ExplanationNode,
     TrainingRunAnalysis,
     build_class_concepts,
@@ -201,39 +202,38 @@ class ModelExplanationResult:
     def explanation_graph(self) -> ExplanationGraph:
         return ExplanationGraph.from_dict(self.view_model.explanation_graph)
 
-    def summary(self, level: str = "user") -> str:
-        """Return evidence-backed user, expert, or audit text."""
+    def explain_for(
+        self,
+        audience: str = "domain_user",
+        *,
+        language: str = "ru",
+    ) -> HumanExplanation:
+        """Return typed, claim-grounded cards for the selected audience."""
 
-        payload = self.view_model.human_explanations.get(level)
+        aliases = {"user": "domain_user", "expert": "ml_engineer", "audit": "auditor"}
+        normalized = aliases.get(audience, audience)
+        if language != "ru":
+            raise ValueError("only the verified Russian human-explanation templates are available")
+        payload = self.view_model.human_explanations.get(normalized)
         if not isinstance(payload, Mapping):
-            raise ValueError(f"unknown or unavailable explanation level: {level}")
-        from fuzzyxai.evidence.contracts import HumanExplanation
+            raise ValueError(f"unknown or unavailable audience profile: {audience}")
+        return HumanExplanation.from_dict(payload, graph=self.explanation_graph)
 
-        return explanation_to_text(HumanExplanation(**payload))
+    def summary(
+        self,
+        audience: str = "domain_user",
+        detail: str = "short",
+        *,
+        level: str | None = None,
+    ) -> str:
+        """Render audience-specific text; technical details require ``detail='full'``."""
+
+        return explanation_to_text(self.explain_for(level or audience), detail=detail)
 
     def overview(self) -> str:
         """Answer the five operational questions using claim-grounded text."""
 
-        groups: dict[str, list[ExplanationClaim]] = {}
-        for claim in self.claims:
-            groups.setdefault(claim.claim_type, []).append(claim)
-
-        def line(title: str, candidates: Sequence[str], fallback: str) -> str:
-            selected = [claim for kind in candidates for claim in groups.get(kind, [])]
-            if not selected:
-                return f"**{title}.** {fallback}"
-            claim = selected[0]
-            return f"**{title}.** {claim.statement} [{claim.claim_id}]"
-
-        return "\n\n".join(
-            [
-                line("Что решила модель", ["prediction"], "Прогноз недоступен."),
-                line("Почему", ["model_rule", "class_concept", "similar_case", "data_quality"], "Объясняющий канал отсутствует."),
-                line("Что противоречит", ["forgetting", "subgroup_averaging", "data_deviation", "diagnostic"], "Измеренное противоречие не обнаружено."),
-                f"**Применимость.** Получено объяснение уровня {self.explanation_level}. {self.view_model.explanation_level.get('rationale', '')}",
-                line("Что делать дальше", ["recommended_action"], f"Действие: {self.action}."),
-            ]
-        ) + "\n"
+        return self.summary(audience="domain_user", detail="short")
 
     def story(self) -> str:
         """Render the evidence route as data, training, knowledge, decision, action."""
@@ -356,9 +356,9 @@ class ModelExplanationResult:
         output = Path(path)
         output.parent.mkdir(parents=True, exist_ok=True)
         summaries = "\n".join(
-            f"<section><h2>{escape(level.title())}</h2><pre>{escape(self.summary(level))}</pre></section>"
-            for level in ("user", "expert", "audit")
-            if level in self.view_model.human_explanations
+            f"<section><h2>{escape(audience.title())}</h2><pre>{escape(self.summary(audience))}</pre></section>"
+            for audience in ("domain_user", "ml_engineer", "researcher", "auditor")
+            if audience in self.view_model.human_explanations
         )
         output.write_text(
             "<!doctype html><html lang='ru'><meta charset='utf-8'>"
@@ -611,7 +611,14 @@ class FuzzyXAI:
             counterfactuals=[*counterfactuals, *additional.counterfactuals],
             missing=list(dict.fromkeys([*missing, *additional.missing])),
         )
-        prediction_payload = {**prediction.to_dict(), "score": score}
+        contributions = dict(evidence.get("contributions", internal_evidence.get("contributions", {})))
+        contribution_method = evidence.get("contribution_method", internal_evidence.get("contribution_method"))
+        prediction_payload = {
+            **prediction.to_dict(),
+            "score": score,
+            "contributions": contributions,
+            "contribution_method": contribution_method,
+        }
         claims = build_explanation_claims(
             explanation_evidence,
             prediction=prediction_payload,
@@ -625,7 +632,6 @@ class FuzzyXAI:
             action=action,
             claims=claims,
         )
-        contribution_method = evidence.get("contribution_method", internal_evidence.get("contribution_method"))
         explanation_level = determine_explanation_level(
             explanation_evidence,
             contribution_method=str(contribution_method) if contribution_method else None,
@@ -636,21 +642,29 @@ class FuzzyXAI:
             },
         )
         human = {
-            level: compose_human_explanation(
+            audience: compose_human_explanation(
                 claims,
                 graph,
                 action=action,
-                level=level,
-            ).to_dict()
-            for level in ("user", "expert", "audit")
+                audience=audience,
+                evidence=explanation_evidence,
+                domain_language=self.plan.domain_language,
+            ).to_dict(include_technical_trace=False)
+            for audience in ("domain_user", "ml_engineer", "researcher", "auditor")
         }
+        human.update(
+            {
+                "user": human["domain_user"],
+                "expert": human["ml_engineer"],
+                "audit": human["auditor"],
+            }
+        )
         quality_metrics = evaluate_explanation_quality(
             explanation_evidence,
             graph,
             contributions=dict(evidence.get("contributions", internal_evidence.get("contributions", {}))),
             supplied_metrics=dict(evidence.get("quality_metrics", {})),
         )
-        contributions = dict(evidence.get("contributions", internal_evidence.get("contributions", {})))
         visual_spec = build_visual_spec(
             explanation_evidence,
             claims,

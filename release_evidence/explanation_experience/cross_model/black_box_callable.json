@@ -115,7 +115,7 @@
       "comparison_baseline": "normalized tabular feature vector",
       "confidence_interval": null,
       "counter_evidence_refs": [],
-      "effect": "mixed",
+      "effect": "favorable",
       "evidence_refs": [
         "similar:black_box_callable:0:train:0"
       ],
@@ -143,7 +143,7 @@
       "comparison_baseline": "normalized tabular feature vector",
       "confidence_interval": null,
       "counter_evidence_refs": [],
-      "effect": "mixed",
+      "effect": "favorable",
       "evidence_refs": [
         "similar:black_box_callable:0:train:7"
       ],
@@ -557,7 +557,7 @@
         "comparison_baseline": "normalized tabular feature vector",
         "confidence_interval": null,
         "counter_evidence_refs": [],
-        "effect": "mixed",
+        "effect": "favorable",
         "evidence_refs": [
           "similar:black_box_callable:0:train:0"
         ],
@@ -584,7 +584,7 @@
         "comparison_baseline": "normalized tabular feature vector",
         "confidence_interval": null,
         "counter_evidence_refs": [],
-        "effect": "mixed",
+        "effect": "favorable",
         "evidence_refs": [
           "similar:black_box_callable:0:train:7"
         ],
@@ -1506,6 +1506,8 @@
         "node_type": "prediction",
         "payload": {
           "adapter_id": "callable",
+          "contribution_method": null,
+          "contributions": {},
           "metadata": {},
           "model_type": "BlackBox",
           "predictions": [
@@ -1722,7 +1724,7 @@
           "comparison_baseline": "normalized tabular feature vector",
           "confidence_interval": null,
           "counter_evidence_refs": [],
-          "effect": "mixed",
+          "effect": "favorable",
           "evidence_refs": [
             "similar:black_box_callable:0:train:0"
           ],
@@ -1758,7 +1760,7 @@
           "comparison_baseline": "normalized tabular feature vector",
           "confidence_interval": null,
           "counter_evidence_refs": [],
-          "effect": "mixed",
+          "effect": "favorable",
           "evidence_refs": [
             "similar:black_box_callable:0:train:7"
           ],
@@ -2146,72 +2148,179 @@
   },
   "human_explanations": {
     "audit": {
+      "audience": "auditor",
       "claim_refs": {
-        "decision_changes": [
-          "C-008",
-          "C-009",
+        "changes": [
           "C-010"
         ],
-        "limitations": [
-          "C-003",
-          "C-004",
-          "C-005",
-          "C-006",
-          "C-007",
-          "C-008",
-          "C-009",
-          "C-010",
-          "C-011",
-          "C-012",
-          "C-013",
-          "C-014"
+        "concerns": [
+          "C-013"
         ],
-        "lost_or_averaged": [],
-        "main_reasons": [
-          "C-003",
-          "C-004"
-        ],
-        "model_observed": [
-          "C-002",
+        "decision": [
           "C-001"
         ],
-        "similar_cases": [
+        "main_reasons": [
           "C-005",
-          "C-006",
-          "C-007"
+          "C-004",
+          "C-003"
         ],
-        "summary": [
-          "C-001",
+        "recommended_action": [
           "C-015"
         ],
-        "trust": [
-          "C-011",
-          "C-012",
-          "C-013",
-          "C-015"
+        "reliability": [
+          "C-015",
+          "C-002",
+          "C-013"
         ]
       },
-      "decision_changes": [
-        "Контрфактическое изменение {'water_saturation': {'from': 1.7154201787986858, 'to': -0.02270644737398863}} переводит прогноз из 1 в 0. [C-008]",
-        "Контрфактическое изменение {'water_saturation': {'from': 1.7154201787986858, 'to': -0.8945515273285757}} переводит прогноз из 1 в 0. [C-009]",
-        "Контрфактическое изменение {'water_saturation': {'from': 1.7154201787986858, 'to': -1.2711612822094678}} переводит прогноз из 1 в 0. [C-010]"
+      "concerns": [
+        {
+          "claim_refs": [
+            "C-013"
+          ],
+          "evidence_refs": [
+            "diagnostic:2"
+          ],
+          "explanation": "Для части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено. Источник: C-013; статус: insufficient_evidence.",
+          "title": "Не все проверки подтверждены"
+        }
       ],
+      "decision": {
+        "claim_refs": [
+          "C-001"
+        ],
+        "evidence_refs": [
+          "prediction"
+        ],
+        "explanation": "Модель определила: повышенный риск.",
+        "title": "Повышенный риск"
+      },
+      "decision_changes": [
+        "Изменение значения признака «водонасыщенность» переводит объект в другой класс в проверенном контрфактическом расчёте. Наблюдаемый эффект: None; действие: requires domain review."
+      ],
+      "details": {
+        "contradicts": [],
+        "limitations": [
+          {
+            "claim_refs": [
+              "C-013"
+            ],
+            "evidence_refs": [
+              "diagnostic:2"
+            ],
+            "explanation": "Для части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено. Источник: C-013; статус: insufficient_evidence.",
+            "title": "Не все проверки подтверждены"
+          }
+        ],
+        "similar_cases": [
+          {
+            "claim_refs": [
+              "C-005"
+            ],
+            "evidence_refs": [
+              "similar:black_box_callable:0:train:0"
+            ],
+            "explanation": "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 1.000; объект: train:0.",
+            "title": "Похожий обучающий случай"
+          },
+          {
+            "claim_refs": [
+              "C-006"
+            ],
+            "evidence_refs": [
+              "similar:black_box_callable:0:train:7"
+            ],
+            "explanation": "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 0.754; объект: train:7.",
+            "title": "Похожий обучающий случай"
+          },
+          {
+            "claim_refs": [
+              "C-007"
+            ],
+            "evidence_refs": [
+              "similar:black_box_callable:0:train:71"
+            ],
+            "explanation": "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 0.545; объект: train:71.",
+            "title": "Похожий обучающий случай"
+          }
+        ],
+        "supports": [
+          {
+            "claim_refs": [
+              "C-005"
+            ],
+            "evidence_refs": [
+              "similar:black_box_callable:0:train:0"
+            ],
+            "explanation": "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 1.000; объект: train:0.",
+            "title": "Похожий обучающий случай"
+          },
+          {
+            "claim_refs": [
+              "C-004"
+            ],
+            "evidence_refs": [
+              "concept:1"
+            ],
+            "explanation": "Class 1: no supported primary rules; coverage unavailable.",
+            "title": "Типичный профиль класса повышенный риск"
+          },
+          {
+            "claim_refs": [
+              "C-003"
+            ],
+            "evidence_refs": [
+              "concept:0"
+            ],
+            "explanation": "Class 0: no supported primary rules; coverage unavailable.",
+            "title": "Типичный профиль класса низкий риск"
+          }
+        ],
+        "technical_metrics": [
+          {
+            "claim_refs": [
+              "C-005"
+            ],
+            "evidence_refs": [
+              "similar:black_box_callable:0:train:0"
+            ],
+            "explanation": "1.000; сравнение: normalized tabular feature vector",
+            "title": "similarity"
+          },
+          {
+            "claim_refs": [
+              "C-006"
+            ],
+            "evidence_refs": [
+              "similar:black_box_callable:0:train:7"
+            ],
+            "explanation": "0.754; сравнение: normalized tabular feature vector",
+            "title": "similarity"
+          },
+          {
+            "claim_refs": [
+              "C-007"
+            ],
+            "evidence_refs": [
+              "similar:black_box_callable:0:train:71"
+            ],
+            "explanation": "0.545; сравнение: normalized tabular feature vector",
+            "title": "similarity"
+          },
+          {
+            "claim_refs": [
+              "C-002"
+            ],
+            "evidence_refs": [
+              "data:black_box_callable:0"
+            ],
+            "explanation": "1.000",
+            "title": "data_quality"
+          }
+        ],
+        "training": []
+      },
       "evidence_trace": [
-        "C-001",
-        "C-002",
-        "C-003",
-        "C-004",
-        "C-005",
-        "C-006",
-        "C-007",
-        "C-008",
-        "C-009",
-        "C-010",
-        "C-011",
-        "C-012",
-        "C-013",
-        "C-014",
-        "C-015",
         "data:black_box_callable:0",
         "concept:0",
         "concept:1",
@@ -2243,239 +2352,1830 @@
         "claim:C-014",
         "claim:C-015"
       ],
+      "language": "ru",
       "level": "audit",
       "limitations": [
-        "primary-rule coverage is unavailable [C-003]",
-        "primary-rule coverage is unavailable [C-004]",
-        "feature distance does not establish causal or clinical similarity [C-005]",
-        "feature distance does not establish causal or clinical similarity [C-006]",
-        "feature distance does not establish causal or clinical similarity [C-007]",
-        "quantile search tests association, not causal feasibility [C-008]",
-        "observed_effect is the change in maximum predicted probability, not a causal effect [C-008]",
-        "quantile search tests association, not causal feasibility [C-009]",
-        "observed_effect is the change in maximum predicted probability, not a causal effect [C-009]",
-        "quantile search tests association, not causal feasibility [C-010]",
-        "observed_effect is the change in maximum predicted probability, not a causal effect [C-010]",
-        "Автоматическое принятие ограничено до устранения диагностики. [C-011]",
-        "Автоматическое принятие ограничено до устранения диагностики. [C-012]",
-        "Автоматическое принятие ограничено до устранения диагностики. [C-013]",
-        "Канал evidence «model_rules_or_concepts» отсутствует. [C-014]"
+        "Для части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено. Источник: C-013; статус: insufficient_evidence."
       ],
-      "lost_or_averaged": [],
+      "lost_or_averaged": [
+        "Для части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено. Источник: C-013; статус: insufficient_evidence."
+      ],
       "main_reasons": [
-        "Class 0: no supported primary rules; coverage unavailable. [C-003]",
-        "Class 1: no supported primary rules; coverage unavailable. [C-004]"
+        {
+          "claim_refs": [
+            "C-005"
+          ],
+          "evidence_refs": [
+            "similar:black_box_callable:0:train:0"
+          ],
+          "explanation": "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 1.000; объект: train:0.",
+          "title": "Похожий обучающий случай"
+        },
+        {
+          "claim_refs": [
+            "C-004"
+          ],
+          "evidence_refs": [
+            "concept:1"
+          ],
+          "explanation": "Class 1: no supported primary rules; coverage unavailable.",
+          "title": "Типичный профиль класса повышенный риск"
+        },
+        {
+          "claim_refs": [
+            "C-003"
+          ],
+          "evidence_refs": [
+            "concept:0"
+          ],
+          "explanation": "Class 0: no supported primary rules; coverage unavailable.",
+          "title": "Типичный профиль класса низкий риск"
+        }
       ],
       "model_observed": [
-        "Качество доступных входных данных объекта black_box_callable:0 равно 1.000. [C-002]",
-        "Модель сформировала прогноз [1]. [C-001]"
+        "Модель определила: повышенный риск."
       ],
-      "recommended_action": "review",
+      "recommended_action": {
+        "action": "review",
+        "claim_refs": [
+          "C-015"
+        ],
+        "evidence_refs": [
+          "diagnostic:0",
+          "diagnostic:1",
+          "diagnostic:2"
+        ],
+        "explanation": "Передать результат специалисту и отдельно проверить трещиноватость и водонасыщенность.",
+        "title": "Проверить специалистом"
+      },
+      "reliability": {
+        "claim_refs": [
+          "C-015",
+          "C-002",
+          "C-013"
+        ],
+        "evidence_refs": [
+          "diagnostic:0",
+          "diagnostic:1",
+          "diagnostic:2",
+          "data:black_box_callable:0"
+        ],
+        "explanation": "Результат подтверждается частью доступных сведений, но недостаточно надёжен для автоматического решения.",
+        "title": "Требуется дополнительная проверка"
+      },
       "similar_cases": [
-        "Объект train:0 имеет сходство 1.000 с объектом black_box_callable:0; использован метод robust_standardized_euclidean для представления «normalized tabular feature vector». [C-005]",
-        "Объект train:7 имеет сходство 0.754 с объектом black_box_callable:0; использован метод robust_standardized_euclidean для представления «normalized tabular feature vector». [C-006]",
-        "Объект train:71 имеет сходство 0.545 с объектом black_box_callable:0; использован метод robust_standardized_euclidean для представления «normalized tabular feature vector». [C-007]"
+        "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 1.000; объект: train:0.",
+        "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 0.754; объект: train:7.",
+        "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 0.545; объект: train:71."
       ],
-      "summary": "Модель сформировала прогноз [1]. [C-001] На основании доступных claims рекомендовано действие review. [C-015] Рекомендуемое действие: review. [C-015]",
+      "summary": "## Решение\nМодель определила: повышенный риск.\n\n## Почему\nНайден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 1.000; объект: train:0.\nClass 1: no supported primary rules; coverage unavailable.\nClass 0: no supported primary rules; coverage unavailable.\n\n## Что вызывает сомнение\nДля части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено. Источник: C-013; статус: insufficient_evidence.\n\n## Насколько можно доверять\nРезультат подтверждается частью доступных сведений, но недостаточно надёжен для автоматического решения.\n\n## Что делать\nПередать результат специалисту и отдельно проверить трещиноватость и водонасыщенность.\n\n## Что изменит результат\nИзменение значения признака «водонасыщенность» переводит объект в другой класс в проверенном контрфактическом расчёте. Наблюдаемый эффект: None; действие: requires domain review.\n",
       "trust": [
-        "Диагностика: alignment evidence was not supplied. [C-011]",
-        "Диагностика: reduction evidence was not supplied. [C-012]",
-        "Диагностика: risk evidence was not supplied. [C-013]",
-        "На основании доступных claims рекомендовано действие review. [C-015]"
+        "Результат подтверждается частью доступных сведений, но недостаточно надёжен для автоматического решения.",
+        "Передать результат специалисту и отдельно проверить трещиноватость и водонасыщенность."
+      ],
+      "what_would_change_result": [
+        {
+          "claim_refs": [
+            "C-010"
+          ],
+          "evidence_refs": [
+            "counterfactual:2"
+          ],
+          "explanation": "Изменение значения признака «водонасыщенность» переводит объект в другой класс в проверенном контрфактическом расчёте. Наблюдаемый эффект: None; действие: requires domain review.",
+          "title": "Изменить ключевые признаки"
+        }
+      ]
+    },
+    "auditor": {
+      "audience": "auditor",
+      "claim_refs": {
+        "changes": [
+          "C-010"
+        ],
+        "concerns": [
+          "C-013"
+        ],
+        "decision": [
+          "C-001"
+        ],
+        "main_reasons": [
+          "C-005",
+          "C-004",
+          "C-003"
+        ],
+        "recommended_action": [
+          "C-015"
+        ],
+        "reliability": [
+          "C-015",
+          "C-002",
+          "C-013"
+        ]
+      },
+      "concerns": [
+        {
+          "claim_refs": [
+            "C-013"
+          ],
+          "evidence_refs": [
+            "diagnostic:2"
+          ],
+          "explanation": "Для части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено. Источник: C-013; статус: insufficient_evidence.",
+          "title": "Не все проверки подтверждены"
+        }
+      ],
+      "decision": {
+        "claim_refs": [
+          "C-001"
+        ],
+        "evidence_refs": [
+          "prediction"
+        ],
+        "explanation": "Модель определила: повышенный риск.",
+        "title": "Повышенный риск"
+      },
+      "decision_changes": [
+        "Изменение значения признака «водонасыщенность» переводит объект в другой класс в проверенном контрфактическом расчёте. Наблюдаемый эффект: None; действие: requires domain review."
+      ],
+      "details": {
+        "contradicts": [],
+        "limitations": [
+          {
+            "claim_refs": [
+              "C-013"
+            ],
+            "evidence_refs": [
+              "diagnostic:2"
+            ],
+            "explanation": "Для части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено. Источник: C-013; статус: insufficient_evidence.",
+            "title": "Не все проверки подтверждены"
+          }
+        ],
+        "similar_cases": [
+          {
+            "claim_refs": [
+              "C-005"
+            ],
+            "evidence_refs": [
+              "similar:black_box_callable:0:train:0"
+            ],
+            "explanation": "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 1.000; объект: train:0.",
+            "title": "Похожий обучающий случай"
+          },
+          {
+            "claim_refs": [
+              "C-006"
+            ],
+            "evidence_refs": [
+              "similar:black_box_callable:0:train:7"
+            ],
+            "explanation": "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 0.754; объект: train:7.",
+            "title": "Похожий обучающий случай"
+          },
+          {
+            "claim_refs": [
+              "C-007"
+            ],
+            "evidence_refs": [
+              "similar:black_box_callable:0:train:71"
+            ],
+            "explanation": "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 0.545; объект: train:71.",
+            "title": "Похожий обучающий случай"
+          }
+        ],
+        "supports": [
+          {
+            "claim_refs": [
+              "C-005"
+            ],
+            "evidence_refs": [
+              "similar:black_box_callable:0:train:0"
+            ],
+            "explanation": "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 1.000; объект: train:0.",
+            "title": "Похожий обучающий случай"
+          },
+          {
+            "claim_refs": [
+              "C-004"
+            ],
+            "evidence_refs": [
+              "concept:1"
+            ],
+            "explanation": "Class 1: no supported primary rules; coverage unavailable.",
+            "title": "Типичный профиль класса повышенный риск"
+          },
+          {
+            "claim_refs": [
+              "C-003"
+            ],
+            "evidence_refs": [
+              "concept:0"
+            ],
+            "explanation": "Class 0: no supported primary rules; coverage unavailable.",
+            "title": "Типичный профиль класса низкий риск"
+          }
+        ],
+        "technical_metrics": [
+          {
+            "claim_refs": [
+              "C-005"
+            ],
+            "evidence_refs": [
+              "similar:black_box_callable:0:train:0"
+            ],
+            "explanation": "1.000; сравнение: normalized tabular feature vector",
+            "title": "similarity"
+          },
+          {
+            "claim_refs": [
+              "C-006"
+            ],
+            "evidence_refs": [
+              "similar:black_box_callable:0:train:7"
+            ],
+            "explanation": "0.754; сравнение: normalized tabular feature vector",
+            "title": "similarity"
+          },
+          {
+            "claim_refs": [
+              "C-007"
+            ],
+            "evidence_refs": [
+              "similar:black_box_callable:0:train:71"
+            ],
+            "explanation": "0.545; сравнение: normalized tabular feature vector",
+            "title": "similarity"
+          },
+          {
+            "claim_refs": [
+              "C-002"
+            ],
+            "evidence_refs": [
+              "data:black_box_callable:0"
+            ],
+            "explanation": "1.000",
+            "title": "data_quality"
+          }
+        ],
+        "training": []
+      },
+      "evidence_trace": [
+        "data:black_box_callable:0",
+        "concept:0",
+        "concept:1",
+        "similar:black_box_callable:0:train:0",
+        "similar:black_box_callable:0:train:7",
+        "similar:black_box_callable:0:train:71",
+        "counterfactual:0",
+        "counterfactual:1",
+        "counterfactual:2",
+        "prediction",
+        "diagnostic:0",
+        "diagnostic:1",
+        "diagnostic:2",
+        "trace:missing_evidence",
+        "action",
+        "claim:C-001",
+        "claim:C-002",
+        "claim:C-003",
+        "claim:C-004",
+        "claim:C-005",
+        "claim:C-006",
+        "claim:C-007",
+        "claim:C-008",
+        "claim:C-009",
+        "claim:C-010",
+        "claim:C-011",
+        "claim:C-012",
+        "claim:C-013",
+        "claim:C-014",
+        "claim:C-015"
+      ],
+      "language": "ru",
+      "level": "audit",
+      "limitations": [
+        "Для части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено. Источник: C-013; статус: insufficient_evidence."
+      ],
+      "lost_or_averaged": [
+        "Для части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено. Источник: C-013; статус: insufficient_evidence."
+      ],
+      "main_reasons": [
+        {
+          "claim_refs": [
+            "C-005"
+          ],
+          "evidence_refs": [
+            "similar:black_box_callable:0:train:0"
+          ],
+          "explanation": "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 1.000; объект: train:0.",
+          "title": "Похожий обучающий случай"
+        },
+        {
+          "claim_refs": [
+            "C-004"
+          ],
+          "evidence_refs": [
+            "concept:1"
+          ],
+          "explanation": "Class 1: no supported primary rules; coverage unavailable.",
+          "title": "Типичный профиль класса повышенный риск"
+        },
+        {
+          "claim_refs": [
+            "C-003"
+          ],
+          "evidence_refs": [
+            "concept:0"
+          ],
+          "explanation": "Class 0: no supported primary rules; coverage unavailable.",
+          "title": "Типичный профиль класса низкий риск"
+        }
+      ],
+      "model_observed": [
+        "Модель определила: повышенный риск."
+      ],
+      "recommended_action": {
+        "action": "review",
+        "claim_refs": [
+          "C-015"
+        ],
+        "evidence_refs": [
+          "diagnostic:0",
+          "diagnostic:1",
+          "diagnostic:2"
+        ],
+        "explanation": "Передать результат специалисту и отдельно проверить трещиноватость и водонасыщенность.",
+        "title": "Проверить специалистом"
+      },
+      "reliability": {
+        "claim_refs": [
+          "C-015",
+          "C-002",
+          "C-013"
+        ],
+        "evidence_refs": [
+          "diagnostic:0",
+          "diagnostic:1",
+          "diagnostic:2",
+          "data:black_box_callable:0"
+        ],
+        "explanation": "Результат подтверждается частью доступных сведений, но недостаточно надёжен для автоматического решения.",
+        "title": "Требуется дополнительная проверка"
+      },
+      "similar_cases": [
+        "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 1.000; объект: train:0.",
+        "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 0.754; объект: train:7.",
+        "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 0.545; объект: train:71."
+      ],
+      "summary": "## Решение\nМодель определила: повышенный риск.\n\n## Почему\nНайден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 1.000; объект: train:0.\nClass 1: no supported primary rules; coverage unavailable.\nClass 0: no supported primary rules; coverage unavailable.\n\n## Что вызывает сомнение\nДля части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено. Источник: C-013; статус: insufficient_evidence.\n\n## Насколько можно доверять\nРезультат подтверждается частью доступных сведений, но недостаточно надёжен для автоматического решения.\n\n## Что делать\nПередать результат специалисту и отдельно проверить трещиноватость и водонасыщенность.\n\n## Что изменит результат\nИзменение значения признака «водонасыщенность» переводит объект в другой класс в проверенном контрфактическом расчёте. Наблюдаемый эффект: None; действие: requires domain review.\n",
+      "trust": [
+        "Результат подтверждается частью доступных сведений, но недостаточно надёжен для автоматического решения.",
+        "Передать результат специалисту и отдельно проверить трещиноватость и водонасыщенность."
+      ],
+      "what_would_change_result": [
+        {
+          "claim_refs": [
+            "C-010"
+          ],
+          "evidence_refs": [
+            "counterfactual:2"
+          ],
+          "explanation": "Изменение значения признака «водонасыщенность» переводит объект в другой класс в проверенном контрфактическом расчёте. Наблюдаемый эффект: None; действие: requires domain review.",
+          "title": "Изменить ключевые признаки"
+        }
+      ]
+    },
+    "domain_user": {
+      "audience": "domain_user",
+      "claim_refs": {
+        "changes": [
+          "C-010"
+        ],
+        "concerns": [
+          "C-013"
+        ],
+        "decision": [
+          "C-001"
+        ],
+        "main_reasons": [
+          "C-005",
+          "C-004",
+          "C-003"
+        ],
+        "recommended_action": [
+          "C-015"
+        ],
+        "reliability": [
+          "C-015",
+          "C-002",
+          "C-013"
+        ]
+      },
+      "concerns": [
+        {
+          "claim_refs": [
+            "C-013"
+          ],
+          "evidence_refs": [
+            "diagnostic:2"
+          ],
+          "explanation": "Для части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено.",
+          "title": "Не все проверки подтверждены"
+        }
+      ],
+      "decision": {
+        "claim_refs": [
+          "C-001"
+        ],
+        "evidence_refs": [
+          "prediction"
+        ],
+        "explanation": "Модель определила: повышенный риск.",
+        "title": "Повышенный риск"
+      },
+      "decision_changes": [
+        "Изменение значения признака «водонасыщенность» переводит объект в другой класс в проверенном контрфактическом расчёте."
+      ],
+      "details": {
+        "contradicts": [],
+        "limitations": [
+          {
+            "claim_refs": [
+              "C-013"
+            ],
+            "evidence_refs": [
+              "diagnostic:2"
+            ],
+            "explanation": "Для части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено.",
+            "title": "Не все проверки подтверждены"
+          }
+        ],
+        "similar_cases": [
+          {
+            "claim_refs": [
+              "C-005"
+            ],
+            "evidence_refs": [
+              "similar:black_box_callable:0:train:0"
+            ],
+            "explanation": "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход.",
+            "title": "Похожий обучающий случай"
+          },
+          {
+            "claim_refs": [
+              "C-006"
+            ],
+            "evidence_refs": [
+              "similar:black_box_callable:0:train:7"
+            ],
+            "explanation": "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход.",
+            "title": "Похожий обучающий случай"
+          },
+          {
+            "claim_refs": [
+              "C-007"
+            ],
+            "evidence_refs": [
+              "similar:black_box_callable:0:train:71"
+            ],
+            "explanation": "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход.",
+            "title": "Похожий обучающий случай"
+          }
+        ],
+        "supports": [
+          {
+            "claim_refs": [
+              "C-005"
+            ],
+            "evidence_refs": [
+              "similar:black_box_callable:0:train:0"
+            ],
+            "explanation": "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход.",
+            "title": "Похожий обучающий случай"
+          },
+          {
+            "claim_refs": [
+              "C-004"
+            ],
+            "evidence_refs": [
+              "concept:1"
+            ],
+            "explanation": "По сравнению с референсной выборкой объект близок к типичному профилю группы «повышенный риск». Такое сходство поддерживает результат, но не заменяет проверку ограничений.",
+            "title": "Типичный профиль класса повышенный риск"
+          },
+          {
+            "claim_refs": [
+              "C-003"
+            ],
+            "evidence_refs": [
+              "concept:0"
+            ],
+            "explanation": "По сравнению с референсной выборкой объект близок к типичному профилю группы «низкий риск». Такое сходство поддерживает результат, но не заменяет проверку ограничений.",
+            "title": "Типичный профиль класса низкий риск"
+          }
+        ],
+        "technical_metrics": [
+          {
+            "claim_refs": [
+              "C-005"
+            ],
+            "evidence_refs": [
+              "similar:black_box_callable:0:train:0"
+            ],
+            "explanation": "1.000; сравнение: normalized tabular feature vector",
+            "title": "similarity"
+          },
+          {
+            "claim_refs": [
+              "C-006"
+            ],
+            "evidence_refs": [
+              "similar:black_box_callable:0:train:7"
+            ],
+            "explanation": "0.754; сравнение: normalized tabular feature vector",
+            "title": "similarity"
+          },
+          {
+            "claim_refs": [
+              "C-007"
+            ],
+            "evidence_refs": [
+              "similar:black_box_callable:0:train:71"
+            ],
+            "explanation": "0.545; сравнение: normalized tabular feature vector",
+            "title": "similarity"
+          },
+          {
+            "claim_refs": [
+              "C-002"
+            ],
+            "evidence_refs": [
+              "data:black_box_callable:0"
+            ],
+            "explanation": "1.000",
+            "title": "data_quality"
+          }
+        ],
+        "training": []
+      },
+      "evidence_trace": [],
+      "language": "ru",
+      "level": "user",
+      "limitations": [
+        "Для части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено."
+      ],
+      "lost_or_averaged": [
+        "Для части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено."
+      ],
+      "main_reasons": [
+        {
+          "claim_refs": [
+            "C-005"
+          ],
+          "evidence_refs": [
+            "similar:black_box_callable:0:train:0"
+          ],
+          "explanation": "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход.",
+          "title": "Похожий обучающий случай"
+        },
+        {
+          "claim_refs": [
+            "C-004"
+          ],
+          "evidence_refs": [
+            "concept:1"
+          ],
+          "explanation": "По сравнению с референсной выборкой объект близок к типичному профилю группы «повышенный риск». Такое сходство поддерживает результат, но не заменяет проверку ограничений.",
+          "title": "Типичный профиль класса повышенный риск"
+        },
+        {
+          "claim_refs": [
+            "C-003"
+          ],
+          "evidence_refs": [
+            "concept:0"
+          ],
+          "explanation": "По сравнению с референсной выборкой объект близок к типичному профилю группы «низкий риск». Такое сходство поддерживает результат, но не заменяет проверку ограничений.",
+          "title": "Типичный профиль класса низкий риск"
+        }
+      ],
+      "model_observed": [
+        "Модель определила: повышенный риск."
+      ],
+      "recommended_action": {
+        "action": "review",
+        "claim_refs": [
+          "C-015"
+        ],
+        "evidence_refs": [
+          "diagnostic:0",
+          "diagnostic:1",
+          "diagnostic:2"
+        ],
+        "explanation": "Передать результат специалисту и отдельно проверить трещиноватость и водонасыщенность.",
+        "title": "Проверить специалистом"
+      },
+      "reliability": {
+        "claim_refs": [
+          "C-015",
+          "C-002",
+          "C-013"
+        ],
+        "evidence_refs": [
+          "diagnostic:0",
+          "diagnostic:1",
+          "diagnostic:2",
+          "data:black_box_callable:0"
+        ],
+        "explanation": "Результат подтверждается частью доступных сведений, но недостаточно надёжен для автоматического решения.",
+        "title": "Требуется дополнительная проверка"
+      },
+      "similar_cases": [
+        "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход.",
+        "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход.",
+        "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход."
+      ],
+      "summary": "## Решение\nМодель определила: повышенный риск.\n\n## Почему\nНайден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход.\nПо сравнению с референсной выборкой объект близок к типичному профилю группы «повышенный риск». Такое сходство поддерживает результат, но не заменяет проверку ограничений.\nПо сравнению с референсной выборкой объект близок к типичному профилю группы «низкий риск». Такое сходство поддерживает результат, но не заменяет проверку ограничений.\n\n## Что вызывает сомнение\nДля части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено.\n\n## Насколько можно доверять\nРезультат подтверждается частью доступных сведений, но недостаточно надёжен для автоматического решения.\n\n## Что делать\nПередать результат специалисту и отдельно проверить трещиноватость и водонасыщенность.\n\n## Что изменит результат\nИзменение значения признака «водонасыщенность» переводит объект в другой класс в проверенном контрфактическом расчёте.\n",
+      "trust": [
+        "Результат подтверждается частью доступных сведений, но недостаточно надёжен для автоматического решения.",
+        "Передать результат специалисту и отдельно проверить трещиноватость и водонасыщенность."
+      ],
+      "what_would_change_result": [
+        {
+          "claim_refs": [
+            "C-010"
+          ],
+          "evidence_refs": [
+            "counterfactual:2"
+          ],
+          "explanation": "Изменение значения признака «водонасыщенность» переводит объект в другой класс в проверенном контрфактическом расчёте.",
+          "title": "Изменить ключевые признаки"
+        }
       ]
     },
     "expert": {
+      "audience": "ml_engineer",
       "claim_refs": {
-        "decision_changes": [
-          "C-008",
-          "C-009",
+        "changes": [
           "C-010"
         ],
-        "limitations": [
-          "C-003",
-          "C-004",
-          "C-005",
-          "C-006",
-          "C-007",
-          "C-008",
-          "C-009",
-          "C-010",
-          "C-011",
-          "C-012",
-          "C-013",
-          "C-014"
+        "concerns": [
+          "C-013"
         ],
-        "lost_or_averaged": [],
-        "main_reasons": [
-          "C-003",
-          "C-004"
-        ],
-        "model_observed": [
-          "C-002",
+        "decision": [
           "C-001"
         ],
-        "similar_cases": [
+        "main_reasons": [
           "C-005",
-          "C-006",
-          "C-007"
+          "C-004",
+          "C-003"
         ],
-        "summary": [
-          "C-001",
+        "recommended_action": [
           "C-015"
         ],
-        "trust": [
-          "C-011",
-          "C-012",
-          "C-013",
-          "C-015"
+        "reliability": [
+          "C-015",
+          "C-002",
+          "C-013"
         ]
       },
+      "concerns": [
+        {
+          "claim_refs": [
+            "C-013"
+          ],
+          "evidence_refs": [
+            "diagnostic:2"
+          ],
+          "explanation": "Для части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено. Источник: C-013; статус: insufficient_evidence.",
+          "title": "Не все проверки подтверждены"
+        }
+      ],
+      "decision": {
+        "claim_refs": [
+          "C-001"
+        ],
+        "evidence_refs": [
+          "prediction"
+        ],
+        "explanation": "Модель определила: повышенный риск.",
+        "title": "Повышенный риск"
+      },
       "decision_changes": [
-        "Контрфактическое изменение {'water_saturation': {'from': 1.7154201787986858, 'to': -0.02270644737398863}} переводит прогноз из 1 в 0. [C-008]",
-        "Контрфактическое изменение {'water_saturation': {'from': 1.7154201787986858, 'to': -0.8945515273285757}} переводит прогноз из 1 в 0. [C-009]",
-        "Контрфактическое изменение {'water_saturation': {'from': 1.7154201787986858, 'to': -1.2711612822094678}} переводит прогноз из 1 в 0. [C-010]"
+        "Изменение значения признака «водонасыщенность» переводит объект в другой класс в проверенном контрфактическом расчёте. Наблюдаемый эффект: None; действие: requires domain review."
       ],
+      "details": {
+        "contradicts": [],
+        "limitations": [
+          {
+            "claim_refs": [
+              "C-013"
+            ],
+            "evidence_refs": [
+              "diagnostic:2"
+            ],
+            "explanation": "Для части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено. Источник: C-013; статус: insufficient_evidence.",
+            "title": "Не все проверки подтверждены"
+          }
+        ],
+        "similar_cases": [
+          {
+            "claim_refs": [
+              "C-005"
+            ],
+            "evidence_refs": [
+              "similar:black_box_callable:0:train:0"
+            ],
+            "explanation": "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 1.000; объект: train:0.",
+            "title": "Похожий обучающий случай"
+          },
+          {
+            "claim_refs": [
+              "C-006"
+            ],
+            "evidence_refs": [
+              "similar:black_box_callable:0:train:7"
+            ],
+            "explanation": "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 0.754; объект: train:7.",
+            "title": "Похожий обучающий случай"
+          },
+          {
+            "claim_refs": [
+              "C-007"
+            ],
+            "evidence_refs": [
+              "similar:black_box_callable:0:train:71"
+            ],
+            "explanation": "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 0.545; объект: train:71.",
+            "title": "Похожий обучающий случай"
+          }
+        ],
+        "supports": [
+          {
+            "claim_refs": [
+              "C-005"
+            ],
+            "evidence_refs": [
+              "similar:black_box_callable:0:train:0"
+            ],
+            "explanation": "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 1.000; объект: train:0.",
+            "title": "Похожий обучающий случай"
+          },
+          {
+            "claim_refs": [
+              "C-004"
+            ],
+            "evidence_refs": [
+              "concept:1"
+            ],
+            "explanation": "Class 1: no supported primary rules; coverage unavailable.",
+            "title": "Типичный профиль класса повышенный риск"
+          },
+          {
+            "claim_refs": [
+              "C-003"
+            ],
+            "evidence_refs": [
+              "concept:0"
+            ],
+            "explanation": "Class 0: no supported primary rules; coverage unavailable.",
+            "title": "Типичный профиль класса низкий риск"
+          }
+        ],
+        "technical_metrics": [
+          {
+            "claim_refs": [
+              "C-005"
+            ],
+            "evidence_refs": [
+              "similar:black_box_callable:0:train:0"
+            ],
+            "explanation": "1.000; сравнение: normalized tabular feature vector",
+            "title": "similarity"
+          },
+          {
+            "claim_refs": [
+              "C-006"
+            ],
+            "evidence_refs": [
+              "similar:black_box_callable:0:train:7"
+            ],
+            "explanation": "0.754; сравнение: normalized tabular feature vector",
+            "title": "similarity"
+          },
+          {
+            "claim_refs": [
+              "C-007"
+            ],
+            "evidence_refs": [
+              "similar:black_box_callable:0:train:71"
+            ],
+            "explanation": "0.545; сравнение: normalized tabular feature vector",
+            "title": "similarity"
+          },
+          {
+            "claim_refs": [
+              "C-002"
+            ],
+            "evidence_refs": [
+              "data:black_box_callable:0"
+            ],
+            "explanation": "1.000",
+            "title": "data_quality"
+          }
+        ],
+        "training": []
+      },
       "evidence_trace": [
-        "C-001",
-        "C-002",
-        "C-003",
-        "C-004",
-        "C-005",
-        "C-006",
-        "C-007",
-        "C-008",
-        "C-009",
-        "C-010",
-        "C-011",
-        "C-012",
-        "C-013",
-        "C-014",
-        "C-015"
+        "data:black_box_callable:0",
+        "concept:0",
+        "concept:1",
+        "similar:black_box_callable:0:train:0",
+        "similar:black_box_callable:0:train:7",
+        "similar:black_box_callable:0:train:71",
+        "counterfactual:0",
+        "counterfactual:1",
+        "counterfactual:2",
+        "prediction",
+        "diagnostic:0",
+        "diagnostic:1",
+        "diagnostic:2",
+        "trace:missing_evidence",
+        "action",
+        "claim:C-001",
+        "claim:C-002",
+        "claim:C-003",
+        "claim:C-004",
+        "claim:C-005",
+        "claim:C-006",
+        "claim:C-007",
+        "claim:C-008",
+        "claim:C-009",
+        "claim:C-010",
+        "claim:C-011",
+        "claim:C-012",
+        "claim:C-013",
+        "claim:C-014",
+        "claim:C-015"
       ],
+      "language": "ru",
       "level": "expert",
       "limitations": [
-        "primary-rule coverage is unavailable [C-003]",
-        "primary-rule coverage is unavailable [C-004]",
-        "feature distance does not establish causal or clinical similarity [C-005]",
-        "feature distance does not establish causal or clinical similarity [C-006]",
-        "feature distance does not establish causal or clinical similarity [C-007]",
-        "quantile search tests association, not causal feasibility [C-008]",
-        "observed_effect is the change in maximum predicted probability, not a causal effect [C-008]",
-        "quantile search tests association, not causal feasibility [C-009]",
-        "observed_effect is the change in maximum predicted probability, not a causal effect [C-009]",
-        "quantile search tests association, not causal feasibility [C-010]",
-        "observed_effect is the change in maximum predicted probability, not a causal effect [C-010]",
-        "Автоматическое принятие ограничено до устранения диагностики. [C-011]",
-        "Автоматическое принятие ограничено до устранения диагностики. [C-012]",
-        "Автоматическое принятие ограничено до устранения диагностики. [C-013]",
-        "Канал evidence «model_rules_or_concepts» отсутствует. [C-014]"
+        "Для части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено. Источник: C-013; статус: insufficient_evidence."
       ],
-      "lost_or_averaged": [],
+      "lost_or_averaged": [
+        "Для части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено. Источник: C-013; статус: insufficient_evidence."
+      ],
       "main_reasons": [
-        "Class 0: no supported primary rules; coverage unavailable. [C-003]",
-        "Class 1: no supported primary rules; coverage unavailable. [C-004]"
+        {
+          "claim_refs": [
+            "C-005"
+          ],
+          "evidence_refs": [
+            "similar:black_box_callable:0:train:0"
+          ],
+          "explanation": "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 1.000; объект: train:0.",
+          "title": "Похожий обучающий случай"
+        },
+        {
+          "claim_refs": [
+            "C-004"
+          ],
+          "evidence_refs": [
+            "concept:1"
+          ],
+          "explanation": "Class 1: no supported primary rules; coverage unavailable.",
+          "title": "Типичный профиль класса повышенный риск"
+        },
+        {
+          "claim_refs": [
+            "C-003"
+          ],
+          "evidence_refs": [
+            "concept:0"
+          ],
+          "explanation": "Class 0: no supported primary rules; coverage unavailable.",
+          "title": "Типичный профиль класса низкий риск"
+        }
       ],
       "model_observed": [
-        "Качество доступных входных данных объекта black_box_callable:0 равно 1.000. [C-002]",
-        "Модель сформировала прогноз [1]. [C-001]"
+        "Модель определила: повышенный риск."
       ],
-      "recommended_action": "review",
+      "recommended_action": {
+        "action": "review",
+        "claim_refs": [
+          "C-015"
+        ],
+        "evidence_refs": [
+          "diagnostic:0",
+          "diagnostic:1",
+          "diagnostic:2"
+        ],
+        "explanation": "Передать результат специалисту и отдельно проверить трещиноватость и водонасыщенность.",
+        "title": "Проверить специалистом"
+      },
+      "reliability": {
+        "claim_refs": [
+          "C-015",
+          "C-002",
+          "C-013"
+        ],
+        "evidence_refs": [
+          "diagnostic:0",
+          "diagnostic:1",
+          "diagnostic:2",
+          "data:black_box_callable:0"
+        ],
+        "explanation": "Результат подтверждается частью доступных сведений, но недостаточно надёжен для автоматического решения.",
+        "title": "Требуется дополнительная проверка"
+      },
       "similar_cases": [
-        "Объект train:0 имеет сходство 1.000 с объектом black_box_callable:0; использован метод robust_standardized_euclidean для представления «normalized tabular feature vector». [C-005]",
-        "Объект train:7 имеет сходство 0.754 с объектом black_box_callable:0; использован метод robust_standardized_euclidean для представления «normalized tabular feature vector». [C-006]",
-        "Объект train:71 имеет сходство 0.545 с объектом black_box_callable:0; использован метод robust_standardized_euclidean для представления «normalized tabular feature vector». [C-007]"
+        "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 1.000; объект: train:0.",
+        "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 0.754; объект: train:7.",
+        "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 0.545; объект: train:71."
       ],
-      "summary": "Модель сформировала прогноз [1]. [C-001] На основании доступных claims рекомендовано действие review. [C-015] Рекомендуемое действие: review. [C-015]",
+      "summary": "## Решение\nМодель определила: повышенный риск.\n\n## Почему\nНайден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 1.000; объект: train:0.\nClass 1: no supported primary rules; coverage unavailable.\nClass 0: no supported primary rules; coverage unavailable.\n\n## Что вызывает сомнение\nДля части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено. Источник: C-013; статус: insufficient_evidence.\n\n## Насколько можно доверять\nРезультат подтверждается частью доступных сведений, но недостаточно надёжен для автоматического решения.\n\n## Что делать\nПередать результат специалисту и отдельно проверить трещиноватость и водонасыщенность.\n\n## Что изменит результат\nИзменение значения признака «водонасыщенность» переводит объект в другой класс в проверенном контрфактическом расчёте. Наблюдаемый эффект: None; действие: requires domain review.\n",
       "trust": [
-        "Диагностика: alignment evidence was not supplied. [C-011]",
-        "Диагностика: reduction evidence was not supplied. [C-012]",
-        "Диагностика: risk evidence was not supplied. [C-013]",
-        "На основании доступных claims рекомендовано действие review. [C-015]"
+        "Результат подтверждается частью доступных сведений, но недостаточно надёжен для автоматического решения.",
+        "Передать результат специалисту и отдельно проверить трещиноватость и водонасыщенность."
+      ],
+      "what_would_change_result": [
+        {
+          "claim_refs": [
+            "C-010"
+          ],
+          "evidence_refs": [
+            "counterfactual:2"
+          ],
+          "explanation": "Изменение значения признака «водонасыщенность» переводит объект в другой класс в проверенном контрфактическом расчёте. Наблюдаемый эффект: None; действие: requires domain review.",
+          "title": "Изменить ключевые признаки"
+        }
+      ]
+    },
+    "ml_engineer": {
+      "audience": "ml_engineer",
+      "claim_refs": {
+        "changes": [
+          "C-010"
+        ],
+        "concerns": [
+          "C-013"
+        ],
+        "decision": [
+          "C-001"
+        ],
+        "main_reasons": [
+          "C-005",
+          "C-004",
+          "C-003"
+        ],
+        "recommended_action": [
+          "C-015"
+        ],
+        "reliability": [
+          "C-015",
+          "C-002",
+          "C-013"
+        ]
+      },
+      "concerns": [
+        {
+          "claim_refs": [
+            "C-013"
+          ],
+          "evidence_refs": [
+            "diagnostic:2"
+          ],
+          "explanation": "Для части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено. Источник: C-013; статус: insufficient_evidence.",
+          "title": "Не все проверки подтверждены"
+        }
+      ],
+      "decision": {
+        "claim_refs": [
+          "C-001"
+        ],
+        "evidence_refs": [
+          "prediction"
+        ],
+        "explanation": "Модель определила: повышенный риск.",
+        "title": "Повышенный риск"
+      },
+      "decision_changes": [
+        "Изменение значения признака «водонасыщенность» переводит объект в другой класс в проверенном контрфактическом расчёте. Наблюдаемый эффект: None; действие: requires domain review."
+      ],
+      "details": {
+        "contradicts": [],
+        "limitations": [
+          {
+            "claim_refs": [
+              "C-013"
+            ],
+            "evidence_refs": [
+              "diagnostic:2"
+            ],
+            "explanation": "Для части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено. Источник: C-013; статус: insufficient_evidence.",
+            "title": "Не все проверки подтверждены"
+          }
+        ],
+        "similar_cases": [
+          {
+            "claim_refs": [
+              "C-005"
+            ],
+            "evidence_refs": [
+              "similar:black_box_callable:0:train:0"
+            ],
+            "explanation": "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 1.000; объект: train:0.",
+            "title": "Похожий обучающий случай"
+          },
+          {
+            "claim_refs": [
+              "C-006"
+            ],
+            "evidence_refs": [
+              "similar:black_box_callable:0:train:7"
+            ],
+            "explanation": "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 0.754; объект: train:7.",
+            "title": "Похожий обучающий случай"
+          },
+          {
+            "claim_refs": [
+              "C-007"
+            ],
+            "evidence_refs": [
+              "similar:black_box_callable:0:train:71"
+            ],
+            "explanation": "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 0.545; объект: train:71.",
+            "title": "Похожий обучающий случай"
+          }
+        ],
+        "supports": [
+          {
+            "claim_refs": [
+              "C-005"
+            ],
+            "evidence_refs": [
+              "similar:black_box_callable:0:train:0"
+            ],
+            "explanation": "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 1.000; объект: train:0.",
+            "title": "Похожий обучающий случай"
+          },
+          {
+            "claim_refs": [
+              "C-004"
+            ],
+            "evidence_refs": [
+              "concept:1"
+            ],
+            "explanation": "Class 1: no supported primary rules; coverage unavailable.",
+            "title": "Типичный профиль класса повышенный риск"
+          },
+          {
+            "claim_refs": [
+              "C-003"
+            ],
+            "evidence_refs": [
+              "concept:0"
+            ],
+            "explanation": "Class 0: no supported primary rules; coverage unavailable.",
+            "title": "Типичный профиль класса низкий риск"
+          }
+        ],
+        "technical_metrics": [
+          {
+            "claim_refs": [
+              "C-005"
+            ],
+            "evidence_refs": [
+              "similar:black_box_callable:0:train:0"
+            ],
+            "explanation": "1.000; сравнение: normalized tabular feature vector",
+            "title": "similarity"
+          },
+          {
+            "claim_refs": [
+              "C-006"
+            ],
+            "evidence_refs": [
+              "similar:black_box_callable:0:train:7"
+            ],
+            "explanation": "0.754; сравнение: normalized tabular feature vector",
+            "title": "similarity"
+          },
+          {
+            "claim_refs": [
+              "C-007"
+            ],
+            "evidence_refs": [
+              "similar:black_box_callable:0:train:71"
+            ],
+            "explanation": "0.545; сравнение: normalized tabular feature vector",
+            "title": "similarity"
+          },
+          {
+            "claim_refs": [
+              "C-002"
+            ],
+            "evidence_refs": [
+              "data:black_box_callable:0"
+            ],
+            "explanation": "1.000",
+            "title": "data_quality"
+          }
+        ],
+        "training": []
+      },
+      "evidence_trace": [
+        "data:black_box_callable:0",
+        "concept:0",
+        "concept:1",
+        "similar:black_box_callable:0:train:0",
+        "similar:black_box_callable:0:train:7",
+        "similar:black_box_callable:0:train:71",
+        "counterfactual:0",
+        "counterfactual:1",
+        "counterfactual:2",
+        "prediction",
+        "diagnostic:0",
+        "diagnostic:1",
+        "diagnostic:2",
+        "trace:missing_evidence",
+        "action",
+        "claim:C-001",
+        "claim:C-002",
+        "claim:C-003",
+        "claim:C-004",
+        "claim:C-005",
+        "claim:C-006",
+        "claim:C-007",
+        "claim:C-008",
+        "claim:C-009",
+        "claim:C-010",
+        "claim:C-011",
+        "claim:C-012",
+        "claim:C-013",
+        "claim:C-014",
+        "claim:C-015"
+      ],
+      "language": "ru",
+      "level": "expert",
+      "limitations": [
+        "Для части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено. Источник: C-013; статус: insufficient_evidence."
+      ],
+      "lost_or_averaged": [
+        "Для части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено. Источник: C-013; статус: insufficient_evidence."
+      ],
+      "main_reasons": [
+        {
+          "claim_refs": [
+            "C-005"
+          ],
+          "evidence_refs": [
+            "similar:black_box_callable:0:train:0"
+          ],
+          "explanation": "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 1.000; объект: train:0.",
+          "title": "Похожий обучающий случай"
+        },
+        {
+          "claim_refs": [
+            "C-004"
+          ],
+          "evidence_refs": [
+            "concept:1"
+          ],
+          "explanation": "Class 1: no supported primary rules; coverage unavailable.",
+          "title": "Типичный профиль класса повышенный риск"
+        },
+        {
+          "claim_refs": [
+            "C-003"
+          ],
+          "evidence_refs": [
+            "concept:0"
+          ],
+          "explanation": "Class 0: no supported primary rules; coverage unavailable.",
+          "title": "Типичный профиль класса низкий риск"
+        }
+      ],
+      "model_observed": [
+        "Модель определила: повышенный риск."
+      ],
+      "recommended_action": {
+        "action": "review",
+        "claim_refs": [
+          "C-015"
+        ],
+        "evidence_refs": [
+          "diagnostic:0",
+          "diagnostic:1",
+          "diagnostic:2"
+        ],
+        "explanation": "Передать результат специалисту и отдельно проверить трещиноватость и водонасыщенность.",
+        "title": "Проверить специалистом"
+      },
+      "reliability": {
+        "claim_refs": [
+          "C-015",
+          "C-002",
+          "C-013"
+        ],
+        "evidence_refs": [
+          "diagnostic:0",
+          "diagnostic:1",
+          "diagnostic:2",
+          "data:black_box_callable:0"
+        ],
+        "explanation": "Результат подтверждается частью доступных сведений, но недостаточно надёжен для автоматического решения.",
+        "title": "Требуется дополнительная проверка"
+      },
+      "similar_cases": [
+        "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 1.000; объект: train:0.",
+        "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 0.754; объект: train:7.",
+        "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 0.545; объект: train:71."
+      ],
+      "summary": "## Решение\nМодель определила: повышенный риск.\n\n## Почему\nНайден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 1.000; объект: train:0.\nClass 1: no supported primary rules; coverage unavailable.\nClass 0: no supported primary rules; coverage unavailable.\n\n## Что вызывает сомнение\nДля части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено. Источник: C-013; статус: insufficient_evidence.\n\n## Насколько можно доверять\nРезультат подтверждается частью доступных сведений, но недостаточно надёжен для автоматического решения.\n\n## Что делать\nПередать результат специалисту и отдельно проверить трещиноватость и водонасыщенность.\n\n## Что изменит результат\nИзменение значения признака «водонасыщенность» переводит объект в другой класс в проверенном контрфактическом расчёте. Наблюдаемый эффект: None; действие: requires domain review.\n",
+      "trust": [
+        "Результат подтверждается частью доступных сведений, но недостаточно надёжен для автоматического решения.",
+        "Передать результат специалисту и отдельно проверить трещиноватость и водонасыщенность."
+      ],
+      "what_would_change_result": [
+        {
+          "claim_refs": [
+            "C-010"
+          ],
+          "evidence_refs": [
+            "counterfactual:2"
+          ],
+          "explanation": "Изменение значения признака «водонасыщенность» переводит объект в другой класс в проверенном контрфактическом расчёте. Наблюдаемый эффект: None; действие: requires domain review.",
+          "title": "Изменить ключевые признаки"
+        }
+      ]
+    },
+    "researcher": {
+      "audience": "researcher",
+      "claim_refs": {
+        "changes": [
+          "C-010"
+        ],
+        "concerns": [
+          "C-013"
+        ],
+        "decision": [
+          "C-001"
+        ],
+        "main_reasons": [
+          "C-005",
+          "C-004",
+          "C-003"
+        ],
+        "recommended_action": [
+          "C-015"
+        ],
+        "reliability": [
+          "C-015",
+          "C-002",
+          "C-013"
+        ]
+      },
+      "concerns": [
+        {
+          "claim_refs": [
+            "C-013"
+          ],
+          "evidence_refs": [
+            "diagnostic:2"
+          ],
+          "explanation": "Для части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено. Источник: C-013; статус: insufficient_evidence.",
+          "title": "Не все проверки подтверждены"
+        }
+      ],
+      "decision": {
+        "claim_refs": [
+          "C-001"
+        ],
+        "evidence_refs": [
+          "prediction"
+        ],
+        "explanation": "Модель определила: повышенный риск.",
+        "title": "Повышенный риск"
+      },
+      "decision_changes": [
+        "Изменение значения признака «водонасыщенность» переводит объект в другой класс в проверенном контрфактическом расчёте. Наблюдаемый эффект: None; действие: requires domain review."
+      ],
+      "details": {
+        "contradicts": [],
+        "limitations": [
+          {
+            "claim_refs": [
+              "C-013"
+            ],
+            "evidence_refs": [
+              "diagnostic:2"
+            ],
+            "explanation": "Для части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено. Источник: C-013; статус: insufficient_evidence.",
+            "title": "Не все проверки подтверждены"
+          }
+        ],
+        "similar_cases": [
+          {
+            "claim_refs": [
+              "C-005"
+            ],
+            "evidence_refs": [
+              "similar:black_box_callable:0:train:0"
+            ],
+            "explanation": "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 1.000; объект: train:0.",
+            "title": "Похожий обучающий случай"
+          },
+          {
+            "claim_refs": [
+              "C-006"
+            ],
+            "evidence_refs": [
+              "similar:black_box_callable:0:train:7"
+            ],
+            "explanation": "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 0.754; объект: train:7.",
+            "title": "Похожий обучающий случай"
+          },
+          {
+            "claim_refs": [
+              "C-007"
+            ],
+            "evidence_refs": [
+              "similar:black_box_callable:0:train:71"
+            ],
+            "explanation": "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 0.545; объект: train:71.",
+            "title": "Похожий обучающий случай"
+          }
+        ],
+        "supports": [
+          {
+            "claim_refs": [
+              "C-005"
+            ],
+            "evidence_refs": [
+              "similar:black_box_callable:0:train:0"
+            ],
+            "explanation": "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 1.000; объект: train:0.",
+            "title": "Похожий обучающий случай"
+          },
+          {
+            "claim_refs": [
+              "C-004"
+            ],
+            "evidence_refs": [
+              "concept:1"
+            ],
+            "explanation": "Class 1: no supported primary rules; coverage unavailable.",
+            "title": "Типичный профиль класса повышенный риск"
+          },
+          {
+            "claim_refs": [
+              "C-003"
+            ],
+            "evidence_refs": [
+              "concept:0"
+            ],
+            "explanation": "Class 0: no supported primary rules; coverage unavailable.",
+            "title": "Типичный профиль класса низкий риск"
+          }
+        ],
+        "technical_metrics": [
+          {
+            "claim_refs": [
+              "C-005"
+            ],
+            "evidence_refs": [
+              "similar:black_box_callable:0:train:0"
+            ],
+            "explanation": "1.000; сравнение: normalized tabular feature vector",
+            "title": "similarity"
+          },
+          {
+            "claim_refs": [
+              "C-006"
+            ],
+            "evidence_refs": [
+              "similar:black_box_callable:0:train:7"
+            ],
+            "explanation": "0.754; сравнение: normalized tabular feature vector",
+            "title": "similarity"
+          },
+          {
+            "claim_refs": [
+              "C-007"
+            ],
+            "evidence_refs": [
+              "similar:black_box_callable:0:train:71"
+            ],
+            "explanation": "0.545; сравнение: normalized tabular feature vector",
+            "title": "similarity"
+          },
+          {
+            "claim_refs": [
+              "C-002"
+            ],
+            "evidence_refs": [
+              "data:black_box_callable:0"
+            ],
+            "explanation": "1.000",
+            "title": "data_quality"
+          }
+        ],
+        "training": []
+      },
+      "evidence_trace": [
+        "data:black_box_callable:0",
+        "concept:0",
+        "concept:1",
+        "similar:black_box_callable:0:train:0",
+        "similar:black_box_callable:0:train:7",
+        "similar:black_box_callable:0:train:71",
+        "counterfactual:0",
+        "counterfactual:1",
+        "counterfactual:2",
+        "prediction",
+        "diagnostic:0",
+        "diagnostic:1",
+        "diagnostic:2",
+        "trace:missing_evidence",
+        "action",
+        "claim:C-001",
+        "claim:C-002",
+        "claim:C-003",
+        "claim:C-004",
+        "claim:C-005",
+        "claim:C-006",
+        "claim:C-007",
+        "claim:C-008",
+        "claim:C-009",
+        "claim:C-010",
+        "claim:C-011",
+        "claim:C-012",
+        "claim:C-013",
+        "claim:C-014",
+        "claim:C-015"
+      ],
+      "language": "ru",
+      "level": "expert",
+      "limitations": [
+        "Для части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено. Источник: C-013; статус: insufficient_evidence."
+      ],
+      "lost_or_averaged": [
+        "Для части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено. Источник: C-013; статус: insufficient_evidence."
+      ],
+      "main_reasons": [
+        {
+          "claim_refs": [
+            "C-005"
+          ],
+          "evidence_refs": [
+            "similar:black_box_callable:0:train:0"
+          ],
+          "explanation": "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 1.000; объект: train:0.",
+          "title": "Похожий обучающий случай"
+        },
+        {
+          "claim_refs": [
+            "C-004"
+          ],
+          "evidence_refs": [
+            "concept:1"
+          ],
+          "explanation": "Class 1: no supported primary rules; coverage unavailable.",
+          "title": "Типичный профиль класса повышенный риск"
+        },
+        {
+          "claim_refs": [
+            "C-003"
+          ],
+          "evidence_refs": [
+            "concept:0"
+          ],
+          "explanation": "Class 0: no supported primary rules; coverage unavailable.",
+          "title": "Типичный профиль класса низкий риск"
+        }
+      ],
+      "model_observed": [
+        "Модель определила: повышенный риск."
+      ],
+      "recommended_action": {
+        "action": "review",
+        "claim_refs": [
+          "C-015"
+        ],
+        "evidence_refs": [
+          "diagnostic:0",
+          "diagnostic:1",
+          "diagnostic:2"
+        ],
+        "explanation": "Передать результат специалисту и отдельно проверить трещиноватость и водонасыщенность.",
+        "title": "Проверить специалистом"
+      },
+      "reliability": {
+        "claim_refs": [
+          "C-015",
+          "C-002",
+          "C-013"
+        ],
+        "evidence_refs": [
+          "diagnostic:0",
+          "diagnostic:1",
+          "diagnostic:2",
+          "data:black_box_callable:0"
+        ],
+        "explanation": "Результат подтверждается частью доступных сведений, но недостаточно надёжен для автоматического решения.",
+        "title": "Требуется дополнительная проверка"
+      },
+      "similar_cases": [
+        "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 1.000; объект: train:0.",
+        "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 0.754; объект: train:7.",
+        "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 0.545; объект: train:71."
+      ],
+      "summary": "## Решение\nМодель определила: повышенный риск.\n\n## Почему\nНайден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход. Метод: robust_standardized_euclidean; значение: 1.000; объект: train:0.\nClass 1: no supported primary rules; coverage unavailable.\nClass 0: no supported primary rules; coverage unavailable.\n\n## Что вызывает сомнение\nДля части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено. Источник: C-013; статус: insufficient_evidence.\n\n## Насколько можно доверять\nРезультат подтверждается частью доступных сведений, но недостаточно надёжен для автоматического решения.\n\n## Что делать\nПередать результат специалисту и отдельно проверить трещиноватость и водонасыщенность.\n\n## Что изменит результат\nИзменение значения признака «водонасыщенность» переводит объект в другой класс в проверенном контрфактическом расчёте. Наблюдаемый эффект: None; действие: requires domain review.\n",
+      "trust": [
+        "Результат подтверждается частью доступных сведений, но недостаточно надёжен для автоматического решения.",
+        "Передать результат специалисту и отдельно проверить трещиноватость и водонасыщенность."
+      ],
+      "what_would_change_result": [
+        {
+          "claim_refs": [
+            "C-010"
+          ],
+          "evidence_refs": [
+            "counterfactual:2"
+          ],
+          "explanation": "Изменение значения признака «водонасыщенность» переводит объект в другой класс в проверенном контрфактическом расчёте. Наблюдаемый эффект: None; действие: requires domain review.",
+          "title": "Изменить ключевые признаки"
+        }
       ]
     },
     "user": {
+      "audience": "domain_user",
       "claim_refs": {
-        "decision_changes": [
-          "C-008",
-          "C-009"
+        "changes": [
+          "C-010"
         ],
-        "limitations": [
-          "C-003",
-          "C-004",
-          "C-005",
-          "C-006",
-          "C-007",
-          "C-008",
-          "C-009",
-          "C-010",
-          "C-011",
-          "C-012",
-          "C-013",
-          "C-014"
+        "concerns": [
+          "C-013"
         ],
-        "lost_or_averaged": [],
-        "main_reasons": [
-          "C-003",
-          "C-004"
-        ],
-        "model_observed": [
-          "C-002",
+        "decision": [
           "C-001"
         ],
-        "similar_cases": [
+        "main_reasons": [
           "C-005",
-          "C-006"
+          "C-004",
+          "C-003"
         ],
-        "summary": [
-          "C-001",
+        "recommended_action": [
           "C-015"
         ],
-        "trust": [
-          "C-011",
-          "C-012"
+        "reliability": [
+          "C-015",
+          "C-002",
+          "C-013"
         ]
       },
-      "decision_changes": [
-        "Контрфактическое изменение {'water_saturation': {'from': 1.7154201787986858, 'to': -0.02270644737398863}} переводит прогноз из 1 в 0. [C-008]",
-        "Контрфактическое изменение {'water_saturation': {'from': 1.7154201787986858, 'to': -0.8945515273285757}} переводит прогноз из 1 в 0. [C-009]"
+      "concerns": [
+        {
+          "claim_refs": [
+            "C-013"
+          ],
+          "evidence_refs": [
+            "diagnostic:2"
+          ],
+          "explanation": "Для части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено.",
+          "title": "Не все проверки подтверждены"
+        }
       ],
+      "decision": {
+        "claim_refs": [
+          "C-001"
+        ],
+        "evidence_refs": [
+          "prediction"
+        ],
+        "explanation": "Модель определила: повышенный риск.",
+        "title": "Повышенный риск"
+      },
+      "decision_changes": [
+        "Изменение значения признака «водонасыщенность» переводит объект в другой класс в проверенном контрфактическом расчёте."
+      ],
+      "details": {
+        "contradicts": [],
+        "limitations": [
+          {
+            "claim_refs": [
+              "C-013"
+            ],
+            "evidence_refs": [
+              "diagnostic:2"
+            ],
+            "explanation": "Для части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено.",
+            "title": "Не все проверки подтверждены"
+          }
+        ],
+        "similar_cases": [
+          {
+            "claim_refs": [
+              "C-005"
+            ],
+            "evidence_refs": [
+              "similar:black_box_callable:0:train:0"
+            ],
+            "explanation": "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход.",
+            "title": "Похожий обучающий случай"
+          },
+          {
+            "claim_refs": [
+              "C-006"
+            ],
+            "evidence_refs": [
+              "similar:black_box_callable:0:train:7"
+            ],
+            "explanation": "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход.",
+            "title": "Похожий обучающий случай"
+          },
+          {
+            "claim_refs": [
+              "C-007"
+            ],
+            "evidence_refs": [
+              "similar:black_box_callable:0:train:71"
+            ],
+            "explanation": "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход.",
+            "title": "Похожий обучающий случай"
+          }
+        ],
+        "supports": [
+          {
+            "claim_refs": [
+              "C-005"
+            ],
+            "evidence_refs": [
+              "similar:black_box_callable:0:train:0"
+            ],
+            "explanation": "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход.",
+            "title": "Похожий обучающий случай"
+          },
+          {
+            "claim_refs": [
+              "C-004"
+            ],
+            "evidence_refs": [
+              "concept:1"
+            ],
+            "explanation": "По сравнению с референсной выборкой объект близок к типичному профилю группы «повышенный риск». Такое сходство поддерживает результат, но не заменяет проверку ограничений.",
+            "title": "Типичный профиль класса повышенный риск"
+          },
+          {
+            "claim_refs": [
+              "C-003"
+            ],
+            "evidence_refs": [
+              "concept:0"
+            ],
+            "explanation": "По сравнению с референсной выборкой объект близок к типичному профилю группы «низкий риск». Такое сходство поддерживает результат, но не заменяет проверку ограничений.",
+            "title": "Типичный профиль класса низкий риск"
+          }
+        ],
+        "technical_metrics": [
+          {
+            "claim_refs": [
+              "C-005"
+            ],
+            "evidence_refs": [
+              "similar:black_box_callable:0:train:0"
+            ],
+            "explanation": "1.000; сравнение: normalized tabular feature vector",
+            "title": "similarity"
+          },
+          {
+            "claim_refs": [
+              "C-006"
+            ],
+            "evidence_refs": [
+              "similar:black_box_callable:0:train:7"
+            ],
+            "explanation": "0.754; сравнение: normalized tabular feature vector",
+            "title": "similarity"
+          },
+          {
+            "claim_refs": [
+              "C-007"
+            ],
+            "evidence_refs": [
+              "similar:black_box_callable:0:train:71"
+            ],
+            "explanation": "0.545; сравнение: normalized tabular feature vector",
+            "title": "similarity"
+          },
+          {
+            "claim_refs": [
+              "C-002"
+            ],
+            "evidence_refs": [
+              "data:black_box_callable:0"
+            ],
+            "explanation": "1.000",
+            "title": "data_quality"
+          }
+        ],
+        "training": []
+      },
       "evidence_trace": [],
+      "language": "ru",
       "level": "user",
       "limitations": [
-        "primary-rule coverage is unavailable [C-003]",
-        "primary-rule coverage is unavailable [C-004]",
-        "feature distance does not establish causal or clinical similarity [C-005]",
-        "feature distance does not establish causal or clinical similarity [C-006]",
-        "feature distance does not establish causal or clinical similarity [C-007]",
-        "quantile search tests association, not causal feasibility [C-008]",
-        "observed_effect is the change in maximum predicted probability, not a causal effect [C-008]",
-        "quantile search tests association, not causal feasibility [C-009]",
-        "observed_effect is the change in maximum predicted probability, not a causal effect [C-009]",
-        "quantile search tests association, not causal feasibility [C-010]",
-        "observed_effect is the change in maximum predicted probability, not a causal effect [C-010]",
-        "Автоматическое принятие ограничено до устранения диагностики. [C-011]",
-        "Автоматическое принятие ограничено до устранения диагностики. [C-012]",
-        "Автоматическое принятие ограничено до устранения диагностики. [C-013]",
-        "Канал evidence «model_rules_or_concepts» отсутствует. [C-014]"
+        "Для части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено."
       ],
-      "lost_or_averaged": [],
+      "lost_or_averaged": [
+        "Для части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено."
+      ],
       "main_reasons": [
-        "Class 0: no supported primary rules; coverage unavailable. [C-003]",
-        "Class 1: no supported primary rules; coverage unavailable. [C-004]"
+        {
+          "claim_refs": [
+            "C-005"
+          ],
+          "evidence_refs": [
+            "similar:black_box_callable:0:train:0"
+          ],
+          "explanation": "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход.",
+          "title": "Похожий обучающий случай"
+        },
+        {
+          "claim_refs": [
+            "C-004"
+          ],
+          "evidence_refs": [
+            "concept:1"
+          ],
+          "explanation": "По сравнению с референсной выборкой объект близок к типичному профилю группы «повышенный риск». Такое сходство поддерживает результат, но не заменяет проверку ограничений.",
+          "title": "Типичный профиль класса повышенный риск"
+        },
+        {
+          "claim_refs": [
+            "C-003"
+          ],
+          "evidence_refs": [
+            "concept:0"
+          ],
+          "explanation": "По сравнению с референсной выборкой объект близок к типичному профилю группы «низкий риск». Такое сходство поддерживает результат, но не заменяет проверку ограничений.",
+          "title": "Типичный профиль класса низкий риск"
+        }
       ],
       "model_observed": [
-        "Качество доступных входных данных объекта black_box_callable:0 равно 1.000. [C-002]",
-        "Модель сформировала прогноз [1]. [C-001]"
+        "Модель определила: повышенный риск."
       ],
-      "recommended_action": "review",
+      "recommended_action": {
+        "action": "review",
+        "claim_refs": [
+          "C-015"
+        ],
+        "evidence_refs": [
+          "diagnostic:0",
+          "diagnostic:1",
+          "diagnostic:2"
+        ],
+        "explanation": "Передать результат специалисту и отдельно проверить трещиноватость и водонасыщенность.",
+        "title": "Проверить специалистом"
+      },
+      "reliability": {
+        "claim_refs": [
+          "C-015",
+          "C-002",
+          "C-013"
+        ],
+        "evidence_refs": [
+          "diagnostic:0",
+          "diagnostic:1",
+          "diagnostic:2",
+          "data:black_box_callable:0"
+        ],
+        "explanation": "Результат подтверждается частью доступных сведений, но недостаточно надёжен для автоматического решения.",
+        "title": "Требуется дополнительная проверка"
+      },
       "similar_cases": [
-        "Объект train:0 имеет сходство 1.000 с объектом black_box_callable:0; использован метод robust_standardized_euclidean для представления «normalized tabular feature vector». [C-005]",
-        "Объект train:7 имеет сходство 0.754 с объектом black_box_callable:0; использован метод robust_standardized_euclidean для представления «normalized tabular feature vector». [C-006]"
+        "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход.",
+        "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход.",
+        "Найден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход."
       ],
-      "summary": "Модель сформировала прогноз [1]. [C-001] На основании доступных claims рекомендовано действие review. [C-015] Рекомендуемое действие: review. [C-015]",
+      "summary": "## Решение\nМодель определила: повышенный риск.\n\n## Почему\nНайден похожий обучающий случай; сходство рассчитано по представлению «нормализованные значения признаков». Сходство поддерживает результат, но само по себе не доказывает одинаковый исход.\nПо сравнению с референсной выборкой объект близок к типичному профилю группы «повышенный риск». Такое сходство поддерживает результат, но не заменяет проверку ограничений.\nПо сравнению с референсной выборкой объект близок к типичному профилю группы «низкий риск». Такое сходство поддерживает результат, но не заменяет проверку ограничений.\n\n## Что вызывает сомнение\nДля части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено.\n\n## Насколько можно доверять\nРезультат подтверждается частью доступных сведений, но недостаточно надёжен для автоматического решения.\n\n## Что делать\nПередать результат специалисту и отдельно проверить трещиноватость и водонасыщенность.\n\n## Что изменит результат\nИзменение значения признака «водонасыщенность» переводит объект в другой класс в проверенном контрфактическом расчёте.\n",
       "trust": [
-        "Диагностика: alignment evidence was not supplied. [C-011]",
-        "Диагностика: reduction evidence was not supplied. [C-012]"
+        "Результат подтверждается частью доступных сведений, но недостаточно надёжен для автоматического решения.",
+        "Передать результат специалисту и отдельно проверить трещиноватость и водонасыщенность."
+      ],
+      "what_would_change_result": [
+        {
+          "claim_refs": [
+            "C-010"
+          ],
+          "evidence_refs": [
+            "counterfactual:2"
+          ],
+          "explanation": "Изменение значения признака «водонасыщенность» переводит объект в другой класс в проверенном контрфактическом расчёте.",
+          "title": "Изменить ключевые признаки"
+        }
       ]
     }
   },
@@ -2871,7 +4571,7 @@
     },
     "adapter_id": "callable",
     "dataset_version": "controlled_cross_model_v1",
-    "explain_plan_sha256": "0680e714ca3d2ef5e360f69b8842776937a8079421274a637dfdfac336bba11c",
+    "explain_plan_sha256": "1fe8bad53acc74898c7c9d14c21ccebc3c65f192464f4b61c4773e0230a3e695",
     "generated_at": "controlled_fixture",
     "input_sha256": "29e3550aad8113522ad359d93bf42525132da6e948d147682bdb174e43043c67",
     "missing_evidence": [
@@ -3162,7 +4862,7 @@
         },
         {
           "claim_id": "C-005",
-          "effect": "mixed",
+          "effect": "favorable",
           "evidence_refs": [
             "similar:black_box_callable:0:train:0"
           ],
@@ -3178,7 +4878,7 @@
         },
         {
           "claim_id": "C-006",
-          "effect": "mixed",
+          "effect": "favorable",
           "evidence_refs": [
             "similar:black_box_callable:0:train:7"
           ],

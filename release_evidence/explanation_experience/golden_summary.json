@@ -116,6 +116,6 @@
     "claim_count": 14,
     "level": "E5"
   },
-  "schema_version": "1.0",
+  "schema_version": "1.2",
   "status": "controlled_golden_explanations"
 }

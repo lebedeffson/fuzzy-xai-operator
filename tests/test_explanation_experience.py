@@ -1,10 +1,8 @@
 from __future__ import annotations
 
-import re
-
 import pytest
 
-from fuzzyxai import FuzzyXAI
+from fuzzyxai import ExplainPlan, FuzzyXAI
 from fuzzyxai.adapters import NativeRuleAdapter
 from fuzzyxai.evidence import ExplanationClaim, ExplanationEvidence, evaluate_rule_ablation, extract_rules
 from fuzzyxai.schemas import validate_payload
@@ -36,7 +34,25 @@ class TraceableRuleModel:
 
 def _full_result():
     model = TraceableRuleModel()
-    fx = FuzzyXAI.wrap(model)
+    plan = ExplainPlan.default()
+    plan.domain_language = {
+        "features": {
+            "fracture_density": {
+                "label": "трещиноватость породы",
+                "meaning": "плотность трещин в горном массиве",
+                "high_text": "Трещин больше, чем в большинстве исследованных участков.",
+            },
+            "distance": {"label": "расстояние до выработки"},
+        },
+        "classes": {"0": {"label": "низкий риск"}, "1": {"label": "повышенный риск"}},
+        "actions": {
+            "review": {
+                "label": "Проверить специалистом",
+                "explanation": "Данных недостаточно для автоматического решения.",
+            }
+        },
+    }
+    fx = FuzzyXAI.wrap(model, explain_plan=plan)
     rule = extract_rules(NativeRuleAdapter(model), feature_names=["fracture_density", "distance"])[0]
     rule = evaluate_rule_ablation(
         rule,
@@ -100,9 +116,12 @@ def test_claims_are_grounded_and_primary_graph_nodes() -> None:
     assert {edge.source for edge in graph.edges} <= {node.node_id for node in graph.nodes}
     assert {edge.target for edge in graph.edges} <= {node.node_id for node in graph.nodes}
     assert any(claim.evidence_status == "supported" and claim.effect == "adverse" for claim in result.claims)
-    for payload in result.view_model.human_explanations.values():
-        fields = [payload["summary"], *payload["main_reasons"], *payload["model_observed"], *payload["lost_or_averaged"]]
-        assert all(re.search(r"\[C-\d{3}\]", text) for text in fields if text)
+    human = result.explain_for(audience="domain_user")
+    assert len(human.main_reasons) <= 3
+    assert len(human.concerns) <= 2
+    assert all(fragment.claim_refs and fragment.evidence_refs for fragment in human.fragments)
+    assert all(term not in human.user_text for term in ("R31", "S4", "E5", "gamma", "defer_to_human", "[C-"))
+    assert {"domain_user", "ml_engineer", "researcher", "auditor"} <= set(result.view_model.human_explanations)
 
 
 def test_explanation_levels_and_channel_disclosure() -> None:
@@ -122,7 +141,8 @@ def test_explanation_levels_and_channel_disclosure() -> None:
 
 def test_result_overview_story_inspect_and_audit() -> None:
     result = _full_result()
-    assert "Что решила модель" in result.overview()
+    assert "## Решение" in result.overview()
+    assert "повышенный риск" in result.overview()
     assert "Обучение" in result.story()
     rule = result.inspect("rule:R31")
     assert rule.target["rule_id"] == "R31"
@@ -133,6 +153,7 @@ def test_result_overview_story_inspect_and_audit() -> None:
     assert result.inspect("object:85").target_id == "85"
     assert result.inspect("evidence:data:85").target_type == "evidence"
     assert result.inspect("action").target_id == "action"
+    assert "R31" in result.summary(audience="ml_engineer", detail="full")
     audit = result.audit()
     assert audit["explanation_level"]["level"] == "E5"
     assert audit["trace"]["model_fingerprint"]

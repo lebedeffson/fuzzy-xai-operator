@@ -1,4 +1,4 @@
-"""Build deterministic golden explanations for the v1.1 experience contract."""
+"""Build deterministic golden explanations for the v1.2 human experience contract."""
 
 from __future__ import annotations
 
@@ -9,14 +9,53 @@ from pathlib import Path
 
 import numpy as np
 
-from fuzzyxai import FuzzyXAI
+from fuzzyxai import ExplainPlan, FuzzyXAI
 from fuzzyxai.adapters import NativeRuleAdapter
-from fuzzyxai.evidence import ExplanationClaim, ExplanationEvidence, SimilarCaseEvidence, compare_region_masks
+from fuzzyxai.evidence import (
+    ExplanationClaim,
+    ExplanationEvidence,
+    ExplanationGraph,
+    SimilarCaseEvidence,
+    build_explanation_claims,
+    compare_region_masks,
+    compose_human_explanation,
+)
 from fuzzyxai.evidence import evaluate_rule_ablation, extract_rules
 
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "release_evidence/explanation_experience"
+
+
+def groundwater_plan() -> ExplainPlan:
+    plan = ExplainPlan.default()
+    plan.domain_language = {
+        "features": {
+            "fracture_density": {
+                "label": "трещиноватость породы",
+                "meaning": "количество и плотность трещин в горном массиве",
+                "high_text": "Трещин больше, чем в большинстве исследованных участков.",
+            },
+            "water_saturation": {
+                "label": "водонасыщенность",
+                "high_text": "Водонасыщенность выше типичного уровня.",
+            },
+            "distance": {"label": "расстояние до выработки"},
+            "pressure": {"label": "давление воды"},
+        },
+        "classes": {"0": {"label": "низкий риск"}, "1": {"label": "повышенный риск"}},
+        "actions": {
+            "review": {
+                "label": "Проверить специалистом",
+                "explanation": "Передать результат специалисту и отдельно проверить трещиноватость и водонасыщенность.",
+            },
+            "defer_to_human": {
+                "label": "Передать специалисту",
+                "explanation": "Передать результат специалисту и не применять его автоматически до предметной проверки.",
+            },
+        },
+    }
+    return plan
 
 
 def object_85_history() -> list[dict[str, object]]:
@@ -93,7 +132,7 @@ def write_json(path: Path, payload: object) -> None:
 
 def build_object_85() -> dict:
     model = ControlledRuleModel()
-    fx = FuzzyXAI.wrap(model)
+    fx = FuzzyXAI.wrap(model, explain_plan=groundwater_plan())
     rule = next(rule for rule in extract_rules(NativeRuleAdapter(model), feature_names=["fracture_density", "distance"]) if rule.rule_id == "R31")
     rule = evaluate_rule_ablation(
         rule,
@@ -135,6 +174,9 @@ def build_object_85() -> dict:
         },
     )
     write_json(OUTPUT / "object_85_explanation.json", stable_payload(result))
+    human = result.explain_for("domain_user")
+    write_json(OUTPUT / "object_85_human_explanation.json", human.to_dict(include_technical_trace=False))
+    (OUTPUT / "object_85_human_explanation.md").write_text(human.user_text, encoding="utf-8")
     (OUTPUT / "object_85_overview.md").write_text(result.overview() + "\n" + result.story(), encoding="utf-8")
     result.visualize(view="explanation_story", output=OUTPUT / "object_85_story.png")
     result.visualize(view="training_trace", output=OUTPUT / "object_85_training_trace.png")
@@ -145,7 +187,7 @@ def build_object_85() -> dict:
 
 
 def build_anfis() -> dict:
-    result = FuzzyXAI.wrap(ControlledRuleModel()).explain_one(
+    result = FuzzyXAI.wrap(ControlledRuleModel(), explain_plan=groundwater_plan()).explain_one(
         [0.76, 0.24],
         object_id="anfis-fixture-1",
         feature_names=["fracture_density", "distance"],
@@ -190,7 +232,7 @@ def build_cross_model_matrix() -> dict:
     output_dir.mkdir(parents=True, exist_ok=True)
     matrix: dict[str, object] = {}
     for scenario_id, model in models.items():
-        result = FuzzyXAI.wrap(model).explain_one(
+        result = FuzzyXAI.wrap(model, explain_plan=groundwater_plan()).explain_one(
             values[0],
             object_id=f"{scenario_id}:0",
             feature_names=feature_names,
@@ -353,6 +395,28 @@ def build_medical_research_fixture() -> dict:
             limitations=("Контрпримеры не заменяют клиническую валидацию.",), applicability="research_only",
         ),
     ]
+    human_evidence = ExplanationEvidence(similar_cases=cases)
+    human_claims = build_explanation_claims(
+        human_evidence,
+        prediction={"predictions": ["research_class_B"], "score": 0.76},
+        diagnostics=(),
+        action="review",
+    )
+    human = compose_human_explanation(
+        human_claims,
+        ExplanationGraph((), (), tuple(human_claims)),
+        action="review",
+        evidence=human_evidence,
+        domain_language={
+            "classes": {"research_class_B": {"label": "исследовательский класс B"}},
+            "actions": {
+                "review": {
+                    "label": "Проверить специалистом",
+                    "explanation": "Использовать сходство только как исследовательскую подсказку, а не как клинический вывод.",
+                }
+            },
+        },
+    )
     payload = {
         "status": "controlled_fixture_research_only",
         "clinical_claims": False,
@@ -362,15 +426,18 @@ def build_medical_research_fixture() -> dict:
         "mask_iou": measured_iou.similarity_score,
         "counterexample_count": 2,
         "required_user_message": "Similarity supports inspection but is not a probability of the same diagnosis.",
+        "human_explanation": human.to_dict(include_technical_trace=False),
     }
     write_json(OUTPUT / "medical_research_similarity_explanation.json", payload)
+    write_json(OUTPUT / "medical_research_human_explanation.json", human.to_dict(include_technical_trace=False))
+    (OUTPUT / "medical_research_human_explanation.md").write_text(human.user_text, encoding="utf-8")
     return {"status": payload["status"], "claim_count": len(claims)}
 
 
 def main() -> None:
     OUTPUT.mkdir(parents=True, exist_ok=True)
     summary = {
-        "schema_version": "1.0",
+        "schema_version": "1.2",
         "status": "controlled_golden_explanations",
         "object_85": build_object_85(),
         "anfis": build_anfis(),

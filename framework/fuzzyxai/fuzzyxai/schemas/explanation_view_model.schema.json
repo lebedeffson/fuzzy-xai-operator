@@ -47,7 +47,7 @@
     },
     "human_explanations": {
       "type": "object",
-      "required": ["user", "expert", "audit"]
+      "required": ["domain_user", "ml_engineer", "researcher", "auditor"]
     },
     "quality_metrics": {"type": "object"},
     "explanation_level": {

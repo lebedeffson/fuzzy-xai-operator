@@ -30,7 +30,7 @@ __all__ += ['DatasetRecord', 'infer_dataset_profile']
 __all__ += ['lofo_f1_importance', 'bootstrap_lofo_f1_importance', 'select_top_rules_by_lofo_f1']
 __all__ += ['compute_interpretability_index']
 
-__version__ = "1.1.0rc3"
+__version__ = "1.2.0rc1"
 
 
 def build_explanation(*, terms, representation, rules=None, activations=None, uncertainty=0.0, trace=None, metadata=None):
@@ -189,15 +189,24 @@ from .explain import (
     explain_representation_ru,
 )
 from .evidence import (
+    ActionStatement,
+    AudienceProfile,
     ClassConcept,
+    ChangeStatement,
+    ConcernStatement,
     CounterfactualEvidence,
     DataEvidence,
+    DecisionStatement,
+    ExplanationDetails,
     ExplanationEvidence,
     ExplanationGraph,
     ExplanationClaim,
     ExplanationLevel,
     HumanExplanation,
+    HumanStatement,
     LearnedRule,
+    ReasonStatement,
+    ReliabilityStatement,
     SimilarCaseEvidence,
     SubgroupAveragingEvidence,
     TrainingObjectTrace,
@@ -273,6 +282,15 @@ __all__ += [
     "explain_main_reason_ru",
     "explain_representation_ru",
     "DataEvidence",
+    "AudienceProfile",
+    "HumanStatement",
+    "DecisionStatement",
+    "ReasonStatement",
+    "ConcernStatement",
+    "ReliabilityStatement",
+    "ActionStatement",
+    "ChangeStatement",
+    "ExplanationDetails",
     "TrainingObjectTrace",
     "SubgroupAveragingEvidence",
     "LearnedRule",

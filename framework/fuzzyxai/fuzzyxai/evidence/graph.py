@@ -79,9 +79,19 @@ def build_explanation_graph(
         node_id = f"counterfactual:{index}"
         add_node(node_id, "counterfactual", f"Change toward {counterfactual.target_prediction}", counterfactual.to_dict(), counterfactual.evidence_refs)
 
+    contributions = prediction.get("contributions", {})
+    if isinstance(contributions, Mapping):
+        for feature, value in contributions.items():
+            add_node(
+                f"contribution:{feature}",
+                "contribution",
+                f"Contribution of {feature}",
+                {"feature": str(feature), "value": float(value), "method": prediction.get("contribution_method")},
+            )
+
     add_node("prediction", "prediction", "Model prediction", prediction)
     for node in list(nodes):
-        if node.node_type in {"data", "rule", "concept", "similar_case", "counterfactual"}:
+        if node.node_type in {"data", "contribution", "rule", "concept", "similar_case", "counterfactual"}:
             relation = "changed_by" if node.node_type == "counterfactual" else "derived_from"
             edges.append(ExplanationEdge(node.node_id, "prediction", relation, node.evidence_refs))
 

@@ -217,13 +217,13 @@ operators:
     artifacts: [release_evidence/framework_completion/object_85_user.md]
     visualization: [explanation_graph]
   - id: framework.human_explanation
-    dissertation_ref: "chapter 4, user expert audit narratives"
+    dissertation_ref: "chapter 4, Human Explanation Layer"
     callable: fuzzyxai.evidence.human:compose_human_explanation
     input_schema: ExplanationEvidenceAndGraph
     output_schema: HumanExplanation
-    tests: [tests/test_evidence_first_framework.py]
-    artifacts: [release_evidence/framework_completion/object_85_user.md]
-    visualization: [plain_language_panel]
+    tests: [tests/test_human_explanation_layer.py, tests/test_explanation_experience.py]
+    artifacts: [release_evidence/explanation_experience/object_85_human_explanation.json, release_evidence/explanation_experience/medical_research_human_explanation.json]
+    visualization: [human_explanation_cards]
   - id: framework.explanation_quality
     dissertation_ref: "chapter 4, explanation quality metrics"
     callable: fuzzyxai.evidence.metrics:evaluate_explanation_quality

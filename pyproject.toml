@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "fuzzyxai-operator"
-version = "1.1.0rc3"
+version = "1.2.0rc1"
 description = "FuzzyXAI operator engine, Studio, proof package, and doctoral readiness audit."
 readme = "README.md"
 requires-python = ">=3.10"
@@ -39,6 +39,7 @@ follow_imports = "skip"
 files = [
     "framework/fuzzyxai/fuzzyxai/adapters/model.py",
     "framework/fuzzyxai/fuzzyxai/evidence/contracts.py",
+    "framework/fuzzyxai/fuzzyxai/evidence/human.py",
     "framework/fuzzyxai/fuzzyxai/visualization/spec.py",
 ]
 
@@ -48,6 +49,9 @@ package-dir = {"" = "framework/fuzzyxai"}
 [tool.setuptools.packages.find]
 where = ["framework/fuzzyxai"]
 include = ["fuzzyxai*"]
+
+[tool.setuptools.package-data]
+fuzzyxai = ["schemas/*.json"]
 
 [tool.setuptools.data-files]
 "share/fuzzyxai/matlab/+fuzzyxai" = ["framework/fuzzyxai/matlab/+fuzzyxai/*.m"]
