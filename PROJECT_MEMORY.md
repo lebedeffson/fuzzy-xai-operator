@@ -4,8 +4,8 @@
 
 - Date: 2026-07-20
 - Branch: `feat/full-empirical-validation`
-- Measured implementation commit: `2557ad45ae81214bb51eb23bd88a0e4daaa327ac`
-- Artifact-layout correction: `ae016fd`
+- Final technical closure commit: `fc8705ececdcc58f6cc171017984d9c6af05dd45`
+- Final full empirical CI run: `29707225733`
 - Candidate status: full E1-E8 technical validation; stable release remains blocked
 
 The current milestone adds a controlled, evidence-first validation layer without changing the defended chapter 2-3
@@ -24,8 +24,9 @@ Measured boundaries must remain explicit:
 - expert review and comprehension pilot remain `planned_not_run`; domain semantic review remains pending;
 - merge to `main` and a stable tag remain forbidden while those external gates are open.
 
-Public run `29706487011` confirmed the full E1-E8 job and checkout-independent Docker reproduction. Its final aggregation
-exposed an artifact-root layout defect, corrected in `ae016fd`; later runs must be used for the final aggregate archive.
+Public run `29707225733` passed protocol smoke, full E1-E8, checkout-independent Docker reproduction, final evidence
+aggregation, archive verification, and the 90-item technical Definition of Done. Stable release remains blocked by
+the three explicitly recorded external gates, not by a computational failure.
 
 - Date: 2026-07-19
 - Branch: `feat/universal-model-integration`

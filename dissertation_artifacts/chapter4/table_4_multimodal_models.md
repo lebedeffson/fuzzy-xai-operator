@@ -1,0 +1,13 @@
+# Measured multimodal model runs
+
+| dataset | modality | model | accuracy | balanced_accuracy | fit_seconds | status |
+|---|---|---|---|---|---|---|
+| controlled_tabular_risk_v1 | tabular | logistic_regression | 0.764000 | 0.763750 | 0.006208 | measured |
+| controlled_tabular_risk_v1 | tabular | random_forest | 0.756000 | 0.755574 | 1.995601 | measured |
+| controlled_tabular_risk_v1 | tabular | hist_gradient_boosting | 0.749600 | 0.749325 | 0.277625 | measured |
+| controlled_geometric_images_v1 | image | image_logistic | 0.920400 | 0.920402 | 0.057681 | measured |
+| controlled_geometric_images_v1 | image | image_mlp | 0.997200 | 0.997204 | 0.623934 | measured |
+| controlled_geological_notes_v1 | text | tfidf_logistic | 1.000000 | 1.000000 | 0.101567 | measured |
+| controlled_geological_notes_v1 | text | tfidf_mlp | 1.000000 | 1.000000 | 0.300389 | measured |
+| controlled_sensor_windows_v1 | time_series | window_hist_gradient_boosting | 1.000000 | 1.000000 | 0.565745 | measured |
+| controlled_sensor_windows_v1 | time_series | window_mlp | 1.000000 | 1.000000 | 0.165772 | measured |

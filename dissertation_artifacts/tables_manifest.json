@@ -1,0 +1,21 @@
+{
+  "commit": "fc8705ececdcc58f6cc171017984d9c6af05dd45",
+  "schema_version": "1.0",
+  "source_evidence": "/home/runner/work/fuzzy-xai-operator/fuzzy-xai-operator/release_evidence/full_empirical_validation",
+  "tables": {
+    "chapter3/table_3_dataset_roles_summary.csv": "e677dd7743b092631a81420c860f9c8e2b45d128cb8f86bda6ad9b3b3f4ea4e2",
+    "chapter3/table_3_synthetic_ruptures_results.csv": "494c6cac3a3a94c1b91db074e4d3e4106df9aad7f1bc15f8cf18a7c51ffcac0e",
+    "chapter3/table_3_uncertainty_hierarchy.csv": "83e70c2e65296f3389689a3321a70d96ed6beaeeeb1159fb095d2024c576c4db",
+    "chapter3/table_3_uncertainty_hierarchy.md": "c87a17d27b85c3a3bd37fd39b51a05ef4c3f8a360a64ed44e0e8c274196a92be",
+    "chapter4/table_4_evidence_matrix.csv": "d8742e3e71f1208555543c9504cf8fba20af33994f6b575c037e03925074e6b3",
+    "chapter4/table_4_explanation_baselines.csv": "40cdd16926a27c3873abe8a1cbd07c3da1c2ed963961d10978c39970e7ee600b",
+    "chapter4/table_4_integration_effort_measurements.csv": "7eddc5f1e53ca22e5ad5dbb7245540720faf9c4539c2154297572525605620e4",
+    "chapter4/table_4_multimodal_models.csv": "8fbd40362f656092d49e27c367387d04a84520e4703d4a0db892e1dedc32faa5",
+    "chapter4/table_4_multimodal_models.md": "4019ea9714b8f3391463ea8b1f87dc95633d09e3fbf5da2e3e376e0e70a9125b",
+    "chapter4/table_4_policy_comparison.csv": "948ca8287375e3081ad69007a163fe344325a1cb8d90999bfca4c48a52962c8e",
+    "chapter4/table_4_policy_comparison.md": "f48406dbe23a42656dff6d6d6f5d3308eddb8114fa57c8d04d9d247073989498",
+    "chapter4/table_4_registry_snapshot.csv": "0763ddbbfe05947b2f83a3fd7d4bd47ef3af3e33cc9ba376e7ed87c7ae891155",
+    "chapter4/table_4_rule_ablation_repeated_cv.csv": "bb380a10754ab8a2c3c018d9ed12dd9cfb4a07089178b0162d37c04f872c9a9d",
+    "chapter4/table_4_source_repo_cards.csv": "a0b4c2359df915e6447b66c72c86e4408fbd9dc2b8209b1125845c64cff03f6e"
+  }
+}

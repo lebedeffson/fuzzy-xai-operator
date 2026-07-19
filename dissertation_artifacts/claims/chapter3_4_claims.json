@@ -1,0 +1,95 @@
+{
+  "claims": [
+    {
+      "claim": "Adaptive uncertainty selection reduces representation complexity without unacceptable measured risk.",
+      "claim_id": "ch3.adaptive_hierarchy_practical_utility",
+      "evidence_files": [
+        "uncertainty_hierarchy/hierarchy_results.json"
+      ],
+      "limitations": [
+        "controlled uncertainty injection"
+      ],
+      "metrics": {
+        "adaptive_fml_fraction": 0.5522,
+        "non_inferior": true
+      },
+      "status": "supported"
+    },
+    {
+      "claim": "the rule-removal effect is not confirmed as a general pattern and remains a controlled illustration",
+      "claim_id": "ch4.rule_ablation_general_effect",
+      "evidence_files": [
+        "rule_ablation/statistical_report.json",
+        "rule_ablation/repeated_cv_metrics.csv"
+      ],
+      "limitations": [
+        "controlled interaction subgroup",
+        "rule-selection family is fixed before evaluation"
+      ],
+      "metrics": {
+        "confidence_interval_95": [
+          0.0,
+          0.0
+        ],
+        "holm_adjusted_p": 1.0,
+        "mean_difference": 0.0,
+        "median_difference": 0.0,
+        "n_pairs": 50,
+        "rank_biserial_effect": 0.0,
+        "standard_deviation": 0.0,
+        "wilcoxon_p_two_sided": 1.0,
+        "wilcoxon_w": 0.0,
+        "worsening_fraction": 0.0
+      },
+      "status": "inconclusive"
+    },
+    {
+      "claim": "Critical rupture provides incremental predictive information about wrong automatic decisions.",
+      "claim_id": "ch4.critical_rupture_predictive_value",
+      "evidence_files": [
+        "critical_rupture_scalability/critical_rupture_and_scalability.json"
+      ],
+      "limitations": [
+        "without incremental predictive value, critical rupture is a structural diagnostic indicator only"
+      ],
+      "metrics": {
+        "incremental_auprc": -0.12556024709557384
+      },
+      "status": "not_supported"
+    },
+    {
+      "claim": "Required external explainers were measured under the common protocol.",
+      "claim_id": "ch4.explainer_comparison",
+      "evidence_files": [
+        "baselines/baseline_quality_matrix.csv",
+        "baselines/statistical_comparison.json"
+      ],
+      "limitations": [
+        "quality metrics are model-behavior metrics, not causal validity",
+        "full FuzzyXAI receives no training-history channel when the model does not expose one"
+      ],
+      "metrics": {
+        "n_explained": 100
+      },
+      "status": "supported"
+    },
+    {
+      "claim": "Independent users understand the generated explanations.",
+      "claim_id": "ch4.external_comprehension",
+      "evidence_files": [
+        "external_review/review_status.json"
+      ],
+      "limitations": [
+        "comprehension pilot and expert review are planned_not_run"
+      ],
+      "metrics": {},
+      "status": "not_supported"
+    }
+  ],
+  "forbidden_claims": [
+    "clinical safety",
+    "universal superiority",
+    "external validity from controlled generators"
+  ],
+  "schema_version": "1.0"
+}

@@ -1,0 +1,458 @@
+{
+  "blocked": 0,
+  "items": [
+    {
+      "description": "four datasets",
+      "id": 1,
+      "status": "PASS"
+    },
+    {
+      "description": "at least 10000 objects per main dataset",
+      "id": 2,
+      "status": "PASS"
+    },
+    {
+      "description": "tabular contour",
+      "id": 3,
+      "status": "PASS"
+    },
+    {
+      "description": "image contour",
+      "id": 4,
+      "status": "PASS"
+    },
+    {
+      "description": "text contour",
+      "id": 5,
+      "status": "PASS"
+    },
+    {
+      "description": "time-series contour",
+      "id": 6,
+      "status": "PASS"
+    },
+    {
+      "description": "linear model",
+      "id": 7,
+      "status": "PASS"
+    },
+    {
+      "description": "tree or ensemble",
+      "id": 8,
+      "status": "PASS"
+    },
+    {
+      "description": "gradient boosting",
+      "id": 9,
+      "status": "PASS"
+    },
+    {
+      "description": "neural model",
+      "id": 10,
+      "status": "PASS"
+    },
+    {
+      "description": "modular preprocessing and decision chain",
+      "id": 11,
+      "status": "PASS"
+    },
+    {
+      "description": "at least 50 paired rule-ablation comparisons",
+      "id": 12,
+      "status": "PASS"
+    },
+    {
+      "description": "object predictions saved",
+      "id": 13,
+      "status": "PASS"
+    },
+    {
+      "description": "confidence intervals",
+      "id": 14,
+      "status": "PASS"
+    },
+    {
+      "description": "effect sizes",
+      "id": 15,
+      "status": "PASS"
+    },
+    {
+      "description": "paired tests",
+      "id": 16,
+      "status": "PASS"
+    },
+    {
+      "description": "multiple-testing correction",
+      "id": 17,
+      "status": "PASS"
+    },
+    {
+      "description": "unsuccessful results retained",
+      "id": 18,
+      "status": "PASS"
+    },
+    {
+      "description": "SHAP measured",
+      "id": 19,
+      "status": "PASS"
+    },
+    {
+      "description": "LIME measured",
+      "id": 20,
+      "status": "PASS"
+    },
+    {
+      "description": "Anchors measured",
+      "id": 21,
+      "status": "PASS"
+    },
+    {
+      "description": "RuleFit measured where applicable",
+      "id": 22,
+      "status": "PASS"
+    },
+    {
+      "description": "confidence threshold measured",
+      "id": 23,
+      "status": "PASS"
+    },
+    {
+      "description": "SHAP/LIME disagreement heuristic",
+      "id": 24,
+      "status": "PASS"
+    },
+    {
+      "description": "FuzzyXAI without history",
+      "id": 25,
+      "status": "PASS"
+    },
+    {
+      "description": "full FuzzyXAI",
+      "id": 26,
+      "status": "PASS"
+    },
+    {
+      "description": "fidelity stability completeness runtime measured",
+      "id": 27,
+      "status": "PASS"
+    },
+    {
+      "description": "P1-P7 compared",
+      "id": 28,
+      "status": "PASS"
+    },
+    {
+      "description": "automatic coverage",
+      "id": 29,
+      "status": "PASS"
+    },
+    {
+      "description": "wrong automatic decisions",
+      "id": 30,
+      "status": "PASS"
+    },
+    {
+      "description": "critical wrong decisions",
+      "id": 31,
+      "status": "PASS"
+    },
+    {
+      "description": "false blocks",
+      "id": 32,
+      "status": "PASS"
+    },
+    {
+      "description": "risk-coverage curve",
+      "id": 33,
+      "status": "PASS"
+    },
+    {
+      "description": "costs fixed before test",
+      "id": 34,
+      "status": "PASS"
+    },
+    {
+      "description": "fixed calibration grid",
+      "id": 35,
+      "status": "PASS"
+    },
+    {
+      "description": "calibration objective",
+      "id": 36,
+      "status": "PASS"
+    },
+    {
+      "description": "deterministic tie-break",
+      "id": 37,
+      "status": "PASS"
+    },
+    {
+      "description": "test excluded from calibration",
+      "id": 38,
+      "status": "PASS"
+    },
+    {
+      "description": "parameters frozen",
+      "id": 39,
+      "status": "PASS"
+    },
+    {
+      "description": "complete trial journal",
+      "id": 40,
+      "status": "PASS"
+    },
+    {
+      "description": "weight sensitivity",
+      "id": 41,
+      "status": "PASS"
+    },
+    {
+      "description": "threshold sensitivity",
+      "id": 42,
+      "status": "PASS"
+    },
+    {
+      "description": "noise sensitivity",
+      "id": 43,
+      "status": "PASS"
+    },
+    {
+      "description": "distribution-shift sensitivity",
+      "id": 44,
+      "status": "PASS"
+    },
+    {
+      "description": "sensitivity heatmaps",
+      "id": 45,
+      "status": "PASS"
+    },
+    {
+      "description": "action robustness K_rob",
+      "id": 46,
+      "status": "PASS"
+    },
+    {
+      "description": "always F0",
+      "id": 47,
+      "status": "PASS"
+    },
+    {
+      "description": "always Fint",
+      "id": 48,
+      "status": "PASS"
+    },
+    {
+      "description": "always NAS",
+      "id": 49,
+      "status": "PASS"
+    },
+    {
+      "description": "always FML",
+      "id": 50,
+      "status": "PASS"
+    },
+    {
+      "description": "adaptive selector",
+      "id": 51,
+      "status": "PASS"
+    },
+    {
+      "description": "selection coverage",
+      "id": 52,
+      "status": "PASS"
+    },
+    {
+      "description": "representation redundancy",
+      "id": 53,
+      "status": "PASS"
+    },
+    {
+      "description": "action influence",
+      "id": 54,
+      "status": "PASS"
+    },
+    {
+      "description": "representation complexity",
+      "id": 55,
+      "status": "PASS"
+    },
+    {
+      "description": "adaptive versus FML non-inferiority",
+      "id": 56,
+      "status": "PASS"
+    },
+    {
+      "description": "FML above 90 percent blocks utility claim",
+      "id": 57,
+      "status": "PASS"
+    },
+    {
+      "description": "typed critical-rupture definition",
+      "id": 58,
+      "status": "PASS"
+    },
+    {
+      "description": "critical-rupture type tests",
+      "id": 59,
+      "status": "PASS"
+    },
+    {
+      "description": "error association",
+      "id": 60,
+      "status": "PASS"
+    },
+    {
+      "description": "simple-signal comparison",
+      "id": 61,
+      "status": "PASS"
+    },
+    {
+      "description": "no safety terminology without gain",
+      "id": 62,
+      "status": "PASS"
+    },
+    {
+      "description": "1k 5k 10k 50k scaling",
+      "id": 63,
+      "status": "PASS"
+    },
+    {
+      "description": "time and memory",
+      "id": 64,
+      "status": "PASS"
+    },
+    {
+      "description": "graph size",
+      "id": 65,
+      "status": "PASS"
+    },
+    {
+      "description": "theoretical-complexity comparison",
+      "id": 66,
+      "status": "PASS"
+    },
+    {
+      "description": "Dockerfile",
+      "id": 67,
+      "status": "PASS"
+    },
+    {
+      "description": "lock file",
+      "id": 68,
+      "status": "PASS"
+    },
+    {
+      "description": "Makefile",
+      "id": 69,
+      "status": "PASS"
+    },
+    {
+      "description": "make reproduce-dissertation",
+      "id": 70,
+      "status": "PASS"
+    },
+    {
+      "description": "Docker reproduction",
+      "id": 71,
+      "status": "PASS"
+    },
+    {
+      "description": "dataset hashes",
+      "id": 72,
+      "status": "PASS"
+    },
+    {
+      "description": "report hashes",
+      "id": 73,
+      "status": "PASS"
+    },
+    {
+      "description": "automatic tables",
+      "id": 74,
+      "status": "PASS"
+    },
+    {
+      "description": "automatic figures",
+      "id": 75,
+      "status": "PASS"
+    },
+    {
+      "description": "clean evidence archive verification",
+      "id": 76,
+      "status": "PASS"
+    },
+    {
+      "description": "100-object expert sample",
+      "id": 77,
+      "status": "PASS"
+    },
+    {
+      "description": "expert form",
+      "id": 78,
+      "status": "PASS"
+    },
+    {
+      "description": "blinded packets",
+      "id": 79,
+      "status": "PASS"
+    },
+    {
+      "description": "no fabricated expert results",
+      "id": 80,
+      "status": "PASS"
+    },
+    {
+      "description": "comprehension remains planned until run",
+      "id": 81,
+      "status": "PASS"
+    },
+    {
+      "description": "domain review remains pending until run",
+      "id": 82,
+      "status": "PASS"
+    },
+    {
+      "description": "fast CI",
+      "id": 83,
+      "status": "PASS"
+    },
+    {
+      "description": "heavy CI",
+      "id": 84,
+      "status": "PASS"
+    },
+    {
+      "description": "no unsupported claims",
+      "id": 85,
+      "status": "PASS"
+    },
+    {
+      "description": "chapters generated from artifacts",
+      "id": 86,
+      "status": "PASS"
+    },
+    {
+      "description": "Project Memory updated",
+      "id": 87,
+      "status": "PASS"
+    },
+    {
+      "description": "Release Status updated",
+      "id": 88,
+      "status": "PASS"
+    },
+    {
+      "description": "main merge only after gates or as candidate",
+      "id": 89,
+      "status": "PASS"
+    },
+    {
+      "description": "no stable tag with external gates open",
+      "id": 90,
+      "status": "PASS"
+    }
+  ],
+  "passed": 90,
+  "schema_version": "1.0",
+  "stable_release_allowed": false
+}

@@ -13,7 +13,8 @@ Status: technical candidate on `feat/full-empirical-validation`; stable release 
 - critical-rupture incremental AUPRC: `-0.12556024709557384`;
 - safety claim: forbidden; interpretation: structural diagnostic only;
 - 1k/5k/10k/50k scalability contour: PASS;
-- full E1-E8 job and Docker reproduction: PASS in public run `29706487011`;
+- full E1-E8 job, Docker reproduction, aggregation, and archive verification: PASS in public run `29707225733`;
+- technical Definition of Done: `90/90 PASS`;
 - independent expert/comprehension work: `planned_not_run`;
 - regulated-domain language review: `pending_external_review`;
 - merge to `main`: blocked;

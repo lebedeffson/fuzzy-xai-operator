@@ -1,0 +1,9 @@
+# Uncertainty hierarchy comparison
+
+| mode | coverage | undercoverage | mean_complexity | mean_risk |
+|---|---|---|---|---|
+| always_F0 | 0.109800 | 0.890200 | 1.000000 | 0.892396 |
+| always_Fint | 0.223800 | 0.776200 | 2.000000 | 0.780676 |
+| always_NAS | 0.447800 | 0.552200 | 4.000000 | 0.561156 |
+| always_FML | 1.000000 | 0.000000 | 8.000000 | 0.020000 |
+| adaptive | 1.000000 | 0.000000 | 5.651400 | 0.020000 |

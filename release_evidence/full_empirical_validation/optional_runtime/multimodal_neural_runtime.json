@@ -1,0 +1,126 @@
+{
+  "checks": {
+    "cnn_measured": true,
+    "onnx_parity": true,
+    "text_sequence_measured": true,
+    "time_series_sequence_measured": true
+  },
+  "limitations": [
+    "controlled modality generators",
+    "maps are not causal"
+  ],
+  "result_origin": "measured_on_controlled_datasets",
+  "runs": [
+    {
+      "channels": [
+        "gradient_map",
+        "integrated_gradients_compatible",
+        "perturbation_stability"
+      ],
+      "dataset_id": "controlled_geometric_images_v1",
+      "fit_seconds": 0.9973787250000044,
+      "metrics": {
+        "accuracy": 0.921,
+        "auroc": 0.9922959691838767,
+        "balanced_accuracy": 0.9210056840227361,
+        "critical_errors": 76,
+        "expected_calibration_error": 0.10830777476727961,
+        "f1": 0.9210789210789211,
+        "n_objects": 2000,
+        "precision": 0.9183266932270916,
+        "recall": 0.9238476953907816,
+        "subgroup_accuracy": 0.0,
+        "subgroup_auroc": 0.0,
+        "subgroup_balanced_accuracy": 0.0,
+        "subgroup_critical_errors": 76,
+        "subgroup_expected_calibration_error": 0.828731405584118,
+        "subgroup_f1": 0.0,
+        "subgroup_n_objects": 158,
+        "subgroup_precision": 0.0,
+        "subgroup_recall": 0.0
+      },
+      "modality": "image",
+      "model": "pytorch_tiny_cnn",
+      "n_objects": 10000,
+      "onnx_export": "/home/runner/work/fuzzy-xai-operator/fuzzy-xai-operator/release_evidence/full_empirical_validation/optional_runtime/controlled_image_cnn.onnx",
+      "onnx_parity_pass": true,
+      "onnx_probability_max_abs_error": 1.1920928955078125e-07,
+      "predict_seconds": 0.025515939999991133,
+      "status": "measured"
+    },
+    {
+      "channels": [
+        "token_masking",
+        "sequence_sensitivity",
+        "paraphrase_stability_protocol"
+      ],
+      "dataset_id": "controlled_geological_notes_v1",
+      "fit_seconds": 0.9126477780000073,
+      "metrics": {
+        "accuracy": 1.0,
+        "auroc": 1.0,
+        "balanced_accuracy": 1.0,
+        "critical_errors": 0,
+        "expected_calibration_error": 0.0002692815007394507,
+        "f1": 1.0,
+        "n_objects": 2000,
+        "precision": 1.0,
+        "recall": 1.0,
+        "subgroup_accuracy": 1.0,
+        "subgroup_auroc": 1.0,
+        "subgroup_balanced_accuracy": 1.0,
+        "subgroup_critical_errors": 0,
+        "subgroup_expected_calibration_error": 0.0008098104855410316,
+        "subgroup_f1": 1.0,
+        "subgroup_n_objects": 129,
+        "subgroup_precision": 1.0,
+        "subgroup_recall": 1.0
+      },
+      "modality": "text",
+      "model": "pytorch_gru",
+      "n_objects": 10000,
+      "predict_seconds": 0.010292500999980803,
+      "status": "measured"
+    },
+    {
+      "channels": [
+        "window_ablation",
+        "shift_stability",
+        "state_history"
+      ],
+      "dataset_id": "controlled_sensor_windows_v1",
+      "fit_seconds": 2.357468824999984,
+      "metrics": {
+        "accuracy": 1.0,
+        "auroc": 1.0,
+        "balanced_accuracy": 1.0,
+        "critical_errors": 0,
+        "expected_calibration_error": 0.0003374971053927034,
+        "f1": 1.0,
+        "n_objects": 2000,
+        "precision": 1.0,
+        "recall": 1.0,
+        "subgroup_accuracy": 1.0,
+        "subgroup_auroc": 1.0,
+        "subgroup_balanced_accuracy": 1.0,
+        "subgroup_critical_errors": 0,
+        "subgroup_expected_calibration_error": 0.00041732057669509353,
+        "subgroup_f1": 1.0,
+        "subgroup_n_objects": 133,
+        "subgroup_precision": 1.0,
+        "subgroup_recall": 1.0
+      },
+      "modality": "time_series",
+      "model": "pytorch_gru",
+      "n_objects": 10000,
+      "predict_seconds": 0.03779654000001642,
+      "status": "measured"
+    }
+  ],
+  "runtime": {
+    "onnxruntime": "1.20.1",
+    "python": "3.11.15",
+    "torch": "2.5.1+cu124"
+  },
+  "schema_version": "1.0"
+}

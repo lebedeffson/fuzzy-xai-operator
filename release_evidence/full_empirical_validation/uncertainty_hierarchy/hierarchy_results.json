@@ -1,0 +1,56 @@
+{
+  "adaptive_distribution": {
+    "F0": 1098,
+    "FML": 5522,
+    "Fint": 1140,
+    "NAS": 2240,
+    "diagnostic_refusal": 0
+  },
+  "adaptive_fml_fraction": 0.5522,
+  "claim_block_reason": null,
+  "experiment_id": "E7",
+  "forced_all_representations_object_count": 20,
+  "n_objects": 10000,
+  "non_inferior_to_fml": true,
+  "non_inferiority_epsilon": 0.01,
+  "practical_hierarchy_claim_allowed": true,
+  "profile_source": "controlled_known_uncertainty_injection",
+  "rows": [
+    {
+      "coverage": 0.10980000000000001,
+      "mean_complexity": 1.0,
+      "mean_risk": 0.8923960000000256,
+      "mode": "always_F0",
+      "undercoverage": 0.8902
+    },
+    {
+      "coverage": 0.2238,
+      "mean_complexity": 2.0,
+      "mean_risk": 0.7806760000000444,
+      "mode": "always_Fint",
+      "undercoverage": 0.7762
+    },
+    {
+      "coverage": 0.4478,
+      "mean_complexity": 4.0,
+      "mean_risk": 0.5611560000000468,
+      "mode": "always_NAS",
+      "undercoverage": 0.5522
+    },
+    {
+      "coverage": 1.0,
+      "mean_complexity": 8.0,
+      "mean_risk": 0.020000000000002852,
+      "mode": "always_FML",
+      "undercoverage": 0.0
+    },
+    {
+      "coverage": 1.0,
+      "mean_complexity": 5.6514,
+      "mean_risk": 0.020000000000002852,
+      "mode": "adaptive",
+      "undercoverage": 0.0
+    }
+  ],
+  "schema_version": "1.0"
+}

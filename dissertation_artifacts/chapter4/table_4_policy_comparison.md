@@ -1,0 +1,25 @@
+# Decision-policy comparison
+
+| cost_scenario | policy | automatic_coverage | critical_wrong_automatic | false_blocks | mean_cost |
+|---|---|---|---|---|---|
+| critical_errors_expensive | P1 | 0.740500 | 0 | 0 | 0.872000 |
+| critical_errors_expensive | P2 | 0.404500 | 0 | 0 | 0.960500 |
+| critical_errors_expensive | P3 | 0.177500 | 0 | 0 | 0.995000 |
+| critical_errors_expensive | P4 | 0.492000 | 0 | 18 | 0.978500 |
+| critical_errors_expensive | P5 | 0.492000 | 0 | 18 | 0.978500 |
+| critical_errors_expensive | P6 | 0.000000 | 0 | 0 | 1.000000 |
+| critical_errors_expensive | P7 | 1.000000 | 0 | 0 | 1.167500 |
+| balanced | P1 | 0.740500 | 0 | 0 | 0.879250 |
+| balanced | P2 | 0.404500 | 0 | 0 | 1.185250 |
+| balanced | P3 | 0.177500 | 0 | 0 | 1.371750 |
+| balanced | P4 | 0.492000 | 0 | 18 | 1.139500 |
+| balanced | P5 | 0.492000 | 0 | 18 | 1.139500 |
+| balanced | P6 | 0.000000 | 0 | 0 | 1.500000 |
+| balanced | P7 | 1.000000 | 0 | 0 | 0.934000 |
+| manual_review_expensive | P1 | 0.740500 | 0 | 0 | 1.787500 |
+| manual_review_expensive | P2 | 0.404500 | 0 | 0 | 3.269500 |
+| manual_review_expensive | P3 | 0.177500 | 0 | 0 | 4.250500 |
+| manual_review_expensive | P4 | 0.492000 | 0 | 18 | 2.887000 |
+| manual_review_expensive | P5 | 0.492000 | 0 | 18 | 2.887000 |
+| manual_review_expensive | P6 | 0.000000 | 0 | 0 | 5.000000 |
+| manual_review_expensive | P7 | 1.000000 | 0 | 0 | 0.934000 |
