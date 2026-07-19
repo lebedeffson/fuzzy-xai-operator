@@ -1,12 +1,12 @@
-FuzzyXAI Human Explanation Layer release verification
+FuzzyXAI Human Explanation Quality Gate release verification
 Date: 2026-07-19
 Branch: feat/human-explanation-layer
-Version: 1.2.0rc1
+Version: 1.2.0rc2
 Previous green baseline: 884409f4cb1b
-Implementation commit: 8b4a865c93b9
-Release-status commit: 0a9f5a2a6904
+Implementation commit: 97e25e3990f4
+Public implementation run: 29693479788
 
-PASS: full local Python 3.14 regression - 308 passed
+PASS: full local Python 3.14 regression - 311 passed
 PASS: public-contract Ruff gate
 PASS: strict MyPy contract gate
 PASS: framework release check
@@ -17,20 +17,28 @@ PASS: HumanExplanation schema and typed result API
 PASS: domain-user limit - at most 3 reasons and 2 concerns
 PASS: every visible card references claims and evidence
 PASS: domain-user technical-term exclusion
+PASS: reason specificity - subject + direction + comparison
+PASS: direct feature effects outrank similar cases
+PASS: vague domain-user phrase exclusion
+PASS: reliability support/limitation/missing-evidence structure
+PASS: incomplete counterfactual exclusion
+PASS: complete counterfactual before/after contract
+PASS: undefined class meaning - insufficient_domain_language
 PASS: object 85 human explanation - observed epoch-16 transition
 PASS: medical research similarity semantics - mask IoU is not diagnosis probability
 PASS: cross-model controlled explanations
-PASS: wheel and sdist build - 1.2.0rc1
-PASS: isolated installed-wheel explain_for smoke
+PASS: wheel and sdist build - 1.2.0rc2
+PASS: unpacked wheel payload import against validated dependency environment
 PASS: wheel contains Human Explanation runtime and JSON schema
 PASS: Chapter 4 operator matrix - 30/30
 PASS: Chapter 4 figures - 12/12
 PASS: Chapter 4 embedded human explanations - 4/4
-PASS: deterministic Chapter 4 ZIP - SHA256 6f6b5a444bd492734a74e8fdfcbbf1580b4e97cbc3b952f23a9cc63a00178786
+PASS: Chapter 4 comprehension pilot assets - 3/3
+PASS: deterministic Chapter 4 ZIP - SHA256 e5cfe3ba290ba7966e74a4dddb28ead16a9a8846eb9d184d518facb2a499b965
 PASS: public GitHub Actions Python 3.11
 PASS: public GitHub Actions Python 3.12
 PASS: public GitHub Actions Octave JSON/dashboard smoke
-Public implementation run: https://github.com/lebedeffson/fuzzy-xai-operator/actions/runs/29691191720
+Public implementation run: https://github.com/lebedeffson/fuzzy-xai-operator/actions/runs/29693479788
 
 Warnings in the full local suite are third-party sklearn feature-name and SHAP/Matplotlib deprecation warnings only.
 

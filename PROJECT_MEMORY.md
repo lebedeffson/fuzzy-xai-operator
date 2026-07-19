@@ -3,9 +3,9 @@
 - Date: 2026-07-19
 - Branch: `feat/human-explanation-layer`
 - Previous green baseline: `884409f4cb1b`
-- Human Explanation implementation: `8b4a865c93b9`
-- Candidate version: `1.2.0rc1`
-- Public CI run: `29691191720`
+- Human Explanation Quality Gate implementation: `97e25e3990f4`
+- Candidate version: `1.2.0rc2`
+- Public CI run: `29693479788`
 - Release tag: not created
 
 ## Current Focus
@@ -41,24 +41,32 @@ result.audit()
 - similar-case support evaluated against the current prediction; counterexamples do not enter the support block;
 - image-mask similarity described as geometric overlap, never diagnosis probability;
 - object 85 human explanation reports the observed epoch-16 transition and hidden rare-subtype degradation;
+- every first-level reason names a subject, effect direction, and comparison;
+- reliability separates concrete support, limitations, and missing evidence;
+- incomplete counterfactuals remain audit evidence and are not exposed to domain users;
+- direct feature effects outrank native rules, concepts, similar cases, and surrogate patterns;
+- undefined class semantics produce `insufficient_domain_language`, not a translated technical code;
+- the object 85 fixture exposes computed feature effects, an 18 percentage-point rare-group loss, and a complete class-changing intervention;
+- the medical fixture states that its research group lacks medical meaning and cannot be interpreted as a diagnosis;
+- the executable comprehension scorer preserves `planned_not_run` until at least six independent participants provide both comparison conditions;
 - `HumanExplanation` JSON schema included in the wheel;
 - operator manifest remains `30/30` and maps the human layer to tests and golden evidence.
 - Chapter 4 evidence contains `30/30` operator rows, `12/12` figures, and `4/4` embedded human-explanation files.
 
 ## Validation
 
-- local Python 3.14 regression: `308 passed`;
+- local Python 3.14 regression: `311 passed`;
 - strict Ruff gate: PASS;
 - strict MyPy gate: PASS;
 - `make framework-release-check`: PASS, release subset `26 passed`;
 - operator manifest: `30/30`, PASS;
 - deterministic golden rebuild and checksum comparison: PASS;
 - Human Explanation verifier: object 85 cards, medical similarity semantics, cross-model evidence, PASS;
-- wheel/sdist build as `1.2.0rc1`: PASS;
+- wheel/sdist build as `1.2.0rc2`: PASS;
 - isolated wheel import and `explain_for()` smoke: PASS;
 - wheel content check includes runtime, human layer, and JSON schema: PASS;
-- deterministic Chapter 4 evidence ZIP: PASS, SHA256 `6f6b5a444bd492734a74e8fdfcbbf1580b4e97cbc3b952f23a9cc63a00178786`;
-- public GitHub Actions run `29691191720`: Python 3.11, Python 3.12, and Octave PASS for `8b4a865c93b9`;
+- deterministic Chapter 4 evidence ZIP: PASS, SHA256 `e5cfe3ba290ba7966e74a4dddb28ead16a9a8846eb9d184d518facb2a499b965`;
+- public GitHub Actions run `29693479788`: Python 3.11, Python 3.12, and Octave PASS for `97e25e3990f4`;
 - comprehension pilot: `planned_not_run`.
 
 ## Claim Boundary
@@ -77,7 +85,7 @@ result.audit()
 - Keep the generated website quarantined.
 - Build the analysis ZIP only from the committed Git index with `python scripts/build_framework_release.py`.
 - Never package the dirty working tree.
-- Do not create `v1.2.0-rc1` until the documented comprehension pilot passes and the release is approved for tagging.
+- Do not create `v1.2.0-rc2` until the documented comprehension pilot passes and the release is approved for tagging.
 
 ## Next Step
 
