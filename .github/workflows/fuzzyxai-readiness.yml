@@ -11,6 +11,7 @@ on:
       - feat/human-explanation-layer
       - feat/empirical-validation-gate
       - feat/universal-model-integration
+      - feat/full-empirical-validation
   pull_request:
 
 jobs:

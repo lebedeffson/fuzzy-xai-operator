@@ -28,10 +28,13 @@ FORBIDDEN_PARTS = {
 FORBIDDEN_SUFFIXES = {".docx", ".pdf", ".pyc", ".pyo", ".zip"}
 ALLOWED_ROOTS = {
     ".github",
+    "configs",
+    "data_manifests",
     "docs",
     "examples",
     "framework",
     "scripts",
+    "study",
     "tests",
 }
 ALLOWED_EXACT = {
@@ -39,15 +42,18 @@ ALLOWED_EXACT = {
     "CHANGELOG.md",
     "CITATION.cff",
     "CONTRIBUTING.md",
+    "Dockerfile",
     "LICENSE",
     "Makefile",
     "PROJECT_MEMORY.md",
     "README.md",
+    "docker-compose.yml",
     "RELEASE_NOTES.md",
     "RELEASE_STATUS.md",
     "TEST_REPORT.txt",
     "pyproject.toml",
     "requirements.txt",
+    "requirements.lock",
 }
 ALLOWED_PREFIXES = (
     "experiments/real_training_experiment/",
@@ -127,6 +133,19 @@ REQUIRED_PATHS = {
     "fuzzy-xai-operator/scripts/build_chapter4_final_candidate.py",
     "fuzzy-xai-operator/scripts/verify_chapter4_final_candidate.py",
     "fuzzy-xai-operator/release_evidence/chapter4_final_candidate/manifest_sha256.json",
+    "fuzzy-xai-operator/configs/full_empirical_validation.json",
+    "fuzzy-xai-operator/configs/calibration_grid.yaml",
+    "fuzzy-xai-operator/data_manifests/full_empirical_validation.json",
+    "fuzzy-xai-operator/framework/fuzzyxai/fuzzyxai/experiments/contracts.py",
+    "fuzzy-xai-operator/framework/fuzzyxai/fuzzyxai/experiments/protocols.py",
+    "fuzzy-xai-operator/framework/fuzzyxai/fuzzyxai/experiments/statistics.py",
+    "fuzzy-xai-operator/scripts/run_full_empirical_validation.py",
+    "fuzzy-xai-operator/scripts/run_optional_multimodal_models.py",
+    "fuzzy-xai-operator/scripts/verify_full_empirical_validation.py",
+    "fuzzy-xai-operator/scripts/reproduce_all.py",
+    "fuzzy-xai-operator/scripts/verify_reproduction.py",
+    "fuzzy-xai-operator/tests/test_full_empirical_contracts.py",
+    "fuzzy-xai-operator/study/expert_review/reviewer_form.md",
 }
 
 

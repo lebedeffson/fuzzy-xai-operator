@@ -17,6 +17,25 @@ python -m venv .venv
 .venv/bin/python -m pip install -e ".[dev]"
 ```
 
+## Empirical Validation
+
+Run the small one-thread protocol check locally:
+
+```bash
+make empirical-smoke
+```
+
+Run the full E1-E8 dissertation candidate in CI or an isolated container:
+
+```bash
+make reproduce-dissertation
+docker compose run --rm reproduce
+```
+
+Controlled 10,000-object datasets validate protocol behavior, not external-domain
+generalization. External comprehension and domain reviews remain release blockers
+until independent responses are available.
+
 ## Explain a model
 
 ```python
