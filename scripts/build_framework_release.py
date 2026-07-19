@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
+import shutil
 import subprocess
 import tempfile
 import zipfile
@@ -86,20 +88,27 @@ def validate_archive(path: Path) -> tuple[int, list[str]]:
 def main() -> None:
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     commit = run_git("rev-parse", "HEAD")
+    head_tree = run_git("rev-parse", "HEAD^{tree}")
+    index_tree = run_git("write-tree")
+    if index_tree != head_tree:
+        raise RuntimeError("release index differs from HEAD; commit staged changes before packaging")
     short_commit = commit[:12]
-    archive_path = OUTPUT_DIR / f"fuzzy-xai-operator-framework-{short_commit}.zip"
-    subprocess.run(
-        [
-            "git",
-            "archive",
-            "--format=zip",
-            "--prefix=fuzzy-xai-operator/",
-            f"--output={archive_path}",
-            "HEAD",
-        ],
-        cwd=ROOT,
-        check=True,
-    )
+    archive_path = OUTPUT_DIR / f"fuzzy-xai-operator-full-{short_commit}.zip"
+    with tempfile.TemporaryDirectory() as temp_dir:
+        export_root = Path(temp_dir) / "fuzzy-xai-operator"
+        export_root.mkdir()
+        subprocess.run(
+            ["git", "checkout-index", "--all", f"--prefix={export_root}{os.sep}"],
+            cwd=ROOT,
+            check=True,
+        )
+        # The historical website and editor state are deliberately outside the
+        # framework release, while tracked evidence remains available to tests.
+        shutil.rmtree(export_root / "site" / "dubnaxai", ignore_errors=True)
+        shutil.rmtree(export_root / ".vscode", ignore_errors=True)
+        with zipfile.ZipFile(archive_path, "w", compression=zipfile.ZIP_DEFLATED) as archive:
+            for source in sorted(path for path in export_root.rglob("*") if path.is_file()):
+                archive.write(source, source.relative_to(export_root.parent))
     file_count, _ = validate_archive(archive_path)
     archive_hash = sha256(archive_path)
     checksum_path = archive_path.with_suffix(".zip.sha256")
@@ -112,7 +121,7 @@ def main() -> None:
         "archive": archive_path.name,
         "sha256": archive_hash,
         "file_count": file_count,
-        "source": "git archive HEAD",
+        "source": "git checkout-index at HEAD; quarantined site and editor state pruned",
         "quarantined_site_included": False,
     }
     manifest_path = OUTPUT_DIR / "framework_release_manifest.json"
