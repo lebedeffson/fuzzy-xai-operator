@@ -5,8 +5,110 @@
     "level": "E3"
   },
   "comprehension_study": "planned_not_run",
+  "cross_model": {
+    "black_box_callable": {
+      "action": "review",
+      "adapter_id": "callable",
+      "capabilities": {
+        "checkpoints": false,
+        "embeddings": false,
+        "feature_importance": false,
+        "gradients": false,
+        "predict": true,
+        "predict_proba": false,
+        "rules": false,
+        "training_history": false
+      },
+      "explanation_level": "E3",
+      "graph_valid": true,
+      "missing_channels": [
+        "alignment",
+        "local_contributions",
+        "reduction",
+        "risk",
+        "rules",
+        "training_history"
+      ],
+      "native_channels": [
+        "prediction",
+        "call_trace",
+        "data_profile",
+        "class_concepts",
+        "similar_cases",
+        "counterfactuals"
+      ],
+      "surrogate_channels": []
+    },
+    "sklearn_linear": {
+      "action": "review",
+      "adapter_id": "sklearn",
+      "capabilities": {
+        "checkpoints": false,
+        "embeddings": false,
+        "feature_importance": true,
+        "gradients": false,
+        "predict": true,
+        "predict_proba": true,
+        "rules": true,
+        "training_history": false
+      },
+      "explanation_level": "E3",
+      "graph_valid": true,
+      "missing_channels": [
+        "alignment",
+        "reduction",
+        "risk",
+        "training_history"
+      ],
+      "native_channels": [
+        "prediction",
+        "call_trace",
+        "data_profile",
+        "local_contributions",
+        "class_concepts",
+        "similar_cases",
+        "counterfactuals"
+      ],
+      "surrogate_channels": [
+        "rules"
+      ]
+    },
+    "tree_native_paths": {
+      "action": "review",
+      "adapter_id": "sklearn",
+      "capabilities": {
+        "checkpoints": false,
+        "embeddings": false,
+        "feature_importance": true,
+        "gradients": false,
+        "predict": true,
+        "predict_proba": true,
+        "rules": true,
+        "training_history": false
+      },
+      "explanation_level": "E3",
+      "graph_valid": true,
+      "missing_channels": [
+        "alignment",
+        "reduction",
+        "risk",
+        "training_history"
+      ],
+      "native_channels": [
+        "prediction",
+        "call_trace",
+        "data_profile",
+        "local_contributions",
+        "rules",
+        "class_concepts",
+        "similar_cases",
+        "counterfactuals"
+      ],
+      "surrogate_channels": []
+    }
+  },
   "medical_research": {
-    "claim_count": 2,
+    "claim_count": 3,
     "status": "controlled_fixture_research_only"
   },
   "object_85": {

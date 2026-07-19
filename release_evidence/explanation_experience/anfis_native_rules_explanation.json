@@ -5,278 +5,356 @@
       "claim_id": "C-001",
       "claim_type": "prediction",
       "comparison_baseline": null,
+      "confidence_interval": null,
       "counter_evidence_refs": [],
+      "effect": "neutral",
       "evidence_refs": [
         "prediction"
       ],
+      "evidence_status": "supported",
       "limitations": [],
       "metric_name": "model_score",
       "metric_unit": null,
       "metric_value": 0.82,
+      "native": null,
       "scope": "object",
+      "severity": "info",
       "short_statement": "Прогноз: [1]",
       "statement": "Модель сформировала прогноз [1] с максимальным модельным баллом 0.820.",
       "status": "supported",
       "strength": 0.82,
-      "subject_id": "[1]"
+      "subject_id": "[1]",
+      "surrogate": null
     },
     {
       "applicability": null,
       "claim_id": "C-002",
       "claim_type": "data_quality",
       "comparison_baseline": null,
+      "confidence_interval": null,
       "counter_evidence_refs": [],
+      "effect": "favorable",
       "evidence_refs": [
         "data:anfis-fixture-1"
       ],
+      "evidence_status": "supported",
       "limitations": [],
       "metric_name": "data_quality",
       "metric_unit": null,
       "metric_value": 1.0,
+      "native": null,
       "scope": "object",
+      "severity": "info",
       "short_statement": "Качество данных: 1.000",
       "statement": "Качество доступных входных данных объекта anfis-fixture-1 равно 1.000.",
       "status": "supported",
       "strength": 1.0,
-      "subject_id": "anfis-fixture-1"
+      "subject_id": "anfis-fixture-1",
+      "surrogate": null
     },
     {
       "applicability": null,
       "claim_id": "C-003",
       "claim_type": "model_rule",
       "comparison_baseline": null,
+      "confidence_interval": null,
       "counter_evidence_refs": [],
+      "effect": "favorable",
       "evidence_refs": [
         "rule:R31"
       ],
+      "evidence_status": "supported",
       "limitations": [],
       "metric_name": "rule_importance",
       "metric_unit": null,
       "metric_value": 0.84,
+      "native": true,
       "scope": "model",
+      "severity": "info",
       "short_statement": "R31: fracture_density is high and distance is low -> 1",
       "statement": "Правило R31 является нативным: fracture_density is high and distance is low -> 1.",
       "status": "supported",
       "strength": 0.84,
-      "subject_id": "R31"
+      "subject_id": "R31",
+      "surrogate": false
     },
     {
       "applicability": null,
       "claim_id": "C-004",
       "claim_type": "model_rule",
       "comparison_baseline": null,
+      "confidence_interval": null,
       "counter_evidence_refs": [],
+      "effect": "favorable",
       "evidence_refs": [
         "rule:R12"
       ],
+      "evidence_status": "supported",
       "limitations": [],
       "metric_name": "rule_importance",
       "metric_unit": null,
       "metric_value": 0.67,
+      "native": true,
       "scope": "model",
+      "severity": "info",
       "short_statement": "R12: water_saturation is high -> 1",
       "statement": "Правило R12 является нативным: water_saturation is high -> 1.",
       "status": "supported",
       "strength": 0.67,
-      "subject_id": "R12"
+      "subject_id": "R12",
+      "surrogate": false
     },
     {
       "applicability": null,
       "claim_id": "C-005",
       "claim_type": "class_concept",
       "comparison_baseline": null,
+      "confidence_interval": null,
       "counter_evidence_refs": [],
+      "effect": "favorable",
       "evidence_refs": [
         "concept:0"
       ],
+      "evidence_status": "supported",
       "limitations": [
         "primary-rule coverage is unavailable"
       ],
       "metric_name": null,
       "metric_unit": null,
       "metric_value": null,
+      "native": null,
       "scope": "class",
+      "severity": "info",
       "short_statement": "Концепт класса 0",
       "statement": "Class 0: no supported primary rules; coverage unavailable.",
       "status": "supported",
       "strength": null,
-      "subject_id": "0"
+      "subject_id": "0",
+      "surrogate": null
     },
     {
       "applicability": null,
       "claim_id": "C-006",
       "claim_type": "class_concept",
       "comparison_baseline": null,
+      "confidence_interval": null,
       "counter_evidence_refs": [],
+      "effect": "favorable",
       "evidence_refs": [
         "concept:1"
       ],
+      "evidence_status": "supported",
       "limitations": [
         "coverage is a lower bound because overlap between rules is unavailable"
       ],
       "metric_name": "primary_rule_coverage",
       "metric_unit": null,
       "metric_value": 0.46,
+      "native": null,
       "scope": "class",
+      "severity": "info",
       "short_statement": "Концепт класса 1",
       "statement": "Class 1: fracture_density is high and distance is low -> 1; water_saturation is high -> 1; supported primary-rule coverage 46.0%.",
       "status": "supported",
       "strength": null,
-      "subject_id": "1"
+      "subject_id": "1",
+      "surrogate": null
     },
     {
       "applicability": null,
       "claim_id": "C-007",
       "claim_type": "similar_case",
       "comparison_baseline": "normalized tabular feature vector",
+      "confidence_interval": null,
       "counter_evidence_refs": [],
+      "effect": "mixed",
       "evidence_refs": [
         "similar:anfis-fixture-1:reference_3"
       ],
+      "evidence_status": "supported",
       "limitations": [
         "feature distance does not establish causal or clinical similarity"
       ],
       "metric_name": "similarity",
       "metric_unit": null,
       "metric_value": 0.871474,
+      "native": null,
       "scope": "object",
+      "severity": "info",
       "short_statement": "Похожий случай reference_3: 0.871",
       "statement": "Объект reference_3 имеет сходство 0.871 с объектом anfis-fixture-1; использован метод robust_standardized_euclidean для представления «normalized tabular feature vector».",
       "status": "supported",
       "strength": 0.871474,
-      "subject_id": "anfis-fixture-1"
+      "subject_id": "anfis-fixture-1",
+      "surrogate": null
     },
     {
       "applicability": null,
       "claim_id": "C-008",
       "claim_type": "similar_case",
       "comparison_baseline": "normalized tabular feature vector",
+      "confidence_interval": null,
       "counter_evidence_refs": [],
+      "effect": "mixed",
       "evidence_refs": [
         "similar:anfis-fixture-1:reference_2"
       ],
+      "evidence_status": "supported",
       "limitations": [
         "feature distance does not establish causal or clinical similarity"
       ],
       "metric_name": "similarity",
       "metric_unit": null,
       "metric_value": 0.721808,
+      "native": null,
       "scope": "object",
+      "severity": "info",
       "short_statement": "Похожий случай reference_2: 0.722",
       "statement": "Объект reference_2 имеет сходство 0.722 с объектом anfis-fixture-1; использован метод robust_standardized_euclidean для представления «normalized tabular feature vector».",
       "status": "supported",
       "strength": 0.721808,
-      "subject_id": "anfis-fixture-1"
+      "subject_id": "anfis-fixture-1",
+      "surrogate": null
     },
     {
       "applicability": null,
       "claim_id": "C-009",
       "claim_type": "similar_case",
       "comparison_baseline": "normalized tabular feature vector",
+      "confidence_interval": null,
       "counter_evidence_refs": [],
+      "effect": "mixed",
       "evidence_refs": [
         "similar:anfis-fixture-1:reference_1"
       ],
+      "evidence_status": "supported",
       "limitations": [
         "feature distance does not establish causal or clinical similarity"
       ],
       "metric_name": "similarity",
       "metric_unit": null,
       "metric_value": 0.250936,
+      "native": null,
       "scope": "object",
+      "severity": "info",
       "short_statement": "Похожий случай reference_1: 0.251",
       "statement": "Объект reference_1 имеет сходство 0.251 с объектом anfis-fixture-1; использован метод robust_standardized_euclidean для представления «normalized tabular feature vector».",
       "status": "supported",
       "strength": 0.250936,
-      "subject_id": "anfis-fixture-1"
+      "subject_id": "anfis-fixture-1",
+      "surrogate": null
     },
     {
       "applicability": null,
       "claim_id": "C-010",
       "claim_type": "diagnostic",
       "comparison_baseline": null,
+      "confidence_interval": null,
       "counter_evidence_refs": [],
+      "effect": "adverse",
       "evidence_refs": [
         "diagnostic:0"
       ],
+      "evidence_status": "insufficient_evidence",
       "limitations": [
         "Автоматическое принятие ограничено до устранения диагностики."
       ],
       "metric_name": null,
       "metric_unit": null,
       "metric_value": null,
+      "native": null,
       "scope": "model",
+      "severity": "warning",
       "short_statement": "alignment evidence was not supplied",
       "statement": "Диагностика: alignment evidence was not supplied.",
       "status": "insufficient_evidence",
       "strength": null,
-      "subject_id": "D_k_alignment_missing"
+      "subject_id": "D_k_alignment_missing",
+      "surrogate": null
     },
     {
       "applicability": null,
       "claim_id": "C-011",
       "claim_type": "diagnostic",
       "comparison_baseline": null,
+      "confidence_interval": null,
       "counter_evidence_refs": [],
+      "effect": "adverse",
       "evidence_refs": [
         "diagnostic:1"
       ],
+      "evidence_status": "insufficient_evidence",
       "limitations": [
         "Автоматическое принятие ограничено до устранения диагностики."
       ],
       "metric_name": null,
       "metric_unit": null,
       "metric_value": null,
+      "native": null,
       "scope": "model",
+      "severity": "warning",
       "short_statement": "reduction evidence was not supplied",
       "statement": "Диагностика: reduction evidence was not supplied.",
       "status": "insufficient_evidence",
       "strength": null,
-      "subject_id": "D_k_reduction_missing"
+      "subject_id": "D_k_reduction_missing",
+      "surrogate": null
     },
     {
       "applicability": null,
       "claim_id": "C-012",
       "claim_type": "diagnostic",
       "comparison_baseline": null,
+      "confidence_interval": null,
       "counter_evidence_refs": [],
+      "effect": "adverse",
       "evidence_refs": [
         "diagnostic:2"
       ],
+      "evidence_status": "insufficient_evidence",
       "limitations": [
         "Автоматическое принятие ограничено до устранения диагностики."
       ],
       "metric_name": null,
       "metric_unit": null,
       "metric_value": null,
+      "native": null,
       "scope": "model",
+      "severity": "warning",
       "short_statement": "risk evidence was not supplied",
       "statement": "Диагностика: risk evidence was not supplied.",
       "status": "insufficient_evidence",
       "strength": null,
-      "subject_id": "D_k_risk_missing"
+      "subject_id": "D_k_risk_missing",
+      "surrogate": null
     },
     {
       "applicability": "review",
       "claim_id": "C-013",
       "claim_type": "recommended_action",
       "comparison_baseline": null,
+      "confidence_interval": null,
       "counter_evidence_refs": [],
+      "effect": "adverse",
       "evidence_refs": [
         "diagnostic:0",
         "diagnostic:1",
         "diagnostic:2"
       ],
+      "evidence_status": "supported",
       "limitations": [],
       "metric_name": null,
       "metric_unit": null,
       "metric_value": null,
+      "native": null,
       "scope": "object",
+      "severity": "warning",
       "short_statement": "Действие: review",
       "statement": "На основании доступных claims рекомендовано действие review.",
       "status": "supported",
       "strength": null,
-      "subject_id": "[1]"
+      "subject_id": "[1]",
+      "surrogate": null
     }
   ],
   "diagnostics": [
@@ -310,308 +388,373 @@
         "claim_id": "C-001",
         "claim_type": "prediction",
         "comparison_baseline": null,
+        "confidence_interval": null,
         "counter_evidence_refs": [],
+        "effect": "neutral",
         "evidence_refs": [
           "prediction"
         ],
+        "evidence_status": "supported",
         "limitations": [],
         "metric_name": "model_score",
         "metric_unit": null,
         "metric_value": 0.82,
+        "native": null,
         "scope": "object",
+        "severity": "info",
         "short_statement": "Прогноз: [1]",
         "statement": "Модель сформировала прогноз [1] с максимальным модельным баллом 0.820.",
-        "status": "supported",
         "strength": 0.82,
-        "subject_id": "[1]"
+        "subject_id": "[1]",
+        "surrogate": null
       },
       {
         "applicability": null,
         "claim_id": "C-002",
         "claim_type": "data_quality",
         "comparison_baseline": null,
+        "confidence_interval": null,
         "counter_evidence_refs": [],
+        "effect": "favorable",
         "evidence_refs": [
           "data:anfis-fixture-1"
         ],
+        "evidence_status": "supported",
         "limitations": [],
         "metric_name": "data_quality",
         "metric_unit": null,
         "metric_value": 1.0,
+        "native": null,
         "scope": "object",
+        "severity": "info",
         "short_statement": "Качество данных: 1.000",
         "statement": "Качество доступных входных данных объекта anfis-fixture-1 равно 1.000.",
-        "status": "supported",
         "strength": 1.0,
-        "subject_id": "anfis-fixture-1"
+        "subject_id": "anfis-fixture-1",
+        "surrogate": null
       },
       {
         "applicability": null,
         "claim_id": "C-003",
         "claim_type": "model_rule",
         "comparison_baseline": null,
+        "confidence_interval": null,
         "counter_evidence_refs": [],
+        "effect": "favorable",
         "evidence_refs": [
           "rule:R31"
         ],
+        "evidence_status": "supported",
         "limitations": [],
         "metric_name": "rule_importance",
         "metric_unit": null,
         "metric_value": 0.84,
+        "native": true,
         "scope": "model",
+        "severity": "info",
         "short_statement": "R31: fracture_density is high and distance is low -> 1",
         "statement": "Правило R31 является нативным: fracture_density is high and distance is low -> 1.",
-        "status": "supported",
         "strength": 0.84,
-        "subject_id": "R31"
+        "subject_id": "R31",
+        "surrogate": false
       },
       {
         "applicability": null,
         "claim_id": "C-004",
         "claim_type": "model_rule",
         "comparison_baseline": null,
+        "confidence_interval": null,
         "counter_evidence_refs": [],
+        "effect": "favorable",
         "evidence_refs": [
           "rule:R12"
         ],
+        "evidence_status": "supported",
         "limitations": [],
         "metric_name": "rule_importance",
         "metric_unit": null,
         "metric_value": 0.67,
+        "native": true,
         "scope": "model",
+        "severity": "info",
         "short_statement": "R12: water_saturation is high -> 1",
         "statement": "Правило R12 является нативным: water_saturation is high -> 1.",
-        "status": "supported",
         "strength": 0.67,
-        "subject_id": "R12"
+        "subject_id": "R12",
+        "surrogate": false
       },
       {
         "applicability": null,
         "claim_id": "C-005",
         "claim_type": "class_concept",
         "comparison_baseline": null,
+        "confidence_interval": null,
         "counter_evidence_refs": [],
+        "effect": "favorable",
         "evidence_refs": [
           "concept:0"
         ],
+        "evidence_status": "supported",
         "limitations": [
           "primary-rule coverage is unavailable"
         ],
         "metric_name": null,
         "metric_unit": null,
         "metric_value": null,
+        "native": null,
         "scope": "class",
+        "severity": "info",
         "short_statement": "Концепт класса 0",
         "statement": "Class 0: no supported primary rules; coverage unavailable.",
-        "status": "supported",
         "strength": null,
-        "subject_id": "0"
+        "subject_id": "0",
+        "surrogate": null
       },
       {
         "applicability": null,
         "claim_id": "C-006",
         "claim_type": "class_concept",
         "comparison_baseline": null,
+        "confidence_interval": null,
         "counter_evidence_refs": [],
+        "effect": "favorable",
         "evidence_refs": [
           "concept:1"
         ],
+        "evidence_status": "supported",
         "limitations": [
           "coverage is a lower bound because overlap between rules is unavailable"
         ],
         "metric_name": "primary_rule_coverage",
         "metric_unit": null,
         "metric_value": 0.46,
+        "native": null,
         "scope": "class",
+        "severity": "info",
         "short_statement": "Концепт класса 1",
         "statement": "Class 1: fracture_density is high and distance is low -> 1; water_saturation is high -> 1; supported primary-rule coverage 46.0%.",
-        "status": "supported",
         "strength": null,
-        "subject_id": "1"
+        "subject_id": "1",
+        "surrogate": null
       },
       {
         "applicability": null,
         "claim_id": "C-007",
         "claim_type": "similar_case",
         "comparison_baseline": "normalized tabular feature vector",
+        "confidence_interval": null,
         "counter_evidence_refs": [],
+        "effect": "mixed",
         "evidence_refs": [
           "similar:anfis-fixture-1:reference_3"
         ],
+        "evidence_status": "supported",
         "limitations": [
           "feature distance does not establish causal or clinical similarity"
         ],
         "metric_name": "similarity",
         "metric_unit": null,
         "metric_value": 0.871474,
+        "native": null,
         "scope": "object",
+        "severity": "info",
         "short_statement": "Похожий случай reference_3: 0.871",
         "statement": "Объект reference_3 имеет сходство 0.871 с объектом anfis-fixture-1; использован метод robust_standardized_euclidean для представления «normalized tabular feature vector».",
-        "status": "supported",
         "strength": 0.871474,
-        "subject_id": "anfis-fixture-1"
+        "subject_id": "anfis-fixture-1",
+        "surrogate": null
       },
       {
         "applicability": null,
         "claim_id": "C-008",
         "claim_type": "similar_case",
         "comparison_baseline": "normalized tabular feature vector",
+        "confidence_interval": null,
         "counter_evidence_refs": [],
+        "effect": "mixed",
         "evidence_refs": [
           "similar:anfis-fixture-1:reference_2"
         ],
+        "evidence_status": "supported",
         "limitations": [
           "feature distance does not establish causal or clinical similarity"
         ],
         "metric_name": "similarity",
         "metric_unit": null,
         "metric_value": 0.721808,
+        "native": null,
         "scope": "object",
+        "severity": "info",
         "short_statement": "Похожий случай reference_2: 0.722",
         "statement": "Объект reference_2 имеет сходство 0.722 с объектом anfis-fixture-1; использован метод robust_standardized_euclidean для представления «normalized tabular feature vector».",
-        "status": "supported",
         "strength": 0.721808,
-        "subject_id": "anfis-fixture-1"
+        "subject_id": "anfis-fixture-1",
+        "surrogate": null
       },
       {
         "applicability": null,
         "claim_id": "C-009",
         "claim_type": "similar_case",
         "comparison_baseline": "normalized tabular feature vector",
+        "confidence_interval": null,
         "counter_evidence_refs": [],
+        "effect": "mixed",
         "evidence_refs": [
           "similar:anfis-fixture-1:reference_1"
         ],
+        "evidence_status": "supported",
         "limitations": [
           "feature distance does not establish causal or clinical similarity"
         ],
         "metric_name": "similarity",
         "metric_unit": null,
         "metric_value": 0.250936,
+        "native": null,
         "scope": "object",
+        "severity": "info",
         "short_statement": "Похожий случай reference_1: 0.251",
         "statement": "Объект reference_1 имеет сходство 0.251 с объектом anfis-fixture-1; использован метод robust_standardized_euclidean для представления «normalized tabular feature vector».",
-        "status": "supported",
         "strength": 0.250936,
-        "subject_id": "anfis-fixture-1"
+        "subject_id": "anfis-fixture-1",
+        "surrogate": null
       },
       {
         "applicability": null,
         "claim_id": "C-010",
         "claim_type": "diagnostic",
         "comparison_baseline": null,
+        "confidence_interval": null,
         "counter_evidence_refs": [],
+        "effect": "adverse",
         "evidence_refs": [
           "diagnostic:0"
         ],
+        "evidence_status": "insufficient_evidence",
         "limitations": [
           "Автоматическое принятие ограничено до устранения диагностики."
         ],
         "metric_name": null,
         "metric_unit": null,
         "metric_value": null,
+        "native": null,
         "scope": "model",
+        "severity": "warning",
         "short_statement": "alignment evidence was not supplied",
         "statement": "Диагностика: alignment evidence was not supplied.",
-        "status": "insufficient_evidence",
         "strength": null,
-        "subject_id": "D_k_alignment_missing"
+        "subject_id": "D_k_alignment_missing",
+        "surrogate": null
       },
       {
         "applicability": null,
         "claim_id": "C-011",
         "claim_type": "diagnostic",
         "comparison_baseline": null,
+        "confidence_interval": null,
         "counter_evidence_refs": [],
+        "effect": "adverse",
         "evidence_refs": [
           "diagnostic:1"
         ],
+        "evidence_status": "insufficient_evidence",
         "limitations": [
           "Автоматическое принятие ограничено до устранения диагностики."
         ],
         "metric_name": null,
         "metric_unit": null,
         "metric_value": null,
+        "native": null,
         "scope": "model",
+        "severity": "warning",
         "short_statement": "reduction evidence was not supplied",
         "statement": "Диагностика: reduction evidence was not supplied.",
-        "status": "insufficient_evidence",
         "strength": null,
-        "subject_id": "D_k_reduction_missing"
+        "subject_id": "D_k_reduction_missing",
+        "surrogate": null
       },
       {
         "applicability": null,
         "claim_id": "C-012",
         "claim_type": "diagnostic",
         "comparison_baseline": null,
+        "confidence_interval": null,
         "counter_evidence_refs": [],
+        "effect": "adverse",
         "evidence_refs": [
           "diagnostic:2"
         ],
+        "evidence_status": "insufficient_evidence",
         "limitations": [
           "Автоматическое принятие ограничено до устранения диагностики."
         ],
         "metric_name": null,
         "metric_unit": null,
         "metric_value": null,
+        "native": null,
         "scope": "model",
+        "severity": "warning",
         "short_statement": "risk evidence was not supplied",
         "statement": "Диагностика: risk evidence was not supplied.",
-        "status": "insufficient_evidence",
         "strength": null,
-        "subject_id": "D_k_risk_missing"
+        "subject_id": "D_k_risk_missing",
+        "surrogate": null
       },
       {
         "applicability": "review",
         "claim_id": "C-013",
         "claim_type": "recommended_action",
         "comparison_baseline": null,
+        "confidence_interval": null,
         "counter_evidence_refs": [],
+        "effect": "adverse",
         "evidence_refs": [
           "diagnostic:0",
           "diagnostic:1",
           "diagnostic:2"
         ],
+        "evidence_status": "supported",
         "limitations": [],
         "metric_name": null,
         "metric_unit": null,
         "metric_value": null,
+        "native": null,
         "scope": "object",
+        "severity": "warning",
         "short_statement": "Действие: review",
         "statement": "На основании доступных claims рекомендовано действие review.",
-        "status": "supported",
         "strength": null,
-        "subject_id": "[1]"
+        "subject_id": "[1]",
+        "surrogate": null
       }
     ],
     "edges": [
       {
         "evidence_refs": [],
-        "relation": "supports",
+        "relation": "derived_from",
         "source": "rule:R31",
         "target": "concept:1"
       },
       {
         "evidence_refs": [],
-        "relation": "supports",
+        "relation": "derived_from",
         "source": "rule:R12",
         "target": "concept:1"
       },
       {
         "evidence_refs": [],
-        "relation": "compared_with",
+        "relation": "derived_from",
         "source": "data:anfis-fixture-1",
         "target": "similar:anfis-fixture-1:reference_3"
       },
       {
         "evidence_refs": [],
-        "relation": "compared_with",
+        "relation": "derived_from",
         "source": "data:anfis-fixture-1",
         "target": "similar:anfis-fixture-1:reference_2"
       },
       {
         "evidence_refs": [],
-        "relation": "compared_with",
+        "relation": "derived_from",
         "source": "data:anfis-fixture-1",
         "target": "similar:anfis-fixture-1:reference_1"
       },
@@ -619,7 +762,7 @@
         "evidence_refs": [
           "robust_median_mad_profile"
         ],
-        "relation": "supported_by",
+        "relation": "derived_from",
         "source": "data:anfis-fixture-1",
         "target": "prediction"
       },
@@ -627,7 +770,7 @@
         "evidence_refs": [
           "adapter.extract_rules"
         ],
-        "relation": "supported_by",
+        "relation": "derived_from",
         "source": "rule:R31",
         "target": "prediction"
       },
@@ -635,37 +778,37 @@
         "evidence_refs": [
           "adapter.extract_rules"
         ],
-        "relation": "supported_by",
+        "relation": "derived_from",
         "source": "rule:R12",
         "target": "prediction"
       },
       {
         "evidence_refs": [],
-        "relation": "supported_by",
+        "relation": "derived_from",
         "source": "concept:0",
         "target": "prediction"
       },
       {
         "evidence_refs": [],
-        "relation": "supported_by",
+        "relation": "derived_from",
         "source": "concept:1",
         "target": "prediction"
       },
       {
         "evidence_refs": [],
-        "relation": "supported_by",
+        "relation": "derived_from",
         "source": "similar:anfis-fixture-1:reference_3",
         "target": "prediction"
       },
       {
         "evidence_refs": [],
-        "relation": "supported_by",
+        "relation": "derived_from",
         "source": "similar:anfis-fixture-1:reference_2",
         "target": "prediction"
       },
       {
         "evidence_refs": [],
-        "relation": "supported_by",
+        "relation": "derived_from",
         "source": "similar:anfis-fixture-1:reference_1",
         "target": "prediction"
       },
@@ -827,7 +970,7 @@
       },
       {
         "evidence_refs": [],
-        "relation": "leads_to",
+        "relation": "recommends",
         "source": "prediction",
         "target": "action"
       },
@@ -922,6 +1065,8 @@
         "node_id": "rule:R31",
         "node_type": "rule",
         "payload": {
+          "ablation_baseline": {},
+          "ablation_without_rule": {},
           "activation": 0.71,
           "antecedents": [
             "fracture_density is high",
@@ -959,6 +1104,8 @@
         "node_id": "rule:R12",
         "node_type": "rule",
         "payload": {
+          "ablation_baseline": {},
+          "ablation_without_rule": {},
           "activation": 0.82,
           "antecedents": [
             "water_saturation is high"
@@ -1069,6 +1216,7 @@
           "compared_representation": "normalized tabular feature vector",
           "coverage_score": 1.0,
           "different_features": [],
+          "is_counterexample": false,
           "limitations": [
             "feature distance does not establish causal or clinical similarity"
           ],
@@ -1077,6 +1225,7 @@
             "distance"
           ],
           "matched_regions": [],
+          "media_artifacts": {},
           "query_object_id": "anfis-fixture-1",
           "reference_label": 1,
           "reference_object_id": "reference_3",
@@ -1099,6 +1248,7 @@
           "compared_representation": "normalized tabular feature vector",
           "coverage_score": 1.0,
           "different_features": [],
+          "is_counterexample": false,
           "limitations": [
             "feature distance does not establish causal or clinical similarity"
           ],
@@ -1107,6 +1257,7 @@
             "distance"
           ],
           "matched_regions": [],
+          "media_artifacts": {},
           "query_object_id": "anfis-fixture-1",
           "reference_label": 1,
           "reference_object_id": "reference_2",
@@ -1132,11 +1283,13 @@
             "fracture_density",
             "distance"
           ],
+          "is_counterexample": false,
           "limitations": [
             "feature distance does not establish causal or clinical similarity"
           ],
           "matched_features": [],
           "matched_regions": [],
+          "media_artifacts": {},
           "query_object_id": "anfis-fixture-1",
           "reference_label": 0,
           "reference_object_id": "reference_1",
@@ -1210,6 +1363,15 @@
         }
       },
       {
+        "evidence_refs": [],
+        "label": "review",
+        "node_id": "action",
+        "node_type": "action",
+        "payload": {
+          "action": "review"
+        }
+      },
+      {
         "evidence_refs": [
           "prediction"
         ],
@@ -1221,20 +1383,26 @@
           "claim_id": "C-001",
           "claim_type": "prediction",
           "comparison_baseline": null,
+          "confidence_interval": null,
           "counter_evidence_refs": [],
+          "effect": "neutral",
           "evidence_refs": [
             "prediction"
           ],
+          "evidence_status": "supported",
           "limitations": [],
           "metric_name": "model_score",
           "metric_unit": null,
           "metric_value": 0.82,
+          "native": null,
           "scope": "object",
+          "severity": "info",
           "short_statement": "Прогноз: [1]",
           "statement": "Модель сформировала прогноз [1] с максимальным модельным баллом 0.820.",
           "status": "supported",
           "strength": 0.82,
-          "subject_id": "[1]"
+          "subject_id": "[1]",
+          "surrogate": null
         }
       },
       {
@@ -1249,20 +1417,26 @@
           "claim_id": "C-002",
           "claim_type": "data_quality",
           "comparison_baseline": null,
+          "confidence_interval": null,
           "counter_evidence_refs": [],
+          "effect": "favorable",
           "evidence_refs": [
             "data:anfis-fixture-1"
           ],
+          "evidence_status": "supported",
           "limitations": [],
           "metric_name": "data_quality",
           "metric_unit": null,
           "metric_value": 1.0,
+          "native": null,
           "scope": "object",
+          "severity": "info",
           "short_statement": "Качество данных: 1.000",
           "statement": "Качество доступных входных данных объекта anfis-fixture-1 равно 1.000.",
           "status": "supported",
           "strength": 1.0,
-          "subject_id": "anfis-fixture-1"
+          "subject_id": "anfis-fixture-1",
+          "surrogate": null
         }
       },
       {
@@ -1277,20 +1451,26 @@
           "claim_id": "C-003",
           "claim_type": "model_rule",
           "comparison_baseline": null,
+          "confidence_interval": null,
           "counter_evidence_refs": [],
+          "effect": "favorable",
           "evidence_refs": [
             "rule:R31"
           ],
+          "evidence_status": "supported",
           "limitations": [],
           "metric_name": "rule_importance",
           "metric_unit": null,
           "metric_value": 0.84,
+          "native": true,
           "scope": "model",
+          "severity": "info",
           "short_statement": "R31: fracture_density is high and distance is low -> 1",
           "statement": "Правило R31 является нативным: fracture_density is high and distance is low -> 1.",
           "status": "supported",
           "strength": 0.84,
-          "subject_id": "R31"
+          "subject_id": "R31",
+          "surrogate": false
         }
       },
       {
@@ -1305,20 +1485,26 @@
           "claim_id": "C-004",
           "claim_type": "model_rule",
           "comparison_baseline": null,
+          "confidence_interval": null,
           "counter_evidence_refs": [],
+          "effect": "favorable",
           "evidence_refs": [
             "rule:R12"
           ],
+          "evidence_status": "supported",
           "limitations": [],
           "metric_name": "rule_importance",
           "metric_unit": null,
           "metric_value": 0.67,
+          "native": true,
           "scope": "model",
+          "severity": "info",
           "short_statement": "R12: water_saturation is high -> 1",
           "statement": "Правило R12 является нативным: water_saturation is high -> 1.",
           "status": "supported",
           "strength": 0.67,
-          "subject_id": "R12"
+          "subject_id": "R12",
+          "surrogate": false
         }
       },
       {
@@ -1333,22 +1519,28 @@
           "claim_id": "C-005",
           "claim_type": "class_concept",
           "comparison_baseline": null,
+          "confidence_interval": null,
           "counter_evidence_refs": [],
+          "effect": "favorable",
           "evidence_refs": [
             "concept:0"
           ],
+          "evidence_status": "supported",
           "limitations": [
             "primary-rule coverage is unavailable"
           ],
           "metric_name": null,
           "metric_unit": null,
           "metric_value": null,
+          "native": null,
           "scope": "class",
+          "severity": "info",
           "short_statement": "Концепт класса 0",
           "statement": "Class 0: no supported primary rules; coverage unavailable.",
           "status": "supported",
           "strength": null,
-          "subject_id": "0"
+          "subject_id": "0",
+          "surrogate": null
         }
       },
       {
@@ -1363,22 +1555,28 @@
           "claim_id": "C-006",
           "claim_type": "class_concept",
           "comparison_baseline": null,
+          "confidence_interval": null,
           "counter_evidence_refs": [],
+          "effect": "favorable",
           "evidence_refs": [
             "concept:1"
           ],
+          "evidence_status": "supported",
           "limitations": [
             "coverage is a lower bound because overlap between rules is unavailable"
           ],
           "metric_name": "primary_rule_coverage",
           "metric_unit": null,
           "metric_value": 0.46,
+          "native": null,
           "scope": "class",
+          "severity": "info",
           "short_statement": "Концепт класса 1",
           "statement": "Class 1: fracture_density is high and distance is low -> 1; water_saturation is high -> 1; supported primary-rule coverage 46.0%.",
           "status": "supported",
           "strength": null,
-          "subject_id": "1"
+          "subject_id": "1",
+          "surrogate": null
         }
       },
       {
@@ -1393,22 +1591,28 @@
           "claim_id": "C-007",
           "claim_type": "similar_case",
           "comparison_baseline": "normalized tabular feature vector",
+          "confidence_interval": null,
           "counter_evidence_refs": [],
+          "effect": "mixed",
           "evidence_refs": [
             "similar:anfis-fixture-1:reference_3"
           ],
+          "evidence_status": "supported",
           "limitations": [
             "feature distance does not establish causal or clinical similarity"
           ],
           "metric_name": "similarity",
           "metric_unit": null,
           "metric_value": 0.871474,
+          "native": null,
           "scope": "object",
+          "severity": "info",
           "short_statement": "Похожий случай reference_3: 0.871",
           "statement": "Объект reference_3 имеет сходство 0.871 с объектом anfis-fixture-1; использован метод robust_standardized_euclidean для представления «normalized tabular feature vector».",
           "status": "supported",
           "strength": 0.871474,
-          "subject_id": "anfis-fixture-1"
+          "subject_id": "anfis-fixture-1",
+          "surrogate": null
         }
       },
       {
@@ -1423,22 +1627,28 @@
           "claim_id": "C-008",
           "claim_type": "similar_case",
           "comparison_baseline": "normalized tabular feature vector",
+          "confidence_interval": null,
           "counter_evidence_refs": [],
+          "effect": "mixed",
           "evidence_refs": [
             "similar:anfis-fixture-1:reference_2"
           ],
+          "evidence_status": "supported",
           "limitations": [
             "feature distance does not establish causal or clinical similarity"
           ],
           "metric_name": "similarity",
           "metric_unit": null,
           "metric_value": 0.721808,
+          "native": null,
           "scope": "object",
+          "severity": "info",
           "short_statement": "Похожий случай reference_2: 0.722",
           "statement": "Объект reference_2 имеет сходство 0.722 с объектом anfis-fixture-1; использован метод robust_standardized_euclidean для представления «normalized tabular feature vector».",
           "status": "supported",
           "strength": 0.721808,
-          "subject_id": "anfis-fixture-1"
+          "subject_id": "anfis-fixture-1",
+          "surrogate": null
         }
       },
       {
@@ -1453,22 +1663,28 @@
           "claim_id": "C-009",
           "claim_type": "similar_case",
           "comparison_baseline": "normalized tabular feature vector",
+          "confidence_interval": null,
           "counter_evidence_refs": [],
+          "effect": "mixed",
           "evidence_refs": [
             "similar:anfis-fixture-1:reference_1"
           ],
+          "evidence_status": "supported",
           "limitations": [
             "feature distance does not establish causal or clinical similarity"
           ],
           "metric_name": "similarity",
           "metric_unit": null,
           "metric_value": 0.250936,
+          "native": null,
           "scope": "object",
+          "severity": "info",
           "short_statement": "Похожий случай reference_1: 0.251",
           "statement": "Объект reference_1 имеет сходство 0.251 с объектом anfis-fixture-1; использован метод robust_standardized_euclidean для представления «normalized tabular feature vector».",
           "status": "supported",
           "strength": 0.250936,
-          "subject_id": "anfis-fixture-1"
+          "subject_id": "anfis-fixture-1",
+          "surrogate": null
         }
       },
       {
@@ -1483,22 +1699,28 @@
           "claim_id": "C-010",
           "claim_type": "diagnostic",
           "comparison_baseline": null,
+          "confidence_interval": null,
           "counter_evidence_refs": [],
+          "effect": "adverse",
           "evidence_refs": [
             "diagnostic:0"
           ],
+          "evidence_status": "insufficient_evidence",
           "limitations": [
             "Автоматическое принятие ограничено до устранения диагностики."
           ],
           "metric_name": null,
           "metric_unit": null,
           "metric_value": null,
+          "native": null,
           "scope": "model",
+          "severity": "warning",
           "short_statement": "alignment evidence was not supplied",
           "statement": "Диагностика: alignment evidence was not supplied.",
           "status": "insufficient_evidence",
           "strength": null,
-          "subject_id": "D_k_alignment_missing"
+          "subject_id": "D_k_alignment_missing",
+          "surrogate": null
         }
       },
       {
@@ -1513,22 +1735,28 @@
           "claim_id": "C-011",
           "claim_type": "diagnostic",
           "comparison_baseline": null,
+          "confidence_interval": null,
           "counter_evidence_refs": [],
+          "effect": "adverse",
           "evidence_refs": [
             "diagnostic:1"
           ],
+          "evidence_status": "insufficient_evidence",
           "limitations": [
             "Автоматическое принятие ограничено до устранения диагностики."
           ],
           "metric_name": null,
           "metric_unit": null,
           "metric_value": null,
+          "native": null,
           "scope": "model",
+          "severity": "warning",
           "short_statement": "reduction evidence was not supplied",
           "statement": "Диагностика: reduction evidence was not supplied.",
           "status": "insufficient_evidence",
           "strength": null,
-          "subject_id": "D_k_reduction_missing"
+          "subject_id": "D_k_reduction_missing",
+          "surrogate": null
         }
       },
       {
@@ -1543,22 +1771,28 @@
           "claim_id": "C-012",
           "claim_type": "diagnostic",
           "comparison_baseline": null,
+          "confidence_interval": null,
           "counter_evidence_refs": [],
+          "effect": "adverse",
           "evidence_refs": [
             "diagnostic:2"
           ],
+          "evidence_status": "insufficient_evidence",
           "limitations": [
             "Автоматическое принятие ограничено до устранения диагностики."
           ],
           "metric_name": null,
           "metric_unit": null,
           "metric_value": null,
+          "native": null,
           "scope": "model",
+          "severity": "warning",
           "short_statement": "risk evidence was not supplied",
           "statement": "Диагностика: risk evidence was not supplied.",
           "status": "insufficient_evidence",
           "strength": null,
-          "subject_id": "D_k_risk_missing"
+          "subject_id": "D_k_risk_missing",
+          "surrogate": null
         }
       },
       {
@@ -1575,31 +1809,28 @@
           "claim_id": "C-013",
           "claim_type": "recommended_action",
           "comparison_baseline": null,
+          "confidence_interval": null,
           "counter_evidence_refs": [],
+          "effect": "adverse",
           "evidence_refs": [
             "diagnostic:0",
             "diagnostic:1",
             "diagnostic:2"
           ],
+          "evidence_status": "supported",
           "limitations": [],
           "metric_name": null,
           "metric_unit": null,
           "metric_value": null,
+          "native": null,
           "scope": "object",
+          "severity": "warning",
           "short_statement": "Действие: review",
           "statement": "На основании доступных claims рекомендовано действие review.",
           "status": "supported",
           "strength": null,
-          "subject_id": "[1]"
-        }
-      },
-      {
-        "evidence_refs": [],
-        "label": "review",
-        "node_id": "action",
-        "node_type": "action",
-        "payload": {
-          "action": "review"
+          "subject_id": "[1]",
+          "surrogate": null
         }
       }
     ],
@@ -1705,6 +1936,7 @@
         "diagnostic:0",
         "diagnostic:1",
         "diagnostic:2",
+        "action",
         "claim:C-001",
         "claim:C-002",
         "claim:C-003",
@@ -1717,8 +1949,7 @@
         "claim:C-010",
         "claim:C-011",
         "claim:C-012",
-        "claim:C-013",
-        "action"
+        "claim:C-013"
       ],
       "level": "audit",
       "limitations": [
@@ -2037,6 +2268,8 @@
     "missing": [],
     "rules": [
       {
+        "ablation_baseline": {},
+        "ablation_without_rule": {},
         "activation": 0.71,
         "antecedents": [
           "fracture_density is high",
@@ -2066,6 +2299,8 @@
         "surrogate": false
       },
       {
+        "ablation_baseline": {},
+        "ablation_without_rule": {},
         "activation": 0.82,
         "antecedents": [
           "water_saturation is high"
@@ -2099,6 +2334,7 @@
         "compared_representation": "normalized tabular feature vector",
         "coverage_score": 1.0,
         "different_features": [],
+        "is_counterexample": false,
         "limitations": [
           "feature distance does not establish causal or clinical similarity"
         ],
@@ -2107,6 +2343,7 @@
           "distance"
         ],
         "matched_regions": [],
+        "media_artifacts": {},
         "query_object_id": "anfis-fixture-1",
         "reference_label": 1,
         "reference_object_id": "reference_3",
@@ -2123,6 +2360,7 @@
         "compared_representation": "normalized tabular feature vector",
         "coverage_score": 1.0,
         "different_features": [],
+        "is_counterexample": false,
         "limitations": [
           "feature distance does not establish causal or clinical similarity"
         ],
@@ -2131,6 +2369,7 @@
           "distance"
         ],
         "matched_regions": [],
+        "media_artifacts": {},
         "query_object_id": "anfis-fixture-1",
         "reference_label": 1,
         "reference_object_id": "reference_2",
@@ -2150,11 +2389,13 @@
           "fracture_density",
           "distance"
         ],
+        "is_counterexample": false,
         "limitations": [
           "feature distance does not establish causal or clinical similarity"
         ],
         "matched_features": [],
         "matched_regions": [],
+        "media_artifacts": {},
         "query_object_id": "anfis-fixture-1",
         "reference_label": 0,
         "reference_object_id": "reference_1",
@@ -2271,6 +2512,14 @@
     "run_parameters": {}
   },
   "visual_spec": {
+    "audit": {
+      "claim_count": 13,
+      "edge_count": 39,
+      "graph_errors": [],
+      "graph_valid": true,
+      "missing_evidence": [],
+      "node_count": 26
+    },
     "counterfactuals": [],
     "data_profile": [
       {
@@ -2313,98 +2562,175 @@
       "limitations": [
         {
           "claim_id": "C-010",
+          "effect": "adverse",
+          "evidence_refs": [
+            "diagnostic:0"
+          ],
+          "evidence_status": "insufficient_evidence",
           "limitations": [
             "Автоматическое принятие ограничено до устранения диагностики."
           ],
+          "native": null,
+          "severity": "warning",
           "statement": "alignment evidence was not supplied",
-          "status": "insufficient_evidence",
-          "strength": null
+          "strength": null,
+          "surrogate": null
         },
         {
           "claim_id": "C-011",
+          "effect": "adverse",
+          "evidence_refs": [
+            "diagnostic:1"
+          ],
+          "evidence_status": "insufficient_evidence",
           "limitations": [
             "Автоматическое принятие ограничено до устранения диагностики."
           ],
+          "native": null,
+          "severity": "warning",
           "statement": "reduction evidence was not supplied",
-          "status": "insufficient_evidence",
-          "strength": null
+          "strength": null,
+          "surrogate": null
         },
         {
           "claim_id": "C-012",
+          "effect": "adverse",
+          "evidence_refs": [
+            "diagnostic:2"
+          ],
+          "evidence_status": "insufficient_evidence",
           "limitations": [
             "Автоматическое принятие ограничено до устранения диагностики."
           ],
+          "native": null,
+          "severity": "warning",
           "statement": "risk evidence was not supplied",
-          "status": "insufficient_evidence",
-          "strength": null
+          "strength": null,
+          "surrogate": null
         }
       ],
       "supports": [
         {
           "claim_id": "C-001",
+          "effect": "neutral",
+          "evidence_refs": [
+            "prediction"
+          ],
+          "evidence_status": "supported",
           "limitations": [],
+          "native": null,
+          "severity": "info",
           "statement": "Прогноз: [1]",
-          "status": "supported",
-          "strength": 0.82
+          "strength": 0.82,
+          "surrogate": null
         },
         {
           "claim_id": "C-003",
+          "effect": "favorable",
+          "evidence_refs": [
+            "rule:R31"
+          ],
+          "evidence_status": "supported",
           "limitations": [],
+          "native": true,
+          "severity": "info",
           "statement": "R31: fracture_density is high and distance is low -> 1",
-          "status": "supported",
-          "strength": 0.84
+          "strength": 0.84,
+          "surrogate": false
         },
         {
           "claim_id": "C-004",
+          "effect": "favorable",
+          "evidence_refs": [
+            "rule:R12"
+          ],
+          "evidence_status": "supported",
           "limitations": [],
+          "native": true,
+          "severity": "info",
           "statement": "R12: water_saturation is high -> 1",
-          "status": "supported",
-          "strength": 0.67
+          "strength": 0.67,
+          "surrogate": false
         },
         {
           "claim_id": "C-005",
+          "effect": "favorable",
+          "evidence_refs": [
+            "concept:0"
+          ],
+          "evidence_status": "supported",
           "limitations": [
             "primary-rule coverage is unavailable"
           ],
+          "native": null,
+          "severity": "info",
           "statement": "Концепт класса 0",
-          "status": "supported",
-          "strength": null
+          "strength": null,
+          "surrogate": null
         },
         {
           "claim_id": "C-006",
+          "effect": "favorable",
+          "evidence_refs": [
+            "concept:1"
+          ],
+          "evidence_status": "supported",
           "limitations": [
             "coverage is a lower bound because overlap between rules is unavailable"
           ],
+          "native": null,
+          "severity": "info",
           "statement": "Концепт класса 1",
-          "status": "supported",
-          "strength": null
+          "strength": null,
+          "surrogate": null
         },
         {
           "claim_id": "C-007",
+          "effect": "mixed",
+          "evidence_refs": [
+            "similar:anfis-fixture-1:reference_3"
+          ],
+          "evidence_status": "supported",
           "limitations": [
             "feature distance does not establish causal or clinical similarity"
           ],
+          "native": null,
+          "severity": "info",
           "statement": "Похожий случай reference_3: 0.871",
-          "status": "supported",
-          "strength": 0.871474
+          "strength": 0.871474,
+          "surrogate": null
         },
         {
           "claim_id": "C-008",
+          "effect": "mixed",
+          "evidence_refs": [
+            "similar:anfis-fixture-1:reference_2"
+          ],
+          "evidence_status": "supported",
           "limitations": [
             "feature distance does not establish causal or clinical similarity"
           ],
+          "native": null,
+          "severity": "info",
           "statement": "Похожий случай reference_2: 0.722",
-          "status": "supported",
-          "strength": 0.721808
+          "strength": 0.721808,
+          "surrogate": null
         },
         {
           "claim_id": "C-009",
+          "effect": "mixed",
+          "evidence_refs": [
+            "similar:anfis-fixture-1:reference_1"
+          ],
+          "evidence_status": "supported",
           "limitations": [
             "feature distance does not establish causal or clinical similarity"
           ],
+          "native": null,
+          "severity": "info",
           "statement": "Похожий случай reference_1: 0.251",
-          "status": "supported",
-          "strength": 0.250936
+          "strength": 0.250936,
+          "surrogate": null
         }
       ]
     },
@@ -2452,12 +2778,22 @@
           "uncovered_fraction": 0.54
         }
       ],
+      "displayed_rule_count": 2,
+      "primary_rule_count": 2,
       "rules": [
         {
           "claim_refs": [
             "C-003"
           ],
-          "counterfactual_effect": {},
+          "counterfactual_effect": {
+            "additional": [],
+            "calibration": null,
+            "critical_errors": null,
+            "subgroup_recall": null,
+            "test": null,
+            "train": null,
+            "validation": null
+          },
           "coverage": 0.08,
           "importance": 0.84,
           "native": true,
@@ -2472,7 +2808,15 @@
           "claim_refs": [
             "C-004"
           ],
-          "counterfactual_effect": {},
+          "counterfactual_effect": {
+            "additional": [],
+            "calibration": null,
+            "critical_errors": null,
+            "subgroup_recall": null,
+            "test": null,
+            "train": null,
+            "validation": null
+          },
           "coverage": 0.46,
           "importance": 0.67,
           "native": true,
@@ -2483,7 +2827,8 @@
           "surrogate": false,
           "text": "water_saturation is high -> 1"
         }
-      ]
+      ],
+      "source_rule_count": 2
     },
     "overview": {
       "action": "review",
@@ -2496,8 +2841,13 @@
         "recommended_action",
         "similar_case"
       ],
-      "claim_count": 13,
-      "contested_claims": 0,
+      "claim_counts": {
+        "contested": 0,
+        "insufficient_evidence": 3,
+        "not_applicable": 0,
+        "supported": 10,
+        "total": 13
+      },
       "explanation_level": {
         "available_channels": [
           "prediction",
@@ -2527,92 +2877,76 @@
         "rationale": "Доступны концепты классов или похожие случаи.",
         "surrogate_channels": []
       },
-      "insufficient_claims": 3,
       "prediction": {
         "adapter_id": "native_rules",
-        "metadata": {
-          "classes": [
-            0,
-            1
-          ]
-        },
         "model_type": "ControlledRuleModel",
-        "predictions": [
-          1
-        ],
-        "probabilities": [
-          [
-            0.18,
-            0.82
-          ]
-        ],
+        "prediction": "[1]",
         "score": 0.82
-      },
-      "supported_claims": 10
+      }
     },
     "provenance_edges": [
       {
-        "relation": "supports",
+        "relation": "derived_from",
         "source": "rule:R31",
         "target": "concept:1"
       },
       {
-        "relation": "supports",
+        "relation": "derived_from",
         "source": "rule:R12",
         "target": "concept:1"
       },
       {
-        "relation": "compared_with",
+        "relation": "derived_from",
         "source": "data:anfis-fixture-1",
         "target": "similar:anfis-fixture-1:reference_3"
       },
       {
-        "relation": "compared_with",
+        "relation": "derived_from",
         "source": "data:anfis-fixture-1",
         "target": "similar:anfis-fixture-1:reference_2"
       },
       {
-        "relation": "compared_with",
+        "relation": "derived_from",
         "source": "data:anfis-fixture-1",
         "target": "similar:anfis-fixture-1:reference_1"
       },
       {
-        "relation": "supported_by",
+        "relation": "derived_from",
         "source": "data:anfis-fixture-1",
         "target": "prediction"
       },
       {
-        "relation": "supported_by",
+        "relation": "derived_from",
         "source": "rule:R31",
         "target": "prediction"
       },
       {
-        "relation": "supported_by",
+        "relation": "derived_from",
         "source": "rule:R12",
         "target": "prediction"
       },
       {
-        "relation": "supported_by",
+        "relation": "derived_from",
         "source": "concept:0",
         "target": "prediction"
       },
       {
-        "relation": "supported_by",
+        "relation": "derived_from",
         "source": "concept:1",
         "target": "prediction"
       },
       {
-        "relation": "supported_by",
+        "relation": "derived_from",
         "source": "similar:anfis-fixture-1:reference_3",
         "target": "prediction"
       },
       {
-        "relation": "supported_by",
+        "relation": "derived_from",
         "source": "similar:anfis-fixture-1:reference_2",
         "target": "prediction"
       },
       {
-        "relation": "supported_by",
+        "relation": "derived_from",
         "source": "similar:anfis-fixture-1:reference_1",
         "target": "prediction"
       },
@@ -2722,7 +3056,7 @@
         "target": "claim:C-013"
       },
       {
-        "relation": "leads_to",
+        "relation": "recommends",
         "source": "prediction",
         "target": "action"
       },
@@ -2809,6 +3143,11 @@
         "node_type": "diagnostic"
       },
       {
+        "label": "review",
+        "node_id": "action",
+        "node_type": "action"
+      },
+      {
         "label": "Прогноз: [1]",
         "node_id": "claim:C-001",
         "node_type": "claim"
@@ -2872,14 +3211,10 @@
         "label": "Действие: review",
         "node_id": "claim:C-013",
         "node_type": "claim"
-      },
-      {
-        "label": "review",
-        "node_id": "action",
-        "node_type": "action"
       }
     ],
-    "schema_version": "1.0",
+    "rule_ablations": [],
+    "schema_version": "1.1",
     "similar_cases": [
       {
         "claim_refs": [
@@ -2887,7 +3222,9 @@
           "C-008",
           "C-009"
         ],
+        "coverage_score": 1.0,
         "different_features": [],
+        "is_counterexample": false,
         "limitations": [
           "feature distance does not establish causal or clinical similarity"
         ],
@@ -2895,8 +3232,13 @@
           "fracture_density",
           "distance"
         ],
+        "matched_regions": [],
+        "media_artifacts": [],
         "method": "robust_standardized_euclidean",
+        "query_object_id": "anfis-fixture-1",
+        "reference_label": "1",
         "reference_object_id": "reference_3",
+        "reference_prediction": "null",
         "representation": "normalized tabular feature vector",
         "score": 0.871474
       },
@@ -2906,7 +3248,9 @@
           "C-008",
           "C-009"
         ],
+        "coverage_score": 1.0,
         "different_features": [],
+        "is_counterexample": false,
         "limitations": [
           "feature distance does not establish causal or clinical similarity"
         ],
@@ -2914,8 +3258,13 @@
           "fracture_density",
           "distance"
         ],
+        "matched_regions": [],
+        "media_artifacts": [],
         "method": "robust_standardized_euclidean",
+        "query_object_id": "anfis-fixture-1",
+        "reference_label": "1",
         "reference_object_id": "reference_2",
+        "reference_prediction": "null",
         "representation": "normalized tabular feature vector",
         "score": 0.721808
       },
@@ -2925,16 +3274,23 @@
           "C-008",
           "C-009"
         ],
+        "coverage_score": 0.0,
         "different_features": [
           "fracture_density",
           "distance"
         ],
+        "is_counterexample": false,
         "limitations": [
           "feature distance does not establish causal or clinical similarity"
         ],
         "matched_features": [],
+        "matched_regions": [],
+        "media_artifacts": [],
         "method": "robust_standardized_euclidean",
+        "query_object_id": "anfis-fixture-1",
+        "reference_label": "0",
         "reference_object_id": "reference_1",
+        "reference_prediction": "null",
         "representation": "normalized tabular feature vector",
         "score": 0.250936
       }
@@ -2944,18 +3300,22 @@
         "claim_refs": [
           "C-002"
         ],
+        "effect": "favorable",
+        "evidence_status": "supported",
         "facts": [
           "Качество данных: 1.000"
         ],
+        "severity": "info",
         "stage_id": "data",
-        "status": "supported",
         "title": "Данные"
       },
       {
         "claim_refs": [],
+        "effect": "unknown",
+        "evidence_status": "insufficient_evidence",
         "facts": [],
+        "severity": "warning",
         "stage_id": "training",
-        "status": "missing",
         "title": "Обучение"
       },
       {
@@ -2965,14 +3325,16 @@
           "C-005",
           "C-006"
         ],
+        "effect": "favorable",
+        "evidence_status": "supported",
         "facts": [
           "R31: fracture_density is high and distance is low -> 1",
           "R12: water_saturation is high -> 1",
           "Концепт класса 0",
           "Концепт класса 1"
         ],
+        "severity": "info",
         "stage_id": "knowledge",
-        "status": "supported",
         "title": "Знания модели"
       },
       {
@@ -2985,25 +3347,29 @@
           "C-011",
           "C-012"
         ],
+        "effect": "adverse",
+        "evidence_status": "insufficient_evidence",
         "facts": [
           "Прогноз: [1]",
           "Похожий случай reference_3: 0.871",
           "Похожий случай reference_2: 0.722",
           "Похожий случай reference_1: 0.251"
         ],
+        "severity": "warning",
         "stage_id": "decision",
-        "status": "limitation",
         "title": "Решение"
       },
       {
         "claim_refs": [
           "C-013"
         ],
+        "effect": "adverse",
+        "evidence_status": "supported",
         "facts": [
           "Действие: review"
         ],
+        "severity": "warning",
         "stage_id": "action",
-        "status": "supported",
         "title": "Действие"
       }
     ],

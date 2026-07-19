@@ -5,220 +5,283 @@
       "claim_id": "C-001",
       "claim_type": "prediction",
       "comparison_baseline": null,
+      "confidence_interval": null,
       "counter_evidence_refs": [],
+      "effect": "neutral",
       "evidence_refs": [
         "prediction"
       ],
+      "evidence_status": "supported",
       "limitations": [],
       "metric_name": "model_score",
       "metric_unit": null,
       "metric_value": 0.82,
+      "native": null,
       "scope": "object",
+      "severity": "info",
       "short_statement": "Прогноз: [1]",
       "statement": "Модель сформировала прогноз [1] с максимальным модельным баллом 0.820.",
       "status": "supported",
       "strength": 0.82,
-      "subject_id": "[1]"
+      "subject_id": "[1]",
+      "surrogate": null
     },
     {
       "applicability": null,
       "claim_id": "C-002",
       "claim_type": "data_quality",
       "comparison_baseline": null,
+      "confidence_interval": null,
       "counter_evidence_refs": [],
+      "effect": "favorable",
       "evidence_refs": [
         "data:85"
       ],
+      "evidence_status": "supported",
       "limitations": [],
       "metric_name": "data_quality",
       "metric_unit": null,
       "metric_value": 1.0,
+      "native": null,
       "scope": "object",
+      "severity": "info",
       "short_statement": "Качество данных: 1.000",
       "statement": "Качество доступных входных данных объекта 85 равно 1.000.",
       "status": "supported",
       "strength": 1.0,
-      "subject_id": "85"
+      "subject_id": "85",
+      "surrogate": null
     },
     {
       "applicability": null,
       "claim_id": "C-003",
       "claim_type": "first_learned",
       "comparison_baseline": null,
+      "confidence_interval": null,
       "counter_evidence_refs": [],
+      "effect": "favorable",
       "evidence_refs": [
         "training:85"
       ],
+      "evidence_status": "supported",
       "limitations": [],
       "metric_name": "first_learned_epoch",
       "metric_unit": "epoch",
       "metric_value": 7.0,
+      "native": null,
       "scope": "object",
+      "severity": "info",
       "short_statement": "Первое обучение: эпоха 7",
       "statement": "Объект 85 впервые был правильно распознан на эпохе 7.",
       "status": "supported",
       "strength": null,
-      "subject_id": "85"
+      "subject_id": "85",
+      "surrogate": null
     },
     {
       "applicability": null,
       "claim_id": "C-004",
       "claim_type": "forgetting",
       "comparison_baseline": null,
+      "confidence_interval": null,
       "counter_evidence_refs": [],
+      "effect": "adverse",
       "evidence_refs": [
         "training:85"
       ],
+      "evidence_status": "supported",
       "limitations": [],
       "metric_name": "forgetting_event_count",
       "metric_unit": "events",
       "metric_value": 1.0,
+      "native": null,
       "scope": "object",
+      "severity": "warning",
       "short_statement": "Забывание: эпохи 16",
       "statement": "Для объекта 85 зафиксированы события забывания на эпохах 16.",
       "status": "supported",
-      "strength": 1.0,
-      "subject_id": "85"
+      "strength": 0.18181800000000004,
+      "subject_id": "85",
+      "surrogate": null
     },
     {
       "applicability": null,
       "claim_id": "C-005",
       "claim_type": "subgroup_averaging",
-      "comparison_baseline": "global_metric_change=+0.040",
+      "comparison_baseline": "global_metric_change=+0.105",
+      "confidence_interval": null,
       "counter_evidence_refs": [],
+      "effect": "adverse",
       "evidence_refs": [
         "subgroup:S4"
       ],
+      "evidence_status": "supported",
       "limitations": [
         "embedding spread unavailable"
       ],
       "metric_name": "subgroup_metric_change",
       "metric_unit": null,
-      "metric_value": -0.23,
+      "metric_value": -0.18,
+      "native": null,
       "scope": "subgroup",
+      "severity": "warning",
       "short_statement": "Подгруппа S4 усредняется",
-      "statement": "При изменении общей метрики на +0.040 метрика подгруппы S4 изменилась на -0.230.",
+      "statement": "При изменении общей метрики на +0.105 метрика подгруппы S4 изменилась на -0.180.",
       "status": "supported",
       "strength": null,
-      "subject_id": "S4"
+      "subject_id": "S4",
+      "surrogate": null
     },
     {
       "applicability": null,
       "claim_id": "C-006",
       "claim_type": "lost_rules",
       "comparison_baseline": null,
+      "confidence_interval": null,
       "counter_evidence_refs": [],
+      "effect": "adverse",
       "evidence_refs": [
         "subgroup:S4"
       ],
+      "evidence_status": "supported",
       "limitations": [
         "embedding spread unavailable"
       ],
       "metric_name": null,
       "metric_unit": null,
       "metric_value": null,
+      "native": null,
       "scope": "subgroup",
+      "severity": "warning",
       "short_statement": "Потеряны правила: R31",
       "statement": "В истории подгруппы S4 перестали наблюдаться правила R31.",
       "status": "supported",
       "strength": null,
-      "subject_id": "S4"
+      "subject_id": "S4",
+      "surrogate": null
     },
     {
       "applicability": null,
       "claim_id": "C-007",
       "claim_type": "model_rule",
       "comparison_baseline": null,
+      "confidence_interval": null,
       "counter_evidence_refs": [],
+      "effect": "favorable",
       "evidence_refs": [
         "rule:R31"
       ],
+      "evidence_status": "supported",
       "limitations": [],
       "metric_name": "rule_importance",
       "metric_unit": null,
       "metric_value": 0.07,
+      "native": true,
       "scope": "model",
+      "severity": "info",
       "short_statement": "R31: fracture_density is high and distance is low -> 1",
       "statement": "Правило R31 является нативным: fracture_density is high and distance is low -> 1.",
       "status": "supported",
       "strength": 0.07,
-      "subject_id": "R31"
+      "subject_id": "R31",
+      "surrogate": false
     },
     {
       "applicability": null,
       "claim_id": "C-008",
       "claim_type": "similar_case",
       "comparison_baseline": "normalized tabular feature vector",
+      "confidence_interval": null,
       "counter_evidence_refs": [],
+      "effect": "mixed",
       "evidence_refs": [
         "similar:85:68"
       ],
+      "evidence_status": "supported",
       "limitations": [
         "feature distance does not establish causal or clinical similarity"
       ],
       "metric_name": "similarity",
       "metric_unit": null,
       "metric_value": 0.765608,
+      "native": null,
       "scope": "object",
+      "severity": "info",
       "short_statement": "Похожий случай 68: 0.766",
       "statement": "Объект 68 имеет сходство 0.766 с объектом 85; использован метод robust_standardized_euclidean для представления «normalized tabular feature vector».",
       "status": "supported",
       "strength": 0.765608,
-      "subject_id": "85"
+      "subject_id": "85",
+      "surrogate": null
     },
     {
       "applicability": null,
       "claim_id": "C-009",
       "claim_type": "similar_case",
       "comparison_baseline": "normalized tabular feature vector",
+      "confidence_interval": null,
       "counter_evidence_refs": [],
+      "effect": "mixed",
       "evidence_refs": [
         "similar:85:67"
       ],
+      "evidence_status": "supported",
       "limitations": [
         "feature distance does not establish causal or clinical similarity"
       ],
       "metric_name": "similarity",
       "metric_unit": null,
       "metric_value": 0.608953,
+      "native": null,
       "scope": "object",
+      "severity": "info",
       "short_statement": "Похожий случай 67: 0.609",
       "statement": "Объект 67 имеет сходство 0.609 с объектом 85; использован метод robust_standardized_euclidean для представления «normalized tabular feature vector».",
       "status": "supported",
       "strength": 0.608953,
-      "subject_id": "85"
+      "subject_id": "85",
+      "surrogate": null
     },
     {
       "applicability": null,
       "claim_id": "C-010",
       "claim_type": "similar_case",
       "comparison_baseline": "normalized tabular feature vector",
+      "confidence_interval": null,
       "counter_evidence_refs": [],
+      "effect": "mixed",
       "evidence_refs": [
         "similar:85:12"
       ],
+      "evidence_status": "supported",
       "limitations": [
         "feature distance does not establish causal or clinical similarity"
       ],
       "metric_name": "similarity",
       "metric_unit": null,
       "metric_value": 0.212377,
+      "native": null,
       "scope": "object",
+      "severity": "info",
       "short_statement": "Похожий случай 12: 0.212",
       "statement": "Объект 12 имеет сходство 0.212 с объектом 85; использован метод robust_standardized_euclidean для представления «normalized tabular feature vector».",
       "status": "supported",
       "strength": 0.212377,
-      "subject_id": "85"
+      "subject_id": "85",
+      "surrogate": null
     },
     {
       "applicability": "requires domain review",
       "claim_id": "C-011",
       "claim_type": "counterfactual",
       "comparison_baseline": null,
+      "confidence_interval": null,
       "counter_evidence_refs": [],
+      "effect": "mixed",
       "evidence_refs": [
         "counterfactual:0"
       ],
+      "evidence_status": "supported",
       "limitations": [
         "quantile search tests association, not causal feasibility",
         "observed_effect is the change in maximum predicted probability, not a causal effect"
@@ -226,22 +289,28 @@
       "metric_name": "observed_effect",
       "metric_unit": null,
       "metric_value": -0.04,
+      "native": null,
       "scope": "object",
+      "severity": "info",
       "short_statement": "Контрфакт: 1 → 0",
       "statement": "Контрфактическое изменение {'fracture_density': {'from': 0.84, 'to': 0.4}} переводит прогноз из 1 в 0.",
       "status": "supported",
       "strength": null,
-      "subject_id": "1"
+      "subject_id": "1",
+      "surrogate": null
     },
     {
       "applicability": "requires domain review",
       "claim_id": "C-012",
       "claim_type": "counterfactual",
       "comparison_baseline": null,
+      "confidence_interval": null,
       "counter_evidence_refs": [],
+      "effect": "mixed",
       "evidence_refs": [
         "counterfactual:1"
       ],
+      "evidence_status": "supported",
       "limitations": [
         "quantile search tests association, not causal feasibility",
         "observed_effect is the change in maximum predicted probability, not a causal effect"
@@ -249,22 +318,28 @@
       "metric_name": "observed_effect",
       "metric_unit": null,
       "metric_value": -0.04,
+      "native": null,
       "scope": "object",
+      "severity": "info",
       "short_statement": "Контрфакт: 1 → 0",
       "statement": "Контрфактическое изменение {'fracture_density': {'from': 0.84, 'to': 0.17500000000000002}} переводит прогноз из 1 в 0.",
       "status": "supported",
       "strength": null,
-      "subject_id": "1"
+      "subject_id": "1",
+      "surrogate": null
     },
     {
       "applicability": "requires domain review",
       "claim_id": "C-013",
       "claim_type": "counterfactual",
       "comparison_baseline": null,
+      "confidence_interval": null,
       "counter_evidence_refs": [],
+      "effect": "mixed",
       "evidence_refs": [
         "counterfactual:2"
       ],
+      "evidence_status": "supported",
       "limitations": [
         "quantile search tests association, not causal feasibility",
         "observed_effect is the change in maximum predicted probability, not a causal effect"
@@ -272,32 +347,41 @@
       "metric_name": "observed_effect",
       "metric_unit": null,
       "metric_value": -0.04,
+      "native": null,
       "scope": "object",
+      "severity": "info",
       "short_statement": "Контрфакт: 1 → 0",
       "statement": "Контрфактическое изменение {'fracture_density': {'from': 0.84, 'to': 0.13}} переводит прогноз из 1 в 0.",
       "status": "supported",
       "strength": null,
-      "subject_id": "1"
+      "subject_id": "1",
+      "surrogate": null
     },
     {
       "applicability": "defer_to_human",
       "claim_id": "C-014",
       "claim_type": "recommended_action",
       "comparison_baseline": null,
+      "confidence_interval": null,
       "counter_evidence_refs": [],
+      "effect": "adverse",
       "evidence_refs": [
         "prediction"
       ],
+      "evidence_status": "supported",
       "limitations": [],
       "metric_name": null,
       "metric_unit": null,
       "metric_value": null,
+      "native": null,
       "scope": "object",
+      "severity": "warning",
       "short_statement": "Действие: defer_to_human",
       "statement": "На основании доступных claims рекомендовано действие defer_to_human.",
       "status": "supported",
       "strength": null,
-      "subject_id": "[1]"
+      "subject_id": "[1]",
+      "surrogate": null
     }
   ],
   "diagnostics": [],
@@ -317,220 +401,273 @@
         "claim_id": "C-001",
         "claim_type": "prediction",
         "comparison_baseline": null,
+        "confidence_interval": null,
         "counter_evidence_refs": [],
+        "effect": "neutral",
         "evidence_refs": [
           "prediction"
         ],
+        "evidence_status": "supported",
         "limitations": [],
         "metric_name": "model_score",
         "metric_unit": null,
         "metric_value": 0.82,
+        "native": null,
         "scope": "object",
+        "severity": "info",
         "short_statement": "Прогноз: [1]",
         "statement": "Модель сформировала прогноз [1] с максимальным модельным баллом 0.820.",
-        "status": "supported",
         "strength": 0.82,
-        "subject_id": "[1]"
+        "subject_id": "[1]",
+        "surrogate": null
       },
       {
         "applicability": null,
         "claim_id": "C-002",
         "claim_type": "data_quality",
         "comparison_baseline": null,
+        "confidence_interval": null,
         "counter_evidence_refs": [],
+        "effect": "favorable",
         "evidence_refs": [
           "data:85"
         ],
+        "evidence_status": "supported",
         "limitations": [],
         "metric_name": "data_quality",
         "metric_unit": null,
         "metric_value": 1.0,
+        "native": null,
         "scope": "object",
+        "severity": "info",
         "short_statement": "Качество данных: 1.000",
         "statement": "Качество доступных входных данных объекта 85 равно 1.000.",
-        "status": "supported",
         "strength": 1.0,
-        "subject_id": "85"
+        "subject_id": "85",
+        "surrogate": null
       },
       {
         "applicability": null,
         "claim_id": "C-003",
         "claim_type": "first_learned",
         "comparison_baseline": null,
+        "confidence_interval": null,
         "counter_evidence_refs": [],
+        "effect": "favorable",
         "evidence_refs": [
           "training:85"
         ],
+        "evidence_status": "supported",
         "limitations": [],
         "metric_name": "first_learned_epoch",
         "metric_unit": "epoch",
         "metric_value": 7.0,
+        "native": null,
         "scope": "object",
+        "severity": "info",
         "short_statement": "Первое обучение: эпоха 7",
         "statement": "Объект 85 впервые был правильно распознан на эпохе 7.",
-        "status": "supported",
         "strength": null,
-        "subject_id": "85"
+        "subject_id": "85",
+        "surrogate": null
       },
       {
         "applicability": null,
         "claim_id": "C-004",
         "claim_type": "forgetting",
         "comparison_baseline": null,
+        "confidence_interval": null,
         "counter_evidence_refs": [],
+        "effect": "adverse",
         "evidence_refs": [
           "training:85"
         ],
+        "evidence_status": "supported",
         "limitations": [],
         "metric_name": "forgetting_event_count",
         "metric_unit": "events",
         "metric_value": 1.0,
+        "native": null,
         "scope": "object",
+        "severity": "warning",
         "short_statement": "Забывание: эпохи 16",
         "statement": "Для объекта 85 зафиксированы события забывания на эпохах 16.",
-        "status": "supported",
-        "strength": 1.0,
-        "subject_id": "85"
+        "strength": 0.18181800000000004,
+        "subject_id": "85",
+        "surrogate": null
       },
       {
         "applicability": null,
         "claim_id": "C-005",
         "claim_type": "subgroup_averaging",
-        "comparison_baseline": "global_metric_change=+0.040",
+        "comparison_baseline": "global_metric_change=+0.105",
+        "confidence_interval": null,
         "counter_evidence_refs": [],
+        "effect": "adverse",
         "evidence_refs": [
           "subgroup:S4"
         ],
+        "evidence_status": "supported",
         "limitations": [
           "embedding spread unavailable"
         ],
         "metric_name": "subgroup_metric_change",
         "metric_unit": null,
-        "metric_value": -0.23,
+        "metric_value": -0.18,
+        "native": null,
         "scope": "subgroup",
+        "severity": "warning",
         "short_statement": "Подгруппа S4 усредняется",
-        "statement": "При изменении общей метрики на +0.040 метрика подгруппы S4 изменилась на -0.230.",
-        "status": "supported",
+        "statement": "При изменении общей метрики на +0.105 метрика подгруппы S4 изменилась на -0.180.",
         "strength": null,
-        "subject_id": "S4"
+        "subject_id": "S4",
+        "surrogate": null
       },
       {
         "applicability": null,
         "claim_id": "C-006",
         "claim_type": "lost_rules",
         "comparison_baseline": null,
+        "confidence_interval": null,
         "counter_evidence_refs": [],
+        "effect": "adverse",
         "evidence_refs": [
           "subgroup:S4"
         ],
+        "evidence_status": "supported",
         "limitations": [
           "embedding spread unavailable"
         ],
         "metric_name": null,
         "metric_unit": null,
         "metric_value": null,
+        "native": null,
         "scope": "subgroup",
+        "severity": "warning",
         "short_statement": "Потеряны правила: R31",
         "statement": "В истории подгруппы S4 перестали наблюдаться правила R31.",
-        "status": "supported",
         "strength": null,
-        "subject_id": "S4"
+        "subject_id": "S4",
+        "surrogate": null
       },
       {
         "applicability": null,
         "claim_id": "C-007",
         "claim_type": "model_rule",
         "comparison_baseline": null,
+        "confidence_interval": null,
         "counter_evidence_refs": [],
+        "effect": "favorable",
         "evidence_refs": [
           "rule:R31"
         ],
+        "evidence_status": "supported",
         "limitations": [],
         "metric_name": "rule_importance",
         "metric_unit": null,
         "metric_value": 0.07,
+        "native": true,
         "scope": "model",
+        "severity": "info",
         "short_statement": "R31: fracture_density is high and distance is low -> 1",
         "statement": "Правило R31 является нативным: fracture_density is high and distance is low -> 1.",
-        "status": "supported",
         "strength": 0.07,
-        "subject_id": "R31"
+        "subject_id": "R31",
+        "surrogate": false
       },
       {
         "applicability": null,
         "claim_id": "C-008",
         "claim_type": "similar_case",
         "comparison_baseline": "normalized tabular feature vector",
+        "confidence_interval": null,
         "counter_evidence_refs": [],
+        "effect": "mixed",
         "evidence_refs": [
           "similar:85:68"
         ],
+        "evidence_status": "supported",
         "limitations": [
           "feature distance does not establish causal or clinical similarity"
         ],
         "metric_name": "similarity",
         "metric_unit": null,
         "metric_value": 0.765608,
+        "native": null,
         "scope": "object",
+        "severity": "info",
         "short_statement": "Похожий случай 68: 0.766",
         "statement": "Объект 68 имеет сходство 0.766 с объектом 85; использован метод robust_standardized_euclidean для представления «normalized tabular feature vector».",
-        "status": "supported",
         "strength": 0.765608,
-        "subject_id": "85"
+        "subject_id": "85",
+        "surrogate": null
       },
       {
         "applicability": null,
         "claim_id": "C-009",
         "claim_type": "similar_case",
         "comparison_baseline": "normalized tabular feature vector",
+        "confidence_interval": null,
         "counter_evidence_refs": [],
+        "effect": "mixed",
         "evidence_refs": [
           "similar:85:67"
         ],
+        "evidence_status": "supported",
         "limitations": [
           "feature distance does not establish causal or clinical similarity"
         ],
         "metric_name": "similarity",
         "metric_unit": null,
         "metric_value": 0.608953,
+        "native": null,
         "scope": "object",
+        "severity": "info",
         "short_statement": "Похожий случай 67: 0.609",
         "statement": "Объект 67 имеет сходство 0.609 с объектом 85; использован метод robust_standardized_euclidean для представления «normalized tabular feature vector».",
-        "status": "supported",
         "strength": 0.608953,
-        "subject_id": "85"
+        "subject_id": "85",
+        "surrogate": null
       },
       {
         "applicability": null,
         "claim_id": "C-010",
         "claim_type": "similar_case",
         "comparison_baseline": "normalized tabular feature vector",
+        "confidence_interval": null,
         "counter_evidence_refs": [],
+        "effect": "mixed",
         "evidence_refs": [
           "similar:85:12"
         ],
+        "evidence_status": "supported",
         "limitations": [
           "feature distance does not establish causal or clinical similarity"
         ],
         "metric_name": "similarity",
         "metric_unit": null,
         "metric_value": 0.212377,
+        "native": null,
         "scope": "object",
+        "severity": "info",
         "short_statement": "Похожий случай 12: 0.212",
         "statement": "Объект 12 имеет сходство 0.212 с объектом 85; использован метод robust_standardized_euclidean для представления «normalized tabular feature vector».",
-        "status": "supported",
         "strength": 0.212377,
-        "subject_id": "85"
+        "subject_id": "85",
+        "surrogate": null
       },
       {
         "applicability": "requires domain review",
         "claim_id": "C-011",
         "claim_type": "counterfactual",
         "comparison_baseline": null,
+        "confidence_interval": null,
         "counter_evidence_refs": [],
+        "effect": "mixed",
         "evidence_refs": [
           "counterfactual:0"
         ],
+        "evidence_status": "supported",
         "limitations": [
           "quantile search tests association, not causal feasibility",
           "observed_effect is the change in maximum predicted probability, not a causal effect"
@@ -538,22 +675,27 @@
         "metric_name": "observed_effect",
         "metric_unit": null,
         "metric_value": -0.04,
+        "native": null,
         "scope": "object",
+        "severity": "info",
         "short_statement": "Контрфакт: 1 → 0",
         "statement": "Контрфактическое изменение {'fracture_density': {'from': 0.84, 'to': 0.4}} переводит прогноз из 1 в 0.",
-        "status": "supported",
         "strength": null,
-        "subject_id": "1"
+        "subject_id": "1",
+        "surrogate": null
       },
       {
         "applicability": "requires domain review",
         "claim_id": "C-012",
         "claim_type": "counterfactual",
         "comparison_baseline": null,
+        "confidence_interval": null,
         "counter_evidence_refs": [],
+        "effect": "mixed",
         "evidence_refs": [
           "counterfactual:1"
         ],
+        "evidence_status": "supported",
         "limitations": [
           "quantile search tests association, not causal feasibility",
           "observed_effect is the change in maximum predicted probability, not a causal effect"
@@ -561,22 +703,27 @@
         "metric_name": "observed_effect",
         "metric_unit": null,
         "metric_value": -0.04,
+        "native": null,
         "scope": "object",
+        "severity": "info",
         "short_statement": "Контрфакт: 1 → 0",
         "statement": "Контрфактическое изменение {'fracture_density': {'from': 0.84, 'to': 0.17500000000000002}} переводит прогноз из 1 в 0.",
-        "status": "supported",
         "strength": null,
-        "subject_id": "1"
+        "subject_id": "1",
+        "surrogate": null
       },
       {
         "applicability": "requires domain review",
         "claim_id": "C-013",
         "claim_type": "counterfactual",
         "comparison_baseline": null,
+        "confidence_interval": null,
         "counter_evidence_refs": [],
+        "effect": "mixed",
         "evidence_refs": [
           "counterfactual:2"
         ],
+        "evidence_status": "supported",
         "limitations": [
           "quantile search tests association, not causal feasibility",
           "observed_effect is the change in maximum predicted probability, not a causal effect"
@@ -584,32 +731,39 @@
         "metric_name": "observed_effect",
         "metric_unit": null,
         "metric_value": -0.04,
+        "native": null,
         "scope": "object",
+        "severity": "info",
         "short_statement": "Контрфакт: 1 → 0",
         "statement": "Контрфактическое изменение {'fracture_density': {'from': 0.84, 'to': 0.13}} переводит прогноз из 1 в 0.",
-        "status": "supported",
         "strength": null,
-        "subject_id": "1"
+        "subject_id": "1",
+        "surrogate": null
       },
       {
         "applicability": "defer_to_human",
         "claim_id": "C-014",
         "claim_type": "recommended_action",
         "comparison_baseline": null,
+        "confidence_interval": null,
         "counter_evidence_refs": [],
+        "effect": "adverse",
         "evidence_refs": [
           "prediction"
         ],
+        "evidence_status": "supported",
         "limitations": [],
         "metric_name": null,
         "metric_unit": null,
         "metric_value": null,
+        "native": null,
         "scope": "object",
+        "severity": "warning",
         "short_statement": "Действие: defer_to_human",
         "statement": "На основании доступных claims рекомендовано действие defer_to_human.",
-        "status": "supported",
         "strength": null,
-        "subject_id": "[1]"
+        "subject_id": "[1]",
+        "surrogate": null
       }
     ],
     "edges": [
@@ -621,19 +775,19 @@
       },
       {
         "evidence_refs": [],
-        "relation": "compared_with",
+        "relation": "derived_from",
         "source": "data:85",
         "target": "similar:85:68"
       },
       {
         "evidence_refs": [],
-        "relation": "compared_with",
+        "relation": "derived_from",
         "source": "data:85",
         "target": "similar:85:67"
       },
       {
         "evidence_refs": [],
-        "relation": "compared_with",
+        "relation": "derived_from",
         "source": "data:85",
         "target": "similar:85:12"
       },
@@ -641,7 +795,7 @@
         "evidence_refs": [
           "robust_median_mad_profile"
         ],
-        "relation": "supported_by",
+        "relation": "derived_from",
         "source": "data:85",
         "target": "prediction"
       },
@@ -650,25 +804,25 @@
           "adapter.extract_rules",
           "measured_rule_ablation"
         ],
-        "relation": "supported_by",
+        "relation": "derived_from",
         "source": "rule:R31",
         "target": "prediction"
       },
       {
         "evidence_refs": [],
-        "relation": "supported_by",
+        "relation": "derived_from",
         "source": "similar:85:68",
         "target": "prediction"
       },
       {
         "evidence_refs": [],
-        "relation": "supported_by",
+        "relation": "derived_from",
         "source": "similar:85:67",
         "target": "prediction"
       },
       {
         "evidence_refs": [],
-        "relation": "supported_by",
+        "relation": "derived_from",
         "source": "similar:85:12",
         "target": "prediction"
       },
@@ -810,7 +964,7 @@
       },
       {
         "evidence_refs": [],
-        "relation": "leads_to",
+        "relation": "recommends",
         "source": "prediction",
         "target": "action"
       },
@@ -886,58 +1040,300 @@
         "node_type": "training_event",
         "payload": {
           "confidence_by_epoch": [
+            0.32,
+            0.46,
+            0.72,
             0.78,
-            0.31
+            0.75,
+            0.31,
+            0.28,
+            0.3,
+            0.34,
+            0.37,
+            0.39,
+            0.41
           ],
           "embedding_by_epoch": [
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
             [],
             []
           ],
           "epoch_metrics": [
             {
-              "confidence": 0.78,
+              "confidence": 0.32,
+              "correct": false,
+              "epoch": 1,
+              "global_metric": 0.75,
+              "loss": 0.91,
+              "margin": -0.24,
+              "predicted_class": 0,
+              "prototype_distance": 0.61,
+              "rule_activations": {
+                "R12": 0.31,
+                "R31": 0.19
+              },
+              "subgroup_metric": 0.7
+            },
+            {
+              "confidence": 0.46,
+              "correct": false,
+              "epoch": 4,
+              "global_metric": 0.77,
+              "loss": 0.62,
+              "margin": -0.08,
+              "predicted_class": 0,
+              "prototype_distance": 0.592,
+              "rule_activations": {
+                "R12": 0.45,
+                "R31": 0.38
+              },
+              "subgroup_metric": 0.71
+            },
+            {
+              "confidence": 0.72,
               "correct": true,
               "epoch": 7,
+              "global_metric": 0.79,
+              "loss": 0.31,
+              "margin": 0.21,
+              "predicted_class": 1,
+              "prototype_distance": 0.574,
+              "rule_activations": {
+                "R12": 0.56,
+                "R31": 0.66
+              },
+              "subgroup_metric": 0.72
+            },
+            {
+              "confidence": 0.78,
+              "correct": true,
+              "epoch": 10,
+              "global_metric": 0.8,
               "loss": 0.24,
               "margin": 0.42,
+              "predicted_class": 1,
+              "prototype_distance": 0.556,
               "rule_activations": {
+                "R12": 0.62,
                 "R31": 0.71
-              }
+              },
+              "subgroup_metric": 0.72
+            },
+            {
+              "confidence": 0.75,
+              "correct": true,
+              "epoch": 13,
+              "global_metric": 0.81,
+              "loss": 0.28,
+              "margin": 0.35,
+              "predicted_class": 1,
+              "prototype_distance": 0.538,
+              "rule_activations": {
+                "R12": 0.68,
+                "R31": 0.63
+              },
+              "subgroup_metric": 0.69
             },
             {
               "confidence": 0.31,
               "correct": false,
               "epoch": 16,
+              "global_metric": 0.82,
               "loss": 0.79,
               "margin": -0.16,
+              "predicted_class": 0,
+              "prototype_distance": 0.71,
               "rule_activations": {
+                "R12": 0.73,
                 "R31": 0.08
-              }
+              },
+              "subgroup_metric": 0.49
+            },
+            {
+              "confidence": 0.28,
+              "correct": false,
+              "epoch": 19,
+              "global_metric": 0.83,
+              "loss": 0.83,
+              "margin": -0.22,
+              "predicted_class": 0,
+              "prototype_distance": 0.719,
+              "rule_activations": {
+                "R12": 0.77,
+                "R31": 0.06
+              },
+              "subgroup_metric": 0.47
+            },
+            {
+              "confidence": 0.3,
+              "correct": false,
+              "epoch": 22,
+              "global_metric": 0.835,
+              "loss": 0.78,
+              "margin": -0.18,
+              "predicted_class": 0,
+              "prototype_distance": 0.728,
+              "rule_activations": {
+                "R12": 0.79,
+                "R31": 0.05
+              },
+              "subgroup_metric": 0.46
+            },
+            {
+              "confidence": 0.34,
+              "correct": false,
+              "epoch": 25,
+              "global_metric": 0.84,
+              "loss": 0.71,
+              "margin": -0.11,
+              "predicted_class": 0,
+              "prototype_distance": 0.737,
+              "rule_activations": {
+                "R12": 0.81,
+                "R31": 0.04
+              },
+              "subgroup_metric": 0.48
+            },
+            {
+              "confidence": 0.37,
+              "correct": false,
+              "epoch": 28,
+              "global_metric": 0.845,
+              "loss": 0.68,
+              "margin": -0.07,
+              "predicted_class": 0,
+              "prototype_distance": 0.746,
+              "rule_activations": {
+                "R12": 0.82,
+                "R31": 0.04
+              },
+              "subgroup_metric": 0.5
+            },
+            {
+              "confidence": 0.39,
+              "correct": false,
+              "epoch": 31,
+              "global_metric": 0.85,
+              "loss": 0.64,
+              "margin": -0.04,
+              "predicted_class": 0,
+              "prototype_distance": 0.755,
+              "rule_activations": {
+                "R12": 0.83,
+                "R31": 0.03
+              },
+              "subgroup_metric": 0.51
+            },
+            {
+              "confidence": 0.41,
+              "correct": false,
+              "epoch": 34,
+              "global_metric": 0.855,
+              "loss": 0.61,
+              "margin": -0.02,
+              "predicted_class": 0,
+              "prototype_distance": 0.764,
+              "rule_activations": {
+                "R12": 0.84,
+                "R31": 0.03
+              },
+              "subgroup_metric": 0.52
             }
           ],
           "first_learned_epoch": 7,
           "forgetting_events": [
             16
           ],
-          "last_correct_epoch": 7,
+          "last_correct_epoch": 13,
           "loss_by_epoch": [
+            0.91,
+            0.62,
+            0.31,
             0.24,
-            0.79
+            0.28,
+            0.79,
+            0.83,
+            0.78,
+            0.71,
+            0.68,
+            0.64,
+            0.61
           ],
           "object_id": "85",
           "predicted_class_by_epoch": [
-            null,
-            null
+            0,
+            0,
+            1,
+            1,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
           ],
           "rule_activation_by_epoch": [
             {
+              "R12": 0.31,
+              "R31": 0.19
+            },
+            {
+              "R12": 0.45,
+              "R31": 0.38
+            },
+            {
+              "R12": 0.56,
+              "R31": 0.66
+            },
+            {
+              "R12": 0.62,
               "R31": 0.71
             },
             {
+              "R12": 0.68,
+              "R31": 0.63
+            },
+            {
+              "R12": 0.73,
               "R31": 0.08
+            },
+            {
+              "R12": 0.77,
+              "R31": 0.06
+            },
+            {
+              "R12": 0.79,
+              "R31": 0.05
+            },
+            {
+              "R12": 0.81,
+              "R31": 0.04
+            },
+            {
+              "R12": 0.82,
+              "R31": 0.04
+            },
+            {
+              "R12": 0.83,
+              "R31": 0.03
+            },
+            {
+              "R12": 0.84,
+              "R31": 0.03
             }
           ],
-          "stability_score": 0.0,
+          "stability_score": 0.818182,
           "warnings": []
         }
       },
@@ -955,15 +1351,15 @@
             "R31"
           ],
           "embedding_collapse": null,
-          "global_metric_change": 0.04,
+          "global_metric_change": 0.105,
           "limitations": [
             "embedding spread unavailable"
           ],
-          "minority_recall_change": -0.23,
+          "minority_recall_change": -0.18,
           "prototype_distance_change": null,
           "size": 1,
           "subgroup_id": "S4",
-          "subgroup_metric_change": -0.23
+          "subgroup_metric_change": -0.18
         }
       },
       {
@@ -975,6 +1371,22 @@
         "node_id": "rule:R31",
         "node_type": "rule",
         "payload": {
+          "ablation_baseline": {
+            "calibration": 0.11,
+            "critical_errors": 2.0,
+            "subgroup_recall": 0.72,
+            "test": 0.84,
+            "train": 0.86,
+            "validation": 0.82
+          },
+          "ablation_without_rule": {
+            "calibration": 0.24,
+            "critical_errors": 7.0,
+            "subgroup_recall": 0.49,
+            "test": 0.79,
+            "train": 0.85,
+            "validation": 0.75
+          },
           "activation": 0.71,
           "antecedents": [
             "fracture_density is high",
@@ -984,6 +1396,9 @@
           "complexity": 2.0,
           "consequent": "1",
           "counterfactual_effect": {
+            "calibration": -0.13,
+            "critical_errors": -5.0,
+            "subgroup_recall": 0.23,
             "test": 0.05,
             "train": 0.01,
             "validation": 0.07
@@ -1018,6 +1433,7 @@
           "compared_representation": "normalized tabular feature vector",
           "coverage_score": 1.0,
           "different_features": [],
+          "is_counterexample": false,
           "limitations": [
             "feature distance does not establish causal or clinical similarity"
           ],
@@ -1026,6 +1442,7 @@
             "distance"
           ],
           "matched_regions": [],
+          "media_artifacts": {},
           "query_object_id": "85",
           "reference_label": 1,
           "reference_object_id": "68",
@@ -1050,6 +1467,7 @@
           "different_features": [
             "fracture_density"
           ],
+          "is_counterexample": false,
           "limitations": [
             "feature distance does not establish causal or clinical similarity"
           ],
@@ -1057,6 +1475,7 @@
             "distance"
           ],
           "matched_regions": [],
+          "media_artifacts": {},
           "query_object_id": "85",
           "reference_label": 1,
           "reference_object_id": "67",
@@ -1082,11 +1501,13 @@
             "fracture_density",
             "distance"
           ],
+          "is_counterexample": false,
           "limitations": [
             "feature distance does not establish causal or clinical similarity"
           ],
           "matched_features": [],
           "matched_regions": [],
+          "media_artifacts": {},
           "query_object_id": "85",
           "reference_label": 0,
           "reference_object_id": "12",
@@ -1226,6 +1647,15 @@
         }
       },
       {
+        "evidence_refs": [],
+        "label": "defer_to_human",
+        "node_id": "action",
+        "node_type": "action",
+        "payload": {
+          "action": "defer_to_human"
+        }
+      },
+      {
         "evidence_refs": [
           "prediction"
         ],
@@ -1237,20 +1667,26 @@
           "claim_id": "C-001",
           "claim_type": "prediction",
           "comparison_baseline": null,
+          "confidence_interval": null,
           "counter_evidence_refs": [],
+          "effect": "neutral",
           "evidence_refs": [
             "prediction"
           ],
+          "evidence_status": "supported",
           "limitations": [],
           "metric_name": "model_score",
           "metric_unit": null,
           "metric_value": 0.82,
+          "native": null,
           "scope": "object",
+          "severity": "info",
           "short_statement": "Прогноз: [1]",
           "statement": "Модель сформировала прогноз [1] с максимальным модельным баллом 0.820.",
           "status": "supported",
           "strength": 0.82,
-          "subject_id": "[1]"
+          "subject_id": "[1]",
+          "surrogate": null
         }
       },
       {
@@ -1265,20 +1701,26 @@
           "claim_id": "C-002",
           "claim_type": "data_quality",
           "comparison_baseline": null,
+          "confidence_interval": null,
           "counter_evidence_refs": [],
+          "effect": "favorable",
           "evidence_refs": [
             "data:85"
           ],
+          "evidence_status": "supported",
           "limitations": [],
           "metric_name": "data_quality",
           "metric_unit": null,
           "metric_value": 1.0,
+          "native": null,
           "scope": "object",
+          "severity": "info",
           "short_statement": "Качество данных: 1.000",
           "statement": "Качество доступных входных данных объекта 85 равно 1.000.",
           "status": "supported",
           "strength": 1.0,
-          "subject_id": "85"
+          "subject_id": "85",
+          "surrogate": null
         }
       },
       {
@@ -1293,20 +1735,26 @@
           "claim_id": "C-003",
           "claim_type": "first_learned",
           "comparison_baseline": null,
+          "confidence_interval": null,
           "counter_evidence_refs": [],
+          "effect": "favorable",
           "evidence_refs": [
             "training:85"
           ],
+          "evidence_status": "supported",
           "limitations": [],
           "metric_name": "first_learned_epoch",
           "metric_unit": "epoch",
           "metric_value": 7.0,
+          "native": null,
           "scope": "object",
+          "severity": "info",
           "short_statement": "Первое обучение: эпоха 7",
           "statement": "Объект 85 впервые был правильно распознан на эпохе 7.",
           "status": "supported",
           "strength": null,
-          "subject_id": "85"
+          "subject_id": "85",
+          "surrogate": null
         }
       },
       {
@@ -1321,20 +1769,26 @@
           "claim_id": "C-004",
           "claim_type": "forgetting",
           "comparison_baseline": null,
+          "confidence_interval": null,
           "counter_evidence_refs": [],
+          "effect": "adverse",
           "evidence_refs": [
             "training:85"
           ],
+          "evidence_status": "supported",
           "limitations": [],
           "metric_name": "forgetting_event_count",
           "metric_unit": "events",
           "metric_value": 1.0,
+          "native": null,
           "scope": "object",
+          "severity": "warning",
           "short_statement": "Забывание: эпохи 16",
           "statement": "Для объекта 85 зафиксированы события забывания на эпохах 16.",
           "status": "supported",
-          "strength": 1.0,
-          "subject_id": "85"
+          "strength": 0.18181800000000004,
+          "subject_id": "85",
+          "surrogate": null
         }
       },
       {
@@ -1348,23 +1802,29 @@
           "applicability": null,
           "claim_id": "C-005",
           "claim_type": "subgroup_averaging",
-          "comparison_baseline": "global_metric_change=+0.040",
+          "comparison_baseline": "global_metric_change=+0.105",
+          "confidence_interval": null,
           "counter_evidence_refs": [],
+          "effect": "adverse",
           "evidence_refs": [
             "subgroup:S4"
           ],
+          "evidence_status": "supported",
           "limitations": [
             "embedding spread unavailable"
           ],
           "metric_name": "subgroup_metric_change",
           "metric_unit": null,
-          "metric_value": -0.23,
+          "metric_value": -0.18,
+          "native": null,
           "scope": "subgroup",
+          "severity": "warning",
           "short_statement": "Подгруппа S4 усредняется",
-          "statement": "При изменении общей метрики на +0.040 метрика подгруппы S4 изменилась на -0.230.",
+          "statement": "При изменении общей метрики на +0.105 метрика подгруппы S4 изменилась на -0.180.",
           "status": "supported",
           "strength": null,
-          "subject_id": "S4"
+          "subject_id": "S4",
+          "surrogate": null
         }
       },
       {
@@ -1379,22 +1839,28 @@
           "claim_id": "C-006",
           "claim_type": "lost_rules",
           "comparison_baseline": null,
+          "confidence_interval": null,
           "counter_evidence_refs": [],
+          "effect": "adverse",
           "evidence_refs": [
             "subgroup:S4"
           ],
+          "evidence_status": "supported",
           "limitations": [
             "embedding spread unavailable"
           ],
           "metric_name": null,
           "metric_unit": null,
           "metric_value": null,
+          "native": null,
           "scope": "subgroup",
+          "severity": "warning",
           "short_statement": "Потеряны правила: R31",
           "statement": "В истории подгруппы S4 перестали наблюдаться правила R31.",
           "status": "supported",
           "strength": null,
-          "subject_id": "S4"
+          "subject_id": "S4",
+          "surrogate": null
         }
       },
       {
@@ -1409,20 +1875,26 @@
           "claim_id": "C-007",
           "claim_type": "model_rule",
           "comparison_baseline": null,
+          "confidence_interval": null,
           "counter_evidence_refs": [],
+          "effect": "favorable",
           "evidence_refs": [
             "rule:R31"
           ],
+          "evidence_status": "supported",
           "limitations": [],
           "metric_name": "rule_importance",
           "metric_unit": null,
           "metric_value": 0.07,
+          "native": true,
           "scope": "model",
+          "severity": "info",
           "short_statement": "R31: fracture_density is high and distance is low -> 1",
           "statement": "Правило R31 является нативным: fracture_density is high and distance is low -> 1.",
           "status": "supported",
           "strength": 0.07,
-          "subject_id": "R31"
+          "subject_id": "R31",
+          "surrogate": false
         }
       },
       {
@@ -1437,22 +1909,28 @@
           "claim_id": "C-008",
           "claim_type": "similar_case",
           "comparison_baseline": "normalized tabular feature vector",
+          "confidence_interval": null,
           "counter_evidence_refs": [],
+          "effect": "mixed",
           "evidence_refs": [
             "similar:85:68"
           ],
+          "evidence_status": "supported",
           "limitations": [
             "feature distance does not establish causal or clinical similarity"
           ],
           "metric_name": "similarity",
           "metric_unit": null,
           "metric_value": 0.765608,
+          "native": null,
           "scope": "object",
+          "severity": "info",
           "short_statement": "Похожий случай 68: 0.766",
           "statement": "Объект 68 имеет сходство 0.766 с объектом 85; использован метод robust_standardized_euclidean для представления «normalized tabular feature vector».",
           "status": "supported",
           "strength": 0.765608,
-          "subject_id": "85"
+          "subject_id": "85",
+          "surrogate": null
         }
       },
       {
@@ -1467,22 +1945,28 @@
           "claim_id": "C-009",
           "claim_type": "similar_case",
           "comparison_baseline": "normalized tabular feature vector",
+          "confidence_interval": null,
           "counter_evidence_refs": [],
+          "effect": "mixed",
           "evidence_refs": [
             "similar:85:67"
           ],
+          "evidence_status": "supported",
           "limitations": [
             "feature distance does not establish causal or clinical similarity"
           ],
           "metric_name": "similarity",
           "metric_unit": null,
           "metric_value": 0.608953,
+          "native": null,
           "scope": "object",
+          "severity": "info",
           "short_statement": "Похожий случай 67: 0.609",
           "statement": "Объект 67 имеет сходство 0.609 с объектом 85; использован метод robust_standardized_euclidean для представления «normalized tabular feature vector».",
           "status": "supported",
           "strength": 0.608953,
-          "subject_id": "85"
+          "subject_id": "85",
+          "surrogate": null
         }
       },
       {
@@ -1497,22 +1981,28 @@
           "claim_id": "C-010",
           "claim_type": "similar_case",
           "comparison_baseline": "normalized tabular feature vector",
+          "confidence_interval": null,
           "counter_evidence_refs": [],
+          "effect": "mixed",
           "evidence_refs": [
             "similar:85:12"
           ],
+          "evidence_status": "supported",
           "limitations": [
             "feature distance does not establish causal or clinical similarity"
           ],
           "metric_name": "similarity",
           "metric_unit": null,
           "metric_value": 0.212377,
+          "native": null,
           "scope": "object",
+          "severity": "info",
           "short_statement": "Похожий случай 12: 0.212",
           "statement": "Объект 12 имеет сходство 0.212 с объектом 85; использован метод robust_standardized_euclidean для представления «normalized tabular feature vector».",
           "status": "supported",
           "strength": 0.212377,
-          "subject_id": "85"
+          "subject_id": "85",
+          "surrogate": null
         }
       },
       {
@@ -1527,10 +2017,13 @@
           "claim_id": "C-011",
           "claim_type": "counterfactual",
           "comparison_baseline": null,
+          "confidence_interval": null,
           "counter_evidence_refs": [],
+          "effect": "mixed",
           "evidence_refs": [
             "counterfactual:0"
           ],
+          "evidence_status": "supported",
           "limitations": [
             "quantile search tests association, not causal feasibility",
             "observed_effect is the change in maximum predicted probability, not a causal effect"
@@ -1538,12 +2031,15 @@
           "metric_name": "observed_effect",
           "metric_unit": null,
           "metric_value": -0.04,
+          "native": null,
           "scope": "object",
+          "severity": "info",
           "short_statement": "Контрфакт: 1 → 0",
           "statement": "Контрфактическое изменение {'fracture_density': {'from': 0.84, 'to': 0.4}} переводит прогноз из 1 в 0.",
           "status": "supported",
           "strength": null,
-          "subject_id": "1"
+          "subject_id": "1",
+          "surrogate": null
         }
       },
       {
@@ -1558,10 +2054,13 @@
           "claim_id": "C-012",
           "claim_type": "counterfactual",
           "comparison_baseline": null,
+          "confidence_interval": null,
           "counter_evidence_refs": [],
+          "effect": "mixed",
           "evidence_refs": [
             "counterfactual:1"
           ],
+          "evidence_status": "supported",
           "limitations": [
             "quantile search tests association, not causal feasibility",
             "observed_effect is the change in maximum predicted probability, not a causal effect"
@@ -1569,12 +2068,15 @@
           "metric_name": "observed_effect",
           "metric_unit": null,
           "metric_value": -0.04,
+          "native": null,
           "scope": "object",
+          "severity": "info",
           "short_statement": "Контрфакт: 1 → 0",
           "statement": "Контрфактическое изменение {'fracture_density': {'from': 0.84, 'to': 0.17500000000000002}} переводит прогноз из 1 в 0.",
           "status": "supported",
           "strength": null,
-          "subject_id": "1"
+          "subject_id": "1",
+          "surrogate": null
         }
       },
       {
@@ -1589,10 +2091,13 @@
           "claim_id": "C-013",
           "claim_type": "counterfactual",
           "comparison_baseline": null,
+          "confidence_interval": null,
           "counter_evidence_refs": [],
+          "effect": "mixed",
           "evidence_refs": [
             "counterfactual:2"
           ],
+          "evidence_status": "supported",
           "limitations": [
             "quantile search tests association, not causal feasibility",
             "observed_effect is the change in maximum predicted probability, not a causal effect"
@@ -1600,12 +2105,15 @@
           "metric_name": "observed_effect",
           "metric_unit": null,
           "metric_value": -0.04,
+          "native": null,
           "scope": "object",
+          "severity": "info",
           "short_statement": "Контрфакт: 1 → 0",
           "statement": "Контрфактическое изменение {'fracture_density': {'from': 0.84, 'to': 0.13}} переводит прогноз из 1 в 0.",
           "status": "supported",
           "strength": null,
-          "subject_id": "1"
+          "subject_id": "1",
+          "surrogate": null
         }
       },
       {
@@ -1620,29 +2128,26 @@
           "claim_id": "C-014",
           "claim_type": "recommended_action",
           "comparison_baseline": null,
+          "confidence_interval": null,
           "counter_evidence_refs": [],
+          "effect": "adverse",
           "evidence_refs": [
             "prediction"
           ],
+          "evidence_status": "supported",
           "limitations": [],
           "metric_name": null,
           "metric_unit": null,
           "metric_value": null,
+          "native": null,
           "scope": "object",
+          "severity": "warning",
           "short_statement": "Действие: defer_to_human",
           "statement": "На основании доступных claims рекомендовано действие defer_to_human.",
           "status": "supported",
           "strength": null,
-          "subject_id": "[1]"
-        }
-      },
-      {
-        "evidence_refs": [],
-        "label": "defer_to_human",
-        "node_id": "action",
-        "node_type": "action",
-        "payload": {
-          "action": "defer_to_human"
+          "subject_id": "[1]",
+          "surrogate": null
         }
       }
     ],
@@ -1759,6 +2264,7 @@
         "counterfactual:1",
         "counterfactual:2",
         "prediction",
+        "action",
         "claim:C-001",
         "claim:C-002",
         "claim:C-003",
@@ -1772,8 +2278,7 @@
         "claim:C-011",
         "claim:C-012",
         "claim:C-013",
-        "claim:C-014",
-        "action"
+        "claim:C-014"
       ],
       "level": "audit",
       "limitations": [
@@ -1791,7 +2296,7 @@
       ],
       "lost_or_averaged": [
         "Для объекта 85 зафиксированы события забывания на эпохах 16. [C-004]",
-        "При изменении общей метрики на +0.040 метрика подгруппы S4 изменилась на -0.230. [C-005]",
+        "При изменении общей метрики на +0.105 метрика подгруппы S4 изменилась на -0.180. [C-005]",
         "В истории подгруппы S4 перестали наблюдаться правила R31. [C-006]"
       ],
       "main_reasons": [
@@ -1893,7 +2398,7 @@
       ],
       "lost_or_averaged": [
         "Для объекта 85 зафиксированы события забывания на эпохах 16. [C-004]",
-        "При изменении общей метрики на +0.040 метрика подгруппы S4 изменилась на -0.230. [C-005]",
+        "При изменении общей метрики на +0.105 метрика подгруппы S4 изменилась на -0.180. [C-005]",
         "В истории подгруппы S4 перестали наблюдаться правила R31. [C-006]"
       ],
       "main_reasons": [
@@ -1976,7 +2481,7 @@
       ],
       "lost_or_averaged": [
         "Для объекта 85 зафиксированы события забывания на эпохах 16. [C-004]",
-        "При изменении общей метрики на +0.040 метрика подгруппы S4 изменилась на -0.230. [C-005]"
+        "При изменении общей метрики на +0.105 метрика подгруппы S4 изменилась на -0.180. [C-005]"
       ],
       "main_reasons": [
         "Правило R31 является нативным: fracture_density is high and distance is low -> 1. [C-007]"
@@ -2129,6 +2634,22 @@
     "missing": [],
     "rules": [
       {
+        "ablation_baseline": {
+          "calibration": 0.11,
+          "critical_errors": 2.0,
+          "subgroup_recall": 0.72,
+          "test": 0.84,
+          "train": 0.86,
+          "validation": 0.82
+        },
+        "ablation_without_rule": {
+          "calibration": 0.24,
+          "critical_errors": 7.0,
+          "subgroup_recall": 0.49,
+          "test": 0.79,
+          "train": 0.85,
+          "validation": 0.75
+        },
         "activation": 0.71,
         "antecedents": [
           "fracture_density is high",
@@ -2138,6 +2659,9 @@
         "complexity": 2.0,
         "consequent": "1",
         "counterfactual_effect": {
+          "calibration": -0.13,
+          "critical_errors": -5.0,
+          "subgroup_recall": 0.23,
           "test": 0.05,
           "train": 0.01,
           "validation": 0.07
@@ -2168,6 +2692,7 @@
         "compared_representation": "normalized tabular feature vector",
         "coverage_score": 1.0,
         "different_features": [],
+        "is_counterexample": false,
         "limitations": [
           "feature distance does not establish causal or clinical similarity"
         ],
@@ -2176,6 +2701,7 @@
           "distance"
         ],
         "matched_regions": [],
+        "media_artifacts": {},
         "query_object_id": "85",
         "reference_label": 1,
         "reference_object_id": "68",
@@ -2194,6 +2720,7 @@
         "different_features": [
           "fracture_density"
         ],
+        "is_counterexample": false,
         "limitations": [
           "feature distance does not establish causal or clinical similarity"
         ],
@@ -2201,6 +2728,7 @@
           "distance"
         ],
         "matched_regions": [],
+        "media_artifacts": {},
         "query_object_id": "85",
         "reference_label": 1,
         "reference_object_id": "67",
@@ -2220,11 +2748,13 @@
           "fracture_density",
           "distance"
         ],
+        "is_counterexample": false,
         "limitations": [
           "feature distance does not establish causal or clinical similarity"
         ],
         "matched_features": [],
         "matched_regions": [],
+        "media_artifacts": {},
         "query_object_id": "85",
         "reference_label": 0,
         "reference_object_id": "12",
@@ -2248,72 +2778,314 @@
           "R31"
         ],
         "embedding_collapse": null,
-        "global_metric_change": 0.04,
+        "global_metric_change": 0.105,
         "limitations": [
           "embedding spread unavailable"
         ],
-        "minority_recall_change": -0.23,
+        "minority_recall_change": -0.18,
         "prototype_distance_change": null,
         "size": 1,
         "subgroup_id": "S4",
-        "subgroup_metric_change": -0.23
+        "subgroup_metric_change": -0.18
       }
     ],
     "training": [
       {
         "confidence_by_epoch": [
+          0.32,
+          0.46,
+          0.72,
           0.78,
-          0.31
+          0.75,
+          0.31,
+          0.28,
+          0.3,
+          0.34,
+          0.37,
+          0.39,
+          0.41
         ],
         "embedding_by_epoch": [
+          [],
+          [],
+          [],
+          [],
+          [],
+          [],
+          [],
+          [],
+          [],
+          [],
           [],
           []
         ],
         "epoch_metrics": [
           {
-            "confidence": 0.78,
+            "confidence": 0.32,
+            "correct": false,
+            "epoch": 1,
+            "global_metric": 0.75,
+            "loss": 0.91,
+            "margin": -0.24,
+            "predicted_class": 0,
+            "prototype_distance": 0.61,
+            "rule_activations": {
+              "R12": 0.31,
+              "R31": 0.19
+            },
+            "subgroup_metric": 0.7
+          },
+          {
+            "confidence": 0.46,
+            "correct": false,
+            "epoch": 4,
+            "global_metric": 0.77,
+            "loss": 0.62,
+            "margin": -0.08,
+            "predicted_class": 0,
+            "prototype_distance": 0.592,
+            "rule_activations": {
+              "R12": 0.45,
+              "R31": 0.38
+            },
+            "subgroup_metric": 0.71
+          },
+          {
+            "confidence": 0.72,
             "correct": true,
             "epoch": 7,
+            "global_metric": 0.79,
+            "loss": 0.31,
+            "margin": 0.21,
+            "predicted_class": 1,
+            "prototype_distance": 0.574,
+            "rule_activations": {
+              "R12": 0.56,
+              "R31": 0.66
+            },
+            "subgroup_metric": 0.72
+          },
+          {
+            "confidence": 0.78,
+            "correct": true,
+            "epoch": 10,
+            "global_metric": 0.8,
             "loss": 0.24,
             "margin": 0.42,
+            "predicted_class": 1,
+            "prototype_distance": 0.556,
             "rule_activations": {
+              "R12": 0.62,
               "R31": 0.71
-            }
+            },
+            "subgroup_metric": 0.72
+          },
+          {
+            "confidence": 0.75,
+            "correct": true,
+            "epoch": 13,
+            "global_metric": 0.81,
+            "loss": 0.28,
+            "margin": 0.35,
+            "predicted_class": 1,
+            "prototype_distance": 0.538,
+            "rule_activations": {
+              "R12": 0.68,
+              "R31": 0.63
+            },
+            "subgroup_metric": 0.69
           },
           {
             "confidence": 0.31,
             "correct": false,
             "epoch": 16,
+            "global_metric": 0.82,
             "loss": 0.79,
             "margin": -0.16,
+            "predicted_class": 0,
+            "prototype_distance": 0.71,
             "rule_activations": {
+              "R12": 0.73,
               "R31": 0.08
-            }
+            },
+            "subgroup_metric": 0.49
+          },
+          {
+            "confidence": 0.28,
+            "correct": false,
+            "epoch": 19,
+            "global_metric": 0.83,
+            "loss": 0.83,
+            "margin": -0.22,
+            "predicted_class": 0,
+            "prototype_distance": 0.719,
+            "rule_activations": {
+              "R12": 0.77,
+              "R31": 0.06
+            },
+            "subgroup_metric": 0.47
+          },
+          {
+            "confidence": 0.3,
+            "correct": false,
+            "epoch": 22,
+            "global_metric": 0.835,
+            "loss": 0.78,
+            "margin": -0.18,
+            "predicted_class": 0,
+            "prototype_distance": 0.728,
+            "rule_activations": {
+              "R12": 0.79,
+              "R31": 0.05
+            },
+            "subgroup_metric": 0.46
+          },
+          {
+            "confidence": 0.34,
+            "correct": false,
+            "epoch": 25,
+            "global_metric": 0.84,
+            "loss": 0.71,
+            "margin": -0.11,
+            "predicted_class": 0,
+            "prototype_distance": 0.737,
+            "rule_activations": {
+              "R12": 0.81,
+              "R31": 0.04
+            },
+            "subgroup_metric": 0.48
+          },
+          {
+            "confidence": 0.37,
+            "correct": false,
+            "epoch": 28,
+            "global_metric": 0.845,
+            "loss": 0.68,
+            "margin": -0.07,
+            "predicted_class": 0,
+            "prototype_distance": 0.746,
+            "rule_activations": {
+              "R12": 0.82,
+              "R31": 0.04
+            },
+            "subgroup_metric": 0.5
+          },
+          {
+            "confidence": 0.39,
+            "correct": false,
+            "epoch": 31,
+            "global_metric": 0.85,
+            "loss": 0.64,
+            "margin": -0.04,
+            "predicted_class": 0,
+            "prototype_distance": 0.755,
+            "rule_activations": {
+              "R12": 0.83,
+              "R31": 0.03
+            },
+            "subgroup_metric": 0.51
+          },
+          {
+            "confidence": 0.41,
+            "correct": false,
+            "epoch": 34,
+            "global_metric": 0.855,
+            "loss": 0.61,
+            "margin": -0.02,
+            "predicted_class": 0,
+            "prototype_distance": 0.764,
+            "rule_activations": {
+              "R12": 0.84,
+              "R31": 0.03
+            },
+            "subgroup_metric": 0.52
           }
         ],
         "first_learned_epoch": 7,
         "forgetting_events": [
           16
         ],
-        "last_correct_epoch": 7,
+        "last_correct_epoch": 13,
         "loss_by_epoch": [
+          0.91,
+          0.62,
+          0.31,
           0.24,
-          0.79
+          0.28,
+          0.79,
+          0.83,
+          0.78,
+          0.71,
+          0.68,
+          0.64,
+          0.61
         ],
         "object_id": "85",
         "predicted_class_by_epoch": [
-          null,
-          null
+          0,
+          0,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
         ],
         "rule_activation_by_epoch": [
           {
+            "R12": 0.31,
+            "R31": 0.19
+          },
+          {
+            "R12": 0.45,
+            "R31": 0.38
+          },
+          {
+            "R12": 0.56,
+            "R31": 0.66
+          },
+          {
+            "R12": 0.62,
             "R31": 0.71
           },
           {
+            "R12": 0.68,
+            "R31": 0.63
+          },
+          {
+            "R12": 0.73,
             "R31": 0.08
+          },
+          {
+            "R12": 0.77,
+            "R31": 0.06
+          },
+          {
+            "R12": 0.79,
+            "R31": 0.05
+          },
+          {
+            "R12": 0.81,
+            "R31": 0.04
+          },
+          {
+            "R12": 0.82,
+            "R31": 0.04
+          },
+          {
+            "R12": 0.83,
+            "R31": 0.03
+          },
+          {
+            "R12": 0.84,
+            "R31": 0.03
           }
         ],
-        "stability_score": 0.0,
+        "stability_score": 0.818182,
         "warnings": []
       }
     ]
@@ -2420,72 +3192,92 @@
     "run_parameters": {}
   },
   "visual_spec": {
+    "audit": {
+      "claim_count": 14,
+      "edge_count": 28,
+      "graph_errors": [],
+      "graph_valid": true,
+      "missing_evidence": [],
+      "node_count": 26
+    },
     "counterfactuals": [
       {
         "actionability": "requires domain review",
-        "changed_features": {
-          "fracture_density": {
-            "from": 0.84,
-            "to": 0.4
+        "changed_features": [
+          {
+            "feature": "fracture_density",
+            "source_value": null,
+            "target_value": "{\"from\": 0.84, \"to\": 0.4}"
           }
-        },
+        ],
         "changed_rules": [],
         "claim_refs": [
           "C-011",
           "C-012",
           "C-013"
         ],
+        "expected_effect": null,
         "limitations": [
           "quantile search tests association, not causal feasibility",
           "observed_effect is the change in maximum predicted probability, not a causal effect"
         ],
+        "minimality": 1.725822,
         "observed_effect": -0.04,
-        "source_prediction": 1,
-        "target_prediction": 0
+        "plausibility": 1.0,
+        "source_prediction": "1",
+        "target_prediction": "0"
       },
       {
         "actionability": "requires domain review",
-        "changed_features": {
-          "fracture_density": {
-            "from": 0.84,
-            "to": 0.17500000000000002
+        "changed_features": [
+          {
+            "feature": "fracture_density",
+            "source_value": null,
+            "target_value": "{\"from\": 0.84, \"to\": 0.17500000000000002}"
           }
-        },
+        ],
         "changed_rules": [],
         "claim_refs": [
           "C-011",
           "C-012",
           "C-013"
         ],
+        "expected_effect": null,
         "limitations": [
           "quantile search tests association, not causal feasibility",
           "observed_effect is the change in maximum predicted probability, not a causal effect"
         ],
+        "minimality": 2.608345,
         "observed_effect": -0.04,
-        "source_prediction": 1,
-        "target_prediction": 0
+        "plausibility": 1.0,
+        "source_prediction": "1",
+        "target_prediction": "0"
       },
       {
         "actionability": "requires domain review",
-        "changed_features": {
-          "fracture_density": {
-            "from": 0.84,
-            "to": 0.13
+        "changed_features": [
+          {
+            "feature": "fracture_density",
+            "source_value": null,
+            "target_value": "{\"from\": 0.84, \"to\": 0.13}"
           }
-        },
+        ],
         "changed_rules": [],
         "claim_refs": [
           "C-011",
           "C-012",
           "C-013"
         ],
+        "expected_effect": null,
         "limitations": [
           "quantile search tests association, not causal feasibility",
           "observed_effect is the change in maximum predicted probability, not a causal effect"
         ],
+        "minimality": 2.784849,
         "observed_effect": -0.04,
-        "source_prediction": 1,
-        "target_prediction": 0
+        "plausibility": 1.0,
+        "source_prediction": "1",
+        "target_prediction": "0"
       }
     ],
     "data_profile": [
@@ -2528,83 +3320,145 @@
       "contradicts": [
         {
           "claim_id": "C-004",
+          "effect": "adverse",
+          "evidence_refs": [
+            "training:85"
+          ],
+          "evidence_status": "supported",
           "limitations": [],
+          "native": null,
+          "severity": "warning",
           "statement": "Забывание: эпохи 16",
-          "status": "supported",
-          "strength": 1.0
+          "strength": 0.18181800000000004,
+          "surrogate": null
         },
         {
           "claim_id": "C-005",
+          "effect": "adverse",
+          "evidence_refs": [
+            "subgroup:S4"
+          ],
+          "evidence_status": "supported",
           "limitations": [
             "embedding spread unavailable"
           ],
+          "native": null,
+          "severity": "warning",
           "statement": "Подгруппа S4 усредняется",
-          "status": "supported",
-          "strength": null
+          "strength": null,
+          "surrogate": null
         },
         {
           "claim_id": "C-006",
+          "effect": "adverse",
+          "evidence_refs": [
+            "subgroup:S4"
+          ],
+          "evidence_status": "supported",
           "limitations": [
             "embedding spread unavailable"
           ],
+          "native": null,
+          "severity": "warning",
           "statement": "Потеряны правила: R31",
-          "status": "supported",
-          "strength": null
+          "strength": null,
+          "surrogate": null
         }
       ],
       "limitations": [],
       "supports": [
         {
           "claim_id": "C-001",
+          "effect": "neutral",
+          "evidence_refs": [
+            "prediction"
+          ],
+          "evidence_status": "supported",
           "limitations": [],
+          "native": null,
+          "severity": "info",
           "statement": "Прогноз: [1]",
-          "status": "supported",
-          "strength": 0.82
+          "strength": 0.82,
+          "surrogate": null
         },
         {
           "claim_id": "C-007",
+          "effect": "favorable",
+          "evidence_refs": [
+            "rule:R31"
+          ],
+          "evidence_status": "supported",
           "limitations": [],
+          "native": true,
+          "severity": "info",
           "statement": "R31: fracture_density is high and distance is low -> 1",
-          "status": "supported",
-          "strength": 0.07
+          "strength": 0.07,
+          "surrogate": false
         },
         {
           "claim_id": "C-008",
+          "effect": "mixed",
+          "evidence_refs": [
+            "similar:85:68"
+          ],
+          "evidence_status": "supported",
           "limitations": [
             "feature distance does not establish causal or clinical similarity"
           ],
+          "native": null,
+          "severity": "info",
           "statement": "Похожий случай 68: 0.766",
-          "status": "supported",
-          "strength": 0.765608
+          "strength": 0.765608,
+          "surrogate": null
         },
         {
           "claim_id": "C-009",
+          "effect": "mixed",
+          "evidence_refs": [
+            "similar:85:67"
+          ],
+          "evidence_status": "supported",
           "limitations": [
             "feature distance does not establish causal or clinical similarity"
           ],
+          "native": null,
+          "severity": "info",
           "statement": "Похожий случай 67: 0.609",
-          "status": "supported",
-          "strength": 0.608953
+          "strength": 0.608953,
+          "surrogate": null
         },
         {
           "claim_id": "C-010",
+          "effect": "mixed",
+          "evidence_refs": [
+            "similar:85:12"
+          ],
+          "evidence_status": "supported",
           "limitations": [
             "feature distance does not establish causal or clinical similarity"
           ],
+          "native": null,
+          "severity": "info",
           "statement": "Похожий случай 12: 0.212",
-          "status": "supported",
-          "strength": 0.212377
+          "strength": 0.212377,
+          "surrogate": null
         }
       ]
     },
     "knowledge_atlas": {
       "concepts": [],
+      "displayed_rule_count": 1,
+      "primary_rule_count": 1,
       "rules": [
         {
           "claim_refs": [
             "C-007"
           ],
           "counterfactual_effect": {
+            "additional": [],
+            "calibration": -0.13,
+            "critical_errors": -5.0,
+            "subgroup_recall": 0.23,
             "test": 0.05,
             "train": 0.01,
             "validation": 0.07
@@ -2619,7 +3473,8 @@
           "surrogate": false,
           "text": "fracture_density is high and distance is low -> 1"
         }
-      ]
+      ],
+      "source_rule_count": 1
     },
     "overview": {
       "action": "defer_to_human",
@@ -2635,8 +3490,13 @@
         "similar_case",
         "subgroup_averaging"
       ],
-      "claim_count": 14,
-      "contested_claims": 0,
+      "claim_counts": {
+        "contested": 0,
+        "insufficient_evidence": 0,
+        "not_applicable": 0,
+        "supported": 14,
+        "total": 14
+      },
       "explanation_level": {
         "available_channels": [
           "prediction",
@@ -2670,28 +3530,12 @@
         "rationale": "Доступен полный операторный маршрут, контрфакты и аудит.",
         "surrogate_channels": []
       },
-      "insufficient_claims": 0,
       "prediction": {
         "adapter_id": "native_rules",
-        "metadata": {
-          "classes": [
-            0,
-            1
-          ]
-        },
         "model_type": "ControlledRuleModel",
-        "predictions": [
-          1
-        ],
-        "probabilities": [
-          [
-            0.18,
-            0.82
-          ]
-        ],
+        "prediction": "[1]",
         "score": 0.82
-      },
-      "supported_claims": 14
+      }
     },
     "provenance_edges": [
       {
@@ -2700,42 +3544,42 @@
         "target": "training:85"
       },
       {
-        "relation": "compared_with",
+        "relation": "derived_from",
         "source": "data:85",
         "target": "similar:85:68"
       },
       {
-        "relation": "compared_with",
+        "relation": "derived_from",
         "source": "data:85",
         "target": "similar:85:67"
       },
       {
-        "relation": "compared_with",
+        "relation": "derived_from",
         "source": "data:85",
         "target": "similar:85:12"
       },
       {
-        "relation": "supported_by",
+        "relation": "derived_from",
         "source": "data:85",
         "target": "prediction"
       },
       {
-        "relation": "supported_by",
+        "relation": "derived_from",
         "source": "rule:R31",
         "target": "prediction"
       },
       {
-        "relation": "supported_by",
+        "relation": "derived_from",
         "source": "similar:85:68",
         "target": "prediction"
       },
       {
-        "relation": "supported_by",
+        "relation": "derived_from",
         "source": "similar:85:67",
         "target": "prediction"
       },
       {
-        "relation": "supported_by",
+        "relation": "derived_from",
         "source": "similar:85:12",
         "target": "prediction"
       },
@@ -2825,7 +3669,7 @@
         "target": "claim:C-014"
       },
       {
-        "relation": "leads_to",
+        "relation": "recommends",
         "source": "prediction",
         "target": "action"
       },
@@ -2890,6 +3734,11 @@
         "label": "Model prediction",
         "node_id": "prediction",
         "node_type": "prediction"
+      },
+      {
+        "label": "defer_to_human",
+        "node_id": "action",
+        "node_type": "action"
       },
       {
         "label": "Прогноз: [1]",
@@ -2960,14 +3809,59 @@
         "label": "Действие: defer_to_human",
         "node_id": "claim:C-014",
         "node_type": "claim"
-      },
-      {
-        "label": "defer_to_human",
-        "node_id": "action",
-        "node_type": "action"
       }
     ],
-    "schema_version": "1.0",
+    "rule_ablations": [
+      {
+        "difference": -0.13,
+        "metric": "calibration",
+        "rule_id": "R31",
+        "scope": "calibration",
+        "with_rule": 0.11,
+        "without_rule": 0.24
+      },
+      {
+        "difference": -5.0,
+        "metric": "critical_errors",
+        "rule_id": "R31",
+        "scope": "subgroup",
+        "with_rule": 2.0,
+        "without_rule": 7.0
+      },
+      {
+        "difference": 0.22999999999999998,
+        "metric": "subgroup_recall",
+        "rule_id": "R31",
+        "scope": "subgroup",
+        "with_rule": 0.72,
+        "without_rule": 0.49
+      },
+      {
+        "difference": 0.04999999999999993,
+        "metric": "test",
+        "rule_id": "R31",
+        "scope": "test",
+        "with_rule": 0.84,
+        "without_rule": 0.79
+      },
+      {
+        "difference": 0.010000000000000009,
+        "metric": "train",
+        "rule_id": "R31",
+        "scope": "train",
+        "with_rule": 0.86,
+        "without_rule": 0.85
+      },
+      {
+        "difference": 0.06999999999999995,
+        "metric": "validation",
+        "rule_id": "R31",
+        "scope": "validation",
+        "with_rule": 0.82,
+        "without_rule": 0.75
+      }
+    ],
+    "schema_version": "1.1",
     "similar_cases": [
       {
         "claim_refs": [
@@ -2975,7 +3869,9 @@
           "C-009",
           "C-010"
         ],
+        "coverage_score": 1.0,
         "different_features": [],
+        "is_counterexample": false,
         "limitations": [
           "feature distance does not establish causal or clinical similarity"
         ],
@@ -2983,8 +3879,13 @@
           "fracture_density",
           "distance"
         ],
+        "matched_regions": [],
+        "media_artifacts": [],
         "method": "robust_standardized_euclidean",
+        "query_object_id": "85",
+        "reference_label": "1",
         "reference_object_id": "68",
+        "reference_prediction": "null",
         "representation": "normalized tabular feature vector",
         "score": 0.765608
       },
@@ -2994,17 +3895,24 @@
           "C-009",
           "C-010"
         ],
+        "coverage_score": 0.5,
         "different_features": [
           "fracture_density"
         ],
+        "is_counterexample": false,
         "limitations": [
           "feature distance does not establish causal or clinical similarity"
         ],
         "matched_features": [
           "distance"
         ],
+        "matched_regions": [],
+        "media_artifacts": [],
         "method": "robust_standardized_euclidean",
+        "query_object_id": "85",
+        "reference_label": "1",
         "reference_object_id": "67",
+        "reference_prediction": "null",
         "representation": "normalized tabular feature vector",
         "score": 0.608953
       },
@@ -3014,16 +3922,23 @@
           "C-009",
           "C-010"
         ],
+        "coverage_score": 0.0,
         "different_features": [
           "fracture_density",
           "distance"
         ],
+        "is_counterexample": false,
         "limitations": [
           "feature distance does not establish causal or clinical similarity"
         ],
         "matched_features": [],
+        "matched_regions": [],
+        "media_artifacts": [],
         "method": "robust_standardized_euclidean",
+        "query_object_id": "85",
+        "reference_label": "0",
         "reference_object_id": "12",
+        "reference_prediction": "null",
         "representation": "normalized tabular feature vector",
         "score": 0.212377
       }
@@ -3033,11 +3948,13 @@
         "claim_refs": [
           "C-002"
         ],
+        "effect": "favorable",
+        "evidence_status": "supported",
         "facts": [
           "Качество данных: 1.000"
         ],
+        "severity": "info",
         "stage_id": "data",
-        "status": "supported",
         "title": "Данные"
       },
       {
@@ -3047,25 +3964,29 @@
           "C-005",
           "C-006"
         ],
+        "effect": "adverse",
+        "evidence_status": "supported",
         "facts": [
           "Первое обучение: эпоха 7",
           "Забывание: эпохи 16",
           "Подгруппа S4 усредняется",
           "Потеряны правила: R31"
         ],
+        "severity": "warning",
         "stage_id": "training",
-        "status": "supported",
         "title": "Обучение"
       },
       {
         "claim_refs": [
           "C-007"
         ],
+        "effect": "favorable",
+        "evidence_status": "supported",
         "facts": [
           "R31: fracture_density is high and distance is low -> 1"
         ],
+        "severity": "info",
         "stage_id": "knowledge",
-        "status": "supported",
         "title": "Знания модели"
       },
       {
@@ -3078,25 +3999,29 @@
           "C-012",
           "C-013"
         ],
+        "effect": "mixed",
+        "evidence_status": "supported",
         "facts": [
           "Прогноз: [1]",
           "Похожий случай 68: 0.766",
           "Похожий случай 67: 0.609",
           "Похожий случай 12: 0.212"
         ],
+        "severity": "info",
         "stage_id": "decision",
-        "status": "supported",
         "title": "Решение"
       },
       {
         "claim_refs": [
           "C-014"
         ],
+        "effect": "adverse",
+        "evidence_status": "supported",
         "facts": [
           "Действие: defer_to_human"
         ],
+        "severity": "warning",
         "stage_id": "action",
-        "status": "supported",
         "title": "Действие"
       }
     ],
@@ -3113,28 +4038,256 @@
         "object_id": "85",
         "points": [
           {
-            "confidence": 0.78,
+            "confidence": 0.32,
+            "correct": false,
+            "epoch": 1,
+            "forgetting": false,
+            "global_metric": 0.75,
+            "loss": 0.91,
+            "margin": -0.24,
+            "prototype_distance": 0.61,
+            "rule_activations": [
+              {
+                "activation": 0.19,
+                "rule_id": "R31"
+              },
+              {
+                "activation": 0.31,
+                "rule_id": "R12"
+              }
+            ],
+            "subgroup_metric": 0.7
+          },
+          {
+            "confidence": 0.46,
+            "correct": false,
+            "epoch": 4,
+            "forgetting": false,
+            "global_metric": 0.77,
+            "loss": 0.62,
+            "margin": -0.08,
+            "prototype_distance": 0.592,
+            "rule_activations": [
+              {
+                "activation": 0.38,
+                "rule_id": "R31"
+              },
+              {
+                "activation": 0.45,
+                "rule_id": "R12"
+              }
+            ],
+            "subgroup_metric": 0.71
+          },
+          {
+            "confidence": 0.72,
             "correct": true,
             "epoch": 7,
             "forgetting": false,
+            "global_metric": 0.79,
+            "loss": 0.31,
+            "margin": 0.21,
+            "prototype_distance": 0.574,
+            "rule_activations": [
+              {
+                "activation": 0.66,
+                "rule_id": "R31"
+              },
+              {
+                "activation": 0.56,
+                "rule_id": "R12"
+              }
+            ],
+            "subgroup_metric": 0.72
+          },
+          {
+            "confidence": 0.78,
+            "correct": true,
+            "epoch": 10,
+            "forgetting": false,
+            "global_metric": 0.8,
             "loss": 0.24,
             "margin": 0.42,
-            "prototype_distance": null,
-            "rule_activations": {
-              "R31": 0.71
-            }
+            "prototype_distance": 0.556,
+            "rule_activations": [
+              {
+                "activation": 0.71,
+                "rule_id": "R31"
+              },
+              {
+                "activation": 0.62,
+                "rule_id": "R12"
+              }
+            ],
+            "subgroup_metric": 0.72
+          },
+          {
+            "confidence": 0.75,
+            "correct": true,
+            "epoch": 13,
+            "forgetting": false,
+            "global_metric": 0.81,
+            "loss": 0.28,
+            "margin": 0.35,
+            "prototype_distance": 0.538,
+            "rule_activations": [
+              {
+                "activation": 0.63,
+                "rule_id": "R31"
+              },
+              {
+                "activation": 0.68,
+                "rule_id": "R12"
+              }
+            ],
+            "subgroup_metric": 0.69
           },
           {
             "confidence": 0.31,
             "correct": false,
             "epoch": 16,
             "forgetting": true,
+            "global_metric": 0.82,
             "loss": 0.79,
             "margin": -0.16,
-            "prototype_distance": null,
-            "rule_activations": {
-              "R31": 0.08
-            }
+            "prototype_distance": 0.71,
+            "rule_activations": [
+              {
+                "activation": 0.08,
+                "rule_id": "R31"
+              },
+              {
+                "activation": 0.73,
+                "rule_id": "R12"
+              }
+            ],
+            "subgroup_metric": 0.49
+          },
+          {
+            "confidence": 0.28,
+            "correct": false,
+            "epoch": 19,
+            "forgetting": false,
+            "global_metric": 0.83,
+            "loss": 0.83,
+            "margin": -0.22,
+            "prototype_distance": 0.719,
+            "rule_activations": [
+              {
+                "activation": 0.06,
+                "rule_id": "R31"
+              },
+              {
+                "activation": 0.77,
+                "rule_id": "R12"
+              }
+            ],
+            "subgroup_metric": 0.47
+          },
+          {
+            "confidence": 0.3,
+            "correct": false,
+            "epoch": 22,
+            "forgetting": false,
+            "global_metric": 0.835,
+            "loss": 0.78,
+            "margin": -0.18,
+            "prototype_distance": 0.728,
+            "rule_activations": [
+              {
+                "activation": 0.05,
+                "rule_id": "R31"
+              },
+              {
+                "activation": 0.79,
+                "rule_id": "R12"
+              }
+            ],
+            "subgroup_metric": 0.46
+          },
+          {
+            "confidence": 0.34,
+            "correct": false,
+            "epoch": 25,
+            "forgetting": false,
+            "global_metric": 0.84,
+            "loss": 0.71,
+            "margin": -0.11,
+            "prototype_distance": 0.737,
+            "rule_activations": [
+              {
+                "activation": 0.04,
+                "rule_id": "R31"
+              },
+              {
+                "activation": 0.81,
+                "rule_id": "R12"
+              }
+            ],
+            "subgroup_metric": 0.48
+          },
+          {
+            "confidence": 0.37,
+            "correct": false,
+            "epoch": 28,
+            "forgetting": false,
+            "global_metric": 0.845,
+            "loss": 0.68,
+            "margin": -0.07,
+            "prototype_distance": 0.746,
+            "rule_activations": [
+              {
+                "activation": 0.04,
+                "rule_id": "R31"
+              },
+              {
+                "activation": 0.82,
+                "rule_id": "R12"
+              }
+            ],
+            "subgroup_metric": 0.5
+          },
+          {
+            "confidence": 0.39,
+            "correct": false,
+            "epoch": 31,
+            "forgetting": false,
+            "global_metric": 0.85,
+            "loss": 0.64,
+            "margin": -0.04,
+            "prototype_distance": 0.755,
+            "rule_activations": [
+              {
+                "activation": 0.03,
+                "rule_id": "R31"
+              },
+              {
+                "activation": 0.83,
+                "rule_id": "R12"
+              }
+            ],
+            "subgroup_metric": 0.51
+          },
+          {
+            "confidence": 0.41,
+            "correct": false,
+            "epoch": 34,
+            "forgetting": false,
+            "global_metric": 0.855,
+            "loss": 0.61,
+            "margin": -0.02,
+            "prototype_distance": 0.764,
+            "rule_activations": [
+              {
+                "activation": 0.03,
+                "rule_id": "R31"
+              },
+              {
+                "activation": 0.84,
+                "rule_id": "R12"
+              }
+            ],
+            "subgroup_metric": 0.52
           }
         ]
       }

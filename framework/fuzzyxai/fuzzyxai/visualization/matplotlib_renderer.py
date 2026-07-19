@@ -50,11 +50,17 @@ def _story(spec: Mapping[str, Any]):
     width, gap, left = 0.17, 0.025, 0.025
     for index, stage in enumerate(stages):
         x = left + index * (width + gap)
-        color = _COLORS.get(str(stage.get("status")), "#7b8790")
-        box = FancyBboxPatch((x, 0.28), width, 0.48, boxstyle="round,pad=0.012,rounding_size=0.012", facecolor="#f7f9fa", edgecolor=color, linewidth=2)
+        evidence_status = str(stage.get("evidence_status", "insufficient_evidence"))
+        color = {
+            "adverse": _COLORS["conflict"],
+            "mixed": _COLORS["limitation"],
+            "unknown": _COLORS["missing"],
+        }.get(str(stage.get("effect")), _COLORS["supported"])
+        edge_color = _COLORS["limitation"] if evidence_status != "supported" else color
+        box = FancyBboxPatch((x, 0.28), width, 0.48, boxstyle="round,pad=0.012,rounding_size=0.012", facecolor="#f7f9fa", edgecolor=edge_color, linewidth=2)
         axis.add_patch(box)
         axis.text(x + 0.012, 0.70, stage.get("title", ""), fontsize=15, fontweight="bold", color="#17242d")
-        axis.text(x + width - 0.012, 0.70, str(stage.get("status", "")).upper(), ha="right", fontsize=8, color=color, fontweight="bold")
+        axis.text(x + width - 0.012, 0.70, f"{evidence_status.upper()} / {str(stage.get('effect', '')).upper()}", ha="right", fontsize=6.8, color=edge_color, fontweight="bold")
         y = 0.64
         facts = list(stage.get("facts", [])) or ["Evidence отсутствует"]
         for fact in facts[:4]:
@@ -109,7 +115,7 @@ def _training_trace(spec: Mapping[str, Any]):
     timeline = timelines[0]
     points = list(timeline.get("points", []))
     epochs = [point.get("epoch") for point in points]
-    figure, axes = plt.subplots(4, 1, figsize=(16, 9), sharex=True, gridspec_kw={"height_ratios": [0.55, 1, 1, 1.35]})
+    figure, axes = plt.subplots(6, 1, figsize=(16, 9), sharex=True, gridspec_kw={"height_ratios": [0.5, 1, 1, 1, 1, 1.2]})
     figure.suptitle(f"Траектория обучения объекта {timeline.get('object_id')}", x=0.06, ha="left", fontsize=20, fontweight="bold")
     correct = [1 if point.get("correct") else 0 for point in points]
     axes[0].scatter(epochs, correct, c=[_COLORS["supported"] if flag else _COLORS["conflict"] for flag in correct], s=65)
@@ -118,13 +124,20 @@ def _training_trace(spec: Mapping[str, Any]):
     axes[1].set_ylabel("Confidence")
     axes[2].plot(epochs, [point.get("loss") for point in points], marker="o", color="#b7791f")
     axes[2].set_ylabel("Object loss")
-    rule_ids = sorted({key for point in points for key in point.get("rule_activations", {})})[:5]
+    axes[3].plot(epochs, [point.get("margin") for point in points], marker="o", color="#70558c")
+    axes[3].set_ylabel("Margin")
+    axes[4].plot(epochs, [point.get("prototype_distance") for point in points], marker="o", color="#5a7582", label="prototype distance")
+    axes[4].plot(epochs, [point.get("subgroup_metric") for point in points], marker="s", color="#a23b3b", label="subgroup metric")
+    axes[4].plot(epochs, [point.get("global_metric") for point in points], marker="^", color="#2f6b4f", label="global metric")
+    axes[4].set_ylabel("Context")
+    axes[4].legend(loc="upper right", ncol=3, fontsize=8)
+    rule_ids = sorted({item.get("rule_id") for point in points for item in point.get("rule_activations", []) if item.get("rule_id")})[:5]
     for rule_id in rule_ids:
-        axes[3].plot(epochs, [point.get("rule_activations", {}).get(rule_id) for point in points], marker=".", label=rule_id)
-    axes[3].set_ylabel("Rule activation")
-    axes[3].set_xlabel("Эпоха")
+        axes[5].plot(epochs, [next((item.get("activation") for item in point.get("rule_activations", []) if item.get("rule_id") == rule_id), None) for point in points], marker=".", label=rule_id)
+    axes[5].set_ylabel("Rule activation")
+    axes[5].set_xlabel("Эпоха")
     if rule_ids:
-        axes[3].legend(loc="upper right", ncol=min(3, len(rule_ids)))
+        axes[5].legend(loc="upper right", ncol=min(3, len(rule_ids)))
     for point in points:
         if point.get("forgetting"):
             for axis in axes:
@@ -195,10 +208,10 @@ def _table_view(spec: Mapping[str, Any], view: str):
         columns = ["Объект", "Score", "Метод", "Представление", "Ограничения"]
         rows = [[item.get("reference_object_id"), f"{item.get('score', 0):.3f}", item.get("method"), item.get("representation"), "; ".join(item.get("limitations", []))] for item in items[:12]]
     elif view == "rule_ablation":
-        rules = list(spec.get("knowledge_atlas", {}).get("rules", []))
+        ablations = list(spec.get("rule_ablations", []))
         title = "What-if: измеренный эффект отключения правила"
-        columns = ["Правило", "Train", "Validation", "Test", "Важно"]
-        rows = [[rule.get("rule_id"), rule.get("counterfactual_effect", {}).get("train"), rule.get("counterfactual_effect", {}).get("validation"), rule.get("counterfactual_effect", {}).get("test"), rule.get("importance")] for rule in rules if rule.get("counterfactual_effect")]
+        columns = ["Правило", "Метрика", "С правилом", "Без правила", "Разница", "Scope"]
+        rows = [[item.get("rule_id"), item.get("metric"), item.get("with_rule"), item.get("without_rule"), item.get("difference"), item.get("scope")] for item in ablations]
     else:
         items = list(spec.get("counterfactuals", []))
         title = "Контрфактические изменения"
@@ -246,18 +259,21 @@ def _audit(spec: Mapping[str, Any]):
     import matplotlib.pyplot as plt
 
     overview = dict(spec.get("overview", {}))
+    audit = dict(spec.get("audit", {}))
+    counts = dict(overview.get("claim_counts", {}))
     figure, axis = plt.subplots(figsize=(16, 9))
     axis.axis("off")
     axis.set_title("Аудит объяснения", loc="left", fontsize=20, fontweight="bold")
     lines = [
         f"Action: {overview.get('action')}",
         f"Explanation level: {overview.get('explanation_level', {}).get('level')}",
-        f"Claims: {overview.get('claim_count')}",
-        f"Supported: {overview.get('supported_claims')}",
-        f"Contested: {overview.get('contested_claims')}",
-        f"Insufficient evidence: {overview.get('insufficient_claims')}",
-        f"Graph nodes: {len(spec.get('provenance_nodes', []))}",
-        f"Graph edges: {len(spec.get('provenance_edges', []))}",
+        f"Claims: {counts.get('total')}",
+        f"Supported: {counts.get('supported')}",
+        f"Contested: {counts.get('contested')}",
+        f"Insufficient evidence: {counts.get('insufficient_evidence')}",
+        f"Graph validation: {'PASS' if audit.get('graph_valid') else 'FAIL'}",
+        f"Graph nodes: {audit.get('node_count')}",
+        f"Graph edges: {audit.get('edge_count')}",
     ]
     axis.text(0.03, 0.88, "\n".join(lines), va="top", fontsize=14, family="monospace", bbox={"boxstyle": "round,pad=.8", "facecolor": "#f6f8f9", "edgecolor": "#9fb2bc"})
     return figure
