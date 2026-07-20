@@ -60,14 +60,20 @@ def sha256(content: bytes) -> str:
 def runtime_paths(prefixes: Sequence[str]) -> list[Path]:
     paths = []
     for prefix in prefixes:
-        candidate = ROOT / prefix
-        if candidate.is_file():
-            paths.append(candidate)
-        elif candidate.is_dir():
-            paths.extend(path for path in candidate.rglob("*") if path.is_file())
-        else:
-            paths.extend(path for path in ROOT.glob(f"{prefix}*") if path.is_file())
+        resolved = _runtime_prefix_paths(prefix)
+        if not resolved:
+            raise RuntimeError(f"required runtime archive input is missing: {prefix}")
+        paths.extend(resolved)
     return sorted(set(paths))
+
+
+def _runtime_prefix_paths(prefix: str) -> list[Path]:
+    candidate = ROOT / prefix
+    if candidate.is_file():
+        return [candidate]
+    if candidate.is_dir():
+        return [path for path in candidate.rglob("*") if path.is_file()]
+    return [path for path in ROOT.glob(f"{prefix}*") if path.is_file()]
 
 
 def committed_paths(commit: str, prefixes: Sequence[str]) -> list[str]:

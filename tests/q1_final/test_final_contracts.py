@@ -7,6 +7,7 @@ import pytest
 
 from fuzzyxai.q1_final.contracts import ExternalGateRecord, FinalRunIdentity
 from fuzzyxai.q1_final.multiclass import _stratified_cap
+from scripts.q1_final import build_archives
 
 
 COMMIT = "1" * 40
@@ -53,3 +54,9 @@ def test_stratified_cap_accepts_composite_string_strata() -> None:
     selected = _stratified_cap(indices, labels, 24, 4201)
     assert len(selected) == 24
     assert len(set(selected.tolist())) == 24
+
+
+def test_runtime_archive_inputs_fail_closed(tmp_path: object, monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setattr(build_archives, "ROOT", tmp_path)
+    with pytest.raises(RuntimeError, match="required runtime archive input is missing"):
+        build_archives.runtime_paths(("release_evidence/q1_final/dod_185.json",))

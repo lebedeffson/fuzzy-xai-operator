@@ -96,6 +96,9 @@ def main(profile: str, input_dir: Path | None) -> None:
         command(sys.executable, "scripts/q1_final/verify_archives.py")
         command(sys.executable, "scripts/q1_final/build_dod.py")
         command(sys.executable, "scripts/q1_final/build_manifest.py")
+        # Rebuild once so every archive embeds the post-verification DoD and manifest.
+        command(sys.executable, "scripts/q1_final/build_archives.py")
+        command(sys.executable, "scripts/q1_final/verify_archives.py")
     print(f"PASS: q1_final_reproduction profile={profile}")
 
 
