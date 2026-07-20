@@ -34,6 +34,11 @@ def _one(input_dir: Path, pattern: str) -> dict[str, object] | None:
     return json.loads(candidates[0].read_text(encoding="utf-8")) if candidates else None
 
 
+def _onnx_verified(neural: dict[str, object] | None) -> bool:
+    onnx = neural.get("onnx") if neural else None
+    return isinstance(onnx, dict) and onnx.get("status") == "verified"
+
+
 def merge(input_dir: Path, *, allow_incomplete: bool) -> dict[str, object]:
     rows = {}
     checks: dict[str, bool] = {}
@@ -50,7 +55,7 @@ def merge(input_dir: Path, *, allow_incomplete: bool) -> dict[str, object]:
         if neural:
             model_rows.extend(neural["models"])
         families = {str(row["family"]) for row in model_rows if row.get("status") == "measured"}
-        if neural and neural.get("onnx", {}).get("status") == "verified":
+        if _onnx_verified(neural):
             families.add("ONNX")
         methods = {
             str(row["method"])
