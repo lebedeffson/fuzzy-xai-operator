@@ -1,5 +1,40 @@
 # Project Memory
 
+## FXAI-AI-PRE-REVIEW-HUMAN-CONFIRMATION
+
+- Date: 2026-07-20
+- Branch: `feat/ai-pre-review-human-confirmation`
+- Technical implementation commit: `5c8d0fe`
+- Frozen Q1 evidence: `e34e52fb8ae62ee1be043d6d5b26a0c9214a0572`
+- Formative observer base: `bd48a9ca3795e2665e0e6a4f1ab4f4e981774c2b`
+- Technical status: PASS; AI and human gates open
+- Stable release: blocked
+
+This milestone prepares a blind AI pre-review followed by independent human confirmation without treating AI output
+as expert evidence. The tracked source snapshot contains 360 unique measured cases: 240 formative and 120
+confirmatory, split equally across tabular, image, text and time-series modalities. Three explanation variants per
+case are randomized with an out-of-repository HMAC secret; the reversible method map is AES-256 encrypted.
+
+Validated technical boundary:
+
+- master log: 1,080 blind variants;
+- review packets: 18 batches, at most 20 cases and 60 variants per batch;
+- rubric: R1-R10 plus 12 critical-defect flags;
+- AI importer requires complete batches, immutable hashes, exact commit identity and independent `AI_RUN_1..3`;
+- confirmatory lock fails closed until a real formative acceptance record exists;
+- human packet construction fails closed until protocol lock, three AI runs and score commitment exist;
+- human importer requires at least three independently hashed reviewers and rejects AI reviewer records;
+- technical DoD at implementation time: 42 PASS, 38 external/public-CI items open;
+- focused local tests: 6 passed; new-code Ruff and compile checks: PASS;
+- deterministic analysis-input archive: PASS for repeated same-commit builds.
+
+Frozen evidence limitation: the Q1 Fashion-MNIST protocol labels every evaluated image class as rare, so the image
+modality has no measured `common_class` stratum. The study records this limitation rather than fabricating a class.
+
+Next step: run the formative AI pre-review externally, import the raw JSONL without rewriting it, repair only observed
+defects, and lock the confirmatory protocol. Human confirmation remains forbidden until three confirmatory AI runs
+are committed. No human-comprehension, domain-approval, expert-validation or stable-release claim is allowed yet.
+
 ## Q1 Empirical Remediation
 
 - Date: 2026-07-20

@@ -1,5 +1,25 @@
 # FuzzyXAI Framework Release Status
 
+## AI Pre-review and Human Confirmation Candidate
+
+Status: technical tooling PASS at `5c8d0fe` on `feat/ai-pre-review-human-confirmation`; external AI review, public CI
+and independent human confirmation remain open. Stable release is `BLOCKED`.
+
+- frozen evidence commits remain ancestors and unchanged;
+- tracked design: 360 unique cases, 1,080 blind variants, four modalities, 18 bounded review batches;
+- method identity: HMAC-randomized and encrypted with a secret excluded from repository and archives;
+- local technical command: `make ai-pre-review-check` PASS;
+- focused tests: `6 passed`;
+- negative gates: confirmatory lock and human-pack generation correctly reject missing external evidence;
+- current claim states: `planned_not_run`, `pending_three_ai_runs`, and `external_gate`;
+- technical DoD: `42/80 PASS`; 38 items require external AI sessions, public CI, final documentation commit or humans;
+- independent experts observed: 0;
+- AI confirmatory runs observed: 0;
+- human validation, domain approval and demonstrated comprehension: not claimed.
+
+The next allowed transition is a real formative AI pre-review. A stable tag, expert-validation wording, and human
+confirmation remain forbidden until the locked confirmatory and independent-human thresholds are actually measured.
+
 ## Two-Stage Selective Observer Formative Cycle
 
 Status: formative method candidate on `feat/selective-observer-formative`; confirmatory claims and stable release are
