@@ -698,3 +698,35 @@ ai-final-check: ai-final-archive
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m pytest -q tests/ai_pre_review_final
 
 reproduce-ai-review-final: ai-final-check
+
+.PHONY: strong-confirmatory-protocol strong-confirmatory-smoke strong-confirmatory-formative strong-confirmatory-formative-check strong-confirmatory-lock chapter4-formative-shell chapter4-final strong-confirmatory-check
+strong-confirmatory-protocol:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/strong_confirmatory/build_protocol.py
+
+strong-confirmatory-smoke: strong-confirmatory-protocol
+	OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/strong_confirmatory/run_formative.py --profile smoke
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/strong_confirmatory/build_report.py
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/strong_confirmatory/verify_formative.py
+
+strong-confirmatory-formative: strong-confirmatory-protocol
+	OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/strong_confirmatory/run_formative.py --profile full
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/strong_confirmatory/build_report.py
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/strong_confirmatory/verify_formative.py
+
+strong-confirmatory-formative-check:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/strong_confirmatory/verify_formative.py
+
+strong-confirmatory-lock:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/strong_confirmatory/lock_protocol.py
+
+chapter4-formative-shell: strong-confirmatory-formative-check
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/chapter4/build_claims.py
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/chapter4/build_tables.py
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/chapter4/build_figures.py
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/chapter4/build_text.py
+
+chapter4-final:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/chapter4/build_final.py
+
+strong-confirmatory-check: strong-confirmatory-protocol
+	OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m pytest -q tests/strong_confirmatory
