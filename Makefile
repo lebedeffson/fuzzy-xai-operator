@@ -699,7 +699,7 @@ ai-final-check: ai-final-archive
 
 reproduce-ai-review-final: ai-final-check
 
-.PHONY: strong-confirmatory-protocol strong-confirmatory-smoke strong-confirmatory-formative strong-confirmatory-formative-check strong-confirmatory-lock chapter4-formative-shell chapter4-final strong-confirmatory-check
+.PHONY: strong-confirmatory-protocol strong-confirmatory-smoke strong-confirmatory-formative strong-confirmatory-formative-check strong-confirmatory-lock strong-confirmatory-bundle chapter4-formative-shell chapter4-final strong-confirmatory-check
 strong-confirmatory-protocol:
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/strong_confirmatory/build_protocol.py
 
@@ -718,6 +718,9 @@ strong-confirmatory-formative-check:
 
 strong-confirmatory-lock:
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/strong_confirmatory/lock_protocol.py
+
+strong-confirmatory-bundle: chapter4-formative-shell
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/strong_confirmatory/build_bundle.py
 
 chapter4-formative-shell: strong-confirmatory-formative-check
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/chapter4/build_claims.py
