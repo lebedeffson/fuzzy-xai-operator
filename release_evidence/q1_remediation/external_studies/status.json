@@ -1,20 +1,20 @@
 {
-  "schema_version": "1.0",
   "comprehension": {
-    "status": "planned_not_run",
+    "claim_allowed": false,
     "participant_count": 0,
-    "claim_allowed": false
+    "status": "planned_not_run"
   },
   "domain_language_review": {
-    "status": "pending_external_review",
+    "claim_allowed": false,
     "reviewer_count": 0,
-    "claim_allowed": false
+    "status": "pending_external_review"
   },
   "expert_action_review": {
-    "status": "planned_not_run",
-    "reviewer_count": 0,
+    "claim_allowed": false,
     "object_count": 0,
-    "claim_allowed": false
+    "reviewer_count": 0,
+    "status": "planned_not_run"
   },
+  "schema_version": "1.0",
   "stable_release_allowed": false
 }

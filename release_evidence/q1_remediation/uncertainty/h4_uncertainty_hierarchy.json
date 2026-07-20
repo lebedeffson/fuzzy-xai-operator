@@ -25,35 +25,35 @@
     {
       "coverage": 0.12250000000000005,
       "mean_complexity": 1.0,
-      "mean_risk": 0.8975,
+      "mean_risk": 0.8974999999999873,
       "mode": "always_F0",
       "undercoverage": 0.8775
     },
     {
       "coverage": 0.22999999999999998,
       "mean_complexity": 2.0,
-      "mean_risk": 0.79,
+      "mean_risk": 0.7899999999999879,
       "mode": "always_Fint",
       "undercoverage": 0.77
     },
     {
       "coverage": 0.4358333333333333,
       "mean_complexity": 4.0,
-      "mean_risk": 0.5841666666666666,
+      "mean_risk": 0.5841666666666574,
       "mode": "always_NAS",
       "undercoverage": 0.5641666666666667
     },
     {
       "coverage": 1.0,
       "mean_complexity": 8.0,
-      "mean_risk": 0.02,
+      "mean_risk": 0.019999999999999647,
       "mode": "always_FML",
       "undercoverage": 0.0
     },
     {
       "coverage": 1.0,
       "mean_complexity": 5.674166666666666,
-      "mean_risk": 0.02,
+      "mean_risk": 0.019999999999999647,
       "mode": "adaptive",
       "undercoverage": 0.0
     }

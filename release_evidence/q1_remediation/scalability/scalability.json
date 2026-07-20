@@ -2,9 +2,9 @@
   "complexity_wording": "Observed runtime is consistent with linear scaling over the measured range.",
   "linear_scalability_claim_allowed": true,
   "log_log_fit": {
-    "intercept": -13.347673990906227,
-    "r_squared": 0.9956855540651713,
-    "slope": 1.0631283894571235
+    "intercept": -12.327554357011678,
+    "r_squared": 0.998488264577404,
+    "slope": 1.0358774340986538
   },
   "measured_operations": [
     "evidence_nodes",
@@ -14,35 +14,35 @@
   ],
   "measurements": [
     {
-      "elapsed_seconds": 0.002699101998587139,
+      "elapsed_seconds": 0.005785161000005701,
       "graph_edges": 1000,
       "graph_nodes": 2000,
       "n_objects": 1000,
-      "peak_memory_bytes": 291524,
+      "peak_memory_bytes": 423300,
       "serialized_bytes": 42694
     },
     {
-      "elapsed_seconds": 0.012862906001828378,
+      "elapsed_seconds": 0.031112722000003146,
       "graph_edges": 5000,
       "graph_nodes": 10000,
       "n_objects": 5000,
-      "peak_memory_bytes": 1441604,
+      "peak_memory_bytes": 2143470,
       "serialized_bytes": 226694
     },
     {
-      "elapsed_seconds": 0.025083548000111477,
+      "elapsed_seconds": 0.05592428799999993,
       "graph_edges": 10000,
       "graph_nodes": 20000,
       "n_objects": 10000,
-      "peak_memory_bytes": 2897556,
+      "peak_memory_bytes": 4305566,
       "serialized_bytes": 456694
     },
     {
-      "elapsed_seconds": 0.1748860469997453,
+      "elapsed_seconds": 0.34069780400000127,
       "graph_edges": 50000,
       "graph_nodes": 100000,
       "n_objects": 50000,
-      "peak_memory_bytes": 15456012,
+      "peak_memory_bytes": 18334792,
       "serialized_bytes": 2416694
     }
   ]

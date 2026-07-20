@@ -12,7 +12,7 @@
     "fit_pairs": 40,
     "holdout_mae": 0.3567434518647147,
     "holdout_pairs": 10,
-    "holdout_r2": -0.06296668096584601,
+    "holdout_r2": -0.06296668096584646,
     "status": "measured_exploratory_controlled"
   },
   "descriptors": [

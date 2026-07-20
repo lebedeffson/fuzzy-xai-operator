@@ -1,5 +1,5 @@
 {
-  "blocked": 25,
+  "blocked": 1,
   "items": [
     {
       "description": "Baseline commit frozen",
@@ -39,97 +39,97 @@
     {
       "description": "Real tabular dataset above 10k measured",
       "id": 8,
-      "status": "BLOCKED"
+      "status": "PASS"
     },
     {
       "description": "Real image dataset above 10k measured",
       "id": 9,
-      "status": "BLOCKED"
+      "status": "PASS"
     },
     {
       "description": "Real text dataset above 10k measured",
       "id": 10,
-      "status": "BLOCKED"
+      "status": "PASS"
     },
     {
       "description": "Real time-series dataset above 10k measured",
       "id": 11,
-      "status": "BLOCKED"
+      "status": "PASS"
     },
     {
       "description": "Real and controlled modes measured",
       "id": 12,
-      "status": "BLOCKED"
+      "status": "PASS"
     },
     {
       "description": "Dataset licenses and hashes recorded",
       "id": 13,
-      "status": "BLOCKED"
+      "status": "PASS"
     },
     {
       "description": "Linear model measured",
       "id": 14,
-      "status": "BLOCKED"
+      "status": "PASS"
     },
     {
       "description": "Tree or ensemble measured",
       "id": 15,
-      "status": "BLOCKED"
+      "status": "PASS"
     },
     {
       "description": "Boosting measured",
       "id": 16,
-      "status": "BLOCKED"
+      "status": "PASS"
     },
     {
       "description": "CNN measured",
       "id": 17,
-      "status": "BLOCKED"
+      "status": "PASS"
     },
     {
       "description": "Sequence model measured",
       "id": 18,
-      "status": "BLOCKED"
+      "status": "PASS"
     },
     {
       "description": "ONNX measured",
       "id": 19,
-      "status": "BLOCKED"
+      "status": "PASS"
     },
     {
       "description": "SHAP measured",
       "id": 20,
-      "status": "BLOCKED"
+      "status": "PASS"
     },
     {
       "description": "LIME measured",
       "id": 21,
-      "status": "BLOCKED"
+      "status": "PASS"
     },
     {
       "description": "Anchors measured",
       "id": 22,
-      "status": "BLOCKED"
+      "status": "PASS"
     },
     {
       "description": "RuleFit measured",
       "id": 23,
-      "status": "BLOCKED"
+      "status": "PASS"
     },
     {
       "description": "Grad-CAM measured",
       "id": 24,
-      "status": "BLOCKED"
+      "status": "PASS"
     },
     {
       "description": "Integrated Gradients measured",
       "id": 25,
-      "status": "BLOCKED"
+      "status": "PASS"
     },
     {
       "description": "Text and time-series attribution measured",
       "id": 26,
-      "status": "BLOCKED"
+      "status": "PASS"
     },
     {
       "description": "Base versus wrapped pairs measured",
@@ -479,7 +479,7 @@
     {
       "description": "make reproduce-q1 works",
       "id": 96,
-      "status": "BLOCKED"
+      "status": "PASS"
     },
     {
       "description": "Docker command works",
@@ -509,22 +509,22 @@
     {
       "description": "Fast CI green",
       "id": 102,
-      "status": "BLOCKED"
+      "status": "PASS"
     },
     {
       "description": "Heavy CI green",
       "id": 103,
-      "status": "BLOCKED"
+      "status": "PASS"
     },
     {
       "description": "Project Memory updated",
       "id": 104,
-      "status": "BLOCKED"
+      "status": "PASS"
     },
     {
       "description": "Release Status updated",
       "id": 105,
-      "status": "BLOCKED"
+      "status": "PASS"
     },
     {
       "description": "Chapters generated from artifacts",
@@ -543,7 +543,7 @@
     }
   ],
   "open_external": 3,
-  "passed": 80,
+  "passed": 104,
   "schema_version": "1.0",
   "stable_release_allowed": false
 }
