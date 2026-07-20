@@ -33,8 +33,15 @@ fuzzyxai_experiments/reports/*_20*.json
 # Framework completion: generated evidence and release archives
 release_evidence/generated/
 release_artifacts/
+release_evidence/q1_final/
+reports/q1_final/
+dissertation_artifacts/q1_final/
 *.whl
 *.tar.gz
+
+# Protected external-study records are imported only in guarded CI.
+study/q1_final/**/raw_anonymized/
+study/q1_final/**/signed_records/
 
 # Quarantined/generated ecosystem content must not return to main
 site/dubnaxai/

@@ -1,0 +1,108 @@
+{
+  "assignment_slots": 40,
+  "base_commit": "41c32af25242164144fd907e4850fa9d4f426bd1",
+  "domain_card_count": 60,
+  "expert_object_count": 100,
+  "files": [
+    {
+      "bytes": 558,
+      "path": "study/q1_final/README.md",
+      "sha256": "0b3731fc3b0268be5a0b1b168c239416fc067ac7f8bcf9d8e4813ffb76c1afd5"
+    },
+    {
+      "bytes": 17163,
+      "path": "study/q1_final/comprehension/assignments.json",
+      "sha256": "544c4e6c3cba778ac145b8c504acc8b7ea730ed4d765e3c48e393f9cdb476fc3"
+    },
+    {
+      "bytes": 282,
+      "path": "study/q1_final/comprehension/power_analysis.json",
+      "sha256": "1b217b42a7910f37781cc00e15673e6472977ec134e83b55680f6602db2e5f4c"
+    },
+    {
+      "bytes": 180,
+      "path": "study/q1_final/comprehension/response_schema.csv",
+      "sha256": "1d3051fe520140e4cd649e8ec588b00601b9503f86ac0a333fb9684e9ea40270"
+    },
+    {
+      "bytes": 419,
+      "path": "study/q1_final/comprehension/study_design.json",
+      "sha256": "46852bd0bdc6119dd99a8b1f28bebac2d864f87c0f91c496705686a7ad32eec2"
+    },
+    {
+      "bytes": 542,
+      "path": "study/q1_final/consent/anonymization_procedure.md",
+      "sha256": "ed5856cae6679d4456f6c9381808b45dd60c1c08a7926b7c905d8a9c9074c57d"
+    },
+    {
+      "bytes": 256,
+      "path": "study/q1_final/consent/consent_form.md",
+      "sha256": "74a66dff10fe60beb06eca8606e812e39fd23ca738bef71f9cdfd3b1424499c5"
+    },
+    {
+      "bytes": 363,
+      "path": "study/q1_final/consent/information_sheet.md",
+      "sha256": "5ddff05cab5d134589a8488db059eed512f99c1c5bcce88151f580af4a443956"
+    },
+    {
+      "bytes": 355,
+      "path": "study/q1_final/consent/privacy_and_retention.md",
+      "sha256": "30fcea29f33b4d6086f5f8cc048a1782eb40877acff50b2ff84efe91cacf107d"
+    },
+    {
+      "bytes": 329,
+      "path": "study/q1_final/consent/withdrawal_policy.md",
+      "sha256": "7bfdff6d59901eb5f75a1d24f5ab0269b260838fd321dc1c3dbcf98997aff3c0"
+    },
+    {
+      "bytes": 15913,
+      "path": "study/q1_final/domain_language_review/cards.json",
+      "sha256": "38486cdcbe008313b21662d89162bfae5eb0dbee64f360cb5971a7904011a708"
+    },
+    {
+      "bytes": 93,
+      "path": "study/q1_final/domain_language_review/findings_schema.csv",
+      "sha256": "e96b17c0de584e30c431cab1bf0eab2d50f1e3c37f596a55e9de04b296398e48"
+    },
+    {
+      "bytes": 281,
+      "path": "study/q1_final/ethics/README.md",
+      "sha256": "10dffbd2ce8f78742d30a4f08e7cabeb54b434306a13cfd2fce86fc73164ed59"
+    },
+    {
+      "bytes": 139,
+      "path": "study/q1_final/ethics/status.json",
+      "sha256": "0a3775a21882ef6389f5dd2844f4e3090d6cdc4ff81acfe08aa820c472b1c2f1"
+    },
+    {
+      "bytes": 23343,
+      "path": "study/q1_final/expert_action_review/objects.json",
+      "sha256": "75ae17b81985e98139bb36695179737f10c1d56140d0b4a53b7939d19b85cfbf"
+    },
+    {
+      "bytes": 106,
+      "path": "study/q1_final/expert_action_review/response_schema.csv",
+      "sha256": "68862c536c20c778929f267e65e1deb79b4c91f8082969aac79992ae7a0c236b"
+    },
+    {
+      "bytes": 235,
+      "path": "study/q1_final/expert_action_review/study_design.json",
+      "sha256": "5ba611925b12acec046d3316c2b02751a92afee6a6717207545bd68d2e139cf0"
+    },
+    {
+      "bytes": 26744,
+      "path": "study/q1_final/stimuli_manifest/stimuli.json",
+      "sha256": "c0c4a7d8207f5776f8cabc36d4a919c72c93e9adefefe32c9d31eea96a667661"
+    }
+  ],
+  "human_responses_generated": false,
+  "method_identity_blinded": true,
+  "record_origin": "frozen_stimuli_and_blank_templates_only",
+  "schema_version": "2.0",
+  "scorer_sha256": {
+    "comprehension": "8f2a2195d38e74ff88c517d89acef5498251fe07d7492ee4f9909c2ab4553b67",
+    "domain_language_review": "2c45d4578de7556f633794ad35f1009524a83c08839bdb0144130ebe6afd76bd",
+    "expert_action_review": "ee1cccaae401619aeeae289fa9c9cb91a675a5d29a54437b071685f99c03e752"
+  },
+  "stimulus_count": 24
+}

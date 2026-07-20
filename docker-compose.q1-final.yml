@@ -1,0 +1,23 @@
+services:
+  reproduce-q1-final:
+    build:
+      context: .
+      dockerfile: Dockerfile.q1-final
+    command: make reproduce-q1-final
+    environment:
+      OMP_NUM_THREADS: "1"
+      OPENBLAS_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
+      NUMEXPR_NUM_THREADS: "1"
+      PYTHONPATH: /workspace/framework/fuzzyxai:/workspace
+    volumes:
+      - ./release_evidence/q1_final:/workspace/release_evidence/q1_final
+      - ./reports/q1_final:/workspace/reports/q1_final
+      - ./dissertation_artifacts/q1_final:/workspace/dissertation_artifacts/q1_final
+      - ./release_artifacts/q1_final:/workspace/release_artifacts/q1_final
+
+  smoke-q1-final:
+    build:
+      context: .
+      dockerfile: Dockerfile.q1-final
+    command: make reproduce-q1-final-smoke

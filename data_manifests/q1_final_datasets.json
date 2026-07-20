@@ -1,0 +1,46 @@
+{
+  "schema_version": "2.0",
+  "redistribution_policy": "Raw public datasets are downloaded into a local or CI cache and are not redistributed in release archives.",
+  "datasets": [
+    {
+      "dataset_id": "uci_covertype",
+      "modality": "tabular",
+      "source": "https://archive.ics.uci.edu/dataset/180/cover+type",
+      "license": "CC BY 4.0",
+      "native_classes": 7,
+      "minimum_objects": 10000
+    },
+    {
+      "dataset_id": "fashion_mnist",
+      "modality": "image",
+      "source": "https://github.com/zalandoresearch/fashion-mnist",
+      "license": "MIT",
+      "native_classes": 10,
+      "minimum_objects": 10000
+    },
+    {
+      "dataset_id": "20newsgroups",
+      "modality": "text",
+      "source": "https://scikit-learn.org/stable/modules/generated/sklearn.datasets.fetch_20newsgroups.html",
+      "license": "Source-specific post rights; raw text is cache-only and is not redistributed.",
+      "native_classes": 20,
+      "minimum_objects": 10000
+    },
+    {
+      "dataset_id": "ucr_electric_devices",
+      "modality": "timeseries",
+      "source": "https://zenodo.org/records/11190880",
+      "license": "CC BY 4.0",
+      "native_classes": 7,
+      "minimum_objects": 10000
+    },
+    {
+      "dataset_id": "uci_adult",
+      "modality": "tabular_confirmatory",
+      "source": "https://archive.ics.uci.edu/dataset/2/adult",
+      "license": "CC BY 4.0",
+      "native_classes": 2,
+      "minimum_objects": 10000
+    }
+  ]
+}

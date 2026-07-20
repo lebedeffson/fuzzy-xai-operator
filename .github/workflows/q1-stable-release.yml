@@ -1,0 +1,46 @@
+name: Q1 stable release gate
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  PYTHONPATH: framework/fuzzyxai:.
+
+jobs:
+  stable-release-gate:
+    runs-on: ubuntu-latest
+    environment: q1-stable-release
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: |
+          python -m pip install --no-deps -e .
+          python -m pip install numpy pandas scipy scikit-learn PyYAML
+      - name: Require main and clean release identity
+        run: |
+          test "${{ github.ref_name }}" = main
+          test -z "$(git status --porcelain)"
+      - name: Require closed external gates
+        run: python scripts/q1_final/verify_external_gates.py
+      - name: Require supported-claim hygiene
+        run: |
+          python scripts/q1_final/build_identity.py
+          python scripts/q1_final/build_claim_registry.py
+          python scripts/q1_final/build_gate_matrix.py
+          python scripts/q1_final/check_forbidden_claims.py
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          gate = json.loads(Path('release_evidence/q1_final/final_gate_matrix.json').read_text())
+          if not gate['stable_release_allowed']:
+              raise SystemExit('stable release is blocked by the final gate matrix')
+          PY
+      - name: Verify committed source export
+        run: python scripts/build_framework_release.py

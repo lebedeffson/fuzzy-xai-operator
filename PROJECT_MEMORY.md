@@ -149,3 +149,40 @@ instability. Both supported Python jobs passed. This validates the feature branc
 Run the real external pilot and domain review. After both pass, review merge to `main`, require green main CI, rebuild
 committed-index archives, and only then create a release tag. Do not claim `v1.4.0` support before modality-specific
 adapters and benchmarks exist.
+## FXAI-Q1-FINAL-CLOSURE
+
+- Date: 2026-07-20
+- Branch: `feat/q1-final-closure`
+- Frozen base: `41c32af25242164144fd907e4850fa9d4f426bd1`
+- Candidate status: implementation and local smoke complete; native multiclass heavy CI pending
+- Stable release: blocked
+
+This milestone adds a final evidence-first validation boundary rather than replacing the defended operators or the
+frozen predecessor experiments. It defines native multiclass tasks for Covertype, Fashion-MNIST, 20 Newsgroups and
+ElectricDevices; measured explainer cohorts; separate H1-H5 results; a leakage-resistant two-dataset confirmatory H6
+protocol; end-to-end scalability; claim registry 2.0; deterministic archive identity; and protected external-study
+scorers. The generated DubnaXAI site remains quarantined.
+
+Local validation at implementation time:
+
+- Q1 final focused suite: `14 passed`;
+- Ruff for the Q1 final package, scripts and tests: PASS;
+- compileall: PASS;
+- `scripts/q1_final/reproduce_all.py --profile smoke`: PASS;
+- strict external verifier: expected FAIL with `domain_language_review`, `comprehension`, and `expert_action_review` open;
+- no heavy real-data result is claimed from the smoke profile.
+
+Release boundary:
+
+- the four native multiclass jobs, required explainers, H1-H6, full scalability, Docker reproduction and archive
+  verification must pass in `.github/workflows/q1-final-validation.yml` before technical closure;
+- external scorers never generate participant or reviewer records;
+- an approved or exempt ethics record, genuine anonymized responses and signed records are required to close an
+  external gate;
+- null or negative H3, H5 predictive, H6, comprehension or expert-action results must remain visible and must remove
+  the corresponding positive claim;
+- no merge to `main`, stable `v1.3.0` tag or stable GitHub release is allowed while mandatory gates are open;
+- archive commit and CI run IDs are written at build time to `release_evidence/q1_final/run_identity.json`.
+
+Next step: run the public technical workflow, preserve its measured outcomes, then conduct the three independent
+external protocols. Do not manufacture responses or promote smoke evidence to a real-data claim.

@@ -1,0 +1,48 @@
+schema_version: "2.0"
+identifier: FXAI-Q1-FINAL-CLOSURE
+base_commit: 41c32af25242164144fd907e4850fa9d4f426bd1
+frozen_before_heavy_run: true
+datasets:
+  native_multiclass:
+    - uci_covertype
+    - fashion_mnist
+    - sklearn_20newsgroups
+    - ucr_electric_devices
+  rule_ablation_confirmatory:
+    - uci_covertype
+    - uci_adult
+rule_ablation:
+  frozen_subgroups:
+    uci_covertype: 3
+    uci_adult: 1
+  candidate_score_weights:
+    subgroup_coverage: 0.35
+    exclusivity: 0.30
+    redundancy: -0.15
+    activation_stability: 0.20
+  practically_null_interval: [-0.01, 0.01]
+  matched_controls: 5
+  folds: 10
+  seeds: [4201, 4202, 4203, 4204, 4205]
+  second_dataset_frozen_before_run: uci_adult
+  dataset_sampling_seed: 1907
+  covertype_analysis_cap: 50000
+  primary_metric: subgroup_macro_recall
+  test_access: once_per_fold_after_selection
+hypotheses:
+  H1: paired system wrapper fidelity is non-inferior at margin -0.02
+  H2: real-pipeline missingness F1 is at least 0.95 and false certification at most 0.01
+  H3: adaptive analysis is evaluated against the strongest simple baseline separately for full and preregistered hard cases
+  H4: adaptive uncertainty is risk non-inferior to always-FML and strictly less complex
+  H5_structural: typed route faults are localized as structural diagnostics
+  H5_predictive: prior non-positive predictive result remains frozen unless an independent M1 improves M0
+  H6: selected subgroup-specific rules exceed five matched controls on two independent tabular datasets
+external_gates:
+  domain_language: requires two domain reviewers and one HCI or scientific-communication reviewer
+  comprehension: randomized blinded within-subject study with at least 24 valid participants
+  expert_action: at least three independent experts evaluating the same 100 objects
+stopping_rules:
+  - no endpoint or margin changes after the first held-out result
+  - no additional seeds selected in response to p-values
+  - null and negative results are retained
+release_rule: stable release remains blocked while any mandatory external gate is open

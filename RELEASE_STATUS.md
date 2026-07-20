@@ -1,5 +1,24 @@
 # FuzzyXAI Framework Release Status
 
+## Q1 Final Closure Candidate
+
+Status: implementation candidate on `feat/q1-final-closure`; stable release is `BLOCKED`.
+
+- frozen base: `41c32af25242164144fd907e4850fa9d4f426bd1`;
+- local focused tests: `14 passed`;
+- local lint and compile checks: PASS;
+- local final smoke reproduction: PASS;
+- native multiclass heavy workflow: pending first public run;
+- domain-language review: open;
+- comprehension study: open;
+- expert-action review: open;
+- stable tag and merge to `main`: forbidden until the applicable technical and external gates close.
+
+The final candidate preserves all prior negative results. It distinguishes structural critical-rupture diagnosis from
+predictive association, and it removes any general H6 rule-effect claim when the confirmatory result is null. The
+external package contains frozen stimuli, blank response schemas and deterministic scorers only; it contains no
+generated participant or reviewer responses.
+
 ## Q1 Empirical Remediation
 
 Status: technical candidate on `feat/q1-empirical-remediation`; stable release remains `BLOCKED`.

@@ -1,0 +1,8 @@
+{
+  "frozen_before_review": true,
+  "gold_standard": "majority consensus with disagreement retained",
+  "minimum_agreement_gain": 0.02,
+  "minimum_reviewers": 3,
+  "shared_objects": 100,
+  "unsafe_accept_noninferiority_margin": 0.01
+}

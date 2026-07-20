@@ -1,0 +1,818 @@
+[
+  {
+    "condition_a": {
+      "confidence": 0.86,
+      "local_reason": "The strongest local contribution is fracture density.",
+      "prediction": "elevated risk",
+      "title": "Model output",
+      "warning": "This local explanation is associational."
+    },
+    "condition_b": {
+      "decision": "elevated risk",
+      "limitations": [
+        "No material limitation was detected in the available route."
+      ],
+      "provenance_available": true,
+      "reasons": [
+        "fracture density",
+        "water saturation",
+        "distance to excavation"
+      ],
+      "recommended_action": "accept",
+      "title": "Decision review"
+    },
+    "ground_truth_action": "accept",
+    "object_id": "q1_object_001",
+    "questions": {
+      "action": "Which action is appropriate?",
+      "decision": "Which decision did the model produce?",
+      "limitation": "What is the main limitation?",
+      "overtrust": "Should this result be used automatically?",
+      "reason": "Which factor most strongly supports the decision?"
+    },
+    "scenario_type": "simple",
+    "stimulus_id": "stimulus_001"
+  },
+  {
+    "condition_a": {
+      "confidence": 0.79,
+      "local_reason": "The strongest local contribution is fracture density.",
+      "prediction": "elevated risk",
+      "title": "Model output",
+      "warning": "This local explanation is associational."
+    },
+    "condition_b": {
+      "decision": "elevated risk",
+      "limitations": [
+        "No material limitation was detected in the available route."
+      ],
+      "provenance_available": true,
+      "reasons": [
+        "fracture density",
+        "water saturation",
+        "distance to excavation"
+      ],
+      "recommended_action": "accept",
+      "title": "Decision review"
+    },
+    "ground_truth_action": "accept",
+    "object_id": "q1_object_002",
+    "questions": {
+      "action": "Which action is appropriate?",
+      "decision": "Which decision did the model produce?",
+      "limitation": "What is the main limitation?",
+      "overtrust": "Should this result be used automatically?",
+      "reason": "Which factor most strongly supports the decision?"
+    },
+    "scenario_type": "simple",
+    "stimulus_id": "stimulus_002"
+  },
+  {
+    "condition_a": {
+      "confidence": 0.72,
+      "local_reason": "The strongest local contribution is fracture density.",
+      "prediction": "moderate risk",
+      "title": "Model output",
+      "warning": "This local explanation is associational."
+    },
+    "condition_b": {
+      "decision": "moderate risk",
+      "limitations": [
+        "No material limitation was detected in the available route."
+      ],
+      "provenance_available": true,
+      "reasons": [
+        "fracture density",
+        "water saturation",
+        "distance to excavation"
+      ],
+      "recommended_action": "accept",
+      "title": "Decision review"
+    },
+    "ground_truth_action": "accept",
+    "object_id": "q1_object_003",
+    "questions": {
+      "action": "Which action is appropriate?",
+      "decision": "Which decision did the model produce?",
+      "limitation": "What is the main limitation?",
+      "overtrust": "Should this result be used automatically?",
+      "reason": "Which factor most strongly supports the decision?"
+    },
+    "scenario_type": "simple",
+    "stimulus_id": "stimulus_003"
+  },
+  {
+    "condition_a": {
+      "confidence": 0.65,
+      "local_reason": "The strongest local contribution is fracture density.",
+      "prediction": "elevated risk",
+      "title": "Model output",
+      "warning": "This local explanation is associational."
+    },
+    "condition_b": {
+      "decision": "elevated risk",
+      "limitations": [
+        "No material limitation was detected in the available route."
+      ],
+      "provenance_available": true,
+      "reasons": [
+        "fracture density",
+        "water saturation",
+        "distance to excavation"
+      ],
+      "recommended_action": "accept",
+      "title": "Decision review"
+    },
+    "ground_truth_action": "accept",
+    "object_id": "q1_object_004",
+    "questions": {
+      "action": "Which action is appropriate?",
+      "decision": "Which decision did the model produce?",
+      "limitation": "What is the main limitation?",
+      "overtrust": "Should this result be used automatically?",
+      "reason": "Which factor most strongly supports the decision?"
+    },
+    "scenario_type": "simple",
+    "stimulus_id": "stimulus_004"
+  },
+  {
+    "condition_a": {
+      "confidence": 0.58,
+      "local_reason": "The strongest local contribution is fracture density.",
+      "prediction": "elevated risk",
+      "title": "Model output",
+      "warning": "This local explanation is associational."
+    },
+    "condition_b": {
+      "decision": "elevated risk",
+      "limitations": [
+        "No material limitation was detected in the available route."
+      ],
+      "provenance_available": true,
+      "reasons": [
+        "fracture density",
+        "water saturation",
+        "distance to excavation"
+      ],
+      "recommended_action": "accept",
+      "title": "Decision review"
+    },
+    "ground_truth_action": "accept",
+    "object_id": "q1_object_005",
+    "questions": {
+      "action": "Which action is appropriate?",
+      "decision": "Which decision did the model produce?",
+      "limitation": "What is the main limitation?",
+      "overtrust": "Should this result be used automatically?",
+      "reason": "Which factor most strongly supports the decision?"
+    },
+    "scenario_type": "simple",
+    "stimulus_id": "stimulus_005"
+  },
+  {
+    "condition_a": {
+      "confidence": 0.89,
+      "local_reason": "The strongest local contribution is fracture density.",
+      "prediction": "moderate risk",
+      "title": "Model output",
+      "warning": "This local explanation is associational."
+    },
+    "condition_b": {
+      "decision": "moderate risk",
+      "limitations": [
+        "No material limitation was detected in the available route."
+      ],
+      "provenance_available": true,
+      "reasons": [
+        "fracture density",
+        "water saturation",
+        "distance to excavation"
+      ],
+      "recommended_action": "accept",
+      "title": "Decision review"
+    },
+    "ground_truth_action": "accept",
+    "object_id": "q1_object_006",
+    "questions": {
+      "action": "Which action is appropriate?",
+      "decision": "Which decision did the model produce?",
+      "limitation": "What is the main limitation?",
+      "overtrust": "Should this result be used automatically?",
+      "reason": "Which factor most strongly supports the decision?"
+    },
+    "scenario_type": "simple",
+    "stimulus_id": "stimulus_006"
+  },
+  {
+    "condition_a": {
+      "confidence": 0.82,
+      "local_reason": "The strongest local contribution is fracture density.",
+      "prediction": "elevated risk",
+      "title": "Model output",
+      "warning": "This local explanation is associational."
+    },
+    "condition_b": {
+      "decision": "elevated risk",
+      "limitations": [
+        "The model confidence is close to the decision boundary."
+      ],
+      "provenance_available": true,
+      "reasons": [
+        "fracture density",
+        "water saturation",
+        "distance to excavation"
+      ],
+      "recommended_action": "review",
+      "title": "Decision review"
+    },
+    "ground_truth_action": "review",
+    "object_id": "q1_object_007",
+    "questions": {
+      "action": "Which action is appropriate?",
+      "decision": "Which decision did the model produce?",
+      "limitation": "What is the main limitation?",
+      "overtrust": "Should this result be used automatically?",
+      "reason": "Which factor most strongly supports the decision?"
+    },
+    "scenario_type": "low_confidence",
+    "stimulus_id": "stimulus_007"
+  },
+  {
+    "condition_a": {
+      "confidence": 0.75,
+      "local_reason": "The strongest local contribution is fracture density.",
+      "prediction": "elevated risk",
+      "title": "Model output",
+      "warning": "This local explanation is associational."
+    },
+    "condition_b": {
+      "decision": "elevated risk",
+      "limitations": [
+        "The model confidence is close to the decision boundary."
+      ],
+      "provenance_available": true,
+      "reasons": [
+        "fracture density",
+        "water saturation",
+        "distance to excavation"
+      ],
+      "recommended_action": "review",
+      "title": "Decision review"
+    },
+    "ground_truth_action": "review",
+    "object_id": "q1_object_008",
+    "questions": {
+      "action": "Which action is appropriate?",
+      "decision": "Which decision did the model produce?",
+      "limitation": "What is the main limitation?",
+      "overtrust": "Should this result be used automatically?",
+      "reason": "Which factor most strongly supports the decision?"
+    },
+    "scenario_type": "low_confidence",
+    "stimulus_id": "stimulus_008"
+  },
+  {
+    "condition_a": {
+      "confidence": 0.68,
+      "local_reason": "The strongest local contribution is fracture density.",
+      "prediction": "moderate risk",
+      "title": "Model output",
+      "warning": "This local explanation is associational."
+    },
+    "condition_b": {
+      "decision": "moderate risk",
+      "limitations": [
+        "The model confidence is close to the decision boundary."
+      ],
+      "provenance_available": true,
+      "reasons": [
+        "fracture density",
+        "water saturation",
+        "distance to excavation"
+      ],
+      "recommended_action": "review",
+      "title": "Decision review"
+    },
+    "ground_truth_action": "review",
+    "object_id": "q1_object_009",
+    "questions": {
+      "action": "Which action is appropriate?",
+      "decision": "Which decision did the model produce?",
+      "limitation": "What is the main limitation?",
+      "overtrust": "Should this result be used automatically?",
+      "reason": "Which factor most strongly supports the decision?"
+    },
+    "scenario_type": "low_confidence",
+    "stimulus_id": "stimulus_009"
+  },
+  {
+    "condition_a": {
+      "confidence": 0.61,
+      "local_reason": "The strongest local contribution is fracture density.",
+      "prediction": "elevated risk",
+      "title": "Model output",
+      "warning": "This local explanation is associational."
+    },
+    "condition_b": {
+      "decision": "elevated risk",
+      "limitations": [
+        "The model confidence is close to the decision boundary."
+      ],
+      "provenance_available": true,
+      "reasons": [
+        "fracture density",
+        "water saturation",
+        "distance to excavation"
+      ],
+      "recommended_action": "review",
+      "title": "Decision review"
+    },
+    "ground_truth_action": "review",
+    "object_id": "q1_object_010",
+    "questions": {
+      "action": "Which action is appropriate?",
+      "decision": "Which decision did the model produce?",
+      "limitation": "What is the main limitation?",
+      "overtrust": "Should this result be used automatically?",
+      "reason": "Which factor most strongly supports the decision?"
+    },
+    "scenario_type": "low_confidence",
+    "stimulus_id": "stimulus_010"
+  },
+  {
+    "condition_a": {
+      "confidence": 0.92,
+      "local_reason": "The strongest local contribution is fracture density.",
+      "prediction": "elevated risk",
+      "title": "Model output",
+      "warning": "This local explanation is associational."
+    },
+    "condition_b": {
+      "decision": "elevated risk",
+      "limitations": [
+        "The model confidence is close to the decision boundary."
+      ],
+      "provenance_available": true,
+      "reasons": [
+        "fracture density",
+        "water saturation",
+        "distance to excavation"
+      ],
+      "recommended_action": "review",
+      "title": "Decision review"
+    },
+    "ground_truth_action": "review",
+    "object_id": "q1_object_011",
+    "questions": {
+      "action": "Which action is appropriate?",
+      "decision": "Which decision did the model produce?",
+      "limitation": "What is the main limitation?",
+      "overtrust": "Should this result be used automatically?",
+      "reason": "Which factor most strongly supports the decision?"
+    },
+    "scenario_type": "low_confidence",
+    "stimulus_id": "stimulus_011"
+  },
+  {
+    "condition_a": {
+      "confidence": 0.85,
+      "local_reason": "The strongest local contribution is fracture density.",
+      "prediction": "moderate risk",
+      "title": "Model output",
+      "warning": "This local explanation is associational."
+    },
+    "condition_b": {
+      "decision": "moderate risk",
+      "limitations": [
+        "The model confidence is close to the decision boundary."
+      ],
+      "provenance_available": true,
+      "reasons": [
+        "fracture density",
+        "water saturation",
+        "distance to excavation"
+      ],
+      "recommended_action": "review",
+      "title": "Decision review"
+    },
+    "ground_truth_action": "review",
+    "object_id": "q1_object_012",
+    "questions": {
+      "action": "Which action is appropriate?",
+      "decision": "Which decision did the model produce?",
+      "limitation": "What is the main limitation?",
+      "overtrust": "Should this result be used automatically?",
+      "reason": "Which factor most strongly supports the decision?"
+    },
+    "scenario_type": "low_confidence",
+    "stimulus_id": "stimulus_012"
+  },
+  {
+    "condition_a": {
+      "confidence": 0.78,
+      "local_reason": "The strongest local contribution is fracture density.",
+      "prediction": "elevated risk",
+      "title": "Model output",
+      "warning": "This local explanation is associational."
+    },
+    "condition_b": {
+      "decision": "elevated risk",
+      "limitations": [
+        "High confidence conflicts with held-out outcome evidence."
+      ],
+      "provenance_available": true,
+      "reasons": [
+        "fracture density",
+        "water saturation",
+        "distance to excavation"
+      ],
+      "recommended_action": "review",
+      "title": "Decision review"
+    },
+    "ground_truth_action": "review",
+    "object_id": "q1_object_013",
+    "questions": {
+      "action": "Which action is appropriate?",
+      "decision": "Which decision did the model produce?",
+      "limitation": "What is the main limitation?",
+      "overtrust": "Should this result be used automatically?",
+      "reason": "Which factor most strongly supports the decision?"
+    },
+    "scenario_type": "incorrect_high_confidence",
+    "stimulus_id": "stimulus_013"
+  },
+  {
+    "condition_a": {
+      "confidence": 0.71,
+      "local_reason": "The strongest local contribution is fracture density.",
+      "prediction": "elevated risk",
+      "title": "Model output",
+      "warning": "This local explanation is associational."
+    },
+    "condition_b": {
+      "decision": "elevated risk",
+      "limitations": [
+        "High confidence conflicts with held-out outcome evidence."
+      ],
+      "provenance_available": true,
+      "reasons": [
+        "fracture density",
+        "water saturation",
+        "distance to excavation"
+      ],
+      "recommended_action": "review",
+      "title": "Decision review"
+    },
+    "ground_truth_action": "review",
+    "object_id": "q1_object_014",
+    "questions": {
+      "action": "Which action is appropriate?",
+      "decision": "Which decision did the model produce?",
+      "limitation": "What is the main limitation?",
+      "overtrust": "Should this result be used automatically?",
+      "reason": "Which factor most strongly supports the decision?"
+    },
+    "scenario_type": "incorrect_high_confidence",
+    "stimulus_id": "stimulus_014"
+  },
+  {
+    "condition_a": {
+      "confidence": 0.64,
+      "local_reason": "The strongest local contribution is fracture density.",
+      "prediction": "moderate risk",
+      "title": "Model output",
+      "warning": "This local explanation is associational."
+    },
+    "condition_b": {
+      "decision": "moderate risk",
+      "limitations": [
+        "High confidence conflicts with held-out outcome evidence."
+      ],
+      "provenance_available": true,
+      "reasons": [
+        "fracture density",
+        "water saturation",
+        "distance to excavation"
+      ],
+      "recommended_action": "review",
+      "title": "Decision review"
+    },
+    "ground_truth_action": "review",
+    "object_id": "q1_object_015",
+    "questions": {
+      "action": "Which action is appropriate?",
+      "decision": "Which decision did the model produce?",
+      "limitation": "What is the main limitation?",
+      "overtrust": "Should this result be used automatically?",
+      "reason": "Which factor most strongly supports the decision?"
+    },
+    "scenario_type": "incorrect_high_confidence",
+    "stimulus_id": "stimulus_015"
+  },
+  {
+    "condition_a": {
+      "confidence": 0.57,
+      "local_reason": "The strongest local contribution is fracture density.",
+      "prediction": "elevated risk",
+      "title": "Model output",
+      "warning": "This local explanation is associational."
+    },
+    "condition_b": {
+      "decision": "elevated risk",
+      "limitations": [
+        "High confidence conflicts with held-out outcome evidence."
+      ],
+      "provenance_available": true,
+      "reasons": [
+        "fracture density",
+        "water saturation",
+        "distance to excavation"
+      ],
+      "recommended_action": "review",
+      "title": "Decision review"
+    },
+    "ground_truth_action": "review",
+    "object_id": "q1_object_016",
+    "questions": {
+      "action": "Which action is appropriate?",
+      "decision": "Which decision did the model produce?",
+      "limitation": "What is the main limitation?",
+      "overtrust": "Should this result be used automatically?",
+      "reason": "Which factor most strongly supports the decision?"
+    },
+    "scenario_type": "incorrect_high_confidence",
+    "stimulus_id": "stimulus_016"
+  },
+  {
+    "condition_a": {
+      "confidence": 0.88,
+      "local_reason": "The strongest local contribution is fracture density.",
+      "prediction": "elevated risk",
+      "title": "Model output",
+      "warning": "This local explanation is associational."
+    },
+    "condition_b": {
+      "decision": "elevated risk",
+      "limitations": [
+        "A required provenance channel is absent."
+      ],
+      "provenance_available": false,
+      "reasons": [
+        "fracture density",
+        "water saturation",
+        "distance to excavation"
+      ],
+      "recommended_action": "review",
+      "title": "Decision review"
+    },
+    "ground_truth_action": "review",
+    "object_id": "q1_object_017",
+    "questions": {
+      "action": "Which action is appropriate?",
+      "decision": "Which decision did the model produce?",
+      "limitation": "What is the main limitation?",
+      "overtrust": "Should this result be used automatically?",
+      "reason": "Which factor most strongly supports the decision?"
+    },
+    "scenario_type": "incomplete_evidence",
+    "stimulus_id": "stimulus_017"
+  },
+  {
+    "condition_a": {
+      "confidence": 0.81,
+      "local_reason": "The strongest local contribution is fracture density.",
+      "prediction": "moderate risk",
+      "title": "Model output",
+      "warning": "This local explanation is associational."
+    },
+    "condition_b": {
+      "decision": "moderate risk",
+      "limitations": [
+        "A required provenance channel is absent."
+      ],
+      "provenance_available": false,
+      "reasons": [
+        "fracture density",
+        "water saturation",
+        "distance to excavation"
+      ],
+      "recommended_action": "review",
+      "title": "Decision review"
+    },
+    "ground_truth_action": "review",
+    "object_id": "q1_object_018",
+    "questions": {
+      "action": "Which action is appropriate?",
+      "decision": "Which decision did the model produce?",
+      "limitation": "What is the main limitation?",
+      "overtrust": "Should this result be used automatically?",
+      "reason": "Which factor most strongly supports the decision?"
+    },
+    "scenario_type": "incomplete_evidence",
+    "stimulus_id": "stimulus_018"
+  },
+  {
+    "condition_a": {
+      "confidence": 0.74,
+      "local_reason": "The strongest local contribution is fracture density.",
+      "prediction": "elevated risk",
+      "title": "Model output",
+      "warning": "This local explanation is associational."
+    },
+    "condition_b": {
+      "decision": "elevated risk",
+      "limitations": [
+        "A required provenance channel is absent."
+      ],
+      "provenance_available": false,
+      "reasons": [
+        "fracture density",
+        "water saturation",
+        "distance to excavation"
+      ],
+      "recommended_action": "review",
+      "title": "Decision review"
+    },
+    "ground_truth_action": "review",
+    "object_id": "q1_object_019",
+    "questions": {
+      "action": "Which action is appropriate?",
+      "decision": "Which decision did the model produce?",
+      "limitation": "What is the main limitation?",
+      "overtrust": "Should this result be used automatically?",
+      "reason": "Which factor most strongly supports the decision?"
+    },
+    "scenario_type": "incomplete_evidence",
+    "stimulus_id": "stimulus_019"
+  },
+  {
+    "condition_a": {
+      "confidence": 0.67,
+      "local_reason": "The strongest local contribution is fracture density.",
+      "prediction": "elevated risk",
+      "title": "Model output",
+      "warning": "This local explanation is associational."
+    },
+    "condition_b": {
+      "decision": "elevated risk",
+      "limitations": [
+        "A required provenance channel is absent."
+      ],
+      "provenance_available": false,
+      "reasons": [
+        "fracture density",
+        "water saturation",
+        "distance to excavation"
+      ],
+      "recommended_action": "review",
+      "title": "Decision review"
+    },
+    "ground_truth_action": "review",
+    "object_id": "q1_object_020",
+    "questions": {
+      "action": "Which action is appropriate?",
+      "decision": "Which decision did the model produce?",
+      "limitation": "What is the main limitation?",
+      "overtrust": "Should this result be used automatically?",
+      "reason": "Which factor most strongly supports the decision?"
+    },
+    "scenario_type": "incomplete_evidence",
+    "stimulus_id": "stimulus_020"
+  },
+  {
+    "condition_a": {
+      "confidence": 0.6,
+      "local_reason": "The strongest local contribution is fracture density.",
+      "prediction": "moderate risk",
+      "title": "Model output",
+      "warning": "This local explanation is associational."
+    },
+    "condition_b": {
+      "decision": "moderate risk",
+      "limitations": [
+        "Two evidence channels support different actions."
+      ],
+      "provenance_available": true,
+      "reasons": [
+        "fracture density",
+        "water saturation",
+        "distance to excavation"
+      ],
+      "recommended_action": "review",
+      "title": "Decision review"
+    },
+    "ground_truth_action": "review",
+    "object_id": "q1_object_021",
+    "questions": {
+      "action": "Which action is appropriate?",
+      "decision": "Which decision did the model produce?",
+      "limitation": "What is the main limitation?",
+      "overtrust": "Should this result be used automatically?",
+      "reason": "Which factor most strongly supports the decision?"
+    },
+    "scenario_type": "conflict",
+    "stimulus_id": "stimulus_021"
+  },
+  {
+    "condition_a": {
+      "confidence": 0.91,
+      "local_reason": "The strongest local contribution is fracture density.",
+      "prediction": "elevated risk",
+      "title": "Model output",
+      "warning": "This local explanation is associational."
+    },
+    "condition_b": {
+      "decision": "elevated risk",
+      "limitations": [
+        "Two evidence channels support different actions."
+      ],
+      "provenance_available": true,
+      "reasons": [
+        "fracture density",
+        "water saturation",
+        "distance to excavation"
+      ],
+      "recommended_action": "review",
+      "title": "Decision review"
+    },
+    "ground_truth_action": "review",
+    "object_id": "q1_object_022",
+    "questions": {
+      "action": "Which action is appropriate?",
+      "decision": "Which decision did the model produce?",
+      "limitation": "What is the main limitation?",
+      "overtrust": "Should this result be used automatically?",
+      "reason": "Which factor most strongly supports the decision?"
+    },
+    "scenario_type": "conflict",
+    "stimulus_id": "stimulus_022"
+  },
+  {
+    "condition_a": {
+      "confidence": 0.84,
+      "local_reason": "The strongest local contribution is fracture density.",
+      "prediction": "elevated risk",
+      "title": "Model output",
+      "warning": "This local explanation is associational."
+    },
+    "condition_b": {
+      "decision": "elevated risk",
+      "limitations": [
+        "The object differs from the training reference distribution."
+      ],
+      "provenance_available": true,
+      "reasons": [
+        "fracture density",
+        "water saturation",
+        "distance to excavation"
+      ],
+      "recommended_action": "review",
+      "title": "Decision review"
+    },
+    "ground_truth_action": "review",
+    "object_id": "q1_object_023",
+    "questions": {
+      "action": "Which action is appropriate?",
+      "decision": "Which decision did the model produce?",
+      "limitation": "What is the main limitation?",
+      "overtrust": "Should this result be used automatically?",
+      "reason": "Which factor most strongly supports the decision?"
+    },
+    "scenario_type": "shift",
+    "stimulus_id": "stimulus_023"
+  },
+  {
+    "condition_a": {
+      "confidence": 0.77,
+      "local_reason": "The strongest local contribution is fracture density.",
+      "prediction": "moderate risk",
+      "title": "Model output",
+      "warning": "This local explanation is associational."
+    },
+    "condition_b": {
+      "decision": "moderate risk",
+      "limitations": [
+        "The object differs from the training reference distribution."
+      ],
+      "provenance_available": true,
+      "reasons": [
+        "fracture density",
+        "water saturation",
+        "distance to excavation"
+      ],
+      "recommended_action": "review",
+      "title": "Decision review"
+    },
+    "ground_truth_action": "review",
+    "object_id": "q1_object_024",
+    "questions": {
+      "action": "Which action is appropriate?",
+      "decision": "Which decision did the model produce?",
+      "limitation": "What is the main limitation?",
+      "overtrust": "Should this result be used automatically?",
+      "reason": "Which factor most strongly supports the decision?"
+    },
+    "scenario_type": "shift",
+    "stimulus_id": "stimulus_024"
+  }
+]
