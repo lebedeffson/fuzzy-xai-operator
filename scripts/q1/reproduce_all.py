@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import json
 import os
 import platform
 import subprocess
@@ -43,6 +44,10 @@ def command(*parts: str) -> None:
 def main(profile: str) -> None:
     n_objects = 1_200 if profile == "smoke" else 10_000
     command(sys.executable, "scripts/q1/build_baseline_snapshot.py")
+    external_gates = json.loads(
+        (ROOT / "research/preregistration/q1_external_gates.json").read_text(encoding="utf-8")
+    )
+    write_json(OUTPUT / "external_studies/status.json", external_gates)
     run_controlled_q1(OUTPUT, n_objects=n_objects)
     write_json(
         OUTPUT / "run_manifest.json",

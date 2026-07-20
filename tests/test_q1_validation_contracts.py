@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 from pathlib import Path
 
 import pytest
@@ -153,3 +154,12 @@ def test_electric_devices_reader_accepts_an_official_split_below_10k(tmp_path: P
     values, labels = _read_ts(split)
     assert values.tolist() == [[1.0, 2.0, 0.0]]
     assert labels.tolist() == [3.0]
+
+
+def test_packaged_external_gates_fail_closed() -> None:
+    root = Path(__file__).resolve().parents[1]
+    gates = json.loads((root / "research/preregistration/q1_external_gates.json").read_text(encoding="utf-8"))
+    assert gates["stable_release_allowed"] is False
+    studies = [details for details in gates.values() if isinstance(details, dict)]
+    assert studies
+    assert all(not details["claim_allowed"] for details in studies)

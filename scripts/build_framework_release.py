@@ -155,6 +155,7 @@ REQUIRED_PATHS = {
     "fuzzy-xai-operator/research/preregistration/q1_hypotheses.yaml",
     "fuzzy-xai-operator/research/preregistration/q1_analysis_plan.md",
     "fuzzy-xai-operator/research/preregistration/q1_baseline_snapshot.json",
+    "fuzzy-xai-operator/research/preregistration/q1_external_gates.json",
     "fuzzy-xai-operator/framework/fuzzyxai/fuzzyxai/q1_validation/schemas.py",
     "fuzzy-xai-operator/framework/fuzzyxai/fuzzyxai/q1_validation/protocols.py",
     "fuzzy-xai-operator/scripts/q1/reproduce_all.py",
