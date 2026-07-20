@@ -5,6 +5,7 @@
 - Branch: `feat/strong-confirmatory-closure`
 - Implementation commit: `238194c113fc2f1677730318dfc0ba4d4d4426d5`
 - Formative evidence: measured locally
+- Public formative workflow: `29788608838`, PASS on evidence commit `fa6c40c`
 - Confirmatory test: not opened
 - External human gates: open
 - Stable release: `BLOCKED`

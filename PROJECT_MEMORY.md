@@ -7,6 +7,7 @@
 - Implementation commit: `238194c113fc2f1677730318dfc0ba4d4d4426d5`
 - Frozen ancestors: `e34e52f`, `bd48a9c`, `1f5fd77`
 - Research phase: formative development
+- Public formative workflow: `29788608838`, PASS on evidence commit `fa6c40c`
 - Confirmatory protocol: blocked
 - Stable release: blocked
 
