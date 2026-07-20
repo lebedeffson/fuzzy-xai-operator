@@ -6,8 +6,8 @@
 - Branch: `feat/ai-pre-review-final-closure`
 - Frozen invalid-for-scoring prototype: `60ed5697d4d607df59556ea82de63527905f0f4f`
 - Leakage-remediation implementation: `c1271db`
-- Public validation commit: `b61aaf3c9e70aee64ea6aaf35ecb5e7dabd25183`
-- Public workflow: `29766746012`, PASS
+- Reviewer-packet hardening commit: `79f80a8`
+- Public workflow: `29767282573`, PASS
 - Stable release: blocked
 
 The previous 360-case analysis bundle remains a technical prototype but must not be scored: it disclosed outcome,
@@ -23,6 +23,8 @@ Validated technical boundary:
 - outcome, true label, original stratum, expected action, hidden rupture type, answer-key notes and method identity are
   absent from reviewer-visible records;
 - the public ZIP excludes the encrypted scoring key, private paths and all confirmatory records;
+- reviewer records contain no internal semantic-block labels; technical audit and claim-registry files are kept out of
+  the reviewer ZIP to avoid priming;
 - negative tests fail closed for injected outcome, action, stratum and method fields;
 - focused test suite: `10 passed`; Ruff and compile checks: PASS;
 - confirmatory lock fails closed until at least two real formative runs meet the frozen acceptance contract;
