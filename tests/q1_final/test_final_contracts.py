@@ -11,6 +11,7 @@ from scripts.q1_final import build_archives
 
 
 COMMIT = "1" * 40
+ROOT = build_archives.ROOT
 
 
 def test_stable_identity_rejects_open_external_gate() -> None:
@@ -60,3 +61,12 @@ def test_runtime_archive_inputs_fail_closed(tmp_path: object, monkeypatch: pytes
     monkeypatch.setattr(build_archives, "ROOT", tmp_path)
     with pytest.raises(RuntimeError, match="required runtime archive input is missing"):
         build_archives.runtime_paths(("release_evidence/q1_final/dod_185.json",))
+
+
+def test_final_docker_context_keeps_git_identity() -> None:
+    ignored = {
+        line.strip()
+        for line in (ROOT / ".dockerignore").read_text(encoding="utf-8").splitlines()
+        if line.strip() and not line.lstrip().startswith("#")
+    }
+    assert ".git" not in ignored
