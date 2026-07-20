@@ -88,6 +88,7 @@ def _tabular_explainers(dataset: object, evaluation_ids: Sequence[int]) -> tuple
             if method == "RuleFit":
                 summary["evaluation_strategy"] = "one_vs_rest_surrogate"
                 summary["training_sample_size"] = min(10_000, len(train))
+                summary["attribution_strategy"] = "linear_terms_plus_active_rules"
             methods.append(summary)
         except Exception as error:
             methods.append({"method": method, "status": "failed", "n_explained": 0, "error": repr(error)})
@@ -163,12 +164,7 @@ def _rulefit_values(model: object, train: np.ndarray, labels: np.ndarray, sample
         surrogate_classes = np.asarray(getattr(surrogate, "classes_", (0, 1)))
         positive_column = int(np.flatnonzero(surrogate_classes == 1)[0])
         positive_probabilities.append(probabilities[:, positive_column])
-        class_importances.append(
-            np.asarray(
-                getattr(surrogate, "feature_importances_", np.ones(train.shape[1])),
-                dtype=float,
-            )[: train.shape[1]]
-        )
+        class_importances.append(_rulefit_local_values(surrogate, sample, train.shape[1]))
 
     scores = np.column_stack(positive_probabilities)
     denominator = scores.sum(axis=1, keepdims=True)
@@ -183,8 +179,27 @@ def _rulefit_values(model: object, train: np.ndarray, labels: np.ndarray, sample
     predicted_positions = np.asarray([class_positions[int(class_id)] for class_id in predicted])
     fidelity = probabilities[np.arange(len(sample)), predicted_positions]
     importances = np.asarray(class_importances)
-    values = sample * importances[predicted_positions]
+    values = importances[predicted_positions, np.arange(len(sample))]
     return values, fidelity
+
+
+def _rulefit_local_values(surrogate: object, sample: np.ndarray, n_features: int) -> np.ndarray:
+    transformed = (
+        surrogate.friedscale.scale(sample)
+        if bool(getattr(surrogate, "lin_standardise", False))
+        else sample
+    )
+    coefficients = np.asarray(surrogate.coef, dtype=float)
+    values = transformed * coefficients[:n_features] if bool(getattr(surrogate, "include_linear", True)) else np.zeros_like(sample)
+    for rule in getattr(surrogate, "rules_without_feature_names_", ()):
+        active = np.asarray(surrogate.transform(sample, [str(rule)])[:, 0], dtype=float)
+        feature_names = sorted({str(feature) for feature, _operator in rule.agg_dict})
+        feature_indices = [int(name.removeprefix("X_")) for name in feature_names]
+        if not feature_indices:
+            continue
+        contribution = active * float(rule.args[0]) / len(feature_indices)
+        values[:, feature_indices] += contribution[:, None]
+    return values
 
 
 def _image_explainers(
