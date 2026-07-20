@@ -261,11 +261,27 @@ def main() -> None:
         shutil.rmtree(export_root / "site" / "dubnaxai", ignore_errors=True)
         shutil.rmtree(export_root / ".vscode", ignore_errors=True)
         manifest_artifacts = manifest_artifact_paths(export_root)
-        with zipfile.ZipFile(archive_path, "w", compression=zipfile.ZIP_DEFLATED) as archive:
+        with zipfile.ZipFile(
+            archive_path,
+            "w",
+            compression=zipfile.ZIP_DEFLATED,
+            compresslevel=9,
+        ) as archive:
             for source in sorted(path for path in export_root.rglob("*") if path.is_file()):
                 if not include_in_source_release(source.relative_to(export_root), manifest_artifacts):
                     continue
-                archive.write(source, source.relative_to(export_root.parent))
+                mode = 0o100755 if source.stat().st_mode & 0o111 else 0o100644
+                info = zipfile.ZipInfo(
+                    source.relative_to(export_root.parent).as_posix(),
+                    date_time=(1980, 1, 1, 0, 0, 0),
+                )
+                info.external_attr = mode << 16
+                archive.writestr(
+                    info,
+                    source.read_bytes(),
+                    compress_type=zipfile.ZIP_DEFLATED,
+                    compresslevel=9,
+                )
     file_count, _ = validate_archive(archive_path, manifest_artifacts)
     archive_hash = sha256(archive_path)
     checksum_path = archive_path.with_suffix(".zip.sha256")
