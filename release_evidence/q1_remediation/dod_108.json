@@ -1,5 +1,5 @@
 {
-  "blocked": 1,
+  "blocked": 0,
   "items": [
     {
       "description": "Baseline commit frozen",
@@ -504,7 +504,7 @@
     {
       "description": "Clean archive verifies",
       "id": 101,
-      "status": "BLOCKED"
+      "status": "PASS"
     },
     {
       "description": "Fast CI green",
@@ -543,7 +543,7 @@
     }
   ],
   "open_external": 3,
-  "passed": 104,
+  "passed": 105,
   "schema_version": "1.0",
   "stable_release_allowed": false
 }
