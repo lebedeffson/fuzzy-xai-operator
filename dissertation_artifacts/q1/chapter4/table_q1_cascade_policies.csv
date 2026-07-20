@@ -1,0 +1,6 @@
+automatic_coverage,critical_wrong_automatic,false_block,mean_cost,n_objects,policy_id,review,risk,wrong_automatic,level_distribution
+0.5541666666666667,0,0,1.0,240,threshold_only,107,0.8625,20,
+0.008333333333333333,0,79,10.0,240,always_full,139,1.2583333333333333,1,
+0.1625,0,60,7.4875,240,matched_random_gate,126,1.2125,9,
+0.20833333333333334,0,0,3.0,240,explainer_disagreement,190,0.9791666666666666,9,
+0.2791666666666667,0,37,3.6666666666666665,240,adaptive_ABC,131,1.0833333333333333,11,"{""A"": 67, ""B"": 131, ""C"": 42}"

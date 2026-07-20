@@ -1,0 +1,15 @@
+services:
+  reproduce-q1:
+    build:
+      context: .
+      dockerfile: Dockerfile.q1
+    command: make reproduce-q1
+    environment:
+      OMP_NUM_THREADS: "1"
+      OPENBLAS_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
+      NUMEXPR_NUM_THREADS: "1"
+    volumes:
+      - ./release_evidence/q1_remediation:/workspace/release_evidence/q1_remediation
+      - ./reports/q1:/workspace/reports/q1
+      - ./dissertation_artifacts/q1:/workspace/dissertation_artifacts/q1

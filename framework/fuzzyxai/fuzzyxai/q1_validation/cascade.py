@@ -84,6 +84,21 @@ class CascadeEvaluation:
         return asdict(self)
 
 
+def cascade_decisions(signals: Sequence[CascadeSignals], policy: CascadePolicy) -> tuple[tuple[CascadeLevel, ...], tuple[str, ...]]:
+    levels = tuple(policy.level(item) for item in signals)
+    actions: list[str] = []
+    for signal, level in zip(signals, levels):
+        if level is CascadeLevel.A:
+            actions.append("accept")
+        elif level is CascadeLevel.B:
+            actions.append("review")
+        elif not signal.required_fields_complete or signal.source_conflict > policy.conflict_threshold:
+            actions.append("block")
+        else:
+            actions.append("review")
+    return levels, tuple(actions)
+
+
 def evaluate_cascade(
     signals: Sequence[CascadeSignals],
     *,
@@ -97,8 +112,9 @@ def evaluate_cascade(
     if not signals or not (len(signals) == len(predictions) == len(labels) == len(critical)):
         raise ValueError("cascade inputs must be non-empty and aligned")
     active = policy or CascadePolicy()
-    levels = [active.level(item) for item in signals]
-    actions = ["accept" if level is CascadeLevel.A else "review" if level is CascadeLevel.B else "block" for level in levels]
+    level_values, action_values = cascade_decisions(signals, active)
+    levels = list(level_values)
+    actions = list(action_values)
     wrong = np.asarray(predictions) != np.asarray(labels)
     auto = np.asarray([item == "accept" for item in actions])
     blocked = np.asarray([item == "block" for item in actions])

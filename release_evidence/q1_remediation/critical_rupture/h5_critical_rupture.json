@@ -1,0 +1,25 @@
+{
+  "allowed_interpretation": "critical rupture is a structural diagnostic indicator only",
+  "predictive": {
+    "evaluation_partition": "test",
+    "fit_partition": "validation",
+    "incremental_auprc": -0.0005609278151094133,
+    "m0_auprc": 0.469200016787222,
+    "m0_auroc": 0.6898082386363636,
+    "m0_brier": 0.18005366104308113,
+    "m1_auprc": 0.4686390889721126,
+    "m1_auroc": 0.6888316761363636,
+    "m1_brier": 0.18007060920631515,
+    "n_test": 240
+  },
+  "predictive_claim_allowed": false,
+  "structural": {
+    "exact_type_accuracy": 1.0,
+    "f1": 1.0,
+    "false_certification_rate": 0.0,
+    "n_objects": 180,
+    "precision": 1.0,
+    "recall": 1.0
+  },
+  "structural_status": "supported"
+}

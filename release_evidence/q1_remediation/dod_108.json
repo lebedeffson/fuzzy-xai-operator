@@ -1,0 +1,549 @@
+{
+  "blocked": 25,
+  "items": [
+    {
+      "description": "Baseline commit frozen",
+      "id": 1,
+      "status": "PASS"
+    },
+    {
+      "description": "Baseline evidence checksummed",
+      "id": 2,
+      "status": "PASS"
+    },
+    {
+      "description": "Prior negative results preserved",
+      "id": 3,
+      "status": "PASS"
+    },
+    {
+      "description": "Preregistration exists",
+      "id": 4,
+      "status": "PASS"
+    },
+    {
+      "description": "Analysis plan exists",
+      "id": 5,
+      "status": "PASS"
+    },
+    {
+      "description": "Non-inferiority margins frozen",
+      "id": 6,
+      "status": "PASS"
+    },
+    {
+      "description": "Power analysis exists",
+      "id": 7,
+      "status": "PASS"
+    },
+    {
+      "description": "Real tabular dataset above 10k measured",
+      "id": 8,
+      "status": "BLOCKED"
+    },
+    {
+      "description": "Real image dataset above 10k measured",
+      "id": 9,
+      "status": "BLOCKED"
+    },
+    {
+      "description": "Real text dataset above 10k measured",
+      "id": 10,
+      "status": "BLOCKED"
+    },
+    {
+      "description": "Real time-series dataset above 10k measured",
+      "id": 11,
+      "status": "BLOCKED"
+    },
+    {
+      "description": "Real and controlled modes measured",
+      "id": 12,
+      "status": "BLOCKED"
+    },
+    {
+      "description": "Dataset licenses and hashes recorded",
+      "id": 13,
+      "status": "BLOCKED"
+    },
+    {
+      "description": "Linear model measured",
+      "id": 14,
+      "status": "BLOCKED"
+    },
+    {
+      "description": "Tree or ensemble measured",
+      "id": 15,
+      "status": "BLOCKED"
+    },
+    {
+      "description": "Boosting measured",
+      "id": 16,
+      "status": "BLOCKED"
+    },
+    {
+      "description": "CNN measured",
+      "id": 17,
+      "status": "BLOCKED"
+    },
+    {
+      "description": "Sequence model measured",
+      "id": 18,
+      "status": "BLOCKED"
+    },
+    {
+      "description": "ONNX measured",
+      "id": 19,
+      "status": "BLOCKED"
+    },
+    {
+      "description": "SHAP measured",
+      "id": 20,
+      "status": "BLOCKED"
+    },
+    {
+      "description": "LIME measured",
+      "id": 21,
+      "status": "BLOCKED"
+    },
+    {
+      "description": "Anchors measured",
+      "id": 22,
+      "status": "BLOCKED"
+    },
+    {
+      "description": "RuleFit measured",
+      "id": 23,
+      "status": "BLOCKED"
+    },
+    {
+      "description": "Grad-CAM measured",
+      "id": 24,
+      "status": "BLOCKED"
+    },
+    {
+      "description": "Integrated Gradients measured",
+      "id": 25,
+      "status": "BLOCKED"
+    },
+    {
+      "description": "Text and time-series attribution measured",
+      "id": 26,
+      "status": "BLOCKED"
+    },
+    {
+      "description": "Base versus wrapped pairs measured",
+      "id": 27,
+      "status": "PASS"
+    },
+    {
+      "description": "Non-inferiority test executed",
+      "id": 28,
+      "status": "PASS"
+    },
+    {
+      "description": "Fidelity confidence interval recorded",
+      "id": 29,
+      "status": "PASS"
+    },
+    {
+      "description": "Worsened objects listed",
+      "id": 30,
+      "status": "PASS"
+    },
+    {
+      "description": "K_trace measured",
+      "id": 31,
+      "status": "PASS"
+    },
+    {
+      "description": "Provenance retention checked",
+      "id": 32,
+      "status": "PASS"
+    },
+    {
+      "description": "User reduction retention checked",
+      "id": 33,
+      "status": "PASS"
+    },
+    {
+      "description": "Controlled channel removal checked",
+      "id": 34,
+      "status": "PASS"
+    },
+    {
+      "description": "Missingness F1 measured",
+      "id": 35,
+      "status": "PASS"
+    },
+    {
+      "description": "Cascade levels A B C implemented",
+      "id": 36,
+      "status": "PASS"
+    },
+    {
+      "description": "Threshold baseline measured",
+      "id": 37,
+      "status": "PASS"
+    },
+    {
+      "description": "Always-full baseline measured",
+      "id": 38,
+      "status": "PASS"
+    },
+    {
+      "description": "Matched random gate measured",
+      "id": 39,
+      "status": "PASS"
+    },
+    {
+      "description": "Explainer-disagreement heuristic measured",
+      "id": 40,
+      "status": "PASS"
+    },
+    {
+      "description": "Risk-coverage data generated",
+      "id": 41,
+      "status": "PASS"
+    },
+    {
+      "description": "Cost saving measured",
+      "id": 42,
+      "status": "PASS"
+    },
+    {
+      "description": "Escalation fraction measured",
+      "id": 43,
+      "status": "PASS"
+    },
+    {
+      "description": "Calibration grid measured",
+      "id": 44,
+      "status": "PASS"
+    },
+    {
+      "description": "Calibration objective recorded",
+      "id": 45,
+      "status": "PASS"
+    },
+    {
+      "description": "Tie-break frozen",
+      "id": 46,
+      "status": "PASS"
+    },
+    {
+      "description": "Leakage tests present",
+      "id": 47,
+      "status": "PASS"
+    },
+    {
+      "description": "Parameters frozen",
+      "id": 48,
+      "status": "PASS"
+    },
+    {
+      "description": "Test used once",
+      "id": 49,
+      "status": "PASS"
+    },
+    {
+      "description": "Selected rule ablated",
+      "id": 50,
+      "status": "PASS"
+    },
+    {
+      "description": "Matched random rule ablated",
+      "id": 51,
+      "status": "PASS"
+    },
+    {
+      "description": "Group or path ablation measured",
+      "id": 52,
+      "status": "PASS"
+    },
+    {
+      "description": "At least 50 paired comparisons",
+      "id": 53,
+      "status": "PASS"
+    },
+    {
+      "description": "Conditional effect model measured",
+      "id": 54,
+      "status": "PASS"
+    },
+    {
+      "description": "Null-result wording enforced",
+      "id": 55,
+      "status": "PASS"
+    },
+    {
+      "description": "CR-S executed",
+      "id": 56,
+      "status": "PASS"
+    },
+    {
+      "description": "Structural F1 measured",
+      "id": 57,
+      "status": "PASS"
+    },
+    {
+      "description": "False certification measured",
+      "id": 58,
+      "status": "PASS"
+    },
+    {
+      "description": "CR-P executed",
+      "id": 59,
+      "status": "PASS"
+    },
+    {
+      "description": "M0 and M1 compared",
+      "id": 60,
+      "status": "PASS"
+    },
+    {
+      "description": "Predictive claim blocked without gain",
+      "id": 61,
+      "status": "PASS"
+    },
+    {
+      "description": "Always F0 measured",
+      "id": 62,
+      "status": "PASS"
+    },
+    {
+      "description": "Always Fint measured",
+      "id": 63,
+      "status": "PASS"
+    },
+    {
+      "description": "Always NAS measured",
+      "id": 64,
+      "status": "PASS"
+    },
+    {
+      "description": "Always FML measured",
+      "id": 65,
+      "status": "PASS"
+    },
+    {
+      "description": "Adaptive measured",
+      "id": 66,
+      "status": "PASS"
+    },
+    {
+      "description": "Hierarchy non-inferiority measured",
+      "id": 67,
+      "status": "PASS"
+    },
+    {
+      "description": "Complexity reduction measured",
+      "id": 68,
+      "status": "PASS"
+    },
+    {
+      "description": "FML fraction analyzed",
+      "id": 69,
+      "status": "PASS"
+    },
+    {
+      "description": "Undercoverage measured",
+      "id": 70,
+      "status": "PASS"
+    },
+    {
+      "description": "Action influence measured",
+      "id": 71,
+      "status": "PASS"
+    },
+    {
+      "description": "Sensitivity weights measured",
+      "id": 72,
+      "status": "PASS"
+    },
+    {
+      "description": "Sensitivity thresholds measured",
+      "id": 73,
+      "status": "PASS"
+    },
+    {
+      "description": "Sensitivity noise measured",
+      "id": 74,
+      "status": "PASS"
+    },
+    {
+      "description": "Sensitivity shift measured",
+      "id": 75,
+      "status": "PASS"
+    },
+    {
+      "description": "K_rob measured",
+      "id": 76,
+      "status": "PASS"
+    },
+    {
+      "description": "Sensitivity heatmaps generated",
+      "id": 77,
+      "status": "PASS"
+    },
+    {
+      "description": "Pareto frontier generated",
+      "id": 78,
+      "status": "PASS"
+    },
+    {
+      "description": "Scalability 1k measured",
+      "id": 79,
+      "status": "PASS"
+    },
+    {
+      "description": "Scalability 5k measured",
+      "id": 80,
+      "status": "PASS"
+    },
+    {
+      "description": "Scalability 10k measured",
+      "id": 81,
+      "status": "PASS"
+    },
+    {
+      "description": "Scalability 50k measured",
+      "id": 82,
+      "status": "PASS"
+    },
+    {
+      "description": "Runtime measured",
+      "id": 83,
+      "status": "PASS"
+    },
+    {
+      "description": "Memory measured",
+      "id": 84,
+      "status": "PASS"
+    },
+    {
+      "description": "Graph size measured",
+      "id": 85,
+      "status": "PASS"
+    },
+    {
+      "description": "Complexity claim checked against measurements",
+      "id": 86,
+      "status": "PASS"
+    },
+    {
+      "description": "Comprehension protocol prepared",
+      "id": 87,
+      "status": "PASS"
+    },
+    {
+      "description": "Comprehension materials prepared",
+      "id": 88,
+      "status": "PASS"
+    },
+    {
+      "description": "Comprehension run or gate open",
+      "id": 89,
+      "status": "OPEN_EXTERNAL"
+    },
+    {
+      "description": "Expert protocol prepared",
+      "id": 90,
+      "status": "PASS"
+    },
+    {
+      "description": "Expert study run or gate open",
+      "id": 91,
+      "status": "OPEN_EXTERNAL"
+    },
+    {
+      "description": "Domain review run or gate open",
+      "id": 92,
+      "status": "OPEN_EXTERNAL"
+    },
+    {
+      "description": "External results not fabricated",
+      "id": 93,
+      "status": "PASS"
+    },
+    {
+      "description": "Dockerfile.q1 works",
+      "id": 94,
+      "status": "PASS"
+    },
+    {
+      "description": "Lock file fixed",
+      "id": 95,
+      "status": "PASS"
+    },
+    {
+      "description": "make reproduce-q1 works",
+      "id": 96,
+      "status": "BLOCKED"
+    },
+    {
+      "description": "Docker command works",
+      "id": 97,
+      "status": "PASS"
+    },
+    {
+      "description": "All tables generated",
+      "id": 98,
+      "status": "PASS"
+    },
+    {
+      "description": "All figures generated",
+      "id": 99,
+      "status": "PASS"
+    },
+    {
+      "description": "Claim registry generated",
+      "id": 100,
+      "status": "PASS"
+    },
+    {
+      "description": "Clean archive verifies",
+      "id": 101,
+      "status": "BLOCKED"
+    },
+    {
+      "description": "Fast CI green",
+      "id": 102,
+      "status": "BLOCKED"
+    },
+    {
+      "description": "Heavy CI green",
+      "id": 103,
+      "status": "BLOCKED"
+    },
+    {
+      "description": "Project Memory updated",
+      "id": 104,
+      "status": "BLOCKED"
+    },
+    {
+      "description": "Release Status updated",
+      "id": 105,
+      "status": "BLOCKED"
+    },
+    {
+      "description": "Chapters generated from artifacts",
+      "id": 106,
+      "status": "PASS"
+    },
+    {
+      "description": "No unsupported wording",
+      "id": 107,
+      "status": "PASS"
+    },
+    {
+      "description": "Stable tag blocked while external gates open",
+      "id": 108,
+      "status": "PASS"
+    }
+  ],
+  "open_external": 3,
+  "passed": 80,
+  "schema_version": "1.0",
+  "stable_release_allowed": false
+}

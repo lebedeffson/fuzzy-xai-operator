@@ -1,0 +1,28 @@
+{
+  "baseline_k_trace": 0.0,
+  "controlled_removed_channels": [
+    "data",
+    "model",
+    "method",
+    "version",
+    "hash",
+    "reference_data",
+    "rule",
+    "history"
+  ],
+  "fuzzyxai_k_trace": 1.0,
+  "missingness": {
+    "f1": 1.0,
+    "false_certification_rate": 0.0,
+    "false_negative": 0,
+    "false_positive": 0,
+    "n_objects": 180,
+    "precision": 1.0,
+    "recall": 1.0,
+    "source_localization_accuracy": 1.0,
+    "true_negative": 20,
+    "true_positive": 160
+  },
+  "status": "supported",
+  "traceability_gain": 1.0
+}

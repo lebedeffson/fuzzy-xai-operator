@@ -1,0 +1,61 @@
+{
+  "adaptive_distribution": {
+    "F0": 147,
+    "FML": 677,
+    "Fint": 129,
+    "NAS": 247,
+    "diagnostic_refusal": 0
+  },
+  "adaptive_fml_fraction": 0.5641666666666667,
+  "allowed_wording": "Adaptive selection preserves risk within the preregistered margin and reduces representation complexity.",
+  "claim_allowed": true,
+  "claim_block_reason": null,
+  "complexity_reduction_vs_fml": 2.3258333333333336,
+  "forbidden_wording": "Adaptive selection is superior on every criterion.",
+  "non_inferior_to_fml": true,
+  "non_inferiority_epsilon": 0.02,
+  "practical_hierarchy_claim_allowed": true,
+  "representation_complexity": {
+    "F0": 1.0,
+    "FML": 8.0,
+    "Fint": 2.0,
+    "NAS": 4.0
+  },
+  "rows": [
+    {
+      "coverage": 0.12250000000000005,
+      "mean_complexity": 1.0,
+      "mean_risk": 0.8975,
+      "mode": "always_F0",
+      "undercoverage": 0.8775
+    },
+    {
+      "coverage": 0.22999999999999998,
+      "mean_complexity": 2.0,
+      "mean_risk": 0.79,
+      "mode": "always_Fint",
+      "undercoverage": 0.77
+    },
+    {
+      "coverage": 0.4358333333333333,
+      "mean_complexity": 4.0,
+      "mean_risk": 0.5841666666666666,
+      "mode": "always_NAS",
+      "undercoverage": 0.5641666666666667
+    },
+    {
+      "coverage": 1.0,
+      "mean_complexity": 8.0,
+      "mean_risk": 0.02,
+      "mode": "always_FML",
+      "undercoverage": 0.0
+    },
+    {
+      "coverage": 1.0,
+      "mean_complexity": 5.674166666666666,
+      "mean_risk": 0.02,
+      "mode": "adaptive",
+      "undercoverage": 0.0
+    }
+  ]
+}

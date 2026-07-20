@@ -1,0 +1,17 @@
+{
+  "base_commit": "cafe403c7d60e36b08f56a5325ba380718a5be35",
+  "branch": "feat/q1-empirical-remediation",
+  "commit": "e69b2cc15f3f1cd176cf527ab7bf74b300da1a9a",
+  "controlled_objects": 1200,
+  "external_gates": {
+    "comprehension": "planned_not_run",
+    "domain_language_review": "pending_external_review",
+    "expert_action_review": "planned_not_run"
+  },
+  "profile": "smoke",
+  "python": "3.14.6",
+  "real_benchmark_status": "pending_heavy_ci",
+  "schema_version": "1.0",
+  "stable_release_allowed": false,
+  "threads": 1
+}

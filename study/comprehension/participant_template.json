@@ -1,0 +1,10 @@
+{
+  "participant_id": "",
+  "condition_order": [],
+  "responses": [],
+  "completion_seconds": null,
+  "overtrust_score": null,
+  "subjective_clarity": null,
+  "cognitive_load": null,
+  "consent_recorded": false
+}

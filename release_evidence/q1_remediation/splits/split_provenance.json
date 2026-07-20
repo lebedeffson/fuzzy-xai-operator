@@ -1,0 +1,52 @@
+{
+  "hashes": {
+    "test": "e571f7a585d12c5778610cf4eb2a2efc9547f091a5e7313a650bac6c30ce4cc0",
+    "train": "118a405a3dcfe7f68296931b5b0aea076f991f2f7e3cb81471eb314852971558",
+    "validation": "ac12a1aba31b92564f9755a6f8f79a1f10fcb71317197d7cd3d529ed520bdd7a"
+  },
+  "ledger": [
+    {
+      "input_hashes": {
+        "test": "e571f7a585d12c5778610cf4eb2a2efc9547f091a5e7313a650bac6c30ce4cc0",
+        "train": "118a405a3dcfe7f68296931b5b0aea076f991f2f7e3cb81471eb314852971558",
+        "validation": "ac12a1aba31b92564f9755a6f8f79a1f10fcb71317197d7cd3d529ed520bdd7a"
+      },
+      "operation": "fit",
+      "operation_id": "model-fit",
+      "partitions": [
+        "train"
+      ]
+    },
+    {
+      "input_hashes": {
+        "test": "e571f7a585d12c5778610cf4eb2a2efc9547f091a5e7313a650bac6c30ce4cc0",
+        "train": "118a405a3dcfe7f68296931b5b0aea076f991f2f7e3cb81471eb314852971558",
+        "validation": "ac12a1aba31b92564f9755a6f8f79a1f10fcb71317197d7cd3d529ed520bdd7a"
+      },
+      "operation": "calibrate",
+      "operation_id": "policy-calibration",
+      "partitions": [
+        "train",
+        "validation"
+      ]
+    },
+    {
+      "input_hashes": {
+        "test": "e571f7a585d12c5778610cf4eb2a2efc9547f091a5e7313a650bac6c30ce4cc0",
+        "train": "118a405a3dcfe7f68296931b5b0aea076f991f2f7e3cb81471eb314852971558",
+        "validation": "ac12a1aba31b92564f9755a6f8f79a1f10fcb71317197d7cd3d529ed520bdd7a"
+      },
+      "operation": "evaluate",
+      "operation_id": "final-test",
+      "partitions": [
+        "test"
+      ]
+    }
+  ],
+  "sizes": {
+    "test": 240,
+    "train": 720,
+    "validation": 240
+  },
+  "test_access_count": 1
+}

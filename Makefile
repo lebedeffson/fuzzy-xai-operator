@@ -34,6 +34,35 @@ final-readiness-audit: studio-hybrid-batch studio-export-tables
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m pytest tests/audit -q
 
 .PHONY: studio-semantic-smoke studio-server-smoke studio-smoke operator-manifest-check framework-release-check framework-source-release doctorate-release-check fresh-clone-gate practice-demo practice-screenshots practice-package practice-package-with-qa dataset-audit train-all evaluate-all training-audit practice-readiness-check screenshot-qc proof-qc package-self-contained-check real-validation-check full-delivery-package final-delivery-report final-product-check research-repo-inventory framework-check fuzzyxai-framework-check framework-external-check fuzzyxai-cli-check fuzzyxai-schema-check fuzzyxai-adapter-sdk-check fuzzyxai-framework-rc-check fuzzyxai-framework-rc-package fuzzyxai-visualization-check fuzzyxai-visualization-package fuzzyxai-visual-quality-check fuzzyxai-shap-like-visualization-check fuzzyxai-shap-like-visualization-package fuzzyxai-ru-visual-explanation-check fuzzyxai-ru-visual-explanation-package fuzzyxai-ru-visual-editorial-check fuzzyxai-ru-operator-explanation-check fuzzyxai-ru-explanation-framework-check operator-traceability-check research-validation research-validation-check fuzzyxai-research-analysis fuzzyxai-research-analysis-check applications-check operator-dashboard operator-route-check site-build sprint-report dubnaxai-release-check
+.PHONY: reproduce-q1 reproduce-q1-smoke verify-q1 q1-baseline-snapshot q1-claims q1-tables q1-figures q1-archives q1-archive-check
+
+q1-baseline-snapshot:
+	$(PYTHON) scripts/q1/build_baseline_snapshot.py
+
+reproduce-q1-smoke:
+	OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/q1/reproduce_all.py --profile smoke
+
+reproduce-q1:
+	OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/q1/reproduce_all.py --profile full
+
+verify-q1:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/q1/verify_all.py
+
+q1-claims:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/q1/build_claim_registry.py
+
+q1-tables:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/q1/build_tables.py
+
+q1-figures:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/q1/build_figures.py
+
+q1-archives:
+	$(PYTHON) scripts/build_framework_release.py
+	$(PYTHON) scripts/q1/build_archives.py
+
+q1-archive-check:
+	$(PYTHON) scripts/q1/verify_archives.py
 studio-semantic-smoke:
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m fuzzyxai.audit.studio_smoke
 
