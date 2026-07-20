@@ -6,7 +6,8 @@
 - Branch: `feat/ai-pre-review-final-closure`
 - Frozen invalid-for-scoring prototype: `60ed5697d4d607df59556ea82de63527905f0f4f`
 - Leakage-remediation implementation: `c1271db`
-- Public CI: pending branch push
+- Public validation commit: `b61aaf3c9e70aee64ea6aaf35ecb5e7dabd25183`
+- Public workflow: `29766746012`, PASS
 - Stable release: blocked
 
 The previous 360-case analysis bundle remains a technical prototype but must not be scored: it disclosed outcome,
@@ -30,8 +31,7 @@ Validated technical boundary:
 
 Next step: run the 240-case formative AI pre-review using the new public archive. Do not expose the 120 confirmatory
 cases, create a protocol lock, invite human reviewers or claim AI-human agreement before real formative results are
-imported and accepted. Public CI must pass on the pushed commit before this milestone is treated as externally
-reproducible.
+imported and accepted. The focused public technical workflow is green; it does not replace the open external gates.
 
 ## FXAI-AI-PRE-REVIEW-HUMAN-CONFIRMATION
 

@@ -5,7 +5,8 @@
 - Branch: `feat/ai-pre-review-final-closure`
 - Implementation commit: `c1271db`
 - Technical status: `PASS_LOCAL`
-- Public CI: `PENDING`
+- Public validation commit: `b61aaf3c9e70aee64ea6aaf35ecb5e7dabd25183`
+- Public CI: `29766746012`, `PASS`
 - Formative AI review: `planned_not_run`
 - Confirmatory protocol: `BLOCKED_BY_FORMATIVE_STAGE`
 - Human confirmation: `OPEN_EXTERNAL`
