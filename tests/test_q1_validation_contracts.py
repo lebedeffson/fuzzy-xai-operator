@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from pathlib import Path
+
 import pytest
 
 from fuzzyxai.q1_validation import (
@@ -23,6 +25,7 @@ from fuzzyxai.q1_validation.critical_rupture import (
     structural_metrics,
 )
 from fuzzyxai.q1_validation.local_explainers import LocalExplanation, wrap_local_explanation
+from fuzzyxai.q1_validation.real_benchmarks import _read_ts
 from fuzzyxai.q1_validation.rule_ablation import AblationPair, RuleDescriptor, select_matched_random_rule, summarize_ablation
 from fuzzyxai.q1_validation.traceability import EvidenceClaim, MissingnessPrediction, evaluate_missingness, traceability_score
 
@@ -142,3 +145,11 @@ def test_external_gate_and_supported_claim_fail_closed() -> None:
 def test_q1_calibration_config_validates_thresholds() -> None:
     with pytest.raises(ValueError, match="thresholds"):
         Q1CalibrationConfig(1.1, 0.5, 1, 1, 1, 1, 1, 0.2, 0.3, 10, 5, 1, 2)
+
+
+def test_electric_devices_reader_accepts_an_official_split_below_10k(tmp_path: Path) -> None:
+    split = tmp_path / "ElectricDevices_TRAIN.ts"
+    split.write_text("@problemName ElectricDevices\n@data\n1.0,2.0,?:3\n", encoding="utf-8")
+    values, labels = _read_ts(split)
+    assert values.tolist() == [[1.0, 2.0, 0.0]]
+    assert labels.tolist() == [3.0]

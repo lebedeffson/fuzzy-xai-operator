@@ -237,6 +237,8 @@ def _load_electric_devices(cache: Path) -> LoadedBenchmark:
     test_values, test_labels = _read_ts(test_path)
     values = np.concatenate((train_values, test_values)).astype(np.float32)
     original = np.concatenate((train_labels, test_labels))
+    if len(values) < 10_000:
+        raise RuntimeError(f"ElectricDevices expected at least 10k combined objects, got {len(values)}")
     unique = sorted(set(float(item) for item in original))
     labels = np.isin(original, unique[: max(1, len(unique) // 2)]).astype(int)
     return LoadedBenchmark(
@@ -441,7 +443,15 @@ def _export_onnx(model: object, sample: object, modality: str) -> dict[str, obje
         import torch
 
         path = Path.cwd() / f"q1_{modality}_cnn.onnx"
-        torch.onnx.export(model, sample, path, input_names=["input"], output_names=["logit"], opset_version=17)
+        torch.onnx.export(
+            model,
+            sample,
+            path,
+            input_names=["input"],
+            output_names=["logit"],
+            opset_version=17,
+            dynamo=False,
+        )
         session = ort.InferenceSession(str(path), providers=["CPUExecutionProvider"])
         expected = model(sample).detach().cpu().numpy()
         observed = session.run(None, {"input": sample.detach().cpu().numpy()})[0]
@@ -506,8 +516,8 @@ def _read_ts(path: Path) -> tuple[np.ndarray, np.ndarray]:
         series_text, label_text = parts[-2], parts[-1]
         values.append([float(item) if item != "?" else 0.0 for item in series_text.split(",")])
         labels.append(float(label_text))
-    if len(values) < 10_000:
-        raise RuntimeError(f"ElectricDevices expected at least 10k objects, got {len(values)}")
+    if not values:
+        raise RuntimeError(f"no ElectricDevices objects found in {path}")
     return np.asarray(values, dtype=np.float32), np.asarray(labels)
 
 

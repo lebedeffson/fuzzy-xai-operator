@@ -21,6 +21,8 @@ jobs:
     timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
@@ -61,6 +63,8 @@ jobs:
         modality: [tabular, image, text, timeseries]
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
@@ -69,10 +73,10 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           python -m pip install --no-deps -e .
-          python -m pip install numpy pandas scipy scikit-learn matplotlib plotly PyYAML shap
-          if [ "${{ matrix.modality }}" = tabular ]; then python -m pip install lime alibi imodels xgboost; fi
-          if [ "${{ matrix.modality }}" != tabular ]; then python -m pip install torch; fi
-          if [ "${{ matrix.modality }}" = image ]; then python -m pip install onnx onnxruntime; fi
+          python -m pip install numpy==1.26.4 pandas==2.2.3 scipy==1.13.1 scikit-learn==1.5.2 matplotlib==3.9.4 plotly==5.24.1 PyYAML==6.0.2 shap==0.46.0
+          if [ "${{ matrix.modality }}" = tabular ]; then python -m pip install lime==0.2.0.1 alibi==0.9.6 click==8.1.8 imodels==2.0.4 xgboost==3.2.0 torch==2.5.1; fi
+          if [ "${{ matrix.modality }}" != tabular ]; then python -m pip install torch==2.5.1; fi
+          if [ "${{ matrix.modality }}" = image ]; then python -m pip install onnx==1.17.0 onnxruntime==1.20.1; fi
       - name: Run real benchmark
         run: |
           python scripts/q1/run_real_benchmark.py \
@@ -89,6 +93,8 @@ jobs:
     timeout-minutes: 120
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - name: Build image
         run: docker build -f Dockerfile.q1 -t fuzzyxai-q1 .
       - name: Run full one-command reproduction in clean container
@@ -106,6 +112,8 @@ jobs:
     timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"

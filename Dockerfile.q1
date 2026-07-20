@@ -8,6 +8,9 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
     NUMEXPR_NUM_THREADS=1
 
 WORKDIR /workspace
+RUN apt-get update \
+    && apt-get install --yes --no-install-recommends make \
+    && rm -rf /var/lib/apt/lists/*
 COPY requirements.lock /workspace/requirements.lock
 RUN python -m pip install --no-cache-dir -r requirements.lock
 COPY . /workspace
