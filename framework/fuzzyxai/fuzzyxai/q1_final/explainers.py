@@ -87,6 +87,7 @@ def _tabular_explainers(dataset: object, evaluation_ids: Sequence[int]) -> tuple
             summary = _method_summary(method, method_pairs, "measured")
             if method == "RuleFit":
                 summary["evaluation_strategy"] = "one_vs_rest_surrogate"
+                summary["training_sample_size"] = min(10_000, len(train))
             methods.append(summary)
         except Exception as error:
             methods.append({"method": method, "status": "failed", "n_explained": 0, "error": repr(error)})
@@ -149,12 +150,15 @@ def _rulefit_values(model: object, train: np.ndarray, labels: np.ndarray, sample
     classes = np.unique(target)
     if len(classes) < 2:
         raise ValueError("RuleFit one-vs-rest evaluation requires at least two predicted classes")
+    fit_indices = _stratified_cap(np.arange(len(target)), target, 10_000, 4401)
+    fit_values = train[fit_indices]
+    fit_target = target[fit_indices]
 
     positive_probabilities = []
     class_importances = []
     for class_id in classes:
         surrogate = RuleFitClassifier(n_estimators=30, random_state=4201)
-        surrogate.fit(train, (target == class_id).astype(int))
+        surrogate.fit(fit_values, (fit_target == class_id).astype(int))
         probabilities = np.asarray(surrogate.predict_proba(sample), dtype=float)
         surrogate_classes = np.asarray(getattr(surrogate, "classes_", (0, 1)))
         positive_column = int(np.flatnonzero(surrogate_classes == 1)[0])
