@@ -70,7 +70,7 @@ def main() -> None:
 
 
 def _dod_statuses() -> dict[int, str]:
-    passed = set(range(1, 21)) | {42, 43, 44, 45, 46, 47, 62, 63, 64, 65, 66, 67, 68, 69, 71, 72, 73, 76, 77, 78, 79, 80}
+    passed = set(range(1, 21)) | {42, 43, 44, 45, 46, 47, 62, 63, 64, 65, 66, 67, 68, 69, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80}
     statuses = {index: "PASS" if index in passed else "OPEN_EXTERNAL" for index in range(1, 81)}
     for index in range(21, 41):
         statuses[index] = "OPEN_AI"
