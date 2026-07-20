@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0",
+  "study_id": "FXAI-AI-REVIEW-HUMAN-CONFIRMATION-FINAL",
+  "frozen_q1_commit": "e34e52fb8ae62ee1be043d6d5b26a0c9214a0572",
+  "formative_observer_commit": "bd48a9ca3795e2665e0e6a4f1ab4f4e981774c2b",
+  "modalities": ["tabular", "image", "text", "timeseries"],
+  "formative_cases_per_modality": 60,
+  "confirmatory_cases_per_modality": 30,
+  "variants_per_case": 3,
+  "batch_case_limit": 20,
+  "ai_run_count": 3,
+  "human_min_experts": 3,
+  "human_cases_per_expert": 120,
+  "agreement_thresholds": {
+    "weighted_kappa": 0.6,
+    "spearman_overall_usability": 0.7,
+    "critical_defect_recall": 0.9,
+    "critical_defect_precision": 0.75,
+    "preferred_variant_agreement": 0.7
+  },
+  "stable_release_allowed": false
+}

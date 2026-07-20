@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["review_schema_version", "batch_id", "case_id", "variant_id", "scores", "critical_flags", "preferred_variant_rank", "confidence_in_review", "summary", "required_changes", "optional_changes", "claim_evidence_audit", "reviewer_type", "reviewer_model_label", "review_timestamp", "input_batch_sha256", "ai_run_id", "ai_review_commit"],
+  "properties": {
+    "review_schema_version": {"const": "1.0"},
+    "batch_id": {"type": "string"},
+    "case_id": {"pattern": "^case_[0-9]{6}$"},
+    "variant_id": {"pattern": "^X[123]$"},
+    "scores": {
+      "type": "object",
+      "required": ["factual_consistency", "traceability", "uncertainty_honesty", "action_quality", "clarity", "limitation_completeness", "overtrust_control", "causal_correctness", "audience_fit", "overall_usability"],
+      "additionalProperties": false,
+      "properties": {
+        "factual_consistency": {"type": "integer", "minimum": 0, "maximum": 4},
+        "traceability": {"type": "integer", "minimum": 0, "maximum": 4},
+        "uncertainty_honesty": {"type": "integer", "minimum": 0, "maximum": 4},
+        "action_quality": {"type": "integer", "minimum": 0, "maximum": 4},
+        "clarity": {"type": "integer", "minimum": 0, "maximum": 4},
+        "limitation_completeness": {"type": "integer", "minimum": 0, "maximum": 4},
+        "overtrust_control": {"type": "integer", "minimum": 0, "maximum": 4},
+        "causal_correctness": {"type": "integer", "minimum": 0, "maximum": 4},
+        "audience_fit": {"type": "integer", "minimum": 0, "maximum": 4},
+        "overall_usability": {"type": "integer", "minimum": 0, "maximum": 4}
+      }
+    },
+    "critical_flags": {"type": "array"},
+    "preferred_variant_rank": {"type": "integer", "minimum": 1, "maximum": 3},
+    "confidence_in_review": {"type": "number", "minimum": 0, "maximum": 1},
+    "summary": {"type": "string", "maxLength": 600},
+    "required_changes": {"type": "array", "maxItems": 8},
+    "optional_changes": {"type": "array", "maxItems": 5},
+    "claim_evidence_audit": {"type": "array"},
+    "reviewer_type": {"const": "ai_pre_reviewer"},
+    "reviewer_model_label": {"type": "string", "minLength": 1},
+    "review_timestamp": {"type": "string", "format": "date-time"},
+    "input_batch_sha256": {"pattern": "^[0-9a-f]{64}$"},
+    "ai_run_id": {"enum": ["AI_RUN_1", "AI_RUN_2", "AI_RUN_3"]},
+    "ai_review_commit": {"pattern": "^[0-9a-f]{40}$"}
+  }
+}

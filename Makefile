@@ -628,3 +628,41 @@ reproduce-dissertation:
 
 empirical-full-check:
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/verify_reproduction.py --profile full
+
+.PHONY: ai-pre-review-select-source ai-pre-review-build-log ai-pre-review-build-batches ai-pre-review-validate-input ai-pre-review-import ai-pre-review-aggregate ai-pre-review-lock-confirmatory ai-pre-review-build-human-pack ai-pre-review-compare-human ai-pre-review-reports ai-pre-review-archive ai-pre-review-check
+ai-pre-review-select-source:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/ai_pre_review/select_source_cases.py
+
+ai-pre-review-build-log:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/ai_pre_review/build_log.py
+
+ai-pre-review-build-batches: ai-pre-review-build-log
+
+ai-pre-review-validate-input:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/ai_pre_review/validate_inputs.py
+
+ai-pre-review-import:
+	test -n "$(REVIEW_DIR)" && test -n "$(SPLIT)" && test -n "$(AI_RUN_ID)"
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/ai_pre_review/import_ai_reviews.py --review-dir "$(REVIEW_DIR)" --split "$(SPLIT)" --run-id "$(AI_RUN_ID)"
+
+ai-pre-review-aggregate:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/ai_pre_review/aggregate_ai_reviews.py
+
+ai-pre-review-lock-confirmatory:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/ai_pre_review/lock_confirmatory.py
+
+ai-pre-review-build-human-pack:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/ai_pre_review/build_human_pack.py
+
+ai-pre-review-compare-human:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/ai_pre_review/compare_human.py
+
+ai-pre-review-reports:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/ai_pre_review/build_reports.py
+
+ai-pre-review-archive:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/ai_pre_review/build_archive.py
+
+ai-pre-review-check: ai-pre-review-build-log ai-pre-review-validate-input ai-pre-review-reports
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/ai_pre_review/build_archive.py
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/ai_pre_review/verify_pipeline.py

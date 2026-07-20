@@ -35,6 +35,16 @@ release_evidence/generated/
 release_artifacts/
 release_evidence/q1_final/
 reports/q1_final/
+release_evidence/ai_pre_review/
+reports/ai_pre_review/
+dissertation_artifacts/ai_pre_review/
+release_artifacts/ai_pre_review/
+study/ai_pre_review/master_explanation_log.jsonl
+study/ai_pre_review/AI_REVIEW_MASTER_LOG.md
+study/ai_pre_review/batch_manifest.json
+study/ai_pre_review/chatgpt_batches/
+study/ai_pre_review/method_identity_key.encrypted
+study/ai_pre_review/human_confirmation/
 dissertation_artifacts/q1_final/
 *.whl
 *.tar.gz

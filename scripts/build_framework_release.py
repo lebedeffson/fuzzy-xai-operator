@@ -178,6 +178,17 @@ REQUIRED_PATHS = {
     "fuzzy-xai-operator/docs/reproduction/Q1_FINAL_REPRODUCTION.md",
     "fuzzy-xai-operator/tests/q1_final/test_final_contracts.py",
     "fuzzy-xai-operator/uv.lock",
+    "fuzzy-xai-operator/configs/ai_pre_review/config.json",
+    "fuzzy-xai-operator/framework/fuzzyxai/fuzzyxai/ai_pre_review/contracts.py",
+    "fuzzy-xai-operator/framework/fuzzyxai/fuzzyxai/ai_pre_review/generator.py",
+    "fuzzy-xai-operator/framework/fuzzyxai/fuzzyxai/ai_pre_review/review_io.py",
+    "fuzzy-xai-operator/scripts/ai_pre_review/build_log.py",
+    "fuzzy-xai-operator/scripts/ai_pre_review/verify_pipeline.py",
+    "fuzzy-xai-operator/study/ai_pre_review/rubric_v1.yaml",
+    "fuzzy-xai-operator/study/ai_pre_review/ai_review_schema.json",
+    "fuzzy-xai-operator/study/ai_pre_review/human_response_schema.json",
+    "fuzzy-xai-operator/study/ai_pre_review/source_case_evidence.jsonl",
+    "fuzzy-xai-operator/tests/ai_pre_review/test_pipeline.py",
 }
 
 
