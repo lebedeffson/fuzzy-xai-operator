@@ -1,0 +1,159 @@
+{
+  "confirmatory_claim_allowed": false,
+  "formative_target_met": true,
+  "modalities": [
+    {
+      "configurations": [
+        {
+          "action_agreement": 0.98,
+          "configuration": "coarse",
+          "mean_absolute_risk_change": 0.0046972269293919615,
+          "representation_agreement": 0.981,
+          "top_k_jaccard": 1.0
+        },
+        {
+          "action_agreement": 1.0,
+          "configuration": "default",
+          "mean_absolute_risk_change": 0.0,
+          "representation_agreement": 1.0,
+          "top_k_jaccard": 1.0
+        },
+        {
+          "action_agreement": 0.986,
+          "configuration": "fine",
+          "mean_absolute_risk_change": 0.0031737494529420172,
+          "representation_agreement": 0.988,
+          "top_k_jaccard": 1.0
+        },
+        {
+          "action_agreement": 0.973,
+          "configuration": "very_fine",
+          "mean_absolute_risk_change": 0.007229054050712996,
+          "representation_agreement": 0.973,
+          "top_k_jaccard": 1.0
+        }
+      ],
+      "confirmatory_claim_allowed": false,
+      "formative_target_met": true,
+      "modality": "tabular",
+      "phase": "formative_only",
+      "reference": "default",
+      "risk_tolerance": 0.05
+    },
+    {
+      "configurations": [
+        {
+          "action_agreement": 0.985,
+          "configuration": "coarse",
+          "mean_absolute_risk_change": 0.004783316688911387,
+          "representation_agreement": 0.979,
+          "top_k_jaccard": 1.0
+        },
+        {
+          "action_agreement": 1.0,
+          "configuration": "default",
+          "mean_absolute_risk_change": 0.0,
+          "representation_agreement": 1.0,
+          "top_k_jaccard": 1.0
+        },
+        {
+          "action_agreement": 0.988,
+          "configuration": "fine",
+          "mean_absolute_risk_change": 0.003109835557019921,
+          "representation_agreement": 0.989,
+          "top_k_jaccard": 1.0
+        },
+        {
+          "action_agreement": 0.974,
+          "configuration": "very_fine",
+          "mean_absolute_risk_change": 0.0069139733876167125,
+          "representation_agreement": 0.967,
+          "top_k_jaccard": 1.0
+        }
+      ],
+      "confirmatory_claim_allowed": false,
+      "formative_target_met": true,
+      "modality": "image",
+      "phase": "formative_only",
+      "reference": "default",
+      "risk_tolerance": 0.05
+    },
+    {
+      "configurations": [
+        {
+          "action_agreement": 0.987,
+          "configuration": "coarse",
+          "mean_absolute_risk_change": 0.004725260715378837,
+          "representation_agreement": 0.98,
+          "top_k_jaccard": 1.0
+        },
+        {
+          "action_agreement": 1.0,
+          "configuration": "default",
+          "mean_absolute_risk_change": 0.0,
+          "representation_agreement": 1.0,
+          "top_k_jaccard": 1.0
+        },
+        {
+          "action_agreement": 0.99,
+          "configuration": "fine",
+          "mean_absolute_risk_change": 0.003203883748010376,
+          "representation_agreement": 0.989,
+          "top_k_jaccard": 1.0
+        },
+        {
+          "action_agreement": 0.972,
+          "configuration": "very_fine",
+          "mean_absolute_risk_change": 0.007280077457968952,
+          "representation_agreement": 0.97,
+          "top_k_jaccard": 1.0
+        }
+      ],
+      "confirmatory_claim_allowed": false,
+      "formative_target_met": true,
+      "modality": "text",
+      "phase": "formative_only",
+      "reference": "default",
+      "risk_tolerance": 0.05
+    },
+    {
+      "configurations": [
+        {
+          "action_agreement": 0.984,
+          "configuration": "coarse",
+          "mean_absolute_risk_change": 0.00475127852954466,
+          "representation_agreement": 0.973,
+          "top_k_jaccard": 1.0
+        },
+        {
+          "action_agreement": 1.0,
+          "configuration": "default",
+          "mean_absolute_risk_change": 0.0,
+          "representation_agreement": 1.0,
+          "top_k_jaccard": 1.0
+        },
+        {
+          "action_agreement": 0.987,
+          "configuration": "fine",
+          "mean_absolute_risk_change": 0.0031640794754827237,
+          "representation_agreement": 0.985,
+          "top_k_jaccard": 1.0
+        },
+        {
+          "action_agreement": 0.971,
+          "configuration": "very_fine",
+          "mean_absolute_risk_change": 0.007165272384444323,
+          "representation_agreement": 0.972,
+          "top_k_jaccard": 1.0
+        }
+      ],
+      "confirmatory_claim_allowed": false,
+      "formative_target_met": true,
+      "modality": "timeseries",
+      "phase": "formative_only",
+      "reference": "default",
+      "risk_tolerance": 0.05
+    }
+  ],
+  "phase": "formative_only"
+}

@@ -1,0 +1,64 @@
+{
+  "confirmatory_test_opened": false,
+  "forbidden": [
+    "positive confirmatory wording from formative data",
+    "changing thresholds after test opening",
+    "overwriting original negative results",
+    "stable tag while external gates are open"
+  ],
+  "primary_endpoints": {
+    "H3-v2": [
+      "wrong automatic actions at matched coverage",
+      "coverage at matched selective risk"
+    ],
+    "H5-A": [
+      "fault F1",
+      "false certification",
+      "source localization",
+      "invalid-action recall"
+    ],
+    "H6-A": [
+      "planted-rule detection",
+      "subgroup localization",
+      "matched-control separation"
+    ],
+    "H6-B": [
+      "candidate effect minus median matched-control effect"
+    ],
+    "H7": [
+      "Jaccard@k",
+      "Kendall tau",
+      "sign agreement",
+      "rank-biased overlap",
+      "fidelity non-inferiority"
+    ],
+    "H8": [
+      "action agreement",
+      "representation agreement",
+      "risk difference"
+    ],
+    "H9": [
+      "scaling exponent",
+      "streaming memory",
+      "determinism"
+    ]
+  },
+  "reporting_required": [
+    "effect size",
+    "95% confidence interval",
+    "adjusted p-value",
+    "N",
+    "unit of analysis"
+  ],
+  "schema_version": "1.0",
+  "stage": "formative_development",
+  "statistics": [
+    "paired bootstrap",
+    "cluster bootstrap",
+    "Wilcoxon",
+    "McNemar",
+    "permutation test",
+    "Holm correction"
+  ],
+  "study_id": "fuzzyxai-strong-confirmatory-closure"
+}

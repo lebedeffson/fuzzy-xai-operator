@@ -1,0 +1,16 @@
+{
+  "confirmatory_claim_allowed": false,
+  "confirmatory_test_opened": false,
+  "external_human_gates_completed": false,
+  "phase": "formative_development",
+  "profile": "full",
+  "results": {
+    "H3_v2_selective": false,
+    "H5_A_route_validity": true,
+    "H6_A_planted_rules": true,
+    "H7_stability": false,
+    "H8_grid_sensitivity": true,
+    "H9_scalability": true
+  },
+  "schema_version": "1.0"
+}

@@ -1,5 +1,42 @@
 # Project Memory
 
+## FXAI-STRONG-CONFIRMATORY-FORMATIVE
+
+- Date: 2026-07-21
+- Branch: `feat/strong-confirmatory-closure`
+- Implementation commit: `238194c113fc2f1677730318dfc0ba4d4d4426d5`
+- Frozen ancestors: `e34e52f`, `bd48a9c`, `1f5fd77`
+- Research phase: formative development
+- Confirmatory protocol: blocked
+- Stable release: blocked
+
+This milestone implements the fail-closed strong confirmatory program without rewriting or relabeling prior evidence.
+The immutable statuses remain `H3-original = not_supported`, `H5-P-original = not_supported`, and
+`H6-general = not_supported`. EBM, GAM, RuleFit and rule lists are registered as interpretable predictors rather than
+post-hoc explainers; modality-specific post-hoc methods and action policies are separate comparator families.
+
+Measured formative evidence:
+
+- H3-v2 selective observer: formative target not met; no positive policy claim is allowed;
+- H5-A controlled route validity: F1 `0.998998998998999`, false certification `0.002`, source localization `0.998`,
+  invalid-action recall `0.998`; this is a route-contract result, not an error-prediction claim;
+- H6-A semisynthetic planted rules on real tabular features: `24` configurations, detection rate
+  `0.8333333333333334`, mean specific effect `0.21666666666666667`; H6-B remains not run;
+- H7 stability: image and controlled time-series profiles meet the formative fidelity/stability gate, while tabular
+  and cached 20 Newsgroups profiles fail fidelity non-inferiority; the overall H7 formative target is not met;
+- H8 controlled component-grid action/representation stability: formative target met;
+- H9 cached streaming operator layer: measured to `1,000,000` objects, deterministic repeat PASS, empirical exponent
+  `0.9220263168835`; local-explainer cost is explicitly excluded.
+
+The protocol lock deletes/refuses itself until sealed independent dataset manifests and a real formative AI-review
+acceptance file exist. Final Chapter 4 generation additionally requires locked confirmatory claims plus real
+domain-language, comprehension, and expert-action gates. The current output is a checksummed formative evidence
+package and a 17-section chapter shell only; no new strong dissertation conclusion, merge, stable tag, or external
+validation claim is allowed.
+
+Next step: complete real formative AI review and seal independent confirmatory datasets. Then lock the protocol once,
+run the untouched confirmatory split, and invite independent humans. Do not tune thresholds after test opening.
+
 ## FXAI-AI-PRE-REVIEW-FINAL-BLINDING
 
 - Date: 2026-07-20

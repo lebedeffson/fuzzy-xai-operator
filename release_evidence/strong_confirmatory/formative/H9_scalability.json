@@ -1,0 +1,66 @@
+{
+  "confirmatory_claim_allowed": false,
+  "deterministic_repeat": true,
+  "empirical_scaling_exponent": 0.9220263168835,
+  "formative_target_met": true,
+  "local_explainer_included": false,
+  "measurements": [
+    {
+      "batch_latency_ms_p50": 0.2890960004151566,
+      "batch_latency_ms_p95": 0.2890960004151566,
+      "batch_latency_ms_p99": 0.2890960004151566,
+      "batch_size": 10000,
+      "n_objects": 1000,
+      "objects_per_second": 3365586.8680603164,
+      "peak_rss_bytes": 289673216,
+      "result_sha256": "5f2c8bed4520b3efbe171ad0f3ab1355c06244b868476d15c181ad594f24c956",
+      "wall_time_seconds": 0.00029712500054301927
+    },
+    {
+      "batch_latency_ms_p50": 1.6114050004034652,
+      "batch_latency_ms_p95": 1.6114050004034652,
+      "batch_latency_ms_p99": 1.6114050004034652,
+      "batch_size": 10000,
+      "n_objects": 10000,
+      "objects_per_second": 6195936.581838615,
+      "peak_rss_bytes": 289673216,
+      "result_sha256": "98ea3847baf3a3df036af56aec782c14383f637b4c6b12ae16bffde05a7a3281",
+      "wall_time_seconds": 0.0016139609997480875
+    },
+    {
+      "batch_latency_ms_p50": 1.5688690000388306,
+      "batch_latency_ms_p95": 1.6128545999890775,
+      "batch_latency_ms_p99": 1.616178120202676,
+      "batch_size": 10000,
+      "n_objects": 100000,
+      "objects_per_second": 6332566.375001359,
+      "peak_rss_bytes": 289673216,
+      "result_sha256": "fc1e830e23bd79a315576b2f23f797cb6462a53e4bf4ff0d6b510ef52d37d037",
+      "wall_time_seconds": 0.015791386000273633
+    },
+    {
+      "batch_latency_ms_p50": 1.5782309992573573,
+      "batch_latency_ms_p95": 1.642276049915381,
+      "batch_latency_ms_p99": 1.6960483896582443,
+      "batch_size": 10000,
+      "n_objects": 500000,
+      "objects_per_second": 6306762.040842941,
+      "peak_rss_bytes": 289673216,
+      "result_sha256": "4710df7f637f77cfbe6417bf81d26305c203ad0b7b01146ee8c2ca9e42343350",
+      "wall_time_seconds": 0.07927998500053945
+    },
+    {
+      "batch_latency_ms_p50": 1.5739960003884335,
+      "batch_latency_ms_p95": 1.662878150045799,
+      "batch_latency_ms_p99": 1.7472521404397412,
+      "batch_size": 10000,
+      "n_objects": 1000000,
+      "objects_per_second": 6293653.7659155475,
+      "peak_rss_bytes": 289673216,
+      "result_sha256": "56a2528ea7cd0c678d7d8162522da375df081c1e25fca55f313663e44eb3e0fe",
+      "wall_time_seconds": 0.15889021499970113
+    }
+  ],
+  "mode": "streaming_cached_operator_layer",
+  "phase": "formative_measurement"
+}

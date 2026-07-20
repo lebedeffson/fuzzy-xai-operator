@@ -1,0 +1,42 @@
+{
+  "immutable_original_statuses": {
+    "H3-original": "not_supported",
+    "H5-P-original": "not_supported",
+    "H6-general": "not_supported"
+  },
+  "new_hypotheses": {
+    "H3-v2": "selective observer utility in a validation-defined ambiguity zone",
+    "H5-A": "route validity prevents invalid automatic action",
+    "H6-A": "planted-rule recovery validates the ablation method",
+    "H6-B": "low-redundancy subgroup rules exceed matched controls",
+    "H7": "system explanation stability with fidelity non-inferiority",
+    "H8": "action stability across a frozen component grid",
+    "H9": "near-linear operator-layer streaming scalability"
+  },
+  "retained_supported_results": {
+    "H1": {
+      "n_pairs": 6000,
+      "scope": "paired fidelity preservation",
+      "status": "supported"
+    },
+    "H2": {
+      "f1": 1.0,
+      "n_deletions": 2000,
+      "scope": "controlled provenance localization",
+      "status": "supported"
+    },
+    "H4": {
+      "complexity_after": 3.137,
+      "complexity_before": 8.0,
+      "n_objects": 504260,
+      "status": "supported"
+    },
+    "H5-S": {
+      "f1": 1.0,
+      "n_faults": 4000,
+      "scope": "controlled structural detection only",
+      "status": "supported"
+    }
+  },
+  "schema_version": "1.0"
+}

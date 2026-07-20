@@ -1,0 +1,84 @@
+{
+  "confirmatory_claim_allowed": false,
+  "fault_types": [
+    "missing_provenance",
+    "mismatched_model_version",
+    "wrong_preprocessing",
+    "wrong_explainer_model_pairing",
+    "missing_calibration",
+    "wrong_reference_population",
+    "broken_transformation",
+    "incompatible_dictionary",
+    "excessive_reduction_loss",
+    "corrupted_audit_hash"
+  ],
+  "formative_target_met": true,
+  "methods": [
+    {
+      "f1": 0.0969807868252516,
+      "false_block": 0.4,
+      "false_certification": 0.947,
+      "fault_source_localization": null,
+      "invalid_action_recall": 0.053,
+      "method": "confidence",
+      "precision": 0.5698924731182796
+    },
+    {
+      "f1": 0.46153846153846156,
+      "false_block": 0.0,
+      "false_certification": 0.7,
+      "fault_source_localization": null,
+      "invalid_action_recall": 0.3,
+      "method": "data_quality_only",
+      "precision": 1.0
+    },
+    {
+      "f1": 0.3333333333333333,
+      "false_block": 0.0,
+      "false_certification": 0.8,
+      "fault_source_localization": null,
+      "invalid_action_recall": 0.2,
+      "method": "provenance_presence_only",
+      "precision": 1.0
+    },
+    {
+      "f1": 0.46153846153846156,
+      "false_block": 0.0,
+      "false_certification": 0.7,
+      "fault_source_localization": null,
+      "invalid_action_recall": 0.3,
+      "method": "static_schema_validation",
+      "precision": 1.0
+    },
+    {
+      "f1": 0.7492483463619964,
+      "false_block": 0.4,
+      "false_certification": 0.377,
+      "fault_source_localization": null,
+      "invalid_action_recall": 0.623,
+      "method": "simple_or",
+      "precision": 0.9396681749622926
+    },
+    {
+      "f1": 0.3333333333333333,
+      "false_block": 0.0,
+      "false_certification": 0.8,
+      "fault_source_localization": null,
+      "invalid_action_recall": 0.2,
+      "method": "observer_without_route_features",
+      "precision": 1.0
+    },
+    {
+      "f1": 0.998998998998999,
+      "false_block": 0.0,
+      "false_certification": 0.002,
+      "fault_source_localization": 0.998,
+      "invalid_action_recall": 0.998,
+      "method": "typed_route_validity",
+      "precision": 1.0
+    }
+  ],
+  "model_error_prediction_claim_allowed": false,
+  "n_records": 1100,
+  "phase": "formative_controlled"
+}

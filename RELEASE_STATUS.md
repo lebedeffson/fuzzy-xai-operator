@@ -1,5 +1,23 @@
 # FuzzyXAI Framework Release Status
 
+## Strong Confirmatory Formative Gate
+
+- Branch: `feat/strong-confirmatory-closure`
+- Implementation commit: `238194c113fc2f1677730318dfc0ba4d4d4426d5`
+- Formative evidence: measured locally
+- Confirmatory test: not opened
+- External human gates: open
+- Stable release: `BLOCKED`
+
+The strong confirmatory code and formative evidence preserve all original negative statuses. The measured development
+cycle does not support H3-v2 or overall H7. Controlled H5-A, semisynthetic H6-A, controlled H8, and operator-layer H9
+meet their formative thresholds but cannot be described as independently confirmed. H6-B, independent datasets,
+human comprehension, expert-action agreement, and domain-language approval remain unmeasured.
+
+`make strong-confirmatory-lock` and `make chapter4-final` fail closed while their external prerequisites are absent.
+The 17-section Chapter 4 output is a formative shell with explicit pending markers, not a final dissertation chapter.
+No merge to `main` or stable tag is allowed from this state.
+
 ## AI Pre-review Final Blinding Gate
 
 - Branch: `feat/ai-pre-review-final-closure`
