@@ -1,5 +1,38 @@
 # Project Memory
 
+## FXAI-AI-PRE-REVIEW-FINAL-BLINDING
+
+- Date: 2026-07-20
+- Branch: `feat/ai-pre-review-final-closure`
+- Frozen invalid-for-scoring prototype: `60ed5697d4d607df59556ea82de63527905f0f4f`
+- Leakage-remediation implementation: `c1271db`
+- Public CI: pending branch push
+- Stable release: blocked
+
+The previous 360-case analysis bundle remains a technical prototype but must not be scored: it disclosed outcome,
+expected-action and structural answer-key fields. The replacement freezes a reviewer-visible formative input with 240
+cases and 720 randomized variants across tabular, image, text and time-series modalities. It includes human-readable
+measured features, image regions, text phrases and time intervals, plus direction, normalized magnitude, rank,
+stability, source agreement, limitations and complete claim-evidence links.
+
+Validated technical boundary:
+
+- automated leakage and evidence audit: PASS, `240/240` cases, `720/720` variants, claim coverage `1.0`;
+- public formative archive: 12 batches and 60 referenced image assets;
+- outcome, true label, original stratum, expected action, hidden rupture type, answer-key notes and method identity are
+  absent from reviewer-visible records;
+- the public ZIP excludes the encrypted scoring key, private paths and all confirmatory records;
+- negative tests fail closed for injected outcome, action, stratum and method fields;
+- focused test suite: `10 passed`; Ruff and compile checks: PASS;
+- confirmatory lock fails closed until at least two real formative runs meet the frozen acceptance contract;
+- claim registry remains evidence-first: predecessor negative results are preserved and seven external claims remain
+  `open_external`.
+
+Next step: run the 240-case formative AI pre-review using the new public archive. Do not expose the 120 confirmatory
+cases, create a protocol lock, invite human reviewers or claim AI-human agreement before real formative results are
+imported and accepted. Public CI must pass on the pushed commit before this milestone is treated as externally
+reproducible.
+
 ## FXAI-AI-PRE-REVIEW-HUMAN-CONFIRMATION
 
 - Date: 2026-07-20

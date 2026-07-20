@@ -1,5 +1,25 @@
 # FuzzyXAI Framework Release Status
 
+## AI Pre-review Final Blinding Gate
+
+- Branch: `feat/ai-pre-review-final-closure`
+- Implementation commit: `c1271db`
+- Technical status: `PASS_LOCAL`
+- Public CI: `PENDING`
+- Formative AI review: `planned_not_run`
+- Confirmatory protocol: `BLOCKED_BY_FORMATIVE_STAGE`
+- Human confirmation: `OPEN_EXTERNAL`
+- Stable release: `BLOCKED`
+
+The scoreable replacement bundle contains only the 240-case formative input. The prior `60ed5697` bundle is retained
+for provenance but is invalid for evaluation because its reviewer inputs leaked outcome and expected-action fields.
+The encrypted key and the 120-case confirmatory pool are excluded from public source and reviewer archives.
+
+Local acceptance: `make ai-final-check` PASS; 720 reviewer variants, four modalities, 12 batches, 60 image assets,
+claim-evidence coverage `1.0`, focused tests `10 passed`. These results establish packet integrity and blinding only;
+they do not establish AI repeatability, human agreement, domain approval, comprehension benefit or expert-action
+utility.
+
 ## AI Pre-review and Human Confirmation Candidate
 
 Status: technical tooling PASS at `461d267a4a700a4aeff8251ef25f7da539d2bab1` on
