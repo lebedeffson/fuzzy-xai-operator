@@ -78,8 +78,6 @@ def _dod_statuses() -> dict[int, str]:
     for index in range(48, 62):
         statuses[index] = "OPEN_HUMAN"
     statuses[70] = "PENDING_PUBLIC_CI"
-    statuses[74] = "PENDING_FINAL_COMMIT"
-    statuses[75] = "PENDING_FINAL_COMMIT"
     return statuses
 
 

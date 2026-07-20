@@ -24,7 +24,7 @@ Validated technical boundary:
 - confirmatory lock fails closed until a real formative acceptance record exists;
 - human packet construction fails closed until protocol lock, three AI runs and score commitment exist;
 - human importer requires at least three independently hashed reviewers and rejects AI reviewer records;
-- technical DoD at implementation time: 42 PASS, 38 external/public-CI items open;
+- technical DoD after memory/release documentation: 44 PASS, 36 external/public-CI items open;
 - focused local tests: 6 passed; new-code Ruff and compile checks: PASS;
 - deterministic analysis-input archive: PASS for repeated same-commit builds.
 

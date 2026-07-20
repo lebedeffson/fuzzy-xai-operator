@@ -12,7 +12,7 @@ and independent human confirmation remain open. Stable release is `BLOCKED`.
 - focused tests: `6 passed`;
 - negative gates: confirmatory lock and human-pack generation correctly reject missing external evidence;
 - current claim states: `planned_not_run`, `pending_three_ai_runs`, and `external_gate`;
-- technical DoD: `42/80 PASS`; 38 items require external AI sessions, public CI, final documentation commit or humans;
+- technical DoD: `44/80 PASS`; 36 items require external AI sessions, public CI or humans;
 - independent experts observed: 0;
 - AI confirmatory runs observed: 0;
 - human validation, domain approval and demonstrated comprehension: not claimed.
