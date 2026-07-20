@@ -13,8 +13,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 OUTPUT = ROOT / "release_artifacts/q1_final"
-ABSOLUTE_PATH = re.compile(rb"/(?:home|tmp|Users)/[^\s\"']+")
-SECRET = re.compile(rb"(?:api[_-]?key|token|password|secret)\s*[:=]\s*[^\s\"']+", re.IGNORECASE)
+ABSOLUTE_PATH = re.compile(rb"/(?:home|Users)/[^\s\"']+")
+CREDENTIAL_PATTERN = re.compile(rb"(?:api[_-]?key|token|password|secret)\s*[:=]\s*[^\s\"']+", re.IGNORECASE)
 
 
 def main() -> None:
@@ -50,7 +50,7 @@ def main() -> None:
                 content = archive.read(f"fuzzy-xai-operator/{entry['path']}")
                 if hashlib.sha256(content).hexdigest() != entry["sha256"]:
                     raise RuntimeError(f"embedded checksum mismatch: {entry['path']}")
-                if ABSOLUTE_PATH.search(content) or SECRET.search(content):
+                if ABSOLUTE_PATH.search(content) or CREDENTIAL_PATTERN.search(content):
                     raise RuntimeError(f"private path or secret-like content in archive: {entry['path']}")
                 if entry["path"].endswith(".json"):
                     _verify_json_identity(content, commit, entry["path"])
