@@ -666,3 +666,35 @@ ai-pre-review-archive:
 ai-pre-review-check: ai-pre-review-build-log ai-pre-review-validate-input ai-pre-review-reports
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/ai_pre_review/build_archive.py
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/ai_pre_review/verify_pipeline.py
+
+.PHONY: ai-final-build-log ai-final-build-blind-batches ai-pre-review-final-blinding-audit ai-final-blinding-audit ai-final-validate-evidence ai-final-lock-confirmatory ai-final-claim-registry ai-final-dissertation-artifacts ai-final-archive ai-final-check reproduce-ai-review-final
+ai-final-build-log:
+	test -s study/ai_pre_review_final/public_formative/reviewer_cases.jsonl
+	test -s study/ai_pre_review_final/public_formative/manifest.json
+
+ai-final-build-blind-batches: ai-final-build-log
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/ai_pre_review_final/build_public_bundle.py
+
+ai-pre-review-final-blinding-audit ai-final-blinding-audit: ai-final-build-log
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/ai_pre_review_final/audit_blinding.py
+
+ai-final-validate-evidence: ai-final-build-log
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/ai_pre_review_final/validate_evidence.py
+
+ai-final-lock-confirmatory:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/ai_pre_review_final/lock_confirmatory.py
+
+ai-final-claim-registry:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/ai_pre_review_final/build_claim_registry.py
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/ai_pre_review_final/check_claims.py
+
+ai-final-dissertation-artifacts: ai-final-blinding-audit ai-final-claim-registry
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/ai_pre_review_final/build_reports.py
+
+ai-final-archive: ai-final-dissertation-artifacts ai-final-validate-evidence
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/ai_pre_review_final/build_public_bundle.py
+
+ai-final-check: ai-final-archive
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m pytest -q tests/ai_pre_review_final
+
+reproduce-ai-review-final: ai-final-check
