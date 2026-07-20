@@ -184,21 +184,23 @@ def run_native_multiclass(
                 "status": "measured",
             }
             runs.append(row)
+            for position, object_index in enumerate(test_cap):
+                object_predictions.append(
+                    {
+                        "seed": seed,
+                        "model_id": model_id,
+                        "family": family,
+                        "object_id": int(object_index),
+                        "true_class": int(y_test[position]),
+                        "predicted_class": int(predictions[position]),
+                        "confidence": float(probabilities[position].max()),
+                        "correct": bool(predictions[position] == y_test[position]),
+                        "class_probability": float(probabilities[position, y_test[position]]),
+                        "rare_class": bool(int(y_test[position]) in rare_classes),
+                        "low_confidence": bool(float(probabilities[position].max()) <= confidence_threshold),
+                    }
+                )
             if model_id == models[0][0]:
-                for position, object_index in enumerate(test_cap):
-                    object_predictions.append(
-                        {
-                            "seed": seed,
-                            "object_id": int(object_index),
-                            "true_class": int(y_test[position]),
-                            "predicted_class": int(predictions[position]),
-                            "confidence": float(probabilities[position].max()),
-                            "correct": bool(predictions[position] == y_test[position]),
-                            "class_probability": float(probabilities[position, y_test[position]]),
-                            "rare_class": bool(int(y_test[position]) in rare_classes),
-                            "low_confidence": bool(float(probabilities[position].max()) <= confidence_threshold),
-                        }
-                    )
                 if seed_index == 0:
                     required = 1000 if modality == "tabular" else 500
                     evaluation_ids = _evaluation_sample(

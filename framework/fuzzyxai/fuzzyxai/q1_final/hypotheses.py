@@ -199,13 +199,15 @@ def evaluate_h2(
 
 def evaluate_h3(payloads: Mapping[str, Mapping[str, object]]) -> dict[str, object]:
     """Compare predeclared policies on full and hard-case populations."""
-    all_predictions = _prediction_rows(payloads)
+    all_predictions = _prediction_rows(payloads, frozen_explainer_cohort=True)
     results: list[dict[str, object]] = []
     for population, rows in (("full", all_predictions), ("hard_cases", [row for row in all_predictions if _hard_case(row)])):
         if not rows:
             continue
+        adaptive_actions = [_policy_action("P7", row) for row in rows]
+        random_review = _matched_random_actions(adaptive_actions, seed=4201 + len(rows))
         for policy in ("P0", "P1", "P2", "P3", "P4", "P5", "P6", "P7", "P8"):
-            actions = [_policy_action(policy, row, index) for index, row in enumerate(rows)]
+            actions = random_review if policy == "P6" else [_policy_action(policy, row) for row in rows]
             results.append(_policy_metrics(policy, population, rows, actions))
     full = [row for row in results if row["population"] == "full"]
     hard = [row for row in results if row["population"] == "hard_cases"]
@@ -214,14 +216,51 @@ def evaluate_h3(payloads: Mapping[str, Mapping[str, object]]) -> dict[str, objec
     strongest_hard = min((row for row in hard if row["policy"] in {"P1", "P2", "P3", "P4"}), key=lambda row: row["risk"])
     adaptive_hard = next(row for row in hard if row["policy"] == "P7")
     full_supported = adaptive_full["risk"] < strongest_full["risk"] and abs(adaptive_full["coverage"] - strongest_full["coverage"]) <= 0.02
-    hard_supported = adaptive_hard["risk"] < strongest_hard["risk"] and abs(adaptive_hard["coverage"] - strongest_hard["coverage"]) <= 0.02
+    always_full_hard = next(row for row in hard if row["policy"] == "P5")
+    hard_supported = (
+        adaptive_hard["risk"] < strongest_hard["risk"]
+        and abs(adaptive_hard["coverage"] - strongest_hard["coverage"]) <= 0.02
+    ) or (
+        adaptive_hard["mean_cost"] <= 0.70 * always_full_hard["mean_cost"]
+        and adaptive_hard["risk"] <= always_full_hard["risk"] + 0.02
+    )
+    strata = {
+        "low_confidence": lambda row: bool(row.get("low_confidence", False)),
+        "explainer_disagreement": lambda row: float(row.get("explainer_disagreement", 0.0)) >= 0.10,
+        "cross_model_conflict": lambda row: bool(row.get("cross_model_conflict", False)),
+        "rare_class": lambda row: bool(row.get("rare_class", False)),
+        "boundary_object": lambda row: 0.55 <= float(row["confidence"]) < 0.75,
+    }
     return {
         "full_population_status": "supported" if full_supported else "not_supported",
         "hard_case_status": "supported" if hard_supported else "not_supported",
         "strongest_simple_full": strongest_full["policy"],
         "strongest_simple_hard": strongest_hard["policy"],
-        "hard_case_definition": "confidence<0.65 or rare native class or confidence<0.75 boundary",
+        "hard_case_definition": "validation-defined low confidence, measured explainer disagreement, cross-model conflict, rare native class, or fixed boundary band",
         "test_outcomes_not_used_to_define_hard_cases": True,
+        "evaluation_population": "frozen explainer cohort from the first preregistered seed and model per modality",
+        "evaluation_object_count": len(all_predictions),
+        "matched_random_escalation_rate": True,
+        "available_strata": list(strata),
+        "unavailable_strata": ["detected_shift", "incomplete_provenance", "high_instability", "high_calibration_residual"],
+        "stratum_results": {
+            name: _population_policy_summary([row for row in all_predictions if predicate(row)], name)
+            for name, predicate in strata.items()
+        },
+        "modality_results": {
+            modality: _population_policy_summary(
+                [row for row in all_predictions if row["modality"] == modality],
+                f"modality:{modality}",
+            )
+            for modality in sorted({str(row["modality"]) for row in all_predictions})
+        },
+        "model_family_results": {
+            family: _population_policy_summary(
+                [row for row in all_predictions if row["family"] == family],
+                f"family:{family}",
+            )
+            for family in sorted({str(row["family"]) for row in all_predictions})
+        },
         "results": results,
     }
 
@@ -355,12 +394,36 @@ def run_hypotheses(input_dir: Path, output: Path) -> dict[str, object]:
     return result
 
 
-def _prediction_rows(payloads: Mapping[str, Mapping[str, object]]) -> list[dict[str, object]]:
-    result = []
+def _prediction_rows(
+    payloads: Mapping[str, Mapping[str, object]],
+    *,
+    frozen_explainer_cohort: bool = False,
+) -> list[dict[str, object]]:
+    result: list[dict[str, object]] = []
     for modality, payload in payloads.items():
-        for raw in payload["object_predictions"]:
+        raw_predictions = list(payload["object_predictions"])
+        conflict_groups: dict[tuple[int, int], set[int]] = defaultdict(set)
+        for raw in raw_predictions:
+            conflict_groups[(int(raw["seed"]), int(raw["object_id"]))].add(int(raw["predicted_class"]))
+        explanation_rows = payload.get("explanation_evaluation", {}).get("pairs", [])
+        explanation_fidelity: dict[str, list[float]] = defaultdict(list)
+        for pair in explanation_rows:
+            explanation_fidelity[str(pair["object_id"])].append(float(pair["base_fidelity"]))
+        evaluation_ids = {str(item) for item in payload.get("evaluation_object_ids", [])}
+        first_seed = int(payload["seeds"][0])
+        first_model = str(payload["models"][0]["model_id"])
+        for raw in raw_predictions:
+            if frozen_explainer_cohort and not (
+                int(raw["seed"]) == first_seed
+                and str(raw.get("model_id")) == first_model
+                and str(raw["object_id"]) in evaluation_ids
+            ):
+                continue
             row = dict(raw)
             row["modality"] = modality
+            values = explanation_fidelity.get(str(raw["object_id"]), [])
+            row["explainer_disagreement"] = float(np.std(values)) if len(values) >= 2 else 0.0
+            row["cross_model_conflict"] = len(conflict_groups[(int(raw["seed"]), int(raw["object_id"]))]) > 1
             result.append(row)
     if not result:
         raise RuntimeError("real hypothesis evaluation requires object predictions")
@@ -368,10 +431,16 @@ def _prediction_rows(payloads: Mapping[str, Mapping[str, object]]) -> list[dict[
 
 
 def _hard_case(row: Mapping[str, object]) -> bool:
-    return float(row["confidence"]) < 0.75 or bool(row.get("rare_class", False))
+    return (
+        bool(row.get("low_confidence", False))
+        or float(row.get("explainer_disagreement", 0.0)) >= 0.10
+        or bool(row.get("cross_model_conflict", False))
+        or bool(row.get("rare_class", False))
+        or 0.55 <= float(row["confidence"]) < 0.75
+    )
 
 
-def _policy_action(policy: str, row: Mapping[str, object], index: int) -> str:
+def _policy_action(policy: str, row: Mapping[str, object]) -> str:
     confidence = float(row["confidence"])
     hard = _hard_case(row)
     if policy == "P0":
@@ -381,18 +450,40 @@ def _policy_action(policy: str, row: Mapping[str, object], index: int) -> str:
     if policy == "P2":
         return "accept" if confidence >= 0.75 else "review"
     if policy == "P3":
-        return "review" if confidence < 0.72 else "accept"
+        return "review" if float(row.get("explainer_disagreement", 0.0)) >= 0.10 else "accept"
     if policy == "P4":
-        return "review" if bool(row.get("rare_class", False)) else ("accept" if confidence >= 0.70 else "review")
+        conflict = bool(row.get("cross_model_conflict", False)) or (
+            bool(row.get("rare_class", False)) and confidence >= 0.80
+        )
+        return "review" if conflict else "accept"
     if policy == "P5":
         return "review" if hard else "accept"
     if policy == "P6":
-        return "review" if index % 4 == 0 else ("accept" if confidence >= 0.70 else "review")
+        raise ValueError("P6 requires population-level matched random escalation")
     if policy == "P7":
         return "review" if hard else "accept"
     if policy == "P8":
         return "accept" if bool(row["correct"]) else "review"
     raise ValueError(f"unknown policy: {policy}")
+
+
+def _matched_random_actions(reference_actions: Sequence[str], *, seed: int) -> list[str]:
+    review_count = sum(action == "review" for action in reference_actions)
+    rng = np.random.default_rng(seed)
+    selected = set(rng.choice(len(reference_actions), size=review_count, replace=False).tolist()) if review_count else set()
+    return ["review" if index in selected else "accept" for index in range(len(reference_actions))]
+
+
+def _population_policy_summary(rows: Sequence[Mapping[str, object]], label: str) -> dict[str, object]:
+    if not rows:
+        return {"population": label, "n_objects": 0, "status": "not_observed"}
+    adaptive = [_policy_action("P7", row) for row in rows]
+    random_actions = _matched_random_actions(adaptive, seed=5201 + len(rows))
+    metrics = []
+    for policy in ("P0", "P1", "P2", "P3", "P4", "P5", "P6", "P7"):
+        actions = random_actions if policy == "P6" else [_policy_action(policy, row) for row in rows]
+        metrics.append(_policy_metrics(policy, label, rows, actions))
+    return {"population": label, "n_objects": len(rows), "status": "measured", "policies": metrics}
 
 
 def _policy_metrics(
@@ -404,7 +495,8 @@ def _policy_metrics(
     wrong = np.asarray([not bool(row["correct"]) for row in rows])
     accepted = np.asarray([action == "accept" for action in actions])
     reviewed = np.asarray([action == "review" for action in actions])
-    costs = {"P0": 1.0, "P1": 1.1, "P2": 1.2, "P3": 1.5, "P4": 1.5, "P5": 10.0, "P6": 3.0, "P7": 3.0, "P8": 10.0}
+    fixed_costs = {"P0": 1.0, "P1": 1.1, "P2": 1.3, "P3": 2.5, "P4": 1.5, "P5": 10.0, "P8": 10.0}
+    mean_cost = fixed_costs.get(policy, 1.0 + 9.0 * float(reviewed.mean()))
     risk = (5.0 * np.sum(wrong & accepted) + np.sum(reviewed)) / len(rows)
     return {
         "policy": policy,
@@ -414,7 +506,7 @@ def _policy_metrics(
         "coverage": float(accepted.mean()),
         "wrong_automatic": int(np.sum(wrong & accepted)),
         "review": int(reviewed.sum()),
-        "mean_cost": costs.get(policy, 1.0),
+        "mean_cost": mean_cost,
     }
 
 

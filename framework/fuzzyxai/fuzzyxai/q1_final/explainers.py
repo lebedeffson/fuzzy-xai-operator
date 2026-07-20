@@ -84,7 +84,10 @@ def _tabular_explainers(dataset: object, evaluation_ids: Sequence[int]) -> tuple
             attributions, fidelity = evaluator(model, values[train], labels[train], sample)
             method_pairs = _pairs(method, evaluation_ids, attributions, fidelity)
             pairs.extend(method_pairs)
-            methods.append(_method_summary(method, method_pairs, "measured"))
+            summary = _method_summary(method, method_pairs, "measured")
+            if method == "RuleFit":
+                summary["evaluation_strategy"] = "one_vs_rest_surrogate"
+            methods.append(summary)
         except Exception as error:
             methods.append({"method": method, "status": "failed", "n_explained": 0, "error": repr(error)})
     return methods, pairs
@@ -141,13 +144,42 @@ def _anchor_values(model: object, train: np.ndarray, labels: np.ndarray, sample:
 def _rulefit_values(model: object, train: np.ndarray, labels: np.ndarray, sample: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
     from imodels import RuleFitClassifier
 
-    surrogate = RuleFitClassifier(n_estimators=30, random_state=4201)
-    surrogate.fit(train, model.predict(train))
-    probabilities = np.asarray(surrogate.predict_proba(sample), dtype=float)
-    predicted = model.predict(sample)
-    fidelity = probabilities[np.arange(len(sample)), predicted]
-    importances = np.asarray(getattr(surrogate, "feature_importances_", np.ones(train.shape[1])), dtype=float)
-    values = sample * importances[: sample.shape[1]]
+    del labels
+    target = np.asarray(model.predict(train), dtype=int)
+    classes = np.unique(target)
+    if len(classes) < 2:
+        raise ValueError("RuleFit one-vs-rest evaluation requires at least two predicted classes")
+
+    positive_probabilities = []
+    class_importances = []
+    for class_id in classes:
+        surrogate = RuleFitClassifier(n_estimators=30, random_state=4201)
+        surrogate.fit(train, (target == class_id).astype(int))
+        probabilities = np.asarray(surrogate.predict_proba(sample), dtype=float)
+        surrogate_classes = np.asarray(getattr(surrogate, "classes_", (0, 1)))
+        positive_column = int(np.flatnonzero(surrogate_classes == 1)[0])
+        positive_probabilities.append(probabilities[:, positive_column])
+        class_importances.append(
+            np.asarray(
+                getattr(surrogate, "feature_importances_", np.ones(train.shape[1])),
+                dtype=float,
+            )[: train.shape[1]]
+        )
+
+    scores = np.column_stack(positive_probabilities)
+    denominator = scores.sum(axis=1, keepdims=True)
+    probabilities = np.divide(
+        scores,
+        denominator,
+        out=np.full_like(scores, 1.0 / len(classes)),
+        where=denominator > 0.0,
+    )
+    predicted = np.asarray(model.predict(sample), dtype=int)
+    class_positions = {int(class_id): index for index, class_id in enumerate(classes)}
+    predicted_positions = np.asarray([class_positions[int(class_id)] for class_id in predicted])
+    fidelity = probabilities[np.arange(len(sample)), predicted_positions]
+    importances = np.asarray(class_importances)
+    values = sample * importances[predicted_positions]
     return values, fidelity
 
 

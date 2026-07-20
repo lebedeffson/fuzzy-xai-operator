@@ -10,6 +10,8 @@ def _payload(modality: str) -> dict[str, object]:
         rows.append(
             {
                 "seed": 4201,
+                "model_id": "model_1",
+                "family": "linear",
                 "object_id": index,
                 "true_class": index % 3,
                 "predicted_class": index % 3 if index % 7 else (index + 1) % 3,
@@ -17,6 +19,7 @@ def _payload(modality: str) -> dict[str, object]:
                 "correct": bool(index % 7),
                 "class_probability": confidence,
                 "rare_class": index % 3 == 2,
+                "low_confidence": confidence <= 0.65,
             }
         )
     return {
@@ -26,8 +29,10 @@ def _payload(modality: str) -> dict[str, object]:
             "native_class_count": 3,
             "raw_sha256": "a" * 64,
         },
-        "models": [{"status": "measured"}],
+        "seeds": [4201],
+        "models": [{"status": "measured", "model_id": "model_1", "family": "linear"}],
         "object_predictions": rows,
+        "evaluation_object_ids": list(range(40)),
     }
 
 

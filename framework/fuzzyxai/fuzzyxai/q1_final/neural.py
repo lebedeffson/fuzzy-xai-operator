@@ -178,8 +178,9 @@ def _build_model(modality: str, model_id: str, values: np.ndarray, classes: int)
             if deeper:
                 layers.extend((torch.nn.Conv2d(32, 64, 3, padding=1), torch.nn.ReLU()))
             self.features = torch.nn.Sequential(*layers)
-            self.pool = torch.nn.AdaptiveAvgPool2d((2, 2))
-            self.head = torch.nn.Linear((64 if deeper else 32) * 4, classes)
+            # Global pooling has a stable ONNX representation for dynamic batches.
+            self.pool = torch.nn.AdaptiveAvgPool2d((1, 1))
+            self.head = torch.nn.Linear(64 if deeper else 32, classes)
 
         def forward(self, inputs: object) -> object:
             return self.head(self.pool(self.features(inputs)).flatten(1))
