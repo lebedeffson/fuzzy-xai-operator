@@ -150,7 +150,6 @@ def _public_record(evidence: dict[str, Any], source: dict[str, Any], method: str
         concerns: list[dict[str, Any]] = []
         limitations = [{"text": "Локальные вклады описывают чувствительность модели, а не причинное устройство объекта.", "claim_id": "C-L1", "evidence_ids": ["E1"]}]
         action = "Использовать прогноз как информационный сигнал и проверить его по правилам предметной задачи."
-        blocks = ["prediction", "single_source_reasons", "standard_limitation"]
         provenance = []
         counterfactuals = []
         claim_links = _claim_links(evidence, reasons, concerns, limitations, action, "O-CONFIDENCE")
@@ -160,7 +159,6 @@ def _public_record(evidence: dict[str, Any], source: dict[str, Any], method: str
         concerns = _observable_concerns(confidence, agreement, stability, unavailable, full=False)
         limitations = _limitations(unavailable, extended=False)
         action, action_ref = _prospective_action(confidence, agreement, stability, unavailable)
-        blocks = ["prediction", "ranked_reasons", "source_agreement", "unavailable_channels", "prospective_action", "sensitivity", "short_provenance"]
         provenance = ["Версия набора и объекта зафиксирована хэшами.", "Причины связаны с видимыми evidence ID."]
         counterfactuals = [{"text": f"Наиболее чувствительный наблюдаемый фактор: {shown_items[0]['display_name']}.", "evidence_ids": [shown_items[0]["evidence_id"]], "kind": "sensitivity_not_recommendation"}]
         claim_links = _claim_links(evidence, reasons, concerns, limitations, action, action_ref)
@@ -170,7 +168,6 @@ def _public_record(evidence: dict[str, Any], source: dict[str, Any], method: str
         concerns = _observable_concerns(confidence, agreement, stability, unavailable, full=True)
         limitations = _limitations(unavailable, extended=True)
         action, action_ref = _prospective_action(confidence, agreement, stability, unavailable)
-        blocks = ["prediction", "multi_source_evidence", "source_agreement", "stability", "unavailable_channels", "prospective_action", "sensitivity", "fidelity_metadata", "applicability", "full_provenance"]
         provenance = [
             f"Dataset SHA256: {evidence['dataset_sha256']}",
             f"Evidence SHA256: {evidence['evidence_sha256']}",
@@ -204,7 +201,6 @@ def _public_record(evidence: dict[str, Any], source: dict[str, Any], method: str
         "candidate_explanation": explanation,
         "claim_evidence_links": claim_links,
         "claim_evidence_coverage": 1.0,
-        "semantic_blocks": blocks,
         "presentation": {"language": "ru", "detail": "full" if method == METHODS[2] else "short", "word_count": _word_count(explanation)},
         "record_sha256": "",
     }

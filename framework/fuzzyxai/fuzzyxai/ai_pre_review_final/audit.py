@@ -138,21 +138,58 @@ def _audit_variants(case_id: str, variants: list[dict[str, Any]], failures: list
     if len(variants) != 3 or {row.get("variant_id") for row in variants} != {"X1", "X2", "X3"}:
         failures.append(f"{case_id}: three blind variants are required")
         return
-    baseline = [row for row in variants if "single_source_reasons" in row.get("semantic_blocks", [])]
-    selective = [row for row in variants if "prospective_action" in row.get("semantic_blocks", []) and "full_provenance" not in row.get("semantic_blocks", [])]
-    full = [row for row in variants if "full_provenance" in row.get("semantic_blocks", [])]
+    baseline = [row for row in variants if _variant_signature(row) == "baseline"]
+    selective = [row for row in variants if _variant_signature(row) == "selective"]
+    full = [row for row in variants if _variant_signature(row) == "full"]
     if not (len(baseline) == len(selective) == len(full) == 1):
         failures.append(f"{case_id}: A/B/C roles are not structurally distinguishable")
         return
-    a_blocks = set(baseline[0]["semantic_blocks"])
-    b_blocks = set(selective[0]["semantic_blocks"])
-    c_blocks = set(full[0]["semantic_blocks"])
+    a_blocks = _observed_blocks(baseline[0])
+    b_blocks = _observed_blocks(selective[0])
+    c_blocks = _observed_blocks(full[0])
     if len(a_blocks ^ b_blocks) < 2 or len(b_blocks ^ c_blocks) < 2:
-        failures.append(f"{case_id}: variants differ by fewer than two semantic blocks")
+        failures.append(f"{case_id}: variants differ by fewer than two observed content blocks")
     if len(full[0]["interpretable_evidence"]) <= len(selective[0]["interpretable_evidence"]):
         failures.append(f"{case_id}: full variant has no additional evidence")
     if any(block in a_blocks for block in ("source_agreement", "prospective_action", "full_provenance")):
         failures.append(f"{case_id}: baseline contains system diagnostics")
+
+
+def _variant_signature(row: dict[str, Any]) -> str:
+    evidence_count = len(row.get("interpretable_evidence", []))
+    provenance_count = len(row.get("candidate_explanation", {}).get("provenance_summary", []))
+    detail = row.get("presentation", {}).get("detail")
+    if evidence_count == 3 and provenance_count == 0 and detail == "short":
+        return "baseline"
+    if evidence_count == 4 and provenance_count == 2 and detail == "short":
+        return "selective"
+    if evidence_count == 5 and provenance_count >= 3 and detail == "full":
+        return "full"
+    return "unknown"
+
+
+def _observed_blocks(row: dict[str, Any]) -> set[str]:
+    explanation = row.get("candidate_explanation", {})
+    conditions = row.get("observable_conditions", {})
+    blocks = {"prediction", "reasons"}
+    if "не предоставлено" not in str(conditions.get("source_agreement_summary", "")).lower():
+        blocks.add("source_agreement")
+    if explanation.get("concerns"):
+        blocks.add("concerns")
+    provenance_count = len(explanation.get("provenance_summary", []))
+    if provenance_count:
+        blocks.add("short_provenance")
+    if provenance_count >= 3:
+        blocks.add("full_provenance")
+    if len(row.get("interpretable_evidence", [])) >= 5:
+        blocks.add("extended_evidence")
+    if any(item.get("claim_id") == "C-L3" for item in explanation.get("limitations", [])):
+        blocks.add("applicability_limitation")
+    if explanation.get("counterfactuals"):
+        blocks.add("sensitivity")
+    if _variant_signature(row) != "baseline":
+        blocks.add("prospective_action")
+    return blocks
 
 
 def _audit_hash(row: dict[str, Any], label: str, failures: list[str]) -> None:

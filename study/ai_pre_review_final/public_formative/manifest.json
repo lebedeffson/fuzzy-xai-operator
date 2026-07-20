@@ -8,9 +8,9 @@
     "text",
     "timeseries"
   ],
-  "reviewer_cases_sha256": "74ce50ccc0cb4457e61115f8bf71ffac825e7550d20af9b8f9b8202df489b4e9",
+  "reviewer_cases_sha256": "0e5e2334642691753487852389261e563f02d762811a8322772ad31286da6715",
   "schema_version": "2.0",
-  "source_commit": "60ed5697d4d607df59556ea82de63527905f0f4f",
+  "source_commit": "0ae017c3f61846e18e5915ea1ea0636381cfacd6",
   "stage": "formative",
   "variant_count": 720
 }

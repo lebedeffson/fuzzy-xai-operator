@@ -24,7 +24,6 @@
     "candidate_explanation": {"type": "object"},
     "claim_evidence_links": {"type": "array", "minItems": 4},
     "claim_evidence_coverage": {"const": 1.0},
-    "semantic_blocks": {"type": "array", "minItems": 3},
     "presentation": {"type": "object"},
     "record_sha256": {"pattern": "^[0-9a-f]{64}$"}
   }

@@ -77,9 +77,17 @@ def test_variants_are_semantically_distinct_without_revealing_identity() -> None
     for row in rows:
         by_case.setdefault(str(row["case_id"]), []).append(row)
     for variants in by_case.values():
-        blocks = [set(row["semantic_blocks"]) for row in variants]
-        assert len({frozenset(value) for value in blocks}) == 3
-        assert min(len(left ^ right) for index, left in enumerate(blocks) for right in blocks[index + 1 :]) >= 2
+        signatures = {
+            (
+                len(row["interpretable_evidence"]),
+                len(row["candidate_explanation"]["provenance_summary"]),
+                row["presentation"]["detail"],
+                bool(row["candidate_explanation"]["counterfactuals"]),
+            )
+            for row in variants
+        }
+        assert signatures == {(3, 0, "short", False), (4, 2, "short", True), (5, 3, "full", True)}
+        assert all("semantic_blocks" not in row for row in variants)
 
 
 def test_public_archive_excludes_private_and_confirmatory_material() -> None:
@@ -90,6 +98,7 @@ def test_public_archive_excludes_private_and_confirmatory_material() -> None:
         names = handle.namelist()
         assert not any("hidden_scoring_key" in name or "/private/" in name for name in names)
         assert not any("/confirmatory/" in name for name in names)
+        assert not any("BLINDING_AUDIT" in name or "claim_registry" in name for name in names)
         root_name = names[0].split("/", 1)[0]
         manifest = json.loads(handle.read(f"{root_name}/manifest.json"))
         rows = [json.loads(line) for line in handle.read(f"{root_name}/reviewer_cases.jsonl").decode().splitlines()]

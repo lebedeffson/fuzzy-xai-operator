@@ -59,9 +59,6 @@ def main() -> None:
             (study / "reviewer_case_schema_v2.json", bundle / "reviewer_case_schema_v2.json"),
             (ROOT / "study/ai_pre_review/rubric_v1.yaml", bundle / "rubric_v1.yaml"),
             (ROOT / "study/ai_pre_review/ai_review_schema.json", bundle / "ai_review_schema.json"),
-            (ROOT / "reports/ai_pre_review_final/BLINDING_AUDIT.json", bundle / "BLINDING_AUDIT.json"),
-            (ROOT / "reports/ai_pre_review_final/BLINDING_AUDIT.md", bundle / "BLINDING_AUDIT.md"),
-            (ROOT / "release_evidence/ai_pre_review_final/claim_registry_3.json", bundle / "claim_registry_3.json"),
         )
         for source, target in copies:
             shutil.copy2(source, target)
