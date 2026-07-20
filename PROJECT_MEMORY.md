@@ -5,6 +5,8 @@
 - Date: 2026-07-20
 - Branch: `feat/ai-pre-review-human-confirmation`
 - Technical implementation commit: `5c8d0fe`
+- Public technical validation commit: `461d267a4a700a4aeff8251ef25f7da539d2bab1`
+- Public workflow: `29752785014`, PASS
 - Frozen Q1 evidence: `e34e52fb8ae62ee1be043d6d5b26a0c9214a0572`
 - Formative observer base: `bd48a9ca3795e2665e0e6a4f1ab4f4e981774c2b`
 - Technical status: PASS; AI and human gates open
@@ -27,6 +29,7 @@ Validated technical boundary:
 - technical DoD after memory/release documentation: 44 PASS, 36 external/public-CI items open;
 - focused local tests: 6 passed; new-code Ruff and compile checks: PASS;
 - deterministic analysis-input archive: PASS for repeated same-commit builds.
+- public focused workflow: PASS on the exact technical validation commit.
 
 Frozen evidence limitation: the Q1 Fashion-MNIST protocol labels every evaluated image class as rare, so the image
 modality has no measured `common_class` stratum. The study records this limitation rather than fabricating a class.

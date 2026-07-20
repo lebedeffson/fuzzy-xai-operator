@@ -2,17 +2,19 @@
 
 ## AI Pre-review and Human Confirmation Candidate
 
-Status: technical tooling PASS at `5c8d0fe` on `feat/ai-pre-review-human-confirmation`; external AI review, public CI
-and independent human confirmation remain open. Stable release is `BLOCKED`.
+Status: technical tooling PASS at `461d267a4a700a4aeff8251ef25f7da539d2bab1` on
+`feat/ai-pre-review-human-confirmation`; external AI review and independent human confirmation remain open. Stable
+release is `BLOCKED`.
 
 - frozen evidence commits remain ancestors and unchanged;
 - tracked design: 360 unique cases, 1,080 blind variants, four modalities, 18 bounded review batches;
 - method identity: HMAC-randomized and encrypted with a secret excluded from repository and archives;
 - local technical command: `make ai-pre-review-check` PASS;
 - focused tests: `6 passed`;
+- public focused workflow `29752785014`: PASS;
 - negative gates: confirmatory lock and human-pack generation correctly reject missing external evidence;
 - current claim states: `planned_not_run`, `pending_three_ai_runs`, and `external_gate`;
-- technical DoD: `44/80 PASS`; 36 items require external AI sessions, public CI or humans;
+- offline technical DoD: `44/80 PASS`; public CI is separately PASS, while 35 items still require external AI sessions or humans;
 - independent experts observed: 0;
 - AI confirmatory runs observed: 0;
 - human validation, domain approval and demonstrated comprehension: not claimed.
