@@ -1,14 +1,34 @@
 # FuzzyXAI Framework Release Status
 
+## Two-Stage Selective Observer Formative Cycle
+
+Status: formative method candidate on `feat/selective-observer-formative`; confirmatory claims and stable release are
+`BLOCKED`.
+
+- frozen predecessor: `e34e52fb8ae62ee1be043d6d5b26a0c9214a0572`;
+- predecessor public CI: `29740096302`, 9/9 jobs PASS;
+- predecessor negative results remain immutable: H3 full/hard not supported, H5 predictive not supported, H6
+  confirmatory general effect not supported;
+- new method: grouped out-of-fold four-action selective risk controller;
+- H5 is separated into action-contract validity and an optional held-out predictive increment;
+- H6 is separated into planted-rule method validation and held-out low-redundancy matched-control ablation;
+- train/validation, formative participants and pilot experts are isolated from confirmatory data and participants;
+- domain-language, comprehension and expert-action gates remain open;
+- no confirmatory test has been opened and no participant or expert response has been generated.
+
+The formative acceptance command is `make selective-observer-formative-check`. A positive confirmatory claim requires
+a separately hashed protocol lock, independent data or participants, one test opening and unchanged frozen code.
+
 ## Q1 Final Closure Candidate
 
-Status: implementation candidate on `feat/q1-final-closure`; stable release is `BLOCKED`.
+Status: technical closure at `e34e52fb8ae62ee1be043d6d5b26a0c9214a0572`; stable release is `BLOCKED`.
 
 - frozen base: `41c32af25242164144fd907e4850fa9d4f426bd1`;
-- local focused tests: `14 passed`;
+- local focused tests: `19 passed`;
 - local lint and compile checks: PASS;
 - local final smoke reproduction: PASS;
-- native multiclass heavy workflow: pending first public run;
+- public workflow `29740096302`: 9/9 jobs PASS, including native multiclass, Docker and aggregate verification;
+- technical DoD: 161 PASS, 0 BLOCKED, 24 OPEN_EXTERNAL;
 - domain-language review: open;
 - comprehension study: open;
 - expert-action review: open;

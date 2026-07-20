@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.0",
+  "hypothesis_family": "H6",
+  "phase": "formative_development",
+  "candidate_definition": "high subgroup specificity, sufficient coverage, stable activation and low functional redundancy",
+  "rule_families": ["RuleFit", "decision list", "rule ensemble", "single decision tree", "interpretable boosting representation"],
+  "H6a": {
+    "design": "semisynthetic planted rules based on real feature distributions",
+    "targets": ["planted rule recovery", "affected subgroup localization", "redundancy sensitivity"],
+    "claim_scope": "ablation methodology only"
+  },
+  "H6b": {
+    "design": "two new tabular datasets; train-validation selection; one test opening",
+    "matched_controls_per_candidate": 5,
+    "primary_endpoint": "candidate effect minus median matched-control effect",
+    "minimum_specific_effect": 0.01,
+    "positive_criterion": "95% interval above minimum effect and positive mean on each dataset"
+  },
+  "confirmatory_claim_allowed": false
+}

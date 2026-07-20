@@ -66,6 +66,11 @@ files = [
     "framework/fuzzyxai/fuzzyxai/evidence/contracts.py",
     "framework/fuzzyxai/fuzzyxai/evidence/human.py",
     "framework/fuzzyxai/fuzzyxai/visualization/spec.py",
+    "framework/fuzzyxai/fuzzyxai/selective_observer/baselines.py",
+    "framework/fuzzyxai/fuzzyxai/selective_observer/contracts.py",
+    "framework/fuzzyxai/fuzzyxai/selective_observer/controller.py",
+    "framework/fuzzyxai/fuzzyxai/selective_observer/route_validity.py",
+    "framework/fuzzyxai/fuzzyxai/selective_observer/rule_validation.py",
 ]
 
 [tool.setuptools]

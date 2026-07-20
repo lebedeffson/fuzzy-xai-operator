@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0",
+  "hypothesis_family": "H5",
+  "phase": "formative_development",
+  "H5a": {
+    "target": "automatic action allowed despite a violated mandatory explanation contract",
+    "primary_metrics": ["F1", "fault type accuracy", "source localization", "false certification", "false refusal"],
+    "positive_criteria": {
+      "minimum_f1": 0.95,
+      "maximum_false_certification": 0.01
+    }
+  },
+  "H5b": {
+    "target": "held-out model error",
+    "baseline_model": "confidence plus calibration residual plus shift",
+    "extended_model": "baseline plus typed route features",
+    "positive_criterion": "paired held-out incremental AUPRC confidence interval lower bound above zero",
+    "fallback_if_not_supported": "remove predictive claim and retain H5a structural action-validity claim"
+  },
+  "confirmatory_claim_allowed": false
+}

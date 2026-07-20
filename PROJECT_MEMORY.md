@@ -149,12 +149,40 @@ instability. Both supported Python jobs passed. This validates the feature branc
 Run the real external pilot and domain review. After both pass, review merge to `main`, require green main CI, rebuild
 committed-index archives, and only then create a release tag. Do not claim `v1.4.0` support before modality-specific
 adapters and benchmarks exist.
+## FXAI-SELECTIVE-OBSERVER-FORMATIVE
+
+- Date: 2026-07-20
+- Branch: `feat/selective-observer-formative`
+- Frozen predecessor: `e34e52fb8ae62ee1be043d6d5b26a0c9214a0572`
+- Research phase: formative development
+- Stable release: blocked
+
+This milestone starts a new two-stage research cycle without modifying the predecessor evidence. It adds a grouped
+out-of-fold selective risk controller with `accept`, `short_review`, `full_review` and `block`; preregisterable
+confidence, uncertainty, explainer-disagreement and selective-risk baselines; separate risk-coverage and cost-review
+comparisons; H5 action-contract validation separated from held-out error prediction; H6 planted-rule method checks
+separated from low-redundancy matched-control confirmation; and an immutable stage-B protocol-lock contract.
+
+The development package is intentionally claim-safe:
+
+- controller source channels and controller selection predictions are out-of-fold;
+- test records cannot be passed to development contracts;
+- formative datasets and participants cannot overlap confirmatory identities;
+- formative operating-point gains never enable a confirmatory claim;
+- external-study files contain protocols and empty record lists only;
+- the old H3, H5 predictive and H6 null results remain visible;
+- no stable tag or merge is allowed during formative development.
+
+Acceptance command: `make selective-observer-formative-check`. The next scientific action is formative usability and
+expert-task piloting, followed by a signed/timestamped protocol lock. Only then may new datasets, participants and
+experts be opened once for confirmation.
+
 ## FXAI-Q1-FINAL-CLOSURE
 
 - Date: 2026-07-20
 - Branch: `feat/q1-final-closure`
 - Frozen base: `41c32af25242164144fd907e4850fa9d4f426bd1`
-- Candidate status: implementation and local smoke complete; native multiclass heavy CI pending
+- Candidate status: technical closure PASS at `e34e52fb8ae62ee1be043d6d5b26a0c9214a0572`; external gates open
 - Stable release: blocked
 
 This milestone adds a final evidence-first validation boundary rather than replacing the defended operators or the
@@ -165,12 +193,13 @@ scorers. The generated DubnaXAI site remains quarantined.
 
 Local validation at implementation time:
 
-- Q1 final focused suite: `14 passed`;
+- Q1 final focused suite: `19 passed`;
 - Ruff for the Q1 final package, scripts and tests: PASS;
 - compileall: PASS;
 - `scripts/q1_final/reproduce_all.py --profile smoke`: PASS;
 - strict external verifier: expected FAIL with `domain_language_review`, `comprehension`, and `expert_action_review` open;
-- no heavy real-data result is claimed from the smoke profile.
+- public workflow `29740096302`: 9/9 jobs PASS, including four native modalities, rule ablation, scalability, Docker and aggregate verification;
+- technical DoD: 161 PASS, 0 BLOCKED, 24 OPEN_EXTERNAL.
 
 Release boundary:
 
@@ -184,5 +213,5 @@ Release boundary:
 - no merge to `main`, stable `v1.3.0` tag or stable GitHub release is allowed while mandatory gates are open;
 - archive commit and CI run IDs are written at build time to `release_evidence/q1_final/run_identity.json`.
 
-Next step: run the public technical workflow, preserve its measured outcomes, then conduct the three independent
-external protocols. Do not manufacture responses or promote smoke evidence to a real-data claim.
+Next step: preserve the technical result and conduct the three independent external protocols. Do not manufacture
+responses or promote formative evidence to a confirmatory claim.

@@ -1,0 +1,34 @@
+{
+  "confirmatory_protocol_locked": false,
+  "confirmatory_test_opened": false,
+  "external_records_present": false,
+  "files": [
+    {
+      "path": "study/selective_observer/FORMATIVE_CONFIRMATORY_BOUNDARY.md",
+      "sha256": "d8cf6746506c7792e38174af191d5fe3b157f6d9caee80d55082ff26a9dbe6d1"
+    },
+    {
+      "path": "study/selective_observer/external_gates.json",
+      "sha256": "860e8b992fa16841d3e566d5b42d559bfc06a900ccf886b49ef26cccac095d19"
+    },
+    {
+      "path": "study/selective_observer/h3_selective_policy.json",
+      "sha256": "0fc2b58ce915a04d9d26c2f204d4edb65c9ffdbf65961bd881a835a67ada592e"
+    },
+    {
+      "path": "study/selective_observer/h5_route_validity.json",
+      "sha256": "f3fbf7840cb6183545dc27ebc5070ebb0ff0c5ec3e7adf39db75ed00feea33da"
+    },
+    {
+      "path": "study/selective_observer/h6_rule_ablation.json",
+      "sha256": "6497247286a9237e966ea635aac38af9b3420a0edb7321c168323eb485347193"
+    },
+    {
+      "path": "study/selective_observer/research_cycle.json",
+      "sha256": "2ac8f6ef24058b3713c35ff58fceafa39303bdf68954d8ccc7f7b0255f28a001"
+    }
+  ],
+  "frozen_predecessor_commit": "e34e52fb8ae62ee1be043d6d5b26a0c9214a0572",
+  "phase": "formative_development",
+  "schema_version": "1.0"
+}

@@ -1,0 +1,30 @@
+{
+  "schema_version": "1.0",
+  "phase": "formative_development",
+  "domain_language": {
+    "status": "open",
+    "formative_panel": "two independent domain specialists and one HCI or scientific-communication specialist",
+    "closure": "zero critical and zero major findings after second-round approval",
+    "raw_records": []
+  },
+  "comprehension": {
+    "status": "open",
+    "formative_participants": "8-12, excluded from confirmation",
+    "confirmatory_participants": "40-60 subject to frozen power analysis",
+    "primary_outcomes": ["limitation comprehension", "action accuracy", "unsafe overtrust"],
+    "minimum_effects": {
+      "limitation_comprehension_absolute": 0.15,
+      "action_accuracy_absolute": 0.10,
+      "maximum_unsafe_overtrust_increase_absolute": 0.05
+    },
+    "raw_records": []
+  },
+  "expert_action": {
+    "status": "open",
+    "pilot": "three experts on 20-30 objects",
+    "confirmation": "3-5 new experts, 150 objects, blinded alternatives",
+    "primary_endpoint": "unsafe automatic acceptance at matched review budget",
+    "raw_records": []
+  },
+  "stable_release_allowed": false
+}
