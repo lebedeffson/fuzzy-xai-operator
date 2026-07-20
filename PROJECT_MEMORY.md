@@ -1,5 +1,44 @@
 # Project Memory
 
+## Q1 Empirical Remediation
+
+- Date: 2026-07-20
+- Branch: `feat/q1-empirical-remediation`
+- Frozen predecessor: `cafe403c7d60e36b08f56a5325ba380718a5be35`
+- Technical CI commit: `a9ca41ecc9bdfe74024214e5e4b1ed2c3eccefab`
+- Public Q1 workflow: `29709914672`
+- Candidate status: technical remediation PASS; stable release remains blocked
+
+This independent cycle preserves the earlier E1-E8 negative results and evaluates new preregistered hypotheses
+without changing their criteria after measurement. The public workflow passed the focused contracts, four independent
+real-modality jobs, a clean Docker reproduction and aggregate evidence verification.
+
+Measured technical evidence:
+
+- real datasets: UCI Covertype `581012`, Fashion-MNIST `70000`, 20 Newsgroups `18846`, and ElectricDevices `16637` objects;
+- real benchmark matrix: 16 measured model records and 25 measured explainer records;
+- model channels include linear, tree, boosting, CNN, sequence and ONNX execution;
+- explainer channels include SHAP, LIME, Anchors, RuleFit, Grad-CAM, Integrated Gradients, and text/time-series masking;
+- H1 controlled paired fidelity: 240 pairs, mean delta `0.0`, lower 95% bound `0.0`, non-inferior at margin `-0.02`;
+- H2 controlled traceability: `K_trace 0.0 -> 1.0`, missingness F1 `1.0`, false-certification rate `0.0`;
+- H3 adaptive cascade controlled cost fraction `0.36666666666666664`, with the preregistered risk-cost criterion met;
+- H4 adaptive hierarchy uses FML for `0.5641666666666667` of objects and reduces mean representation complexity by `2.3258333333333336` versus always-FML while meeting non-inferiority;
+- H5 structural diagnosis F1 `1.0`, but predictive incremental AUPRC `-0.0005609278151094133`; predictive and safety claims remain forbidden;
+- H6 matched rule-ablation candidate remains `inconclusive`; its exploratory conditional model has holdout R2 `-0.06296668096584646` and does not support a general rule-removal claim;
+- all datasets, licenses, preprocessing declarations and raw/processed hashes are recorded in the aggregate evidence;
+- clean command `docker run --rm fuzzyxai-q1 make reproduce-q1`: PASS;
+- technical DoD after archive closure: 105 PASS, 0 BLOCKED, 3 OPEN_EXTERNAL.
+
+Required boundaries:
+
+- the real benchmarks demonstrate reproducible framework execution, not clinical, production or external-domain validity;
+- the critical-rupture result is a structural diagnostic result only;
+- the rule-ablation result is a controlled context-dependent candidate, not a confirmed general effect;
+- independent comprehension, expert-action and domain-language reviews are still not run;
+- merge to `main` and a stable release tag remain forbidden while any external gate is open.
+
+Next step: run the three independent external protocols. Do not reopen or overwrite the frozen predecessor results.
+
 ## Full Empirical Validation
 
 - Date: 2026-07-20

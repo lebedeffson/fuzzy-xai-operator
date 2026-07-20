@@ -1,5 +1,28 @@
 # FuzzyXAI Framework Release Status
 
+## Q1 Empirical Remediation
+
+Status: technical candidate on `feat/q1-empirical-remediation`; stable release remains `BLOCKED`.
+
+- frozen predecessor commit: `cafe403c7d60e36b08f56a5325ba380718a5be35`;
+- technical CI commit: `a9ca41ecc9bdfe74024214e5e4b1ed2c3eccefab`;
+- public workflow run `29709914672`: fast, tabular, image, text, time-series, Docker and aggregate jobs PASS;
+- real datasets: 4/4 above 10,000 objects, with source, license, preprocessing and hashes recorded;
+- measured records: 16 model runs and 25 explainer runs;
+- clean Docker command `docker run --rm fuzzyxai-q1 make reproduce-q1`: PASS;
+- supported controlled claims: 5; not supported: 1; inconclusive: 1; external gate claim: 1;
+- critical-rupture incremental AUPRC: `-0.0005609278151094133`; predictive/safety claim forbidden;
+- matched rule ablation: context-dependent candidate only; general effect remains unconfirmed;
+- comprehension pilot: `planned_not_run`;
+- expert-action review: `planned_not_run`;
+- domain-language review: `pending_external_review`;
+- merge to `main`: blocked;
+- stable release tag: forbidden.
+
+The Q1 evidence supports technical reproducibility and measured execution across four modalities. It does not support
+clinical effectiveness, production safety, human-comprehension improvement, domain validity or universal superiority.
+The earlier negative empirical results remain frozen and are not replaced by this independent cycle.
+
 ## Full Empirical Validation
 
 Status: technical candidate on `feat/full-empirical-validation`; stable release remains `BLOCKED`.

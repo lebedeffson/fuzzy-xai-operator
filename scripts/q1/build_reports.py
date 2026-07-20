@@ -89,11 +89,37 @@ def main() -> None:
         ["No human result is synthesized by code."],
     )
     registry = load("claim_registry.json")
+    real = load("real_benchmarks/combined_status.json") if (EVIDENCE / "real_benchmarks/combined_status.json").is_file() else None
+    fast = load("ci_fast_status.json") if (EVIDENCE / "ci_fast_status.json").is_file() else None
+    heavy = load("ci_heavy_status.json") if (EVIDENCE / "ci_heavy_status.json").is_file() else None
+    real_rows: list[tuple[str, object]] = []
+    if real is not None:
+        real_rows = [
+            ("Real datasets", len(real["datasets"])),
+            ("Measured model runs", len(real["models"])),
+            ("Measured explainer records", len(real["explainers"])),
+            ("Real benchmark status", real["status"]),
+        ]
+    ci_rows = [
+        ("Fast CI", fast["status"] if fast is not None else "pending"),
+        ("Heavy CI", heavy["status"] if heavy is not None else "pending"),
+    ]
     write(
         "final_q1_validation.md",
         "Q1 remediation status",
-        [("Supported controlled claims", registry["supported"]), ("Not supported", registry["not_supported"]), ("Inconclusive", registry["inconclusive"]), ("External gates", registry["external_gate"]), ("Stable release", "BLOCKED")],
-        ["Real multimodal benchmark and heavy CI evidence remain separate gates.", "Human gates remain open."],
+        [
+            ("Supported controlled claims", registry["supported"]),
+            ("Not supported", registry["not_supported"]),
+            ("Inconclusive", registry["inconclusive"]),
+            *real_rows,
+            *ci_rows,
+            ("External gates", registry["external_gate"]),
+            ("Stable release", "BLOCKED"),
+        ],
+        [
+            "Real multimodal benchmarks establish technical execution, not deployment or domain validity.",
+            "Human comprehension, expert-action and domain-language gates remain open.",
+        ],
     )
     print("PASS: q1_reports")
 

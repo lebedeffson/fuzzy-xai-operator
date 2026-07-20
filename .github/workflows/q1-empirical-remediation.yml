@@ -148,6 +148,9 @@ jobs:
           python scripts/q1/build_reports.py
           python scripts/q1/build_tables.py
           python scripts/q1/build_figures.py
+          python scripts/build_framework_release.py
+          python scripts/q1/build_archives.py
+          python scripts/q1/verify_archives.py
           python scripts/q1/build_dod.py
           python scripts/q1/build_manifest.py
           python scripts/q1/verify_all.py
