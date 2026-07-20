@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import copy
 import json
+import subprocess
 import zipfile
 from pathlib import Path
 
@@ -91,9 +92,9 @@ def test_variants_are_semantically_distinct_without_revealing_identity() -> None
 
 
 def test_public_archive_excludes_private_and_confirmatory_material() -> None:
-    archives = sorted((ROOT / "release_artifacts/ai_pre_review_final").glob("*.zip"))
-    assert archives, "run the public bundle builder before this test"
-    archive = archives[-1]
+    commit = subprocess.check_output(["git", "rev-parse", "--short=12", "HEAD"], cwd=ROOT, text=True).strip()
+    archive = ROOT / "release_artifacts/ai_pre_review_final" / f"fuzzyxai-ai-pre-review-final-bundles-{commit}.zip"
+    assert archive.is_file(), "run the public bundle builder for the current commit before this test"
     with zipfile.ZipFile(archive) as handle:
         names = handle.namelist()
         assert not any("hidden_scoring_key" in name or "/private/" in name for name in names)
