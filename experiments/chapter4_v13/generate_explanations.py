@@ -154,13 +154,19 @@ def generate_for_split(split: str, *, objects: int) -> dict[str, object]:
     source = list(read_jsonl(ARTIFACTS / "processed" / source_name))
     predictions = list(read_jsonl(ARTIFACTS / "predictions" / f"{split}.jsonl"))
     selected = _select(source, predictions, objects // 4)
+    expected_objects = len(selected)
     batch_size = int(runtime["explanation_batch_size"])
     steps = int(cfg["explanations"]["methods"]["integrated_gradients"]["steps"])
     mask_limit = int(cfg["explanations"]["methods"]["token_masking"]["tokens_per_object"])
     top_k = int(cfg["explanations"]["top_k"])
     variants = int(cfg["explanations"]["stability"]["perturbations_per_object"])
-    output_rows: list[dict[str, object]] = []
-    timing_rows: list[dict[str, object]] = []
+    output_path = ARTIFACTS / "explanations" / f"{split}.jsonl"
+    partial_path = ARTIFACTS / "explanations" / f"{split}.partial.jsonl"
+    partial_timing_path = ARTIFACTS / "explanations" / f"{split}_timings.partial.json"
+    output_rows: list[dict[str, object]] = list(read_jsonl(partial_path)) if partial_path.exists() else []
+    timing_rows: list[dict[str, object]] = __import__("json").loads(partial_timing_path.read_text(encoding="utf-8")) if partial_timing_path.exists() else []
+    completed_ids = {str(row["object_id"]) for row in output_rows}
+    selected = [pair for pair in selected if str(pair[0]["object_id"]) not in completed_ids]
 
     for start in range(0, len(selected), batch_size):
         batch = selected[start : start + batch_size]
@@ -228,14 +234,19 @@ def generate_for_split(split: str, *, objects: int) -> dict[str, object]:
                     "seed_stability": 1.0,
                 }
             )
-        completed = min(start + len(batch), len(selected))
-        if completed % 50 == 0 or completed == len(selected):
-            print(f"progress: {split} explanations {completed}/{len(selected)}", flush=True)
+        completed = len(output_rows)
+        if completed % 50 == 0 or completed == expected_objects:
+            write_jsonl(partial_path, output_rows)
+            write_json(partial_timing_path, timing_rows)
+            print(f"progress: {split} explanations {completed}/{expected_objects}", flush=True)
 
-    output_path = ARTIFACTS / "explanations" / f"{split}.jsonl"
     write_jsonl(output_path, output_rows)
     timing_path = ARTIFACTS / "explanations" / f"{split}_timings.json"
     write_json(timing_path, timing_rows)
+    if partial_path.exists():
+        partial_path.unlink()
+    if partial_timing_path.exists():
+        partial_timing_path.unlink()
     summary = {
         "split": split,
         "objects": len(output_rows),
