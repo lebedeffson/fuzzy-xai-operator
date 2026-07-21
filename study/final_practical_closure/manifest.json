@@ -20,7 +20,7 @@
       "sha256": "ce6fa6e7c121dc17d8baae18f67e3dcc727587cf0025b8adfab5c0304ade25ee"
     }
   ],
-  "implementation_commit": "699662e01a7bb40c437717455b55896ebd011d5d",
+  "implementation_commit": "2f70d167414c170ddfc7559d59e287bcb4ea3f52",
   "schema_version": "1.0",
   "stable_technical_release_allowed": false,
   "stage": "formative_development"

@@ -28,8 +28,8 @@
     },
     {
       "path": "dissertation_artifacts/final_practical_closure/chapter4_formative/figures/h9_scaling.png",
-      "sha256": "1e25d9385035138957c21b39bb335f04277cb47b58ec68f08a3810c33156c79e",
-      "size": 57653
+      "sha256": "4789752ff75925fc8b803f0cc844c25c53a269d8d76a071b14772e8393684878",
+      "size": 57746
     }
   ],
   "phase": "formative_development",
@@ -62,8 +62,8 @@
     },
     {
       "path": "dissertation_artifacts/final_practical_closure/chapter4_formative/tables/h9_scaling.csv",
-      "sha256": "cf3a68fd47b6fcb4082768bb48f535cebe079b1bdc68c2b8fcb62eed878297e5",
-      "size": 1063
+      "sha256": "f25514de3b79ef76eddd309b06de864aec37a0af27b5e09611060103d7bb4203",
+      "size": 1065
     }
   ]
 }
