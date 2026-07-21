@@ -1,0 +1,72 @@
+{
+  "dataset": {
+    "id": "fancyzhx/ag_news",
+    "labels": [
+      "World",
+      "Sports",
+      "Business",
+      "Sci_Tech"
+    ],
+    "license_status": "unknown_in_upstream_dataset_card",
+    "redistribution": "forbidden_in_release_bundle",
+    "revision": "eb185aade064a813bc0b7f42de02595523103ca4",
+    "source": "https://huggingface.co/datasets/fancyzhx/ag_news",
+    "source_test_size": 7600,
+    "source_train_size": 120000
+  },
+  "license": {
+    "release_redistribution": "forbidden_in_release_bundle",
+    "source_url": "https://huggingface.co/datasets/fancyzhx/ag_news",
+    "upstream_status": "unknown_in_upstream_dataset_card"
+  },
+  "private_label_vault": {
+    "path": "private/sealed_test_labels.json",
+    "release_excluded": true,
+    "sha256": "95925cb01e0100f1ac2e7e23829480cf85b440c09c81b1395c15c19d95cfd479"
+  },
+  "processed_files": {
+    "sealed_test": {
+      "path": "processed/sealed_test_inputs.jsonl",
+      "rows": 7600,
+      "sha256": "1b0f217fc3687a35616d4e8456f2e1a8e5c3363df46ba440bf14b9b800a5f655"
+    },
+    "train": {
+      "path": "processed/train.jsonl",
+      "rows": 99839,
+      "sha256": "388fd7e24011c179afca5e8a4c00fa751fa16d176182d6267dc41591beb98920"
+    },
+    "validation": {
+      "path": "processed/validation.jsonl",
+      "rows": 20000,
+      "sha256": "1a52c8b6a9a90f21f5dcb99397de7943bbc0ee01998f0e0dae015e5fb76f6623"
+    }
+  },
+  "protocol_deviation": {
+    "actual_train_pool_after_exclusion": 119839,
+    "excluded_repeated_training_rows": 151,
+    "excluded_train_test_matches": 10,
+    "excluded_training_rows": 161,
+    "official_test_preserved": true,
+    "original_protocol_train_size": 100000,
+    "reason": "pinned_upstream_revision_contains_exact_normalized_text_duplicates",
+    "status": "registered_before_model_execution",
+    "thresholds_models_and_metrics_changed": false
+  },
+  "raw_files": {
+    "test": {
+      "bytes": 1234829,
+      "path": "raw/test-00000-of-00001.parquet",
+      "sha256": "71de87ec66bc5737752a2502204dfa6d7fe9856ade3ea444dc6317789a4f13fb"
+    },
+    "train": {
+      "bytes": 18585438,
+      "path": "raw/train-00000-of-00001.parquet",
+      "sha256": "fc508d6d9868594e3da960a8cfeb63ab5a4746598b93428c224397080c1f52ee"
+    }
+  },
+  "split_id_sha256": {
+    "sealed_test": "24fa45c952489e7252cc7864b051bd3aa166c3d877a4e9041b1d4a3adf0b857c",
+    "train": "c28ab827b8ba37d6b8f656f42e7e83e5d429accb83c1f1d88400514d43fac3d2",
+    "validation": "e91d045ca60ba0fce2d034692d864817de0f1247ece6000b79d7fee5a62433ce"
+  }
+}

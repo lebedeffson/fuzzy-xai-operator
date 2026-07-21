@@ -1,0 +1,11 @@
+{
+  "actual_train_pool_after_exclusion": 119839,
+  "excluded_repeated_training_rows": 151,
+  "excluded_train_test_matches": 10,
+  "excluded_training_rows": 161,
+  "official_test_preserved": true,
+  "original_protocol_train_size": 100000,
+  "reason": "pinned_upstream_revision_contains_exact_normalized_text_duplicates",
+  "status": "registered_before_model_execution",
+  "thresholds_models_and_metrics_changed": false
+}

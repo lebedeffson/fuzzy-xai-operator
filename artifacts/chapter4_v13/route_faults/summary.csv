@@ -1,0 +1,17 @@
+method,group,n,precision,recall,f1,false_certification,false_rejection,fault_type_accuracy,component_localization_accuracy,diagnostic_time_ms_mean
+independent_if_else,clean,1000,0.0,0.0,0.0,0.0,0.0,1.0,1.0,0.000636519
+independent_if_else,held_out_fault_types,1000,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.00070853
+independent_if_else,registered_compositional,4000,1.0,1.0,1.0,0.0,0.0,0.0,0.0,0.0006876464999999999
+independent_if_else,registered_single,1000,1.0,1.0,1.0,0.0,0.0,1.0,1.0,0.000701302
+simple_or,clean,1000,0.0,0.0,0.0,0.0,0.0,1.0,1.0,0.00065346
+simple_or,held_out_fault_types,1000,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0008606789999999999
+simple_or,registered_compositional,4000,1.0,0.8,0.888888888888889,0.2,0.0,0.05,0.05,0.00065902625
+simple_or,registered_single,1000,1.0,0.4,0.5714285714285715,0.6,0.0,0.4,0.4,0.000620806
+typed_route_validator,clean,1000,0.0,0.0,0.0,0.0,0.0,1.0,1.0,0.000763642
+typed_route_validator,held_out_fault_types,1000,1.0,1.0,1.0,0.0,0.0,1.0,1.0,0.0011749280000000002
+typed_route_validator,registered_compositional,4000,1.0,1.0,1.0,0.0,0.0,1.0,1.0,0.0071287845
+typed_route_validator,registered_single,1000,1.0,1.0,1.0,0.0,0.0,1.0,1.0,0.0008519339999999999
+weighted_fault_score,clean,1000,0.0,0.0,0.0,0.0,0.0,1.0,1.0,0.001027875
+weighted_fault_score,held_out_fault_types,1000,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.000680319
+weighted_fault_score,registered_compositional,4000,1.0,1.0,1.0,0.0,0.0,0.0,0.0,0.0007569674999999999
+weighted_fault_score,registered_single,1000,1.0,1.0,1.0,0.0,0.0,0.0,0.0,0.00085555

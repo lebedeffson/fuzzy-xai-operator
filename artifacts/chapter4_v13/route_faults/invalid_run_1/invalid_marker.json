@@ -1,0 +1,8 @@
+{
+  "opened_test_labels": false,
+  "raw_sha256": "83db4483a7b91ca5b27feacc77679a3d563db47ddf26731d4f753fd402339b58",
+  "reason": "model_version_mismatch also induced unregistered mixed_model_artifacts",
+  "status": "invalid_ground_truth_injection_coupling",
+  "summary_sha256": "12eea4573619c251cf6c4bd18e33e8c229dae64d82aacf4e06d47ea86f82d943",
+  "thresholds_changed": false
+}

@@ -1,0 +1,19 @@
+{
+  "cases": 7000,
+  "evaluations": 28000,
+  "groups": [
+    "clean",
+    "held_out_fault_types",
+    "registered_compositional",
+    "registered_single"
+  ],
+  "held_out_fault_claim": "exploratory; no universal unknown-fault detection claim",
+  "methods": [
+    "simple_or",
+    "independent_if_else",
+    "weighted_fault_score",
+    "typed_route_validator"
+  ],
+  "raw_sha256": "19e3cf4642c6012e5caa3023a1283147b703c5260343da6dbe3defac617f6a6e",
+  "summary_sha256": "2919c0bf1ede643185f26f7b7f0c3cf49cd29452dea9ca52bb0b0a6cdcc8c62b"
+}
