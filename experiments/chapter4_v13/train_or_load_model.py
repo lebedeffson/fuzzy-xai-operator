@@ -2,12 +2,16 @@ from __future__ import annotations
 
 import argparse
 import math
+import os
 from collections.abc import Sequence
 from typing import Any
 
 import numpy as np
 
 from .common import ARTIFACTS, environment_manifest, measured_stage, protocol, read_jsonl, runtime_config, sha256_file, write_json, write_jsonl
+
+
+os.environ.setdefault("CUBLAS_WORKSPACE_CONFIG", ":4096:8")
 
 
 def set_deterministic(seed: int) -> None:
@@ -30,7 +34,7 @@ def load_frozen_model() -> tuple[Any, Any, Any]:
     revision = cfg["model"]["revision"]
     cache_dir = ARTIFACTS / "model_cache"
     tokenizer = AutoTokenizer.from_pretrained(model_id, revision=revision, cache_dir=cache_dir)
-    model = AutoModelForSequenceClassification.from_pretrained(model_id, revision=revision, cache_dir=cache_dir)
+    model = AutoModelForSequenceClassification.from_pretrained(model_id, revision=revision, cache_dir=cache_dir, attn_implementation="eager")
     device = torch.device(runtime["device"] if runtime["device"] == "cuda" and torch.cuda.is_available() else "cpu")
     model.to(device)
     model.eval()
