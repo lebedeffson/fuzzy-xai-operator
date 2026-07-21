@@ -19,6 +19,7 @@ def _write_table(name: str, frame: pd.DataFrame) -> Path:
 
 def build() -> dict[str, object]:
     cfg = protocol()
+    dataset_manifest = read_json(ARTIFACTS / "manifests" / "dataset_manifest.json")
     explanations = read_json(ARTIFACTS / "explanations" / "sealed_test_summary.json")
     quality = read_json(ARTIFACTS / "policies" / "test_quality.json")
     policy = pd.read_csv(ARTIFACTS / "policies" / "policy_results.csv")
@@ -29,21 +30,25 @@ def build() -> dict[str, object]:
     primary = next(row for row in statistics["comparisons"] if row["primary"])
 
     tables: dict[str, dict[str, object]] = {}
+    split_files = dataset_manifest["processed_files"]
+    train_rows = int(split_files["train"]["rows"])
+    validation_rows = int(split_files["validation"]["rows"])
+    test_rows = int(split_files["sealed_test"]["rows"])
     modern = pd.DataFrame(
         [
             {
                 "dataset": "AG News",
-                "objects_total": 127600,
-                "train": 100000,
-                "validation": 20000,
-                "sealed_test": 7600,
+                "objects_total": train_rows + validation_rows + test_rows,
+                "train": train_rows,
+                "validation": validation_rows,
+                "sealed_test": test_rows,
                 "test_accuracy": quality["accuracy"],
                 "local_explanations": explanations["objects"],
                 "canonical_hash_preservation": explanations["canonical_hash_preservation_rate"],
             }
         ]
     )
-    tables["modern_contour"] = {"path": _write_table("modern_contour", modern), "sources": [ARTIFACTS / "manifests" / "model_manifest.json", ARTIFACTS / "explanations" / "sealed_test_summary.json", ARTIFACTS / "policies" / "test_quality.json"], "status": "confirmatory"}
+    tables["modern_contour"] = {"path": _write_table("modern_contour", modern), "sources": [ARTIFACTS / "manifests" / "dataset_manifest.json", ARTIFACTS / "manifests" / "model_manifest.json", ARTIFACTS / "explanations" / "sealed_test_summary.json", ARTIFACTS / "policies" / "test_quality.json"], "status": "confirmatory"}
 
     policies = policy[(policy["review_budget"] == 0.20) & (policy["cost_profile"] == "balanced")].copy()
     policies = policies[["policy", "automatic_coverage", "wrong_automatic_actions", "selective_risk", "manual_review_load", "false_blocks", "total_cost", "risk_auroc", "risk_auprc", "expected_calibration_error", "brier_score"]]
