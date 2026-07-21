@@ -82,5 +82,6 @@ artifacts/chapter4_v13/model_cache/
 artifacts/chapter4_v13/predictions/
 artifacts/chapter4_v13/explanations/*.jsonl
 artifacts/chapter4_v13/explanations/*.partial.json
+artifacts/chapter4_v13/runtime/*.partial.csv
 artifacts/chapter4_v13/**/*.lock
 .venv-chapter4-v13/

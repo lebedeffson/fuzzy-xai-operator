@@ -143,7 +143,12 @@ def run() -> dict[str, object]:
     model, tokenizer, device = load_frozen_model()
     source = list(read_jsonl(ARTIFACTS / "processed" / "sealed_test_inputs.jsonl"))
     source.extend(read_jsonl(ARTIFACTS / "processed" / "validation.jsonl"))
-    raw_rows = []
+    partial_path = ARTIFACTS / "runtime" / "raw_results.partial.csv"
+    if partial_path.exists():
+        raw_rows = pd.read_csv(partial_path).to_dict(orient="records")
+    else:
+        raw_rows = []
+    completed = {(str(row["explainer"]), int(row["n"]), int(row["repetition"])) for row in raw_rows}
     sizes = [int(value) for value in cfg["sizes"]]
     methods = ("integrated_gradients", "token_masking")
     process = psutil.Process()
@@ -167,6 +172,8 @@ def run() -> dict[str, object]:
                 token_masking_batch(model, tokenizer, device, skeleton, warm_targets, limit=20)
 
             for repetition in range(int(cfg["repetitions"])):
+                if (method, n, repetition) in completed:
+                    continue
                 if torch.cuda.is_available():
                     torch.cuda.reset_peak_memory_stats()
                     torch.cuda.synchronize()
@@ -205,11 +212,14 @@ def run() -> dict[str, object]:
                         "cached": False,
                     }
                 )
+                partial_path.parent.mkdir(parents=True, exist_ok=True)
+                pd.DataFrame(raw_rows).to_csv(partial_path, index=False)
             print(f"progress: runtime method={method} n={n}", flush=True)
 
     raw_path = ARTIFACTS / "runtime" / "raw_results.csv"
     frame = pd.DataFrame(raw_rows)
     frame.to_csv(raw_path, index=False)
+    partial_path.unlink(missing_ok=True)
     summary_rows = []
     for (method, n), group in frame.groupby(["explainer", "n"], sort=True):
         row: dict[str, object] = {"modality": "text", "model": "DistilBERT AG News", "explainer": method, "n": int(n), "repetitions": len(group)}
