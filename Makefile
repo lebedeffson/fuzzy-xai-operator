@@ -734,7 +734,7 @@ chapter4-strong-confirmatory-final:
 strong-confirmatory-check: strong-confirmatory-protocol
 	OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m pytest -q tests/strong_confirmatory
 
-.PHONY: practical-controller-protocol practical-controller-formative practical-controller-formative-check practical-controller-freeze practical-controller-confirmatory practical-controller-baselines practical-controller-ablation route-validity-confirmatory rule-detectability-envelope rule-matched-control-confirmatory posthoc-benchmark-final glassbox-benchmark-final h7-canonical-fidelity h7-presentation-tradeoff grid-confirmatory scale-2m scale-5m ai-formative-run2-import final-statistics final-claim-registry chapter4-practical-formative chapter4-final practical-release-check practical-release-archive reproduce-final-practical-closure
+.PHONY: practical-controller-protocol practical-controller-formative practical-controller-formative-check practical-controller-freeze practical-controller-confirmatory practical-controller-baselines practical-controller-ablation route-validity-confirmatory rule-detectability-envelope rule-matched-control-confirmatory posthoc-benchmark-final glassbox-benchmark-final h7-canonical-fidelity h7-presentation-tradeoff grid-confirmatory scale-2m scale-5m ai-formative-run2-import final-statistics final-claim-registry chapter4-practical-formative chapter4-final practical-release-check practical-release-archive practical-docker-check reproduce-final-practical-closure
 
 practical-controller-protocol:
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/final_practical_closure/build_protocol.py
@@ -787,5 +787,10 @@ practical-release-check: practical-controller-formative-check chapter4-practical
 practical-release-archive: practical-release-check
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/final_practical_closure/build_formative_report.py
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/final_practical_closure/build_bundle.py
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/build_framework_release.py
+
+practical-docker-check:
+	docker build -f Dockerfile.practical -t fuzzyxai-practical .
+	docker run --rm fuzzyxai-practical
 
 reproduce-final-practical-closure: practical-controller-formative practical-controller-freeze practical-controller-confirmatory final-statistics final-claim-registry chapter4-final practical-release-archive

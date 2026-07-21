@@ -1,5 +1,52 @@
 # Project Memory
 
+## FXAI-FINAL-PRACTICAL-CLOSURE-FORMATIVE
+
+- Date: 2026-07-21
+- Branch: `feat/final-practical-closure`
+- Base: `63cef7578d28a28dac63654f24642a980b49bc90`
+- Practical-controller implementation: `699662e01a7bb40c437717455b55896ebd011d5d`
+- Formative evidence commit: `44d50cf`
+- Research phase: formative development
+- Confirmatory protocol: blocked, test unopened
+- Stable technical release: blocked
+
+This milestone implements the production-facing, budgeted FuzzyXAI action controller without changing prior result
+statuses. `H3-original`, `H5-P-original`, and `H6-general` remain `not_supported`. The public API now exposes typed
+`assess_action`, batch and streaming assessment, formal hard guards, OOF predictive/route risk estimators, calibrated
+budget allocation, exact canonical explanation preservation, deterministic replay, shadow/canary monitoring, and
+rollback thresholds. Low confidence alone cannot produce `block`; only a frozen formal contract violation can.
+
+Measured full-profile formative evidence:
+
+- H3 practical development comparison at a 20% review budget: the controller recorded `0` wrong or invalid automatic
+  actions at automatic coverage `0.7785588752196837`; the best simple baseline recorded `12` at coverage
+  `0.8014059753954306`. This is a development result only and permits no confirmatory superiority claim;
+- H5-A controlled route validity: F1 `0.9990900818926297`, false certification `0.0018181818181818182`, source
+  localization `0.9981818181818182`; naturally occurring failures remain unobserved in a sealed pipeline;
+- H6-A detectability envelope: `81` configurations, detection rate `0.2962962962962963`, formative target not met;
+  H6-B remains not run and requires two independent sealed tabular datasets;
+- H7-A exact canonical source-hash preservation rate `1.0`; H7-B remains a presentation trade-off requiring
+  confirmation;
+- H8 controlled grid sensitivity formative target met;
+- H9 cached operator layer measured through `5,000,000` objects with empirical exponent near `0.90`; local-explainer
+  cost is excluded and separately disclosed.
+
+Validated technical boundary:
+
+- focused public/practical/strong-confirmatory regression: `23 passed`; practical suite: `12 passed`;
+- Ruff, compile, public import, evidence checksums and Parquet reads: PASS;
+- machine-generated formative Chapter 4 shell: 17 sections, 6 tables, 6 figures, zero placeholders;
+- claim registry 3.0 removes human-comprehension, expert-confirmation, domain-safety, and specialist-superiority claims
+  from technical release scope rather than pretending those gates passed;
+- protocol lock fails closed until two independent tabular datasets plus image, text, and time-series datasets are
+  sealed, all controller features are OOF, and a real blinded AI formative run 2 passes;
+- final DOCX/PDF generation fails closed until every enabled computational claim has sealed confirmatory evidence.
+
+Next step: import a real 240-case blinded AI formative run 2, seal independent confirmatory datasets and splits, lock
+the protocol once, and run the untouched result packages. Do not tune thresholds, datasets, costs, strata, or primary
+metrics after lock. Do not report the formative H3 advantage as confirmed.
+
 ## FXAI-STRONG-CONFIRMATORY-FORMATIVE
 
 - Date: 2026-07-21

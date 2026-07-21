@@ -29,11 +29,16 @@ INCLUDE = (
 def main() -> None:
     subprocess.run([sys.executable, "scripts/final_practical_closure/verify_formative.py"], cwd=ROOT, check=True)
     files = _files()
-    implementation = subprocess.run(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True, capture_output=True, check=True).stdout.strip()
+    study_manifest = json.loads((STUDY / "manifest.json").read_text(encoding="utf-8"))
+    implementation = str(study_manifest["implementation_commit"])
+    bundle_source_commit = subprocess.run(
+        ["git", "rev-parse", "HEAD"], cwd=ROOT, text=True, capture_output=True, check=True
+    ).stdout.strip()
     manifest = {
         "schema_version": "1.0",
         "bundle_type": "formative_practical_closure_evidence",
         "implementation_commit": implementation,
+        "bundle_source_commit": bundle_source_commit,
         "confirmatory_test_opened": False,
         "confirmatory_claim_allowed": False,
         "stable_release_allowed": False,
