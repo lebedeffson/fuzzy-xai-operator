@@ -228,7 +228,9 @@ def generate_for_split(split: str, *, objects: int) -> dict[str, object]:
                     "seed_stability": 1.0,
                 }
             )
-        print(f"progress: {split} explanations {min(start + len(batch), len(selected))}/{len(selected)}", flush=True)
+        completed = min(start + len(batch), len(selected))
+        if completed % 50 == 0 or completed == len(selected):
+            print(f"progress: {split} explanations {completed}/{len(selected)}", flush=True)
 
     output_path = ARTIFACTS / "explanations" / f"{split}.jsonl"
     write_jsonl(output_path, output_rows)
