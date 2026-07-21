@@ -70,19 +70,37 @@ def _populate(stage: Path, head: str) -> None:
             STUDY / "protocol.json",
             STUDY / "confirmatory_protocol_lock.json",
             STUDY / "confirmatory_scoring_recovery_lock.json",
+            STUDY / "confirmatory_opening_record.json",
+            STUDY / "confirmatory_invalid_marker.json",
+            STUDY / "confirmatory_completion_marker.json",
             STUDY / "protocol_manifest.json",
         ],
         "data_manifests": [STUDY / "confirmatory_dataset_manifest.json", STUDY / "confirmatory_split_manifest.json", STUDY / "near_duplicate_audit.json", STUDY / "final_leakage_audit.json"],
         "models": list((STUDY / "dataset_manifests").glob("*/model_manifest.json")),
         "features": [STUDY / "confirmatory_feature_manifest.json", STUDY / "p0_p1_feature_audit.json"],
+        "evidence/frozen_previous": [
+            ROOT / "release_evidence/final_practical_closure/claim_registry.json",
+            ROOT / "release_evidence/final_practical_closure/formative/summary.json",
+            EVIDENCE / "claim_status_prelock.json",
+        ],
         "evidence/formative": [STUDY / "formative_real/summary.json", STUDY / "comparator_formative/summary.json", STUDY / "h7_formative/summary.json"],
         "evidence/shadow_replay": list(EVIDENCE.glob("shadow_replay*")),
         "evidence/ai_text_review": [STUDY / "ai_text_review_scope.json"],
+        "evidence/ai_text_review/run2_input": [
+            STUDY / "ai_formative_run2/fuzzyxai-ai-formative-run2-input.zip",
+            STUDY / "ai_formative_run2/fuzzyxai-ai-formative-run2-input.zip.sha256",
+            STUDY / "ai_formative_run2/protocol.json",
+        ],
         "statistics": [STUDY / "confirmatory/final_statistics.json"],
         "tables": list((ROOT / "dissertation_artifacts/final_one_zip/chapter4/tables").glob("*")),
         "figures": list((ROOT / "dissertation_artifacts/final_one_zip/chapter4/figures").glob("*")),
         "chapter4": list((ROOT / "dissertation_artifacts/final_one_zip/chapter4").glob("*.*")),
         "release_status": [ROOT / "PROJECT_MEMORY.md", ROOT / "RELEASE_STATUS.md", EVIDENCE / "final_claim_registry.json"],
+        "logs": [
+            STUDY / "confirmatory_opening_record.json",
+            STUDY / "confirmatory_invalid_marker.json",
+            STUDY / "confirmatory_completion_marker.json",
+        ],
     }
     for destination, paths in mappings.items():
         target = stage / destination
@@ -103,8 +121,19 @@ def _populate(stage: Path, head: str) -> None:
         shutil.copy2(license_path, stage / "LICENSES" / f"{license_path.parents[1].name}.txt")
     (stage / "reproducibility").mkdir()
     shutil.copy2(ROOT / "Makefile", stage / "reproducibility/Makefile")
-    (stage / "logs").mkdir()
-    lineage = {name: head for name in ("source_commit", "protocol_commit", "model_commit", "feature_commit", "confirmatory_commit", "chapter_commit")}
+    original_lock = load(STUDY / "confirmatory_protocol_lock.json")
+    recovery_lock = load(STUDY / "confirmatory_scoring_recovery_lock.json")
+    lineage = {
+        "source_commit": head,
+        "protocol_commit": original_lock["source_commit"],
+        "model_commit": original_lock["source_commit"],
+        "feature_commit": original_lock["source_commit"],
+        "confirmatory_prescore_commit": original_lock["source_commit"],
+        "scoring_recovery_commit": recovery_lock["source_commit"],
+        "chapter_commit": head,
+        "single_commit_lineage": False,
+        "lineage_deviation": "declared_scoring_only_recovery_and_conservative_post_scoring_claim_packaging",
+    }
     write(stage / "artifact_lineage.json", lineage)
     _write_final_report(stage, head)
     (stage / "README_FIRST.md").write_text(
@@ -131,8 +160,16 @@ def _copy_tree(source: Path, destination: Path, *, exclude_directories: set[str]
 def _write_final_report(stage: Path, head: str) -> None:
     statistics = load(STUDY / "confirmatory/final_statistics.json")
     claims = load(EVIDENCE / "final_claim_registry.json")
-    lock = load(STUDY / "confirmatory_protocol_lock.json")
+    protocol = load(STUDY / "protocol.json")
     completion = load(STUDY / "confirmatory_completion_marker.json")
+    h3 = statistics["H3"]["P1_vs_baseline"]
+    h3_summary = load(STUDY / "confirmatory/h3_h7_summary.json")["H3_P1"]
+    h5 = next(row for row in statistics["H5-A"]["methods"] if row["method"] == "typed_route_validity")
+    h6a = statistics["H6-A"]
+    h7a = statistics["H7-A"]
+    h9 = statistics["H9"]
+    shadow = load(EVIDENCE / "shadow_replay_summary.json")
+    ai_scope = load(STUDY / "ai_text_review_scope.json")
     claim_rows = claims.get("claims") or claims.get("hypotheses") or claims.get("new_claims", {})
     lines = [
         "# Final technical closure report",
@@ -140,9 +177,31 @@ def _write_final_report(stage: Path, head: str) -> None:
         f"- Source commit: `{head}`",
         f"- Protocol lock: `{sha256(STUDY / 'confirmatory_protocol_lock.json')}`",
         f"- Completion status: `{completion.get('status')}`",
-        f"- Confirmatory objects: `{statistics.get('objects', statistics.get('n', 'see statistics artifact'))}`",
-        f"- Primary endpoint: `{lock.get('primary_endpoint', 'see locked protocol')}`",
+        f"- Confirmatory objects: `{h3['n']}`",
+        f"- Primary endpoint: `{protocol['primary_endpoint']}`",
+        f"- Original confirmatory status: `{load(STUDY / 'confirmatory_invalid_marker.json')['status']}`",
+        f"- Scoring completion: `{completion.get('status')}`",
         "- Human comprehension, domain approval and expert-action claims: `out_of_scope`",
+        "",
+        "## H3",
+        "",
+        f"- Primary review budget: `{h3_summary['primary_review_budget']}`",
+        f"- Best frozen baseline: `{h3_summary['baseline']}`",
+        f"- Baseline invalid automatic actions: `{h3_summary['baseline_invalid_automatic_actions']}`",
+        f"- FuzzyXAI P1 invalid automatic actions: `{h3_summary['fuzzyxai_invalid_automatic_actions']}`",
+        f"- Relative reduction: `{h3['relative_invalid_action_reduction']}`",
+        f"- 95% CI: `{h3['confidence_interval_95']}`",
+        f"- Holm-adjusted p: `{h3['holm_adjusted_p']}`",
+        "- Claim: `not_supported`",
+        "",
+        "## Bounded results",
+        "",
+        f"- H5-A controlled fault F1: `{h5['f1']}`; false certification: `{h5['false_certification']}`; source localization: `{h5['source_localization']}`.",
+        f"- H6-A synthetic eligible-region detection: `{h6a['detection_rate']}`; FDR: `{h6a['false_discovery_rate']}`.",
+        f"- H7-A canonical artifacts: `{h7a['artifacts']}`; preservation: `{h7a['canonical_hash_preservation_rate']}`.",
+        f"- H9 operator-only maximum N: `{h9['maximum_objects']}`; end-to-end target met: `{h9['end_to_end_target_met']}`.",
+        f"- Controlled shadow replay events: `{shadow['event_count']}`; confirmatory claim allowed: `{shadow['confirmatory_claim_allowed']}`.",
+        f"- AI text review: `{ai_scope['status']}`; review records: `{ai_scope['review_records']}`.",
         "",
         "## Claim registry",
         "",
