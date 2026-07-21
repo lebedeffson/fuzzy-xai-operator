@@ -1,5 +1,34 @@
 # FuzzyXAI Framework Release Status
 
+## Final One-Zip Practical Closure
+
+- Branch: `feat/one-zip-final-practical-closure`
+- Original protocol source: `3a7ad13ae33f2d84f0384c34c0a417c0f1a34def`
+- Scoring-recovery source: `13a29170cd96cc7e94f86a4fa2c129c7e75f295e`
+- Original run: `INVALID_AFTER_LABEL_OPENING_BEFORE_SCORING`
+- Recovery: `COMPLETED_SCORING_ONLY_PRESCORE_IMMUTABLE`
+- Sealed objects: `17,404`
+- H3-P1/P2/P3/P4: `NOT_SUPPORTED_OR_NOT_ESTIMABLE`
+- H5-A: `SUPPORTED_CONTROLLED_FAULT_LIBRARY_ONLY`
+- H6-A: `SUPPORTED_SYNTHETIC_ELIGIBLE_REGION_ONLY`
+- H6-B: `NOT_SUPPORTED_INFERENTIAL_GATE_INCOMPLETE`
+- H7-A: `SUPPORTED`
+- H7-B/H8/H9 confirmatory claims: `NOT_SUPPORTED`
+- AI/human validation: `NOT_RUN_OUT_OF_SCOPE`
+- Chapter 4: `19 A4 pages, 31 tables, 23 figures, 0 placeholders`
+- Stable tag: `NOT_YET_CREATED`
+
+The principal practical superiority hypothesis failed on sealed data: FuzzyXAI P1 recorded 2,828 invalid automatic
+actions at the 20% review budget, while the frozen weighted baseline recorded 2,722. The relative change was
+`-0.0389419544`; its 95% confidence interval crossed zero and Holm-adjusted p was `0.9999990968`. No positive H3
+wording is enabled. Supported statements are limited to controlled route-fault detection, synthetic planted-rule
+detection inside the registered eligible region and exact canonical hash preservation.
+
+The original run and its invalid marker are retained. The only recovery unwrapped the already defined label-vault
+envelope and scored pre-existing hashed actions; it did not rebuild predictions, features, explanations, models,
+thresholds or policies. Artifact lineage records the protocol and recovery commits separately. Public CI, merge and
+tag remain pending and must be verified independently before release wording changes.
+
 ## Final One-Zip Practical Closure Prelock
 
 - Branch: `feat/one-zip-final-practical-closure`

@@ -1,5 +1,46 @@
 # Project Memory
 
+## FXAI-FINAL-ONE-ZIP-PRACTICAL-CLOSURE
+
+- Date: 2026-07-21
+- Branch: `feat/one-zip-final-practical-closure`
+- Original protocol source: `3a7ad13ae33f2d84f0384c34c0a417c0f1a34def`
+- Declared scoring-recovery source: `13a29170cd96cc7e94f86a4fa2c129c7e75f295e`
+- Protocol identifier: `FXAI-FINAL-ONE-ZIP-PRACTICAL-CLOSURE`
+- Sealed objects scored: `17,404`
+- Post-open tuning: `false`
+- Human claims: disabled and out of scope
+
+The original confirmatory scoring attempt is preserved as `invalid_after_label_opening`. The failure occurred before
+outcomes were scored: the runner treated the outer `{"labels": ...}` vault envelope as the identity map and detected
+the repeated service key `labels`. All test predictions, explanations, canonical evidence, P0/P1 features and policy
+actions had already been written and hashed without labels. A separate scoring-only recovery commit unwrapped that
+existing envelope and scored the immutable pre-score artifacts. The original opening record, invalid marker, protocol
+lock and recovery lock remain part of the final evidence. This is a declared protocol deviation and is not represented
+as an untouched original confirmatory run.
+
+Final scientific boundary:
+
+- H3-P1 is not supported: at the frozen 20% review budget P1 produced 2,828 invalid automatic actions versus 2,722
+  for `weighted_linear_score`; relative reduction `-0.0389419544`, 95% CI for the absolute effect
+  `[-0.0271225273, 0.0198597763]`, Holm-adjusted p `0.9999990968`;
+- H3-P2 is not estimable because no development operating point met the frozen 0.05 risk ceiling;
+- H3-P3 and H3-P4 are not supported; H3-original remains not supported;
+- H5-A is supported only for the registered controlled/compositional fault library: F1 `1.0`, false certification
+  `0.0`, source localization `1.0`; H5-P-original remains not supported;
+- H6-A is supported only in the registered synthetic planted-rule eligible region. H6-B is not supported because the
+  required locked confidence interval and Holm test were not produced; H6-general remains not supported;
+- H7-A is supported with exact hash preservation for 17,404 canonical artifacts. H7-B is not supported;
+- H8 and H9 retain bounded technical measurements but are not confirmatory claims because their own artifacts mark
+  confirmatory claims as disallowed; H9 is operator-only and not an end-to-end explainer benchmark;
+- AI text review was not run. Domain-language, comprehension and expert-action claims remain disabled.
+
+The generated Chapter 4 package contains 17 sections, 31 machine-generated tables and 23 figures. The rendered output
+is 19 A4 pages with no placeholders; DOCX and PDF are generated from the claim registry and final statistics. The one
+external ZIP is built from the committed-tree source allowlist plus immutable evidence, and excludes raw data, label
+vaults, the decryption key, caches and the quarantined site. Public CI, merge and technical tag remain separate release
+operations and must not be reported as complete until verified.
+
 ## FXAI-FINAL-ONE-ZIP-PRACTICAL-PRELOCK
 
 - Date: 2026-07-21
