@@ -14,7 +14,7 @@
     "H5-S": "supported",
     "H6-general": "not_supported"
   },
-  "implementation_commit": "a49785ae81208911d74b4f1f9aa87e7382843de8",
+  "implementation_commit": "77e12c0e468fdff727fa1f89eda3b5e3e6aa19a4",
   "maximum_formative_iterations": 3,
   "phase": "formative_iteration_2_prelock",
   "post_lock_changes_forbidden": true,

@@ -1,0 +1,36 @@
+{
+  "blockers": [],
+  "datasets": [
+    {
+      "artifact_sha256": "6544f163b41baef6098658651dd74cfa0b6a154f3985e50f8c96fea5b1742cc9",
+      "dataset_id": "bank_marketing",
+      "objects": 32940
+    },
+    {
+      "artifact_sha256": "408c617bc883bf725c22355804653f77d840dea368ace2c11a9b36c47cc1a8cb",
+      "dataset_id": "default_credit_clients",
+      "objects": 23999
+    },
+    {
+      "artifact_sha256": "de8b79eaf75ecd12c42560820355fa9eb7be4d3cf2522b0503d529ea085ed1b2",
+      "dataset_id": "sms_spam",
+      "objects": 4126
+    },
+    {
+      "artifact_sha256": "c876c79988b2c54dca926000a1847c5fefa9ff166ed324d1f2451ab378e20291",
+      "dataset_id": "shoulder_implant_xray",
+      "objects": 476
+    },
+    {
+      "artifact_sha256": "6cf0a4bc5c748c046e6064917bbfde53506c117e4625866aa018cc4178b8a179",
+      "dataset_id": "uci_har_smartphones",
+      "objects": 8284
+    }
+  ],
+  "held_out_label_used_as_feature": false,
+  "oof_objects": 69825,
+  "oof_test_overlap": 0,
+  "sealed_test_loaded": false,
+  "sealed_test_objects": 17406,
+  "status": "pass"
+}

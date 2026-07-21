@@ -5,46 +5,48 @@
 - Date: 2026-07-21
 - Branch: `feat/final-confirmatory-and-chapter4`
 - Frozen base: `68e6edcfa867b48684b89d98dd74b5fe4794ef55`
-- Prelock implementation: `a49785ae81208911d74b4f1f9aa87e7382843de8`
-- Compact evidence commit: `efa2e90`
-- Public prelock workflow: `29824352350`, PASS on `6f866e6e0e7232c168155ff314ed282f08f1eee8`
+- Dataset sealing and OOF implementation: `77e12c0e468fdff727fa1f89eda3b5e3e6aa19a4`
+- Previous public prelock workflow: `29824352350`, PASS
 - Research phase: formative iteration 2 of at most 3
 - Confirmatory test: unopened
 - Stable technical release: blocked
 
-This milestone adds the sealed-confirmation contracts around the unchanged practical controller. It defines the
-five-part invalid-action decomposition, 9 predictive and 13 route OOF channels, independent dataset and split audits,
-non-refit/refit/conditional rule-ablation estimands, a 40-family route-fault taxonomy, and a one-way protocol lock.
-The primary endpoint, 20% review budget, unsafe-accept-sensitive cost profile, false-block ceiling and original
-positive/negative hypothesis statuses are frozen before any confirmatory labels can be opened.
+The five independent datasets are now downloaded, prepared and sealed locally. Public Git evidence contains source,
+license, preprocessing and split manifests plus hashed identities; raw/processed data, encrypted labels and OOF rows
+with development targets remain workspace-local. The practical controller and frozen hypotheses were not changed.
 
 Measured technical prelock evidence:
 
-- focused final/practical regression: `19 passed`; Ruff, compile and prelock verification: PASS;
-- candidate registry: two tabular, one image, one text and one time-series entry; all remain
-  `candidate_not_downloaded`, with zero sealed datasets;
+- focused final/practical regression: `20 passed`; Ruff and prelock verification: PASS;
+- independent registry: Bank Marketing, Default of Credit Card Clients, Shoulder Implant X-Ray, SMS Spam and UCI HAR;
+  all five are `sealed`, with zero formative identity overlap;
+- split evidence: 69,825 train/development OOF identities, 17,406 sealed-test identities and zero overlap;
+- OOF baseline artifacts: 69,825 rows, generated without loading sealed test; per-object held-out labels are not used
+  as feature channels;
 - route-fault library: 40 distinct templates and 14 double/triple compositions;
-- blind AI run-2 input: 240 cases and 720 variants; scores are not run and AI is not external validation;
+- blind AI run-2 input: `release_artifacts/fuzzyxai-ai-formative-run2-input-77e12c0e468f.zip`, 240 cases,
+  720 variants, 12 batches, rubric, schemas and 60 image assets; scores are not run and AI is not external validation;
+  SHA256 `2451660d981983ea18a5dc33940f0c022139517a1e0d4ad3891083c866ea1438`;
 - controlled formative shadow replay: 100,000 events across clean, shift, schema, calibration, update and recovery
   phases; it is explicitly not confirmatory or observed-production evidence;
 - deterministic prelock evidence archive:
-  `release_artifacts/fuzzyxai-final-confirmatory-prelock-a49785ae8120.zip`, SHA256
-  `c70979e1e2bce999b416fd16eee6b1fbdd31156a57febda98cb6cb0426f73de8`.
-- clean committed-tree source archive: `release_artifacts/fuzzyxai-source-release-6f866e6e0e72.zip`, 1,484 files,
-  SHA256 `8c1df84403cad4c7fe273f8f2c39489ead7e41c629d6abb0db3a2f69da409b08`; quarantined site absent.
+  `release_artifacts/fuzzyxai-final-confirmatory-prelock-77e12c0e468f.zip`, SHA256
+  `ed4a87b01355d35c8c11b9172a3724c4aee477d850e09de0de778138ffae8289`.
+- clean committed-tree source archive: `release_artifacts/fuzzyxai-source-release-77e12c0e468f.zip`, 1,528 files,
+  SHA256 `9e5a07f949b100418817c7ead4f464c46201897155e0692fc5147fff6a11d207`; quarantined site absent.
 
 Fail-closed boundary:
 
-- dataset sealing is blocked until five real independent packages, isolated OOF/test identities and encrypted label
-  vaults are supplied;
-- protocol lock is blocked until the dataset leakage audit and a real clean-session AI formative run 2 pass;
+- predictive P0 remains partial because real model-disagreement and shift channels are absent;
+- route/explanation P1 remains pending and contains no invented values;
+- protocol lock is blocked until P0/P1 are complete and a real clean-session AI formative run 2 passes;
 - H3-P1-P4, H5-A, H6-A/B, H7-A/B, H8 and H9 remain `blocked_pending_sealed_confirmation` in the new claim file;
 - H3-original, H5-P-original and H6-general remain `not_supported` and must not be relabeled;
 - final statistics, final Chapter 4 DOCX/PDF, final archive, merge and stable tag remain forbidden.
 
-Next step: supply and seal the five independent datasets without test-label access, run the 240-case blind AI
-formative review in a clean external session, import its immutable summary, and create the protocol lock once. Do not
-tune datasets, costs, thresholds, strata or primary metrics after lock.
+Next step: run the supplied 240-case blind ZIP in a temporary clean chat, import all 720 immutable raw reviews, then
+populate the missing real P0/P1 channels from train/development only. Create the protocol lock once after both gates
+pass. Do not open sealed-test labels or tune datasets, costs, thresholds, strata or primary metrics before that point.
 
 ## FXAI-FINAL-PRACTICAL-CLOSURE-FORMATIVE
 

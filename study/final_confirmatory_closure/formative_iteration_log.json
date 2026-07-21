@@ -10,8 +10,8 @@
       "results_sha256": "3df7861fcec5de8011f4a50de314660e8a80cf4eef382825235020e7f6c95bfe"
     },
     {
-      "commit": "a49785ae81208911d74b4f1f9aa87e7382843de8",
-      "config_sha256": "d50d4b53b2cbaa6bc3a5e57aaf9b3723fdc3feef181273dada0d17fc26e3d4a3",
+      "commit": "77e12c0e468fdff727fa1f89eda3b5e3e6aa19a4",
+      "config_sha256": "c795c6304a196f1452ed25831e38183e7ec8f9d457f4b043a461191c15b69c64",
       "iteration": 2,
       "reason": "predeclared confirmatory contracts, H6 estimand correction and run-2 card preparation",
       "result": "in_progress",

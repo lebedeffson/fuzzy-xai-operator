@@ -1,0 +1,122 @@
+{
+  "blockers": [],
+  "datasets": [
+    {
+      "dataset_id": "bank_marketing",
+      "sealed_test_visible_fields": [
+        "object_id_hash",
+        "age",
+        "job",
+        "marital",
+        "education",
+        "default",
+        "housing",
+        "loan",
+        "contact",
+        "month",
+        "day_of_week",
+        "duration",
+        "campaign",
+        "pdays",
+        "previous",
+        "poutcome",
+        "emp.var.rate",
+        "cons.price.idx",
+        "cons.conf.idx",
+        "euribor3m",
+        "nr.employed"
+      ],
+      "split_intersections": {
+        "development_test": 0,
+        "train_development": 0,
+        "train_test": 0
+      },
+      "vault_is_openssl_salted_ciphertext": true,
+      "vault_sha256": "fd90d8fdd058e53de7c6171756fe15ab25674fd041af4025f95ea9f5ccc2ccba"
+    },
+    {
+      "dataset_id": "default_credit_clients",
+      "sealed_test_visible_fields": [
+        "object_id_hash",
+        "ID",
+        "LIMIT_BAL",
+        "SEX",
+        "EDUCATION",
+        "MARRIAGE",
+        "AGE",
+        "PAY_0",
+        "PAY_2",
+        "PAY_3",
+        "PAY_4",
+        "PAY_5",
+        "PAY_6",
+        "BILL_AMT1",
+        "BILL_AMT2",
+        "BILL_AMT3",
+        "BILL_AMT4",
+        "BILL_AMT5",
+        "BILL_AMT6",
+        "PAY_AMT1",
+        "PAY_AMT2",
+        "PAY_AMT3",
+        "PAY_AMT4",
+        "PAY_AMT5",
+        "PAY_AMT6"
+      ],
+      "split_intersections": {
+        "development_test": 0,
+        "train_development": 0,
+        "train_test": 0
+      },
+      "vault_is_openssl_salted_ciphertext": true,
+      "vault_sha256": "275c8de57129f823c05ea0657ee234d8550ff0f071b9703b88680b467a8a1fd0"
+    },
+    {
+      "dataset_id": "shoulder_implant_xray",
+      "sealed_test_visible_fields": [
+        "object_id_hash",
+        "x"
+      ],
+      "split_intersections": {
+        "development_test": 0,
+        "train_development": 0,
+        "train_test": 0
+      },
+      "vault_is_openssl_salted_ciphertext": true,
+      "vault_sha256": "7a070cf804a9fa21abe2c27644d287667ad25387c2547bc7233de1fe0adca1a3"
+    },
+    {
+      "dataset_id": "sms_spam",
+      "sealed_test_visible_fields": [
+        "object_id_hash",
+        "text"
+      ],
+      "split_intersections": {
+        "development_test": 0,
+        "train_development": 0,
+        "train_test": 0
+      },
+      "vault_is_openssl_salted_ciphertext": true,
+      "vault_sha256": "837a406c0831dcbbf605f3a7e65fe8d5121e64350fe30b532e250e129f8b7cd1"
+    },
+    {
+      "dataset_id": "uci_har_smartphones",
+      "sealed_test_visible_fields": [
+        "object_id_hash",
+        "subject_id",
+        "x"
+      ],
+      "split_intersections": {
+        "development_test": 0,
+        "train_development": 0,
+        "train_test": 0
+      },
+      "vault_is_openssl_salted_ciphertext": true,
+      "vault_sha256": "616b1de914668b13fe7e28e738caf93f2ec77e953ff5d314ec89842d47f98980"
+    }
+  ],
+  "raw_sources_excluded_from_tuning_mount": true,
+  "scope": "dataset_and_split_isolation_before_protocol_lock",
+  "status": "pass",
+  "tuning_runner_can_read_test_labels": false
+}

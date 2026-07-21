@@ -1,0 +1,293 @@
+{
+  "P0_status": "partial_predictive_oof_missing_model_disagreement_and_shift",
+  "P1_status": "pending_real_route_explanation_features",
+  "datasets": [
+    {
+      "accuracy": 0.937037037037037,
+      "artifact_path": "study/final_confirmatory_closure/oof_features/bank_marketing.jsonl",
+      "artifact_sha256": "6544f163b41baef6098658651dd74cfa0b6a154f3985e50f8c96fea5b1742cc9",
+      "classes": [
+        "no",
+        "yes"
+      ],
+      "dataset_id": "bank_marketing",
+      "feature_leakage_controls": {
+        "calibration_residual": "fit_fold_reliability_map_only",
+        "held_out_label_used_as_feature": false,
+        "rare_group_indicator": "predicted_class_prevalence_in_fit_fold"
+      },
+      "folds": [
+        {
+          "fit": 26352,
+          "fold": 0,
+          "held_out": 6588
+        },
+        {
+          "fit": 26352,
+          "fold": 1,
+          "held_out": 6588
+        },
+        {
+          "fit": 26352,
+          "fold": 2,
+          "held_out": 6588
+        },
+        {
+          "fit": 26352,
+          "fold": 3,
+          "held_out": 6588
+        },
+        {
+          "fit": 26352,
+          "fold": 4,
+          "held_out": 6588
+        }
+      ],
+      "log_loss": 0.18140296598725975,
+      "missing_predictive_channels": [
+        "model_disagreement",
+        "shift_score"
+      ],
+      "model_family": "calibrated_logistic_baseline",
+      "objects": 32940,
+      "route_features_status": "pending_real_explanation_artifacts"
+    },
+    {
+      "accuracy": 0.8099087461977582,
+      "artifact_path": "study/final_confirmatory_closure/oof_features/default_credit_clients.jsonl",
+      "artifact_sha256": "408c617bc883bf725c22355804653f77d840dea368ace2c11a9b36c47cc1a8cb",
+      "classes": [
+        "0",
+        "1"
+      ],
+      "dataset_id": "default_credit_clients",
+      "feature_leakage_controls": {
+        "calibration_residual": "fit_fold_reliability_map_only",
+        "held_out_label_used_as_feature": false,
+        "rare_group_indicator": "predicted_class_prevalence_in_fit_fold"
+      },
+      "folds": [
+        {
+          "fit": 19199,
+          "fold": 0,
+          "held_out": 4800
+        },
+        {
+          "fit": 19199,
+          "fold": 1,
+          "held_out": 4800
+        },
+        {
+          "fit": 19199,
+          "fold": 2,
+          "held_out": 4800
+        },
+        {
+          "fit": 19199,
+          "fold": 3,
+          "held_out": 4800
+        },
+        {
+          "fit": 19200,
+          "fold": 4,
+          "held_out": 4799
+        }
+      ],
+      "log_loss": 0.4643752286664765,
+      "missing_predictive_channels": [
+        "model_disagreement",
+        "shift_score"
+      ],
+      "model_family": "calibrated_logistic_baseline",
+      "objects": 23999,
+      "route_features_status": "pending_real_explanation_artifacts"
+    },
+    {
+      "accuracy": 0.9818225884634028,
+      "artifact_path": "study/final_confirmatory_closure/oof_features/sms_spam.jsonl",
+      "artifact_sha256": "de8b79eaf75ecd12c42560820355fa9eb7be4d3cf2522b0503d529ea085ed1b2",
+      "classes": [
+        "ham",
+        "spam"
+      ],
+      "dataset_id": "sms_spam",
+      "feature_leakage_controls": {
+        "calibration_residual": "fit_fold_reliability_map_only",
+        "held_out_label_used_as_feature": false,
+        "rare_group_indicator": "predicted_class_prevalence_in_fit_fold"
+      },
+      "folds": [
+        {
+          "fit": 3300,
+          "fold": 0,
+          "held_out": 826
+        },
+        {
+          "fit": 3301,
+          "fold": 1,
+          "held_out": 825
+        },
+        {
+          "fit": 3301,
+          "fold": 2,
+          "held_out": 825
+        },
+        {
+          "fit": 3301,
+          "fold": 3,
+          "held_out": 825
+        },
+        {
+          "fit": 3301,
+          "fold": 4,
+          "held_out": 825
+        }
+      ],
+      "log_loss": 0.05947287629185274,
+      "missing_predictive_channels": [
+        "model_disagreement",
+        "shift_score"
+      ],
+      "model_family": "calibrated_logistic_baseline",
+      "objects": 4126,
+      "route_features_status": "pending_real_explanation_artifacts"
+    },
+    {
+      "accuracy": 0.49369747899159666,
+      "artifact_path": "study/final_confirmatory_closure/oof_features/shoulder_implant_xray.jsonl",
+      "artifact_sha256": "c876c79988b2c54dca926000a1847c5fefa9ff166ed324d1f2451ab378e20291",
+      "classes": [
+        "Cofield",
+        "Depuy",
+        "Tornier",
+        "Zimmer"
+      ],
+      "dataset_id": "shoulder_implant_xray",
+      "feature_leakage_controls": {
+        "calibration_residual": "fit_fold_reliability_map_only",
+        "held_out_label_used_as_feature": false,
+        "rare_group_indicator": "predicted_class_prevalence_in_fit_fold"
+      },
+      "folds": [
+        {
+          "fit": 380,
+          "fold": 0,
+          "held_out": 96
+        },
+        {
+          "fit": 381,
+          "fold": 1,
+          "held_out": 95
+        },
+        {
+          "fit": 381,
+          "fold": 2,
+          "held_out": 95
+        },
+        {
+          "fit": 381,
+          "fold": 3,
+          "held_out": 95
+        },
+        {
+          "fit": 381,
+          "fold": 4,
+          "held_out": 95
+        }
+      ],
+      "log_loss": 1.193915004416036,
+      "missing_predictive_channels": [
+        "model_disagreement",
+        "shift_score"
+      ],
+      "model_family": "calibrated_logistic_baseline",
+      "objects": 476,
+      "route_features_status": "pending_real_explanation_artifacts"
+    },
+    {
+      "accuracy": 0.7944229840656688,
+      "artifact_path": "study/final_confirmatory_closure/oof_features/uci_har_smartphones.jsonl",
+      "artifact_sha256": "6cf0a4bc5c748c046e6064917bbfde53506c117e4625866aa018cc4178b8a179",
+      "classes": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6"
+      ],
+      "dataset_id": "uci_har_smartphones",
+      "feature_leakage_controls": {
+        "calibration_residual": "fit_fold_reliability_map_only",
+        "held_out_label_used_as_feature": false,
+        "rare_group_indicator": "predicted_class_prevalence_in_fit_fold"
+      },
+      "folds": [
+        {
+          "fit": 6590,
+          "fold": 0,
+          "held_out": 1694
+        },
+        {
+          "fit": 6557,
+          "fold": 1,
+          "held_out": 1727
+        },
+        {
+          "fit": 6872,
+          "fold": 2,
+          "held_out": 1412
+        },
+        {
+          "fit": 6546,
+          "fold": 3,
+          "held_out": 1738
+        },
+        {
+          "fit": 6571,
+          "fold": 4,
+          "held_out": 1713
+        }
+      ],
+      "log_loss": 0.6110473236111333,
+      "missing_predictive_channels": [
+        "model_disagreement",
+        "shift_score"
+      ],
+      "model_family": "calibrated_logistic_baseline",
+      "objects": 8284,
+      "route_features_status": "pending_real_explanation_artifacts"
+    }
+  ],
+  "feature_source": "out_of_fold_train_development_only",
+  "lock_status": "blocked_route_features_pending",
+  "predictive_channels": [
+    "calibrated_confidence",
+    "prediction_margin",
+    "normalized_entropy",
+    "calibration_residual",
+    "boundary_distance",
+    "model_disagreement",
+    "shift_score",
+    "rare_group_indicator",
+    "missingness_profile"
+  ],
+  "route_channels": [
+    "provenance_completeness",
+    "typed_route_fault",
+    "explainer_disagreement",
+    "seed_stability",
+    "bootstrap_stability",
+    "perturbation_stability",
+    "representation_class",
+    "reduction_loss",
+    "rule_redundancy",
+    "conflict_severity",
+    "missing_evidence_channels",
+    "reference_set_deviation",
+    "canonical_hash_status"
+  ],
+  "schema_version": "1.0",
+  "sealed_test_loaded": false,
+  "source_commit": "77e12c0e468fdff727fa1f89eda3b5e3e6aa19a4"
+}

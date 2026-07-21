@@ -1,0 +1,11 @@
+{
+  "cases": 240,
+  "memory_used": false,
+  "prior_context": false,
+  "project_context": false,
+  "review_status": "fully_blind",
+  "reviewer_model_label": "FILL_AFTER_REVIEW",
+  "run": "formative_run_2",
+  "session_type": "temporary_clean_chat",
+  "variants": 720
+}

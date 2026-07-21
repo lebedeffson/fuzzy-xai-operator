@@ -3,58 +3,58 @@
   "datasets": [
     {
       "dataset_id": "bank_marketing",
-      "download_sha256": null,
+      "download_sha256": "e0bf5f5de5b846e2f18e9d90606637267d46dfa260e0f17bb12e605db5efbeb4",
       "formative_id_overlap": false,
-      "label_vault_sha256": null,
+      "label_vault_sha256": "fd90d8fdd058e53de7c6171756fe15ab25674fd041af4025f95ea9f5ccc2ccba",
       "license": "CC BY 4.0",
       "modality": "tabular",
-      "preprocessing_sha256": null,
+      "preprocessing_sha256": "22b763003ee6e56e20178954e2f4aba32c79b89ad3c069fedf9e27800bd771a7",
       "source": "UCI Bank Marketing",
-      "status": "candidate_not_downloaded"
+      "status": "sealed"
     },
     {
-      "dataset_id": "statlog_german_credit",
-      "download_sha256": null,
+      "dataset_id": "default_credit_clients",
+      "download_sha256": "56c885f84457f6680f8438f02bfcdac9579323d8a94465ee5f26e32baa727602",
       "formative_id_overlap": false,
-      "label_vault_sha256": null,
+      "label_vault_sha256": "275c8de57129f823c05ea0657ee234d8550ff0f071b9703b88680b467a8a1fd0",
       "license": "CC BY 4.0",
       "modality": "tabular",
-      "preprocessing_sha256": null,
-      "source": "UCI Statlog German Credit",
-      "status": "candidate_not_downloaded"
+      "preprocessing_sha256": "4e306bb4ed23308a8343738abccfd18e9c40a741ea9600583173e2fdcaff2beb",
+      "source": "UCI Default of Credit Card Clients",
+      "status": "sealed"
     },
     {
-      "dataset_id": "cifar10",
-      "download_sha256": null,
+      "dataset_id": "shoulder_implant_xray",
+      "download_sha256": "1286d0b92ed90a9de978a28770fb546756d067b0a504f33e811c72486c712a45",
       "formative_id_overlap": false,
-      "label_vault_sha256": null,
-      "license": "dataset-specific research terms",
+      "label_vault_sha256": "7a070cf804a9fa21abe2c27644d287667ad25387c2547bc7233de1fe0adca1a3",
+      "license": "CC BY 4.0",
       "modality": "image",
-      "preprocessing_sha256": null,
-      "source": "CIFAR-10",
-      "status": "candidate_not_downloaded"
+      "preprocessing_sha256": "0096ef1164d47101385fcf2db6c7251ea3b041127bf19474f175da112e312718",
+      "source": "UCI Shoulder Implant X-Ray",
+      "status": "sealed"
     },
     {
-      "dataset_id": "ag_news",
-      "download_sha256": null,
+      "dataset_id": "sms_spam",
+      "download_sha256": "1587ea43e58e82b14ff1f5425c88e17f8496bfcdb67a583dbff9eefaf9963ce3",
       "formative_id_overlap": false,
-      "label_vault_sha256": null,
-      "license": "dataset-specific research terms",
+      "label_vault_sha256": "837a406c0831dcbbf605f3a7e65fe8d5121e64350fe30b532e250e129f8b7cd1",
+      "license": "CC BY 4.0",
       "modality": "text",
-      "preprocessing_sha256": null,
-      "source": "AG News",
-      "status": "candidate_not_downloaded"
+      "preprocessing_sha256": "57a640afadc843d6c41bb6418e07f5358e86371ce52992407c5ab45a83667014",
+      "source": "UCI SMS Spam Collection",
+      "status": "sealed"
     },
     {
-      "dataset_id": "ford_a",
-      "download_sha256": null,
+      "dataset_id": "uci_har_smartphones",
+      "download_sha256": "c00b803081a5c797cd5e4b83700a9810b38d53d9d84e01917e090e1fdbc81031",
       "formative_id_overlap": false,
-      "label_vault_sha256": null,
-      "license": "UCR archive terms",
+      "label_vault_sha256": "616b1de914668b13fe7e28e738caf93f2ec77e953ff5d314ec89842d47f98980",
+      "license": "CC BY 4.0",
       "modality": "timeseries",
-      "preprocessing_sha256": null,
-      "source": "UCR FordA",
-      "status": "candidate_not_downloaded"
+      "preprocessing_sha256": "37ec9812276940301cca76163e17dacaeb1db7ea6fcd9a33bf5b2a5f99fce6d5",
+      "source": "UCI HAR Smartphones",
+      "status": "sealed"
     }
   ],
   "known_formative_dataset_ids": [
@@ -1323,5 +1323,5 @@
     "ffd9c5c9b8246f62b756272ad3946a9073d52618d3e20296e8f10ee5919fc572"
   ],
   "schema_version": "1.0",
-  "status": "blocked_pending_download_and_sealing"
+  "status": "sealed_pass"
 }

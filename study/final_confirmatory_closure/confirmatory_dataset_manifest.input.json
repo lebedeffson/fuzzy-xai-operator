@@ -1,0 +1,82 @@
+{
+  "datasets": [
+    {
+      "dataset_id": "bank_marketing",
+      "development_ids_sha256": "c4c0ae3261c8f25e4759ec7b25cb32226f89c29389989d2908273028ee6045b0",
+      "download_sha256": "e0bf5f5de5b846e2f18e9d90606637267d46dfa260e0f17bb12e605db5efbeb4",
+      "grouping_key": null,
+      "label_vault_path": "data/confirmatory/bank_marketing/manifests/confirmatory_label_vault.enc",
+      "label_vault_sha256": "fd90d8fdd058e53de7c6171756fe15ab25674fd041af4025f95ea9f5ccc2ccba",
+      "license": "CC BY 4.0",
+      "modality": "tabular",
+      "preprocessing_sha256": "22b763003ee6e56e20178954e2f4aba32c79b89ad3c069fedf9e27800bd771a7",
+      "source": "https://archive.ics.uci.edu/static/public/222/bank+marketing.zip",
+      "test_ids_sha256": "0dde65458e0e38bc55c8576b57f8f0d07a5e801e82a9a39da9bcc553494776e2",
+      "train_ids_sha256": "0f717116dcc638caee3e1bb15a24f80025ba065124e26d4a580004932f8bdac5",
+      "used_in_formative_tuning": false
+    },
+    {
+      "dataset_id": "default_credit_clients",
+      "development_ids_sha256": "b761bf769ed5c79d26ea2b67ceb141dd1d7d470c119fb5d26cafb881213cb62b",
+      "download_sha256": "56c885f84457f6680f8438f02bfcdac9579323d8a94465ee5f26e32baa727602",
+      "grouping_key": "ID",
+      "label_vault_path": "data/confirmatory/default_credit_clients/manifests/confirmatory_label_vault.enc",
+      "label_vault_sha256": "275c8de57129f823c05ea0657ee234d8550ff0f071b9703b88680b467a8a1fd0",
+      "license": "CC BY 4.0",
+      "modality": "tabular",
+      "preprocessing_sha256": "4e306bb4ed23308a8343738abccfd18e9c40a741ea9600583173e2fdcaff2beb",
+      "source": "https://archive.ics.uci.edu/static/public/350/default+of+credit+card+clients.zip",
+      "test_ids_sha256": "1aab7e5f9f20397546792c5e30f30afa0c6d5c33d2ba8c1727d859dc6ac7ae1c",
+      "train_ids_sha256": "44d6208e7623c981d7f493577b1dac24b1e60677d50362f3b959de03455fc7eb",
+      "used_in_formative_tuning": false
+    },
+    {
+      "dataset_id": "shoulder_implant_xray",
+      "development_ids_sha256": "c2ae3a58a65688030bb0ba5cac8fb9b8acb704d0e106c5990208ba7b71fdd4ca",
+      "download_sha256": "1286d0b92ed90a9de978a28770fb546756d067b0a504f33e811c72486c712a45",
+      "grouping_key": null,
+      "label_vault_path": "data/confirmatory/shoulder_implant_xray/manifests/confirmatory_label_vault.enc",
+      "label_vault_sha256": "7a070cf804a9fa21abe2c27644d287667ad25387c2547bc7233de1fe0adca1a3",
+      "license": "CC BY 4.0",
+      "modality": "image",
+      "preprocessing_sha256": "0096ef1164d47101385fcf2db6c7251ea3b041127bf19474f175da112e312718",
+      "source": "https://archive.ics.uci.edu/static/public/517/shoulder+implant+x+ray+manufacturer+classification.zip",
+      "test_ids_sha256": "eabe61bedc0581086adb85ac6fa5bb96c8ff3d421feec25c2c23b339c55ecdf6",
+      "train_ids_sha256": "c01a7601b944a5d069a2d55fa092c96aa558efdce7743903384eb6620bbd9294",
+      "used_in_formative_tuning": false
+    },
+    {
+      "dataset_id": "sms_spam",
+      "development_ids_sha256": "ad34fc04bab6405be3a990e3252d6909b10f16f7507eda331c2be677da56428c",
+      "download_sha256": "1587ea43e58e82b14ff1f5425c88e17f8496bfcdb67a583dbff9eefaf9963ce3",
+      "grouping_key": null,
+      "label_vault_path": "data/confirmatory/sms_spam/manifests/confirmatory_label_vault.enc",
+      "label_vault_sha256": "837a406c0831dcbbf605f3a7e65fe8d5121e64350fe30b532e250e129f8b7cd1",
+      "license": "CC BY 4.0",
+      "modality": "text",
+      "preprocessing_sha256": "57a640afadc843d6c41bb6418e07f5358e86371ce52992407c5ab45a83667014",
+      "source": "https://archive.ics.uci.edu/static/public/228/sms+spam+collection.zip",
+      "test_ids_sha256": "b9439506404afe50cbd3d08a6fae81df306561e0aabc555a35a8dad5eefe230f",
+      "train_ids_sha256": "f73642e662c63dabb7376b4fa5057bb63c55fab5fd54cbe4c7b19c6e322993e8",
+      "used_in_formative_tuning": false
+    },
+    {
+      "dataset_id": "uci_har_smartphones",
+      "development_ids_sha256": "9d8d5cdec78369bb3b27919b427a7073ca9c42096ff28cb2df15014b07e78f5f",
+      "download_sha256": "c00b803081a5c797cd5e4b83700a9810b38d53d9d84e01917e090e1fdbc81031",
+      "grouping_key": "subject_id",
+      "label_vault_path": "data/confirmatory/uci_har_smartphones/manifests/confirmatory_label_vault.enc",
+      "label_vault_sha256": "616b1de914668b13fe7e28e738caf93f2ec77e953ff5d314ec89842d47f98980",
+      "license": "CC BY 4.0",
+      "modality": "timeseries",
+      "preprocessing_sha256": "37ec9812276940301cca76163e17dacaeb1db7ea6fcd9a33bf5b2a5f99fce6d5",
+      "source": "https://archive.ics.uci.edu/static/public/240/human+activity+recognition+using+smartphones.zip",
+      "test_ids_sha256": "9a01f566defc4e0da562c6630e5e2026f4382e108b8c725e35d3330a96703804",
+      "train_ids_sha256": "5f182a0d6c29905a124da9f34f71f0ff895b7033e1a3918e7f9497cd0fa748e8",
+      "used_in_formative_tuning": false
+    }
+  ],
+  "license_policy": "all datasets CC BY 4.0",
+  "schema_version": "1.0",
+  "selection_commit": "084298955371b65d1386725d6985e98546b4af27"
+}

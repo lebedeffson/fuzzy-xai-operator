@@ -4,29 +4,32 @@
 
 - Branch: `feat/final-confirmatory-and-chapter4`
 - Frozen base: `68e6edcfa867b48684b89d98dd74b5fe4794ef55`
-- Implementation: `a49785ae81208911d74b4f1f9aa87e7382843de8`
-- Evidence commit: `efa2e90`
+- Dataset/OOF implementation: `77e12c0e468fdff727fa1f89eda3b5e3e6aa19a4`
 - Technical prelock check: `PASS_LOCAL`
 - Public workflow: `29824352350`, Python 3.11/3.12 `PASS`
-- Confirmatory datasets sealed: `0/5`
+- Confirmatory datasets sealed: `5/5`
+- OOF identities: `69825`
+- Sealed-test identities: `17406`, overlap `0`
+- P0 features: `PARTIAL`, disagreement and shift pending
+- P1 route/explanation features: `PENDING_REAL_EVIDENCE`
 - Confirmatory test: `UNOPENED`
 - AI formative run 2: `INPUT_READY_SCORES_NOT_RUN`
 - Final Chapter 4: `BLOCKED`
 - Stable release: `BLOCKED`
 
-The branch adds strict dataset, OOF, label-vault, claim-status and one-way protocol-lock gates without changing the
-practical controller or predecessor results. A controlled 100,000-event shadow replay, 40 route-fault templates and a
-240-case/720-variant blind reviewer input are technical formative artifacts only. They do not establish independent
-confirmation, production incidents, human understanding or expert approval.
+Five independent UCI datasets are now prepared and sealed locally with workspace-only encrypted label vaults. The
+tracked tree contains only licenses, manifests and hashed split identities. The 69,825-row OOF baseline did not load
+sealed test and has zero identity overlap, but the confirmatory lock remains closed because P0/P1 evidence is
+incomplete and the clean-session AI review has not been run.
 
 The shareable technical artifact is
-`release_artifacts/fuzzyxai-final-confirmatory-prelock-a49785ae8120.zip` with SHA256
-`c70979e1e2bce999b416fd16eee6b1fbdd31156a57febda98cb6cb0426f73de8`. Its `BOUNDARY.json` explicitly disables
+`release_artifacts/fuzzyxai-final-confirmatory-prelock-77e12c0e468f.zip` with SHA256
+`ed4a87b01355d35c8c11b9172a3724c4aee477d850e09de0de778138ffae8289`. Its `BOUNDARY.json` explicitly disables
 confirmatory and stable-release claims. `make final-seal-datasets`, `make final-controller-freeze`, final Chapter 4 and
 `make final-release-archive` remain fail-closed until real external inputs pass.
 
-The clean committed-tree source release is `release_artifacts/fuzzyxai-source-release-6f866e6e0e72.zip` with 1,484
-files and SHA256 `8c1df84403cad4c7fe273f8f2c39489ead7e41c629d6abb0db3a2f69da409b08`; the quarantined site is absent.
+The clean committed-tree source release is `release_artifacts/fuzzyxai-source-release-77e12c0e468f.zip` with 1,528
+files and SHA256 `9e5a07f949b100418817c7ead4f464c46201897155e0692fc5147fff6a11d207`; the quarantined site is absent.
 
 ## Strong Confirmatory Formative Gate
 

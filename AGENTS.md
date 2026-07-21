@@ -6,3 +6,4 @@
 - Every defended operator must remain mapped in `framework/fuzzyxai/operators_manifest.yaml` to a callable, schemas, tests, and visualization policy.
 - Read `PROJECT_MEMORY.md` for the current release boundary and validated claims.
 - Build shareable source archives with `python scripts/build_framework_release.py`; do not zip the dirty worktree.
+- Confirmatory controller inputs must be observable before scoring; held-out labels may be targets but never feature channels.
