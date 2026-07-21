@@ -68,15 +68,38 @@ def prepare() -> dict[str, object]:
     if len(original_train) != cfg["dataset"]["source_train_size"] or len(original_test) != cfg["dataset"]["source_test_size"]:
         raise RuntimeError("upstream AG News sizes differ from the frozen protocol")
 
-    all_train_indices = original_train.index.to_numpy()
+    # The pinned upstream revision contains repeated training texts and ten
+    # exact train/test duplicates. Keep the official test intact and exclude
+    # all conflicting/repeated training rows before any model run.
+    train_normalized = original_train["text"].astype(str).map(normalize_text)
+    test_normalized = original_test["text"].astype(str).map(normalize_text)
+    test_values = set(test_normalized)
+    shared_with_test = train_normalized.isin(test_values)
+    duplicate_training = train_normalized.duplicated(keep="first")
+    excluded = original_train.loc[shared_with_test | duplicate_training].copy()
+    filtered_train = original_train.loc[~(shared_with_test | duplicate_training)].copy()
+    deviation = {
+        "status": "registered_before_model_execution",
+        "reason": "pinned_upstream_revision_contains_exact_normalized_text_duplicates",
+        "original_protocol_train_size": cfg["split"]["train"],
+        "actual_train_pool_after_exclusion": len(filtered_train),
+        "excluded_training_rows": len(excluded),
+        "excluded_train_test_matches": int(shared_with_test.sum()),
+        "excluded_repeated_training_rows": int(duplicate_training.sum()),
+        "official_test_preserved": True,
+        "thresholds_models_and_metrics_changed": False,
+    }
+    write_json(ARTIFACTS / "manifests" / "protocol_deviation_duplicate_rows.json", deviation)
+
+    all_train_indices = filtered_train.index.to_numpy()
     train_indices, validation_indices = train_test_split(
         all_train_indices,
         test_size=cfg["split"]["validation"],
         random_state=frozen["statistics"]["seeds"][0],
-        stratify=original_train["label"].to_numpy(),
+        stratify=filtered_train["label"].to_numpy(),
     )
-    train_rows = _records(original_train.loc[sorted(train_indices)], "train")
-    validation_rows = _records(original_train.loc[sorted(validation_indices)], "validation")
+    train_rows = _records(filtered_train.loc[sorted(train_indices)], "train")
+    validation_rows = _records(filtered_train.loc[sorted(validation_indices)], "validation")
     test_rows_with_labels = _records(original_test, "sealed_test")
     test_inputs = [{key: value for key, value in row.items() if key != "label"} for row in test_rows_with_labels]
     test_labels = {str(row["object_id"]): int(row["label"]) for row in test_rows_with_labels}
@@ -135,6 +158,7 @@ def prepare() -> dict[str, object]:
             "release_redistribution": cfg["dataset"]["redistribution"],
             "source_url": cfg["dataset"]["source"],
         },
+        "protocol_deviation": deviation,
     }
     write_json(ARTIFACTS / "manifests" / "dataset_manifest.json", manifest)
     return {"counts": audit["counts"], "audit_passed": audit["passed"], "manifest": str(ARTIFACTS / "manifests" / "dataset_manifest.json")}
