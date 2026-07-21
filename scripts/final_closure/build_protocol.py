@@ -5,6 +5,8 @@ from __future__ import annotations
 
 import subprocess
 
+import pandas as pd
+
 from common import BASE, EVIDENCE, ROOT, STUDY, sha256, write
 
 
@@ -18,6 +20,7 @@ def main() -> None:
 
         measured = json.loads(formative_summary.read_text(encoding="utf-8"))
         primary_comparator = measured.get("best_matched_budget_baseline", {}).get("policy", primary_comparator)
+    fixed_risk_budgets = _fixed_risk_budgets()
     protocol = {
         "schema_version": "2.0",
         "identifier": "FXAI-FINAL-ONE-ZIP-PRACTICAL-CLOSURE",
@@ -30,6 +33,8 @@ def main() -> None:
         "primary_cost_profile": "unsafe_accept_sensitive",
         "primary_comparator_policy": primary_comparator,
         "false_block_ceiling": 0.01,
+        "primary_operational_risk_ceiling": 0.05,
+        "fixed_risk_operating_budgets_from_development": fixed_risk_budgets,
         "hard_fault_recall_minimum": 0.95,
         "maximum_formative_iterations": 3,
         "current_formative_iteration": 2,
@@ -124,6 +129,19 @@ def main() -> None:
 
 def _hash_if_present(path):
     return sha256(path) if path.is_file() else None
+
+
+def _fixed_risk_budgets() -> dict[str, float | None]:
+    path = STUDY / "formative_real/policy_results.parquet"
+    if not path.is_file():
+        return {}
+    frame = pd.read_parquet(path)
+    frame = frame[frame["dataset_id"].isna()] if "dataset_id" in frame else frame
+    result: dict[str, float | None] = {}
+    for policy, rows in frame.groupby("policy"):
+        eligible = rows[rows["operational_risk"] <= 0.05]
+        result[str(policy)] = float(eligible.sort_values("automatic_coverage").iloc[-1]["review_budget"]) if len(eligible) else None
+    return result
 
 
 if __name__ == "__main__":
