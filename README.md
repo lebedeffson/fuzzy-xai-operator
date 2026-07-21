@@ -65,7 +65,8 @@ make reproduce-chapter4-v13 CHAPTER4_V13_PYTHON=/path/to/python3.12
 
 The full command downloads data and model weights from their pinned upstream
 revisions. AG News is not redistributed because its upstream dataset card reports
-an unknown license. Raw data, sealed labels and model caches stay under ignored
+an unknown license. The pinned model card also does not state a license for the
+weights; see `THIRD_PARTY_NOTICES.md`. Raw data, sealed labels and model caches stay under ignored
 `artifacts/chapter4_v13/` subdirectories. Every released numeric table cell is
 mapped to raw evidence and SHA256 in `artifacts/chapter4_v13/evidence_map.json`.
 

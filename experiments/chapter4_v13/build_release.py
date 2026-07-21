@@ -67,6 +67,7 @@ def build() -> dict[str, object]:
             "config/chapter4_v13_case.yaml",
             "config/chapter4_v13_requirements.txt",
             "LICENSE",
+            "THIRD_PARTY_NOTICES.md",
             "README.md",
         ):
             files.append((ROOT / relative, f"source/{relative}"))
