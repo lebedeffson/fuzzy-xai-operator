@@ -37,7 +37,13 @@ jobs:
       - name: Framework release gate
         run: make framework-release-check
       - name: Full regression suite
-        run: python -m pytest -q
+        shell: bash
+        run: |
+          set -euo pipefail
+          while IFS= read -r test_file; do
+            echo "RUN: ${test_file}"
+            python -m pytest -q "${test_file}"
+          done < <(find tests -type f -name 'test*.py' | LC_ALL=C sort)
       - name: Public contract quality gates
         run: |
           ruff check framework/fuzzyxai/fuzzyxai/adapters/model.py framework/fuzzyxai/fuzzyxai/evidence framework/fuzzyxai/fuzzyxai/visualization tests/test_explanation_experience.py
