@@ -3,7 +3,9 @@
 ## FXAI-FINAL-ONE-ZIP-PRACTICAL-CLOSURE
 
 - Date: 2026-07-21
-- Branch: `feat/one-zip-final-practical-closure`
+- Release target: `v1.3.0` technical stable
+- Branch: `feat/one-zip-final-practical-closure`, merged to `main`
+- Green pre-release main CI: readiness `29846598207`; universal integration `29846598714`
 - Original protocol source: `3a7ad13ae33f2d84f0384c34c0a417c0f1a34def`
 - Declared scoring-recovery source: `13a29170cd96cc7e94f86a4fa2c129c7e75f295e`
 - Protocol identifier: `FXAI-FINAL-ONE-ZIP-PRACTICAL-CLOSURE`
@@ -38,8 +40,9 @@ Final scientific boundary:
 The generated Chapter 4 package contains 17 sections, 31 machine-generated tables and 23 figures. The rendered output
 is 19 A4 pages with no placeholders; DOCX and PDF are generated from the claim registry and final statistics. The one
 external ZIP is built from the committed-tree source allowlist plus immutable evidence, and excludes raw data, label
-vaults, the decryption key, caches and the quarantined site. Public CI, merge and technical tag remain separate release
-operations and must not be reported as complete until verified.
+vaults, the decryption key, caches and the quarantined site. The stable tag is created only after the final version
+commit passes the same public readiness and universal-integration workflows; this release operation does not upgrade
+unsupported hypotheses or absent human evidence.
 
 ## FXAI-FINAL-ONE-ZIP-PRACTICAL-PRELOCK
 
