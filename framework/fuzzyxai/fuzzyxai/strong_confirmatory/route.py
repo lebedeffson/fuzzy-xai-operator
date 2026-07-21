@@ -19,6 +19,7 @@ FAULT_TYPES = (
     "incompatible_dictionary",
     "excessive_reduction_loss",
     "corrupted_audit_hash",
+    "forbidden_rule_conflict",
 )
 
 

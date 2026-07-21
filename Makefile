@@ -699,7 +699,7 @@ ai-final-check: ai-final-archive
 
 reproduce-ai-review-final: ai-final-check
 
-.PHONY: strong-confirmatory-protocol strong-confirmatory-smoke strong-confirmatory-formative strong-confirmatory-formative-check strong-confirmatory-lock strong-confirmatory-bundle chapter4-formative-shell chapter4-final strong-confirmatory-check
+.PHONY: strong-confirmatory-protocol strong-confirmatory-smoke strong-confirmatory-formative strong-confirmatory-formative-check strong-confirmatory-lock strong-confirmatory-bundle chapter4-formative-shell chapter4-strong-confirmatory-final strong-confirmatory-check
 strong-confirmatory-protocol:
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/strong_confirmatory/build_protocol.py
 
@@ -728,8 +728,64 @@ chapter4-formative-shell: strong-confirmatory-formative-check
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/chapter4/build_figures.py
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/chapter4/build_text.py
 
-chapter4-final:
+chapter4-strong-confirmatory-final:
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/chapter4/build_final.py
 
 strong-confirmatory-check: strong-confirmatory-protocol
 	OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m pytest -q tests/strong_confirmatory
+
+.PHONY: practical-controller-protocol practical-controller-formative practical-controller-formative-check practical-controller-freeze practical-controller-confirmatory practical-controller-baselines practical-controller-ablation route-validity-confirmatory rule-detectability-envelope rule-matched-control-confirmatory posthoc-benchmark-final glassbox-benchmark-final h7-canonical-fidelity h7-presentation-tradeoff grid-confirmatory scale-2m scale-5m ai-formative-run2-import final-statistics final-claim-registry chapter4-practical-formative chapter4-final practical-release-check practical-release-archive reproduce-final-practical-closure
+
+practical-controller-protocol:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/final_practical_closure/build_protocol.py
+
+practical-controller-formative: practical-controller-protocol
+	OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 PYTHONPATH=$(PYTHONPATH) nice -n 18 $(PYTHON) scripts/final_practical_closure/run_formative.py --profile full
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/final_practical_closure/verify_formative.py
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/final_practical_closure/build_artifacts.py
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/final_practical_closure/build_formative_report.py
+
+practical-controller-formative-check:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/final_practical_closure/verify_formative.py
+
+practical-controller-freeze: practical-controller-formative-check
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/final_practical_closure/lock_protocol.py
+
+practical-controller-confirmatory: practical-controller-freeze
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/final_practical_closure/run_confirmatory.py
+
+practical-controller-baselines practical-controller-ablation rule-detectability-envelope posthoc-benchmark-final glassbox-benchmark-final h7-canonical-fidelity h7-presentation-tradeoff:
+	@$(MAKE) practical-controller-formative
+
+route-validity-confirmatory rule-matched-control-confirmatory grid-confirmatory scale-2m scale-5m:
+	@$(MAKE) practical-controller-confirmatory
+
+ai-formative-run2-import:
+	@test -n "$(AI_RUN2_INPUT)" || (echo "BLOCKED: set AI_RUN2_INPUT to a real blinded run-2 JSON"; exit 2)
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/final_practical_closure/import_ai_formative_run2.py "$(AI_RUN2_INPUT)"
+
+final-statistics: practical-controller-confirmatory
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/final_practical_closure/build_claim_registry.py
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/final_practical_closure/build_confirmatory_outputs.py
+
+final-claim-registry:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/final_practical_closure/build_claim_registry.py
+
+chapter4-practical-formative: practical-controller-formative-check
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/final_practical_closure/build_artifacts.py
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/final_practical_closure/build_chapter4_formative.py
+
+chapter4-final: final-claim-registry
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/final_practical_closure/build_confirmatory_outputs.py
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/final_practical_closure/build_chapter4_final.py
+
+practical-release-check: practical-controller-formative-check chapter4-practical-formative final-claim-registry
+	OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 PYTHONPATH=$(PYTHONPATH) nice -n 18 $(PYTHON) -m pytest -q tests/practical_controller
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m ruff check framework/fuzzyxai/fuzzyxai/practical_controller scripts/final_practical_closure tests/practical_controller
+	@echo "PASS: practical-release-check scope=formative-technical-candidate stable=false"
+
+practical-release-archive: practical-release-check
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/final_practical_closure/build_formative_report.py
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/final_practical_closure/build_bundle.py
+
+reproduce-final-practical-closure: practical-controller-formative practical-controller-freeze practical-controller-confirmatory final-statistics final-claim-registry chapter4-final practical-release-archive

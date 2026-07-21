@@ -264,6 +264,41 @@ from .evidence import (
     select_explanatory_cases,
     validate_domain_language,
 )
+from .practical_controller import (
+    ActionAssessment,
+    BatchAssessment,
+    CostProfile,
+    CostProfileName,
+    DeploymentContext,
+    DeploymentMode,
+    ExplanationArtifact,
+    PracticalPolicy,
+    PredictionArtifact,
+    ReviewBudget,
+    RouteArtifacts,
+    assess_action,
+    assess_batch,
+    assess_stream,
+    cost_profile,
+)
+
+__all__ += [
+    "ActionAssessment",
+    "BatchAssessment",
+    "CostProfile",
+    "CostProfileName",
+    "DeploymentContext",
+    "DeploymentMode",
+    "ExplanationArtifact",
+    "PracticalPolicy",
+    "PredictionArtifact",
+    "ReviewBudget",
+    "RouteArtifacts",
+    "assess_action",
+    "assess_batch",
+    "assess_stream",
+    "cost_profile",
+]
 
 __all__ += [
     "FuzzyXAI",
