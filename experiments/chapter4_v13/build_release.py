@@ -41,10 +41,21 @@ def build() -> dict[str, object]:
     with tempfile.TemporaryDirectory(prefix="fuzzyxai-v13-release-") as temporary:
         temp = Path(temporary)
         sanitized = temp / "sanitized_explanation_metrics.jsonl"
+        sanitized_predictions = temp / "sealed_test_predictions_without_labels.jsonl"
+        sanitized_policy_scores = temp / "test_policy_scores_without_labels.jsonl"
         rows = []
         for row in read_jsonl(ARTIFACTS / "explanations" / "sealed_test.jsonl"):
             rows.append({key: value for key, value in row.items() if key != "canonical_payload"})
         write_jsonl(sanitized, rows)
+        forbidden = {"label", "true_label", "is_correct", "ground_truth", "expected_action", "text"}
+        write_jsonl(
+            sanitized_predictions,
+            ({key: value for key, value in row.items() if key not in forbidden} for row in read_jsonl(ARTIFACTS / "predictions" / "sealed_test.jsonl")),
+        )
+        write_jsonl(
+            sanitized_policy_scores,
+            ({key: value for key, value in row.items() if key not in forbidden} for row in read_jsonl(ARTIFACTS / "policies" / "test_policy_scores.jsonl")),
+        )
 
         files: list[tuple[Path, str]] = []
         for name in OUTPUT_NAMES:
@@ -71,6 +82,10 @@ def build() -> dict[str, object]:
             "policies/policy_results.csv",
             "policies/statistical_tests.json",
             "policies/summary.json",
+            "policies/test_quality.json",
+            "policies/validation_selection.json",
+            "policies/fitted_models.json",
+            "policies/pre_score_lock.json",
             "route_faults/raw_results.jsonl",
             "route_faults/summary.csv",
             "route_faults/manifest.json",
@@ -80,6 +95,7 @@ def build() -> dict[str, object]:
             "explanations/sealed_test_summary.json",
             "manifests/dataset_manifest.json",
             "manifests/model_manifest.json",
+            "manifests/protocol_deviation_duplicate_rows.json",
             "manifests/tables_manifest.json",
             "manifests/figures_manifest.json",
             "manifests/validation.json",
@@ -94,6 +110,8 @@ def build() -> dict[str, object]:
             source = ARTIFACTS / relative
             files.append((source, f"evidence/{relative}"))
         files.append((sanitized, "evidence/explanations/sanitized_explanation_metrics.jsonl"))
+        files.append((sanitized_predictions, "evidence/predictions/sealed_test_predictions_without_labels.jsonl"))
+        files.append((sanitized_policy_scores, "evidence/policies/test_policy_scores_without_labels.jsonl"))
         for directory in ("tables", "figures"):
             for path in sorted((ARTIFACTS / directory).iterdir()):
                 if path.is_file():
