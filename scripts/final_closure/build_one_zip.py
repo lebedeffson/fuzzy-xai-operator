@@ -68,10 +68,9 @@ def _populate(stage: Path, head: str) -> None:
     mappings = {
         "protocol": [STUDY / "protocol.json", STUDY / "confirmatory_protocol_lock.json", STUDY / "protocol_manifest.json"],
         "data_manifests": [STUDY / "confirmatory_dataset_manifest.json", STUDY / "confirmatory_split_manifest.json", STUDY / "near_duplicate_audit.json", STUDY / "final_leakage_audit.json"],
-        "models": list((STUDY / "dataset_manifests").glob("*/model_manifest.json")) + list((STUDY / "confirmatory/models").glob("*.manifest.json")),
+        "models": list((STUDY / "dataset_manifests").glob("*/model_manifest.json")),
         "features": [STUDY / "confirmatory_feature_manifest.json", STUDY / "p0_p1_feature_audit.json"],
         "evidence/formative": [STUDY / "formative_real/summary.json", STUDY / "comparator_formative/summary.json", STUDY / "h7_formative/summary.json"],
-        "evidence/confirmatory": list((STUDY / "confirmatory").glob("*")),
         "evidence/shadow_replay": list(EVIDENCE.glob("shadow_replay*")),
         "evidence/ai_text_review": [STUDY / "ai_text_review_scope.json"],
         "statistics": [STUDY / "confirmatory/final_statistics.json"],
@@ -86,6 +85,14 @@ def _populate(stage: Path, head: str) -> None:
         for path in paths:
             if path.is_file() and not any(name in path.as_posix() for name in PROHIBITED_NAMES):
                 shutil.copy2(path, target / path.name)
+    _copy_tree(STUDY / "confirmatory/models", stage / "models/confirmatory")
+    _copy_tree(STUDY / "confirmatory/features", stage / "features/sealed_test")
+    _copy_tree(STUDY / "confirmatory/canonical", stage / "evidence/confirmatory/canonical")
+    _copy_tree(
+        STUDY / "confirmatory",
+        stage / "evidence/confirmatory/results",
+        exclude_directories={"models", "features", "canonical"},
+    )
     (stage / "LICENSES").mkdir()
     for license_path in ROOT.glob("data/confirmatory/*/manifests/license.txt"):
         shutil.copy2(license_path, stage / "LICENSES" / f"{license_path.parents[1].name}.txt")
@@ -94,10 +101,71 @@ def _populate(stage: Path, head: str) -> None:
     (stage / "logs").mkdir()
     lineage = {name: head for name in ("source_commit", "protocol_commit", "model_commit", "feature_commit", "confirmatory_commit", "chapter_commit")}
     write(stage / "artifact_lineage.json", lineage)
+    _write_final_report(stage, head)
     (stage / "README_FIRST.md").write_text(
         "# FuzzyXAI final practical closure\n\nTechnical computational evidence only. Human comprehension, domain approval and expert-action claims are out of scope.\n",
         encoding="utf-8",
     )
+
+
+def _copy_tree(source: Path, destination: Path, *, exclude_directories: set[str] | None = None) -> None:
+    if not source.is_dir():
+        return
+    excluded = exclude_directories or set()
+    for path in sorted(item for item in source.rglob("*") if item.is_file()):
+        relative = path.relative_to(source)
+        if relative.parts and relative.parts[0] in excluded:
+            continue
+        if any(name in path.as_posix() for name in PROHIBITED_NAMES):
+            continue
+        target = destination / relative
+        target.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(path, target)
+
+
+def _write_final_report(stage: Path, head: str) -> None:
+    statistics = load(STUDY / "confirmatory/final_statistics.json")
+    claims = load(EVIDENCE / "final_claim_registry.json")
+    lock = load(STUDY / "confirmatory_protocol_lock.json")
+    completion = load(STUDY / "confirmatory_completion_marker.json")
+    claim_rows = claims.get("claims") or claims.get("hypotheses") or claims.get("new_claims", {})
+    lines = [
+        "# Final technical closure report",
+        "",
+        f"- Source commit: `{head}`",
+        f"- Protocol lock: `{sha256(STUDY / 'confirmatory_protocol_lock.json')}`",
+        f"- Completion status: `{completion.get('status')}`",
+        f"- Confirmatory objects: `{statistics.get('objects', statistics.get('n', 'see statistics artifact'))}`",
+        f"- Primary endpoint: `{lock.get('primary_endpoint', 'see locked protocol')}`",
+        "- Human comprehension, domain approval and expert-action claims: `out_of_scope`",
+        "",
+        "## Claim registry",
+        "",
+        "| Claim | Status |",
+        "| --- | --- |",
+    ]
+    normalized_rows = (
+        ({"claim_id": claim_id, "status": status} for claim_id, status in claim_rows.items())
+        if isinstance(claim_rows, dict)
+        else claim_rows
+    )
+    for row in normalized_rows:
+        claim_id = row.get("claim_id", row.get("id", "unknown"))
+        status = row.get("status", row.get("claim_status", "unknown"))
+        lines.append(f"| `{claim_id}` | `{status}` |")
+    lines.extend(
+        [
+            "",
+            "## Evidence boundaries",
+            "",
+            "The archive preserves negative and inconclusive findings. A claim is enabled only by the machine-generated claim registry; absent external human evidence cannot be represented as human validation.",
+            "",
+            "Exact effect sizes, confidence intervals, adjusted p-values and units of analysis are stored in `statistics/final_statistics.json` and linked chapter artifacts.",
+        ]
+    )
+    report = stage / "release_status/FINAL_ONE_ZIP_REPORT.md"
+    report.parent.mkdir(parents=True, exist_ok=True)
+    report.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
 def _write_checksums(stage: Path) -> None:
