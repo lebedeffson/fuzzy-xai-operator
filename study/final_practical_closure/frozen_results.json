@@ -1,0 +1,25 @@
+{
+  "immutable": {
+    "H1": "supported",
+    "H2": "supported",
+    "H3-original": "not_supported",
+    "H4": "supported",
+    "H5-P-original": "not_supported",
+    "H5-S": "supported",
+    "H6-general": "not_supported"
+  },
+  "new": {
+    "H3-P1": "not_run",
+    "H3-P2": "not_run",
+    "H3-P3": "not_run",
+    "H3-P4": "not_run",
+    "H5-A": "not_run",
+    "H6-A": "not_run",
+    "H6-B": "not_run",
+    "H7-A": "not_run",
+    "H7-B": "not_run",
+    "H8": "not_run",
+    "H9": "not_run"
+  },
+  "schema_version": "1.0"
+}

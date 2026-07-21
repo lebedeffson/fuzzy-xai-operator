@@ -1,0 +1,123 @@
+{
+  "confirmatory_run_completed": false,
+  "confirmatory_summary_sha256": null,
+  "external_claims": {
+    "enabled": [],
+    "gates": {
+      "comprehension": "open_external_not_in_scope",
+      "domain_language": "open_external_not_in_scope",
+      "expert_action": "open_external_not_in_scope"
+    },
+    "removed_out_of_scope": [
+      "understandable to users",
+      "confirmed by experts",
+      "improves domain safety",
+      "better than specialist decisions"
+    ],
+    "technical_release_blocked": false
+  },
+  "formative_profile": "full",
+  "formative_summary_sha256": "3df7861fcec5de8011f4a50de314660e8a80cf4eef382825235020e7f6c95bfe",
+  "immutable_original_results": {
+    "H1": "supported",
+    "H2": "supported",
+    "H3-original": "not_supported",
+    "H4": "supported",
+    "H5-P-original": "not_supported",
+    "H5-S": "supported",
+    "H6-general": "not_supported"
+  },
+  "new_claims": [
+    {
+      "claim_id": "H3-P1",
+      "enabled": true,
+      "evidence": null,
+      "phase": "formative_only",
+      "positive_wording_allowed": false,
+      "status": "not_run"
+    },
+    {
+      "claim_id": "H3-P2",
+      "enabled": true,
+      "evidence": null,
+      "phase": "formative_only",
+      "positive_wording_allowed": false,
+      "status": "not_run"
+    },
+    {
+      "claim_id": "H3-P3",
+      "enabled": true,
+      "evidence": null,
+      "phase": "formative_only",
+      "positive_wording_allowed": false,
+      "status": "not_run"
+    },
+    {
+      "claim_id": "H3-P4",
+      "enabled": true,
+      "evidence": null,
+      "phase": "formative_only",
+      "positive_wording_allowed": false,
+      "status": "not_run"
+    },
+    {
+      "claim_id": "H5-A",
+      "enabled": true,
+      "evidence": null,
+      "phase": "formative_only",
+      "positive_wording_allowed": false,
+      "status": "not_run"
+    },
+    {
+      "claim_id": "H6-A",
+      "enabled": true,
+      "evidence": null,
+      "phase": "formative_only",
+      "positive_wording_allowed": false,
+      "status": "not_run"
+    },
+    {
+      "claim_id": "H6-B",
+      "enabled": true,
+      "evidence": null,
+      "phase": "formative_only",
+      "positive_wording_allowed": false,
+      "status": "not_run"
+    },
+    {
+      "claim_id": "H7-A",
+      "enabled": true,
+      "evidence": null,
+      "phase": "formative_only",
+      "positive_wording_allowed": false,
+      "status": "not_run"
+    },
+    {
+      "claim_id": "H7-B",
+      "enabled": true,
+      "evidence": null,
+      "phase": "formative_only",
+      "positive_wording_allowed": false,
+      "status": "not_run"
+    },
+    {
+      "claim_id": "H8",
+      "enabled": true,
+      "evidence": null,
+      "phase": "formative_only",
+      "positive_wording_allowed": false,
+      "status": "not_run"
+    },
+    {
+      "claim_id": "H9",
+      "enabled": true,
+      "evidence": null,
+      "phase": "formative_only",
+      "positive_wording_allowed": false,
+      "status": "not_run"
+    }
+  ],
+  "schema_version": "3.0",
+  "stable_claim_scope": "computational evidence only; no human comprehension, expert, domain-safety or specialist-superiority claim",
+  "technical_release_allowed": false
+}

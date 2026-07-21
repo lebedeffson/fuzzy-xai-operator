@@ -1,0 +1,339 @@
+{
+  "confirmatory_claim_allowed": false,
+  "confirmatory_test_opened": false,
+  "experiment_count": 6,
+  "files": [
+    {
+      "path": "release_evidence/final_practical_closure/formative/H3_practical/SHA256SUMS",
+      "sha256": "8c341a807d3feb53c78edb0af355763aab56b987f19de2e567119bc1c8a2f108",
+      "size": 851
+    },
+    {
+      "path": "release_evidence/final_practical_closure/formative/H3_practical/claim_status.json",
+      "sha256": "be77fd5d917ed2c1bd5b6d35fe32c136b61908f1097c1664422bf0b047bfa007",
+      "size": 59
+    },
+    {
+      "path": "release_evidence/final_practical_closure/formative/H3_practical/dataset_manifest.json",
+      "sha256": "cea9aa5543e1aa9898b83f568bd82e988c7847d764f6a9527be81f018bf44d3d",
+      "size": 75
+    },
+    {
+      "path": "release_evidence/final_practical_closure/formative/H3_practical/figures_manifest.json",
+      "sha256": "6a1277ac26329784e90da0088415fbc79d7f92e9ad9cf02e311506e8ddf3ac9f",
+      "size": 44
+    },
+    {
+      "path": "release_evidence/final_practical_closure/formative/H3_practical/protocol.json",
+      "sha256": "a9a8df268262553c2292e44d6e180cf13c0c4601c1dca45f2e44c310b5584f42",
+      "size": 99
+    },
+    {
+      "path": "release_evidence/final_practical_closure/formative/H3_practical/raw_results.jsonl",
+      "sha256": "91ca5f09bb0d7d319de5439ea36722d96b90e320c56dfcbed536d02441c55b89",
+      "size": 26694
+    },
+    {
+      "path": "release_evidence/final_practical_closure/formative/H3_practical/raw_results.parquet",
+      "sha256": "329c9936e7ffd327c6acb5a9357ea606e9de48968a7c6d0e0de2d9e0c15311e6",
+      "size": 4899
+    },
+    {
+      "path": "release_evidence/final_practical_closure/formative/H3_practical/split_manifest.json",
+      "sha256": "2b47248cd0dc5a32fc8c285629c5062d9b91a8904dd3908206514f75c9a2dfac",
+      "size": 70
+    },
+    {
+      "path": "release_evidence/final_practical_closure/formative/H3_practical/statistical_tests.json",
+      "sha256": "51ccb5cb76d060f35e25264d0a69fb4fd818e74211c6a08d5717e4f22d94b397",
+      "size": 80
+    },
+    {
+      "path": "release_evidence/final_practical_closure/formative/H3_practical/summary.json",
+      "sha256": "8e80ea9f304e1dd84751d8eb6507b565baf679b7ad5cd69c67d6ad07633f7530",
+      "size": 45486
+    },
+    {
+      "path": "release_evidence/final_practical_closure/formative/H3_practical/tables_manifest.json",
+      "sha256": "6a1277ac26329784e90da0088415fbc79d7f92e9ad9cf02e311506e8ddf3ac9f",
+      "size": 44
+    },
+    {
+      "path": "release_evidence/final_practical_closure/formative/H5_A_route_validity/SHA256SUMS",
+      "sha256": "00a3dbc06b63886f25bf13ac08ae110daa549e625304fa7196536583abacda90",
+      "size": 851
+    },
+    {
+      "path": "release_evidence/final_practical_closure/formative/H5_A_route_validity/claim_status.json",
+      "sha256": "be77fd5d917ed2c1bd5b6d35fe32c136b61908f1097c1664422bf0b047bfa007",
+      "size": 59
+    },
+    {
+      "path": "release_evidence/final_practical_closure/formative/H5_A_route_validity/dataset_manifest.json",
+      "sha256": "cea9aa5543e1aa9898b83f568bd82e988c7847d764f6a9527be81f018bf44d3d",
+      "size": 75
+    },
+    {
+      "path": "release_evidence/final_practical_closure/formative/H5_A_route_validity/figures_manifest.json",
+      "sha256": "6a1277ac26329784e90da0088415fbc79d7f92e9ad9cf02e311506e8ddf3ac9f",
+      "size": 44
+    },
+    {
+      "path": "release_evidence/final_practical_closure/formative/H5_A_route_validity/protocol.json",
+      "sha256": "52afed71db76b4543e6e591a68c163c08edd4341b67d1f3447eb3c5a4b0820f2",
+      "size": 106
+    },
+    {
+      "path": "release_evidence/final_practical_closure/formative/H5_A_route_validity/raw_results.jsonl",
+      "sha256": "a3cf2eeb6d0254e46356c381d4d2007e7335381cb004b829282eef66a7576195",
+      "size": 362579
+    },
+    {
+      "path": "release_evidence/final_practical_closure/formative/H5_A_route_validity/raw_results.parquet",
+      "sha256": "bd3c9e8a778ce0921b092bb1b3ca5bb6728cc939652c4a1f329e200dea01cf69",
+      "size": 16976
+    },
+    {
+      "path": "release_evidence/final_practical_closure/formative/H5_A_route_validity/split_manifest.json",
+      "sha256": "2b47248cd0dc5a32fc8c285629c5062d9b91a8904dd3908206514f75c9a2dfac",
+      "size": 70
+    },
+    {
+      "path": "release_evidence/final_practical_closure/formative/H5_A_route_validity/statistical_tests.json",
+      "sha256": "51ccb5cb76d060f35e25264d0a69fb4fd818e74211c6a08d5717e4f22d94b397",
+      "size": 80
+    },
+    {
+      "path": "release_evidence/final_practical_closure/formative/H5_A_route_validity/summary.json",
+      "sha256": "db465baa49a83ed262741f794b87c3d68d0118ff7a438b4cda858fcf85d43317",
+      "size": 3210
+    },
+    {
+      "path": "release_evidence/final_practical_closure/formative/H5_A_route_validity/tables_manifest.json",
+      "sha256": "6a1277ac26329784e90da0088415fbc79d7f92e9ad9cf02e311506e8ddf3ac9f",
+      "size": 44
+    },
+    {
+      "path": "release_evidence/final_practical_closure/formative/H6_A_detectability/SHA256SUMS",
+      "sha256": "6ce457604c22538926328b0f24c975d1c2f3b6db41b660685f5d3609e8583977",
+      "size": 851
+    },
+    {
+      "path": "release_evidence/final_practical_closure/formative/H6_A_detectability/claim_status.json",
+      "sha256": "be77fd5d917ed2c1bd5b6d35fe32c136b61908f1097c1664422bf0b047bfa007",
+      "size": 59
+    },
+    {
+      "path": "release_evidence/final_practical_closure/formative/H6_A_detectability/dataset_manifest.json",
+      "sha256": "cea9aa5543e1aa9898b83f568bd82e988c7847d764f6a9527be81f018bf44d3d",
+      "size": 75
+    },
+    {
+      "path": "release_evidence/final_practical_closure/formative/H6_A_detectability/figures_manifest.json",
+      "sha256": "6a1277ac26329784e90da0088415fbc79d7f92e9ad9cf02e311506e8ddf3ac9f",
+      "size": 44
+    },
+    {
+      "path": "release_evidence/final_practical_closure/formative/H6_A_detectability/protocol.json",
+      "sha256": "888e750cda3ca19ff00341070a1bc712d883144112640c7d8a7eaced7518f618",
+      "size": 105
+    },
+    {
+      "path": "release_evidence/final_practical_closure/formative/H6_A_detectability/raw_results.jsonl",
+      "sha256": "2445012beb00d3b5851e5d67da56dac028746dd93758891893cd0874a007946b",
+      "size": 16303
+    },
+    {
+      "path": "release_evidence/final_practical_closure/formative/H6_A_detectability/raw_results.parquet",
+      "sha256": "146e5327363b22e366601041108422dbc1ba6d44c21c637eb6d9badd7ef77362",
+      "size": 3342
+    },
+    {
+      "path": "release_evidence/final_practical_closure/formative/H6_A_detectability/split_manifest.json",
+      "sha256": "2b47248cd0dc5a32fc8c285629c5062d9b91a8904dd3908206514f75c9a2dfac",
+      "size": 70
+    },
+    {
+      "path": "release_evidence/final_practical_closure/formative/H6_A_detectability/statistical_tests.json",
+      "sha256": "51ccb5cb76d060f35e25264d0a69fb4fd818e74211c6a08d5717e4f22d94b397",
+      "size": 80
+    },
+    {
+      "path": "release_evidence/final_practical_closure/formative/H6_A_detectability/summary.json",
+      "sha256": "8d1f56d5f6c2a98c9ec856fb420b473461bb390b6c911be8d60c9d09d1bd2383",
+      "size": 15465
+    },
+    {
+      "path": "release_evidence/final_practical_closure/formative/H6_A_detectability/tables_manifest.json",
+      "sha256": "6a1277ac26329784e90da0088415fbc79d7f92e9ad9cf02e311506e8ddf3ac9f",
+      "size": 44
+    },
+    {
+      "path": "release_evidence/final_practical_closure/formative/H7_canonical_projection/SHA256SUMS",
+      "sha256": "8b912e2bfa26b2021b90edb4f0d6c926d13bb0bc51dc5a2f8db678ce0aa18fb7",
+      "size": 851
+    },
+    {
+      "path": "release_evidence/final_practical_closure/formative/H7_canonical_projection/claim_status.json",
+      "sha256": "be77fd5d917ed2c1bd5b6d35fe32c136b61908f1097c1664422bf0b047bfa007",
+      "size": 59
+    },
+    {
+      "path": "release_evidence/final_practical_closure/formative/H7_canonical_projection/dataset_manifest.json",
+      "sha256": "cea9aa5543e1aa9898b83f568bd82e988c7847d764f6a9527be81f018bf44d3d",
+      "size": 75
+    },
+    {
+      "path": "release_evidence/final_practical_closure/formative/H7_canonical_projection/figures_manifest.json",
+      "sha256": "6a1277ac26329784e90da0088415fbc79d7f92e9ad9cf02e311506e8ddf3ac9f",
+      "size": 44
+    },
+    {
+      "path": "release_evidence/final_practical_closure/formative/H7_canonical_projection/protocol.json",
+      "sha256": "138b8e48251ff3fa89a572c26dda8e1fc0aedd1b3e88b22402919939ccc8797b",
+      "size": 110
+    },
+    {
+      "path": "release_evidence/final_practical_closure/formative/H7_canonical_projection/raw_results.jsonl",
+      "sha256": "80109f9ad8d0098b1d607b6215b4908829d61e03c508bf775e236b9b3681d009",
+      "size": 70445
+    },
+    {
+      "path": "release_evidence/final_practical_closure/formative/H7_canonical_projection/raw_results.parquet",
+      "sha256": "af4c928b240f0e6cccaa6b4e248f8b5a910b2066b7fd38386d6310b78db3fe16",
+      "size": 4993
+    },
+    {
+      "path": "release_evidence/final_practical_closure/formative/H7_canonical_projection/split_manifest.json",
+      "sha256": "2b47248cd0dc5a32fc8c285629c5062d9b91a8904dd3908206514f75c9a2dfac",
+      "size": 70
+    },
+    {
+      "path": "release_evidence/final_practical_closure/formative/H7_canonical_projection/statistical_tests.json",
+      "sha256": "51ccb5cb76d060f35e25264d0a69fb4fd818e74211c6a08d5717e4f22d94b397",
+      "size": 80
+    },
+    {
+      "path": "release_evidence/final_practical_closure/formative/H7_canonical_projection/summary.json",
+      "sha256": "d3969eb6738946b61448c497c9147a7d8cdda38e0f767dc48869542c61d9a255",
+      "size": 680
+    },
+    {
+      "path": "release_evidence/final_practical_closure/formative/H7_canonical_projection/tables_manifest.json",
+      "sha256": "6a1277ac26329784e90da0088415fbc79d7f92e9ad9cf02e311506e8ddf3ac9f",
+      "size": 44
+    },
+    {
+      "path": "release_evidence/final_practical_closure/formative/H8_grid/SHA256SUMS",
+      "sha256": "774c1bf571c9b0610e39f9ec209eb1503914473e1e61554497a8719d281c7acc",
+      "size": 851
+    },
+    {
+      "path": "release_evidence/final_practical_closure/formative/H8_grid/claim_status.json",
+      "sha256": "be77fd5d917ed2c1bd5b6d35fe32c136b61908f1097c1664422bf0b047bfa007",
+      "size": 59
+    },
+    {
+      "path": "release_evidence/final_practical_closure/formative/H8_grid/dataset_manifest.json",
+      "sha256": "cea9aa5543e1aa9898b83f568bd82e988c7847d764f6a9527be81f018bf44d3d",
+      "size": 75
+    },
+    {
+      "path": "release_evidence/final_practical_closure/formative/H8_grid/figures_manifest.json",
+      "sha256": "6a1277ac26329784e90da0088415fbc79d7f92e9ad9cf02e311506e8ddf3ac9f",
+      "size": 44
+    },
+    {
+      "path": "release_evidence/final_practical_closure/formative/H8_grid/protocol.json",
+      "sha256": "06cbfcd0f2b04b631cb267ccb7c5cda6cc2e3c6debf7be5ee951a0f5ff9ea55f",
+      "size": 94
+    },
+    {
+      "path": "release_evidence/final_practical_closure/formative/H8_grid/raw_results.jsonl",
+      "sha256": "37fff1f887e46b71011ea43bc642171dbc2391e931a3a330effa439b1c65a24b",
+      "size": 2888
+    },
+    {
+      "path": "release_evidence/final_practical_closure/formative/H8_grid/raw_results.parquet",
+      "sha256": "b71af292519c8c1a74b432aa103812183cf61b17d367dfe388bf1dca466fc2bb",
+      "size": 2497
+    },
+    {
+      "path": "release_evidence/final_practical_closure/formative/H8_grid/split_manifest.json",
+      "sha256": "2b47248cd0dc5a32fc8c285629c5062d9b91a8904dd3908206514f75c9a2dfac",
+      "size": 70
+    },
+    {
+      "path": "release_evidence/final_practical_closure/formative/H8_grid/statistical_tests.json",
+      "sha256": "51ccb5cb76d060f35e25264d0a69fb4fd818e74211c6a08d5717e4f22d94b397",
+      "size": 80
+    },
+    {
+      "path": "release_evidence/final_practical_closure/formative/H8_grid/summary.json",
+      "sha256": "4aa50009a58a89a13f67d810f46d97332c59eaa92f2b746a82d4999efd270c34",
+      "size": 5326
+    },
+    {
+      "path": "release_evidence/final_practical_closure/formative/H8_grid/tables_manifest.json",
+      "sha256": "6a1277ac26329784e90da0088415fbc79d7f92e9ad9cf02e311506e8ddf3ac9f",
+      "size": 44
+    },
+    {
+      "path": "release_evidence/final_practical_closure/formative/H9_scaling/SHA256SUMS",
+      "sha256": "16a1274ca5571534044c90de0c5206f268fea803957dd5a2c70abf1d7e7e5e97",
+      "size": 851
+    },
+    {
+      "path": "release_evidence/final_practical_closure/formative/H9_scaling/claim_status.json",
+      "sha256": "be77fd5d917ed2c1bd5b6d35fe32c136b61908f1097c1664422bf0b047bfa007",
+      "size": 59
+    },
+    {
+      "path": "release_evidence/final_practical_closure/formative/H9_scaling/dataset_manifest.json",
+      "sha256": "cea9aa5543e1aa9898b83f568bd82e988c7847d764f6a9527be81f018bf44d3d",
+      "size": 75
+    },
+    {
+      "path": "release_evidence/final_practical_closure/formative/H9_scaling/figures_manifest.json",
+      "sha256": "6a1277ac26329784e90da0088415fbc79d7f92e9ad9cf02e311506e8ddf3ac9f",
+      "size": 44
+    },
+    {
+      "path": "release_evidence/final_practical_closure/formative/H9_scaling/protocol.json",
+      "sha256": "5de0b3fbc856d1263975a703aafa098e1a0d6deaf9839004b14b6d80e170cef6",
+      "size": 97
+    },
+    {
+      "path": "release_evidence/final_practical_closure/formative/H9_scaling/raw_results.jsonl",
+      "sha256": "46134242ce5916e7fcec4c4a834b4b870e1b6f3ed289ccb2af3121ee71c36719",
+      "size": 1854
+    },
+    {
+      "path": "release_evidence/final_practical_closure/formative/H9_scaling/raw_results.parquet",
+      "sha256": "eb3fa1e5a0b9c21cbcc799cc1c4c1e0f96a8923d125eb584fbbd7af75a3d5e51",
+      "size": 3820
+    },
+    {
+      "path": "release_evidence/final_practical_closure/formative/H9_scaling/split_manifest.json",
+      "sha256": "2b47248cd0dc5a32fc8c285629c5062d9b91a8904dd3908206514f75c9a2dfac",
+      "size": 70
+    },
+    {
+      "path": "release_evidence/final_practical_closure/formative/H9_scaling/statistical_tests.json",
+      "sha256": "51ccb5cb76d060f35e25264d0a69fb4fd818e74211c6a08d5717e4f22d94b397",
+      "size": 80
+    },
+    {
+      "path": "release_evidence/final_practical_closure/formative/H9_scaling/summary.json",
+      "sha256": "e08263c965dfedf5f5cf3de2d8788286b433d1ca5562e0a74658e1e5d28df6af",
+      "size": 3065
+    },
+    {
+      "path": "release_evidence/final_practical_closure/formative/H9_scaling/tables_manifest.json",
+      "sha256": "6a1277ac26329784e90da0088415fbc79d7f92e9ad9cf02e311506e8ddf3ac9f",
+      "size": 44
+    }
+  ],
+  "phase": "formative_development",
+  "schema_version": "1.0"
+}

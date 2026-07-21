@@ -1,0 +1,111 @@
+{
+  "confirmatory_claim_allowed": false,
+  "fault_types": [
+    "missing_provenance",
+    "mismatched_model_version",
+    "wrong_preprocessing",
+    "wrong_explainer_model_pairing",
+    "missing_calibration",
+    "wrong_reference_population",
+    "broken_transformation",
+    "incompatible_dictionary",
+    "excessive_reduction_loss",
+    "corrupted_audit_hash",
+    "forbidden_rule_conflict"
+  ],
+  "formative_target_met": true,
+  "methods": [
+    {
+      "f1": 0.2625,
+      "false_block": 0.12,
+      "false_certification": 0.8472727272727273,
+      "fault_source_localization": null,
+      "invalid_action_recall": 0.15272727272727274,
+      "method": "confidence",
+      "precision": 0.9333333333333333
+    },
+    {
+      "f1": 0.3076923076923077,
+      "false_block": 0.0,
+      "false_certification": 0.8181818181818182,
+      "fault_source_localization": null,
+      "invalid_action_recall": 0.18181818181818182,
+      "method": "data_quality_only",
+      "precision": 1.0
+    },
+    {
+      "f1": 0.3076923076923077,
+      "false_block": 0.0,
+      "false_certification": 0.8181818181818182,
+      "fault_source_localization": null,
+      "invalid_action_recall": 0.18181818181818182,
+      "method": "provenance_presence_only",
+      "precision": 1.0
+    },
+    {
+      "f1": 0.42857142857142855,
+      "false_block": 0.0,
+      "false_certification": 0.7272727272727273,
+      "fault_source_localization": null,
+      "invalid_action_recall": 0.2727272727272727,
+      "method": "static_schema_validation",
+      "precision": 1.0
+    },
+    {
+      "f1": 0.7603121516164995,
+      "false_block": 0.12,
+      "false_certification": 0.38,
+      "fault_source_localization": null,
+      "invalid_action_recall": 0.62,
+      "method": "simple_or",
+      "precision": 0.9827089337175793
+    },
+    {
+      "f1": 0.3076923076923077,
+      "false_block": 0.0,
+      "false_certification": 0.8181818181818182,
+      "fault_source_localization": null,
+      "invalid_action_recall": 0.18181818181818182,
+      "method": "observer_without_route_features",
+      "precision": 1.0
+    },
+    {
+      "f1": 0.9990900818926297,
+      "false_block": 0.0,
+      "false_certification": 0.0018181818181818182,
+      "fault_source_localization": 0.9981818181818182,
+      "invalid_action_recall": 0.9981818181818182,
+      "method": "typed_route_validity",
+      "precision": 1.0
+    }
+  ],
+  "model_error_prediction_claim_allowed": false,
+  "n_records": 1200,
+  "natural_failures": {
+    "required": [
+      "failed artifact load",
+      "stale model card",
+      "missing feature mapping",
+      "incompatible schema",
+      "missing channel",
+      "unsupported distribution shift",
+      "nondeterministic explanation",
+      "stale reference data"
+    ],
+    "status": "not_observed_in_a_sealed_pipeline"
+  },
+  "phase": "formative_controlled",
+  "requested_fault_types": [
+    "missing_provenance",
+    "mismatched_model_version",
+    "wrong_preprocessing",
+    "wrong_explainer_model_pairing",
+    "missing_calibration",
+    "wrong_reference_population",
+    "broken_transformation",
+    "incompatible_dictionary",
+    "excessive_reduction_loss",
+    "corrupted_audit_hash",
+    "forbidden_rule_conflict"
+  ]
+}

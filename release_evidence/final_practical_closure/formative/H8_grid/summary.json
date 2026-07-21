@@ -1,0 +1,183 @@
+{
+  "confirmatory_claim_allowed": false,
+  "formative_target_met": true,
+  "modalities": [
+    {
+      "configurations": [
+        {
+          "action_agreement": 0.982,
+          "configuration": "coarse",
+          "mean_absolute_risk_change": 0.006508795774584048,
+          "representation_agreement": 0.974,
+          "top_k_jaccard": 1.0
+        },
+        {
+          "action_agreement": 1.0,
+          "configuration": "default",
+          "mean_absolute_risk_change": 0.0,
+          "representation_agreement": 1.0,
+          "top_k_jaccard": 1.0
+        },
+        {
+          "action_agreement": 0.986,
+          "configuration": "fine",
+          "mean_absolute_risk_change": 0.00392195210882098,
+          "representation_agreement": 0.983,
+          "top_k_jaccard": 1.0
+        },
+        {
+          "action_agreement": 0.975,
+          "configuration": "very_fine",
+          "mean_absolute_risk_change": 0.0098385854499051,
+          "representation_agreement": 0.978,
+          "top_k_jaccard": 1.0
+        }
+      ],
+      "confirmatory_claim_allowed": false,
+      "formative_target_met": true,
+      "modality": "tabular",
+      "phase": "formative_only",
+      "reference": "default",
+      "risk_tolerance": 0.05,
+      "varied_parameters": [
+        "terms",
+        "knots",
+        "membership_overlap",
+        "rule_granularity"
+      ]
+    },
+    {
+      "configurations": [
+        {
+          "action_agreement": 0.986,
+          "configuration": "coarse",
+          "mean_absolute_risk_change": 0.006426352661389705,
+          "representation_agreement": 0.984,
+          "top_k_jaccard": 1.0
+        },
+        {
+          "action_agreement": 1.0,
+          "configuration": "default",
+          "mean_absolute_risk_change": 0.0,
+          "representation_agreement": 1.0,
+          "top_k_jaccard": 1.0
+        },
+        {
+          "action_agreement": 0.988,
+          "configuration": "fine",
+          "mean_absolute_risk_change": 0.0037998824247109575,
+          "representation_agreement": 0.992,
+          "top_k_jaccard": 1.0
+        },
+        {
+          "action_agreement": 0.979,
+          "configuration": "very_fine",
+          "mean_absolute_risk_change": 0.009554564836128342,
+          "representation_agreement": 0.978,
+          "top_k_jaccard": 1.0
+        }
+      ],
+      "confirmatory_claim_allowed": false,
+      "formative_target_met": true,
+      "modality": "image",
+      "phase": "formative_only",
+      "reference": "default",
+      "risk_tolerance": 0.05,
+      "varied_parameters": [
+        "superpixel_count",
+        "segmentation_seed",
+        "mask_resolution",
+        "merge_threshold"
+      ]
+    },
+    {
+      "configurations": [
+        {
+          "action_agreement": 0.984,
+          "configuration": "coarse",
+          "mean_absolute_risk_change": 0.00632716296260468,
+          "representation_agreement": 0.978,
+          "top_k_jaccard": 1.0
+        },
+        {
+          "action_agreement": 1.0,
+          "configuration": "default",
+          "mean_absolute_risk_change": 0.0,
+          "representation_agreement": 1.0,
+          "top_k_jaccard": 1.0
+        },
+        {
+          "action_agreement": 0.992,
+          "configuration": "fine",
+          "mean_absolute_risk_change": 0.003898951611278157,
+          "representation_agreement": 0.991,
+          "top_k_jaccard": 1.0
+        },
+        {
+          "action_agreement": 0.963,
+          "configuration": "very_fine",
+          "mean_absolute_risk_change": 0.009553860854676695,
+          "representation_agreement": 0.966,
+          "top_k_jaccard": 1.0
+        }
+      ],
+      "confirmatory_claim_allowed": false,
+      "formative_target_met": true,
+      "modality": "text",
+      "phase": "formative_only",
+      "reference": "default",
+      "risk_tolerance": 0.05,
+      "varied_parameters": [
+        "token_grouping",
+        "phrase_grouping",
+        "sentence_grouping",
+        "grouping_threshold"
+      ]
+    },
+    {
+      "configurations": [
+        {
+          "action_agreement": 0.988,
+          "configuration": "coarse",
+          "mean_absolute_risk_change": 0.006451099941640995,
+          "representation_agreement": 0.992,
+          "top_k_jaccard": 1.0
+        },
+        {
+          "action_agreement": 1.0,
+          "configuration": "default",
+          "mean_absolute_risk_change": 0.0,
+          "representation_agreement": 1.0,
+          "top_k_jaccard": 1.0
+        },
+        {
+          "action_agreement": 0.987,
+          "configuration": "fine",
+          "mean_absolute_risk_change": 0.0039529607727838215,
+          "representation_agreement": 0.99,
+          "top_k_jaccard": 1.0
+        },
+        {
+          "action_agreement": 0.974,
+          "configuration": "very_fine",
+          "mean_absolute_risk_change": 0.00994243112045608,
+          "representation_agreement": 0.975,
+          "top_k_jaccard": 1.0
+        }
+      ],
+      "confirmatory_claim_allowed": false,
+      "formative_target_met": true,
+      "modality": "timeseries",
+      "phase": "formative_only",
+      "reference": "default",
+      "risk_tolerance": 0.05,
+      "varied_parameters": [
+        "window_length",
+        "window_overlap",
+        "multiscale_windows",
+        "channel_grouping"
+      ]
+    }
+  ],
+  "phase": "formative_controlled_grid"
+}

@@ -1,0 +1,69 @@
+{
+  "confirmatory_claim_allowed": false,
+  "figures": [
+    {
+      "path": "dissertation_artifacts/final_practical_closure/chapter4_formative/figures/h3_matched_budget.png",
+      "sha256": "0f1f6c8e162cba2eece930109de5cb1d6de3f031ff784e1528852620721a40e7",
+      "size": 83344
+    },
+    {
+      "path": "dissertation_artifacts/final_practical_closure/chapter4_formative/figures/h5_route_validity.png",
+      "sha256": "a5627dcf09cc99bc36c709d65944f93db88c39edaf711fc1192d038f267f92b4",
+      "size": 61510
+    },
+    {
+      "path": "dissertation_artifacts/final_practical_closure/chapter4_formative/figures/h6_detectability.png",
+      "sha256": "52e0e8b06c1bab0a0f68ccf8f7b1839354b879d143b57e4daf55915a43e2847b",
+      "size": 55912
+    },
+    {
+      "path": "dissertation_artifacts/final_practical_closure/chapter4_formative/figures/h7_projection_tradeoff.png",
+      "sha256": "a0ebc35b243a4a8dd89fb0fad4baa937f80ef1d93ac5658ecd0280b3265a3b2f",
+      "size": 49621
+    },
+    {
+      "path": "dissertation_artifacts/final_practical_closure/chapter4_formative/figures/h8_grid_sensitivity.png",
+      "sha256": "a9aa07d1c48b7af5d825f73eedc550237fd5b71ae5414b9b588db743034dbbed",
+      "size": 36764
+    },
+    {
+      "path": "dissertation_artifacts/final_practical_closure/chapter4_formative/figures/h9_scaling.png",
+      "sha256": "ec8d152e64aa956c3567ec0b2e990dbe91b4d8c5cce0ba80c85821040d57165a",
+      "size": 57753
+    }
+  ],
+  "phase": "formative_development",
+  "schema_version": "1.0",
+  "tables": [
+    {
+      "path": "dissertation_artifacts/final_practical_closure/chapter4_formative/tables/h3_matched_budget.csv",
+      "sha256": "c908cbb2be45bf71ea28e2a173c1813fbad333d28034a15c9e22b6d90988a29f",
+      "size": 6722
+    },
+    {
+      "path": "dissertation_artifacts/final_practical_closure/chapter4_formative/tables/h5_route_guardrails.csv",
+      "sha256": "7b093fa179090118a87e198b2df921be2ec1fb5fbc879035525cdfc04b4256c2",
+      "size": 730
+    },
+    {
+      "path": "dissertation_artifacts/final_practical_closure/chapter4_formative/tables/h6_detectability_envelope.csv",
+      "sha256": "f67a8eb20eb66c61022b28b7939eef03a4c89fe72b92d87a2800d1274c625c77",
+      "size": 4668
+    },
+    {
+      "path": "dissertation_artifacts/final_practical_closure/chapter4_formative/tables/h7_projection_tradeoff.csv",
+      "sha256": "c0bae23dc20393c23d95a961dd93aa79a8cdb2220590f8ba4981937074cbe8b4",
+      "size": 142
+    },
+    {
+      "path": "dissertation_artifacts/final_practical_closure/chapter4_formative/tables/h8_grid_sensitivity.csv",
+      "sha256": "d653af3078f607a8cbb23652b7e458b73fec86659e22024e93a99230cef4cd84",
+      "size": 866
+    },
+    {
+      "path": "dissertation_artifacts/final_practical_closure/chapter4_formative/tables/h9_scaling.csv",
+      "sha256": "ee4843727bd4053dae8a11b348539ad38fefbec43150daf3647b9be310941728",
+      "size": 1065
+    }
+  ]
+}

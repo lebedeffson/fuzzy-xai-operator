@@ -1,0 +1,17 @@
+action_agreement,configuration,mean_absolute_risk_change,modality,representation_agreement,top_k_jaccard
+0.982,coarse,0.006508795774584048,tabular,0.974,1.0
+1.0,default,0.0,tabular,1.0,1.0
+0.986,fine,0.00392195210882098,tabular,0.983,1.0
+0.975,very_fine,0.0098385854499051,tabular,0.978,1.0
+0.986,coarse,0.006426352661389705,image,0.984,1.0
+1.0,default,0.0,image,1.0,1.0
+0.988,fine,0.0037998824247109575,image,0.992,1.0
+0.979,very_fine,0.009554564836128342,image,0.978,1.0
+0.984,coarse,0.00632716296260468,text,0.978,1.0
+1.0,default,0.0,text,1.0,1.0
+0.992,fine,0.003898951611278157,text,0.991,1.0
+0.963,very_fine,0.009553860854676695,text,0.966,1.0
+0.988,coarse,0.006451099941640995,timeseries,0.992,1.0
+1.0,default,0.0,timeseries,1.0,1.0
+0.987,fine,0.0039529607727838215,timeseries,0.99,1.0
+0.974,very_fine,0.00994243112045608,timeseries,0.975,1.0

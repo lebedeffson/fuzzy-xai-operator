@@ -1,0 +1,27 @@
+{
+  "base_commit": "63cef7578d28a28dac63654f24642a980b49bc90",
+  "confirmatory_protocol_locked": false,
+  "confirmatory_test_opened": false,
+  "files": [
+    {
+      "path": "study/final_practical_closure/confirmatory_dataset_requirements.json",
+      "sha256": "c03525d3f1c725188b222984c99203e00dab3a6917f34b430e71630a67fcb980"
+    },
+    {
+      "path": "study/final_practical_closure/external_claim_gates.json",
+      "sha256": "4a5e5ca3b90faa666aa4b6dff85e55a76308ad27639f31e4c4162bcdf9f9d2ad"
+    },
+    {
+      "path": "study/final_practical_closure/frozen_results.json",
+      "sha256": "081e32b732ecc7780da8891a9598c5153a6983d9dbf0cf71726b3ed954fae302"
+    },
+    {
+      "path": "study/final_practical_closure/practical_protocol.json",
+      "sha256": "ce6fa6e7c121dc17d8baae18f67e3dcc727587cf0025b8adfab5c0304ade25ee"
+    }
+  ],
+  "implementation_commit": "5b72ccb88d095fd8276ec52a12c66a5b6915dfc9",
+  "schema_version": "1.0",
+  "stable_technical_release_allowed": false,
+  "stage": "formative_development"
+}

@@ -1,0 +1,74 @@
+{
+  "H3_P1_minimum_relative_reduction": 0.15,
+  "H3_P2_minimum_coverage_gain": 0.05,
+  "confirmatory_test_opened": false,
+  "cost_profiles": {
+    "balanced": {
+      "false_block": 3.0,
+      "full_review": 1.0,
+      "short_review": 0.4,
+      "unsafe_accept": 8.0
+    },
+    "review_expensive": {
+      "false_block": 3.0,
+      "full_review": 4.0,
+      "short_review": 1.5,
+      "unsafe_accept": 10.0
+    },
+    "unsafe_accept_sensitive": {
+      "false_block": 4.0,
+      "full_review": 1.2,
+      "short_review": 0.5,
+      "unsafe_accept": 20.0
+    }
+  },
+  "false_block_ceiling": 0.01,
+  "forbidden_after_lock": [
+    "feature changes",
+    "threshold changes",
+    "cost-profile changes",
+    "dataset changes",
+    "case removal based on outcomes",
+    "new primary metrics",
+    "new subgroups"
+  ],
+  "frozen_strata": [
+    "high_confidence_disagreement",
+    "low_confidence_object",
+    "unstable_explanation",
+    "incomplete_provenance",
+    "detected_shift",
+    "rare_group",
+    "boundary_object",
+    "route_fault"
+  ],
+  "hard_fault_recall_minimum": 0.95,
+  "invalid_action_definition": [
+    "wrong prediction accepted",
+    "route contract violation accepted",
+    "mandatory provenance absent during accept",
+    "out-of-applicability input accepted",
+    "critical explanation instability accepted",
+    "hard guard bypassed",
+    "action contradicts frozen operational contract"
+  ],
+  "primary_cost_profile": "unsafe_accept_sensitive",
+  "review_budgets": [
+    0.05,
+    0.1,
+    0.2,
+    0.3,
+    1.0
+  ],
+  "schema_version": "1.0",
+  "stage": "formative_development",
+  "statistics": [
+    "paired bootstrap",
+    "cluster bootstrap",
+    "McNemar",
+    "Wilcoxon",
+    "permutation test",
+    "Holm correction"
+  ],
+  "target": "operationally_invalid_automatic_action"
+}
