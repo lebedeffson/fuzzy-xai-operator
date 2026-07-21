@@ -143,12 +143,21 @@ def measured_stage(name: str) -> Iterator[dict[str, float | int | str]]:
 
 
 def environment_manifest() -> dict[str, object]:
+    processor = platform.processor()
+    if not processor:
+        try:
+            for line in Path("/proc/cpuinfo").read_text(encoding="utf-8").splitlines():
+                if line.lower().startswith("model name"):
+                    processor = line.split(":", maxsplit=1)[1].strip()
+                    break
+        except OSError:
+            processor = "unknown"
     manifest: dict[str, object] = {
         "protocol_sha256": verify_protocol_hash(),
         "commit": git_commit(),
         "python": platform.python_version(),
         "platform": platform.platform(),
-        "processor": platform.processor(),
+        "processor": processor or "unknown",
         "cpu_count": os.cpu_count(),
     }
     try:
@@ -161,6 +170,12 @@ def environment_manifest() -> dict[str, object]:
             except metadata.PackageNotFoundError:
                 packages[name] = None
         manifest["packages"] = packages
+        try:
+            import psutil
+
+            manifest["ram_total_bytes"] = int(psutil.virtual_memory().total)
+        except ImportError:
+            manifest["ram_total_bytes"] = None
     except ImportError:
         pass
     try:

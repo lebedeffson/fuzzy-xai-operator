@@ -237,6 +237,14 @@ def run() -> dict[str, object]:
     pd.DataFrame(summary_rows).to_csv(summary_path, index=False)
     manifest = {
         "environment": environment_manifest(),
+        "benchmark_configuration": {
+            "runtime": runtime_config(),
+            "integrated_gradients": protocol()["modern_contour"]["explanations"]["methods"]["integrated_gradients"],
+            "token_masking": protocol()["modern_contour"]["explanations"]["methods"]["token_masking"],
+            "background_samples": 0,
+            "input_perturbations": 0,
+            "cache_enabled": False,
+        },
         "warmups": cfg["warmups"],
         "repetitions": cfg["repetitions"],
         "sizes": sizes,
