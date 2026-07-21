@@ -1,0 +1,9 @@
+{
+  "dataset_id": "default_credit_clients",
+  "grouping_key": "ID",
+  "modality": "tabular",
+  "split_seed": 7419,
+  "strategy": "deterministic_stratified_60_20_20",
+  "test_labels_in_processed_data": false,
+  "unique_ids": true
+}

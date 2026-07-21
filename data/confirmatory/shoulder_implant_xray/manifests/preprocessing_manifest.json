@@ -1,0 +1,9 @@
+{
+  "dataset_id": "shoulder_implant_xray",
+  "modality": "image",
+  "source_duplicate_note": "UCI removed eight repeated-patient images before publication",
+  "split_seed": 7419,
+  "strategy": "deterministic_stratified_60_20_20",
+  "test_labels_in_processed_data": false,
+  "transform": "grayscale_resize_128x128_uint8"
+}

@@ -40,6 +40,11 @@ def test_confirmatory_features_require_oof_and_extended_width() -> None:
         ConfirmatoryFeatureVector(D, (0.0,) * 9, (0.0,) * 13, False, "test")
 
 
+def test_confirmatory_features_preserve_missing_evidence() -> None:
+    value = ConfirmatoryFeatureVector(D, (0.5,) * 7 + (None, None), (None,) * 13, True, "dev-oof")
+    assert value.missing_channel_count == 15
+
+
 def test_dataset_audit_blocks_formative_reuse_label_access_and_overlap() -> None:
     dataset = _dataset()
     report = audit_registry(

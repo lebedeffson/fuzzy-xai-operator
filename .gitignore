@@ -65,3 +65,11 @@ study/q1_final/**/signed_records/
 
 # Quarantined/generated ecosystem content must not return to main
 site/dubnaxai/
+
+# Confirmatory raw/processed data and encrypted labels stay local. Only manifests are versioned.
+data/confirmatory/*/raw/
+data/confirmatory/*/processed/
+data/confirmatory/**/*.enc
+
+# OOF rows contain development labels and belong only in the sealed evidence bundle.
+study/final_confirmatory_closure/oof_features/

@@ -1,0 +1,23 @@
+{
+  "counts": {
+    "development": 1031,
+    "sealed_test": 1033,
+    "train": 3095
+  },
+  "dataset_id": "sms_spam",
+  "identity_file_sha256": {
+    "development": "ad34fc04bab6405be3a990e3252d6909b10f16f7507eda331c2be677da56428c",
+    "sealed_test": "b9439506404afe50cbd3d08a6fae81df306561e0aabc555a35a8dad5eefe230f",
+    "train": "f73642e662c63dabb7376b4fa5057bb63c55fab5fd54cbe4c7b19c6e322993e8"
+  },
+  "identity_files": {
+    "development": "data/confirmatory/sms_spam/manifests/development_object_ids.txt",
+    "sealed_test": "data/confirmatory/sms_spam/manifests/sealed_test_object_ids.txt",
+    "train": "data/confirmatory/sms_spam/manifests/train_object_ids.txt"
+  },
+  "intersection_counts": {
+    "development_test": 0,
+    "train_development": 0,
+    "train_test": 0
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "counts": {
+    "development": 8235,
+    "sealed_test": 8236,
+    "train": 24705
+  },
+  "dataset_id": "bank_marketing",
+  "identity_file_sha256": {
+    "development": "c4c0ae3261c8f25e4759ec7b25cb32226f89c29389989d2908273028ee6045b0",
+    "sealed_test": "0dde65458e0e38bc55c8576b57f8f0d07a5e801e82a9a39da9bcc553494776e2",
+    "train": "0f717116dcc638caee3e1bb15a24f80025ba065124e26d4a580004932f8bdac5"
+  },
+  "identity_files": {
+    "development": "data/confirmatory/bank_marketing/manifests/development_object_ids.txt",
+    "sealed_test": "data/confirmatory/bank_marketing/manifests/sealed_test_object_ids.txt",
+    "train": "data/confirmatory/bank_marketing/manifests/train_object_ids.txt"
+  },
+  "intersection_counts": {
+    "development_test": 0,
+    "train_development": 0,
+    "train_test": 0
+  }
+}

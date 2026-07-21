@@ -64,6 +64,7 @@ ALLOWED_EXACT = {
     "uv.lock",
 }
 ALLOWED_PREFIXES = (
+    "data/confirmatory/",
     "experiments/real_training_experiment/",
     "release_evidence/explanation_experience/",
     "release_evidence/chapter4_explanation_experience/",
@@ -207,7 +208,14 @@ REQUIRED_PATHS = {
     "fuzzy-xai-operator/framework/fuzzyxai/fuzzyxai/final_closure/faults.py",
     "fuzzy-xai-operator/framework/fuzzyxai/fuzzyxai/final_closure/ablation.py",
     "fuzzy-xai-operator/scripts/final_closure/build_protocol.py",
+    "fuzzy-xai-operator/scripts/final_closure/prepare_confirmatory_datasets.py",
+    "fuzzy-xai-operator/scripts/final_closure/build_dataset_registry.py",
     "fuzzy-xai-operator/scripts/final_closure/seal_datasets.py",
+    "fuzzy-xai-operator/scripts/final_closure/verify_dataset_leakage.py",
+    "fuzzy-xai-operator/scripts/final_closure/build_oof_features.py",
+    "fuzzy-xai-operator/scripts/final_closure/verify_oof_features.py",
+    "fuzzy-xai-operator/scripts/final_closure/build_ai_run2_bundle.py",
+    "fuzzy-xai-operator/scripts/final_closure/import_ai_run2.py",
     "fuzzy-xai-operator/scripts/final_closure/lock_protocol.py",
     "fuzzy-xai-operator/scripts/final_closure/verify_prelock.py",
     "fuzzy-xai-operator/scripts/final_closure/build_prelock_bundle.py",

@@ -1,0 +1,23 @@
+{
+  "counts": {
+    "development": 120,
+    "sealed_test": 121,
+    "train": 356
+  },
+  "dataset_id": "shoulder_implant_xray",
+  "identity_file_sha256": {
+    "development": "c2ae3a58a65688030bb0ba5cac8fb9b8acb704d0e106c5990208ba7b71fdd4ca",
+    "sealed_test": "eabe61bedc0581086adb85ac6fa5bb96c8ff3d421feec25c2c23b339c55ecdf6",
+    "train": "c01a7601b944a5d069a2d55fa092c96aa558efdce7743903384eb6620bbd9294"
+  },
+  "identity_files": {
+    "development": "data/confirmatory/shoulder_implant_xray/manifests/development_object_ids.txt",
+    "sealed_test": "data/confirmatory/shoulder_implant_xray/manifests/sealed_test_object_ids.txt",
+    "train": "data/confirmatory/shoulder_implant_xray/manifests/train_object_ids.txt"
+  },
+  "intersection_counts": {
+    "development_test": 0,
+    "train_development": 0,
+    "train_test": 0
+  }
+}

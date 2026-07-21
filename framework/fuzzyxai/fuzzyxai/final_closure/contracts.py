@@ -25,8 +25,8 @@ class InvalidActionDecomposition:
 @dataclass(frozen=True)
 class ConfirmatoryFeatureVector:
     object_id_hash: str
-    predictive: tuple[float, ...]
-    route: tuple[float, ...]
+    predictive: tuple[float | None, ...]
+    route: tuple[float | None, ...]
     source_is_oof: bool
     split_id: str
 
@@ -35,8 +35,12 @@ class ConfirmatoryFeatureVector:
             raise ValueError("confirmatory feature vector requires 9 predictive and 13 route channels")
         if not self.source_is_oof:
             raise ValueError("confirmatory controller features must be out-of-fold")
-        if any(not 0.0 <= value <= 1.0 for value in (*self.predictive, *self.route)):
+        if any(not 0.0 <= value <= 1.0 for value in (*self.predictive, *self.route) if value is not None):
             raise ValueError("confirmatory feature channels must be normalized to [0, 1]")
+
+    @property
+    def missing_channel_count(self) -> int:
+        return sum(value is None for value in (*self.predictive, *self.route))
 
 
 @dataclass(frozen=True)

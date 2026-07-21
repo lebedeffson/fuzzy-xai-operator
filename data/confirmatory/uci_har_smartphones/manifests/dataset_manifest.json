@@ -1,0 +1,15 @@
+{
+  "dataset_id": "uci_har_smartphones",
+  "development_ids_sha256": "9d8d5cdec78369bb3b27919b427a7073ca9c42096ff28cb2df15014b07e78f5f",
+  "download_sha256": "c00b803081a5c797cd5e4b83700a9810b38d53d9d84e01917e090e1fdbc81031",
+  "grouping_key": "subject_id",
+  "label_vault_path": "data/confirmatory/uci_har_smartphones/manifests/confirmatory_label_vault.enc",
+  "label_vault_sha256": "616b1de914668b13fe7e28e738caf93f2ec77e953ff5d314ec89842d47f98980",
+  "license": "CC BY 4.0",
+  "modality": "timeseries",
+  "preprocessing_sha256": "37ec9812276940301cca76163e17dacaeb1db7ea6fcd9a33bf5b2a5f99fce6d5",
+  "source": "https://archive.ics.uci.edu/static/public/240/human+activity+recognition+using+smartphones.zip",
+  "test_ids_sha256": "9a01f566defc4e0da562c6630e5e2026f4382e108b8c725e35d3330a96703804",
+  "train_ids_sha256": "5f182a0d6c29905a124da9f34f71f0ff895b7033e1a3918e7f9497cd0fa748e8",
+  "used_in_formative_tuning": false
+}

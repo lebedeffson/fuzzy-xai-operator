@@ -34,10 +34,16 @@ def main() -> None:
         "confirmatory_claim_allowed": False,
         "stable_release_allowed": False,
         "remaining_external_inputs": [
-            "five independent sealed dataset packages",
-            "isolated OOF and test split manifest",
-            "encrypted test-label vaults",
             "clean-session 240-case AI formative run 2 scores",
+            "OOF model-disagreement and shift features",
+            "real OOF route and explanation evidence channels",
+        ],
+        "completed_inputs": [
+            "five independent downloaded and sealed datasets",
+            "encrypted workspace-local test-label vaults",
+            "train/development/sealed-test identity manifests",
+            "leakage-free calibrated OOF baseline predictions",
+            "self-contained blind run-2 input bundle",
         ],
     }
     with zipfile.ZipFile(archive, "w", zipfile.ZIP_DEFLATED) as bundle:
