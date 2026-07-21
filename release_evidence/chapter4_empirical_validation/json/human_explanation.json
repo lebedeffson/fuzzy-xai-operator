@@ -1,0 +1,1216 @@
+{
+  "audience": "domain_user",
+  "claim_refs": {
+    "changes": [
+      "C-038"
+    ],
+    "concerns": [
+      "C-034",
+      "C-041"
+    ],
+    "decision": [
+      "C-001"
+    ],
+    "main_reasons": [
+      "C-003",
+      "C-002",
+      "C-004"
+    ],
+    "recommended_action": [
+      "C-042"
+    ],
+    "reliability": [
+      "C-042",
+      "C-003",
+      "C-002",
+      "C-004",
+      "C-034",
+      "C-041",
+      "C-032",
+      "C-040",
+      "C-039"
+    ]
+  },
+  "concerns": [
+    {
+      "claim_refs": [
+        "C-034"
+      ],
+      "evidence_refs": [
+        "training:case_real_001"
+      ],
+      "explanation": "Модель сначала научилась правильно распознавать исследуемый объект case_real_001. После 9-го этапа обучения она снова начала ошибаться и стала хуже различать редкие случаи этого типа.",
+      "title": "Редкий тип стал распознаваться хуже"
+    },
+    {
+      "claim_refs": [
+        "C-041"
+      ],
+      "evidence_refs": [
+        "diagnostic:2"
+      ],
+      "explanation": "Для части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено.",
+      "title": "Не все проверки подтверждены"
+    }
+  ],
+  "decision": {
+    "claim_refs": [
+      "C-001"
+    ],
+    "domain_language_status": "available",
+    "evidence_refs": [
+      "prediction"
+    ],
+    "explanation": "Модель определила: метка benign в исследовательском наборе.",
+    "title": "Метка benign в исследовательском наборе"
+  },
+  "decision_changes": [
+    "Если увеличить показатель «worst texture» с 26,93 до 30,38, повторный запуск модели меняет прогноз с «метка benign в исследовательском наборе» на «метка malignant в исследовательском наборе». Оценка выбранного класса изменилась с 62% до 52%. Это анализ чувствительности модели, а не рекомендация изменить реальный объект. Практическая выполнимость изменения не подтверждена."
+  ],
+  "details": {
+    "contradicts": [
+      {
+        "claim_refs": [
+          "C-026"
+        ],
+        "evidence_refs": [
+          "contribution:worst perimeter"
+        ],
+        "explanation": "Значение находится в верхних 40% распределения среди 341 объектов (обучающая выборка). Поэтому этот показатель противоречит прогнозу.",
+        "title": "Максимальный периметр"
+      },
+      {
+        "claim_refs": [
+          "C-005"
+        ],
+        "evidence_refs": [
+          "contribution:radius error"
+        ],
+        "explanation": "Значение находится в верхних 65% распределения среди 341 объектов (обучающая выборка). Поэтому этот показатель противоречит прогнозу.",
+        "title": "Radius error"
+      },
+      {
+        "claim_refs": [
+          "C-006"
+        ],
+        "evidence_refs": [
+          "contribution:mean texture"
+        ],
+        "explanation": "Значение находится в верхних 72% распределения среди 341 объектов (обучающая выборка). Поэтому этот показатель противоречит прогнозу.",
+        "title": "Mean texture"
+      },
+      {
+        "claim_refs": [
+          "C-008"
+        ],
+        "evidence_refs": [
+          "contribution:perimeter error"
+        ],
+        "explanation": "Значение находится в верхних 63% распределения среди 341 объектов (обучающая выборка). Поэтому этот показатель противоречит прогнозу.",
+        "title": "Perimeter error"
+      },
+      {
+        "claim_refs": [
+          "C-009"
+        ],
+        "evidence_refs": [
+          "contribution:compactness error"
+        ],
+        "explanation": "Значение находится в верхних 21% распределения среди 341 объектов (обучающая выборка). Поэтому этот показатель противоречит прогнозу.",
+        "title": "Compactness error"
+      },
+      {
+        "claim_refs": [
+          "C-010"
+        ],
+        "evidence_refs": [
+          "contribution:area error"
+        ],
+        "explanation": "Значение находится в верхних 57% распределения среди 341 объектов (обучающая выборка). Поэтому этот показатель противоречит прогнозу.",
+        "title": "Area error"
+      },
+      {
+        "claim_refs": [
+          "C-011"
+        ],
+        "evidence_refs": [
+          "contribution:mean fractal dimension"
+        ],
+        "explanation": "Значение находится в верхних 15% распределения среди 341 объектов (обучающая выборка). Поэтому этот показатель противоречит прогнозу.",
+        "title": "Mean fractal dimension"
+      },
+      {
+        "claim_refs": [
+          "C-012"
+        ],
+        "evidence_refs": [
+          "contribution:mean compactness"
+        ],
+        "explanation": "Значение находится в верхних 14% распределения среди 341 объектов (обучающая выборка). Поэтому этот показатель противоречит прогнозу.",
+        "title": "Mean compactness"
+      },
+      {
+        "claim_refs": [
+          "C-014"
+        ],
+        "evidence_refs": [
+          "contribution:worst area"
+        ],
+        "explanation": "Значение находится в верхних 43% распределения среди 341 объектов (обучающая выборка). Поэтому этот показатель противоречит прогнозу.",
+        "title": "Worst area"
+      },
+      {
+        "claim_refs": [
+          "C-016"
+        ],
+        "evidence_refs": [
+          "contribution:fractal dimension error"
+        ],
+        "explanation": "Значение находится в верхних 24% распределения среди 341 объектов (обучающая выборка). Поэтому этот показатель противоречит прогнозу.",
+        "title": "Fractal dimension error"
+      },
+      {
+        "claim_refs": [
+          "C-019"
+        ],
+        "evidence_refs": [
+          "contribution:mean area"
+        ],
+        "explanation": "Значение находится в верхних 45% распределения среди 341 объектов (обучающая выборка). Поэтому этот показатель противоречит прогнозу.",
+        "title": "Mean area"
+      },
+      {
+        "claim_refs": [
+          "C-021"
+        ],
+        "evidence_refs": [
+          "contribution:worst radius"
+        ],
+        "explanation": "Значение находится в верхних 43% распределения среди 341 объектов (обучающая выборка). Поэтому этот показатель противоречит прогнозу.",
+        "title": "Worst radius"
+      },
+      {
+        "claim_refs": [
+          "C-022"
+        ],
+        "evidence_refs": [
+          "contribution:worst compactness"
+        ],
+        "explanation": "Значение находится в верхних 9% распределения среди 341 объектов (обучающая выборка). Поэтому этот показатель противоречит прогнозу.",
+        "title": "Worst compactness"
+      },
+      {
+        "claim_refs": [
+          "C-023"
+        ],
+        "evidence_refs": [
+          "contribution:smoothness error"
+        ],
+        "explanation": "Значение находится в верхних 57% распределения среди 341 объектов (обучающая выборка). Поэтому этот показатель противоречит прогнозу.",
+        "title": "Smoothness error"
+      },
+      {
+        "claim_refs": [
+          "C-025"
+        ],
+        "evidence_refs": [
+          "contribution:mean symmetry"
+        ],
+        "explanation": "Значение находится в верхних 13% распределения среди 341 объектов (обучающая выборка). Поэтому этот показатель противоречит прогнозу.",
+        "title": "Mean symmetry"
+      },
+      {
+        "claim_refs": [
+          "C-027"
+        ],
+        "evidence_refs": [
+          "contribution:mean radius"
+        ],
+        "explanation": "Значение находится в верхних 43% распределения среди 341 объектов (обучающая выборка). Поэтому этот показатель противоречит прогнозу.",
+        "title": "Mean radius"
+      },
+      {
+        "claim_refs": [
+          "C-029"
+        ],
+        "evidence_refs": [
+          "contribution:mean perimeter"
+        ],
+        "explanation": "Значение находится в верхних 41% распределения среди 341 объектов (обучающая выборка). Поэтому этот показатель противоречит прогнозу.",
+        "title": "Mean perimeter"
+      },
+      {
+        "claim_refs": [
+          "C-030"
+        ],
+        "evidence_refs": [
+          "contribution:concavity error"
+        ],
+        "explanation": "Значение находится в верхних 25% распределения среди 341 объектов (обучающая выборка). Поэтому этот показатель противоречит прогнозу.",
+        "title": "Concavity error"
+      },
+      {
+        "claim_refs": [
+          "C-037"
+        ],
+        "evidence_refs": [
+          "similar:case_real_001:bcwd_0047"
+        ],
+        "explanation": "Найден близкий пример с другим результатом. Объекты сравнивались по характеристикам: значения исходных показателей. Это показывает, что отдельное сходство встречается у разных результатов и ограничивает доверие.",
+        "title": "Похожий контрпример"
+      }
+    ],
+    "limitations": [
+      {
+        "claim_refs": [
+          "C-034"
+        ],
+        "evidence_refs": [
+          "training:case_real_001"
+        ],
+        "explanation": "Модель сначала научилась правильно распознавать исследуемый объект case_real_001. После 9-го этапа обучения она снова начала ошибаться и стала хуже различать редкие случаи этого типа.",
+        "title": "Редкий тип стал распознаваться хуже"
+      },
+      {
+        "claim_refs": [
+          "C-041"
+        ],
+        "evidence_refs": [
+          "diagnostic:2"
+        ],
+        "explanation": "Для части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено.",
+        "title": "Не все проверки подтверждены"
+      },
+      {
+        "claim_refs": [
+          "C-026"
+        ],
+        "evidence_refs": [
+          "contribution:worst perimeter"
+        ],
+        "explanation": "Значение находится в верхних 40% распределения среди 341 объектов (обучающая выборка). Поэтому этот показатель противоречит прогнозу.",
+        "title": "Максимальный периметр"
+      },
+      {
+        "claim_refs": [
+          "C-005"
+        ],
+        "evidence_refs": [
+          "contribution:radius error"
+        ],
+        "explanation": "Значение находится в верхних 65% распределения среди 341 объектов (обучающая выборка). Поэтому этот показатель противоречит прогнозу.",
+        "title": "Radius error"
+      },
+      {
+        "claim_refs": [
+          "C-006"
+        ],
+        "evidence_refs": [
+          "contribution:mean texture"
+        ],
+        "explanation": "Значение находится в верхних 72% распределения среди 341 объектов (обучающая выборка). Поэтому этот показатель противоречит прогнозу.",
+        "title": "Mean texture"
+      },
+      {
+        "claim_refs": [
+          "C-008"
+        ],
+        "evidence_refs": [
+          "contribution:perimeter error"
+        ],
+        "explanation": "Значение находится в верхних 63% распределения среди 341 объектов (обучающая выборка). Поэтому этот показатель противоречит прогнозу.",
+        "title": "Perimeter error"
+      },
+      {
+        "claim_refs": [
+          "C-009"
+        ],
+        "evidence_refs": [
+          "contribution:compactness error"
+        ],
+        "explanation": "Значение находится в верхних 21% распределения среди 341 объектов (обучающая выборка). Поэтому этот показатель противоречит прогнозу.",
+        "title": "Compactness error"
+      },
+      {
+        "claim_refs": [
+          "C-010"
+        ],
+        "evidence_refs": [
+          "contribution:area error"
+        ],
+        "explanation": "Значение находится в верхних 57% распределения среди 341 объектов (обучающая выборка). Поэтому этот показатель противоречит прогнозу.",
+        "title": "Area error"
+      },
+      {
+        "claim_refs": [
+          "C-011"
+        ],
+        "evidence_refs": [
+          "contribution:mean fractal dimension"
+        ],
+        "explanation": "Значение находится в верхних 15% распределения среди 341 объектов (обучающая выборка). Поэтому этот показатель противоречит прогнозу.",
+        "title": "Mean fractal dimension"
+      },
+      {
+        "claim_refs": [
+          "C-012"
+        ],
+        "evidence_refs": [
+          "contribution:mean compactness"
+        ],
+        "explanation": "Значение находится в верхних 14% распределения среди 341 объектов (обучающая выборка). Поэтому этот показатель противоречит прогнозу.",
+        "title": "Mean compactness"
+      },
+      {
+        "claim_refs": [
+          "C-014"
+        ],
+        "evidence_refs": [
+          "contribution:worst area"
+        ],
+        "explanation": "Значение находится в верхних 43% распределения среди 341 объектов (обучающая выборка). Поэтому этот показатель противоречит прогнозу.",
+        "title": "Worst area"
+      },
+      {
+        "claim_refs": [
+          "C-016"
+        ],
+        "evidence_refs": [
+          "contribution:fractal dimension error"
+        ],
+        "explanation": "Значение находится в верхних 24% распределения среди 341 объектов (обучающая выборка). Поэтому этот показатель противоречит прогнозу.",
+        "title": "Fractal dimension error"
+      },
+      {
+        "claim_refs": [
+          "C-019"
+        ],
+        "evidence_refs": [
+          "contribution:mean area"
+        ],
+        "explanation": "Значение находится в верхних 45% распределения среди 341 объектов (обучающая выборка). Поэтому этот показатель противоречит прогнозу.",
+        "title": "Mean area"
+      },
+      {
+        "claim_refs": [
+          "C-021"
+        ],
+        "evidence_refs": [
+          "contribution:worst radius"
+        ],
+        "explanation": "Значение находится в верхних 43% распределения среди 341 объектов (обучающая выборка). Поэтому этот показатель противоречит прогнозу.",
+        "title": "Worst radius"
+      },
+      {
+        "claim_refs": [
+          "C-022"
+        ],
+        "evidence_refs": [
+          "contribution:worst compactness"
+        ],
+        "explanation": "Значение находится в верхних 9% распределения среди 341 объектов (обучающая выборка). Поэтому этот показатель противоречит прогнозу.",
+        "title": "Worst compactness"
+      },
+      {
+        "claim_refs": [
+          "C-023"
+        ],
+        "evidence_refs": [
+          "contribution:smoothness error"
+        ],
+        "explanation": "Значение находится в верхних 57% распределения среди 341 объектов (обучающая выборка). Поэтому этот показатель противоречит прогнозу.",
+        "title": "Smoothness error"
+      },
+      {
+        "claim_refs": [
+          "C-025"
+        ],
+        "evidence_refs": [
+          "contribution:mean symmetry"
+        ],
+        "explanation": "Значение находится в верхних 13% распределения среди 341 объектов (обучающая выборка). Поэтому этот показатель противоречит прогнозу.",
+        "title": "Mean symmetry"
+      },
+      {
+        "claim_refs": [
+          "C-027"
+        ],
+        "evidence_refs": [
+          "contribution:mean radius"
+        ],
+        "explanation": "Значение находится в верхних 43% распределения среди 341 объектов (обучающая выборка). Поэтому этот показатель противоречит прогнозу.",
+        "title": "Mean radius"
+      },
+      {
+        "claim_refs": [
+          "C-029"
+        ],
+        "evidence_refs": [
+          "contribution:mean perimeter"
+        ],
+        "explanation": "Значение находится в верхних 41% распределения среди 341 объектов (обучающая выборка). Поэтому этот показатель противоречит прогнозу.",
+        "title": "Mean perimeter"
+      },
+      {
+        "claim_refs": [
+          "C-030"
+        ],
+        "evidence_refs": [
+          "contribution:concavity error"
+        ],
+        "explanation": "Значение находится в верхних 25% распределения среди 341 объектов (обучающая выборка). Поэтому этот показатель противоречит прогнозу.",
+        "title": "Concavity error"
+      },
+      {
+        "claim_refs": [
+          "C-037"
+        ],
+        "evidence_refs": [
+          "similar:case_real_001:bcwd_0047"
+        ],
+        "explanation": "Найден близкий пример с другим результатом. Объекты сравнивались по характеристикам: значения исходных показателей. Это показывает, что отдельное сходство встречается у разных результатов и ограничивает доверие.",
+        "title": "Похожий контрпример"
+      }
+    ],
+    "similar_cases": [
+      {
+        "claim_refs": [
+          "C-036"
+        ],
+        "evidence_refs": [
+          "similar:case_real_001:bcwd_0081"
+        ],
+        "explanation": "Дополнительным подтверждением служит обучающий объект с похожими характеристиками: значения исходных показателей. Сходство является вспомогательным основанием и не определяет результат самостоятельно.",
+        "title": "Похожий обучающий случай"
+      },
+      {
+        "claim_refs": [
+          "C-037"
+        ],
+        "evidence_refs": [
+          "similar:case_real_001:bcwd_0047"
+        ],
+        "explanation": "Найден близкий пример с другим результатом. Объекты сравнивались по характеристикам: значения исходных показателей. Это показывает, что отдельное сходство встречается у разных результатов и ограничивает доверие.",
+        "title": "Похожий контрпример"
+      }
+    ],
+    "supports": [
+      {
+        "claim_refs": [
+          "C-003"
+        ],
+        "comparison_text": "Значение находится в верхних 24% распределения среди 341 объектов (обучающая выборка).",
+        "effect_direction": "supports",
+        "evidence_refs": [
+          "contribution:worst concave points"
+        ],
+        "explanation": "Значение находится в верхних 24% распределения среди 341 объектов (обучающая выборка). Поэтому этот показатель поддерживает прогноз.",
+        "subject_label": "максимальная выраженность вогнутых участков контура",
+        "title": "Максимальная выраженность вогнутых участков контура"
+      },
+      {
+        "claim_refs": [
+          "C-002"
+        ],
+        "comparison_text": "Значение находится в верхних 9% распределения среди 341 объектов (обучающая выборка).",
+        "effect_direction": "supports",
+        "evidence_refs": [
+          "contribution:worst symmetry"
+        ],
+        "explanation": "Значение находится в верхних 9% распределения среди 341 объектов (обучающая выборка). Поэтому этот показатель поддерживает прогноз.",
+        "subject_label": "worst symmetry",
+        "title": "Worst symmetry"
+      },
+      {
+        "claim_refs": [
+          "C-004"
+        ],
+        "comparison_text": "Значение находится в верхних 15% распределения среди 341 объектов (обучающая выборка).",
+        "effect_direction": "supports",
+        "evidence_refs": [
+          "contribution:worst concavity"
+        ],
+        "explanation": "Значение находится в верхних 15% распределения среди 341 объектов (обучающая выборка). Поэтому этот показатель поддерживает прогноз.",
+        "subject_label": "worst concavity",
+        "title": "Worst concavity"
+      },
+      {
+        "claim_refs": [
+          "C-007"
+        ],
+        "comparison_text": "Значение находится в верхних 25% распределения среди 341 объектов (обучающая выборка).",
+        "effect_direction": "supports",
+        "evidence_refs": [
+          "contribution:worst smoothness"
+        ],
+        "explanation": "Значение находится в верхних 25% распределения среди 341 объектов (обучающая выборка). Поэтому этот показатель поддерживает прогноз.",
+        "subject_label": "worst smoothness",
+        "title": "Worst smoothness"
+      },
+      {
+        "claim_refs": [
+          "C-013"
+        ],
+        "comparison_text": "Значение находится в верхних 29% распределения среди 341 объектов (обучающая выборка).",
+        "effect_direction": "supports",
+        "evidence_refs": [
+          "contribution:mean smoothness"
+        ],
+        "explanation": "Значение находится в верхних 29% распределения среди 341 объектов (обучающая выборка). Поэтому этот показатель поддерживает прогноз.",
+        "subject_label": "mean smoothness",
+        "title": "Mean smoothness"
+      },
+      {
+        "claim_refs": [
+          "C-015"
+        ],
+        "comparison_text": "Значение находится в верхних 35% распределения среди 341 объектов (обучающая выборка).",
+        "effect_direction": "supports",
+        "evidence_refs": [
+          "contribution:mean concave points"
+        ],
+        "explanation": "Значение находится в верхних 35% распределения среди 341 объектов (обучающая выборка). Поэтому этот показатель поддерживает прогноз.",
+        "subject_label": "mean concave points",
+        "title": "Mean concave points"
+      },
+      {
+        "claim_refs": [
+          "C-017"
+        ],
+        "comparison_text": "Значение находится в верхних 41% распределения среди 341 объектов (обучающая выборка).",
+        "effect_direction": "supports",
+        "evidence_refs": [
+          "contribution:worst texture"
+        ],
+        "explanation": "Значение находится в верхних 41% распределения среди 341 объектов (обучающая выборка). Поэтому этот показатель поддерживает прогноз.",
+        "subject_label": "worst texture",
+        "title": "Worst texture"
+      },
+      {
+        "claim_refs": [
+          "C-018"
+        ],
+        "comparison_text": "Значение находится в верхних 23% распределения среди 341 объектов (обучающая выборка).",
+        "effect_direction": "supports",
+        "evidence_refs": [
+          "contribution:concave points error"
+        ],
+        "explanation": "Значение находится в верхних 23% распределения среди 341 объектов (обучающая выборка). Поэтому этот показатель поддерживает прогноз.",
+        "subject_label": "concave points error",
+        "title": "Concave points error"
+      },
+      {
+        "claim_refs": [
+          "C-020"
+        ],
+        "comparison_text": "Значение находится в верхних 35% распределения среди 341 объектов (обучающая выборка).",
+        "effect_direction": "supports",
+        "evidence_refs": [
+          "contribution:mean concavity"
+        ],
+        "explanation": "Значение находится в верхних 35% распределения среди 341 объектов (обучающая выборка). Поэтому этот показатель поддерживает прогноз.",
+        "subject_label": "mean concavity",
+        "title": "Mean concavity"
+      },
+      {
+        "claim_refs": [
+          "C-024"
+        ],
+        "comparison_text": "Значение находится в верхних 9% распределения среди 341 объектов (обучающая выборка).",
+        "effect_direction": "supports",
+        "evidence_refs": [
+          "contribution:worst fractal dimension"
+        ],
+        "explanation": "Значение находится в верхних 9% распределения среди 341 объектов (обучающая выборка). Поэтому этот показатель поддерживает прогноз.",
+        "subject_label": "worst fractal dimension",
+        "title": "Worst fractal dimension"
+      },
+      {
+        "claim_refs": [
+          "C-028"
+        ],
+        "comparison_text": "Значение находится в верхних 44% распределения среди 341 объектов (обучающая выборка).",
+        "effect_direction": "supports",
+        "evidence_refs": [
+          "contribution:symmetry error"
+        ],
+        "explanation": "Значение находится в верхних 44% распределения среди 341 объектов (обучающая выборка). Поэтому этот показатель поддерживает прогноз.",
+        "subject_label": "symmetry error",
+        "title": "Symmetry error"
+      },
+      {
+        "claim_refs": [
+          "C-031"
+        ],
+        "comparison_text": "Значение находится в верхних 47% распределения среди 341 объектов (обучающая выборка).",
+        "effect_direction": "supports",
+        "evidence_refs": [
+          "contribution:texture error"
+        ],
+        "explanation": "Значение находится в верхних 47% распределения среди 341 объектов (обучающая выборка). Поэтому этот показатель поддерживает прогноз.",
+        "subject_label": "texture error",
+        "title": "Texture error"
+      },
+      {
+        "claim_refs": [
+          "C-036"
+        ],
+        "comparison_text": "с обучающими объектами по характеристикам: значения исходных показателей",
+        "effect_direction": "additional_support",
+        "evidence_refs": [
+          "similar:case_real_001:bcwd_0081"
+        ],
+        "explanation": "Дополнительным подтверждением служит обучающий объект с похожими характеристиками: значения исходных показателей. Сходство является вспомогательным основанием и не определяет результат самостоятельно.",
+        "subject_label": "похожий обучающий случай",
+        "title": "Похожий обучающий случай"
+      }
+    ],
+    "technical_metrics": [
+      {
+        "claim_refs": [
+          "C-003"
+        ],
+        "evidence_refs": [
+          "contribution:worst concave points"
+        ],
+        "explanation": "0.576; сравнение: zero local contribution",
+        "title": "local_contribution"
+      },
+      {
+        "claim_refs": [
+          "C-038"
+        ],
+        "evidence_refs": [
+          "counterfactual:0"
+        ],
+        "explanation": "-0.097",
+        "title": "observed_effect"
+      },
+      {
+        "claim_refs": [
+          "C-002"
+        ],
+        "evidence_refs": [
+          "contribution:worst symmetry"
+        ],
+        "explanation": "0.942; сравнение: zero local contribution",
+        "title": "local_contribution"
+      },
+      {
+        "claim_refs": [
+          "C-034"
+        ],
+        "evidence_refs": [
+          "training:case_real_001"
+        ],
+        "explanation": "1.000",
+        "title": "forgetting_event_count"
+      },
+      {
+        "claim_refs": [
+          "C-026"
+        ],
+        "evidence_refs": [
+          "contribution:worst perimeter"
+        ],
+        "explanation": "-0.049; сравнение: zero local contribution",
+        "title": "local_contribution"
+      },
+      {
+        "claim_refs": [
+          "C-001"
+        ],
+        "evidence_refs": [
+          "prediction"
+        ],
+        "explanation": "0.617",
+        "title": "model_score"
+      },
+      {
+        "claim_refs": [
+          "C-004"
+        ],
+        "evidence_refs": [
+          "contribution:worst concavity"
+        ],
+        "explanation": "0.557; сравнение: zero local contribution",
+        "title": "local_contribution"
+      },
+      {
+        "claim_refs": [
+          "C-005"
+        ],
+        "evidence_refs": [
+          "contribution:radius error"
+        ],
+        "explanation": "-0.513; сравнение: zero local contribution",
+        "title": "local_contribution"
+      },
+      {
+        "claim_refs": [
+          "C-006"
+        ],
+        "evidence_refs": [
+          "contribution:mean texture"
+        ],
+        "explanation": "-0.428; сравнение: zero local contribution",
+        "title": "local_contribution"
+      },
+      {
+        "claim_refs": [
+          "C-007"
+        ],
+        "evidence_refs": [
+          "contribution:worst smoothness"
+        ],
+        "explanation": "0.388; сравнение: zero local contribution",
+        "title": "local_contribution"
+      },
+      {
+        "claim_refs": [
+          "C-008"
+        ],
+        "evidence_refs": [
+          "contribution:perimeter error"
+        ],
+        "explanation": "-0.340; сравнение: zero local contribution",
+        "title": "local_contribution"
+      },
+      {
+        "claim_refs": [
+          "C-009"
+        ],
+        "evidence_refs": [
+          "contribution:compactness error"
+        ],
+        "explanation": "-0.338; сравнение: zero local contribution",
+        "title": "local_contribution"
+      },
+      {
+        "claim_refs": [
+          "C-010"
+        ],
+        "evidence_refs": [
+          "contribution:area error"
+        ],
+        "explanation": "-0.307; сравнение: zero local contribution",
+        "title": "local_contribution"
+      },
+      {
+        "claim_refs": [
+          "C-011"
+        ],
+        "evidence_refs": [
+          "contribution:mean fractal dimension"
+        ],
+        "explanation": "-0.254; сравнение: zero local contribution",
+        "title": "local_contribution"
+      },
+      {
+        "claim_refs": [
+          "C-012"
+        ],
+        "evidence_refs": [
+          "contribution:mean compactness"
+        ],
+        "explanation": "-0.183; сравнение: zero local contribution",
+        "title": "local_contribution"
+      },
+      {
+        "claim_refs": [
+          "C-013"
+        ],
+        "evidence_refs": [
+          "contribution:mean smoothness"
+        ],
+        "explanation": "0.173; сравнение: zero local contribution",
+        "title": "local_contribution"
+      },
+      {
+        "claim_refs": [
+          "C-014"
+        ],
+        "evidence_refs": [
+          "contribution:worst area"
+        ],
+        "explanation": "-0.171; сравнение: zero local contribution",
+        "title": "local_contribution"
+      },
+      {
+        "claim_refs": [
+          "C-015"
+        ],
+        "evidence_refs": [
+          "contribution:mean concave points"
+        ],
+        "explanation": "0.160; сравнение: zero local contribution",
+        "title": "local_contribution"
+      },
+      {
+        "claim_refs": [
+          "C-016"
+        ],
+        "evidence_refs": [
+          "contribution:fractal dimension error"
+        ],
+        "explanation": "-0.146; сравнение: zero local contribution",
+        "title": "local_contribution"
+      },
+      {
+        "claim_refs": [
+          "C-017"
+        ],
+        "evidence_refs": [
+          "contribution:worst texture"
+        ],
+        "explanation": "0.140; сравнение: zero local contribution",
+        "title": "local_contribution"
+      },
+      {
+        "claim_refs": [
+          "C-018"
+        ],
+        "evidence_refs": [
+          "contribution:concave points error"
+        ],
+        "explanation": "0.108; сравнение: zero local contribution",
+        "title": "local_contribution"
+      },
+      {
+        "claim_refs": [
+          "C-019"
+        ],
+        "evidence_refs": [
+          "contribution:mean area"
+        ],
+        "explanation": "-0.104; сравнение: zero local contribution",
+        "title": "local_contribution"
+      },
+      {
+        "claim_refs": [
+          "C-020"
+        ],
+        "evidence_refs": [
+          "contribution:mean concavity"
+        ],
+        "explanation": "0.098; сравнение: zero local contribution",
+        "title": "local_contribution"
+      },
+      {
+        "claim_refs": [
+          "C-021"
+        ],
+        "evidence_refs": [
+          "contribution:worst radius"
+        ],
+        "explanation": "-0.075; сравнение: zero local contribution",
+        "title": "local_contribution"
+      },
+      {
+        "claim_refs": [
+          "C-022"
+        ],
+        "evidence_refs": [
+          "contribution:worst compactness"
+        ],
+        "explanation": "-0.074; сравнение: zero local contribution",
+        "title": "local_contribution"
+      },
+      {
+        "claim_refs": [
+          "C-023"
+        ],
+        "evidence_refs": [
+          "contribution:smoothness error"
+        ],
+        "explanation": "-0.056; сравнение: zero local contribution",
+        "title": "local_contribution"
+      },
+      {
+        "claim_refs": [
+          "C-024"
+        ],
+        "evidence_refs": [
+          "contribution:worst fractal dimension"
+        ],
+        "explanation": "0.055; сравнение: zero local contribution",
+        "title": "local_contribution"
+      },
+      {
+        "claim_refs": [
+          "C-025"
+        ],
+        "evidence_refs": [
+          "contribution:mean symmetry"
+        ],
+        "explanation": "-0.051; сравнение: zero local contribution",
+        "title": "local_contribution"
+      },
+      {
+        "claim_refs": [
+          "C-027"
+        ],
+        "evidence_refs": [
+          "contribution:mean radius"
+        ],
+        "explanation": "-0.029; сравнение: zero local contribution",
+        "title": "local_contribution"
+      },
+      {
+        "claim_refs": [
+          "C-028"
+        ],
+        "evidence_refs": [
+          "contribution:symmetry error"
+        ],
+        "explanation": "0.021; сравнение: zero local contribution",
+        "title": "local_contribution"
+      },
+      {
+        "claim_refs": [
+          "C-029"
+        ],
+        "evidence_refs": [
+          "contribution:mean perimeter"
+        ],
+        "explanation": "-0.013; сравнение: zero local contribution",
+        "title": "local_contribution"
+      },
+      {
+        "claim_refs": [
+          "C-030"
+        ],
+        "evidence_refs": [
+          "contribution:concavity error"
+        ],
+        "explanation": "-0.013; сравнение: zero local contribution",
+        "title": "local_contribution"
+      },
+      {
+        "claim_refs": [
+          "C-031"
+        ],
+        "evidence_refs": [
+          "contribution:texture error"
+        ],
+        "explanation": "0.006; сравнение: zero local contribution",
+        "title": "local_contribution"
+      },
+      {
+        "claim_refs": [
+          "C-035"
+        ],
+        "evidence_refs": [
+          "rule:tree_leaf_11"
+        ],
+        "explanation": "0.035",
+        "title": "rule_importance"
+      },
+      {
+        "claim_refs": [
+          "C-036"
+        ],
+        "evidence_refs": [
+          "similar:case_real_001:bcwd_0081"
+        ],
+        "explanation": "0.722; сравнение: normalized tabular feature vector",
+        "title": "similarity"
+      },
+      {
+        "claim_refs": [
+          "C-037"
+        ],
+        "evidence_refs": [
+          "similar:case_real_001:bcwd_0047"
+        ],
+        "explanation": "0.598; сравнение: normalized tabular feature vector",
+        "title": "similarity"
+      },
+      {
+        "claim_refs": [
+          "C-032"
+        ],
+        "evidence_refs": [
+          "data:case_real_001"
+        ],
+        "explanation": "1.000",
+        "title": "data_quality"
+      },
+      {
+        "claim_refs": [
+          "C-033"
+        ],
+        "evidence_refs": [
+          "training:case_real_001"
+        ],
+        "explanation": "1.000",
+        "title": "first_learned_epoch"
+      }
+    ],
+    "training": [
+      {
+        "claim_refs": [
+          "C-034"
+        ],
+        "evidence_refs": [
+          "training:case_real_001"
+        ],
+        "explanation": "Модель сначала научилась правильно распознавать исследуемый объект case_real_001. После 9-го этапа обучения она снова начала ошибаться и стала хуже различать редкие случаи этого типа.",
+        "title": "Редкий тип стал распознаваться хуже"
+      }
+    ]
+  },
+  "evidence_trace": [],
+  "language": "ru",
+  "level": "user",
+  "limitations": [
+    "Модель сначала научилась правильно распознавать исследуемый объект case_real_001. После 9-го этапа обучения она снова начала ошибаться и стала хуже различать редкие случаи этого типа.",
+    "Для части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено.",
+    "Значение находится в верхних 40% распределения среди 341 объектов (обучающая выборка). Поэтому этот показатель противоречит прогнозу.",
+    "Значение находится в верхних 65% распределения среди 341 объектов (обучающая выборка). Поэтому этот показатель противоречит прогнозу.",
+    "Значение находится в верхних 72% распределения среди 341 объектов (обучающая выборка). Поэтому этот показатель противоречит прогнозу.",
+    "Значение находится в верхних 63% распределения среди 341 объектов (обучающая выборка). Поэтому этот показатель противоречит прогнозу.",
+    "Значение находится в верхних 21% распределения среди 341 объектов (обучающая выборка). Поэтому этот показатель противоречит прогнозу.",
+    "Значение находится в верхних 57% распределения среди 341 объектов (обучающая выборка). Поэтому этот показатель противоречит прогнозу.",
+    "Значение находится в верхних 15% распределения среди 341 объектов (обучающая выборка). Поэтому этот показатель противоречит прогнозу.",
+    "Значение находится в верхних 14% распределения среди 341 объектов (обучающая выборка). Поэтому этот показатель противоречит прогнозу.",
+    "Значение находится в верхних 43% распределения среди 341 объектов (обучающая выборка). Поэтому этот показатель противоречит прогнозу.",
+    "Значение находится в верхних 24% распределения среди 341 объектов (обучающая выборка). Поэтому этот показатель противоречит прогнозу.",
+    "Значение находится в верхних 45% распределения среди 341 объектов (обучающая выборка). Поэтому этот показатель противоречит прогнозу.",
+    "Значение находится в верхних 43% распределения среди 341 объектов (обучающая выборка). Поэтому этот показатель противоречит прогнозу.",
+    "Значение находится в верхних 9% распределения среди 341 объектов (обучающая выборка). Поэтому этот показатель противоречит прогнозу.",
+    "Значение находится в верхних 57% распределения среди 341 объектов (обучающая выборка). Поэтому этот показатель противоречит прогнозу.",
+    "Значение находится в верхних 13% распределения среди 341 объектов (обучающая выборка). Поэтому этот показатель противоречит прогнозу.",
+    "Значение находится в верхних 43% распределения среди 341 объектов (обучающая выборка). Поэтому этот показатель противоречит прогнозу.",
+    "Значение находится в верхних 41% распределения среди 341 объектов (обучающая выборка). Поэтому этот показатель противоречит прогнозу.",
+    "Значение находится в верхних 25% распределения среди 341 объектов (обучающая выборка). Поэтому этот показатель противоречит прогнозу.",
+    "Найден близкий пример с другим результатом. Объекты сравнивались по характеристикам: значения исходных показателей. Это показывает, что отдельное сходство встречается у разных результатов и ограничивает доверие."
+  ],
+  "lost_or_averaged": [
+    "Модель сначала научилась правильно распознавать исследуемый объект case_real_001. После 9-го этапа обучения она снова начала ошибаться и стала хуже различать редкие случаи этого типа.",
+    "Для части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено."
+  ],
+  "main_reasons": [
+    {
+      "claim_refs": [
+        "C-003"
+      ],
+      "comparison_text": "Значение находится в верхних 24% распределения среди 341 объектов (обучающая выборка).",
+      "effect_direction": "supports",
+      "evidence_refs": [
+        "contribution:worst concave points"
+      ],
+      "explanation": "Значение находится в верхних 24% распределения среди 341 объектов (обучающая выборка). Поэтому этот показатель поддерживает прогноз.",
+      "subject_label": "максимальная выраженность вогнутых участков контура",
+      "title": "Максимальная выраженность вогнутых участков контура"
+    },
+    {
+      "claim_refs": [
+        "C-002"
+      ],
+      "comparison_text": "Значение находится в верхних 9% распределения среди 341 объектов (обучающая выборка).",
+      "effect_direction": "supports",
+      "evidence_refs": [
+        "contribution:worst symmetry"
+      ],
+      "explanation": "Значение находится в верхних 9% распределения среди 341 объектов (обучающая выборка). Поэтому этот показатель поддерживает прогноз.",
+      "subject_label": "worst symmetry",
+      "title": "Worst symmetry"
+    },
+    {
+      "claim_refs": [
+        "C-004"
+      ],
+      "comparison_text": "Значение находится в верхних 15% распределения среди 341 объектов (обучающая выборка).",
+      "effect_direction": "supports",
+      "evidence_refs": [
+        "contribution:worst concavity"
+      ],
+      "explanation": "Значение находится в верхних 15% распределения среди 341 объектов (обучающая выборка). Поэтому этот показатель поддерживает прогноз.",
+      "subject_label": "worst concavity",
+      "title": "Worst concavity"
+    }
+  ],
+  "model_observed": [
+    "Модель определила: метка benign в исследовательском наборе."
+  ],
+  "recommended_action": {
+    "action": "review",
+    "claim_refs": [
+      "C-042"
+    ],
+    "evidence_refs": [
+      "diagnostic:0",
+      "diagnostic:1",
+      "diagnostic:2"
+    ],
+    "explanation": "Не использовать классификацию как медицинское заключение; проверить evidence и ограничения протокола.",
+    "title": "Проверить исследовательский результат"
+  },
+  "reliability": {
+    "claim_refs": [
+      "C-042",
+      "C-003",
+      "C-002",
+      "C-004",
+      "C-034",
+      "C-041",
+      "C-032",
+      "C-040",
+      "C-039"
+    ],
+    "conclusion": "Эти ограничения не позволяют использовать результат автоматически.",
+    "evidence_refs": [
+      "diagnostic:0",
+      "diagnostic:1",
+      "diagnostic:2",
+      "contribution:worst concave points",
+      "contribution:worst symmetry",
+      "contribution:worst concavity",
+      "training:case_real_001",
+      "data:case_real_001"
+    ],
+    "explanation": "Решение поддерживают: максимальная выраженность вогнутых участков контура, worst symmetry, worst concavity. Доверие ограничивают: редкий тип стал распознаваться хуже, не все проверки подтверждены. Эти ограничения не позволяют использовать результат автоматически.",
+    "limited_by": [
+      "Редкий тип стал распознаваться хуже",
+      "Не все проверки подтверждены"
+    ],
+    "missing_evidence": [],
+    "supported_by": [
+      "максимальная выраженность вогнутых участков контура",
+      "worst symmetry",
+      "worst concavity"
+    ],
+    "title": "Требуется дополнительная проверка"
+  },
+  "similar_cases": [
+    "Дополнительным подтверждением служит обучающий объект с похожими характеристиками: значения исходных показателей. Сходство является вспомогательным основанием и не определяет результат самостоятельно.",
+    "Найден близкий пример с другим результатом. Объекты сравнивались по характеристикам: значения исходных показателей. Это показывает, что отдельное сходство встречается у разных результатов и ограничивает доверие."
+  ],
+  "summary": "## Решение\nМодель определила: метка benign в исследовательском наборе.\n\n## Почему\nЗначение находится в верхних 24% распределения среди 341 объектов (обучающая выборка). Поэтому этот показатель поддерживает прогноз.\nЗначение находится в верхних 9% распределения среди 341 объектов (обучающая выборка). Поэтому этот показатель поддерживает прогноз.\nЗначение находится в верхних 15% распределения среди 341 объектов (обучающая выборка). Поэтому этот показатель поддерживает прогноз.\n\n## Что вызывает сомнение\nМодель сначала научилась правильно распознавать исследуемый объект case_real_001. После 9-го этапа обучения она снова начала ошибаться и стала хуже различать редкие случаи этого типа.\nДля части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено.\n\n## Насколько можно доверять\nРешение поддерживают: максимальная выраженность вогнутых участков контура, worst symmetry, worst concavity. Доверие ограничивают: редкий тип стал распознаваться хуже, не все проверки подтверждены. Эти ограничения не позволяют использовать результат автоматически.\n\n## Что делать\nНе использовать классификацию как медицинское заключение; проверить evidence и ограничения протокола.\n\n## Что изменит результат\nЕсли увеличить показатель «worst texture» с 26,93 до 30,38, повторный запуск модели меняет прогноз с «метка benign в исследовательском наборе» на «метка malignant в исследовательском наборе». Оценка выбранного класса изменилась с 62% до 52%. Это анализ чувствительности модели, а не рекомендация изменить реальный объект. Практическая выполнимость изменения не подтверждена.\n",
+  "trust": [
+    "Решение поддерживают: максимальная выраженность вогнутых участков контура, worst symmetry, worst concavity. Доверие ограничивают: редкий тип стал распознаваться хуже, не все проверки подтверждены. Эти ограничения не позволяют использовать результат автоматически.",
+    "Не использовать классификацию как медицинское заключение; проверить evidence и ограничения протокола."
+  ],
+  "what_would_change_result": [
+    {
+      "actionability": "Это анализ чувствительности модели, а не рекомендация изменить реальный объект. Практическая выполнимость изменения не подтверждена.",
+      "changed_value": 30.38,
+      "claim_refs": [
+        "C-038"
+      ],
+      "direction": "increase",
+      "evidence_refs": [
+        "counterfactual:0"
+      ],
+      "explanation": "Если увеличить показатель «worst texture» с 26,93 до 30,38, повторный запуск модели меняет прогноз с «метка benign в исследовательском наборе» на «метка malignant в исследовательском наборе». Оценка выбранного класса изменилась с 62% до 52%. Это анализ чувствительности модели, а не рекомендация изменить реальный объект. Практическая выполнимость изменения не подтверждена.",
+      "feature": "worst texture",
+      "observed_effect": -0.096824,
+      "original_value": 26.93,
+      "plausibility": 1.0,
+      "prediction_after": 1,
+      "prediction_before": 0,
+      "title": "Что изменится при изменении показателя «worst texture»"
+    }
+  ]
+}

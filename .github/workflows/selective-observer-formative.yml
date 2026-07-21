@@ -1,0 +1,47 @@
+name: Selective observer formative gate
+
+on:
+  push:
+    branches:
+      - feat/selective-observer-formative
+  pull_request:
+    paths:
+      - "framework/fuzzyxai/fuzzyxai/selective_observer/**"
+      - "scripts/selective_observer/**"
+      - "study/selective_observer/**"
+      - "tests/selective_observer/**"
+      - "docs/SELECTIVE_OBSERVER_RESEARCH_CYCLE.md"
+      - "Makefile"
+      - "pyproject.toml"
+      - ".github/workflows/selective-observer-formative.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  formative-boundary:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      OMP_NUM_THREADS: "1"
+      OPENBLAS_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
+      NUMEXPR_NUM_THREADS: "1"
+      PYTHONHASHSEED: "0"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Install focused dependencies
+        run: python -m pip install -e ".[dev]"
+      - name: Verify frozen predecessor
+        run: test "$(git merge-base HEAD e34e52fb8ae62ee1be043d6d5b26a0c9214a0572)" = "e34e52fb8ae62ee1be043d6d5b26a0c9214a0572"
+      - name: Formative protocol gate
+        run: make selective-observer-formative-check
+      - name: Lint selective observer
+        run: ruff check framework/fuzzyxai/fuzzyxai/selective_observer scripts/selective_observer tests/selective_observer

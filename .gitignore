@@ -29,3 +29,47 @@ fuzzyxai_doctoral_runtime_release.zip
 
 # Reproducibility package timestamp copies
 fuzzyxai_experiments/reports/*_20*.json
+
+# Framework completion: generated evidence and release archives
+release_evidence/generated/
+release_artifacts/
+release_evidence/q1_final/
+reports/q1_final/
+release_evidence/ai_pre_review/
+reports/ai_pre_review/
+dissertation_artifacts/ai_pre_review/
+release_artifacts/ai_pre_review/
+study/ai_pre_review/master_explanation_log.jsonl
+study/ai_pre_review/AI_REVIEW_MASTER_LOG.md
+study/ai_pre_review/batch_manifest.json
+study/ai_pre_review/chatgpt_batches/
+study/ai_pre_review/method_identity_key.encrypted
+study/ai_pre_review/human_confirmation/
+release_evidence/ai_pre_review_final/
+reports/ai_pre_review_final/
+dissertation_artifacts/ai_pre_review_final/
+study/ai_pre_review_final/reviewer_cases.jsonl
+study/ai_pre_review_final/BLIND_REVIEW_MASTER_LOG.md
+study/ai_pre_review_final/blind_batch_manifest.json
+study/ai_pre_review_final/blind_batches/
+study/ai_pre_review_final/evidence/
+study/ai_pre_review_final/private/
+study/ai_pre_review_final/human_confirmation/
+dissertation_artifacts/q1_final/
+*.whl
+*.tar.gz
+
+# Protected external-study records are imported only in guarded CI.
+study/q1_final/**/raw_anonymized/
+study/q1_final/**/signed_records/
+
+# Quarantined/generated ecosystem content must not return to main
+site/dubnaxai/
+
+# Confirmatory raw/processed data and encrypted labels stay local. Only manifests are versioned.
+data/confirmatory/*/raw/
+data/confirmatory/*/processed/
+data/confirmatory/**/*.enc
+
+# OOF rows contain development labels and belong only in the sealed evidence bundle.
+study/final_confirmatory_closure/oof_features/

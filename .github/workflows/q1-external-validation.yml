@@ -1,0 +1,61 @@
+name: Q1 protected external validation
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  PYTHONPATH: framework/fuzzyxai:.
+  OMP_NUM_THREADS: "1"
+  OPENBLAS_NUM_THREADS: "1"
+  MKL_NUM_THREADS: "1"
+  NUMEXPR_NUM_THREADS: "1"
+
+jobs:
+  external-gates:
+    runs-on: ubuntu-latest
+    environment: q1-external-study-data
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: |
+          python -m pip install --no-deps -e .
+          python -m pip install numpy pandas scipy scikit-learn PyYAML
+      - name: Import protected anonymized study bundle
+        env:
+          Q1_EXTERNAL_STUDY_BUNDLE_B64: ${{ secrets.Q1_EXTERNAL_STUDY_BUNDLE_B64 }}
+        run: |
+          test -n "$Q1_EXTERNAL_STUDY_BUNDLE_B64"
+          printf '%s' "$Q1_EXTERNAL_STUDY_BUNDLE_B64" | base64 --decode > /tmp/q1-external.tgz
+          tar -xzf /tmp/q1-external.tgz -C .
+      - name: Score frozen external studies
+        run: |
+          python scripts/q1_final/score_domain_review.py \
+            --reviewers study/q1_final/domain_language_review/raw_anonymized/domain_reviewers.json \
+            --findings study/q1_final/domain_language_review/raw_anonymized/domain_findings.csv \
+            --dictionary study/q1_final/domain_language_review/dictionary_after.json \
+            --cards study/q1_final/domain_language_review/cards.json \
+            --output release_evidence/q1_final/external/domain_language_review/scoring.json
+          python scripts/q1_final/score_comprehension.py \
+            --responses study/q1_final/comprehension/raw_anonymized/responses.csv \
+            --assignments study/q1_final/comprehension/assignments.json \
+            --output release_evidence/q1_final/external/comprehension/scoring.json
+          python scripts/q1_final/score_expert_action_review.py \
+            --responses study/q1_final/expert_action_review/raw_anonymized/responses.csv \
+            --output release_evidence/q1_final/external/expert_action_review/scoring.json
+      - name: Strict external verification
+        run: python scripts/q1_final/verify_external_gates.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: q1-final-external-scored-${{ github.sha }}
+          path: release_evidence/q1_final/external
+          if-no-files-found: error
+          retention-days: 30

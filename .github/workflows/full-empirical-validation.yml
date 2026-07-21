@@ -1,0 +1,186 @@
+name: FuzzyXAI full empirical validation
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - feat/full-empirical-validation
+
+concurrency:
+  group: full-empirical-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  protocol-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      OMP_NUM_THREADS: "1"
+      OPENBLAS_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
+      NUMEXPR_NUM_THREADS: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install core framework
+        run: python -m pip install -e ".[dev]"
+      - name: Contract tests
+        run: python -m pytest -q tests/test_full_empirical_contracts.py
+      - name: Controlled protocol smoke
+        run: |
+          python scripts/run_full_empirical_validation.py --profile smoke --output /tmp/fuzzyxai-empirical-smoke
+          python scripts/verify_full_empirical_validation.py --profile smoke --root /tmp/fuzzyxai-empirical-smoke
+      - name: Empirical source lint
+        run: |
+          ruff check \
+            framework/fuzzyxai/fuzzyxai/experiments/contracts.py \
+            framework/fuzzyxai/fuzzyxai/experiments/critical_rupture.py \
+            framework/fuzzyxai/fuzzyxai/experiments/datasets.py \
+            framework/fuzzyxai/fuzzyxai/experiments/metrics.py \
+            framework/fuzzyxai/fuzzyxai/experiments/policies.py \
+            framework/fuzzyxai/fuzzyxai/experiments/statistics.py \
+            framework/fuzzyxai/fuzzyxai/experiments/uncertainty_selection.py \
+            framework/fuzzyxai/fuzzyxai/experiments/baselines.py \
+            framework/fuzzyxai/fuzzyxai/experiments/calibration_grid.py \
+            framework/fuzzyxai/fuzzyxai/experiments/protocols.py \
+            framework/fuzzyxai/fuzzyxai/experiments/scalability.py \
+            framework/fuzzyxai/fuzzyxai/experiments/sensitivity.py \
+            scripts/run_full_empirical_validation.py \
+            scripts/run_optional_multimodal_models.py \
+            scripts/verify_full_empirical_validation.py
+
+  full-e1-e8:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    env:
+      OMP_NUM_THREADS: "1"
+      OPENBLAS_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
+      NUMEXPR_NUM_THREADS: "1"
+      PYTHONHASHSEED: "42"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install locked empirical environment
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.lock
+          python -m pip install --no-deps -e .
+      - name: Run full E1-E8 reproduction
+        run: |
+          set -o pipefail
+          python scripts/reproduce_all.py --profile full 2>&1 | tee /tmp/full-empirical.log
+      - name: Verify clean evidence checksums
+        run: python scripts/verify_reproduction.py --profile full
+      - name: Upload raw empirical evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: fuzzyxai-full-empirical-raw-${{ github.sha }}
+          path: |
+            /tmp/full-empirical.log
+            release_evidence/full_empirical_validation
+            dissertation_artifacts/chapter3
+            dissertation_artifacts/chapter4
+            dissertation_artifacts/claims
+            dissertation_artifacts/tables_manifest.json
+            reports/empirical_validation
+            release_artifacts/fuzzyxai-full-empirical-evidence-*.zip
+            release_artifacts/fuzzyxai-full-empirical-evidence-*.zip.sha256
+            release_artifacts/fuzzyxai-dissertation-artifacts-*.zip
+            release_artifacts/fuzzyxai-dissertation-artifacts-*.zip.sha256
+            release_artifacts/fuzzyxai-reproducibility-bundle-*.zip
+            release_artifacts/fuzzyxai-reproducibility-bundle-*.zip.sha256
+            release_artifacts/empirical_archive_verification.json
+          retention-days: 30
+
+  docker-reproduction:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build locked reproduction image
+        run: docker build --build-arg FUZZYXAI_COMMIT="${{ github.sha }}" --build-arg FUZZYXAI_BRANCH="${{ github.ref_name }}" -t fuzzyxai:full-empirical .
+      - name: Run complete reproduction in container
+        run: |
+          set -o pipefail
+          docker run --rm fuzzyxai:full-empirical make reproduce-dissertation 2>&1 | tee /tmp/docker-reproduction.log
+      - name: Record successful Docker execution
+        run: |
+          printf '%s\n' '{"schema_version":"1.0","status":"PASS","command":"docker run --rm fuzzyxai:full-empirical make reproduce-dissertation","commit":"${{ github.sha }}"}' > docker_reproduction.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: fuzzyxai-docker-reproduction-${{ github.sha }}
+          path: |
+            docker_reproduction.json
+            /tmp/docker-reproduction.log
+          retention-days: 30
+
+  aggregate-evidence:
+    needs: [protocol-smoke, full-e1-e8, docker-reproduction]
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - uses: actions/download-artifact@v4
+        with:
+          name: fuzzyxai-full-empirical-raw-${{ github.sha }}
+          path: /tmp/raw-empirical
+      - uses: actions/download-artifact@v4
+        with:
+          name: fuzzyxai-docker-reproduction-${{ github.sha }}
+          path: /tmp/docker-status
+      - name: Merge CI and Docker evidence
+        run: |
+          run_manifest="$(find /tmp/raw-empirical -path '*/release_evidence/full_empirical_validation/run_manifest.json' -type f -print -quit)"
+          docker_status="$(find /tmp/docker-status -name docker_reproduction.json -type f -print -quit)"
+          test -n "$run_manifest"
+          test -n "$docker_status"
+          raw_root="$(dirname "$(dirname "$(dirname "$run_manifest")")")"
+          cp -a "$raw_root/release_evidence/full_empirical_validation" release_evidence/
+          cp -a "$raw_root/dissertation_artifacts/chapter3" dissertation_artifacts/
+          cp -a "$raw_root/dissertation_artifacts/chapter4" dissertation_artifacts/
+          cp -a "$raw_root/dissertation_artifacts/claims" dissertation_artifacts/
+          cp "$raw_root/dissertation_artifacts/tables_manifest.json" dissertation_artifacts/tables_manifest.json
+          cp -a "$raw_root/reports/empirical_validation" reports/
+          cp -a "$raw_root/release_artifacts/." release_artifacts/
+          cp "$docker_status" release_evidence/full_empirical_validation/docker_reproduction.json
+          printf '%s\n' '{"schema_version":"1.0","status":"PASS","job":"protocol-smoke","commit":"${{ github.sha }}"}' > release_evidence/full_empirical_validation/ci_fast_status.json
+          printf '%s\n' '{"schema_version":"1.0","status":"PASS","job":"full-e1-e8","commit":"${{ github.sha }}"}' > release_evidence/full_empirical_validation/ci_heavy_status.json
+      - name: Freeze final DoD and checksums
+        run: |
+          python scripts/build_empirical_dod.py
+          python scripts/rebuild_empirical_manifest.py
+          python scripts/verify_reproduction.py --profile full
+          python scripts/build_empirical_archives.py
+          python scripts/verify_empirical_archives.py
+          python scripts/build_empirical_dod.py
+          python scripts/rebuild_empirical_manifest.py
+          python scripts/build_empirical_archives.py
+          python scripts/verify_empirical_archives.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fuzzyxai-full-empirical-final-${{ github.sha }}
+          path: |
+            release_evidence/full_empirical_validation
+            dissertation_artifacts/chapter3
+            dissertation_artifacts/chapter4
+            dissertation_artifacts/claims
+            dissertation_artifacts/tables_manifest.json
+            reports/empirical_validation
+            release_artifacts/fuzzyxai-full-empirical-evidence-*.zip
+            release_artifacts/fuzzyxai-full-empirical-evidence-*.zip.sha256
+            release_artifacts/fuzzyxai-dissertation-artifacts-*.zip
+            release_artifacts/fuzzyxai-dissertation-artifacts-*.zip.sha256
+            release_artifacts/fuzzyxai-reproducibility-bundle-*.zip
+            release_artifacts/fuzzyxai-reproducibility-bundle-*.zip.sha256
+            release_artifacts/empirical_archive_verification.json
+          retention-days: 30

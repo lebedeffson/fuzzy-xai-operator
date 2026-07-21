@@ -1,0 +1,18 @@
+{
+  "configuration_count": 40,
+  "missing_optional_reports": [],
+  "release_claim": "Only rows with status=pass are runtime-verified; missing reports never become pass.",
+  "schema_version": "1.0",
+  "status_counts": {
+    "pass": 40
+  },
+  "verified_optional_libraries": [
+    "catboost",
+    "lightgbm",
+    "onnx",
+    "tensorflow",
+    "torch",
+    "xgboost"
+  ],
+  "version_conflicts": []
+}

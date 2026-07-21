@@ -1,0 +1,16 @@
+parameter,factor,value,changed_action_fraction,accept_fraction,review_fraction,block_fraction,false_blocks,missed_critical_cases,mean_cost
+confidence_threshold,0.5,0.325,0.2345,0.7265,0.2635,0.01,18,0,1.18975
+confidence_threshold,0.75,0.48750000000000004,0.2345,0.7265,0.2635,0.01,18,0,1.18975
+confidence_threshold,1.0,0.65,0.0,0.492,0.498,0.01,18,0,1.1395
+confidence_threshold,1.25,0.8125,0.224,0.268,0.722,0.01,18,0,1.2035
+confidence_threshold,1.5,0.9750000000000001,0.4695,0.0225,0.9675,0.01,18,0,1.47575
+conflict_threshold,0.5,0.05,0.0,0.492,0.498,0.01,18,0,1.1395
+conflict_threshold,0.75,0.07500000000000001,0.0,0.492,0.498,0.01,18,0,1.1395
+conflict_threshold,1.0,0.1,0.0,0.492,0.498,0.01,18,0,1.1395
+conflict_threshold,1.25,0.125,0.0,0.492,0.498,0.01,18,0,1.1395
+conflict_threshold,1.5,0.15000000000000002,0.0,0.492,0.498,0.01,18,0,1.1395
+stability_threshold,0.5,0.275,0.1805,0.6725,0.3175,0.01,18,0,0.95275
+stability_threshold,0.75,0.41250000000000003,0.0915,0.5835,0.4065,0.01,18,0,1.05825
+stability_threshold,1.0,0.55,0.0,0.492,0.498,0.01,18,0,1.1395
+stability_threshold,1.25,0.6875,0.092,0.4,0.59,0.01,18,0,1.2215
+stability_threshold,1.5,0.8250000000000001,0.2285,0.2635,0.7265,0.01,18,0,1.30825

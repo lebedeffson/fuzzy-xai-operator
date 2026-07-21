@@ -55,6 +55,43 @@ REQUIRED: dict[str, tuple[str, ...]] = {
     "route": ("scenario_id", "nodes", "computed_result", "final_action"),
     "proof_trace": ("package_type", "scenario_id", "route", "computed_result", "final_action"),
     "operator_trace": ("scenario_id", "nodes", "edges", "computed_result"),
+    "explanation_view_model": (
+        "schema_version",
+        "model",
+        "route",
+        "risk",
+        "diagnostics",
+        "trace",
+        "layers",
+        "explanation_graph",
+        "human_explanations",
+    ),
+    "explanation_visual_spec": (
+        "schema_version",
+        "overview",
+        "story",
+        "data_profile",
+        "training_timeline",
+        "knowledge_atlas",
+        "decision_evidence",
+        "similar_cases",
+        "counterfactuals",
+        "rule_ablations",
+        "provenance_nodes",
+        "provenance_edges",
+        "audit",
+    ),
+    "human_explanation": (
+        "audience",
+        "language",
+        "decision",
+        "main_reasons",
+        "concerns",
+        "reliability",
+        "recommended_action",
+        "what_would_change_result",
+        "details",
+    ),
 }
 
 
@@ -78,6 +115,60 @@ def validate_payload(payload: dict[str, Any], schema: str) -> ValidationResult:
             errors.append(f"{object_field} must be object")
     if schema in {"route", "operator_trace"} and "nodes" in payload and not isinstance(payload["nodes"], list):
         errors.append("nodes must be array")
+    if schema == "explanation_view_model":
+        if payload.get("schema_version") != "2.0":
+            errors.append("schema_version must be 2.0")
+        for object_field in ("model", "risk", "trace", "layers", "explanation_graph", "human_explanations"):
+            if object_field in payload and not isinstance(payload[object_field], dict):
+                errors.append(f"{object_field} must be object")
+    if schema == "explanation_visual_spec":
+        if payload.get("schema_version") != "1.1":
+            errors.append("schema_version must be 1.1")
+        for object_field in ("overview", "knowledge_atlas", "decision_evidence", "audit"):
+            if object_field in payload and not isinstance(payload[object_field], dict):
+                errors.append(f"{object_field} must be object")
+        for array_field in ("story", "data_profile", "training_timeline", "similar_cases", "counterfactuals", "rule_ablations", "provenance_nodes", "provenance_edges"):
+            if array_field in payload and not isinstance(payload[array_field], (list, tuple)):
+                errors.append(f"{array_field} must be array")
+    if schema == "human_explanation":
+        if payload.get("audience") not in {"domain_user", "ml_engineer", "researcher", "auditor"}:
+            errors.append("audience must be domain_user, ml_engineer, researcher, or auditor")
+        for object_field in ("decision", "reliability", "recommended_action", "details"):
+            if object_field in payload and not isinstance(payload[object_field], dict):
+                errors.append(f"{object_field} must be object")
+        for array_field in ("main_reasons", "concerns", "what_would_change_result"):
+            if array_field in payload and not isinstance(payload[array_field], (list, tuple)):
+                errors.append(f"{array_field} must be array")
+        decision = payload.get("decision", {})
+        if isinstance(decision, dict) and decision.get("domain_language_status") not in {
+            "available",
+            "insufficient_domain_language",
+        }:
+            errors.append("decision.domain_language_status is required")
+        for index, reason in enumerate(payload.get("main_reasons", ())):
+            if not isinstance(reason, dict) or not all(
+                reason.get(field) for field in ("subject_label", "effect_direction", "comparison_text")
+            ):
+                errors.append(f"main_reasons[{index}] lacks subject, direction, or comparison")
+        reliability = payload.get("reliability", {})
+        if isinstance(reliability, dict):
+            for field in ("supported_by", "limited_by", "missing_evidence", "conclusion"):
+                if field not in reliability:
+                    errors.append(f"reliability.{field} is required")
+        for index, change in enumerate(payload.get("what_would_change_result", ())):
+            required_change = (
+                "feature",
+                "original_value",
+                "changed_value",
+                "direction",
+                "prediction_before",
+                "prediction_after",
+                "observed_effect",
+                "plausibility",
+                "actionability",
+            )
+            if not isinstance(change, dict) or any(field not in change for field in required_change):
+                errors.append(f"what_would_change_result[{index}] is incomplete")
     return ValidationResult(not errors, errors, schema)
 
 

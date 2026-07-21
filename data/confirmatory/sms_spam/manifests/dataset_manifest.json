@@ -1,0 +1,15 @@
+{
+  "dataset_id": "sms_spam",
+  "development_ids_sha256": "4d1491fa8dead757578aca08dab72869da83e2c21c4520ee8646503c1de41ffa",
+  "download_sha256": "1587ea43e58e82b14ff1f5425c88e17f8496bfcdb67a583dbff9eefaf9963ce3",
+  "grouping_key": "normalized_text_minhash_cluster",
+  "label_vault_path": "data/confirmatory/sms_spam/manifests/confirmatory_label_vault.enc",
+  "label_vault_sha256": "07c8dac6ce6864075912d66f304fab27b8e6b210eff243bac74461d9c87c5fbe",
+  "license": "CC BY 4.0",
+  "modality": "text",
+  "preprocessing_sha256": "b4b4f03ef71d1be5356e9e930794b61e79c4ff81e5764f3c9a621b9f85907a22",
+  "source": "https://archive.ics.uci.edu/static/public/228/sms+spam+collection.zip",
+  "test_ids_sha256": "bd0f6818a67f718394d0790b6913f6f63209acf8579c38a4b82bb47eabd60b90",
+  "train_ids_sha256": "f6b8f371292378c9cf14be3d6201ec4fc9d4b5711d0f5abd98f1b44f09d5755f",
+  "used_in_formative_tuning": false
+}

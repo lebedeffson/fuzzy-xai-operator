@@ -1,0 +1,159 @@
+{
+  "calibration": {
+    "candidates": [
+      {
+        "development_brier_correctness": 0.01237638351954726,
+        "method": "platt",
+        "n": 1032
+      },
+      {
+        "development_brier_correctness": 0.012229934305119402,
+        "method": "isotonic",
+        "n": 1032
+      },
+      {
+        "development_brier_correctness": 0.010035139223698366,
+        "method": "temperature",
+        "n": 1032
+      },
+      {
+        "development_brier_correctness": 0.012324455729317686,
+        "method": "conformal",
+        "n": 1032
+      }
+    ],
+    "per_row_mapping_fit_excludes_row": true,
+    "selected_method": "temperature",
+    "selection_partition": "development",
+    "test_labels_used": false
+  },
+  "dataset_id": "sms_spam",
+  "fold_artifacts": [
+    {
+      "fold": 0,
+      "role": "primary",
+      "sha256": "b2181375a40b70dd6879d8d7a5b01d41375a5c0c20b033c655abbfd3d07d9392"
+    },
+    {
+      "fold": 0,
+      "role": "alternate",
+      "sha256": "4c4c85e3492ee85e6af91a9e5a199bd157b273bb6740758e76dcb74650652d34"
+    },
+    {
+      "fold": 0,
+      "role": "seed",
+      "sha256": "439eed7ce1b2dacfcf17173dc4693493dd4a0a83728540e4d438b0bd468dc2b3"
+    },
+    {
+      "fold": 0,
+      "role": "bootstrap",
+      "sha256": "6aff73123bbcc86e48d6d2f0decfa5c9c402e81c2c54e85356e8bc897a3a235d"
+    },
+    {
+      "fold": 1,
+      "role": "primary",
+      "sha256": "ed8cee98c6f867062360fcb5bd9c906835f6714bbe587a7b78b41ca30e553bab"
+    },
+    {
+      "fold": 1,
+      "role": "alternate",
+      "sha256": "f4ebe397235cc0522749317d5ac2cf359d9ceb54c458ad2d82a4a37cf5c13248"
+    },
+    {
+      "fold": 1,
+      "role": "seed",
+      "sha256": "447746a4cde04d41f383403e3d1c4133aebf5872014447b4798104d73850b2a1"
+    },
+    {
+      "fold": 1,
+      "role": "bootstrap",
+      "sha256": "d4cdac7f93f6e1415fa7f247b1bdd9f390848cc9e7a9c36dbe8e2870fc4f87ca"
+    },
+    {
+      "fold": 2,
+      "role": "primary",
+      "sha256": "db8d569b099ff82647eaae4256ce31aaad6cd72c6693d97085cb46b35ca63a7c"
+    },
+    {
+      "fold": 2,
+      "role": "alternate",
+      "sha256": "76d37326f369c0ca455d9896d4c7b091ccb3751b8893af89d7489106db862afa"
+    },
+    {
+      "fold": 2,
+      "role": "seed",
+      "sha256": "d314fb1642d70ceac8170126ce53cd8b96081196007798fe1d75f21dbeec3dce"
+    },
+    {
+      "fold": 2,
+      "role": "bootstrap",
+      "sha256": "269785bf26311c14c706afb3d871aead756a03968bd91fb05838dbc84255ef0c"
+    },
+    {
+      "fold": 3,
+      "role": "primary",
+      "sha256": "451f2097adeb50594592dbe3af88dde9a004d37191c96213f5c17e7bf5105c13"
+    },
+    {
+      "fold": 3,
+      "role": "alternate",
+      "sha256": "f0be0480595235207fbbef817d3bf3f78ae716b9ee0b57f36954559432fe7f24"
+    },
+    {
+      "fold": 3,
+      "role": "seed",
+      "sha256": "2c71d352f23ad8dcd637adc07244bc7c5e4c0915ec484e35c3621aafd033bed0"
+    },
+    {
+      "fold": 3,
+      "role": "bootstrap",
+      "sha256": "553b8e4b7be57629172b10fdd8e397dda30a169c135d0c5ad63bb7dbd301627f"
+    },
+    {
+      "fold": 4,
+      "role": "primary",
+      "sha256": "50661b0918ffadfa26a3f8072e8923f6f3552b6b2906ebbc21b94ac9866da325"
+    },
+    {
+      "fold": 4,
+      "role": "alternate",
+      "sha256": "2af7efdb7164b4a7462e37c9a5ee89a4e40a3daf968b6234458b78aef7937729"
+    },
+    {
+      "fold": 4,
+      "role": "seed",
+      "sha256": "e0c27d47577b71e726786d3fccfdb267ab8176c298f2d760f0ba4929e68213eb"
+    },
+    {
+      "fold": 4,
+      "role": "bootstrap",
+      "sha256": "3655d88b0f7a55ad04b5286f162c10e91f774a28757357151f94c86613a55786"
+    }
+  ],
+  "modality": "text",
+  "models": {
+    "alternate": {
+      "family": "naive_bayes",
+      "model_id": "tfidf_complement_naive_bayes",
+      "representation": "tfidf_1_2gram"
+    },
+    "optional_embedding_model": "not_installed_not_verified",
+    "primary": {
+      "family": "calibrated_linear",
+      "model_id": "tfidf_sgd_logistic_calibrated",
+      "representation": "tfidf_1_2gram"
+    }
+  },
+  "schema_version": "1.0",
+  "sealed_test_loaded": false,
+  "source_commit": "9def80e4871f49f0abb18fb8b7972b60a03be720",
+  "training_scope": "five_fold_cross_fitted_train_development_only",
+  "versions": {
+    "numpy": "2.5.1",
+    "pandas": "3.0.3",
+    "python": "3.12.12",
+    "scikit-learn": "1.9.0",
+    "scipy": "1.18.0",
+    "torch": "2.13.0+cpu"
+  }
+}

@@ -1,0 +1,802 @@
+[
+  {
+    "assignment_slot": "slot_001",
+    "condition_order": "A_then_B",
+    "object_order_seed": 9200,
+    "participant_id": null,
+    "stimulus_ids": [
+      "stimulus_001",
+      "stimulus_003",
+      "stimulus_005",
+      "stimulus_007",
+      "stimulus_009",
+      "stimulus_011",
+      "stimulus_013",
+      "stimulus_015",
+      "stimulus_017",
+      "stimulus_019",
+      "stimulus_021",
+      "stimulus_023"
+    ]
+  },
+  {
+    "assignment_slot": "slot_002",
+    "condition_order": "B_then_A",
+    "object_order_seed": 9201,
+    "participant_id": null,
+    "stimulus_ids": [
+      "stimulus_002",
+      "stimulus_004",
+      "stimulus_006",
+      "stimulus_008",
+      "stimulus_010",
+      "stimulus_012",
+      "stimulus_014",
+      "stimulus_016",
+      "stimulus_018",
+      "stimulus_020",
+      "stimulus_022",
+      "stimulus_024"
+    ]
+  },
+  {
+    "assignment_slot": "slot_003",
+    "condition_order": "A_then_B",
+    "object_order_seed": 9202,
+    "participant_id": null,
+    "stimulus_ids": [
+      "stimulus_003",
+      "stimulus_005",
+      "stimulus_007",
+      "stimulus_009",
+      "stimulus_011",
+      "stimulus_013",
+      "stimulus_015",
+      "stimulus_017",
+      "stimulus_019",
+      "stimulus_021",
+      "stimulus_023",
+      "stimulus_001"
+    ]
+  },
+  {
+    "assignment_slot": "slot_004",
+    "condition_order": "B_then_A",
+    "object_order_seed": 9203,
+    "participant_id": null,
+    "stimulus_ids": [
+      "stimulus_004",
+      "stimulus_006",
+      "stimulus_008",
+      "stimulus_010",
+      "stimulus_012",
+      "stimulus_014",
+      "stimulus_016",
+      "stimulus_018",
+      "stimulus_020",
+      "stimulus_022",
+      "stimulus_024",
+      "stimulus_002"
+    ]
+  },
+  {
+    "assignment_slot": "slot_005",
+    "condition_order": "A_then_B",
+    "object_order_seed": 9204,
+    "participant_id": null,
+    "stimulus_ids": [
+      "stimulus_005",
+      "stimulus_007",
+      "stimulus_009",
+      "stimulus_011",
+      "stimulus_013",
+      "stimulus_015",
+      "stimulus_017",
+      "stimulus_019",
+      "stimulus_021",
+      "stimulus_023",
+      "stimulus_001",
+      "stimulus_003"
+    ]
+  },
+  {
+    "assignment_slot": "slot_006",
+    "condition_order": "B_then_A",
+    "object_order_seed": 9205,
+    "participant_id": null,
+    "stimulus_ids": [
+      "stimulus_006",
+      "stimulus_008",
+      "stimulus_010",
+      "stimulus_012",
+      "stimulus_014",
+      "stimulus_016",
+      "stimulus_018",
+      "stimulus_020",
+      "stimulus_022",
+      "stimulus_024",
+      "stimulus_002",
+      "stimulus_004"
+    ]
+  },
+  {
+    "assignment_slot": "slot_007",
+    "condition_order": "A_then_B",
+    "object_order_seed": 9206,
+    "participant_id": null,
+    "stimulus_ids": [
+      "stimulus_007",
+      "stimulus_009",
+      "stimulus_011",
+      "stimulus_013",
+      "stimulus_015",
+      "stimulus_017",
+      "stimulus_019",
+      "stimulus_021",
+      "stimulus_023",
+      "stimulus_001",
+      "stimulus_003",
+      "stimulus_005"
+    ]
+  },
+  {
+    "assignment_slot": "slot_008",
+    "condition_order": "B_then_A",
+    "object_order_seed": 9207,
+    "participant_id": null,
+    "stimulus_ids": [
+      "stimulus_008",
+      "stimulus_010",
+      "stimulus_012",
+      "stimulus_014",
+      "stimulus_016",
+      "stimulus_018",
+      "stimulus_020",
+      "stimulus_022",
+      "stimulus_024",
+      "stimulus_002",
+      "stimulus_004",
+      "stimulus_006"
+    ]
+  },
+  {
+    "assignment_slot": "slot_009",
+    "condition_order": "A_then_B",
+    "object_order_seed": 9208,
+    "participant_id": null,
+    "stimulus_ids": [
+      "stimulus_009",
+      "stimulus_011",
+      "stimulus_013",
+      "stimulus_015",
+      "stimulus_017",
+      "stimulus_019",
+      "stimulus_021",
+      "stimulus_023",
+      "stimulus_001",
+      "stimulus_003",
+      "stimulus_005",
+      "stimulus_007"
+    ]
+  },
+  {
+    "assignment_slot": "slot_010",
+    "condition_order": "B_then_A",
+    "object_order_seed": 9209,
+    "participant_id": null,
+    "stimulus_ids": [
+      "stimulus_010",
+      "stimulus_012",
+      "stimulus_014",
+      "stimulus_016",
+      "stimulus_018",
+      "stimulus_020",
+      "stimulus_022",
+      "stimulus_024",
+      "stimulus_002",
+      "stimulus_004",
+      "stimulus_006",
+      "stimulus_008"
+    ]
+  },
+  {
+    "assignment_slot": "slot_011",
+    "condition_order": "A_then_B",
+    "object_order_seed": 9210,
+    "participant_id": null,
+    "stimulus_ids": [
+      "stimulus_011",
+      "stimulus_013",
+      "stimulus_015",
+      "stimulus_017",
+      "stimulus_019",
+      "stimulus_021",
+      "stimulus_023",
+      "stimulus_001",
+      "stimulus_003",
+      "stimulus_005",
+      "stimulus_007",
+      "stimulus_009"
+    ]
+  },
+  {
+    "assignment_slot": "slot_012",
+    "condition_order": "B_then_A",
+    "object_order_seed": 9211,
+    "participant_id": null,
+    "stimulus_ids": [
+      "stimulus_012",
+      "stimulus_014",
+      "stimulus_016",
+      "stimulus_018",
+      "stimulus_020",
+      "stimulus_022",
+      "stimulus_024",
+      "stimulus_002",
+      "stimulus_004",
+      "stimulus_006",
+      "stimulus_008",
+      "stimulus_010"
+    ]
+  },
+  {
+    "assignment_slot": "slot_013",
+    "condition_order": "A_then_B",
+    "object_order_seed": 9212,
+    "participant_id": null,
+    "stimulus_ids": [
+      "stimulus_013",
+      "stimulus_015",
+      "stimulus_017",
+      "stimulus_019",
+      "stimulus_021",
+      "stimulus_023",
+      "stimulus_001",
+      "stimulus_003",
+      "stimulus_005",
+      "stimulus_007",
+      "stimulus_009",
+      "stimulus_011"
+    ]
+  },
+  {
+    "assignment_slot": "slot_014",
+    "condition_order": "B_then_A",
+    "object_order_seed": 9213,
+    "participant_id": null,
+    "stimulus_ids": [
+      "stimulus_014",
+      "stimulus_016",
+      "stimulus_018",
+      "stimulus_020",
+      "stimulus_022",
+      "stimulus_024",
+      "stimulus_002",
+      "stimulus_004",
+      "stimulus_006",
+      "stimulus_008",
+      "stimulus_010",
+      "stimulus_012"
+    ]
+  },
+  {
+    "assignment_slot": "slot_015",
+    "condition_order": "A_then_B",
+    "object_order_seed": 9214,
+    "participant_id": null,
+    "stimulus_ids": [
+      "stimulus_015",
+      "stimulus_017",
+      "stimulus_019",
+      "stimulus_021",
+      "stimulus_023",
+      "stimulus_001",
+      "stimulus_003",
+      "stimulus_005",
+      "stimulus_007",
+      "stimulus_009",
+      "stimulus_011",
+      "stimulus_013"
+    ]
+  },
+  {
+    "assignment_slot": "slot_016",
+    "condition_order": "B_then_A",
+    "object_order_seed": 9215,
+    "participant_id": null,
+    "stimulus_ids": [
+      "stimulus_016",
+      "stimulus_018",
+      "stimulus_020",
+      "stimulus_022",
+      "stimulus_024",
+      "stimulus_002",
+      "stimulus_004",
+      "stimulus_006",
+      "stimulus_008",
+      "stimulus_010",
+      "stimulus_012",
+      "stimulus_014"
+    ]
+  },
+  {
+    "assignment_slot": "slot_017",
+    "condition_order": "A_then_B",
+    "object_order_seed": 9216,
+    "participant_id": null,
+    "stimulus_ids": [
+      "stimulus_017",
+      "stimulus_019",
+      "stimulus_021",
+      "stimulus_023",
+      "stimulus_001",
+      "stimulus_003",
+      "stimulus_005",
+      "stimulus_007",
+      "stimulus_009",
+      "stimulus_011",
+      "stimulus_013",
+      "stimulus_015"
+    ]
+  },
+  {
+    "assignment_slot": "slot_018",
+    "condition_order": "B_then_A",
+    "object_order_seed": 9217,
+    "participant_id": null,
+    "stimulus_ids": [
+      "stimulus_018",
+      "stimulus_020",
+      "stimulus_022",
+      "stimulus_024",
+      "stimulus_002",
+      "stimulus_004",
+      "stimulus_006",
+      "stimulus_008",
+      "stimulus_010",
+      "stimulus_012",
+      "stimulus_014",
+      "stimulus_016"
+    ]
+  },
+  {
+    "assignment_slot": "slot_019",
+    "condition_order": "A_then_B",
+    "object_order_seed": 9218,
+    "participant_id": null,
+    "stimulus_ids": [
+      "stimulus_019",
+      "stimulus_021",
+      "stimulus_023",
+      "stimulus_001",
+      "stimulus_003",
+      "stimulus_005",
+      "stimulus_007",
+      "stimulus_009",
+      "stimulus_011",
+      "stimulus_013",
+      "stimulus_015",
+      "stimulus_017"
+    ]
+  },
+  {
+    "assignment_slot": "slot_020",
+    "condition_order": "B_then_A",
+    "object_order_seed": 9219,
+    "participant_id": null,
+    "stimulus_ids": [
+      "stimulus_020",
+      "stimulus_022",
+      "stimulus_024",
+      "stimulus_002",
+      "stimulus_004",
+      "stimulus_006",
+      "stimulus_008",
+      "stimulus_010",
+      "stimulus_012",
+      "stimulus_014",
+      "stimulus_016",
+      "stimulus_018"
+    ]
+  },
+  {
+    "assignment_slot": "slot_021",
+    "condition_order": "A_then_B",
+    "object_order_seed": 9220,
+    "participant_id": null,
+    "stimulus_ids": [
+      "stimulus_021",
+      "stimulus_023",
+      "stimulus_001",
+      "stimulus_003",
+      "stimulus_005",
+      "stimulus_007",
+      "stimulus_009",
+      "stimulus_011",
+      "stimulus_013",
+      "stimulus_015",
+      "stimulus_017",
+      "stimulus_019"
+    ]
+  },
+  {
+    "assignment_slot": "slot_022",
+    "condition_order": "B_then_A",
+    "object_order_seed": 9221,
+    "participant_id": null,
+    "stimulus_ids": [
+      "stimulus_022",
+      "stimulus_024",
+      "stimulus_002",
+      "stimulus_004",
+      "stimulus_006",
+      "stimulus_008",
+      "stimulus_010",
+      "stimulus_012",
+      "stimulus_014",
+      "stimulus_016",
+      "stimulus_018",
+      "stimulus_020"
+    ]
+  },
+  {
+    "assignment_slot": "slot_023",
+    "condition_order": "A_then_B",
+    "object_order_seed": 9222,
+    "participant_id": null,
+    "stimulus_ids": [
+      "stimulus_023",
+      "stimulus_001",
+      "stimulus_003",
+      "stimulus_005",
+      "stimulus_007",
+      "stimulus_009",
+      "stimulus_011",
+      "stimulus_013",
+      "stimulus_015",
+      "stimulus_017",
+      "stimulus_019",
+      "stimulus_021"
+    ]
+  },
+  {
+    "assignment_slot": "slot_024",
+    "condition_order": "B_then_A",
+    "object_order_seed": 9223,
+    "participant_id": null,
+    "stimulus_ids": [
+      "stimulus_024",
+      "stimulus_002",
+      "stimulus_004",
+      "stimulus_006",
+      "stimulus_008",
+      "stimulus_010",
+      "stimulus_012",
+      "stimulus_014",
+      "stimulus_016",
+      "stimulus_018",
+      "stimulus_020",
+      "stimulus_022"
+    ]
+  },
+  {
+    "assignment_slot": "slot_025",
+    "condition_order": "A_then_B",
+    "object_order_seed": 9224,
+    "participant_id": null,
+    "stimulus_ids": [
+      "stimulus_001",
+      "stimulus_003",
+      "stimulus_005",
+      "stimulus_007",
+      "stimulus_009",
+      "stimulus_011",
+      "stimulus_013",
+      "stimulus_015",
+      "stimulus_017",
+      "stimulus_019",
+      "stimulus_021",
+      "stimulus_023"
+    ]
+  },
+  {
+    "assignment_slot": "slot_026",
+    "condition_order": "B_then_A",
+    "object_order_seed": 9225,
+    "participant_id": null,
+    "stimulus_ids": [
+      "stimulus_002",
+      "stimulus_004",
+      "stimulus_006",
+      "stimulus_008",
+      "stimulus_010",
+      "stimulus_012",
+      "stimulus_014",
+      "stimulus_016",
+      "stimulus_018",
+      "stimulus_020",
+      "stimulus_022",
+      "stimulus_024"
+    ]
+  },
+  {
+    "assignment_slot": "slot_027",
+    "condition_order": "A_then_B",
+    "object_order_seed": 9226,
+    "participant_id": null,
+    "stimulus_ids": [
+      "stimulus_003",
+      "stimulus_005",
+      "stimulus_007",
+      "stimulus_009",
+      "stimulus_011",
+      "stimulus_013",
+      "stimulus_015",
+      "stimulus_017",
+      "stimulus_019",
+      "stimulus_021",
+      "stimulus_023",
+      "stimulus_001"
+    ]
+  },
+  {
+    "assignment_slot": "slot_028",
+    "condition_order": "B_then_A",
+    "object_order_seed": 9227,
+    "participant_id": null,
+    "stimulus_ids": [
+      "stimulus_004",
+      "stimulus_006",
+      "stimulus_008",
+      "stimulus_010",
+      "stimulus_012",
+      "stimulus_014",
+      "stimulus_016",
+      "stimulus_018",
+      "stimulus_020",
+      "stimulus_022",
+      "stimulus_024",
+      "stimulus_002"
+    ]
+  },
+  {
+    "assignment_slot": "slot_029",
+    "condition_order": "A_then_B",
+    "object_order_seed": 9228,
+    "participant_id": null,
+    "stimulus_ids": [
+      "stimulus_005",
+      "stimulus_007",
+      "stimulus_009",
+      "stimulus_011",
+      "stimulus_013",
+      "stimulus_015",
+      "stimulus_017",
+      "stimulus_019",
+      "stimulus_021",
+      "stimulus_023",
+      "stimulus_001",
+      "stimulus_003"
+    ]
+  },
+  {
+    "assignment_slot": "slot_030",
+    "condition_order": "B_then_A",
+    "object_order_seed": 9229,
+    "participant_id": null,
+    "stimulus_ids": [
+      "stimulus_006",
+      "stimulus_008",
+      "stimulus_010",
+      "stimulus_012",
+      "stimulus_014",
+      "stimulus_016",
+      "stimulus_018",
+      "stimulus_020",
+      "stimulus_022",
+      "stimulus_024",
+      "stimulus_002",
+      "stimulus_004"
+    ]
+  },
+  {
+    "assignment_slot": "slot_031",
+    "condition_order": "A_then_B",
+    "object_order_seed": 9230,
+    "participant_id": null,
+    "stimulus_ids": [
+      "stimulus_007",
+      "stimulus_009",
+      "stimulus_011",
+      "stimulus_013",
+      "stimulus_015",
+      "stimulus_017",
+      "stimulus_019",
+      "stimulus_021",
+      "stimulus_023",
+      "stimulus_001",
+      "stimulus_003",
+      "stimulus_005"
+    ]
+  },
+  {
+    "assignment_slot": "slot_032",
+    "condition_order": "B_then_A",
+    "object_order_seed": 9231,
+    "participant_id": null,
+    "stimulus_ids": [
+      "stimulus_008",
+      "stimulus_010",
+      "stimulus_012",
+      "stimulus_014",
+      "stimulus_016",
+      "stimulus_018",
+      "stimulus_020",
+      "stimulus_022",
+      "stimulus_024",
+      "stimulus_002",
+      "stimulus_004",
+      "stimulus_006"
+    ]
+  },
+  {
+    "assignment_slot": "slot_033",
+    "condition_order": "A_then_B",
+    "object_order_seed": 9232,
+    "participant_id": null,
+    "stimulus_ids": [
+      "stimulus_009",
+      "stimulus_011",
+      "stimulus_013",
+      "stimulus_015",
+      "stimulus_017",
+      "stimulus_019",
+      "stimulus_021",
+      "stimulus_023",
+      "stimulus_001",
+      "stimulus_003",
+      "stimulus_005",
+      "stimulus_007"
+    ]
+  },
+  {
+    "assignment_slot": "slot_034",
+    "condition_order": "B_then_A",
+    "object_order_seed": 9233,
+    "participant_id": null,
+    "stimulus_ids": [
+      "stimulus_010",
+      "stimulus_012",
+      "stimulus_014",
+      "stimulus_016",
+      "stimulus_018",
+      "stimulus_020",
+      "stimulus_022",
+      "stimulus_024",
+      "stimulus_002",
+      "stimulus_004",
+      "stimulus_006",
+      "stimulus_008"
+    ]
+  },
+  {
+    "assignment_slot": "slot_035",
+    "condition_order": "A_then_B",
+    "object_order_seed": 9234,
+    "participant_id": null,
+    "stimulus_ids": [
+      "stimulus_011",
+      "stimulus_013",
+      "stimulus_015",
+      "stimulus_017",
+      "stimulus_019",
+      "stimulus_021",
+      "stimulus_023",
+      "stimulus_001",
+      "stimulus_003",
+      "stimulus_005",
+      "stimulus_007",
+      "stimulus_009"
+    ]
+  },
+  {
+    "assignment_slot": "slot_036",
+    "condition_order": "B_then_A",
+    "object_order_seed": 9235,
+    "participant_id": null,
+    "stimulus_ids": [
+      "stimulus_012",
+      "stimulus_014",
+      "stimulus_016",
+      "stimulus_018",
+      "stimulus_020",
+      "stimulus_022",
+      "stimulus_024",
+      "stimulus_002",
+      "stimulus_004",
+      "stimulus_006",
+      "stimulus_008",
+      "stimulus_010"
+    ]
+  },
+  {
+    "assignment_slot": "slot_037",
+    "condition_order": "A_then_B",
+    "object_order_seed": 9236,
+    "participant_id": null,
+    "stimulus_ids": [
+      "stimulus_013",
+      "stimulus_015",
+      "stimulus_017",
+      "stimulus_019",
+      "stimulus_021",
+      "stimulus_023",
+      "stimulus_001",
+      "stimulus_003",
+      "stimulus_005",
+      "stimulus_007",
+      "stimulus_009",
+      "stimulus_011"
+    ]
+  },
+  {
+    "assignment_slot": "slot_038",
+    "condition_order": "B_then_A",
+    "object_order_seed": 9237,
+    "participant_id": null,
+    "stimulus_ids": [
+      "stimulus_014",
+      "stimulus_016",
+      "stimulus_018",
+      "stimulus_020",
+      "stimulus_022",
+      "stimulus_024",
+      "stimulus_002",
+      "stimulus_004",
+      "stimulus_006",
+      "stimulus_008",
+      "stimulus_010",
+      "stimulus_012"
+    ]
+  },
+  {
+    "assignment_slot": "slot_039",
+    "condition_order": "A_then_B",
+    "object_order_seed": 9238,
+    "participant_id": null,
+    "stimulus_ids": [
+      "stimulus_015",
+      "stimulus_017",
+      "stimulus_019",
+      "stimulus_021",
+      "stimulus_023",
+      "stimulus_001",
+      "stimulus_003",
+      "stimulus_005",
+      "stimulus_007",
+      "stimulus_009",
+      "stimulus_011",
+      "stimulus_013"
+    ]
+  },
+  {
+    "assignment_slot": "slot_040",
+    "condition_order": "B_then_A",
+    "object_order_seed": 9239,
+    "participant_id": null,
+    "stimulus_ids": [
+      "stimulus_016",
+      "stimulus_018",
+      "stimulus_020",
+      "stimulus_022",
+      "stimulus_024",
+      "stimulus_002",
+      "stimulus_004",
+      "stimulus_006",
+      "stimulus_008",
+      "stimulus_010",
+      "stimulus_012",
+      "stimulus_014"
+    ]
+  }
+]

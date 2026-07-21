@@ -1,0 +1,35 @@
+{
+  "confirmatory": {
+    "exact_manifests": [],
+    "lock_allowed": false,
+    "requirements": [
+      "at least two independent tabular datasets",
+      "one independent image dataset",
+      "one independent text dataset",
+      "one independent time-series dataset with a frozen temporal split"
+    ],
+    "status": "not_opened"
+  },
+  "formative": {
+    "image": [
+      "sklearn digits"
+    ],
+    "tabular": [
+      "sklearn breast cancer",
+      "sklearn wine"
+    ],
+    "text": [
+      "20 Newsgroups development subset"
+    ],
+    "timeseries": [
+      "controlled periodic-signal development fixture"
+    ]
+  },
+  "schema_version": "1.0",
+  "split_rules": [
+    "group split for repeated subjects",
+    "temporal split for time series",
+    "OOF policy features",
+    "untouched confirmatory test"
+  ]
+}

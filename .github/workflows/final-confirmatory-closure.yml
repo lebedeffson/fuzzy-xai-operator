@@ -1,0 +1,49 @@
+name: Final confirmatory prelock gate
+
+on:
+  push:
+    branches:
+      - feat/final-confirmatory-and-chapter4
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  prelock-technical:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+      - name: Install focused dependencies
+        run: python -m pip install ".[dev,evidence]"
+      - name: Build and verify prelock package
+        env:
+          OMP_NUM_THREADS: "1"
+          OPENBLAS_NUM_THREADS: "1"
+          MKL_NUM_THREADS: "1"
+          NUMEXPR_NUM_THREADS: "1"
+        run: make final-release-check
+      - name: Confirm external gates fail closed
+        run: |
+          set +e
+          python scripts/final_closure/seal_datasets.py > /tmp/seal.log 2>&1
+          seal_code=$?
+          python scripts/final_closure/lock_protocol.py > /tmp/lock.log 2>&1
+          lock_code=$?
+          cat /tmp/seal.log
+          cat /tmp/lock.log
+          test "$seal_code" -eq 1
+          test "$lock_code" -eq 2
+          grep -q "BLOCKED: real downloaded dataset" /tmp/seal.log
+          grep -q "BLOCKED: final_confirmatory_protocol_lock" /tmp/lock.log
+      - name: Source hygiene
+        run: git diff --check

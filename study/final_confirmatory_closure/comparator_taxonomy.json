@@ -1,0 +1,44 @@
+{
+  "action_policies": [
+    "always accept",
+    "always review",
+    "raw confidence threshold",
+    "calibrated confidence threshold",
+    "uncertainty threshold",
+    "model disagreement",
+    "explainer disagreement",
+    "provenance completeness",
+    "data-quality guardrail",
+    "simple OR guardrail",
+    "weighted linear score",
+    "predictive-risk P0",
+    "conformal/selective",
+    "full FuzzyXAI P1"
+  ],
+  "benchmark_status": "protocol_frozen_measurements_pending",
+  "forbidden_comparisons": [
+    "treating EBM, GAM, RuleFit, rule lists or FXAM as local post-hoc explainers",
+    "claiming that FuzzyXAI is a better predictive model than a glass-box predictor",
+    "running tabular glass-box predictors on raw images, raw text or raw time-series tensors"
+  ],
+  "interpretable_predictors_tabular_only": [
+    "GAM",
+    "GA2M",
+    "EBM",
+    "RuleFit",
+    "sparse decision tree",
+    "rule list",
+    "FXAM if a pinned reproducible implementation becomes available"
+  ],
+  "post_hoc_explainers_same_frozen_model": [
+    "SHAP",
+    "LIME",
+    "Anchors",
+    "Integrated Gradients",
+    "Grad-CAM",
+    "token masking",
+    "window masking",
+    "component occlusion inside FuzzyXAI"
+  ],
+  "schema_version": "1.0"
+}

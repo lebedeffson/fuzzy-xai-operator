@@ -1,0 +1,173 @@
+{
+  "adapter": "SklearnLinearAdapter",
+  "adapter_id": "sklearn_linear_v2",
+  "api_checks": {
+    "compare_models": true,
+    "explain_batch": true,
+    "explain_global": true,
+    "explain_one": true,
+    "why_not": true
+  },
+  "artifact_sha256": "e374927e9998edeee8a64cf0f19687c1b5bb43a7af4c030e345dabdea39144e9",
+  "available_evidence_sources": [
+    {
+      "available": true,
+      "fidelity": null,
+      "fidelity_status": "not_applicable",
+      "limitations": [],
+      "method": "model.predict",
+      "name": "prediction",
+      "origin": "native"
+    },
+    {
+      "available": true,
+      "fidelity": null,
+      "fidelity_status": "not_applicable",
+      "limitations": [
+        "Perturbation is not a domain-validated intervention."
+      ],
+      "method": "model_re_evaluation",
+      "name": "perturbation_counterfactual",
+      "origin": "derived"
+    },
+    {
+      "available": true,
+      "fidelity": null,
+      "fidelity_status": "not_applicable",
+      "limitations": [],
+      "method": "model.predict_proba",
+      "name": "predict_proba",
+      "origin": "native"
+    },
+    {
+      "available": true,
+      "fidelity": null,
+      "fidelity_status": "not_applicable",
+      "limitations": [
+        "Decision score is not a calibrated probability."
+      ],
+      "method": "model.decision_function",
+      "name": "decision_function",
+      "origin": "native"
+    },
+    {
+      "available": true,
+      "fidelity": null,
+      "fidelity_status": "not_applicable",
+      "limitations": [],
+      "method": "model.coef_",
+      "name": "coefficients",
+      "origin": "native"
+    },
+    {
+      "available": true,
+      "fidelity": null,
+      "fidelity_status": "not_applicable",
+      "limitations": [],
+      "method": "x_i * coefficient_i",
+      "name": "local_contributions",
+      "origin": "derived_from_native"
+    }
+  ],
+  "conformance": 1.0,
+  "conformance_report": {
+    "adapter_id": "sklearn_linear_v2",
+    "checks": [
+      {
+        "check_id": "prediction_available",
+        "detail": "canonical prediction returned",
+        "status": "pass"
+      },
+      {
+        "check_id": "prediction_parity",
+        "detail": "adapter output matches model.predict",
+        "status": "pass"
+      },
+      {
+        "check_id": "capabilities_serializable",
+        "detail": "capability report is JSON serializable",
+        "status": "pass"
+      },
+      {
+        "check_id": "capability_truthfulness",
+        "detail": "all available channels have explicit descriptors",
+        "status": "pass"
+      },
+      {
+        "check_id": "fingerprint_stable",
+        "detail": "fingerprint is stable SHA256",
+        "status": "pass"
+      },
+      {
+        "check_id": "local_evidence_serializable",
+        "detail": "local evidence is deterministic JSON data",
+        "status": "pass"
+      }
+    ],
+    "errors": [],
+    "model_family": "sklearn_linear",
+    "status": "pass",
+    "task_type": "binary_classification",
+    "warnings": []
+  },
+  "derived_channels": [
+    "perturbation_counterfactual",
+    "local_contributions"
+  ],
+  "duration_seconds": 0.151274,
+  "environment": "core-model-contracts",
+  "graph_errors": [],
+  "graph_validation": 1.0,
+  "human_explanation_checks": {
+    "all_fragments_grounded": true,
+    "comparisons_present": true,
+    "concern_count_valid": true,
+    "decision_present": true,
+    "reason_count_valid": true,
+    "recommended_action_present": true,
+    "reliability_present": true,
+    "technical_terms_hidden": true
+  },
+  "library": "sklearn",
+  "library_package": "scikit-learn",
+  "library_version": "1.9.0",
+  "missing_channels": [
+    "alignment",
+    "counterfactuals",
+    "reduction",
+    "risk",
+    "similar_cases",
+    "training_history"
+  ],
+  "model_class": "LogisticRegression",
+  "model_family": "sklearn_linear",
+  "native_channels": [
+    "prediction",
+    "predict_proba",
+    "decision_function",
+    "coefficients"
+  ],
+  "operating_system": "Linux-6.17.0-1020-azure-x86_64-with-glibc2.39",
+  "prediction_parity": 1.0,
+  "python_version": "3.12.13",
+  "quality": {
+    "blocked_channels": [],
+    "completeness": 0.71875,
+    "faithfulness": null,
+    "fidelity": null,
+    "limitations": [],
+    "measured_top_reason_stability": 1.0,
+    "reconstruction_error": null,
+    "sparsity": 0.25,
+    "stability": null,
+    "status": "pass"
+  },
+  "quality_gate": "pass",
+  "report_id": "sklearn_py312",
+  "sample_size": 64,
+  "schema_version": "1.0",
+  "status": "pass",
+  "surrogate_channels": [],
+  "task_type": "binary_classification",
+  "warnings": []
+}

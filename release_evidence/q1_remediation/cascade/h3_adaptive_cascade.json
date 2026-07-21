@@ -1,0 +1,68 @@
+{
+  "adaptive_cost_fraction_of_full": 0.36666666666666664,
+  "policies": [
+    {
+      "automatic_coverage": 0.5541666666666667,
+      "critical_wrong_automatic": 0,
+      "false_block": 0,
+      "mean_cost": 1.0,
+      "n_objects": 240,
+      "policy_id": "threshold_only",
+      "review": 107,
+      "risk": 0.8625,
+      "wrong_automatic": 20
+    },
+    {
+      "automatic_coverage": 0.008333333333333333,
+      "critical_wrong_automatic": 0,
+      "false_block": 79,
+      "mean_cost": 10.0,
+      "n_objects": 240,
+      "policy_id": "always_full",
+      "review": 139,
+      "risk": 1.2583333333333333,
+      "wrong_automatic": 1
+    },
+    {
+      "automatic_coverage": 0.1625,
+      "critical_wrong_automatic": 0,
+      "false_block": 60,
+      "mean_cost": 7.4875,
+      "n_objects": 240,
+      "policy_id": "matched_random_gate",
+      "review": 126,
+      "risk": 1.2125,
+      "wrong_automatic": 9
+    },
+    {
+      "automatic_coverage": 0.20833333333333334,
+      "critical_wrong_automatic": 0,
+      "false_block": 0,
+      "mean_cost": 3.0,
+      "n_objects": 240,
+      "policy_id": "explainer_disagreement",
+      "review": 190,
+      "risk": 0.9791666666666666,
+      "wrong_automatic": 9
+    },
+    {
+      "automatic_coverage": 0.2791666666666667,
+      "critical_wrong_automatic": 0,
+      "false_block": 37,
+      "level_distribution": {
+        "A": 67,
+        "B": 131,
+        "C": 42
+      },
+      "mean_cost": 3.6666666666666665,
+      "n_objects": 240,
+      "policy_id": "adaptive_ABC",
+      "review": 131,
+      "risk": 1.0833333333333333,
+      "wrong_automatic": 11
+    }
+  ],
+  "risk_noninferiority_margin": 0.02,
+  "status": "supported",
+  "success_rule_met": true
+}

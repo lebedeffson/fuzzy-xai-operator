@@ -1,0 +1,18 @@
+{
+  "H6_B_status": "not_run_requires_two_sealed_independent_datasets",
+  "ai_formative_run2": "not_imported",
+  "confirmatory_claim_allowed": false,
+  "confirmatory_test_opened": false,
+  "experiments": {
+    "H3_practical": true,
+    "H5_A_route_validity": true,
+    "H6_A_detectability": false,
+    "H7_canonical_projection": true,
+    "H8_grid": true,
+    "H9_scaling": true
+  },
+  "natural_route_failures": "not_observed_in_a_sealed_pipeline",
+  "phase": "formative_development",
+  "profile": "full",
+  "schema_version": "1.0"
+}

@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0",
+  "base_commit": "cafe403c7d60e36b08f56a5325ba380718a5be35",
+  "profiles": {
+    "smoke": {
+      "controlled_objects": 1200,
+      "real_benchmarks": false,
+      "scalability_max_objects": 50000
+    },
+    "full": {
+      "controlled_objects": 10000,
+      "real_benchmarks": true,
+      "scalability_max_objects": 100000
+    }
+  },
+  "seeds": [4201, 4202, 4203, 4204, 4205],
+  "fidelity_margin": -0.02,
+  "risk_margin": 0.02,
+  "cost_modes": ["safety-heavy", "balanced", "review-expensive"],
+  "external_gates": ["comprehension", "expert_action_review", "domain_language_review"]
+}

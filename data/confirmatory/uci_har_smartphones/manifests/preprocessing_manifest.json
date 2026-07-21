@@ -1,0 +1,51 @@
+{
+  "dataset_id": "uci_har_smartphones",
+  "grouping_key": "subject_id",
+  "modality": "timeseries",
+  "sampling_rate_hz": 50,
+  "signal_shape": [
+    128,
+    9
+  ],
+  "split_seed": 7419,
+  "strategy": "subject_group_18_6_6",
+  "subject_groups": {
+    "development": [
+      1,
+      10,
+      12,
+      19,
+      24,
+      29
+    ],
+    "sealed_test": [
+      2,
+      5,
+      7,
+      16,
+      20,
+      30
+    ],
+    "train": [
+      3,
+      4,
+      6,
+      8,
+      9,
+      11,
+      13,
+      14,
+      15,
+      17,
+      18,
+      21,
+      22,
+      23,
+      25,
+      26,
+      27,
+      28
+    ]
+  },
+  "test_labels_in_processed_data": false
+}

@@ -1,0 +1,11 @@
+cff-version: 1.2.0
+message: "If you use FuzzyXAI, cite the software release and the associated dissertation/publication."
+title: "FuzzyXAI Research Framework"
+type: software
+version: "1.0.0-rc"
+date-released: "2026-07-19"
+repository-code: "https://github.com/lebedeffson/fuzzy-xai-operator"
+license: MIT
+authors:
+  - family-names: "Lebedev"
+    given-names: "Alexander"

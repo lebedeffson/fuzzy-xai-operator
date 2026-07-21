@@ -1,0 +1,12 @@
+{
+  "alpha": 0.05,
+  "assumed_standard_deviation": 0.1,
+  "limitations": [
+    "planning approximation; final inference uses paired bootstrap confidence intervals"
+  ],
+  "method": "paired normal approximation",
+  "minimum_effect": 0.02,
+  "required_pairs": 197,
+  "schema_version": "1.0",
+  "target_power": 0.8
+}

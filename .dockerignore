@@ -1,0 +1,19 @@
+# Required by the final in-container committed-index and identity checks.
+.venv*
+.pytest_cache
+.mypy_cache
+.ruff_cache
+__pycache__
+*.pyc
+*.zip
+data/
+dissertation_artifacts/
+evidence/
+figures/
+fuzzyxai_experiments/
+models/
+release_artifacts/
+release_evidence/
+reports/
+research_validation/outputs/
+site/

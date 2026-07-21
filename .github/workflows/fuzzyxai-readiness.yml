@@ -1,33 +1,89 @@
-name: FuzzyXAI readiness
+name: FuzzyXAI framework readiness
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
-      - audit/fuzzyxai-final-readiness
+      - feat/research-framework-completion
+      - feat/explanation-experience
+      - feat/explanation-experience-completion
+      - feat/human-explanation-layer
+      - feat/empirical-validation-gate
+      - feat/universal-model-integration
+      - feat/full-empirical-validation
   pull_request:
 
 jobs:
-  readiness:
+  python:
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12"]
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v4
-
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
-
-      - name: Install LibreOffice
+          python-version: ${{ matrix.python-version }}
+      - name: Install system dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y libreoffice
-
-      - name: Install
+      - name: Install framework
         run: |
           python -m pip install -U pip
-          pip install -e ".[dev]"
-
-      - name: Run doctoral release check
+          python -m pip install -e ".[dev]"
+      - name: Framework release gate
+        run: make framework-release-check
+      - name: Full regression suite
+        run: python -m pytest -q
+      - name: Public contract quality gates
         run: |
-          make doctorate-release-check
+          ruff check framework/fuzzyxai/fuzzyxai/adapters/model.py framework/fuzzyxai/fuzzyxai/evidence framework/fuzzyxai/fuzzyxai/visualization tests/test_explanation_experience.py
+          if [ "${{ matrix.python-version }}" = "3.11" ]; then
+            mypy
+          fi
+      - name: Deterministic Explanation Experience evidence
+        run: |
+          python scripts/build_explanation_experience_evidence.py
+          cp release_evidence/explanation_experience/manifest_sha256.json /tmp/manifest-first.json
+          python scripts/build_explanation_experience_evidence.py
+          cmp /tmp/manifest-first.json release_evidence/explanation_experience/manifest_sha256.json
+      - name: Measured empirical validation gate
+        run: |
+          python experiments/real_training_experiment/run_empirical_validation.py
+          python scripts/build_empirical_chapter4_evidence.py
+          python scripts/verify_empirical_validation.py
+      - name: Build wheel and sdist
+        run: python -m build
+      - name: Wheel import smoke
+        run: |
+          python -m pip install --force-reinstall --no-deps dist/*.whl
+          cd /tmp
+          python -c "from fuzzyxai import FuzzyXAI; print('wheel-import: PASS')"
+
+  matlab-json-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install framework and Octave
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y octave gnuplot-nox
+          python -m pip install -e .
+      - name: Generate canonical JSON
+        run: |
+          python - <<'PY'
+          from fuzzyxai import FuzzyXAI
+          class Model:
+              def __call__(self, rows):
+                  return [1 for _ in rows]
+          FuzzyXAI.wrap(Model()).explain_one([0.2, 0.8], object_id="octave-smoke").export_json("/tmp/fuzzyxai.json")
+          PY
+      - name: Run Octave loader, validator, and dashboard
+        run: |
+          octave --no-gui --quiet --eval "addpath('framework/fuzzyxai/matlab'); set(0,'defaultfigurevisible','off'); result=fuzzyxai.loadResult('/tmp/fuzzyxai.json'); assert(fuzzyxai.validateResult(result)); figureHandle=fuzzyxai.dashboard(result); print(figureHandle,'/tmp/fuzzyxai_dashboard.png','-dpng'); assert(exist('/tmp/fuzzyxai_dashboard.png','file')==2); disp('matlab-json-smoke: PASS');"

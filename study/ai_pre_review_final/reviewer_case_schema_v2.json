@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Leakage-free blind reviewer case",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "case_id", "variant_id", "modality", "task_description", "audience", "prediction", "observable_conditions", "interpretable_evidence", "candidate_explanation", "claim_evidence_links", "claim_evidence_coverage", "presentation", "record_sha256"],
+  "properties": {
+    "schema_version": {"const": "2.0"},
+    "case_id": {"pattern": "^case_[0-9]{6}$"},
+    "variant_id": {"pattern": "^X[123]$"},
+    "modality": {"enum": ["tabular", "image", "text", "timeseries"]},
+    "task_description": {"type": "string", "minLength": 10},
+    "audience": {"enum": ["domain_user", "technical_reviewer", "auditor"]},
+    "prediction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["display_label", "confidence"],
+      "properties": {"display_label": {"type": "string"}, "confidence": {"type": "number", "minimum": 0, "maximum": 1}}
+    },
+    "observable_conditions": {"type": "object"},
+    "interpretable_evidence": {"type": "array", "minItems": 2},
+    "observable_asset": {"type": "object"},
+    "fidelity_metadata": {"type": ["object", "null"]},
+    "candidate_explanation": {"type": "object"},
+    "claim_evidence_links": {"type": "array", "minItems": 4},
+    "claim_evidence_coverage": {"const": 1.0},
+    "presentation": {"type": "object"},
+    "record_sha256": {"pattern": "^[0-9a-f]{64}$"}
+  }
+}

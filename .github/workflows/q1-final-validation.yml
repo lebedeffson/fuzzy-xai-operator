@@ -1,0 +1,265 @@
+name: Q1 final technical validation
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [feat/q1-final-closure]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+env:
+  OMP_NUM_THREADS: "1"
+  OPENBLAS_NUM_THREADS: "1"
+  MKL_NUM_THREADS: "1"
+  NUMEXPR_NUM_THREADS: "1"
+  PYTHONHASHSEED: "4201"
+  PYTHONPATH: framework/fuzzyxai:.
+
+jobs:
+  fast:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Install focused environment
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install --no-deps -e .
+          python -m pip install numpy pandas scipy scikit-learn matplotlib plotly PyYAML pytest ruff pyarrow
+      - name: Contracts and fail-closed scorer tests
+        run: python -m pytest -q tests/q1_final
+      - name: Lint
+        run: ruff check framework/fuzzyxai/fuzzyxai/q1_final scripts/q1_final tests/q1_final
+      - name: Operator manifest
+        run: python -m fuzzyxai.audit.operators_manifest --output /tmp/operators_manifest.json
+      - name: Final smoke reproduction
+        run: make reproduce-q1-final-smoke
+      - name: Strict external gate must remain closed
+        run: |
+          if python scripts/q1_final/verify_external_gates.py; then
+            echo "strict external gate unexpectedly passed" >&2
+            exit 1
+          fi
+
+  native-modality:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    strategy:
+      fail-fast: false
+      matrix:
+        modality: [tabular, image, text, timeseries]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - uses: actions/cache@v4
+        with:
+          path: .cache/q1-final/${{ matrix.modality }}
+          key: q1-final-${{ matrix.modality }}-v2
+      - name: Install locked heavy environment
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install --requirement requirements.lock
+          python -m pip install --no-deps -e .
+      - name: Native multiclass and frozen cohort
+        run: |
+          mkdir -p job-output
+          python scripts/q1_final/run_multiclass_benchmark.py \
+            --modality "${{ matrix.modality }}" \
+            --output "job-output/${{ matrix.modality }}.json" \
+            --cache ".cache/q1-final/${{ matrix.modality }}"
+      - name: Native neural family
+        if: matrix.modality != 'tabular'
+        run: |
+          python scripts/q1_final/run_neural_benchmark.py \
+            --modality "${{ matrix.modality }}" \
+            --output "job-output/${{ matrix.modality }}_neural.json" \
+            --cache ".cache/q1-final/${{ matrix.modality }}"
+      - name: Required explainers on identical IDs
+        run: |
+          neural_args=()
+          if [ "${{ matrix.modality }}" = image ]; then
+            neural_args=(--neural job-output/image_neural.json)
+          fi
+          python scripts/q1_final/run_explainers.py \
+            --modality "${{ matrix.modality }}" \
+            --benchmark "job-output/${{ matrix.modality }}.json" \
+            --output "job-output/${{ matrix.modality }}_explainers.json" \
+            --cache ".cache/q1-final/${{ matrix.modality }}" \
+            "${neural_args[@]}"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: q1-final-${{ matrix.modality }}-${{ github.sha }}
+          path: job-output
+          if-no-files-found: error
+          retention-days: 30
+
+  rule-ablation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - uses: actions/cache@v4
+        with:
+          path: .cache/q1-final/rule-ablation
+          key: q1-final-rule-ablation-v2
+      - run: |
+          python -m pip install --upgrade pip
+          python -m pip install --requirement requirements.lock
+          python -m pip install --no-deps -e .
+      - name: Confirmatory H6
+        run: python scripts/q1_final/run_rule_ablation.py --output job-output/rule_ablation --cache .cache/q1-final/rule-ablation
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: q1-final-rule-ablation-${{ github.sha }}
+          path: job-output
+          if-no-files-found: error
+          retention-days: 30
+
+  scalability:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - run: |
+          python -m pip install --upgrade pip
+          python -m pip install --no-deps -e .
+          python -m pip install numpy pandas scipy scikit-learn matplotlib plotly PyYAML
+      - run: python scripts/q1_final/run_scalability.py --output job-output/scalability/end_to_end.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: q1-final-scalability-${{ github.sha }}
+          path: job-output
+          if-no-files-found: error
+          retention-days: 30
+
+  docker-reproduction:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Build final locked image
+        run: docker build -f Dockerfile.q1-final -t fuzzyxai-q1-final .
+      - name: Full clean-container reproduction
+        run: |
+          set -o pipefail
+          docker run --rm fuzzyxai-q1-final make reproduce-q1-final 2>&1 | tee docker-q1-final.log
+      - name: Record Docker identity
+        run: |
+          printf '%s\n' '{"schema_version":"1.0","status":"PASS","commit":"${{ github.sha }}","command":"docker run --rm fuzzyxai-q1-final make reproduce-q1-final"}' > docker-reproduction.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: q1-final-docker-${{ github.sha }}
+          path: |
+            docker-q1-final.log
+            docker-reproduction.json
+          retention-days: 30
+
+  aggregate:
+    needs: [fast, native-modality, rule-ablation, scalability, docker-reproduction]
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - run: |
+          python -m pip install --upgrade pip
+          python -m pip install --requirement requirements.lock
+          python -m pip install --no-deps -e .
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: q1-final-*-${{ github.sha }}
+          path: downloads
+      - name: Restore measured jobs
+        run: |
+          mkdir -p release_evidence/q1_final/real_jobs release_evidence/q1_final/rule_ablation release_evidence/q1_final/scalability
+          find downloads -type f \( -name 'tabular*.json' -o -name 'image*.json' -o -name 'text*.json' -o -name 'timeseries*.json' -o -name '*.pt' -o -name '*.onnx' \) -exec cp {} release_evidence/q1_final/real_jobs/ \;
+          rule_dir="$(find downloads -type d -path '*/rule_ablation' -print -quit)"
+          test -n "$rule_dir"
+          cp -a "$rule_dir/." release_evidence/q1_final/rule_ablation/
+          scaling_file="$(find downloads -path '*/scalability/end_to_end.json' -type f -print -quit)"
+          test -n "$scaling_file"
+          cp "$scaling_file" release_evidence/q1_final/scalability/end_to_end.json
+          docker_status="$(find downloads -name docker-reproduction.json -type f -print -quit)"
+          test -n "$docker_status"
+          cp "$docker_status" release_evidence/q1_final/docker_reproduction.json
+      - name: Aggregate real evidence and claims
+        env:
+          FUZZYXAI_CI_RUN_IDS: ${{ github.run_id }}
+          FUZZYXAI_FINAL_COMMIT: ${{ github.sha }}
+          FUZZYXAI_FINAL_BRANCH: ${{ github.ref_name }}
+        run: |
+          python scripts/q1_final/merge_real_benchmarks.py --input-dir release_evidence/q1_final/real_jobs
+          python scripts/q1_final/run_hypotheses.py --input-dir release_evidence/q1_final/real_jobs
+          python scripts/q1_final/build_external_study_pack.py
+          python scripts/q1_final/verify_external_gates.py --allow-open
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          Path('release_evidence/q1_final/ci_heavy_status.json').write_text(json.dumps({
+              'schema_version': '1.0',
+              'status': 'PASS',
+              'run_id': '${{ github.run_id }}',
+              'commit': '${{ github.sha }}',
+              'jobs': ['fast', 'native-modality', 'rule-ablation', 'scalability', 'docker-reproduction', 'aggregate'],
+          }, indent=2, sort_keys=True) + '\n')
+          PY
+          python scripts/q1_final/build_identity.py
+          python scripts/q1_final/build_claim_registry.py
+          python scripts/q1_final/build_gate_matrix.py
+          python scripts/q1_final/build_reports.py
+          python scripts/q1_final/build_dod.py
+          python scripts/q1_final/build_manifest.py
+          python scripts/q1_final/check_forbidden_claims.py
+          python scripts/q1_final/verify_all.py --require-heavy
+          python scripts/build_framework_release.py
+          python scripts/q1_final/build_archives.py
+          python scripts/q1_final/verify_archives.py
+          python scripts/q1_final/build_dod.py
+          python scripts/q1_final/build_manifest.py
+          python scripts/q1_final/build_archives.py
+          python scripts/q1_final/verify_archives.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: q1-final-aggregate-${{ github.sha }}
+          path: |
+            release_evidence/q1_final
+            reports/q1_final
+            dissertation_artifacts/q1_final
+            release_artifacts/q1_final
+            release_artifacts/fuzzyxai-source-release-*.zip
+            release_artifacts/fuzzyxai-source-release-*.zip.sha256
+            release_artifacts/source_release_manifest.json
+          if-no-files-found: error
+          retention-days: 30

@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.0",
+  "comprehension": {
+    "status": "planned_not_run",
+    "participant_count": 0,
+    "claim_allowed": false
+  },
+  "domain_language_review": {
+    "status": "pending_external_review",
+    "reviewer_count": 0,
+    "claim_allowed": false
+  },
+  "expert_action_review": {
+    "status": "planned_not_run",
+    "reviewer_count": 0,
+    "object_count": 0,
+    "claim_allowed": false
+  },
+  "stable_release_allowed": false
+}

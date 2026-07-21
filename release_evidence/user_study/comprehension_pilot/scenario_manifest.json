@@ -1,0 +1,25 @@
+{
+  "commit": "3dda3e3952e5cb773a625c542e23391eb67f048e",
+  "randomization": "counterbalanced AB/BA within participant",
+  "scenarios": [
+    {
+      "artifact": "release_evidence/empirical_experiments/breast_cancer_checkpoint/selected_forgetting_case.json",
+      "claim_boundary": "measured evidence for this dataset, split, seed, and model configuration",
+      "scenario_id": "forgetting_case",
+      "sha256": "d1b23ff3cea8ef95ee0e6eab46f575256a4b4e492cc14ea0294d77a808d138f9"
+    },
+    {
+      "artifact": "release_evidence/empirical_experiments/breast_cancer_checkpoint/rule_ablation.json",
+      "claim_boundary": "measured evidence for this dataset, split, seed, and model configuration",
+      "scenario_id": "rule_ablation",
+      "sha256": "c7c6a493bdd21d3c6e063650dceb437559cff6b789746f0ebbe993162d241692"
+    },
+    {
+      "artifact": "release_evidence/explanation_experience/medical_research_similarity_explanation.json",
+      "claim_boundary": "research_only; IoU and embedding similarity are not diagnostic probabilities",
+      "scenario_id": "image_similarity",
+      "sha256": "4c6513957859cb4ac61cf2cf641a4ea0946d134afe2a8b58745f0d657c412df1"
+    }
+  ],
+  "schema_version": "1.0"
+}

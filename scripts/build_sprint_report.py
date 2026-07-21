@@ -12,6 +12,11 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "reports" / "release" / "current"
+SITE_QUARANTINE = ROOT / "site" / "README.md"
+
+
+def site_is_quarantined() -> bool:
+    return SITE_QUARANTINE.exists() and "quarantine" in SITE_QUARANTINE.read_text(encoding="utf-8").lower()
 
 SCENARIOS: dict[str, dict[str, Any]] = {
     "hybrid_xiris": {
@@ -208,6 +213,8 @@ def nearly_equal(actual: Any, expected: Any) -> bool:
 
 
 def scan_site() -> tuple[bool, list[str]]:
+    if site_is_quarantined():
+        return False, []
     issues: list[str] = []
     suffixes = {".ts", ".tsx", ".js", ".jsx", ".mjs", ".cjs", ".json"}
     for path in (ROOT / "site" / "dubnaxai").rglob("*"):
@@ -433,6 +440,8 @@ def validate_scenarios() -> tuple[list[dict[str, Any]], list[dict[str, Any]], di
         errors: list[str] = []
         warnings: list[str] = []
         for name, path in paths.items():
+            if site_is_quarantined() and name in {"site_route", "site_dashboard"}:
+                continue
             if not path.exists():
                 errors.append(f"missing {name}: {path.relative_to(ROOT)}")
             elif path.is_file() and path.stat().st_size == 0:
@@ -832,6 +841,7 @@ def main() -> int:
         "site_routes_total": sum(1 for item in manifest["site_public_routes"] if item["exists"]),
         "site_figures_total": sum(1 for item in manifest["site_public_figures"] if item["exists"]),
         "site_computes_fuzzyxai": site_bad,
+        "site_quarantined": site_is_quarantined(),
         "applications_choose_actions_directly": apps_bad,
         "dirty_worktree": bool(git_status.strip()),
         "dirty_source_files": bool(dirty_sources),

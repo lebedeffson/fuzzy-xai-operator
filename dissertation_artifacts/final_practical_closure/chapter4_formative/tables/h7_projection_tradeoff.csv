@@ -1,0 +1,4 @@
+mean_length,mean_retained_magnitude,mean_sparsity,top_k
+61.0,0.9083370833066815,0.375,3
+103.0,0.9638908318923654,0.625,5
+165.65,1.0,1.0,8

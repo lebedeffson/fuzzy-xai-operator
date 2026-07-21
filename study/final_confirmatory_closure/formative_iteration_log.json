@@ -1,0 +1,21 @@
+{
+  "iteration_3_allowed_only_if_predeclared_before_iteration_2_results": true,
+  "iterations": [
+    {
+      "commit": "68e6edcfa867b48684b89d98dd74b5fe4794ef55",
+      "config_sha256": "ce6fa6e7c121dc17d8baae18f67e3dcc727587cf0025b8adfab5c0304ade25ee",
+      "iteration": 1,
+      "reason": "initial practical-controller formative cycle",
+      "result": "completed",
+      "results_sha256": "3df7861fcec5de8011f4a50de314660e8a80cf4eef382825235020e7f6c95bfe"
+    },
+    {
+      "commit": "9def80e4871f49f0abb18fb8b7972b60a03be720",
+      "config_sha256": "04cd70a2ae657c0b0b44fd7b6c66a0da509e0a2238fd7e63c419d6824a5ea94f",
+      "iteration": 2,
+      "reason": "predeclared confirmatory contracts, H6 estimand correction and run-2 card preparation",
+      "result": "in_progress",
+      "results_sha256": null
+    }
+  ]
+}

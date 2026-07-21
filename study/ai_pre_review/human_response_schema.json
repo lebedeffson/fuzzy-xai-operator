@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["reviewer_hash", "signed_record_sha256", "case_id", "variant_id", "scores", "critical_flags", "preferred_variant_rank", "domain_correctness", "action_acceptability", "domain_terminology", "real_world_risk", "input_batch_sha256"],
+  "properties": {
+    "reviewer_hash": {"pattern": "^[0-9a-f]{64}$"},
+    "signed_record_sha256": {"pattern": "^[0-9a-f]{64}$"},
+    "case_id": {"pattern": "^case_[0-9]{6}$"},
+    "variant_id": {"pattern": "^X[123]$"},
+    "scores": {"type": "object"},
+    "critical_flags": {"type": "array"},
+    "preferred_variant_rank": {"type": "integer", "minimum": 1, "maximum": 3},
+    "domain_correctness": {"type": "integer", "minimum": 0, "maximum": 4},
+    "action_acceptability": {"type": "integer", "minimum": 0, "maximum": 4},
+    "domain_terminology": {"type": "integer", "minimum": 0, "maximum": 4},
+    "real_world_risk": {"type": "integer", "minimum": 0, "maximum": 4},
+    "input_batch_sha256": {"pattern": "^[0-9a-f]{64}$"}
+  }
+}

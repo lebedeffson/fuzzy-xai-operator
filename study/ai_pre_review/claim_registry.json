@@ -1,0 +1,12 @@
+{
+  "schema_version": "1.0",
+  "claims": [
+    {"claim_id": "H10-AI-formative", "status": "planned_not_run", "allowed_before_humans": "Проведена формализованная AI-предпроверка объяснений.", "human_validation": false},
+    {"claim_id": "H10-AI-repeatability", "status": "pending_three_ai_runs", "human_validation": false},
+    {"claim_id": "H10-AI-human-agreement", "status": "external_gate", "human_validation": false},
+    {"claim_id": "H10-critical-defect-recall", "status": "external_gate", "human_validation": false},
+    {"claim_id": "H10-preferred-variant-agreement", "status": "external_gate", "human_validation": false}
+  ],
+  "forbidden_before_human_confirmation": ["expert_validated", "human_confirmed", "domain_approved"],
+  "stable_release_allowed": false
+}

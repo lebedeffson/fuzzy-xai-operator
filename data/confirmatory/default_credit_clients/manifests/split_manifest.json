@@ -1,0 +1,23 @@
+{
+  "counts": {
+    "development": 6000,
+    "sealed_test": 6001,
+    "train": 17999
+  },
+  "dataset_id": "default_credit_clients",
+  "identity_file_sha256": {
+    "development": "b15d4d07021dddc647f263d76c1ff8c92369d3ff3b6d13396f71c2995cf520d9",
+    "sealed_test": "ee63f441cba0d964656ed0801bcd6a68810da72f9dc4bb638c4dddfdb18a7f63",
+    "train": "655bef95a3ffb9e17d2dbd4897e38f346d9d4d5fad7abdeced380dd4baffcb26"
+  },
+  "identity_files": {
+    "development": "data/confirmatory/default_credit_clients/manifests/development_object_ids.txt",
+    "sealed_test": "data/confirmatory/default_credit_clients/manifests/sealed_test_object_ids.txt",
+    "train": "data/confirmatory/default_credit_clients/manifests/train_object_ids.txt"
+  },
+  "intersection_counts": {
+    "development_test": 0,
+    "train_development": 0,
+    "train_test": 0
+  }
+}

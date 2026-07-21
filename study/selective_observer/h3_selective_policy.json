@@ -1,0 +1,34 @@
+{
+  "schema_version": "1.0",
+  "hypothesis": "H3-selective",
+  "phase": "formative_development",
+  "controller": "calibrated four-action selective risk controller",
+  "source_features": "out-of-fold only",
+  "actions": ["accept", "short_review", "full_review", "block"],
+  "primary_population": "validation-defined ambiguity zone",
+  "ambiguity_strata": [
+    "near decision boundary",
+    "high confidence with model disagreement",
+    "data shift",
+    "incomplete provenance",
+    "unstable attribution",
+    "rare class",
+    "native-surrogate conflict"
+  ],
+  "baselines": [
+    "calibrated confidence threshold",
+    "confidence plus uncertainty",
+    "confidence plus measured explainer disagreement",
+    "conformal or selective risk control"
+  ],
+  "primary_endpoints": [
+    "wrong automatic decisions at matched coverage",
+    "automatic coverage at matched wrong-automatic risk"
+  ],
+  "positive_criteria": {
+    "coverage_tolerance_absolute": 0.02,
+    "minimum_relative_wrong_automatic_reduction": 0.15,
+    "alternative_minimum_coverage_gain_absolute": 0.05
+  },
+  "confirmatory_claim_allowed": false
+}

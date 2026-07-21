@@ -1,0 +1,19 @@
+{
+  "datasets": [],
+  "minimum": {
+    "image": 1,
+    "tabular": 2,
+    "text": 1,
+    "timeseries": 1
+  },
+  "requirements": [
+    "not used in formative tuning",
+    "group split for repeated entities",
+    "temporal split for time series",
+    "test identities frozen by SHA256",
+    "labels unavailable to tuning runner",
+    "controller features out-of-fold"
+  ],
+  "schema_version": "1.0",
+  "status": "not_sealed"
+}

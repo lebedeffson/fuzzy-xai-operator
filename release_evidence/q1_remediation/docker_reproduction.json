@@ -1,0 +1,1 @@
+{"status":"PASS","command":"docker run --rm fuzzyxai-q1 make reproduce-q1"}

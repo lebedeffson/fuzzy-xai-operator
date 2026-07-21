@@ -1,0 +1,220 @@
+{
+  "action_robustness": {
+    "mean": 0.8830000000000002,
+    "minimum": 0.7333333333333333,
+    "most_unstable_object_ids": [
+      "tab_002301",
+      "tab_006293",
+      "tab_006302",
+      "tab_003629",
+      "tab_003134",
+      "tab_005738",
+      "tab_009566",
+      "tab_000720",
+      "tab_000363",
+      "tab_006246"
+    ]
+  },
+  "experiment_id": "E6",
+  "input_perturbations": [
+    {
+      "changed_prediction_fraction": 0.018,
+      "scenario": "feature_noise"
+    },
+    {
+      "changed_prediction_fraction": 0.0275,
+      "scenario": "missing_values_median_imputed"
+    },
+    {
+      "changed_prediction_fraction": 0.085,
+      "scenario": "distribution_shift"
+    },
+    {
+      "changed_prediction_fraction": 0.0055,
+      "scenario": "background_reference_shift"
+    }
+  ],
+  "parameter_points": [
+    {
+      "accept_fraction": 0.7265,
+      "block_fraction": 0.01,
+      "changed_action_fraction": 0.2345,
+      "factor": 0.5,
+      "false_blocks": 18,
+      "mean_cost": 1.18975,
+      "missed_critical_cases": 0,
+      "parameter": "confidence_threshold",
+      "review_fraction": 0.2635,
+      "value": 0.325
+    },
+    {
+      "accept_fraction": 0.7265,
+      "block_fraction": 0.01,
+      "changed_action_fraction": 0.2345,
+      "factor": 0.75,
+      "false_blocks": 18,
+      "mean_cost": 1.18975,
+      "missed_critical_cases": 0,
+      "parameter": "confidence_threshold",
+      "review_fraction": 0.2635,
+      "value": 0.48750000000000004
+    },
+    {
+      "accept_fraction": 0.492,
+      "block_fraction": 0.01,
+      "changed_action_fraction": 0.0,
+      "factor": 1.0,
+      "false_blocks": 18,
+      "mean_cost": 1.1395,
+      "missed_critical_cases": 0,
+      "parameter": "confidence_threshold",
+      "review_fraction": 0.498,
+      "value": 0.65
+    },
+    {
+      "accept_fraction": 0.268,
+      "block_fraction": 0.01,
+      "changed_action_fraction": 0.224,
+      "factor": 1.25,
+      "false_blocks": 18,
+      "mean_cost": 1.2035,
+      "missed_critical_cases": 0,
+      "parameter": "confidence_threshold",
+      "review_fraction": 0.722,
+      "value": 0.8125
+    },
+    {
+      "accept_fraction": 0.0225,
+      "block_fraction": 0.01,
+      "changed_action_fraction": 0.4695,
+      "factor": 1.5,
+      "false_blocks": 18,
+      "mean_cost": 1.47575,
+      "missed_critical_cases": 0,
+      "parameter": "confidence_threshold",
+      "review_fraction": 0.9675,
+      "value": 0.9750000000000001
+    },
+    {
+      "accept_fraction": 0.492,
+      "block_fraction": 0.01,
+      "changed_action_fraction": 0.0,
+      "factor": 0.5,
+      "false_blocks": 18,
+      "mean_cost": 1.1395,
+      "missed_critical_cases": 0,
+      "parameter": "conflict_threshold",
+      "review_fraction": 0.498,
+      "value": 0.05
+    },
+    {
+      "accept_fraction": 0.492,
+      "block_fraction": 0.01,
+      "changed_action_fraction": 0.0,
+      "factor": 0.75,
+      "false_blocks": 18,
+      "mean_cost": 1.1395,
+      "missed_critical_cases": 0,
+      "parameter": "conflict_threshold",
+      "review_fraction": 0.498,
+      "value": 0.07500000000000001
+    },
+    {
+      "accept_fraction": 0.492,
+      "block_fraction": 0.01,
+      "changed_action_fraction": 0.0,
+      "factor": 1.0,
+      "false_blocks": 18,
+      "mean_cost": 1.1395,
+      "missed_critical_cases": 0,
+      "parameter": "conflict_threshold",
+      "review_fraction": 0.498,
+      "value": 0.1
+    },
+    {
+      "accept_fraction": 0.492,
+      "block_fraction": 0.01,
+      "changed_action_fraction": 0.0,
+      "factor": 1.25,
+      "false_blocks": 18,
+      "mean_cost": 1.1395,
+      "missed_critical_cases": 0,
+      "parameter": "conflict_threshold",
+      "review_fraction": 0.498,
+      "value": 0.125
+    },
+    {
+      "accept_fraction": 0.492,
+      "block_fraction": 0.01,
+      "changed_action_fraction": 0.0,
+      "factor": 1.5,
+      "false_blocks": 18,
+      "mean_cost": 1.1395,
+      "missed_critical_cases": 0,
+      "parameter": "conflict_threshold",
+      "review_fraction": 0.498,
+      "value": 0.15000000000000002
+    },
+    {
+      "accept_fraction": 0.6725,
+      "block_fraction": 0.01,
+      "changed_action_fraction": 0.1805,
+      "factor": 0.5,
+      "false_blocks": 18,
+      "mean_cost": 0.95275,
+      "missed_critical_cases": 0,
+      "parameter": "stability_threshold",
+      "review_fraction": 0.3175,
+      "value": 0.275
+    },
+    {
+      "accept_fraction": 0.5835,
+      "block_fraction": 0.01,
+      "changed_action_fraction": 0.0915,
+      "factor": 0.75,
+      "false_blocks": 18,
+      "mean_cost": 1.05825,
+      "missed_critical_cases": 0,
+      "parameter": "stability_threshold",
+      "review_fraction": 0.4065,
+      "value": 0.41250000000000003
+    },
+    {
+      "accept_fraction": 0.492,
+      "block_fraction": 0.01,
+      "changed_action_fraction": 0.0,
+      "factor": 1.0,
+      "false_blocks": 18,
+      "mean_cost": 1.1395,
+      "missed_critical_cases": 0,
+      "parameter": "stability_threshold",
+      "review_fraction": 0.498,
+      "value": 0.55
+    },
+    {
+      "accept_fraction": 0.4,
+      "block_fraction": 0.01,
+      "changed_action_fraction": 0.092,
+      "factor": 1.25,
+      "false_blocks": 18,
+      "mean_cost": 1.2215,
+      "missed_critical_cases": 0,
+      "parameter": "stability_threshold",
+      "review_fraction": 0.59,
+      "value": 0.6875
+    },
+    {
+      "accept_fraction": 0.2635,
+      "block_fraction": 0.01,
+      "changed_action_fraction": 0.2285,
+      "factor": 1.5,
+      "false_blocks": 18,
+      "mean_cost": 1.30825,
+      "missed_critical_cases": 0,
+      "parameter": "stability_threshold",
+      "review_fraction": 0.7265,
+      "value": 0.8250000000000001
+    }
+  ],
+  "schema_version": "1.0"
+}

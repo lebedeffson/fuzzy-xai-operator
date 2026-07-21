@@ -1,0 +1,147 @@
+{
+  "datasets": [
+    {
+      "dataset_id": "bank_marketing",
+      "explainer_manifest_status": "pending_real_oof_explanations",
+      "files": {
+        "dataset_manifest": {
+          "path": "data/confirmatory/bank_marketing/manifests/dataset_manifest.json",
+          "sha256": "bf10e1fcea403dc047a4fad5a11fdf32e61079cad517a65132103dddfc0552b8"
+        },
+        "feature_schema_manifest": {
+          "path": "study/final_confirmatory_closure/dataset_manifests/bank_marketing/feature_schema_manifest.json",
+          "sha256": "fb5a195395656329d980fdf71e578101ccdbfd110a81bf685d366c0bc342768a"
+        },
+        "license": {
+          "path": "data/confirmatory/bank_marketing/manifests/license.txt",
+          "sha256": "6a7ff0f3af4a9de725af583c23a057c5beaee26b411c253c138d4fd1adf5c7bc"
+        },
+        "preprocessing_manifest": {
+          "path": "data/confirmatory/bank_marketing/manifests/preprocessing_manifest.json",
+          "sha256": "22b763003ee6e56e20178954e2f4aba32c79b89ad3c069fedf9e27800bd771a7"
+        },
+        "split_manifest": {
+          "path": "data/confirmatory/bank_marketing/manifests/split_manifest.json",
+          "sha256": "a9dbacafa3ed6a937608f049f44928e3e150b89b67c58daf0f8749d661e129b3"
+        }
+      },
+      "modality": "tabular",
+      "model_manifest_status": "pending_real_oof_model_fit"
+    },
+    {
+      "dataset_id": "default_credit_clients",
+      "explainer_manifest_status": "pending_real_oof_explanations",
+      "files": {
+        "dataset_manifest": {
+          "path": "data/confirmatory/default_credit_clients/manifests/dataset_manifest.json",
+          "sha256": "e0423c6c63a91619940aa67ee8a4685c29a697005b42af5a225bdf8fc69aa258"
+        },
+        "feature_schema_manifest": {
+          "path": "study/final_confirmatory_closure/dataset_manifests/default_credit_clients/feature_schema_manifest.json",
+          "sha256": "0de6fbbbf3d8f2f3512a60f594da45c3e4133fce67f061c197b5b71dfefeff85"
+        },
+        "license": {
+          "path": "data/confirmatory/default_credit_clients/manifests/license.txt",
+          "sha256": "18c6d2874de73000aa7c527d3ff519ad79032bfc408a3d7741ec4c364b612e84"
+        },
+        "preprocessing_manifest": {
+          "path": "data/confirmatory/default_credit_clients/manifests/preprocessing_manifest.json",
+          "sha256": "8afbc5faed79146bba3354aa9c96a085a1d04aa4486d551c50b796d2076dddb1"
+        },
+        "split_manifest": {
+          "path": "data/confirmatory/default_credit_clients/manifests/split_manifest.json",
+          "sha256": "e6df306ac19552ec74fbf6e7c8af276c9764b65099e9522fb3489a0a50115d53"
+        }
+      },
+      "modality": "tabular",
+      "model_manifest_status": "pending_real_oof_model_fit"
+    },
+    {
+      "dataset_id": "shoulder_implant_xray",
+      "explainer_manifest_status": "pending_real_oof_explanations",
+      "files": {
+        "dataset_manifest": {
+          "path": "data/confirmatory/shoulder_implant_xray/manifests/dataset_manifest.json",
+          "sha256": "4658bdc8ad12a31a4af8d57939685db54182fd113f4a69b4fed0a3ec3737e60d"
+        },
+        "feature_schema_manifest": {
+          "path": "study/final_confirmatory_closure/dataset_manifests/shoulder_implant_xray/feature_schema_manifest.json",
+          "sha256": "9eb19d72ac819494366b768b20e68bd42cb892f40b204f33ac2f2e5034729a87"
+        },
+        "license": {
+          "path": "data/confirmatory/shoulder_implant_xray/manifests/license.txt",
+          "sha256": "6631d79b6e7a11eb1e3c9443a6a20ca01507d77187483e4e20c16afa8ab7c870"
+        },
+        "preprocessing_manifest": {
+          "path": "data/confirmatory/shoulder_implant_xray/manifests/preprocessing_manifest.json",
+          "sha256": "622e8d46dd9184571188c5d3f06fb48ceea105cc2c39732da76a0e2d432f3bbf"
+        },
+        "split_manifest": {
+          "path": "data/confirmatory/shoulder_implant_xray/manifests/split_manifest.json",
+          "sha256": "c02b78f1ae6adc11b090411e63bbd4deedb535c318235c7ca07d8e550c161a91"
+        }
+      },
+      "modality": "image",
+      "model_manifest_status": "pending_real_oof_model_fit"
+    },
+    {
+      "dataset_id": "sms_spam",
+      "explainer_manifest_status": "pending_real_oof_explanations",
+      "files": {
+        "dataset_manifest": {
+          "path": "data/confirmatory/sms_spam/manifests/dataset_manifest.json",
+          "sha256": "97c654b83c173ecc1eefc8b2de5ba7859a3091382a157ef9edf6dd715fcfa839"
+        },
+        "feature_schema_manifest": {
+          "path": "study/final_confirmatory_closure/dataset_manifests/sms_spam/feature_schema_manifest.json",
+          "sha256": "2a73ca07c80fdb1656f4a917affdbd2876432daea0f043fcb8b4e92eb3b32b40"
+        },
+        "license": {
+          "path": "data/confirmatory/sms_spam/manifests/license.txt",
+          "sha256": "31a56babc49aab882a9ba3401b2b45988e704eef2494b81b6c49975c144a209b"
+        },
+        "preprocessing_manifest": {
+          "path": "data/confirmatory/sms_spam/manifests/preprocessing_manifest.json",
+          "sha256": "b4b4f03ef71d1be5356e9e930794b61e79c4ff81e5764f3c9a621b9f85907a22"
+        },
+        "split_manifest": {
+          "path": "data/confirmatory/sms_spam/manifests/split_manifest.json",
+          "sha256": "edff5450d149df752541163c84a47c4631c49235e7aa666dd8c7c00182a3efa8"
+        }
+      },
+      "modality": "text",
+      "model_manifest_status": "pending_real_oof_model_fit"
+    },
+    {
+      "dataset_id": "uci_har_smartphones",
+      "explainer_manifest_status": "pending_real_oof_explanations",
+      "files": {
+        "dataset_manifest": {
+          "path": "data/confirmatory/uci_har_smartphones/manifests/dataset_manifest.json",
+          "sha256": "b5eb176cbce409917078829ffec082630d65eae24f92a94d1619deefbfbecb20"
+        },
+        "feature_schema_manifest": {
+          "path": "study/final_confirmatory_closure/dataset_manifests/uci_har_smartphones/feature_schema_manifest.json",
+          "sha256": "31e7381b6d1033bcf6da69ddb9bc8735b9d40a0ccc3028ba4ad95637749fd369"
+        },
+        "license": {
+          "path": "data/confirmatory/uci_har_smartphones/manifests/license.txt",
+          "sha256": "bce7ac25ee9aa1156574858a398891357e791aa4c334b449fa9c7229ac70d5fe"
+        },
+        "preprocessing_manifest": {
+          "path": "data/confirmatory/uci_har_smartphones/manifests/preprocessing_manifest.json",
+          "sha256": "37ec9812276940301cca76163e17dacaeb1db7ea6fcd9a33bf5b2a5f99fce6d5"
+        },
+        "split_manifest": {
+          "path": "data/confirmatory/uci_har_smartphones/manifests/split_manifest.json",
+          "sha256": "8e0d09b21d1343d57c9d26618d3d2e12ee1ca48b09a4e2bb33fa02ad88bcd958"
+        }
+      },
+      "modality": "timeseries",
+      "model_manifest_status": "pending_real_oof_model_fit"
+    }
+  ],
+  "schema_version": "1.0",
+  "sealed_test_labels_loaded": false,
+  "status": "pass"
+}

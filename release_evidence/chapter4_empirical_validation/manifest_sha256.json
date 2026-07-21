@@ -1,0 +1,30 @@
+{
+  "controlled_fixture_separated": true,
+  "files": {
+    "dataset_card.md": "e241e278dca484d7feaeace25c7019be4fa0017731c1e363230405965af68df4",
+    "figures/01_measured_training_trace.png": "ea24b987dcc43aa49a82c8cd2e1ae5fad4de30eb505c945bf4a96b53764897c4",
+    "figures/02_measured_rule_ablation.png": "701ad836f4b03e7fa864aea62adcbc402c764c32ab95b1c9d7d917ed446c250e",
+    "figures/03_subgroup_trajectory.png": "b6d282c48a35f709a5d0f55c7afeddcc403fa7238138e18e2938989de83209e1",
+    "json/checkpoints.json": "44427a100fe6eaa6bfea6425993076cb07ef5aab814b024129bc65ef039f0e9d",
+    "json/cross_model_matrix.json": "ea39a5576dd2c5e3f06cc167282b55d1164b6203d77eab4e19bbf9a1663b34ee",
+    "json/domain_language.json": "20fd36cda8a09bb4b0003649df38bbdbc9b3aed8103ed37ebf9111944d9625d0",
+    "json/domain_language_validation.json": "77fca1ccc2b3f00c8b8ef4c3d8efd82217eafe4da7b8342704bd4db3b07c5a6f",
+    "json/empirical_summary.json": "a24d98cf9ef5bbcd8907d2fbe5cf3133a2c03f5858c16b6a7d22b8175fb38aea",
+    "json/environment.json": "5d7ff45bbbe9846781d2b59cbd3984a0bfc7499c22ca51f1eab7b99caa9aa257",
+    "json/explanation_result.json": "fc541dfb769d7a2c94e101ecb6af253acf812038cf208ed56be15fa775591fc3",
+    "json/human_explanation.json": "36e7c031f201ea963d74b643ce842e7d0434357cac6ac3e8c580493b1a37ee96",
+    "json/rule_ablation.json": "c7c6a493bdd21d3c6e063650dceb437559cff6b789746f0ebbe993162d241692",
+    "json/selected_forgetting_case.json": "d1b23ff3cea8ef95ee0e6eab46f575256a4b4e492cc14ea0294d77a808d138f9",
+    "json/sensitivity_analysis.json": "d3b2a5b44aebc8ddde9e8b9605ffdf2dc84ab198b0b2a87d2c0a4a1013593eab",
+    "json/similar_cases.json": "9cf215cd2a0f0ad8dfb7a6e062610c732127448ed57a552cf5afa016c01c40b6",
+    "json/subgroup_definition.json": "5146c773390149675044dab6d5e43476bd25167b6ae1740a52dd9455f5010369",
+    "release_gate_status.json": "0520bebf5c764f9822caa1aa6272fd14c435ccb09c3c8ed9dfda66e2bac3db32",
+    "report.md": "0ea7346b39eea6589e34524af1e58979947af4c2521aa59976aac1a2cecf6e87",
+    "tables/checkpoint_metrics.csv": "1677bb0596360c8d2fc3a39ee98ec56f1e481c48e8ac9c39e3774f97e53d1c76",
+    "tables/cross_model_matrix.csv": "600bcc689c89ce0a6ed49bf48aced6fe24ef17e9eec872133ac04cebd7880ae7",
+    "tables/rule_ablation.json": "c7c6a493bdd21d3c6e063650dceb437559cff6b789746f0ebbe993162d241692",
+    "tables/similar_cases.json": "9cf215cd2a0f0ad8dfb7a6e062610c732127448ed57a552cf5afa016c01c40b6"
+  },
+  "result_origin": "measured",
+  "schema_version": "1.0"
+}

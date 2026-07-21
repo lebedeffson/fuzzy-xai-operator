@@ -1,0 +1,68 @@
+{
+  "blockers": [],
+  "canonical_hash_coverage": 1.0,
+  "datasets": [
+    {
+      "allowed_not_applicable_channels": [
+        "rule_redundancy"
+      ],
+      "artifact_sha256": "31c334d7e610caf0b52c115c4a7b5e9f7855a9f7234e6c5a9f44bf2f6b6e8d23",
+      "canonical_evidence_sha256": "3b3a0b42609590a8f5f7a6405345551b45d820668cd344a84931ac8f6b827699",
+      "dataset_id": "bank_marketing",
+      "explainer_manifest_sha256": "d82c06219b61cf7b29729c6388bf72d9b730f8d783f1c4e957230bc2bec88139",
+      "model_manifest_sha256": "b95e0ddaa41ce37b936ef89b8473e9ecaf7aad6906816a3c5071fc81126024eb",
+      "objects": 32940
+    },
+    {
+      "allowed_not_applicable_channels": [
+        "rule_redundancy"
+      ],
+      "artifact_sha256": "54fb38a867613f4fc8365bda75198ba093a3abb31ede00e29324a5b76df66095",
+      "canonical_evidence_sha256": "e718364b407ed274bd3de8df272b05d5b7e02fca333d9a7a5f83f136b8293a90",
+      "dataset_id": "default_credit_clients",
+      "explainer_manifest_sha256": "a581c801fba65509f2445ff20acfe8a2fce40fdfda73cb6875c54202193dcd6a",
+      "model_manifest_sha256": "1f10fcc1953465ee35b742c1cefc37edaadafded9f6005e4025bc2db48cbaebd",
+      "objects": 23999
+    },
+    {
+      "allowed_not_applicable_channels": [
+        "rule_redundancy"
+      ],
+      "artifact_sha256": "e0ed1e23282102af849a0ed573afc36d40060c5c0057f6b76bcdb258b48cf339",
+      "canonical_evidence_sha256": "d7c55f957f949bf1833852f4b12643e90ca934f642e66ec628b69d158eb2e2a4",
+      "dataset_id": "shoulder_implant_xray",
+      "explainer_manifest_sha256": "7fc6a1963ba43bc915dc8e8b14054886725922248c48cbe635b2ca0cf1e3267b",
+      "model_manifest_sha256": "2142b93aaaedeb0c06c51a2673d3f784c8c36476045fbf525f23b720eef24e06",
+      "objects": 477
+    },
+    {
+      "allowed_not_applicable_channels": [
+        "rule_redundancy"
+      ],
+      "artifact_sha256": "f1ddbf2b291b952f1ac127de4b66cc04d01d88cdf9d6b825a0a0e928f511abd1",
+      "canonical_evidence_sha256": "58748ce465a8b3352434fad3f1825fbf6fff95a884218f1977a396bad04422ba",
+      "dataset_id": "sms_spam",
+      "explainer_manifest_sha256": "07bb6ffd8352eefc04418f213acaa199b0ab012d03aa29b8de971685744481cb",
+      "model_manifest_sha256": "2ff0fa42c71d83b5418c7f0894206f4ae235cc99e9997b6b8808b5ffd61a39b9",
+      "objects": 4127
+    },
+    {
+      "allowed_not_applicable_channels": [
+        "rule_redundancy"
+      ],
+      "artifact_sha256": "a8a0d123862fb1b4e0a023af8806feae346be3532efbb07dcf830af610cd0451",
+      "canonical_evidence_sha256": "f0c3611bcc045af637df79ee0f8632d103907a78af763f8f4663ca31ea88f89d",
+      "dataset_id": "uci_har_smartphones",
+      "explainer_manifest_sha256": "6b9bc546cf2519474f6896071307fe033a5f959b43ffa3c260e5187b2deb2d42",
+      "model_manifest_sha256": "3dfb1f3e3874d341c70ad937a58720e4150ed2e11fdfb0ffa6c37fb6e523b88a",
+      "objects": 8284
+    }
+  ],
+  "held_out_label_used_as_feature": false,
+  "near_duplicate_violations": 0,
+  "oof_objects": 69827,
+  "oof_test_overlap": 0,
+  "sealed_test_loaded": false,
+  "sealed_test_objects": 17404,
+  "status": "pass"
+}

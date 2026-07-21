@@ -1,0 +1,172 @@
+{
+  "experiment_id": "E2",
+  "folds": 10,
+  "independent_seeds": 5,
+  "interpretation": "the rule-removal effect is not confirmed as a general pattern and remains a controlled illustration",
+  "limitations": [
+    "controlled interaction subgroup",
+    "rule-selection family is fixed before evaluation"
+  ],
+  "mcnemar": {
+    "baseline_only_correct": 52,
+    "candidate_only_correct": 46,
+    "discordant_pairs": 98,
+    "p_two_sided": 0.613734467630139
+  },
+  "n_paired_comparisons": 50,
+  "result_origin": "measured_on_controlled_tabular_dataset",
+  "schema_version": "1.0",
+  "statistics": {
+    "accuracy": {
+      "confidence_interval_95": [
+        -0.0005000000000000004,
+        0.0003200000000000003
+      ],
+      "holm_adjusted_p": 0.9461743992155645,
+      "mean_difference": -0.00012000000000000011,
+      "median_difference": 0.0,
+      "n_pairs": 50,
+      "rank_biserial_effect": -0.27384615384615385,
+      "standard_deviation": 0.0015069905136274977,
+      "wilcoxon_p_two_sided": 0.23645102010844776,
+      "wilcoxon_w": 118.0,
+      "worsening_fraction": 0.32
+    },
+    "auroc": {
+      "confidence_interval_95": [
+        -9.425784212599097e-05,
+        6.21713742725305e-05
+      ],
+      "holm_adjusted_p": 0.9461743992155645,
+      "mean_difference": -1.9203780583383344e-05,
+      "median_difference": -6.001176230535643e-05,
+      "n_pairs": 50,
+      "rank_biserial_effect": -0.21411764705882352,
+      "standard_deviation": 0.0002791135410001133,
+      "wilcoxon_p_two_sided": 0.18923487984311288,
+      "wilcoxon_w": 501.0,
+      "worsening_fraction": 0.6
+    },
+    "balanced_accuracy": {
+      "confidence_interval_95": [
+        -0.00048484883940102863,
+        0.00034439572290557497
+      ],
+      "holm_adjusted_p": 1.0,
+      "mean_difference": -0.00010225385078325599,
+      "median_difference": 0.0,
+      "n_pairs": 50,
+      "rank_biserial_effect": -0.06006006006006006,
+      "standard_deviation": 0.0015135435433186687,
+      "wilcoxon_p_two_sided": 0.7593334449096095,
+      "wilcoxon_w": 313.0,
+      "worsening_fraction": 0.32
+    },
+    "critical_errors": {
+      "confidence_interval_95": [
+        -0.94,
+        -0.48
+      ],
+      "holm_adjusted_p": 0.00011666760840194386,
+      "mean_difference": -0.7,
+      "median_difference": -1.0,
+      "n_pairs": 50,
+      "rank_biserial_effect": -0.9458128078817734,
+      "standard_deviation": 0.8390957231764807,
+      "wilcoxon_p_two_sided": 1.2963067600215984e-05,
+      "wilcoxon_w": 11.0,
+      "worsening_fraction": 0.54
+    },
+    "expected_calibration_error": {
+      "confidence_interval_95": [
+        0.0004191797833592796,
+        0.002361041278939538
+      ],
+      "holm_adjusted_p": 0.04673439070218904,
+      "mean_difference": 0.0013540735832149548,
+      "median_difference": 0.0010073406409784533,
+      "n_pairs": 50,
+      "rank_biserial_effect": 0.4415686274509804,
+      "standard_deviation": 0.0036358828399951425,
+      "wilcoxon_p_two_sided": 0.006676341528884148,
+      "wilcoxon_w": 356.0,
+      "worsening_fraction": 0.36
+    },
+    "f1": {
+      "confidence_interval_95": [
+        -0.0007705479344394272,
+        1.6744141435478534e-05
+      ],
+      "holm_adjusted_p": 0.04234558490261122,
+      "mean_difference": -0.0004027786528966737,
+      "median_difference": -0.00042513225892221174,
+      "n_pairs": 50,
+      "rank_biserial_effect": -0.5345345345345346,
+      "standard_deviation": 0.0014144849441881568,
+      "wilcoxon_p_two_sided": 0.0052931981128264026,
+      "wilcoxon_w": 155.0,
+      "worsening_fraction": 0.56
+    },
+    "precision": {
+      "confidence_interval_95": [
+        0.00010423801604749317,
+        0.0011226226370371938
+      ],
+      "holm_adjusted_p": 0.22424605856058544,
+      "mean_difference": 0.0005622059608568742,
+      "median_difference": 0.0,
+      "n_pairs": 50,
+      "rank_biserial_effect": 0.3993993993993994,
+      "standard_deviation": 0.0018491595667142378,
+      "wilcoxon_p_two_sided": 0.037374343093430906,
+      "wilcoxon_w": 200.0,
+      "worsening_fraction": 0.32
+    },
+    "recall": {
+      "confidence_interval_95": [
+        -0.0018541993123933008,
+        -0.0009468235220743626
+      ],
+      "holm_adjusted_p": 0.00011083155648377327,
+      "mean_difference": -0.0013810604111607506,
+      "median_difference": -0.0019723865877712132,
+      "n_pairs": 50,
+      "rank_biserial_effect": -0.9532019704433498,
+      "standard_deviation": 0.0016553535453575716,
+      "wilcoxon_p_two_sided": 1.1083155648377327e-05,
+      "wilcoxon_w": 9.5,
+      "worsening_fraction": 0.54
+    },
+    "subgroup_f1": {
+      "confidence_interval_95": [
+        0.0,
+        0.0
+      ],
+      "holm_adjusted_p": 1.0,
+      "mean_difference": 0.0,
+      "median_difference": 0.0,
+      "n_pairs": 50,
+      "rank_biserial_effect": 0.0,
+      "standard_deviation": 0.0,
+      "wilcoxon_p_two_sided": 1.0,
+      "wilcoxon_w": 0.0,
+      "worsening_fraction": 0.0
+    },
+    "subgroup_recall": {
+      "confidence_interval_95": [
+        0.0,
+        0.0
+      ],
+      "holm_adjusted_p": 1.0,
+      "mean_difference": 0.0,
+      "median_difference": 0.0,
+      "n_pairs": 50,
+      "rank_biserial_effect": 0.0,
+      "standard_deviation": 0.0,
+      "wilcoxon_p_two_sided": 1.0,
+      "wilcoxon_w": 0.0,
+      "worsening_fraction": 0.0
+    }
+  },
+  "test_partition_used_for_rule_selection": false
+}

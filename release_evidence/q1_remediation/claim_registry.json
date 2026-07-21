@@ -1,0 +1,233 @@
+{
+  "base_commit": "cafe403c7d60e36b08f56a5325ba380718a5be35",
+  "claims": [
+    {
+      "allowed_wording": "The system layer preserved local fidelity within the preregistered margin on this controlled contour.",
+      "claim": "The FuzzyXAI system layer preserves paired local fidelity within the preregistered margin on the controlled contour.",
+      "claim_id": "H1-01",
+      "confidence_intervals": {
+        "lower_ci_95": 0.0
+      },
+      "datasets": [
+        "controlled_tabular_risk_v1"
+      ],
+      "evidence": [
+        "fidelity/h1_fidelity_noninferiority.json"
+      ],
+      "forbidden_wording": "FuzzyXAI improves the causal correctness of SHAP or any other attribution method.",
+      "limitations": [
+        "Controlled tabular contour; external modalities require heavy benchmark evidence."
+      ],
+      "methods": [
+        "FuzzyXAI"
+      ],
+      "metrics": {
+        "lower_ci_95": 0.0,
+        "margin": -0.02,
+        "mean_delta": 0.0
+      },
+      "status": "supported"
+    },
+    {
+      "allowed_wording": "On the controlled removal protocol, FuzzyXAI preserved complete provenance and localized missing channels.",
+      "claim": "Typed provenance increases traceability and detects controlled missing channels.",
+      "claim_id": "H2-01",
+      "confidence_intervals": {},
+      "datasets": [
+        "controlled_tabular_risk_v1"
+      ],
+      "evidence": [
+        "traceability/h2_traceability_missingness.json"
+      ],
+      "forbidden_wording": "FuzzyXAI detects every real-world documentation defect.",
+      "limitations": [
+        "Missing channels were controlled injections."
+      ],
+      "methods": [
+        "FuzzyXAI"
+      ],
+      "metrics": {
+        "false_certification_rate": 0.0,
+        "missingness_f1": 1.0,
+        "traceability_gain": 1.0
+      },
+      "status": "supported"
+    },
+    {
+      "allowed_wording": "The adaptive cascade met the preregistered controlled risk-cost criterion.",
+      "claim": "The adaptive cascade reduces controlled analysis cost at non-inferior decision risk.",
+      "claim_id": "H3-01",
+      "confidence_intervals": {},
+      "datasets": [
+        "controlled_tabular_risk_v1"
+      ],
+      "evidence": [
+        "cascade/h3_adaptive_cascade.json"
+      ],
+      "forbidden_wording": "The cascade is universally safer or cheaper in production.",
+      "limitations": [
+        "Policy signals are controlled; external risk calibration is not established."
+      ],
+      "methods": [
+        "FuzzyXAI"
+      ],
+      "metrics": {
+        "cost_fraction": 0.36666666666666664,
+        "risk_margin": 0.02
+      },
+      "status": "supported"
+    },
+    {
+      "allowed_wording": "Adaptive selection preserves risk within the preregistered margin and reduces representation complexity.",
+      "claim": "Adaptive uncertainty representation is non-inferior to always-FML and less complex on injected profiles.",
+      "claim_id": "H4-01",
+      "confidence_intervals": {},
+      "datasets": [
+        "controlled_tabular_risk_v1"
+      ],
+      "evidence": [
+        "uncertainty/h4_uncertainty_hierarchy.json"
+      ],
+      "forbidden_wording": "Adaptive selection is superior on every criterion.",
+      "limitations": [
+        "Profiles have controlled known uncertainty types."
+      ],
+      "methods": [
+        "FuzzyXAI"
+      ],
+      "metrics": {
+        "complexity_reduction": 2.3258333333333336,
+        "epsilon": 0.02,
+        "fml_fraction": 0.5641666666666667
+      },
+      "status": "supported"
+    },
+    {
+      "allowed_wording": "Critical rupture is a structural diagnostic indicator on the controlled route-violation protocol.",
+      "claim": "Critical rupture localizes controlled structural route violations.",
+      "claim_id": "H5-S-01",
+      "confidence_intervals": {
+        "precision": 1.0
+      },
+      "datasets": [
+        "controlled_tabular_risk_v1"
+      ],
+      "evidence": [
+        "critical_rupture/h5_critical_rupture.json"
+      ],
+      "forbidden_wording": "Critical rupture is a predictive safety signal.",
+      "limitations": [
+        "Structural defects were controlled injections."
+      ],
+      "methods": [
+        "FuzzyXAI"
+      ],
+      "metrics": {
+        "exact_type_accuracy": 1.0,
+        "f1": 1.0,
+        "false_certification_rate": 0.0,
+        "n_objects": 180,
+        "precision": 1.0,
+        "recall": 1.0
+      },
+      "status": "supported"
+    },
+    {
+      "allowed_wording": "critical rupture is a structural diagnostic indicator only",
+      "claim": "Critical rupture adds held-out predictive value for model error.",
+      "claim_id": "H5-P-01",
+      "confidence_intervals": {},
+      "datasets": [
+        "controlled_tabular_risk_v1"
+      ],
+      "evidence": [
+        "critical_rupture/h5_critical_rupture.json"
+      ],
+      "forbidden_wording": "Critical rupture improves safety or predicts errors when incremental AUPRC is non-positive.",
+      "limitations": [
+        "Predictive addition is secondary and must be positive on held-out data."
+      ],
+      "methods": [
+        "FuzzyXAI"
+      ],
+      "metrics": {
+        "evaluation_partition": "test",
+        "fit_partition": "validation",
+        "incremental_auprc": -0.0005609278151094133,
+        "m0_auprc": 0.469200016787222,
+        "m0_auroc": 0.6898082386363636,
+        "m0_brier": 0.18005366104308113,
+        "m1_auprc": 0.4686390889721126,
+        "m1_auroc": 0.6888316761363636,
+        "m1_brier": 0.18007060920631515,
+        "n_test": 240
+      },
+      "status": "not_supported"
+    },
+    {
+      "allowed_wording": "The controlled contour identified a context-dependent candidate effect for validation on independent data.",
+      "claim": "Subgroup-specific leaf-rule ablation exceeds a matched random leaf ablation.",
+      "claim_id": "H6-01",
+      "confidence_intervals": {
+        "ci_95": [
+          0.24,
+          0.49833333333333335
+        ],
+        "mean_specific_effect": 0.37166666666666665
+      },
+      "datasets": [
+        "controlled_tabular_risk_v1"
+      ],
+      "evidence": [
+        "rule_ablation/h6_rule_ablation.json"
+      ],
+      "forbidden_wording": "Rule removal has a general beneficial or harmful effect.",
+      "limitations": [
+        "Positive controlled candidate requires confirmation on a separate real benchmark."
+      ],
+      "methods": [
+        "FuzzyXAI"
+      ],
+      "metrics": {
+        "ci_95": [
+          0.24,
+          0.49833333333333335
+        ],
+        "mean_specific_effect": 0.37166666666666665,
+        "n_pairs": 50
+      },
+      "status": "inconclusive"
+    },
+    {
+      "allowed_wording": "Human usefulness remains unverified pending an independent study.",
+      "claim": "FuzzyXAI improves user comprehension without increasing overtrust.",
+      "claim_id": "H7-01",
+      "confidence_intervals": {
+        "participants": 0
+      },
+      "datasets": [
+        "controlled_tabular_risk_v1"
+      ],
+      "evidence": [
+        "external_studies/status.json"
+      ],
+      "forbidden_wording": "Users understand or trust FuzzyXAI better.",
+      "limitations": [
+        "No participant study has been run."
+      ],
+      "methods": [
+        "FuzzyXAI"
+      ],
+      "metrics": {
+        "participants": 0
+      },
+      "status": "external_gate"
+    }
+  ],
+  "external_gate": 1,
+  "inconclusive": 1,
+  "not_supported": 1,
+  "schema_version": "1.0",
+  "stable_release_allowed": false,
+  "supported": 5
+}

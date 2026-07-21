@@ -1,0 +1,19 @@
+services:
+  reproduce:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        FUZZYXAI_COMMIT: ${FUZZYXAI_COMMIT:-container-unpinned}
+        FUZZYXAI_BRANCH: ${FUZZYXAI_BRANCH:-container}
+    command: make reproduce-dissertation
+    environment:
+      OMP_NUM_THREADS: "1"
+      OPENBLAS_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
+      NUMEXPR_NUM_THREADS: "1"
+    volumes:
+      - ./release_evidence:/app/release_evidence
+      - ./dissertation_artifacts:/app/dissertation_artifacts
+      - ./reports/empirical_validation:/app/reports/empirical_validation
+      - ./release_artifacts:/app/release_artifacts

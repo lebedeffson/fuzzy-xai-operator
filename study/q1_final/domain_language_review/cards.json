@@ -1,0 +1,542 @@
+[
+  {
+    "action": "accept",
+    "associational_label": true,
+    "card_id": "domain_card_001",
+    "decision": "elevated risk",
+    "level": "user",
+    "limitation": "No material limitation was detected in the available route.",
+    "stimulus_id": "stimulus_001"
+  },
+  {
+    "action": "accept",
+    "associational_label": true,
+    "card_id": "domain_card_002",
+    "decision": "elevated risk",
+    "level": "user",
+    "limitation": "No material limitation was detected in the available route.",
+    "stimulus_id": "stimulus_002"
+  },
+  {
+    "action": "accept",
+    "associational_label": true,
+    "card_id": "domain_card_003",
+    "decision": "moderate risk",
+    "level": "user",
+    "limitation": "No material limitation was detected in the available route.",
+    "stimulus_id": "stimulus_003"
+  },
+  {
+    "action": "accept",
+    "associational_label": true,
+    "card_id": "domain_card_004",
+    "decision": "elevated risk",
+    "level": "user",
+    "limitation": "No material limitation was detected in the available route.",
+    "stimulus_id": "stimulus_004"
+  },
+  {
+    "action": "accept",
+    "associational_label": true,
+    "card_id": "domain_card_005",
+    "decision": "elevated risk",
+    "level": "user",
+    "limitation": "No material limitation was detected in the available route.",
+    "stimulus_id": "stimulus_005"
+  },
+  {
+    "action": "accept",
+    "associational_label": true,
+    "card_id": "domain_card_006",
+    "decision": "moderate risk",
+    "level": "user",
+    "limitation": "No material limitation was detected in the available route.",
+    "stimulus_id": "stimulus_006"
+  },
+  {
+    "action": "review",
+    "associational_label": true,
+    "card_id": "domain_card_007",
+    "decision": "elevated risk",
+    "level": "user",
+    "limitation": "The model confidence is close to the decision boundary.",
+    "stimulus_id": "stimulus_007"
+  },
+  {
+    "action": "review",
+    "associational_label": true,
+    "card_id": "domain_card_008",
+    "decision": "elevated risk",
+    "level": "user",
+    "limitation": "The model confidence is close to the decision boundary.",
+    "stimulus_id": "stimulus_008"
+  },
+  {
+    "action": "review",
+    "associational_label": true,
+    "card_id": "domain_card_009",
+    "decision": "moderate risk",
+    "level": "user",
+    "limitation": "The model confidence is close to the decision boundary.",
+    "stimulus_id": "stimulus_009"
+  },
+  {
+    "action": "review",
+    "associational_label": true,
+    "card_id": "domain_card_010",
+    "decision": "elevated risk",
+    "level": "user",
+    "limitation": "The model confidence is close to the decision boundary.",
+    "stimulus_id": "stimulus_010"
+  },
+  {
+    "action": "review",
+    "associational_label": true,
+    "card_id": "domain_card_011",
+    "decision": "elevated risk",
+    "level": "user",
+    "limitation": "The model confidence is close to the decision boundary.",
+    "stimulus_id": "stimulus_011"
+  },
+  {
+    "action": "review",
+    "associational_label": true,
+    "card_id": "domain_card_012",
+    "decision": "moderate risk",
+    "level": "user",
+    "limitation": "The model confidence is close to the decision boundary.",
+    "stimulus_id": "stimulus_012"
+  },
+  {
+    "action": "review",
+    "associational_label": true,
+    "card_id": "domain_card_013",
+    "decision": "elevated risk",
+    "level": "user",
+    "limitation": "High confidence conflicts with held-out outcome evidence.",
+    "stimulus_id": "stimulus_013"
+  },
+  {
+    "action": "review",
+    "associational_label": true,
+    "card_id": "domain_card_014",
+    "decision": "elevated risk",
+    "level": "user",
+    "limitation": "High confidence conflicts with held-out outcome evidence.",
+    "stimulus_id": "stimulus_014"
+  },
+  {
+    "action": "review",
+    "associational_label": true,
+    "card_id": "domain_card_015",
+    "decision": "moderate risk",
+    "level": "user",
+    "limitation": "High confidence conflicts with held-out outcome evidence.",
+    "stimulus_id": "stimulus_015"
+  },
+  {
+    "action": "review",
+    "associational_label": true,
+    "card_id": "domain_card_016",
+    "decision": "elevated risk",
+    "level": "user",
+    "limitation": "High confidence conflicts with held-out outcome evidence.",
+    "stimulus_id": "stimulus_016"
+  },
+  {
+    "action": "review",
+    "associational_label": true,
+    "card_id": "domain_card_017",
+    "decision": "elevated risk",
+    "level": "user",
+    "limitation": "A required provenance channel is absent.",
+    "stimulus_id": "stimulus_017"
+  },
+  {
+    "action": "review",
+    "associational_label": true,
+    "card_id": "domain_card_018",
+    "decision": "moderate risk",
+    "level": "user",
+    "limitation": "A required provenance channel is absent.",
+    "stimulus_id": "stimulus_018"
+  },
+  {
+    "action": "review",
+    "associational_label": true,
+    "card_id": "domain_card_019",
+    "decision": "elevated risk",
+    "level": "user",
+    "limitation": "A required provenance channel is absent.",
+    "stimulus_id": "stimulus_019"
+  },
+  {
+    "action": "review",
+    "associational_label": true,
+    "card_id": "domain_card_020",
+    "decision": "elevated risk",
+    "level": "user",
+    "limitation": "A required provenance channel is absent.",
+    "stimulus_id": "stimulus_020"
+  },
+  {
+    "action": "review",
+    "associational_label": true,
+    "card_id": "domain_card_021",
+    "decision": "moderate risk",
+    "level": "user",
+    "limitation": "Two evidence channels support different actions.",
+    "stimulus_id": "stimulus_021"
+  },
+  {
+    "action": "review",
+    "associational_label": true,
+    "card_id": "domain_card_022",
+    "decision": "elevated risk",
+    "level": "user",
+    "limitation": "Two evidence channels support different actions.",
+    "stimulus_id": "stimulus_022"
+  },
+  {
+    "action": "review",
+    "associational_label": true,
+    "card_id": "domain_card_023",
+    "decision": "elevated risk",
+    "level": "user",
+    "limitation": "The object differs from the training reference distribution.",
+    "stimulus_id": "stimulus_023"
+  },
+  {
+    "action": "review",
+    "associational_label": true,
+    "card_id": "domain_card_024",
+    "decision": "moderate risk",
+    "level": "user",
+    "limitation": "The object differs from the training reference distribution.",
+    "stimulus_id": "stimulus_024"
+  },
+  {
+    "action": "accept",
+    "associational_label": true,
+    "card_id": "domain_card_025",
+    "decision": "elevated risk",
+    "level": "user",
+    "limitation": "No material limitation was detected in the available route.",
+    "stimulus_id": "stimulus_001"
+  },
+  {
+    "action": "accept",
+    "associational_label": true,
+    "card_id": "domain_card_026",
+    "decision": "elevated risk",
+    "level": "user",
+    "limitation": "No material limitation was detected in the available route.",
+    "stimulus_id": "stimulus_002"
+  },
+  {
+    "action": "accept",
+    "associational_label": true,
+    "card_id": "domain_card_027",
+    "decision": "moderate risk",
+    "level": "user",
+    "limitation": "No material limitation was detected in the available route.",
+    "stimulus_id": "stimulus_003"
+  },
+  {
+    "action": "accept",
+    "associational_label": true,
+    "card_id": "domain_card_028",
+    "decision": "elevated risk",
+    "level": "user",
+    "limitation": "No material limitation was detected in the available route.",
+    "stimulus_id": "stimulus_004"
+  },
+  {
+    "action": "accept",
+    "associational_label": true,
+    "card_id": "domain_card_029",
+    "decision": "elevated risk",
+    "level": "user",
+    "limitation": "No material limitation was detected in the available route.",
+    "stimulus_id": "stimulus_005"
+  },
+  {
+    "action": "accept",
+    "associational_label": true,
+    "card_id": "domain_card_030",
+    "decision": "moderate risk",
+    "level": "user",
+    "limitation": "No material limitation was detected in the available route.",
+    "stimulus_id": "stimulus_006"
+  },
+  {
+    "action": "review",
+    "associational_label": true,
+    "card_id": "domain_card_031",
+    "decision": "elevated risk",
+    "level": "expert",
+    "limitation": "The model confidence is close to the decision boundary.",
+    "stimulus_id": "stimulus_007"
+  },
+  {
+    "action": "review",
+    "associational_label": true,
+    "card_id": "domain_card_032",
+    "decision": "elevated risk",
+    "level": "expert",
+    "limitation": "The model confidence is close to the decision boundary.",
+    "stimulus_id": "stimulus_008"
+  },
+  {
+    "action": "review",
+    "associational_label": true,
+    "card_id": "domain_card_033",
+    "decision": "moderate risk",
+    "level": "expert",
+    "limitation": "The model confidence is close to the decision boundary.",
+    "stimulus_id": "stimulus_009"
+  },
+  {
+    "action": "review",
+    "associational_label": true,
+    "card_id": "domain_card_034",
+    "decision": "elevated risk",
+    "level": "expert",
+    "limitation": "The model confidence is close to the decision boundary.",
+    "stimulus_id": "stimulus_010"
+  },
+  {
+    "action": "review",
+    "associational_label": true,
+    "card_id": "domain_card_035",
+    "decision": "elevated risk",
+    "level": "expert",
+    "limitation": "The model confidence is close to the decision boundary.",
+    "stimulus_id": "stimulus_011"
+  },
+  {
+    "action": "review",
+    "associational_label": true,
+    "card_id": "domain_card_036",
+    "decision": "moderate risk",
+    "level": "expert",
+    "limitation": "The model confidence is close to the decision boundary.",
+    "stimulus_id": "stimulus_012"
+  },
+  {
+    "action": "review",
+    "associational_label": true,
+    "card_id": "domain_card_037",
+    "decision": "elevated risk",
+    "level": "expert",
+    "limitation": "High confidence conflicts with held-out outcome evidence.",
+    "stimulus_id": "stimulus_013"
+  },
+  {
+    "action": "review",
+    "associational_label": true,
+    "card_id": "domain_card_038",
+    "decision": "elevated risk",
+    "level": "expert",
+    "limitation": "High confidence conflicts with held-out outcome evidence.",
+    "stimulus_id": "stimulus_014"
+  },
+  {
+    "action": "review",
+    "associational_label": true,
+    "card_id": "domain_card_039",
+    "decision": "moderate risk",
+    "level": "expert",
+    "limitation": "High confidence conflicts with held-out outcome evidence.",
+    "stimulus_id": "stimulus_015"
+  },
+  {
+    "action": "review",
+    "associational_label": true,
+    "card_id": "domain_card_040",
+    "decision": "elevated risk",
+    "level": "expert",
+    "limitation": "High confidence conflicts with held-out outcome evidence.",
+    "stimulus_id": "stimulus_016"
+  },
+  {
+    "action": "review",
+    "associational_label": true,
+    "card_id": "domain_card_041",
+    "decision": "elevated risk",
+    "level": "expert",
+    "limitation": "A required provenance channel is absent.",
+    "stimulus_id": "stimulus_017"
+  },
+  {
+    "action": "review",
+    "associational_label": true,
+    "card_id": "domain_card_042",
+    "decision": "moderate risk",
+    "level": "expert",
+    "limitation": "A required provenance channel is absent.",
+    "stimulus_id": "stimulus_018"
+  },
+  {
+    "action": "review",
+    "associational_label": true,
+    "card_id": "domain_card_043",
+    "decision": "elevated risk",
+    "level": "expert",
+    "limitation": "A required provenance channel is absent.",
+    "stimulus_id": "stimulus_019"
+  },
+  {
+    "action": "review",
+    "associational_label": true,
+    "card_id": "domain_card_044",
+    "decision": "elevated risk",
+    "level": "expert",
+    "limitation": "A required provenance channel is absent.",
+    "stimulus_id": "stimulus_020"
+  },
+  {
+    "action": "review",
+    "associational_label": true,
+    "card_id": "domain_card_045",
+    "decision": "moderate risk",
+    "level": "expert",
+    "limitation": "Two evidence channels support different actions.",
+    "stimulus_id": "stimulus_021"
+  },
+  {
+    "action": "review",
+    "associational_label": true,
+    "card_id": "domain_card_046",
+    "decision": "elevated risk",
+    "level": "expert",
+    "limitation": "Two evidence channels support different actions.",
+    "stimulus_id": "stimulus_022"
+  },
+  {
+    "action": "review",
+    "associational_label": true,
+    "card_id": "domain_card_047",
+    "decision": "elevated risk",
+    "level": "expert",
+    "limitation": "The object differs from the training reference distribution.",
+    "stimulus_id": "stimulus_023"
+  },
+  {
+    "action": "review",
+    "associational_label": true,
+    "card_id": "domain_card_048",
+    "decision": "moderate risk",
+    "level": "expert",
+    "limitation": "The object differs from the training reference distribution.",
+    "stimulus_id": "stimulus_024"
+  },
+  {
+    "action": "accept",
+    "associational_label": true,
+    "card_id": "domain_card_049",
+    "decision": "elevated risk",
+    "level": "expert",
+    "limitation": "No material limitation was detected in the available route.",
+    "stimulus_id": "stimulus_001"
+  },
+  {
+    "action": "accept",
+    "associational_label": true,
+    "card_id": "domain_card_050",
+    "decision": "elevated risk",
+    "level": "expert",
+    "limitation": "No material limitation was detected in the available route.",
+    "stimulus_id": "stimulus_002"
+  },
+  {
+    "action": "accept",
+    "associational_label": true,
+    "card_id": "domain_card_051",
+    "decision": "moderate risk",
+    "level": "audit",
+    "limitation": "No material limitation was detected in the available route.",
+    "stimulus_id": "stimulus_003"
+  },
+  {
+    "action": "accept",
+    "associational_label": true,
+    "card_id": "domain_card_052",
+    "decision": "elevated risk",
+    "level": "audit",
+    "limitation": "No material limitation was detected in the available route.",
+    "stimulus_id": "stimulus_004"
+  },
+  {
+    "action": "accept",
+    "associational_label": true,
+    "card_id": "domain_card_053",
+    "decision": "elevated risk",
+    "level": "audit",
+    "limitation": "No material limitation was detected in the available route.",
+    "stimulus_id": "stimulus_005"
+  },
+  {
+    "action": "accept",
+    "associational_label": true,
+    "card_id": "domain_card_054",
+    "decision": "moderate risk",
+    "level": "audit",
+    "limitation": "No material limitation was detected in the available route.",
+    "stimulus_id": "stimulus_006"
+  },
+  {
+    "action": "review",
+    "associational_label": true,
+    "card_id": "domain_card_055",
+    "decision": "elevated risk",
+    "level": "audit",
+    "limitation": "The model confidence is close to the decision boundary.",
+    "stimulus_id": "stimulus_007"
+  },
+  {
+    "action": "review",
+    "associational_label": true,
+    "card_id": "domain_card_056",
+    "decision": "elevated risk",
+    "level": "audit",
+    "limitation": "The model confidence is close to the decision boundary.",
+    "stimulus_id": "stimulus_008"
+  },
+  {
+    "action": "review",
+    "associational_label": true,
+    "card_id": "domain_card_057",
+    "decision": "moderate risk",
+    "level": "audit",
+    "limitation": "The model confidence is close to the decision boundary.",
+    "stimulus_id": "stimulus_009"
+  },
+  {
+    "action": "review",
+    "associational_label": true,
+    "card_id": "domain_card_058",
+    "decision": "elevated risk",
+    "level": "audit",
+    "limitation": "The model confidence is close to the decision boundary.",
+    "stimulus_id": "stimulus_010"
+  },
+  {
+    "action": "review",
+    "associational_label": true,
+    "card_id": "domain_card_059",
+    "decision": "elevated risk",
+    "level": "audit",
+    "limitation": "The model confidence is close to the decision boundary.",
+    "stimulus_id": "stimulus_011"
+  },
+  {
+    "action": "review",
+    "associational_label": true,
+    "card_id": "domain_card_060",
+    "decision": "moderate risk",
+    "level": "audit",
+    "limitation": "The model confidence is close to the decision boundary.",
+    "stimulus_id": "stimulus_012"
+  }
+]

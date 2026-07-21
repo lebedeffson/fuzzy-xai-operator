@@ -1,0 +1,129 @@
+{
+  "dataset_id": "bank_marketing",
+  "fields": [
+    {
+      "dtype": "int64",
+      "missing_allowed": false,
+      "name": "age",
+      "role": "predictor"
+    },
+    {
+      "dtype": "str",
+      "missing_allowed": false,
+      "name": "job",
+      "role": "predictor"
+    },
+    {
+      "dtype": "str",
+      "missing_allowed": false,
+      "name": "marital",
+      "role": "predictor"
+    },
+    {
+      "dtype": "str",
+      "missing_allowed": false,
+      "name": "education",
+      "role": "predictor"
+    },
+    {
+      "dtype": "str",
+      "missing_allowed": false,
+      "name": "default",
+      "role": "predictor"
+    },
+    {
+      "dtype": "str",
+      "missing_allowed": false,
+      "name": "housing",
+      "role": "predictor"
+    },
+    {
+      "dtype": "str",
+      "missing_allowed": false,
+      "name": "loan",
+      "role": "predictor"
+    },
+    {
+      "dtype": "str",
+      "missing_allowed": false,
+      "name": "contact",
+      "role": "predictor"
+    },
+    {
+      "dtype": "str",
+      "missing_allowed": false,
+      "name": "month",
+      "role": "predictor"
+    },
+    {
+      "dtype": "str",
+      "missing_allowed": false,
+      "name": "day_of_week",
+      "role": "predictor"
+    },
+    {
+      "dtype": "int64",
+      "missing_allowed": false,
+      "name": "duration",
+      "role": "predictor"
+    },
+    {
+      "dtype": "int64",
+      "missing_allowed": false,
+      "name": "campaign",
+      "role": "predictor"
+    },
+    {
+      "dtype": "int64",
+      "missing_allowed": false,
+      "name": "pdays",
+      "role": "predictor"
+    },
+    {
+      "dtype": "int64",
+      "missing_allowed": false,
+      "name": "previous",
+      "role": "predictor"
+    },
+    {
+      "dtype": "str",
+      "missing_allowed": false,
+      "name": "poutcome",
+      "role": "predictor"
+    },
+    {
+      "dtype": "float64",
+      "missing_allowed": false,
+      "name": "emp.var.rate",
+      "role": "predictor"
+    },
+    {
+      "dtype": "float64",
+      "missing_allowed": false,
+      "name": "cons.price.idx",
+      "role": "predictor"
+    },
+    {
+      "dtype": "float64",
+      "missing_allowed": false,
+      "name": "cons.conf.idx",
+      "role": "predictor"
+    },
+    {
+      "dtype": "float64",
+      "missing_allowed": false,
+      "name": "euribor3m",
+      "role": "predictor"
+    },
+    {
+      "dtype": "float64",
+      "missing_allowed": false,
+      "name": "nr.employed",
+      "role": "predictor"
+    }
+  ],
+  "identity_field": "object_id_hash",
+  "modality": "tabular",
+  "schema_version": "1.0",
+  "target_field_visible_in_sealed_test": false
+}

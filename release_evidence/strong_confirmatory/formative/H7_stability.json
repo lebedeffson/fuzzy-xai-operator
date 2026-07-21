@@ -1,0 +1,347 @@
+{
+  "confirmatory_claim_allowed": false,
+  "formative_target_met": false,
+  "modalities": [
+    {
+      "aggregation": "rolling five-replicate median selected during formative development",
+      "baseline": {
+        "jaccard_at_k": 0.3638548752834467,
+        "kendall_tau": 0.6271695988740325,
+        "rank_biased_overlap": 0.3999156224038784,
+        "sign_agreement": 0.9681632653061224
+      },
+      "confirmatory_claim_allowed": false,
+      "fidelity_noninferiority": {
+        "confidence_interval_95": [
+          -0.04585559407170557,
+          -0.033203913031895016
+        ],
+        "effect": -0.0391552700215604,
+        "margin": -0.02,
+        "n": 50,
+        "noninferior": false,
+        "unit_of_analysis": "paired replicate"
+      },
+      "formative_target_met": false,
+      "modality": "tabular",
+      "phase": "formative_only",
+      "replicates": 50,
+      "stability_effects": [
+        {
+          "confidence_interval_95": [
+            0.14220610625202462,
+            0.1694310009718173
+          ],
+          "criterion_met": true,
+          "effect": 0.1559054097829608,
+          "holm_adjusted_p": 0.000999750062484379,
+          "metric": "jaccard_at_k",
+          "n": 1225,
+          "p_value": 0.00024993751562109475,
+          "unit_of_analysis": "paired replicate"
+        },
+        {
+          "confidence_interval_95": [
+            0.15856138869340838,
+            0.16826554069903824
+          ],
+          "criterion_met": true,
+          "effect": 0.1632990851513019,
+          "holm_adjusted_p": 0.000999750062484379,
+          "metric": "kendall_tau",
+          "n": 1225,
+          "p_value": 0.00024993751562109475,
+          "unit_of_analysis": "paired replicate"
+        },
+        {
+          "confidence_interval_95": [
+            0.022040816326530613,
+            0.04244897959183674
+          ],
+          "criterion_met": true,
+          "effect": 0.03183673469387755,
+          "holm_adjusted_p": 0.000999750062484379,
+          "metric": "sign_agreement",
+          "n": 1225,
+          "p_value": 0.00024993751562109475,
+          "unit_of_analysis": "paired replicate"
+        },
+        {
+          "confidence_interval_95": [
+            0.20285590404460482,
+            0.23244923489944924
+          ],
+          "criterion_met": true,
+          "effect": 0.21728799027608406,
+          "holm_adjusted_p": 0.000999750062484379,
+          "metric": "rank_biased_overlap",
+          "n": 1225,
+          "p_value": 0.00024993751562109475,
+          "unit_of_analysis": "paired replicate"
+        }
+      ],
+      "system": {
+        "jaccard_at_k": 0.5197602850664075,
+        "kendall_tau": 0.7904686840253343,
+        "rank_biased_overlap": 0.6172036126799625,
+        "sign_agreement": 1.0
+      }
+    },
+    {
+      "aggregation": "rolling five-replicate median selected during formative development",
+      "baseline": {
+        "jaccard_at_k": 0.8215354713313898,
+        "kendall_tau": 0.8192597991577583,
+        "rank_biased_overlap": 0.8366481215230347,
+        "sign_agreement": 1.0
+      },
+      "confirmatory_claim_allowed": false,
+      "fidelity_noninferiority": {
+        "confidence_interval_95": [
+          -0.00885137181207436,
+          -0.0074932922091947764
+        ],
+        "effect": -0.008188444204571654,
+        "margin": -0.02,
+        "n": 50,
+        "noninferior": true,
+        "unit_of_analysis": "paired replicate"
+      },
+      "formative_target_met": true,
+      "modality": "image",
+      "phase": "formative_only",
+      "replicates": 50,
+      "stability_effects": [
+        {
+          "confidence_interval_95": [
+            0.010571428571428572,
+            0.03280855199222546
+          ],
+          "criterion_met": true,
+          "effect": 0.02172983479105928,
+          "holm_adjusted_p": 0.000999750062484379,
+          "metric": "jaccard_at_k",
+          "n": 1225,
+          "p_value": 0.00024993751562109475,
+          "unit_of_analysis": "paired replicate"
+        },
+        {
+          "confidence_interval_95": [
+            0.07821412374473598,
+            0.08190735341755749
+          ],
+          "criterion_met": true,
+          "effect": 0.08007855523161644,
+          "holm_adjusted_p": 0.000999750062484379,
+          "metric": "kendall_tau",
+          "n": 1225,
+          "p_value": 0.00024993751562109475,
+          "unit_of_analysis": "paired replicate"
+        },
+        {
+          "confidence_interval_95": [
+            0.0,
+            0.0
+          ],
+          "criterion_met": false,
+          "effect": 0.0,
+          "holm_adjusted_p": 1.0,
+          "metric": "sign_agreement",
+          "n": 1225,
+          "p_value": 1.0,
+          "unit_of_analysis": "paired replicate"
+        },
+        {
+          "confidence_interval_95": [
+            0.10137996565332681,
+            0.11690099950214262
+          ],
+          "criterion_met": true,
+          "effect": 0.1092877191705966,
+          "holm_adjusted_p": 0.000999750062484379,
+          "metric": "rank_biased_overlap",
+          "n": 1225,
+          "p_value": 0.00024993751562109475,
+          "unit_of_analysis": "paired replicate"
+        }
+      ],
+      "system": {
+        "jaccard_at_k": 0.843265306122449,
+        "kendall_tau": 0.8993383543893748,
+        "rank_biased_overlap": 0.9459358406936313,
+        "sign_agreement": 1.0
+      }
+    },
+    {
+      "aggregation": "rolling five-replicate median selected during formative development",
+      "baseline": {
+        "jaccard_at_k": 0.5472465176546809,
+        "kendall_tau": 0.32737915500648423,
+        "rank_biased_overlap": 0.7340675182236212,
+        "sign_agreement": 0.8569523809523809
+      },
+      "confirmatory_claim_allowed": false,
+      "fidelity_noninferiority": {
+        "confidence_interval_95": [
+          -0.18663959730072135,
+          -0.04491047596745934
+        ],
+        "effect": -0.1022801155934549,
+        "margin": -0.02,
+        "n": 50,
+        "noninferior": false,
+        "unit_of_analysis": "paired replicate"
+      },
+      "formative_target_met": false,
+      "modality": "text:20_newsgroups_cached_development_subset",
+      "phase": "formative_only",
+      "replicates": 50,
+      "stability_effects": [
+        {
+          "confidence_interval_95": [
+            0.05675777453838678,
+            0.08423655652737283
+          ],
+          "criterion_met": true,
+          "effect": 0.07071266601878846,
+          "holm_adjusted_p": 0.000999750062484379,
+          "metric": "jaccard_at_k",
+          "n": 1225,
+          "p_value": 0.00024993751562109475,
+          "unit_of_analysis": "paired replicate"
+        },
+        {
+          "confidence_interval_95": [
+            0.19698623620685735,
+            0.20595060177917324
+          ],
+          "criterion_met": true,
+          "effect": 0.20154717994221102,
+          "holm_adjusted_p": 0.000999750062484379,
+          "metric": "kendall_tau",
+          "n": 1225,
+          "p_value": 0.00024993751562109475,
+          "unit_of_analysis": "paired replicate"
+        },
+        {
+          "confidence_interval_95": [
+            0.09084115646258503,
+            0.12134693877551021
+          ],
+          "criterion_met": true,
+          "effect": 0.10553741496598641,
+          "holm_adjusted_p": 0.000999750062484379,
+          "metric": "sign_agreement",
+          "n": 1225,
+          "p_value": 0.00024993751562109475,
+          "unit_of_analysis": "paired replicate"
+        },
+        {
+          "confidence_interval_95": [
+            0.14148267242234244,
+            0.15736537698862596
+          ],
+          "criterion_met": true,
+          "effect": 0.1493967853068799,
+          "holm_adjusted_p": 0.000999750062484379,
+          "metric": "rank_biased_overlap",
+          "n": 1225,
+          "p_value": 0.00024993751562109475,
+          "unit_of_analysis": "paired replicate"
+        }
+      ],
+      "system": {
+        "jaccard_at_k": 0.6179591836734694,
+        "kendall_tau": 0.5289263349486952,
+        "rank_biased_overlap": 0.8834643035305011,
+        "sign_agreement": 0.9624897959183675
+      }
+    },
+    {
+      "aggregation": "rolling five-replicate median selected during formative development",
+      "baseline": {
+        "jaccard_at_k": 0.7564625850340136,
+        "kendall_tau": 0.6579097093382809,
+        "rank_biased_overlap": 0.9206135555733854,
+        "sign_agreement": 0.9986938775510205
+      },
+      "confirmatory_claim_allowed": false,
+      "fidelity_noninferiority": {
+        "confidence_interval_95": [
+          -0.0007887454077534552,
+          -0.0005492663244709473
+        ],
+        "effect": -0.0006640891606290599,
+        "margin": -0.02,
+        "n": 50,
+        "noninferior": true,
+        "unit_of_analysis": "paired replicate"
+      },
+      "formative_target_met": true,
+      "modality": "timeseries:controlled_periodic_signal",
+      "phase": "formative_only",
+      "replicates": 50,
+      "stability_effects": [
+        {
+          "confidence_interval_95": [
+            0.13142857142857142,
+            0.1553809523809524
+          ],
+          "criterion_met": true,
+          "effect": 0.1431292517006803,
+          "holm_adjusted_p": 0.000999750062484379,
+          "metric": "jaccard_at_k",
+          "n": 1225,
+          "p_value": 0.00024993751562109475,
+          "unit_of_analysis": "paired replicate"
+        },
+        {
+          "confidence_interval_95": [
+            0.0890525664811379,
+            0.10565244279529991
+          ],
+          "criterion_met": true,
+          "effect": 0.09704390847247989,
+          "holm_adjusted_p": 0.000999750062484379,
+          "metric": "kendall_tau",
+          "n": 1225,
+          "p_value": 0.00024993751562109475,
+          "unit_of_analysis": "paired replicate"
+        },
+        {
+          "confidence_interval_95": [
+            0.0004897959183673468,
+            0.002285714285714285
+          ],
+          "criterion_met": false,
+          "effect": 0.0013061224489795916,
+          "holm_adjusted_p": 0.005748562859285179,
+          "metric": "sign_agreement",
+          "n": 1225,
+          "p_value": 0.005748562859285179,
+          "unit_of_analysis": "paired replicate"
+        },
+        {
+          "confidence_interval_95": [
+            0.02441893811369388,
+            0.033371276572947556
+          ],
+          "criterion_met": true,
+          "effect": 0.028829221982070163,
+          "holm_adjusted_p": 0.000999750062484379,
+          "metric": "rank_biased_overlap",
+          "n": 1225,
+          "p_value": 0.00024993751562109475,
+          "unit_of_analysis": "paired replicate"
+        }
+      ],
+      "system": {
+        "jaccard_at_k": 0.8995918367346939,
+        "kendall_tau": 0.7549536178107608,
+        "rank_biased_overlap": 0.9494427775554557,
+        "sign_agreement": 1.0
+      }
+    }
+  ],
+  "phase": "formative_only"
+}

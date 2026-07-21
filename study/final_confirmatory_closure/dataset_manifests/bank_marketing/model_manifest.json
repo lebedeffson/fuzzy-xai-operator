@@ -1,0 +1,162 @@
+{
+  "calibration": {
+    "candidates": [
+      {
+        "development_brier_correctness": 0.06623497660245753,
+        "method": "platt",
+        "n": 8235
+      },
+      {
+        "development_brier_correctness": 0.06337724679716414,
+        "method": "isotonic",
+        "n": 8235
+      },
+      {
+        "development_brier_correctness": 0.06285242580190982,
+        "method": "temperature",
+        "n": 8235
+      },
+      {
+        "development_brier_correctness": 0.06516356058420439,
+        "method": "conformal",
+        "n": 8235
+      }
+    ],
+    "per_row_mapping_fit_excludes_row": true,
+    "selected_method": "temperature",
+    "selection_partition": "development",
+    "test_labels_used": false
+  },
+  "dataset_id": "bank_marketing",
+  "fold_artifacts": [
+    {
+      "fold": 0,
+      "role": "primary",
+      "sha256": "f8dcaf53883fec9729496c1c9154fecbd45f9cfed3df84b368be40cde7eddaf5"
+    },
+    {
+      "fold": 0,
+      "role": "alternate",
+      "sha256": "87a2a729f5fc23a22e90966d9f9acfd2a10f7d7889bf57ab5a2bf5b39f93221c"
+    },
+    {
+      "fold": 0,
+      "role": "seed",
+      "sha256": "bbe1d7cbde4114b6958d02c31187f4f72fa04a0bdccced00022592b6b5b69fcb"
+    },
+    {
+      "fold": 0,
+      "role": "bootstrap",
+      "sha256": "e66cf19a1604091145f3db6f3ff61940a068c0764ca9f9d0fa1dca1f6b416067"
+    },
+    {
+      "fold": 1,
+      "role": "primary",
+      "sha256": "c34ef026e356ca2d8d035e5c9548641bb64ff242a8932f5b931e5d8faf1cc755"
+    },
+    {
+      "fold": 1,
+      "role": "alternate",
+      "sha256": "03aface1ed180387370dee27d06d9fc750a8dd3a8c555b753b59b743ad119e30"
+    },
+    {
+      "fold": 1,
+      "role": "seed",
+      "sha256": "db6630121039b8a7ac9afaa4ffac96577ecc719a41478d2c4ed6da62d54d2058"
+    },
+    {
+      "fold": 1,
+      "role": "bootstrap",
+      "sha256": "c365204a95076e94aeeb102b3c49c29ba2f9eb485b1453b98f0cbae9889ea7bd"
+    },
+    {
+      "fold": 2,
+      "role": "primary",
+      "sha256": "9bcb3cb8e36799dece241080b88b2d8d19485684026f8992893f3e9ee66fc490"
+    },
+    {
+      "fold": 2,
+      "role": "alternate",
+      "sha256": "48cf3dc8e2f4d9b20cc294bf85b75f9946d7188f3d4d4b0dbc7484e110beec0a"
+    },
+    {
+      "fold": 2,
+      "role": "seed",
+      "sha256": "5b2514f481b9e06730db8b98af6349b35ee9f3561012d2bfdea652ab81e67bbe"
+    },
+    {
+      "fold": 2,
+      "role": "bootstrap",
+      "sha256": "dc5aff371f79c38c01af828a107611785425aa8ccf1f84beceb3a6d6aaa2d1f3"
+    },
+    {
+      "fold": 3,
+      "role": "primary",
+      "sha256": "fe6728fefc8085c446106ad9edfe0bbc5d2ea285bad9d57b6f1b7b4b9d35ceee"
+    },
+    {
+      "fold": 3,
+      "role": "alternate",
+      "sha256": "dc1c54d98458db0662c8c60b07bd39fbe56eb29d55baced5356c6f8a4ed01db2"
+    },
+    {
+      "fold": 3,
+      "role": "seed",
+      "sha256": "1f0d2ebfa70da42695b478fd335b8c2c9fa419a39b77f448ee8321a01db50b83"
+    },
+    {
+      "fold": 3,
+      "role": "bootstrap",
+      "sha256": "8588f4df5a57e6b074167f68c57783b1ab50d8d2f7c1ebdc8bbc677d85e79b71"
+    },
+    {
+      "fold": 4,
+      "role": "primary",
+      "sha256": "ee710d6763791aaa2d7972c5f1b3bc9e1ab8d20d9d6857e472c62182ceee5caf"
+    },
+    {
+      "fold": 4,
+      "role": "alternate",
+      "sha256": "79883cccf4f4599e3b4014b07baa9266be12f3e21d81833111af2deb5ba5cfc4"
+    },
+    {
+      "fold": 4,
+      "role": "seed",
+      "sha256": "7b4cedb552e5364a76a0f2595a70297395de8a064a9dca26030f7bec9be118bc"
+    },
+    {
+      "fold": 4,
+      "role": "bootstrap",
+      "sha256": "67bb71c6f228cc4c45fd133aaa4936f6989f9be5db44e98d94d0838a09df3592"
+    }
+  ],
+  "modality": "tabular",
+  "models": {
+    "additional_benchmark_models": [
+      "random_forest",
+      "calibrated_gradient_boosting"
+    ],
+    "alternate": {
+      "family": "linear",
+      "model_id": "sklearn_logistic_regression",
+      "native_input": "mixed_tabular"
+    },
+    "primary": {
+      "family": "gradient_boosting",
+      "model_id": "sklearn_hist_gradient_boosting",
+      "native_input": "mixed_tabular"
+    }
+  },
+  "schema_version": "1.0",
+  "sealed_test_loaded": false,
+  "source_commit": "9def80e4871f49f0abb18fb8b7972b60a03be720",
+  "training_scope": "five_fold_cross_fitted_train_development_only",
+  "versions": {
+    "numpy": "2.5.1",
+    "pandas": "3.0.3",
+    "python": "3.12.12",
+    "scikit-learn": "1.9.0",
+    "scipy": "1.18.0",
+    "torch": "2.13.0+cpu"
+  }
+}

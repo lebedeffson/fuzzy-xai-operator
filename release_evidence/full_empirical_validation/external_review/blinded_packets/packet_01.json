@@ -1,0 +1,180 @@
+{
+  "items": [
+    {
+      "explanation_available": true,
+      "model_probability": 0.7100922270694625,
+      "object_id": "tab_000436",
+      "proposed_action": "review",
+      "review_item_id": "review_000"
+    },
+    {
+      "explanation_available": true,
+      "model_probability": 0.38765643727267296,
+      "object_id": "tab_000634",
+      "proposed_action": "review",
+      "review_item_id": "review_001"
+    },
+    {
+      "explanation_available": true,
+      "model_probability": 0.4456230600618251,
+      "object_id": "tab_000675",
+      "proposed_action": "review",
+      "review_item_id": "review_002"
+    },
+    {
+      "explanation_available": true,
+      "model_probability": 0.16428883949543008,
+      "object_id": "tab_000761",
+      "proposed_action": "accept",
+      "review_item_id": "review_003"
+    },
+    {
+      "explanation_available": true,
+      "model_probability": 0.6145571719948656,
+      "object_id": "tab_000851",
+      "proposed_action": "review",
+      "review_item_id": "review_004"
+    },
+    {
+      "explanation_available": true,
+      "model_probability": 0.7109330556156707,
+      "object_id": "tab_000883",
+      "proposed_action": "review",
+      "review_item_id": "review_005"
+    },
+    {
+      "explanation_available": true,
+      "model_probability": 0.9056611484133257,
+      "object_id": "tab_000915",
+      "proposed_action": "accept",
+      "review_item_id": "review_006"
+    },
+    {
+      "explanation_available": true,
+      "model_probability": 0.02964197767613849,
+      "object_id": "tab_000933",
+      "proposed_action": "accept",
+      "review_item_id": "review_007"
+    },
+    {
+      "explanation_available": true,
+      "model_probability": 0.2520490224858128,
+      "object_id": "tab_000971",
+      "proposed_action": "review",
+      "review_item_id": "review_008"
+    },
+    {
+      "explanation_available": true,
+      "model_probability": 0.44538397158612236,
+      "object_id": "tab_001270",
+      "proposed_action": "review",
+      "review_item_id": "review_009"
+    },
+    {
+      "explanation_available": true,
+      "model_probability": 0.49907509017651935,
+      "object_id": "tab_001295",
+      "proposed_action": "review",
+      "review_item_id": "review_010"
+    },
+    {
+      "explanation_available": true,
+      "model_probability": 0.5379660710703164,
+      "object_id": "tab_001397",
+      "proposed_action": "review",
+      "review_item_id": "review_011"
+    },
+    {
+      "explanation_available": true,
+      "model_probability": 0.8913990854148749,
+      "object_id": "tab_001536",
+      "proposed_action": "accept",
+      "review_item_id": "review_012"
+    },
+    {
+      "explanation_available": true,
+      "model_probability": 0.9575759981157049,
+      "object_id": "tab_001604",
+      "proposed_action": "accept",
+      "review_item_id": "review_013"
+    },
+    {
+      "explanation_available": true,
+      "model_probability": 0.9893899905365,
+      "object_id": "tab_001642",
+      "proposed_action": "accept",
+      "review_item_id": "review_014"
+    },
+    {
+      "explanation_available": true,
+      "model_probability": 0.5934020245089259,
+      "object_id": "tab_001811",
+      "proposed_action": "review",
+      "review_item_id": "review_015"
+    },
+    {
+      "explanation_available": true,
+      "model_probability": 0.5145174142507628,
+      "object_id": "tab_001889",
+      "proposed_action": "review",
+      "review_item_id": "review_016"
+    },
+    {
+      "explanation_available": true,
+      "model_probability": 0.950139566665835,
+      "object_id": "tab_001937",
+      "proposed_action": "accept",
+      "review_item_id": "review_017"
+    },
+    {
+      "explanation_available": true,
+      "model_probability": 0.9184004400958669,
+      "object_id": "tab_001996",
+      "proposed_action": "accept",
+      "review_item_id": "review_018"
+    },
+    {
+      "explanation_available": true,
+      "model_probability": 0.4236505371251066,
+      "object_id": "tab_002256",
+      "proposed_action": "review",
+      "review_item_id": "review_019"
+    },
+    {
+      "explanation_available": true,
+      "model_probability": 0.09512544455330325,
+      "object_id": "tab_002264",
+      "proposed_action": "accept",
+      "review_item_id": "review_020"
+    },
+    {
+      "explanation_available": true,
+      "model_probability": 0.8949967704539424,
+      "object_id": "tab_002394",
+      "proposed_action": "accept",
+      "review_item_id": "review_021"
+    },
+    {
+      "explanation_available": true,
+      "model_probability": 0.024243684380387407,
+      "object_id": "tab_002750",
+      "proposed_action": "accept",
+      "review_item_id": "review_022"
+    },
+    {
+      "explanation_available": true,
+      "model_probability": 0.7900395339177962,
+      "object_id": "tab_002882",
+      "proposed_action": "accept",
+      "review_item_id": "review_023"
+    },
+    {
+      "explanation_available": true,
+      "model_probability": 0.008965191144469038,
+      "object_id": "tab_003119",
+      "proposed_action": "accept",
+      "review_item_id": "review_024"
+    }
+  ],
+  "status": "unreviewed"
+}

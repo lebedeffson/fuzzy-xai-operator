@@ -1,0 +1,1854 @@
+{
+  "conditional_model": {
+    "claim_scope": "exploratory controlled predictor; independent real-benchmark confirmation required",
+    "features": [
+      "coverage",
+      "subgroup_coverage",
+      "exclusivity",
+      "redundancy",
+      "depth",
+      "confidence"
+    ],
+    "fit_pairs": 40,
+    "holdout_mae": 0.3567434518647147,
+    "holdout_pairs": 10,
+    "holdout_r2": -0.06296668096584646,
+    "status": "measured_exploratory_controlled"
+  },
+  "descriptors": [
+    {
+      "fold": 0,
+      "matched": {
+        "activation_frequency": 0.14074074074074075,
+        "confidence": 0.6842105263157895,
+        "coverage": 0.14074074074074075,
+        "depth": 5,
+        "exclusivity": 0.0,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:41",
+        "subgroup_coverage": 0.0
+      },
+      "seed": 4201,
+      "selected": {
+        "activation_frequency": 0.15555555555555556,
+        "confidence": 0.8095238095238095,
+        "coverage": 0.15555555555555556,
+        "depth": 5,
+        "exclusivity": 0.047619047619047616,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:25",
+        "subgroup_coverage": 1.0
+      }
+    },
+    {
+      "fold": 1,
+      "matched": {
+        "activation_frequency": 0.11481481481481481,
+        "confidence": 0.8064516129032258,
+        "coverage": 0.11481481481481481,
+        "depth": 5,
+        "exclusivity": 0.0,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:37",
+        "subgroup_coverage": 0.0
+      },
+      "seed": 4201,
+      "selected": {
+        "activation_frequency": 0.11481481481481481,
+        "confidence": 0.8709677419354839,
+        "coverage": 0.11481481481481481,
+        "depth": 5,
+        "exclusivity": 0.16129032258064516,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:12",
+        "subgroup_coverage": 1.0
+      }
+    },
+    {
+      "fold": 2,
+      "matched": {
+        "activation_frequency": 0.05185185185185185,
+        "confidence": 0.5,
+        "coverage": 0.05185185185185185,
+        "depth": 5,
+        "exclusivity": 0.0,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:50",
+        "subgroup_coverage": 0.0
+      },
+      "seed": 4201,
+      "selected": {
+        "activation_frequency": 0.037037037037037035,
+        "confidence": 0.9,
+        "coverage": 0.037037037037037035,
+        "depth": 5,
+        "exclusivity": 0.1,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:39",
+        "subgroup_coverage": 0.5
+      }
+    },
+    {
+      "fold": 3,
+      "matched": {
+        "activation_frequency": 0.04814814814814815,
+        "confidence": 0.6153846153846154,
+        "coverage": 0.04814814814814815,
+        "depth": 5,
+        "exclusivity": 0.0,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:47",
+        "subgroup_coverage": 0.0
+      },
+      "seed": 4201,
+      "selected": {
+        "activation_frequency": 0.044444444444444446,
+        "confidence": 0.9166666666666666,
+        "coverage": 0.044444444444444446,
+        "depth": 5,
+        "exclusivity": 0.16666666666666666,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:32",
+        "subgroup_coverage": 0.5
+      }
+    },
+    {
+      "fold": 4,
+      "matched": {
+        "activation_frequency": 0.08148148148148149,
+        "confidence": 0.5909090909090909,
+        "coverage": 0.08148148148148149,
+        "depth": 5,
+        "exclusivity": 0.0,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:30",
+        "subgroup_coverage": 0.0
+      },
+      "seed": 4201,
+      "selected": {
+        "activation_frequency": 0.08148148148148149,
+        "confidence": 0.8181818181818182,
+        "coverage": 0.08148148148148149,
+        "depth": 5,
+        "exclusivity": 0.13636363636363635,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:41",
+        "subgroup_coverage": 0.75
+      }
+    },
+    {
+      "fold": 5,
+      "matched": {
+        "activation_frequency": 0.014814814814814815,
+        "confidence": 1.0,
+        "coverage": 0.014814814814814815,
+        "depth": 5,
+        "exclusivity": 0.0,
+        "output_class": "0",
+        "redundancy": 0.0,
+        "rule_id": "leaf:16",
+        "subgroup_coverage": 0.0
+      },
+      "seed": 4201,
+      "selected": {
+        "activation_frequency": 0.011111111111111112,
+        "confidence": 0.6666666666666666,
+        "coverage": 0.011111111111111112,
+        "depth": 5,
+        "exclusivity": 0.3333333333333333,
+        "output_class": "0",
+        "redundancy": 0.0,
+        "rule_id": "leaf:36",
+        "subgroup_coverage": 0.2
+      }
+    },
+    {
+      "fold": 6,
+      "matched": {
+        "activation_frequency": 0.025925925925925925,
+        "confidence": 0.7142857142857143,
+        "coverage": 0.025925925925925925,
+        "depth": 5,
+        "exclusivity": 0.0,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:25",
+        "subgroup_coverage": 0.0
+      },
+      "seed": 4201,
+      "selected": {
+        "activation_frequency": 0.025925925925925925,
+        "confidence": 0.7142857142857143,
+        "coverage": 0.025925925925925925,
+        "depth": 5,
+        "exclusivity": 0.14285714285714285,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:31",
+        "subgroup_coverage": 0.5
+      }
+    },
+    {
+      "fold": 7,
+      "matched": {
+        "activation_frequency": 0.0962962962962963,
+        "confidence": 0.6923076923076923,
+        "coverage": 0.0962962962962963,
+        "depth": 5,
+        "exclusivity": 0.0,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:32",
+        "subgroup_coverage": 0.0
+      },
+      "seed": 4201,
+      "selected": {
+        "activation_frequency": 0.1259259259259259,
+        "confidence": 0.9411764705882353,
+        "coverage": 0.1259259259259259,
+        "depth": 5,
+        "exclusivity": 0.14705882352941177,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:28",
+        "subgroup_coverage": 1.0
+      }
+    },
+    {
+      "fold": 8,
+      "matched": {
+        "activation_frequency": 0.014814814814814815,
+        "confidence": 0.75,
+        "coverage": 0.014814814814814815,
+        "depth": 5,
+        "exclusivity": 0.0,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:11",
+        "subgroup_coverage": 0.0
+      },
+      "seed": 4201,
+      "selected": {
+        "activation_frequency": 0.011111111111111112,
+        "confidence": 1.0,
+        "coverage": 0.011111111111111112,
+        "depth": 5,
+        "exclusivity": 0.3333333333333333,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:18",
+        "subgroup_coverage": 0.2
+      }
+    },
+    {
+      "fold": 9,
+      "matched": {
+        "activation_frequency": 0.04814814814814815,
+        "confidence": 0.5384615384615384,
+        "coverage": 0.04814814814814815,
+        "depth": 5,
+        "exclusivity": 0.0,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:44",
+        "subgroup_coverage": 0.0
+      },
+      "seed": 4201,
+      "selected": {
+        "activation_frequency": 0.04814814814814815,
+        "confidence": 0.6923076923076923,
+        "coverage": 0.04814814814814815,
+        "depth": 5,
+        "exclusivity": 0.15384615384615385,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:28",
+        "subgroup_coverage": 0.6666666666666666
+      }
+    },
+    {
+      "fold": 0,
+      "matched": {
+        "activation_frequency": 0.07037037037037037,
+        "confidence": 0.631578947368421,
+        "coverage": 0.07037037037037037,
+        "depth": 5,
+        "exclusivity": 0.0,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:37",
+        "subgroup_coverage": 0.0
+      },
+      "seed": 4202,
+      "selected": {
+        "activation_frequency": 0.06296296296296296,
+        "confidence": 0.7647058823529411,
+        "coverage": 0.06296296296296296,
+        "depth": 5,
+        "exclusivity": 0.11764705882352941,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:30",
+        "subgroup_coverage": 0.5
+      }
+    },
+    {
+      "fold": 1,
+      "matched": {
+        "activation_frequency": 0.04814814814814815,
+        "confidence": 0.8461538461538461,
+        "coverage": 0.04814814814814815,
+        "depth": 5,
+        "exclusivity": 0.0,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:10",
+        "subgroup_coverage": 0.0
+      },
+      "seed": 4202,
+      "selected": {
+        "activation_frequency": 0.12222222222222222,
+        "confidence": 0.8484848484848485,
+        "coverage": 0.12222222222222222,
+        "depth": 5,
+        "exclusivity": 0.18181818181818182,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:26",
+        "subgroup_coverage": 1.0
+      }
+    },
+    {
+      "fold": 2,
+      "matched": {
+        "activation_frequency": 0.025925925925925925,
+        "confidence": 0.7142857142857143,
+        "coverage": 0.025925925925925925,
+        "depth": 5,
+        "exclusivity": 0.0,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:31",
+        "subgroup_coverage": 0.0
+      },
+      "seed": 4202,
+      "selected": {
+        "activation_frequency": 0.022222222222222223,
+        "confidence": 0.6666666666666666,
+        "coverage": 0.022222222222222223,
+        "depth": 3,
+        "exclusivity": 0.3333333333333333,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:35",
+        "subgroup_coverage": 0.4
+      }
+    },
+    {
+      "fold": 3,
+      "matched": {
+        "activation_frequency": 0.1037037037037037,
+        "confidence": 0.6785714285714286,
+        "coverage": 0.1037037037037037,
+        "depth": 5,
+        "exclusivity": 0.0,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:36",
+        "subgroup_coverage": 0.0
+      },
+      "seed": 4202,
+      "selected": {
+        "activation_frequency": 0.1259259259259259,
+        "confidence": 0.8235294117647058,
+        "coverage": 0.1259259259259259,
+        "depth": 5,
+        "exclusivity": 0.14705882352941177,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:30",
+        "subgroup_coverage": 1.0
+      }
+    },
+    {
+      "fold": 4,
+      "matched": {
+        "activation_frequency": 0.05925925925925926,
+        "confidence": 0.75,
+        "coverage": 0.05925925925925926,
+        "depth": 5,
+        "exclusivity": 0.0,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:22",
+        "subgroup_coverage": 0.0
+      },
+      "seed": 4202,
+      "selected": {
+        "activation_frequency": 0.05555555555555555,
+        "confidence": 0.8,
+        "coverage": 0.05555555555555555,
+        "depth": 5,
+        "exclusivity": 0.13333333333333333,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:24",
+        "subgroup_coverage": 0.6666666666666666
+      }
+    },
+    {
+      "fold": 5,
+      "matched": {
+        "activation_frequency": 0.10740740740740741,
+        "confidence": 0.7241379310344828,
+        "coverage": 0.10740740740740741,
+        "depth": 5,
+        "exclusivity": 0.0,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:42",
+        "subgroup_coverage": 0.0
+      },
+      "seed": 4202,
+      "selected": {
+        "activation_frequency": 0.14444444444444443,
+        "confidence": 0.8717948717948718,
+        "coverage": 0.14444444444444443,
+        "depth": 5,
+        "exclusivity": 0.10256410256410256,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:15",
+        "subgroup_coverage": 1.0
+      }
+    },
+    {
+      "fold": 6,
+      "matched": {
+        "activation_frequency": 0.12962962962962962,
+        "confidence": 0.7142857142857143,
+        "coverage": 0.12962962962962962,
+        "depth": 5,
+        "exclusivity": 0.0,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:34",
+        "subgroup_coverage": 0.0
+      },
+      "seed": 4202,
+      "selected": {
+        "activation_frequency": 0.13703703703703704,
+        "confidence": 0.7837837837837838,
+        "coverage": 0.13703703703703704,
+        "depth": 5,
+        "exclusivity": 0.08108108108108109,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:38",
+        "subgroup_coverage": 1.0
+      }
+    },
+    {
+      "fold": 7,
+      "matched": {
+        "activation_frequency": 0.018518518518518517,
+        "confidence": 0.6,
+        "coverage": 0.018518518518518517,
+        "depth": 5,
+        "exclusivity": 0.0,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:10",
+        "subgroup_coverage": 0.0
+      },
+      "seed": 4202,
+      "selected": {
+        "activation_frequency": 0.022222222222222223,
+        "confidence": 1.0,
+        "coverage": 0.022222222222222223,
+        "depth": 5,
+        "exclusivity": 0.3333333333333333,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:13",
+        "subgroup_coverage": 0.3333333333333333
+      }
+    },
+    {
+      "fold": 8,
+      "matched": {
+        "activation_frequency": 0.12222222222222222,
+        "confidence": 0.7878787878787878,
+        "coverage": 0.12222222222222222,
+        "depth": 5,
+        "exclusivity": 0.0,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:47",
+        "subgroup_coverage": 0.0
+      },
+      "seed": 4202,
+      "selected": {
+        "activation_frequency": 0.1037037037037037,
+        "confidence": 0.8214285714285714,
+        "coverage": 0.1037037037037037,
+        "depth": 5,
+        "exclusivity": 0.07142857142857142,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:16",
+        "subgroup_coverage": 0.5
+      }
+    },
+    {
+      "fold": 9,
+      "matched": {
+        "activation_frequency": 0.05185185185185185,
+        "confidence": 0.8571428571428571,
+        "coverage": 0.05185185185185185,
+        "depth": 5,
+        "exclusivity": 0.0,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:25",
+        "subgroup_coverage": 0.0
+      },
+      "seed": 4202,
+      "selected": {
+        "activation_frequency": 0.1814814814814815,
+        "confidence": 0.7551020408163265,
+        "coverage": 0.1814814814814815,
+        "depth": 5,
+        "exclusivity": 0.08163265306122448,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:28",
+        "subgroup_coverage": 1.0
+      }
+    },
+    {
+      "fold": 0,
+      "matched": {
+        "activation_frequency": 0.08148148148148149,
+        "confidence": 0.5909090909090909,
+        "coverage": 0.08148148148148149,
+        "depth": 5,
+        "exclusivity": 0.0,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:43",
+        "subgroup_coverage": 0.0
+      },
+      "seed": 4203,
+      "selected": {
+        "activation_frequency": 0.12962962962962962,
+        "confidence": 0.6857142857142857,
+        "coverage": 0.12962962962962962,
+        "depth": 5,
+        "exclusivity": 0.11428571428571428,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:19",
+        "subgroup_coverage": 0.6666666666666666
+      }
+    },
+    {
+      "fold": 1,
+      "matched": {
+        "activation_frequency": 0.15925925925925927,
+        "confidence": 0.5116279069767442,
+        "coverage": 0.15925925925925927,
+        "depth": 5,
+        "exclusivity": 0.0,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:37",
+        "subgroup_coverage": 0.0
+      },
+      "seed": 4203,
+      "selected": {
+        "activation_frequency": 0.1037037037037037,
+        "confidence": 0.8928571428571429,
+        "coverage": 0.1037037037037037,
+        "depth": 5,
+        "exclusivity": 0.03571428571428571,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:30",
+        "subgroup_coverage": 1.0
+      }
+    },
+    {
+      "fold": 2,
+      "matched": {
+        "activation_frequency": 0.03333333333333333,
+        "confidence": 0.7777777777777778,
+        "coverage": 0.03333333333333333,
+        "depth": 5,
+        "exclusivity": 0.1111111111111111,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:33",
+        "subgroup_coverage": 0.2
+      },
+      "seed": 4203,
+      "selected": {
+        "activation_frequency": 0.03333333333333333,
+        "confidence": 0.7777777777777778,
+        "coverage": 0.03333333333333333,
+        "depth": 5,
+        "exclusivity": 0.2222222222222222,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:35",
+        "subgroup_coverage": 0.4
+      }
+    },
+    {
+      "fold": 3,
+      "matched": {
+        "activation_frequency": 0.06666666666666667,
+        "confidence": 0.7777777777777778,
+        "coverage": 0.06666666666666667,
+        "depth": 5,
+        "exclusivity": 0.0,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:39",
+        "subgroup_coverage": 0.0
+      },
+      "seed": 4203,
+      "selected": {
+        "activation_frequency": 0.13703703703703704,
+        "confidence": 0.8918918918918919,
+        "coverage": 0.13703703703703704,
+        "depth": 5,
+        "exclusivity": 0.13513513513513514,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:15",
+        "subgroup_coverage": 1.0
+      }
+    },
+    {
+      "fold": 4,
+      "matched": {
+        "activation_frequency": 0.08888888888888889,
+        "confidence": 0.5,
+        "coverage": 0.08888888888888889,
+        "depth": 5,
+        "exclusivity": 0.0,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:12",
+        "subgroup_coverage": 0.0
+      },
+      "seed": 4203,
+      "selected": {
+        "activation_frequency": 0.11851851851851852,
+        "confidence": 0.875,
+        "coverage": 0.11851851851851852,
+        "depth": 5,
+        "exclusivity": 0.09375,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:30",
+        "subgroup_coverage": 0.75
+      }
+    },
+    {
+      "fold": 5,
+      "matched": {
+        "activation_frequency": 0.09259259259259259,
+        "confidence": 0.56,
+        "coverage": 0.09259259259259259,
+        "depth": 5,
+        "exclusivity": 0.0,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:46",
+        "subgroup_coverage": 0.0
+      },
+      "seed": 4203,
+      "selected": {
+        "activation_frequency": 0.17037037037037037,
+        "confidence": 0.8478260869565217,
+        "coverage": 0.17037037037037037,
+        "depth": 5,
+        "exclusivity": 0.06521739130434782,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:34",
+        "subgroup_coverage": 1.0
+      }
+    },
+    {
+      "fold": 6,
+      "matched": {
+        "activation_frequency": 0.08518518518518518,
+        "confidence": 0.5652173913043478,
+        "coverage": 0.08518518518518518,
+        "depth": 5,
+        "exclusivity": 0.0,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:43",
+        "subgroup_coverage": 0.0
+      },
+      "seed": 4203,
+      "selected": {
+        "activation_frequency": 0.17777777777777778,
+        "confidence": 0.9166666666666666,
+        "coverage": 0.17777777777777778,
+        "depth": 5,
+        "exclusivity": 0.08333333333333333,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:12",
+        "subgroup_coverage": 1.0
+      }
+    },
+    {
+      "fold": 7,
+      "matched": {
+        "activation_frequency": 0.08518518518518518,
+        "confidence": 0.782608695652174,
+        "coverage": 0.08518518518518518,
+        "depth": 5,
+        "exclusivity": 0.0,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:30",
+        "subgroup_coverage": 0.0
+      },
+      "seed": 4203,
+      "selected": {
+        "activation_frequency": 0.09259259259259259,
+        "confidence": 0.76,
+        "coverage": 0.09259259259259259,
+        "depth": 5,
+        "exclusivity": 0.2,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:29",
+        "subgroup_coverage": 1.0
+      }
+    },
+    {
+      "fold": 8,
+      "matched": {
+        "activation_frequency": 0.07407407407407407,
+        "confidence": 0.7,
+        "coverage": 0.07407407407407407,
+        "depth": 5,
+        "exclusivity": 0.0,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:38",
+        "subgroup_coverage": 0.0
+      },
+      "seed": 4203,
+      "selected": {
+        "activation_frequency": 0.10740740740740741,
+        "confidence": 0.7586206896551724,
+        "coverage": 0.10740740740740741,
+        "depth": 5,
+        "exclusivity": 0.13793103448275862,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:32",
+        "subgroup_coverage": 0.8
+      }
+    },
+    {
+      "fold": 9,
+      "matched": {
+        "activation_frequency": 0.07037037037037037,
+        "confidence": 0.7368421052631579,
+        "coverage": 0.07037037037037037,
+        "depth": 5,
+        "exclusivity": 0.0,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:34",
+        "subgroup_coverage": 0.0
+      },
+      "seed": 4203,
+      "selected": {
+        "activation_frequency": 0.21481481481481482,
+        "confidence": 0.7241379310344828,
+        "coverage": 0.21481481481481482,
+        "depth": 5,
+        "exclusivity": 0.06896551724137931,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:18",
+        "subgroup_coverage": 1.0
+      }
+    },
+    {
+      "fold": 0,
+      "matched": {
+        "activation_frequency": 0.06666666666666667,
+        "confidence": 0.7222222222222222,
+        "coverage": 0.06666666666666667,
+        "depth": 5,
+        "exclusivity": 0.0,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:31",
+        "subgroup_coverage": 0.0
+      },
+      "seed": 4204,
+      "selected": {
+        "activation_frequency": 0.06296296296296296,
+        "confidence": 0.8235294117647058,
+        "coverage": 0.06296296296296296,
+        "depth": 5,
+        "exclusivity": 0.29411764705882354,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:34",
+        "subgroup_coverage": 0.8333333333333334
+      }
+    },
+    {
+      "fold": 1,
+      "matched": {
+        "activation_frequency": 0.05925925925925926,
+        "confidence": 0.625,
+        "coverage": 0.05925925925925926,
+        "depth": 5,
+        "exclusivity": 0.0,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:9",
+        "subgroup_coverage": 0.0
+      },
+      "seed": 4204,
+      "selected": {
+        "activation_frequency": 0.1814814814814815,
+        "confidence": 0.8367346938775511,
+        "coverage": 0.1814814814814815,
+        "depth": 5,
+        "exclusivity": 0.10204081632653061,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:32",
+        "subgroup_coverage": 0.8333333333333334
+      }
+    },
+    {
+      "fold": 2,
+      "matched": {
+        "activation_frequency": 0.03333333333333333,
+        "confidence": 0.7777777777777778,
+        "coverage": 0.03333333333333333,
+        "depth": 5,
+        "exclusivity": 0.0,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:27",
+        "subgroup_coverage": 0.0
+      },
+      "seed": 4204,
+      "selected": {
+        "activation_frequency": 0.037037037037037035,
+        "confidence": 0.8,
+        "coverage": 0.037037037037037035,
+        "depth": 5,
+        "exclusivity": 0.3,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:29",
+        "subgroup_coverage": 1.0
+      }
+    },
+    {
+      "fold": 3,
+      "matched": {
+        "activation_frequency": 0.1111111111111111,
+        "confidence": 0.6666666666666666,
+        "coverage": 0.1111111111111111,
+        "depth": 5,
+        "exclusivity": 0.0,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:21",
+        "subgroup_coverage": 0.0
+      },
+      "seed": 4204,
+      "selected": {
+        "activation_frequency": 0.1037037037037037,
+        "confidence": 0.8928571428571429,
+        "coverage": 0.1037037037037037,
+        "depth": 5,
+        "exclusivity": 0.17857142857142858,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:18",
+        "subgroup_coverage": 0.8333333333333334
+      }
+    },
+    {
+      "fold": 4,
+      "matched": {
+        "activation_frequency": 0.07037037037037037,
+        "confidence": 0.8947368421052632,
+        "coverage": 0.07037037037037037,
+        "depth": 5,
+        "exclusivity": 0.0,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:33",
+        "subgroup_coverage": 0.0
+      },
+      "seed": 4204,
+      "selected": {
+        "activation_frequency": 0.07407407407407407,
+        "confidence": 0.9,
+        "coverage": 0.07407407407407407,
+        "depth": 5,
+        "exclusivity": 0.2,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:32",
+        "subgroup_coverage": 0.8
+      }
+    },
+    {
+      "fold": 5,
+      "matched": {
+        "activation_frequency": 0.08148148148148149,
+        "confidence": 0.5909090909090909,
+        "coverage": 0.08148148148148149,
+        "depth": 5,
+        "exclusivity": 0.0,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:7",
+        "subgroup_coverage": 0.0
+      },
+      "seed": 4204,
+      "selected": {
+        "activation_frequency": 0.12222222222222222,
+        "confidence": 0.9090909090909091,
+        "coverage": 0.12222222222222222,
+        "depth": 5,
+        "exclusivity": 0.030303030303030304,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:10",
+        "subgroup_coverage": 1.0
+      }
+    },
+    {
+      "fold": 6,
+      "matched": {
+        "activation_frequency": 0.014814814814814815,
+        "confidence": 0.5,
+        "coverage": 0.014814814814814815,
+        "depth": 5,
+        "exclusivity": 0.0,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:27",
+        "subgroup_coverage": 0.0
+      },
+      "seed": 4204,
+      "selected": {
+        "activation_frequency": 0.011111111111111112,
+        "confidence": 1.0,
+        "coverage": 0.011111111111111112,
+        "depth": 5,
+        "exclusivity": 0.6666666666666666,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:17",
+        "subgroup_coverage": 0.2857142857142857
+      }
+    },
+    {
+      "fold": 7,
+      "matched": {
+        "activation_frequency": 0.07777777777777778,
+        "confidence": 0.6666666666666666,
+        "coverage": 0.07777777777777778,
+        "depth": 5,
+        "exclusivity": 0.0,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:24",
+        "subgroup_coverage": 0.0
+      },
+      "seed": 4204,
+      "selected": {
+        "activation_frequency": 0.08148148148148149,
+        "confidence": 0.9090909090909091,
+        "coverage": 0.08148148148148149,
+        "depth": 5,
+        "exclusivity": 0.13636363636363635,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:22",
+        "subgroup_coverage": 0.6
+      }
+    },
+    {
+      "fold": 8,
+      "matched": {
+        "activation_frequency": 0.018518518518518517,
+        "confidence": 1.0,
+        "coverage": 0.018518518518518517,
+        "depth": 5,
+        "exclusivity": 0.0,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:10",
+        "subgroup_coverage": 0.0
+      },
+      "seed": 4204,
+      "selected": {
+        "activation_frequency": 0.018518518518518517,
+        "confidence": 0.6,
+        "coverage": 0.018518518518518517,
+        "depth": 5,
+        "exclusivity": 0.2,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:17",
+        "subgroup_coverage": 0.3333333333333333
+      }
+    },
+    {
+      "fold": 9,
+      "matched": {
+        "activation_frequency": 0.02962962962962963,
+        "confidence": 0.625,
+        "coverage": 0.02962962962962963,
+        "depth": 5,
+        "exclusivity": 0.0,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:43",
+        "subgroup_coverage": 0.0
+      },
+      "seed": 4204,
+      "selected": {
+        "activation_frequency": 0.022222222222222223,
+        "confidence": 0.6666666666666666,
+        "coverage": 0.022222222222222223,
+        "depth": 5,
+        "exclusivity": 0.16666666666666666,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:32",
+        "subgroup_coverage": 0.2
+      }
+    },
+    {
+      "fold": 0,
+      "matched": {
+        "activation_frequency": 0.06666666666666667,
+        "confidence": 0.5555555555555556,
+        "coverage": 0.06666666666666667,
+        "depth": 5,
+        "exclusivity": 0.0,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:36",
+        "subgroup_coverage": 0.0
+      },
+      "seed": 4205,
+      "selected": {
+        "activation_frequency": 0.09259259259259259,
+        "confidence": 0.88,
+        "coverage": 0.09259259259259259,
+        "depth": 5,
+        "exclusivity": 0.12,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:31",
+        "subgroup_coverage": 0.75
+      }
+    },
+    {
+      "fold": 1,
+      "matched": {
+        "activation_frequency": 0.13703703703703704,
+        "confidence": 0.6756756756756757,
+        "coverage": 0.13703703703703704,
+        "depth": 5,
+        "exclusivity": 0.0,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:36",
+        "subgroup_coverage": 0.0
+      },
+      "seed": 4205,
+      "selected": {
+        "activation_frequency": 0.1111111111111111,
+        "confidence": 0.7666666666666667,
+        "coverage": 0.1111111111111111,
+        "depth": 5,
+        "exclusivity": 0.1,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:14",
+        "subgroup_coverage": 1.0
+      }
+    },
+    {
+      "fold": 2,
+      "matched": {
+        "activation_frequency": 0.05925925925925926,
+        "confidence": 0.625,
+        "coverage": 0.05925925925925926,
+        "depth": 5,
+        "exclusivity": 0.0,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:51",
+        "subgroup_coverage": 0.0
+      },
+      "seed": 4205,
+      "selected": {
+        "activation_frequency": 0.12962962962962962,
+        "confidence": 0.7428571428571429,
+        "coverage": 0.12962962962962962,
+        "depth": 5,
+        "exclusivity": 0.11428571428571428,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:32",
+        "subgroup_coverage": 1.0
+      }
+    },
+    {
+      "fold": 3,
+      "matched": {
+        "activation_frequency": 0.08148148148148149,
+        "confidence": 0.7272727272727273,
+        "coverage": 0.08148148148148149,
+        "depth": 5,
+        "exclusivity": 0.0,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:18",
+        "subgroup_coverage": 0.0
+      },
+      "seed": 4205,
+      "selected": {
+        "activation_frequency": 0.08518518518518518,
+        "confidence": 0.8695652173913043,
+        "coverage": 0.08518518518518518,
+        "depth": 5,
+        "exclusivity": 0.08695652173913043,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:17",
+        "subgroup_coverage": 0.6666666666666666
+      }
+    },
+    {
+      "fold": 4,
+      "matched": {
+        "activation_frequency": 0.044444444444444446,
+        "confidence": 0.6666666666666666,
+        "coverage": 0.044444444444444446,
+        "depth": 5,
+        "exclusivity": 0.0,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:54",
+        "subgroup_coverage": 0.0
+      },
+      "seed": 4205,
+      "selected": {
+        "activation_frequency": 0.040740740740740744,
+        "confidence": 1.0,
+        "coverage": 0.040740740740740744,
+        "depth": 5,
+        "exclusivity": 0.18181818181818182,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:41",
+        "subgroup_coverage": 0.5
+      }
+    },
+    {
+      "fold": 5,
+      "matched": {
+        "activation_frequency": 0.022222222222222223,
+        "confidence": 0.6666666666666666,
+        "coverage": 0.022222222222222223,
+        "depth": 5,
+        "exclusivity": 0.0,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:10",
+        "subgroup_coverage": 0.0
+      },
+      "seed": 4205,
+      "selected": {
+        "activation_frequency": 0.03333333333333333,
+        "confidence": 0.7777777777777778,
+        "coverage": 0.03333333333333333,
+        "depth": 5,
+        "exclusivity": 0.2222222222222222,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:34",
+        "subgroup_coverage": 0.3333333333333333
+      }
+    },
+    {
+      "fold": 6,
+      "matched": {
+        "activation_frequency": 0.11851851851851852,
+        "confidence": 0.53125,
+        "coverage": 0.11851851851851852,
+        "depth": 5,
+        "exclusivity": 0.0,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:36",
+        "subgroup_coverage": 0.0
+      },
+      "seed": 4205,
+      "selected": {
+        "activation_frequency": 0.16666666666666666,
+        "confidence": 0.8444444444444444,
+        "coverage": 0.16666666666666666,
+        "depth": 5,
+        "exclusivity": 0.044444444444444446,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:15",
+        "subgroup_coverage": 1.0
+      }
+    },
+    {
+      "fold": 7,
+      "matched": {
+        "activation_frequency": 0.06296296296296296,
+        "confidence": 0.5294117647058824,
+        "coverage": 0.06296296296296296,
+        "depth": 5,
+        "exclusivity": 0.0,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:9",
+        "subgroup_coverage": 0.0
+      },
+      "seed": 4205,
+      "selected": {
+        "activation_frequency": 0.05555555555555555,
+        "confidence": 0.8,
+        "coverage": 0.05555555555555555,
+        "depth": 5,
+        "exclusivity": 0.13333333333333333,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:33",
+        "subgroup_coverage": 0.5
+      }
+    },
+    {
+      "fold": 8,
+      "matched": {
+        "activation_frequency": 0.018518518518518517,
+        "confidence": 0.6,
+        "coverage": 0.018518518518518517,
+        "depth": 5,
+        "exclusivity": 0.0,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:7",
+        "subgroup_coverage": 0.0
+      },
+      "seed": 4205,
+      "selected": {
+        "activation_frequency": 0.014814814814814815,
+        "confidence": 0.5,
+        "coverage": 0.014814814814814815,
+        "depth": 5,
+        "exclusivity": 0.25,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:32",
+        "subgroup_coverage": 0.16666666666666666
+      }
+    },
+    {
+      "fold": 9,
+      "matched": {
+        "activation_frequency": 0.0962962962962963,
+        "confidence": 0.7307692307692307,
+        "coverage": 0.0962962962962963,
+        "depth": 5,
+        "exclusivity": 0.0,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:35",
+        "subgroup_coverage": 0.0
+      },
+      "seed": 4205,
+      "selected": {
+        "activation_frequency": 0.2037037037037037,
+        "confidence": 0.8363636363636363,
+        "coverage": 0.2037037037037037,
+        "depth": 5,
+        "exclusivity": 0.10909090909090909,
+        "output_class": "1",
+        "redundancy": 0.0,
+        "rule_id": "leaf:28",
+        "subgroup_coverage": 1.0
+      }
+    }
+  ],
+  "effect_partition": "held_out_fold",
+  "folds": 10,
+  "pairs": [
+    {
+      "fold": 0,
+      "matched_delta": 0.0,
+      "matched_rule": "leaf:41",
+      "seed": 4201,
+      "selected_delta": 1.0,
+      "selected_rule": "leaf:25",
+      "specific_effect": 1.0,
+      "subgroup": "predefined_rare_interaction"
+    },
+    {
+      "fold": 1,
+      "matched_delta": 0.0,
+      "matched_rule": "leaf:37",
+      "seed": 4201,
+      "selected_delta": 0.0,
+      "selected_rule": "leaf:12",
+      "specific_effect": 0.0,
+      "subgroup": "predefined_rare_interaction"
+    },
+    {
+      "fold": 2,
+      "matched_delta": 0.0,
+      "matched_rule": "leaf:50",
+      "seed": 4201,
+      "selected_delta": 0.25,
+      "selected_rule": "leaf:39",
+      "specific_effect": 0.25,
+      "subgroup": "predefined_rare_interaction"
+    },
+    {
+      "fold": 3,
+      "matched_delta": 0.0,
+      "matched_rule": "leaf:47",
+      "seed": 4201,
+      "selected_delta": 0.0,
+      "selected_rule": "leaf:32",
+      "specific_effect": 0.0,
+      "subgroup": "predefined_rare_interaction"
+    },
+    {
+      "fold": 4,
+      "matched_delta": 0.0,
+      "matched_rule": "leaf:30",
+      "seed": 4201,
+      "selected_delta": 0.0,
+      "selected_rule": "leaf:41",
+      "specific_effect": 0.0,
+      "subgroup": "predefined_rare_interaction"
+    },
+    {
+      "fold": 5,
+      "matched_delta": 0.0,
+      "matched_rule": "leaf:16",
+      "seed": 4201,
+      "selected_delta": 0.0,
+      "selected_rule": "leaf:36",
+      "specific_effect": 0.0,
+      "subgroup": "predefined_rare_interaction"
+    },
+    {
+      "fold": 6,
+      "matched_delta": 0.0,
+      "matched_rule": "leaf:25",
+      "seed": 4201,
+      "selected_delta": 0.0,
+      "selected_rule": "leaf:31",
+      "specific_effect": 0.0,
+      "subgroup": "predefined_rare_interaction"
+    },
+    {
+      "fold": 7,
+      "matched_delta": 0.0,
+      "matched_rule": "leaf:32",
+      "seed": 4201,
+      "selected_delta": 0.0,
+      "selected_rule": "leaf:28",
+      "specific_effect": 0.0,
+      "subgroup": "predefined_rare_interaction"
+    },
+    {
+      "fold": 8,
+      "matched_delta": 0.0,
+      "matched_rule": "leaf:11",
+      "seed": 4201,
+      "selected_delta": 0.0,
+      "selected_rule": "leaf:18",
+      "specific_effect": 0.0,
+      "subgroup": "predefined_rare_interaction"
+    },
+    {
+      "fold": 9,
+      "matched_delta": 0.0,
+      "matched_rule": "leaf:44",
+      "seed": 4201,
+      "selected_delta": 0.0,
+      "selected_rule": "leaf:28",
+      "specific_effect": 0.0,
+      "subgroup": "predefined_rare_interaction"
+    },
+    {
+      "fold": 0,
+      "matched_delta": 0.0,
+      "matched_rule": "leaf:37",
+      "seed": 4202,
+      "selected_delta": 0.3333333333333333,
+      "selected_rule": "leaf:30",
+      "specific_effect": 0.3333333333333333,
+      "subgroup": "predefined_rare_interaction"
+    },
+    {
+      "fold": 1,
+      "matched_delta": 0.0,
+      "matched_rule": "leaf:10",
+      "seed": 4202,
+      "selected_delta": 0.0,
+      "selected_rule": "leaf:26",
+      "specific_effect": 0.0,
+      "subgroup": "predefined_rare_interaction"
+    },
+    {
+      "fold": 2,
+      "matched_delta": 0.0,
+      "matched_rule": "leaf:31",
+      "seed": 4202,
+      "selected_delta": 0.0,
+      "selected_rule": "leaf:35",
+      "specific_effect": 0.0,
+      "subgroup": "predefined_rare_interaction"
+    },
+    {
+      "fold": 3,
+      "matched_delta": 0.0,
+      "matched_rule": "leaf:36",
+      "seed": 4202,
+      "selected_delta": 1.0,
+      "selected_rule": "leaf:30",
+      "specific_effect": 1.0,
+      "subgroup": "predefined_rare_interaction"
+    },
+    {
+      "fold": 4,
+      "matched_delta": 0.0,
+      "matched_rule": "leaf:22",
+      "seed": 4202,
+      "selected_delta": 0.0,
+      "selected_rule": "leaf:24",
+      "specific_effect": 0.0,
+      "subgroup": "predefined_rare_interaction"
+    },
+    {
+      "fold": 5,
+      "matched_delta": 0.0,
+      "matched_rule": "leaf:42",
+      "seed": 4202,
+      "selected_delta": 0.6666666666666667,
+      "selected_rule": "leaf:15",
+      "specific_effect": 0.6666666666666667,
+      "subgroup": "predefined_rare_interaction"
+    },
+    {
+      "fold": 6,
+      "matched_delta": 0.0,
+      "matched_rule": "leaf:34",
+      "seed": 4202,
+      "selected_delta": 1.0,
+      "selected_rule": "leaf:38",
+      "specific_effect": 1.0,
+      "subgroup": "predefined_rare_interaction"
+    },
+    {
+      "fold": 7,
+      "matched_delta": 0.0,
+      "matched_rule": "leaf:10",
+      "seed": 4202,
+      "selected_delta": 1.0,
+      "selected_rule": "leaf:13",
+      "specific_effect": 1.0,
+      "subgroup": "predefined_rare_interaction"
+    },
+    {
+      "fold": 8,
+      "matched_delta": 0.0,
+      "matched_rule": "leaf:47",
+      "seed": 4202,
+      "selected_delta": 0.0,
+      "selected_rule": "leaf:16",
+      "specific_effect": 0.0,
+      "subgroup": "predefined_rare_interaction"
+    },
+    {
+      "fold": 9,
+      "matched_delta": 0.0,
+      "matched_rule": "leaf:25",
+      "seed": 4202,
+      "selected_delta": 0.5,
+      "selected_rule": "leaf:28",
+      "specific_effect": 0.5,
+      "subgroup": "predefined_rare_interaction"
+    },
+    {
+      "fold": 0,
+      "matched_delta": 0.0,
+      "matched_rule": "leaf:43",
+      "seed": 4203,
+      "selected_delta": 0.5,
+      "selected_rule": "leaf:19",
+      "specific_effect": 0.5,
+      "subgroup": "predefined_rare_interaction"
+    },
+    {
+      "fold": 1,
+      "matched_delta": 0.0,
+      "matched_rule": "leaf:37",
+      "seed": 4203,
+      "selected_delta": 1.0,
+      "selected_rule": "leaf:30",
+      "specific_effect": 1.0,
+      "subgroup": "predefined_rare_interaction"
+    },
+    {
+      "fold": 2,
+      "matched_delta": 0.6666666666666667,
+      "matched_rule": "leaf:33",
+      "seed": 4203,
+      "selected_delta": 0.0,
+      "selected_rule": "leaf:35",
+      "specific_effect": -0.6666666666666667,
+      "subgroup": "predefined_rare_interaction"
+    },
+    {
+      "fold": 3,
+      "matched_delta": 0.0,
+      "matched_rule": "leaf:39",
+      "seed": 4203,
+      "selected_delta": 1.0,
+      "selected_rule": "leaf:15",
+      "specific_effect": 1.0,
+      "subgroup": "predefined_rare_interaction"
+    },
+    {
+      "fold": 4,
+      "matched_delta": 0.0,
+      "matched_rule": "leaf:12",
+      "seed": 4203,
+      "selected_delta": 1.0,
+      "selected_rule": "leaf:30",
+      "specific_effect": 1.0,
+      "subgroup": "predefined_rare_interaction"
+    },
+    {
+      "fold": 5,
+      "matched_delta": 0.0,
+      "matched_rule": "leaf:46",
+      "seed": 4203,
+      "selected_delta": 0.0,
+      "selected_rule": "leaf:34",
+      "specific_effect": 0.0,
+      "subgroup": "predefined_rare_interaction"
+    },
+    {
+      "fold": 6,
+      "matched_delta": 0.0,
+      "matched_rule": "leaf:43",
+      "seed": 4203,
+      "selected_delta": 0.5,
+      "selected_rule": "leaf:12",
+      "specific_effect": 0.5,
+      "subgroup": "predefined_rare_interaction"
+    },
+    {
+      "fold": 7,
+      "matched_delta": 0.0,
+      "matched_rule": "leaf:30",
+      "seed": 4203,
+      "selected_delta": 1.0,
+      "selected_rule": "leaf:29",
+      "specific_effect": 1.0,
+      "subgroup": "predefined_rare_interaction"
+    },
+    {
+      "fold": 8,
+      "matched_delta": 0.0,
+      "matched_rule": "leaf:38",
+      "seed": 4203,
+      "selected_delta": 0.0,
+      "selected_rule": "leaf:32",
+      "specific_effect": 0.0,
+      "subgroup": "predefined_rare_interaction"
+    },
+    {
+      "fold": 9,
+      "matched_delta": 0.0,
+      "matched_rule": "leaf:34",
+      "seed": 4203,
+      "selected_delta": 1.0,
+      "selected_rule": "leaf:18",
+      "specific_effect": 1.0,
+      "subgroup": "predefined_rare_interaction"
+    },
+    {
+      "fold": 0,
+      "matched_delta": 0.0,
+      "matched_rule": "leaf:31",
+      "seed": 4204,
+      "selected_delta": 0.0,
+      "selected_rule": "leaf:34",
+      "specific_effect": 0.0,
+      "subgroup": "predefined_rare_interaction"
+    },
+    {
+      "fold": 1,
+      "matched_delta": 0.0,
+      "matched_rule": "leaf:9",
+      "seed": 4204,
+      "selected_delta": 0.5,
+      "selected_rule": "leaf:32",
+      "specific_effect": 0.5,
+      "subgroup": "predefined_rare_interaction"
+    },
+    {
+      "fold": 2,
+      "matched_delta": 0.0,
+      "matched_rule": "leaf:27",
+      "seed": 4204,
+      "selected_delta": 0.0,
+      "selected_rule": "leaf:29",
+      "specific_effect": 0.0,
+      "subgroup": "predefined_rare_interaction"
+    },
+    {
+      "fold": 3,
+      "matched_delta": 0.0,
+      "matched_rule": "leaf:21",
+      "seed": 4204,
+      "selected_delta": 1.0,
+      "selected_rule": "leaf:18",
+      "specific_effect": 1.0,
+      "subgroup": "predefined_rare_interaction"
+    },
+    {
+      "fold": 4,
+      "matched_delta": 0.5,
+      "matched_rule": "leaf:33",
+      "seed": 4204,
+      "selected_delta": 0.5,
+      "selected_rule": "leaf:32",
+      "specific_effect": 0.0,
+      "subgroup": "predefined_rare_interaction"
+    },
+    {
+      "fold": 5,
+      "matched_delta": 0.0,
+      "matched_rule": "leaf:7",
+      "seed": 4204,
+      "selected_delta": 0.0,
+      "selected_rule": "leaf:10",
+      "specific_effect": 0.0,
+      "subgroup": "predefined_rare_interaction"
+    },
+    {
+      "fold": 6,
+      "matched_delta": 0.0,
+      "matched_rule": "leaf:27",
+      "seed": 4204,
+      "selected_delta": 0.0,
+      "selected_rule": "leaf:17",
+      "specific_effect": 0.0,
+      "subgroup": "predefined_rare_interaction"
+    },
+    {
+      "fold": 7,
+      "matched_delta": 0.0,
+      "matched_rule": "leaf:24",
+      "seed": 4204,
+      "selected_delta": 0.33333333333333337,
+      "selected_rule": "leaf:22",
+      "specific_effect": 0.33333333333333337,
+      "subgroup": "predefined_rare_interaction"
+    },
+    {
+      "fold": 8,
+      "matched_delta": 0.0,
+      "matched_rule": "leaf:10",
+      "seed": 4204,
+      "selected_delta": 0.0,
+      "selected_rule": "leaf:17",
+      "specific_effect": 0.0,
+      "subgroup": "predefined_rare_interaction"
+    },
+    {
+      "fold": 9,
+      "matched_delta": 0.0,
+      "matched_rule": "leaf:43",
+      "seed": 4204,
+      "selected_delta": 0.0,
+      "selected_rule": "leaf:32",
+      "specific_effect": 0.0,
+      "subgroup": "predefined_rare_interaction"
+    },
+    {
+      "fold": 0,
+      "matched_delta": 0.0,
+      "matched_rule": "leaf:36",
+      "seed": 4205,
+      "selected_delta": 1.0,
+      "selected_rule": "leaf:31",
+      "specific_effect": 1.0,
+      "subgroup": "predefined_rare_interaction"
+    },
+    {
+      "fold": 1,
+      "matched_delta": 0.0,
+      "matched_rule": "leaf:36",
+      "seed": 4205,
+      "selected_delta": 0.6666666666666667,
+      "selected_rule": "leaf:14",
+      "specific_effect": 0.6666666666666667,
+      "subgroup": "predefined_rare_interaction"
+    },
+    {
+      "fold": 2,
+      "matched_delta": 0.0,
+      "matched_rule": "leaf:51",
+      "seed": 4205,
+      "selected_delta": 1.0,
+      "selected_rule": "leaf:32",
+      "specific_effect": 1.0,
+      "subgroup": "predefined_rare_interaction"
+    },
+    {
+      "fold": 3,
+      "matched_delta": 0.0,
+      "matched_rule": "leaf:18",
+      "seed": 4205,
+      "selected_delta": 1.0,
+      "selected_rule": "leaf:17",
+      "specific_effect": 1.0,
+      "subgroup": "predefined_rare_interaction"
+    },
+    {
+      "fold": 4,
+      "matched_delta": 0.0,
+      "matched_rule": "leaf:54",
+      "seed": 4205,
+      "selected_delta": 0.0,
+      "selected_rule": "leaf:41",
+      "specific_effect": 0.0,
+      "subgroup": "predefined_rare_interaction"
+    },
+    {
+      "fold": 5,
+      "matched_delta": 0.0,
+      "matched_rule": "leaf:10",
+      "seed": 4205,
+      "selected_delta": 0.0,
+      "selected_rule": "leaf:34",
+      "specific_effect": 0.0,
+      "subgroup": "predefined_rare_interaction"
+    },
+    {
+      "fold": 6,
+      "matched_delta": 0.0,
+      "matched_rule": "leaf:36",
+      "seed": 4205,
+      "selected_delta": 1.0,
+      "selected_rule": "leaf:15",
+      "specific_effect": 1.0,
+      "subgroup": "predefined_rare_interaction"
+    },
+    {
+      "fold": 7,
+      "matched_delta": 0.0,
+      "matched_rule": "leaf:9",
+      "seed": 4205,
+      "selected_delta": 0.0,
+      "selected_rule": "leaf:33",
+      "specific_effect": 0.0,
+      "subgroup": "predefined_rare_interaction"
+    },
+    {
+      "fold": 8,
+      "matched_delta": 0.0,
+      "matched_rule": "leaf:7",
+      "seed": 4205,
+      "selected_delta": 0.0,
+      "selected_rule": "leaf:32",
+      "specific_effect": 0.0,
+      "subgroup": "predefined_rare_interaction"
+    },
+    {
+      "fold": 9,
+      "matched_delta": 0.0,
+      "matched_rule": "leaf:35",
+      "seed": 4205,
+      "selected_delta": 1.0,
+      "selected_rule": "leaf:28",
+      "specific_effect": 1.0,
+      "subgroup": "predefined_rare_interaction"
+    }
+  ],
+  "protocol": "validation-selected leaf rule versus coverage/depth/class matched rule",
+  "schema_version": "1.0",
+  "seeds": [
+    4201,
+    4202,
+    4203,
+    4204,
+    4205
+  ],
+  "selection_partition": "validation",
+  "summary": {
+    "folds": 10,
+    "interpretation": "context_dependent_effect_candidate",
+    "n_pairs": 50,
+    "seeds": 5,
+    "specific_effect": {
+      "confidence_interval_95": [
+        0.24,
+        0.49833333333333335
+      ],
+      "mean_difference": 0.37166666666666665,
+      "median_difference": 0.0,
+      "n_pairs": 50,
+      "rank_biserial_effect": 0.9446153846153846,
+      "standard_deviation": 0.4675435153817345,
+      "wilcoxon_p_two_sided": 3.8423998953048246e-05,
+      "wilcoxon_w": 9.0,
+      "worsening_fraction": 0.02
+    }
+  }
+}

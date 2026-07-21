@@ -1,0 +1,726 @@
+{
+  "adapter_id": "sklearn_pipeline_v2",
+  "capabilities": {
+    "adapter_id": "sklearn_pipeline_v2",
+    "capabilities": {
+      "attention": false,
+      "calibration": true,
+      "channels": [
+        {
+          "available": true,
+          "fidelity": null,
+          "fidelity_status": "not_applicable",
+          "limitations": [],
+          "method": "model.predict",
+          "name": "prediction",
+          "origin": "native"
+        },
+        {
+          "available": true,
+          "fidelity": null,
+          "fidelity_status": "not_applicable",
+          "limitations": [
+            "Perturbation is not a domain-validated intervention."
+          ],
+          "method": "model_re_evaluation",
+          "name": "perturbation_counterfactual",
+          "origin": "derived"
+        },
+        {
+          "available": true,
+          "fidelity": null,
+          "fidelity_status": "not_applicable",
+          "limitations": [],
+          "method": "model.predict_proba",
+          "name": "predict_proba",
+          "origin": "native"
+        },
+        {
+          "available": true,
+          "fidelity": null,
+          "fidelity_status": "not_applicable",
+          "limitations": [
+            "Decision score is not a calibrated probability."
+          ],
+          "method": "model.decision_function",
+          "name": "decision_function",
+          "origin": "native"
+        },
+        {
+          "available": true,
+          "fidelity": null,
+          "fidelity_status": "not_applicable",
+          "limitations": [],
+          "method": "model.coef_",
+          "name": "coefficients",
+          "origin": "native"
+        },
+        {
+          "available": true,
+          "fidelity": null,
+          "fidelity_status": "not_applicable",
+          "limitations": [],
+          "method": "x_i * coefficient_i",
+          "name": "local_contributions",
+          "origin": "derived_from_native"
+        }
+      ],
+      "checkpoints": false,
+      "class_names": true,
+      "decision_function": true,
+      "decision_path": false,
+      "embeddings": false,
+      "feature_importance": true,
+      "feature_names": true,
+      "global_importance": true,
+      "gradients": false,
+      "input_constraints": false,
+      "integrated_gradients": false,
+      "local_contributions": true,
+      "native_counterfactual": false,
+      "native_rules": false,
+      "nearest_neighbors": false,
+      "occlusion": false,
+      "per_sample_loss": false,
+      "perturbation_counterfactual": true,
+      "predict": true,
+      "predict_proba": true,
+      "rules": false,
+      "support_examples": false,
+      "training_history": false,
+      "uncertainty": false
+    },
+    "input_schema": {
+      "constraints": {},
+      "dtype": "unknown",
+      "feature_names": [],
+      "feature_provenance": {
+        "x0": [
+          "x0"
+        ],
+        "x1": [
+          "x1"
+        ],
+        "x2": [
+          "x2"
+        ],
+        "x3": [
+          "x3"
+        ],
+        "x4": [
+          "x4"
+        ],
+        "x5": [
+          "x5"
+        ],
+        "x6": [
+          "x6"
+        ],
+        "x7": [
+          "x7"
+        ]
+      },
+      "shape": [],
+      "transformed_feature_names": [
+        "x0",
+        "x1",
+        "x2",
+        "x3",
+        "x4",
+        "x5",
+        "x6",
+        "x7"
+      ]
+    },
+    "model_family": "sklearn_pipeline",
+    "output_schema": {
+      "calibrated_probability": true,
+      "classes": [
+        0,
+        1
+      ],
+      "output_names": [],
+      "score_semantics": "probability",
+      "task_type": "binary_classification"
+    },
+    "resolution": {
+      "matched_predicates": [
+        "sklearn_exact",
+        "predict_proba_v2",
+        "decision_function_v2"
+      ],
+      "rejected_adapters": [
+        "native_rules_v2",
+        "catboost",
+        "lightgbm",
+        "xgboost",
+        "keras",
+        "onnx",
+        "torch",
+        "callable_v2"
+      ],
+      "selected_adapter": "sklearn_pipeline_v2",
+      "selected_family": "sklearn_pipeline",
+      "task_type": "binary_classification",
+      "warnings": []
+    },
+    "task_type": "binary_classification"
+  },
+  "config_id": "pipeline_logistic_binary",
+  "conformance": {
+    "adapter_id": "sklearn_pipeline_v2",
+    "checks": [
+      {
+        "check_id": "prediction_available",
+        "detail": "canonical prediction returned",
+        "status": "pass"
+      },
+      {
+        "check_id": "prediction_parity",
+        "detail": "adapter output matches model.predict",
+        "status": "pass"
+      },
+      {
+        "check_id": "capabilities_serializable",
+        "detail": "capability report is JSON serializable",
+        "status": "pass"
+      },
+      {
+        "check_id": "capability_truthfulness",
+        "detail": "all available channels have explicit descriptors",
+        "status": "pass"
+      },
+      {
+        "check_id": "fingerprint_stable",
+        "detail": "fingerprint is stable SHA256",
+        "status": "pass"
+      },
+      {
+        "check_id": "local_evidence_serializable",
+        "detail": "local evidence is deterministic JSON data",
+        "status": "pass"
+      }
+    ],
+    "errors": [],
+    "model_family": "sklearn_pipeline",
+    "status": "pass",
+    "task_type": "binary_classification",
+    "warnings": []
+  },
+  "graph_errors": [],
+  "human_explanation": {
+    "audience": "domain_user",
+    "claim_refs": {
+      "changes": [],
+      "concerns": [
+        "C-015",
+        "C-002"
+      ],
+      "decision": [
+        "C-001"
+      ],
+      "main_reasons": [
+        "C-008",
+        "C-012",
+        "C-011"
+      ],
+      "recommended_action": [
+        "C-017"
+      ],
+      "reliability": [
+        "C-017",
+        "C-008",
+        "C-012",
+        "C-011",
+        "C-015",
+        "C-002",
+        "C-010",
+        "C-014",
+        "C-013",
+        "C-016"
+      ]
+    },
+    "concerns": [
+      {
+        "claim_refs": [
+          "C-015"
+        ],
+        "evidence_refs": [
+          "diagnostic:2"
+        ],
+        "explanation": "Для части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено.",
+        "title": "Не все проверки подтверждены"
+      },
+      {
+        "claim_refs": [
+          "C-002"
+        ],
+        "evidence_refs": [
+          "contribution:x6"
+        ],
+        "explanation": "Признак входит в число наиболее важных для текущего решения. Модель использует для этого показателя измеренный линейный коэффициент. Поэтому этот показатель противоречит прогнозу.",
+        "title": "X6"
+      }
+    ],
+    "decision": {
+      "claim_refs": [
+        "C-001"
+      ],
+      "domain_language_status": "insufficient_domain_language",
+      "evidence_refs": [
+        "prediction"
+      ],
+      "explanation": "Модель сформировала результат, но человеко-понятное название класса в плане объяснения не задано. До заполнения предметного словаря этот результат нельзя использовать как предметное заключение.",
+      "title": "Предметное значение класса не задано"
+    },
+    "decision_changes": [],
+    "details": {
+      "contradicts": [
+        {
+          "claim_refs": [
+            "C-002"
+          ],
+          "evidence_refs": [
+            "contribution:x6"
+          ],
+          "explanation": "Признак входит в число наиболее важных для текущего решения. Модель использует для этого показателя измеренный линейный коэффициент. Поэтому этот показатель противоречит прогнозу.",
+          "title": "X6"
+        },
+        {
+          "claim_refs": [
+            "C-003"
+          ],
+          "evidence_refs": [
+            "contribution:x2"
+          ],
+          "explanation": "Признак входит в число наиболее важных для текущего решения. Модель использует для этого показателя измеренный линейный коэффициент. Поэтому этот показатель противоречит прогнозу.",
+          "title": "X2"
+        },
+        {
+          "claim_refs": [
+            "C-004"
+          ],
+          "evidence_refs": [
+            "contribution:x1"
+          ],
+          "explanation": "Признак входит в число наиболее важных для текущего решения. Модель использует для этого показателя измеренный линейный коэффициент. Поэтому этот показатель противоречит прогнозу.",
+          "title": "X1"
+        },
+        {
+          "claim_refs": [
+            "C-005"
+          ],
+          "evidence_refs": [
+            "contribution:x0"
+          ],
+          "explanation": "Признак входит в число наиболее важных для текущего решения. Модель использует для этого показателя измеренный линейный коэффициент. Поэтому этот показатель противоречит прогнозу.",
+          "title": "X0"
+        },
+        {
+          "claim_refs": [
+            "C-006"
+          ],
+          "evidence_refs": [
+            "contribution:x3"
+          ],
+          "explanation": "Признак входит в число наиболее важных для текущего решения. Модель использует для этого показателя измеренный линейный коэффициент. Поэтому этот показатель противоречит прогнозу.",
+          "title": "X3"
+        },
+        {
+          "claim_refs": [
+            "C-007"
+          ],
+          "evidence_refs": [
+            "contribution:x5"
+          ],
+          "explanation": "Признак входит в число наиболее важных для текущего решения. Модель использует для этого показателя измеренный линейный коэффициент. Поэтому этот показатель противоречит прогнозу.",
+          "title": "X5"
+        },
+        {
+          "claim_refs": [
+            "C-009"
+          ],
+          "evidence_refs": [
+            "contribution:x4"
+          ],
+          "explanation": "Признак входит в число наиболее важных для текущего решения. Модель использует для этого показателя измеренный линейный коэффициент. Поэтому этот показатель противоречит прогнозу.",
+          "title": "X4"
+        }
+      ],
+      "limitations": [
+        {
+          "claim_refs": [
+            "C-015"
+          ],
+          "evidence_refs": [
+            "diagnostic:2"
+          ],
+          "explanation": "Для части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено.",
+          "title": "Не все проверки подтверждены"
+        },
+        {
+          "claim_refs": [
+            "C-002"
+          ],
+          "evidence_refs": [
+            "contribution:x6"
+          ],
+          "explanation": "Признак входит в число наиболее важных для текущего решения. Модель использует для этого показателя измеренный линейный коэффициент. Поэтому этот показатель противоречит прогнозу.",
+          "title": "X6"
+        },
+        {
+          "claim_refs": [
+            "C-003"
+          ],
+          "evidence_refs": [
+            "contribution:x2"
+          ],
+          "explanation": "Признак входит в число наиболее важных для текущего решения. Модель использует для этого показателя измеренный линейный коэффициент. Поэтому этот показатель противоречит прогнозу.",
+          "title": "X2"
+        },
+        {
+          "claim_refs": [
+            "C-004"
+          ],
+          "evidence_refs": [
+            "contribution:x1"
+          ],
+          "explanation": "Признак входит в число наиболее важных для текущего решения. Модель использует для этого показателя измеренный линейный коэффициент. Поэтому этот показатель противоречит прогнозу.",
+          "title": "X1"
+        },
+        {
+          "claim_refs": [
+            "C-005"
+          ],
+          "evidence_refs": [
+            "contribution:x0"
+          ],
+          "explanation": "Признак входит в число наиболее важных для текущего решения. Модель использует для этого показателя измеренный линейный коэффициент. Поэтому этот показатель противоречит прогнозу.",
+          "title": "X0"
+        },
+        {
+          "claim_refs": [
+            "C-006"
+          ],
+          "evidence_refs": [
+            "contribution:x3"
+          ],
+          "explanation": "Признак входит в число наиболее важных для текущего решения. Модель использует для этого показателя измеренный линейный коэффициент. Поэтому этот показатель противоречит прогнозу.",
+          "title": "X3"
+        },
+        {
+          "claim_refs": [
+            "C-007"
+          ],
+          "evidence_refs": [
+            "contribution:x5"
+          ],
+          "explanation": "Признак входит в число наиболее важных для текущего решения. Модель использует для этого показателя измеренный линейный коэффициент. Поэтому этот показатель противоречит прогнозу.",
+          "title": "X5"
+        },
+        {
+          "claim_refs": [
+            "C-009"
+          ],
+          "evidence_refs": [
+            "contribution:x4"
+          ],
+          "explanation": "Признак входит в число наиболее важных для текущего решения. Модель использует для этого показателя измеренный линейный коэффициент. Поэтому этот показатель противоречит прогнозу.",
+          "title": "X4"
+        }
+      ],
+      "similar_cases": [],
+      "supports": [
+        {
+          "claim_refs": [
+            "C-008"
+          ],
+          "comparison_text": "Признак входит в число наиболее важных для текущего решения.",
+          "effect_direction": "supports",
+          "evidence_refs": [
+            "contribution:x7"
+          ],
+          "explanation": "Признак входит в число наиболее важных для текущего решения. Модель использует для этого показателя измеренный линейный коэффициент. Поэтому этот показатель поддерживает прогноз.",
+          "subject_label": "x7",
+          "title": "X7"
+        },
+        {
+          "claim_refs": [
+            "C-012"
+          ],
+          "comparison_text": "Объект сопоставлен с типичным профилем группы «1» по обучающей выборке.",
+          "effect_direction": "supports",
+          "evidence_refs": [
+            "concept:1"
+          ],
+          "explanation": "По сравнению с референсной выборкой объект близок к типичному профилю группы «1». Такое сходство поддерживает результат, но не заменяет проверку ограничений.",
+          "subject_label": "1",
+          "title": "Типичный профиль группы 1"
+        },
+        {
+          "claim_refs": [
+            "C-011"
+          ],
+          "comparison_text": "Объект сопоставлен с типичным профилем группы «0» по обучающей выборке.",
+          "effect_direction": "supports",
+          "evidence_refs": [
+            "concept:0"
+          ],
+          "explanation": "По сравнению с референсной выборкой объект близок к типичному профилю группы «0». Такое сходство поддерживает результат, но не заменяет проверку ограничений.",
+          "subject_label": "0",
+          "title": "Типичный профиль группы 0"
+        }
+      ],
+      "technical_metrics": [
+        {
+          "claim_refs": [
+            "C-001"
+          ],
+          "evidence_refs": [
+            "prediction"
+          ],
+          "explanation": "0.974",
+          "title": "model_score"
+        },
+        {
+          "claim_refs": [
+            "C-002"
+          ],
+          "evidence_refs": [
+            "contribution:x6"
+          ],
+          "explanation": "-0.615; сравнение: zero local contribution",
+          "title": "local_contribution"
+        },
+        {
+          "claim_refs": [
+            "C-003"
+          ],
+          "evidence_refs": [
+            "contribution:x2"
+          ],
+          "explanation": "-0.582; сравнение: zero local contribution",
+          "title": "local_contribution"
+        },
+        {
+          "claim_refs": [
+            "C-004"
+          ],
+          "evidence_refs": [
+            "contribution:x1"
+          ],
+          "explanation": "-0.400; сравнение: zero local contribution",
+          "title": "local_contribution"
+        },
+        {
+          "claim_refs": [
+            "C-005"
+          ],
+          "evidence_refs": [
+            "contribution:x0"
+          ],
+          "explanation": "-0.267; сравнение: zero local contribution",
+          "title": "local_contribution"
+        },
+        {
+          "claim_refs": [
+            "C-006"
+          ],
+          "evidence_refs": [
+            "contribution:x3"
+          ],
+          "explanation": "-0.218; сравнение: zero local contribution",
+          "title": "local_contribution"
+        },
+        {
+          "claim_refs": [
+            "C-007"
+          ],
+          "evidence_refs": [
+            "contribution:x5"
+          ],
+          "explanation": "-0.163; сравнение: zero local contribution",
+          "title": "local_contribution"
+        },
+        {
+          "claim_refs": [
+            "C-008"
+          ],
+          "evidence_refs": [
+            "contribution:x7"
+          ],
+          "explanation": "0.103; сравнение: zero local contribution",
+          "title": "local_contribution"
+        },
+        {
+          "claim_refs": [
+            "C-009"
+          ],
+          "evidence_refs": [
+            "contribution:x4"
+          ],
+          "explanation": "-0.063; сравнение: zero local contribution",
+          "title": "local_contribution"
+        },
+        {
+          "claim_refs": [
+            "C-010"
+          ],
+          "evidence_refs": [
+            "data:pipeline_logistic_binary_object"
+          ],
+          "explanation": "1.000",
+          "title": "data_quality"
+        }
+      ],
+      "training": []
+    },
+    "evidence_trace": [],
+    "language": "ru",
+    "level": "user",
+    "limitations": [
+      "Для части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено.",
+      "Признак входит в число наиболее важных для текущего решения. Модель использует для этого показателя измеренный линейный коэффициент. Поэтому этот показатель противоречит прогнозу.",
+      "Признак входит в число наиболее важных для текущего решения. Модель использует для этого показателя измеренный линейный коэффициент. Поэтому этот показатель противоречит прогнозу.",
+      "Признак входит в число наиболее важных для текущего решения. Модель использует для этого показателя измеренный линейный коэффициент. Поэтому этот показатель противоречит прогнозу.",
+      "Признак входит в число наиболее важных для текущего решения. Модель использует для этого показателя измеренный линейный коэффициент. Поэтому этот показатель противоречит прогнозу.",
+      "Признак входит в число наиболее важных для текущего решения. Модель использует для этого показателя измеренный линейный коэффициент. Поэтому этот показатель противоречит прогнозу.",
+      "Признак входит в число наиболее важных для текущего решения. Модель использует для этого показателя измеренный линейный коэффициент. Поэтому этот показатель противоречит прогнозу.",
+      "Признак входит в число наиболее важных для текущего решения. Модель использует для этого показателя измеренный линейный коэффициент. Поэтому этот показатель противоречит прогнозу."
+    ],
+    "lost_or_averaged": [
+      "Для части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено.",
+      "Признак входит в число наиболее важных для текущего решения. Модель использует для этого показателя измеренный линейный коэффициент. Поэтому этот показатель противоречит прогнозу."
+    ],
+    "main_reasons": [
+      {
+        "claim_refs": [
+          "C-008"
+        ],
+        "comparison_text": "Признак входит в число наиболее важных для текущего решения.",
+        "effect_direction": "supports",
+        "evidence_refs": [
+          "contribution:x7"
+        ],
+        "explanation": "Признак входит в число наиболее важных для текущего решения. Модель использует для этого показателя измеренный линейный коэффициент. Поэтому этот показатель поддерживает прогноз.",
+        "subject_label": "x7",
+        "title": "X7"
+      },
+      {
+        "claim_refs": [
+          "C-012"
+        ],
+        "comparison_text": "Объект сопоставлен с типичным профилем группы «1» по обучающей выборке.",
+        "effect_direction": "supports",
+        "evidence_refs": [
+          "concept:1"
+        ],
+        "explanation": "По сравнению с референсной выборкой объект близок к типичному профилю группы «1». Такое сходство поддерживает результат, но не заменяет проверку ограничений.",
+        "subject_label": "1",
+        "title": "Типичный профиль группы 1"
+      },
+      {
+        "claim_refs": [
+          "C-011"
+        ],
+        "comparison_text": "Объект сопоставлен с типичным профилем группы «0» по обучающей выборке.",
+        "effect_direction": "supports",
+        "evidence_refs": [
+          "concept:0"
+        ],
+        "explanation": "По сравнению с референсной выборкой объект близок к типичному профилю группы «0». Такое сходство поддерживает результат, но не заменяет проверку ограничений.",
+        "subject_label": "0",
+        "title": "Типичный профиль группы 0"
+      }
+    ],
+    "model_observed": [
+      "Модель сформировала результат, но человеко-понятное название класса в плане объяснения не задано. До заполнения предметного словаря этот результат нельзя использовать как предметное заключение."
+    ],
+    "recommended_action": {
+      "action": "review",
+      "claim_refs": [
+        "C-017"
+      ],
+      "evidence_refs": [
+        "diagnostic:0",
+        "diagnostic:1",
+        "diagnostic:2"
+      ],
+      "explanation": "Результат недостаточно надёжен для автоматического решения.",
+      "title": "Проверить специалистом"
+    },
+    "reliability": {
+      "claim_refs": [
+        "C-017",
+        "C-008",
+        "C-012",
+        "C-011",
+        "C-015",
+        "C-002",
+        "C-010",
+        "C-014",
+        "C-013",
+        "C-016"
+      ],
+      "conclusion": "Эти ограничения не позволяют использовать результат автоматически.",
+      "evidence_refs": [
+        "diagnostic:0",
+        "diagnostic:1",
+        "diagnostic:2",
+        "contribution:x7",
+        "concept:1",
+        "concept:0",
+        "contribution:x6",
+        "data:pipeline_logistic_binary_object",
+        "trace:missing_evidence"
+      ],
+      "explanation": "Решение поддерживают: x7, 1, 0. Доверие ограничивают: не все проверки подтверждены, x6. Не хватает данных для проверок: model rules or concepts, предметное значение прогнозируемой группы. Эти ограничения не позволяют использовать результат автоматически.",
+      "limited_by": [
+        "Не все проверки подтверждены",
+        "X6"
+      ],
+      "missing_evidence": [
+        "model rules or concepts",
+        "предметное значение прогнозируемой группы"
+      ],
+      "supported_by": [
+        "x7",
+        "1",
+        "0"
+      ],
+      "title": "Требуется дополнительная проверка"
+    },
+    "similar_cases": [],
+    "summary": "## Решение\nМодель сформировала результат, но человеко-понятное название класса в плане объяснения не задано. До заполнения предметного словаря этот результат нельзя использовать как предметное заключение.\n\n## Почему\nПризнак входит в число наиболее важных для текущего решения. Модель использует для этого показателя измеренный линейный коэффициент. Поэтому этот показатель поддерживает прогноз.\nПо сравнению с референсной выборкой объект близок к типичному профилю группы «1». Такое сходство поддерживает результат, но не заменяет проверку ограничений.\nПо сравнению с референсной выборкой объект близок к типичному профилю группы «0». Такое сходство поддерживает результат, но не заменяет проверку ограничений.\n\n## Что вызывает сомнение\nДля части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено.\nПризнак входит в число наиболее важных для текущего решения. Модель использует для этого показателя измеренный линейный коэффициент. Поэтому этот показатель противоречит прогнозу.\n\n## Насколько можно доверять\nРешение поддерживают: x7, 1, 0. Доверие ограничивают: не все проверки подтверждены, x6. Не хватает данных для проверок: model rules or concepts, предметное значение прогнозируемой группы. Эти ограничения не позволяют использовать результат автоматически.\n\n## Что делать\nРезультат недостаточно надёжен для автоматического решения.\n",
+    "trust": [
+      "Решение поддерживают: x7, 1, 0. Доверие ограничивают: не все проверки подтверждены, x6. Не хватает данных для проверок: model rules or concepts, предметное значение прогнозируемой группы. Эти ограничения не позволяют использовать результат автоматически.",
+      "Результат недостаточно надёжен для автоматического решения."
+    ],
+    "what_would_change_result": []
+  },
+  "missing_channels": [
+    "alignment",
+    "counterfactuals",
+    "reduction",
+    "risk",
+    "rules",
+    "similar_cases",
+    "training_history"
+  ],
+  "model_class": "sklearn.pipeline.Pipeline",
+  "model_family": "sklearn_pipeline",
+  "prediction_parity": true,
+  "quality": {
+    "blocked_channels": [],
+    "completeness": 0.5882352941176471,
+    "faithfulness": null,
+    "fidelity": null,
+    "limitations": [],
+    "reconstruction_error": null,
+    "sparsity": 0.125,
+    "stability": null,
+    "status": "pass"
+  },
+  "status": "pass",
+  "task": "binary_classification"
+}

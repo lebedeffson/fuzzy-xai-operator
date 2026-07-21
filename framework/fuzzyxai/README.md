@@ -534,6 +534,45 @@ result = pipe.explain_scalar_risk(
 print(result.report)
 ```
 
+## Model-independent SDK
+
+The public adapter contract does not depend on a particular ML library:
+
+```python
+from fuzzyxai import FuzzyXAI
+
+fx = FuzzyXAI.wrap(model, adapter="auto", explain_plan=plan)
+result = fx.explain(X, evidence=operator_evidence)
+human = result.explain_for(audience="domain_user", language="ru")
+print(human.decision.explanation)
+print(human.recommended_action.explanation)
+result.plot("operator_passport.png")
+result.export_json("explanation.json")
+```
+
+Supported base adapters are `CallableAdapter`, `PredictProbaAdapter`, and
+`SklearnAdapter`; custom integrations implement `ModelAdapter`. If operator
+evidence is absent, FuzzyXAI returns the prediction with an explicit diagnostic
+and `review` action. It does not synthesize `gamma`, `Delta`, or `rho` from
+demonstration constants.
+
+`ExplainPlan.domain_language` maps dataset feature names, model classes, and
+action codes to domain wording. `domain_user`, `ml_engineer`, `researcher`, and
+`auditor` are communication profiles; they are independent of the E0-E5
+evidence-depth level. Domain-user cards hide internal IDs but preserve claim and
+evidence references in serialized form.
+
+The canonical visualization contract is `ExplanationViewModel`. Matplotlib and
+MATLAB render the same JSON; see `framework/fuzzyxai/VISUALIZATION_API.md`.
+
+Operator coverage for chapters 2-3 is checked with:
+
+```bash
+make operator-manifest-check
+```
+
+The source of truth is `framework/fuzzyxai/operators_manifest.yaml`.
+
 ## Структура проекта
 
 ```text

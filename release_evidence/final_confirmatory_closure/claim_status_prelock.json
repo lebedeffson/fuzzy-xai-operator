@@ -1,0 +1,36 @@
+{
+  "external_claim_gates": {
+    "comprehension": "open_external_not_in_scope",
+    "domain_language": "open_external_not_in_scope",
+    "expert_action": "open_external_not_in_scope"
+  },
+  "forbidden_release_claims": [
+    "understandable_to_users",
+    "confirmed_by_experts",
+    "improves_domain_safety",
+    "matches_specialist_decisions"
+  ],
+  "frozen_claims": {
+    "H1": "supported",
+    "H2": "supported",
+    "H3-original": "not_supported",
+    "H4": "supported",
+    "H5-P-original": "not_supported",
+    "H5-S": "supported",
+    "H6-general": "not_supported"
+  },
+  "new_claims": {
+    "H3-P1": "blocked_pending_sealed_confirmation",
+    "H3-P2": "blocked_pending_sealed_confirmation",
+    "H3-P3": "blocked_pending_sealed_confirmation",
+    "H3-P4": "blocked_pending_sealed_confirmation",
+    "H5-A": "blocked_pending_sealed_confirmation",
+    "H6-A": "blocked_pending_sealed_confirmation",
+    "H6-B": "blocked_pending_sealed_confirmation",
+    "H7-A": "blocked_pending_sealed_confirmation",
+    "H7-B": "blocked_pending_sealed_confirmation",
+    "H8": "blocked_pending_sealed_confirmation",
+    "H9": "blocked_pending_sealed_confirmation"
+  },
+  "phase": "formative_prelock"
+}

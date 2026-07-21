@@ -1,0 +1,486 @@
+{
+  "checks": {
+    "anchors": true,
+    "boosting": true,
+    "cnn": true,
+    "gradcam": true,
+    "image_10k": true,
+    "integrated_gradients": true,
+    "licenses_and_hashes": true,
+    "lime": true,
+    "linear": true,
+    "onnx": true,
+    "real_and_controlled": true,
+    "rule_conditional_model": true,
+    "rulefit": true,
+    "sequence": true,
+    "shap": true,
+    "tabular_10k": true,
+    "text_10k": true,
+    "text_timeseries_attribution": true,
+    "timeseries_10k": true,
+    "tree": true
+  },
+  "datasets": [
+    {
+      "dataset_id": "uci_covertype",
+      "downloaded_at": "2026-07-20T00:48:13.183542+00:00",
+      "known_limitations": [
+        "benchmark target is a preregistered binary derivative of the seven-class task"
+      ],
+      "license": "CC BY 4.0",
+      "modality": "tabular",
+      "n_features": 54,
+      "n_objects": 581012,
+      "preprocessing": [
+        "float32 conversion",
+        "binary target: original cover types 1-2 versus 3-7"
+      ],
+      "processed_sha256": "003b286d641c2c1a7382211d2e0bcc92583d9e16d7e870b9016def594767c086",
+      "raw_sha256": "672e1266002c95cfc3de2b452dee2a75e71e9f2feb90bc0caafc5dd16f3217dd",
+      "source": "https://archive.ics.uci.edu/dataset/31/covertype",
+      "target": "predeclared binary grouping",
+      "task": "binary_classification_derived_from_original_labels",
+      "version": "UCI-31/sklearn-cache"
+    },
+    {
+      "dataset_id": "fashion_mnist",
+      "downloaded_at": "2026-07-20T00:46:30.762496+00:00",
+      "known_limitations": [
+        "fashion benchmark; no medical-image generalization"
+      ],
+      "license": "MIT",
+      "modality": "image",
+      "n_features": 28,
+      "n_objects": 70000,
+      "preprocessing": [
+        "scale pixels to [0,1]",
+        "binary target: footwear classes 5,7,9 versus other apparel"
+      ],
+      "processed_sha256": "aea83f6512f777bae517538511cb1b5dac31135f770a9f1a9ed75aa6e0694d29",
+      "raw_sha256": "1ad69a47dbce37a98443e5e5628a031b5910be879d3589e945a1519f805aa28c",
+      "source": "https://github.com/zalandoresearch/fashion-mnist",
+      "target": "predeclared binary grouping",
+      "task": "binary_classification_derived_from_original_labels",
+      "version": "official-master-idx"
+    },
+    {
+      "dataset_id": "20newsgroups",
+      "downloaded_at": "2026-07-20T00:46:43.412636+00:00",
+      "known_limitations": [
+        "historical posts can contain personal or offensive language",
+        "raw text is not redistributed"
+      ],
+      "license": "source-specific post rights; scikit-learn loader is BSD-3-Clause",
+      "modality": "text",
+      "n_features": 1,
+      "n_objects": 18846,
+      "preprocessing": [
+        "remove headers, footers and quotes",
+        "binary target: first ten versus last ten categories"
+      ],
+      "processed_sha256": "e2d2dfd26aa33a913bd7dfc1c86a9a39af803c9f5961773b167837601478f682",
+      "raw_sha256": "0668a31a6a2d1b3b4fc0eb1d4ef08234444a554dab6a6d662832f4501578566a",
+      "source": "https://scikit-learn.org/stable/modules/generated/sklearn.datasets.fetch_20newsgroups.html",
+      "target": "predeclared binary grouping",
+      "task": "binary_classification_derived_from_original_labels",
+      "version": "sklearn-cache"
+    },
+    {
+      "dataset_id": "ucr_electric_devices",
+      "downloaded_at": "2026-07-20T00:46:22.931150+00:00",
+      "known_limitations": [
+        "household electricity benchmark; no operational energy claim"
+      ],
+      "license": "CC BY 4.0",
+      "modality": "timeseries",
+      "n_features": 96,
+      "n_objects": 16637,
+      "preprocessing": [
+        "merge official train and test before preregistered re-split",
+        "binary grouping of original seven classes"
+      ],
+      "processed_sha256": "50d7673de8d5bf7c8495b3b0683aa6dc07433bccf26d0462987564de49a5cb0d",
+      "raw_sha256": "0b9e6987e20657eeaa5c7b258776e50fcde9b26b6d9c30a5caa8cdea154b5c2e",
+      "source": "https://zenodo.org/records/11190880",
+      "target": "predeclared binary grouping",
+      "task": "binary_classification_derived_from_original_labels",
+      "version": "Zenodo-v1"
+    }
+  ],
+  "explainers": [
+    {
+      "completeness": 0.6116112952490258,
+      "elapsed_seconds": 0.9367616860000112,
+      "fidelity": 0.1182903981684786,
+      "implementation": "shap",
+      "limitation": null,
+      "method": "SHAP",
+      "model_calls": 40,
+      "n_explained": 20,
+      "sparsity": 5.0,
+      "stability": 0.9990806898074798,
+      "status": "measured",
+      "traceability": 1.0,
+      "version": "0.46.0"
+    },
+    {
+      "completeness": 0.4408557370870897,
+      "elapsed_seconds": 0.43979695699999866,
+      "fidelity": 0.0514020255181651,
+      "implementation": "lime",
+      "limitation": null,
+      "method": "LIME",
+      "model_calls": 40,
+      "n_explained": 20,
+      "sparsity": 5.0,
+      "stability": 0.9990806898074798,
+      "status": "measured",
+      "traceability": 1.0,
+      "version": "0.2.0.1"
+    },
+    {
+      "completeness": 0.9459625970307688,
+      "elapsed_seconds": 3.137705264999994,
+      "fidelity": 0.9459625970307688,
+      "implementation": "alibi",
+      "limitation": null,
+      "method": "Anchors",
+      "model_calls": null,
+      "n_explained": 20,
+      "sparsity": 1.15,
+      "stability": null,
+      "status": "measured",
+      "traceability": 1.0,
+      "version": "0.9.6"
+    },
+    {
+      "completeness": 0.9286,
+      "elapsed_seconds": 19.856742156999985,
+      "fidelity": 0.9286,
+      "implementation": "imodels",
+      "limitation": null,
+      "method": "RuleFit",
+      "model_calls": null,
+      "n_explained": 5000,
+      "sparsity": 27.0,
+      "stability": null,
+      "status": "measured",
+      "traceability": 1.0,
+      "version": "2.0.4"
+    },
+    {
+      "implementation": "sklearn.LogisticRegression",
+      "method": "linear_coefficients",
+      "status": "measured"
+    },
+    {
+      "implementation": "sklearn.RandomForestClassifier",
+      "method": "native_tree_path",
+      "status": "measured"
+    },
+    {
+      "implementation": "fuzzyxai.q1_validation",
+      "method": "occlusion",
+      "n_explained": 20,
+      "status": "measured"
+    },
+    {
+      "attribution_l1": 523.4561873913569,
+      "implementation": "shap.LinearExplainer",
+      "method": "SHAP",
+      "n_explained": 20,
+      "status": "measured"
+    },
+    {
+      "implementation": "sklearn.LogisticRegression",
+      "method": "linear_coefficients",
+      "status": "measured"
+    },
+    {
+      "implementation": "sklearn.RandomForestClassifier",
+      "method": "native_tree_path",
+      "status": "measured"
+    },
+    {
+      "map_shape": [
+        1,
+        28,
+        28
+      ],
+      "map_sum": 0.08194487541913986,
+      "method": "Grad-CAM",
+      "status": "measured"
+    },
+    {
+      "attribution_l1": 0.5316534042358398,
+      "method": "Integrated Gradients",
+      "status": "measured"
+    },
+    {
+      "method": "occlusion",
+      "n_explained": 1,
+      "status": "measured"
+    },
+    {
+      "implementation": "fuzzyxai.q1_validation",
+      "method": "token_masking",
+      "n_explained": 20,
+      "status": "measured"
+    },
+    {
+      "attribution_l1": 120.52181487732555,
+      "implementation": "shap.LinearExplainer",
+      "method": "SHAP",
+      "n_explained": 20,
+      "status": "measured"
+    },
+    {
+      "implementation": "sklearn.LogisticRegression",
+      "method": "linear_coefficients",
+      "status": "measured"
+    },
+    {
+      "implementation": "sklearn.RandomForestClassifier",
+      "method": "native_tree_path",
+      "status": "measured"
+    },
+    {
+      "attribution_l1": 0.7462536096572876,
+      "method": "Integrated Gradients",
+      "status": "measured"
+    },
+    {
+      "method": "token_masking",
+      "n_explained": 1,
+      "status": "measured"
+    },
+    {
+      "implementation": "fuzzyxai.q1_validation",
+      "method": "window_masking",
+      "n_explained": 20,
+      "status": "measured"
+    },
+    {
+      "attribution_l1": 49.13682886872925,
+      "implementation": "shap.LinearExplainer",
+      "method": "SHAP",
+      "n_explained": 20,
+      "status": "measured"
+    },
+    {
+      "implementation": "sklearn.LogisticRegression",
+      "method": "linear_coefficients",
+      "status": "measured"
+    },
+    {
+      "implementation": "sklearn.RandomForestClassifier",
+      "method": "native_tree_path",
+      "status": "measured"
+    },
+    {
+      "attribution_l1": 1.4576023817062378,
+      "method": "Integrated Gradients",
+      "status": "measured"
+    },
+    {
+      "method": "window_masking",
+      "n_explained": 1,
+      "status": "measured"
+    }
+  ],
+  "failures": [],
+  "limitations": [
+    "benchmark performance does not establish deployment validity",
+    "attributions are associational rather than causal",
+    "external human and domain gates remain open"
+  ],
+  "models": [
+    {
+      "accuracy": 0.9362,
+      "balanced_accuracy": 0.8353520020710012,
+      "f1": 0.9630316375014486,
+      "family": "linear",
+      "fit_seconds": 0.04671705799998449,
+      "library": "scikit-learn",
+      "model_id": "logistic",
+      "n_test": 5000,
+      "n_train": 20000,
+      "predict_seconds": 0.001794748999998319,
+      "status": "measured"
+    },
+    {
+      "accuracy": 0.9484,
+      "balanced_accuracy": 0.8447015442088144,
+      "f1": 0.9702833448514168,
+      "family": "tree",
+      "fit_seconds": 1.1663543619999928,
+      "library": "scikit-learn",
+      "model_id": "random_forest",
+      "n_test": 5000,
+      "n_train": 20000,
+      "predict_seconds": 0.018222270999984858,
+      "status": "measured"
+    },
+    {
+      "accuracy": 0.949,
+      "balanced_accuracy": 0.8606629309373137,
+      "f1": 0.9704416367219195,
+      "family": "boosting",
+      "fit_seconds": 0.21311567899999773,
+      "library": "scikit-learn",
+      "model_id": "xgboost",
+      "n_test": 5000,
+      "n_train": 20000,
+      "predict_seconds": 0.00485680299999558,
+      "status": "measured"
+    },
+    {
+      "accuracy": 0.9954,
+      "balanced_accuracy": 0.9944285714285714,
+      "f1": 0.9923307769256419,
+      "family": "linear",
+      "fit_seconds": 0.027166692999998077,
+      "library": "scikit-learn",
+      "model_id": "logistic",
+      "n_test": 5000,
+      "n_train": 20000,
+      "predict_seconds": 0.0009979480000197327,
+      "status": "measured"
+    },
+    {
+      "accuracy": 0.9968,
+      "balanced_accuracy": 0.9956190476190476,
+      "f1": 0.9946559786239145,
+      "family": "tree",
+      "fit_seconds": 2.6796867799999973,
+      "library": "scikit-learn",
+      "model_id": "random_forest",
+      "n_test": 5000,
+      "n_train": 20000,
+      "predict_seconds": 0.011584061999997175,
+      "status": "measured"
+    },
+    {
+      "accuracy": 0.9954,
+      "balanced_accuracy": 0.9938571428571428,
+      "f1": 0.9923154026060809,
+      "family": "boosting",
+      "fit_seconds": 0.2917887510000128,
+      "library": "scikit-learn",
+      "model_id": "hist_gradient_boosting",
+      "n_test": 5000,
+      "n_train": 20000,
+      "predict_seconds": 0.026045764999992116,
+      "status": "measured"
+    },
+    {
+      "family": "CNN",
+      "fit_seconds": 1.4215090559999908,
+      "library": "torch",
+      "model_id": "tiny_cnn",
+      "status": "measured"
+    },
+    {
+      "family": "ONNX",
+      "library": "onnxruntime",
+      "model_id": "tiny_cnn_onnx",
+      "parity_max_abs": 1.1920928955078125e-07,
+      "status": "measured"
+    },
+    {
+      "accuracy": 0.7068965517241379,
+      "balanced_accuracy": 0.7067429600913921,
+      "f1": 0.7135079077002852,
+      "family": "linear",
+      "fit_seconds": 0.09186118600001691,
+      "library": "scikit-learn",
+      "model_id": "logistic",
+      "n_test": 3770,
+      "n_train": 15076,
+      "predict_seconds": 0.004350100999999995,
+      "status": "measured"
+    },
+    {
+      "accuracy": 0.6970822281167108,
+      "balanced_accuracy": 0.6950833908476612,
+      "f1": 0.7250842561386616,
+      "family": "tree",
+      "fit_seconds": 2.216948185999996,
+      "library": "scikit-learn",
+      "model_id": "random_forest",
+      "n_test": 3770,
+      "n_train": 15076,
+      "predict_seconds": 0.015697270000003982,
+      "status": "measured"
+    },
+    {
+      "accuracy": 0.7180371352785145,
+      "balanced_accuracy": 0.7175427006926218,
+      "f1": 0.7283414260158446,
+      "family": "boosting",
+      "fit_seconds": 3.329225605000005,
+      "library": "scikit-learn",
+      "model_id": "hist_gradient_boosting",
+      "n_test": 3770,
+      "n_train": 15076,
+      "predict_seconds": 0.06238347600000793,
+      "status": "measured"
+    },
+    {
+      "family": "sequence",
+      "fit_seconds": 0.5465023200000019,
+      "library": "torch",
+      "model_id": "text_gru",
+      "status": "measured"
+    },
+    {
+      "accuracy": 0.7728365384615384,
+      "balanced_accuracy": 0.7594204178348823,
+      "f1": 0.7153614457831325,
+      "family": "linear",
+      "fit_seconds": 0.013939667000016698,
+      "library": "scikit-learn",
+      "model_id": "logistic",
+      "n_test": 3328,
+      "n_train": 13309,
+      "predict_seconds": 0.0007795440000109011,
+      "status": "measured"
+    },
+    {
+      "accuracy": 0.8897235576923077,
+      "balanced_accuracy": 0.8905199755686544,
+      "f1": 0.8753820033955857,
+      "family": "tree",
+      "fit_seconds": 2.534887612999995,
+      "library": "scikit-learn",
+      "model_id": "random_forest",
+      "n_test": 3328,
+      "n_train": 13309,
+      "predict_seconds": 0.01663519500002053,
+      "status": "measured"
+    },
+    {
+      "accuracy": 0.9005408653846154,
+      "balanced_accuracy": 0.8997943204480061,
+      "f1": 0.8859800206682742,
+      "family": "boosting",
+      "fit_seconds": 0.3584541220000119,
+      "library": "scikit-learn",
+      "model_id": "hist_gradient_boosting",
+      "n_test": 3328,
+      "n_train": 13309,
+      "predict_seconds": 0.02918691200000012,
+      "status": "measured"
+    },
+    {
+      "family": "sequence",
+      "fit_seconds": 0.6528984570000205,
+      "library": "torch",
+      "model_id": "timeseries_gru",
+      "status": "measured"
+    }
+  ],
+  "schema_version": "1.0",
+  "status": "PASS"
+}

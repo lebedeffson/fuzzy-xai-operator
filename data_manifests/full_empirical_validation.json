@@ -1,0 +1,58 @@
+{
+  "schema_version": "1.0",
+  "claim_scope": "controlled protocol validation only; no external-domain generalization",
+  "datasets": [
+    {
+      "dataset_id": "controlled_tabular_risk_v1",
+      "modality": "tabular",
+      "minimum_objects": 10000,
+      "task": "binary classification",
+      "source": "fuzzyxai.experiments.datasets.controlled_tabular",
+      "license": "CC0-1.0",
+      "version": "1.0",
+      "seed": 4201,
+      "preprocessing": "none before persisted snapshot; model-specific scaling is train-only",
+      "target": "measured controlled event label",
+      "limitations": ["controlled synthetic interactions", "not an external application benchmark"]
+    },
+    {
+      "dataset_id": "controlled_geometric_images_v1",
+      "modality": "image",
+      "minimum_objects": 10000,
+      "task": "binary classification",
+      "source": "fuzzyxai.experiments.datasets.controlled_images",
+      "license": "CC0-1.0",
+      "version": "1.0",
+      "seed": 4202,
+      "preprocessing": "16x16 controlled image generation; no causal-map claim",
+      "target": "geometric orientation class",
+      "limitations": ["controlled shapes", "not a medical image benchmark"]
+    },
+    {
+      "dataset_id": "controlled_geological_notes_v1",
+      "modality": "text",
+      "minimum_objects": 10000,
+      "task": "binary classification",
+      "source": "fuzzyxai.experiments.datasets.controlled_text",
+      "license": "CC0-1.0",
+      "version": "1.0",
+      "seed": 4203,
+      "preprocessing": "deterministic token vocabulary; TF-IDF or sequence encoding is train protocol specific",
+      "target": "controlled note class",
+      "limitations": ["generated vocabulary", "not a natural-language generalization benchmark"]
+    },
+    {
+      "dataset_id": "controlled_sensor_windows_v1",
+      "modality": "time_series",
+      "minimum_objects": 10000,
+      "task": "window classification",
+      "source": "fuzzyxai.experiments.datasets.controlled_time_series",
+      "license": "CC0-1.0",
+      "version": "1.0",
+      "seed": 4204,
+      "preprocessing": "64-point windows; spectral summaries or GRU sequence input",
+      "target": "controlled frequency/event class",
+      "limitations": ["generated signals", "not a field-deployment benchmark"]
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "dataset_id": "default_credit_clients",
+  "development_ids_sha256": "b15d4d07021dddc647f263d76c1ff8c92369d3ff3b6d13396f71c2995cf520d9",
+  "download_sha256": "56c885f84457f6680f8438f02bfcdac9579323d8a94465ee5f26e32baa727602",
+  "grouping_key": "exact_feature_cluster",
+  "label_vault_path": "data/confirmatory/default_credit_clients/manifests/confirmatory_label_vault.enc",
+  "label_vault_sha256": "228d4e09ccb619041736ae3edc65f8fbb16a1bf75a633440e00bf1fcc7bc2b38",
+  "license": "CC BY 4.0",
+  "modality": "tabular",
+  "preprocessing_sha256": "8afbc5faed79146bba3354aa9c96a085a1d04aa4486d551c50b796d2076dddb1",
+  "source": "https://archive.ics.uci.edu/static/public/350/default+of+credit+card+clients.zip",
+  "test_ids_sha256": "ee63f441cba0d964656ed0801bcd6a68810da72f9dc4bb638c4dddfdb18a7f63",
+  "train_ids_sha256": "655bef95a3ffb9e17d2dbd4897e38f346d9d4d5fad7abdeced380dd4baffcb26",
+  "used_in_formative_tuning": false
+}

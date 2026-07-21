@@ -1,0 +1,22 @@
+{
+  "H7_A": {
+    "canonical_hash_preservation_rate": 1.0,
+    "status": "pass",
+    "target": 1.0
+  },
+  "H7_B": {
+    "mean_attribution_mass_retained": 0.8382074548255939,
+    "mean_length_reduction": 0.7589065810783296,
+    "mean_source_perturbation_stability": 0.8913181792121315,
+    "stability_gain_after_projection": null,
+    "status": "blocked_projection_stability_not_yet_measured"
+  },
+  "confirmatory_claim_allowed": false,
+  "objects": 69827,
+  "phase": "formative_real_oof",
+  "raw_rows": {
+    "path": "study/final_confirmatory_closure/h7_formative/projection_rows.jsonl",
+    "sha256": "ffe115e2fc302bbf9bad603652283584ccecdd8afcacc4b0ab1e3bfb0c5bf1f3"
+  },
+  "sealed_test_opened": false
+}

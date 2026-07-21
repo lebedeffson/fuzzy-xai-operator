@@ -1,0 +1,1719 @@
+{
+  "configurations": [
+    {
+      "adapter": "sklearn_ensemble_v2",
+      "api_checks": {},
+      "artifact_sha256": "e09d8c6b5c6b7265eb63ad8d9a9e2b0219af12d149379c872f1948db79db7611",
+      "configuration_id": "adaboost_binary",
+      "conformance": 1.0,
+      "derived_channels": [
+        "perturbation_counterfactual",
+        "ensemble_disagreement"
+      ],
+      "environment": "core-model-contracts",
+      "graph_validation": 1.0,
+      "library": "sklearn",
+      "library_version": "1.8.0",
+      "missing_channels": [
+        "alignment",
+        "counterfactuals",
+        "reduction",
+        "risk",
+        "similar_cases",
+        "training_history"
+      ],
+      "model_class": "sklearn.ensemble._weight_boosting.AdaBoostClassifier",
+      "model_family": "sklearn_ensemble",
+      "native_channels": [
+        "prediction",
+        "predict_proba",
+        "decision_function",
+        "ensemble_votes",
+        "native_rules"
+      ],
+      "prediction_parity": 1.0,
+      "python_versions": [
+        "3.11",
+        "3.12"
+      ],
+      "quality_gate": "pass",
+      "report_path": "core_reports/adaboost_binary.json",
+      "status": "pass",
+      "surrogate_channels": [],
+      "task_type": "binary_classification",
+      "user_explanation_complete": true
+    },
+    {
+      "adapter": "callable",
+      "api_checks": {},
+      "artifact_sha256": "55752b7fd627bbfab77c9a1fef89845a117be3a10fcdf034d570d0f9cc13194f",
+      "configuration_id": "callable_black_box",
+      "conformance": 1.0,
+      "derived_channels": [
+        "perturbation_counterfactual"
+      ],
+      "environment": "core-model-contracts",
+      "graph_validation": 1.0,
+      "library": "python",
+      "library_version": null,
+      "missing_channels": [
+        "alignment",
+        "counterfactuals",
+        "local_contributions",
+        "reduction",
+        "risk",
+        "rules",
+        "similar_cases",
+        "training_history"
+      ],
+      "model_class": "__main__.CallableBenchmarkModel",
+      "model_family": "callable_black_box",
+      "native_channels": [
+        "prediction"
+      ],
+      "prediction_parity": 1.0,
+      "python_versions": [
+        "3.11",
+        "3.12"
+      ],
+      "quality_gate": "pass",
+      "report_path": "core_reports/callable_black_box.json",
+      "status": "pass",
+      "surrogate_channels": [],
+      "task_type": "binary_classification",
+      "user_explanation_complete": true
+    },
+    {
+      "adapter": "sklearn_linear_v2",
+      "api_checks": {},
+      "artifact_sha256": "4978702a2b512cfa898e686ebb10ffd7a2d9da10873564b4485fadbd20544ef8",
+      "configuration_id": "elastic_net_regression",
+      "conformance": 1.0,
+      "derived_channels": [
+        "perturbation_counterfactual",
+        "local_contributions"
+      ],
+      "environment": "core-model-contracts",
+      "graph_validation": 1.0,
+      "library": "sklearn",
+      "library_version": "1.8.0",
+      "missing_channels": [
+        "alignment",
+        "counterfactuals",
+        "reduction",
+        "risk",
+        "similar_cases",
+        "training_history"
+      ],
+      "model_class": "sklearn.linear_model._coordinate_descent.ElasticNet",
+      "model_family": "sklearn_linear",
+      "native_channels": [
+        "prediction",
+        "coefficients"
+      ],
+      "prediction_parity": 1.0,
+      "python_versions": [
+        "3.11",
+        "3.12"
+      ],
+      "quality_gate": "pass",
+      "report_path": "core_reports/elastic_net_regression.json",
+      "status": "pass",
+      "surrogate_channels": [],
+      "task_type": "regression",
+      "user_explanation_complete": true
+    },
+    {
+      "adapter": "sklearn_ensemble_v2",
+      "api_checks": {},
+      "artifact_sha256": "b324127ec14466a74721488300a2ee06f8b47ea75e00f8399fa25bfc19e82fcd",
+      "configuration_id": "extra_trees_binary",
+      "conformance": 1.0,
+      "derived_channels": [
+        "perturbation_counterfactual",
+        "ensemble_disagreement"
+      ],
+      "environment": "core-model-contracts",
+      "graph_validation": 1.0,
+      "library": "sklearn",
+      "library_version": "1.8.0",
+      "missing_channels": [
+        "alignment",
+        "counterfactuals",
+        "reduction",
+        "risk",
+        "similar_cases",
+        "training_history"
+      ],
+      "model_class": "sklearn.ensemble._forest.ExtraTreesClassifier",
+      "model_family": "sklearn_ensemble",
+      "native_channels": [
+        "prediction",
+        "predict_proba",
+        "ensemble_votes",
+        "native_rules"
+      ],
+      "prediction_parity": 1.0,
+      "python_versions": [
+        "3.11",
+        "3.12"
+      ],
+      "quality_gate": "pass",
+      "report_path": "core_reports/extra_trees_binary.json",
+      "status": "pass",
+      "surrogate_channels": [],
+      "task_type": "binary_classification",
+      "user_explanation_complete": true
+    },
+    {
+      "adapter": "sklearn_naive_bayes_v2",
+      "api_checks": {},
+      "artifact_sha256": "33bd8433d8cba65905ca4239977d93d2adda9ca00fb7d076880d038631171d38",
+      "configuration_id": "gaussian_nb_binary",
+      "conformance": 1.0,
+      "derived_channels": [
+        "perturbation_counterfactual",
+        "log_likelihood_terms"
+      ],
+      "environment": "core-model-contracts",
+      "graph_validation": 1.0,
+      "library": "sklearn",
+      "library_version": "1.8.0",
+      "missing_channels": [
+        "alignment",
+        "counterfactuals",
+        "reduction",
+        "risk",
+        "rules",
+        "similar_cases",
+        "training_history"
+      ],
+      "model_class": "sklearn.naive_bayes.GaussianNB",
+      "model_family": "sklearn_naive_bayes",
+      "native_channels": [
+        "prediction",
+        "predict_proba",
+        "class_priors"
+      ],
+      "prediction_parity": 1.0,
+      "python_versions": [
+        "3.11",
+        "3.12"
+      ],
+      "quality_gate": "pass",
+      "report_path": "core_reports/gaussian_nb_binary.json",
+      "status": "pass",
+      "surrogate_channels": [],
+      "task_type": "binary_classification",
+      "user_explanation_complete": true
+    },
+    {
+      "adapter": "sklearn_naive_bayes_v2",
+      "api_checks": {},
+      "artifact_sha256": "5568fb37b7d6752e07aabd076bafdf00cb7214fb4ab3b93339f608706d514433",
+      "configuration_id": "gaussian_nb_multiclass",
+      "conformance": 1.0,
+      "derived_channels": [
+        "perturbation_counterfactual",
+        "log_likelihood_terms"
+      ],
+      "environment": "core-model-contracts",
+      "graph_validation": 1.0,
+      "library": "sklearn",
+      "library_version": "1.8.0",
+      "missing_channels": [
+        "alignment",
+        "counterfactuals",
+        "reduction",
+        "risk",
+        "rules",
+        "similar_cases",
+        "training_history"
+      ],
+      "model_class": "sklearn.naive_bayes.GaussianNB",
+      "model_family": "sklearn_naive_bayes",
+      "native_channels": [
+        "prediction",
+        "predict_proba",
+        "class_priors"
+      ],
+      "prediction_parity": 1.0,
+      "python_versions": [
+        "3.11",
+        "3.12"
+      ],
+      "quality_gate": "pass",
+      "report_path": "core_reports/gaussian_nb_multiclass.json",
+      "status": "pass",
+      "surrogate_channels": [],
+      "task_type": "multiclass_classification",
+      "user_explanation_complete": true
+    },
+    {
+      "adapter": "predict_proba",
+      "api_checks": {},
+      "artifact_sha256": "ee7b39270e4ca286eb6f28eccb4abffbb2b4ab444ff963b8b8a4c0e38ed86943",
+      "configuration_id": "generic_predict_proba",
+      "conformance": 1.0,
+      "derived_channels": [
+        "perturbation_counterfactual"
+      ],
+      "environment": "core-model-contracts",
+      "graph_validation": 1.0,
+      "library": "python",
+      "library_version": null,
+      "missing_channels": [
+        "alignment",
+        "counterfactuals",
+        "local_contributions",
+        "reduction",
+        "risk",
+        "rules",
+        "similar_cases",
+        "training_history"
+      ],
+      "model_class": "__main__.GenericProbaModel",
+      "model_family": "predict_proba_compatible",
+      "native_channels": [
+        "prediction",
+        "predict_proba"
+      ],
+      "prediction_parity": 1.0,
+      "python_versions": [
+        "3.11",
+        "3.12"
+      ],
+      "quality_gate": "pass",
+      "report_path": "core_reports/generic_predict_proba.json",
+      "status": "pass",
+      "surrogate_channels": [],
+      "task_type": "binary_classification",
+      "user_explanation_complete": true
+    },
+    {
+      "adapter": "sklearn_ensemble_v2",
+      "api_checks": {},
+      "artifact_sha256": "145be8cae81bdae259f558ef974b0d75d8c680fad60344bae3b0fdf90b77cac0",
+      "configuration_id": "gradient_boosting_binary",
+      "conformance": 1.0,
+      "derived_channels": [
+        "perturbation_counterfactual",
+        "ensemble_disagreement"
+      ],
+      "environment": "core-model-contracts",
+      "graph_validation": 1.0,
+      "library": "sklearn",
+      "library_version": "1.8.0",
+      "missing_channels": [
+        "alignment",
+        "counterfactuals",
+        "reduction",
+        "risk",
+        "similar_cases",
+        "training_history"
+      ],
+      "model_class": "sklearn.ensemble._gb.GradientBoostingClassifier",
+      "model_family": "sklearn_ensemble",
+      "native_channels": [
+        "prediction",
+        "predict_proba",
+        "decision_function",
+        "ensemble_votes",
+        "native_rules"
+      ],
+      "prediction_parity": 1.0,
+      "python_versions": [
+        "3.11",
+        "3.12"
+      ],
+      "quality_gate": "pass",
+      "report_path": "core_reports/gradient_boosting_binary.json",
+      "status": "pass",
+      "surrogate_channels": [],
+      "task_type": "binary_classification",
+      "user_explanation_complete": true
+    },
+    {
+      "adapter": "sklearn_ensemble_v2",
+      "api_checks": {},
+      "artifact_sha256": "7d0c48f8f9d44f60223e734b2718949ca3ef81962ae5c8de5faf5d097de4b40e",
+      "configuration_id": "gradient_boosting_regression",
+      "conformance": 1.0,
+      "derived_channels": [
+        "perturbation_counterfactual",
+        "ensemble_disagreement"
+      ],
+      "environment": "core-model-contracts",
+      "graph_validation": 1.0,
+      "library": "sklearn",
+      "library_version": "1.8.0",
+      "missing_channels": [
+        "alignment",
+        "counterfactuals",
+        "reduction",
+        "risk",
+        "similar_cases",
+        "training_history"
+      ],
+      "model_class": "sklearn.ensemble._gb.GradientBoostingRegressor",
+      "model_family": "sklearn_ensemble",
+      "native_channels": [
+        "prediction",
+        "ensemble_votes",
+        "native_rules"
+      ],
+      "prediction_parity": 1.0,
+      "python_versions": [
+        "3.11",
+        "3.12"
+      ],
+      "quality_gate": "pass",
+      "report_path": "core_reports/gradient_boosting_regression.json",
+      "status": "pass",
+      "surrogate_channels": [],
+      "task_type": "regression",
+      "user_explanation_complete": true
+    },
+    {
+      "adapter": "sklearn_generic_v2",
+      "api_checks": {},
+      "artifact_sha256": "842a49c4647cbc56b413a3bfe5e3747efe88f2076811bd2d90080464089c71b1",
+      "configuration_id": "hist_gradient_boosting_binary",
+      "conformance": 1.0,
+      "derived_channels": [
+        "perturbation_counterfactual"
+      ],
+      "environment": "core-model-contracts",
+      "graph_validation": 1.0,
+      "library": "sklearn",
+      "library_version": "1.8.0",
+      "missing_channels": [
+        "alignment",
+        "counterfactuals",
+        "local_contributions",
+        "reduction",
+        "risk",
+        "rules",
+        "similar_cases",
+        "training_history"
+      ],
+      "model_class": "sklearn.ensemble._hist_gradient_boosting.gradient_boosting.HistGradientBoostingClassifier",
+      "model_family": "sklearn_generic",
+      "native_channels": [
+        "prediction",
+        "predict_proba",
+        "decision_function"
+      ],
+      "prediction_parity": 1.0,
+      "python_versions": [
+        "3.11",
+        "3.12"
+      ],
+      "quality_gate": "pass",
+      "report_path": "core_reports/hist_gradient_boosting_binary.json",
+      "status": "pass",
+      "surrogate_channels": [],
+      "task_type": "binary_classification",
+      "user_explanation_complete": true
+    },
+    {
+      "adapter": "sklearn_knn_v2",
+      "api_checks": {},
+      "artifact_sha256": "0a2fabf85bd668e0946caf2d5182596e7a4f53c1c1bab16e1665272abe3ccbea",
+      "configuration_id": "knn_binary",
+      "conformance": 1.0,
+      "derived_channels": [
+        "perturbation_counterfactual"
+      ],
+      "environment": "core-model-contracts",
+      "graph_validation": 1.0,
+      "library": "sklearn",
+      "library_version": "1.8.0",
+      "missing_channels": [
+        "alignment",
+        "counterfactuals",
+        "reduction",
+        "risk",
+        "rules",
+        "similar_cases",
+        "training_history"
+      ],
+      "model_class": "sklearn.neighbors._classification.KNeighborsClassifier",
+      "model_family": "sklearn_knn",
+      "native_channels": [
+        "prediction",
+        "predict_proba",
+        "nearest_neighbors"
+      ],
+      "prediction_parity": 1.0,
+      "python_versions": [
+        "3.11",
+        "3.12"
+      ],
+      "quality_gate": "pass",
+      "report_path": "core_reports/knn_binary.json",
+      "status": "pass",
+      "surrogate_channels": [],
+      "task_type": "binary_classification",
+      "user_explanation_complete": true
+    },
+    {
+      "adapter": "sklearn_knn_v2",
+      "api_checks": {},
+      "artifact_sha256": "d14237c1ebb932c3fbf7bc62994ba43a2aec66f920537ed9fa8d4c62458b5c9f",
+      "configuration_id": "knn_multiclass",
+      "conformance": 1.0,
+      "derived_channels": [
+        "perturbation_counterfactual"
+      ],
+      "environment": "core-model-contracts",
+      "graph_validation": 1.0,
+      "library": "sklearn",
+      "library_version": "1.8.0",
+      "missing_channels": [
+        "alignment",
+        "counterfactuals",
+        "reduction",
+        "risk",
+        "rules",
+        "similar_cases",
+        "training_history"
+      ],
+      "model_class": "sklearn.neighbors._classification.KNeighborsClassifier",
+      "model_family": "sklearn_knn",
+      "native_channels": [
+        "prediction",
+        "predict_proba",
+        "nearest_neighbors"
+      ],
+      "prediction_parity": 1.0,
+      "python_versions": [
+        "3.11",
+        "3.12"
+      ],
+      "quality_gate": "pass",
+      "report_path": "core_reports/knn_multiclass.json",
+      "status": "pass",
+      "surrogate_channels": [],
+      "task_type": "multiclass_classification",
+      "user_explanation_complete": true
+    },
+    {
+      "adapter": "sklearn_knn_v2",
+      "api_checks": {},
+      "artifact_sha256": "5f185a344ed40727a7a95da422af6c6ea2b2ff7bd033d1bcdea702ccc7cfbdb7",
+      "configuration_id": "knn_regression",
+      "conformance": 1.0,
+      "derived_channels": [
+        "perturbation_counterfactual"
+      ],
+      "environment": "core-model-contracts",
+      "graph_validation": 1.0,
+      "library": "sklearn",
+      "library_version": "1.8.0",
+      "missing_channels": [
+        "alignment",
+        "counterfactuals",
+        "reduction",
+        "risk",
+        "rules",
+        "similar_cases",
+        "training_history"
+      ],
+      "model_class": "sklearn.neighbors._regression.KNeighborsRegressor",
+      "model_family": "sklearn_knn",
+      "native_channels": [
+        "prediction",
+        "nearest_neighbors"
+      ],
+      "prediction_parity": 1.0,
+      "python_versions": [
+        "3.11",
+        "3.12"
+      ],
+      "quality_gate": "pass",
+      "report_path": "core_reports/knn_regression.json",
+      "status": "pass",
+      "surrogate_channels": [],
+      "task_type": "regression",
+      "user_explanation_complete": true
+    },
+    {
+      "adapter": "sklearn_linear_v2",
+      "api_checks": {},
+      "artifact_sha256": "75d444bd9d9d343b9243c7fb3f87032f1b7715d44bb931ff5580baf852d70a28",
+      "configuration_id": "lasso_regression",
+      "conformance": 1.0,
+      "derived_channels": [
+        "perturbation_counterfactual",
+        "local_contributions"
+      ],
+      "environment": "core-model-contracts",
+      "graph_validation": 1.0,
+      "library": "sklearn",
+      "library_version": "1.8.0",
+      "missing_channels": [
+        "alignment",
+        "counterfactuals",
+        "reduction",
+        "risk",
+        "similar_cases",
+        "training_history"
+      ],
+      "model_class": "sklearn.linear_model._coordinate_descent.Lasso",
+      "model_family": "sklearn_linear",
+      "native_channels": [
+        "prediction",
+        "coefficients"
+      ],
+      "prediction_parity": 1.0,
+      "python_versions": [
+        "3.11",
+        "3.12"
+      ],
+      "quality_gate": "pass",
+      "report_path": "core_reports/lasso_regression.json",
+      "status": "pass",
+      "surrogate_channels": [],
+      "task_type": "regression",
+      "user_explanation_complete": true
+    },
+    {
+      "adapter": "sklearn_linear_v2",
+      "api_checks": {},
+      "artifact_sha256": "c4133e3765cb9776b7cfa291d0a7521a5bc377aaeeb81064353a2fc671073591",
+      "configuration_id": "linear_regression",
+      "conformance": 1.0,
+      "derived_channels": [
+        "perturbation_counterfactual",
+        "local_contributions"
+      ],
+      "environment": "core-model-contracts",
+      "graph_validation": 1.0,
+      "library": "sklearn",
+      "library_version": "1.8.0",
+      "missing_channels": [
+        "alignment",
+        "counterfactuals",
+        "reduction",
+        "risk",
+        "similar_cases",
+        "training_history"
+      ],
+      "model_class": "sklearn.linear_model._base.LinearRegression",
+      "model_family": "sklearn_linear",
+      "native_channels": [
+        "prediction",
+        "coefficients"
+      ],
+      "prediction_parity": 1.0,
+      "python_versions": [
+        "3.11",
+        "3.12"
+      ],
+      "quality_gate": "pass",
+      "report_path": "core_reports/linear_regression.json",
+      "status": "pass",
+      "surrogate_channels": [],
+      "task_type": "regression",
+      "user_explanation_complete": true
+    },
+    {
+      "adapter": "sklearn_svm_v2",
+      "api_checks": {},
+      "artifact_sha256": "b826c6f58b74f414405d5935577058303b53e8b95d73ae7552e03abe2b869979",
+      "configuration_id": "linear_svc_binary",
+      "conformance": 1.0,
+      "derived_channels": [
+        "perturbation_counterfactual",
+        "local_contributions"
+      ],
+      "environment": "core-model-contracts",
+      "graph_validation": 1.0,
+      "library": "sklearn",
+      "library_version": "1.8.0",
+      "missing_channels": [
+        "alignment",
+        "counterfactuals",
+        "reduction",
+        "risk",
+        "similar_cases",
+        "training_history"
+      ],
+      "model_class": "sklearn.svm._classes.LinearSVC",
+      "model_family": "sklearn_svm",
+      "native_channels": [
+        "prediction",
+        "decision_function"
+      ],
+      "prediction_parity": 1.0,
+      "python_versions": [
+        "3.11",
+        "3.12"
+      ],
+      "quality_gate": "pass",
+      "report_path": "core_reports/linear_svc_binary.json",
+      "status": "pass",
+      "surrogate_channels": [],
+      "task_type": "binary_classification",
+      "user_explanation_complete": true
+    },
+    {
+      "adapter": "sklearn_svm_v2",
+      "api_checks": {},
+      "artifact_sha256": "5f0658b512cda3213c685e164975d26126f656af04a9c0c45e689c6fdb9a2856",
+      "configuration_id": "linear_svc_kernel_binary",
+      "conformance": 1.0,
+      "derived_channels": [
+        "perturbation_counterfactual",
+        "local_contributions"
+      ],
+      "environment": "core-model-contracts",
+      "graph_validation": 1.0,
+      "library": "sklearn",
+      "library_version": "1.8.0",
+      "missing_channels": [
+        "alignment",
+        "counterfactuals",
+        "reduction",
+        "risk",
+        "similar_cases",
+        "training_history"
+      ],
+      "model_class": "sklearn.svm._classes.SVC",
+      "model_family": "sklearn_svm",
+      "native_channels": [
+        "prediction",
+        "predict_proba",
+        "decision_function",
+        "support_vectors"
+      ],
+      "prediction_parity": 1.0,
+      "python_versions": [
+        "3.11",
+        "3.12"
+      ],
+      "quality_gate": "pass",
+      "report_path": "core_reports/linear_svc_kernel_binary.json",
+      "status": "pass",
+      "surrogate_channels": [],
+      "task_type": "binary_classification",
+      "user_explanation_complete": true
+    },
+    {
+      "adapter": "sklearn_linear_v2",
+      "api_checks": {},
+      "artifact_sha256": "67c51e72d99d541d06fd9ece00985cb396a2c6c578f7e623644321f9345835f3",
+      "configuration_id": "logistic_binary",
+      "conformance": 1.0,
+      "derived_channels": [
+        "perturbation_counterfactual",
+        "local_contributions"
+      ],
+      "environment": "core-model-contracts",
+      "graph_validation": 1.0,
+      "library": "sklearn",
+      "library_version": "1.8.0",
+      "missing_channels": [
+        "alignment",
+        "counterfactuals",
+        "reduction",
+        "risk",
+        "similar_cases",
+        "training_history"
+      ],
+      "model_class": "sklearn.linear_model._logistic.LogisticRegression",
+      "model_family": "sklearn_linear",
+      "native_channels": [
+        "prediction",
+        "predict_proba",
+        "decision_function",
+        "coefficients"
+      ],
+      "prediction_parity": 1.0,
+      "python_versions": [
+        "3.11",
+        "3.12"
+      ],
+      "quality_gate": "pass",
+      "report_path": "core_reports/logistic_binary.json",
+      "status": "pass",
+      "surrogate_channels": [],
+      "task_type": "binary_classification",
+      "user_explanation_complete": true
+    },
+    {
+      "adapter": "sklearn_linear_v2",
+      "api_checks": {},
+      "artifact_sha256": "60a8413356beb3020153de7b716ab7dc819fad21502c45cdf1e294566ece6cca",
+      "configuration_id": "logistic_multiclass",
+      "conformance": 1.0,
+      "derived_channels": [
+        "perturbation_counterfactual",
+        "local_contributions"
+      ],
+      "environment": "core-model-contracts",
+      "graph_validation": 1.0,
+      "library": "sklearn",
+      "library_version": "1.8.0",
+      "missing_channels": [
+        "alignment",
+        "counterfactuals",
+        "reduction",
+        "risk",
+        "similar_cases",
+        "training_history"
+      ],
+      "model_class": "sklearn.linear_model._logistic.LogisticRegression",
+      "model_family": "sklearn_linear",
+      "native_channels": [
+        "prediction",
+        "predict_proba",
+        "decision_function",
+        "coefficients"
+      ],
+      "prediction_parity": 1.0,
+      "python_versions": [
+        "3.11",
+        "3.12"
+      ],
+      "quality_gate": "pass",
+      "report_path": "core_reports/logistic_multiclass.json",
+      "status": "pass",
+      "surrogate_channels": [],
+      "task_type": "multiclass_classification",
+      "user_explanation_complete": true
+    },
+    {
+      "adapter": "native_rules_v2",
+      "api_checks": {},
+      "artifact_sha256": "f635c37004168df0578f927d3d5c22f02fc66862e3ff7cba6041d24fcdca772e",
+      "configuration_id": "native_rule_model",
+      "conformance": 1.0,
+      "derived_channels": [
+        "perturbation_counterfactual"
+      ],
+      "environment": "core-model-contracts",
+      "graph_validation": 1.0,
+      "library": "fuzzyxai-native",
+      "library_version": null,
+      "missing_channels": [
+        "alignment",
+        "counterfactuals",
+        "reduction",
+        "risk",
+        "similar_cases",
+        "training_history"
+      ],
+      "model_class": "__main__.NativeRuleBenchmarkModel",
+      "model_family": "rule_based",
+      "native_channels": [
+        "prediction",
+        "predict_proba",
+        "native_rules",
+        "rule_activation"
+      ],
+      "prediction_parity": 1.0,
+      "python_versions": [
+        "3.11",
+        "3.12"
+      ],
+      "quality_gate": "pass",
+      "report_path": "core_reports/native_rule_model.json",
+      "status": "pass",
+      "surrogate_channels": [],
+      "task_type": "binary_classification",
+      "user_explanation_complete": true
+    },
+    {
+      "adapter": "sklearn_pipeline_v2",
+      "api_checks": {},
+      "artifact_sha256": "aa1fddd4ae575a52fe88e517505a62ba8e02b825cdf66c78634482c2c86cabad",
+      "configuration_id": "pipeline_logistic_binary",
+      "conformance": 1.0,
+      "derived_channels": [
+        "perturbation_counterfactual",
+        "local_contributions"
+      ],
+      "environment": "core-model-contracts",
+      "graph_validation": 1.0,
+      "library": "sklearn",
+      "library_version": "1.8.0",
+      "missing_channels": [
+        "alignment",
+        "counterfactuals",
+        "reduction",
+        "risk",
+        "rules",
+        "similar_cases",
+        "training_history"
+      ],
+      "model_class": "sklearn.pipeline.Pipeline",
+      "model_family": "sklearn_pipeline",
+      "native_channels": [
+        "prediction",
+        "predict_proba",
+        "decision_function",
+        "coefficients"
+      ],
+      "prediction_parity": 1.0,
+      "python_versions": [
+        "3.11",
+        "3.12"
+      ],
+      "quality_gate": "pass",
+      "report_path": "core_reports/pipeline_logistic_binary.json",
+      "status": "pass",
+      "surrogate_channels": [],
+      "task_type": "binary_classification",
+      "user_explanation_complete": true
+    },
+    {
+      "adapter": "sklearn_ensemble_v2",
+      "api_checks": {},
+      "artifact_sha256": "58c67a9c8355ce00ea7767551862d0fc20fb25f90ce913082d2128f43615ce2d",
+      "configuration_id": "random_forest_binary",
+      "conformance": 1.0,
+      "derived_channels": [
+        "perturbation_counterfactual",
+        "ensemble_disagreement"
+      ],
+      "environment": "core-model-contracts",
+      "graph_validation": 1.0,
+      "library": "sklearn",
+      "library_version": "1.8.0",
+      "missing_channels": [
+        "alignment",
+        "counterfactuals",
+        "reduction",
+        "risk",
+        "similar_cases",
+        "training_history"
+      ],
+      "model_class": "sklearn.ensemble._forest.RandomForestClassifier",
+      "model_family": "sklearn_ensemble",
+      "native_channels": [
+        "prediction",
+        "predict_proba",
+        "ensemble_votes",
+        "native_rules"
+      ],
+      "prediction_parity": 1.0,
+      "python_versions": [
+        "3.11",
+        "3.12"
+      ],
+      "quality_gate": "pass",
+      "report_path": "core_reports/random_forest_binary.json",
+      "status": "pass",
+      "surrogate_channels": [],
+      "task_type": "binary_classification",
+      "user_explanation_complete": true
+    },
+    {
+      "adapter": "sklearn_ensemble_v2",
+      "api_checks": {},
+      "artifact_sha256": "e48139d713a52b6826d02b9140919cf5c709f58f49f84a5d4f797c6c22219a06",
+      "configuration_id": "random_forest_multiclass",
+      "conformance": 1.0,
+      "derived_channels": [
+        "perturbation_counterfactual",
+        "ensemble_disagreement"
+      ],
+      "environment": "core-model-contracts",
+      "graph_validation": 1.0,
+      "library": "sklearn",
+      "library_version": "1.8.0",
+      "missing_channels": [
+        "alignment",
+        "counterfactuals",
+        "reduction",
+        "risk",
+        "similar_cases",
+        "training_history"
+      ],
+      "model_class": "sklearn.ensemble._forest.RandomForestClassifier",
+      "model_family": "sklearn_ensemble",
+      "native_channels": [
+        "prediction",
+        "predict_proba",
+        "ensemble_votes",
+        "native_rules"
+      ],
+      "prediction_parity": 1.0,
+      "python_versions": [
+        "3.11",
+        "3.12"
+      ],
+      "quality_gate": "pass",
+      "report_path": "core_reports/random_forest_multiclass.json",
+      "status": "pass",
+      "surrogate_channels": [],
+      "task_type": "multiclass_classification",
+      "user_explanation_complete": true
+    },
+    {
+      "adapter": "sklearn_ensemble_v2",
+      "api_checks": {},
+      "artifact_sha256": "80d4b880e6ef0428a074aa5362df831f4e5d5a610a129b834d519529cb4f45da",
+      "configuration_id": "random_forest_regression",
+      "conformance": 1.0,
+      "derived_channels": [
+        "perturbation_counterfactual",
+        "ensemble_disagreement"
+      ],
+      "environment": "core-model-contracts",
+      "graph_validation": 1.0,
+      "library": "sklearn",
+      "library_version": "1.8.0",
+      "missing_channels": [
+        "alignment",
+        "counterfactuals",
+        "reduction",
+        "risk",
+        "similar_cases",
+        "training_history"
+      ],
+      "model_class": "sklearn.ensemble._forest.RandomForestRegressor",
+      "model_family": "sklearn_ensemble",
+      "native_channels": [
+        "prediction",
+        "ensemble_votes",
+        "native_rules"
+      ],
+      "prediction_parity": 1.0,
+      "python_versions": [
+        "3.11",
+        "3.12"
+      ],
+      "quality_gate": "pass",
+      "report_path": "core_reports/random_forest_regression.json",
+      "status": "pass",
+      "surrogate_channels": [],
+      "task_type": "regression",
+      "user_explanation_complete": true
+    },
+    {
+      "adapter": "sklearn_svm_v2",
+      "api_checks": {},
+      "artifact_sha256": "eaa46ade2a9605bb94f07251737acc7d574f1b11d6f7fedf499f4120c8ddf878",
+      "configuration_id": "rbf_svc_binary",
+      "conformance": 1.0,
+      "derived_channels": [
+        "perturbation_counterfactual"
+      ],
+      "environment": "core-model-contracts",
+      "graph_validation": 1.0,
+      "library": "sklearn",
+      "library_version": "1.8.0",
+      "missing_channels": [
+        "alignment",
+        "counterfactuals",
+        "reduction",
+        "risk",
+        "rules",
+        "similar_cases",
+        "training_history"
+      ],
+      "model_class": "sklearn.svm._classes.SVC",
+      "model_family": "sklearn_svm",
+      "native_channels": [
+        "prediction",
+        "predict_proba",
+        "decision_function",
+        "support_vectors"
+      ],
+      "prediction_parity": 1.0,
+      "python_versions": [
+        "3.11",
+        "3.12"
+      ],
+      "quality_gate": "pass",
+      "report_path": "core_reports/rbf_svc_binary.json",
+      "status": "pass",
+      "surrogate_channels": [
+        "local_contributions"
+      ],
+      "task_type": "binary_classification",
+      "user_explanation_complete": true
+    },
+    {
+      "adapter": "sklearn_linear_v2",
+      "api_checks": {},
+      "artifact_sha256": "83119bb0becba8d0da5c1d28603c1ce07ee53194ab953676815bdbf890340440",
+      "configuration_id": "ridge_binary",
+      "conformance": 1.0,
+      "derived_channels": [
+        "perturbation_counterfactual",
+        "local_contributions"
+      ],
+      "environment": "core-model-contracts",
+      "graph_validation": 1.0,
+      "library": "sklearn",
+      "library_version": "1.8.0",
+      "missing_channels": [
+        "alignment",
+        "counterfactuals",
+        "reduction",
+        "risk",
+        "similar_cases",
+        "training_history"
+      ],
+      "model_class": "sklearn.linear_model._ridge.RidgeClassifier",
+      "model_family": "sklearn_linear",
+      "native_channels": [
+        "prediction",
+        "decision_function",
+        "coefficients"
+      ],
+      "prediction_parity": 1.0,
+      "python_versions": [
+        "3.11",
+        "3.12"
+      ],
+      "quality_gate": "pass",
+      "report_path": "core_reports/ridge_binary.json",
+      "status": "pass",
+      "surrogate_channels": [],
+      "task_type": "binary_classification",
+      "user_explanation_complete": true
+    },
+    {
+      "adapter": "sklearn_linear_v2",
+      "api_checks": {},
+      "artifact_sha256": "a33d655dd582066209468b6355c9312deea977bdab168e3e676f0c5689778c9c",
+      "configuration_id": "ridge_regression",
+      "conformance": 1.0,
+      "derived_channels": [
+        "perturbation_counterfactual",
+        "local_contributions"
+      ],
+      "environment": "core-model-contracts",
+      "graph_validation": 1.0,
+      "library": "sklearn",
+      "library_version": "1.8.0",
+      "missing_channels": [
+        "alignment",
+        "counterfactuals",
+        "reduction",
+        "risk",
+        "similar_cases",
+        "training_history"
+      ],
+      "model_class": "sklearn.linear_model._ridge.Ridge",
+      "model_family": "sklearn_linear",
+      "native_channels": [
+        "prediction",
+        "coefficients"
+      ],
+      "prediction_parity": 1.0,
+      "python_versions": [
+        "3.11",
+        "3.12"
+      ],
+      "quality_gate": "pass",
+      "report_path": "core_reports/ridge_regression.json",
+      "status": "pass",
+      "surrogate_channels": [],
+      "task_type": "regression",
+      "user_explanation_complete": true
+    },
+    {
+      "adapter": "sklearn_linear_v2",
+      "api_checks": {},
+      "artifact_sha256": "b6794065c2f4e69bd1958d1a414037f347936b599d05f54272ef3a570b62b58f",
+      "configuration_id": "sgd_binary",
+      "conformance": 1.0,
+      "derived_channels": [
+        "perturbation_counterfactual",
+        "local_contributions"
+      ],
+      "environment": "core-model-contracts",
+      "graph_validation": 1.0,
+      "library": "sklearn",
+      "library_version": "1.8.0",
+      "missing_channels": [
+        "alignment",
+        "counterfactuals",
+        "reduction",
+        "risk",
+        "similar_cases",
+        "training_history"
+      ],
+      "model_class": "sklearn.linear_model._stochastic_gradient.SGDClassifier",
+      "model_family": "sklearn_linear",
+      "native_channels": [
+        "prediction",
+        "predict_proba",
+        "decision_function",
+        "coefficients"
+      ],
+      "prediction_parity": 1.0,
+      "python_versions": [
+        "3.11",
+        "3.12"
+      ],
+      "quality_gate": "pass",
+      "report_path": "core_reports/sgd_binary.json",
+      "status": "pass",
+      "surrogate_channels": [],
+      "task_type": "binary_classification",
+      "user_explanation_complete": true
+    },
+    {
+      "adapter": "sklearn_linear_v2",
+      "api_checks": {},
+      "artifact_sha256": "c41ecac965fe2844779374db61581498a40af40d84e9bf2bc2089c7e41d3e84b",
+      "configuration_id": "sgd_regression",
+      "conformance": 1.0,
+      "derived_channels": [
+        "perturbation_counterfactual",
+        "local_contributions"
+      ],
+      "environment": "core-model-contracts",
+      "graph_validation": 1.0,
+      "library": "sklearn",
+      "library_version": "1.8.0",
+      "missing_channels": [
+        "alignment",
+        "counterfactuals",
+        "reduction",
+        "risk",
+        "similar_cases",
+        "training_history"
+      ],
+      "model_class": "sklearn.linear_model._stochastic_gradient.SGDRegressor",
+      "model_family": "sklearn_linear",
+      "native_channels": [
+        "prediction",
+        "coefficients"
+      ],
+      "prediction_parity": 1.0,
+      "python_versions": [
+        "3.11",
+        "3.12"
+      ],
+      "quality_gate": "pass",
+      "report_path": "core_reports/sgd_regression.json",
+      "status": "pass",
+      "surrogate_channels": [],
+      "task_type": "regression",
+      "user_explanation_complete": true
+    },
+    {
+      "adapter": "sklearn_svm_v2",
+      "api_checks": {},
+      "artifact_sha256": "09683c8fe6ea50f25eb95ec69d73fdf877ee0ba9e50df71e159ab890faf34589",
+      "configuration_id": "svr_regression",
+      "conformance": 1.0,
+      "derived_channels": [
+        "perturbation_counterfactual"
+      ],
+      "environment": "core-model-contracts",
+      "graph_validation": 1.0,
+      "library": "sklearn",
+      "library_version": "1.8.0",
+      "missing_channels": [
+        "alignment",
+        "counterfactuals",
+        "reduction",
+        "risk",
+        "rules",
+        "similar_cases",
+        "training_history"
+      ],
+      "model_class": "sklearn.svm._classes.SVR",
+      "model_family": "sklearn_svm",
+      "native_channels": [
+        "prediction",
+        "support_vectors"
+      ],
+      "prediction_parity": 1.0,
+      "python_versions": [
+        "3.11",
+        "3.12"
+      ],
+      "quality_gate": "pass",
+      "report_path": "core_reports/svr_regression.json",
+      "status": "pass",
+      "surrogate_channels": [
+        "local_contributions"
+      ],
+      "task_type": "regression",
+      "user_explanation_complete": true
+    },
+    {
+      "adapter": "sklearn_tree_v2",
+      "api_checks": {},
+      "artifact_sha256": "72534138dc510e221fe888ed6a1b10bd13e27ba157dd6fdb640275838782597e",
+      "configuration_id": "tree_entropy_binary",
+      "conformance": 1.0,
+      "derived_channels": [
+        "perturbation_counterfactual",
+        "local_contributions"
+      ],
+      "environment": "core-model-contracts",
+      "graph_validation": 1.0,
+      "library": "sklearn",
+      "library_version": "1.8.0",
+      "missing_channels": [
+        "alignment",
+        "counterfactuals",
+        "reduction",
+        "risk",
+        "similar_cases",
+        "training_history"
+      ],
+      "model_class": "sklearn.tree._classes.DecisionTreeClassifier",
+      "model_family": "sklearn_tree",
+      "native_channels": [
+        "prediction",
+        "predict_proba",
+        "decision_path",
+        "native_rules"
+      ],
+      "prediction_parity": 1.0,
+      "python_versions": [
+        "3.11",
+        "3.12"
+      ],
+      "quality_gate": "pass",
+      "report_path": "core_reports/tree_entropy_binary.json",
+      "status": "pass",
+      "surrogate_channels": [],
+      "task_type": "binary_classification",
+      "user_explanation_complete": true
+    },
+    {
+      "adapter": "sklearn_tree_v2",
+      "api_checks": {},
+      "artifact_sha256": "2c7d1784a1aa826138d1825efe3444a9becf968c7e9a11d2bc6136dd668cf9f1",
+      "configuration_id": "tree_gini_binary",
+      "conformance": 1.0,
+      "derived_channels": [
+        "perturbation_counterfactual",
+        "local_contributions"
+      ],
+      "environment": "core-model-contracts",
+      "graph_validation": 1.0,
+      "library": "sklearn",
+      "library_version": "1.8.0",
+      "missing_channels": [
+        "alignment",
+        "counterfactuals",
+        "reduction",
+        "risk",
+        "similar_cases",
+        "training_history"
+      ],
+      "model_class": "sklearn.tree._classes.DecisionTreeClassifier",
+      "model_family": "sklearn_tree",
+      "native_channels": [
+        "prediction",
+        "predict_proba",
+        "decision_path",
+        "native_rules"
+      ],
+      "prediction_parity": 1.0,
+      "python_versions": [
+        "3.11",
+        "3.12"
+      ],
+      "quality_gate": "pass",
+      "report_path": "core_reports/tree_gini_binary.json",
+      "status": "pass",
+      "surrogate_channels": [],
+      "task_type": "binary_classification",
+      "user_explanation_complete": true
+    },
+    {
+      "adapter": "sklearn_tree_v2",
+      "api_checks": {},
+      "artifact_sha256": "e695e087d02cf561116e458a3255c4fe10f37c05c0887ca4a0a7ade2592c820f",
+      "configuration_id": "tree_multiclass",
+      "conformance": 1.0,
+      "derived_channels": [
+        "perturbation_counterfactual",
+        "local_contributions"
+      ],
+      "environment": "core-model-contracts",
+      "graph_validation": 1.0,
+      "library": "sklearn",
+      "library_version": "1.8.0",
+      "missing_channels": [
+        "alignment",
+        "counterfactuals",
+        "reduction",
+        "risk",
+        "similar_cases",
+        "training_history"
+      ],
+      "model_class": "sklearn.tree._classes.DecisionTreeClassifier",
+      "model_family": "sklearn_tree",
+      "native_channels": [
+        "prediction",
+        "predict_proba",
+        "decision_path",
+        "native_rules"
+      ],
+      "prediction_parity": 1.0,
+      "python_versions": [
+        "3.11",
+        "3.12"
+      ],
+      "quality_gate": "pass",
+      "report_path": "core_reports/tree_multiclass.json",
+      "status": "pass",
+      "surrogate_channels": [],
+      "task_type": "multiclass_classification",
+      "user_explanation_complete": true
+    },
+    {
+      "adapter": "sklearn_tree_v2",
+      "api_checks": {},
+      "artifact_sha256": "877c3f56c2fa1106fce8e4f78a7ed221e89481a092a6fabd4372d9c5466acf77",
+      "configuration_id": "tree_regression",
+      "conformance": 1.0,
+      "derived_channels": [
+        "perturbation_counterfactual",
+        "local_contributions"
+      ],
+      "environment": "core-model-contracts",
+      "graph_validation": 1.0,
+      "library": "sklearn",
+      "library_version": "1.8.0",
+      "missing_channels": [
+        "alignment",
+        "counterfactuals",
+        "reduction",
+        "risk",
+        "similar_cases",
+        "training_history"
+      ],
+      "model_class": "sklearn.tree._classes.DecisionTreeRegressor",
+      "model_family": "sklearn_tree",
+      "native_channels": [
+        "prediction",
+        "decision_path",
+        "native_rules"
+      ],
+      "prediction_parity": 1.0,
+      "python_versions": [
+        "3.11",
+        "3.12"
+      ],
+      "quality_gate": "pass",
+      "report_path": "core_reports/tree_regression.json",
+      "status": "pass",
+      "surrogate_channels": [],
+      "task_type": "regression",
+      "user_explanation_complete": true
+    },
+    {
+      "adapter": "XGBoostAdapter",
+      "api_checks": {
+        "compare_models": true,
+        "explain_batch": true,
+        "explain_global": true,
+        "explain_one": true,
+        "why_not": true
+      },
+      "artifact_sha256": "a577f1cf54b1290769a2ae1d4da71ae6ab1be64493ff4444cc2a7c1f7c9fd90d",
+      "configuration_id": "xgboost_runtime",
+      "conformance": 1.0,
+      "derived_channels": [
+        "perturbation_counterfactual"
+      ],
+      "environment": "optional-runtime-xgboost",
+      "graph_validation": 1.0,
+      "library": "xgboost",
+      "library_version": "3.3.0",
+      "missing_channels": [
+        "alignment",
+        "counterfactuals",
+        "reduction",
+        "risk",
+        "rules",
+        "similar_cases",
+        "training_history"
+      ],
+      "model_class": "XGBClassifier",
+      "model_family": "xgboost",
+      "native_channels": [
+        "prediction",
+        "predict_proba",
+        "local_contributions",
+        "native_rules",
+        "leaf_indices"
+      ],
+      "prediction_parity": 1.0,
+      "python_versions": [
+        "3.11.15",
+        "3.12.13"
+      ],
+      "quality_gate": "pass",
+      "report_path": "adapter_reports/adapter_report_xgboost_py312.json",
+      "status": "pass",
+      "surrogate_channels": [],
+      "task_type": "binary_classification",
+      "user_explanation_complete": true
+    },
+    {
+      "adapter": "LightGBMAdapter",
+      "api_checks": {
+        "compare_models": true,
+        "explain_batch": true,
+        "explain_global": true,
+        "explain_one": true,
+        "why_not": true
+      },
+      "artifact_sha256": "e68bfe32fdcd076638e6743b784bb694f0d225143ae751dd0b797cc6e1fa5f43",
+      "configuration_id": "lightgbm_runtime",
+      "conformance": 1.0,
+      "derived_channels": [
+        "perturbation_counterfactual"
+      ],
+      "environment": "optional-runtime-lightgbm",
+      "graph_validation": 1.0,
+      "library": "lightgbm",
+      "library_version": "4.7.0",
+      "missing_channels": [
+        "alignment",
+        "counterfactuals",
+        "reduction",
+        "risk",
+        "rules",
+        "similar_cases",
+        "training_history"
+      ],
+      "model_class": "LGBMClassifier",
+      "model_family": "lightgbm",
+      "native_channels": [
+        "prediction",
+        "predict_proba",
+        "decision_function",
+        "local_contributions",
+        "native_rules",
+        "leaf_indices"
+      ],
+      "prediction_parity": 1.0,
+      "python_versions": [
+        "3.11.15",
+        "3.12.13"
+      ],
+      "quality_gate": "pass",
+      "report_path": "adapter_reports/adapter_report_lightgbm_py312.json",
+      "status": "pass",
+      "surrogate_channels": [],
+      "task_type": "binary_classification",
+      "user_explanation_complete": true
+    },
+    {
+      "adapter": "CatBoostAdapter",
+      "api_checks": {
+        "compare_models": true,
+        "explain_batch": true,
+        "explain_global": true,
+        "explain_one": true,
+        "why_not": true
+      },
+      "artifact_sha256": "3b0bdea08ff4e43b50bc51787e3a8f3936be3aac5f23fc3f568fb884382f0367",
+      "configuration_id": "catboost_runtime",
+      "conformance": 1.0,
+      "derived_channels": [
+        "perturbation_counterfactual"
+      ],
+      "environment": "optional-runtime-catboost",
+      "graph_validation": 1.0,
+      "library": "catboost",
+      "library_version": "1.2.10",
+      "missing_channels": [
+        "alignment",
+        "counterfactuals",
+        "reduction",
+        "risk",
+        "rules",
+        "similar_cases",
+        "training_history"
+      ],
+      "model_class": "CatBoostClassifier",
+      "model_family": "catboost",
+      "native_channels": [
+        "prediction",
+        "predict_proba",
+        "local_contributions",
+        "native_rules",
+        "leaf_indices"
+      ],
+      "prediction_parity": 1.0,
+      "python_versions": [
+        "3.11.15",
+        "3.12.13"
+      ],
+      "quality_gate": "pass",
+      "report_path": "adapter_reports/adapter_report_catboost_py312.json",
+      "status": "pass",
+      "surrogate_channels": [],
+      "task_type": "binary_classification",
+      "user_explanation_complete": true
+    },
+    {
+      "adapter": "TorchAdapter",
+      "api_checks": {
+        "compare_models": true,
+        "explain_batch": true,
+        "explain_global": true,
+        "explain_one": true,
+        "why_not": true
+      },
+      "artifact_sha256": "1c58f89b0a77bc19cc37e2917be846f494bbba1b92dac856cd5a06d26556514f",
+      "configuration_id": "torch_runtime",
+      "conformance": 1.0,
+      "derived_channels": [
+        "perturbation_counterfactual",
+        "gradients",
+        "integrated_gradients"
+      ],
+      "environment": "optional-runtime-torch",
+      "graph_validation": 1.0,
+      "library": "torch",
+      "library_version": "2.13.0",
+      "missing_channels": [
+        "alignment",
+        "counterfactuals",
+        "reduction",
+        "risk",
+        "rules",
+        "similar_cases",
+        "training_history"
+      ],
+      "model_class": "Sequential",
+      "model_family": "pytorch",
+      "native_channels": [
+        "prediction"
+      ],
+      "prediction_parity": 1.0,
+      "python_versions": [
+        "3.11.15",
+        "3.12.13"
+      ],
+      "quality_gate": "pass",
+      "report_path": "adapter_reports/adapter_report_torch_py312.json",
+      "status": "pass",
+      "surrogate_channels": [],
+      "task_type": "binary_classification",
+      "user_explanation_complete": true
+    },
+    {
+      "adapter": "KerasAdapter",
+      "api_checks": {
+        "compare_models": true,
+        "explain_batch": true,
+        "explain_global": true,
+        "explain_one": true,
+        "why_not": true
+      },
+      "artifact_sha256": "fac77ac745e5ca8f39df50502f357f50532dc40b5581c3e18c55c017aa298ae5",
+      "configuration_id": "tensorflow_runtime",
+      "conformance": 1.0,
+      "derived_channels": [
+        "perturbation_counterfactual",
+        "gradients"
+      ],
+      "environment": "optional-runtime-tensorflow",
+      "graph_validation": 1.0,
+      "library": "tensorflow",
+      "library_version": "2.21.0",
+      "missing_channels": [
+        "alignment",
+        "counterfactuals",
+        "reduction",
+        "risk",
+        "rules",
+        "similar_cases",
+        "training_history"
+      ],
+      "model_class": "Sequential",
+      "model_family": "keras",
+      "native_channels": [
+        "prediction"
+      ],
+      "prediction_parity": 1.0,
+      "python_versions": [
+        "3.11.15",
+        "3.12.13"
+      ],
+      "quality_gate": "pass",
+      "report_path": "adapter_reports/adapter_report_tensorflow_py312.json",
+      "status": "pass",
+      "surrogate_channels": [],
+      "task_type": "binary_classification",
+      "user_explanation_complete": true
+    },
+    {
+      "adapter": "ONNXRuntimeAdapter",
+      "api_checks": {
+        "compare_models": true,
+        "explain_batch": true,
+        "explain_global": true,
+        "explain_one": true,
+        "why_not": true
+      },
+      "artifact_sha256": "3f569f06bec7b348f6a70f4f16d13b4cce34f94c938f603a0f7e9a9856fd53e1",
+      "configuration_id": "onnx_runtime",
+      "conformance": 1.0,
+      "derived_channels": [
+        "perturbation_counterfactual"
+      ],
+      "environment": "optional-runtime-onnx",
+      "graph_validation": 1.0,
+      "library": "onnx",
+      "library_version": "1.27.0",
+      "missing_channels": [
+        "alignment",
+        "counterfactuals",
+        "local_contributions",
+        "reduction",
+        "risk",
+        "rules",
+        "similar_cases",
+        "training_history"
+      ],
+      "model_class": "ONNXModel",
+      "model_family": "onnxruntime",
+      "native_channels": [
+        "prediction",
+        "onnx_outputs"
+      ],
+      "prediction_parity": 1.0,
+      "python_versions": [
+        "3.11.15",
+        "3.12.13"
+      ],
+      "quality_gate": "pass",
+      "report_path": "adapter_reports/adapter_report_onnx_py312.json",
+      "status": "pass",
+      "surrogate_channels": [],
+      "task_type": "binary_classification",
+      "user_explanation_complete": true
+    }
+  ],
+  "summary": {
+    "configuration_count": 40,
+    "missing_optional_reports": [],
+    "release_claim": "Only rows with status=pass are runtime-verified; missing reports never become pass.",
+    "schema_version": "1.0",
+    "status_counts": {
+      "pass": 40
+    },
+    "verified_optional_libraries": [
+      "catboost",
+      "lightgbm",
+      "onnx",
+      "tensorflow",
+      "torch",
+      "xgboost"
+    ],
+    "version_conflicts": []
+  }
+}

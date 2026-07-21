@@ -1,0 +1,309 @@
+{
+  "compositional_templates": [
+    [
+      "FT-01",
+      "FT-02"
+    ],
+    [
+      "FT-03",
+      "FT-04"
+    ],
+    [
+      "FT-05",
+      "FT-06"
+    ],
+    [
+      "FT-07",
+      "FT-08"
+    ],
+    [
+      "FT-09",
+      "FT-10"
+    ],
+    [
+      "FT-11",
+      "FT-12"
+    ],
+    [
+      "FT-13",
+      "FT-14"
+    ],
+    [
+      "FT-15",
+      "FT-16"
+    ],
+    [
+      "FT-17",
+      "FT-18"
+    ],
+    [
+      "FT-19",
+      "FT-20"
+    ],
+    [
+      "FT-21",
+      "FT-22",
+      "FT-23"
+    ],
+    [
+      "FT-24",
+      "FT-25",
+      "FT-26"
+    ],
+    [
+      "FT-27",
+      "FT-28",
+      "FT-29"
+    ],
+    [
+      "FT-30",
+      "FT-31",
+      "FT-32"
+    ]
+  ],
+  "confirmatory_claim_allowed": false,
+  "controlled_fault_templates": [
+    {
+      "diagnosable": true,
+      "family": "model_version",
+      "source": "route:model_version",
+      "template_id": "FT-01"
+    },
+    {
+      "diagnosable": true,
+      "family": "preprocessing_version",
+      "source": "route:preprocessing_version",
+      "template_id": "FT-02"
+    },
+    {
+      "diagnosable": true,
+      "family": "feature_mapping",
+      "source": "route:feature_mapping",
+      "template_id": "FT-03"
+    },
+    {
+      "diagnosable": true,
+      "family": "category_dictionary",
+      "source": "route:category_dictionary",
+      "template_id": "FT-04"
+    },
+    {
+      "diagnosable": true,
+      "family": "tokenization",
+      "source": "route:tokenization",
+      "template_id": "FT-05"
+    },
+    {
+      "diagnosable": true,
+      "family": "image_normalization",
+      "source": "route:image_normalization",
+      "template_id": "FT-06"
+    },
+    {
+      "diagnosable": true,
+      "family": "sampling_rate",
+      "source": "route:sampling_rate",
+      "template_id": "FT-07"
+    },
+    {
+      "diagnosable": true,
+      "family": "calibration_missing",
+      "source": "route:calibration_missing",
+      "template_id": "FT-08"
+    },
+    {
+      "diagnosable": true,
+      "family": "calibration_stale",
+      "source": "route:calibration_stale",
+      "template_id": "FT-09"
+    },
+    {
+      "diagnosable": true,
+      "family": "reference_population",
+      "source": "route:reference_population",
+      "template_id": "FT-10"
+    },
+    {
+      "diagnosable": true,
+      "family": "provenance_edge",
+      "source": "route:provenance_edge",
+      "template_id": "FT-11"
+    },
+    {
+      "diagnosable": true,
+      "family": "explainer_model_pair",
+      "source": "route:explainer_model_pair",
+      "template_id": "FT-12"
+    },
+    {
+      "diagnosable": true,
+      "family": "artifact_corruption",
+      "source": "route:artifact_corruption",
+      "template_id": "FT-13"
+    },
+    {
+      "diagnosable": true,
+      "family": "artifact_hash",
+      "source": "route:artifact_hash",
+      "template_id": "FT-14"
+    },
+    {
+      "diagnosable": true,
+      "family": "model_card_stale",
+      "source": "route:model_card_stale",
+      "template_id": "FT-15"
+    },
+    {
+      "diagnosable": true,
+      "family": "schema_unsupported",
+      "source": "route:schema_unsupported",
+      "template_id": "FT-16"
+    },
+    {
+      "diagnosable": true,
+      "family": "reduction_loss",
+      "source": "route:reduction_loss",
+      "template_id": "FT-17"
+    },
+    {
+      "diagnosable": true,
+      "family": "required_channel",
+      "source": "route:required_channel",
+      "template_id": "FT-18"
+    },
+    {
+      "diagnosable": true,
+      "family": "explain_plan",
+      "source": "route:explain_plan",
+      "template_id": "FT-19"
+    },
+    {
+      "diagnosable": true,
+      "family": "nondeterminism",
+      "source": "route:nondeterminism",
+      "template_id": "FT-20"
+    },
+    {
+      "diagnosable": true,
+      "family": "reference_shift",
+      "source": "route:reference_shift",
+      "template_id": "FT-21"
+    },
+    {
+      "diagnosable": true,
+      "family": "cache_corruption",
+      "source": "route:cache_corruption",
+      "template_id": "FT-22"
+    },
+    {
+      "diagnosable": true,
+      "family": "feature_order",
+      "source": "route:feature_order",
+      "template_id": "FT-23"
+    },
+    {
+      "diagnosable": true,
+      "family": "feature_unit",
+      "source": "route:feature_unit",
+      "template_id": "FT-24"
+    },
+    {
+      "diagnosable": true,
+      "family": "class_dictionary",
+      "source": "route:class_dictionary",
+      "template_id": "FT-25"
+    },
+    {
+      "diagnosable": true,
+      "family": "background_set",
+      "source": "route:background_set",
+      "template_id": "FT-26"
+    },
+    {
+      "diagnosable": true,
+      "family": "segmentation_version",
+      "source": "route:segmentation_version",
+      "template_id": "FT-27"
+    },
+    {
+      "diagnosable": true,
+      "family": "mask_resolution",
+      "source": "route:mask_resolution",
+      "template_id": "FT-28"
+    },
+    {
+      "diagnosable": true,
+      "family": "embedding_version",
+      "source": "route:embedding_version",
+      "template_id": "FT-29"
+    },
+    {
+      "diagnosable": true,
+      "family": "window_alignment",
+      "source": "route:window_alignment",
+      "template_id": "FT-30"
+    },
+    {
+      "diagnosable": true,
+      "family": "timezone",
+      "source": "route:timezone",
+      "template_id": "FT-31"
+    },
+    {
+      "diagnosable": true,
+      "family": "missingness_contract",
+      "source": "route:missingness_contract",
+      "template_id": "FT-32"
+    },
+    {
+      "diagnosable": true,
+      "family": "grouping_key",
+      "source": "route:grouping_key",
+      "template_id": "FT-33"
+    },
+    {
+      "diagnosable": true,
+      "family": "label_mapping",
+      "source": "route:label_mapping",
+      "template_id": "FT-34"
+    },
+    {
+      "diagnosable": true,
+      "family": "probability_shape",
+      "source": "route:probability_shape",
+      "template_id": "FT-35"
+    },
+    {
+      "diagnosable": true,
+      "family": "output_semantics",
+      "source": "route:output_semantics",
+      "template_id": "FT-36"
+    },
+    {
+      "diagnosable": true,
+      "family": "rule_conflict",
+      "source": "route:rule_conflict",
+      "template_id": "FT-37"
+    },
+    {
+      "diagnosable": true,
+      "family": "deployment_envelope",
+      "source": "route:deployment_envelope",
+      "template_id": "FT-38"
+    },
+    {
+      "diagnosable": true,
+      "family": "data_quality",
+      "source": "route:data_quality",
+      "template_id": "FT-39"
+    },
+    {
+      "diagnosable": true,
+      "family": "audit_signature",
+      "source": "route:audit_signature",
+      "template_id": "FT-40"
+    }
+  ],
+  "phase": "formative_library",
+  "terminology": "realistic replayed deployment incidents"
+}

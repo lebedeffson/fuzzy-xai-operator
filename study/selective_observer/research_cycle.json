@@ -1,0 +1,63 @@
+{
+  "schema_version": "1.0",
+  "study_id": "fuzzyxai-selective-observer-two-stage",
+  "frozen_predecessor": {
+    "commit": "e34e52fb8ae62ee1be043d6d5b26a0c9214a0572",
+    "public_ci_run": "29740096302",
+    "source_archive_sha256": "3875e471f53e3a53e245469d567bda60d31c0c791dc0138d9683f975d7ba6c87",
+    "preserve_negative_results": [
+      "H3 full-population utility not supported",
+      "H3 hard-case utility not supported",
+      "H5 predictive association not supported",
+      "H6 confirmatory general rule effect not supported"
+    ]
+  },
+  "current_phase": "formative_development",
+  "confirmatory_test_opened": false,
+  "stable_release_allowed": false,
+  "phases": [
+    {
+      "id": "A",
+      "name": "formative_development",
+      "allowed": [
+        "change selective controller",
+        "change explanation cards and domain dictionary",
+        "add validation-derived channels",
+        "run formative participants and pilot experts"
+      ],
+      "forbidden": [
+        "use confirmatory test outcomes",
+        "reuse formative participants in confirmation",
+        "publish a confirmatory positive claim"
+      ]
+    },
+    {
+      "id": "B",
+      "name": "preregistration_and_freeze",
+      "required": [
+        "primary outcomes",
+        "baselines",
+        "minimum effects",
+        "power analysis",
+        "exclusion rules",
+        "statistical tests",
+        "stopping rule",
+        "error costs",
+        "code hash",
+        "interface hash",
+        "dataset hashes"
+      ]
+    },
+    {
+      "id": "C",
+      "name": "independent_confirmation",
+      "required": [
+        "new test data",
+        "new participants",
+        "new experts",
+        "one test opening",
+        "unchanged frozen method"
+      ]
+    }
+  ]
+}

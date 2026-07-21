@@ -39,8 +39,12 @@ def current_branch() -> str:
         return branch or f"detached:{current_commit()}"
     except Exception:
         if RELEASE_METADATA_FILE.exists():
-            return read_json(RELEASE_METADATA_FILE).get("audit_branch", "runtime_release")
-        return "unknown"
+            metadata = read_json(RELEASE_METADATA_FILE)
+            branch = metadata.get("audit_branch")
+            if branch and branch != "runtime_release":
+                return str(branch)
+            return f"detached:{metadata.get('source_commit', 'unknown')}"
+        return f"detached:{current_commit()}"
 
 
 def dirty_paths() -> list[str]:

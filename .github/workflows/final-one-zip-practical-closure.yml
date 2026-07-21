@@ -1,0 +1,57 @@
+name: Final one-zip practical closure source gate
+
+on:
+  push:
+    branches:
+      - feat/one-zip-final-practical-closure
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  public-source-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12"]
+    env:
+      OMP_NUM_THREADS: "1"
+      OPENBLAS_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
+      NUMEXPR_NUM_THREADS: "1"
+      PYTHONHASHSEED: "0"
+      PYTHONPATH: framework/fuzzyxai:scripts/final_closure
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+      - name: Install focused dependencies
+        run: python -m pip install ".[dev,evidence]"
+      - name: Focused final contracts
+        run: python -m pytest -q tests/final_closure tests/practical_controller
+      - name: Lint and compile final source
+        run: |
+          python -m ruff check \
+            framework/fuzzyxai/fuzzyxai/final_closure \
+            framework/fuzzyxai/fuzzyxai/practical_controller \
+            scripts/final_closure \
+            tests/final_closure \
+            tests/practical_controller
+          python -m compileall -q framework/fuzzyxai/fuzzyxai/final_closure scripts/final_closure
+          git diff --check
+      - name: Build clean source release
+        run: python scripts/build_framework_release.py
+      - name: Enforce public-source boundary
+        run: |
+          ! git ls-files | grep -E 'confirmatory_label_vault[.]enc|confirmatory_vault_aes256[.]pass|data/confirmatory/.*/raw/'
+          ! git ls-files | grep -E '^site/dubnaxai/'
+          test ! -e study/final_confirmatory_closure/confirmatory_completion_marker.json
+          test ! -e study/final_confirmatory_closure/confirmatory/final_statistics.json
+          echo 'PASS: public source gate excludes private sealed evidence'

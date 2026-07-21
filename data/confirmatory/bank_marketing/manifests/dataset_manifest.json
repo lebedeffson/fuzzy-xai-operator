@@ -1,0 +1,15 @@
+{
+  "dataset_id": "bank_marketing",
+  "development_ids_sha256": "c4c0ae3261c8f25e4759ec7b25cb32226f89c29389989d2908273028ee6045b0",
+  "download_sha256": "e0bf5f5de5b846e2f18e9d90606637267d46dfa260e0f17bb12e605db5efbeb4",
+  "grouping_key": null,
+  "label_vault_path": "data/confirmatory/bank_marketing/manifests/confirmatory_label_vault.enc",
+  "label_vault_sha256": "2f0e1747ca9ad35ca4f68c626b578bb5e95b947c0f2e05f27af5f6626063173f",
+  "license": "CC BY 4.0",
+  "modality": "tabular",
+  "preprocessing_sha256": "22b763003ee6e56e20178954e2f4aba32c79b89ad3c069fedf9e27800bd771a7",
+  "source": "https://archive.ics.uci.edu/static/public/222/bank+marketing.zip",
+  "test_ids_sha256": "0dde65458e0e38bc55c8576b57f8f0d07a5e801e82a9a39da9bcc553494776e2",
+  "train_ids_sha256": "0f717116dcc638caee3e1bb15a24f80025ba065124e26d4a580004932f8bdac5",
+  "used_in_formative_tuning": false
+}

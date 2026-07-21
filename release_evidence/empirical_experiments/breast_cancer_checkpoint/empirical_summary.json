@@ -1,0 +1,161 @@
+{
+  "checkpoint_hashes_unique": 30,
+  "checkpoints": 30,
+  "claim_scope": "measured methodological benchmark; not clinical validation",
+  "comprehension_pilot": "planned_not_run",
+  "counterfactual_modes": [
+    "sensitivity_analysis"
+  ],
+  "cross_model_count": 5,
+  "cross_model_graphs_valid": true,
+  "dataset": {
+    "doi": "10.24432/C5DW2B",
+    "features": 30,
+    "license": "CC BY 4.0",
+    "name": "Breast Cancer Wisconsin (Diagnostic)",
+    "objects": 569,
+    "snapshot_sha256": "9f4874774e7b44c492bed00e0b09dfc354cbdbdb5d88eedc4ea12e9f0312104c"
+  },
+  "domain_language_validation": {
+    "checked_features": 2,
+    "errors": [],
+    "expert_review_required": true,
+    "language_hash": "206e0e5985763e834af9f6006f6164867faa896ba319a522a4fd7e51235ff445",
+    "status": "insufficient_domain_language",
+    "version": "bcwd-neutral-methodological-v1",
+    "warnings": [
+      "feature worst concave points: semantic wording has not been externally reviewed",
+      "feature worst perimeter: semantic wording has not been externally reviewed",
+      "regulated domain requires external expert review before categorical domain-user wording"
+    ]
+  },
+  "empirical_status": "measured",
+  "fixture_type": "empirical_training_run",
+  "release_gate": "blocked_external_pilot_and_domain_review",
+  "result_origin": "measured",
+  "rule_ablation": {
+    "critical_errors_with_rule": 5,
+    "critical_errors_without_rule": 10,
+    "fidelity": null,
+    "limitations": [
+      "tree leaf suppression uses the sibling branch distribution as the explicit fallback",
+      "the measured effect applies to this split, seed, and tree configuration"
+    ],
+    "model_fingerprint": "1a3f92c4deffe58e0c47f43234d475c352a464be71bd14e8efb5c7748a97c0e4",
+    "native": true,
+    "result_origin": "measured",
+    "rule_id": "tree_leaf_11",
+    "run_id": "bcwd_sgd_checkpoint_seed42_v1",
+    "subgroup_metrics_with_rule": {
+      "subgroup_accuracy": 0.9375,
+      "subgroup_precision": 1.0,
+      "subgroup_recall": 0.9230769230769231
+    },
+    "subgroup_metrics_without_rule": {
+      "subgroup_accuracy": 0.6875,
+      "subgroup_precision": 1.0,
+      "subgroup_recall": 0.6153846153846154
+    },
+    "surrogate": false,
+    "target_prediction_with_rule": 1,
+    "target_prediction_without_rule": 0,
+    "test_metrics_with_rule": {
+      "accuracy": 0.9473684210526315,
+      "calibration_error": 0.04533702677746999,
+      "critical_errors": 5.0,
+      "precision": 0.9736842105263158,
+      "recall": 0.8809523809523809,
+      "subgroup_accuracy": 0.9375,
+      "subgroup_precision": 1.0,
+      "subgroup_recall": 0.9090909090909091
+    },
+    "test_metrics_without_rule": {
+      "accuracy": 0.9035087719298246,
+      "calibration_error": 0.06068790397045244,
+      "critical_errors": 10.0,
+      "precision": 0.9696969696969697,
+      "recall": 0.7619047619047619,
+      "subgroup_accuracy": 0.6875,
+      "subgroup_precision": 1.0,
+      "subgroup_recall": 0.5454545454545454
+    },
+    "train_metrics_with_rule": {
+      "accuracy": 0.9765395894428153,
+      "calibration_error": 1.002171626883962e-18,
+      "critical_errors": 7.0,
+      "precision": 0.9917355371900827,
+      "recall": 0.9448818897637795,
+      "subgroup_accuracy": 0.9772727272727273,
+      "subgroup_precision": 1.0,
+      "subgroup_recall": 0.9666666666666667
+    },
+    "train_metrics_without_rule": {
+      "accuracy": 0.9384164222873901,
+      "calibration_error": 0.02859237536656891,
+      "critical_errors": 20.0,
+      "precision": 0.9907407407407407,
+      "recall": 0.84251968503937,
+      "subgroup_accuracy": 0.7727272727272727,
+      "subgroup_precision": 1.0,
+      "subgroup_recall": 0.6666666666666666
+    },
+    "validation_metrics_with_rule": {
+      "accuracy": 0.9210526315789473,
+      "calibration_error": 0.06635118497999383,
+      "critical_errors": 6.0,
+      "precision": 0.925,
+      "recall": 0.8604651162790697,
+      "subgroup_accuracy": 0.9375,
+      "subgroup_precision": 1.0,
+      "subgroup_recall": 0.9230769230769231
+    },
+    "validation_metrics_without_rule": {
+      "accuracy": 0.8859649122807017,
+      "calibration_error": 0.08389504462911665,
+      "critical_errors": 11.0,
+      "precision": 0.9411764705882353,
+      "recall": 0.7441860465116279,
+      "subgroup_accuracy": 0.6875,
+      "subgroup_precision": 1.0,
+      "subgroup_recall": 0.6153846153846154
+    }
+  },
+  "run_id": "bcwd_sgd_checkpoint_seed42_v1",
+  "scenario_id": "object_85_real_training_experiment",
+  "schema_version": "1.0",
+  "selected_case": {
+    "forgetting_events": [
+      9
+    ],
+    "public_id": "case_real_001",
+    "rare_subgroup_member": true,
+    "source_id": "bcwd_0215"
+  },
+  "similar_case_roles": [
+    "support",
+    "counterexample"
+  ],
+  "split": {
+    "seed": 42,
+    "test": 114,
+    "train": 341,
+    "validation": 114
+  },
+  "subgroup": {
+    "centroids_sha256": "5f8a39555d3e076602072b4cfd5ba9520cdcc44475ea9e3b18cefa386dba8773",
+    "definition_time": "before checkpoint-model training and before forgetting-case selection",
+    "method": "smallest KMeans cluster on standardized train features",
+    "n_clusters": 3,
+    "random_seed": 42,
+    "scaler_fit_partition": "train",
+    "selected_cluster": 2,
+    "subgroup_definition_hash": "692b0a5a713f834ec620b2c50d6744643626b427236c9ebadf407437bfe03077",
+    "subgroup_id": "rare_unsupervised_cluster_001",
+    "train_cluster_sizes": [
+      218,
+      79,
+      44
+    ],
+    "uses_test_labels": false
+  }
+}

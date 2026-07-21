@@ -1,0 +1,162 @@
+name: Q1 empirical remediation
+
+on:
+  push:
+    branches: [feat/q1-empirical-remediation]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  OMP_NUM_THREADS: "1"
+  OPENBLAS_NUM_THREADS: "1"
+  MKL_NUM_THREADS: "1"
+  NUMEXPR_NUM_THREADS: "1"
+  PYTHONPATH: framework/fuzzyxai:.
+
+jobs:
+  fast:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Install focused dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install --no-deps -e .
+          python -m pip install numpy pandas scipy scikit-learn matplotlib plotly PyYAML pytest ruff
+      - name: Contract and leakage tests
+        run: python -m pytest tests/test_q1_validation_contracts.py -q
+      - name: Ruff
+        run: ruff check framework/fuzzyxai/fuzzyxai/q1_validation scripts/q1 tests/test_q1_validation_contracts.py
+      - name: Controlled smoke
+        run: python scripts/q1/reproduce_all.py --profile smoke
+      - name: Record fast status
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          path=Path('release_evidence/q1_remediation/ci_fast_status.json')
+          path.write_text(json.dumps({'status':'PASS','run_id':'${{ github.run_id }}','commit':'${{ github.sha }}'},indent=2)+'\n')
+          PY
+          python scripts/q1/build_manifest.py
+      - name: Pack controlled evidence
+        run: tar -czf q1-controlled.tgz release_evidence/q1_remediation reports/q1 dissertation_artifacts/q1
+      - uses: actions/upload-artifact@v4
+        with:
+          name: q1-controlled
+          path: q1-controlled.tgz
+
+  real-benchmarks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      matrix:
+        modality: [tabular, image, text, timeseries]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Install benchmark dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install --no-deps -e .
+          python -m pip install numpy==1.26.4 pandas==2.2.3 scipy==1.13.1 scikit-learn==1.5.2 matplotlib==3.9.4 plotly==5.24.1 PyYAML==6.0.2 shap==0.46.0
+          if [ "${{ matrix.modality }}" = tabular ]; then python -m pip install lime==0.2.0.1 alibi==0.9.6 click==8.1.8 imodels==2.0.4 xgboost==3.2.0 torch==2.5.1; fi
+          if [ "${{ matrix.modality }}" != tabular ]; then python -m pip install torch==2.5.1; fi
+          if [ "${{ matrix.modality }}" = image ]; then python -m pip install onnx==1.17.0 onnxruntime==1.20.1; fi
+      - name: Run real benchmark
+        run: |
+          python scripts/q1/run_real_benchmark.py \
+            --modality "${{ matrix.modality }}" \
+            --output "${{ matrix.modality }}.json" \
+            --cache ".cache/q1/${{ matrix.modality }}"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: q1-real-${{ matrix.modality }}
+          path: ${{ matrix.modality }}.json
+
+  docker-reproduction:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Build image
+        run: docker build -f Dockerfile.q1 -t fuzzyxai-q1 .
+      - name: Run full one-command reproduction in clean container
+        run: docker run --rm fuzzyxai-q1 make reproduce-q1
+      - name: Record Docker status
+        run: echo '{"status":"PASS","command":"docker run --rm fuzzyxai-q1 make reproduce-q1"}' > docker_reproduction.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: q1-docker
+          path: docker_reproduction.json
+
+  aggregate:
+    needs: [fast, real-benchmarks, docker-reproduction]
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install aggregation dependencies
+        run: |
+          python -m pip install --no-deps -e .
+          python -m pip install numpy pandas scipy scikit-learn matplotlib plotly PyYAML
+      - uses: actions/download-artifact@v4
+        with:
+          name: q1-controlled
+          path: downloads/controlled
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: q1-real-*
+          path: downloads/real
+      - uses: actions/download-artifact@v4
+        with:
+          name: q1-docker
+          path: downloads/docker
+      - name: Restore and merge evidence
+        run: |
+          tar -xzf downloads/controlled/q1-controlled.tgz
+          cp downloads/docker/docker_reproduction.json release_evidence/q1_remediation/docker_reproduction.json
+          python scripts/q1/merge_real_benchmarks.py --input-dir downloads/real
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          path=Path('release_evidence/q1_remediation/ci_heavy_status.json')
+          path.write_text(json.dumps({'status':'PASS','run_id':'${{ github.run_id }}','commit':'${{ github.sha }}','jobs':['real-benchmarks','docker-reproduction','aggregate']},indent=2)+'\n')
+          PY
+          python scripts/q1/build_claim_registry.py
+          python scripts/q1/build_reports.py
+          python scripts/q1/build_tables.py
+          python scripts/q1/build_figures.py
+          python scripts/build_framework_release.py
+          python scripts/q1/build_archives.py
+          python scripts/q1/verify_archives.py
+          python scripts/q1/build_dod.py
+          python scripts/q1/build_manifest.py
+          python scripts/q1/verify_all.py
+      - name: Pack aggregate result
+        run: tar -czf q1-aggregate.tgz release_evidence/q1_remediation reports/q1 dissertation_artifacts/q1
+      - uses: actions/upload-artifact@v4
+        with:
+          name: q1-aggregate
+          path: q1-aggregate.tgz

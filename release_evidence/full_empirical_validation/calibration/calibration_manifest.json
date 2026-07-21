@@ -1,0 +1,47 @@
+{
+  "best_config": {
+    "confidence_threshold": 0.65,
+    "conflict_threshold": 0.1,
+    "critical_wrong_automatic": 0,
+    "false_blocks": 15,
+    "representation_cost": 0.0,
+    "reviewed": 979,
+    "risk": 2174.0,
+    "runtime_cost": 0.0,
+    "stability_threshold": 0.55
+  },
+  "code_commit": "fc8705ececdcc58f6cc171017984d9c6af05dd45",
+  "dataset_id": "controlled_tabular_risk_v1",
+  "grid": {
+    "confidence_threshold": [
+      0.65,
+      0.75,
+      0.85
+    ],
+    "conflict_threshold": [
+      0.1,
+      0.2,
+      0.3
+    ],
+    "stability_threshold": [
+      0.55,
+      0.7,
+      0.85
+    ]
+  },
+  "library_versions": {
+    "python": "3.11.15"
+  },
+  "schema_version": "1.0",
+  "seed": 42,
+  "split_hash": "745d1f1927d6ca02b3525237e47fd50bb88d9baec119e452f2cfb66727f3a521",
+  "status": "frozen_from_validation",
+  "test_partition_used": false,
+  "tie_break": [
+    "lower critical-error risk",
+    "lower representation complexity",
+    "fewer calibrated parameters",
+    "lexicographically first configuration"
+  ],
+  "trial_count": 27
+}

@@ -1,0 +1,221 @@
+{
+  "P0_P1_audit_status": "pass",
+  "P0_status": "pass_predictive_oof",
+  "P1_status": "pass_route_oof",
+  "channel_semantics": {
+    "categorical_ordinal": [
+      "representation_class"
+    ],
+    "good_when_high": [
+      "calibrated_confidence",
+      "prediction_margin",
+      "boundary_distance",
+      "seed_stability",
+      "bootstrap_stability",
+      "perturbation_stability",
+      "provenance_completeness",
+      "canonical_hash_status"
+    ],
+    "risk_when_high": [
+      "normalized_entropy",
+      "cross_fitted_calibration_estimate",
+      "model_checkpoint_disagreement",
+      "label_free_shift_score",
+      "train_derived_rare_group_indicator",
+      "missingness_profile",
+      "data_quality_profile",
+      "explainer_disagreement",
+      "typed_route_fault",
+      "reduction_loss",
+      "rule_redundancy",
+      "conflict_severity",
+      "missing_evidence_channels",
+      "reference_set_deviation"
+    ]
+  },
+  "datasets": [
+    {
+      "accuracy": 0.9442319368548877,
+      "alternate_model_family": "sklearn_logistic_regression",
+      "artifact_path": "study/final_confirmatory_closure/oof_features/bank_marketing.jsonl",
+      "artifact_sha256": "31c334d7e610caf0b52c115c4a7b5e9f7855a9f7234e6c5a9f44bf2f6b6e8d23",
+      "calibration_method": "temperature",
+      "canonical_evidence_path": "study/final_confirmatory_closure/oof_features/canonical/bank_marketing.jsonl",
+      "canonical_evidence_sha256": "3b3a0b42609590a8f5f7a6405345551b45d820668cd344a84931ac8f6b827699",
+      "classes": [
+        "no",
+        "yes"
+      ],
+      "dataset_id": "bank_marketing",
+      "explainer_manifest_path": "study/final_confirmatory_closure/dataset_manifests/bank_marketing/explainer_manifest.json",
+      "explainer_manifest_sha256": "d82c06219b61cf7b29729c6388bf72d9b730f8d783f1c4e957230bc2bec88139",
+      "held_out_label_used_as_feature": false,
+      "log_loss": 0.117376035005393,
+      "missing_predictive_channels": [],
+      "modality": "tabular",
+      "model_family": "sklearn_hist_gradient_boosting",
+      "model_manifest_path": "study/final_confirmatory_closure/dataset_manifests/bank_marketing/model_manifest.json",
+      "model_manifest_sha256": "b95e0ddaa41ce37b936ef89b8473e9ecaf7aad6906816a3c5071fc81126024eb",
+      "not_applicable_route_channels": [
+        "rule_redundancy"
+      ],
+      "objects": 32940,
+      "route_features_status": "measured_oof_with_explicit_not_applicable_mask",
+      "sealed_test_loaded": false
+    },
+    {
+      "accuracy": 0.821742572607192,
+      "alternate_model_family": "sklearn_logistic_regression",
+      "artifact_path": "study/final_confirmatory_closure/oof_features/default_credit_clients.jsonl",
+      "artifact_sha256": "54fb38a867613f4fc8365bda75198ba093a3abb31ede00e29324a5b76df66095",
+      "calibration_method": "temperature",
+      "canonical_evidence_path": "study/final_confirmatory_closure/oof_features/canonical/default_credit_clients.jsonl",
+      "canonical_evidence_sha256": "e718364b407ed274bd3de8df272b05d5b7e02fca333d9a7a5f83f136b8293a90",
+      "classes": [
+        "0",
+        "1"
+      ],
+      "dataset_id": "default_credit_clients",
+      "explainer_manifest_path": "study/final_confirmatory_closure/dataset_manifests/default_credit_clients/explainer_manifest.json",
+      "explainer_manifest_sha256": "a581c801fba65509f2445ff20acfe8a2fce40fdfda73cb6875c54202193dcd6a",
+      "held_out_label_used_as_feature": false,
+      "log_loss": 0.42555396527858746,
+      "missing_predictive_channels": [],
+      "modality": "tabular",
+      "model_family": "sklearn_hist_gradient_boosting",
+      "model_manifest_path": "study/final_confirmatory_closure/dataset_manifests/default_credit_clients/model_manifest.json",
+      "model_manifest_sha256": "1f10fcc1953465ee35b742c1cefc37edaadafded9f6005e4025bc2db48cbaebd",
+      "not_applicable_route_channels": [
+        "rule_redundancy"
+      ],
+      "objects": 23999,
+      "route_features_status": "measured_oof_with_explicit_not_applicable_mask",
+      "sealed_test_loaded": false
+    },
+    {
+      "accuracy": 0.37735849056603776,
+      "alternate_model_family": "downsampled_pixel_logistic",
+      "artifact_path": "study/final_confirmatory_closure/oof_features/shoulder_implant_xray.jsonl",
+      "artifact_sha256": "e0ed1e23282102af849a0ed573afc36d40060c5c0057f6b76bcdb258b48cf339",
+      "calibration_method": "temperature",
+      "canonical_evidence_path": "study/final_confirmatory_closure/oof_features/canonical/shoulder_implant_xray.jsonl",
+      "canonical_evidence_sha256": "d7c55f957f949bf1833852f4b12643e90ca934f642e66ec628b69d158eb2e2a4",
+      "classes": [
+        "Cofield",
+        "Depuy",
+        "Tornier",
+        "Zimmer"
+      ],
+      "dataset_id": "shoulder_implant_xray",
+      "explainer_manifest_path": "study/final_confirmatory_closure/dataset_manifests/shoulder_implant_xray/explainer_manifest.json",
+      "explainer_manifest_sha256": "7fc6a1963ba43bc915dc8e8b14054886725922248c48cbe635b2ca0cf1e3267b",
+      "held_out_label_used_as_feature": false,
+      "log_loss": 1.3199977145520831,
+      "missing_predictive_channels": [],
+      "modality": "image",
+      "model_family": "compact_grayscale_cnn",
+      "model_manifest_path": "study/final_confirmatory_closure/dataset_manifests/shoulder_implant_xray/model_manifest.json",
+      "model_manifest_sha256": "2142b93aaaedeb0c06c51a2673d3f784c8c36476045fbf525f23b720eef24e06",
+      "not_applicable_route_channels": [
+        "rule_redundancy"
+      ],
+      "objects": 477,
+      "route_features_status": "measured_oof_with_explicit_not_applicable_mask",
+      "sealed_test_loaded": false
+    },
+    {
+      "accuracy": 0.9827962200145384,
+      "alternate_model_family": "tfidf_complement_naive_bayes",
+      "artifact_path": "study/final_confirmatory_closure/oof_features/sms_spam.jsonl",
+      "artifact_sha256": "f1ddbf2b291b952f1ac127de4b66cc04d01d88cdf9d6b825a0a0e928f511abd1",
+      "calibration_method": "temperature",
+      "canonical_evidence_path": "study/final_confirmatory_closure/oof_features/canonical/sms_spam.jsonl",
+      "canonical_evidence_sha256": "58748ce465a8b3352434fad3f1825fbf6fff95a884218f1977a396bad04422ba",
+      "classes": [
+        "ham",
+        "spam"
+      ],
+      "dataset_id": "sms_spam",
+      "explainer_manifest_path": "study/final_confirmatory_closure/dataset_manifests/sms_spam/explainer_manifest.json",
+      "explainer_manifest_sha256": "07bb6ffd8352eefc04418f213acaa199b0ab012d03aa29b8de971685744481cb",
+      "held_out_label_used_as_feature": false,
+      "log_loss": 0.05740293232780245,
+      "missing_predictive_channels": [],
+      "modality": "text",
+      "model_family": "tfidf_sgd_logistic_calibrated",
+      "model_manifest_path": "study/final_confirmatory_closure/dataset_manifests/sms_spam/model_manifest.json",
+      "model_manifest_sha256": "2ff0fa42c71d83b5418c7f0894206f4ae235cc99e9997b6b8808b5ffd61a39b9",
+      "not_applicable_route_channels": [
+        "rule_redundancy"
+      ],
+      "objects": 4127,
+      "route_features_status": "measured_oof_with_explicit_not_applicable_mask",
+      "sealed_test_loaded": false
+    },
+    {
+      "accuracy": 0.9286576533075809,
+      "alternate_model_family": "summary_feature_random_forest",
+      "artifact_path": "study/final_confirmatory_closure/oof_features/uci_har_smartphones.jsonl",
+      "artifact_sha256": "a8a0d123862fb1b4e0a023af8806feae346be3532efbb07dcf830af610cd0451",
+      "calibration_method": "temperature",
+      "canonical_evidence_path": "study/final_confirmatory_closure/oof_features/canonical/uci_har_smartphones.jsonl",
+      "canonical_evidence_sha256": "f0c3611bcc045af637df79ee0f8632d103907a78af763f8f4663ca31ea88f89d",
+      "classes": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6"
+      ],
+      "dataset_id": "uci_har_smartphones",
+      "explainer_manifest_path": "study/final_confirmatory_closure/dataset_manifests/uci_har_smartphones/explainer_manifest.json",
+      "explainer_manifest_sha256": "6b9bc546cf2519474f6896071307fe033a5f959b43ffa3c260e5187b2deb2d42",
+      "held_out_label_used_as_feature": false,
+      "log_loss": 0.2597445523232844,
+      "missing_predictive_channels": [],
+      "modality": "timeseries",
+      "model_family": "compact_temporal_1d_cnn",
+      "model_manifest_path": "study/final_confirmatory_closure/dataset_manifests/uci_har_smartphones/model_manifest.json",
+      "model_manifest_sha256": "3dfb1f3e3874d341c70ad937a58720e4150ed2e11fdfb0ffa6c37fb6e523b88a",
+      "not_applicable_route_channels": [
+        "rule_redundancy"
+      ],
+      "objects": 8284,
+      "route_features_status": "measured_oof_with_explicit_not_applicable_mask",
+      "sealed_test_loaded": false
+    }
+  ],
+  "feature_source": "real_cross_fitted_train_development_models_and_explanations",
+  "lock_status": "ready_for_lock",
+  "predictive_channels": [
+    "calibrated_confidence",
+    "prediction_margin",
+    "normalized_entropy",
+    "cross_fitted_calibration_estimate",
+    "boundary_distance",
+    "model_checkpoint_disagreement",
+    "label_free_shift_score",
+    "train_derived_rare_group_indicator",
+    "missingness_profile",
+    "data_quality_profile"
+  ],
+  "route_channels": [
+    "explainer_disagreement",
+    "seed_stability",
+    "bootstrap_stability",
+    "perturbation_stability",
+    "provenance_completeness",
+    "typed_route_fault",
+    "canonical_hash_status",
+    "representation_class",
+    "reduction_loss",
+    "rule_redundancy",
+    "conflict_severity",
+    "missing_evidence_channels",
+    "reference_set_deviation"
+  ],
+  "schema_version": "2.0",
+  "sealed_test_loaded": false,
+  "source_commit": "9def80e4871f49f0abb18fb8b7972b60a03be720"
+}

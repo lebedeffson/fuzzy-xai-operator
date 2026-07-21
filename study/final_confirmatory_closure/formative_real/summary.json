@@ -1,0 +1,97 @@
+{
+  "P0_primary": {
+    "automatic_coverage": 0.8000057284431523,
+    "invalid_automatic_actions": 8389
+  },
+  "P1_primary": {
+    "automatic_coverage": 0.8000057284431523,
+    "false_blocks": 0,
+    "invalid_automatic_actions": 6283,
+    "n": 69827,
+    "observed_review_rate": 0.19999427155684762,
+    "operational_risk": 0.11247359564641438,
+    "policy": "full_fuzzyxai_P1",
+    "review_budget": 0.2
+  },
+  "best_matched_budget_baseline": {
+    "automatic_coverage": 0.8000057284431523,
+    "false_blocks": 0,
+    "invalid_automatic_actions": 8356,
+    "n": 69827,
+    "observed_review_rate": 0.19999427155684762,
+    "operational_risk": 0.1495829007196305,
+    "policy": "weighted_linear_score",
+    "review_budget": 0.2
+  },
+  "component_ablation": {
+    "explainer_disagreement": {
+      "automatic_coverage": 0.8000057284431523,
+      "invalid_automatic_actions": 6498
+    },
+    "model_disagreement": {
+      "automatic_coverage": 0.8000057284431523,
+      "invalid_automatic_actions": 6300
+    },
+    "provenance": {
+      "automatic_coverage": 0.8000057284431523,
+      "invalid_automatic_actions": 6287
+    },
+    "reduction_loss": {
+      "automatic_coverage": 0.8000057284431523,
+      "invalid_automatic_actions": 6322
+    },
+    "representation_class": {
+      "automatic_coverage": 0.8000057284431523,
+      "invalid_automatic_actions": 6294
+    },
+    "route_faults": {
+      "automatic_coverage": 0.8000057284431523,
+      "invalid_automatic_actions": 6283
+    },
+    "shift": {
+      "automatic_coverage": 0.8000057284431523,
+      "invalid_automatic_actions": 6273
+    },
+    "stability": {
+      "automatic_coverage": 0.8000057284431523,
+      "invalid_automatic_actions": 7416
+    }
+  },
+  "confirmatory_claim_allowed": false,
+  "dataset_count": 5,
+  "formative_target_met": true,
+  "frozen_negative_statuses": {
+    "H3-original": "not_supported",
+    "H5-P-original": "not_supported",
+    "H6-general": "not_supported"
+  },
+  "model_manifest": {
+    "path": "study/final_confirmatory_closure/formative_real/p0_p1_model_manifest.json",
+    "sha256": "9f1fec489a3295d719fd6252836505cb82ac776f1ae5442e7e4dba9079164e9f"
+  },
+  "objects": 69827,
+  "phase": "formative_real_oof",
+  "primary_review_budget": 0.2,
+  "raw_results": {
+    "path": "study/final_confirmatory_closure/formative_real/policy_results.parquet",
+    "sha256": "755a0b91cc195a2dad55037678eedfd9c7f8bc5159b88875fd1d9b9789c05806"
+  },
+  "relative_invalid_action_reduction": 0.24808520823360458,
+  "schema_version": "1.0",
+  "sealed_test_opened": false,
+  "target_counts": {
+    "any_invalid": 13215,
+    "contract_failure": 0,
+    "data_failure": 0,
+    "explanation_failure": 6370,
+    "prediction_failure": 7074,
+    "route_failure": 0
+  },
+  "target_definition": {
+    "contract_failure": "frozen hard contract violation",
+    "data_failure": "label-free shift >= 0.80 or data-quality fault >= 0.50",
+    "explanation_failure": "minimum stability < 0.40 and explainer disagreement >= 0.60",
+    "prediction_failure": "predicted_label differs from held-out OOF target",
+    "route_failure": "typed route fault present"
+  }
+}

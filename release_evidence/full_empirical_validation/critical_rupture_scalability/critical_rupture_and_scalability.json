@@ -1,0 +1,124 @@
+{
+  "association": {
+    "interpretation": "structural_diagnostic_only",
+    "n_objects": 2000,
+    "p_wrong_auto_given_rupture": 0.1,
+    "p_wrong_auto_without_rupture": 0.23484848484848486,
+    "risk_ratio": 0.4258064516129032,
+    "wrong_auto_with_rupture": 2,
+    "wrong_auto_without_rupture": 465
+  },
+  "claim_rule": "without incremental predictive value, critical rupture is a structural diagnostic indicator only",
+  "critical_rupture_definition": "no admissible certified path from available evidence to automatic action",
+  "detector_comparison": [
+    {
+      "auprc": 0.2510040462674493,
+      "auroc": 0.4962704861358466,
+      "brier_calibration": 0.2415,
+      "indicator": "critical_rupture",
+      "positive_flags": 20,
+      "precision": 0.1,
+      "recall": 0.004282655246252677
+    },
+    {
+      "auprc": 0.37656429336302316,
+      "auroc": 0.6840857313269387,
+      "brier_calibration": 0.3325,
+      "indicator": "low_confidence",
+      "positive_flags": 866,
+      "precision": 0.3856812933025404,
+      "recall": 0.715203426124197
+    },
+    {
+      "auprc": 0.2427504635238848,
+      "auroc": 0.4789596751551519,
+      "brier_calibration": 0.5625,
+      "indicator": "shap_lime_disagreement",
+      "positive_flags": 1178,
+      "precision": 0.22071307300509338,
+      "recall": 0.556745182012848
+    },
+    {
+      "auprc": 0.2817654513342973,
+      "auroc": 0.5606793302519447,
+      "brier_calibration": 0.6575,
+      "indicator": "ensemble_spread",
+      "positive_flags": 1754,
+      "precision": 0.25826681870011403,
+      "recall": 0.9700214132762313
+    },
+    {
+      "auprc": 0.254335864362159,
+      "auroc": 0.4984544168199677,
+      "brier_calibration": 0.245,
+      "indicator": "simple_rule_conflict",
+      "positive_flags": 39,
+      "precision": 0.20512820512820512,
+      "recall": 0.017130620985010708
+    },
+    {
+      "auprc": 0.22526393319313412,
+      "auroc": 0.44737055304360446,
+      "brier_calibration": 0.5025,
+      "indicator": "uncertainty_threshold",
+      "positive_flags": 868,
+      "precision": 0.19009216589861752,
+      "recall": 0.3533190578158458
+    },
+    {
+      "auprc": 0.3043990274690834,
+      "auroc": 0.5427064257987374,
+      "brier_calibration": 0.2445,
+      "indicator": "cross_model_disagreement",
+      "positive_flags": 156,
+      "precision": 0.42948717948717946,
+      "recall": 0.14346895074946467
+    }
+  ],
+  "experiment_id": "E8",
+  "incremental_auprc_over_best_simple_baseline": -0.12556024709557384,
+  "safety_claim_allowed": false,
+  "scalability": {
+    "linear_scalability_claim_allowed": true,
+    "log_log_fit": {
+      "intercept": -11.224155470089064,
+      "r_squared": 0.9999735462129751,
+      "slope": 0.99960781095148
+    },
+    "measurements": [
+      {
+        "elapsed_seconds": 0.013410327000002553,
+        "graph_edges": 9000,
+        "graph_nodes": 10000,
+        "n_objects": 1000,
+        "peak_memory_bytes": 852718,
+        "serialized_bytes": 56891
+      },
+      {
+        "elapsed_seconds": 0.06596467199997846,
+        "graph_edges": 45000,
+        "graph_nodes": 50000,
+        "n_objects": 5000,
+        "peak_memory_bytes": 4388502,
+        "serialized_bytes": 288891
+      },
+      {
+        "elapsed_seconds": 0.1321997419999832,
+        "graph_edges": 90000,
+        "graph_nodes": 100000,
+        "n_objects": 10000,
+        "peak_memory_bytes": 5788963,
+        "serialized_bytes": 578891
+      },
+      {
+        "elapsed_seconds": 0.6692133310000088,
+        "graph_edges": 450000,
+        "graph_nodes": 500000,
+        "n_objects": 50000,
+        "peak_memory_bytes": 17413006,
+        "serialized_bytes": 2938891
+      }
+    ]
+  },
+  "schema_version": "1.0"
+}

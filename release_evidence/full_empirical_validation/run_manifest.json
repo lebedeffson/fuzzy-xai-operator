@@ -1,0 +1,176 @@
+{
+  "branch": "feat/full-empirical-validation",
+  "commit": "fc8705ececdcc58f6cc171017984d9c6af05dd45",
+  "environment": {
+    "omp_num_threads": "1",
+    "platform": "Linux-6.17.0-1020-azure-x86_64-with-glibc2.39",
+    "python": "3.11.15"
+  },
+  "experiments": [
+    {
+      "checks": {
+        "all_models_measured": true,
+        "four_modalities": true,
+        "minimum_objects": true,
+        "provenance_channel": true
+      },
+      "evidence_files": [
+        "release_evidence/full_empirical_validation/empirical_validation/multimodal_results.json",
+        "release_evidence/full_empirical_validation/empirical_validation/datasets_manifest.json"
+      ],
+      "evidence_status": "controlled",
+      "experiment_id": "E1",
+      "limitations": [
+        "controlled datasets limit external validity"
+      ],
+      "metrics": {
+        "n_objects_per_modality": 10000
+      },
+      "status": "PASS"
+    },
+    {
+      "checks": {
+        "paired_comparisons": true,
+        "test_not_used_for_selection": true
+      },
+      "evidence_files": [
+        "release_evidence/full_empirical_validation/rule_ablation/statistical_report.json",
+        "release_evidence/full_empirical_validation/rule_ablation/repeated_cv_predictions.csv"
+      ],
+      "evidence_status": "controlled",
+      "experiment_id": "E2",
+      "limitations": [
+        "controlled datasets limit external validity"
+      ],
+      "metrics": {
+        "paired_comparisons": 50
+      },
+      "status": "PASS"
+    },
+    {
+      "checks": {
+        "required_baselines_measured": true,
+        "same_objects": true
+      },
+      "evidence_files": [
+        "release_evidence/full_empirical_validation/baselines/baseline_quality_matrix.csv"
+      ],
+      "evidence_status": "controlled",
+      "experiment_id": "E3",
+      "limitations": [
+        "controlled datasets limit external validity"
+      ],
+      "metrics": {},
+      "status": "PASS"
+    },
+    {
+      "checks": {
+        "costs_predeclared": true,
+        "seven_policies_three_costs": true
+      },
+      "evidence_files": [
+        "release_evidence/full_empirical_validation/policies/policy_comparison.json"
+      ],
+      "evidence_status": "controlled",
+      "experiment_id": "E4",
+      "limitations": [
+        "controlled datasets limit external validity"
+      ],
+      "metrics": {},
+      "status": "PASS"
+    },
+    {
+      "checks": {
+        "complete_trial_log": true,
+        "validation_only": true
+      },
+      "evidence_files": [
+        "release_evidence/full_empirical_validation/calibration/calibration_manifest.json",
+        "release_evidence/full_empirical_validation/calibration/all_trials.csv"
+      ],
+      "evidence_status": "controlled",
+      "experiment_id": "E5",
+      "limitations": [
+        "controlled datasets limit external validity"
+      ],
+      "metrics": {},
+      "status": "PASS"
+    },
+    {
+      "checks": {
+        "noise_and_shift": true,
+        "parameter_sensitivity": true
+      },
+      "evidence_files": [
+        "release_evidence/full_empirical_validation/sensitivity/sensitivity_report.json"
+      ],
+      "evidence_status": "controlled",
+      "experiment_id": "E6",
+      "limitations": [
+        "controlled datasets limit external validity"
+      ],
+      "metrics": {},
+      "status": "PASS"
+    },
+    {
+      "checks": {
+        "all_modes": true,
+        "twenty_forced_objects": true
+      },
+      "evidence_files": [
+        "release_evidence/full_empirical_validation/uncertainty_hierarchy/hierarchy_results.json"
+      ],
+      "evidence_status": "controlled",
+      "experiment_id": "E7",
+      "limitations": [
+        "controlled datasets limit external validity"
+      ],
+      "metrics": {
+        "practical_claim_allowed": true
+      },
+      "status": "PASS"
+    },
+    {
+      "checks": {
+        "association_measured": true,
+        "full_population": true,
+        "required_scaling_sizes": true
+      },
+      "evidence_files": [
+        "release_evidence/full_empirical_validation/critical_rupture_scalability/critical_rupture_and_scalability.json",
+        "release_evidence/full_empirical_validation/object_level/full_population_summary.json"
+      ],
+      "evidence_status": "controlled",
+      "experiment_id": "E8",
+      "limitations": [
+        "controlled datasets limit external validity"
+      ],
+      "metrics": {},
+      "status": "PASS"
+    }
+  ],
+  "expert_review_infrastructure": {
+    "claim_allowed": false,
+    "packets": 4,
+    "results_file": null,
+    "sample_size": 100,
+    "status": "planned_not_run"
+  },
+  "external_gates": {
+    "comprehension_pilot": "planned_not_run",
+    "domain_semantic_review": "pending_external_review",
+    "expert_review": "planned_not_run"
+  },
+  "profile": "full",
+  "release_status": "BLOCKED",
+  "schema_version": "1.0",
+  "scientific_boundaries": [
+    "no universal superiority claim",
+    "no clinical safety claim",
+    "controlled multimodal datasets do not establish external validity",
+    "external comprehension and domain review remain incomplete"
+  ],
+  "seed": 42,
+  "tag_allowed": false,
+  "threads": 1
+}

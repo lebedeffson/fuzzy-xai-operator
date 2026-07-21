@@ -1,0 +1,7 @@
+{
+  "limitation": "final achieved power must be recomputed from genuine anonymized records",
+  "method": "paired binary-outcome design; conservative preregistered minimum",
+  "minimum_valid_participants": 24,
+  "status": "design_frozen_not_recruited",
+  "target_participants": 40
+}

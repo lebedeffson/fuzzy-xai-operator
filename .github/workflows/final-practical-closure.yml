@@ -1,0 +1,44 @@
+name: Final practical closure
+
+on:
+  push:
+    branches:
+      - feat/final-practical-closure
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  practical-controller:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+      - name: Install framework and evidence dependencies
+        run: python -m pip install ".[dev,evidence]"
+      - name: Focused practical regression
+        run: python -m pytest -q tests/practical_controller tests/strong_confirmatory tests/test_public_framework_api.py
+      - name: Verify committed full-profile evidence
+        run: python scripts/final_practical_closure/verify_formative.py
+      - name: Verify source and generated artifacts
+        run: |
+          python -m ruff check framework/fuzzyxai/fuzzyxai/practical_controller scripts/final_practical_closure tests/practical_controller
+          python -m compileall -q framework/fuzzyxai/fuzzyxai/practical_controller scripts/final_practical_closure
+          git diff --check
+      - name: Confirm sealed gate fails closed
+        run: |
+          set +e
+          python scripts/final_practical_closure/lock_protocol.py > /tmp/lock.log 2>&1
+          code=$?
+          cat /tmp/lock.log
+          test "$code" -eq 2
+          grep -q "BLOCKED: practical_confirmatory_protocol_lock" /tmp/lock.log

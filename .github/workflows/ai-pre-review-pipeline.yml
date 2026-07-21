@@ -1,0 +1,56 @@
+name: AI pre-review protocol gate
+
+on:
+  push:
+    branches:
+      - feat/ai-pre-review-human-confirmation
+  pull_request:
+    paths:
+      - "framework/fuzzyxai/fuzzyxai/ai_pre_review/**"
+      - "configs/ai_pre_review/**"
+      - "study/ai_pre_review/**"
+      - "scripts/ai_pre_review/**"
+      - "tests/ai_pre_review/**"
+      - "docs/AI_PRE_REVIEW_HUMAN_CONFIRMATION.md"
+      - "Makefile"
+      - ".github/workflows/ai-pre-review-pipeline.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  technical-boundary:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    env:
+      OMP_NUM_THREADS: "1"
+      OPENBLAS_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
+      NUMEXPR_NUM_THREADS: "1"
+      PYTHONHASHSEED: "0"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Install focused dependencies
+        run: python -m pip install -e ".[dev]"
+      - name: Verify frozen ancestors
+        run: |
+          git merge-base --is-ancestor e34e52fb8ae62ee1be043d6d5b26a0c9214a0572 HEAD
+          git merge-base --is-ancestor bd48a9ca3795e2665e0e6a4f1ab4f4e981774c2b HEAD
+      - name: Build and verify blind inputs
+        run: make ai-pre-review-check
+      - name: Focused tests
+        run: pytest -q tests/ai_pre_review
+      - name: Lint new study code
+        run: ruff check framework/fuzzyxai/fuzzyxai/ai_pre_review scripts/ai_pre_review tests/ai_pre_review
+      - name: Assert external gates remain honest
+        run: |
+          test ! -e study/ai_pre_review/confirmatory_protocol_lock.json
+          test ! -e release_evidence/ai_pre_review/raw_human/human_reviews.jsonl
+          ! grep -R '"status"[[:space:]]*:[[:space:]]*"human_confirmed"' study/ai_pre_review release_evidence/ai_pre_review

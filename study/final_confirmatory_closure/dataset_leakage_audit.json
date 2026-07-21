@@ -1,0 +1,17 @@
+{
+  "blockers": [],
+  "identity_source": "internally_built_confirmatory_dataset_registry",
+  "isolation_contract": {
+    "controller_feature_source": "out_of_fold_train_development_only",
+    "test_identity_visibility_during_tuning": "hash_only",
+    "test_labels_loaded_by_tuning": false,
+    "tuning_runner_can_read_test_labels": false
+  },
+  "modality_counts": {
+    "image": 1,
+    "tabular": 2,
+    "text": 1,
+    "timeseries": 1
+  },
+  "status": "pass"
+}

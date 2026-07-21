@@ -1,0 +1,102 @@
+{
+  "chapter_status": "formative_shell_only",
+  "final_chapter_allowed": false,
+  "new_claims": [
+    {
+      "allowed_wording": "Formative measurement only; independent confirmation has not been run.",
+      "claim_allowed": false,
+      "claim_id": "H3-v2-selective",
+      "confirmatory_status": "not_run",
+      "evidence": {
+        "evidence_id": "FORMATIVE-H3_v2_selective",
+        "experiment_id": "H3_v2_selective",
+        "sha256": "dd084e922e5013e06d679a9e9d1395cd83d24f8373ee93b562918d00e20ec4a7",
+        "source_file": "release_evidence/strong_confirmatory/formative/H3_v2_selective.json"
+      },
+      "forbidden_wording": "The hypothesis is confirmed or the method is superior.",
+      "formative_target_met": false,
+      "phase": "formative"
+    },
+    {
+      "allowed_wording": "Formative measurement only; independent confirmation has not been run.",
+      "claim_allowed": false,
+      "claim_id": "H5-A-route-validity",
+      "confirmatory_status": "not_run",
+      "evidence": {
+        "evidence_id": "FORMATIVE-H5_A_route_validity",
+        "experiment_id": "H5_A_route_validity",
+        "sha256": "4186b513c42de54f945fd49ce0441759bc819c1c27a24f1915078942aa5702bc",
+        "source_file": "release_evidence/strong_confirmatory/formative/H5_A_route_validity.json"
+      },
+      "forbidden_wording": "The hypothesis is confirmed or the method is superior.",
+      "formative_target_met": true,
+      "phase": "formative"
+    },
+    {
+      "allowed_wording": "Formative measurement only; independent confirmation has not been run.",
+      "claim_allowed": false,
+      "claim_id": "H6-A-planted-rules",
+      "confirmatory_status": "not_run",
+      "evidence": {
+        "evidence_id": "FORMATIVE-H6_A_planted_rules",
+        "experiment_id": "H6_A_planted_rules",
+        "sha256": "a92f9e5b7c26a20f5e3d59740cca09ea96bea508e208ba0d2562e30fb64a0afb",
+        "source_file": "release_evidence/strong_confirmatory/formative/H6_A_planted_rules.json"
+      },
+      "forbidden_wording": "The hypothesis is confirmed or the method is superior.",
+      "formative_target_met": true,
+      "phase": "formative"
+    },
+    {
+      "allowed_wording": "Formative measurement only; independent confirmation has not been run.",
+      "claim_allowed": false,
+      "claim_id": "H7-stability",
+      "confirmatory_status": "not_run",
+      "evidence": {
+        "evidence_id": "FORMATIVE-H7_stability",
+        "experiment_id": "H7_stability",
+        "sha256": "504f2d49fbb354fdb8a0e25e3627bf5437d6c7af1346356df55e073410fd3c0b",
+        "source_file": "release_evidence/strong_confirmatory/formative/H7_stability.json"
+      },
+      "forbidden_wording": "The hypothesis is confirmed or the method is superior.",
+      "formative_target_met": false,
+      "phase": "formative"
+    },
+    {
+      "allowed_wording": "Formative measurement only; independent confirmation has not been run.",
+      "claim_allowed": false,
+      "claim_id": "H8-grid-sensitivity",
+      "confirmatory_status": "not_run",
+      "evidence": {
+        "evidence_id": "FORMATIVE-H8_grid_sensitivity",
+        "experiment_id": "H8_grid_sensitivity",
+        "sha256": "89ee1adcbd712d1fbb0a05f8858475f664e847343f987d105ec862179edd9898",
+        "source_file": "release_evidence/strong_confirmatory/formative/H8_grid_sensitivity.json"
+      },
+      "forbidden_wording": "The hypothesis is confirmed or the method is superior.",
+      "formative_target_met": true,
+      "phase": "formative"
+    },
+    {
+      "allowed_wording": "Formative measurement only; independent confirmation has not been run.",
+      "claim_allowed": false,
+      "claim_id": "H9-scalability",
+      "confirmatory_status": "not_run",
+      "evidence": {
+        "evidence_id": "FORMATIVE-H9_scalability",
+        "experiment_id": "H9_scalability",
+        "sha256": "ab85b44c5f412fabd83ace851a38b989e4d61ed9fc83d77c01682182eb74c85c",
+        "source_file": "release_evidence/strong_confirmatory/formative/H9_scalability.json"
+      },
+      "forbidden_wording": "The hypothesis is confirmed or the method is superior.",
+      "formative_target_met": true,
+      "phase": "formative"
+    }
+  ],
+  "original_negative_results": {
+    "H3-original": "not_supported",
+    "H5-P-original": "not_supported",
+    "H6-general": "not_supported"
+  },
+  "schema_version": "1.0"
+}

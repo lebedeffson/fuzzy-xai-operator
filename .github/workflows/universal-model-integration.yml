@@ -1,0 +1,127 @@
+name: Universal model integration
+
+env:
+  OMP_NUM_THREADS: "1"
+  OPENBLAS_NUM_THREADS: "1"
+  MKL_NUM_THREADS: "1"
+  NUMEXPR_NUM_THREADS: "1"
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - feat/universal-model-integration
+  pull_request:
+
+jobs:
+  core-model-contracts:
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12"]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - run: python -m pip install -U pip
+      - run: python -m pip install -e ".[dev]"
+      - name: Typed adapter contracts
+        if: matrix.python-version == '3.11'
+        run: |
+          ruff check framework/fuzzyxai/fuzzyxai/adapters/contracts_v2.py framework/fuzzyxai/fuzzyxai/adapters/model_v2.py framework/fuzzyxai/fuzzyxai/adapters/model_registry.py framework/fuzzyxai/fuzzyxai/adapters/sklearn_v2.py framework/fuzzyxai/fuzzyxai/adapter_conformance.py framework/fuzzyxai/fuzzyxai/planner.py framework/fuzzyxai/fuzzyxai/explanation_quality.py
+          mypy
+      - name: Core model tests
+        run: python -m pytest -q tests/test_universal_model_adapters.py tests/test_external_release_gates.py tests/test_model_validation_report_merge.py
+      - name: Deterministic universality benchmark
+        run: |
+          python experiments/model_universality/run_benchmark.py --output /tmp/model-universality
+          cd /tmp/model-universality
+          sha256sum -c checksums.sha256
+      - name: Core runtime validation report
+        run: python experiments/model_universality/runtime_validation.py --library sklearn --output /tmp/adapter-reports
+      - name: Upload core runtime report
+        uses: actions/upload-artifact@v4
+        with:
+          name: adapter-report-sklearn-py${{ matrix.python-version }}
+          path: /tmp/adapter-reports/*.json
+          if-no-files-found: error
+      - name: External gate integrity without fabricated pass
+        run: |
+          python scripts/build_external_validation_package.py
+          python scripts/verify_external_release_gates.py
+
+  optional-runtime:
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12"]
+        runtime:
+          - {extra: xgboost, test: tests/optional/test_boosting_adapters.py, expression: xgboost}
+          - {extra: lightgbm, test: tests/optional/test_boosting_adapters.py, expression: lightgbm}
+          - {extra: catboost, test: tests/optional/test_boosting_adapters.py, expression: catboost}
+          - {extra: torch, test: tests/optional/test_torch_adapter.py, expression: ""}
+          - {extra: tensorflow, test: tests/optional/test_tensorflow_adapter.py, expression: ""}
+          - {extra: onnx, test: tests/optional/test_onnx_adapter.py, expression: ""}
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+      - run: python -m pip install -U pip
+      - run: python -m pip install -e ".[dev,${{ matrix.runtime.extra }}]"
+      - name: Runtime-specific adapter smoke
+        run: |
+          if [ -n "${{ matrix.runtime.expression }}" ]; then
+            python -m pytest -q "${{ matrix.runtime.test }}" -k "${{ matrix.runtime.expression }}"
+          else
+            python -m pytest -q "${{ matrix.runtime.test }}"
+          fi
+      - name: Runtime validation report
+        run: python experiments/model_universality/runtime_validation.py --library "${{ matrix.runtime.extra }}" --output /tmp/adapter-reports
+      - name: Upload runtime report
+        uses: actions/upload-artifact@v4
+        with:
+          name: adapter-report-${{ matrix.runtime.extra }}-py${{ matrix.python-version }}
+          path: /tmp/adapter-reports/*.json
+          if-no-files-found: error
+
+  aggregate-model-evidence:
+    needs: [core-model-contracts, optional-runtime]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: adapter-report-*
+          path: /tmp/adapter-reports
+          merge-multiple: true
+      - name: Merge independently measured reports
+        run: |
+          python scripts/merge_model_validation_reports.py \
+            --reports-dir /tmp/adapter-reports \
+            --output /tmp/model-universality-unified \
+            --quality-output /tmp/explanation-quality
+          cd /tmp/model-universality-unified
+          sha256sum -c checksums.sha256
+          cd /tmp/explanation-quality
+          sha256sum -c checksums.sha256
+          python "${GITHUB_WORKSPACE}/scripts/verify_model_universality.py" \
+            --evidence /tmp/model-universality-unified \
+            --require-all-pass
+          python "${GITHUB_WORKSPACE}/scripts/verify_explanation_quality.py" \
+            --evidence /tmp/explanation-quality \
+            --require-all-pass
+      - name: Upload unified model evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: model-universality-unified-${{ github.sha }}
+          path: |
+            /tmp/model-universality-unified
+            /tmp/explanation-quality
+          if-no-files-found: error

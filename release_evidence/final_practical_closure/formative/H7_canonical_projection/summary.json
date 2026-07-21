@@ -1,0 +1,29 @@
+{
+  "H7_A": {
+    "exact_source_hash_rate": 1.0,
+    "target_met": true
+  },
+  "H7_B": {
+    "confirmatory_status": "not_run",
+    "projection_tradeoff": {
+      "3": {
+        "mean_length": 61.0,
+        "mean_retained_magnitude": 0.9083370833066815,
+        "mean_sparsity": 0.375
+      },
+      "5": {
+        "mean_length": 103.0,
+        "mean_retained_magnitude": 0.9638908318923654,
+        "mean_sparsity": 0.625
+      },
+      "8": {
+        "mean_length": 165.65,
+        "mean_retained_magnitude": 1.0,
+        "mean_sparsity": 1.0
+      }
+    }
+  },
+  "confirmatory_claim_allowed": false,
+  "formative_target_met": true,
+  "phase": "formative_canonical_projection"
+}

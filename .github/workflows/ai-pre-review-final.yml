@@ -1,0 +1,56 @@
+name: Final blind AI pre-review gate
+
+on:
+  push:
+    branches:
+      - feat/ai-pre-review-final-closure
+  pull_request:
+    paths:
+      - "framework/fuzzyxai/fuzzyxai/ai_pre_review_final/**"
+      - "configs/ai_pre_review_final/**"
+      - "study/ai_pre_review_final/**"
+      - "scripts/ai_pre_review_final/**"
+      - "tests/ai_pre_review_final/**"
+      - "docs/AI_PRE_REVIEW_FINAL_BLINDING.md"
+      - "Makefile"
+      - ".github/workflows/ai-pre-review-final.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  public-formative-boundary:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    env:
+      OMP_NUM_THREADS: "1"
+      OPENBLAS_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
+      NUMEXPR_NUM_THREADS: "1"
+      PYTHONHASHSEED: "0"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Install focused dependencies
+        run: python -m pip install -e ".[dev]"
+      - name: Verify frozen ancestors
+        run: |
+          git merge-base --is-ancestor e34e52fb8ae62ee1be043d6d5b26a0c9214a0572 HEAD
+          git merge-base --is-ancestor bd48a9ca3795e2665e0e6a4f1ab4f4e981774c2b HEAD
+          git merge-base --is-ancestor 60ed5697d4d607df59556ea82de63527905f0f4f HEAD
+      - name: Verify public formative bundle
+        run: make ai-final-check
+      - name: Lint final study code
+        run: ruff check framework/fuzzyxai/fuzzyxai/ai_pre_review_final scripts/ai_pre_review_final tests/ai_pre_review_final
+      - name: Assert private and external gates remain closed
+        run: |
+          test ! -e study/ai_pre_review_final/private/hidden_scoring_key.enc
+          test ! -e study/ai_pre_review_final/confirmatory_protocol_lock.json
+          test ! -e study/ai_pre_review_final/formative_acceptance.json
+          ! find study/ai_pre_review_final/public_formative -type f -print0 | xargs -0 grep -l -E '"(is_correct|true_label|expected_action|method_identity|original_stratum)"'

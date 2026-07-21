@@ -1,0 +1,12 @@
+{
+  "condition_a": "strong simple baseline",
+  "condition_b": "FuzzyXAI human explanation",
+  "design": "blinded randomized within-subject A/B",
+  "frozen_before_recruitment": true,
+  "minimum_effect_action_accuracy": 0.05,
+  "minimum_effect_limitation_accuracy": 0.05,
+  "minimum_valid_participants": 24,
+  "stimuli_per_participant": 12,
+  "target_participants": 40,
+  "unsafe_overtrust_noninferiority_margin": 0.02
+}

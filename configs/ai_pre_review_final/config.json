@@ -1,0 +1,13 @@
+{
+  "schema_version": "2.0",
+  "study_id": "FXAI-FINAL-AI-HUMAN-CLOSURE",
+  "frozen_q1_commit": "e34e52fb8ae62ee1be043d6d5b26a0c9214a0572",
+  "selective_observer_commit": "bd48a9ca3795e2665e0e6a4f1ab4f4e981774c2b",
+  "technical_ai_pipeline_commit": "60ed5697d4d607df59556ea82de63527905f0f4f",
+  "formative_cases": 240,
+  "confirmatory_cases": 120,
+  "variants_per_case": 3,
+  "batch_case_limit": 20,
+  "modalities": ["tabular", "image", "text", "timeseries"],
+  "stable_release_allowed": false
+}

@@ -1,0 +1,23 @@
+{
+  "counts": {
+    "development": 2046,
+    "sealed_test": 2015,
+    "train": 6238
+  },
+  "dataset_id": "uci_har_smartphones",
+  "identity_file_sha256": {
+    "development": "9d8d5cdec78369bb3b27919b427a7073ca9c42096ff28cb2df15014b07e78f5f",
+    "sealed_test": "9a01f566defc4e0da562c6630e5e2026f4382e108b8c725e35d3330a96703804",
+    "train": "5f182a0d6c29905a124da9f34f71f0ff895b7033e1a3918e7f9497cd0fa748e8"
+  },
+  "identity_files": {
+    "development": "data/confirmatory/uci_har_smartphones/manifests/development_object_ids.txt",
+    "sealed_test": "data/confirmatory/uci_har_smartphones/manifests/sealed_test_object_ids.txt",
+    "train": "data/confirmatory/uci_har_smartphones/manifests/train_object_ids.txt"
+  },
+  "intersection_counts": {
+    "development_test": 0,
+    "train_development": 0,
+    "train_test": 0
+  }
+}

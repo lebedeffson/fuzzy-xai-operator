@@ -1,0 +1,38 @@
+{
+  "schema_version": "2.0",
+  "base_commit": "41c32af25242164144fd907e4850fa9d4f426bd1",
+  "profile": "full_q1_final",
+  "seeds": [4201, 4202, 4203, 4204, 4205],
+  "native_tasks": {
+    "tabular": "covertype_native_7class",
+    "image": "fashion_mnist_native_10class",
+    "text": "newsgroups_native_20class",
+    "timeseries": "electric_devices_native_7class"
+  },
+  "explanation_sample": {
+    "tabular": 1000,
+    "image": 500,
+    "text": 500,
+    "timeseries": 500
+  },
+  "h1_noninferiority_margin": -0.02,
+  "h2_removals_per_modality": 500,
+  "h2_min_f1": 0.95,
+  "h2_max_false_certification": 0.01,
+  "h3_coverage_tolerance": 0.02,
+  "h3_cost_fraction_of_full": 0.70,
+  "h4_risk_epsilon": 0.02,
+  "h4_fml_stop_fraction": 0.90,
+  "h5_structural_faults_per_modality": 1000,
+  "h6_datasets": ["uci_covertype", "uci_adult"],
+  "h6_folds": 10,
+  "h6_seeds": 5,
+  "h6_matched_controls": 5,
+  "scalability_sizes": [1000, 5000, 10000, 50000, 100000],
+  "external": {
+    "domain_reviewers": 3,
+    "comprehension_min_valid": 24,
+    "expert_reviewers": 3,
+    "expert_objects": 100
+  }
+}

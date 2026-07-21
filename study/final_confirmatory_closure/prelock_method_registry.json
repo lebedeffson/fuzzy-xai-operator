@@ -1,0 +1,54 @@
+{
+  "confirmatory_claim_allowed": false,
+  "confirmatory_test_opened": false,
+  "current_formative": {
+    "H3": {
+      "path": "study/final_confirmatory_closure/formative_real/summary.json",
+      "sha256": "c6fecfb729fc3d19e9fe5a8b34b15c46cdc858197bbde485d244d3ee7cbcc324"
+    },
+    "H7": {
+      "path": "study/final_confirmatory_closure/h7_formative/summary.json",
+      "sha256": "0da8205c311b999bd7aee4770cd099dfa8c2cf9fafd94c041a2f55fc0357ba11"
+    },
+    "comparators": {
+      "path": "study/final_confirmatory_closure/comparator_formative/summary.json",
+      "sha256": "4462cf30c24050f14376869bce2e9f6b22378703df1ecfbd69c1a5ae6a5e7ab2"
+    }
+  },
+  "frozen_historical_formative": {
+    "H5-A": {
+      "path": "release_evidence/final_practical_closure/formative/H5_A_route_validity/summary.json",
+      "sha256": "db465baa49a83ed262741f794b87c3d68d0118ff7a438b4cda858fcf85d43317"
+    },
+    "H6-A": {
+      "path": "release_evidence/final_practical_closure/formative/H6_A_detectability/summary.json",
+      "sha256": "8d1f56d5f6c2a98c9ec856fb420b473461bb390b6c911be8d60c9d09d1bd2383"
+    },
+    "H8": {
+      "path": "release_evidence/final_practical_closure/formative/H8_grid/summary.json",
+      "sha256": "4aa50009a58a89a13f67d810f46d97332c59eaa92f2b746a82d4999efd270c34"
+    },
+    "H9": {
+      "path": "release_evidence/final_practical_closure/formative/H9_scaling/summary.json",
+      "sha256": "04008a4063522bf81090699abc7e1cabd2b5daee5047664b3f572e6ce52074f7"
+    }
+  },
+  "lock_readiness": "ready_with_confirmatory_only_experiments_pending",
+  "method_checks": {
+    "H6_A_formative_target_met": false,
+    "H6_B_result_available": false,
+    "H7_A_preservation": 1.0
+  },
+  "method_status": {
+    "H3-P1-P4": "measured_formative_current_not_confirmatory",
+    "H5-A": "controlled_formative_ready_for_sealed_replay",
+    "H6-A": "formative_target_not_met_method_boundary_preserved",
+    "H6-B": "confirmatory_only_requires_two_sealed_tabular_datasets",
+    "H7-A": "formative_pass_exact_hash_preservation",
+    "H7-B": "blocked_projection_stability_not_measured",
+    "H8": "controlled_formative_ready_for_independent_check",
+    "H9": "operator_only_formative_ready_end_to_end_pending"
+  },
+  "phase": "prelock_method_readiness",
+  "schema_version": "1.0"
+}

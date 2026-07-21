@@ -1,10 +1,11 @@
 PYTHON ?= python
+CONFIRMATORY_PYTHON ?= .venv-confirmatory/bin/python
 PYTHONPATH := .
 PORT ?= 8085
 DATASET ?= breast_cancer
 BASELINE_ACCESS ?= native
 
-.PHONY: install test risk-test category-hott-test studio-engine-test studio-hybrid-batch studio-export-tables category-hott-test chapter2-breast-cancer-demo chapter2-real-operator-case reproduce-chapter2 calibrate-chapter2 benchmark-equal-raw-structure chapter2-3-final-evidence chapter3-artifacts reproduce-critical-ruptures chapter3-audit chapter3-real-conflicts chapter3-f0-vs-nas chapter3-calibrate-observer chapter3-tables chapter3-validate chapter3-final-evidence chapter3-practice-natural chapter3-practice-conflict chapter3-practice-bootstrap chapter3-practice-baselines chapter3-practice-calibrate chapter3-practice-ablation chapter3-practice-sensitivity chapter3-practice-stats chapter3-practice-validate chapter3-practice-all figures-chapter2 chapter2-figures chapter2-patch chapter2-validate chapter2-package2 ecosystem-evidence doctoral-final-evidence validate-ecosystem-sdk dissertation-artifacts chapter5-experiments chapter5-demo chapter5-latex web-demo unified-demo layered-demo layered-demo-legacy defense-demo defense-demo-legacy studio ui-health-check ui-health-check-all browser-visual-check unified-demo-cli full-pipeline figures full-experiments demo dashboard proof formal-proof thesis full-demo full-observer dataset-observer dataset-modes-check baseline-check real-data-validation benchmark benchmark-dataset baseline-comparison calibrate-observer ablation-benchmark defense-cases real-reduction-example dissertation-demo-summary dissertation-component-tables dissertation-check dataset-cards thesis-practice-tables structure-aware-benchmark reproducibility-artifacts operator-benchmark risk-benchmark lofo-f1-demo clean
+.PHONY: install test risk-test category-hott-test studio-engine-test studio-hybrid-batch studio-export-tables category-hott-test chapter2-breast-cancer-demo chapter2-real-operator-case reproduce-chapter2 calibrate-chapter2 benchmark-equal-raw-structure chapter2-3-final-evidence chapter3-artifacts reproduce-critical-ruptures chapter3-audit chapter3-real-conflicts chapter3-f0-vs-nas chapter3-calibrate-observer chapter3-tables chapter3-validate chapter3-final-evidence chapter3-practice-natural chapter3-practice-conflict chapter3-practice-bootstrap chapter3-practice-baselines chapter3-practice-calibrate chapter3-practice-ablation chapter3-practice-sensitivity chapter3-practice-stats chapter3-practice-validate chapter3-practice-all figures-chapter2 chapter2-figures chapter2-patch chapter2-validate chapter2-package2 ecosystem-evidence doctoral-final-evidence validate-ecosystem-sdk dissertation-artifacts chapter5-experiments chapter5-demo chapter5-latex web-demo unified-demo layered-demo layered-demo-legacy defense-demo defense-demo-legacy studio ui-health-check ui-health-check-all browser-visual-check unified-demo-cli full-pipeline figures full-experiments demo dashboard proof formal-proof thesis full-demo full-observer dataset-observer dataset-modes-check baseline-check real-data-validation benchmark benchmark-dataset baseline-comparison calibrate-observer ablation-benchmark defense-cases real-reduction-example dissertation-demo-summary dissertation-component-tables dissertation-check dataset-cards thesis-practice-tables structure-aware-benchmark reproducibility-artifacts operator-benchmark risk-benchmark lofo-f1-demo reproduce-dissertation empirical-smoke empirical-full-check clean
 
 install:
 	$(PYTHON) -m pip install -r requirements.txt
@@ -33,7 +34,60 @@ final-readiness-audit: studio-hybrid-batch studio-export-tables
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m fuzzyxai.audit.build_package
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m pytest tests/audit -q
 
-.PHONY: studio-semantic-smoke studio-server-smoke studio-smoke doctorate-release-check fresh-clone-gate practice-demo practice-screenshots practice-package practice-package-with-qa dataset-audit train-all evaluate-all training-audit practice-readiness-check screenshot-qc proof-qc package-self-contained-check real-validation-check full-delivery-package final-delivery-report final-product-check research-repo-inventory framework-check fuzzyxai-framework-check framework-external-check fuzzyxai-cli-check fuzzyxai-schema-check fuzzyxai-adapter-sdk-check fuzzyxai-framework-rc-check fuzzyxai-framework-rc-package fuzzyxai-visualization-check fuzzyxai-visualization-package fuzzyxai-visual-quality-check fuzzyxai-shap-like-visualization-check fuzzyxai-shap-like-visualization-package fuzzyxai-ru-visual-explanation-check fuzzyxai-ru-visual-explanation-package fuzzyxai-ru-visual-editorial-check fuzzyxai-ru-operator-explanation-check fuzzyxai-ru-explanation-framework-check operator-traceability-check research-validation research-validation-check fuzzyxai-research-analysis fuzzyxai-research-analysis-check applications-check operator-dashboard operator-route-check site-build sprint-report dubnaxai-release-check
+.PHONY: studio-semantic-smoke studio-server-smoke studio-smoke operator-manifest-check framework-release-check framework-source-release doctorate-release-check fresh-clone-gate practice-demo practice-screenshots practice-package practice-package-with-qa dataset-audit train-all evaluate-all training-audit practice-readiness-check screenshot-qc proof-qc package-self-contained-check real-validation-check full-delivery-package final-delivery-report final-product-check research-repo-inventory framework-check fuzzyxai-framework-check framework-external-check fuzzyxai-cli-check fuzzyxai-schema-check fuzzyxai-adapter-sdk-check fuzzyxai-framework-rc-check fuzzyxai-framework-rc-package fuzzyxai-visualization-check fuzzyxai-visualization-package fuzzyxai-visual-quality-check fuzzyxai-shap-like-visualization-check fuzzyxai-shap-like-visualization-package fuzzyxai-ru-visual-explanation-check fuzzyxai-ru-visual-explanation-package fuzzyxai-ru-visual-editorial-check fuzzyxai-ru-operator-explanation-check fuzzyxai-ru-explanation-framework-check operator-traceability-check research-validation research-validation-check fuzzyxai-research-analysis fuzzyxai-research-analysis-check applications-check operator-dashboard operator-route-check site-build sprint-report dubnaxai-release-check
+.PHONY: reproduce-q1 reproduce-q1-smoke verify-q1 q1-baseline-snapshot q1-claims q1-tables q1-figures q1-archives q1-archive-check reproduce-q1-final-smoke reproduce-q1-final verify-q1-final q1-final-archives q1-final-archive-check q1-final-external-check selective-observer-formative-check
+
+q1-baseline-snapshot:
+	$(PYTHON) scripts/q1/build_baseline_snapshot.py
+
+reproduce-q1-smoke:
+	OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/q1/reproduce_all.py --profile smoke
+
+reproduce-q1:
+	OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/q1/reproduce_all.py --profile full
+
+verify-q1:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/q1/verify_all.py
+
+q1-claims:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/q1/build_claim_registry.py
+
+q1-tables:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/q1/build_tables.py
+
+q1-figures:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/q1/build_figures.py
+
+q1-archives:
+	$(PYTHON) scripts/build_framework_release.py
+	$(PYTHON) scripts/q1/build_archives.py
+
+q1-archive-check:
+	$(PYTHON) scripts/q1/verify_archives.py
+
+reproduce-q1-final-smoke:
+	OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 PYTHONPATH=framework/fuzzyxai:. $(PYTHON) scripts/q1_final/reproduce_all.py --profile smoke
+
+reproduce-q1-final:
+	OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 PYTHONPATH=framework/fuzzyxai:. $(PYTHON) scripts/q1_final/reproduce_all.py --profile full
+
+verify-q1-final:
+	PYTHONPATH=framework/fuzzyxai:. $(PYTHON) scripts/q1_final/verify_all.py --require-heavy
+
+q1-final-archives:
+	PYTHONPATH=framework/fuzzyxai:. $(PYTHON) scripts/q1_final/build_archives.py
+
+q1-final-archive-check:
+	PYTHONPATH=framework/fuzzyxai:. $(PYTHON) scripts/q1_final/verify_archives.py
+
+q1-final-external-check:
+	PYTHONPATH=framework/fuzzyxai:. $(PYTHON) scripts/q1_final/verify_external_gates.py
+
+selective-observer-formative-check:
+	OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 PYTHONPATH=framework/fuzzyxai:. $(PYTHON) scripts/selective_observer/build_protocol_manifest.py
+	OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 PYTHONPATH=framework/fuzzyxai:. $(PYTHON) scripts/selective_observer/verify_formative_boundary.py
+	OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 PYTHONPATH=framework/fuzzyxai:. $(PYTHON) -m pytest tests/selective_observer -q
+	@echo "selective-observer-formative-check: PASS"
 studio-semantic-smoke:
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m fuzzyxai.audit.studio_smoke
 
@@ -42,7 +96,18 @@ studio-server-smoke:
 
 studio-smoke: studio-semantic-smoke studio-server-smoke
 
-doctorate-release-check: studio-hybrid-batch studio-export-tables
+operator-manifest-check:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m fuzzyxai.audit.operators_manifest --output reports/audit/operators_manifest_report.json
+
+framework-release-check: operator-manifest-check
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m pytest tests/test_public_framework_api.py tests/test_evidence_first_framework.py tests/test_framework_release_contract.py -q
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) examples/object_85_training_trace.py --output-dir release_evidence/generated/object_85
+	@echo "framework-release-check: PASS"
+
+framework-source-release: framework-release-check
+	$(PYTHON) scripts/build_framework_release.py
+
+doctorate-release-check: operator-manifest-check studio-hybrid-batch studio-export-tables
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m fuzzyxai.audit.inventory
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m fuzzyxai.audit.grep_stale_terms
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m fuzzyxai.audit.formula_references
@@ -51,7 +116,7 @@ doctorate-release-check: studio-hybrid-batch studio-export-tables
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m fuzzyxai.audit.docx_render_gate --chapter4 docs/chapters/glava_4_FuzzyXAI_corrected_final.docx --chapter5 docs/chapters/glava_5_FuzzyXAI_corrected_final.docx
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m fuzzyxai.audit.final_audit
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m fuzzyxai.audit.build_package
-	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m pytest tests/audit tests/test_studio_operator_engine.py tests/test_fuzzyxai_studio_demo_readiness.py -q
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m pytest tests/audit tests/test_studio_operator_engine.py tests/test_fuzzyxai_studio_demo_readiness.py tests/test_public_framework_api.py tests/test_evidence_first_framework.py tests/test_framework_release_contract.py -q
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m fuzzyxai.audit.studio_smoke
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m fuzzyxai.audit.studio_server_smoke
 
@@ -198,13 +263,13 @@ operator-route-check:
 	$(PYTHON) applications/check_operator_routes.py
 
 site-build:
-	$(PYTHON) site/dubnaxai/build.py
+	@echo "site-build: QUARANTINED (see archive/site-prototype-cab4018)"
 
 sprint-report:
 	$(PYTHON) scripts/build_sprint_report.py
 
-dubnaxai-release-check: research-repo-inventory fuzzyxai-framework-check framework-external-check fuzzyxai-cli-check fuzzyxai-schema-check fuzzyxai-adapter-sdk-check operator-traceability-check fuzzyxai-visual-quality-check fuzzyxai-shap-like-visualization-check applications-check operator-dashboard operator-route-check site-build sprint-report
-	@echo "dubnaxai-release-check: PASS"
+dubnaxai-release-check:
+	@echo "dubnaxai-release-check: QUARANTINED; run doctorate-release-check for the framework"
 
 risk-test:
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m pytest tests/test_risk_*.py -q
@@ -526,3 +591,321 @@ lofo-f1-demo:
 clean:
 	find . -type d -name __pycache__ -prune -exec rm -rf {} +
 	find . -type d -name .pytest_cache -prune -exec rm -rf {} +
+
+explanation-experience-evidence:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/build_explanation_experience_evidence.py
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/verify_explanation_experience.py
+
+.PHONY: chapter4-explanation-evidence empirical-validation empirical-validation-check chapter4-empirical-evidence model-universality external-validation-gates chapter4-final-candidate
+chapter4-explanation-evidence: explanation-experience-evidence
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/build_chapter4_explanation_evidence.py
+
+empirical-validation:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) experiments/real_training_experiment/run_empirical_validation.py
+
+chapter4-empirical-evidence: empirical-validation
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/build_empirical_chapter4_evidence.py
+
+empirical-validation-check: chapter4-empirical-evidence
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/verify_empirical_validation.py
+
+model-universality:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) experiments/model_universality/run_benchmark.py
+	cd release_evidence/model_universality && sha256sum -c checksums.sha256
+
+external-validation-gates:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/build_external_validation_package.py
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/verify_external_release_gates.py
+
+chapter4-final-candidate: model-universality external-validation-gates
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/build_chapter4_final_candidate.py
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/verify_chapter4_final_candidate.py
+
+empirical-smoke:
+	OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/reproduce_all.py --profile smoke --skip-optional --skip-archives
+
+reproduce-dissertation:
+	OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/reproduce_all.py --profile full
+
+empirical-full-check:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/verify_reproduction.py --profile full
+
+.PHONY: ai-pre-review-select-source ai-pre-review-build-log ai-pre-review-build-batches ai-pre-review-validate-input ai-pre-review-import ai-pre-review-aggregate ai-pre-review-lock-confirmatory ai-pre-review-build-human-pack ai-pre-review-compare-human ai-pre-review-reports ai-pre-review-archive ai-pre-review-check
+ai-pre-review-select-source:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/ai_pre_review/select_source_cases.py
+
+ai-pre-review-build-log:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/ai_pre_review/build_log.py
+
+ai-pre-review-build-batches: ai-pre-review-build-log
+
+ai-pre-review-validate-input:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/ai_pre_review/validate_inputs.py
+
+ai-pre-review-import:
+	test -n "$(REVIEW_DIR)" && test -n "$(SPLIT)" && test -n "$(AI_RUN_ID)"
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/ai_pre_review/import_ai_reviews.py --review-dir "$(REVIEW_DIR)" --split "$(SPLIT)" --run-id "$(AI_RUN_ID)"
+
+ai-pre-review-aggregate:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/ai_pre_review/aggregate_ai_reviews.py
+
+ai-pre-review-lock-confirmatory:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/ai_pre_review/lock_confirmatory.py
+
+ai-pre-review-build-human-pack:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/ai_pre_review/build_human_pack.py
+
+ai-pre-review-compare-human:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/ai_pre_review/compare_human.py
+
+ai-pre-review-reports:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/ai_pre_review/build_reports.py
+
+ai-pre-review-archive:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/ai_pre_review/build_archive.py
+
+ai-pre-review-check: ai-pre-review-build-log ai-pre-review-validate-input ai-pre-review-reports
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/ai_pre_review/build_archive.py
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/ai_pre_review/verify_pipeline.py
+
+.PHONY: ai-final-build-log ai-final-build-blind-batches ai-pre-review-final-blinding-audit ai-final-blinding-audit ai-final-validate-evidence ai-final-lock-confirmatory ai-final-claim-registry ai-final-dissertation-artifacts ai-final-archive ai-final-check reproduce-ai-review-final
+ai-final-build-log:
+	test -s study/ai_pre_review_final/public_formative/reviewer_cases.jsonl
+	test -s study/ai_pre_review_final/public_formative/manifest.json
+
+ai-final-build-blind-batches: ai-final-build-log
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/ai_pre_review_final/build_public_bundle.py
+
+ai-pre-review-final-blinding-audit ai-final-blinding-audit: ai-final-build-log
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/ai_pre_review_final/audit_blinding.py
+
+ai-final-validate-evidence: ai-final-build-log
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/ai_pre_review_final/validate_evidence.py
+
+ai-final-lock-confirmatory:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/ai_pre_review_final/lock_confirmatory.py
+
+ai-final-claim-registry:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/ai_pre_review_final/build_claim_registry.py
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/ai_pre_review_final/check_claims.py
+
+ai-final-dissertation-artifacts: ai-final-blinding-audit ai-final-claim-registry
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/ai_pre_review_final/build_reports.py
+
+ai-final-archive: ai-final-dissertation-artifacts ai-final-validate-evidence
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/ai_pre_review_final/build_public_bundle.py
+
+ai-final-check: ai-final-archive
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m pytest -q tests/ai_pre_review_final
+
+reproduce-ai-review-final: ai-final-check
+
+.PHONY: strong-confirmatory-protocol strong-confirmatory-smoke strong-confirmatory-formative strong-confirmatory-formative-check strong-confirmatory-lock strong-confirmatory-bundle chapter4-formative-shell chapter4-strong-confirmatory-final strong-confirmatory-check
+strong-confirmatory-protocol:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/strong_confirmatory/build_protocol.py
+
+strong-confirmatory-smoke: strong-confirmatory-protocol
+	OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/strong_confirmatory/run_formative.py --profile smoke
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/strong_confirmatory/build_report.py
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/strong_confirmatory/verify_formative.py
+
+strong-confirmatory-formative: strong-confirmatory-protocol
+	OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/strong_confirmatory/run_formative.py --profile full
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/strong_confirmatory/build_report.py
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/strong_confirmatory/verify_formative.py
+
+strong-confirmatory-formative-check:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/strong_confirmatory/verify_formative.py
+
+strong-confirmatory-lock:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/strong_confirmatory/lock_protocol.py
+
+strong-confirmatory-bundle: chapter4-formative-shell
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/strong_confirmatory/build_bundle.py
+
+chapter4-formative-shell: strong-confirmatory-formative-check
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/chapter4/build_claims.py
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/chapter4/build_tables.py
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/chapter4/build_figures.py
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/chapter4/build_text.py
+
+chapter4-strong-confirmatory-final:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/chapter4/build_final.py
+
+strong-confirmatory-check: strong-confirmatory-protocol
+	OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m pytest -q tests/strong_confirmatory
+
+.PHONY: practical-controller-protocol practical-controller-formative practical-controller-formative-check practical-controller-freeze practical-controller-confirmatory practical-controller-baselines practical-controller-ablation route-validity-confirmatory rule-detectability-envelope rule-matched-control-confirmatory posthoc-benchmark-final glassbox-benchmark-final h7-canonical-fidelity h7-presentation-tradeoff grid-confirmatory scale-2m scale-5m ai-formative-run2-import final-statistics final-claim-registry chapter4-practical-formative chapter4-final practical-release-check practical-release-archive practical-docker-check reproduce-final-practical-closure
+
+practical-controller-protocol:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/final_practical_closure/build_protocol.py
+
+practical-controller-formative: practical-controller-protocol
+	OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 PYTHONPATH=$(PYTHONPATH) nice -n 18 $(PYTHON) scripts/final_practical_closure/run_formative.py --profile full
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/final_practical_closure/verify_formative.py
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/final_practical_closure/build_artifacts.py
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/final_practical_closure/build_formative_report.py
+
+practical-controller-formative-check:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/final_practical_closure/verify_formative.py
+
+practical-controller-freeze: practical-controller-formative-check
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/final_practical_closure/lock_protocol.py
+
+practical-controller-confirmatory: practical-controller-freeze
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/final_practical_closure/run_confirmatory.py
+
+practical-controller-baselines practical-controller-ablation rule-detectability-envelope posthoc-benchmark-final glassbox-benchmark-final h7-canonical-fidelity h7-presentation-tradeoff:
+	@$(MAKE) practical-controller-formative
+
+route-validity-confirmatory rule-matched-control-confirmatory grid-confirmatory scale-2m scale-5m:
+	@$(MAKE) practical-controller-confirmatory
+
+ai-formative-run2-import:
+	@test -n "$(AI_RUN2_INPUT)" || (echo "BLOCKED: set AI_RUN2_INPUT to a real blinded run-2 JSON"; exit 2)
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/final_practical_closure/import_ai_formative_run2.py "$(AI_RUN2_INPUT)"
+
+final-statistics: practical-controller-confirmatory
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/final_practical_closure/build_claim_registry.py
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/final_practical_closure/build_confirmatory_outputs.py
+
+final-claim-registry:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/final_practical_closure/build_claim_registry.py
+
+chapter4-practical-formative: practical-controller-formative-check
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/final_practical_closure/build_artifacts.py
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/final_practical_closure/build_chapter4_formative.py
+
+chapter4-final: final-chapter4
+	@echo "PASS: chapter4-final source=sealed-confirmatory"
+
+practical-release-check: practical-controller-formative-check chapter4-practical-formative final-claim-registry
+	OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 PYTHONPATH=$(PYTHONPATH) nice -n 18 $(PYTHON) -m pytest -q tests/practical_controller
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) -m ruff check framework/fuzzyxai/fuzzyxai/practical_controller scripts/final_practical_closure tests/practical_controller
+	@echo "PASS: practical-release-check scope=formative-technical-candidate stable=false"
+
+practical-release-archive: practical-release-check
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/final_practical_closure/build_formative_report.py
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/final_practical_closure/build_bundle.py
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/build_framework_release.py
+
+practical-docker-check:
+	docker build -f Dockerfile.practical -t fuzzyxai-practical .
+	docker run --rm fuzzyxai-practical
+
+reproduce-final-practical-closure: final-release-check final-controller-freeze final-controller-confirmatory final-confirmatory-statistics final-confirmatory-claim-registry final-chapter4 final-one-zip
+
+.PHONY: final-confirmatory-protocol final-comparator-protocol final-dataset-registry final-seal-datasets final-leakage-audit final-data-verify final-near-duplicate-audit final-oof-features final-p0-p1-audit final-local-data-check final-controller-formative final-controller-freeze final-controller-confirmatory final-controller-baselines final-controller-ablation final-route-controlled final-route-replay final-rule-envelope final-rule-matched-controls final-canonical-evidence final-presentation-projection final-posthoc-benchmark final-glassbox-benchmark final-grid-confirmatory final-scale-operator final-scale-end-to-end final-shadow-replay final-ai-run2-build final-ai-run2-import final-ai-run2-report final-ai-text-review-scope final-prelock-method-registry final-confirmatory-statistics final-confirmatory-claim-registry final-chapter4 final-release-check final-prelock-archive final-release-archive final-one-zip reproduce-final-confirmatory-closure
+
+final-confirmatory-protocol:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/final_closure/build_protocol.py
+
+final-comparator-protocol:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/final_closure/build_comparator_protocol.py
+
+final-dataset-registry: final-confirmatory-protocol
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/final_closure/build_dataset_registry.py
+
+final-seal-datasets: final-dataset-registry
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/final_closure/seal_datasets.py
+
+final-leakage-audit: final-seal-datasets
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/final_closure/verify_dataset_leakage.py
+
+final-data-verify: final-leakage-audit
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/final_closure/build_data_metadata.py
+	@echo "PASS: final_data_verify"
+
+final-near-duplicate-audit: final-data-verify
+	OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 PYTHONPATH=$(PYTHONPATH) nice -n 18 $(PYTHON) scripts/final_closure/audit_near_duplicates.py
+
+final-oof-features: final-near-duplicate-audit
+	@for dataset in bank_marketing default_credit_clients shoulder_implant_xray sms_spam uci_har_smartphones; do \
+		OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 PYTHONPATH=$(PYTHONPATH) nice -n 18 $(CONFIRMATORY_PYTHON) scripts/final_closure/build_oof_features.py --dataset $$dataset || exit $$?; \
+	done
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/final_closure/verify_oof_features.py
+
+final-p0-p1-audit: final-oof-features
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/final_closure/verify_oof_features.py
+
+final-local-data-check: final-p0-p1-audit
+	@echo "PASS: final-local-data-check private_inputs_available=true test_opened=false"
+
+final-controller-formative: final-p0-p1-audit
+	OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 PYTHONPATH=$(PYTHONPATH):scripts/final_closure nice -n 18 $(CONFIRMATORY_PYTHON) scripts/final_closure/run_real_formative.py
+
+final-controller-freeze: final-p0-p1-audit final-controller-formative final-comparator-protocol final-posthoc-benchmark final-canonical-evidence final-ai-text-review-scope final-prelock-method-registry
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/final_closure/lock_protocol.py
+
+final-controller-confirmatory: final-controller-freeze
+	OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 PYTHONPATH=$(PYTHONPATH):scripts/final_closure nice -n 18 $(CONFIRMATORY_PYTHON) scripts/final_closure/run_sealed_confirmatory.py
+
+final-controller-scoring-recovery-lock:
+	PYTHONPATH=$(PYTHONPATH):scripts/final_closure $(CONFIRMATORY_PYTHON) scripts/final_closure/run_scoring_recovery.py lock
+
+final-controller-scoring-recovery:
+	PYTHONPATH=$(PYTHONPATH):scripts/final_closure $(CONFIRMATORY_PYTHON) scripts/final_closure/run_scoring_recovery.py run
+
+final-controller-baselines final-controller-ablation:
+	@$(MAKE) final-controller-confirmatory
+
+final-route-controlled:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/final_closure/build_fault_library.py
+
+final-route-replay final-shadow-replay:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/final_closure/run_shadow_replay.py
+
+final-rule-envelope final-scale-operator:
+	@$(MAKE) final-controller-formative
+
+final-canonical-evidence final-presentation-projection: final-p0-p1-audit
+	OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 PYTHONPATH=$(PYTHONPATH):scripts/final_closure nice -n 18 $(CONFIRMATORY_PYTHON) scripts/final_closure/verify_canonical_projection.py
+
+final-posthoc-benchmark final-glassbox-benchmark: final-comparator-protocol final-p0-p1-audit
+	OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 PYTHONPATH=$(PYTHONPATH):framework/fuzzyxai nice -n 18 $(CONFIRMATORY_PYTHON) scripts/final_closure/run_comparator_formative.py
+
+final-rule-matched-controls final-grid-confirmatory final-scale-end-to-end:
+	@$(MAKE) final-controller-confirmatory
+
+final-ai-run2-build:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/final_closure/build_ai_run2_bundle.py
+
+final-ai-run2-import:
+	@test -n "$(AI_RUN2_INPUT)" || (echo "BLOCKED: set AI_RUN2_INPUT to a directory containing reviews.jsonl and session_metadata.json"; exit 2)
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/final_closure/import_ai_run2.py "$(AI_RUN2_INPUT)"
+
+final-ai-run2-report:
+	@test -f study/final_confirmatory_closure/ai_formative_run2_report.md || (echo "BLOCKED: import a real clean-session AI run 2 first"; exit 2)
+	@cat study/final_confirmatory_closure/ai_formative_run2_report.md
+
+final-ai-text-review-scope: final-ai-run2-build
+	PYTHONPATH=$(PYTHONPATH):scripts/final_closure $(PYTHON) scripts/final_closure/build_ai_scope_decision.py
+
+final-prelock-method-registry: final-controller-formative final-posthoc-benchmark final-canonical-evidence
+	PYTHONPATH=$(PYTHONPATH):scripts/final_closure $(PYTHON) scripts/final_closure/build_prelock_method_registry.py
+
+final-confirmatory-statistics: final-controller-confirmatory
+	PYTHONPATH=$(PYTHONPATH):scripts/final_closure $(CONFIRMATORY_PYTHON) scripts/final_closure/build_final_statistics.py
+
+final-confirmatory-claim-registry: final-confirmatory-statistics
+	PYTHONPATH=$(PYTHONPATH):scripts/final_closure $(PYTHON) scripts/final_closure/build_final_claim_registry.py
+
+final-chapter4: final-confirmatory-claim-registry
+	OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 PYTHONPATH=$(PYTHONPATH):scripts/final_closure nice -n 18 $(CONFIRMATORY_PYTHON) scripts/final_closure/build_chapter4.py
+
+final-release-check: final-confirmatory-protocol final-route-controlled final-ai-run2-build final-ai-text-review-scope final-shadow-replay
+	OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 PYTHONPATH=$(PYTHONPATH) nice -n 18 $(PYTHON) -m pytest -q tests/final_closure tests/practical_controller
+	PYTHONPATH=$(PYTHONPATH) nice -n 18 $(PYTHON) -m ruff check framework/fuzzyxai/fuzzyxai/final_closure scripts/final_closure tests/final_closure
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/final_closure/verify_prelock.py
+	@echo "PASS: final-release-check scope=prelock-technical stable=false"
+
+final-prelock-archive: final-release-check
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/final_closure/build_prelock_bundle.py
+
+final-release-archive: final-release-check
+	@$(MAKE) final-one-zip
+
+final-one-zip: final-chapter4
+	PYTHONPATH=$(PYTHONPATH):scripts/final_closure $(PYTHON) scripts/final_closure/build_one_zip.py
+
+reproduce-final-confirmatory-closure: reproduce-final-practical-closure

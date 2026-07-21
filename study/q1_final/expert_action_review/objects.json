@@ -1,0 +1,1102 @@
+[
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_001",
+    "response": null,
+    "source_stimulus_id": "stimulus_001",
+    "stratum": "ordinary"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_002",
+    "response": null,
+    "source_stimulus_id": "stimulus_002",
+    "stratum": "rare"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_003",
+    "response": null,
+    "source_stimulus_id": "stimulus_003",
+    "stratum": "incorrect"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_004",
+    "response": null,
+    "source_stimulus_id": "stimulus_004",
+    "stratum": "conflict"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_005",
+    "response": null,
+    "source_stimulus_id": "stimulus_005",
+    "stratum": "incomplete"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_006",
+    "response": null,
+    "source_stimulus_id": "stimulus_006",
+    "stratum": "shift"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_007",
+    "response": null,
+    "source_stimulus_id": "stimulus_007",
+    "stratum": "boundary"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_008",
+    "response": null,
+    "source_stimulus_id": "stimulus_008",
+    "stratum": "ordinary"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_009",
+    "response": null,
+    "source_stimulus_id": "stimulus_009",
+    "stratum": "rare"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_010",
+    "response": null,
+    "source_stimulus_id": "stimulus_010",
+    "stratum": "incorrect"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_011",
+    "response": null,
+    "source_stimulus_id": "stimulus_011",
+    "stratum": "conflict"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_012",
+    "response": null,
+    "source_stimulus_id": "stimulus_012",
+    "stratum": "incomplete"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_013",
+    "response": null,
+    "source_stimulus_id": "stimulus_013",
+    "stratum": "shift"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_014",
+    "response": null,
+    "source_stimulus_id": "stimulus_014",
+    "stratum": "boundary"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_015",
+    "response": null,
+    "source_stimulus_id": "stimulus_015",
+    "stratum": "ordinary"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_016",
+    "response": null,
+    "source_stimulus_id": "stimulus_016",
+    "stratum": "rare"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_017",
+    "response": null,
+    "source_stimulus_id": "stimulus_017",
+    "stratum": "incorrect"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_018",
+    "response": null,
+    "source_stimulus_id": "stimulus_018",
+    "stratum": "conflict"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_019",
+    "response": null,
+    "source_stimulus_id": "stimulus_019",
+    "stratum": "incomplete"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_020",
+    "response": null,
+    "source_stimulus_id": "stimulus_020",
+    "stratum": "shift"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_021",
+    "response": null,
+    "source_stimulus_id": "stimulus_021",
+    "stratum": "boundary"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_022",
+    "response": null,
+    "source_stimulus_id": "stimulus_022",
+    "stratum": "ordinary"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_023",
+    "response": null,
+    "source_stimulus_id": "stimulus_023",
+    "stratum": "rare"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_024",
+    "response": null,
+    "source_stimulus_id": "stimulus_024",
+    "stratum": "incorrect"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_025",
+    "response": null,
+    "source_stimulus_id": "stimulus_001",
+    "stratum": "conflict"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_026",
+    "response": null,
+    "source_stimulus_id": "stimulus_002",
+    "stratum": "incomplete"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_027",
+    "response": null,
+    "source_stimulus_id": "stimulus_003",
+    "stratum": "shift"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_028",
+    "response": null,
+    "source_stimulus_id": "stimulus_004",
+    "stratum": "boundary"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_029",
+    "response": null,
+    "source_stimulus_id": "stimulus_005",
+    "stratum": "ordinary"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_030",
+    "response": null,
+    "source_stimulus_id": "stimulus_006",
+    "stratum": "rare"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_031",
+    "response": null,
+    "source_stimulus_id": "stimulus_007",
+    "stratum": "incorrect"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_032",
+    "response": null,
+    "source_stimulus_id": "stimulus_008",
+    "stratum": "conflict"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_033",
+    "response": null,
+    "source_stimulus_id": "stimulus_009",
+    "stratum": "incomplete"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_034",
+    "response": null,
+    "source_stimulus_id": "stimulus_010",
+    "stratum": "shift"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_035",
+    "response": null,
+    "source_stimulus_id": "stimulus_011",
+    "stratum": "boundary"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_036",
+    "response": null,
+    "source_stimulus_id": "stimulus_012",
+    "stratum": "ordinary"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_037",
+    "response": null,
+    "source_stimulus_id": "stimulus_013",
+    "stratum": "rare"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_038",
+    "response": null,
+    "source_stimulus_id": "stimulus_014",
+    "stratum": "incorrect"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_039",
+    "response": null,
+    "source_stimulus_id": "stimulus_015",
+    "stratum": "conflict"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_040",
+    "response": null,
+    "source_stimulus_id": "stimulus_016",
+    "stratum": "incomplete"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_041",
+    "response": null,
+    "source_stimulus_id": "stimulus_017",
+    "stratum": "shift"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_042",
+    "response": null,
+    "source_stimulus_id": "stimulus_018",
+    "stratum": "boundary"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_043",
+    "response": null,
+    "source_stimulus_id": "stimulus_019",
+    "stratum": "ordinary"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_044",
+    "response": null,
+    "source_stimulus_id": "stimulus_020",
+    "stratum": "rare"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_045",
+    "response": null,
+    "source_stimulus_id": "stimulus_021",
+    "stratum": "incorrect"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_046",
+    "response": null,
+    "source_stimulus_id": "stimulus_022",
+    "stratum": "conflict"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_047",
+    "response": null,
+    "source_stimulus_id": "stimulus_023",
+    "stratum": "incomplete"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_048",
+    "response": null,
+    "source_stimulus_id": "stimulus_024",
+    "stratum": "shift"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_049",
+    "response": null,
+    "source_stimulus_id": "stimulus_001",
+    "stratum": "boundary"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_050",
+    "response": null,
+    "source_stimulus_id": "stimulus_002",
+    "stratum": "ordinary"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_051",
+    "response": null,
+    "source_stimulus_id": "stimulus_003",
+    "stratum": "rare"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_052",
+    "response": null,
+    "source_stimulus_id": "stimulus_004",
+    "stratum": "incorrect"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_053",
+    "response": null,
+    "source_stimulus_id": "stimulus_005",
+    "stratum": "conflict"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_054",
+    "response": null,
+    "source_stimulus_id": "stimulus_006",
+    "stratum": "incomplete"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_055",
+    "response": null,
+    "source_stimulus_id": "stimulus_007",
+    "stratum": "shift"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_056",
+    "response": null,
+    "source_stimulus_id": "stimulus_008",
+    "stratum": "boundary"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_057",
+    "response": null,
+    "source_stimulus_id": "stimulus_009",
+    "stratum": "ordinary"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_058",
+    "response": null,
+    "source_stimulus_id": "stimulus_010",
+    "stratum": "rare"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_059",
+    "response": null,
+    "source_stimulus_id": "stimulus_011",
+    "stratum": "incorrect"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_060",
+    "response": null,
+    "source_stimulus_id": "stimulus_012",
+    "stratum": "conflict"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_061",
+    "response": null,
+    "source_stimulus_id": "stimulus_013",
+    "stratum": "incomplete"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_062",
+    "response": null,
+    "source_stimulus_id": "stimulus_014",
+    "stratum": "shift"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_063",
+    "response": null,
+    "source_stimulus_id": "stimulus_015",
+    "stratum": "boundary"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_064",
+    "response": null,
+    "source_stimulus_id": "stimulus_016",
+    "stratum": "ordinary"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_065",
+    "response": null,
+    "source_stimulus_id": "stimulus_017",
+    "stratum": "rare"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_066",
+    "response": null,
+    "source_stimulus_id": "stimulus_018",
+    "stratum": "incorrect"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_067",
+    "response": null,
+    "source_stimulus_id": "stimulus_019",
+    "stratum": "conflict"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_068",
+    "response": null,
+    "source_stimulus_id": "stimulus_020",
+    "stratum": "incomplete"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_069",
+    "response": null,
+    "source_stimulus_id": "stimulus_021",
+    "stratum": "shift"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_070",
+    "response": null,
+    "source_stimulus_id": "stimulus_022",
+    "stratum": "boundary"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_071",
+    "response": null,
+    "source_stimulus_id": "stimulus_023",
+    "stratum": "ordinary"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_072",
+    "response": null,
+    "source_stimulus_id": "stimulus_024",
+    "stratum": "rare"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_073",
+    "response": null,
+    "source_stimulus_id": "stimulus_001",
+    "stratum": "incorrect"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_074",
+    "response": null,
+    "source_stimulus_id": "stimulus_002",
+    "stratum": "conflict"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_075",
+    "response": null,
+    "source_stimulus_id": "stimulus_003",
+    "stratum": "incomplete"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_076",
+    "response": null,
+    "source_stimulus_id": "stimulus_004",
+    "stratum": "shift"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_077",
+    "response": null,
+    "source_stimulus_id": "stimulus_005",
+    "stratum": "boundary"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_078",
+    "response": null,
+    "source_stimulus_id": "stimulus_006",
+    "stratum": "ordinary"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_079",
+    "response": null,
+    "source_stimulus_id": "stimulus_007",
+    "stratum": "rare"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_080",
+    "response": null,
+    "source_stimulus_id": "stimulus_008",
+    "stratum": "incorrect"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_081",
+    "response": null,
+    "source_stimulus_id": "stimulus_009",
+    "stratum": "conflict"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_082",
+    "response": null,
+    "source_stimulus_id": "stimulus_010",
+    "stratum": "incomplete"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_083",
+    "response": null,
+    "source_stimulus_id": "stimulus_011",
+    "stratum": "shift"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_084",
+    "response": null,
+    "source_stimulus_id": "stimulus_012",
+    "stratum": "boundary"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_085",
+    "response": null,
+    "source_stimulus_id": "stimulus_013",
+    "stratum": "ordinary"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_086",
+    "response": null,
+    "source_stimulus_id": "stimulus_014",
+    "stratum": "rare"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_087",
+    "response": null,
+    "source_stimulus_id": "stimulus_015",
+    "stratum": "incorrect"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_088",
+    "response": null,
+    "source_stimulus_id": "stimulus_016",
+    "stratum": "conflict"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_089",
+    "response": null,
+    "source_stimulus_id": "stimulus_017",
+    "stratum": "incomplete"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_090",
+    "response": null,
+    "source_stimulus_id": "stimulus_018",
+    "stratum": "shift"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_091",
+    "response": null,
+    "source_stimulus_id": "stimulus_019",
+    "stratum": "boundary"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_092",
+    "response": null,
+    "source_stimulus_id": "stimulus_020",
+    "stratum": "ordinary"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_093",
+    "response": null,
+    "source_stimulus_id": "stimulus_021",
+    "stratum": "rare"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_094",
+    "response": null,
+    "source_stimulus_id": "stimulus_022",
+    "stratum": "incorrect"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_095",
+    "response": null,
+    "source_stimulus_id": "stimulus_023",
+    "stratum": "conflict"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_096",
+    "response": null,
+    "source_stimulus_id": "stimulus_024",
+    "stratum": "incomplete"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_097",
+    "response": null,
+    "source_stimulus_id": "stimulus_001",
+    "stratum": "shift"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_098",
+    "response": null,
+    "source_stimulus_id": "stimulus_002",
+    "stratum": "boundary"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_099",
+    "response": null,
+    "source_stimulus_id": "stimulus_003",
+    "stratum": "ordinary"
+  },
+  {
+    "blinded_conditions": [
+      "condition_1",
+      "condition_2",
+      "condition_3"
+    ],
+    "object_id": "expert_object_100",
+    "response": null,
+    "source_stimulus_id": "stimulus_004",
+    "stratum": "rare"
+  }
+]

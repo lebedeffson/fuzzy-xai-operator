@@ -1,0 +1,23 @@
+{
+  "files": {
+    "checkpoints.json": "44427a100fe6eaa6bfea6425993076cb07ef5aab814b024129bc65ef039f0e9d",
+    "cross_model_matrix.json": "ea39a5576dd2c5e3f06cc167282b55d1164b6203d77eab4e19bbf9a1663b34ee",
+    "data/dataset_snapshot.csv": "9f4874774e7b44c492bed00e0b09dfc354cbdbdb5d88eedc4ea12e9f0312104c",
+    "dataset_card.md": "e241e278dca484d7feaeace25c7019be4fa0017731c1e363230405965af68df4",
+    "domain_language.json": "20fd36cda8a09bb4b0003649df38bbdbc9b3aed8103ed37ebf9111944d9625d0",
+    "domain_language_validation.json": "77fca1ccc2b3f00c8b8ef4c3d8efd82217eafe4da7b8342704bd4db3b07c5a6f",
+    "empirical_summary.json": "a24d98cf9ef5bbcd8907d2fbe5cf3133a2c03f5858c16b6a7d22b8175fb38aea",
+    "environment.json": "5d7ff45bbbe9846781d2b59cbd3984a0bfc7499c22ca51f1eab7b99caa9aa257",
+    "explanation_result.json": "fc541dfb769d7a2c94e101ecb6af253acf812038cf208ed56be15fa775591fc3",
+    "human_explanation.json": "36e7c031f201ea963d74b643ce842e7d0434357cac6ac3e8c580493b1a37ee96",
+    "human_explanation.md": "12885293dd03d05139033782994cbaab378f6c665946ca9e04f688b054a33190",
+    "rule_ablation.json": "c7c6a493bdd21d3c6e063650dceb437559cff6b789746f0ebbe993162d241692",
+    "selected_forgetting_case.json": "d1b23ff3cea8ef95ee0e6eab46f575256a4b4e492cc14ea0294d77a808d138f9",
+    "sensitivity_analysis.json": "d3b2a5b44aebc8ddde9e8b9605ffdf2dc84ab198b0b2a87d2c0a4a1013593eab",
+    "similar_cases.json": "9cf215cd2a0f0ad8dfb7a6e062610c732127448ed57a552cf5afa016c01c40b6",
+    "subgroup_definition.json": "5146c773390149675044dab6d5e43476bd25167b6ae1740a52dd9455f5010369"
+  },
+  "run_id": "bcwd_sgd_checkpoint_seed42_v1",
+  "schema_version": "1.0",
+  "source_type": "measured"
+}

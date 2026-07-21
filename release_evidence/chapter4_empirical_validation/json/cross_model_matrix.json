@@ -1,0 +1,183 @@
+[
+  {
+    "action": "review",
+    "adapter_capabilities": {
+      "checkpoints": false,
+      "embeddings": false,
+      "feature_importance": true,
+      "gradients": false,
+      "predict": true,
+      "predict_proba": true,
+      "rules": true,
+      "training_history": false
+    },
+    "explanation_level": "E3",
+    "graph_errors": [],
+    "missing_channels": [
+      "alignment",
+      "counterfactuals",
+      "reduction",
+      "risk",
+      "similar_cases",
+      "training_history"
+    ],
+    "model": "logistic_regression",
+    "model_fingerprint": "94a06851a96f9b69721f6af6df38d2c747c542ea85e429678c41bc0d087935fe",
+    "native_channels": [
+      "prediction",
+      "call_trace",
+      "data_profile",
+      "local_contributions",
+      "class_concepts"
+    ],
+    "native_rule_count": 0,
+    "prediction": 0,
+    "surrogate_channels": [
+      "rules"
+    ]
+  },
+  {
+    "action": "review",
+    "adapter_capabilities": {
+      "checkpoints": false,
+      "embeddings": false,
+      "feature_importance": true,
+      "gradients": false,
+      "predict": true,
+      "predict_proba": true,
+      "rules": true,
+      "training_history": false
+    },
+    "explanation_level": "E3",
+    "graph_errors": [],
+    "missing_channels": [
+      "alignment",
+      "counterfactuals",
+      "reduction",
+      "risk",
+      "similar_cases",
+      "training_history"
+    ],
+    "model": "decision_tree",
+    "model_fingerprint": "1a3f92c4deffe58e0c47f43234d475c352a464be71bd14e8efb5c7748a97c0e4",
+    "native_channels": [
+      "prediction",
+      "call_trace",
+      "data_profile",
+      "local_contributions",
+      "rules",
+      "class_concepts"
+    ],
+    "native_rule_count": 8,
+    "prediction": 1,
+    "surrogate_channels": []
+  },
+  {
+    "action": "review",
+    "adapter_capabilities": {
+      "checkpoints": false,
+      "embeddings": false,
+      "feature_importance": true,
+      "gradients": false,
+      "predict": true,
+      "predict_proba": true,
+      "rules": true,
+      "training_history": false
+    },
+    "explanation_level": "E3",
+    "graph_errors": [],
+    "missing_channels": [
+      "alignment",
+      "counterfactuals",
+      "reduction",
+      "risk",
+      "similar_cases",
+      "training_history"
+    ],
+    "model": "random_forest",
+    "model_fingerprint": "8136a0f72cc2d0aa4c63e93559af3418123216ce9131eb4630c69620733318d8",
+    "native_channels": [
+      "prediction",
+      "call_trace",
+      "data_profile",
+      "local_contributions",
+      "rules",
+      "class_concepts"
+    ],
+    "native_rule_count": 50,
+    "prediction": 1,
+    "surrogate_channels": []
+  },
+  {
+    "action": "review",
+    "adapter_capabilities": {
+      "checkpoints": false,
+      "embeddings": false,
+      "feature_importance": true,
+      "gradients": false,
+      "predict": true,
+      "predict_proba": true,
+      "rules": true,
+      "training_history": false
+    },
+    "explanation_level": "E3",
+    "graph_errors": [],
+    "missing_channels": [
+      "alignment",
+      "counterfactuals",
+      "local_contributions",
+      "reduction",
+      "risk",
+      "similar_cases",
+      "training_history"
+    ],
+    "model": "sugeno_native_rules",
+    "model_fingerprint": "c8d1307328c50163e7beff1a94f3b59e3a8ca02dbed0d0072c3d4b03d94ac146",
+    "native_channels": [
+      "prediction",
+      "call_trace",
+      "data_profile",
+      "rules",
+      "class_concepts"
+    ],
+    "native_rule_count": 5,
+    "prediction": 1,
+    "surrogate_channels": []
+  },
+  {
+    "action": "review",
+    "adapter_capabilities": {
+      "checkpoints": false,
+      "embeddings": false,
+      "feature_importance": false,
+      "gradients": false,
+      "predict": true,
+      "predict_proba": false,
+      "rules": false,
+      "training_history": false
+    },
+    "explanation_level": "E3",
+    "graph_errors": [],
+    "missing_channels": [
+      "alignment",
+      "counterfactuals",
+      "local_contributions",
+      "reduction",
+      "risk",
+      "rules",
+      "similar_cases",
+      "training_history"
+    ],
+    "model": "black_box_callable",
+    "model_fingerprint": "7159890368d2ba8419ac1f139e823b9097c2bde9454ecb73c6fdfaa377a521dc",
+    "native_channels": [
+      "prediction",
+      "call_trace",
+      "data_profile",
+      "class_concepts"
+    ],
+    "native_rule_count": 0,
+    "prediction": 0,
+    "surrogate_channels": []
+  }
+]

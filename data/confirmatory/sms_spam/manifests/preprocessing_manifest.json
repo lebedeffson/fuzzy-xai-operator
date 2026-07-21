@@ -1,0 +1,11 @@
+{
+  "dataset_id": "sms_spam",
+  "grouping_key": "normalized_text_minhash_cluster",
+  "modality": "text",
+  "near_duplicate_pairs_grouped": 93,
+  "near_duplicate_threshold": 0.9,
+  "normalized_text_duplicates_removed": 415,
+  "split_seed": 7419,
+  "strategy": "stratified_near_duplicate_group_60_20_20",
+  "test_labels_in_processed_data": false
+}

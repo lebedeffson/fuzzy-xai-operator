@@ -1,0 +1,16 @@
+{
+  "case_count": 240,
+  "confirmatory_material_included": false,
+  "hidden_scoring_key_included": false,
+  "modalities": [
+    "image",
+    "tabular",
+    "text",
+    "timeseries"
+  ],
+  "reviewer_cases_sha256": "0e5e2334642691753487852389261e563f02d762811a8322772ad31286da6715",
+  "schema_version": "2.0",
+  "source_commit": "0ae017c3f61846e18e5915ea1ea0636381cfacd6",
+  "stage": "formative",
+  "variant_count": 720
+}

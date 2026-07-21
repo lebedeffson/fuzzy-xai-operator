@@ -1,0 +1,41 @@
+name: Strong confirmatory formative gate
+
+on:
+  push:
+    branches: [feat/strong-confirmatory-closure]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  formative-boundary:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Install focused framework dependencies
+        run: python -m pip install -e ".[dev]"
+      - name: Verify frozen ancestors
+        run: |
+          git merge-base --is-ancestor e34e52fb8ae62ee1be043d6d5b26a0c9214a0572 HEAD
+          git merge-base --is-ancestor bd48a9ca3795e2665e0e6a4f1ab4f4e981774c2b HEAD
+          git merge-base --is-ancestor 1f5fd774afadde5fe03aed07eaf44f3f54967736 HEAD
+      - name: Focused tests and protocol build
+        env:
+          OMP_NUM_THREADS: "1"
+          OPENBLAS_NUM_THREADS: "1"
+          MKL_NUM_THREADS: "1"
+          NUMEXPR_NUM_THREADS: "1"
+        run: make strong-confirmatory-check
+      - name: Confirm final gates remain closed
+        run: |
+          test ! -e study/strong_confirmatory/confirmatory_protocol_lock.json
+          if python scripts/chapter4/build_final.py; then
+            echo "Final Chapter 4 unexpectedly passed without independent evidence" >&2
+            exit 1
+          fi

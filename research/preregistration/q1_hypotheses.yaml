@@ -1,0 +1,71 @@
+schema_version: "1.0"
+document_id: TZ-FXAI-Q1-EMPIRICAL-REMEDIATION
+registered_before_final_test: true
+base_commit: cafe403c7d60e36b08f56a5325ba380718a5be35
+branch: feat/q1-empirical-remediation
+random_seeds: [4201, 4202, 4203, 4204, 4205]
+primary_unit_of_analysis: held_out_object
+test_access_policy: once_after_calibration_freeze
+multiple_testing: holm
+hypotheses:
+  H1:
+    title: Local fidelity non-inferiority
+    estimand: fidelity_fuzzyxai_plus_base_minus_base
+    margin: -0.02
+    decision_rule: lower_ci_95_greater_or_equal_margin
+    failure_wording: The system layer degrades local fidelity for this explainer.
+  H2:
+    title: Traceability and missing-channel diagnosis
+    primary_metrics: [traceability_gain, missingness_f1, false_certification_rate]
+    missingness_f1_minimum: 0.95
+  H3:
+    title: Adaptive cascade
+    epsilon_risk: 0.02
+    maximum_coverage_difference: 0.02
+    maximum_cost_fraction_of_full: 0.70
+    success_rule: lower_risk_at_comparable_coverage_or_lower_cost_at_noninferior_risk
+  H4:
+    title: Minimal sufficient uncertainty representation
+    epsilon_risk: 0.02
+    comparator: always_FML
+    success_rule: noninferior_risk_and_lower_complexity
+  H5:
+    title: Structural critical-rupture diagnosis
+    structural_f1_minimum: 0.95
+    predictive_extension: secondary
+    no_gain_wording: Critical rupture is a structural diagnostic indicator only.
+  H6:
+    title: Context-dependent rule significance
+    minimum_paired_comparisons: 50
+    comparator: matched_random_rule
+    matching_fields: [coverage, activation_frequency, depth, output_class]
+    null_wording: Rule ablation remains a local diagnostic procedure without a general predictive claim.
+  H7:
+    title: External usefulness and comprehension
+    status: external_gate
+    minimum_comprehension_participants: 12
+    preferred_comprehension_participants: 20
+    minimum_domain_experts: 3
+    claim_allowed_before_real_participants: false
+predeclared_subgroups:
+  - confidence_high
+  - confidence_low
+  - trace_complete
+  - trace_incomplete
+  - shifted
+  - not_shifted
+  - explanation_stable
+  - explanation_unstable
+  - rare_group
+  - common_group
+  - source_conflict
+  - no_source_conflict
+  - native_explanation
+  - surrogate_explanation
+forbidden_claims:
+  - universal safety improvement
+  - causal validity of attribution methods
+  - clinical applicability
+  - external-domain generalization from controlled contours
+  - predictive safety signal without independent incremental gain
+  - stable release while external gates are open

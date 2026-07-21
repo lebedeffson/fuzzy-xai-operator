@@ -1,0 +1,177 @@
+{
+  "contradicts": [],
+  "limitations": [
+    {
+      "claim_id": "C-010",
+      "effect": "adverse",
+      "evidence_refs": [
+        "diagnostic:0"
+      ],
+      "evidence_status": "insufficient_evidence",
+      "limitations": [
+        "Автоматическое принятие ограничено до устранения диагностики."
+      ],
+      "native": null,
+      "severity": "warning",
+      "statement": "alignment evidence was not supplied",
+      "strength": null,
+      "surrogate": null
+    },
+    {
+      "claim_id": "C-011",
+      "effect": "adverse",
+      "evidence_refs": [
+        "diagnostic:1"
+      ],
+      "evidence_status": "insufficient_evidence",
+      "limitations": [
+        "Автоматическое принятие ограничено до устранения диагностики."
+      ],
+      "native": null,
+      "severity": "warning",
+      "statement": "reduction evidence was not supplied",
+      "strength": null,
+      "surrogate": null
+    },
+    {
+      "claim_id": "C-012",
+      "effect": "adverse",
+      "evidence_refs": [
+        "diagnostic:2"
+      ],
+      "evidence_status": "insufficient_evidence",
+      "limitations": [
+        "Автоматическое принятие ограничено до устранения диагностики."
+      ],
+      "native": null,
+      "severity": "warning",
+      "statement": "risk evidence was not supplied",
+      "strength": null,
+      "surrogate": null
+    }
+  ],
+  "supports": [
+    {
+      "claim_id": "C-001",
+      "effect": "neutral",
+      "evidence_refs": [
+        "prediction"
+      ],
+      "evidence_status": "supported",
+      "limitations": [],
+      "native": null,
+      "severity": "info",
+      "statement": "Прогноз: [1]",
+      "strength": 0.6950000000000001,
+      "surrogate": null
+    },
+    {
+      "claim_id": "C-003",
+      "effect": "favorable",
+      "evidence_refs": [
+        "rule:R31"
+      ],
+      "evidence_status": "supported",
+      "limitations": [],
+      "native": true,
+      "severity": "info",
+      "statement": "R31: fracture_density is high and distance is low -> 1",
+      "strength": 0.84,
+      "surrogate": false
+    },
+    {
+      "claim_id": "C-004",
+      "effect": "favorable",
+      "evidence_refs": [
+        "rule:R12"
+      ],
+      "evidence_status": "supported",
+      "limitations": [],
+      "native": true,
+      "severity": "info",
+      "statement": "R12: water_saturation is high -> 1",
+      "strength": 0.67,
+      "surrogate": false
+    },
+    {
+      "claim_id": "C-005",
+      "effect": "favorable",
+      "evidence_refs": [
+        "concept:0"
+      ],
+      "evidence_status": "supported",
+      "limitations": [
+        "primary-rule coverage is unavailable"
+      ],
+      "native": null,
+      "severity": "info",
+      "statement": "Концепт класса 0",
+      "strength": null,
+      "surrogate": null
+    },
+    {
+      "claim_id": "C-006",
+      "effect": "favorable",
+      "evidence_refs": [
+        "concept:1"
+      ],
+      "evidence_status": "supported",
+      "limitations": [
+        "coverage is a lower bound because overlap between rules is unavailable"
+      ],
+      "native": null,
+      "severity": "info",
+      "statement": "Концепт класса 1",
+      "strength": null,
+      "surrogate": null
+    },
+    {
+      "claim_id": "C-007",
+      "effect": "favorable",
+      "evidence_refs": [
+        "similar:anfis-fixture-1:reference_3"
+      ],
+      "evidence_status": "supported",
+      "limitations": [
+        "feature distance does not establish causal or clinical similarity"
+      ],
+      "native": null,
+      "severity": "info",
+      "statement": "Похожий случай reference_3: 0.871",
+      "strength": 0.871474,
+      "surrogate": null
+    },
+    {
+      "claim_id": "C-008",
+      "effect": "favorable",
+      "evidence_refs": [
+        "similar:anfis-fixture-1:reference_2"
+      ],
+      "evidence_status": "supported",
+      "limitations": [
+        "feature distance does not establish causal or clinical similarity"
+      ],
+      "native": null,
+      "severity": "info",
+      "statement": "Похожий случай reference_2: 0.722",
+      "strength": 0.721808,
+      "surrogate": null
+    },
+    {
+      "claim_id": "C-009",
+      "effect": "mixed",
+      "evidence_refs": [
+        "similar:anfis-fixture-1:reference_1"
+      ],
+      "evidence_status": "supported",
+      "limitations": [
+        "feature distance does not establish causal or clinical similarity"
+      ],
+      "native": null,
+      "severity": "info",
+      "statement": "Похожий случай reference_1: 0.251",
+      "strength": 0.250936,
+      "surrogate": null
+    }
+  ]
+}

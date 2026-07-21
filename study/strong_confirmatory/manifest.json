@@ -1,0 +1,35 @@
+{
+  "confirmatory_protocol_locked": false,
+  "confirmatory_test_opened": false,
+  "files": [
+    {
+      "path": "study/strong_confirmatory/comparator_taxonomy.json",
+      "sha256": "bb4e91c590e4a9a9a489a1bc85509b57c2ddae8f518e131100ec71cde9db5001"
+    },
+    {
+      "path": "study/strong_confirmatory/dataset_plan.json",
+      "sha256": "5972794768f6053d3668e3d43432a50b0e66949145d5ded5f7b7e03369b6bfc3"
+    },
+    {
+      "path": "study/strong_confirmatory/frozen_claims.json",
+      "sha256": "7b42355a11c7de8efaf1dcd9c1204d93ff07ab92b6088d5d452552e4acfc711a"
+    },
+    {
+      "path": "study/strong_confirmatory/power_analysis.json",
+      "sha256": "e3efbedc88d3cc3500bac8a2a2c5a2c454de1097d1fde462e26224cef0f48470"
+    },
+    {
+      "path": "study/strong_confirmatory/protocol_v1.json",
+      "sha256": "ffd9c5c9b8246f62b756272ad3946a9073d52618d3e20296e8f10ee5919fc572"
+    }
+  ],
+  "frozen_ancestors": [
+    "e34e52fb8ae62ee1be043d6d5b26a0c9214a0572",
+    "bd48a9ca3795e2665e0e6a4f1ab4f4e981774c2b",
+    "1f5fd774afadde5fe03aed07eaf44f3f54967736"
+  ],
+  "implementation_commit": "238194c113fc2f1677730318dfc0ba4d4d4426d5",
+  "schema_version": "1.0",
+  "stable_release_allowed": false,
+  "stage": "formative_development"
+}

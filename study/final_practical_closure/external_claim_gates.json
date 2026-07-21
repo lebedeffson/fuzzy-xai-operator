@@ -1,0 +1,15 @@
+{
+  "claims_enabled": [],
+  "claims_removed": [
+    "understandable to users",
+    "confirmed by experts",
+    "improves domain safety",
+    "better than specialist decisions"
+  ],
+  "comprehension": "open_external_not_in_scope",
+  "domain_language": "open_external_not_in_scope",
+  "expert_action": "open_external_not_in_scope",
+  "schema_version": "1.0",
+  "scientific_claim_rule": "enabled claim with absent evidence is blocked; removed out-of-scope claim is not a technical-release blocker",
+  "technical_release_blocked_by_external_gates": false
+}

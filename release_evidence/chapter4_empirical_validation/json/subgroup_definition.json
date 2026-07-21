@@ -1,0 +1,17 @@
+{
+  "centroids_sha256": "5f8a39555d3e076602072b4cfd5ba9520cdcc44475ea9e3b18cefa386dba8773",
+  "definition_time": "before checkpoint-model training and before forgetting-case selection",
+  "method": "smallest KMeans cluster on standardized train features",
+  "n_clusters": 3,
+  "random_seed": 42,
+  "scaler_fit_partition": "train",
+  "selected_cluster": 2,
+  "subgroup_definition_hash": "692b0a5a713f834ec620b2c50d6744643626b427236c9ebadf407437bfe03077",
+  "subgroup_id": "rare_unsupervised_cluster_001",
+  "train_cluster_sizes": [
+    218,
+    79,
+    44
+  ],
+  "uses_test_labels": false
+}

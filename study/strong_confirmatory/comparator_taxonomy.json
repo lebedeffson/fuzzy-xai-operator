@@ -1,0 +1,54 @@
+{
+  "FAST": {
+    "status": "excluded_pending_exact_article_and_implementation"
+  },
+  "families": {
+    "A_post_hoc_same_frozen_model": {
+      "equal_reason_budget_required": true,
+      "methods": [
+        "SHAP",
+        "LIME",
+        "Anchors",
+        "Integrated Gradients",
+        "Grad-CAM",
+        "token masking",
+        "window masking",
+        "modality-specific explainer",
+        "same explainer inside FuzzyXAI"
+      ]
+    },
+    "B_interpretable_predictors": {
+      "applicable_inputs": "feature representations comparable to tabular predictors",
+      "forbidden_claim": "FuzzyXAI is a better predictive model than EBM",
+      "methods": [
+        "GAM",
+        "GA2M",
+        "EBM",
+        "RuleFit",
+        "sparse decision tree",
+        "rule list",
+        "black-box predictor",
+        "black-box predictor plus FuzzyXAI audit layer"
+      ]
+    },
+    "C_action_policies": {
+      "methods": [
+        "confidence threshold",
+        "calibrated confidence",
+        "uncertainty threshold",
+        "model disagreement",
+        "explainer disagreement",
+        "data-quality guardrail",
+        "shift detector",
+        "provenance-only guardrail",
+        "simple OR",
+        "weighted score",
+        "conformal/selective baseline",
+        "selective FuzzyXAI observer",
+        "always accept",
+        "always review"
+      ]
+    }
+  },
+  "schema_version": "1.0"
+}

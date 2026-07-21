@@ -1,0 +1,162 @@
+{
+  "calibration": {
+    "candidates": [
+      {
+        "development_brier_correctness": 0.1360379345634506,
+        "method": "platt",
+        "n": 6000
+      },
+      {
+        "development_brier_correctness": 0.13608396225709996,
+        "method": "isotonic",
+        "n": 6000
+      },
+      {
+        "development_brier_correctness": 0.13519858460841983,
+        "method": "temperature",
+        "n": 6000
+      },
+      {
+        "development_brier_correctness": 0.13631896814526417,
+        "method": "conformal",
+        "n": 6000
+      }
+    ],
+    "per_row_mapping_fit_excludes_row": true,
+    "selected_method": "temperature",
+    "selection_partition": "development",
+    "test_labels_used": false
+  },
+  "dataset_id": "default_credit_clients",
+  "fold_artifacts": [
+    {
+      "fold": 0,
+      "role": "primary",
+      "sha256": "85fc1899ddcb6c109c1d7ae6e2fcb2061391a18f3369ad8603fed4a76f83abd8"
+    },
+    {
+      "fold": 0,
+      "role": "alternate",
+      "sha256": "0fb4ac839173a2b573baa77bb1af17cfe632fd344831c26a7618232c1981f24e"
+    },
+    {
+      "fold": 0,
+      "role": "seed",
+      "sha256": "f421f18445547e987a649ddc5af1dcb8788cbf959d6a1074c8b44bd42d31ebfb"
+    },
+    {
+      "fold": 0,
+      "role": "bootstrap",
+      "sha256": "3eb2021c0179afb1d783cfb53ef62fb1cbd776357f679d82a7e008978c47f670"
+    },
+    {
+      "fold": 1,
+      "role": "primary",
+      "sha256": "0dfd0b757acba9f6dbc46b4653fe9a93784863ce4963fb671d591a54f7c270f7"
+    },
+    {
+      "fold": 1,
+      "role": "alternate",
+      "sha256": "a9eb2aba17401738b027311d0f0856829ab4f5a05df5843cd1f6cc6f4d300590"
+    },
+    {
+      "fold": 1,
+      "role": "seed",
+      "sha256": "5ff75cd6f58a5aaa6642fff327a99f321f2b432a4b4e16d78b87666a3f83b91d"
+    },
+    {
+      "fold": 1,
+      "role": "bootstrap",
+      "sha256": "1d048b7e69ef9ec2eee8d44de3103c15da33e948a5731d48e3a1a74f9944af8a"
+    },
+    {
+      "fold": 2,
+      "role": "primary",
+      "sha256": "1ed5663beffe9071f41554f74b8c8103aea1faefa007976958470f1c75e21a75"
+    },
+    {
+      "fold": 2,
+      "role": "alternate",
+      "sha256": "c6e67fe2477ee31440105d17b3b74181af7fc46c474d186945608d3048eac75c"
+    },
+    {
+      "fold": 2,
+      "role": "seed",
+      "sha256": "f0183130203b0aed710ca5d2b6bd9ca60727c6a95500d9f0e6a73097d08cd77f"
+    },
+    {
+      "fold": 2,
+      "role": "bootstrap",
+      "sha256": "1d928e69bb49d423d04510bfae9f7c64c6c24b363d8f47abc6192e0dc884d7bd"
+    },
+    {
+      "fold": 3,
+      "role": "primary",
+      "sha256": "d01c27e101a9b4c4b306abef4eeef9981b7f3e7804a8347c2fdc2fd32372e996"
+    },
+    {
+      "fold": 3,
+      "role": "alternate",
+      "sha256": "a62dbb4c0d6a172a1886072dbca1d0be81decf61f0e9b0b3eb95c167d080b818"
+    },
+    {
+      "fold": 3,
+      "role": "seed",
+      "sha256": "925d6b059deede88aadd507077491d4124187a3bddd1c09a01765704023165a5"
+    },
+    {
+      "fold": 3,
+      "role": "bootstrap",
+      "sha256": "3e4daee1a3eb8286cf262912c6b4857c8d08e6c0e75969387e6ba23f5ded247e"
+    },
+    {
+      "fold": 4,
+      "role": "primary",
+      "sha256": "41973857793559f498343e3fcba01c74a7ffd33b83f3db3ab5f53715e2020b0b"
+    },
+    {
+      "fold": 4,
+      "role": "alternate",
+      "sha256": "6f49b412d25f38ff2e3572412d543df74a0c58d3dafbdf01d643ae66444814ad"
+    },
+    {
+      "fold": 4,
+      "role": "seed",
+      "sha256": "41b4e8ffae955b839eecdecb1d5e732333f8e073ca69160dfe2069ece1427bb4"
+    },
+    {
+      "fold": 4,
+      "role": "bootstrap",
+      "sha256": "e0dd78f0eb6ffa096db5d94c735e30b5fe88c35e061d27c788ca5e5f6e3d4017"
+    }
+  ],
+  "modality": "tabular",
+  "models": {
+    "additional_benchmark_models": [
+      "random_forest",
+      "calibrated_gradient_boosting"
+    ],
+    "alternate": {
+      "family": "linear",
+      "model_id": "sklearn_logistic_regression",
+      "native_input": "mixed_tabular"
+    },
+    "primary": {
+      "family": "gradient_boosting",
+      "model_id": "sklearn_hist_gradient_boosting",
+      "native_input": "mixed_tabular"
+    }
+  },
+  "schema_version": "1.0",
+  "sealed_test_loaded": false,
+  "source_commit": "9def80e4871f49f0abb18fb8b7972b60a03be720",
+  "training_scope": "five_fold_cross_fitted_train_development_only",
+  "versions": {
+    "numpy": "2.5.1",
+    "pandas": "3.0.3",
+    "python": "3.12.12",
+    "scikit-learn": "1.9.0",
+    "scipy": "1.18.0",
+    "torch": "2.13.0+cpu"
+  }
+}

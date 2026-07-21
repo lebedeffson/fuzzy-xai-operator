@@ -1,0 +1,17 @@
+{
+  "controller_feature_source": "out_of_fold_train_development_only",
+  "oof_object_count": 69827,
+  "oof_object_hashes_file_sha256": "ee0af57c3d2cc8f4a9e4e280008515537669eba278ae6e70b03908e98ad56874",
+  "oof_object_hashes_path": "study/final_confirmatory_closure/oof_object_hashes.txt",
+  "overlap_count": 0,
+  "raw_sources_excluded_from_tuning_mount": true,
+  "schema_version": "1.0",
+  "sealed_test_object_count": 17404,
+  "sealed_test_object_hashes_file_sha256": "3c18305f160aa568b516dd3b78b3c46e94d4d4336be5d91f4067e8fe5014cd62",
+  "sealed_test_object_hashes_path": "study/final_confirmatory_closure/sealed_test_object_hashes.txt",
+  "split_seed": 7419,
+  "test_identity_visibility_during_tuning": "hash_only",
+  "test_labels_loaded_by_tuning": false,
+  "tuning_runner_can_read_test_labels": false,
+  "vault_key_path_in_repository": false
+}

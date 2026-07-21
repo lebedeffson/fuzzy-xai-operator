@@ -1,0 +1,63 @@
+schema_version: "1.0"
+status: formative_until_confirmatory_lock
+scale: [0, 1, 2, 3, 4]
+criteria:
+  factual_consistency:
+    id: R1
+    title: Фактическая согласованность
+    anchors: ["противоречит evidence", "существенные противоречия", "частично корректно", "мелкие неточности", "полностью соответствует evidence"]
+  traceability:
+    id: R2
+    title: Прослеживаемость
+    anchors: ["источники отсутствуют", "декларативная связь", "частичная связь", "почти все ключевые утверждения", "каждое ключевое утверждение прослеживается"]
+  uncertainty_honesty:
+    id: R3
+    title: Честность неопределённости
+    anchors: ["ограничения скрыты", "формальные или вводят в заблуждение", "частично отражены", "существенные ограничения показаны", "точно и без преувеличения"]
+  action_quality:
+    id: R4
+    title: Качество действия
+    anchors: ["противоречит данным", "необоснованно", "частично обосновано", "в основном соответствует", "строго следует из контракта"]
+  clarity:
+    id: R5
+    title: Понятность
+    anchors: ["непонятно", "перегружено", "частично понятно", "понятно с небольшими затруднениями", "ясно и однозначно"]
+  limitation_completeness:
+    id: R6
+    title: Полнота существенных ограничений
+    anchors: ["критические ограничения пропущены", "пропущено большинство", "часть отсутствует", "почти все присутствуют", "все отражены"]
+  overtrust_control:
+    id: R7
+    title: Контроль чрезмерного доверия
+    anchors: ["сильное чрезмерное доверие", "высокий риск", "умеренный риск", "низкий риск", "риск минимизирован"]
+  causal_correctness:
+    id: R8
+    title: Ложная причинность
+    anchors: ["центральные ложные причины", "несколько серьёзных overclaims", "единичные неоднозначные фразы", "в основном ограничено корректно", "отсутствует или строго обосновано"]
+  audience_fit:
+    id: R9
+    title: Соответствие аудитории
+    anchors: ["полностью не соответствует", "существенно не соответствует", "частично соответствует", "хорошо соответствует", "оптимально"]
+  overall_usability:
+    id: R10
+    title: Общая пригодность
+    anchors: ["использовать нельзя", "полная переработка", "существенная правка", "небольшая правка", "пригодно в указанных пределах"]
+critical_flags:
+  - unsupported_claim
+  - contradicts_evidence
+  - missing_critical_limitation
+  - unsafe_or_unjustified_action
+  - causal_overclaim
+  - method_identity_leak
+  - unexplained_technical_term
+  - confidence_overstatement
+  - clinical_or_domain_overclaim
+  - counterfactual_presented_as_recommendation
+  - provenance_broken
+  - wrong_audience_level
+review_constraints:
+  summary_max_characters: 600
+  required_changes_max_items: 8
+  optional_changes_max_items: 5
+  external_domain_knowledge_forbidden: true
+  method_guessing_forbidden: true

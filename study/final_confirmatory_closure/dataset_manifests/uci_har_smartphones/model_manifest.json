@@ -1,0 +1,158 @@
+{
+  "calibration": {
+    "candidates": [
+      {
+        "development_brier_correctness": 0.07104086895878556,
+        "method": "platt",
+        "n": 2046
+      },
+      {
+        "development_brier_correctness": 0.07125548295700006,
+        "method": "isotonic",
+        "n": 2046
+      },
+      {
+        "development_brier_correctness": 0.06858035844701586,
+        "method": "temperature",
+        "n": 2046
+      },
+      {
+        "development_brier_correctness": 0.07356444218972535,
+        "method": "conformal",
+        "n": 2046
+      }
+    ],
+    "per_row_mapping_fit_excludes_row": true,
+    "selected_method": "temperature",
+    "selection_partition": "development",
+    "test_labels_used": false
+  },
+  "dataset_id": "uci_har_smartphones",
+  "fold_artifacts": [
+    {
+      "fold": 0,
+      "role": "primary",
+      "sha256": "a017c4fa979a419735e37ab1205ff2c1a159650cd3bb03ebe2770659b4476520"
+    },
+    {
+      "fold": 0,
+      "role": "alternate",
+      "sha256": "41148a7a3ce1bf809605d60e0fc83993e41cb2f753c571b3e955bfb3aeb17ade"
+    },
+    {
+      "fold": 0,
+      "role": "seed",
+      "sha256": "a54fd349325b21d0e5c03859b8337e19bad4e2e26d5ca01078b947be4741e092"
+    },
+    {
+      "fold": 0,
+      "role": "bootstrap",
+      "sha256": "85934efc6349436711c10039bbd6d3ad8a526d414f40602ee8181fac3832ee38"
+    },
+    {
+      "fold": 1,
+      "role": "primary",
+      "sha256": "15a7780473184ab92e2ab3337034d8359f8f61511769fca156dc3d1e67296101"
+    },
+    {
+      "fold": 1,
+      "role": "alternate",
+      "sha256": "8a5cf50bef3a1f1e6ff6093cb3eb1e98aecf1452383fcf331c463ef38738f7c2"
+    },
+    {
+      "fold": 1,
+      "role": "seed",
+      "sha256": "81fc46ad564e26d908721973571d94b0e44925e8cc2b52f5ba7d7f8db92ee0dc"
+    },
+    {
+      "fold": 1,
+      "role": "bootstrap",
+      "sha256": "73572b30e8c1c164a0894c6f33905d5bfcce9f90ec1340240844f368925e08ac"
+    },
+    {
+      "fold": 2,
+      "role": "primary",
+      "sha256": "14795d1047c88c6e5a15a288fc6ebe7b674de1383fcd40ee2abfd3a99369fd0c"
+    },
+    {
+      "fold": 2,
+      "role": "alternate",
+      "sha256": "defcecde3216ff12bc8a3bc062abd5dd26333b11f204f4bba6c7a159dbdb64ee"
+    },
+    {
+      "fold": 2,
+      "role": "seed",
+      "sha256": "ab10664ecb58481b07d0cf9a16016a18c153a754d7a80513a3f3beaf68dd9579"
+    },
+    {
+      "fold": 2,
+      "role": "bootstrap",
+      "sha256": "334711df0a4a21249b5e1b95e18dc597095a6d1c096ae24c54ddaa919d4f031d"
+    },
+    {
+      "fold": 3,
+      "role": "primary",
+      "sha256": "835c18c0bf4a2bb23994352f52bd8512a864a396e09a8f7da0f10100fc6f73a3"
+    },
+    {
+      "fold": 3,
+      "role": "alternate",
+      "sha256": "f189671f7615183be391edb8813ead527dff18caaa775e388465f24d0e9d870b"
+    },
+    {
+      "fold": 3,
+      "role": "seed",
+      "sha256": "8e38c5aa8a56d865c989d89cff26e302249fc827957e24925fe058e4368fea0a"
+    },
+    {
+      "fold": 3,
+      "role": "bootstrap",
+      "sha256": "5c0a799e6fde466b6e6db86725b36a835bd97ac2e9cb85a9e293601b647e5a1d"
+    },
+    {
+      "fold": 4,
+      "role": "primary",
+      "sha256": "874b46770e9a7e419338a98570915947ab91c9b8c8ccec94e4753e26eef7ef6e"
+    },
+    {
+      "fold": 4,
+      "role": "alternate",
+      "sha256": "5bb04c26c5cc06d24d0e2fda82b70919728d615590523ed8c2438f9fc8a2317b"
+    },
+    {
+      "fold": 4,
+      "role": "seed",
+      "sha256": "68d497aaaf32bffb1cf45777130c7ceda1c47041787f852d3d27a93c8cec1164"
+    },
+    {
+      "fold": 4,
+      "role": "bootstrap",
+      "sha256": "b256ef26640774437240216c34b56d7bb39a15882730e7f8417254074554bcab"
+    }
+  ],
+  "modality": "timeseries",
+  "models": {
+    "alternate": {
+      "family": "feature_based_random_forest",
+      "model_id": "summary_feature_random_forest"
+    },
+    "primary": {
+      "family": "temporal_1d_cnn",
+      "model_id": "compact_temporal_1d_cnn",
+      "native_input": "128x9_sensor_window",
+      "normalization": "fit_fold_channel_mean_std"
+    }
+  },
+  "schema_version": "1.0",
+  "sealed_test_loaded": false,
+  "source_commit": "9def80e4871f49f0abb18fb8b7972b60a03be720",
+  "training_scope": "five_fold_cross_fitted_train_development_only",
+  "versions": {
+    "numpy": "2.5.1",
+    "pandas": "3.0.3",
+    "python": "3.12.12",
+    "scikit-learn": "1.9.0",
+    "scipy": "1.18.0",
+    "torch": "2.13.0+cpu"
+  }
+}

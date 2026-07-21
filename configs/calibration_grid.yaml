@@ -1,0 +1,30 @@
+schema_version: "1.0"
+selection_partition: validation
+test_partition_used: false
+method: deterministic_grid_search
+seed: 42
+grid:
+  confidence_threshold: [0.65, 0.75, 0.85]
+  conflict_threshold: [0.10, 0.20, 0.30]
+  stability_threshold: [0.55, 0.70, 0.85]
+cost_scenarios:
+  critical_errors_expensive:
+    critical_error: 25.0
+    wrong_auto: 5.0
+    review: 1.0
+    false_block: 2.0
+  balanced:
+    critical_error: 10.0
+    wrong_auto: 4.0
+    review: 1.5
+    false_block: 2.5
+  manual_review_expensive:
+    critical_error: 12.0
+    wrong_auto: 4.0
+    review: 5.0
+    false_block: 3.0
+tie_break:
+  - lower_critical_error_risk
+  - lower_representation_complexity
+  - fewer_calibrated_parameters
+  - lexicographically_first_configuration

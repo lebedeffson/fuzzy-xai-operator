@@ -25,6 +25,18 @@ from .shap_like import (
     render_representation_class_atlas_v2,
 )
 from .trace_heatmap import render_operator_trace_heatmap
+from .explanation_dashboard import render_explanation_dashboard
+from .training import render_training_trajectory
+from .view_model import ExplanationViewModel
+from .spec import (
+    ExplanationVisualSpec,
+    FeatureProfileSpec,
+    build_visual_spec,
+)
+from .matplotlib_renderer import render_visual_spec as render_explanation_view
+from .operator_dashboard import render_dashboard, render_operator_dashboard
+from .route_artifacts import save_proof_trace_json, save_route_json
+from .traceability import write_traceability_artifacts
 
 render_operator_route_flow = render_route_sankey
 
@@ -53,4 +65,16 @@ __all__ = [
     "render_explanation_coverage_curve_v2",
     "render_representation_class_atlas_v2",
     "render_proof_consistency_matrix_v2",
+    "ExplanationViewModel",
+    "render_explanation_dashboard",
+    "render_training_trajectory",
+    "ExplanationVisualSpec",
+    "FeatureProfileSpec",
+    "build_visual_spec",
+    "render_explanation_view",
+    "render_dashboard",
+    "render_operator_dashboard",
+    "save_route_json",
+    "save_proof_trace_json",
+    "write_traceability_artifacts",
 ]

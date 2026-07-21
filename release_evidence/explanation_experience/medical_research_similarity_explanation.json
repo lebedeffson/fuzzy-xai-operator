@@ -1,0 +1,536 @@
+{
+  "claims": [
+    {
+      "applicability": "research_only",
+      "claim_id": "C-MED-001",
+      "claim_type": "similar_case",
+      "comparison_baseline": null,
+      "confidence_interval": null,
+      "counter_evidence_refs": [],
+      "effect": "neutral",
+      "evidence_refs": [
+        "similar:research_image_query:67:iou"
+      ],
+      "evidence_status": "supported",
+      "limitations": [
+        "IoU характеризует геометрию масок, а не вероятность диагноза."
+      ],
+      "metric_name": "mask_iou",
+      "metric_unit": null,
+      "metric_value": 0.889503,
+      "native": null,
+      "scope": "medical",
+      "severity": "info",
+      "short_statement": "Mask IoU with object 67: 0.890",
+      "statement": "Пересечение сегментационных масок объекта и примера 67 по IoU равно 0.890.",
+      "status": "supported",
+      "strength": 0.889503,
+      "subject_id": "research_image_query",
+      "surrogate": null
+    },
+    {
+      "applicability": "research_only",
+      "claim_id": "C-MED-002",
+      "claim_type": "similar_case",
+      "comparison_baseline": null,
+      "confidence_interval": null,
+      "counter_evidence_refs": [],
+      "effect": "neutral",
+      "evidence_refs": [
+        "similar:research_image_query:67:embedding"
+      ],
+      "evidence_status": "supported",
+      "limitations": [
+        "Метрика зависит от версии модели и не является клиническим выводом."
+      ],
+      "metric_name": "embedding_cosine_similarity",
+      "metric_unit": null,
+      "metric_value": 0.82,
+      "native": null,
+      "scope": "medical",
+      "severity": "info",
+      "short_statement": "Embedding similarity with object 67: 0.82",
+      "statement": "Косинусное сходство embedding объекта и примера 67 равно 0.82.",
+      "status": "supported",
+      "strength": 0.82,
+      "subject_id": "research_image_query",
+      "surrogate": null
+    },
+    {
+      "applicability": "research_only",
+      "claim_id": "C-MED-003",
+      "claim_type": "counterexample",
+      "comparison_baseline": null,
+      "confidence_interval": null,
+      "counter_evidence_refs": [],
+      "effect": "adverse",
+      "evidence_refs": [
+        "similar:research_image_query:41",
+        "similar:research_image_query:93"
+      ],
+      "evidence_status": "supported",
+      "limitations": [
+        "Контрпримеры не заменяют клиническую валидацию."
+      ],
+      "metric_name": null,
+      "metric_unit": null,
+      "metric_value": null,
+      "native": null,
+      "scope": "medical",
+      "severity": "warning",
+      "short_statement": "Two nearest counterexamples limit automatic interpretation",
+      "statement": "Два ближайших контролируемых контрпримера имеют сходные отдельные признаки, но относятся к research_class_A.",
+      "status": "supported",
+      "strength": null,
+      "subject_id": "research_image_query",
+      "surrogate": null
+    }
+  ],
+  "clinical_claims": false,
+  "counterexample_count": 2,
+  "human_explanation": {
+    "audience": "domain_user",
+    "claim_refs": {
+      "changes": [],
+      "concerns": [
+        "C-004"
+      ],
+      "decision": [
+        "C-001"
+      ],
+      "main_reasons": [
+        "C-002",
+        "C-003"
+      ],
+      "recommended_action": [
+        "C-006"
+      ],
+      "reliability": [
+        "C-006",
+        "C-002",
+        "C-003",
+        "C-004"
+      ]
+    },
+    "concerns": [
+      {
+        "claim_refs": [
+          "C-004"
+        ],
+        "evidence_refs": [
+          "similar:research_image_query:41"
+        ],
+        "explanation": "Найден близкий пример с другим результатом. Объекты сравнивались по характеристикам: форма и структура выделенной области изображения. Это показывает, что отдельное сходство встречается у разных результатов и ограничивает доверие.",
+        "title": "Похожий контрпример"
+      }
+    ],
+    "decision": {
+      "claim_refs": [
+        "C-001"
+      ],
+      "domain_language_status": "insufficient_domain_language",
+      "evidence_refs": [
+        "prediction"
+      ],
+      "explanation": "Модель отнесла изображение к категории «исследовательская группа B». Предметное медицинское значение этой группы в плане объяснения не задано, поэтому результат нельзя трактовать как диагноз.",
+      "title": "Исследовательская группа B"
+    },
+    "decision_changes": [],
+    "details": {
+      "contradicts": [
+        {
+          "claim_refs": [
+            "C-004"
+          ],
+          "evidence_refs": [
+            "similar:research_image_query:41"
+          ],
+          "explanation": "Найден близкий пример с другим результатом. Объекты сравнивались по характеристикам: форма и структура выделенной области изображения. Это показывает, что отдельное сходство встречается у разных результатов и ограничивает доверие.",
+          "title": "Похожий контрпример"
+        },
+        {
+          "claim_refs": [
+            "C-005"
+          ],
+          "evidence_refs": [
+            "similar:research_image_query:93"
+          ],
+          "explanation": "Найден близкий пример с другим результатом. Объекты сравнивались по характеристикам: форма и структура выделенной области изображения. Это показывает, что отдельное сходство встречается у разных результатов и ограничивает доверие.",
+          "title": "Похожий контрпример"
+        }
+      ],
+      "limitations": [
+        {
+          "claim_refs": [
+            "C-004"
+          ],
+          "evidence_refs": [
+            "similar:research_image_query:41"
+          ],
+          "explanation": "Найден близкий пример с другим результатом. Объекты сравнивались по характеристикам: форма и структура выделенной области изображения. Это показывает, что отдельное сходство встречается у разных результатов и ограничивает доверие.",
+          "title": "Похожий контрпример"
+        }
+      ],
+      "similar_cases": [
+        {
+          "claim_refs": [
+            "C-002"
+          ],
+          "comparison_text": "с обучающим изображением по пересечению контуров выделенных областей",
+          "effect_direction": "additional_support",
+          "evidence_refs": [
+            "similar:research_image_query:67"
+          ],
+          "explanation": "Модель нашла обучающий пример с похожей выделенной областью. Контуры областей перекрываются на 89%. Этот показатель относится к геометрии выделенных областей и не является вероятностью одинакового диагноза.",
+          "subject_label": "похожая область изображения",
+          "title": "Похожая область изображения"
+        },
+        {
+          "claim_refs": [
+            "C-003"
+          ],
+          "comparison_text": "с обучающими объектами по характеристикам: форма и структура выделенной области изображения",
+          "effect_direction": "additional_support",
+          "evidence_refs": [
+            "similar:research_image_query:67"
+          ],
+          "explanation": "Модель также считает изображения похожими по форме и структуре выделенной области; измеренное сходство составляет 82%. Этот показатель описывает техническое сходство изображений, а не вероятность одинакового заболевания.",
+          "subject_label": "похожий обучающий случай",
+          "title": "Похожий обучающий случай"
+        },
+        {
+          "claim_refs": [
+            "C-004"
+          ],
+          "comparison_text": "с примером другого результата по характеристикам: форма и структура выделенной области изображения",
+          "effect_direction": "opposes",
+          "evidence_refs": [
+            "similar:research_image_query:41"
+          ],
+          "explanation": "Найден близкий пример с другим результатом. Объекты сравнивались по характеристикам: форма и структура выделенной области изображения. Это показывает, что отдельное сходство встречается у разных результатов и ограничивает доверие.",
+          "subject_label": "похожий контрпример",
+          "title": "Похожий контрпример"
+        },
+        {
+          "claim_refs": [
+            "C-005"
+          ],
+          "comparison_text": "с примером другого результата по характеристикам: форма и структура выделенной области изображения",
+          "effect_direction": "opposes",
+          "evidence_refs": [
+            "similar:research_image_query:93"
+          ],
+          "explanation": "Найден близкий пример с другим результатом. Объекты сравнивались по характеристикам: форма и структура выделенной области изображения. Это показывает, что отдельное сходство встречается у разных результатов и ограничивает доверие.",
+          "subject_label": "похожий контрпример",
+          "title": "Похожий контрпример"
+        }
+      ],
+      "supports": [
+        {
+          "claim_refs": [
+            "C-002"
+          ],
+          "comparison_text": "с обучающим изображением по пересечению контуров выделенных областей",
+          "effect_direction": "additional_support",
+          "evidence_refs": [
+            "similar:research_image_query:67"
+          ],
+          "explanation": "Модель нашла обучающий пример с похожей выделенной областью. Контуры областей перекрываются на 89%. Этот показатель относится к геометрии выделенных областей и не является вероятностью одинакового диагноза.",
+          "subject_label": "похожая область изображения",
+          "title": "Похожая область изображения"
+        },
+        {
+          "claim_refs": [
+            "C-003"
+          ],
+          "comparison_text": "с обучающими объектами по характеристикам: форма и структура выделенной области изображения",
+          "effect_direction": "additional_support",
+          "evidence_refs": [
+            "similar:research_image_query:67"
+          ],
+          "explanation": "Модель также считает изображения похожими по форме и структуре выделенной области; измеренное сходство составляет 82%. Этот показатель описывает техническое сходство изображений, а не вероятность одинакового заболевания.",
+          "subject_label": "похожий обучающий случай",
+          "title": "Похожий обучающий случай"
+        }
+      ],
+      "technical_metrics": [
+        {
+          "claim_refs": [
+            "C-001"
+          ],
+          "evidence_refs": [
+            "prediction"
+          ],
+          "explanation": "0.760",
+          "title": "model_score"
+        },
+        {
+          "claim_refs": [
+            "C-002"
+          ],
+          "evidence_refs": [
+            "similar:research_image_query:67"
+          ],
+          "explanation": "0.890; сравнение: segmentation masks (pixels inside the selected region)",
+          "title": "similarity"
+        },
+        {
+          "claim_refs": [
+            "C-003"
+          ],
+          "evidence_refs": [
+            "similar:research_image_query:67"
+          ],
+          "explanation": "0.820; сравнение: model embedding vector",
+          "title": "similarity"
+        },
+        {
+          "claim_refs": [
+            "C-004"
+          ],
+          "evidence_refs": [
+            "similar:research_image_query:41"
+          ],
+          "explanation": "0.760; сравнение: model embedding vector",
+          "title": "similarity"
+        },
+        {
+          "claim_refs": [
+            "C-005"
+          ],
+          "evidence_refs": [
+            "similar:research_image_query:93"
+          ],
+          "explanation": "0.710; сравнение: model embedding vector",
+          "title": "similarity"
+        }
+      ],
+      "training": []
+    },
+    "evidence_trace": [],
+    "language": "ru",
+    "level": "user",
+    "limitations": [
+      "Найден близкий пример с другим результатом. Объекты сравнивались по характеристикам: форма и структура выделенной области изображения. Это показывает, что отдельное сходство встречается у разных результатов и ограничивает доверие."
+    ],
+    "lost_or_averaged": [
+      "Найден близкий пример с другим результатом. Объекты сравнивались по характеристикам: форма и структура выделенной области изображения. Это показывает, что отдельное сходство встречается у разных результатов и ограничивает доверие."
+    ],
+    "main_reasons": [
+      {
+        "claim_refs": [
+          "C-002"
+        ],
+        "comparison_text": "с обучающим изображением по пересечению контуров выделенных областей",
+        "effect_direction": "additional_support",
+        "evidence_refs": [
+          "similar:research_image_query:67"
+        ],
+        "explanation": "Модель нашла обучающий пример с похожей выделенной областью. Контуры областей перекрываются на 89%. Этот показатель относится к геометрии выделенных областей и не является вероятностью одинакового диагноза.",
+        "subject_label": "похожая область изображения",
+        "title": "Похожая область изображения"
+      },
+      {
+        "claim_refs": [
+          "C-003"
+        ],
+        "comparison_text": "с обучающими объектами по характеристикам: форма и структура выделенной области изображения",
+        "effect_direction": "additional_support",
+        "evidence_refs": [
+          "similar:research_image_query:67"
+        ],
+        "explanation": "Модель также считает изображения похожими по форме и структуре выделенной области; измеренное сходство составляет 82%. Этот показатель описывает техническое сходство изображений, а не вероятность одинакового заболевания.",
+        "subject_label": "похожий обучающий случай",
+        "title": "Похожий обучающий случай"
+      }
+    ],
+    "model_observed": [
+      "Модель отнесла изображение к категории «исследовательская группа B». Предметное медицинское значение этой группы в плане объяснения не задано, поэтому результат нельзя трактовать как диагноз."
+    ],
+    "recommended_action": {
+      "action": "review",
+      "claim_refs": [
+        "C-006"
+      ],
+      "evidence_refs": [
+        "prediction"
+      ],
+      "explanation": "Не использовать результат как диагноз. Врач должен отдельно оценить изображение, выделенную область и отличия от похожих случаев.",
+      "title": "Использовать только для исследовательского анализа"
+    },
+    "reliability": {
+      "claim_refs": [
+        "C-006",
+        "C-002",
+        "C-003",
+        "C-004"
+      ],
+      "conclusion": "Эти ограничения не позволяют использовать результат автоматически.",
+      "evidence_refs": [
+        "prediction",
+        "similar:research_image_query:67",
+        "similar:research_image_query:41"
+      ],
+      "explanation": "Решение поддерживают: похожая область изображения, похожий обучающий случай. Доверие ограничивают: похожий контрпример. Не хватает данных для проверок: предметное значение прогнозируемой группы. Эти ограничения не позволяют использовать результат автоматически.",
+      "limited_by": [
+        "Похожий контрпример"
+      ],
+      "missing_evidence": [
+        "предметное значение прогнозируемой группы"
+      ],
+      "supported_by": [
+        "похожая область изображения",
+        "похожий обучающий случай"
+      ],
+      "title": "Требуется дополнительная проверка"
+    },
+    "similar_cases": [
+      "Модель нашла обучающий пример с похожей выделенной областью. Контуры областей перекрываются на 89%. Этот показатель относится к геометрии выделенных областей и не является вероятностью одинакового диагноза.",
+      "Модель также считает изображения похожими по форме и структуре выделенной области; измеренное сходство составляет 82%. Этот показатель описывает техническое сходство изображений, а не вероятность одинакового заболевания.",
+      "Найден близкий пример с другим результатом. Объекты сравнивались по характеристикам: форма и структура выделенной области изображения. Это показывает, что отдельное сходство встречается у разных результатов и ограничивает доверие.",
+      "Найден близкий пример с другим результатом. Объекты сравнивались по характеристикам: форма и структура выделенной области изображения. Это показывает, что отдельное сходство встречается у разных результатов и ограничивает доверие."
+    ],
+    "summary": "## Решение\nМодель отнесла изображение к категории «исследовательская группа B». Предметное медицинское значение этой группы в плане объяснения не задано, поэтому результат нельзя трактовать как диагноз.\n\n## Почему\nМодель нашла обучающий пример с похожей выделенной областью. Контуры областей перекрываются на 89%. Этот показатель относится к геометрии выделенных областей и не является вероятностью одинакового диагноза.\nМодель также считает изображения похожими по форме и структуре выделенной области; измеренное сходство составляет 82%. Этот показатель описывает техническое сходство изображений, а не вероятность одинакового заболевания.\n\n## Что вызывает сомнение\nНайден близкий пример с другим результатом. Объекты сравнивались по характеристикам: форма и структура выделенной области изображения. Это показывает, что отдельное сходство встречается у разных результатов и ограничивает доверие.\n\n## Насколько можно доверять\nРешение поддерживают: похожая область изображения, похожий обучающий случай. Доверие ограничивают: похожий контрпример. Не хватает данных для проверок: предметное значение прогнозируемой группы. Эти ограничения не позволяют использовать результат автоматически.\n\n## Что делать\nНе использовать результат как диагноз. Врач должен отдельно оценить изображение, выделенную область и отличия от похожих случаев.\n",
+    "trust": [
+      "Решение поддерживают: похожая область изображения, похожий обучающий случай. Доверие ограничивают: похожий контрпример. Не хватает данных для проверок: предметное значение прогнозируемой группы. Эти ограничения не позволяют использовать результат автоматически.",
+      "Не использовать результат как диагноз. Врач должен отдельно оценить изображение, выделенную область и отличия от похожих случаев."
+    ],
+    "what_would_change_result": []
+  },
+  "mask_iou": 0.889503,
+  "media_artifacts": {
+    "counterexample_41": "release_evidence/explanation_experience/medical_media/counterexample_41.png",
+    "counterexample_93": "release_evidence/explanation_experience/medical_media/counterexample_93.png",
+    "mask_difference": "release_evidence/explanation_experience/medical_media/mask_difference.png",
+    "mask_intersection": "release_evidence/explanation_experience/medical_media/mask_intersection.png",
+    "query_image": "release_evidence/explanation_experience/medical_media/query_image.png",
+    "query_mask": "release_evidence/explanation_experience/medical_media/query_mask.png",
+    "reference_image_67": "release_evidence/explanation_experience/medical_media/reference_image_67.png",
+    "reference_mask_67": "release_evidence/explanation_experience/medical_media/reference_mask_67.png"
+  },
+  "required_user_message": "Similarity supports inspection but is not a probability of the same diagnosis.",
+  "similar_cases": [
+    {
+      "compared_representation": "segmentation masks (pixels inside the selected region)",
+      "coverage_score": 0.889503,
+      "different_features": [],
+      "is_counterexample": false,
+      "limitations": [
+        "mask overlap does not measure semantic or diagnostic equivalence"
+      ],
+      "matched_features": [],
+      "matched_regions": [
+        "segmentation_mask"
+      ],
+      "media_artifacts": {
+        "mask_difference": "release_evidence/explanation_experience/medical_media/mask_difference.png",
+        "mask_intersection": "release_evidence/explanation_experience/medical_media/mask_intersection.png",
+        "query_image": "release_evidence/explanation_experience/medical_media/query_image.png",
+        "query_mask": "release_evidence/explanation_experience/medical_media/query_mask.png",
+        "reference_image_67": "release_evidence/explanation_experience/medical_media/reference_image_67.png",
+        "reference_mask_67": "release_evidence/explanation_experience/medical_media/reference_mask_67.png"
+      },
+      "query_object_id": "research_image_query",
+      "reference_label": "research_class_B",
+      "reference_object_id": "67",
+      "reference_outcome": "controlled_fixture",
+      "reference_prediction": "research_class_B",
+      "similarity_method": "binary_mask_intersection_over_union",
+      "similarity_score": 0.889503,
+      "trace": {
+        "intersection_pixels": 483,
+        "union_pixels": 543
+      }
+    },
+    {
+      "compared_representation": "model embedding vector",
+      "coverage_score": null,
+      "different_features": [
+        "surrounding_tissue_density"
+      ],
+      "is_counterexample": false,
+      "limitations": [
+        "Embedding similarity is model-dependent and is not a clinical conclusion."
+      ],
+      "matched_features": [
+        "boundary_shape"
+      ],
+      "matched_regions": [],
+      "media_artifacts": {
+        "query_image": "release_evidence/explanation_experience/medical_media/query_image.png",
+        "reference_image": "release_evidence/explanation_experience/medical_media/reference_image_67.png"
+      },
+      "query_object_id": "research_image_query",
+      "reference_label": "research_class_B",
+      "reference_object_id": "67",
+      "reference_outcome": null,
+      "reference_prediction": "research_class_B",
+      "similarity_method": "cosine_similarity",
+      "similarity_score": 0.82,
+      "trace": {
+        "fixture": "controlled_medical_similarity_v1"
+      }
+    },
+    {
+      "compared_representation": "model embedding vector",
+      "coverage_score": null,
+      "different_features": [
+        "texture",
+        "surrounding_tissue_density"
+      ],
+      "is_counterexample": true,
+      "limitations": [
+        "Counterexample similarity is representation-specific and research-only."
+      ],
+      "matched_features": [
+        "boundary_shape"
+      ],
+      "matched_regions": [],
+      "media_artifacts": {
+        "query_image": "release_evidence/explanation_experience/medical_media/query_image.png",
+        "reference_image": "release_evidence/explanation_experience/medical_media/counterexample_41.png"
+      },
+      "query_object_id": "research_image_query",
+      "reference_label": "research_class_A",
+      "reference_object_id": "41",
+      "reference_outcome": "controlled_fixture",
+      "reference_prediction": "research_class_A",
+      "similarity_method": "cosine_similarity",
+      "similarity_score": 0.76,
+      "trace": {
+        "fixture": "controlled_medical_similarity_v1"
+      }
+    },
+    {
+      "compared_representation": "model embedding vector",
+      "coverage_score": null,
+      "different_features": [
+        "boundary_shape",
+        "texture"
+      ],
+      "is_counterexample": true,
+      "limitations": [
+        "Counterexample similarity is representation-specific and research-only."
+      ],
+      "matched_features": [
+        "region_area"
+      ],
+      "matched_regions": [],
+      "media_artifacts": {
+        "query_image": "release_evidence/explanation_experience/medical_media/query_image.png",
+        "reference_image": "release_evidence/explanation_experience/medical_media/counterexample_93.png"
+      },
+      "query_object_id": "research_image_query",
+      "reference_label": "research_class_A",
+      "reference_object_id": "93",
+      "reference_outcome": "controlled_fixture",
+      "reference_prediction": "research_class_A",
+      "similarity_method": "cosine_similarity",
+      "similarity_score": 0.71,
+      "trace": {
+        "fixture": "controlled_medical_similarity_v1"
+      }
+    }
+  ],
+  "status": "controlled_fixture_research_only"
+}

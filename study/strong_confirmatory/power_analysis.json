@@ -1,0 +1,21 @@
+{
+  "alpha_familywise": 0.05,
+  "effect_thresholds": {
+    "H3_coverage_gain": 0.05,
+    "H3_relative_wrong_automatic_reduction": 0.15,
+    "H6_specific_effect": 0.01,
+    "H7_stability_gain": 0.02
+  },
+  "final_sample_sizes_require_confirmatory_dataset_prevalence": true,
+  "minimum_confirmatory_units": {
+    "H3-v2_per_modality": 1000,
+    "H5-A_per_fault_type": 200,
+    "H6-A_configurations": 48,
+    "H6-B_candidates_per_dataset": 20,
+    "H7_paired_replicates_per_method": 50,
+    "H8_objects_per_modality": 1000
+  },
+  "power": 0.8,
+  "schema_version": "1.0",
+  "status": "preregistered_planning_values_not_results"
+}

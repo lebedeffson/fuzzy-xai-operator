@@ -1,0 +1,69 @@
+{
+  "controlled_dataset": {
+    "claim_scope": "protocol and controlled-behavior validation only; no external-domain generalization",
+    "content_sha256": "9ba0fc50717bec196d54cc8dd98527c1f183f4bf3d4227bdc8bc922dbfc3a516",
+    "dataset_id": "controlled_tabular_risk_v1",
+    "n_objects": 1200,
+    "source_type": "controlled_perturbation"
+  },
+  "real_benchmarks": [
+    {
+      "acquisition": "sklearn.datasets.fetch_covtype",
+      "dataset_id": "uci_covertype",
+      "license": "CC BY 4.0 (verify against downloaded dataset card)",
+      "limitations": [
+        "forest-cover benchmark; not a safety-domain validation"
+      ],
+      "minimum_objects": 10000,
+      "modality": "tabular",
+      "redistribution": "reference_only",
+      "source": "https://archive.ics.uci.edu/dataset/31/covertype",
+      "task": "multiclass_classification",
+      "version": "UCI-31"
+    },
+    {
+      "acquisition": "official gzip files",
+      "dataset_id": "fashion_mnist",
+      "license": "MIT",
+      "limitations": [
+        "grayscale apparel images; no medical generalization"
+      ],
+      "minimum_objects": 10000,
+      "modality": "image",
+      "redistribution": "reference_only",
+      "source": "https://github.com/zalandoresearch/fashion-mnist",
+      "task": "multiclass_classification",
+      "version": "fashion-mnist-v1"
+    },
+    {
+      "acquisition": "sklearn.datasets.fetch_20newsgroups",
+      "dataset_id": "20newsgroups",
+      "license": "dataset content has source-specific rights; loader is BSD-3-Clause",
+      "limitations": [
+        "historical posts may contain personal or offensive content",
+        "license must be reviewed before redistribution"
+      ],
+      "minimum_objects": 10000,
+      "modality": "text",
+      "redistribution": "do_not_redistribute_raw_text",
+      "source": "https://scikit-learn.org/stable/modules/generated/sklearn.datasets.fetch_20newsgroups.html",
+      "task": "multiclass_classification",
+      "version": "sklearn-cache-versioned"
+    },
+    {
+      "acquisition": "UCR archive download",
+      "dataset_id": "ucr_electric_devices",
+      "license": "dataset-specific UCR terms; verify before redistribution",
+      "limitations": [
+        "household electricity benchmark; dataset-specific terms apply"
+      ],
+      "minimum_objects": 10000,
+      "modality": "timeseries",
+      "redistribution": "reference_only",
+      "source": "https://www.timeseriesclassification.com/description.php?Dataset=ElectricDevices",
+      "task": "multiclass_classification",
+      "version": "UCR-ElectricDevices"
+    }
+  ],
+  "schema_version": "1.0"
+}

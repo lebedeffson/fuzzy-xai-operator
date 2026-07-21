@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://dubnaxai.example/schemas/explanation_view_model.schema.json",
+  "title": "FuzzyXAI ExplanationViewModel",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "model",
+    "route",
+    "risk",
+    "diagnostics",
+    "trace",
+    "layers",
+    "explanation_graph",
+    "human_explanations"
+  ],
+  "properties": {
+    "schema_version": {"const": "2.0"},
+    "model": {"type": "object"},
+    "fuzzy": {"type": "object"},
+    "route": {"type": "array", "items": {"type": "object"}},
+    "disagreement": {"type": "object"},
+    "risk": {
+      "type": "object",
+      "required": ["action"],
+      "properties": {"action": {"type": "string"}}
+    },
+    "diagnostics": {"type": "array", "items": {"type": "object"}},
+    "claims": {
+      "oneOf": [
+        {"type": "object"},
+        {"type": "array", "items": {"type": "object"}}
+      ]
+    },
+    "narrative": {"type": "string"},
+    "trace": {
+      "type": "object",
+      "required": ["adapter_id", "model_fingerprint", "input_sha256", "explain_plan_sha256"]
+    },
+    "layers": {
+      "type": "object",
+      "required": ["data", "training", "rules", "concepts", "similar_cases", "counterfactuals", "missing"]
+    },
+    "explanation_graph": {
+      "type": "object",
+      "required": ["nodes", "edges", "missing_evidence"]
+    },
+    "human_explanations": {
+      "type": "object",
+      "required": ["domain_user", "ml_engineer", "researcher", "auditor"]
+    },
+    "quality_metrics": {"type": "object"},
+    "explanation_level": {
+      "type": "object",
+      "properties": {
+        "level": {"enum": ["E0", "E1", "E2", "E3", "E4", "E5"]},
+        "available_channels": {"type": "array"},
+        "missing_channels": {"type": "array"},
+        "native_channels": {"type": "array"},
+        "surrogate_channels": {"type": "array"}
+      }
+    },
+    "visual_spec": {"type": "object"}
+  },
+  "additionalProperties": true
+}

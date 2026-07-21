@@ -1,0 +1,101 @@
+{
+  "artifacts": [
+    {
+      "path": "study/final_confirmatory_closure/protocol.json",
+      "sha256": "04cd70a2ae657c0b0b44fd7b6c66a0da509e0a2238fd7e63c419d6824a5ea94f"
+    },
+    {
+      "path": "study/final_confirmatory_closure/formative_iteration_log.json",
+      "sha256": "8eb6be57cc5fa49189ff15709199346d456a13074da8172938f42c4365c152e2"
+    },
+    {
+      "path": "study/final_confirmatory_closure/confirmatory_dataset_registry.json",
+      "sha256": "ca98d93a6bc81075b5f2ead7d7789d28b548441b5295dc510356d713628f7c98"
+    },
+    {
+      "path": "study/final_confirmatory_closure/confirmatory_dataset_manifest.json",
+      "sha256": "27d3af1b11d8ec497bd9b84e2e1b6c53fd1317a5b7037a420273a1cb6e1e9681"
+    },
+    {
+      "path": "study/final_confirmatory_closure/confirmatory_split_manifest.json",
+      "sha256": "ff4a8b2b0bc8e86131e6c756f2191e6b0dfb112003483306cf297729648b9d68"
+    },
+    {
+      "path": "study/final_confirmatory_closure/final_leakage_audit.json",
+      "sha256": "f0d1056df15904ae35af30db07755fdef301e6f3d54fe7962438ee84f477240b"
+    },
+    {
+      "path": "study/final_confirmatory_closure/near_duplicate_audit.json",
+      "sha256": "c22021188aecab21611b0b173da20f24cb4d7163c6ff5d5195a55274036e5c82"
+    },
+    {
+      "path": "study/final_confirmatory_closure/confirmatory_feature_manifest.json",
+      "sha256": "080aeb9f123047b08f266d4368500653c40448e0688f2b4dd7372062bbe7e7b7"
+    },
+    {
+      "path": "study/final_confirmatory_closure/oof_feature_audit.json",
+      "sha256": "08b6b44e879bbf4ea13a6d30c2c04f99b9c8c3721686766a2ee7911375444732"
+    },
+    {
+      "path": "study/final_confirmatory_closure/p0_p1_feature_audit.json",
+      "sha256": "08b6b44e879bbf4ea13a6d30c2c04f99b9c8c3721686766a2ee7911375444732"
+    },
+    {
+      "path": "study/final_confirmatory_closure/formative_real/summary.json",
+      "sha256": "c6fecfb729fc3d19e9fe5a8b34b15c46cdc858197bbde485d244d3ee7cbcc324"
+    },
+    {
+      "path": "study/final_confirmatory_closure/comparator_taxonomy.json",
+      "sha256": "432fd0fc0b741816a6a525c149c75647bfaffc88e74c7c0629899efa2e54bdca"
+    },
+    {
+      "path": "study/final_confirmatory_closure/comparator_formative/summary.json",
+      "sha256": "4462cf30c24050f14376869bce2e9f6b22378703df1ecfbd69c1a5ae6a5e7ab2"
+    },
+    {
+      "path": "study/final_confirmatory_closure/h7_formative/summary.json",
+      "sha256": "0da8205c311b999bd7aee4770cd099dfa8c2cf9fafd94c041a2f55fc0357ba11"
+    },
+    {
+      "path": "study/final_confirmatory_closure/prelock_method_registry.json",
+      "sha256": "034b82f9e67402cdc1f86d958887a091a9ab92876c3b240382e1af569a576be2"
+    },
+    {
+      "path": "study/final_confirmatory_closure/ai_formative_run2/protocol.json",
+      "sha256": "430ab38e1b78b10aa88008c55250aeb997233e835222fd278af148afe7b520ea"
+    },
+    {
+      "path": "study/final_confirmatory_closure/ai_formative_run2/reviewer_cases.jsonl",
+      "sha256": "d08270c87b795f5f526dae69317216a40a017194d5145f8c973ef24193c88387"
+    },
+    {
+      "path": "study/final_confirmatory_closure/ai_formative_run2/fuzzyxai-ai-formative-run2-input.zip",
+      "sha256": "80332d63fca5c5e99ce80e90ee9ad97352e6a3909e10a65848f86ccbb269e6b5"
+    },
+    {
+      "path": "study/final_confirmatory_closure/ai_text_review_scope.json",
+      "sha256": "c774938bfc611ab0fe1e7e787c9a61f22c52536427b7bf805d1b5e23263141c6"
+    },
+    {
+      "path": "release_evidence/final_confirmatory_closure/claim_status_prelock.json",
+      "sha256": "899de1e5c60b7ee92692ea135372a58eb328754fa855aa7fdf1c5a48e2cc1ab1"
+    },
+    {
+      "path": "release_evidence/final_confirmatory_closure/fault_library.json",
+      "sha256": "b9c41897bcaeea6eff98e4ad6ebed946fd751cad7bc87da3d1994505b0e03dc7"
+    },
+    {
+      "path": "release_evidence/final_confirmatory_closure/shadow_replay_summary.json",
+      "sha256": "8d8dfac323cfb116897e5f3989c5ed5a1eb24fa78022396e3a5dd85177c3f683"
+    },
+    {
+      "path": "release_evidence/final_confirmatory_closure/shadow_replay_events.jsonl",
+      "sha256": "31dd9666518e8711174cb05605cd7bddaab953b57dd4c61e5eab89018199e4c4"
+    }
+  ],
+  "blockers": [],
+  "confirmatory_claim_allowed": false,
+  "scope": "prelock_technical_formative",
+  "stable_release_allowed": false,
+  "status": "pass"
+}
