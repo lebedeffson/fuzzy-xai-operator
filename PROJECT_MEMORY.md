@@ -6,7 +6,8 @@
 - Branch: `feat/final-practical-closure`
 - Base: `63cef7578d28a28dac63654f24642a980b49bc90`
 - Practical-controller implementation: `699662e01a7bb40c437717455b55896ebd011d5d`
-- Formative evidence commit: `44d50cf`
+- Release-gate implementation: `2f70d167414c170ddfc7559d59e287bcb4ea3f52`
+- Formative evidence commit: `d5ac4d5`
 - Research phase: formative development
 - Confirmatory protocol: blocked, test unopened
 - Stable technical release: blocked
@@ -29,7 +30,7 @@ Measured full-profile formative evidence:
 - H7-A exact canonical source-hash preservation rate `1.0`; H7-B remains a presentation trade-off requiring
   confirmation;
 - H8 controlled grid sensitivity formative target met;
-- H9 cached operator layer measured through `5,000,000` objects with empirical exponent near `0.90`; local-explainer
+- H9 cached operator layer measured through `5,000,000` objects with empirical exponent `0.928977185286909`; local-explainer
   cost is excluded and separately disclosed.
 
 Validated technical boundary:
