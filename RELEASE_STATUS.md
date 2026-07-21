@@ -1,5 +1,29 @@
 # FuzzyXAI Framework Release Status
 
+## Final Practical Confirmatory Prelock
+
+- Branch: `feat/final-confirmatory-and-chapter4`
+- Frozen base: `68e6edcfa867b48684b89d98dd74b5fe4794ef55`
+- Implementation: `a49785ae81208911d74b4f1f9aa87e7382843de8`
+- Evidence commit: `efa2e90`
+- Technical prelock check: `PASS_LOCAL`
+- Confirmatory datasets sealed: `0/5`
+- Confirmatory test: `UNOPENED`
+- AI formative run 2: `INPUT_READY_SCORES_NOT_RUN`
+- Final Chapter 4: `BLOCKED`
+- Stable release: `BLOCKED`
+
+The branch adds strict dataset, OOF, label-vault, claim-status and one-way protocol-lock gates without changing the
+practical controller or predecessor results. A controlled 100,000-event shadow replay, 40 route-fault templates and a
+240-case/720-variant blind reviewer input are technical formative artifacts only. They do not establish independent
+confirmation, production incidents, human understanding or expert approval.
+
+The shareable technical artifact is
+`release_artifacts/fuzzyxai-final-confirmatory-prelock-a49785ae8120.zip` with SHA256
+`c70979e1e2bce999b416fd16eee6b1fbdd31156a57febda98cb6cb0426f73de8`. Its `BOUNDARY.json` explicitly disables
+confirmatory and stable-release claims. `make final-seal-datasets`, `make final-controller-freeze`, final Chapter 4 and
+`make final-release-archive` remain fail-closed until real external inputs pass.
+
 ## Strong Confirmatory Formative Gate
 
 - Branch: `feat/strong-confirmatory-closure`

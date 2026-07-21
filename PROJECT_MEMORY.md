@@ -1,5 +1,48 @@
 # Project Memory
 
+## FXAI-FINAL-PRACTICAL-CONFIRMATORY-PRELOCK
+
+- Date: 2026-07-21
+- Branch: `feat/final-confirmatory-and-chapter4`
+- Frozen base: `68e6edcfa867b48684b89d98dd74b5fe4794ef55`
+- Prelock implementation: `a49785ae81208911d74b4f1f9aa87e7382843de8`
+- Compact evidence commit: `efa2e90`
+- Research phase: formative iteration 2 of at most 3
+- Confirmatory test: unopened
+- Stable technical release: blocked
+
+This milestone adds the sealed-confirmation contracts around the unchanged practical controller. It defines the
+five-part invalid-action decomposition, 9 predictive and 13 route OOF channels, independent dataset and split audits,
+non-refit/refit/conditional rule-ablation estimands, a 40-family route-fault taxonomy, and a one-way protocol lock.
+The primary endpoint, 20% review budget, unsafe-accept-sensitive cost profile, false-block ceiling and original
+positive/negative hypothesis statuses are frozen before any confirmatory labels can be opened.
+
+Measured technical prelock evidence:
+
+- focused final/practical regression: `19 passed`; Ruff, compile and prelock verification: PASS;
+- candidate registry: two tabular, one image, one text and one time-series entry; all remain
+  `candidate_not_downloaded`, with zero sealed datasets;
+- route-fault library: 40 distinct templates and 14 double/triple compositions;
+- blind AI run-2 input: 240 cases and 720 variants; scores are not run and AI is not external validation;
+- controlled formative shadow replay: 100,000 events across clean, shift, schema, calibration, update and recovery
+  phases; it is explicitly not confirmatory or observed-production evidence;
+- deterministic prelock evidence archive:
+  `release_artifacts/fuzzyxai-final-confirmatory-prelock-a49785ae8120.zip`, SHA256
+  `c70979e1e2bce999b416fd16eee6b1fbdd31156a57febda98cb6cb0426f73de8`.
+
+Fail-closed boundary:
+
+- dataset sealing is blocked until five real independent packages, isolated OOF/test identities and encrypted label
+  vaults are supplied;
+- protocol lock is blocked until the dataset leakage audit and a real clean-session AI formative run 2 pass;
+- H3-P1-P4, H5-A, H6-A/B, H7-A/B, H8 and H9 remain `blocked_pending_sealed_confirmation` in the new claim file;
+- H3-original, H5-P-original and H6-general remain `not_supported` and must not be relabeled;
+- final statistics, final Chapter 4 DOCX/PDF, final archive, merge and stable tag remain forbidden.
+
+Next step: supply and seal the five independent datasets without test-label access, run the 240-case blind AI
+formative review in a clean external session, import its immutable summary, and create the protocol lock once. Do not
+tune datasets, costs, thresholds, strata or primary metrics after lock.
+
 ## FXAI-FINAL-PRACTICAL-CLOSURE-FORMATIVE
 
 - Date: 2026-07-21
