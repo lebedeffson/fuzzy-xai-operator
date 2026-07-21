@@ -36,6 +36,43 @@ Controlled 10,000-object datasets validate protocol behavior, not external-domai
 generalization. External comprehension and domain reviews remain release blockers
 until independent responses are available.
 
+## Chapter 4 v13 practical evaluation
+
+The frozen v13 protocol adds a modern pretrained text contour without changing the
+negative v1.3.0 findings. It uses the pinned AG News dataset revision and a frozen
+DistilBERT model, produces real Integrated Gradients and token-masking explanations,
+compares policies at matched review budgets, evaluates registered/compositional/
+held-out route faults, and decomposes end-to-end runtime.
+
+Install the pinned research dependencies into an existing Python 3.12 environment:
+
+```bash
+python -m pip install -r config/chapter4_v13_requirements.txt
+python -m pip install -e .
+```
+
+Run the lightweight contract smoke used by CI:
+
+```bash
+make chapter4-v13-smoke
+```
+
+Run the complete local experiment once:
+
+```bash
+make reproduce-chapter4-v13 CHAPTER4_V13_PYTHON=/path/to/python3.12
+```
+
+The full command downloads data and model weights from their pinned upstream
+revisions. AG News is not redistributed because its upstream dataset card reports
+an unknown license. Raw data, sealed labels and model caches stay under ignored
+`artifacts/chapter4_v13/` subdirectories. Every released numeric table cell is
+mapped to raw evidence and SHA256 in `artifacts/chapter4_v13/evidence_map.json`.
+
+Known boundaries: the old H3, H5-P and H6-general claims remain unsupported; the
+5-million-object benchmark describes only the cached operator layer; the v13 user
+study package is a future protocol and contains no participant evidence.
+
 ## Explain a model
 
 ```python

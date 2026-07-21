@@ -1,0 +1,48 @@
+study:
+  id: FXAI-USER-STUDY-FUTURE-01
+  status: planned_not_run
+  objective: compare understanding of limitations and operational action
+  design: randomized_within_subject_counterbalanced
+  conditions:
+    baseline:
+      content: [prediction, calibrated_confidence, top_local_reasons, standard_limitation]
+    fuzzyxai:
+      content: [decision, reasons, contradictions, reliability, recommended_action, expandable_provenance]
+  inclusion:
+    - age_at_least_18
+    - able_to_read_study_language
+    - no_prior_participation_in_formative_materials
+  exclusion:
+    - incomplete_primary_outcomes
+    - failed_attention_check_defined_before_recruitment
+  tasks:
+    - identify_model_decision
+    - identify_main_reason
+    - identify_limitation
+    - choose_accept_review_or_block
+    - distinguish_similarity_from_probability
+  primary_outcomes:
+    - limitation_identification_correct
+    - operational_action_correct
+    - overtrust_indicator
+  secondary_outcomes:
+    - reason_comprehension_correct
+    - response_time_seconds
+    - confidence_1_to_5
+    - cognitive_load_1_to_5
+  randomization:
+    unit: participant
+    method: seeded_block_randomization
+    concealment: method_identity_hidden
+  statistics:
+    primary_tests: [mixed_effects_logistic_regression]
+    response_time_test: mixed_effects_log_linear
+    multiple_comparisons: holm
+    confidence_interval: 0.95
+    unit: participant_and_scenario
+    power_analysis_required_before_recruitment: true
+  data_handling:
+    anonymous_participant_id: true
+    retain_individual_responses: true
+    no_sensitive_domain_decisions: true
+    consent_required: true

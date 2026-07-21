@@ -1,0 +1,36 @@
+name: Chapter 4 v13 reproducibility smoke
+
+on:
+  push:
+    branches: [experiments/chapter4-practical-v13]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  smoke:
+    strategy:
+      matrix:
+        python-version: ["3.11", "3.12"]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install -e . pytest
+      - name: Unit and contract tests
+        run: pytest -q tests/chapter4_v13
+      - name: End-to-end controller smoke
+        run: python -m experiments.chapter4_v13.reproduce_all --smoke
+      - name: Protocol and leakage schema checks
+        run: |
+          python - <<'PY'
+          import yaml
+          from pathlib import Path
+          from experiments.chapter4_v13.common import verify_protocol_hash
+          assert verify_protocol_hash()
+          protocol = yaml.safe_load(Path("config/chapter4_v13_protocol.yaml").read_text())
+          assert protocol["policy_evaluation"]["test_labels_allowed_only_in"] == "scoring"
+          assert protocol["policy_evaluation"]["matched_coverage_required"] is True
+          PY

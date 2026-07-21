@@ -1,0 +1,16 @@
+field,type,required,description
+participant_id,string,yes,Anonymous study identifier
+scenario_id,string,yes,Frozen scenario identifier
+condition,string,yes,baseline or fuzzyxai
+order_index,integer,yes,Presentation order
+decision_answer,string,yes,Participant interpretation of model decision
+reason_answer,string,yes,Participant interpretation of main reason
+limitation_correct,boolean,yes,Correctly identified the material limitation
+action_answer,string,yes,accept review or block
+action_correct,boolean,yes,Action matches frozen scenario contract
+overtrust_indicator,boolean,yes,Treated insufficient evidence as conclusive
+confidence_1_to_5,integer,yes,Self-reported confidence
+cognitive_load_1_to_5,integer,yes,Self-reported workload
+response_time_seconds,number,yes,Measured task completion time
+attention_check_passed,boolean,yes,Frozen attention check
+free_text,string,no,Optional explanation

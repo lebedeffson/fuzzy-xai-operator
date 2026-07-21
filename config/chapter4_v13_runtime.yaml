@@ -1,0 +1,20 @@
+runtime:
+  device: cuda
+  python: "3.12"
+  threads: 8
+  prediction_batch_size: 64
+  explanation_batch_size: 1
+  masking_forward_batch_size: 128
+  max_length: 128
+  deterministic: true
+  torch_dtype: float32
+  cache_dir: artifacts/chapter4_v13/model_cache
+  data_root: artifacts/chapter4_v13/raw
+  processed_root: artifacts/chapter4_v13/processed
+  private_root: artifacts/chapter4_v13/private
+  output_root: artifacts/chapter4_v13
+  release_excludes:
+    - raw
+    - processed
+    - private
+    - model_cache

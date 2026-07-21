@@ -7,7 +7,7 @@ from __future__ import annotations
 
 import ast
 import json
-from typing import Any
+from typing import Any, TextIO
 
 
 
@@ -155,7 +155,9 @@ def _parse_block(rows: list[tuple[int, str]], index: int, indent: int) -> tuple[
     return out, index
 
 
-def safe_load(text: str) -> Any:
+def safe_load(text: str | TextIO) -> Any:
+    if hasattr(text, "read"):
+        text = text.read()
     text = text or ''
     stripped = text.strip()
     if not stripped:
@@ -165,3 +167,22 @@ def safe_load(text: str) -> Any:
     rows = _prepare(text)
     parsed, _ = _parse_block(rows, 0, rows[0][0] if rows else 0)
     return parsed
+
+
+def dump(
+    value: Any,
+    stream: TextIO | None = None,
+    *,
+    allow_unicode: bool = True,
+    sort_keys: bool = True,
+    **_: Any,
+) -> str | None:
+    """Serialize as JSON, which is valid YAML, for third-party compatibility."""
+    rendered = json.dumps(value, ensure_ascii=not allow_unicode, sort_keys=sort_keys, indent=2, default=str)
+    if stream is not None:
+        stream.write(rendered)
+        return None
+    return rendered
+
+
+safe_dump = dump

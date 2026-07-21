@@ -909,3 +909,30 @@ final-one-zip: final-chapter4
 	PYTHONPATH=$(PYTHONPATH):scripts/final_closure $(PYTHON) scripts/final_closure/build_one_zip.py
 
 reproduce-final-confirmatory-closure: reproduce-final-practical-closure
+
+# Chapter 4 v13 uses a pre-existing environment selected by the caller.
+CHAPTER4_V13_PYTHON ?= python
+
+chapter4-v13-smoke:
+	PYTHONPATH=framework/fuzzyxai:. $(CHAPTER4_V13_PYTHON) -m experiments.chapter4_v13.reproduce_all --smoke
+
+chapter4-v13-prepare:
+	PYTHONPATH=framework/fuzzyxai:. $(CHAPTER4_V13_PYTHON) -m experiments.chapter4_v13.prepare_data
+	PYTHONPATH=framework/fuzzyxai:. $(CHAPTER4_V13_PYTHON) -m experiments.chapter4_v13.train_or_load_model
+
+chapter4-v13-explanations:
+	PYTHONPATH=framework/fuzzyxai:. $(CHAPTER4_V13_PYTHON) -m experiments.chapter4_v13.generate_explanations --split validation --objects 2000
+	PYTHONPATH=framework/fuzzyxai:. $(CHAPTER4_V13_PYTHON) -m experiments.chapter4_v13.generate_explanations --split sealed_test --objects 2000
+
+chapter4-v13-analysis:
+	PYTHONPATH=framework/fuzzyxai:. $(CHAPTER4_V13_PYTHON) -m experiments.chapter4_v13.run_policies --stage pre-score
+	PYTHONPATH=framework/fuzzyxai:. $(CHAPTER4_V13_PYTHON) -m experiments.chapter4_v13.run_policies --stage score
+	PYTHONPATH=framework/fuzzyxai:. $(CHAPTER4_V13_PYTHON) -m experiments.chapter4_v13.run_route_faults
+	PYTHONPATH=framework/fuzzyxai:. $(CHAPTER4_V13_PYTHON) -m experiments.chapter4_v13.benchmark_end_to_end
+	PYTHONPATH=framework/fuzzyxai:. $(CHAPTER4_V13_PYTHON) -m experiments.chapter4_v13.reproduce_case
+	PYTHONPATH=framework/fuzzyxai:. $(CHAPTER4_V13_PYTHON) -m experiments.chapter4_v13.build_tables
+	PYTHONPATH=framework/fuzzyxai:. $(CHAPTER4_V13_PYTHON) -m experiments.chapter4_v13.build_figures
+	PYTHONPATH=framework/fuzzyxai:. $(CHAPTER4_V13_PYTHON) -m experiments.chapter4_v13.validate_evidence
+
+reproduce-chapter4-v13:
+	PYTHONPATH=framework/fuzzyxai:. $(CHAPTER4_V13_PYTHON) -m experiments.chapter4_v13.reproduce_all

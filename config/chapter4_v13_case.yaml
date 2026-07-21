@@ -1,0 +1,17 @@
+case:
+  selection_rule: first_explained_object_by_sorted_object_id
+  source_split: sealed_test
+  include_raw_text_in_release: false
+  reason: upstream_dataset_license_is_unknown
+  required_artifacts:
+    - input_reference.json
+    - prediction.json
+    - local_explanation.json
+    - canonical_artifact.json
+    - provenance_graph.json
+    - diagnostic_state.json
+    - action.json
+    - user_card.md
+    - audit.md
+    - stage_timings.json
+    - SHA256SUMS

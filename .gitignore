@@ -73,3 +73,11 @@ data/confirmatory/**/*.enc
 
 # OOF rows contain development labels and belong only in the sealed evidence bundle.
 study/final_confirmatory_closure/oof_features/
+
+# Chapter 4 v13 keeps downloaded data, labels, model caches and bulky raw rows local.
+artifacts/chapter4_v13/raw/
+artifacts/chapter4_v13/processed/
+artifacts/chapter4_v13/private/
+artifacts/chapter4_v13/model_cache/
+artifacts/chapter4_v13/**/*.lock
+.venv-chapter4-v13/
