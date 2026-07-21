@@ -28,8 +28,8 @@
     },
     {
       "path": "dissertation_artifacts/final_practical_closure/chapter4_formative/figures/h9_scaling.png",
-      "sha256": "ec8d152e64aa956c3567ec0b2e990dbe91b4d8c5cce0ba80c85821040d57165a",
-      "size": 57753
+      "sha256": "1e25d9385035138957c21b39bb335f04277cb47b58ec68f08a3810c33156c79e",
+      "size": 57653
     }
   ],
   "phase": "formative_development",
@@ -37,33 +37,33 @@
   "tables": [
     {
       "path": "dissertation_artifacts/final_practical_closure/chapter4_formative/tables/h3_matched_budget.csv",
-      "sha256": "c908cbb2be45bf71ea28e2a173c1813fbad333d28034a15c9e22b6d90988a29f",
-      "size": 6722
+      "sha256": "04d260438003035c31ef7ed0131b4ed30e323f25867d099ec099bee356411683",
+      "size": 6651
     },
     {
       "path": "dissertation_artifacts/final_practical_closure/chapter4_formative/tables/h5_route_guardrails.csv",
-      "sha256": "7b093fa179090118a87e198b2df921be2ec1fb5fbc879035525cdfc04b4256c2",
-      "size": 730
+      "sha256": "79e833da42ce37d1899191607d1b31270f19783c697581eb2bf9a1f0ada64d1f",
+      "size": 722
     },
     {
       "path": "dissertation_artifacts/final_practical_closure/chapter4_formative/tables/h6_detectability_envelope.csv",
-      "sha256": "f67a8eb20eb66c61022b28b7939eef03a4c89fe72b92d87a2800d1274c625c77",
-      "size": 4668
+      "sha256": "70737b1d946ac1e2adacb1362ad35a5b473bc62c8c8b6e7eace8ed435cd7a185",
+      "size": 4586
     },
     {
       "path": "dissertation_artifacts/final_practical_closure/chapter4_formative/tables/h7_projection_tradeoff.csv",
-      "sha256": "c0bae23dc20393c23d95a961dd93aa79a8cdb2220590f8ba4981937074cbe8b4",
-      "size": 142
+      "sha256": "742a274293964b5d150c63358ebf3e42539d9af77917c7453aba249fbe4c9836",
+      "size": 138
     },
     {
       "path": "dissertation_artifacts/final_practical_closure/chapter4_formative/tables/h8_grid_sensitivity.csv",
-      "sha256": "d653af3078f607a8cbb23652b7e458b73fec86659e22024e93a99230cef4cd84",
-      "size": 866
+      "sha256": "0f78e5520a297cd258939dca6ba2e025388b8453156528ef6293500a5a16d32b",
+      "size": 849
     },
     {
       "path": "dissertation_artifacts/final_practical_closure/chapter4_formative/tables/h9_scaling.csv",
-      "sha256": "ee4843727bd4053dae8a11b348539ad38fefbec43150daf3647b9be310941728",
-      "size": 1065
+      "sha256": "cf3a68fd47b6fcb4082768bb48f535cebe079b1bdc68c2b8fcb62eed878297e5",
+      "size": 1063
     }
   ]
 }

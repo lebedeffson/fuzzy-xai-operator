@@ -2,64 +2,64 @@
   "cached_operator_layer": {
     "confirmatory_claim_allowed": false,
     "deterministic_repeat": true,
-    "empirical_scaling_exponent": 0.9015449591793473,
+    "empirical_scaling_exponent": 0.9026156409529635,
     "formative_target_met": true,
     "local_explainer_included": false,
     "measurements": [
       {
-        "batch_latency_ms_p50": 0.3844210004899651,
-        "batch_latency_ms_p95": 0.3844210004899651,
-        "batch_latency_ms_p99": 0.3844210004899651,
+        "batch_latency_ms_p50": 0.377657999706571,
+        "batch_latency_ms_p95": 0.377657999706571,
+        "batch_latency_ms_p99": 0.377657999706571,
         "batch_size": 10000,
         "n_objects": 1000,
-        "objects_per_second": 2542459.0630982737,
-        "peak_rss_bytes": 232919040,
+        "objects_per_second": 2576589.1104658144,
+        "peak_rss_bytes": 219869184,
         "result_sha256": "df7639ca6eceaae81534fceb76c2c0a53737608da3beb866df786ff56038aeae",
-        "wall_time_seconds": 0.0003933200005121762
+        "wall_time_seconds": 0.00038811000013083685
       },
       {
-        "batch_latency_ms_p50": 1.7198654995809193,
-        "batch_latency_ms_p95": 2.166601400040235,
-        "batch_latency_ms_p99": 2.27703787970313,
+        "batch_latency_ms_p50": 1.7448699991291505,
+        "batch_latency_ms_p95": 2.1906732494244348,
+        "batch_latency_ms_p99": 2.300457049277611,
         "batch_size": 10000,
         "n_objects": 100000,
-        "objects_per_second": 5537358.87148418,
-        "peak_rss_bytes": 234885120,
+        "objects_per_second": 5503426.791234409,
+        "peak_rss_bytes": 221704192,
         "result_sha256": "6bccc31959ee57dba3c29e93dcdda28578949f09059560f540608012e1a4dd68",
-        "wall_time_seconds": 0.018059150999761187
+        "wall_time_seconds": 0.018170497000028263
       },
       {
-        "batch_latency_ms_p50": 1.7089939992729342,
-        "batch_latency_ms_p95": 1.8383580496447394,
-        "batch_latency_ms_p99": 1.8996237115425174,
+        "batch_latency_ms_p50": 1.7145104984592763,
+        "batch_latency_ms_p95": 1.8603547485326999,
+        "batch_latency_ms_p99": 2.0030654694892296,
         "batch_size": 10000,
         "n_objects": 1000000,
-        "objects_per_second": 5812093.145507469,
-        "peak_rss_bytes": 234885120,
+        "objects_per_second": 5783846.549462852,
+        "peak_rss_bytes": 221704192,
         "result_sha256": "829027caf909673f29eef6ef4cfc5306b85e797bd47efc8ad6705c3b540d873f",
-        "wall_time_seconds": 0.17205505399942922
+        "wall_time_seconds": 0.17289531999995233
       },
       {
-        "batch_latency_ms_p50": 1.6778230001364136,
-        "batch_latency_ms_p95": 1.965807849956036,
-        "batch_latency_ms_p99": 2.12431264028055,
+        "batch_latency_ms_p50": 1.7022744996211259,
+        "batch_latency_ms_p95": 1.8791301507917524,
+        "batch_latency_ms_p99": 1.9297242001084665,
         "batch_size": 10000,
         "n_objects": 2000000,
-        "objects_per_second": 5841158.104899491,
-        "peak_rss_bytes": 234885120,
+        "objects_per_second": 5831486.054602845,
+        "peak_rss_bytes": 221704192,
         "result_sha256": "e45a65456271a380a20c46766242ad7b2fbcc907350385c6c3f1f54d372fcd2e",
-        "wall_time_seconds": 0.3423978540013195
+        "wall_time_seconds": 0.34296575200096413
       },
       {
-        "batch_latency_ms_p50": 1.6912109995246283,
-        "batch_latency_ms_p95": 2.093341449926811,
-        "batch_latency_ms_p99": 2.480979400006617,
+        "batch_latency_ms_p50": 1.7065290003301925,
+        "batch_latency_ms_p95": 1.90046070047174,
+        "batch_latency_ms_p99": 2.020541140063869,
         "batch_size": 10000,
         "n_objects": 5000000,
-        "objects_per_second": 5732303.352607586,
-        "peak_rss_bytes": 234885120,
+        "objects_per_second": 5786917.789019645,
+        "peak_rss_bytes": 221704192,
         "result_sha256": "8c039b69b9f0b76b567b74e78f68f0a2d44b83f9ab9b5badae7d982a49ef2cfe",
-        "wall_time_seconds": 0.8722497210001166
+        "wall_time_seconds": 0.8640178040004685
       }
     ],
     "mode": "streaming_cached_operator_layer",
@@ -68,15 +68,15 @@
   "confirmatory_claim_allowed": false,
   "formative_target_met": true,
   "maximum_objects": 5000000,
-  "peak_rss_bytes": 234885120,
+  "peak_rss_bytes": 221704192,
   "phase": "formative_measurement",
   "representative_base_explainer": {
     "kind": "linear_contribution",
     "n_objects": 100000,
-    "wall_time_seconds": 0.0029605409999931
+    "wall_time_seconds": 0.0050900850001198705
   },
   "uncached_serialization_subset": {
     "n_objects": 10000,
-    "wall_time_seconds": 0.04997410500072874
+    "wall_time_seconds": 0.054253595999398385
   }
 }
