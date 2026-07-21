@@ -2,7 +2,9 @@
 
 ## Final One-Zip Practical Closure
 
-- Branch: `feat/one-zip-final-practical-closure`
+- Release target: `v1.3.0` technical stable
+- Branch: `feat/one-zip-final-practical-closure`, merged to `main`
+- Green pre-release main CI: readiness `29846598207`; universal integration `29846598714`
 - Original protocol source: `3a7ad13ae33f2d84f0384c34c0a417c0f1a34def`
 - Scoring-recovery source: `13a29170cd96cc7e94f86a4fa2c129c7e75f295e`
 - Original run: `INVALID_AFTER_LABEL_OPENING_BEFORE_SCORING`
@@ -16,7 +18,7 @@
 - H7-B/H8/H9 confirmatory claims: `NOT_SUPPORTED`
 - AI/human validation: `NOT_RUN_OUT_OF_SCOPE`
 - Chapter 4: `19 A4 pages, 31 tables, 23 figures, 0 placeholders`
-- Stable tag: `NOT_YET_CREATED`
+- Stable tag: `PENDING_FINAL_VERSION_COMMIT_CI`
 
 The principal practical superiority hypothesis failed on sealed data: FuzzyXAI P1 recorded 2,828 invalid automatic
 actions at the 20% review budget, while the frozen weighted baseline recorded 2,722. The relative change was
@@ -27,7 +29,8 @@ detection inside the registered eligible region and exact canonical hash preserv
 The original run and its invalid marker are retained. The only recovery unwrapped the already defined label-vault
 envelope and scored pre-existing hashed actions; it did not rebuild predictions, features, explanations, models,
 thresholds or policies. Artifact lineage records the protocol and recovery commits separately. Public CI, merge and
-tag remain pending and must be verified independently before release wording changes.
+tag are release operations distinct from scientific claim status. Human-comprehension, domain-approval and
+expert-action claims remain out of scope and disabled; their absence does not become evidence through this release.
 
 ## Final One-Zip Practical Closure Prelock
 
