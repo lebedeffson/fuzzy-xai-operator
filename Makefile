@@ -933,6 +933,8 @@ chapter4-v13-analysis:
 	PYTHONPATH=framework/fuzzyxai:. $(CHAPTER4_V13_PYTHON) -m experiments.chapter4_v13.build_tables
 	PYTHONPATH=framework/fuzzyxai:. $(CHAPTER4_V13_PYTHON) -m experiments.chapter4_v13.build_figures
 	PYTHONPATH=framework/fuzzyxai:. $(CHAPTER4_V13_PYTHON) -m experiments.chapter4_v13.validate_evidence
+	PYTHONPATH=framework/fuzzyxai:. $(CHAPTER4_V13_PYTHON) -m experiments.chapter4_v13.build_chapter
+	PYTHONPATH=framework/fuzzyxai:. $(CHAPTER4_V13_PYTHON) -m experiments.chapter4_v13.validate_document
 
 reproduce-chapter4-v13:
 	PYTHONPATH=framework/fuzzyxai:. $(CHAPTER4_V13_PYTHON) -m experiments.chapter4_v13.reproduce_all
