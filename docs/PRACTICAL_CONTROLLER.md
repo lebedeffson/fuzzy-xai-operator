@@ -57,4 +57,3 @@ make PYTHON=.venv/bin/python practical-controller-freeze
 
 The first command validates the technical formative candidate. The second must return `BLOCKED` until real external
 inputs are supplied. A formative advantage must not be described as confirmatory evidence.
-

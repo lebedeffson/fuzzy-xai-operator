@@ -42,4 +42,3 @@ jobs:
           cat /tmp/lock.log
           test "$code" -eq 2
           grep -q "BLOCKED: practical_confirmatory_protocol_lock" /tmp/lock.log
-

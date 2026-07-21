@@ -11,4 +11,3 @@ COPY . .
 RUN python -m pip install --no-cache-dir ".[dev,evidence]"
 
 CMD ["make", "PYTHON=python", "practical-release-check"]
-
