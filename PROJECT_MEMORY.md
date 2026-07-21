@@ -6,7 +6,8 @@
 - Branch: `feat/final-confirmatory-and-chapter4`
 - Frozen base: `68e6edcfa867b48684b89d98dd74b5fe4794ef55`
 - Dataset sealing and OOF implementation: `77e12c0e468fdff727fa1f89eda3b5e3e6aa19a4`
-- Previous public prelock workflow: `29824352350`, PASS
+- Public sealed-prelock workflow: `29827701682`, Python 3.11/3.12 PASS on
+  `613e35d00dedd4b5c9368861734a79d0a958df11`
 - Research phase: formative iteration 2 of at most 3
 - Confirmatory test: unopened
 - Stable technical release: blocked

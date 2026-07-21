@@ -6,7 +6,8 @@
 - Frozen base: `68e6edcfa867b48684b89d98dd74b5fe4794ef55`
 - Dataset/OOF implementation: `77e12c0e468fdff727fa1f89eda3b5e3e6aa19a4`
 - Technical prelock check: `PASS_LOCAL`
-- Public workflow: `29824352350`, Python 3.11/3.12 `PASS`
+- Public workflow: `29827701682`, Python 3.11/3.12 `PASS` on
+  `613e35d00dedd4b5c9368861734a79d0a958df11`
 - Confirmatory datasets sealed: `5/5`
 - OOF identities: `69825`
 - Sealed-test identities: `17406`, overlap `0`
