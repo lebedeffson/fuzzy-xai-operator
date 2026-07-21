@@ -7,6 +7,7 @@
 - Implementation: `a49785ae81208911d74b4f1f9aa87e7382843de8`
 - Evidence commit: `efa2e90`
 - Technical prelock check: `PASS_LOCAL`
+- Public workflow: `29824352350`, Python 3.11/3.12 `PASS`
 - Confirmatory datasets sealed: `0/5`
 - Confirmatory test: `UNOPENED`
 - AI formative run 2: `INPUT_READY_SCORES_NOT_RUN`
@@ -23,6 +24,9 @@ The shareable technical artifact is
 `c70979e1e2bce999b416fd16eee6b1fbdd31156a57febda98cb6cb0426f73de8`. Its `BOUNDARY.json` explicitly disables
 confirmatory and stable-release claims. `make final-seal-datasets`, `make final-controller-freeze`, final Chapter 4 and
 `make final-release-archive` remain fail-closed until real external inputs pass.
+
+The clean committed-tree source release is `release_artifacts/fuzzyxai-source-release-6f866e6e0e72.zip` with 1,484
+files and SHA256 `8c1df84403cad4c7fe273f8f2c39489ead7e41c629d6abb0db3a2f69da409b08`; the quarantined site is absent.
 
 ## Strong Confirmatory Formative Gate
 

@@ -7,6 +7,7 @@
 - Frozen base: `68e6edcfa867b48684b89d98dd74b5fe4794ef55`
 - Prelock implementation: `a49785ae81208911d74b4f1f9aa87e7382843de8`
 - Compact evidence commit: `efa2e90`
+- Public prelock workflow: `29824352350`, PASS on `6f866e6e0e7232c168155ff314ed282f08f1eee8`
 - Research phase: formative iteration 2 of at most 3
 - Confirmatory test: unopened
 - Stable technical release: blocked
@@ -29,6 +30,8 @@ Measured technical prelock evidence:
 - deterministic prelock evidence archive:
   `release_artifacts/fuzzyxai-final-confirmatory-prelock-a49785ae8120.zip`, SHA256
   `c70979e1e2bce999b416fd16eee6b1fbdd31156a57febda98cb6cb0426f73de8`.
+- clean committed-tree source archive: `release_artifacts/fuzzyxai-source-release-6f866e6e0e72.zip`, 1,484 files,
+  SHA256 `8c1df84403cad4c7fe273f8f2c39489ead7e41c629d6abb0db3a2f69da409b08`; quarantined site absent.
 
 Fail-closed boundary:
 
