@@ -384,12 +384,26 @@ def _open_all_vaults() -> dict[str, str]:
                 stderr=subprocess.DEVNULL,
             )
             clear.seek(0)
-            labels = json.load(clear)
+            labels = _parse_vault_payload(json.load(clear), dataset_id)
+        expected = {
+            json.loads(line)["object_id_hash"]
+            for line in (OUTPUT / f"features/{dataset_id}.jsonl").read_text(encoding="utf-8").splitlines()
+        }
+        if set(labels) != expected:
+            raise RuntimeError(
+                f"sealed identity mismatch for {dataset_id}: features={len(expected)} labels={len(labels)}"
+            )
         overlap = set(output) & set(labels)
         if overlap:
             raise RuntimeError(f"duplicate sealed identity across label vaults: {len(overlap)}")
         output.update({str(key): str(value) for key, value in labels.items()})
     return output
+
+
+def _parse_vault_payload(payload: object, dataset_id: str) -> dict[str, str]:
+    if not isinstance(payload, dict) or set(payload) != {"labels"} or not isinstance(payload["labels"], dict):
+        raise RuntimeError(f"invalid label-vault envelope for {dataset_id}")
+    return {str(key): str(value) for key, value in payload["labels"].items()}
 
 
 def _score_preserved_actions(labels: dict[str, str], manifest: dict[str, object]) -> dict[str, object]:

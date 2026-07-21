@@ -20,6 +20,7 @@ from fuzzyxai.final_closure import (
     non_refit_ablation,
     refit_ablation,
 )
+from run_sealed_confirmatory import _parse_vault_payload
 
 
 D = hashlib.sha256(b"x").hexdigest()
@@ -118,3 +119,9 @@ def test_prelock_registry_preserves_unmet_and_unrun_method_boundaries() -> None:
     assert registry["method_status"]["H6-B"] == "confirmatory_only_requires_two_sealed_tabular_datasets"
     assert registry["method_status"]["H7-B"] == "blocked_projection_stability_not_measured"
     assert registry["confirmatory_claim_allowed"] is False
+
+
+def test_label_vault_envelope_is_explicitly_unwrapped() -> None:
+    assert _parse_vault_payload({"labels": {"object-1": 1}}, "dataset") == {"object-1": "1"}
+    with pytest.raises(RuntimeError, match="invalid label-vault envelope"):
+        _parse_vault_payload({"object-1": 1}, "dataset")

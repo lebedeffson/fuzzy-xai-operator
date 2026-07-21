@@ -24,7 +24,11 @@ def main() -> None:
     for path in (completion, statistics_path, claims_path):
         if not path.is_file():
             raise SystemExit(f"BLOCKED: chapter 4 requires {path.relative_to(ROOT)}")
-    if load(completion).get("status") != "completed_once":
+    completion_payload = load(completion)
+    if completion_payload.get("status") not in {
+        "completed_once",
+        "completed_via_declared_scoring_recovery",
+    }:
         raise SystemExit("BLOCKED: confirmatory completion marker is invalid")
     statistics, claims = load(statistics_path), load(claims_path)
     OUTPUT.mkdir(parents=True, exist_ok=True)
@@ -113,7 +117,10 @@ def _chapter(statistics, claims, evidence, tables, figures) -> str:
     h9 = statistics["H9"]
     sections = [
         ("4.1 Постановка практической задачи", "Практический контур рассматривает решение модели как проверяемый маршрут от данных и объяснения к действию."),
-        ("4.2 Formative и confirmatory protocol", "Настройка выполнена до однократного открытия запечатанных меток; после protocol lock изменение моделей, признаков и endpoints запрещено."),
+        (
+            "4.2 Formative и confirmatory protocol",
+            "Настройка выполнена до однократного открытия запечатанных меток; после protocol lock изменение моделей, признаков и endpoints запрещено. Первичная scoring-процедура остановилась из-за ошибки распаковки служебного envelope до вычисления результатов. Сохранён invalid marker; итоговый scoring выполнен как объявленное техническое восстановление над неизменными pre-score действиями без повторного обучения или настройки.",
+        ),
         ("4.3 Данные, модели и разбиения", f"Исследование использует пять независимых наборов и {statistics['H3']['P1_vs_baseline']['n']} запечатанных объектов."),
         ("4.4 Архитектура практического контроллера", "Контроллер объединяет predictive risk, route risk и формальный hard guard при фиксированном бюджете проверки."),
         ("4.5 Таксономия аналогов", "Post-hoc explainers, glass-box predictors и политики действия сравниваются раздельно."),

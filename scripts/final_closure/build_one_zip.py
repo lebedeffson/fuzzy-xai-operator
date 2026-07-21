@@ -30,7 +30,7 @@ def main() -> None:
     if missing:
         raise SystemExit(f"BLOCKED: final one ZIP prerequisites missing: {missing}")
     completion = load(STUDY / "confirmatory_completion_marker.json")
-    if completion.get("status") != "completed_once":
+    if completion.get("status") not in {"completed_once", "completed_via_declared_scoring_recovery"}:
         raise SystemExit("BLOCKED: confirmatory run is not complete")
     head = _git("rev-parse", "HEAD")
     if _git("write-tree") != _git("rev-parse", "HEAD^{tree}"):
@@ -66,7 +66,12 @@ def _populate(stage: Path, head: str) -> None:
             destination.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(path, destination)
     mappings = {
-        "protocol": [STUDY / "protocol.json", STUDY / "confirmatory_protocol_lock.json", STUDY / "protocol_manifest.json"],
+        "protocol": [
+            STUDY / "protocol.json",
+            STUDY / "confirmatory_protocol_lock.json",
+            STUDY / "confirmatory_scoring_recovery_lock.json",
+            STUDY / "protocol_manifest.json",
+        ],
         "data_manifests": [STUDY / "confirmatory_dataset_manifest.json", STUDY / "confirmatory_split_manifest.json", STUDY / "near_duplicate_audit.json", STUDY / "final_leakage_audit.json"],
         "models": list((STUDY / "dataset_manifests").glob("*/model_manifest.json")),
         "features": [STUDY / "confirmatory_feature_manifest.json", STUDY / "p0_p1_feature_audit.json"],
@@ -103,7 +108,7 @@ def _populate(stage: Path, head: str) -> None:
     write(stage / "artifact_lineage.json", lineage)
     _write_final_report(stage, head)
     (stage / "README_FIRST.md").write_text(
-        "# FuzzyXAI final practical closure\n\nTechnical computational evidence only. Human comprehension, domain approval and expert-action claims are out of scope.\n",
+        "# FuzzyXAI final practical closure\n\nTechnical computational evidence only. Human comprehension, domain approval and expert-action claims are out of scope. The original scoring failure and declared scoring-only recovery are preserved in the protocol and evidence directories.\n",
         encoding="utf-8",
     )
 

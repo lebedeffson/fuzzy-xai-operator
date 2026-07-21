@@ -840,6 +840,12 @@ final-controller-freeze: final-p0-p1-audit final-controller-formative final-comp
 final-controller-confirmatory: final-controller-freeze
 	OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 PYTHONPATH=$(PYTHONPATH):scripts/final_closure nice -n 18 $(CONFIRMATORY_PYTHON) scripts/final_closure/run_sealed_confirmatory.py
 
+final-controller-scoring-recovery-lock:
+	PYTHONPATH=$(PYTHONPATH):scripts/final_closure $(CONFIRMATORY_PYTHON) scripts/final_closure/run_scoring_recovery.py lock
+
+final-controller-scoring-recovery:
+	PYTHONPATH=$(PYTHONPATH):scripts/final_closure $(CONFIRMATORY_PYTHON) scripts/final_closure/run_scoring_recovery.py run
+
 final-controller-baselines final-controller-ablation:
 	@$(MAKE) final-controller-confirmatory
 

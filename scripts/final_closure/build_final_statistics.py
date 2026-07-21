@@ -18,7 +18,10 @@ SEED = 7419
 
 def main() -> None:
     completion = STUDY / "confirmatory_completion_marker.json"
-    if not completion.is_file() or load(completion).get("status") != "completed_once":
+    if not completion.is_file() or load(completion).get("status") not in {
+        "completed_once",
+        "completed_via_declared_scoring_recovery",
+    }:
         raise SystemExit("BLOCKED: final statistics require the one-shot confirmatory completion marker")
     summary = load(OUTPUT / "h3_h7_summary.json")
     protocol = load(STUDY / "protocol.json")
@@ -51,6 +54,7 @@ def main() -> None:
         "effect_size_and_ci_required": True,
         "holm_families": protocol["holm_families"],
         "post_open_tuning": False,
+        "protocol_deviation": summary.get("protocol_deviation"),
     }
     write(OUTPUT / "final_statistics.json", payload)
     print("PASS: final_confirmatory_statistics effects=true ci=true holm=true")
