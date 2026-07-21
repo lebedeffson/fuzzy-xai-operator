@@ -1,0 +1,37 @@
+{
+  "canary": [
+    {
+      "invalid_accepts": 271,
+      "review_rate": 0.197845249755142,
+      "rollback_triggered": true,
+      "traffic_fraction": 0.05
+    },
+    {
+      "invalid_accepts": 504,
+      "review_rate": 0.2018111254851229,
+      "rollback_triggered": true,
+      "traffic_fraction": 0.1
+    },
+    {
+      "invalid_accepts": 1205,
+      "review_rate": 0.19877467665078286,
+      "rollback_triggered": true,
+      "traffic_fraction": 0.25
+    },
+    {
+      "invalid_accepts": 4850,
+      "review_rate": 0.2,
+      "rollback_triggered": true,
+      "traffic_fraction": 1.0
+    }
+  ],
+  "confirmatory_claim_allowed": false,
+  "delayed_labels_opened_after_actions": true,
+  "event_count": 100000,
+  "false_blocks": 6518,
+  "invalid_accepts": 4850,
+  "phase": "controlled_formative_shadow_replay",
+  "review_rate": 0.2,
+  "route_fault_count": 11428,
+  "terminology": "realistic replayed deployment incidents"
+}

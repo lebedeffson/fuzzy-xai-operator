@@ -1,0 +1,20 @@
+{
+  "acceptance": {
+    "critical_contradictions": 0,
+    "critical_unjustified_actions": 0,
+    "critical_unsupported_claims": 0,
+    "minimum_medians": {
+      "clarity": 3,
+      "limitation_completeness": 3,
+      "uncertainty_honesty": 3
+    }
+  },
+  "ai_review_is_external_validation": false,
+  "blind": true,
+  "case_count": 240,
+  "clean_session_required": true,
+  "reviewer_input_sha256": "d08270c87b795f5f526dae69317216a40a017194d5145f8c973ef24193c88387",
+  "schema_version": "1.0",
+  "status": "input_ready_scores_not_run",
+  "variant_count": 720
+}

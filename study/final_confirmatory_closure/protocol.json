@@ -1,0 +1,30 @@
+{
+  "base_commit": "68e6edcfa867b48684b89d98dd74b5fe4794ef55",
+  "confirmatory_test_opened": false,
+  "current_formative_iteration": 2,
+  "false_block_ceiling": 0.01,
+  "hard_fault_recall_minimum": 0.95,
+  "identifier": "FXAI-FINAL-PRACTICAL-CONFIRMATORY-CLOSURE",
+  "immutable_results": {
+    "H1": "supported",
+    "H2": "supported",
+    "H3-original": "not_supported",
+    "H4": "supported",
+    "H5-P-original": "not_supported",
+    "H5-S": "supported",
+    "H6-general": "not_supported"
+  },
+  "implementation_commit": "a49785ae81208911d74b4f1f9aa87e7382843de8",
+  "maximum_formative_iterations": 3,
+  "phase": "formative_iteration_2_prelock",
+  "post_lock_changes_forbidden": true,
+  "primary_cost_profile": "unsafe_accept_sensitive",
+  "primary_endpoint": "operationally_invalid_automatic_actions_at_20_percent_review_budget",
+  "primary_review_budget": 0.2,
+  "schema_version": "1.0",
+  "secondary_review_budgets": [
+    0.05,
+    0.1,
+    0.3
+  ]
+}
