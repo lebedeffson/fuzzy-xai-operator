@@ -936,3 +936,6 @@ chapter4-v13-analysis:
 
 reproduce-chapter4-v13:
 	PYTHONPATH=framework/fuzzyxai:. $(CHAPTER4_V13_PYTHON) -m experiments.chapter4_v13.reproduce_all
+
+chapter4-v13-release:
+	PYTHONPATH=framework/fuzzyxai:. $(CHAPTER4_V13_PYTHON) -m experiments.chapter4_v13.build_release
