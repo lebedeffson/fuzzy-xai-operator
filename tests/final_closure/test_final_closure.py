@@ -1,0 +1,85 @@
+from __future__ import annotations
+
+import hashlib
+
+import numpy as np
+import pytest
+
+from fuzzyxai.final_closure import (
+    ConfirmatoryFeatureVector,
+    FormativeIteration,
+    InvalidActionDecomposition,
+    SealedDataset,
+    audit_registry,
+    compositional_faults,
+    conditional_permutation_effect,
+    fault_library,
+    next_iteration,
+    non_refit_ablation,
+    refit_ablation,
+)
+
+
+D = hashlib.sha256(b"x").hexdigest()
+
+
+def _dataset(dataset_id="new", modality="tabular"):
+    values = [hashlib.sha256(f"{dataset_id}:{index}".encode()).hexdigest() for index in range(6)]
+    return SealedDataset(dataset_id, modality, "source", "license", *values[:5], None, values[-1])
+
+
+def test_invalid_action_keeps_reason_decomposition() -> None:
+    value = InvalidActionDecomposition(route_failure=True, contract_failure=True)
+    assert value.operationally_invalid_automatic_action
+    assert value.reason_codes == ("route_failure", "contract_failure")
+
+
+def test_confirmatory_features_require_oof_and_extended_width() -> None:
+    ConfirmatoryFeatureVector(D, (0.0,) * 9, (0.0,) * 13, True, "dev-oof")
+    with pytest.raises(ValueError, match="out-of-fold"):
+        ConfirmatoryFeatureVector(D, (0.0,) * 9, (0.0,) * 13, False, "test")
+
+
+def test_dataset_audit_blocks_formative_reuse_label_access_and_overlap() -> None:
+    dataset = _dataset()
+    report = audit_registry(
+        (dataset, _dataset("tab2"), _dataset("img", "image"), _dataset("txt", "text"), _dataset("ts", "timeseries")),
+        formative_dataset_ids={"new"}, formative_hashes=set(), oof_object_hashes={D},
+        sealed_test_object_hashes={D}, tuning_runner_can_read_test_labels=True,
+    )
+    assert report["status"] == "blocked"
+    assert len(report["blockers"]) == 3
+
+
+def test_dataset_audit_requires_hashed_nonempty_split_identities() -> None:
+    report = audit_registry(
+        (_dataset(), _dataset("tab2"), _dataset("img", "image"), _dataset("txt", "text"), _dataset("ts", "timeseries")),
+        formative_dataset_ids=set(),
+        formative_hashes=set(),
+        oof_object_hashes={"raw-object-id"},
+        sealed_test_object_hashes=set(),
+        tuning_runner_can_read_test_labels=False,
+    )
+    assert report["status"] == "blocked"
+    assert "SEALED_TEST_IDENTITIES_MISSING" in report["blockers"]
+    assert "INVALID_OOF_ID_HASH:1" in report["blockers"]
+
+
+def test_formative_stop_rule_blocks_fourth_iteration() -> None:
+    history = tuple(FormativeIteration(index, D, D, D, "reason", ()) for index in (1, 2, 3))
+    with pytest.raises(RuntimeError, match="STOP_RULE"):
+        next_iteration(history, reason_predeclared=True)
+
+
+def test_fault_library_has_distinct_templates_and_compositions() -> None:
+    assert len(fault_library()) >= 40
+    assert len({item.family for item in fault_library()}) == len(fault_library())
+    assert len(compositional_faults()) >= 10
+
+
+def test_rule_ablation_estimands_are_not_mixed() -> None:
+    local = non_refit_ablation(0.9, 0.8, support=0.1, redundancy=0.2)
+    refit = refit_ablation(0.9, 0.88, support=0.1, redundancy=0.2)
+    assert local.estimand != refit.estimand
+    effect = conditional_permutation_effect([1, 2, 3, 4], ["a", "a", "b", "b"], lambda x: float(x[::2].sum()), seed=7)
+    assert np.isfinite(effect)

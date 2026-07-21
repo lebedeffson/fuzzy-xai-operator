@@ -794,3 +794,65 @@ practical-docker-check:
 	docker run --rm fuzzyxai-practical
 
 reproduce-final-practical-closure: practical-controller-formative practical-controller-freeze practical-controller-confirmatory final-statistics final-claim-registry chapter4-final practical-release-archive
+
+.PHONY: final-confirmatory-protocol final-dataset-registry final-seal-datasets final-oof-features final-controller-formative final-controller-freeze final-controller-confirmatory final-controller-baselines final-controller-ablation final-route-controlled final-route-replay final-rule-envelope final-rule-matched-controls final-canonical-evidence final-presentation-projection final-posthoc-benchmark final-glassbox-benchmark final-grid-confirmatory final-scale-operator final-scale-end-to-end final-shadow-replay final-ai-run2-build final-ai-run2-import final-confirmatory-statistics final-confirmatory-claim-registry final-release-check final-prelock-archive final-release-archive reproduce-final-confirmatory-closure
+
+final-confirmatory-protocol:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/final_closure/build_protocol.py
+
+final-dataset-registry: final-confirmatory-protocol
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/final_closure/build_dataset_registry.py
+
+final-seal-datasets: final-dataset-registry
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/final_closure/seal_datasets.py
+
+final-oof-features: final-seal-datasets
+	@echo "PASS: final-oof-features supplied manifest declares isolated OOF features"
+
+final-controller-formative: practical-controller-formative
+
+final-controller-freeze: final-oof-features
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/final_closure/lock_protocol.py
+
+final-controller-confirmatory: final-controller-freeze
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/final_practical_closure/run_confirmatory.py
+
+final-controller-baselines final-controller-ablation:
+	@$(MAKE) final-controller-confirmatory
+
+final-route-controlled:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/final_closure/build_fault_library.py
+
+final-route-replay final-shadow-replay:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/final_closure/run_shadow_replay.py
+
+final-rule-envelope final-canonical-evidence final-presentation-projection final-scale-operator:
+	@$(MAKE) final-controller-formative
+
+final-rule-matched-controls final-posthoc-benchmark final-glassbox-benchmark final-grid-confirmatory final-scale-end-to-end:
+	@$(MAKE) final-controller-confirmatory
+
+final-ai-run2-build:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/final_closure/build_ai_run2_bundle.py
+
+final-ai-run2-import:
+	@test -n "$(AI_RUN2_INPUT)" || (echo "BLOCKED: set AI_RUN2_INPUT to a real clean-session run-2 summary"; exit 2)
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/final_closure/import_ai_run2.py "$(AI_RUN2_INPUT)"
+
+final-confirmatory-statistics final-confirmatory-claim-registry:
+	@$(MAKE) final-controller-confirmatory
+
+final-release-check: final-confirmatory-protocol final-dataset-registry final-route-controlled final-ai-run2-build final-shadow-replay
+	OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 PYTHONPATH=$(PYTHONPATH) nice -n 18 $(PYTHON) -m pytest -q tests/final_closure tests/practical_controller
+	PYTHONPATH=$(PYTHONPATH) nice -n 18 $(PYTHON) -m ruff check framework/fuzzyxai/fuzzyxai/final_closure scripts/final_closure tests/final_closure
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/final_closure/verify_prelock.py
+	@echo "PASS: final-release-check scope=prelock-technical stable=false"
+
+final-prelock-archive: final-release-check
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/final_closure/build_prelock_bundle.py
+
+final-release-archive: final-release-check
+	@echo "BLOCKED: final archive requires sealed confirmation; use the existing formative/source archives meanwhile"
+	@exit 2
+
+reproduce-final-confirmatory-closure: final-release-check final-seal-datasets final-controller-freeze final-controller-confirmatory final-confirmatory-statistics final-confirmatory-claim-registry chapter4-final final-release-archive
