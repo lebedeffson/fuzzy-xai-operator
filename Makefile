@@ -776,9 +776,8 @@ chapter4-practical-formative: practical-controller-formative-check
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/final_practical_closure/build_artifacts.py
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/final_practical_closure/build_chapter4_formative.py
 
-chapter4-final: final-claim-registry
-	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/final_practical_closure/build_confirmatory_outputs.py
-	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/final_practical_closure/build_chapter4_final.py
+chapter4-final: final-chapter4
+	@echo "PASS: chapter4-final source=sealed-confirmatory"
 
 practical-release-check: practical-controller-formative-check chapter4-practical-formative final-claim-registry
 	OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 PYTHONPATH=$(PYTHONPATH) nice -n 18 $(PYTHON) -m pytest -q tests/practical_controller
@@ -794,9 +793,9 @@ practical-docker-check:
 	docker build -f Dockerfile.practical -t fuzzyxai-practical .
 	docker run --rm fuzzyxai-practical
 
-reproduce-final-practical-closure: practical-controller-formative practical-controller-freeze practical-controller-confirmatory final-statistics final-claim-registry chapter4-final practical-release-archive
+reproduce-final-practical-closure: final-release-check final-controller-freeze final-controller-confirmatory final-confirmatory-statistics final-confirmatory-claim-registry final-chapter4 final-one-zip
 
-.PHONY: final-confirmatory-protocol final-comparator-protocol final-dataset-registry final-seal-datasets final-leakage-audit final-data-verify final-near-duplicate-audit final-oof-features final-p0-p1-audit final-local-data-check final-controller-formative final-controller-freeze final-controller-confirmatory final-controller-baselines final-controller-ablation final-route-controlled final-route-replay final-rule-envelope final-rule-matched-controls final-canonical-evidence final-presentation-projection final-posthoc-benchmark final-glassbox-benchmark final-grid-confirmatory final-scale-operator final-scale-end-to-end final-shadow-replay final-ai-run2-build final-ai-run2-import final-ai-run2-report final-ai-text-review-scope final-prelock-method-registry final-confirmatory-statistics final-confirmatory-claim-registry final-release-check final-prelock-archive final-release-archive reproduce-final-confirmatory-closure
+.PHONY: final-confirmatory-protocol final-comparator-protocol final-dataset-registry final-seal-datasets final-leakage-audit final-data-verify final-near-duplicate-audit final-oof-features final-p0-p1-audit final-local-data-check final-controller-formative final-controller-freeze final-controller-confirmatory final-controller-baselines final-controller-ablation final-route-controlled final-route-replay final-rule-envelope final-rule-matched-controls final-canonical-evidence final-presentation-projection final-posthoc-benchmark final-glassbox-benchmark final-grid-confirmatory final-scale-operator final-scale-end-to-end final-shadow-replay final-ai-run2-build final-ai-run2-import final-ai-run2-report final-ai-text-review-scope final-prelock-method-registry final-confirmatory-statistics final-confirmatory-claim-registry final-chapter4 final-release-check final-prelock-archive final-release-archive final-one-zip reproduce-final-confirmatory-closure
 
 final-confirmatory-protocol:
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/final_closure/build_protocol.py
@@ -879,8 +878,14 @@ final-ai-text-review-scope: final-ai-run2-build
 final-prelock-method-registry: final-controller-formative final-posthoc-benchmark final-canonical-evidence
 	PYTHONPATH=$(PYTHONPATH):scripts/final_closure $(PYTHON) scripts/final_closure/build_prelock_method_registry.py
 
-final-confirmatory-statistics final-confirmatory-claim-registry:
-	@$(MAKE) final-controller-confirmatory
+final-confirmatory-statistics: final-controller-confirmatory
+	PYTHONPATH=$(PYTHONPATH):scripts/final_closure $(CONFIRMATORY_PYTHON) scripts/final_closure/build_final_statistics.py
+
+final-confirmatory-claim-registry: final-confirmatory-statistics
+	PYTHONPATH=$(PYTHONPATH):scripts/final_closure $(PYTHON) scripts/final_closure/build_final_claim_registry.py
+
+final-chapter4: final-confirmatory-claim-registry
+	OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 PYTHONPATH=$(PYTHONPATH):scripts/final_closure nice -n 18 $(CONFIRMATORY_PYTHON) scripts/final_closure/build_chapter4.py
 
 final-release-check: final-confirmatory-protocol final-route-controlled final-ai-run2-build final-ai-text-review-scope final-shadow-replay
 	OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 PYTHONPATH=$(PYTHONPATH) nice -n 18 $(PYTHON) -m pytest -q tests/final_closure tests/practical_controller
@@ -892,7 +897,9 @@ final-prelock-archive: final-release-check
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/final_closure/build_prelock_bundle.py
 
 final-release-archive: final-release-check
-	@echo "BLOCKED: final archive requires sealed confirmation; use the existing formative/source archives meanwhile"
-	@exit 2
+	@$(MAKE) final-one-zip
 
-reproduce-final-confirmatory-closure: final-release-check final-seal-datasets final-controller-freeze final-controller-confirmatory final-confirmatory-statistics final-confirmatory-claim-registry chapter4-final final-release-archive
+final-one-zip: final-chapter4
+	PYTHONPATH=$(PYTHONPATH):scripts/final_closure $(PYTHON) scripts/final_closure/build_one_zip.py
+
+reproduce-final-confirmatory-closure: reproduce-final-practical-closure

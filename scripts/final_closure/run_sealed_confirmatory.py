@@ -20,6 +20,7 @@ from sklearn.isotonic import IsotonicRegression
 from sklearn.linear_model import LogisticRegression
 
 from common import ROOT, STUDY, load, sha256, write
+from confirmatory_experiments import run_label_free_experiments, score_h6b
 from oof_pipeline import (
     DATASETS,
     DATA_ROOT,
@@ -39,6 +40,7 @@ from oof_pipeline import (
 )
 from run_real_formative import (
     BUDGETS,
+    COMPONENT_GROUPS,
     PRIMARY_BUDGET,
     _baseline_scores,
     _load_rows,
@@ -137,11 +139,17 @@ def _build_prescore() -> dict[str, object]:
             feature_frame["explainer_disagreement"].fillna(0).to_numpy(float),
         )
     )
+    for component, component_names in COMPONENT_GROUPS.items():
+        removed = set(component_names) | {f"{name}__missing" for name in component_names}
+        keep = [index for index, name in enumerate(names) if name not in removed]
+        model = _fit_risk_model(oof_p1[:, keep], oof_target)
+        scores[f"P1_minus_{component}"] = model.predict_proba(test_p1[:, keep])[:, 1]
     policy_path = OUTPUT / "prescore_policy_actions.parquet"
     _write_prescore_actions(feature_frame, scores, policy_path)
     model_path = OUTPUT / "controller_models.pkl"
     with model_path.open("wb") as handle:
         pickle.dump({"P0": p0_model, "P1": p1_model, "feature_names": names}, handle, protocol=5)
+    auxiliary = run_label_free_experiments()
     return {
         "schema_version": "1.0",
         "phase": "sealed_test_prescore_without_labels",
@@ -153,6 +161,7 @@ def _build_prescore() -> dict[str, object]:
         "predictive_model_artifacts": model_paths,
         "controller_models": _artifact(model_path),
         "policy_actions": _artifact(policy_path),
+        "label_free_experiments": auxiliary,
         "primary_review_budget": PRIMARY_BUDGET,
     }
 
@@ -415,6 +424,7 @@ def _score_preserved_actions(labels: dict[str, str], manifest: dict[str, object]
     baseline = primary[primary["policy"] == baseline_name].iloc[0]
     reduction = (baseline["invalid_automatic_actions"] - p1["invalid_automatic_actions"]) / max(1, baseline["invalid_automatic_actions"])
     h7_count, h7_preserved = _verify_test_canonical()
+    h6b = score_h6b(labels)
     return {
         "schema_version": "1.0",
         "phase": "sealed_confirmatory_scored_once",
@@ -433,6 +443,8 @@ def _score_preserved_actions(labels: dict[str, str], manifest: dict[str, object]
             "artifacts": h7_count,
             "canonical_hash_preservation_rate": h7_preserved / max(1, h7_count),
         },
+        "H6_B": h6b,
+        "label_free_experiments": manifest["label_free_experiments"],
         "target_counts": {name: int(values.sum()) for name, values in reasons.items()} | {"any_invalid": int(target.sum())},
         "raw_results": _artifact(raw_path),
         "summary_table": _artifact(table_path),
