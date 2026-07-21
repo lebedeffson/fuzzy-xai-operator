@@ -14,7 +14,6 @@ def main() -> None:
     h3 = statistics["H3"]["P1_vs_baseline"]
     h5 = next(row for row in statistics["H5-A"]["methods"] if row["method"] == "typed_route_validity")
     h6a = statistics["H6-A"]
-    h6b = statistics["H6-B"]
     h7 = statistics["H7-A"]
     h8 = statistics["H8"]
     h9 = statistics["H9"]
@@ -26,10 +25,10 @@ def main() -> None:
         ),
         "H3-P2": _fixed_risk_status(statistics["H3"]["fixed_risk"]),
         "H3-P3": _status(statistics["H3"]["P1_vs_P0"]["confidence_interval_95"][0] > 0 and statistics["H3"]["P1_vs_P0"]["holm_adjusted_p"] < 0.05),
-        "H3-P4": "dataset_or_stratum_specific_pending_detailed_analysis",
+        "H3-P4": "not_supported_stratum_inference_incomplete",
         "H5-A": _status(h5["f1"] >= 0.95 and h5["false_certification"] <= 0.01 and h5["source_localization"] >= 0.90),
         "H6-A": _status(h6a["detection_rate"] >= 0.80 and h6a["false_discovery_rate"] <= 0.10 and h6a["sign_accuracy"] >= 0.90),
-        "H6-B": _status(h6b["replicated_positive_direction"]),
+        "H6-B": "not_supported_inferential_gate_incomplete",
         "H7-A": _status(h7["canonical_hash_preservation_rate"] == 1.0 and h7["artifacts"] >= 10_000),
         "H7-B": "not_supported_projection_tradeoff_incomplete",
         "H8": _status(h8["recommended_range_target_met"]),
@@ -47,6 +46,13 @@ def main() -> None:
             "H5-S": "supported", "H5-P-original": "not_supported", "H6-general": "not_supported",
         },
         "new_claims": claims,
+        "claim_scopes": {
+            "H5-A": "controlled_and_compositional_route_faults_only",
+            "H6-A": "registered_synthetic_planted_rule_eligible_region_only",
+            "H6-B": "positive_direction_observed_on_two_datasets_but_no_locked_CI_or_Holm_test",
+            "H8": "registered_label_free_component_grid_transformations_only",
+            "H9": "cached_operator_layer_only_not_end_to_end_explainer_runtime",
+        },
         "human_claims": {
             "understandable_to_users": "out_of_scope_disabled",
             "confirmed_by_experts": "out_of_scope_disabled",
@@ -54,6 +60,7 @@ def main() -> None:
             "matches_specialist_decisions": "out_of_scope_disabled",
         },
         "manual_positive_override_allowed": False,
+        "post_scoring_claim_gate_change": "conservative_only_H6B_and_H3P4_disabled",
     }
     write(EVIDENCE / "final_claim_registry.json", payload)
     print(f"PASS: final_claim_registry supported={sum(value == 'supported' for value in claims.values())} manual_override=false")
