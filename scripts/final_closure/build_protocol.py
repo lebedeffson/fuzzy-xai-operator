@@ -5,7 +5,7 @@ from __future__ import annotations
 
 import subprocess
 
-from common import BASE, ROOT, STUDY, sha256, write
+from common import BASE, EVIDENCE, ROOT, STUDY, sha256, write
 
 
 def main() -> None:
@@ -56,6 +56,28 @@ def main() -> None:
     }
     write(STUDY / "formative_iteration_log.json", iteration)
     write(STUDY / "protocol_manifest.json", {"protocol_sha256": sha256(STUDY / "protocol.json"), "test_opened": False})
+    write(
+        EVIDENCE / "claim_status_prelock.json",
+        {
+            "phase": "formative_prelock",
+            "frozen_claims": protocol["immutable_results"],
+            "new_claims": {
+                hypothesis: "blocked_pending_sealed_confirmation"
+                for hypothesis in ("H3-P1", "H3-P2", "H3-P3", "H3-P4", "H5-A", "H6-A", "H6-B", "H7-A", "H7-B", "H8", "H9")
+            },
+            "external_claim_gates": {
+                "domain_language": "open_external_not_in_scope",
+                "comprehension": "open_external_not_in_scope",
+                "expert_action": "open_external_not_in_scope",
+            },
+            "forbidden_release_claims": [
+                "understandable_to_users",
+                "confirmed_by_experts",
+                "improves_domain_safety",
+                "matches_specialist_decisions",
+            ],
+        },
+    )
     print("PASS: final_protocol iteration=2/3 confirmatory_opened=false")
 
 

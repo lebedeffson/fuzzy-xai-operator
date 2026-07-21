@@ -16,6 +16,7 @@ def main() -> None:
         STUDY / "ai_formative_run2/protocol.json",
         STUDY / "ai_formative_run2/reviewer_cases.jsonl",
         STUDY / "ai_formative_run2/fuzzyxai-ai-formative-run2-input.zip",
+        EVIDENCE / "claim_status_prelock.json",
         EVIDENCE / "fault_library.json",
         EVIDENCE / "shadow_replay_summary.json",
         EVIDENCE / "shadow_replay_events.jsonl",
@@ -28,14 +29,19 @@ def main() -> None:
         protocol = load(required[0])
         registry = load(required[2])
         ai_protocol = load(required[3])
-        faults = load(required[6])
-        replay = load(required[7])
+        claims = load(required[6])
+        faults = load(required[7])
+        replay = load(required[8])
         if protocol.get("confirmatory_test_opened") is not False:
             blockers.append("CONFIRMATORY_TEST_NOT_CLOSED")
         if registry.get("status") not in {"blocked_pending_download_and_sealing", "blocked_formative_overlap"}:
             blockers.append("DATASET_REGISTRY_PRELOCK_STATUS")
         if ai_protocol.get("status") != "input_ready_scores_not_run":
             blockers.append("AI_SCORES_SHOULD_NOT_EXIST")
+        if set(claims.get("frozen_claims", {}).values()) != {"supported", "not_supported"}:
+            blockers.append("FROZEN_CLAIM_STATUS")
+        if set(claims.get("new_claims", {}).values()) != {"blocked_pending_sealed_confirmation"}:
+            blockers.append("NEW_CLAIM_STATUS")
         if len(fault_library()) < 40 or len(compositional_faults()) < 10:
             blockers.append("FAULT_LIBRARY_INCOMPLETE")
         if len(faults.get("controlled_fault_templates", [])) < 40:
@@ -44,7 +50,7 @@ def main() -> None:
             blockers.append("SHADOW_REPLAY_BOUNDARY")
         if sum(1 for _ in required[4].open(encoding="utf-8")) != 720:
             blockers.append("AI_VARIANT_COUNT")
-        if sum(1 for _ in required[8].open(encoding="utf-8")) != 100_000:
+        if sum(1 for _ in required[9].open(encoding="utf-8")) != 100_000:
             blockers.append("SHADOW_EVENT_COUNT")
     status = "pass" if not blockers else "fail"
     manifest = {
