@@ -55,6 +55,7 @@ def inject(route: dict[str, object], fault: str) -> None:
         route["provenance_channels"] = ["prediction", "model", "tokenizer"]
     elif fault == "model_version_mismatch":
         route["model_version"] = "distilbert-ag-news@stale"
+        route["explanation_model_version"] = "distilbert-ag-news@stale"
     elif fault == "preprocessing_incompatibility":
         route["preprocessing_version"] = "tokenizer@incompatible"
     elif fault == "corrupted_checksum":
