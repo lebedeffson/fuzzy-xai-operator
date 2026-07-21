@@ -168,6 +168,21 @@ def _actions(scores: np.ndarray, budget: float) -> np.ndarray:
     return actions
 
 
+def _expected_calibration_error(invalid: np.ndarray, scores: np.ndarray, bins: int = 10) -> float:
+    clipped = np.clip(np.asarray(scores, dtype=float), 0.0, 1.0)
+    targets = np.asarray(invalid, dtype=float)
+    edges = np.linspace(0.0, 1.0, bins + 1)
+    error = 0.0
+    for index in range(bins):
+        upper_inclusive = index == bins - 1
+        mask = (clipped >= edges[index]) & (
+            (clipped <= edges[index + 1]) if upper_inclusive else (clipped < edges[index + 1])
+        )
+        if mask.any():
+            error += float(mask.mean()) * abs(float(targets[mask].mean()) - float(clipped[mask].mean()))
+    return error
+
+
 def _metrics(rows: Sequence[Mapping[str, Any]], scores: np.ndarray, invalid: np.ndarray, budget: float, costs: Mapping[str, float]) -> dict[str, object]:
     actions = _actions(scores, budget)
     accepted = actions == "accept"
@@ -186,6 +201,7 @@ def _metrics(rows: Sequence[Mapping[str, Any]], scores: np.ndarray, invalid: np.
         "total_cost": float(wrong.sum() * float(costs["wrong_accept"]) + reviewed.sum() * float(costs["review"])),
         "risk_auroc": float(roc_auc_score(invalid, scores)),
         "risk_auprc": float(average_precision_score(invalid, scores)),
+        "expected_calibration_error": _expected_calibration_error(invalid, scores),
         "brier_score": float(brier_score_loss(invalid, np.clip(scores, 0.0, 1.0))),
         "action_sha256": sha256_bytes(canonical_bytes(actions.tolist())),
     }

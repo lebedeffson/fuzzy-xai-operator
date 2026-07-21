@@ -3,7 +3,7 @@ from __future__ import annotations
 import numpy as np
 
 from experiments.chapter4_v13.common import canonical_bytes, sha256_bytes, verify_protocol_hash
-from experiments.chapter4_v13.run_policies import _actions, _holm
+from experiments.chapter4_v13.run_policies import _actions, _expected_calibration_error, _holm
 from experiments.chapter4_v13.run_route_faults import clean_route, inject, simple_or, typed_route_validator
 from experiments.chapter4_v13.smoke import run
 
@@ -19,6 +19,12 @@ def test_canonical_hash_is_order_independent() -> None:
 def test_matched_budget_has_exact_review_count() -> None:
     actions = _actions(np.asarray([0.1, 0.4, 0.2, 0.3]), 0.5)
     assert list(actions).count("review") == 2
+
+
+def test_expected_calibration_error_is_zero_for_perfect_binary_risk() -> None:
+    invalid = np.asarray([False, False, True, True])
+    scores = np.asarray([0.0, 0.0, 1.0, 1.0])
+    assert _expected_calibration_error(invalid, scores) == 0.0
 
 
 def test_holm_is_monotone_in_sorted_order() -> None:

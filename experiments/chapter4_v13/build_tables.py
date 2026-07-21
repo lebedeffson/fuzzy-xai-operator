@@ -46,7 +46,7 @@ def build() -> dict[str, object]:
     tables["modern_contour"] = {"path": _write_table("modern_contour", modern), "sources": [ARTIFACTS / "manifests" / "model_manifest.json", ARTIFACTS / "explanations" / "sealed_test_summary.json", ARTIFACTS / "policies" / "test_quality.json"], "status": "confirmatory"}
 
     policies = policy[(policy["review_budget"] == 0.20) & (policy["cost_profile"] == "balanced")].copy()
-    policies = policies[["policy", "automatic_coverage", "wrong_automatic_actions", "selective_risk", "manual_review_load", "false_blocks", "total_cost", "risk_auroc", "risk_auprc", "brier_score"]]
+    policies = policies[["policy", "automatic_coverage", "wrong_automatic_actions", "selective_risk", "manual_review_load", "false_blocks", "total_cost", "risk_auroc", "risk_auprc", "expected_calibration_error", "brier_score"]]
     tables["policies_budget_20"] = {"path": _write_table("policies_budget_20", policies), "sources": [ARTIFACTS / "policies" / "policy_results.csv", ARTIFACTS / "policies" / "statistical_tests.json"], "status": "confirmatory"}
 
     route_table = route[["group", "method", "n", "precision", "recall", "f1", "false_certification", "false_rejection", "fault_type_accuracy", "component_localization_accuracy", "diagnostic_time_ms_mean"]]

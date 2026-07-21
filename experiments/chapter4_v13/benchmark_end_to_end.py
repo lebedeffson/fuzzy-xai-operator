@@ -142,13 +142,19 @@ def run() -> dict[str, object]:
     set_deterministic(protocol()["statistics"]["seeds"][0])
     model, tokenizer, device = load_frozen_model()
     source = list(read_jsonl(ARTIFACTS / "processed" / "sealed_test_inputs.jsonl"))
+    source.extend(read_jsonl(ARTIFACTS / "processed" / "validation.jsonl"))
     raw_rows = []
     sizes = [int(value) for value in cfg["sizes"]]
     methods = ("integrated_gradients", "token_masking")
     process = psutil.Process()
 
     for method in methods:
-        for n in sizes:
+        method_sizes = [*sizes]
+        if method == "token_masking":
+            method_sizes.append(int(cfg["cheap_method_extra_size"]))
+        for n in method_sizes:
+            if n > len(source):
+                raise RuntimeError(f"runtime benchmark requested {n} objects but only {len(source)} are available")
             rows = source[:n]
             texts = [str(row["text"]) for row in rows]
             # One complete warm-up is excluded from recorded repetitions.
