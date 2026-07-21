@@ -139,7 +139,7 @@ def _csv(name: str, rows):
     rows = list(rows)
     keys = sorted({key for row in rows for key in row})
     with path.open("w", encoding="utf-8", newline="") as stream:
-        writer = csv.DictWriter(stream, fieldnames=keys)
+        writer = csv.DictWriter(stream, fieldnames=keys, lineterminator="\n")
         writer.writeheader()
         for row in rows:
             writer.writerow({key: json.dumps(row.get(key), sort_keys=True) if isinstance(row.get(key), (dict, list)) else row.get(key) for key in keys})

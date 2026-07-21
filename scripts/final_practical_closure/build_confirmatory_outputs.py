@@ -62,7 +62,7 @@ def main() -> None:
         values[item["experiment_id"]] = row
     table = tables / "confirmatory_claims.csv"
     with table.open("w", encoding="utf-8", newline="") as stream:
-        writer = csv.DictWriter(stream, fieldnames=list(rows[0]))
+        writer = csv.DictWriter(stream, fieldnames=list(rows[0]), lineterminator="\n")
         writer.writeheader()
         writer.writerows(rows)
     figure = _status_figure(rows, figures)
@@ -151,4 +151,3 @@ def _entry(path):
 
 if __name__ == "__main__":
     main()
-
