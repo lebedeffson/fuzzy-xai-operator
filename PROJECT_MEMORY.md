@@ -1,5 +1,57 @@
 # Project Memory
 
+## FXAI-FINAL-ONE-ZIP-PRACTICAL-PRELOCK
+
+- Date: 2026-07-21
+- Branch: `feat/one-zip-final-practical-closure`
+- Real multimodal implementation: `1160c77b739fa54e7a433e1aeec24c7d9440c978`
+- One-shot confirmatory and final artifact implementation: `418e05c7c0516b7ccf6e33a7de3fb48a22fce93c`
+- Fixed-risk operating-point protocol: `9def80e4871f49f0abb18fb8b7972b60a03be720`
+- Protocol identifier: `FXAI-FINAL-ONE-ZIP-PRACTICAL-CLOSURE`
+- Confirmatory protocol: prelock PASS, not locked
+- Confirmatory labels: unopened
+- Technical stable release: blocked pending the one-shot run and final evidence
+
+The final cycle now uses five real independent datasets with content-aware split isolation. Exact feature duplicates,
+image perceptual-near-duplicates, normalized/MinHash text duplicates and subject-level time-series overlap are all
+audited before OOF generation. The current split contains 69,827 train/development OOF identities and 17,404 sealed
+test identities with zero identity, group, exact-content or registered near-duplicate violations. Label vaults remain
+encrypted and are not feature channels.
+
+Measured prelock evidence:
+
+- real model and component-occlusion pipelines run for two tabular datasets, shoulder radiographs, SMS text and UCI
+  HAR sensor windows; every development row is predicted by a model that did not train on that row;
+- P0 has 10 predictive channels and P1 adds 13 route/explanation channels with explicit `not_applicable` masks;
+- real formative H3 at the frozen 20% review budget records 6,283 invalid accepts for P1 versus 8,356 for the best
+  simple matched-budget policy, a 24.8085% development-only reduction; this is not confirmatory evidence;
+- post-hoc and glass-box comparisons are separated. SHAP, LIME, Anchors and component occlusion use the same frozen
+  predictors; GAM, EBM, RuleFit, sparse tree and rule list are evaluated as predictors. FXAM is pinned to arXiv
+  2111.08255 but excluded because no pinned reproducible implementation is registered;
+- H7-A preserves canonical hashes for all 69,827 OOF explanation artifacts. H7-B remains blocked because projection
+  stability and fidelity trade-off are not yet measured;
+- the historical controlled H5-A, H6-A, H8 and H9 evidence is retained as formative only. H6-A did not meet its prior
+  formative target, H6-B has not been scored, and operator-only H9 must not be described as end-to-end scaling;
+- the 240-case/720-variant blind AI text-review input is available, but no review was run. The technical cycle may
+  continue only because all human-comprehension, expert-confirmation and domain-safety claims are disabled.
+
+Implemented one-shot boundary:
+
+- pre-score builds test predictions, canonical evidence, P0/P1 and all policy actions without opening labels;
+- an immutable opening marker is written before vault decryption, and any post-opening failure forbids reuse of the
+  run as the original confirmation;
+- H5-A, planted H6-A, train/development-selected H6-B candidates, H8 and operator-only H9 are part of the frozen
+  orchestrator; H6-B labels are used only during scoring;
+- final statistics require effect sizes, hierarchical intervals and Holm adjustment; claim status has no manual
+  positive override;
+- Chapter 4 and `fuzzyxai-final-practical-closure-<commit12>.zip` fail closed until completion, statistics and claims
+  exist. The ZIP builder applies the clean-source allowlist and excludes old ZIP files, raw data, vaults, keys and the
+  quarantined site.
+
+Next step: review the prelock code and measured limitations, commit the refreshed manifests, then create the protocol
+lock once. Run the sealed confirmatory command only from the exact locked HEAD. Do not tune the image model, risk
+ceiling, fixed budgets, features, candidate rules or success thresholds after lock.
+
 ## FXAI-FINAL-PRACTICAL-CONFIRMATORY-PRELOCK
 
 - Date: 2026-07-21

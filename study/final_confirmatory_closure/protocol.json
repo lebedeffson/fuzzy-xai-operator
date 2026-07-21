@@ -35,6 +35,22 @@
   "confirmatory_test_opened": false,
   "current_formative_iteration": 2,
   "false_block_ceiling": 0.01,
+  "fixed_risk_operating_budgets_from_development": {
+    "always_accept": null,
+    "always_review": 0.3,
+    "calibrated_confidence_threshold": null,
+    "conformal_selective": null,
+    "data_quality_guardrail": null,
+    "explainer_disagreement": null,
+    "full_fuzzyxai_P1": null,
+    "model_disagreement": null,
+    "predictive_risk_P0": null,
+    "provenance_completeness": null,
+    "raw_confidence_threshold": null,
+    "simple_or_guardrail": null,
+    "uncertainty_threshold": null,
+    "weighted_linear_score": null
+  },
   "hard_fault_recall_minimum": 0.95,
   "holm_families": [
     "H3",
@@ -54,7 +70,7 @@
     "H5-S": "supported",
     "H6-general": "not_supported"
   },
-  "implementation_commit": "a98efe94437e8d9fe24bf561851d883dbaf444f4",
+  "implementation_commit": "9def80e4871f49f0abb18fb8b7972b60a03be720",
   "maximum_formative_iterations": 3,
   "models": {
     "image_primary": "compact_grayscale_cnn",
@@ -83,6 +99,7 @@
   "primary_comparator_policy": "weighted_linear_score",
   "primary_cost_profile": "unsafe_accept_sensitive",
   "primary_endpoint": "operationally_invalid_automatic_actions_at_20_percent_review_budget",
+  "primary_operational_risk_ceiling": 0.05,
   "primary_review_budget": 0.2,
   "schema_version": "2.0",
   "secondary_review_budgets": [

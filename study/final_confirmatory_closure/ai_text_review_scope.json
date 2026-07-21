@@ -15,7 +15,7 @@
   "input_bundle": {
     "blind_variants": 720,
     "path": "study/final_confirmatory_closure/ai_formative_run2/fuzzyxai-ai-formative-run2-input.zip",
-    "sha256": "cea40c1e7dcaacc9f75d135b6eb6365587146f8ad5676202adac58b6d4a23e87"
+    "sha256": "80332d63fca5c5e99ce80e90ee9ad97352e6a3909e10a65848f86ccbb269e6b5"
   },
   "limitations": [
     "No AI text-quality acceptance result is claimed.",

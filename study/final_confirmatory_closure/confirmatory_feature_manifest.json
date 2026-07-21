@@ -55,7 +55,7 @@
       "modality": "tabular",
       "model_family": "sklearn_hist_gradient_boosting",
       "model_manifest_path": "study/final_confirmatory_closure/dataset_manifests/bank_marketing/model_manifest.json",
-      "model_manifest_sha256": "ff19670c9595374c9946e75f7c798a7ebd4e9ec2bb38730963f6c40c07d06a2f",
+      "model_manifest_sha256": "b95e0ddaa41ce37b936ef89b8473e9ecaf7aad6906816a3c5071fc81126024eb",
       "not_applicable_route_channels": [
         "rule_redundancy"
       ],
@@ -84,7 +84,7 @@
       "modality": "tabular",
       "model_family": "sklearn_hist_gradient_boosting",
       "model_manifest_path": "study/final_confirmatory_closure/dataset_manifests/default_credit_clients/model_manifest.json",
-      "model_manifest_sha256": "7f8a0b772040e9be9259610d59af667f12595d1ff53da91e69d3c4f0d621ab49",
+      "model_manifest_sha256": "1f10fcc1953465ee35b742c1cefc37edaadafded9f6005e4025bc2db48cbaebd",
       "not_applicable_route_channels": [
         "rule_redundancy"
       ],
@@ -115,7 +115,7 @@
       "modality": "image",
       "model_family": "compact_grayscale_cnn",
       "model_manifest_path": "study/final_confirmatory_closure/dataset_manifests/shoulder_implant_xray/model_manifest.json",
-      "model_manifest_sha256": "40fa0f15a94b1af6677f9777b77c76bf0095c8035b51b07966aae23d9b149f20",
+      "model_manifest_sha256": "2142b93aaaedeb0c06c51a2673d3f784c8c36476045fbf525f23b720eef24e06",
       "not_applicable_route_channels": [
         "rule_redundancy"
       ],
@@ -144,7 +144,7 @@
       "modality": "text",
       "model_family": "tfidf_sgd_logistic_calibrated",
       "model_manifest_path": "study/final_confirmatory_closure/dataset_manifests/sms_spam/model_manifest.json",
-      "model_manifest_sha256": "fc60b3ce634d425ca877cf605fd26d067bf0a89386d378dc448a1bf19bbeaff8",
+      "model_manifest_sha256": "2ff0fa42c71d83b5418c7f0894206f4ae235cc99e9997b6b8808b5ffd61a39b9",
       "not_applicable_route_channels": [
         "rule_redundancy"
       ],
@@ -177,7 +177,7 @@
       "modality": "timeseries",
       "model_family": "compact_temporal_1d_cnn",
       "model_manifest_path": "study/final_confirmatory_closure/dataset_manifests/uci_har_smartphones/model_manifest.json",
-      "model_manifest_sha256": "2ced9edb89896202a8711563e64dbe4ff07067bb031b0eb75ac446356d43e3f2",
+      "model_manifest_sha256": "3dfb1f3e3874d341c70ad937a58720e4150ed2e11fdfb0ffa6c37fb6e523b88a",
       "not_applicable_route_channels": [
         "rule_redundancy"
       ],
@@ -217,5 +217,5 @@
   ],
   "schema_version": "2.0",
   "sealed_test_loaded": false,
-  "source_commit": "a98efe94437e8d9fe24bf561851d883dbaf444f4"
+  "source_commit": "9def80e4871f49f0abb18fb8b7972b60a03be720"
 }

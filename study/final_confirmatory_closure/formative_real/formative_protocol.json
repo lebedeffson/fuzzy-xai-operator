@@ -9,7 +9,7 @@
   "phase": "formative_train_development_only",
   "primary_endpoint": "operationally_invalid_automatic_action_at_review_budget_0.20",
   "sealed_test_opened": false,
-  "source_commit": "a98efe94437e8d9fe24bf561851d883dbaf444f4",
+  "source_commit": "9def80e4871f49f0abb18fb8b7972b60a03be720",
   "target_definition": {
     "contract_failure": "frozen hard contract violation",
     "data_failure": "label-free shift >= 0.80 or data-quality fault >= 0.50",

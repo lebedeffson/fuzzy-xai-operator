@@ -10,7 +10,7 @@
       "canonical_evidence_sha256": "3b3a0b42609590a8f5f7a6405345551b45d820668cd344a84931ac8f6b827699",
       "dataset_id": "bank_marketing",
       "explainer_manifest_sha256": "d82c06219b61cf7b29729c6388bf72d9b730f8d783f1c4e957230bc2bec88139",
-      "model_manifest_sha256": "ff19670c9595374c9946e75f7c798a7ebd4e9ec2bb38730963f6c40c07d06a2f",
+      "model_manifest_sha256": "b95e0ddaa41ce37b936ef89b8473e9ecaf7aad6906816a3c5071fc81126024eb",
       "objects": 32940
     },
     {
@@ -21,7 +21,7 @@
       "canonical_evidence_sha256": "e718364b407ed274bd3de8df272b05d5b7e02fca333d9a7a5f83f136b8293a90",
       "dataset_id": "default_credit_clients",
       "explainer_manifest_sha256": "a581c801fba65509f2445ff20acfe8a2fce40fdfda73cb6875c54202193dcd6a",
-      "model_manifest_sha256": "7f8a0b772040e9be9259610d59af667f12595d1ff53da91e69d3c4f0d621ab49",
+      "model_manifest_sha256": "1f10fcc1953465ee35b742c1cefc37edaadafded9f6005e4025bc2db48cbaebd",
       "objects": 23999
     },
     {
@@ -32,7 +32,7 @@
       "canonical_evidence_sha256": "d7c55f957f949bf1833852f4b12643e90ca934f642e66ec628b69d158eb2e2a4",
       "dataset_id": "shoulder_implant_xray",
       "explainer_manifest_sha256": "7fc6a1963ba43bc915dc8e8b14054886725922248c48cbe635b2ca0cf1e3267b",
-      "model_manifest_sha256": "40fa0f15a94b1af6677f9777b77c76bf0095c8035b51b07966aae23d9b149f20",
+      "model_manifest_sha256": "2142b93aaaedeb0c06c51a2673d3f784c8c36476045fbf525f23b720eef24e06",
       "objects": 477
     },
     {
@@ -43,7 +43,7 @@
       "canonical_evidence_sha256": "58748ce465a8b3352434fad3f1825fbf6fff95a884218f1977a396bad04422ba",
       "dataset_id": "sms_spam",
       "explainer_manifest_sha256": "07bb6ffd8352eefc04418f213acaa199b0ab012d03aa29b8de971685744481cb",
-      "model_manifest_sha256": "fc60b3ce634d425ca877cf605fd26d067bf0a89386d378dc448a1bf19bbeaff8",
+      "model_manifest_sha256": "2ff0fa42c71d83b5418c7f0894206f4ae235cc99e9997b6b8808b5ffd61a39b9",
       "objects": 4127
     },
     {
@@ -54,7 +54,7 @@
       "canonical_evidence_sha256": "f0c3611bcc045af637df79ee0f8632d103907a78af763f8f4663ca31ea88f89d",
       "dataset_id": "uci_har_smartphones",
       "explainer_manifest_sha256": "6b9bc546cf2519474f6896071307fe033a5f959b43ffa3c260e5187b2deb2d42",
-      "model_manifest_sha256": "2ced9edb89896202a8711563e64dbe4ff07067bb031b0eb75ac446356d43e3f2",
+      "model_manifest_sha256": "3dfb1f3e3874d341c70ad937a58720e4150ed2e11fdfb0ffa6c37fb6e523b88a",
       "objects": 8284
     }
   ],

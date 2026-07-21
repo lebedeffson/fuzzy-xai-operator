@@ -1,5 +1,33 @@
 # FuzzyXAI Framework Release Status
 
+## Final One-Zip Practical Closure Prelock
+
+- Branch: `feat/one-zip-final-practical-closure`
+- Confirmatory executor commit: `418e05c7c0516b7ccf6e33a7de3fb48a22fce93c`
+- Fixed-risk protocol commit: `9def80e4871f49f0abb18fb8b7972b60a03be720`
+- OOF rows: `69,827`
+- Sealed-test rows: `17,404`
+- Identity/group/near-duplicate overlap: `0`
+- P0/P1 feature audit: `PASS`
+- H7-A formative canonical preservation: `1.0` on `69,827` artifacts
+- Confirmatory protocol: `READY_FOR_REVIEW_NOT_LOCKED`
+- Confirmatory labels: `UNOPENED`
+- AI text review: `NOT_RUN_NOT_BLOCKING_WITH_HUMAN_CLAIMS_DISABLED`
+- Final Chapter 4: `BLOCKED_BY_CONFIRMATORY_COMPLETION`
+- Final one ZIP: `BLOCKED_BY_CONFIRMATORY_COMPLETION`
+- Stable tag: `BLOCKED`
+
+The implementation now contains real cross-fitted multimodal models and explanations, explicit P0/P1 feature
+contracts, content-aware leakage audits, separated post-hoc/glass-box/policy comparisons, a two-phase one-shot
+confirmatory executor, post-run statistics, automatic claim assignment, Chapter 4 generation and one-ZIP packaging.
+These are implementation and development results only. No sealed score, confirmatory superiority claim, user
+comprehension claim, domain approval or expert-action claim exists yet.
+
+The formative H3 reduction is 24.8085% against the best simple matched-budget development policy, but it must not be
+reported as confirmed. The frozen operational-risk ceiling of 0.05 has no eligible development operating point for
+P0, P1 or the primary baseline, so H3-P2 is predeclared as not estimable unless the locked evidence itself supports
+the already frozen analysis. H6-A historical formative failure and H6-B unrun status remain visible.
+
 ## Final Practical Confirmatory Prelock
 
 - Branch: `feat/final-confirmatory-and-chapter4`
