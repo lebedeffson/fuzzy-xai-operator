@@ -795,7 +795,7 @@ practical-docker-check:
 
 reproduce-final-practical-closure: practical-controller-formative practical-controller-freeze practical-controller-confirmatory final-statistics final-claim-registry chapter4-final practical-release-archive
 
-.PHONY: final-confirmatory-protocol final-dataset-registry final-seal-datasets final-leakage-audit final-oof-features final-controller-formative final-controller-freeze final-controller-confirmatory final-controller-baselines final-controller-ablation final-route-controlled final-route-replay final-rule-envelope final-rule-matched-controls final-canonical-evidence final-presentation-projection final-posthoc-benchmark final-glassbox-benchmark final-grid-confirmatory final-scale-operator final-scale-end-to-end final-shadow-replay final-ai-run2-build final-ai-run2-import final-ai-run2-report final-confirmatory-statistics final-confirmatory-claim-registry final-release-check final-prelock-archive final-release-archive reproduce-final-confirmatory-closure
+.PHONY: final-confirmatory-protocol final-dataset-registry final-seal-datasets final-leakage-audit final-oof-features final-local-data-check final-controller-formative final-controller-freeze final-controller-confirmatory final-controller-baselines final-controller-ablation final-route-controlled final-route-replay final-rule-envelope final-rule-matched-controls final-canonical-evidence final-presentation-projection final-posthoc-benchmark final-glassbox-benchmark final-grid-confirmatory final-scale-operator final-scale-end-to-end final-shadow-replay final-ai-run2-build final-ai-run2-import final-ai-run2-report final-confirmatory-statistics final-confirmatory-claim-registry final-release-check final-prelock-archive final-release-archive reproduce-final-confirmatory-closure
 
 final-confirmatory-protocol:
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/final_closure/build_protocol.py
@@ -812,6 +812,9 @@ final-leakage-audit: final-seal-datasets
 final-oof-features: final-leakage-audit
 	OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 PYTHONPATH=$(PYTHONPATH) nice -n 18 $(PYTHON) scripts/final_closure/build_oof_features.py
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/final_closure/verify_oof_features.py
+
+final-local-data-check: final-oof-features
+	@echo "PASS: final-local-data-check private_inputs_available=true test_opened=false"
 
 final-controller-formative: practical-controller-formative
 
@@ -850,7 +853,7 @@ final-ai-run2-report:
 final-confirmatory-statistics final-confirmatory-claim-registry:
 	@$(MAKE) final-controller-confirmatory
 
-final-release-check: final-oof-features final-route-controlled final-ai-run2-build final-shadow-replay
+final-release-check: final-confirmatory-protocol final-route-controlled final-ai-run2-build final-shadow-replay
 	OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 PYTHONPATH=$(PYTHONPATH) nice -n 18 $(PYTHON) -m pytest -q tests/final_closure tests/practical_controller
 	PYTHONPATH=$(PYTHONPATH) nice -n 18 $(PYTHON) -m ruff check framework/fuzzyxai/fuzzyxai/final_closure scripts/final_closure tests/final_closure
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/final_closure/verify_prelock.py

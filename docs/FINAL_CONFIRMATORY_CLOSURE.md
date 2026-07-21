@@ -39,8 +39,11 @@ whose SHA256 matches `label_vault_sha256`. The split manifest must declare:
 }
 ```
 
-Run `make final-oof-features`. The current manifest deliberately leaves model disagreement, shift and every real
+Run `make final-local-data-check` on the controlled workstation. The current manifest deliberately leaves model disagreement, shift and every real
 route/explanation channel missing, so the protocol lock remains closed rather than substituting synthetic values.
+
+Public CI runs `make final-release-check` against the committed manifests and audits. It must not require excluded
+raw data, encrypted vaults or development-label OOF rows.
 
 Run the self-contained blind ZIP in a temporary clean chat, save all 720 raw rows as `reviews.jsonl` together with
 `session_metadata.json`, and import them with:
