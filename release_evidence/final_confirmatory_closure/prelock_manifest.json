@@ -2,39 +2,67 @@
   "artifacts": [
     {
       "path": "study/final_confirmatory_closure/protocol.json",
-      "sha256": "c795c6304a196f1452ed25831e38183e7ec8f9d457f4b043a461191c15b69c64"
+      "sha256": "88615b21cb0444d1b8cbb6682f12313b8d71052203965bf06548c30f4e3406a4"
     },
     {
       "path": "study/final_confirmatory_closure/formative_iteration_log.json",
-      "sha256": "1bf04e06da2dd8ab9dbe97bb9d0a5adfb912b0d08adec7d57dc90ff293284f7f"
+      "sha256": "51f458207e5d611a67c1169ab4ffcda7e5ca0e842a2110f757a93ce7682239d7"
     },
     {
       "path": "study/final_confirmatory_closure/confirmatory_dataset_registry.json",
-      "sha256": "5a03ca20fb777b8e959db9d0011b8a34fea14968580f7e9c15711d16db0f7c31"
+      "sha256": "ca98d93a6bc81075b5f2ead7d7789d28b548441b5295dc510356d713628f7c98"
     },
     {
       "path": "study/final_confirmatory_closure/confirmatory_dataset_manifest.json",
-      "sha256": "47d48b0887adbc89a531a2ea24deedbff414f06f538fcc7b1b6bd14fc6222aff"
+      "sha256": "27d3af1b11d8ec497bd9b84e2e1b6c53fd1317a5b7037a420273a1cb6e1e9681"
     },
     {
       "path": "study/final_confirmatory_closure/confirmatory_split_manifest.json",
-      "sha256": "15ff572a5ac03ef74a08e3c30bb5cc068ba77adfdd98b51c35ac415c2aa8962a"
+      "sha256": "ff4a8b2b0bc8e86131e6c756f2191e6b0dfb112003483306cf297729648b9d68"
     },
     {
       "path": "study/final_confirmatory_closure/final_leakage_audit.json",
-      "sha256": "6081728f09c9cc2e81c878891871457b782d6718b30f42fdef5147392cb86ada"
+      "sha256": "f0d1056df15904ae35af30db07755fdef301e6f3d54fe7962438ee84f477240b"
+    },
+    {
+      "path": "study/final_confirmatory_closure/near_duplicate_audit.json",
+      "sha256": "c22021188aecab21611b0b173da20f24cb4d7163c6ff5d5195a55274036e5c82"
     },
     {
       "path": "study/final_confirmatory_closure/confirmatory_feature_manifest.json",
-      "sha256": "95fcabe69c06fda8421142eb53730e048991e973a0427118ce3f03bc98a74e87"
+      "sha256": "6768296b673ce2536eff4abf1d9642cd5dd643cd1da5b5112b272cffc57bb197"
     },
     {
       "path": "study/final_confirmatory_closure/oof_feature_audit.json",
-      "sha256": "aaee692420c9fd8b1ed806629f28333d45cdd484e1dbca3db3f650c607d08103"
+      "sha256": "ba12be5ff808af47b5b673a6bfb8b4e7a8c7bbb7fdfb65fc6e7e7bfdcbd1e2ca"
+    },
+    {
+      "path": "study/final_confirmatory_closure/p0_p1_feature_audit.json",
+      "sha256": "ba12be5ff808af47b5b673a6bfb8b4e7a8c7bbb7fdfb65fc6e7e7bfdcbd1e2ca"
+    },
+    {
+      "path": "study/final_confirmatory_closure/formative_real/summary.json",
+      "sha256": "c6fecfb729fc3d19e9fe5a8b34b15c46cdc858197bbde485d244d3ee7cbcc324"
+    },
+    {
+      "path": "study/final_confirmatory_closure/comparator_taxonomy.json",
+      "sha256": "432fd0fc0b741816a6a525c149c75647bfaffc88e74c7c0629899efa2e54bdca"
+    },
+    {
+      "path": "study/final_confirmatory_closure/comparator_formative/summary.json",
+      "sha256": "4462cf30c24050f14376869bce2e9f6b22378703df1ecfbd69c1a5ae6a5e7ab2"
+    },
+    {
+      "path": "study/final_confirmatory_closure/h7_formative/summary.json",
+      "sha256": "0da8205c311b999bd7aee4770cd099dfa8c2cf9fafd94c041a2f55fc0357ba11"
+    },
+    {
+      "path": "study/final_confirmatory_closure/prelock_method_registry.json",
+      "sha256": "034b82f9e67402cdc1f86d958887a091a9ab92876c3b240382e1af569a576be2"
     },
     {
       "path": "study/final_confirmatory_closure/ai_formative_run2/protocol.json",
-      "sha256": "cef4dd83450178e6d86424e49cbc7e260fe4f8a32de0fd2dfdec48e371a8a18e"
+      "sha256": "ed95b99d9e22bf4f905b31dc04b7793c54cad371a8d260ba889cf63842c12dff"
     },
     {
       "path": "study/final_confirmatory_closure/ai_formative_run2/reviewer_cases.jsonl",
@@ -42,7 +70,11 @@
     },
     {
       "path": "study/final_confirmatory_closure/ai_formative_run2/fuzzyxai-ai-formative-run2-input.zip",
-      "sha256": "2451660d981983ea18a5dc33940f0c022139517a1e0d4ad3891083c866ea1438"
+      "sha256": "cea40c1e7dcaacc9f75d135b6eb6365587146f8ad5676202adac58b6d4a23e87"
+    },
+    {
+      "path": "study/final_confirmatory_closure/ai_text_review_scope.json",
+      "sha256": "a84b4dfc52d86c9bce0632d861b39cc3c00fdb7711cd039a43c8321fdaf3ca6a"
     },
     {
       "path": "release_evidence/final_confirmatory_closure/claim_status_prelock.json",

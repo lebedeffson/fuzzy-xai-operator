@@ -11,9 +11,16 @@ from common import BASE, EVIDENCE, ROOT, STUDY, sha256, write
 def main() -> None:
     subprocess.run(["git", "merge-base", "--is-ancestor", BASE, "HEAD"], cwd=ROOT, check=True)
     head = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
+    formative_summary = ROOT / "study/final_confirmatory_closure/formative_real/summary.json"
+    primary_comparator = "weighted_linear_score"
+    if formative_summary.is_file():
+        import json
+
+        measured = json.loads(formative_summary.read_text(encoding="utf-8"))
+        primary_comparator = measured.get("best_matched_budget_baseline", {}).get("policy", primary_comparator)
     protocol = {
-        "schema_version": "1.0",
-        "identifier": "FXAI-FINAL-PRACTICAL-CONFIRMATORY-CLOSURE",
+        "schema_version": "2.0",
+        "identifier": "FXAI-FINAL-ONE-ZIP-PRACTICAL-CLOSURE",
         "base_commit": BASE,
         "implementation_commit": head,
         "phase": "formative_iteration_2_prelock",
@@ -21,12 +28,46 @@ def main() -> None:
         "primary_review_budget": 0.20,
         "secondary_review_budgets": [0.05, 0.10, 0.30],
         "primary_cost_profile": "unsafe_accept_sensitive",
+        "primary_comparator_policy": primary_comparator,
         "false_block_ceiling": 0.01,
         "hard_fault_recall_minimum": 0.95,
         "maximum_formative_iterations": 3,
         "current_formative_iteration": 2,
         "confirmatory_test_opened": False,
         "post_lock_changes_forbidden": True,
+        "models": {
+            "tabular_primary": "sklearn_hist_gradient_boosting",
+            "image_primary": "compact_grayscale_cnn",
+            "text_primary": "tfidf_sgd_logistic",
+            "timeseries_primary": "compact_1d_cnn",
+        },
+        "calibration_candidates": ["platt", "isotonic", "temperature", "conformal_selective"],
+        "p0_schema_width": 10,
+        "p1_schema_width": 13,
+        "baseline_policies": [
+            "always_accept", "always_review", "raw_confidence", "calibrated_confidence",
+            "uncertainty", "model_disagreement", "explainer_disagreement", "data_quality",
+            "provenance", "simple_or", "weighted_score", "conformal_selective",
+            "predictive_risk_only", "full_fuzzyxai",
+        ],
+        "ambiguity_strata": [
+            "low_confidence", "high_confidence_disagreement", "unstable_explanation",
+            "incomplete_provenance", "shifted_object", "rare_group", "boundary_object", "route_fault",
+        ],
+        "success_rules": {
+            "H3-P1": {"relative_reduction_minimum": 0.15, "ci_excludes_zero": True, "holm_p_below": 0.05},
+            "H3-P2": {"coverage_gain_minimum": 0.05, "ci_excludes_zero": True, "holm_p_below": 0.05},
+            "H5-A": {"f1_minimum": 0.95, "false_certification_maximum": 0.01, "source_localization_minimum": 0.90},
+            "H7-A": {"canonical_hash_preservation": 1.0},
+            "H8": {"action_agreement_minimum": 0.95, "representation_agreement_minimum": 0.90},
+            "H9": {"scaling_exponent_maximum": 1.10},
+        },
+        "holm_families": ["H3", "H5", "H6", "H7", "H8", "H9"],
+        "practically_null_intervals": {
+            "H3_relative_invalid_action_reduction": [-0.15, 0.15],
+            "H3_coverage_gain": [-0.05, 0.05],
+            "H7_fidelity_loss": [-0.01, 0.01],
+        },
         "immutable_results": {
             "H1": "supported", "H2": "supported", "H3-original": "not_supported", "H4": "supported",
             "H5-S": "supported", "H5-P-original": "not_supported", "H6-general": "not_supported",

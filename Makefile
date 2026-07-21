@@ -1,4 +1,5 @@
 PYTHON ?= python
+CONFIRMATORY_PYTHON ?= .venv-confirmatory/bin/python
 PYTHONPATH := .
 PORT ?= 8085
 DATASET ?= breast_cancer
@@ -795,10 +796,13 @@ practical-docker-check:
 
 reproduce-final-practical-closure: practical-controller-formative practical-controller-freeze practical-controller-confirmatory final-statistics final-claim-registry chapter4-final practical-release-archive
 
-.PHONY: final-confirmatory-protocol final-dataset-registry final-seal-datasets final-leakage-audit final-oof-features final-local-data-check final-controller-formative final-controller-freeze final-controller-confirmatory final-controller-baselines final-controller-ablation final-route-controlled final-route-replay final-rule-envelope final-rule-matched-controls final-canonical-evidence final-presentation-projection final-posthoc-benchmark final-glassbox-benchmark final-grid-confirmatory final-scale-operator final-scale-end-to-end final-shadow-replay final-ai-run2-build final-ai-run2-import final-ai-run2-report final-confirmatory-statistics final-confirmatory-claim-registry final-release-check final-prelock-archive final-release-archive reproduce-final-confirmatory-closure
+.PHONY: final-confirmatory-protocol final-comparator-protocol final-dataset-registry final-seal-datasets final-leakage-audit final-data-verify final-near-duplicate-audit final-oof-features final-p0-p1-audit final-local-data-check final-controller-formative final-controller-freeze final-controller-confirmatory final-controller-baselines final-controller-ablation final-route-controlled final-route-replay final-rule-envelope final-rule-matched-controls final-canonical-evidence final-presentation-projection final-posthoc-benchmark final-glassbox-benchmark final-grid-confirmatory final-scale-operator final-scale-end-to-end final-shadow-replay final-ai-run2-build final-ai-run2-import final-ai-run2-report final-ai-text-review-scope final-prelock-method-registry final-confirmatory-statistics final-confirmatory-claim-registry final-release-check final-prelock-archive final-release-archive reproduce-final-confirmatory-closure
 
 final-confirmatory-protocol:
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/final_closure/build_protocol.py
+
+final-comparator-protocol:
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/final_closure/build_comparator_protocol.py
 
 final-dataset-registry: final-confirmatory-protocol
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/final_closure/build_dataset_registry.py
@@ -809,20 +813,33 @@ final-seal-datasets: final-dataset-registry
 final-leakage-audit: final-seal-datasets
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/final_closure/verify_dataset_leakage.py
 
-final-oof-features: final-leakage-audit
-	OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 PYTHONPATH=$(PYTHONPATH) nice -n 18 $(PYTHON) scripts/final_closure/build_oof_features.py
+final-data-verify: final-leakage-audit
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/final_closure/build_data_metadata.py
+	@echo "PASS: final_data_verify"
+
+final-near-duplicate-audit: final-data-verify
+	OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 PYTHONPATH=$(PYTHONPATH) nice -n 18 $(PYTHON) scripts/final_closure/audit_near_duplicates.py
+
+final-oof-features: final-near-duplicate-audit
+	@for dataset in bank_marketing default_credit_clients shoulder_implant_xray sms_spam uci_har_smartphones; do \
+		OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 PYTHONPATH=$(PYTHONPATH) nice -n 18 $(CONFIRMATORY_PYTHON) scripts/final_closure/build_oof_features.py --dataset $$dataset || exit $$?; \
+	done
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/final_closure/verify_oof_features.py
 
-final-local-data-check: final-oof-features
+final-p0-p1-audit: final-oof-features
+	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/final_closure/verify_oof_features.py
+
+final-local-data-check: final-p0-p1-audit
 	@echo "PASS: final-local-data-check private_inputs_available=true test_opened=false"
 
-final-controller-formative: practical-controller-formative
+final-controller-formative: final-p0-p1-audit
+	OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 PYTHONPATH=$(PYTHONPATH):scripts/final_closure nice -n 18 $(CONFIRMATORY_PYTHON) scripts/final_closure/run_real_formative.py
 
-final-controller-freeze: final-oof-features
+final-controller-freeze: final-p0-p1-audit final-controller-formative final-comparator-protocol final-posthoc-benchmark final-canonical-evidence final-ai-text-review-scope final-prelock-method-registry
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/final_closure/lock_protocol.py
 
 final-controller-confirmatory: final-controller-freeze
-	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/final_practical_closure/run_confirmatory.py
+	OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 PYTHONPATH=$(PYTHONPATH):scripts/final_closure nice -n 18 $(CONFIRMATORY_PYTHON) scripts/final_closure/run_sealed_confirmatory.py
 
 final-controller-baselines final-controller-ablation:
 	@$(MAKE) final-controller-confirmatory
@@ -833,10 +850,16 @@ final-route-controlled:
 final-route-replay final-shadow-replay:
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/final_closure/run_shadow_replay.py
 
-final-rule-envelope final-canonical-evidence final-presentation-projection final-scale-operator:
+final-rule-envelope final-scale-operator:
 	@$(MAKE) final-controller-formative
 
-final-rule-matched-controls final-posthoc-benchmark final-glassbox-benchmark final-grid-confirmatory final-scale-end-to-end:
+final-canonical-evidence final-presentation-projection: final-p0-p1-audit
+	OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 PYTHONPATH=$(PYTHONPATH):scripts/final_closure nice -n 18 $(CONFIRMATORY_PYTHON) scripts/final_closure/verify_canonical_projection.py
+
+final-posthoc-benchmark final-glassbox-benchmark: final-comparator-protocol final-p0-p1-audit
+	OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 PYTHONPATH=$(PYTHONPATH):framework/fuzzyxai nice -n 18 $(CONFIRMATORY_PYTHON) scripts/final_closure/run_comparator_formative.py
+
+final-rule-matched-controls final-grid-confirmatory final-scale-end-to-end:
 	@$(MAKE) final-controller-confirmatory
 
 final-ai-run2-build:
@@ -850,10 +873,16 @@ final-ai-run2-report:
 	@test -f study/final_confirmatory_closure/ai_formative_run2_report.md || (echo "BLOCKED: import a real clean-session AI run 2 first"; exit 2)
 	@cat study/final_confirmatory_closure/ai_formative_run2_report.md
 
+final-ai-text-review-scope: final-ai-run2-build
+	PYTHONPATH=$(PYTHONPATH):scripts/final_closure $(PYTHON) scripts/final_closure/build_ai_scope_decision.py
+
+final-prelock-method-registry: final-controller-formative final-posthoc-benchmark final-canonical-evidence
+	PYTHONPATH=$(PYTHONPATH):scripts/final_closure $(PYTHON) scripts/final_closure/build_prelock_method_registry.py
+
 final-confirmatory-statistics final-confirmatory-claim-registry:
 	@$(MAKE) final-controller-confirmatory
 
-final-release-check: final-confirmatory-protocol final-route-controlled final-ai-run2-build final-shadow-replay
+final-release-check: final-confirmatory-protocol final-route-controlled final-ai-run2-build final-ai-text-review-scope final-shadow-replay
 	OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 PYTHONPATH=$(PYTHONPATH) nice -n 18 $(PYTHON) -m pytest -q tests/final_closure tests/practical_controller
 	PYTHONPATH=$(PYTHONPATH) nice -n 18 $(PYTHON) -m ruff check framework/fuzzyxai/fuzzyxai/final_closure scripts/final_closure tests/final_closure
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) scripts/final_closure/verify_prelock.py

@@ -1,0 +1,24 @@
+{
+  "dataset_id": "shoulder_implant_xray",
+  "group_fields": [],
+  "identity_field": "object_id_hash",
+  "image_contract": {
+    "color_space": "grayscale",
+    "normalization": "uint8_0_255",
+    "resolution": [
+      128,
+      128
+    ]
+  },
+  "modality": "image",
+  "schema_version": "1.0",
+  "target_field_visible_in_sealed_test": false,
+  "tensor": {
+    "dtype": "uint8",
+    "name": "x",
+    "sample_shape": [
+      128,
+      128
+    ]
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "aliases": {
+    "bank_marketing": "bank_marketing",
+    "default_credit": "default_credit_clients",
+    "shoulder_xray": "shoulder_implant_xray",
+    "sms_spam": "sms_spam",
+    "uci_har": "uci_har_smartphones"
+  },
+  "policy": "spec_aliases_map_to_stable_historical_dataset_ids_without_renaming_evidence",
+  "schema_version": "1.0"
+}

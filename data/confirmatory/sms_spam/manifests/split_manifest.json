@@ -1,14 +1,14 @@
 {
   "counts": {
-    "development": 1031,
-    "sealed_test": 1033,
+    "development": 1032,
+    "sealed_test": 1032,
     "train": 3095
   },
   "dataset_id": "sms_spam",
   "identity_file_sha256": {
-    "development": "ad34fc04bab6405be3a990e3252d6909b10f16f7507eda331c2be677da56428c",
-    "sealed_test": "b9439506404afe50cbd3d08a6fae81df306561e0aabc555a35a8dad5eefe230f",
-    "train": "f73642e662c63dabb7376b4fa5057bb63c55fab5fd54cbe4c7b19c6e322993e8"
+    "development": "4d1491fa8dead757578aca08dab72869da83e2c21c4520ee8646503c1de41ffa",
+    "sealed_test": "bd0f6818a67f718394d0790b6913f6f63209acf8579c38a4b82bb47eabd60b90",
+    "train": "f6b8f371292378c9cf14be3d6201ec4fc9d4b5711d0f5abd98f1b44f09d5755f"
   },
   "identity_files": {
     "development": "data/confirmatory/sms_spam/manifests/development_object_ids.txt",

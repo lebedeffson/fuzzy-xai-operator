@@ -1,0 +1,33 @@
+{
+  "canonical_payload": "all_component_contributions_preserved_without_projection",
+  "components": [
+    "region_r0_c0",
+    "region_r0_c1",
+    "region_r0_c2",
+    "region_r0_c3",
+    "region_r1_c0",
+    "region_r1_c1",
+    "region_r1_c2",
+    "region_r1_c3",
+    "region_r2_c0",
+    "region_r2_c1",
+    "region_r2_c2",
+    "region_r2_c3",
+    "region_r3_c0",
+    "region_r3_c1",
+    "region_r3_c2",
+    "region_r3_c3"
+  ],
+  "dataset_id": "shoulder_implant_xray",
+  "explainer_id": "component_occlusion",
+  "method": "prediction_difference_after_component_occlusion",
+  "native_or_surrogate": "derived_model_agnostic",
+  "repeat_channels": [
+    "alternate_model",
+    "seed",
+    "bootstrap",
+    "input_perturbation"
+  ],
+  "schema_version": "1.0",
+  "sealed_test_loaded": false
+}

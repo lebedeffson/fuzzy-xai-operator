@@ -1,15 +1,15 @@
 {
   "dataset_id": "shoulder_implant_xray",
-  "development_ids_sha256": "c2ae3a58a65688030bb0ba5cac8fb9b8acb704d0e106c5990208ba7b71fdd4ca",
+  "development_ids_sha256": "b4cfd170204c920c965babb7a4c2beac3fa78bf695411a3672b2b2f19a67f4d7",
   "download_sha256": "1286d0b92ed90a9de978a28770fb546756d067b0a504f33e811c72486c712a45",
-  "grouping_key": null,
+  "grouping_key": "perceptual_hash_cluster",
   "label_vault_path": "data/confirmatory/shoulder_implant_xray/manifests/confirmatory_label_vault.enc",
-  "label_vault_sha256": "7a070cf804a9fa21abe2c27644d287667ad25387c2547bc7233de1fe0adca1a3",
+  "label_vault_sha256": "2d53cf3e13626c48cc9e58fc6964e2d99d0ed0f0bc982e33197c86bf4dc3322d",
   "license": "CC BY 4.0",
   "modality": "image",
-  "preprocessing_sha256": "0096ef1164d47101385fcf2db6c7251ea3b041127bf19474f175da112e312718",
+  "preprocessing_sha256": "622e8d46dd9184571188c5d3f06fb48ceea105cc2c39732da76a0e2d432f3bbf",
   "source": "https://archive.ics.uci.edu/static/public/517/shoulder+implant+x+ray+manufacturer+classification.zip",
-  "test_ids_sha256": "eabe61bedc0581086adb85ac6fa5bb96c8ff3d421feec25c2c23b339c55ecdf6",
-  "train_ids_sha256": "c01a7601b944a5d069a2d55fa092c96aa558efdce7743903384eb6620bbd9294",
+  "test_ids_sha256": "7d95f3c478899807159491ca0d49d7cad4544bcaec60b8e7e5e3b5cf7a90b9ba",
+  "train_ids_sha256": "b354276af1a5f8eb1cf8c7a80d170b5804dd324ecb8c94ba4ef6db5ba59adebb",
   "used_in_formative_tuning": false
 }

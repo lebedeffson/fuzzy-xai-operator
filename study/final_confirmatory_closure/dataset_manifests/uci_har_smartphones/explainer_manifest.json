@@ -1,0 +1,33 @@
+{
+  "canonical_payload": "all_component_contributions_preserved_without_projection",
+  "components": [
+    "window_00",
+    "window_01",
+    "window_02",
+    "window_03",
+    "window_04",
+    "window_05",
+    "window_06",
+    "window_07",
+    "window_08",
+    "window_09",
+    "window_10",
+    "window_11",
+    "window_12",
+    "window_13",
+    "window_14",
+    "window_15"
+  ],
+  "dataset_id": "uci_har_smartphones",
+  "explainer_id": "component_occlusion",
+  "method": "prediction_difference_after_component_occlusion",
+  "native_or_surrogate": "derived_model_agnostic",
+  "repeat_channels": [
+    "alternate_model",
+    "seed",
+    "bootstrap",
+    "input_perturbation"
+  ],
+  "schema_version": "1.0",
+  "sealed_test_loaded": false
+}

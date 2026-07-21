@@ -1,0 +1,31 @@
+{
+  "ai_review_is_external_validation": false,
+  "condition": "all human-perception and expert-validation claims are disabled",
+  "disabled_claims": [
+    "understandable_to_users",
+    "confirmed_by_experts",
+    "improves_domain_safety",
+    "matches_specialist_decisions"
+  ],
+  "external_gates": {
+    "comprehension": "open_external_not_in_scope",
+    "domain_language": "open_external_not_in_scope",
+    "expert_action": "open_external_not_in_scope"
+  },
+  "input_bundle": {
+    "blind_variants": 720,
+    "path": "study/final_confirmatory_closure/ai_formative_run2/fuzzyxai-ai-formative-run2-input.zip",
+    "sha256": "cea40c1e7dcaacc9f75d135b6eb6365587146f8ad5676202adac58b6d4a23e87"
+  },
+  "limitations": [
+    "No AI text-quality acceptance result is claimed.",
+    "No human comprehension, domain correctness or expert-action claim is enabled.",
+    "A later AI review may improve wording but cannot change frozen models, features or endpoints."
+  ],
+  "review_completed": false,
+  "review_records": 0,
+  "schema_version": "1.0",
+  "scope": "automated_formative_text_review_only",
+  "status": "not_run_not_blocking_technical_release",
+  "technical_release_may_proceed": true
+}

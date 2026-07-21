@@ -1,9 +1,12 @@
 {
   "dataset_id": "shoulder_implant_xray",
+  "grouping_key": "perceptual_hash_cluster",
   "modality": "image",
+  "near_duplicate_pairs_grouped": 21,
+  "perceptual_hash_max_hamming_distance": 4,
   "source_duplicate_note": "UCI removed eight repeated-patient images before publication",
   "split_seed": 7419,
-  "strategy": "deterministic_stratified_60_20_20",
+  "strategy": "stratified_perceptual_hash_group_60_20_20",
   "test_labels_in_processed_data": false,
   "transform": "grayscale_resize_128x128_uint8"
 }

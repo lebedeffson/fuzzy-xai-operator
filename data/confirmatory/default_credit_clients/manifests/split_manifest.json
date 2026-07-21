@@ -6,9 +6,9 @@
   },
   "dataset_id": "default_credit_clients",
   "identity_file_sha256": {
-    "development": "b761bf769ed5c79d26ea2b67ceb141dd1d7d470c119fb5d26cafb881213cb62b",
-    "sealed_test": "1aab7e5f9f20397546792c5e30f30afa0c6d5c33d2ba8c1727d859dc6ac7ae1c",
-    "train": "44d6208e7623c981d7f493577b1dac24b1e60677d50362f3b959de03455fc7eb"
+    "development": "b15d4d07021dddc647f263d76c1ff8c92369d3ff3b6d13396f71c2995cf520d9",
+    "sealed_test": "ee63f441cba0d964656ed0801bcd6a68810da72f9dc4bb638c4dddfdb18a7f63",
+    "train": "655bef95a3ffb9e17d2dbd4897e38f346d9d4d5fad7abdeced380dd4baffcb26"
   },
   "identity_files": {
     "development": "data/confirmatory/default_credit_clients/manifests/development_object_ids.txt",

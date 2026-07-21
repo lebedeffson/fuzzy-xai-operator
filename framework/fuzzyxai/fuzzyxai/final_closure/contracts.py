@@ -31,8 +31,8 @@ class ConfirmatoryFeatureVector:
     split_id: str
 
     def __post_init__(self) -> None:
-        if len(self.predictive) != 9 or len(self.route) != 13:
-            raise ValueError("confirmatory feature vector requires 9 predictive and 13 route channels")
+        if len(self.predictive) != 10 or len(self.route) != 13:
+            raise ValueError("confirmatory feature vector requires 10 predictive and 13 route channels")
         if not self.source_is_oof:
             raise ValueError("confirmatory controller features must be out-of-fold")
         if any(not 0.0 <= value <= 1.0 for value in (*self.predictive, *self.route) if value is not None):

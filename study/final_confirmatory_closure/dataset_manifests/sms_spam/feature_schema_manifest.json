@@ -1,0 +1,15 @@
+{
+  "dataset_id": "sms_spam",
+  "fields": [
+    {
+      "dtype": "str",
+      "missing_allowed": false,
+      "name": "text",
+      "role": "unstructured_text"
+    }
+  ],
+  "identity_field": "object_id_hash",
+  "modality": "text",
+  "schema_version": "1.0",
+  "target_field_visible_in_sealed_test": false
+}

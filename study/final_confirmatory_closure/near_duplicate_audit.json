@@ -1,0 +1,60 @@
+{
+  "blockers": [],
+  "datasets": [
+    {
+      "dataset_id": "bank_marketing",
+      "feature_count": 20,
+      "method": "sha256_of_canonical_feature_row_excluding_identifier_and_target",
+      "modality": "tabular",
+      "objects": 41176,
+      "violations": []
+    },
+    {
+      "dataset_id": "default_credit_clients",
+      "feature_count": 23,
+      "method": "sha256_of_canonical_feature_row_excluding_identifier_and_target",
+      "modality": "tabular",
+      "objects": 30000,
+      "violations": []
+    },
+    {
+      "dataset_id": "shoulder_implant_xray",
+      "group_metadata": "unavailable_in_source_dataset",
+      "method": "exact_pixel_sha256_plus_64bit_dct_phash",
+      "modality": "image",
+      "objects": 597,
+      "violations": []
+    },
+    {
+      "candidate_pairs": 186,
+      "dataset_id": "sms_spam",
+      "method": "normalized_sha256_plus_64_component_minhash_lsh_with_exact_jaccard_confirmation",
+      "modality": "text",
+      "objects": 5159,
+      "violations": []
+    },
+    {
+      "dataset_id": "uci_har_smartphones",
+      "method": "subject_disjointness_plus_exact_float32_sequence_sha256",
+      "modality": "timeseries",
+      "objects": 10299,
+      "subjects_per_split": {
+        "development": 6,
+        "sealed_test": 6,
+        "train": 18
+      },
+      "violations": []
+    }
+  ],
+  "near_duplicate_violations": 0,
+  "schema_version": "1.0",
+  "scope": "content_identity_and_near_duplicate_isolation_across_confirmatory_splits",
+  "sealed_test_labels_loaded": false,
+  "status": "pass",
+  "thresholds": {
+    "image_phash_max_hamming_distance": 4,
+    "text_candidate_bands": 16,
+    "text_exact_jaccard_threshold": 0.9,
+    "text_minhash_components": 64
+  }
+}

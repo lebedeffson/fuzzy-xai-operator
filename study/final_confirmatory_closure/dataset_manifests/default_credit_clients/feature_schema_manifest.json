@@ -1,0 +1,153 @@
+{
+  "dataset_id": "default_credit_clients",
+  "fields": [
+    {
+      "dtype": "int64",
+      "missing_allowed": false,
+      "name": "ID",
+      "role": "predictor"
+    },
+    {
+      "dtype": "int64",
+      "missing_allowed": false,
+      "name": "LIMIT_BAL",
+      "role": "predictor"
+    },
+    {
+      "dtype": "int64",
+      "missing_allowed": false,
+      "name": "SEX",
+      "role": "predictor"
+    },
+    {
+      "dtype": "int64",
+      "missing_allowed": false,
+      "name": "EDUCATION",
+      "role": "predictor"
+    },
+    {
+      "dtype": "int64",
+      "missing_allowed": false,
+      "name": "MARRIAGE",
+      "role": "predictor"
+    },
+    {
+      "dtype": "int64",
+      "missing_allowed": false,
+      "name": "AGE",
+      "role": "predictor"
+    },
+    {
+      "dtype": "int64",
+      "missing_allowed": false,
+      "name": "PAY_0",
+      "role": "predictor"
+    },
+    {
+      "dtype": "int64",
+      "missing_allowed": false,
+      "name": "PAY_2",
+      "role": "predictor"
+    },
+    {
+      "dtype": "int64",
+      "missing_allowed": false,
+      "name": "PAY_3",
+      "role": "predictor"
+    },
+    {
+      "dtype": "int64",
+      "missing_allowed": false,
+      "name": "PAY_4",
+      "role": "predictor"
+    },
+    {
+      "dtype": "int64",
+      "missing_allowed": false,
+      "name": "PAY_5",
+      "role": "predictor"
+    },
+    {
+      "dtype": "int64",
+      "missing_allowed": false,
+      "name": "PAY_6",
+      "role": "predictor"
+    },
+    {
+      "dtype": "int64",
+      "missing_allowed": false,
+      "name": "BILL_AMT1",
+      "role": "predictor"
+    },
+    {
+      "dtype": "int64",
+      "missing_allowed": false,
+      "name": "BILL_AMT2",
+      "role": "predictor"
+    },
+    {
+      "dtype": "int64",
+      "missing_allowed": false,
+      "name": "BILL_AMT3",
+      "role": "predictor"
+    },
+    {
+      "dtype": "int64",
+      "missing_allowed": false,
+      "name": "BILL_AMT4",
+      "role": "predictor"
+    },
+    {
+      "dtype": "int64",
+      "missing_allowed": false,
+      "name": "BILL_AMT5",
+      "role": "predictor"
+    },
+    {
+      "dtype": "int64",
+      "missing_allowed": false,
+      "name": "BILL_AMT6",
+      "role": "predictor"
+    },
+    {
+      "dtype": "int64",
+      "missing_allowed": false,
+      "name": "PAY_AMT1",
+      "role": "predictor"
+    },
+    {
+      "dtype": "int64",
+      "missing_allowed": false,
+      "name": "PAY_AMT2",
+      "role": "predictor"
+    },
+    {
+      "dtype": "int64",
+      "missing_allowed": false,
+      "name": "PAY_AMT3",
+      "role": "predictor"
+    },
+    {
+      "dtype": "int64",
+      "missing_allowed": false,
+      "name": "PAY_AMT4",
+      "role": "predictor"
+    },
+    {
+      "dtype": "int64",
+      "missing_allowed": false,
+      "name": "PAY_AMT5",
+      "role": "predictor"
+    },
+    {
+      "dtype": "int64",
+      "missing_allowed": false,
+      "name": "PAY_AMT6",
+      "role": "predictor"
+    }
+  ],
+  "identity_field": "object_id_hash",
+  "modality": "tabular",
+  "schema_version": "1.0",
+  "target_field_visible_in_sealed_test": false
+}

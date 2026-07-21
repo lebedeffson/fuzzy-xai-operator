@@ -1,0 +1,20 @@
+{
+  "budgets": [
+    0.05,
+    0.1,
+    0.2,
+    0.3
+  ],
+  "confirmatory_claim_allowed": false,
+  "phase": "formative_train_development_only",
+  "primary_endpoint": "operationally_invalid_automatic_action_at_review_budget_0.20",
+  "sealed_test_opened": false,
+  "source_commit": "a98efe94437e8d9fe24bf561851d883dbaf444f4",
+  "target_definition": {
+    "contract_failure": "frozen hard contract violation",
+    "data_failure": "label-free shift >= 0.80 or data-quality fault >= 0.50",
+    "explanation_failure": "minimum stability < 0.40 and explainer disagreement >= 0.60",
+    "prediction_failure": "predicted_label differs from held-out OOF target",
+    "route_failure": "typed route fault present"
+  }
+}

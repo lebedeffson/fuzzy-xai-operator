@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import hashlib
+import json
+from pathlib import Path
 
 import numpy as np
 import pytest
@@ -21,6 +23,7 @@ from fuzzyxai.final_closure import (
 
 
 D = hashlib.sha256(b"x").hexdigest()
+ROOT = Path(__file__).resolve().parents[2]
 
 
 def _dataset(dataset_id="new", modality="tabular"):
@@ -35,13 +38,13 @@ def test_invalid_action_keeps_reason_decomposition() -> None:
 
 
 def test_confirmatory_features_require_oof_and_extended_width() -> None:
-    ConfirmatoryFeatureVector(D, (0.0,) * 9, (0.0,) * 13, True, "dev-oof")
+    ConfirmatoryFeatureVector(D, (0.0,) * 10, (0.0,) * 13, True, "dev-oof")
     with pytest.raises(ValueError, match="out-of-fold"):
-        ConfirmatoryFeatureVector(D, (0.0,) * 9, (0.0,) * 13, False, "test")
+        ConfirmatoryFeatureVector(D, (0.0,) * 10, (0.0,) * 13, False, "test")
 
 
 def test_confirmatory_features_preserve_missing_evidence() -> None:
-    value = ConfirmatoryFeatureVector(D, (0.5,) * 7 + (None, None), (None,) * 13, True, "dev-oof")
+    value = ConfirmatoryFeatureVector(D, (0.5,) * 8 + (None, None), (None,) * 13, True, "dev-oof")
     assert value.missing_channel_count == 15
 
 
@@ -88,3 +91,30 @@ def test_rule_ablation_estimands_are_not_mixed() -> None:
     assert local.estimand != refit.estimand
     effect = conditional_permutation_effect([1, 2, 3, 4], ["a", "a", "b", "b"], lambda x: float(x[::2].sum()), seed=7)
     assert np.isfinite(effect)
+
+
+def test_final_protocol_freezes_one_zip_endpoint_and_negative_results() -> None:
+    protocol = json.loads((ROOT / "study/final_confirmatory_closure/protocol.json").read_text(encoding="utf-8"))
+    assert protocol["identifier"] == "FXAI-FINAL-ONE-ZIP-PRACTICAL-CLOSURE"
+    assert protocol["primary_review_budget"] == 0.20
+    assert protocol["primary_comparator_policy"]
+    assert protocol["immutable_results"]["H3-original"] == "not_supported"
+    assert protocol["immutable_results"]["H5-P-original"] == "not_supported"
+    assert protocol["immutable_results"]["H6-general"] == "not_supported"
+
+
+def test_ai_scope_does_not_fabricate_review_or_human_validation() -> None:
+    scope = json.loads((ROOT / "study/final_confirmatory_closure/ai_text_review_scope.json").read_text(encoding="utf-8"))
+    assert scope["status"] == "not_run_not_blocking_technical_release"
+    assert scope["review_completed"] is False
+    assert scope["review_records"] == 0
+    assert scope["ai_review_is_external_validation"] is False
+    assert len(scope["disabled_claims"]) == 4
+
+
+def test_prelock_registry_preserves_unmet_and_unrun_method_boundaries() -> None:
+    registry = json.loads((ROOT / "study/final_confirmatory_closure/prelock_method_registry.json").read_text(encoding="utf-8"))
+    assert registry["method_status"]["H6-A"] == "formative_target_not_met_method_boundary_preserved"
+    assert registry["method_status"]["H6-B"] == "confirmatory_only_requires_two_sealed_tabular_datasets"
+    assert registry["method_status"]["H7-B"] == "blocked_projection_stability_not_measured"
+    assert registry["confirmatory_claim_allowed"] is False

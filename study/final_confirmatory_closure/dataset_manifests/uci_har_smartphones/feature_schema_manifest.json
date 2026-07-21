@@ -1,0 +1,24 @@
+{
+  "dataset_id": "uci_har_smartphones",
+  "group_fields": [
+    "subject_id"
+  ],
+  "identity_field": "object_id_hash",
+  "modality": "timeseries",
+  "schema_version": "1.0",
+  "target_field_visible_in_sealed_test": false,
+  "tensor": {
+    "dtype": "float32",
+    "name": "x",
+    "sample_shape": [
+      128,
+      9
+    ]
+  },
+  "timeseries_contract": {
+    "channels": 9,
+    "group_field": "subject_id",
+    "sampling_rate_hz": 50,
+    "window_samples": 128
+  }
+}

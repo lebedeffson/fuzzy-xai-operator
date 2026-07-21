@@ -109,7 +109,7 @@
   "run": "formative_run_2",
   "schema_version": "2.0",
   "session_type": "temporary_clean_chat",
-  "source_commit": "77e12c0e468fdff727fa1f89eda3b5e3e6aa19a4",
+  "source_commit": "a98efe94437e8d9fe24bf561851d883dbaf444f4",
   "status": "input_ready_scores_not_run",
   "variant_count": 720
 }

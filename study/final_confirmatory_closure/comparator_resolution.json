@@ -1,0 +1,7 @@
+{
+  "FAST": "excluded_ambiguous_identifier",
+  "FXAM": "excluded_no_pinned_reproducible_implementation",
+  "FXAM_reference": "https://arxiv.org/abs/2111.08255",
+  "result_claim_allowed": false,
+  "search_cutoff": "2026-07-21"
+}

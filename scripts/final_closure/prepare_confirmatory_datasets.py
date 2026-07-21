@@ -17,7 +17,18 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 from PIL import Image
+from sklearn.model_selection import StratifiedGroupKFold
 
+from audit_near_duplicates import (
+    IMAGE_PHASH_DISTANCE,
+    MINHASH_BANDS,
+    MINHASH_SIZE,
+    TEXT_JACCARD_THRESHOLD,
+    _minhash,
+    _normalize_text,
+    _phash,
+    _text_shingles,
+)
 from common import ROOT, STUDY, sha256, write
 
 
@@ -201,14 +212,25 @@ def _prepare_default(source: DatasetSource, archive: Path, key_path: Path) -> di
     frame = frame.rename(columns={frame.columns[-1]: "target"})
     frame["object_id_hash"] = frame["ID"].map(lambda value: _digest(f"{source.dataset_id}:{int(value)}"))
     frame = frame[["object_id_hash", *[column for column in frame.columns if column != "object_id_hash"]]]
-    splits = _stratified_split(frame["object_id_hash"].tolist(), frame["target"].astype(str).tolist())
+    feature_columns = [column for column in frame.columns if column not in {"object_id_hash", "ID", "target"}]
+    groups = [
+        _digest(json.dumps([_json_scalar(value) for value in row], separators=(",", ":")))
+        for row in frame[feature_columns].itertuples(index=False, name=None)
+    ]
+    splits = _stratified_group_split(frame["target"].astype(str).tolist(), groups)
     return _write_tabular(
         source,
         frame,
         "target",
         splits,
         key_path,
-        {"strategy": "deterministic_stratified_60_20_20", "grouping_key": "ID", "unique_ids": True},
+        {
+            "strategy": "stratified_group_60_20_20",
+            "grouping_key": "exact_feature_cluster",
+            "source_identifier": "ID",
+            "unique_source_ids": True,
+            "duplicate_feature_groups": len(groups) - len(set(groups)),
+        },
     )
 
 
@@ -225,14 +247,21 @@ def _prepare_sms(source: DatasetSource, archive: Path, key_path: Path) -> dict[s
         seen.add(normalized)
         rows.append((_digest(f"{source.dataset_id}:{normalized}"), message, label))
     frame = pd.DataFrame(rows, columns=["object_id_hash", "text", "target"])
-    splits = _stratified_split(frame["object_id_hash"].tolist(), frame["target"].tolist())
+    groups, near_pairs = _text_duplicate_groups(frame["text"].astype(str).tolist())
+    splits = _stratified_group_split(frame["target"].tolist(), groups)
     return _write_tabular(
         source,
         frame,
         "target",
         splits,
         key_path,
-        {"strategy": "deterministic_stratified_60_20_20", "normalized_text_duplicates_removed": len(text.splitlines()) - len(frame)},
+        {
+            "strategy": "stratified_near_duplicate_group_60_20_20",
+            "grouping_key": "normalized_text_minhash_cluster",
+            "normalized_text_duplicates_removed": len(text.splitlines()) - len(frame),
+            "near_duplicate_pairs_grouped": near_pairs,
+            "near_duplicate_threshold": TEXT_JACCARD_THRESHOLD,
+        },
     )
 
 
@@ -249,8 +278,9 @@ def _prepare_xray(source: DatasetSource, archive: Path, key_path: Path) -> dict[
             images.append(np.asarray(image, dtype=np.uint8))
             labels.append(label)
             object_ids.append(_digest(f"{source.dataset_id}:{hashlib.sha256(payload).hexdigest()}"))
-    splits = _stratified_split(object_ids, labels)
     arrays = np.stack(images)
+    groups, near_pairs = _image_duplicate_groups(arrays)
+    splits = _stratified_group_split(labels, groups)
     return _write_npz(
         source,
         arrays,
@@ -259,9 +289,12 @@ def _prepare_xray(source: DatasetSource, archive: Path, key_path: Path) -> dict[
         splits,
         key_path,
         {
-            "strategy": "deterministic_stratified_60_20_20",
+            "strategy": "stratified_perceptual_hash_group_60_20_20",
             "transform": "grayscale_resize_128x128_uint8",
             "source_duplicate_note": "UCI removed eight repeated-patient images before publication",
+            "grouping_key": "perceptual_hash_cluster",
+            "near_duplicate_pairs_grouped": near_pairs,
+            "perceptual_hash_max_hamming_distance": IMAGE_PHASH_DISTANCE,
         },
     )
 
@@ -411,7 +444,7 @@ def _finalize(
         "train_ids_sha256": sha256(split_ids["train"]),
         "development_ids_sha256": sha256(split_ids["development"]),
         "test_ids_sha256": sha256(split_ids["sealed_test"]),
-        "grouping_key": source.grouping_key,
+        "grouping_key": preprocessing.get("grouping_key", source.grouping_key),
         "label_vault_sha256": sha256(vault),
         "label_vault_path": vault.relative_to(ROOT).as_posix(),
         "used_in_formative_tuning": False,
@@ -451,22 +484,98 @@ def _stratified_split(object_ids: list[str], labels: list[str]) -> dict[str, np.
     return {name: np.asarray(sorted(indices), dtype=np.int64) for name, indices in output.items()}
 
 
+def _stratified_group_split(labels: list[str], groups: list[str]) -> dict[str, np.ndarray]:
+    """Assign each content-similarity group to one deterministic 20% fold."""
+    labels_array = np.asarray(labels)
+    groups_array = np.asarray(groups)
+    splitter = StratifiedGroupKFold(n_splits=5, shuffle=True, random_state=SPLIT_SEED)
+    folds = [held for _, held in splitter.split(np.zeros(len(labels_array)), labels_array, groups_array)]
+    return {
+        "train": np.asarray(sorted(np.concatenate(folds[2:])), dtype=np.int64),
+        "development": np.asarray(sorted(folds[1]), dtype=np.int64),
+        "sealed_test": np.asarray(sorted(folds[0]), dtype=np.int64),
+    }
+
+
+def _image_duplicate_groups(images: np.ndarray) -> tuple[list[str], int]:
+    parents = list(range(len(images)))
+    hashes = [_phash(image) for image in images]
+    near_pairs = 0
+    for left in range(len(images)):
+        for right in range(left + 1, len(images)):
+            if (hashes[left] ^ hashes[right]).bit_count() <= IMAGE_PHASH_DISTANCE:
+                _union(parents, left, right)
+                near_pairs += 1
+    return [_digest(f"image-cluster:{_find(parents, index)}") for index in range(len(images))], near_pairs
+
+
+def _text_duplicate_groups(texts: list[str]) -> tuple[list[str], int]:
+    parents = list(range(len(texts)))
+    shingles = [_text_shingles(_normalize_text(text)) for text in texts]
+    signatures = [_minhash(value) for value in shingles]
+    band_size = MINHASH_SIZE // MINHASH_BANDS
+    buckets: dict[tuple[int, bytes], list[int]] = {}
+    candidates: set[tuple[int, int]] = set()
+    for index, signature in enumerate(signatures):
+        for band in range(MINHASH_BANDS):
+            start = band * band_size
+            key = (band, signature[start : start + band_size].tobytes())
+            for other in buckets.setdefault(key, []):
+                candidates.add((other, index))
+            buckets[key].append(index)
+    near_pairs = 0
+    normalized = [_normalize_text(text) for text in texts]
+    exact: dict[str, int] = {}
+    for index, value in enumerate(normalized):
+        if value in exact:
+            _union(parents, exact[value], index)
+            near_pairs += 1
+        else:
+            exact[value] = index
+    for left, right in sorted(candidates):
+        union = len(shingles[left] | shingles[right])
+        similarity = len(shingles[left] & shingles[right]) / union if union else 1.0
+        if similarity >= TEXT_JACCARD_THRESHOLD:
+            if _find(parents, left) != _find(parents, right):
+                _union(parents, left, right)
+            near_pairs += 1
+    return [_digest(f"text-cluster:{_find(parents, index)}") for index in range(len(texts))], near_pairs
+
+
+def _find(parents: list[int], value: int) -> int:
+    while parents[value] != value:
+        parents[value] = parents[parents[value]]
+        value = parents[value]
+    return value
+
+
+def _union(parents: list[int], left: int, right: int) -> None:
+    left_root, right_root = _find(parents, left), _find(parents, right)
+    if left_root != right_root:
+        parents[max(left_root, right_root)] = min(left_root, right_root)
+
+
 def _encrypt_labels(path: Path, labels: dict[str, object], key_path: Path) -> None:
-    if path.is_file():
-        return
     path.parent.mkdir(parents=True, exist_ok=True)
-    with tempfile.NamedTemporaryFile("w", encoding="utf-8", prefix="fxai-labels-", suffix=".json") as clear:
+    with tempfile.NamedTemporaryFile("w", encoding="utf-8", prefix="fxai-labels-", suffix=".json") as clear, tempfile.NamedTemporaryFile(
+        "wb", prefix="fxai-labels-", suffix=".enc", dir=path.parent, delete=False
+    ) as encrypted:
+        encrypted_path = Path(encrypted.name)
         json.dump({"labels": labels}, clear, sort_keys=True)
         clear.flush()
-        subprocess.run(
-            [
-                "openssl", "enc", "-aes-256-cbc", "-pbkdf2", "-iter", "200000", "-salt",
-                "-in", clear.name, "-out", str(path), "-pass", f"file:{key_path}",
-            ],
-            check=True,
-            stdout=subprocess.DEVNULL,
-            stderr=subprocess.DEVNULL,
-        )
+        try:
+            subprocess.run(
+                [
+                    "openssl", "enc", "-aes-256-cbc", "-pbkdf2", "-iter", "200000", "-salt",
+                    "-in", clear.name, "-out", str(encrypted_path), "-pass", f"file:{key_path}",
+                ],
+                check=True,
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL,
+            )
+            encrypted_path.replace(path)
+        finally:
+            encrypted_path.unlink(missing_ok=True)
 
 
 def _ensure_key(path: Path) -> None:
