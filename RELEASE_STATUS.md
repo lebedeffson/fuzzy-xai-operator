@@ -29,8 +29,8 @@ The shareable technical artifact is
 confirmatory and stable-release claims. `make final-seal-datasets`, `make final-controller-freeze`, final Chapter 4 and
 `make final-release-archive` remain fail-closed until real external inputs pass.
 
-The clean committed-tree source release is `release_artifacts/fuzzyxai-source-release-77e12c0e468f.zip` with 1,528
-files and SHA256 `9e5a07f949b100418817c7ead4f464c46201897155e0692fc5147fff6a11d207`; the quarantined site is absent.
+The clean committed-tree source release is `release_artifacts/fuzzyxai-source-release-613e35d00ded.zip` with 1,539
+files and SHA256 `ff7f54485d7977754b93a164767363ce95d68856aaf3348708f4f844a469c4ea`; the quarantined site is absent.
 
 ## Strong Confirmatory Formative Gate
 

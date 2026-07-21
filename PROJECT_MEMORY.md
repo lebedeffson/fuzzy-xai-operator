@@ -33,8 +33,8 @@ Measured technical prelock evidence:
 - deterministic prelock evidence archive:
   `release_artifacts/fuzzyxai-final-confirmatory-prelock-77e12c0e468f.zip`, SHA256
   `ed4a87b01355d35c8c11b9172a3724c4aee477d850e09de0de778138ffae8289`.
-- clean committed-tree source archive: `release_artifacts/fuzzyxai-source-release-77e12c0e468f.zip`, 1,528 files,
-  SHA256 `9e5a07f949b100418817c7ead4f464c46201897155e0692fc5147fff6a11d207`; quarantined site absent.
+- clean committed-tree source archive: `release_artifacts/fuzzyxai-source-release-613e35d00ded.zip`, 1,539 files,
+  SHA256 `ff7f54485d7977754b93a164767363ce95d68856aaf3348708f4f844a469c4ea`; quarantined site absent.
 
 Fail-closed boundary:
 
