@@ -1,0 +1,16 @@
+{
+  "artifact_sha256": "2406bcd9d1def3ce8a188b902fe739127beb9d181ada27c7fd0dd6147dc8be4c",
+  "canonical_hash_preservation_rate": 1.0,
+  "mean_explainer_top_k_agreement": 0.1782614147548358,
+  "mean_ig_deletion_fidelity": 0.2365457406193018,
+  "mean_ig_perturbation_stability": 0.8390708312757074,
+  "methods": [
+    "integrated_gradients",
+    "token_masking"
+  ],
+  "objects": 2000,
+  "objects_per_predicted_class": 500,
+  "selection_basis": "predicted_class_stratified_without_test_labels",
+  "split": "validation",
+  "test_labels_loaded": false
+}
