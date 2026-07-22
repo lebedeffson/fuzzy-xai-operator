@@ -1,0 +1,8 @@
+{
+  "lock_sha256": "a4d11696d198efffc282752dc305147a12ace75b33d42a1bd5f2b66945732444",
+  "opened_at_utc": "2026-07-22T12:10:58.870945+00:00",
+  "purpose": "single scoring opening; no model, feature, threshold, cost or baseline tuning",
+  "result_sha256": "c87e96e7e6830d1ad99ebe802b4abb03facdbc4408b6a4fa3037d8da17b94530",
+  "scoring_commit": "c59024c7f1950b56f3000101efca82b8237597c6",
+  "status": "completed_without_tuning"
+}

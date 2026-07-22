@@ -1,0 +1,174 @@
+{
+  "controllers": {
+    "frozen_primary_baseline": {
+      "accepted": 487454,
+      "blocks": 0,
+      "coverage": 0.974908,
+      "false_block_rate": 0.0,
+      "false_blocks": 0,
+      "hard_block_rate": 0.0,
+      "invalid_accepts": 164765,
+      "repair_rate": 0.0,
+      "repairs": 0,
+      "review_rate": 0.025092,
+      "reviews": 12546
+    },
+    "full_hierarchical_fuzzyxai": {
+      "accepted": 487454,
+      "blocks": 1864,
+      "coverage": 0.974908,
+      "false_block_rate": 0.0,
+      "false_blocks": 0,
+      "hard_block_rate": 0.003728,
+      "invalid_accepts": 164765,
+      "repair_rate": 0.021364,
+      "repairs": 10682,
+      "review_rate": 0.0,
+      "reviews": 0
+    }
+  },
+  "events": 500000,
+  "implementation_commit": "554bf40c020cf03bd68f779b3f7600ab6dc3b61a",
+  "incident_level_recall": 1.0,
+  "incidents": [
+    {
+      "detected": true,
+      "detection_delay": 2,
+      "events": 815,
+      "family": "stale_calibration",
+      "incident_id": "incident-000",
+      "repair_delay": 2,
+      "repairable": true
+    },
+    {
+      "detected": true,
+      "detection_delay": 0,
+      "events": 784,
+      "family": "partial_preprocessing_update",
+      "incident_id": "incident-001",
+      "repair_delay": 0,
+      "repairable": true
+    },
+    {
+      "detected": true,
+      "detection_delay": 1,
+      "events": 616,
+      "family": "reference_population_error",
+      "incident_id": "incident-002",
+      "repair_delay": 1,
+      "repairable": true
+    },
+    {
+      "detected": true,
+      "detection_delay": 0,
+      "events": 818,
+      "family": "explainer_model_mismatch",
+      "incident_id": "incident-003",
+      "repair_delay": 0,
+      "repairable": true
+    },
+    {
+      "detected": true,
+      "detection_delay": 2,
+      "events": 800,
+      "family": "model_checkpoint_corruption",
+      "incident_id": "incident-004",
+      "repair_delay": null,
+      "repairable": false
+    },
+    {
+      "detected": true,
+      "detection_delay": 2,
+      "events": 593,
+      "family": "stale_calibration",
+      "incident_id": "incident-005",
+      "repair_delay": 2,
+      "repairable": true
+    },
+    {
+      "detected": true,
+      "detection_delay": 0,
+      "events": 452,
+      "family": "partial_preprocessing_update",
+      "incident_id": "incident-006",
+      "repair_delay": 0,
+      "repairable": true
+    },
+    {
+      "detected": true,
+      "detection_delay": 1,
+      "events": 848,
+      "family": "reference_population_error",
+      "incident_id": "incident-007",
+      "repair_delay": 1,
+      "repairable": true
+    },
+    {
+      "detected": true,
+      "detection_delay": 1,
+      "events": 1297,
+      "family": "explainer_model_mismatch",
+      "incident_id": "incident-008",
+      "repair_delay": 1,
+      "repairable": true
+    },
+    {
+      "detected": true,
+      "detection_delay": 1,
+      "events": 1064,
+      "family": "model_checkpoint_corruption",
+      "incident_id": "incident-009",
+      "repair_delay": null,
+      "repairable": false
+    },
+    {
+      "detected": true,
+      "detection_delay": 2,
+      "events": 1268,
+      "family": "stale_calibration",
+      "incident_id": "incident-010",
+      "repair_delay": 2,
+      "repairable": true
+    },
+    {
+      "detected": true,
+      "detection_delay": 1,
+      "events": 1103,
+      "family": "partial_preprocessing_update",
+      "incident_id": "incident-011",
+      "repair_delay": 1,
+      "repairable": true
+    },
+    {
+      "detected": true,
+      "detection_delay": 2,
+      "events": 903,
+      "family": "reference_population_error",
+      "incident_id": "incident-012",
+      "repair_delay": 2,
+      "repairable": true
+    },
+    {
+      "detected": true,
+      "detection_delay": 2,
+      "events": 793,
+      "family": "explainer_model_mismatch",
+      "incident_id": "incident-013",
+      "repair_delay": 2,
+      "repairable": true
+    },
+    {
+      "detected": true,
+      "detection_delay": 1,
+      "events": 392,
+      "family": "partial_preprocessing_update",
+      "incident_id": "incident-recurrence",
+      "repair_delay": 1,
+      "repairable": true
+    }
+  ],
+  "model_lanes": 3,
+  "natural_production_evidence": false,
+  "phase": "post_lock_controlled_chronological_replay",
+  "scope": "registered chronological simulation with bursts, recurrence, delayed labels and partial recovery"
+}

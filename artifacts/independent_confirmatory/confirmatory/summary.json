@@ -1,0 +1,319 @@
+{
+  "H3": {
+    "P0_vs_full": {
+      "absolute_rate_difference_full_minus_predictive": -0.026273090364453314,
+      "hierarchical_bootstrap_ci_95": [
+        -0.02784980532985152,
+        -0.01195288312195925
+      ],
+      "holm_adjusted_p": 6.67250383187122e-199,
+      "paired_p": 3.33625191593561e-199
+    },
+    "absolute_rate_difference_full_minus_baseline": -0.0007696788151106623,
+    "baseline_coverage_at_fixed_risk": 0.6203520630788754,
+    "baseline_invalid_actions": 2316,
+    "coverage_gain": -0.0010770135395987701,
+    "false_block_rate": 0.0,
+    "fixed_risk": 0.0684740573894031,
+    "full_coverage_at_fixed_risk": 0.6192750495392766,
+    "full_invalid_actions": 2279,
+    "hard_block_rate": 0.0048885005824596435,
+    "hierarchical_bootstrap_ci_95": [
+      -0.005072463768115942,
+      0.00728983817320439
+    ],
+    "holm_adjusted_p": 0.023427267103540504,
+    "objects": 48072,
+    "paired_p": 0.023427267103540504,
+    "primary_baseline": "route_only",
+    "relative_reduction": 0.015975820379965457,
+    "route_fault_evidence_scope": "controlled deterministic injection on independent predictive datasets"
+  },
+  "H5": {
+    "families_absent_from_formative": true,
+    "held_out_families": [
+      "heldout_cross_model_mix",
+      "heldout_feature_space",
+      "heldout_graph_reorder",
+      "heldout_reduction_link"
+    ],
+    "known_families": [
+      "canonical_corruption",
+      "missing_provenance",
+      "stale_reference",
+      "version_mismatch"
+    ],
+    "objects": 1620,
+    "simple_or": {
+      "generic_fault_recall": 1.0,
+      "source_region_localization": 0.0,
+      "unknown_type_identification_recall": 0.0
+    },
+    "typed_open_set": {
+      "false_certification": 0.0,
+      "known_type_macro_f1": 0.4656538661245598,
+      "known_type_macro_f1_degradation": 0.5343461338754403,
+      "repair_candidate_recall": 0.6840277777777778,
+      "source_region_localization": 0.6840277777777778,
+      "unknown_fault_recall": 1.0,
+      "unknown_rejection_auroc": 1.0
+    }
+  },
+  "H6": {
+    "reason": "requires at least two independent tabular datasets even if the synthetic formative gate passes",
+    "status": "not_opened"
+  },
+  "datasets": {
+    "eurosat_rgb": {
+      "deterministic_random": {
+        "coverage": 0.8,
+        "false_block_rate": 0.0,
+        "hard_block_rate": 0.0,
+        "invalid_automatic_actions": 1004,
+        "model_errors_accepted": 949,
+        "objects": 2760,
+        "operational_risk": 0.45471014492753625,
+        "review_equivalent_rate": 0.2
+      },
+      "entropy_threshold": {
+        "coverage": 0.8,
+        "false_block_rate": 0.0,
+        "hard_block_rate": 0.0,
+        "invalid_automatic_actions": 905,
+        "model_errors_accepted": 841,
+        "objects": 2760,
+        "operational_risk": 0.4098731884057971,
+        "review_equivalent_rate": 0.2
+      },
+      "full_hierarchical_fuzzyxai": {
+        "coverage": 0.7952898550724637,
+        "false_block_rate": 0.0,
+        "hard_block_rate": 0.004710144927536232,
+        "invalid_automatic_actions": 852,
+        "model_errors_accepted": 850,
+        "objects": 2760,
+        "operational_risk": 0.38815489749430526,
+        "review_equivalent_rate": 0.2
+      },
+      "predictive_only": {
+        "coverage": 0.8,
+        "false_block_rate": 0.0,
+        "hard_block_rate": 0.0,
+        "invalid_automatic_actions": 898,
+        "model_errors_accepted": 837,
+        "objects": 2760,
+        "operational_risk": 0.4067028985507246,
+        "review_equivalent_rate": 0.2
+      },
+      "raw_confidence": {
+        "coverage": 0.8,
+        "false_block_rate": 0.0,
+        "hard_block_rate": 0.0,
+        "invalid_automatic_actions": 902,
+        "model_errors_accepted": 841,
+        "objects": 2760,
+        "operational_risk": 0.40851449275362317,
+        "review_equivalent_rate": 0.2
+      },
+      "route_only": {
+        "coverage": 0.8,
+        "false_block_rate": 0.0,
+        "hard_block_rate": 0.0,
+        "invalid_automatic_actions": 861,
+        "model_errors_accepted": 858,
+        "objects": 2760,
+        "operational_risk": 0.389945652173913,
+        "review_equivalent_rate": 0.2
+      },
+      "simple_or": {
+        "coverage": 0.8,
+        "false_block_rate": 0.0,
+        "hard_block_rate": 0.0,
+        "invalid_automatic_actions": 857,
+        "model_errors_accepted": 857,
+        "objects": 2760,
+        "operational_risk": 0.38813405797101447,
+        "review_equivalent_rate": 0.2
+      },
+      "weighted_score": {
+        "coverage": 0.8,
+        "false_block_rate": 0.0,
+        "hard_block_rate": 0.0,
+        "invalid_automatic_actions": 881,
+        "model_errors_accepted": 842,
+        "objects": 2760,
+        "operational_risk": 0.3990036231884058,
+        "review_equivalent_rate": 0.2
+      }
+    },
+    "uci_dry_bean": {
+      "deterministic_random": {
+        "coverage": 0.8005677785663591,
+        "false_block_rate": 0.0,
+        "hard_block_rate": 0.0,
+        "invalid_automatic_actions": 135,
+        "model_errors_accepted": 95,
+        "objects": 1409,
+        "operational_risk": 0.1196808510638298,
+        "review_equivalent_rate": 0.1994322214336409
+      },
+      "entropy_threshold": {
+        "coverage": 0.8005677785663591,
+        "false_block_rate": 0.0,
+        "hard_block_rate": 0.0,
+        "invalid_automatic_actions": 63,
+        "model_errors_accepted": 21,
+        "objects": 1409,
+        "operational_risk": 0.05585106382978723,
+        "review_equivalent_rate": 0.1994322214336409
+      },
+      "full_hierarchical_fuzzyxai": {
+        "coverage": 0.794180269694819,
+        "false_block_rate": 0.0,
+        "hard_block_rate": 0.0063875088715401,
+        "invalid_automatic_actions": 37,
+        "model_errors_accepted": 37,
+        "objects": 1409,
+        "operational_risk": 0.03306523681858802,
+        "review_equivalent_rate": 0.1994322214336409
+      },
+      "predictive_only": {
+        "coverage": 0.8005677785663591,
+        "false_block_rate": 0.0,
+        "hard_block_rate": 0.0,
+        "invalid_automatic_actions": 63,
+        "model_errors_accepted": 21,
+        "objects": 1409,
+        "operational_risk": 0.05585106382978723,
+        "review_equivalent_rate": 0.1994322214336409
+      },
+      "raw_confidence": {
+        "coverage": 0.8005677785663591,
+        "false_block_rate": 0.0,
+        "hard_block_rate": 0.0,
+        "invalid_automatic_actions": 63,
+        "model_errors_accepted": 21,
+        "objects": 1409,
+        "operational_risk": 0.05585106382978723,
+        "review_equivalent_rate": 0.1994322214336409
+      },
+      "route_only": {
+        "coverage": 0.8005677785663591,
+        "false_block_rate": 0.0,
+        "hard_block_rate": 0.0,
+        "invalid_automatic_actions": 28,
+        "model_errors_accepted": 28,
+        "objects": 1409,
+        "operational_risk": 0.024822695035460994,
+        "review_equivalent_rate": 0.1994322214336409
+      },
+      "simple_or": {
+        "coverage": 0.8005677785663591,
+        "false_block_rate": 0.0,
+        "hard_block_rate": 0.0,
+        "invalid_automatic_actions": 28,
+        "model_errors_accepted": 28,
+        "objects": 1409,
+        "operational_risk": 0.024822695035460994,
+        "review_equivalent_rate": 0.1994322214336409
+      },
+      "weighted_score": {
+        "coverage": 0.8005677785663591,
+        "false_block_rate": 0.0,
+        "hard_block_rate": 0.0,
+        "invalid_automatic_actions": 36,
+        "model_errors_accepted": 36,
+        "objects": 1409,
+        "operational_risk": 0.031914893617021274,
+        "review_equivalent_rate": 0.1994322214336409
+      }
+    },
+    "uci_news_aggregator": {
+      "deterministic_random": {
+        "coverage": 0.8000136664920393,
+        "false_block_rate": 0.0,
+        "hard_block_rate": 0.0,
+        "invalid_automatic_actions": 4771,
+        "model_errors_accepted": 3456,
+        "objects": 43903,
+        "operational_risk": 0.13583691598098113,
+        "review_equivalent_rate": 0.19998633350796075
+      },
+      "entropy_threshold": {
+        "coverage": 0.8000136664920393,
+        "false_block_rate": 0.0,
+        "hard_block_rate": 0.0,
+        "invalid_automatic_actions": 2884,
+        "model_errors_accepted": 1521,
+        "objects": 43903,
+        "operational_risk": 0.08211143695014662,
+        "review_equivalent_rate": 0.19998633350796075
+      },
+      "full_hierarchical_fuzzyxai": {
+        "coverage": 0.795162061818099,
+        "false_block_rate": 0.0,
+        "hard_block_rate": 0.0048516046739402775,
+        "invalid_automatic_actions": 1390,
+        "model_errors_accepted": 1390,
+        "objects": 43903,
+        "operational_risk": 0.0398166714408479,
+        "review_equivalent_rate": 0.19998633350796075
+      },
+      "predictive_only": {
+        "coverage": 0.8000136664920393,
+        "false_block_rate": 0.0,
+        "hard_block_rate": 0.0,
+        "invalid_automatic_actions": 2581,
+        "model_errors_accepted": 1218,
+        "objects": 43903,
+        "operational_risk": 0.07348461122341486,
+        "review_equivalent_rate": 0.19998633350796075
+      },
+      "raw_confidence": {
+        "coverage": 0.8000136664920393,
+        "false_block_rate": 0.0,
+        "hard_block_rate": 0.0,
+        "invalid_automatic_actions": 2566,
+        "model_errors_accepted": 1206,
+        "objects": 43903,
+        "operational_risk": 0.07305754064288358,
+        "review_equivalent_rate": 0.19998633350796075
+      },
+      "route_only": {
+        "coverage": 0.8000136664920393,
+        "false_block_rate": 0.0,
+        "hard_block_rate": 0.0,
+        "invalid_automatic_actions": 1427,
+        "model_errors_accepted": 1427,
+        "objects": 43903,
+        "operational_risk": 0.040628647894542035,
+        "review_equivalent_rate": 0.19998633350796075
+      },
+      "simple_or": {
+        "coverage": 0.8000136664920393,
+        "false_block_rate": 0.0,
+        "hard_block_rate": 0.0,
+        "invalid_automatic_actions": 1432,
+        "model_errors_accepted": 1432,
+        "objects": 43903,
+        "operational_risk": 0.04077100475471913,
+        "review_equivalent_rate": 0.19998633350796075
+      },
+      "weighted_score": {
+        "coverage": 0.8000136664920393,
+        "false_block_rate": 0.0,
+        "hard_block_rate": 0.0,
+        "invalid_automatic_actions": 2249,
+        "model_errors_accepted": 1269,
+        "objects": 43903,
+        "operational_risk": 0.06403211570765595,
+        "review_equivalent_rate": 0.19998633350796075
+      }
+    }
+  },
+  "lock_sha256": "a4d11696d198efffc282752dc305147a12ace75b33d42a1bd5f2b66945732444",
+  "phase": "single_sealed_confirmatory_scoring",
+  "post_open_tuning": false,
+  "schema_version": "1.0",
+  "scoring_commit": "c59024c7f1950b56f3000101efca82b8237597c6"
+}

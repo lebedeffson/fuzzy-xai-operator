@@ -1,0 +1,8 @@
+{
+  "controller_actions_changed": false,
+  "policy_or_threshold_changed": false,
+  "reason": "the first report compared event fault-family names with registered incident IDs",
+  "recovery": "recompute incident attribution from the immutable registered schedule and unchanged event stream",
+  "scope": "replay incident-level aggregation only",
+  "sealed_H3_H5_results_changed": false
+}

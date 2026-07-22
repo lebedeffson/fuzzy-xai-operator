@@ -1,0 +1,25 @@
+{
+  "claims": {
+    "H3-R1": "not_supported",
+    "H3-R2": "not_supported",
+    "H3-R3": "supported_independent_with_controlled_route_faults",
+    "H3-chronological-replay": "descriptive_controlled_replay_only",
+    "H5-A3": "not_supported",
+    "H5-A4": "not_supported",
+    "H5-P2": "not_evaluated_secondary_endpoint",
+    "H5-P3": "not_evaluated_secondary_endpoint",
+    "H6-R6": "not_evaluated_confirmatory_gate_closed",
+    "H6-R7": "not_evaluated_confirmatory_gate_closed",
+    "H6-R8": "formative_only_confirmatory_gate_closed"
+  },
+  "frozen_predecessor_claims": {
+    "H3-original": "not_supported",
+    "H5-P-original": "not_supported",
+    "H6-general": "not_supported"
+  },
+  "generated_from_frozen_evidence": true,
+  "manual_positive_override": false,
+  "merge_to_main_allowed": false,
+  "schema_version": "1.0",
+  "scientific_release_status": "experimental_not_stable"
+}
