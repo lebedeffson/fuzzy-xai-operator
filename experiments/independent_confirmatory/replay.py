@@ -49,12 +49,17 @@ def main() -> None:
             else:
                 target["blocks"] += 1
                 target["false_blocks"] += int(not irreparable)
-        for incident in event.active_incidents:
-            incident_events[incident] = incident_events.get(incident, 0) + 1
-            if full_action != "accept" and incident not in incident_detection:
-                incident_detection[incident] = event.timestamp_index
-            if full_action == "repair_then_retry" and incident not in incident_repair:
-                incident_repair[incident] = event.timestamp_index
+        active_windows = (
+            item
+            for item in schedule
+            if item.start <= event.timestamp_index < item.stop and item.model_lane == event.model_lane
+        )
+        for incident in active_windows:
+            incident_events[incident.incident_id] = incident_events.get(incident.incident_id, 0) + 1
+            if full_action != "accept" and incident.incident_id not in incident_detection:
+                incident_detection[incident.incident_id] = event.timestamp_index
+            if full_action == "repair_then_retry" and incident.incident_id not in incident_repair:
+                incident_repair[incident.incident_id] = event.timestamp_index
     incident_rows = []
     for incident in schedule:
         detected = incident_detection.get(incident.incident_id)
@@ -76,6 +81,17 @@ def main() -> None:
         values["repair_rate"] = values["repairs"] / count
         values["hard_block_rate"] = values["blocks"] / count
         values["false_block_rate"] = values["false_blocks"] / count
+    write_json(
+        ARTIFACTS / "replay" / "scoring_recovery_deviation.json",
+        {
+            "scope": "replay incident-level aggregation only",
+            "reason": "the first report compared event fault-family names with registered incident IDs",
+            "controller_actions_changed": False,
+            "sealed_H3_H5_results_changed": False,
+            "policy_or_threshold_changed": False,
+            "recovery": "recompute incident attribution from the immutable registered schedule and unchanged event stream",
+        },
+    )
     write_json(
         ARTIFACTS / "replay" / "chronological_summary.json",
         {
