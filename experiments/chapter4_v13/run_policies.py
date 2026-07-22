@@ -160,8 +160,10 @@ def _fit_scores(validation: Sequence[Mapping[str, Any]], test: Sequence[Mapping[
     return validation_scores, test_scores, fit
 
 
-def _actions(scores: np.ndarray, budget: float) -> np.ndarray:
+def _actions(scores: np.ndarray, budget: float, policy_name: str | None = None) -> np.ndarray:
     actions = np.full(len(scores), "accept", dtype=object)
+    if policy_name == "always_accept":
+        return actions
     count = int(round(budget * len(scores)))
     order = np.argsort(-scores, kind="stable")
     actions[order[:count]] = "review"
@@ -183,8 +185,15 @@ def _expected_calibration_error(invalid: np.ndarray, scores: np.ndarray, bins: i
     return error
 
 
-def _metrics(rows: Sequence[Mapping[str, Any]], scores: np.ndarray, invalid: np.ndarray, budget: float, costs: Mapping[str, float]) -> dict[str, object]:
-    actions = _actions(scores, budget)
+def _metrics(
+    rows: Sequence[Mapping[str, Any]],
+    scores: np.ndarray,
+    invalid: np.ndarray,
+    budget: float,
+    costs: Mapping[str, float],
+    policy_name: str | None = None,
+) -> dict[str, object]:
+    actions = _actions(scores, budget, policy_name)
     accepted = actions == "accept"
     reviewed = actions == "review"
     wrong = accepted & invalid
@@ -215,7 +224,14 @@ def pre_score() -> dict[str, object]:
     invalid_validation = np.asarray([not bool(row["is_correct"]) for row in validation])
     budget = float(cfg["policy_evaluation"]["primary_budget"])
     validation_metrics = {
-        name: _metrics(validation, scores, invalid_validation, budget, cfg["policy_evaluation"]["cost_profiles"]["balanced"])
+        name: _metrics(
+            validation,
+            scores,
+            invalid_validation,
+            budget,
+            cfg["policy_evaluation"]["cost_profiles"]["balanced"],
+            name,
+        )
         for name, scores in validation_scores.items()
     }
     best_simple = min(SIMPLE_POLICIES, key=lambda name: (validation_metrics[name]["wrong_automatic_actions"], name))
@@ -268,21 +284,30 @@ def _bootstrap(full_wrong: np.ndarray, baseline_wrong: np.ndarray, repetitions: 
         indices = rng.integers(0, n, size=(size, n))
         differences[start : start + size] = (baseline_wrong[indices].mean(axis=1) - full_wrong[indices].mean(axis=1))
     lower, upper = np.quantile(differences, [0.025, 0.975])
-    p_value = min(1.0, 2.0 * min(float(np.mean(differences <= 0.0)), float(np.mean(differences >= 0.0))))
+    lower_tail = int(np.count_nonzero(differences <= 0.0))
+    upper_tail = int(np.count_nonzero(differences >= 0.0))
+    p_value = min(1.0, 2.0 * (min(lower_tail, upper_tail) + 1) / (repetitions + 1))
     return {"absolute_rate_reduction": observed, "ci_lower": float(lower), "ci_upper": float(upper), "p_value": p_value}
 
 
-def score() -> dict[str, object]:
+def score(*, recovery: bool = False) -> dict[str, object]:
     cfg = protocol()
     opening_path = ARTIFACTS / "policies" / "scoring_opening_record.json"
     completion_path = ARTIFACTS / "policies" / "scoring_completion.json"
     summary_path = ARTIFACTS / "policies" / "summary.json"
-    if completion_path.exists():
+    recovery_completion_path = ARTIFACTS / "policies" / "scoring_recovery_completion.json"
+    recovery_lock_path = ARTIFACTS / "policies" / "scoring_recovery_lock.json"
+    if recovery_completion_path.exists():
+        recovery_completion = read_json(recovery_completion_path)
+        if recovery_completion["summary_sha256"] != sha256_file(summary_path):
+            raise RuntimeError("recovered scoring summary no longer matches its lock")
+        return read_json(summary_path)
+    if completion_path.exists() and not recovery:
         completion = read_json(completion_path)
         if completion["summary_sha256"] != sha256_file(summary_path):
             raise RuntimeError("completed scoring summary no longer matches its lock")
         return read_json(summary_path)
-    if opening_path.exists():
+    if opening_path.exists() and not recovery:
         raise RuntimeError("scoring was already opened but did not complete; rerun is forbidden")
     lock_path = ARTIFACTS / "policies" / "pre_score_lock.json"
     lock = read_json(lock_path)
@@ -290,17 +315,38 @@ def score() -> dict[str, object]:
     if lock["policy_scores_sha256"] != sha256_file(score_path):
         raise RuntimeError("policy scores changed after pre-score lock")
     label_vault_path = ARTIFACTS / "private" / "sealed_test_labels.json"
-    write_json(
-        opening_path,
-        {
-            "stage": "test_labels_about_to_open_for_scoring_only",
-            "pre_score_lock_sha256": sha256_file(lock_path),
-            "policy_scores_sha256": sha256_file(score_path),
-            "label_vault_sha256": sha256_file(label_vault_path),
-            "protocol_sha256": verify_protocol_hash(),
-            "scoring_code_commit": git_commit(),
-        },
-    )
+    if recovery:
+        invalid_dir = ARTIFACTS / "policies" / "invalid_scoring_run_1"
+        invalid_marker = invalid_dir / "invalid_marker.json"
+        if not invalid_marker.exists() or not (invalid_dir / "scoring_completion.json").exists():
+            raise RuntimeError("scoring recovery requires the preserved invalid run")
+        write_json(
+            recovery_lock_path,
+            {
+                "stage": "scoring_only_recovery_about_to_open_existing_vault",
+                "invalid_marker_sha256": sha256_file(invalid_marker),
+                "original_completion_sha256": sha256_file(invalid_dir / "scoring_completion.json"),
+                "pre_score_lock_sha256": sha256_file(lock_path),
+                "policy_scores_sha256": sha256_file(score_path),
+                "label_vault_sha256": sha256_file(label_vault_path),
+                "protocol_sha256": verify_protocol_hash(),
+                "recovery_code_commit": git_commit(),
+                "allowed_changes": ["always_accept_action_semantics", "finite_bootstrap_add_one_p_value"],
+                "policy_scores_thresholds_and_selected_baseline_changed": False,
+            },
+        )
+    else:
+        write_json(
+            opening_path,
+            {
+                "stage": "test_labels_about_to_open_for_scoring_only",
+                "pre_score_lock_sha256": sha256_file(lock_path),
+                "policy_scores_sha256": sha256_file(score_path),
+                "label_vault_sha256": sha256_file(label_vault_path),
+                "protocol_sha256": verify_protocol_hash(),
+                "scoring_code_commit": git_commit(),
+            },
+        )
     rows = list(read_jsonl(score_path))
     label_vault = read_json(label_vault_path)["labels"]
     labels = np.asarray([int(label_vault[str(row["object_id"])]) for row in rows])
@@ -312,7 +358,7 @@ def score() -> dict[str, object]:
     for policy_name in ALL_POLICIES:
         scores = np.asarray([float(row["scores"][policy_name]) for row in rows])
         for budget in budgets:
-            actions = _actions(scores, budget)
+            actions = _actions(scores, budget, policy_name)
             wrong = (actions == "accept") & invalid
             action_indicators[(policy_name, budget)] = wrong
             for cost_name, costs in cfg["policy_evaluation"]["cost_profiles"].items():
@@ -321,7 +367,7 @@ def score() -> dict[str, object]:
                         "policy": policy_name,
                         "review_budget": budget,
                         "cost_profile": cost_name,
-                        **_metrics(rows, scores, invalid, budget, costs),
+                        **_metrics(rows, scores, invalid, budget, costs, policy_name),
                     }
                 )
     raw_path = ARTIFACTS / "policies" / "policy_results.csv"
@@ -361,25 +407,24 @@ def score() -> dict[str, object]:
     primary = next(row for row in comparisons if row["primary"])
     summary = {"test_quality": test_quality, "primary_comparison": primary, "policy_results_sha256": sha256_file(raw_path)}
     write_json(summary_path, summary)
-    write_json(
-        completion_path,
-        {
-            "stage": "scoring_complete",
-            "opening_record_sha256": sha256_file(opening_path),
-            "summary_sha256": sha256_file(summary_path),
-            "policy_results_sha256": sha256_file(raw_path),
-            "statistical_tests_sha256": sha256_file(ARTIFACTS / "policies" / "statistical_tests.json"),
-            "post_open_tuning": False,
-        },
-    )
+    completion = {
+        "stage": "scoring_recovery_complete" if recovery else "scoring_complete",
+        "opening_record_sha256": sha256_file(recovery_lock_path if recovery else opening_path),
+        "summary_sha256": sha256_file(summary_path),
+        "policy_results_sha256": sha256_file(raw_path),
+        "statistical_tests_sha256": sha256_file(ARTIFACTS / "policies" / "statistical_tests.json"),
+        "post_open_tuning": False,
+        "scoring_only_recovery": recovery,
+    }
+    write_json(recovery_completion_path if recovery else completion_path, completion)
     return summary
 
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--stage", choices=("pre-score", "score"), required=True)
+    parser.add_argument("--stage", choices=("pre-score", "score", "score-recovery"), required=True)
     args = parser.parse_args()
-    result = pre_score() if args.stage == "pre-score" else score()
+    result = pre_score() if args.stage == "pre-score" else score(recovery=args.stage == "score-recovery")
     print(f"PASS: policy stage={args.stage} {result}")
 
 

@@ -3,7 +3,7 @@ from __future__ import annotations
 import numpy as np
 
 from experiments.chapter4_v13.common import canonical_bytes, sha256_bytes, verify_protocol_hash
-from experiments.chapter4_v13.run_policies import _actions, _expected_calibration_error, _holm
+from experiments.chapter4_v13.run_policies import _actions, _bootstrap, _expected_calibration_error, _holm
 from experiments.chapter4_v13.run_route_faults import clean_route, inject, simple_or, typed_route_validator
 from experiments.chapter4_v13.smoke import run
 
@@ -25,6 +25,18 @@ def test_expected_calibration_error_is_zero_for_perfect_binary_risk() -> None:
     invalid = np.asarray([False, False, True, True])
     scores = np.asarray([0.0, 0.0, 1.0, 1.0])
     assert _expected_calibration_error(invalid, scores) == 0.0
+
+
+def test_always_accept_is_not_forced_to_review_budget() -> None:
+    actions = _actions(np.asarray([0.1, 0.9]), 0.5, "always_accept")
+    assert list(actions) == ["accept", "accept"]
+
+
+def test_finite_bootstrap_never_reports_zero_p_value() -> None:
+    full = np.asarray([True, True, True])
+    baseline = np.asarray([False, False, False])
+    result = _bootstrap(full, baseline, repetitions=100, seed=7)
+    assert result["p_value"] > 0.0
 
 
 def test_holm_is_monotone_in_sorted_order() -> None:
