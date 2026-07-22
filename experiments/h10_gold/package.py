@@ -43,6 +43,11 @@ def package() -> Path:
     commit = subprocess.check_output(("git", "rev-parse", "HEAD"), cwd=ROOT, text=True).strip()
     output_dir = DELIVERABLE_ROOT / f"h10-final-gold-{commit[:12]}"
     output_dir.mkdir(parents=True, exist_ok=True)
+    repository_map = json.loads((ARTIFACT_ROOT / "closure" / "h10_final_gold_evidence_map.json").read_text())
+    for entry in repository_map["entries"]:
+        entry["bundle_commit"] = commit
+    packaged_map = output_dir / "h10_final_gold_evidence_map.json"
+    packaged_map.write_text(json.dumps(repository_map, ensure_ascii=False, sort_keys=True, indent=2) + "\n", encoding="utf-8")
     generated_source = ROOT / "release_artifacts" / f"fuzzyxai-source-release-{commit[:12]}.zip"
     source_zip = output_dir / "h10_final_gold_source.zip"
     shutil.copy2(generated_source, source_zip)
@@ -52,7 +57,10 @@ def package() -> Path:
             continue
         if "truth" in path.name.lower() or path.suffix == ".key":
             raise RuntimeError(f"private truth-like file reached public artifacts: {path}")
+        if path.name == "h10_final_gold_evidence_map.json":
+            continue
         artifact_files.append((path, path.relative_to(ARTIFACT_ROOT).as_posix()))
+    artifact_files.append((packaged_map, "closure/h10_final_gold_evidence_map.json"))
     artifacts_zip = output_dir / "h10_final_gold_artifacts.zip"
     _zip_files(artifacts_zip, artifact_files)
     handoff_files = [
@@ -61,7 +69,7 @@ def package() -> Path:
         (ROOT / "config" / "h10_final_gold_protocol.yaml", "h10_final_gold_protocol.yaml"),
         (ARTIFACT_ROOT / "h10_final_gold_manifest.json", "h10_final_gold_manifest.json"),
         (ARTIFACT_ROOT / "closure" / "h10_final_gold_claim_registry.json", "h10_final_gold_claim_registry.json"),
-        (ARTIFACT_ROOT / "closure" / "h10_final_gold_evidence_map.json", "h10_final_gold_evidence_map.json"),
+        (packaged_map, "h10_final_gold_evidence_map.json"),
         (ARTIFACT_ROOT / "closure" / "h10_final_gold_validation_report.md", "h10_final_gold_validation_report.md"),
         (ARTIFACT_ROOT / "closure" / "h10_final_gold_methodology_audit.json", "h10_final_gold_methodology_audit.json"),
         (ARTIFACT_ROOT / "closure" / "h10_final_gold_leakage_audit.json", "h10_final_gold_leakage_audit.json"),
