@@ -276,6 +276,16 @@ def _clean_claims(text: str) -> str:
     return text
 
 
+def _renumber_labels(text: str, kind: str) -> str:
+    pattern = re.compile(rf"{kind} 4\.(\d+[а-я]?)", flags=re.I)
+    mapping: dict[str, int] = {}
+    for match in pattern.finditer(text):
+        key = match.group(1).lower()
+        if key not in mapping:
+            mapping[key] = len(mapping) + 1
+    return pattern.sub(lambda match: f"{kind} 4.{mapping[match.group(1).lower()]}", text)
+
+
 def build() -> dict[str, object]:
     required = (
         ARTIFACTS / "manifests" / "validation.json",
@@ -317,6 +327,8 @@ def build() -> dict[str, object]:
             "Практическая реализация представлена публичным API, адаптерами четырёх\nмодальностей, типизированным OperatorRoute, проверяемым ProofTrace и\nэкспортом доказательного пакета.",
             "Практическая реализация представлена публичным API, адаптерами четырёх модальностей, типизированным маршрутом, проверяемым доказательным следом и экспортом доказательного пакета. Дополнительный контур с DistilBERT и AG News подтверждает техническую переносимость на современную предварительно обученную модель и раскрывает полную вычислительную стоимость.",
         )
+        text = _renumber_labels(text, "Таблица")
+        text = _renumber_labels(text, "Рисунок")
         markdown.write_text(text, encoding="utf-8")
         _run("pandoc", str(markdown), "--reference-doc", str(SOURCE), "-o", str(DOCX), cwd=work)
 

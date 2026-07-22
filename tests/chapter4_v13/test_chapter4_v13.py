@@ -3,6 +3,7 @@ from __future__ import annotations
 import numpy as np
 
 from experiments.chapter4_v13.common import canonical_bytes, sha256_bytes, verify_protocol_hash
+from experiments.chapter4_v13.build_chapter import _renumber_labels
 from experiments.chapter4_v13.run_policies import _actions, _bootstrap, _expected_calibration_error, _holm
 from experiments.chapter4_v13.run_route_faults import clean_route, inject, simple_or, typed_route_validator
 from experiments.chapter4_v13.smoke import run
@@ -55,3 +56,8 @@ def test_held_out_fault_distinguishes_typed_validator() -> None:
 def test_real_controller_smoke() -> None:
     result = run()
     assert result["trace_id"]
+
+
+def test_document_labels_are_renumbered_in_first_appearance_order() -> None:
+    text = "Таблица 4.1; Таблица 4.2а; ссылка Таблица 4.1; Таблица 4.7"
+    assert _renumber_labels(text, "Таблица") == "Таблица 4.1; Таблица 4.2; ссылка Таблица 4.1; Таблица 4.3"
