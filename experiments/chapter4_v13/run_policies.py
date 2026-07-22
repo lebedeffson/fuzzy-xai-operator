@@ -10,7 +10,7 @@ from sklearn.isotonic import IsotonicRegression
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import average_precision_score, brier_score_loss, roc_auc_score
 
-from .common import ARTIFACTS, canonical_bytes, protocol, read_json, read_jsonl, sha256_bytes, sha256_file, verify_protocol_hash, write_json, write_jsonl
+from .common import ARTIFACTS, canonical_bytes, git_commit, protocol, read_json, read_jsonl, sha256_bytes, sha256_file, verify_protocol_hash, write_json, write_jsonl
 
 
 SIMPLE_POLICIES = (
@@ -274,13 +274,35 @@ def _bootstrap(full_wrong: np.ndarray, baseline_wrong: np.ndarray, repetitions: 
 
 def score() -> dict[str, object]:
     cfg = protocol()
+    opening_path = ARTIFACTS / "policies" / "scoring_opening_record.json"
+    completion_path = ARTIFACTS / "policies" / "scoring_completion.json"
+    summary_path = ARTIFACTS / "policies" / "summary.json"
+    if completion_path.exists():
+        completion = read_json(completion_path)
+        if completion["summary_sha256"] != sha256_file(summary_path):
+            raise RuntimeError("completed scoring summary no longer matches its lock")
+        return read_json(summary_path)
+    if opening_path.exists():
+        raise RuntimeError("scoring was already opened but did not complete; rerun is forbidden")
     lock_path = ARTIFACTS / "policies" / "pre_score_lock.json"
     lock = read_json(lock_path)
     score_path = ARTIFACTS / "policies" / "test_policy_scores.jsonl"
     if lock["policy_scores_sha256"] != sha256_file(score_path):
         raise RuntimeError("policy scores changed after pre-score lock")
+    label_vault_path = ARTIFACTS / "private" / "sealed_test_labels.json"
+    write_json(
+        opening_path,
+        {
+            "stage": "test_labels_about_to_open_for_scoring_only",
+            "pre_score_lock_sha256": sha256_file(lock_path),
+            "policy_scores_sha256": sha256_file(score_path),
+            "label_vault_sha256": sha256_file(label_vault_path),
+            "protocol_sha256": verify_protocol_hash(),
+            "scoring_code_commit": git_commit(),
+        },
+    )
     rows = list(read_jsonl(score_path))
-    label_vault = read_json(ARTIFACTS / "private" / "sealed_test_labels.json")["labels"]
+    label_vault = read_json(label_vault_path)["labels"]
     labels = np.asarray([int(label_vault[str(row["object_id"])]) for row in rows])
     predictions = np.asarray([int(row["prediction"]) for row in rows])
     invalid = labels != predictions
@@ -338,7 +360,18 @@ def score() -> dict[str, object]:
     write_json(ARTIFACTS / "policies" / "test_quality.json", test_quality)
     primary = next(row for row in comparisons if row["primary"])
     summary = {"test_quality": test_quality, "primary_comparison": primary, "policy_results_sha256": sha256_file(raw_path)}
-    write_json(ARTIFACTS / "policies" / "summary.json", summary)
+    write_json(summary_path, summary)
+    write_json(
+        completion_path,
+        {
+            "stage": "scoring_complete",
+            "opening_record_sha256": sha256_file(opening_path),
+            "summary_sha256": sha256_file(summary_path),
+            "policy_results_sha256": sha256_file(raw_path),
+            "statistical_tests_sha256": sha256_file(ARTIFACTS / "policies" / "statistical_tests.json"),
+            "post_open_tuning": False,
+        },
+    )
     return summary
 
 
