@@ -32,6 +32,7 @@ def main() -> None:
     run_module("experiments.chapter4_v13.build_figures")
     run_module("experiments.chapter4_v13.validate_evidence")
     run_module("experiments.chapter4_v13.build_chapter")
+    run_module("experiments.chapter4_v13.build_closure")
     run_module("experiments.chapter4_v13.validate_document")
     run_module("experiments.chapter4_v13.build_release")
 

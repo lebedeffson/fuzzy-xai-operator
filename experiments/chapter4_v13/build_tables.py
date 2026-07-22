@@ -54,8 +54,45 @@ def build() -> dict[str, object]:
     policies = policies[["policy", "automatic_coverage", "wrong_automatic_actions", "selective_risk", "manual_review_load", "false_blocks", "total_cost", "risk_auroc", "risk_auprc", "expected_calibration_error", "brier_score"]]
     tables["policies_budget_20"] = {"path": _write_table("policies_budget_20", policies), "sources": [ARTIFACTS / "policies" / "policy_results.csv", ARTIFACTS / "policies" / "statistical_tests.json"], "status": "confirmatory"}
 
+    selected_baseline = str(quality["best_simple_selected_on_validation"])
+    budget_rows = []
+    for comparison in statistics["comparisons"]:
+        if comparison["baseline"] != selected_baseline:
+            continue
+        budget = float(comparison["review_budget"])
+        baseline_row = policy[(policy["policy"] == selected_baseline) & (policy["review_budget"] == budget) & (policy["cost_profile"] == "balanced")].iloc[0]
+        fuzzy_row = policy[(policy["policy"] == "full_fuzzyxai") & (policy["review_budget"] == budget) & (policy["cost_profile"] == "balanced")].iloc[0]
+        budget_rows.append(
+            {
+                "review_budget": budget,
+                "selected_baseline": selected_baseline,
+                "automatic_coverage": float(fuzzy_row["automatic_coverage"]),
+                "baseline_wrong_actions": int(comparison["baseline_wrong"]),
+                "fuzzyxai_wrong_actions": int(comparison["full_wrong"]),
+                "baseline_error_rate": float(baseline_row["accepted_error_rate"]),
+                "fuzzyxai_error_rate": float(fuzzy_row["accepted_error_rate"]),
+                "baseline_minus_fuzzyxai": float(comparison["absolute_rate_reduction"]),
+                "ci_lower": float(comparison["ci_lower"]),
+                "ci_upper": float(comparison["ci_upper"]),
+                "holm_adjusted_p": float(comparison["holm_adjusted_p"]),
+            }
+        )
+    all_budgets = pd.DataFrame(budget_rows).sort_values("review_budget")
+    tables["policies_all_budgets"] = {
+        "path": _write_table("policies_all_budgets", all_budgets),
+        "sources": [ARTIFACTS / "policies" / "policy_results.csv", ARTIFACTS / "policies" / "statistical_tests.json", ARTIFACTS / "policies" / "validation_selection.json"],
+        "status": "confirmatory_primary_20_secondary_other_budgets",
+    }
+
     route_table = route[["group", "method", "n", "precision", "recall", "f1", "false_certification", "false_rejection", "fault_type_accuracy", "component_localization_accuracy", "diagnostic_time_ms_mean"]]
     tables["route_validator"] = {"path": _write_table("route_validator", route_table), "sources": [ARTIFACTS / "route_faults" / "raw_results.jsonl", ARTIFACTS / "route_faults" / "summary.csv"], "status": "confirmatory_and_exploratory_held_out"}
+    held_out = route[route["group"] == "held_out_fault_types"].copy()
+    held_out["scope"] = "predetermined held-out registered types; exploratory; not arbitrary open-set faults"
+    tables["route_held_out_status"] = {
+        "path": _write_table("route_held_out_status", held_out),
+        "sources": [ARTIFACTS / "route_faults" / "raw_results.jsonl", ARTIFACTS / "route_faults" / "summary.csv", ARTIFACTS / "route_faults" / "manifest.json"],
+        "status": "exploratory_held_out_registered_not_open_set",
+    }
 
     runtime_columns = [
         "modality",
@@ -75,6 +112,11 @@ def build() -> dict[str, object]:
         "explainer_time_fraction",
     ]
     tables["end_to_end_runtime"] = {"path": _write_table("end_to_end_runtime", runtime[runtime_columns]), "sources": [ARTIFACTS / "runtime" / "raw_results.csv", ARTIFACTS / "runtime" / "summary.csv", ARTIFACTS / "runtime" / "manifest.json", ARTIFACTS / "runtime" / "environment_snapshots" / "shared_gpu_during_benchmark.txt"], "status": "descriptive"}
+    tables["runtime_full_statistics"] = {
+        "path": _write_table("runtime_full_statistics", runtime),
+        "sources": [ARTIFACTS / "runtime" / "raw_results.csv", ARTIFACTS / "runtime" / "summary.csv", ARTIFACTS / "runtime" / "manifest.json", ARTIFACTS / "runtime" / "environment_snapshots" / "shared_gpu_during_benchmark.txt"],
+        "status": "descriptive_shared_gpu_environment",
+    }
 
     case = pd.DataFrame([{"object_id": read_json(ARTIFACTS / "end_to_end_case" / "input_reference.json")["object_id"], **case_timing}])
     tables["end_to_end_case"] = {"path": _write_table("end_to_end_case", case), "sources": [ARTIFACTS / "end_to_end_case" / "stage_timings.json", ARTIFACTS / "end_to_end_case" / "action.json"], "status": "descriptive"}

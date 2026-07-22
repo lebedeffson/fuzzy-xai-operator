@@ -1,8 +1,8 @@
 {
   "passed": true,
-  "pages_reviewed": 82,
+  "pages_reviewed": 83,
   "review_date": "2026-07-22",
-  "method": "All PDF pages inspected as contact sheets; pages 63-73 with new v13 tables, figures, runtime, case study and conclusions inspected at full resolution.",
+  "method": "All 83 PDF pages inspected as contact sheets; pages 64-70 with the five-budget table, route faults, runtime and case study inspected at full resolution.",
   "checks": {
     "blank_pages": 0,
     "clipped_tables": 0,

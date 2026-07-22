@@ -18,6 +18,11 @@ OUTPUT_NAMES = (
     "Глава_4_FuzzyXAI_v13_evidence_map.json",
     "Глава_4_FuzzyXAI_v13_leakage_audit.json",
     "Глава_4_FuzzyXAI_v13_visual_review.json",
+    "Глава_4_FuzzyXAI_v13_budget_closure.csv",
+    "Глава_4_FuzzyXAI_v13_runtime_summary_full.csv",
+    "Глава_4_FuzzyXAI_v13_runtime_raw_results.csv",
+    "Глава_4_FuzzyXAI_v13_held_out_faults.csv",
+    "Глава_4_FuzzyXAI_v13_closure_report.md",
 )
 
 
@@ -67,6 +72,7 @@ def build() -> dict[str, object]:
             "config/chapter4_v13_runtime.yaml",
             "config/chapter4_v13_case.yaml",
             "config/chapter4_v13_requirements.txt",
+            "pyproject.toml",
             "LICENSE",
             "THIRD_PARTY_NOTICES.md",
             "README.md",

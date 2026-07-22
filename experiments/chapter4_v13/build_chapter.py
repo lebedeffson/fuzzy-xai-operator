@@ -97,27 +97,10 @@ def _new_section() -> str:
     case_timing = read_json(ARTIFACTS / "end_to_end_case" / "stage_timings.json")
 
     contour = pd.read_csv(ARTIFACTS / "tables" / "modern_contour.csv")
-    policies = pd.read_csv(ARTIFACTS / "tables" / "policies_budget_20.csv")
+    policy_budgets = pd.read_csv(ARTIFACTS / "tables" / "policies_all_budgets.csv")
     route = pd.read_csv(ARTIFACTS / "tables" / "route_validator.csv")
     runtime = pd.read_csv(ARTIFACTS / "tables" / "end_to_end_runtime.csv")
     hypotheses = pd.read_csv(ARTIFACTS / "tables" / "hypothesis_status.csv")
-
-    policy_names = {
-        "always_accept": "Безусловное принятие",
-        "max_confidence": "Порог уверенности",
-        "calibrated_confidence": "Калибр. уверенность",
-        "predictive_entropy": "Энтропия",
-        "weighted_linear": "Взвешенная",
-        "explainer_disagreement": "Расхождение",
-        "simple_or": "OR",
-        "provenance_only": "Происхождение",
-        "predictive_risk_P0": "Предиктивный риск P0",
-        "full_fuzzyxai_P1": "Риск P1",
-        "full_fuzzyxai": "Полный FuzzyXAI",
-        "random_matched_budget": "Случайная",
-    }
-    policies["policy"] = policies["policy"].map(policy_names)
-    policies = policies.sort_values("wrong_automatic_actions")
 
     route_names = {
         "simple_or": "OR",
@@ -185,11 +168,11 @@ def _new_section() -> str:
 
 Первичный scoring-пакет был признан недействительным при послерезультатном техническом аудите: контрольная политика безусловного принятия ошибочно получила общий бюджет проверки, а конечная bootstrap-оценка могла быть записана как p = 0. Исходный пакет сохранён с invalid marker. Затем выполнено только повторное вычисление метрик по неизменённым прогнозам, score rows, порогам и выбранной baseline-политике; модели и действия остальных политик не менялись. Поэтому итог трактуется как scoring-only recovery с зарегистрированным протокольным отклонением.
 
-{_markdown_table(policies, {'policy': 'Политика', 'automatic_coverage': 'Покрытие', 'wrong_automatic_actions': 'Ошибочные действия', 'selective_risk': 'Риск', 'manual_review_load': 'На проверке', 'false_blocks': 'Ложные блокировки', 'total_cost': 'Стоимость'})}
+{_markdown_table(policy_budgets, {'review_budget': 'Бюджет', 'selected_baseline': 'Baseline', 'baseline_wrong_actions': 'Ошибки baseline', 'fuzzyxai_wrong_actions': 'Ошибки FuzzyXAI', 'baseline_minus_fuzzyxai': 'Baseline минус FuzzyXAI', 'ci_lower': 'Нижняя граница ДИ', 'ci_upper': 'Верхняя граница ДИ', 'holm_adjusted_p': 'Holm p'}, digits=6)}
 
-Таблица 4.38 — Сопоставление политик при бюджете проверки 20 %
+Таблица 4.38 — Сопоставление выбранной baseline-политики и FuzzyXAI при бюджетах 5–40 %
 
-Первичная абсолютная разность долей ошибочных автоматических действий составляет {_format(float(primary['absolute_rate_reduction']), 6)}, 95%-й доверительный интервал [{_format(float(primary['ci_lower']), 6)}; {_format(float(primary['ci_upper']), 6)}], скорректированное значение p = {_format(float(primary['holm_adjusted_p']), 6)}. Знак эффекта трактуется относительно простой политики, заранее выбранной на validation-части.
+Эффект во всех статистических таблицах определён как доля ошибок baseline минус доля ошибок FuzzyXAI. Поэтому отрицательное значение означает больше ошибочных автоматических действий у FuzzyXAI. При первичном бюджете 20 % разность составляет {_format(float(primary['absolute_rate_reduction']), 6)}, 95%-й доверительный интервал [{_format(float(primary['ci_lower']), 6)}; {_format(float(primary['ci_upper']), 6)}], скорректированное значение p = {_format(float(primary['holm_adjusted_p']), 6)}.
 
 ![]({(figures / 'policy_risk_coverage.png').resolve()}){{width=15cm}}
 
@@ -197,11 +180,11 @@ def _new_section() -> str:
 
 ### 4.26.4 Типизированная проверка маршрута
 
-Независимое сравнение охватывает корректные маршруты, одиночные нарушения, их композиции и типы, не участвовавшие в настройке простых базовых схем. Типизированный валидатор возвращает не только общий запрет, но также тип и компонент нарушения. Результат относится к зарегистрированной библиотеке и не доказывает обнаружение произвольного неизвестного сбоя.
+Независимое сравнение охватывает корректные маршруты, одиночные нарушения, их композиции и пять заранее зафиксированных типов, отложенных от настройки простых базовых схем. Эти отложенные типы зарегистрированы в типизированном контракте валидатора и поэтому не являются проверкой произвольного open-set отказа. Валидатор возвращает не только общий запрет, но также тип и компонент нарушения. Результат относится к зарегистрированной библиотеке и не доказывает обнаружение неизвестного класса сбоя.
 
 {_markdown_table(route, {'group': 'Группа', 'method': 'Метод', 'n': 'N', 'precision': 'Точность', 'recall': 'Полнота', 'f1': 'F1', 'false_certification': 'Ложная сертификация', 'component_localization_accuracy': 'Локализация'})}
 
-Таблица 4.39 — Диагностика одиночных, композиционных и отложенных нарушений
+Таблица 4.40 — Диагностика одиночных, композиционных и отложенных нарушений
 
 ![]({(figures / 'route_faults.png').resolve()}){{width=15cm}}
 
@@ -213,11 +196,13 @@ def _new_section() -> str:
 
 {_markdown_table(runtime, {'explainer': 'Объяснитель', 'n': 'N', 'repetitions': 'Повторы', 'model_seconds_median': 'Модель, с', 'explainer_seconds_median': 'Объяснитель, с', 'fuzzyxai_seconds_median': 'FuzzyXAI, с', 'serialization_seconds_median': 'Сериализация, с', 'total_seconds_median': 'Полное время, с'})}
 
-Таблица 4.40 — Время этапов современного текстового контура
+Таблица 4.41 — Время этапов современного текстового контура
 
 {_markdown_table(runtime, {'explainer': 'Объяснитель', 'n': 'N', 'objects_per_second_median': 'Объектов/с', 'peak_rss_bytes_median': 'Пиковая RAM, байт', 'peak_vram_bytes_median': 'Пиковая VRAM, байт', 'fuzzyxai_time_fraction': 'Доля FuzzyXAI', 'explainer_time_fraction': 'Доля объяснителя'})}
 
-Таблица 4.41 — Производительность, память и доли времени
+Таблица 4.42 — Производительность, память и доли времени
+
+Полная машинно-читаемая runtime-таблица дополнительно содержит среднее, стандартное отклонение, p95 и p99 для времени каждого этапа, пропускной способности, RAM и VRAM; сырые результаты всех пяти повторов включены в доказательный пакет.
 
 ![]({(figures / 'runtime_decomposition.png').resolve()}){{width=16cm}}
 
@@ -236,13 +221,13 @@ def _new_section() -> str:
 | Диагностика | Структурный статус, коды причин и отсутствующие свидетельства |
 | Аудит | Trace ID, версии и контрольная сумма детерминированного повтора |
 
-Таблица 4.42 — Состав воспроизводимого сквозного примера
+Таблица 4.43 — Состав воспроизводимого сквозного примера
 
 ### 4.26.7 Статус новых проверок
 
 {_markdown_table(hypotheses, {'hypothesis': 'Проверка', 'result': 'Результат', 'scope': 'Область'})}
 
-Таблица 4.43 — Статус проверок дополнительного контура v13
+Таблица 4.44 — Статус проверок дополнительного контура v13
 
 Новый контур расширяет эмпирическую базу современной моделью, крупным набором, сопоставимыми бюджетами и полным измерением времени. Он не меняет зафиксированные отрицательные результаты H3-original, H5-P-original и H6-general и не создаёт утверждений о пользовательской понятности или предметной безопасности.
 
@@ -355,8 +340,11 @@ def build() -> dict[str, object]:
         "# Changelog главы 4 v13\n\n"
         "- Добавлен современный контур AG News с frozen DistilBERT, Integrated Gradients и маскированием токенов.\n"
         "- Добавлено сопоставление 12 политик при одинаковых бюджетах проверки.\n"
+        "- Добавлена полная таблица бюджетов 5/10/20/30/40 % с явным определением знака эффекта.\n"
         "- Добавлена независимая проверка типизированного валидатора на одиночных, композиционных и отложенных нарушениях.\n"
+        "- Отложенные нарушения явно ограничены зарегистрированными типами и не описываются как open-set проверка.\n"
         "- Полное время разделено на модель, объяснитель, FuzzyXAI и сериализацию.\n"
+        "- Полные runtime-квантили и все пять сырых повторов вынесены в closure-пакет.\n"
         "- Добавлен воспроизводимый сквозной объект и leakage audit.\n"
         "- H3-original, H5-P-original и H6-general оставлены отрицательными.\n"
         "- Удалены научные заявления о доказанной пользовательской понятности и предметной безопасности.\n"

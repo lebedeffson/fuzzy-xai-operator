@@ -1,0 +1,5 @@
+method,group,n,precision,recall,f1,false_certification,false_rejection,fault_type_accuracy,component_localization_accuracy,diagnostic_time_ms_mean,scope
+independent_if_else,held_out_fault_types,1000,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.00070853,predetermined held-out registered types; exploratory; not arbitrary open-set faults
+simple_or,held_out_fault_types,1000,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0008606789999999,predetermined held-out registered types; exploratory; not arbitrary open-set faults
+typed_route_validator,held_out_fault_types,1000,1.0,1.0,1.0,0.0,0.0,1.0,1.0,0.001174928,predetermined held-out registered types; exploratory; not arbitrary open-set faults
+weighted_fault_score,held_out_fault_types,1000,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.000680319,predetermined held-out registered types; exploratory; not arbitrary open-set faults

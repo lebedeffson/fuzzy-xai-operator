@@ -74,6 +74,15 @@ Known boundaries: the old H3, H5-P and H6-general claims remain unsupported; the
 5-million-object benchmark describes only the cached operator layer; the v13 user
 study package is a future protocol and contains no participant evidence.
 
+Public reviewer artifacts are committed under
+[`dissertation_artifacts/chapter4_v13/final`](dissertation_artifacts/chapter4_v13/final/).
+The directory contains the DOCX/PDF, the complete five-budget policy table, full
+runtime statistics and raw repetitions, the held-out-fault status, leakage audit,
+evidence map, validation report, checksums and the downloadable evidence ZIP.
+The code is distributed under the MIT license in [`LICENSE`](LICENSE); upstream
+dataset and model license boundaries are recorded in
+[`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md).
+
 ## Explain a model
 
 ```python

@@ -83,6 +83,26 @@
     ],
     "status": "confirmatory"
   },
+  "policies_all_budgets": {
+    "path": "tables/policies_all_budgets.csv",
+    "rows": 5,
+    "sha256": "8d8e2f7c121356ada87fad384b36c40d26779af054aca0db21b4d7519bb22a80",
+    "sources": [
+      {
+        "path": "policies/policy_results.csv",
+        "sha256": "7d169aa78b406b0318f6e28df3f70820f8ca9dd7c6b0ccdd67dcddc3f6d42d99"
+      },
+      {
+        "path": "policies/statistical_tests.json",
+        "sha256": "b284092118f7ec0f9cf88869edfa11b0a6dbfed68aaa632f1b7930582c717bff"
+      },
+      {
+        "path": "policies/validation_selection.json",
+        "sha256": "11adad134a67cafe303449e192355d224d6bd3c9406c73d4bf930411e57be961"
+      }
+    ],
+    "status": "confirmatory_primary_20_secondary_other_budgets"
+  },
   "policies_budget_20": {
     "path": "tables/policies_budget_20.csv",
     "rows": 12,
@@ -99,6 +119,26 @@
     ],
     "status": "confirmatory"
   },
+  "route_held_out_status": {
+    "path": "tables/route_held_out_status.csv",
+    "rows": 4,
+    "sha256": "236a2f71136f22c099f1244f4e7582ec4b51e5cad0c56bf59ce5df90453dfd6c",
+    "sources": [
+      {
+        "path": "route_faults/raw_results.jsonl",
+        "sha256": "19e3cf4642c6012e5caa3023a1283147b703c5260343da6dbe3defac617f6a6e"
+      },
+      {
+        "path": "route_faults/summary.csv",
+        "sha256": "2919c0bf1ede643185f26f7b7f0c3cf49cd29452dea9ca52bb0b0a6cdcc8c62b"
+      },
+      {
+        "path": "route_faults/manifest.json",
+        "sha256": "0cdb35de05b536a23faf3cf870630a108c5b0f86f786dbd69ecc48930f90a0e7"
+      }
+    ],
+    "status": "exploratory_held_out_registered_not_open_set"
+  },
   "route_validator": {
     "path": "tables/route_validator.csv",
     "rows": 16,
@@ -114,5 +154,29 @@
       }
     ],
     "status": "confirmatory_and_exploratory_held_out"
+  },
+  "runtime_full_statistics": {
+    "path": "tables/runtime_full_statistics.csv",
+    "rows": 9,
+    "sha256": "d16324d5ee6b77150e2243ff7fd9d620268374cf32ee88c73c10d8866e67e2b5",
+    "sources": [
+      {
+        "path": "runtime/raw_results.csv",
+        "sha256": "c29c1b06ef929819bb9b87fe1b60f4bd6241bfc9b1a83ccb3c395a38024b7183"
+      },
+      {
+        "path": "runtime/summary.csv",
+        "sha256": "9f46a9531a25ac31c79c9af2ee43869ccb3c8aab27a4aa75ef3ee569d977a226"
+      },
+      {
+        "path": "runtime/manifest.json",
+        "sha256": "d589ca630226fd80479b53015afc060325c2ed366bef8d387ba63950818ab57c"
+      },
+      {
+        "path": "runtime/environment_snapshots/shared_gpu_during_benchmark.txt",
+        "sha256": "1c0038fdf5877100d3af6cbaf10a0b54ceaf4ceb04d37186c1ab3075da08809d"
+      }
+    ],
+    "status": "descriptive_shared_gpu_environment"
   }
 }

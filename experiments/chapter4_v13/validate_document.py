@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import csv
 import re
 import subprocess
 import tempfile
@@ -11,6 +12,11 @@ from .common import ARTIFACTS, read_json, sha256_file
 
 
 VISUAL_REVIEW = FINAL / "Глава_4_FuzzyXAI_v13_visual_review.json"
+BUDGET_CLOSURE = FINAL / "Глава_4_FuzzyXAI_v13_budget_closure.csv"
+RUNTIME_CLOSURE = FINAL / "Глава_4_FuzzyXAI_v13_runtime_summary_full.csv"
+RUNTIME_RAW = FINAL / "Глава_4_FuzzyXAI_v13_runtime_raw_results.csv"
+HELD_OUT_CLOSURE = FINAL / "Глава_4_FuzzyXAI_v13_held_out_faults.csv"
+CLOSURE_REPORT = FINAL / "Глава_4_FuzzyXAI_v13_closure_report.md"
 
 
 FORBIDDEN_MAIN_TEXT = (
@@ -48,6 +54,11 @@ def validate() -> dict[str, object]:
         FINAL / "Глава_4_FuzzyXAI_v13_evidence_map.json",
         FINAL / "Глава_4_FuzzyXAI_v13_leakage_audit.json",
         VISUAL_REVIEW,
+        BUDGET_CLOSURE,
+        RUNTIME_CLOSURE,
+        RUNTIME_RAW,
+        HELD_OUT_CLOSURE,
+        CLOSURE_REPORT,
     )
     missing = [str(path) for path in required if not path.exists()]
     if missing:
@@ -85,6 +96,14 @@ def validate() -> dict[str, object]:
     evidence = read_json(ARTIFACTS / "evidence_map.json")
     leakage = read_json(ARTIFACTS / "leakage_audit.json")
     visual_review = read_json(VISUAL_REVIEW)
+    with BUDGET_CLOSURE.open(encoding="utf-8", newline="") as stream:
+        budget_rows = list(csv.DictReader(stream))
+    with RUNTIME_CLOSURE.open(encoding="utf-8", newline="") as stream:
+        runtime_rows = list(csv.DictReader(stream))
+    with RUNTIME_RAW.open(encoding="utf-8", newline="") as stream:
+        runtime_raw_rows = list(csv.DictReader(stream))
+    with HELD_OUT_CLOSURE.open(encoding="utf-8", newline="") as stream:
+        held_out_rows = list(csv.DictReader(stream))
     errors = []
     if forbidden:
         errors.append(f"forbidden_main_text:{forbidden}")
@@ -102,6 +121,15 @@ def validate() -> dict[str, object]:
         errors.append("leakage_audit_failed")
     if not visual_review.get("passed") or visual_review.get("pages_reviewed") != pages:
         errors.append("visual_review_failed_or_incomplete")
+    if {round(float(row["review_budget"]), 2) for row in budget_rows} != {0.05, 0.10, 0.20, 0.30, 0.40}:
+        errors.append("five_budget_closure_incomplete")
+    runtime_fields = set(runtime_rows[0]) if runtime_rows else set()
+    if not all(f"total_seconds_{suffix}" in runtime_fields for suffix in ("median", "mean", "std", "p95", "p99")):
+        errors.append("runtime_quantiles_incomplete")
+    if not runtime_rows or len(runtime_raw_rows) != 5 * len(runtime_rows):
+        errors.append("runtime_repetitions_incomplete")
+    if not held_out_rows or {row["group"] for row in held_out_rows} != {"held_out_fault_types"}:
+        errors.append("held_out_fault_status_incomplete")
     if "Современный прикладной контур" not in main_text or "DistilBERT" not in main_text:
         errors.append("modern_contour_missing_from_main_text")
     if "не показал статистически подтверждённого" not in main_text and "статистически подтверждённое снижение" not in main_text:
@@ -114,6 +142,11 @@ def validate() -> dict[str, object]:
         "Глава_4_FuzzyXAI_v13_evidence_map.json": sha256_file(FINAL / "Глава_4_FuzzyXAI_v13_evidence_map.json"),
         "Глава_4_FuzzyXAI_v13_leakage_audit.json": sha256_file(FINAL / "Глава_4_FuzzyXAI_v13_leakage_audit.json"),
         VISUAL_REVIEW.name: sha256_file(VISUAL_REVIEW),
+        BUDGET_CLOSURE.name: sha256_file(BUDGET_CLOSURE),
+        RUNTIME_CLOSURE.name: sha256_file(RUNTIME_CLOSURE),
+        RUNTIME_RAW.name: sha256_file(RUNTIME_RAW),
+        HELD_OUT_CLOSURE.name: sha256_file(HELD_OUT_CLOSURE),
+        CLOSURE_REPORT.name: sha256_file(CLOSURE_REPORT),
     }
     status = "PASS" if not errors else "FAIL"
     VALIDATION.write_text(
@@ -131,6 +164,9 @@ def validate() -> dict[str, object]:
         f"- записей в карте доказательств v13: `{len(evidence['entries'])}`\n"
         f"- аудит утечки: `{leakage.get('passed')}`\n"
         f"- визуальная постраничная проверка: `{visual_review.get('passed')}`; страниц: `{visual_review.get('pages_reviewed')}`\n"
+        f"- бюджеты matched coverage: `{[row['review_budget'] for row in budget_rows]}`\n"
+        f"- runtime: `{len(runtime_rows)}` конфигураций, `{len(runtime_raw_rows)}` сырых повторов, median/mean/std/p95/p99\n"
+        f"- held-out status: `{len(held_out_rows)}` методов; exploratory registered types, not arbitrary open-set faults\n"
         f"- неизменённые отрицательные статусы: `H3-original, H5-P-original, H6-general`\n"
         f"- ошибки: `{errors}`\n\n"
         "## Исправленные классы дефектов\n\n"

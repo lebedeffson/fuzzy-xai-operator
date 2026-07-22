@@ -1,6 +1,9 @@
 from __future__ import annotations
 
+import tomllib
+
 import numpy as np
+import pandas as pd
 
 from experiments.chapter4_v13.common import canonical_bytes, sha256_bytes, verify_protocol_hash
 from experiments.chapter4_v13.build_chapter import _renumber_labels
@@ -61,3 +64,22 @@ def test_real_controller_smoke() -> None:
 def test_document_labels_are_renumbered_in_first_appearance_order() -> None:
     text = "Таблица 4.1; Таблица 4.2а; ссылка Таблица 4.1; Таблица 4.7"
     assert _renumber_labels(text, "Таблица") == "Таблица 4.1; Таблица 4.2; ссылка Таблица 4.1; Таблица 4.3"
+
+
+def test_public_license_metadata_points_to_license_file() -> None:
+    with open("pyproject.toml", "rb") as stream:
+        project = tomllib.load(stream)["project"]
+    assert project["license"] == "MIT"
+    assert project["license-files"] == ["LICENSE"]
+
+
+def test_frozen_policy_results_cover_all_review_budgets() -> None:
+    rows = pd.read_csv("artifacts/chapter4_v13/policies/policy_results.csv")
+    assert set(rows["review_budget"]) == {0.05, 0.10, 0.20, 0.30, 0.40}
+
+
+def test_frozen_runtime_has_five_repetitions_and_quantiles() -> None:
+    summary = pd.read_csv("artifacts/chapter4_v13/runtime/summary.csv")
+    assert set(summary["repetitions"]) == {5}
+    for suffix in ("median", "mean", "std", "p95", "p99"):
+        assert f"total_seconds_{suffix}" in summary

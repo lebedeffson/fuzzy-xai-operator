@@ -1,18 +1,21 @@
 # Отчёт проверки главы 4 v13
 
 - статус: `PASS`
-- страниц PDF: `82`
+- страниц PDF: `83`
 - таблиц: `47`; диапазон: `4.1–4.47`
 - рисунков: `27`; диапазон: `4.1–4.27`
 - последовательность таблиц: `True`
 - последовательность рисунков: `True`
-- отрендерено страниц: `82`
+- отрендерено страниц: `83`
 - страницы без содержимого: `[]`
 - запрещённые формулировки в основном тексте: `{}`
 - машинные статусы в основном тексте: `{}`
-- записей в карте доказательств v13: `386`
+- записей в карте доказательств v13: `868`
 - аудит утечки: `True`
-- визуальная постраничная проверка: `True`; страниц: `82`
+- визуальная постраничная проверка: `True`; страниц: `83`
+- бюджеты matched coverage: `['0.05', '0.1', '0.2', '0.3', '0.4']`
+- runtime: `9` конфигураций, `45` сырых повторов, median/mean/std/p95/p99
+- held-out status: `4` методов; exploratory registered types, not arbitrary open-set faults
 - неизменённые отрицательные статусы: `H3-original, H5-P-original, H6-general`
 - ошибки: `[]`
 
@@ -26,9 +29,14 @@
 
 ## Контрольные суммы
 
-- `9e2f5bc30c8819b36690b9b734edbc9e5e69703b5137b6b3d2418aaa18182526`  `Глава_4_FuzzyXAI_эмпирическая_редакция_v13.docx`
-- `8de88fb54d3fc9f4872808984276b6400ee83321cad552f798b9899c514564ba`  `Глава_4_FuzzyXAI_эмпирическая_редакция_v13.pdf`
-- `3432214eed4ce7e7c430600e943d9e73e96406c1619597662691520a78438146`  `Глава_4_FuzzyXAI_v13_changelog.md`
-- `ce9dfb365e88322108a69005743e4c801cb15416242f2eea99c7f19ccde75177`  `Глава_4_FuzzyXAI_v13_evidence_map.json`
+- `7692fc5e8320368ceb769aef270b3932202c79567b689608768e62c22853162a`  `Глава_4_FuzzyXAI_эмпирическая_редакция_v13.docx`
+- `885e814df669059f7ada619a3f24a89fc2c58ca7091931fa1738a35d9b4d6c64`  `Глава_4_FuzzyXAI_эмпирическая_редакция_v13.pdf`
+- `9b6378a2b5143120571d2ad88159f808ed21f14061e47de2ae7e51d085718669`  `Глава_4_FuzzyXAI_v13_changelog.md`
+- `2b001179c20885fafccdc72ec1a0510de3a688887308ce9581b79c9cc706a88f`  `Глава_4_FuzzyXAI_v13_evidence_map.json`
 - `2b3c721b62e9d006fcc85c8c0dc6fba1160ce47c2e2712bf182c9a9a9ff1cf2d`  `Глава_4_FuzzyXAI_v13_leakage_audit.json`
-- `8d1f5301e509aca9a2fe301f66777272e5e3fcd70b104d737b3fcc07848ffa82`  `Глава_4_FuzzyXAI_v13_visual_review.json`
+- `651fad97c17885f294f150ce512b4c4a7b84890c11c1bf0d6f23fd244193b999`  `Глава_4_FuzzyXAI_v13_visual_review.json`
+- `8d8e2f7c121356ada87fad384b36c40d26779af054aca0db21b4d7519bb22a80`  `Глава_4_FuzzyXAI_v13_budget_closure.csv`
+- `d16324d5ee6b77150e2243ff7fd9d620268374cf32ee88c73c10d8866e67e2b5`  `Глава_4_FuzzyXAI_v13_runtime_summary_full.csv`
+- `c29c1b06ef929819bb9b87fe1b60f4bd6241bfc9b1a83ccb3c395a38024b7183`  `Глава_4_FuzzyXAI_v13_runtime_raw_results.csv`
+- `236a2f71136f22c099f1244f4e7582ec4b51e5cad0c56bf59ce5df90453dfd6c`  `Глава_4_FuzzyXAI_v13_held_out_faults.csv`
+- `e2aa5b9f7cee59b274e718638a2a369d1856694c73efcd203a9c451883ef7c42`  `Глава_4_FuzzyXAI_v13_closure_report.md`
