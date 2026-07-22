@@ -1,0 +1,24 @@
+{
+  "policy_results_sha256": "e5970108b20551d2cfff71d8dd1600027bebb2fc9cbeade1ebcf2b5d2cfb8acc",
+  "primary_comparison": {
+    "absolute_rate_reduction": -0.03105263157894737,
+    "baseline": "calibrated_confidence",
+    "baseline_wrong": 72,
+    "ci_lower": -0.035263157894736843,
+    "ci_upper": -0.026973684210526316,
+    "full_wrong": 308,
+    "holm_adjusted_p": 0.0,
+    "p_value": 0.0,
+    "primary": true,
+    "relative_reduction": -3.2777777777777777,
+    "review_budget": 0.2
+  },
+  "test_quality": {
+    "accuracy": 0.9478947368421052,
+    "best_simple_selected_on_validation": "calibrated_confidence",
+    "errors": 396,
+    "labels_opened_only_for_scoring": true,
+    "objects": 7600,
+    "pre_score_lock_sha256": "1e927b557f1ca03c7529270e1b04a0731668e2cc80bc9443b666cb7dd8f88440"
+  }
+}

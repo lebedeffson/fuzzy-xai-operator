@@ -1,0 +1,8 @@
+{
+  "accuracy": 0.9478947368421052,
+  "best_simple_selected_on_validation": "calibrated_confidence",
+  "errors": 396,
+  "labels_opened_only_for_scoring": true,
+  "objects": 7600,
+  "pre_score_lock_sha256": "1e927b557f1ca03c7529270e1b04a0731668e2cc80bc9443b666cb7dd8f88440"
+}

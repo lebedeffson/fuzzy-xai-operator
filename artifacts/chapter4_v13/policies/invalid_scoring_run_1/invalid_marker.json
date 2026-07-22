@@ -1,0 +1,16 @@
+{
+  "status": "invalid_for_final_policy_table",
+  "stage": "post_scoring_quality_audit",
+  "labels_had_been_opened": true,
+  "reasons": [
+    "always_accept_was_incorrectly_forced_to_the_matched_review_budget",
+    "finite_bootstrap_reported_zero_p_value_without_add_one_correction"
+  ],
+  "unchanged_primary_effect": {
+    "baseline": "calibrated_confidence",
+    "baseline_wrong": 72,
+    "full_fuzzyxai_wrong": 308,
+    "absolute_rate_reduction": -0.03105263157894737
+  },
+  "allowed_recovery": "scoring_only_from_immutable_pre_score_rows_with_no_policy_or_threshold_changes"
+}
