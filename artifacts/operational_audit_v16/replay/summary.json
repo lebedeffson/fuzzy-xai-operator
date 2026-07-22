@@ -1,0 +1,413 @@
+{
+  "A3_relative_restoration_reduction_vs_route_only": 0.6541353383458647,
+  "controllers": {
+    "alert_only": {
+      "audit_trace_bytes": 90000000,
+      "false_alerts_per_10000": 5.1,
+      "hard_block_rate": 0.0,
+      "incident_recall": 1.0,
+      "manual_review_events": 546,
+      "median_detection_delay": 6.0,
+      "median_repair_delay": 106.0,
+      "median_time_to_restoration": 106.0,
+      "p95_detection_delay": 13.0,
+      "p95_repair_delay": 113.0,
+      "recertification_rate": 0.0,
+      "repair_success_rate": 0.78,
+      "service_time_source": "protocol amendment A001; controlled simulation"
+    },
+    "hierarchical_v15": {
+      "audit_trace_bytes": 90000000,
+      "false_alerts_per_10000": 4.8,
+      "hard_block_rate": 0.0,
+      "incident_recall": 1.0,
+      "manual_review_events": 516,
+      "median_detection_delay": 7.0,
+      "median_repair_delay": 57.0,
+      "median_time_to_restoration": 57.0,
+      "p95_detection_delay": 14.0,
+      "p95_repair_delay": 64.0,
+      "recertification_rate": 0.0,
+      "repair_success_rate": 0.78,
+      "service_time_source": "protocol amendment A001; controlled simulation"
+    },
+    "lexicographic_v16": {
+      "audit_trace_bytes": 420000000,
+      "false_alerts_per_10000": 0.75,
+      "hard_block_rate": 0.004,
+      "incident_recall": 1.0,
+      "manual_review_events": 111,
+      "median_detection_delay": 3.0,
+      "median_repair_delay": 23.0,
+      "median_time_to_restoration": 23.0,
+      "p95_detection_delay": 5.0,
+      "p95_repair_delay": 25.0,
+      "recertification_rate": 1.0,
+      "repair_success_rate": 0.94,
+      "service_time_source": "protocol amendment A001; controlled simulation"
+    },
+    "route_only": {
+      "audit_trace_bytes": 90000000,
+      "false_alerts_per_10000": 1.2,
+      "hard_block_rate": 0.0,
+      "incident_recall": 1.0,
+      "manual_review_events": 156,
+      "median_detection_delay": 6.5,
+      "median_repair_delay": 66.5,
+      "median_time_to_restoration": 66.5,
+      "p95_detection_delay": 13.25,
+      "p95_repair_delay": 73.25,
+      "recertification_rate": 0.0,
+      "repair_success_rate": 0.78,
+      "service_time_source": "protocol amendment A001; controlled simulation"
+    },
+    "simple_or": {
+      "audit_trace_bytes": 90000000,
+      "false_alerts_per_10000": 3.3,
+      "hard_block_rate": 0.0,
+      "incident_recall": 1.0,
+      "manual_review_events": 366,
+      "median_detection_delay": 7.0,
+      "median_repair_delay": 87.0,
+      "median_time_to_restoration": 87.0,
+      "p95_detection_delay": 13.0,
+      "p95_repair_delay": 93.0,
+      "recertification_rate": 0.0,
+      "repair_success_rate": 0.78,
+      "service_time_source": "protocol amendment A001; controlled simulation"
+    }
+  },
+  "delayed_labels": true,
+  "events": 1000000,
+  "implementation_commit": "289b92adc36e3d98d54f3abb444278a98de06fbb",
+  "incidents": [
+    {
+      "composition_order": 3,
+      "duration": 670,
+      "family": "model_explainer_mismatch",
+      "incident_id": "incident-000",
+      "lane": "model-0",
+      "recurrence": false,
+      "start": 36285
+    },
+    {
+      "composition_order": 1,
+      "duration": 2085,
+      "family": "stale_calibration",
+      "incident_id": "incident-001",
+      "lane": "model-1",
+      "recurrence": false,
+      "start": 50222
+    },
+    {
+      "composition_order": 1,
+      "duration": 1577,
+      "family": "preprocessing_order_change",
+      "incident_id": "incident-002",
+      "lane": "model-2",
+      "recurrence": false,
+      "start": 65904
+    },
+    {
+      "composition_order": 1,
+      "duration": 406,
+      "family": "feature_schema_incompatibility",
+      "incident_id": "incident-003",
+      "lane": "model-3",
+      "recurrence": false,
+      "start": 81320
+    },
+    {
+      "composition_order": 1,
+      "duration": 1440,
+      "family": "cross_model_artifact_mix",
+      "incident_id": "incident-004",
+      "lane": "model-0",
+      "recurrence": false,
+      "start": 99405
+    },
+    {
+      "composition_order": 1,
+      "duration": 1016,
+      "family": "checksum_corruption",
+      "incident_id": "incident-005",
+      "lane": "model-1",
+      "recurrence": false,
+      "start": 114528
+    },
+    {
+      "composition_order": 2,
+      "duration": 731,
+      "family": "reduction_link_loss",
+      "incident_id": "incident-006",
+      "lane": "model-2",
+      "recurrence": false,
+      "start": 130634
+    },
+    {
+      "composition_order": 1,
+      "duration": 492,
+      "family": "reference_population_substitution",
+      "incident_id": "incident-007",
+      "lane": "model-3",
+      "recurrence": false,
+      "start": 144560
+    },
+    {
+      "composition_order": 1,
+      "duration": 1285,
+      "family": "partial_provenance_deletion",
+      "incident_id": "incident-008",
+      "lane": "model-0",
+      "recurrence": false,
+      "start": 164239
+    },
+    {
+      "composition_order": 1,
+      "duration": 431,
+      "family": "dictionary_or_tokenizer_version_change",
+      "incident_id": "incident-009",
+      "lane": "model-1",
+      "recurrence": false,
+      "start": 180236
+    },
+    {
+      "composition_order": 1,
+      "duration": 1568,
+      "family": "model_explainer_mismatch",
+      "incident_id": "incident-010",
+      "lane": "model-2",
+      "recurrence": false,
+      "start": 197537
+    },
+    {
+      "composition_order": 1,
+      "duration": 1627,
+      "family": "stale_calibration",
+      "incident_id": "incident-011",
+      "lane": "model-3",
+      "recurrence": false,
+      "start": 215015
+    },
+    {
+      "composition_order": 2,
+      "duration": 1563,
+      "family": "preprocessing_order_change",
+      "incident_id": "incident-012",
+      "lane": "model-0",
+      "recurrence": false,
+      "start": 234806
+    },
+    {
+      "composition_order": 1,
+      "duration": 732,
+      "family": "feature_schema_incompatibility",
+      "incident_id": "incident-013",
+      "lane": "model-1",
+      "recurrence": false,
+      "start": 258466
+    },
+    {
+      "composition_order": 1,
+      "duration": 863,
+      "family": "cross_model_artifact_mix",
+      "incident_id": "incident-014",
+      "lane": "model-2",
+      "recurrence": false,
+      "start": 278623
+    },
+    {
+      "composition_order": 1,
+      "duration": 1151,
+      "family": "checksum_corruption",
+      "incident_id": "incident-015",
+      "lane": "model-3",
+      "recurrence": false,
+      "start": 301481
+    },
+    {
+      "composition_order": 1,
+      "duration": 1235,
+      "family": "reduction_link_loss",
+      "incident_id": "incident-016",
+      "lane": "model-0",
+      "recurrence": false,
+      "start": 325904
+    },
+    {
+      "composition_order": 2,
+      "duration": 1641,
+      "family": "reference_population_substitution",
+      "incident_id": "incident-017",
+      "lane": "model-1",
+      "recurrence": false,
+      "start": 342642
+    },
+    {
+      "composition_order": 2,
+      "duration": 847,
+      "family": "partial_provenance_deletion",
+      "incident_id": "incident-018",
+      "lane": "model-2",
+      "recurrence": false,
+      "start": 360131
+    },
+    {
+      "composition_order": 1,
+      "duration": 500,
+      "family": "dictionary_or_tokenizer_version_change",
+      "incident_id": "incident-019",
+      "lane": "model-3",
+      "recurrence": false,
+      "start": 380782
+    },
+    {
+      "composition_order": 1,
+      "duration": 2045,
+      "family": "model_explainer_mismatch",
+      "incident_id": "incident-020",
+      "lane": "model-0",
+      "recurrence": false,
+      "start": 396295
+    },
+    {
+      "composition_order": 1,
+      "duration": 1708,
+      "family": "stale_calibration",
+      "incident_id": "incident-021",
+      "lane": "model-1",
+      "recurrence": false,
+      "start": 417633
+    },
+    {
+      "composition_order": 1,
+      "duration": 371,
+      "family": "preprocessing_order_change",
+      "incident_id": "incident-022",
+      "lane": "model-2",
+      "recurrence": false,
+      "start": 435992
+    },
+    {
+      "composition_order": 1,
+      "duration": 1227,
+      "family": "feature_schema_incompatibility",
+      "incident_id": "incident-023",
+      "lane": "model-3",
+      "recurrence": false,
+      "start": 460956
+    },
+    {
+      "composition_order": 2,
+      "duration": 1953,
+      "family": "cross_model_artifact_mix",
+      "incident_id": "incident-024",
+      "lane": "model-0",
+      "recurrence": false,
+      "start": 485219
+    },
+    {
+      "composition_order": 1,
+      "duration": 870,
+      "family": "checksum_corruption",
+      "incident_id": "incident-025",
+      "lane": "model-1",
+      "recurrence": false,
+      "start": 507465
+    },
+    {
+      "composition_order": 1,
+      "duration": 713,
+      "family": "reduction_link_loss",
+      "incident_id": "incident-026",
+      "lane": "model-2",
+      "recurrence": false,
+      "start": 524139
+    },
+    {
+      "composition_order": 1,
+      "duration": 1604,
+      "family": "reference_population_substitution",
+      "incident_id": "incident-027",
+      "lane": "model-3",
+      "recurrence": false,
+      "start": 543514
+    },
+    {
+      "composition_order": 1,
+      "duration": 1686,
+      "family": "partial_provenance_deletion",
+      "incident_id": "incident-028",
+      "lane": "model-0",
+      "recurrence": false,
+      "start": 560244
+    },
+    {
+      "composition_order": 1,
+      "duration": 1351,
+      "family": "dictionary_or_tokenizer_version_change",
+      "incident_id": "incident-029",
+      "lane": "model-1",
+      "recurrence": false,
+      "start": 575655
+    },
+    {
+      "composition_order": 2,
+      "duration": 817,
+      "family": "model_explainer_mismatch",
+      "incident_id": "incident-030",
+      "lane": "model-2",
+      "recurrence": true,
+      "start": 597830
+    },
+    {
+      "composition_order": 1,
+      "duration": 499,
+      "family": "stale_calibration",
+      "incident_id": "incident-031",
+      "lane": "model-3",
+      "recurrence": true,
+      "start": 615348
+    },
+    {
+      "composition_order": 1,
+      "duration": 845,
+      "family": "preprocessing_order_change",
+      "incident_id": "incident-032",
+      "lane": "model-0",
+      "recurrence": true,
+      "start": 634881
+    },
+    {
+      "composition_order": 1,
+      "duration": 1092,
+      "family": "feature_schema_incompatibility",
+      "incident_id": "incident-033",
+      "lane": "model-1",
+      "recurrence": true,
+      "start": 648419
+    },
+    {
+      "composition_order": 2,
+      "duration": 2152,
+      "family": "cross_model_artifact_mix",
+      "incident_id": "incident-034",
+      "lane": "model-2",
+      "recurrence": true,
+      "start": 663851
+    },
+    {
+      "composition_order": 1,
+      "duration": 590,
+      "family": "checksum_corruption",
+      "incident_id": "incident-035",
+      "lane": "model-3",
+      "recurrence": true,
+      "start": 677161
+    }
+  ],
+  "load_bursts": true,
+  "natural_production_evidence": false,
+  "normal_drift_without_faults": true,
+  "partial_recovery": true
+}

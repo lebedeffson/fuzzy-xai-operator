@@ -1,5 +1,38 @@
 # Project Memory
 
+## FXAI-Q1-OPERATIONAL-AUDIT-V16-EXPERIMENTAL
+
+- Date: 2026-07-22
+- Branch: `feat/q1-operational-audit-v16`
+- Frozen predecessor: `f10fbd04ea2c6dc8643d20edbf83bb09e02de750`
+- Protocol: `FXAI-Q1-OPERATIONAL-AUDIT-CONFIRMATORY`
+- Lock commit: `289b92adc36e3d98d54f3abb444278a98de06fbb`
+- Scientific status: experimental operational audit, not production validated
+- Merge to `main`: false
+
+The weighted hierarchical policy is no longer the primary operational mode. The v16 controller is lexicographic:
+irreparable contract fault -> block; repairable, unknown or insufficient route -> repair and recertify; certified route
+with high predictive risk -> review; otherwise accept. Route and predictive scores are not arithmetically mixed.
+
+Fresh sealed evaluation used UCI Online Shoppers and UCI YouTube Spam Collection: 2,842 test identities and 14,210
+route checks. Test target labels were not opened because the registered endpoints concern route-artifact mutations.
+One scoring opening was recorded; no model, threshold or policy changed afterwards.
+
+Scientific boundary:
+
+- A1 and A2 are not supported. The typed validator and a complete independent-if/else baseline have identical
+  localization and repair-candidate recall; hierarchical effects are 0.0, 95% intervals [0.0, 0.0], p=1.0;
+- A3 is descriptive controlled-replay evidence only. The 1,000,000-event/36-incident service-time simulation reports
+  a 65.41% restoration-time reduction, but service times are protocol-defined rather than observed production data;
+- A4 has a descriptive false-certification point estimate of 0.00265. It is not promoted without an aligned
+  hierarchical boundary interval;
+- A5 is supported for byte-identical deterministic audit traces (rate 1.0);
+- old H3/H5/H6 negative results and the frozen f10fbd0 evidence remain unchanged.
+
+The practical contribution is therefore simpler and narrower than originally proposed: deterministic typed route
+contracts, lexicographic action priority, explicit repair-and-recertify behavior and byte-stable audit evidence. The
+current experiment does not show superiority over a complete explicit rule implementation.
+
 ## FXAI-Q1-INDEPENDENT-CONFIRMATORY-CLOSURE-EXPERIMENTAL
 
 - Date: 2026-07-22

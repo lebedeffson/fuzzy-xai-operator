@@ -1,0 +1,159 @@
+{
+  "A1_localization_gain": 0.0,
+  "A2_repair_gain": 0.0,
+  "A4_false_certification": 0.002652519893899204,
+  "A5_byte_identical_rate": 1.0,
+  "best_localization_baseline": "independent_if_else",
+  "best_repair_baseline": "independent_if_else",
+  "datasets": [
+    {
+      "abstention_rate_on_faults": 0.25557809330628806,
+      "byte_identical_trace_rate": 1.0,
+      "dataset_id": "uci_online_shoppers_468",
+      "known_family_accuracy": 0.8985294117647059,
+      "methods": {
+        "hierarchical_validator_v16": {
+          "false_alerts_per_10000_valid": 0.0,
+          "false_certification": 0.0012170385395537525,
+          "generic_fault_recall": 0.9987829614604462,
+          "repair_candidate_recall": 0.9987829614604462,
+          "source_region_localization": 0.9643002028397566
+        },
+        "independent_if_else": {
+          "false_alerts_per_10000_valid": 0.0,
+          "false_certification": 0.0012170385395537525,
+          "generic_fault_recall": 0.9987829614604462,
+          "repair_candidate_recall": 0.9987829614604462,
+          "source_region_localization": 0.9643002028397566
+        },
+        "json_schema": {
+          "false_alerts_per_10000_valid": 0.0,
+          "false_certification": 0.9655172413793104,
+          "generic_fault_recall": 0.034482758620689655,
+          "repair_candidate_recall": 0.0,
+          "source_region_localization": 0.0
+        },
+        "nearest_centroid_v15": {
+          "false_alerts_per_10000_valid": 0.0,
+          "false_certification": 0.0012170385395537525,
+          "generic_fault_recall": 0.9987829614604462,
+          "repair_candidate_recall": 0.0,
+          "source_region_localization": 0.8535496957403651
+        },
+        "route_only_rules": {
+          "false_alerts_per_10000_valid": 0.0,
+          "false_certification": 0.0012170385395537525,
+          "generic_fault_recall": 0.9987829614604462,
+          "repair_candidate_recall": 0.9987829614604462,
+          "source_region_localization": 0.8535496957403651
+        },
+        "simple_or": {
+          "false_alerts_per_10000_valid": 0.0,
+          "false_certification": 0.0012170385395537525,
+          "generic_fault_recall": 0.9987829614604462,
+          "repair_candidate_recall": 0.0,
+          "source_region_localization": 0.0
+        },
+        "weighted_fault_score": {
+          "false_alerts_per_10000_valid": 0.0,
+          "false_certification": 0.0012170385395537525,
+          "generic_fault_recall": 0.9987829614604462,
+          "repair_candidate_recall": 0.0,
+          "source_region_localization": 0.0
+        }
+      },
+      "objects": 2465,
+      "route_checks": 12325
+    },
+    {
+      "abstention_rate_on_faults": 0.2572944297082228,
+      "byte_identical_trace_rate": 1.0,
+      "dataset_id": "uci_youtube_spam_380",
+      "known_family_accuracy": 0.8974358974358975,
+      "methods": {
+        "hierarchical_validator_v16": {
+          "false_alerts_per_10000_valid": 0.0,
+          "false_certification": 0.002652519893899204,
+          "generic_fault_recall": 0.9973474801061007,
+          "repair_candidate_recall": 0.9973474801061007,
+          "source_region_localization": 0.9628647214854111
+        },
+        "independent_if_else": {
+          "false_alerts_per_10000_valid": 0.0,
+          "false_certification": 0.002652519893899204,
+          "generic_fault_recall": 0.9973474801061007,
+          "repair_candidate_recall": 0.9973474801061007,
+          "source_region_localization": 0.9628647214854111
+        },
+        "json_schema": {
+          "false_alerts_per_10000_valid": 0.0,
+          "false_certification": 0.9655172413793104,
+          "generic_fault_recall": 0.034482758620689655,
+          "repair_candidate_recall": 0.0,
+          "source_region_localization": 0.0
+        },
+        "nearest_centroid_v15": {
+          "false_alerts_per_10000_valid": 0.0,
+          "false_certification": 0.002652519893899204,
+          "generic_fault_recall": 0.9973474801061007,
+          "repair_candidate_recall": 0.0,
+          "source_region_localization": 0.8488063660477454
+        },
+        "route_only_rules": {
+          "false_alerts_per_10000_valid": 0.0,
+          "false_certification": 0.002652519893899204,
+          "generic_fault_recall": 0.9973474801061007,
+          "repair_candidate_recall": 0.9973474801061007,
+          "source_region_localization": 0.8488063660477454
+        },
+        "simple_or": {
+          "false_alerts_per_10000_valid": 0.0,
+          "false_certification": 0.002652519893899204,
+          "generic_fault_recall": 0.9973474801061007,
+          "repair_candidate_recall": 0.0,
+          "source_region_localization": 0.0
+        },
+        "weighted_fault_score": {
+          "false_alerts_per_10000_valid": 0.0,
+          "false_certification": 0.002652519893899204,
+          "generic_fault_recall": 0.9973474801061007,
+          "repair_candidate_recall": 0.0,
+          "source_region_localization": 0.0
+        }
+      },
+      "objects": 377,
+      "route_checks": 1885
+    }
+  ],
+  "hierarchical_inference": {
+    "A1": {
+      "ci_95": [
+        0.0,
+        0.0
+      ],
+      "dataset_effects": {
+        "uci_online_shoppers_468": 0.0,
+        "uci_youtube_spam_380": 0.0
+      },
+      "effect": 0.0,
+      "hierarchical_p": 1.0,
+      "iterations": 5000
+    },
+    "A2": {
+      "ci_95": [
+        0.0,
+        0.0
+      ],
+      "dataset_effects": {
+        "uci_online_shoppers_468": 0.0,
+        "uci_youtube_spam_380": 0.0
+      },
+      "effect": 0.0,
+      "hierarchical_p": 1.0,
+      "iterations": 5000
+    }
+  },
+  "labels_opened": false,
+  "post_lock_tuning": false,
+  "primary_inference_unit": "dataset then object cluster"
+}

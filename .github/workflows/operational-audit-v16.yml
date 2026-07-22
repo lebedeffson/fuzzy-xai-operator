@@ -1,0 +1,22 @@
+name: Operational Audit v16
+
+on:
+  push:
+    branches: [feat/q1-operational-audit-v16]
+  pull_request:
+
+jobs:
+  contracts:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+      - run: python -m pip install -e '.[dev]'
+      - run: make operational-audit-smoke OPAUDIT_PYTHON=python
+      - run: ruff check framework/fuzzyxai/fuzzyxai/operational_audit experiments/operational_audit_v16 tests/operational_audit_v16

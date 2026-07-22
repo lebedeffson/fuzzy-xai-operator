@@ -1,0 +1,51 @@
+{
+  "bundle_commit": "2fd86a5b983e8b5be364fadc14d9d50ee0eae606",
+  "closure_packaging_commit": "2fd86a5b983e8b5be364fadc14d9d50ee0eae606",
+  "evidence_generation_commit": "289b92adc36e3d98d54f3abb444278a98de06fbb",
+  "records": [
+    {
+      "path": "config/operational_audit_v16_protocol.json",
+      "sha256": "724bbbee51ca0cf64978b7e570c4d518c995bbc4d282e6ef46d84d9fe3ea860a"
+    },
+    {
+      "path": "config/operational_audit_v16_protocol_amendment_001.json",
+      "sha256": "d3282e2a6a0d2f7a3272a9bb25d46d0baece42172e71a880e87c4504159849d8"
+    },
+    {
+      "path": "artifacts/operational_audit_v16/data/dataset_manifest.json",
+      "sha256": "1b049e6b103f8cccb7c1f54335b6d394ba3f5abac727bef6b47d7dc34c65077c"
+    },
+    {
+      "path": "artifacts/operational_audit_v16/data/pre_opening_leakage_audit.json",
+      "sha256": "91d978ac281be59f0b1d2657a3d64d39544f1d3002741a1a386c4be78d956191"
+    },
+    {
+      "path": "artifacts/operational_audit_v16/data/post_scoring_leakage_audit.json",
+      "sha256": "fc7c1760a65b723d44fbd1a0476e6aa09a13721301b2ae882875fd5766639ed2"
+    },
+    {
+      "path": "artifacts/operational_audit_v16/formative/summary.json",
+      "sha256": "b4f1dd91448ceaeb2091fb46d2140fd6d59a46c0dff30bbccc3c6e7664b908a1"
+    },
+    {
+      "path": "artifacts/operational_audit_v16/lock/protocol_lock.json",
+      "sha256": "0c68988c2907c598b814b3cc630360f09fc0d386607e90d25cf790a111b0d918"
+    },
+    {
+      "path": "artifacts/operational_audit_v16/opening/opening_record.json",
+      "sha256": "dfbf5669dec2a2f22b91b283fc394b43ea2fb2d95211d72b028d52fb591386ee"
+    },
+    {
+      "path": "artifacts/operational_audit_v16/confirmatory/summary.json",
+      "sha256": "b99fd6f6b541609314df9810cd047b4faa751feecd1c2700a25a042787fade77"
+    },
+    {
+      "path": "artifacts/operational_audit_v16/replay/summary.json",
+      "sha256": "033e6ee232812038d71ed3cf62dfe9b1c0f567a60db49e780cdec0508921e2e8"
+    },
+    {
+      "path": "artifacts/operational_audit_v16/closure/claim_registry.json",
+      "sha256": "ed3c08a177cc5115721b2e44d68583ec544dcd38833c8bf988f0961c720f6caf"
+    }
+  ]
+}

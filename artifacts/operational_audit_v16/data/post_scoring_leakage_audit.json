@@ -1,0 +1,9 @@
+{
+  "labels_exported": false,
+  "model_changed": false,
+  "opening_count": 1,
+  "post_lock_tuning": false,
+  "purpose": "route-artifact scoring only",
+  "repeat_opening_forbidden": true,
+  "thresholds_changed": false
+}

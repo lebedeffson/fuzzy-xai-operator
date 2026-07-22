@@ -1,0 +1,21 @@
+{
+  "claims": {
+    "A1": "not_supported",
+    "A2": "not_supported",
+    "A3": "descriptive_controlled_replay_only",
+    "A4": "descriptive_point_estimate_only",
+    "A5": "supported_byte_identical"
+  },
+  "frozen_negative_claims": {
+    "H3-R1": "not_supported",
+    "H3-R2": "not_supported",
+    "H3-original": "not_supported",
+    "H5-A3": "not_supported",
+    "H5-A4": "not_supported",
+    "H5-P-original": "not_supported",
+    "H6-general": "not_supported"
+  },
+  "merge_to_main_allowed": false,
+  "production_validated": false,
+  "scientific_status": "experimental_operational_audit"
+}

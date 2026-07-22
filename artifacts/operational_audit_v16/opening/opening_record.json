@@ -1,0 +1,8 @@
+{
+  "labels_opened": false,
+  "lock_sha256": "0c68988c2907c598b814b3cc630360f09fc0d386607e90d25cf790a111b0d918",
+  "opened_at_utc": "2026-07-22T12:46:03.607934+00:00",
+  "opening_count": 1,
+  "purpose": "route-artifact scoring only",
+  "scoring_commit": "289b92adc36e3d98d54f3abb444278a98de06fbb"
+}
