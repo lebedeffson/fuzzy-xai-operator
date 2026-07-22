@@ -1,0 +1,10 @@
+{
+  "methods_received_gold": false,
+  "methods_received_mutation_log": false,
+  "opening_count": 0,
+  "post_lock_tuning": false,
+  "private_truth_tracked_by_git": false,
+  "release_contains_private_truth": false,
+  "sealed_scoring_performed": false,
+  "sealed_test_opened": false
+}

@@ -1,0 +1,31 @@
+{
+  "blocking_reasons": [
+    "two_real_manual_adjudication_files_absent",
+    "development_primary_effect_below_registered_margin"
+  ],
+  "gold_cut": "independent_exhaustive_graph_diff_hitting_set",
+  "gold_repair": "inverse_low_level_transactions",
+  "gold_source": "executed_transaction_log",
+  "gold_uses_h10_taxonomy": false,
+  "manual_adjudication_completed": false,
+  "old_v16_changed": false,
+  "old_v18_changed": false,
+  "old_v19_changed": false,
+  "oracle_import_independence": {
+    "findings": [],
+    "status": "PASS"
+  },
+  "post_test_tuning": false,
+  "protected_refs": {
+    "docs/chapter4-operational-audit-v16": "b4af116f02d8c062420a61ed586729119314d4ed",
+    "feat/h10-audit-confirmatory-v18": "59a1f45a44c40c871ea955f426a4a31b35dfe85f",
+    "feat/h10-audit-confirmatory-v19": "1713434980d4f4c3fed67be163ae8070d6388cdb",
+    "v1.3.0^{}": "1a71bae98f1554430d537670018dce7dc889e25f",
+    "v1.4.0-alpha.audit^{}": "7f148cffad87a73fc2112f2339ba5b26c2227850"
+  },
+  "protected_refs_unchanged": true,
+  "release_allowed": false,
+  "sealed_test_opened": false,
+  "status": "BLOCKED_PRECONFIRMATORY",
+  "study_id": "FXAI-H10-FINAL-GOLD"
+}

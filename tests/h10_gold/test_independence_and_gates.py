@@ -12,6 +12,7 @@ import pytest
 from experiments.h10_gold.common import ARTIFACT_ROOT, ROOT
 from experiments.h10_gold.run_methods import run_split
 from experiments.h10_gold.validate_adjudication import validate
+from experiments.h10_gold.validate_evidence import validate as validate_evidence
 
 
 FORBIDDEN_BASELINE_NAMES = {"H10Auditor", "SourceLocalizer", "DiagnosticCutSolver", "RepairSetPlanner", "TypedRouteGuard"}
@@ -72,3 +73,10 @@ def test_manual_adjudication_is_not_generated() -> None:
 def test_adjudication_gate_fails_without_real_reviewers() -> None:
     with pytest.raises(RuntimeError, match="missing real reviewer file"):
         validate(ROOT / "config" / "h10_final_gold_protocol.yaml")
+
+
+def test_evidence_map_resolves_to_hashed_csv_values() -> None:
+    path = ARTIFACT_ROOT / "closure" / "h10_final_gold_evidence_map.json"
+    if not path.exists():
+        pytest.skip("closure has not been built")
+    assert validate_evidence()["entries"] >= 188

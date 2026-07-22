@@ -88,6 +88,8 @@ def build(config_path: Path) -> None:
     power = json.loads((ARTIFACT_ROOT / "exploratory" / "power_analysis.json").read_text())
     raw_path = ARTIFACT_ROOT / "exploratory" / "development_raw_results.csv"
     raw = _read_csv(raw_path)
+    protocol_raw_path = ARTIFACT_ROOT / "exploratory" / "protocol_validation_raw_results.csv"
+    protocol_raw = _read_csv(protocol_raw_path) if protocol_raw_path.exists() else []
     tables = ARTIFACT_ROOT / "tables"
     table_map = {
         "overall_results.csv": _group(raw),
@@ -97,6 +99,8 @@ def build(config_path: Path) -> None:
     }
     for name, rows in table_map.items():
         _write_csv(tables / name, rows)
+    if protocol_raw:
+        _write_csv(tables / "protocol_validation_results.csv", _group(protocol_raw, "composite"))
     _write_csv(
         tables / "minimal_cut_results.csv",
         [
@@ -131,11 +135,25 @@ def build(config_path: Path) -> None:
 
     reviewer_files = [ARTIFACT_ROOT / "adjudication" / f"reviewer_{index}.csv" for index in (1, 2)]
     oracle_audit = _forbidden_symbol_audit()
+    protected_expected = {
+        "docs/chapter4-operational-audit-v16": "b4af116f02d8c062420a61ed586729119314d4ed",
+        "feat/h10-audit-confirmatory-v18": "59a1f45a44c40c871ea955f426a4a31b35dfe85f",
+        "feat/h10-audit-confirmatory-v19": "1713434980d4f4c3fed67be163ae8070d6388cdb",
+        "v1.3.0^{}": "1a71bae98f1554430d537670018dce7dc889e25f",
+        "v1.4.0-alpha.audit^{}": "7f148cffad87a73fc2112f2339ba5b26c2227850",
+    }
+    protected_actual = {
+        ref: subprocess.check_output(("git", "rev-parse", ref), cwd=ROOT, text=True).strip()
+        for ref in protected_expected
+    }
+    protected_unchanged = protected_actual == protected_expected
     reasons = []
     if not all(path.exists() for path in reviewer_files):
         reasons.append("two_real_manual_adjudication_files_absent")
     if power["status"] != "PASS":
         reasons.append("development_primary_effect_below_registered_margin")
+    if not protected_unchanged:
+        reasons.append("protected_historical_ref_changed")
     methodology = {
         "study_id": config["study_id"],
         "status": "PASS" if not reasons else "BLOCKED_PRECONFIRMATORY",
@@ -152,6 +170,8 @@ def build(config_path: Path) -> None:
         "old_v16_changed": False,
         "old_v18_changed": False,
         "old_v19_changed": False,
+        "protected_refs_unchanged": protected_unchanged,
+        "protected_refs": protected_actual,
     }
     write_json(ARTIFACT_ROOT / "closure" / "h10_final_gold_methodology_audit.json", methodology)
     claims = {
@@ -168,6 +188,19 @@ def build(config_path: Path) -> None:
             "H10-R_effect_vs_best_strong_baseline": 0.0,
             "H10_C_cut_exact_full": _metric(table_map["composite_fault_results.csv"], "full_h10", "cut_exact"),
             "H10_C_cut_exact_baseline": _metric(table_map["composite_fault_results.csv"], power["best_baseline_selected_on_development"], "cut_exact"),
+        },
+        "protocol_validation_observation": {
+            "performed_after_implementation_commit": bool(protocol_raw),
+            "H10-L_effect_vs_best_strong_baseline": (
+                _metric(_group(protocol_raw, "composite"), "full_h10", "source_localization_f1")
+                - _metric(_group(protocol_raw, "composite"), power["best_baseline_selected_on_development"], "source_localization_f1")
+                if protocol_raw else None
+            ),
+            "H10-R_effect_vs_best_strong_baseline": (
+                _metric(_group(protocol_raw, "composite"), "full_h10", "repair_set_f1")
+                - _metric(_group(protocol_raw, "composite"), power["best_baseline_selected_on_development"], "repair_set_f1")
+                if protocol_raw else None
+            ),
         },
         "manual_positive_override": False,
         "sealed_test_opened": False,
@@ -186,21 +219,33 @@ def build(config_path: Path) -> None:
     write_json(ARTIFACT_ROOT / "closure" / "h10_final_gold_leakage_audit.json", leakage)
 
     evidence = []
-    for filename, rows in table_map.items():
-        path = tables / filename
+    closure_commit = subprocess.check_output(("git", "rev-parse", "HEAD"), cwd=ROOT, text=True).strip()
+    identifiers = {"method", "population", "pipeline_id", "evidence_status"}
+    for path in sorted(tables.glob("*.csv")):
+        rows = _read_csv(path)
         file_hash = sha256_file(path)
         for row_index, row in enumerate(rows, start=2):
-            for metric in ("source_localization_f1", "repair_set_f1", "false_certification", "false_block", "cut_exact", "cut_cost_regret", "repair_cost_regret"):
+            for metric, raw_value in row.items():
+                if metric in identifiers or raw_value in (None, ""):
+                    continue
+                try:
+                    value = float(raw_value)
+                except ValueError:
+                    continue
                 evidence.append(
                     {
                         "claim_id": "EXPLORATORY-H10-GOLD",
                         "metric": metric,
-                        "value": row[metric],
-                        "population": row["population"],
-                        "method": row["method"],
+                        "value": value,
+                        "population": row.get("population", "composite"),
+                        "pipeline": row.get("pipeline_id"),
+                        "method": row.get("method"),
                         "source_file": str(path.relative_to(ROOT)),
                         "locator": f"row={row_index},column={metric}",
                         "sha256": file_hash,
+                        "evidence_generation_commit": manifest["evidence_generation_commit"],
+                        "closure_packaging_commit": closure_commit,
+                        "bundle_commit": None,
                         "status": "exploratory",
                     }
                 )
@@ -215,6 +260,7 @@ def build(config_path: Path) -> None:
 - Oracle independence: `{oracle_audit['status']}`
 - Manual adjudication: `PENDING_TWO_REAL_REVIEWERS`
 - Power gate: `{power['status']}`
+- Protocol-validation primary effect: `0.0` for both endpoints
 - Sealed opening count: `0`
 - Confirmatory scoring: `NOT_RUN`
 - Scientific release: `BLOCKED`

@@ -1,0 +1,23 @@
+{
+  "claims": {
+    "H10-C": "exploratory_only",
+    "H10-L": "not_evaluated_confirmatory",
+    "H10-R": "not_evaluated_confirmatory",
+    "H10-U": "not_evaluated_confirmatory"
+  },
+  "development_observation": {
+    "H10-L_effect_vs_best_strong_baseline": 0.0,
+    "H10-R_effect_vs_best_strong_baseline": 0.0,
+    "H10_C_cut_exact_baseline": 0.2861111111111111,
+    "H10_C_cut_exact_full": 1.0
+  },
+  "manual_positive_override": false,
+  "phase": "preconfirmatory_blocked",
+  "protocol_validation_observation": {
+    "H10-L_effect_vs_best_strong_baseline": 0.0,
+    "H10-R_effect_vs_best_strong_baseline": 0.0,
+    "performed_after_implementation_commit": true
+  },
+  "sealed_test_opened": false,
+  "study_id": "FXAI-H10-FINAL-GOLD"
+}

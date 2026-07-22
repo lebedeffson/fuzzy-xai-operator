@@ -1022,6 +1022,7 @@ h10-gold-confirmatory:
 
 h10-gold-closure:
 	$(H10_GOLD_ENV) $(H10_GOLD_PYTHON) -m experiments.h10_gold.build_closure
+	$(H10_GOLD_ENV) $(H10_GOLD_PYTHON) -m experiments.h10_gold.validate_evidence
 
 h10-gold-figures:
 	$(H10_GOLD_ENV) $(H10_GOLD_PYTHON) -m experiments.h10_gold.build_figures

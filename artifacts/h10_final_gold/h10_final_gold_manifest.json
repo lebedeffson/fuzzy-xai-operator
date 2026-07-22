@@ -1,0 +1,55 @@
+{
+  "adjudication_cases": 200,
+  "adjudication_sha256": "bd3c52bb4974d631bd69e088fa9e63bd59d10af2209ac545823572fe7a365b84",
+  "case_count": 4500,
+  "case_counts": {
+    "clean": 900,
+    "composite": 1800,
+    "single": 900,
+    "unknown_ambiguous": 900
+  },
+  "evidence_generation_commit": "1145c395ced391cce6ea60ba3a8131121d03cfd3",
+  "generator": "transaction_log_and_graph_diff",
+  "gold_uses_fault_taxonomy": false,
+  "operation_counts": {
+    "add_false_dependency": 319,
+    "corrupt_checksum": 779,
+    "mix_run_artifact": 285,
+    "remove_edge": 877,
+    "remove_node": 87,
+    "reorder_components": 296,
+    "replace_explainer_version": 615,
+    "replace_feature_schema": 606,
+    "replace_model_binding": 869,
+    "replace_node_version": 599,
+    "replace_preprocessing": 571,
+    "replace_reference_population": 850
+  },
+  "phase": "generated_prelock",
+  "pipeline_count": 6,
+  "sealed_opened": false,
+  "splits": [
+    {
+      "cases": 900,
+      "input_sha256": "2f974d4bb92c970bc9702b9bc734f8d2a09800742a97f22e91b87a78cf4f9634",
+      "split": "development",
+      "truth_location": "private_untracked",
+      "truth_sha256": "966d35ab2a3fa10824d9c09b050f914d2d60b2f0f05cab00eabeb8417676546c"
+    },
+    {
+      "cases": 900,
+      "input_sha256": "82240394add871474e1e3d99a6f77c43a0061ad2d9faab863fee64830f38eb5a",
+      "split": "protocol_validation",
+      "truth_location": "private_untracked",
+      "truth_sha256": "f8a1aa905178ed033b0b07780b01d69629dc1fed8d7b5b32c3daf7581e5b9455"
+    },
+    {
+      "cases": 2700,
+      "input_sha256": "1b5ca825fe42b02897314c1cfb3c8099d7d3f3f1b6ce818c0df84dbd11678160",
+      "split": "sealed_test",
+      "truth_location": "private_untracked",
+      "truth_sha256": "44f2c29bdabe5ed022fd312a08c7aade1070479e2cbcab6766bf4975e2c6ce6d"
+    }
+  ],
+  "study_id": "FXAI-H10-FINAL-GOLD"
+}

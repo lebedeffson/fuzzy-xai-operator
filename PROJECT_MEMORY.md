@@ -5,6 +5,7 @@
 - Date: 2026-07-23
 - Branch: `feat/h10-final-gold-v20`
 - Frozen base: `feat/h10-audit-confirmatory-v19@1713434980d4f4c3fed67be163ae8070d6388cdb`
+- Gold implementation commit: `1145c395ced391cce6ea60ba3a8131121d03cfd3`
 - Study: `FXAI-H10-FINAL-GOLD`
 - Phase: preconfirmatory development
 - Sealed opening count: `0`

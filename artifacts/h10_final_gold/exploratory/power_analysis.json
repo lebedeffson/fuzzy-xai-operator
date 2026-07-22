@@ -1,0 +1,32 @@
+{
+  "analyses": [
+    {
+      "approximate_required_cases": null,
+      "best_baseline": "typed_route_without_cut",
+      "development_composite_known_cases": 360,
+      "development_effect": 0.0,
+      "metric": "source_f1",
+      "paired_sd": 0.0,
+      "registered_margin": 0.04,
+      "status": "STOP_EXPECTED_EFFECT_BELOW_REGISTERED_MARGIN"
+    },
+    {
+      "approximate_required_cases": null,
+      "best_baseline": "typed_route_without_cut",
+      "development_composite_known_cases": 360,
+      "development_effect": 0.0,
+      "metric": "repair_f1",
+      "paired_sd": 0.0,
+      "registered_margin": 0.04,
+      "status": "STOP_EXPECTED_EFFECT_BELOW_REGISTERED_MARGIN"
+    }
+  ],
+  "baseline_scores": {
+    "independent_if_else": 1.0,
+    "typed_route_without_cut": 1.0
+  },
+  "best_baseline_selected_on_development": "typed_route_without_cut",
+  "interpretation": "Increasing sample size cannot rescue a development effect at or below the registered practical margin.",
+  "sealed_test_opened": false,
+  "status": "BLOCKED"
+}

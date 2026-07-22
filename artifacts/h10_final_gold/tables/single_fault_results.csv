@@ -1,0 +1,4 @@
+method,population,cases,source_localization_f1,repair_set_f1,false_certification,false_block,cut_exact,cut_jaccard,cut_cost_regret,repair_cost_regret,runtime_ms,evidence_status
+full_h10,single,180,1.0,1.0,0.0,0.0,1.0,1.0,0.0,0.0,0.17589147777622807,exploratory_development_only
+independent_if_else,single,180,1.0,1.0,0.0,0.0,0.8944444444444445,0.9296296296296297,0.26666666666666666,0.0,0.027182922225519077,exploratory_development_only
+typed_route_without_cut,single,180,1.0,1.0,0.0,0.0,0.8944444444444445,0.9296296296296297,0.26666666666666666,0.0,0.04698321667243969,exploratory_development_only

@@ -5,6 +5,7 @@ import copy
 import csv
 import hashlib
 import random
+import subprocess
 from pathlib import Path
 from typing import Any
 
@@ -290,6 +291,7 @@ def generate(config_path: Path) -> None:
         "adjudication_sha256": sha256_file(adjudication_path),
         "gold_uses_fault_taxonomy": False,
         "sealed_opened": False,
+        "evidence_generation_commit": subprocess.check_output(("git", "rev-parse", "HEAD"), cwd=ROOT, text=True).strip(),
     }
     write_json(ARTIFACT_ROOT / "h10_final_gold_manifest.json", manifest)
     protocol_hash = hashlib.sha256(config_path.read_bytes()).hexdigest()
