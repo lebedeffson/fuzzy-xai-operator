@@ -44,6 +44,12 @@ def _load_auditor(config: dict) -> H10Auditor:
     ).fit(samples)
 
 
+def _assert_scoring_not_previously_opened(*markers: Path) -> None:
+    existing = [str(path) for path in markers if path.exists()]
+    if existing:
+        raise RuntimeError(f"H10 confirmatory vault has already been opened or invalidated: {existing}")
+
+
 def run(config_path: Path) -> None:
     methodology = audit_methodology()
     if methodology["status"] != "PASS":
@@ -51,9 +57,9 @@ def run(config_path: Path) -> None:
     lock_path = ARTIFACT_ROOT / "lock" / "protocol_lock.json"
     opening_path = ARTIFACT_ROOT / "opening" / "opening_record.json"
     invalid_path = ARTIFACT_ROOT / "opening" / "invalid_marker.json"
+    methodology_invalid_path = ARTIFACT_ROOT / "opening" / "confirmatory_invalid_marker.json"
     completion_path = ARTIFACT_ROOT / "opening" / "completion_marker.json"
-    if opening_path.exists() or completion_path.exists() or invalid_path.exists():
-        raise RuntimeError("H10 confirmatory vault has already been opened or invalidated")
+    _assert_scoring_not_previously_opened(opening_path, completion_path, invalid_path, methodology_invalid_path)
     lock = read_json(lock_path)
     config = load_yaml(config_path)
     checks = {

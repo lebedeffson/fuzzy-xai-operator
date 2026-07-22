@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 """Independent adjudication oracle for H10 v19.
 
 This module deliberately has no imports from ``fuzzyxai.audit_h10`` and does
@@ -7,6 +5,8 @@ not reuse the evaluated classifier, localizer, diagnostic-cut solver, repair
 planner, or taxonomy tables. Truth is derived from an immutable mutation log
 and an independently implemented exhaustive hitting-set oracle.
 """
+
+from __future__ import annotations
 
 from dataclasses import dataclass
 from itertools import combinations

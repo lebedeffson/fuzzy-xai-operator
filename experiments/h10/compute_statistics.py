@@ -164,6 +164,10 @@ def compute(config_path: Path) -> None:
     run_summary = json.loads((ARTIFACT_ROOT / "confirmatory" / "run_summary.json").read_text())
     methodology_path = ARTIFACT_ROOT / "closure" / "confirmatory_methodology_audit.json"
     methodology = read_json(methodology_path) if methodology_path.exists() else {"status": "NOT_RUN"}
+    if methodology["status"] != "PASS":
+        for row in tests:
+            row["statistical_status_before_methodology_audit"] = row["status"]
+            row["status"] = "invalid_methodology"
     claims = {
         "H10-L": next(row["status"] for row in tests if row["metric"] == "source_f1"),
         "H10-C": "secondary_descriptive_valid_oracle",
