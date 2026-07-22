@@ -16,6 +16,7 @@ class SelectiveAction(str, Enum):
     ACCEPT = "accept"
     SHORT_REVIEW = "short_review"
     FULL_REVIEW = "full_review"
+    REPAIR_THEN_RETRY = "repair_then_retry"
     BLOCK = "block"
 
 

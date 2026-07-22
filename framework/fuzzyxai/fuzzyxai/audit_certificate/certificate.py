@@ -24,7 +24,7 @@ class ActionConditionedAuditCertificate:
     schema_version: str = "1.0"
 
     def __post_init__(self) -> None:
-        if self.action not in {"accept", "short_review", "full_review", "block"}:
+        if self.action not in {"accept", "short_review", "full_review", "repair_then_retry", "block"}:
             raise ValueError("unsupported action")
         if not self.checks:
             raise ValueError("a certificate requires at least one contract check")

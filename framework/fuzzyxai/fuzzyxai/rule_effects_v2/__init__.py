@@ -8,11 +8,17 @@ from typing import Callable, Sequence
 import numpy as np
 
 from .certificate_effect import CertificateRuleEffect, certificate_effect
+from .cluster_ablation import ClusterAblationEffect, assess_cluster_ablation, minimal_sufficient_subset
 from .conditional import ConditionalRule, conditional_effect, within_stratum_resample
 from .detectability import DetectabilityPoint, registered_detectability_grid, summarize_detectability
+from .doubly_robust import DoublyRobustEffect, cross_fitted_doubly_robust_effect
+from .equivalence import RuleEquivalenceCluster, cluster_equivalent_rules
+from .formative_gate import H6FormativeGate, evaluate_h6_formative_gate
 from .matched_controls import MatchedRuleSet, eligible_candidate, match_controls, specific_effect
 from .nonrefit import RuleEffectEstimate, nonrefit_effect
+from .power import PowerAnalysis, binary_effect_power
 from .refit import refit_effect
+from .sampler_audit import ConditionalSamplerAudit, audit_conditional_sampler
 
 
 @dataclass(frozen=True)
@@ -65,4 +71,17 @@ __all__ = [
     "specific_effect",
     "summarize_detectability",
     "within_stratum_resample",
+    "ClusterAblationEffect",
+    "ConditionalSamplerAudit",
+    "DoublyRobustEffect",
+    "H6FormativeGate",
+    "PowerAnalysis",
+    "RuleEquivalenceCluster",
+    "assess_cluster_ablation",
+    "audit_conditional_sampler",
+    "binary_effect_power",
+    "cluster_equivalent_rules",
+    "cross_fitted_doubly_robust_effect",
+    "evaluate_h6_formative_gate",
+    "minimal_sufficient_subset",
 ]

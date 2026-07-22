@@ -16,6 +16,7 @@ class BudgetCandidate:
     index: int
     losses: ExpectedActionLosses
     hard_guard_status: HardGuardStatus
+    repairable_failure: bool = False
 
     @property
     def preferred_review(self) -> SelectiveAction:
@@ -37,7 +38,9 @@ def optimize_review_budget(
     mandatory = []
     for candidate in candidates:
         if candidate.hard_guard_status is HardGuardStatus.BLOCKED:
-            actions[candidate.index] = SelectiveAction.BLOCK
+            actions[candidate.index] = (
+                SelectiveAction.REPAIR_THEN_RETRY if candidate.repairable_failure else SelectiveAction.BLOCK
+            )
         elif candidate.hard_guard_status is HardGuardStatus.REVIEW_REQUIRED:
             mandatory.append(candidate)
     capacity = int(review_budget * len(candidates) + 1e-12)

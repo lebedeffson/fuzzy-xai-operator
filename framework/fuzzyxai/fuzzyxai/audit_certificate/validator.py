@@ -52,8 +52,8 @@ def build_action_certificate(
     )
 
 
-def _require(contract_id: str, expected: str, path: str, severity: float) -> ContractRequirement:
-    return ContractRequirement(contract_id=contract_id, expected=expected, source_path=path, severity=severity)
+def _require(contract_id: str, expected: str, path: str, severity: float, *, repairable: bool = True) -> ContractRequirement:
+    return ContractRequirement(contract_id=contract_id, expected=expected, source_path=path, severity=severity, repairable=repairable)
 
 
 def _check(requirement: ContractRequirement, actual: str | None) -> ContractCheck:
@@ -84,7 +84,11 @@ def _boolean_checks(
         values.extend((f"natural_failure:{item}", False, f"route/runtime/{item}", 0.9) for item in route.natural_failure.split("|"))
     else:
         values.append(("natural_pipeline_failure", True, "route/runtime", 0.9))
+    irreparable = {"forbidden_rule_conflict", "critical_data_quality"}
     return [
-        _check(_require(contract_id, "valid", path, severity), "valid" if valid else "invalid")
+        _check(
+            _require(contract_id, "valid", path, severity, repairable=contract_id not in irreparable),
+            "valid" if valid else "invalid",
+        )
         for contract_id, valid, path, severity in values
     ]

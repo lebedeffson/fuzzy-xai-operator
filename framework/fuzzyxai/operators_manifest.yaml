@@ -272,3 +272,27 @@ operators:
     tests: [tests/negative_remediation/test_rule_effects_and_replay.py]
     artifacts: [artifacts/negative_results_remediation/protocol/SHA256SUMS]
     visualization: [rule_effect_estimands]
+  - id: framework.open_set_route_validator
+    dissertation_ref: "chapter 4, H5-A3 open-set structural validation"
+    callable: fuzzyxai.open_set_validator.model:assess_open_set
+    input_schema: OpenSetValidatorSpecAndStructuralObservation
+    output_schema: OpenSetAssessment
+    tests: [tests/independent_confirmatory/test_open_set_and_actions.py]
+    artifacts: [artifacts/independent_confirmatory/protocol/SHA256SUMS]
+    visualization: [open_set_fault_region]
+  - id: framework.rule_equivalence_clustering
+    dissertation_ref: "chapter 4, H6-R6 equivalence-cluster ablation"
+    callable: fuzzyxai.rule_effects_v2.equivalence:cluster_equivalent_rules
+    input_schema: RuleActivationMap
+    output_schema: RuleEquivalenceClusterList
+    tests: [tests/independent_confirmatory/test_h6_advanced.py]
+    artifacts: [artifacts/independent_confirmatory/protocol/SHA256SUMS]
+    visualization: [rule_equivalence_graph]
+  - id: framework.cross_fitted_dr_rule_effect
+    dissertation_ref: "chapter 4, H6-R7 doubly robust rule effect"
+    callable: fuzzyxai.rule_effects_v2.doubly_robust:cross_fitted_doubly_robust_effect
+    input_schema: CovariatesRuleActivationOutcomeAndGroups
+    output_schema: DoublyRobustEffect
+    tests: [tests/independent_confirmatory/test_h6_advanced.py]
+    artifacts: [artifacts/independent_confirmatory/protocol/SHA256SUMS]
+    visualization: [rule_effect_interval]

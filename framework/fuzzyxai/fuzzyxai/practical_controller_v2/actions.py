@@ -122,7 +122,16 @@ def assess_actions_v2(
         hard_probability = 1.0 if guard.status is HardGuardStatus.BLOCKED else 0.0
         losses = expected_action_losses(*risks, hard_fault_probability=hard_probability, costs=cost_profile)
         pending.append((guard, certificate, cut, risks, losses))
-        candidates.append(BudgetCandidate(index=index, losses=losses, hard_guard_status=guard.status))
+        checks = {check.requirement.contract_id: check for check in certificate.checks}
+        repairable = bool(cut.contracts) and all(checks[item].requirement.repairable for item in cut.contracts)
+        candidates.append(
+            BudgetCandidate(
+                index=index,
+                losses=losses,
+                hard_guard_status=guard.status,
+                repairable_failure=repairable,
+            )
+        )
     actions, feasible = optimize_review_budget(candidates, review_budget=review_budget)
     result = []
     for index, (guard, certificate, cut, risks, losses) in enumerate(pending):

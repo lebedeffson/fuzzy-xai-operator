@@ -88,7 +88,7 @@ def test_controller_uses_global_budget_and_blocks_only_hard_faults() -> None:
     assert all(item.action.value != "block" for item in assessments)
     broken = replace(route, preprocessing_version="wrong")
     assessments = assess_actions_v2((prediction,), (explanation,), (broken,), context, 0.2, ActionCostProfile(), policy=policy())
-    assert assessments[0].action.value == "block"
+    assert assessments[0].action.value == "repair_then_retry"
 
 
 def test_four_targets_cannot_be_merged() -> None:

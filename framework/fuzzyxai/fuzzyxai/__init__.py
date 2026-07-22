@@ -455,3 +455,14 @@ __all__ += [
     "solve_approximate",
     "solve_exact",
 ]
+
+# independent_confirmatory_exports
+from .open_set_validator import OpenSetAssessment, OpenSetOutcome, OpenSetValidatorSpec, assess_open_set, fit_open_set_validator
+
+__all__ += [
+    "OpenSetAssessment",
+    "OpenSetOutcome",
+    "OpenSetValidatorSpec",
+    "assess_open_set",
+    "fit_open_set_validator",
+]

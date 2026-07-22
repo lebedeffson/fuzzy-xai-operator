@@ -20,6 +20,7 @@ class ContractRequirement:
     source_path: str
     severity: float = 1.0
     repair_cost: float = 1.0
+    repairable: bool = True
     blocking: bool = True
 
     def __post_init__(self) -> None:
