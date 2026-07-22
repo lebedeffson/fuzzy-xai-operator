@@ -15,7 +15,8 @@
     "p_holm": 0.0143985601439856,
     "p_raw": 0.0100989901009899,
     "repetitions": 10000,
-    "status": "supported",
+    "statistical_status_before_methodology_audit": "supported",
+    "status": "invalid_methodology",
     "unit": "dataset_then_object_known_invalid_faults"
   },
   {
@@ -34,7 +35,8 @@
     "p_holm": 0.0143985601439856,
     "p_raw": 0.0071992800719928,
     "repetitions": 10000,
-    "status": "supported",
+    "statistical_status_before_methodology_audit": "supported",
+    "status": "invalid_methodology",
     "unit": "dataset_then_object_known_invalid_faults"
   }
 ]

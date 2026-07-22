@@ -265,3 +265,31 @@ Measured artifacts are written under `release_evidence/empirical_experiments/` a
 (Diagnostic) data only as a methodological research task; it is not clinical validation. The independent
 comprehension pilot and regulated-domain dictionary review remain incomplete, so `v1.2.0rc3` is an
 untagged computational candidate rather than a completed human-validation release.
+
+## H10 v19 audit integration
+
+The `feat/h10-audit-confirmatory-v19` branch integrates the supplied H10
+auditor and frozen one-opening outputs without opening the sealed vault again.
+The original handoff files are preserved under
+`artifacts/h10_v19/imported_handoff/`.
+
+Repository-level methodology review found that the oracle imports no evaluated
+H10 implementation, but source and repair truth are assigned through a static
+catalog that semantically duplicates the evaluated auditor taxonomy. The
+numerical source/repair differences can be reproduced, but H10-L and H10-R are
+therefore marked `invalid_methodology` for scientific release. H10-C remains a
+secondary descriptive cut result, H10-U remains descriptive, and H10-T is a
+deterministic trace result only.
+
+Use an existing Python environment; no additional virtual environment is
+created by these targets:
+
+```bash
+make h10-smoke H10_PYTHON=/path/to/python
+make reproduce-h10 H10_PYTHON=/path/to/python
+```
+
+`reproduce-h10` rebuilds statistics, replay summaries, tables, figures,
+evidence mapping, validation reports, and release archives from committed
+frozen outputs. It never calls the confirmatory scoring runner or opens a
+label vault.

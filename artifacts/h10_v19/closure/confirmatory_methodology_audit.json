@@ -1,24 +1,28 @@
 {
-  "affected_claims": [],
+  "affected_claims": [
+    "H10-L",
+    "H10-R"
+  ],
   "findings": {
     "mutation_truth_does_not_call_evaluated_cut_solver": true,
     "mutation_truth_does_not_import_evaluated_taxonomy": true,
     "oracle_import_independence": true,
     "oracle_independence_failures": [],
     "oracle_uses_independent_exhaustive_solver": true,
+    "repair_truth_independent_from_source_catalog": false,
     "replay_does_not_use_sealed_mutated_routes_as_normal": true,
     "replay_loads_clean_routes": true,
-    "source_truth_comes_from_mutation_log": true
+    "source_catalog_semantically_independent": false,
+    "source_truth_comes_from_mutation_log": true,
+    "source_truth_derived_from_actual_mutated_graph_nodes": false
   },
   "identity_anchor_reuse_disclosed": true,
   "post_open_tuning": false,
   "replay_status": "valid_design",
   "sealed_scoring_repeated": false,
-  "status": "PASS",
+  "status": "INVALID_FOR_PRIMARY_COMPARATIVE_CLAIMS",
   "unaffected_claims": [
-    "H10-L",
     "H10-C",
-    "H10-R",
     "H10-U",
     "H10-T"
   ]

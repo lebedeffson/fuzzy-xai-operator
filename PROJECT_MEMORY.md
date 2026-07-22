@@ -1,5 +1,33 @@
 # Project Memory
 
+## FXAI-H10-V19-REPOSITORY-INTEGRATION
+
+- Date: 2026-07-22
+- Branch: `feat/h10-audit-confirmatory-v19`
+- Base: `origin/main@e678c047896b81ed796ec6be9cdc4370cf12ddca`
+- Input handoff SHA256: `c7060ab1f88bb853cd73435bdd5a0e95e4ce9f0cbab2554f77c2a79d854443c4`
+- Sealed scoring openings: `1` in the imported handoff; no repository re-opening
+- Technical integration: complete
+- Scientific release: blocked
+
+The v19 handoff reports positive H10-L and H10-R effects, but repository-level
+methodology review found semantic target coupling. The mutation generator
+assigns source nodes from the oracle's static mutation catalog, and that
+leaf-to-source mapping exactly duplicates the evaluated H10 taxonomy. Repair
+truth is copied from the same source-node catalog. The oracle has import-level
+independence and its cut solver is separately implemented, but the primary
+localization and repair targets do not arise from independently mutated graph
+nodes or edges. Consequently H10-L and H10-R are
+`invalid_not_evaluated_with_independent_source_truth` even though their frozen
+numerical effects remain reproducible. H10-C remains secondary descriptive,
+H10-U remains descriptive, and H10-T remains a byte-identical trace result.
+
+The original handoff reports and positive claim registry are preserved under
+`artifacts/h10_v19/imported_handoff/`; repository closure files carry the
+fail-closed status. The invalid v18 closure is retained under
+`artifacts/h10_history/v18/`. No v16/v18 branch or tag was changed, no old
+sealed test was rescored, and no stable tag may be created from this branch.
+
 ## FXAI-FINAL-ONE-ZIP-PRACTICAL-CLOSURE
 
 - Date: 2026-07-21

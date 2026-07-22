@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import sys
+import subprocess
 
 import numpy as np
 import pandas as pd
@@ -168,6 +169,9 @@ def test_conformance_and_planner_block_low_fidelity(classification_data) -> None
 
 
 def test_optional_framework_import_does_not_load_heavy_libraries() -> None:
-    assert "torch" not in sys.modules
-    assert "tensorflow" not in sys.modules
-    assert "onnxruntime" not in sys.modules
+    code = (
+        "import sys; import fuzzyxai; "
+        "print(','.join(name for name in ('torch','tensorflow','onnxruntime') if name in sys.modules))"
+    )
+    loaded = subprocess.check_output([sys.executable, "-c", code], text=True).strip()
+    assert loaded == ""

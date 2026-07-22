@@ -1,14 +1,14 @@
 {
   "claims": {
     "H10-C": "secondary_descriptive_valid_oracle",
-    "H10-L": "supported",
-    "H10-R": "supported",
+    "H10-L": "invalid_methodology",
+    "H10-R": "invalid_methodology",
     "H10-T": "supported",
     "H10-U": "secondary_descriptive"
   },
   "identity_anchor_reuse_disclosed": true,
   "manual_positive_override": false,
-  "methodology_audit_status": "PASS",
+  "methodology_audit_status": "INVALID_FOR_PRIMARY_COMPARATIVE_CLAIMS",
   "old_claims_changed": false,
   "primary_tests": [
     {
@@ -27,7 +27,8 @@
       "p_holm": 0.0143985601439856,
       "p_raw": 0.0100989901009899,
       "repetitions": 10000,
-      "status": "supported",
+      "statistical_status_before_methodology_audit": "supported",
+      "status": "invalid_methodology",
       "unit": "dataset_then_object_known_invalid_faults"
     },
     {
@@ -46,7 +47,8 @@
       "p_holm": 0.0143985601439856,
       "p_raw": 0.0071992800719928,
       "repetitions": 10000,
-      "status": "supported",
+      "statistical_status_before_methodology_audit": "supported",
+      "status": "invalid_methodology",
       "unit": "dataset_then_object_known_invalid_faults"
     }
   ],
@@ -57,6 +59,6 @@
     "false_certification_boundary": 0.01,
     "false_certification_rate": 0.0
   },
-  "scientific_release_allowed": true,
+  "scientific_release_allowed": false,
   "study_id": "FuzzyXAI-H10-Independent-Oracle-v19"
 }

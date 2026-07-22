@@ -107,9 +107,11 @@ def build_evidence_map() -> list[dict]:
                             "closure_packaging_commit": closure_commit,
                             "bundle_commit": closure_commit,
                             "status": (
-                                "invalid_confirmatory_cycle"
-                                if methodology_invalid
-                                else "confirmatory" if claim in {"H10-L", "H10-R"} else "descriptive_or_secondary"
+                                "invalid_methodology"
+                                if methodology_invalid and claim in {"H10-L", "H10-R"}
+                                else "confirmatory"
+                                if claim in {"H10-L", "H10-R"}
+                                else "descriptive_or_secondary"
                             ),
                         }
                     )

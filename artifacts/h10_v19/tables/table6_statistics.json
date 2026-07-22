@@ -6,7 +6,7 @@
     "effect": 0.0494090367439492,
     "p_holm": 0.0143985601439856,
     "p_raw": 0.0100989901009899,
-    "status": "supported"
+    "status": "invalid_methodology"
   },
   {
     "ci_high": 0.0715365412414966,
@@ -15,6 +15,6 @@
     "effect": 0.0494090367439492,
     "p_holm": 0.0143985601439856,
     "p_raw": 0.0071992800719928,
-    "status": "supported"
+    "status": "invalid_methodology"
   }
 ]

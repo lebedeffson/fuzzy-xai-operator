@@ -1,8 +1,8 @@
 [
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": "uci_raisin",
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=2,column=composite_faults",
@@ -14,9 +14,9 @@
     "value": 46.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": "uci_raisin",
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=2,column=development",
@@ -28,9 +28,9 @@
     "value": 197.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": "uci_raisin",
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=2,column=known_faults",
@@ -42,9 +42,9 @@
     "value": 125.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": "uci_raisin",
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=2,column=sealed_test",
@@ -56,9 +56,9 @@
     "value": 198.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": "uci_raisin",
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=2,column=train",
@@ -70,9 +70,9 @@
     "value": 505.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
-    "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
+    "claim_id": "H10-U",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": "uci_raisin",
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=2,column=unknown_faults",
@@ -84,9 +84,9 @@
     "value": 31.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": "uci_sentiment_labelled_sentences",
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=3,column=composite_faults",
@@ -98,9 +98,9 @@
     "value": 151.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": "uci_sentiment_labelled_sentences",
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=3,column=development",
@@ -112,9 +112,9 @@
     "value": 693.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": "uci_sentiment_labelled_sentences",
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=3,column=known_faults",
@@ -126,9 +126,9 @@
     "value": 448.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": "uci_sentiment_labelled_sentences",
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=3,column=sealed_test",
@@ -140,9 +140,9 @@
     "value": 657.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": "uci_sentiment_labelled_sentences",
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=3,column=train",
@@ -154,9 +154,9 @@
     "value": 1633.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
-    "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
+    "claim_id": "H10-U",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": "uci_sentiment_labelled_sentences",
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=3,column=unknown_faults",
@@ -168,9 +168,9 @@
     "value": 106.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": "ucr_forda",
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=4,column=composite_faults",
@@ -182,9 +182,9 @@
     "value": 248.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": "ucr_forda",
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=4,column=development",
@@ -196,9 +196,9 @@
     "value": 1126.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": "ucr_forda",
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=4,column=known_faults",
@@ -210,9 +210,9 @@
     "value": 686.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": "ucr_forda",
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=4,column=sealed_test",
@@ -224,9 +224,9 @@
     "value": 1071.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": "ucr_forda",
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=4,column=train",
@@ -238,9 +238,9 @@
     "value": 2724.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
-    "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
+    "claim_id": "H10-U",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": "ucr_forda",
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=4,column=unknown_faults",
@@ -252,9 +252,9 @@
     "value": 183.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-L",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=2,column=source_localization_f1",
@@ -262,13 +262,13 @@
     "metric": "source_localization_f1",
     "sha256": "2baab2c730acc9675ab75305818a266a354262feaa5486ea47c003501c4b8284",
     "source_file": "artifacts/h10_v19/tables/table2_primary_results.csv",
-    "status": "confirmatory",
+    "status": "invalid_methodology",
     "value": 0.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-R",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=2,column=repair_set_f1",
@@ -276,13 +276,13 @@
     "metric": "repair_set_f1",
     "sha256": "2baab2c730acc9675ab75305818a266a354262feaa5486ea47c003501c4b8284",
     "source_file": "artifacts/h10_v19/tables/table2_primary_results.csv",
-    "status": "confirmatory",
+    "status": "invalid_methodology",
     "value": 0.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=2,column=false_certification",
@@ -294,9 +294,9 @@
     "value": 0.6967808930425753
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=2,column=false_block",
@@ -308,9 +308,9 @@
     "value": 0.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=2,column=diagnostic_latency",
@@ -322,9 +322,9 @@
     "value": 0.0195489999441633
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-L",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=3,column=source_localization_f1",
@@ -332,13 +332,13 @@
     "metric": "source_localization_f1",
     "sha256": "2baab2c730acc9675ab75305818a266a354262feaa5486ea47c003501c4b8284",
     "source_file": "artifacts/h10_v19/tables/table2_primary_results.csv",
-    "status": "confirmatory",
+    "status": "invalid_methodology",
     "value": 0.8685464654487689
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-R",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=3,column=repair_set_f1",
@@ -346,13 +346,13 @@
     "metric": "repair_set_f1",
     "sha256": "2baab2c730acc9675ab75305818a266a354262feaa5486ea47c003501c4b8284",
     "source_file": "artifacts/h10_v19/tables/table2_primary_results.csv",
-    "status": "confirmatory",
+    "status": "invalid_methodology",
     "value": 0.8685464654487689
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=3,column=false_certification",
@@ -364,9 +364,9 @@
     "value": 0.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=3,column=false_block",
@@ -378,9 +378,9 @@
     "value": 0.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=3,column=diagnostic_latency",
@@ -392,9 +392,9 @@
     "value": 0.2953885000351874
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-L",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=4,column=source_localization_f1",
@@ -402,13 +402,13 @@
     "metric": "source_localization_f1",
     "sha256": "2baab2c730acc9675ab75305818a266a354262feaa5486ea47c003501c4b8284",
     "source_file": "artifacts/h10_v19/tables/table2_primary_results.csv",
-    "status": "confirmatory",
+    "status": "invalid_methodology",
     "value": 0.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-R",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=4,column=repair_set_f1",
@@ -416,13 +416,13 @@
     "metric": "repair_set_f1",
     "sha256": "2baab2c730acc9675ab75305818a266a354262feaa5486ea47c003501c4b8284",
     "source_file": "artifacts/h10_v19/tables/table2_primary_results.csv",
-    "status": "confirmatory",
+    "status": "invalid_methodology",
     "value": 0.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=4,column=false_certification",
@@ -434,9 +434,9 @@
     "value": 0.5051921079958464
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=4,column=false_block",
@@ -448,9 +448,9 @@
     "value": 0.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=4,column=diagnostic_latency",
@@ -462,9 +462,9 @@
     "value": 0.005697999995391
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-L",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=5,column=source_localization_f1",
@@ -472,13 +472,13 @@
     "metric": "source_localization_f1",
     "sha256": "2baab2c730acc9675ab75305818a266a354262feaa5486ea47c003501c4b8284",
     "source_file": "artifacts/h10_v19/tables/table2_primary_results.csv",
-    "status": "confirmatory",
+    "status": "invalid_methodology",
     "value": 0.8188320284428307
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-R",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=5,column=repair_set_f1",
@@ -486,13 +486,13 @@
     "metric": "repair_set_f1",
     "sha256": "2baab2c730acc9675ab75305818a266a354262feaa5486ea47c003501c4b8284",
     "source_file": "artifacts/h10_v19/tables/table2_primary_results.csv",
-    "status": "confirmatory",
+    "status": "invalid_methodology",
     "value": 0.8188320284428307
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=5,column=false_certification",
@@ -504,9 +504,9 @@
     "value": 0.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=5,column=false_block",
@@ -518,9 +518,9 @@
     "value": 0.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=5,column=diagnostic_latency",
@@ -532,9 +532,9 @@
     "value": 0.0153220000811415
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-L",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=6,column=source_localization_f1",
@@ -542,13 +542,13 @@
     "metric": "source_localization_f1",
     "sha256": "2baab2c730acc9675ab75305818a266a354262feaa5486ea47c003501c4b8284",
     "source_file": "artifacts/h10_v19/tables/table2_primary_results.csv",
-    "status": "confirmatory",
+    "status": "invalid_methodology",
     "value": 0.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-R",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=6,column=repair_set_f1",
@@ -556,13 +556,13 @@
     "metric": "repair_set_f1",
     "sha256": "2baab2c730acc9675ab75305818a266a354262feaa5486ea47c003501c4b8284",
     "source_file": "artifacts/h10_v19/tables/table2_primary_results.csv",
-    "status": "confirmatory",
+    "status": "invalid_methodology",
     "value": 0.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=6,column=false_certification",
@@ -574,9 +574,9 @@
     "value": 0.6827622014537902
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=6,column=false_block",
@@ -588,9 +588,9 @@
     "value": 0.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=6,column=diagnostic_latency",
@@ -602,9 +602,9 @@
     "value": 0.0094690000196351
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-L",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=7,column=source_localization_f1",
@@ -612,13 +612,13 @@
     "metric": "source_localization_f1",
     "sha256": "2baab2c730acc9675ab75305818a266a354262feaa5486ea47c003501c4b8284",
     "source_file": "artifacts/h10_v19/tables/table2_primary_results.csv",
-    "status": "confirmatory",
+    "status": "invalid_methodology",
     "value": 0.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-R",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=7,column=repair_set_f1",
@@ -626,13 +626,13 @@
     "metric": "repair_set_f1",
     "sha256": "2baab2c730acc9675ab75305818a266a354262feaa5486ea47c003501c4b8284",
     "source_file": "artifacts/h10_v19/tables/table2_primary_results.csv",
-    "status": "confirmatory",
+    "status": "invalid_methodology",
     "value": 0.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=7,column=false_certification",
@@ -644,9 +644,9 @@
     "value": 0.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=7,column=false_block",
@@ -658,9 +658,9 @@
     "value": 0.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=7,column=diagnostic_latency",
@@ -672,9 +672,9 @@
     "value": 0.0131494999777714
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-L",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=8,column=source_localization_f1",
@@ -682,13 +682,13 @@
     "metric": "source_localization_f1",
     "sha256": "2baab2c730acc9675ab75305818a266a354262feaa5486ea47c003501c4b8284",
     "source_file": "artifacts/h10_v19/tables/table2_primary_results.csv",
-    "status": "confirmatory",
+    "status": "invalid_methodology",
     "value": 0.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-R",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=8,column=repair_set_f1",
@@ -696,13 +696,13 @@
     "metric": "repair_set_f1",
     "sha256": "2baab2c730acc9675ab75305818a266a354262feaa5486ea47c003501c4b8284",
     "source_file": "artifacts/h10_v19/tables/table2_primary_results.csv",
-    "status": "confirmatory",
+    "status": "invalid_methodology",
     "value": 0.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=8,column=false_certification",
@@ -714,9 +714,9 @@
     "value": 0.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=8,column=false_block",
@@ -728,9 +728,9 @@
     "value": 0.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=8,column=diagnostic_latency",
@@ -742,9 +742,9 @@
     "value": 0.0135400000544905
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-L",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=9,column=source_localization_f1",
@@ -752,13 +752,13 @@
     "metric": "source_localization_f1",
     "sha256": "2baab2c730acc9675ab75305818a266a354262feaa5486ea47c003501c4b8284",
     "source_file": "artifacts/h10_v19/tables/table2_primary_results.csv",
-    "status": "confirmatory",
+    "status": "invalid_methodology",
     "value": 0.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-R",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=9,column=repair_set_f1",
@@ -766,13 +766,13 @@
     "metric": "repair_set_f1",
     "sha256": "2baab2c730acc9675ab75305818a266a354262feaa5486ea47c003501c4b8284",
     "source_file": "artifacts/h10_v19/tables/table2_primary_results.csv",
-    "status": "confirmatory",
+    "status": "invalid_methodology",
     "value": 0.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=9,column=false_certification",
@@ -784,9 +784,9 @@
     "value": 0.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=9,column=false_block",
@@ -798,9 +798,9 @@
     "value": 0.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=9,column=diagnostic_latency",
@@ -812,9 +812,9 @@
     "value": 0.0176610000721666
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=2,column=parent_f1",
@@ -826,9 +826,9 @@
     "value": 0.176330420969023
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=2,column=leaf_f1",
@@ -840,9 +840,9 @@
     "value": 0.2200158856235107
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
-    "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
+    "claim_id": "H10-U",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=2,column=unknown_auroc",
@@ -854,9 +854,9 @@
     "value": 0.6283223292295472
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
-    "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
+    "claim_id": "H10-U",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=2,column=unknown_recall",
@@ -868,9 +868,9 @@
     "value": 0.28125
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
-    "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
+    "claim_id": "H10-U",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=2,column=abstention_accuracy",
@@ -882,9 +882,9 @@
     "value": 0.7612412919569348
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=3,column=parent_f1",
@@ -896,9 +896,9 @@
     "value": 0.6894360603653693
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=3,column=leaf_f1",
@@ -910,9 +910,9 @@
     "value": 0.7180301826846703
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
-    "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
+    "claim_id": "H10-U",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=3,column=unknown_auroc",
@@ -924,9 +924,9 @@
     "value": 0.7147128177124701
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
-    "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
+    "claim_id": "H10-U",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=3,column=unknown_recall",
@@ -938,9 +938,9 @@
     "value": 0.365625
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
-    "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
+    "claim_id": "H10-U",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=3,column=abstention_accuracy",
@@ -952,9 +952,9 @@
     "value": 0.83153894870171
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=4,column=parent_f1",
@@ -966,9 +966,9 @@
     "value": 0.176330420969023
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=4,column=leaf_f1",
@@ -980,9 +980,9 @@
     "value": 0.2200158856235107
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
-    "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
+    "claim_id": "H10-U",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=4,column=unknown_auroc",
@@ -994,9 +994,9 @@
     "value": 0.5
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
-    "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
+    "claim_id": "H10-U",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=4,column=unknown_recall",
@@ -1008,9 +1008,9 @@
     "value": 0.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
-    "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
+    "claim_id": "H10-U",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=4,column=abstention_accuracy",
@@ -1022,9 +1022,9 @@
     "value": 0.7973400886637112
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=5,column=parent_f1",
@@ -1036,9 +1036,9 @@
     "value": 0.744241461477363
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=5,column=leaf_f1",
@@ -1050,9 +1050,9 @@
     "value": 0.6433677521842732
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
-    "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
+    "claim_id": "H10-U",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=5,column=unknown_auroc",
@@ -1064,9 +1064,9 @@
     "value": 0.5
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
-    "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
+    "claim_id": "H10-U",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=5,column=unknown_recall",
@@ -1078,9 +1078,9 @@
     "value": 0.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
-    "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
+    "claim_id": "H10-U",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=5,column=abstention_accuracy",
@@ -1092,9 +1092,9 @@
     "value": 0.7973400886637112
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=6,column=parent_f1",
@@ -1106,9 +1106,9 @@
     "value": 0.176330420969023
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=6,column=leaf_f1",
@@ -1120,9 +1120,9 @@
     "value": 0.2200158856235107
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
-    "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
+    "claim_id": "H10-U",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=6,column=unknown_auroc",
@@ -1134,9 +1134,9 @@
     "value": 0.5
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
-    "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
+    "claim_id": "H10-U",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=6,column=unknown_recall",
@@ -1148,9 +1148,9 @@
     "value": 0.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
-    "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
+    "claim_id": "H10-U",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=6,column=abstention_accuracy",
@@ -1162,9 +1162,9 @@
     "value": 0.7973400886637112
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=7,column=parent_f1",
@@ -1176,9 +1176,9 @@
     "value": 0.176330420969023
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=7,column=leaf_f1",
@@ -1190,9 +1190,9 @@
     "value": 0.2200158856235107
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
-    "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
+    "claim_id": "H10-U",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=7,column=unknown_auroc",
@@ -1204,9 +1204,9 @@
     "value": 0.5
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
-    "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
+    "claim_id": "H10-U",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=7,column=unknown_recall",
@@ -1218,9 +1218,9 @@
     "value": 0.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
-    "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
+    "claim_id": "H10-U",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=7,column=abstention_accuracy",
@@ -1232,9 +1232,9 @@
     "value": 0.7973400886637112
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=8,column=parent_f1",
@@ -1246,9 +1246,9 @@
     "value": 0.7196187450357426
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=8,column=leaf_f1",
@@ -1260,9 +1260,9 @@
     "value": 0.2200158856235107
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
-    "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
+    "claim_id": "H10-U",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=8,column=unknown_auroc",
@@ -1274,9 +1274,9 @@
     "value": 0.5
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
-    "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
+    "claim_id": "H10-U",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=8,column=unknown_recall",
@@ -1288,9 +1288,9 @@
     "value": 0.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
-    "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
+    "claim_id": "H10-U",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=8,column=abstention_accuracy",
@@ -1302,9 +1302,9 @@
     "value": 0.7973400886637112
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=9,column=parent_f1",
@@ -1316,9 +1316,9 @@
     "value": 0.176330420969023
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=9,column=leaf_f1",
@@ -1330,9 +1330,9 @@
     "value": 0.2200158856235107
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
-    "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
+    "claim_id": "H10-U",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=9,column=unknown_auroc",
@@ -1344,9 +1344,9 @@
     "value": 0.5
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
-    "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
+    "claim_id": "H10-U",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=9,column=unknown_recall",
@@ -1358,9 +1358,9 @@
     "value": 0.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
-    "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
+    "claim_id": "H10-U",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=9,column=abstention_accuracy",
@@ -1372,9 +1372,9 @@
     "value": 0.7973400886637112
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
-    "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
+    "claim_id": "H10-C",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=2,column=cut_exact",
@@ -1386,9 +1386,9 @@
     "value": 0.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
-    "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
+    "claim_id": "H10-C",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=2,column=cut_jaccard",
@@ -1400,9 +1400,9 @@
     "value": 0.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
-    "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
+    "claim_id": "H10-C",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=2,column=cut_cost_ratio",
@@ -1414,9 +1414,9 @@
     "value": 0.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
-    "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
+    "claim_id": "H10-C",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=2,column=extra_nodes",
@@ -1428,9 +1428,9 @@
     "value": 0.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=2,column=runtime_ms",
@@ -1442,9 +1442,9 @@
     "value": 0.0195489999441633
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
-    "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
+    "claim_id": "H10-C",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=3,column=cut_exact",
@@ -1456,9 +1456,9 @@
     "value": 0.9987333755541482
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
-    "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
+    "claim_id": "H10-C",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=3,column=cut_jaccard",
@@ -1470,9 +1470,9 @@
     "value": 0.999366687777074
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
-    "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
+    "claim_id": "H10-C",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=3,column=cut_cost_ratio",
@@ -1484,9 +1484,9 @@
     "value": 1.0015199493350222
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
-    "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
+    "claim_id": "H10-C",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=3,column=extra_nodes",
@@ -1498,9 +1498,9 @@
     "value": 0.0012666244458518
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=3,column=runtime_ms",
@@ -1512,9 +1512,9 @@
     "value": 0.2953885000351874
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
-    "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
+    "claim_id": "H10-C",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=4,column=cut_exact",
@@ -1526,9 +1526,9 @@
     "value": 0.1139962001266624
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
-    "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
+    "claim_id": "H10-C",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=4,column=cut_jaccard",
@@ -1540,9 +1540,9 @@
     "value": 0.2036098796706776
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
-    "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
+    "claim_id": "H10-C",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=4,column=cut_cost_ratio",
@@ -1554,9 +1554,9 @@
     "value": 0.2585439621090393
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
-    "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
+    "claim_id": "H10-C",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=4,column=extra_nodes",
@@ -1568,9 +1568,9 @@
     "value": 0.0943635212159594
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=4,column=runtime_ms",
@@ -1582,9 +1582,9 @@
     "value": 0.005697999995391
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
-    "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
+    "claim_id": "H10-C",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=5,column=cut_exact",
@@ -1596,9 +1596,9 @@
     "value": 0.4642178594046865
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
-    "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
+    "claim_id": "H10-C",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=5,column=cut_jaccard",
@@ -1610,9 +1610,9 @@
     "value": 0.7343360776862994
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
-    "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
+    "claim_id": "H10-C",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=5,column=cut_cost_ratio",
@@ -1624,9 +1624,9 @@
     "value": 1.635797757545513
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
-    "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
+    "claim_id": "H10-C",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=5,column=extra_nodes",
@@ -1638,9 +1638,9 @@
     "value": 0.8695376820772641
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=5,column=runtime_ms",
@@ -1652,9 +1652,9 @@
     "value": 0.0153220000811415
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
-    "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
+    "claim_id": "H10-C",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=6,column=cut_exact",
@@ -1666,9 +1666,9 @@
     "value": 0.0899303356554781
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
-    "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
+    "claim_id": "H10-C",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=6,column=cut_jaccard",
@@ -1680,9 +1680,9 @@
     "value": 0.1155794806839772
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
-    "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
+    "claim_id": "H10-C",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=6,column=cut_cost_ratio",
@@ -1694,9 +1694,9 @@
     "value": 0.1475685656187972
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
-    "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
+    "claim_id": "H10-C",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=6,column=extra_nodes",
@@ -1708,9 +1708,9 @@
     "value": 0.0424319189360354
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=6,column=runtime_ms",
@@ -1722,9 +1722,9 @@
     "value": 0.0094690000196351
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
-    "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
+    "claim_id": "H10-C",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=7,column=cut_exact",
@@ -1736,9 +1736,9 @@
     "value": 0.4642178594046865
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
-    "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
+    "claim_id": "H10-C",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=7,column=cut_jaccard",
@@ -1750,9 +1750,9 @@
     "value": 0.7343360776862994
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
-    "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
+    "claim_id": "H10-C",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=7,column=cut_cost_ratio",
@@ -1764,9 +1764,9 @@
     "value": 1.635797757545513
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
-    "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
+    "claim_id": "H10-C",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=7,column=extra_nodes",
@@ -1778,9 +1778,9 @@
     "value": 0.8695376820772641
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=7,column=runtime_ms",
@@ -1792,9 +1792,9 @@
     "value": 0.0131494999777714
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
-    "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
+    "claim_id": "H10-C",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=8,column=cut_exact",
@@ -1806,9 +1806,9 @@
     "value": 0.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
-    "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
+    "claim_id": "H10-C",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=8,column=cut_jaccard",
@@ -1820,9 +1820,9 @@
     "value": 0.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
-    "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
+    "claim_id": "H10-C",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=8,column=cut_cost_ratio",
@@ -1834,9 +1834,9 @@
     "value": 0.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
-    "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
+    "claim_id": "H10-C",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=8,column=extra_nodes",
@@ -1848,9 +1848,9 @@
     "value": 0.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=8,column=runtime_ms",
@@ -1862,9 +1862,9 @@
     "value": 0.0135400000544905
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
-    "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
+    "claim_id": "H10-C",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=9,column=cut_exact",
@@ -1876,9 +1876,9 @@
     "value": 0.7891070297656745
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
-    "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
+    "claim_id": "H10-C",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=9,column=cut_jaccard",
@@ -1890,9 +1890,9 @@
     "value": 0.8336288790373654
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
-    "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
+    "claim_id": "H10-C",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=9,column=cut_cost_ratio",
@@ -1904,9 +1904,9 @@
     "value": 1.0477600976170385
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
-    "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
+    "claim_id": "H10-C",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=9,column=extra_nodes",
@@ -1918,9 +1918,9 @@
     "value": 0.2197593413552881
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=9,column=runtime_ms",
@@ -1932,9 +1932,9 @@
     "value": 0.0176610000721666
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=2,column=detection_delay_p95",
@@ -1946,9 +1946,9 @@
     "value": 0.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-R",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=2,column=erroneous_repair_actions",
@@ -1956,13 +1956,13 @@
     "metric": "erroneous_repair_actions",
     "sha256": "148505d9f85bcdd383a5916f056a0efcbb47df1076ec1cac6ae2e1595f9965d9",
     "source_file": "artifacts/h10_v19/tables/table5_replay.csv",
-    "status": "confirmatory",
+    "status": "invalid_methodology",
     "value": 74.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=2,column=false_alerts_per_10k",
@@ -1974,9 +1974,9 @@
     "value": 0.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=2,column=hard_block_rate",
@@ -1988,9 +1988,9 @@
     "value": 0.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=2,column=incident_recall",
@@ -2002,9 +2002,9 @@
     "value": 1.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=2,column=manual_load",
@@ -2016,9 +2016,9 @@
     "value": 0.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=2,column=recertification_rate",
@@ -2030,9 +2030,9 @@
     "value": 1.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-R",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=2,column=repair_delay_p95",
@@ -2040,13 +2040,13 @@
     "metric": "repair_delay_p95",
     "sha256": "148505d9f85bcdd383a5916f056a0efcbb47df1076ec1cac6ae2e1595f9965d9",
     "source_file": "artifacts/h10_v19/tables/table5_replay.csv",
-    "status": "confirmatory",
+    "status": "invalid_methodology",
     "value": 20.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-R",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=2,column=repair_success",
@@ -2054,13 +2054,13 @@
     "metric": "repair_success",
     "sha256": "148505d9f85bcdd383a5916f056a0efcbb47df1076ec1cac6ae2e1595f9965d9",
     "source_file": "artifacts/h10_v19/tables/table5_replay.csv",
-    "status": "confirmatory",
+    "status": "invalid_methodology",
     "value": 0.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
-    "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
+    "claim_id": "H10-T",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=2,column=trace_size",
@@ -2072,9 +2072,9 @@
     "value": 0.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=3,column=detection_delay_p95",
@@ -2086,9 +2086,9 @@
     "value": 0.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-R",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=3,column=erroneous_repair_actions",
@@ -2096,13 +2096,13 @@
     "metric": "erroneous_repair_actions",
     "sha256": "148505d9f85bcdd383a5916f056a0efcbb47df1076ec1cac6ae2e1595f9965d9",
     "source_file": "artifacts/h10_v19/tables/table5_replay.csv",
-    "status": "confirmatory",
+    "status": "invalid_methodology",
     "value": 0.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=3,column=false_alerts_per_10k",
@@ -2114,9 +2114,9 @@
     "value": 0.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=3,column=hard_block_rate",
@@ -2128,9 +2128,9 @@
     "value": 0.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=3,column=incident_recall",
@@ -2142,9 +2142,9 @@
     "value": 1.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=3,column=manual_load",
@@ -2156,9 +2156,9 @@
     "value": 1.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=3,column=recertification_rate",
@@ -2170,9 +2170,9 @@
     "value": 0.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-R",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=3,column=repair_delay_p95",
@@ -2180,13 +2180,13 @@
     "metric": "repair_delay_p95",
     "sha256": "148505d9f85bcdd383a5916f056a0efcbb47df1076ec1cac6ae2e1595f9965d9",
     "source_file": "artifacts/h10_v19/tables/table5_replay.csv",
-    "status": "confirmatory",
+    "status": "invalid_methodology",
     "value": 70.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-R",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=3,column=repair_success",
@@ -2194,13 +2194,13 @@
     "metric": "repair_success",
     "sha256": "148505d9f85bcdd383a5916f056a0efcbb47df1076ec1cac6ae2e1595f9965d9",
     "source_file": "artifacts/h10_v19/tables/table5_replay.csv",
-    "status": "confirmatory",
+    "status": "invalid_methodology",
     "value": 0.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
-    "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
+    "claim_id": "H10-T",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=3,column=trace_size",
@@ -2212,9 +2212,9 @@
     "value": 0.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=4,column=detection_delay_p95",
@@ -2226,9 +2226,9 @@
     "value": 0.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-R",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=4,column=erroneous_repair_actions",
@@ -2236,13 +2236,13 @@
     "metric": "erroneous_repair_actions",
     "sha256": "148505d9f85bcdd383a5916f056a0efcbb47df1076ec1cac6ae2e1595f9965d9",
     "source_file": "artifacts/h10_v19/tables/table5_replay.csv",
-    "status": "confirmatory",
+    "status": "invalid_methodology",
     "value": 0.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=4,column=false_alerts_per_10k",
@@ -2254,9 +2254,9 @@
     "value": 0.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=4,column=hard_block_rate",
@@ -2268,9 +2268,9 @@
     "value": 1.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=4,column=incident_recall",
@@ -2282,9 +2282,9 @@
     "value": 1.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=4,column=manual_load",
@@ -2296,9 +2296,9 @@
     "value": 1.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=4,column=recertification_rate",
@@ -2310,9 +2310,9 @@
     "value": 0.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-R",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=4,column=repair_delay_p95",
@@ -2320,13 +2320,13 @@
     "metric": "repair_delay_p95",
     "sha256": "148505d9f85bcdd383a5916f056a0efcbb47df1076ec1cac6ae2e1595f9965d9",
     "source_file": "artifacts/h10_v19/tables/table5_replay.csv",
-    "status": "confirmatory",
+    "status": "invalid_methodology",
     "value": 50.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-R",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=4,column=repair_success",
@@ -2334,13 +2334,13 @@
     "metric": "repair_success",
     "sha256": "148505d9f85bcdd383a5916f056a0efcbb47df1076ec1cac6ae2e1595f9965d9",
     "source_file": "artifacts/h10_v19/tables/table5_replay.csv",
-    "status": "confirmatory",
+    "status": "invalid_methodology",
     "value": 0.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
-    "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
+    "claim_id": "H10-T",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=4,column=trace_size",
@@ -2352,9 +2352,9 @@
     "value": 0.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=5,column=detection_delay_p95",
@@ -2366,9 +2366,9 @@
     "value": 0.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-R",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=5,column=erroneous_repair_actions",
@@ -2376,13 +2376,13 @@
     "metric": "erroneous_repair_actions",
     "sha256": "148505d9f85bcdd383a5916f056a0efcbb47df1076ec1cac6ae2e1595f9965d9",
     "source_file": "artifacts/h10_v19/tables/table5_replay.csv",
-    "status": "confirmatory",
+    "status": "invalid_methodology",
     "value": 5.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=5,column=false_alerts_per_10k",
@@ -2394,9 +2394,9 @@
     "value": 0.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=5,column=hard_block_rate",
@@ -2408,9 +2408,9 @@
     "value": 0.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=5,column=incident_recall",
@@ -2422,9 +2422,9 @@
     "value": 1.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=5,column=manual_load",
@@ -2436,9 +2436,9 @@
     "value": 0.2833333333333333
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=5,column=recertification_rate",
@@ -2450,9 +2450,9 @@
     "value": 1.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-R",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=5,column=repair_delay_p95",
@@ -2460,13 +2460,13 @@
     "metric": "repair_delay_p95",
     "sha256": "148505d9f85bcdd383a5916f056a0efcbb47df1076ec1cac6ae2e1595f9965d9",
     "source_file": "artifacts/h10_v19/tables/table5_replay.csv",
-    "status": "confirmatory",
+    "status": "invalid_methodology",
     "value": 20.0
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "claim_id": "H10-R",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=5,column=repair_success",
@@ -2474,13 +2474,13 @@
     "metric": "repair_success",
     "sha256": "148505d9f85bcdd383a5916f056a0efcbb47df1076ec1cac6ae2e1595f9965d9",
     "source_file": "artifacts/h10_v19/tables/table5_replay.csv",
-    "status": "confirmatory",
+    "status": "invalid_methodology",
     "value": 0.95
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
-    "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
+    "claim_id": "H10-T",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=5,column=trace_size",
@@ -2492,143 +2492,143 @@
     "value": 990.1833333333332
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
-    "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
+    "claim_id": "H10-L",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=2,column=ci_high",
     "method": null,
     "metric": "ci_high",
-    "sha256": "f43286896b174d44ce51225ea8a6b9a0577ca5766186ea73f3285d3fcc367ec4",
+    "sha256": "b91118ed7c54e10a1c784597a33a58a3c68b2de3d1c104ea4cc6f15dea564aa3",
     "source_file": "artifacts/h10_v19/tables/table6_statistics.csv",
-    "status": "descriptive_or_secondary",
+    "status": "invalid_methodology",
     "value": 0.0725124744897959
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
-    "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
+    "claim_id": "H10-L",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=2,column=ci_low",
     "method": null,
     "metric": "ci_low",
-    "sha256": "f43286896b174d44ce51225ea8a6b9a0577ca5766186ea73f3285d3fcc367ec4",
+    "sha256": "b91118ed7c54e10a1c784597a33a58a3c68b2de3d1c104ea4cc6f15dea564aa3",
     "source_file": "artifacts/h10_v19/tables/table6_statistics.csv",
-    "status": "descriptive_or_secondary",
+    "status": "invalid_methodology",
     "value": 0.0259146811802952
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
-    "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
+    "claim_id": "H10-L",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=2,column=effect",
     "method": null,
     "metric": "effect",
-    "sha256": "f43286896b174d44ce51225ea8a6b9a0577ca5766186ea73f3285d3fcc367ec4",
+    "sha256": "b91118ed7c54e10a1c784597a33a58a3c68b2de3d1c104ea4cc6f15dea564aa3",
     "source_file": "artifacts/h10_v19/tables/table6_statistics.csv",
-    "status": "descriptive_or_secondary",
+    "status": "invalid_methodology",
     "value": 0.0494090367439492
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
-    "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
+    "claim_id": "H10-L",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=2,column=p_holm",
     "method": null,
     "metric": "p_holm",
-    "sha256": "f43286896b174d44ce51225ea8a6b9a0577ca5766186ea73f3285d3fcc367ec4",
+    "sha256": "b91118ed7c54e10a1c784597a33a58a3c68b2de3d1c104ea4cc6f15dea564aa3",
     "source_file": "artifacts/h10_v19/tables/table6_statistics.csv",
-    "status": "descriptive_or_secondary",
+    "status": "invalid_methodology",
     "value": 0.0143985601439856
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
-    "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
+    "claim_id": "H10-L",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=2,column=p_raw",
     "method": null,
     "metric": "p_raw",
-    "sha256": "f43286896b174d44ce51225ea8a6b9a0577ca5766186ea73f3285d3fcc367ec4",
+    "sha256": "b91118ed7c54e10a1c784597a33a58a3c68b2de3d1c104ea4cc6f15dea564aa3",
     "source_file": "artifacts/h10_v19/tables/table6_statistics.csv",
-    "status": "descriptive_or_secondary",
+    "status": "invalid_methodology",
     "value": 0.0100989901009899
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
-    "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
+    "claim_id": "H10-R",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=3,column=ci_high",
     "method": null,
     "metric": "ci_high",
-    "sha256": "f43286896b174d44ce51225ea8a6b9a0577ca5766186ea73f3285d3fcc367ec4",
+    "sha256": "b91118ed7c54e10a1c784597a33a58a3c68b2de3d1c104ea4cc6f15dea564aa3",
     "source_file": "artifacts/h10_v19/tables/table6_statistics.csv",
-    "status": "descriptive_or_secondary",
+    "status": "invalid_methodology",
     "value": 0.0715365412414966
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
-    "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
+    "claim_id": "H10-R",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=3,column=ci_low",
     "method": null,
     "metric": "ci_low",
-    "sha256": "f43286896b174d44ce51225ea8a6b9a0577ca5766186ea73f3285d3fcc367ec4",
+    "sha256": "b91118ed7c54e10a1c784597a33a58a3c68b2de3d1c104ea4cc6f15dea564aa3",
     "source_file": "artifacts/h10_v19/tables/table6_statistics.csv",
-    "status": "descriptive_or_secondary",
+    "status": "invalid_methodology",
     "value": 0.0264720998484427
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
-    "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
+    "claim_id": "H10-R",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=3,column=effect",
     "method": null,
     "metric": "effect",
-    "sha256": "f43286896b174d44ce51225ea8a6b9a0577ca5766186ea73f3285d3fcc367ec4",
+    "sha256": "b91118ed7c54e10a1c784597a33a58a3c68b2de3d1c104ea4cc6f15dea564aa3",
     "source_file": "artifacts/h10_v19/tables/table6_statistics.csv",
-    "status": "descriptive_or_secondary",
+    "status": "invalid_methodology",
     "value": 0.0494090367439492
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
-    "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
+    "claim_id": "H10-R",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=3,column=p_holm",
     "method": null,
     "metric": "p_holm",
-    "sha256": "f43286896b174d44ce51225ea8a6b9a0577ca5766186ea73f3285d3fcc367ec4",
+    "sha256": "b91118ed7c54e10a1c784597a33a58a3c68b2de3d1c104ea4cc6f15dea564aa3",
     "source_file": "artifacts/h10_v19/tables/table6_statistics.csv",
-    "status": "descriptive_or_secondary",
+    "status": "invalid_methodology",
     "value": 0.0143985601439856
   },
   {
-    "bundle_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
-    "claim_id": "H10-secondary",
-    "closure_packaging_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "bundle_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
+    "claim_id": "H10-R",
+    "closure_packaging_commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
     "dataset": null,
     "evidence_generation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
     "locator": "row=3,column=p_raw",
     "method": null,
     "metric": "p_raw",
-    "sha256": "f43286896b174d44ce51225ea8a6b9a0577ca5766186ea73f3285d3fcc367ec4",
+    "sha256": "b91118ed7c54e10a1c784597a33a58a3c68b2de3d1c104ea4cc6f15dea564aa3",
     "source_file": "artifacts/h10_v19/tables/table6_statistics.csv",
-    "status": "descriptive_or_secondary",
+    "status": "invalid_methodology",
     "value": 0.0071992800719928
   }
 ]

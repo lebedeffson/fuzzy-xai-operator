@@ -1,4 +1,6 @@
 {
+  "clean_stream_false_alert_ceiling": 0,
+  "clean_stream_sanity_status": "PASS",
   "delayed_evidence": true,
   "events": 1000000,
   "incidents": 60,
@@ -60,7 +62,7 @@
   "normal_stream_contains_mutated_fault_routes": false,
   "normal_stream_source": "clean_routes_with_joint_expected_observed_context_drift",
   "partial_and_failed_repair": true,
-  "peak_rss_kib": 481156,
+  "peak_rss_kib": 472228,
   "repair_delay_rule": "10 events per proposed repair target plus 50 events when recertification fails",
   "service_times_preassigned_to_favor_h10": false
 }

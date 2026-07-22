@@ -1,23 +1,25 @@
 {
   "baseline_independence_failures": [],
   "environment": {
-    "commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
-    "cpu_count": 5,
-    "platform": "Linux-6.12.13-x86_64-with-glibc2.41",
+    "commit": "0aa61e11b24d4df3e3d553bd4123d88ba9fd73b3",
+    "cpu_count": 16,
+    "platform": "Linux-7.1.3-arch2-2-x86_64-with-glibc2.43",
     "processor": "",
-    "python": "3.13.5 (main, May  5 2026, 21:05:52) [GCC 14.2.0]"
+    "python": "3.14.6 (main, Jun 15 2026, 11:36:54) [GCC 16.1.1 20260430]"
   },
   "evidence_entries": 188,
+  "evidence_integrity_failures": [],
   "figures_pdf": 10,
   "figures_png": 10,
   "forbidden_tracked_files": [],
-  "methodology_audit_status": "PASS",
+  "methodology_audit_status": "INVALID_FOR_PRIMARY_COMPARATIVE_CLAIMS",
   "missing": [],
   "old_v16_changed": false,
+  "old_v18_changed": false,
   "opening_count": 1,
   "oracle_independence_failures": [],
   "post_lock_tuning": false,
-  "scientific_release_allowed": true,
-  "status": "PASS",
+  "scientific_release_allowed": false,
+  "status": "TECHNICAL_PASS_SCIENTIFIC_INVALID",
   "tables_csv": 6
 }
