@@ -1,0 +1,9 @@
+hypothesis,result,scope
+H3-original,not_supported,frozen v1.3.0
+H5-P-original,not_supported,frozen v1.3.0
+H6-general,not_supported,frozen v1.3.0
+V13-H1,supported,2000 AG News explanations
+V13-H2,no_confirmatory_advantage,matched coverage sealed test
+V13-H3,supported_registered_library,registered single and compositional route faults
+V13-H4,descriptive,end-to-end N=1..10000
+V13-H5,exploratory,held-out fault types

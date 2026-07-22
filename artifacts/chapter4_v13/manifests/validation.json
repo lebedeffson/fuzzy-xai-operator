@@ -1,0 +1,15 @@
+{
+  "commit": "204eca84a71d95930515e79e057acfdc5dd6143f",
+  "errors": [],
+  "evidence_entries": 386,
+  "passed": true,
+  "protocol_sha256": "55e86e3bcc2d1f56dfd4700c3912313e411f9d29481109f45c29bf82e77c102e",
+  "required_artifacts": 19,
+  "stable_negative_claims": {
+    "H3-original": "not_supported",
+    "H5-P-original": "not_supported",
+    "H6-general": "not_supported"
+  },
+  "test_outcomes_absent_from_policy_features": true,
+  "test_policy_rows": 7600
+}

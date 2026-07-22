@@ -1,0 +1,18 @@
+{
+  "explanation_quality": {
+    "path": "figures/explanation_quality.png",
+    "sha256": "3d0ab6e53c014802fa65940f09703538c73b6107f0e7f525775157fb6630be92"
+  },
+  "policy_risk_coverage": {
+    "path": "figures/policy_risk_coverage.png",
+    "sha256": "85d74a7155f951bb30f3c707aba79b57bbbb6111f9b5b128382a08a7586e323a"
+  },
+  "route_faults": {
+    "path": "figures/route_faults.png",
+    "sha256": "effb8e36a8ecf14e5b58d696d323abe7e733303dde4bb9cfc6f171fb665d53b6"
+  },
+  "runtime_decomposition": {
+    "path": "figures/runtime_decomposition.png",
+    "sha256": "9a959e160fad87478de9b59387a263cc5ad9b984cdc18ae5156674201ccdf60a"
+  }
+}

@@ -1,0 +1,2 @@
+dataset,objects_total,train,validation,sealed_test,test_accuracy,local_explanations,canonical_hash_preservation
+AG News,127439,99839,20000,7600,0.9478947368421052,2000,1.0
