@@ -1,0 +1,24 @@
+{
+  "action": "short_review",
+  "budget_feasible": true,
+  "confidence_interval": [
+    0.31702402091876125,
+    0.5100720033753267
+  ],
+  "deterministic_replay_sha256": "6ca9ceafae502f0057bd9b027be6ec6930930be3d3e848f4d00c302730c350a1",
+  "explain_plan_version": "chapter4-v13",
+  "hard_guard_status": "certified",
+  "missing_evidence": [],
+  "model_version": "distilbert-ag-news@52ee64d",
+  "monitoring_events": [],
+  "operational_risk": 0.41354801214704395,
+  "policy_version": "chapter4-v13-runtime",
+  "predictive_risk": 0.2826928861780488,
+  "reason_codes": [
+    "BUDGET_ALLOCATED_REVIEW",
+    "SINGLE_REQUEST_REVIEW_BUDGET_AVAILABLE"
+  ],
+  "review_priority": 0.41354801214704395,
+  "route_risk": 0.18242552380635635,
+  "trace_id": "05860c1c9c3691a8392f28caed6c55d45c26b6367dd22ac75e0bcfa466081a9a"
+}

@@ -1,0 +1,9 @@
+{
+  "fuzzyxai_seconds": 0.000408667,
+  "integrated_gradients_seconds": 0.159461773,
+  "model_seconds": 0.129460887,
+  "serialization_seconds": 8.126e-06,
+  "serialized_action_bytes": 717,
+  "token_masking_seconds": 0.081716708,
+  "total_seconds": 0.37105616099999994
+}

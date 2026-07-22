@@ -1,0 +1,17 @@
+{
+  "class": 2,
+  "model": {
+    "architecture": "DistilBERT sequence classifier",
+    "id": "textattack/distilbert-base-uncased-ag-news",
+    "revision": "52ee64de95f38323f136c6f6b05e1af7c433417e",
+    "source": "https://huggingface.co/textattack/distilbert-base-uncased-ag-news",
+    "training": "none",
+    "weights": "frozen_pretrained"
+  },
+  "probabilities": [
+    0.014763517305254936,
+    0.00017504984862171113,
+    0.9824371933937073,
+    0.002624227199703455
+  ]
+}

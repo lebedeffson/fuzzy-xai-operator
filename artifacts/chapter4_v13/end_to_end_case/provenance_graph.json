@@ -1,0 +1,34 @@
+{
+  "edges": [
+    [
+      "dataset:f2b6608e5460b3997a7c76be047e64e899e7afe1034c4d3214a48dab3ff05a6a",
+      "model:distilbert-ag-news@52ee64d"
+    ],
+    [
+      "model:distilbert-ag-news@52ee64d",
+      "canonical:4d5ffe02ce198f6d7eed222ed2f78d8ac7ffbf5218102bc352f148e15b22c757"
+    ],
+    [
+      "canonical:4d5ffe02ce198f6d7eed222ed2f78d8ac7ffbf5218102bc352f148e15b22c757",
+      "action:05860c1c9c3691a8392f28caed6c55d45c26b6367dd22ac75e0bcfa466081a9a"
+    ]
+  ],
+  "nodes": [
+    {
+      "id": "dataset:f2b6608e5460b3997a7c76be047e64e899e7afe1034c4d3214a48dab3ff05a6a",
+      "type": "evidence"
+    },
+    {
+      "id": "model:distilbert-ag-news@52ee64d",
+      "type": "model"
+    },
+    {
+      "id": "canonical:4d5ffe02ce198f6d7eed222ed2f78d8ac7ffbf5218102bc352f148e15b22c757",
+      "type": "canonical_explanation"
+    },
+    {
+      "id": "action:05860c1c9c3691a8392f28caed6c55d45c26b6367dd22ac75e0bcfa466081a9a",
+      "type": "action"
+    }
+  ]
+}

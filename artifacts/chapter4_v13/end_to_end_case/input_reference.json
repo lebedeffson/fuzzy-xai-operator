@@ -1,0 +1,9 @@
+{
+  "dataset": "fancyzhx/ag_news",
+  "limitation": "upstream AG News dataset card reports an unknown license; fetch by source reference",
+  "normalized_text_sha256": "f2b6608e5460b3997a7c76be047e64e899e7afe1034c4d3214a48dab3ff05a6a",
+  "object_id": "ag_news:sealed_test:000000:f2b6608e5460",
+  "raw_text_included": false,
+  "source_index": 0,
+  "source_split": "sealed_test"
+}

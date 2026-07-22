@@ -1,0 +1,20 @@
+{
+  "local_only_files": [
+    "local_explanation.json",
+    "canonical_artifact.json",
+    "user_card.md"
+  ],
+  "public_files": [
+    "input_reference.json",
+    "prediction.json",
+    "provenance_graph.json",
+    "diagnostic_state.json",
+    "action.json",
+    "stage_timings.json",
+    "audit.md",
+    "release_manifest.json",
+    "SHA256SUMS"
+  ],
+  "reason": "AG News upstream dataset card reports license unknown; token-bearing derivatives are not redistributed",
+  "reproduction_command": "python -m experiments.chapter4_v13.reproduce_case --config config/chapter4_v13_case.yaml --output artifacts/chapter4_v13/end_to_end_case"
+}

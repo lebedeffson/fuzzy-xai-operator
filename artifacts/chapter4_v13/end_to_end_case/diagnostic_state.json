@@ -1,0 +1,8 @@
+{
+  "hard_guard_status": "certified",
+  "missing_evidence": [],
+  "reason_codes": [
+    "BUDGET_ALLOCATED_REVIEW",
+    "SINGLE_REQUEST_REVIEW_BUDGET_AVAILABLE"
+  ]
+}
