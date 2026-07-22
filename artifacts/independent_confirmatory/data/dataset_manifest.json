@@ -1,0 +1,217 @@
+{
+  "all_datasets_sealed": true,
+  "confirmatory_opening_allowed": false,
+  "datasets": [
+    {
+      "class_counts": {
+        "formative_development": {
+          "BARBUNYA": 255,
+          "BOMBAY": 102,
+          "CALI": 336,
+          "DERMASON": 706,
+          "HOROZ": 375,
+          "SEKER": 388,
+          "SIRA": 523
+        },
+        "sealed_calibration_check": {
+          "BARBUNYA": 153,
+          "BOMBAY": 50,
+          "CALI": 151,
+          "DERMASON": 358,
+          "HOROZ": 181,
+          "SEKER": 217,
+          "SIRA": 249
+        },
+        "sealed_confirmatory_test": {
+          "BARBUNYA": 139,
+          "BOMBAY": 59,
+          "CALI": 157,
+          "DERMASON": 350,
+          "HOROZ": 209,
+          "SEKER": 203,
+          "SIRA": 292
+        },
+        "train": {
+          "BARBUNYA": 775,
+          "BOMBAY": 311,
+          "CALI": 986,
+          "DERMASON": 2132,
+          "HOROZ": 1163,
+          "SEKER": 1219,
+          "SIRA": 1572
+        }
+      },
+      "content_duplicate_groups_kept_within_split": true,
+      "dataset_id": "uci_dry_bean",
+      "group_overlap_count": 0,
+      "license": "CC BY 4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0/legalcode",
+      "modality": "tabular",
+      "n_groups": 13611,
+      "n_objects": 13611,
+      "normalization_fit_scope": "train_only",
+      "raw_sha256": "c91a086bb4357e69409d23287ec22be1be9512145cead1d8ca988c918be38fcb",
+      "sealed": true,
+      "sealed_label_vault_sha256": "923fc48a1886c3900a9b63f4a3eb98a52bb3f0c9753b314b400e138dc258bb21",
+      "source": "https://archive.ics.uci.edu/static/public/602/data.csv",
+      "split_counts": {
+        "formative_development": 2685,
+        "sealed_calibration_check": 1359,
+        "sealed_confirmatory_test": 1409,
+        "train": 8158
+      },
+      "split_identity_sha256": {
+        "formative_development": "d902afd7032c4b1971141fec22fe880a6affd2e4d482dea91bed6f70afd2ca5a",
+        "sealed_calibration_check": "b9d603e831ce59dbcfd38b3dec021345499cb5420ae72d063bf983a02d728f1a",
+        "sealed_confirmatory_test": "690ed5208c4fbc9ceab605cfd77075e3bcbe018275aa00a991df48a743e2ea77",
+        "train": "3dd04e64213efc1f0d7563ff6b3218e6d323fcc8f71c25141f429a50f897283c"
+      },
+      "status": "sealed_data_identity_and_label_vault",
+      "test_labels_in_public_manifest": false,
+      "vault_key_sha256_recorded_locally_only": "cac33e51f86223fa9267ba2c26414fbe093f042de0dc230536cab5e2072f351b"
+    },
+    {
+      "class_counts": {
+        "formative_development": {
+          "b": 21296,
+          "e": 31767,
+          "m": 9436,
+          "t": 20168
+        },
+        "sealed_calibration_check": {
+          "b": 12565,
+          "e": 13107,
+          "m": 4217,
+          "t": 9520
+        },
+        "sealed_confirmatory_test": {
+          "b": 10820,
+          "e": 17950,
+          "m": 4245,
+          "t": 10888
+        },
+        "train": {
+          "b": 71286,
+          "e": 90004,
+          "m": 27741,
+          "t": 67927
+        }
+      },
+      "content_duplicate_groups_kept_within_split": true,
+      "dataset_id": "uci_news_aggregator",
+      "group_overlap_count": 0,
+      "license": "CC BY 4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0/legalcode",
+      "modality": "text",
+      "n_groups": 7231,
+      "n_objects": 422937,
+      "normalization_fit_scope": "train_only",
+      "raw_sha256": "1f5f08691f0ce576cb0b5cfdbcb8c55e0ec14dda8f3e07933da72c500338845a",
+      "sealed": true,
+      "sealed_label_vault_sha256": "2e7960933eeda59110ebbabf82c126337d9d7de580db7934b7649c10f45a0a78",
+      "source": "https://archive.ics.uci.edu/static/public/359/news+aggregator.zip",
+      "split_counts": {
+        "formative_development": 82667,
+        "sealed_calibration_check": 39409,
+        "sealed_confirmatory_test": 43903,
+        "train": 256958
+      },
+      "split_identity_sha256": {
+        "formative_development": "dcd8e350ab1c10f02bca30b893d928195f90f54c468975e1988125630675127f",
+        "sealed_calibration_check": "cceb1e2ed7b9d70c33689c76472402321f9dd5ad065fc0a984770d1b1ccac6d0",
+        "sealed_confirmatory_test": "304fab0ce3fdf557fb73e8244b05bbc67ca54734af0ac4ea3a1e7afadd383541",
+        "train": "39c9c4bfa30f315bfb21053baeb966a52c5c4f3c88fe5fb979486697aa4c010e"
+      },
+      "status": "sealed_data_identity_and_label_vault",
+      "test_labels_in_public_manifest": false,
+      "vault_key_sha256_recorded_locally_only": "d2704cb58482427dcd2f14176f41f0228de3edf8625b69ede546bb98ff460dcb"
+    },
+    {
+      "class_counts": {
+        "formative_development": {
+          "AnnualCrop": 619,
+          "Forest": 592,
+          "HerbaceousVegetation": 576,
+          "Highway": 497,
+          "Industrial": 473,
+          "Pasture": 423,
+          "PermanentCrop": 518,
+          "Residential": 574,
+          "River": 486,
+          "SeaLake": 595
+        },
+        "sealed_calibration_check": {
+          "AnnualCrop": 298,
+          "Forest": 279,
+          "HerbaceousVegetation": 327,
+          "Highway": 249,
+          "Industrial": 247,
+          "Pasture": 205,
+          "PermanentCrop": 243,
+          "Residential": 319,
+          "River": 248,
+          "SeaLake": 305
+        },
+        "sealed_confirmatory_test": {
+          "AnnualCrop": 344,
+          "Forest": 302,
+          "HerbaceousVegetation": 276,
+          "Highway": 238,
+          "Industrial": 274,
+          "Pasture": 194,
+          "PermanentCrop": 262,
+          "Residential": 282,
+          "River": 281,
+          "SeaLake": 307
+        },
+        "train": {
+          "AnnualCrop": 1739,
+          "Forest": 1827,
+          "HerbaceousVegetation": 1821,
+          "Highway": 1516,
+          "Industrial": 1506,
+          "Pasture": 1178,
+          "PermanentCrop": 1477,
+          "Residential": 1825,
+          "River": 1485,
+          "SeaLake": 1793
+        }
+      },
+      "content_duplicate_groups_kept_within_split": true,
+      "dataset_id": "eurosat_rgb",
+      "group_overlap_count": 0,
+      "license": "MIT",
+      "license_url": "https://github.com/phelber/EuroSAT#license",
+      "modality": "image",
+      "n_groups": 27000,
+      "n_objects": 27000,
+      "normalization_fit_scope": "train_only",
+      "raw_sha256": "b4f5b234ecb7d7ff9c6cddb046543b4717c53fd6e9815be6c0e80cc614f51b90",
+      "sealed": true,
+      "sealed_label_vault_sha256": "d9223e5a2ce4a334dc98e6922eb43c40e0a120e022edb19b077da2d50f5570fa",
+      "source": "https://zenodo.org/records/7711810/files/EuroSAT_RGB.zip?download=1",
+      "split_counts": {
+        "formative_development": 5353,
+        "sealed_calibration_check": 2720,
+        "sealed_confirmatory_test": 2760,
+        "train": 16167
+      },
+      "split_identity_sha256": {
+        "formative_development": "df446af44d908ea22349dbe6c15532cbc5598726225c8f523a0056a75d9ce829",
+        "sealed_calibration_check": "e77c09f8e4ad110a262ce547a43f504b008129d3e56b1b105165a88b7b850e22",
+        "sealed_confirmatory_test": "80499c5cb6a1b9f65e2d092268221f6d6a7560aa44bb3f2cf5763c6a8583374a",
+        "train": "7af5866b0b4f9833b01b61a295c1154c68b40bea21d79efdbd70e847c976e1fa"
+      },
+      "status": "sealed_data_identity_and_label_vault",
+      "test_labels_in_public_manifest": false,
+      "vault_key_sha256_recorded_locally_only": "66fbb33ae372922dc7bad22d04b57ee0b02de53924d94469f73c25eab1eafb06"
+    }
+  ],
+  "implementation_commit": "fc4fbd3ace71d640d66baaf56a2a30a334ac03da",
+  "protocol_hashes": {
+    "config/independent_confirmatory_protocol.json": "6626389969acc636213c9bfd7aa798825197e2675ef6ce7a8b72861787323fa2",
+    "config/independent_confirmatory_protocol_amendment_001.json": "f381c56b09d8ebc12007a59b3ff03ec2febd0ce5c3d8f214d6c84aecd3b82ab3"
+  },
+  "reason": "Data sealing does not open labels or freeze models, heads, costs, baselines, or policies.",
+  "schema_version": "1.0"
+}

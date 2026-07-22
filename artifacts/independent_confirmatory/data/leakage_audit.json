@@ -1,0 +1,8 @@
+{
+  "confirmatory_test_opened": false,
+  "group_overlap_count": 0,
+  "status": "pass",
+  "test_labels_in_public_artifacts": false,
+  "vault_encryption": "AES-256-CBC PBKDF2 via OpenSSL",
+  "vault_keys_versioned": false
+}
