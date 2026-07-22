@@ -1,0 +1,10 @@
+{
+  "H3-R1": "not_evaluated",
+  "H3-R2": "not_evaluated",
+  "H3-R3": "not_evaluated",
+  "positive_claim_allowed": false,
+  "protocol_sha256": "a1d60209c6479fdfbc1561c0d470f09af6dd2f9ff6b61f66f1289c6123910717",
+  "reason": "No independent sealed dataset was registered before the remediation lock.",
+  "status": "blocked_no_independent_sealed_dataset",
+  "test_opened": false
+}

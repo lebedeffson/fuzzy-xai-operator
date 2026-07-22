@@ -1,0 +1,27 @@
+{
+  "allowed_summary": "The remediation architecture is implemented. H3-R4 is bounded to controlled replay and H5-A2 to the registered fault library. Independent H3 and real-rule confirmatory claims remain unavailable.",
+  "commit": "3d15097983d7e15b1ac499852be39ecfbb74c7d3",
+  "forbidden_summary": "The new controller universally fixes the negative v1.3.0 results.",
+  "immutable_claims": {
+    "H3-original": "not_supported",
+    "H5-P-original": "not_supported",
+    "H6-general": "not_supported"
+  },
+  "manual_positive_override_allowed": false,
+  "new_claims": {
+    "H3-R1": "not_evaluated",
+    "H3-R2": "not_evaluated",
+    "H3-R3": "not_evaluated",
+    "H3-R4": "supported_controlled_replay_only",
+    "H5-A2": "supported_registered_library_only",
+    "H5-P2": "not_evaluated_independent_model_error_data_absent",
+    "H5-P3": "not_evaluated_independent_model_error_data_absent",
+    "H6-R1": "measured_exploratory",
+    "H6-R2": "measured_exploratory",
+    "H6-R3": "measured_exploratory",
+    "H6-R4": "not_confirmatory_datasets_not_registered_as_independent_before_lock",
+    "H6-R5": "not_evaluated_certificate_adapter_absent_for_these_predictors"
+  },
+  "protocol_sha256": "a1d60209c6479fdfbc1561c0d470f09af6dd2f9ff6b61f66f1289c6123910717",
+  "schema_version": "1.0"
+}

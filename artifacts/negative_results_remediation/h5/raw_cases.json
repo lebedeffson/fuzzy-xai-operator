@@ -1,0 +1,2346 @@
+[
+  {
+    "cut": [
+      "model_version"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "model_version"
+    ],
+    "faults": [
+      "model_version"
+    ],
+    "group": "registered_single",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "explainer_model_pair",
+      "model_version"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "explainer_model_pair",
+      "model_version"
+    ],
+    "faults": [
+      "model_version",
+      "explainer_model_pair"
+    ],
+    "group": "registered_composition",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "explainer_model_pair",
+      "model_version",
+      "preprocessing_version"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "explainer_model_pair",
+      "model_version",
+      "preprocessing_version"
+    ],
+    "faults": [
+      "model_version",
+      "explainer_model_pair",
+      "preprocessing"
+    ],
+    "group": "registered_composition",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "explainer_model_pair"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "explainer_model_pair"
+    ],
+    "faults": [
+      "explainer_model_pair"
+    ],
+    "group": "registered_single",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "explainer_model_pair",
+      "preprocessing_version"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "explainer_model_pair",
+      "preprocessing_version"
+    ],
+    "faults": [
+      "explainer_model_pair",
+      "preprocessing"
+    ],
+    "group": "registered_composition",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "calibration_artifact",
+      "explainer_model_pair",
+      "preprocessing_version"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "calibration_artifact",
+      "explainer_model_pair",
+      "preprocessing_version"
+    ],
+    "faults": [
+      "explainer_model_pair",
+      "preprocessing",
+      "calibration"
+    ],
+    "group": "registered_composition",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "preprocessing_version"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "preprocessing_version"
+    ],
+    "faults": [
+      "preprocessing"
+    ],
+    "group": "registered_single",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "calibration_artifact",
+      "preprocessing_version"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "calibration_artifact",
+      "preprocessing_version"
+    ],
+    "faults": [
+      "preprocessing",
+      "calibration"
+    ],
+    "group": "registered_composition",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "calibration_artifact",
+      "preprocessing_version",
+      "reference_population"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "calibration_artifact",
+      "preprocessing_version",
+      "reference_population"
+    ],
+    "faults": [
+      "preprocessing",
+      "calibration",
+      "reference_population"
+    ],
+    "group": "registered_composition",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "calibration_artifact"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "calibration_artifact"
+    ],
+    "faults": [
+      "calibration"
+    ],
+    "group": "registered_single",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "calibration_artifact",
+      "reference_population"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "calibration_artifact",
+      "reference_population"
+    ],
+    "faults": [
+      "calibration",
+      "reference_population"
+    ],
+    "group": "registered_composition",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "calibration_artifact",
+      "feature_schema",
+      "reference_population"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "calibration_artifact",
+      "feature_schema",
+      "reference_population"
+    ],
+    "faults": [
+      "calibration",
+      "reference_population",
+      "schema"
+    ],
+    "group": "registered_composition",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "reference_population"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "reference_population"
+    ],
+    "faults": [
+      "reference_population"
+    ],
+    "group": "registered_single",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "feature_schema",
+      "reference_population"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "feature_schema",
+      "reference_population"
+    ],
+    "faults": [
+      "reference_population",
+      "schema"
+    ],
+    "group": "registered_composition",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "dictionary_version",
+      "feature_schema",
+      "reference_population"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "dictionary_version",
+      "feature_schema",
+      "reference_population"
+    ],
+    "faults": [
+      "reference_population",
+      "schema",
+      "dictionary"
+    ],
+    "group": "registered_composition",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "feature_schema"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "feature_schema"
+    ],
+    "faults": [
+      "schema"
+    ],
+    "group": "registered_single",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "dictionary_version",
+      "feature_schema"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "dictionary_version",
+      "feature_schema"
+    ],
+    "faults": [
+      "schema",
+      "dictionary"
+    ],
+    "group": "registered_composition",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "canonical_integrity",
+      "dictionary_version",
+      "feature_schema"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "canonical_integrity",
+      "dictionary_version",
+      "feature_schema"
+    ],
+    "faults": [
+      "schema",
+      "dictionary",
+      "canonical"
+    ],
+    "group": "registered_composition",
+    "simple_or_detected": true,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "dictionary_version"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "dictionary_version"
+    ],
+    "faults": [
+      "dictionary"
+    ],
+    "group": "registered_single",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "canonical_integrity",
+      "dictionary_version"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "canonical_integrity",
+      "dictionary_version"
+    ],
+    "faults": [
+      "dictionary",
+      "canonical"
+    ],
+    "group": "registered_composition",
+    "simple_or_detected": true,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "canonical_integrity",
+      "dictionary_version",
+      "provenance:reference"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "canonical_integrity",
+      "dictionary_version",
+      "provenance:reference"
+    ],
+    "faults": [
+      "dictionary",
+      "canonical",
+      "provenance"
+    ],
+    "group": "registered_composition",
+    "simple_or_detected": true,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "canonical_integrity"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "canonical_integrity"
+    ],
+    "faults": [
+      "canonical"
+    ],
+    "group": "registered_single",
+    "simple_or_detected": true,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "canonical_integrity",
+      "provenance:reference"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "canonical_integrity",
+      "provenance:reference"
+    ],
+    "faults": [
+      "canonical",
+      "provenance"
+    ],
+    "group": "registered_composition",
+    "simple_or_detected": true,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "canonical_integrity",
+      "provenance:reference",
+      "reduction_loss"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "canonical_integrity",
+      "provenance:reference",
+      "reduction_loss"
+    ],
+    "faults": [
+      "canonical",
+      "provenance",
+      "reduction"
+    ],
+    "group": "registered_composition",
+    "simple_or_detected": true,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "provenance:reference"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "provenance:reference"
+    ],
+    "faults": [
+      "provenance"
+    ],
+    "group": "registered_single",
+    "simple_or_detected": true,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "provenance:reference",
+      "reduction_loss"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "provenance:reference",
+      "reduction_loss"
+    ],
+    "faults": [
+      "provenance",
+      "reduction"
+    ],
+    "group": "registered_composition",
+    "simple_or_detected": true,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "forbidden_rule_conflict",
+      "provenance:reference",
+      "reduction_loss"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "forbidden_rule_conflict",
+      "provenance:reference",
+      "reduction_loss"
+    ],
+    "faults": [
+      "provenance",
+      "reduction",
+      "forbidden_rule"
+    ],
+    "group": "registered_composition",
+    "simple_or_detected": true,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "reduction_loss"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "reduction_loss"
+    ],
+    "faults": [
+      "reduction"
+    ],
+    "group": "registered_single",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "forbidden_rule_conflict",
+      "reduction_loss"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "forbidden_rule_conflict",
+      "reduction_loss"
+    ],
+    "faults": [
+      "reduction",
+      "forbidden_rule"
+    ],
+    "group": "registered_composition",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "critical_data_quality",
+      "forbidden_rule_conflict",
+      "reduction_loss"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "critical_data_quality",
+      "forbidden_rule_conflict",
+      "reduction_loss"
+    ],
+    "faults": [
+      "reduction",
+      "forbidden_rule",
+      "data_quality"
+    ],
+    "group": "registered_composition",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "forbidden_rule_conflict"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "forbidden_rule_conflict"
+    ],
+    "faults": [
+      "forbidden_rule"
+    ],
+    "group": "registered_single",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "critical_data_quality",
+      "forbidden_rule_conflict"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "critical_data_quality",
+      "forbidden_rule_conflict"
+    ],
+    "faults": [
+      "forbidden_rule",
+      "data_quality"
+    ],
+    "group": "registered_composition",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "critical_data_quality",
+      "forbidden_rule_conflict",
+      "route_fault:registered_00"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "critical_data_quality",
+      "forbidden_rule_conflict",
+      "route_fault:registered_00"
+    ],
+    "faults": [
+      "forbidden_rule",
+      "data_quality",
+      "registered_00"
+    ],
+    "group": "registered_composition",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "critical_data_quality"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "critical_data_quality"
+    ],
+    "faults": [
+      "data_quality"
+    ],
+    "group": "registered_single",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "critical_data_quality",
+      "route_fault:registered_00"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "critical_data_quality",
+      "route_fault:registered_00"
+    ],
+    "faults": [
+      "data_quality",
+      "registered_00"
+    ],
+    "group": "registered_composition",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "critical_data_quality",
+      "route_fault:registered_00",
+      "route_fault:registered_01"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "critical_data_quality",
+      "route_fault:registered_00",
+      "route_fault:registered_01"
+    ],
+    "faults": [
+      "data_quality",
+      "registered_00",
+      "registered_01"
+    ],
+    "group": "registered_composition",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "route_fault:registered_00"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "route_fault:registered_00"
+    ],
+    "faults": [
+      "registered_00"
+    ],
+    "group": "registered_single",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "route_fault:registered_00",
+      "route_fault:registered_01"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "route_fault:registered_00",
+      "route_fault:registered_01"
+    ],
+    "faults": [
+      "registered_00",
+      "registered_01"
+    ],
+    "group": "registered_composition",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "route_fault:registered_00",
+      "route_fault:registered_01",
+      "route_fault:registered_02"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "route_fault:registered_00",
+      "route_fault:registered_01",
+      "route_fault:registered_02"
+    ],
+    "faults": [
+      "registered_00",
+      "registered_01",
+      "registered_02"
+    ],
+    "group": "registered_composition",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "route_fault:registered_01"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "route_fault:registered_01"
+    ],
+    "faults": [
+      "registered_01"
+    ],
+    "group": "registered_single",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "route_fault:registered_01",
+      "route_fault:registered_02"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "route_fault:registered_01",
+      "route_fault:registered_02"
+    ],
+    "faults": [
+      "registered_01",
+      "registered_02"
+    ],
+    "group": "registered_composition",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "route_fault:registered_01",
+      "route_fault:registered_02",
+      "route_fault:registered_03"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "route_fault:registered_01",
+      "route_fault:registered_02",
+      "route_fault:registered_03"
+    ],
+    "faults": [
+      "registered_01",
+      "registered_02",
+      "registered_03"
+    ],
+    "group": "registered_composition",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "route_fault:registered_02"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "route_fault:registered_02"
+    ],
+    "faults": [
+      "registered_02"
+    ],
+    "group": "registered_single",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "route_fault:registered_02",
+      "route_fault:registered_03"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "route_fault:registered_02",
+      "route_fault:registered_03"
+    ],
+    "faults": [
+      "registered_02",
+      "registered_03"
+    ],
+    "group": "registered_composition",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "route_fault:registered_02",
+      "route_fault:registered_03",
+      "route_fault:registered_04"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "route_fault:registered_02",
+      "route_fault:registered_03",
+      "route_fault:registered_04"
+    ],
+    "faults": [
+      "registered_02",
+      "registered_03",
+      "registered_04"
+    ],
+    "group": "registered_composition",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "route_fault:registered_03"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "route_fault:registered_03"
+    ],
+    "faults": [
+      "registered_03"
+    ],
+    "group": "registered_single",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "route_fault:registered_03",
+      "route_fault:registered_04"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "route_fault:registered_03",
+      "route_fault:registered_04"
+    ],
+    "faults": [
+      "registered_03",
+      "registered_04"
+    ],
+    "group": "registered_composition",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "route_fault:registered_03",
+      "route_fault:registered_04",
+      "route_fault:registered_05"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "route_fault:registered_03",
+      "route_fault:registered_04",
+      "route_fault:registered_05"
+    ],
+    "faults": [
+      "registered_03",
+      "registered_04",
+      "registered_05"
+    ],
+    "group": "registered_composition",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "route_fault:registered_04"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "route_fault:registered_04"
+    ],
+    "faults": [
+      "registered_04"
+    ],
+    "group": "registered_single",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "route_fault:registered_04",
+      "route_fault:registered_05"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "route_fault:registered_04",
+      "route_fault:registered_05"
+    ],
+    "faults": [
+      "registered_04",
+      "registered_05"
+    ],
+    "group": "registered_composition",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "route_fault:registered_04",
+      "route_fault:registered_05",
+      "route_fault:registered_06"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "route_fault:registered_04",
+      "route_fault:registered_05",
+      "route_fault:registered_06"
+    ],
+    "faults": [
+      "registered_04",
+      "registered_05",
+      "registered_06"
+    ],
+    "group": "registered_composition",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "route_fault:registered_05"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "route_fault:registered_05"
+    ],
+    "faults": [
+      "registered_05"
+    ],
+    "group": "registered_single",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "route_fault:registered_05",
+      "route_fault:registered_06"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "route_fault:registered_05",
+      "route_fault:registered_06"
+    ],
+    "faults": [
+      "registered_05",
+      "registered_06"
+    ],
+    "group": "registered_composition",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "route_fault:registered_05",
+      "route_fault:registered_06",
+      "route_fault:registered_07"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "route_fault:registered_05",
+      "route_fault:registered_06",
+      "route_fault:registered_07"
+    ],
+    "faults": [
+      "registered_05",
+      "registered_06",
+      "registered_07"
+    ],
+    "group": "registered_composition",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "route_fault:registered_06"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "route_fault:registered_06"
+    ],
+    "faults": [
+      "registered_06"
+    ],
+    "group": "registered_single",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "route_fault:registered_06",
+      "route_fault:registered_07"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "route_fault:registered_06",
+      "route_fault:registered_07"
+    ],
+    "faults": [
+      "registered_06",
+      "registered_07"
+    ],
+    "group": "registered_composition",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "route_fault:registered_06",
+      "route_fault:registered_07",
+      "route_fault:registered_08"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "route_fault:registered_06",
+      "route_fault:registered_07",
+      "route_fault:registered_08"
+    ],
+    "faults": [
+      "registered_06",
+      "registered_07",
+      "registered_08"
+    ],
+    "group": "registered_composition",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "route_fault:registered_07"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "route_fault:registered_07"
+    ],
+    "faults": [
+      "registered_07"
+    ],
+    "group": "registered_single",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "route_fault:registered_07",
+      "route_fault:registered_08"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "route_fault:registered_07",
+      "route_fault:registered_08"
+    ],
+    "faults": [
+      "registered_07",
+      "registered_08"
+    ],
+    "group": "registered_composition",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "route_fault:registered_07",
+      "route_fault:registered_08",
+      "route_fault:registered_09"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "route_fault:registered_07",
+      "route_fault:registered_08",
+      "route_fault:registered_09"
+    ],
+    "faults": [
+      "registered_07",
+      "registered_08",
+      "registered_09"
+    ],
+    "group": "registered_composition",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "route_fault:registered_08"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "route_fault:registered_08"
+    ],
+    "faults": [
+      "registered_08"
+    ],
+    "group": "registered_single",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "route_fault:registered_08",
+      "route_fault:registered_09"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "route_fault:registered_08",
+      "route_fault:registered_09"
+    ],
+    "faults": [
+      "registered_08",
+      "registered_09"
+    ],
+    "group": "registered_composition",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "route_fault:registered_08",
+      "route_fault:registered_09",
+      "route_fault:registered_10"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "route_fault:registered_08",
+      "route_fault:registered_09",
+      "route_fault:registered_10"
+    ],
+    "faults": [
+      "registered_08",
+      "registered_09",
+      "registered_10"
+    ],
+    "group": "registered_composition",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "route_fault:registered_09"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "route_fault:registered_09"
+    ],
+    "faults": [
+      "registered_09"
+    ],
+    "group": "registered_single",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "route_fault:registered_09",
+      "route_fault:registered_10"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "route_fault:registered_09",
+      "route_fault:registered_10"
+    ],
+    "faults": [
+      "registered_09",
+      "registered_10"
+    ],
+    "group": "registered_composition",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "route_fault:registered_09",
+      "route_fault:registered_10",
+      "route_fault:registered_11"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "route_fault:registered_09",
+      "route_fault:registered_10",
+      "route_fault:registered_11"
+    ],
+    "faults": [
+      "registered_09",
+      "registered_10",
+      "registered_11"
+    ],
+    "group": "registered_composition",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "route_fault:registered_10"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "route_fault:registered_10"
+    ],
+    "faults": [
+      "registered_10"
+    ],
+    "group": "registered_single",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "route_fault:registered_10",
+      "route_fault:registered_11"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "route_fault:registered_10",
+      "route_fault:registered_11"
+    ],
+    "faults": [
+      "registered_10",
+      "registered_11"
+    ],
+    "group": "registered_composition",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "route_fault:registered_10",
+      "route_fault:registered_11",
+      "route_fault:registered_12"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "route_fault:registered_10",
+      "route_fault:registered_11",
+      "route_fault:registered_12"
+    ],
+    "faults": [
+      "registered_10",
+      "registered_11",
+      "registered_12"
+    ],
+    "group": "registered_composition",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "route_fault:registered_11"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "route_fault:registered_11"
+    ],
+    "faults": [
+      "registered_11"
+    ],
+    "group": "registered_single",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "route_fault:registered_11",
+      "route_fault:registered_12"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "route_fault:registered_11",
+      "route_fault:registered_12"
+    ],
+    "faults": [
+      "registered_11",
+      "registered_12"
+    ],
+    "group": "registered_composition",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "route_fault:registered_11",
+      "route_fault:registered_12",
+      "route_fault:registered_13"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "route_fault:registered_11",
+      "route_fault:registered_12",
+      "route_fault:registered_13"
+    ],
+    "faults": [
+      "registered_11",
+      "registered_12",
+      "registered_13"
+    ],
+    "group": "registered_composition",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "route_fault:registered_12"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "route_fault:registered_12"
+    ],
+    "faults": [
+      "registered_12"
+    ],
+    "group": "registered_single",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "route_fault:registered_12",
+      "route_fault:registered_13"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "route_fault:registered_12",
+      "route_fault:registered_13"
+    ],
+    "faults": [
+      "registered_12",
+      "registered_13"
+    ],
+    "group": "registered_composition",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "route_fault:registered_12",
+      "route_fault:registered_13",
+      "route_fault:registered_14"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "route_fault:registered_12",
+      "route_fault:registered_13",
+      "route_fault:registered_14"
+    ],
+    "faults": [
+      "registered_12",
+      "registered_13",
+      "registered_14"
+    ],
+    "group": "registered_composition",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "route_fault:registered_13"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "route_fault:registered_13"
+    ],
+    "faults": [
+      "registered_13"
+    ],
+    "group": "registered_single",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "route_fault:registered_13",
+      "route_fault:registered_14"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "route_fault:registered_13",
+      "route_fault:registered_14"
+    ],
+    "faults": [
+      "registered_13",
+      "registered_14"
+    ],
+    "group": "registered_composition",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "route_fault:registered_13",
+      "route_fault:registered_14",
+      "route_fault:registered_15"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "route_fault:registered_13",
+      "route_fault:registered_14",
+      "route_fault:registered_15"
+    ],
+    "faults": [
+      "registered_13",
+      "registered_14",
+      "registered_15"
+    ],
+    "group": "registered_composition",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "route_fault:registered_14"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "route_fault:registered_14"
+    ],
+    "faults": [
+      "registered_14"
+    ],
+    "group": "registered_single",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "route_fault:registered_14",
+      "route_fault:registered_15"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "route_fault:registered_14",
+      "route_fault:registered_15"
+    ],
+    "faults": [
+      "registered_14",
+      "registered_15"
+    ],
+    "group": "registered_composition",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "route_fault:registered_14",
+      "route_fault:registered_15",
+      "route_fault:registered_16"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "route_fault:registered_14",
+      "route_fault:registered_15",
+      "route_fault:registered_16"
+    ],
+    "faults": [
+      "registered_14",
+      "registered_15",
+      "registered_16"
+    ],
+    "group": "registered_composition",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "route_fault:registered_15"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "route_fault:registered_15"
+    ],
+    "faults": [
+      "registered_15"
+    ],
+    "group": "registered_single",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "route_fault:registered_15",
+      "route_fault:registered_16"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "route_fault:registered_15",
+      "route_fault:registered_16"
+    ],
+    "faults": [
+      "registered_15",
+      "registered_16"
+    ],
+    "group": "registered_composition",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "route_fault:registered_15",
+      "route_fault:registered_16",
+      "route_fault:registered_17"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "route_fault:registered_15",
+      "route_fault:registered_16",
+      "route_fault:registered_17"
+    ],
+    "faults": [
+      "registered_15",
+      "registered_16",
+      "registered_17"
+    ],
+    "group": "registered_composition",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "route_fault:registered_16"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "route_fault:registered_16"
+    ],
+    "faults": [
+      "registered_16"
+    ],
+    "group": "registered_single",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "route_fault:registered_16",
+      "route_fault:registered_17"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "route_fault:registered_16",
+      "route_fault:registered_17"
+    ],
+    "faults": [
+      "registered_16",
+      "registered_17"
+    ],
+    "group": "registered_composition",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "route_fault:registered_16",
+      "route_fault:registered_17",
+      "route_fault:registered_18"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "route_fault:registered_16",
+      "route_fault:registered_17",
+      "route_fault:registered_18"
+    ],
+    "faults": [
+      "registered_16",
+      "registered_17",
+      "registered_18"
+    ],
+    "group": "registered_composition",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "route_fault:registered_17"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "route_fault:registered_17"
+    ],
+    "faults": [
+      "registered_17"
+    ],
+    "group": "registered_single",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "route_fault:registered_17",
+      "route_fault:registered_18"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "route_fault:registered_17",
+      "route_fault:registered_18"
+    ],
+    "faults": [
+      "registered_17",
+      "registered_18"
+    ],
+    "group": "registered_composition",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "route_fault:registered_17",
+      "route_fault:registered_18",
+      "route_fault:registered_19"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "route_fault:registered_17",
+      "route_fault:registered_18",
+      "route_fault:registered_19"
+    ],
+    "faults": [
+      "registered_17",
+      "registered_18",
+      "registered_19"
+    ],
+    "group": "registered_composition",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "route_fault:registered_18"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "route_fault:registered_18"
+    ],
+    "faults": [
+      "registered_18"
+    ],
+    "group": "registered_single",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "route_fault:registered_18",
+      "route_fault:registered_19"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "route_fault:registered_18",
+      "route_fault:registered_19"
+    ],
+    "faults": [
+      "registered_18",
+      "registered_19"
+    ],
+    "group": "registered_composition",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "route_fault:registered_18",
+      "route_fault:registered_19",
+      "route_fault:registered_20"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "route_fault:registered_18",
+      "route_fault:registered_19",
+      "route_fault:registered_20"
+    ],
+    "faults": [
+      "registered_18",
+      "registered_19",
+      "registered_20"
+    ],
+    "group": "registered_composition",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "route_fault:registered_19"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "route_fault:registered_19"
+    ],
+    "faults": [
+      "registered_19"
+    ],
+    "group": "registered_single",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "route_fault:registered_19",
+      "route_fault:registered_20"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "route_fault:registered_19",
+      "route_fault:registered_20"
+    ],
+    "faults": [
+      "registered_19",
+      "registered_20"
+    ],
+    "group": "registered_composition",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "route_fault:registered_19",
+      "route_fault:registered_20",
+      "route_fault:registered_21"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "route_fault:registered_19",
+      "route_fault:registered_20",
+      "route_fault:registered_21"
+    ],
+    "faults": [
+      "registered_19",
+      "registered_20",
+      "registered_21"
+    ],
+    "group": "registered_composition",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "route_fault:registered_20"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "route_fault:registered_20"
+    ],
+    "faults": [
+      "registered_20"
+    ],
+    "group": "registered_single",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "route_fault:registered_20",
+      "route_fault:registered_21"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "route_fault:registered_20",
+      "route_fault:registered_21"
+    ],
+    "faults": [
+      "registered_20",
+      "registered_21"
+    ],
+    "group": "registered_composition",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "route_fault:registered_20",
+      "route_fault:registered_21",
+      "route_fault:registered_22"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "route_fault:registered_20",
+      "route_fault:registered_21",
+      "route_fault:registered_22"
+    ],
+    "faults": [
+      "registered_20",
+      "registered_21",
+      "registered_22"
+    ],
+    "group": "registered_composition",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "route_fault:registered_21"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "route_fault:registered_21"
+    ],
+    "faults": [
+      "registered_21"
+    ],
+    "group": "registered_single",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "route_fault:registered_21",
+      "route_fault:registered_22"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "route_fault:registered_21",
+      "route_fault:registered_22"
+    ],
+    "faults": [
+      "registered_21",
+      "registered_22"
+    ],
+    "group": "registered_composition",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "route_fault:registered_21",
+      "route_fault:registered_22",
+      "route_fault:registered_23"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "route_fault:registered_21",
+      "route_fault:registered_22",
+      "route_fault:registered_23"
+    ],
+    "faults": [
+      "registered_21",
+      "registered_22",
+      "registered_23"
+    ],
+    "group": "registered_composition",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "route_fault:registered_22"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "route_fault:registered_22"
+    ],
+    "faults": [
+      "registered_22"
+    ],
+    "group": "registered_single",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "route_fault:registered_22",
+      "route_fault:registered_23"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "route_fault:registered_22",
+      "route_fault:registered_23"
+    ],
+    "faults": [
+      "registered_22",
+      "registered_23"
+    ],
+    "group": "registered_composition",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "route_fault:registered_22",
+      "route_fault:registered_23",
+      "route_fault:registered_24"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "route_fault:registered_22",
+      "route_fault:registered_23",
+      "route_fault:registered_24"
+    ],
+    "faults": [
+      "registered_22",
+      "registered_23",
+      "registered_24"
+    ],
+    "group": "registered_composition",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "route_fault:registered_23"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "route_fault:registered_23"
+    ],
+    "faults": [
+      "registered_23"
+    ],
+    "group": "registered_single",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "route_fault:registered_23",
+      "route_fault:registered_24"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "route_fault:registered_23",
+      "route_fault:registered_24"
+    ],
+    "faults": [
+      "registered_23",
+      "registered_24"
+    ],
+    "group": "registered_composition",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "route_fault:registered_23",
+      "route_fault:registered_24",
+      "route_fault:registered_25"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "route_fault:registered_23",
+      "route_fault:registered_24",
+      "route_fault:registered_25"
+    ],
+    "faults": [
+      "registered_23",
+      "registered_24",
+      "registered_25"
+    ],
+    "group": "registered_composition",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "route_fault:registered_24"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "route_fault:registered_24"
+    ],
+    "faults": [
+      "registered_24"
+    ],
+    "group": "registered_single",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "route_fault:registered_24",
+      "route_fault:registered_25"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "route_fault:registered_24",
+      "route_fault:registered_25"
+    ],
+    "faults": [
+      "registered_24",
+      "registered_25"
+    ],
+    "group": "registered_composition",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "route_fault:registered_24",
+      "route_fault:registered_25",
+      "route_fault:registered_26"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "route_fault:registered_24",
+      "route_fault:registered_25",
+      "route_fault:registered_26"
+    ],
+    "faults": [
+      "registered_24",
+      "registered_25",
+      "registered_26"
+    ],
+    "group": "registered_composition",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "route_fault:registered_25"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "route_fault:registered_25"
+    ],
+    "faults": [
+      "registered_25"
+    ],
+    "group": "registered_single",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "route_fault:registered_25",
+      "route_fault:registered_26"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "route_fault:registered_25",
+      "route_fault:registered_26"
+    ],
+    "faults": [
+      "registered_25",
+      "registered_26"
+    ],
+    "group": "registered_composition",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "route_fault:registered_25",
+      "route_fault:registered_26",
+      "route_fault:registered_27"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "route_fault:registered_25",
+      "route_fault:registered_26",
+      "route_fault:registered_27"
+    ],
+    "faults": [
+      "registered_25",
+      "registered_26",
+      "registered_27"
+    ],
+    "group": "registered_composition",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "route_fault:registered_26"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "route_fault:registered_26"
+    ],
+    "faults": [
+      "registered_26"
+    ],
+    "group": "registered_single",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "route_fault:registered_26",
+      "route_fault:registered_27"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "route_fault:registered_26",
+      "route_fault:registered_27"
+    ],
+    "faults": [
+      "registered_26",
+      "registered_27"
+    ],
+    "group": "registered_composition",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "model_version",
+      "route_fault:registered_26",
+      "route_fault:registered_27"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "model_version",
+      "route_fault:registered_26",
+      "route_fault:registered_27"
+    ],
+    "faults": [
+      "registered_26",
+      "registered_27",
+      "model_version"
+    ],
+    "group": "registered_composition",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "route_fault:registered_27"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "route_fault:registered_27"
+    ],
+    "faults": [
+      "registered_27"
+    ],
+    "group": "registered_single",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "model_version",
+      "route_fault:registered_27"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "model_version",
+      "route_fault:registered_27"
+    ],
+    "faults": [
+      "registered_27",
+      "model_version"
+    ],
+    "group": "registered_composition",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "explainer_model_pair",
+      "model_version",
+      "route_fault:registered_27"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "explainer_model_pair",
+      "model_version",
+      "route_fault:registered_27"
+    ],
+    "faults": [
+      "registered_27",
+      "model_version",
+      "explainer_model_pair"
+    ],
+    "group": "registered_composition",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "natural_failure:heldout_sampling_rate"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "natural_failure:heldout_sampling_rate"
+    ],
+    "faults": [
+      "heldout_sampling_rate"
+    ],
+    "group": "heldout_fault_type",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "natural_failure:heldout_tokenizer_space"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "natural_failure:heldout_tokenizer_space"
+    ],
+    "faults": [
+      "heldout_tokenizer_space"
+    ],
+    "group": "heldout_fault_type",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "natural_failure:heldout_post_reduction_link"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "natural_failure:heldout_post_reduction_link"
+    ],
+    "faults": [
+      "heldout_post_reduction_link"
+    ],
+    "group": "heldout_fault_type",
+    "simple_or_detected": false,
+    "source_localized": true
+  },
+  {
+    "cut": [
+      "natural_failure:heldout_mixed_feature_space"
+    ],
+    "cut_exact_match": true,
+    "detected": true,
+    "expected_cut": [
+      "natural_failure:heldout_mixed_feature_space"
+    ],
+    "faults": [
+      "heldout_mixed_feature_space"
+    ],
+    "group": "heldout_fault_type",
+    "simple_or_detected": false,
+    "source_localized": true
+  }
+]

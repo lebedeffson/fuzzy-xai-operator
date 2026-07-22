@@ -1,0 +1,33 @@
+{
+  "commit": "3d15097983d7e15b1ac499852be39ecfbb74c7d3",
+  "confirmatory_claims_enabled": false,
+  "datasets": [
+    {
+      "confirmatory_independence": false,
+      "content_sha256": "25e2eb7b7a8745b1bde5ba18bc4969983d2e2f403291ecd5bde4a29ef30c3859",
+      "dataset_id": "breast_cancer_wisconsin",
+      "license": "see scikit-learn dataset documentation and original UCI terms",
+      "n_classes": 2,
+      "n_features": 30,
+      "n_objects": 569,
+      "role": "formative_and_rule_effect_evaluation",
+      "source": "scikit-learn bundled UCI dataset"
+    },
+    {
+      "confirmatory_independence": false,
+      "content_sha256": "3a28849ef2366c4b9d4e382b3fa5624a66f693c04d7fdcf43c529bbb0bb338d7",
+      "dataset_id": "wine_recognition",
+      "license": "see scikit-learn dataset documentation and original UCI terms",
+      "n_classes": 3,
+      "n_features": 13,
+      "n_objects": 178,
+      "role": "formative_and_rule_effect_evaluation",
+      "source": "scikit-learn bundled UCI dataset"
+    }
+  ],
+  "limitation": "Bundled datasets support implementation and formative H6 checks; they are not a new sealed independent confirmation.",
+  "protocol_id": "FXAI-NEGATIVE-RESULTS-REMEDIATION",
+  "protocol_sha256": "a1d60209c6479fdfbc1561c0d470f09af6dd2f9ff6b61f66f1289c6123910717",
+  "schema_version": "1.0",
+  "status": "registered_formative_real_tabular_data"
+}

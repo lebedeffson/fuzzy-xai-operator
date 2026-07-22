@@ -1,0 +1,11 @@
+{
+  "criterion_met": false,
+  "detection_rate": 0.19547325102880658,
+  "false_discovery_rate": 0.0,
+  "grid_points": 4500,
+  "n_eligible": 972,
+  "phase": "controlled_formative_detectability",
+  "protocol_sha256": "a1d60209c6479fdfbc1561c0d470f09af6dd2f9ff6b61f66f1289c6123910717",
+  "sign_accuracy": 0.7438271604938271,
+  "universal_rule_claim_allowed": false
+}

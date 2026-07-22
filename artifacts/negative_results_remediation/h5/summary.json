@@ -1,0 +1,25 @@
+{
+  "H5-A2": "supported_registered_library_only",
+  "H5-P2": "not_evaluated_independent_model_error_data_absent",
+  "H5-P3": "not_evaluated_independent_model_error_data_absent",
+  "heldout": {
+    "arbitrary_unknown_failure_claim_allowed": false,
+    "generic_failure_detection": 1.0,
+    "specific_unknown_type_identification": 0.0
+  },
+  "n_heldout_types": 4,
+  "n_registered_cases": 120,
+  "n_registered_templates": 40,
+  "phase": "controlled_confirmatory_after_protocol_lock",
+  "protocol_sha256": "a1d60209c6479fdfbc1561c0d470f09af6dd2f9ff6b61f66f1289c6123910717",
+  "simple_or": {
+    "false_certification": 0.925,
+    "registered_recall": 0.075
+  },
+  "typed_validator": {
+    "false_certification": 0.0,
+    "minimal_cut_exact_match": 1.0,
+    "registered_recall": 1.0,
+    "source_localization": 1.0
+  }
+}

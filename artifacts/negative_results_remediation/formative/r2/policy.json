@@ -1,0 +1,193 @@
+{
+  "cost_profile": {
+    "deployment_shift": 4.0,
+    "false_block": 6.0,
+    "full_review": 1.5,
+    "full_review_residual": 0.1,
+    "prediction_error": 8.0,
+    "short_review": 0.5,
+    "short_review_residual": 0.45,
+    "uncertified_route": 10.0,
+    "unstable_explanation": 2.0
+  },
+  "heads": {
+    "explanation": {
+      "calibration_method": "platt",
+      "calibration_parameters": [
+        1.453442589337259,
+        -0.03915607180150584
+      ],
+      "coefficients": [
+        2.8838458976914683,
+        2.88384589768953,
+        2.8838458976915646,
+        2.8838458976939454,
+        2.883845897690282,
+        1.7725233417643378
+      ],
+      "development_sha256": "205da5cc7ef09c40e6ddb17a1803f7a73076f73c66401c49aa2faee4d973c64a",
+      "feature_names": [
+        "explainer_disagreement",
+        "seed_instability",
+        "bootstrap_instability",
+        "perturbation_instability",
+        "representation_loss",
+        "source_conflict_count"
+      ],
+      "intercept": -22.015330880527117,
+      "means": [
+        0.28837666666668976,
+        0.25953900000000446,
+        0.23070133333335244,
+        0.3027955000000516,
+        0.14418833333334488,
+        0.31112500000004667
+      ],
+      "modality": "global",
+      "scales": [
+        0.26422420837023486,
+        0.23780178753324127,
+        0.2113793666961904,
+        0.2774354187887418,
+        0.13211210418511743,
+        0.28457624950507276
+      ],
+      "target_name": "explanation_unstable_or_incomplete"
+    },
+    "prediction": {
+      "calibration_method": "platt",
+      "calibration_parameters": [
+        0.9960416359135879,
+        0.00030834184977021053
+      ],
+      "coefficients": [
+        -0.0021342782091260076,
+        0.15525574626186647,
+        -0.003940258195817476,
+        0.020412886868156337,
+        -0.003940258195826198,
+        0.45041679869832746
+      ],
+      "development_sha256": "fe03b4d8f446cc6c1f2482b720f8ecc87403a8a03e40cf427b37b7164b1c3cec",
+      "feature_names": [
+        "calibrated_confidence",
+        "entropy",
+        "prediction_margin",
+        "calibration_residual",
+        "boundary_distance",
+        "model_disagreement"
+      ],
+      "intercept": -0.09970441936999873,
+      "means": [
+        0.1541160130528685,
+        0.4800802609303095,
+        0.3082054219212504,
+        0.1070175000000168,
+        0.3082054219212504,
+        0.37291655208332547
+      ],
+      "modality": "global",
+      "scales": [
+        0.10170645181589026,
+        0.2705927600732175,
+        0.203322406071077,
+        0.16252893494309614,
+        0.203322406071077,
+        0.1343402290310436
+      ],
+      "target_name": "model_error"
+    },
+    "route": {
+      "calibration_method": "platt",
+      "calibration_parameters": [
+        1.3505669499982202,
+        0.024212612650771223
+      ],
+      "coefficients": [
+        4.442307688974051,
+        1.681700262239223,
+        1.681700262239223,
+        1.1667587009486524,
+        1.681700262239223,
+        -1.0597324468153506,
+        0.1897653758768975,
+        -0.6873303098183885
+      ],
+      "development_sha256": "cd9412f77252e01b4b5670365a9d55dad17321725ac4678f721323a7585a3804",
+      "feature_names": [
+        "certificate_exists",
+        "certificate_coverage",
+        "unsatisfied_contracts",
+        "weighted_contract_severity",
+        "minimal_cut_size",
+        "path_redundancy",
+        "provenance_completeness",
+        "canonical_integrity"
+      ],
+      "intercept": 3.7682367592954815,
+      "means": [
+        0.683375,
+        0.31112500000004667,
+        0.31112500000004667,
+        0.29584375,
+        0.31112500000004667,
+        0.125,
+        0.16666666666666666,
+        0.08333333333333333
+      ],
+      "modality": "global",
+      "scales": [
+        0.46515976757998034,
+        0.28457624950507276,
+        0.28457624950507276,
+        0.2831738213287754,
+        0.28457624950507276,
+        0.2975595178559521,
+        0.37267799624996795,
+        0.27638539919627336
+      ],
+      "target_name": "route_not_certifiable"
+    },
+    "shift": {
+      "calibration_method": "platt",
+      "calibration_parameters": [
+        4.6697591986840115,
+        -3.3263163331142067
+      ],
+      "coefficients": [
+        10.298955261022703,
+        4.950914865940145,
+        -0.8461702002277504,
+        1.8566196462070255,
+        0.009352648189376499
+      ],
+      "development_sha256": "f412a3422442ebbfdc95df30d5d88042ef298b9a3140a164370764fbe20d1f75",
+      "feature_names": [
+        "shift_score",
+        "reference_population_distance",
+        "artifact_age",
+        "version_distance",
+        "rare_group"
+      ],
+      "intercept": -12.410943177191124,
+      "means": [
+        0.34294854166655303,
+        0.37628187500000765,
+        0.183375,
+        0.16666666666666666,
+        0.0345
+      ],
+      "modality": "global",
+      "scales": [
+        0.20667727543243686,
+        0.24578001469729724,
+        0.3869736546265109,
+        0.37267799624998166,
+        0.1825095887892099
+      ],
+      "target_name": "outside_deployment_envelope"
+    }
+  },
+  "policy_version": "negative-remediation-r2",
+  "selected_without_test": true
+}

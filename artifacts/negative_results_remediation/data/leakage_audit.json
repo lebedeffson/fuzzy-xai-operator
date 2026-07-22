@@ -1,0 +1,8 @@
+{
+  "confirmatory_test_opened": false,
+  "identity_overlap_count": 0,
+  "normalization_fit_scope": "train_only_when_models_are_fit",
+  "policy_selection_scope": "OOF development only",
+  "status": "pass",
+  "test_labels_in_feature_manifest": false
+}

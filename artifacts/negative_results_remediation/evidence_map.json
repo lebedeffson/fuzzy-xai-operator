@@ -1,0 +1,170 @@
+{
+  "records": [
+    {
+      "artifact_path": "artifacts/negative_results_remediation/deviations/pre_final_invalid_run.json",
+      "claim_ids": [],
+      "commit": "3d15097983d7e15b1ac499852be39ecfbb74c7d3",
+      "evidence_id": "NR-E00",
+      "protocol_sha256": "a1d60209c6479fdfbc1561c0d470f09af6dd2f9ff6b61f66f1289c6123910717",
+      "sha256": "3d049e6c3b9357777d2d70d866937d9a5179413127dc49b27fce4376d673c1d5",
+      "status": "invalid_preserved_no_claim"
+    },
+    {
+      "artifact_path": "artifacts/negative_results_remediation/data/dataset_manifest.json",
+      "claim_ids": [
+        "H6-R1",
+        "H6-R2",
+        "H6-R3"
+      ],
+      "commit": "3d15097983d7e15b1ac499852be39ecfbb74c7d3",
+      "evidence_id": "NR-E01",
+      "protocol_sha256": "a1d60209c6479fdfbc1561c0d470f09af6dd2f9ff6b61f66f1289c6123910717",
+      "sha256": "b6a9d273113042470e352a39ee06fb53ef2b22971d064a077bc7c5c5b37931a1",
+      "status": "descriptive"
+    },
+    {
+      "artifact_path": "artifacts/negative_results_remediation/data/leakage_audit.json",
+      "claim_ids": [
+        "H3-R1",
+        "H3-R2",
+        "H3-R3"
+      ],
+      "commit": "3d15097983d7e15b1ac499852be39ecfbb74c7d3",
+      "evidence_id": "NR-E02",
+      "protocol_sha256": "a1d60209c6479fdfbc1561c0d470f09af6dd2f9ff6b61f66f1289c6123910717",
+      "sha256": "6a6dc3f288da8d3c05980177ce3b40bf8aa321f39176a0b61c0259e412d205a1",
+      "status": "audit"
+    },
+    {
+      "artifact_path": "artifacts/negative_results_remediation/lock/negative_remediation_lock.json",
+      "claim_ids": [],
+      "commit": "3d15097983d7e15b1ac499852be39ecfbb74c7d3",
+      "evidence_id": "NR-E03",
+      "protocol_sha256": "a1d60209c6479fdfbc1561c0d470f09af6dd2f9ff6b61f66f1289c6123910717",
+      "sha256": "3e73d285f8fd174c00e9dcf32f2e8b8eb59dbe38c8c51dfa054c1ec1ab4dea5e",
+      "status": "protocol_lock"
+    },
+    {
+      "artifact_path": "artifacts/negative_results_remediation/h3/confirmatory_status.json",
+      "claim_ids": [
+        "H3-R1",
+        "H3-R2",
+        "H3-R3"
+      ],
+      "commit": "3d15097983d7e15b1ac499852be39ecfbb74c7d3",
+      "evidence_id": "NR-E04",
+      "protocol_sha256": "a1d60209c6479fdfbc1561c0d470f09af6dd2f9ff6b61f66f1289c6123910717",
+      "sha256": "a3f53f9c5a5ecf241c4eb68d9eacad63b938fd4c25f94af16ee756419b0ae738",
+      "status": "blocked"
+    },
+    {
+      "artifact_path": "artifacts/negative_results_remediation/replay/summary.json",
+      "claim_ids": [
+        "H3-R4"
+      ],
+      "commit": "3d15097983d7e15b1ac499852be39ecfbb74c7d3",
+      "evidence_id": "NR-E05",
+      "protocol_sha256": "a1d60209c6479fdfbc1561c0d470f09af6dd2f9ff6b61f66f1289c6123910717",
+      "sha256": "9c6acc7a85b436524aa25e0f75e746cbe6c25800092bf2d5c1727737c6851d7f",
+      "status": "controlled_replay"
+    },
+    {
+      "artifact_path": "artifacts/negative_results_remediation/replay/raw_results.npz",
+      "claim_ids": [
+        "H3-R4"
+      ],
+      "commit": "3d15097983d7e15b1ac499852be39ecfbb74c7d3",
+      "evidence_id": "NR-E06",
+      "protocol_sha256": "a1d60209c6479fdfbc1561c0d470f09af6dd2f9ff6b61f66f1289c6123910717",
+      "sha256": "ce75751e5def3f02837632992e9acdfc9f2ff541a264d387abea9499c1dc085f",
+      "status": "raw_controlled_replay"
+    },
+    {
+      "artifact_path": "artifacts/negative_results_remediation/h5/summary.json",
+      "claim_ids": [
+        "H5-A2",
+        "H5-P2",
+        "H5-P3"
+      ],
+      "commit": "3d15097983d7e15b1ac499852be39ecfbb74c7d3",
+      "evidence_id": "NR-E07",
+      "protocol_sha256": "a1d60209c6479fdfbc1561c0d470f09af6dd2f9ff6b61f66f1289c6123910717",
+      "sha256": "7b21b420f6045e89ec75cef47a83ef33d15d31fb9ce5d702cdbeb2fd5de1e59b",
+      "status": "controlled_confirmatory"
+    },
+    {
+      "artifact_path": "artifacts/negative_results_remediation/h5/raw_cases.json",
+      "claim_ids": [
+        "H5-A2"
+      ],
+      "commit": "3d15097983d7e15b1ac499852be39ecfbb74c7d3",
+      "evidence_id": "NR-E08",
+      "protocol_sha256": "a1d60209c6479fdfbc1561c0d470f09af6dd2f9ff6b61f66f1289c6123910717",
+      "sha256": "b005d3bf02c24e2b7881d8fe83c653da02c5971bad57f41f7ff7cb32c1fe53b3",
+      "status": "raw_controlled_faults"
+    },
+    {
+      "artifact_path": "artifacts/negative_results_remediation/h6/detectability_summary.json",
+      "claim_ids": [
+        "H6-R1"
+      ],
+      "commit": "3d15097983d7e15b1ac499852be39ecfbb74c7d3",
+      "evidence_id": "NR-E09",
+      "protocol_sha256": "a1d60209c6479fdfbc1561c0d470f09af6dd2f9ff6b61f66f1289c6123910717",
+      "sha256": "b33847123fbbce70b303d52c67914e7636bbefeb894e77318457faabcb024dd8",
+      "status": "controlled_formative"
+    },
+    {
+      "artifact_path": "artifacts/negative_results_remediation/h6/detectability_rows.json",
+      "claim_ids": [
+        "H6-R1"
+      ],
+      "commit": "3d15097983d7e15b1ac499852be39ecfbb74c7d3",
+      "evidence_id": "NR-E10",
+      "protocol_sha256": "a1d60209c6479fdfbc1561c0d470f09af6dd2f9ff6b61f66f1289c6123910717",
+      "sha256": "b512c29d004ad4c083a8d0864a8667c88f24a313656be922c856c5a66fcbd640",
+      "status": "raw_controlled_formative"
+    },
+    {
+      "artifact_path": "artifacts/negative_results_remediation/h6/real_rule_effects.json",
+      "claim_ids": [
+        "H6-R1",
+        "H6-R2",
+        "H6-R3",
+        "H6-R4",
+        "H6-R5"
+      ],
+      "commit": "3d15097983d7e15b1ac499852be39ecfbb74c7d3",
+      "evidence_id": "NR-E11",
+      "protocol_sha256": "a1d60209c6479fdfbc1561c0d470f09af6dd2f9ff6b61f66f1289c6123910717",
+      "sha256": "3a88805b3b1288fc71b48e0014e9d74136783cfdc4985268ed84d40aca5d9f66",
+      "status": "exploratory"
+    },
+    {
+      "artifact_path": "artifacts/negative_results_remediation/statistics/summary.json",
+      "claim_ids": [
+        "H3-R4",
+        "H5-A2"
+      ],
+      "commit": "3d15097983d7e15b1ac499852be39ecfbb74c7d3",
+      "evidence_id": "NR-E12",
+      "protocol_sha256": "a1d60209c6479fdfbc1561c0d470f09af6dd2f9ff6b61f66f1289c6123910717",
+      "sha256": "25eb2e4256c0fabbf21cd10abe2066459b5a593da671cbb14ecaf433a32bebc0",
+      "status": "statistical_summary"
+    },
+    {
+      "artifact_path": "artifacts/negative_results_remediation/claims/negative_remediation_claim_registry.json",
+      "claim_ids": [
+        "H3-original",
+        "H5-P-original",
+        "H6-general"
+      ],
+      "commit": "3d15097983d7e15b1ac499852be39ecfbb74c7d3",
+      "evidence_id": "NR-E13",
+      "protocol_sha256": "a1d60209c6479fdfbc1561c0d470f09af6dd2f9ff6b61f66f1289c6123910717",
+      "sha256": "78e905f7729564399609ea84909324c5235e8923db4d0cd9d9522a81e713f59a",
+      "status": "claim_registry"
+    }
+  ],
+  "schema_version": "1.0"
+}

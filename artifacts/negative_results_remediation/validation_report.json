@@ -1,0 +1,10 @@
+{
+  "formative_stop_rule_valid": true,
+  "immutable_negative_claims_valid": true,
+  "independent_confirmatory_h3_complete": false,
+  "positive_scientific_release_allowed": false,
+  "protocol_hash_valid": true,
+  "status": "pass_technical_research_candidate",
+  "technical_release_allowed": true,
+  "test_leakage_absent": true
+}

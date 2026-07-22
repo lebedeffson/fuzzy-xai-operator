@@ -1,0 +1,278 @@
+{
+  "H6-R1": "measured_exploratory",
+  "H6-R2": "measured_exploratory",
+  "H6-R3": "measured_exploratory",
+  "H6-R4": "not_confirmatory_datasets_not_registered_as_independent_before_lock",
+  "H6-R5": "not_evaluated_certificate_adapter_absent_for_these_predictors",
+  "H6-general": "not_supported",
+  "dataset_direction_consistent": false,
+  "datasets": [
+    {
+      "candidate": {
+        "bootstrap_stability": 0.9897617945156145,
+        "depth": 1,
+        "feature_indices": [
+          14
+        ],
+        "length": 1,
+        "predicted_class": 1,
+        "redundancy": 0.45259121853814677,
+        "rule_id": "breast_cancer_wisconsin:feature-14",
+        "subgroup_size": 170,
+        "support": 0.49853372434017595
+      },
+      "candidate_eligible": true,
+      "conditional_resampling": "within_train_fitted_non_target_feature_quantile_strata",
+      "conditional_strata_used_test_labels": false,
+      "dataset_id": "breast_cancer_wisconsin",
+      "effects": {
+        "conditional": {
+          "ablated_metric": 0.9473684210526315,
+          "baseline_metric": 0.9473684210526315,
+          "effect": 0.0,
+          "estimand": "conditional",
+          "metadata": {
+            "global_permutation": false,
+            "resampling": "within_stratum",
+            "seed": 4201
+          },
+          "n_objects": 114
+        },
+        "nonrefit": {
+          "ablated_metric": 0.9473684210526315,
+          "baseline_metric": 0.9473684210526315,
+          "effect": 0.0,
+          "estimand": "nonrefit",
+          "metadata": {
+            "refit": false
+          },
+          "n_objects": 114
+        },
+        "refit": {
+          "ablated_metric": 0.9473684210526315,
+          "baseline_metric": 0.9473684210526315,
+          "effect": 0.0,
+          "estimand": "refit",
+          "metadata": {
+            "refit": true
+          },
+          "n_objects": 114
+        }
+      },
+      "matched_controls": [
+        {
+          "bootstrap_stability": 0.9283582857436847,
+          "depth": 1,
+          "feature_indices": [
+            18
+          ],
+          "length": 1,
+          "predicted_class": 1,
+          "redundancy": 0.44671483016820945,
+          "rule_id": "breast_cancer_wisconsin:feature-18",
+          "subgroup_size": 170,
+          "support": 0.49853372434017595
+        },
+        {
+          "bootstrap_stability": 0.8786592581159645,
+          "depth": 1,
+          "feature_indices": [
+            11
+          ],
+          "length": 1,
+          "predicted_class": 1,
+          "redundancy": 0.44156527241888893,
+          "rule_id": "breast_cancer_wisconsin:feature-11",
+          "subgroup_size": 170,
+          "support": 0.49853372434017595
+        },
+        {
+          "bootstrap_stability": 0.9020424962700005,
+          "depth": 1,
+          "feature_indices": [
+            28
+          ],
+          "length": 1,
+          "predicted_class": 1,
+          "redundancy": 0.7020449539285596,
+          "rule_id": "breast_cancer_wisconsin:feature-28",
+          "subgroup_size": 170,
+          "support": 0.49853372434017595
+        },
+        {
+          "bootstrap_stability": 0.9108144260945619,
+          "depth": 1,
+          "feature_indices": [
+            8
+          ],
+          "length": 1,
+          "predicted_class": 1,
+          "redundancy": 0.7020449539285596,
+          "rule_id": "breast_cancer_wisconsin:feature-8",
+          "subgroup_size": 170,
+          "support": 0.49853372434017595
+        },
+        {
+          "bootstrap_stability": 0.9897617945156145,
+          "depth": 1,
+          "feature_indices": [
+            9
+          ],
+          "length": 1,
+          "predicted_class": 1,
+          "redundancy": 0.7733093898434161,
+          "rule_id": "breast_cancer_wisconsin:feature-9",
+          "subgroup_size": 170,
+          "support": 0.49853372434017595
+        }
+      ],
+      "matched_distances": [
+        0.005876388369937313,
+        0.011025946119257835,
+        0.24945373539041282,
+        0.24945373539041282,
+        0.32071817130526936
+      ],
+      "n_development": 114,
+      "n_test": 114,
+      "n_train": 341,
+      "specific_nonrefit_effect": 0.0,
+      "test_used_for_candidate_selection": false
+    },
+    {
+      "candidate": {
+        "bootstrap_stability": 0.9166666666666667,
+        "depth": 1,
+        "feature_indices": [
+          6
+        ],
+        "length": 1,
+        "predicted_class": 1,
+        "redundancy": 0.8749862232493488,
+        "rule_id": "wine_recognition:feature-6",
+        "subgroup_size": 53,
+        "support": 0.5
+      },
+      "candidate_eligible": false,
+      "conditional_resampling": "within_train_fitted_non_target_feature_quantile_strata",
+      "conditional_strata_used_test_labels": false,
+      "dataset_id": "wine_recognition",
+      "effects": {
+        "conditional": {
+          "ablated_metric": 0.6111111111111112,
+          "baseline_metric": 0.9166666666666666,
+          "effect": 0.30555555555555547,
+          "estimand": "conditional",
+          "metadata": {
+            "global_permutation": false,
+            "resampling": "within_stratum",
+            "seed": 4201
+          },
+          "n_objects": 36
+        },
+        "nonrefit": {
+          "ablated_metric": 0.6944444444444444,
+          "baseline_metric": 0.9166666666666666,
+          "effect": 0.2222222222222222,
+          "estimand": "nonrefit",
+          "metadata": {
+            "refit": false
+          },
+          "n_objects": 36
+        },
+        "refit": {
+          "ablated_metric": 0.9166666666666666,
+          "baseline_metric": 0.9166666666666666,
+          "effect": 0.0,
+          "estimand": "refit",
+          "metadata": {
+            "refit": true
+          },
+          "n_objects": 36
+        }
+      },
+      "matched_controls": [
+        {
+          "bootstrap_stability": 0.870545073375262,
+          "depth": 1,
+          "feature_indices": [
+            5
+          ],
+          "length": 1,
+          "predicted_class": 1,
+          "redundancy": 0.8749862232493489,
+          "rule_id": "wine_recognition:feature-5",
+          "subgroup_size": 52,
+          "support": 0.49056603773584906
+        },
+        {
+          "bootstrap_stability": 0.9722222222222222,
+          "depth": 1,
+          "feature_indices": [
+            11
+          ],
+          "length": 1,
+          "predicted_class": 1,
+          "redundancy": 0.7747944159692887,
+          "rule_id": "wine_recognition:feature-11",
+          "subgroup_size": 53,
+          "support": 0.5
+        },
+        {
+          "bootstrap_stability": 0.9166666666666667,
+          "depth": 1,
+          "feature_indices": [
+            8
+          ],
+          "length": 1,
+          "predicted_class": 1,
+          "redundancy": 0.6833073938708379,
+          "rule_id": "wine_recognition:feature-8",
+          "subgroup_size": 53,
+          "support": 0.5
+        },
+        {
+          "bootstrap_stability": 0.9444444444444444,
+          "depth": 1,
+          "feature_indices": [
+            0
+          ],
+          "length": 1,
+          "predicted_class": 1,
+          "redundancy": 0.6252669730942789,
+          "rule_id": "wine_recognition:feature-0",
+          "subgroup_size": 53,
+          "support": 0.5
+        },
+        {
+          "bootstrap_stability": 0.9722222222222222,
+          "depth": 1,
+          "feature_indices": [
+            12
+          ],
+          "length": 1,
+          "predicted_class": 1,
+          "redundancy": 0.6252669730942789,
+          "rule_id": "wine_recognition:feature-12",
+          "subgroup_size": 53,
+          "support": 0.5
+        }
+      ],
+      "matched_distances": [
+        0.02830188679245294,
+        0.10019180728006016,
+        0.19167882937851088,
+        0.2497192501550699,
+        0.2497192501550699
+      ],
+      "n_development": 36,
+      "n_test": 36,
+      "n_train": 106,
+      "specific_nonrefit_effect": 0.2222222222222222,
+      "test_used_for_candidate_selection": false
+    }
+  ],
+  "phase": "exploratory_real_data_after_protocol_lock",
+  "positive_general_claim_allowed": false,
+  "protocol_sha256": "a1d60209c6479fdfbc1561c0d470f09af6dd2f9ff6b61f66f1289c6123910717"
+}
