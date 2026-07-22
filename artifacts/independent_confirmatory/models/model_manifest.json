@@ -1,0 +1,87 @@
+{
+  "datasets": [
+    {
+      "dataset_id": "uci_dry_bean",
+      "development_objects": 2685,
+      "model_family": "HistGradientBoostingClassifier",
+      "model_sha256": "802c18e36139cfd4d338b73c1de9c5c27466e742b2b71f4ea1356889872586fb",
+      "normalization_and_vocabulary_fit_scope": "train_only",
+      "sealed_labels_loaded": false,
+      "splits": {
+        "formative_development": {
+          "artifact_sha256": "c53ae9defb3d99a4fefff06e041437190da01c0be321d055457eb59b765c4c66",
+          "labels_present": true,
+          "objects": 2685
+        },
+        "sealed_calibration_check": {
+          "artifact_sha256": "0079cec7d1a77f2da13befa26bd7373a2c5b457b7d7e05c7b8d037974f64a1f9",
+          "labels_present": false,
+          "objects": 1359
+        },
+        "sealed_confirmatory_test": {
+          "artifact_sha256": "2edfbc788104223abaece3b8a3a16ca4027bfd622b13f4d7e069abf3052af754",
+          "labels_present": false,
+          "objects": 1409
+        }
+      },
+      "train_objects": 8158
+    },
+    {
+      "dataset_id": "uci_news_aggregator",
+      "development_objects": 82667,
+      "model_family": "SGDClassifier",
+      "model_sha256": "02da36a033da21d58e8e70a8b313f74206b21ff74536282655c42a1370bc00e7",
+      "normalization_and_vocabulary_fit_scope": "train_only",
+      "sealed_labels_loaded": false,
+      "splits": {
+        "formative_development": {
+          "artifact_sha256": "a0ffd26c629d8e6230749475102017316d0a807e63ed4415d082d61e4db3ecea",
+          "labels_present": true,
+          "objects": 82667
+        },
+        "sealed_calibration_check": {
+          "artifact_sha256": "f38209dbd007d1787941d6d4e7106c20c238aa1af829644d13b4138fda22e11f",
+          "labels_present": false,
+          "objects": 39409
+        },
+        "sealed_confirmatory_test": {
+          "artifact_sha256": "5dcbe7ef9d8b43b37a25b496db3ecf3e901eaa7cc5763c752b7327f549b365bb",
+          "labels_present": false,
+          "objects": 43903
+        }
+      },
+      "train_objects": 256958
+    },
+    {
+      "dataset_id": "eurosat_rgb",
+      "development_objects": 5353,
+      "model_family": "SGDClassifier",
+      "model_sha256": "2ffe47fe8cfc570ef19f0664c6922af791ca1b395ff44c90203de8c66fd91a3e",
+      "normalization_and_vocabulary_fit_scope": "train_only",
+      "sealed_labels_loaded": false,
+      "splits": {
+        "formative_development": {
+          "artifact_sha256": "194e7965c82bd671c60a77118b7fef2e81044151ce754a8a0ca61cacd6f8c4b4",
+          "labels_present": true,
+          "objects": 5353
+        },
+        "sealed_calibration_check": {
+          "artifact_sha256": "c4ec28369ff22f747838311de25445bcec96ec4e22067be7b3a4e812fc6b167f",
+          "labels_present": false,
+          "objects": 2720
+        },
+        "sealed_confirmatory_test": {
+          "artifact_sha256": "ab0a610ae6d1ed891a2c2a69a6a30a21b32da70bef42f7ac393b0fcdef206e8a",
+          "labels_present": false,
+          "objects": 2760
+        }
+      },
+      "train_objects": 16167
+    }
+  ],
+  "implementation_commit": "f0be3f4fba6a7799a84de6a857c5bf7174e957b1",
+  "phase": "prelock_train_and_observable_prediction",
+  "route_faults": "deterministic controlled injection independent of labels; 3.5% repairable and 0.5% irreparable",
+  "schema_version": "1.0",
+  "test_labels_loaded": false
+}
