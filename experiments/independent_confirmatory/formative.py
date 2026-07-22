@@ -226,6 +226,7 @@ def main() -> None:
     verify_protocol()
     dataset_results = {}
     aggregate = {name: {"invalid": 0, "objects": 0} for name in POLICY_NAMES}
+    score_parts = {name: [] for name in POLICY_NAMES}
     for dataset_id in DATASET_IDS:
         rows = _load_rows(dataset_id, "formative_development")
         policies = {}
@@ -234,6 +235,7 @@ def main() -> None:
             policies[name] = metrics
             aggregate[name]["invalid"] += int(metrics["invalid_automatic_actions"])
             aggregate[name]["objects"] += int(metrics["objects"])
+            score_parts[name].append(policy_scores(rows)[name])
         dataset_results[dataset_id] = policies
     baselines = tuple(name for name in POLICY_NAMES if name != "full_hierarchical_fuzzyxai")
     best_baseline = min(baselines, key=lambda name: (aggregate[name]["invalid"], name))
@@ -249,6 +251,9 @@ def main() -> None:
         "aggregate": aggregate,
         "best_baseline_selected_without_test": best_baseline,
         "cost_weights": {"prediction": 4.0, "route": 3.0, "explanation": 1.0, "shift": 1.5},
+        "policy_score_thresholds_at_20_percent": {
+            name: float(np.quantile(np.concatenate(values), 0.80)) for name, values in score_parts.items()
+        },
         "h5": h5,
         "h6": h6,
         "sealed_calibration_labels_loaded": False,

@@ -1013,3 +1013,46 @@ remediation-smoke:
 
 reproduce-negative-results-remediation:
 	$(REMEDIATION_ENV) nice -n 15 $(REMEDIATION_PYTHON) -m experiments.negative_results_remediation.reproduce_all
+
+# FXAI-Q1-INDEPENDENT-CONFIRMATORY-CLOSURE
+INDEPENDENT_PYTHON ?= $(if $(wildcard .venv-confirmatory/bin/python),.venv-confirmatory/bin/python,$(PYTHON))
+INDEPENDENT_ENV = OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 PYTHONPATH=framework/fuzzyxai:.
+
+.PHONY: independent-data independent-models independent-formative independent-freeze independent-confirmatory independent-replay independent-claims independent-release-check independent-one-zip independent-smoke reproduce-independent-confirmatory-closure
+
+independent-data:
+	$(INDEPENDENT_ENV) $(INDEPENDENT_PYTHON) -m experiments.independent_confirmatory.prepare_data --download
+
+independent-models: independent-data
+	$(INDEPENDENT_ENV) nice -n 15 $(INDEPENDENT_PYTHON) -m experiments.independent_confirmatory.modeling
+
+independent-formative: independent-models
+	$(INDEPENDENT_ENV) nice -n 15 $(INDEPENDENT_PYTHON) -m experiments.independent_confirmatory.formative
+
+independent-freeze:
+	$(INDEPENDENT_ENV) $(INDEPENDENT_PYTHON) -m experiments.independent_confirmatory.freeze
+
+independent-confirmatory:
+	$(INDEPENDENT_ENV) nice -n 15 $(INDEPENDENT_PYTHON) -m experiments.independent_confirmatory.confirmatory
+
+independent-replay:
+	$(INDEPENDENT_ENV) nice -n 15 $(INDEPENDENT_PYTHON) -m experiments.independent_confirmatory.replay
+
+independent-claims:
+	$(INDEPENDENT_ENV) $(INDEPENDENT_PYTHON) -m experiments.independent_confirmatory.closure claims
+	$(INDEPENDENT_ENV) $(INDEPENDENT_PYTHON) -m experiments.independent_confirmatory.closure evidence
+
+independent-release-check:
+	$(INDEPENDENT_ENV) $(INDEPENDENT_PYTHON) -m pytest -q tests/independent_confirmatory
+	$(INDEPENDENT_ENV) $(INDEPENDENT_PYTHON) -m ruff check experiments/independent_confirmatory tests/independent_confirmatory framework/fuzzyxai/fuzzyxai/open_set_validator framework/fuzzyxai/fuzzyxai/rule_effects_v2 framework/fuzzyxai/fuzzyxai/replay/chronological.py
+	$(INDEPENDENT_ENV) $(INDEPENDENT_PYTHON) -m experiments.independent_confirmatory.closure check
+
+independent-one-zip: independent-release-check
+	$(INDEPENDENT_ENV) $(INDEPENDENT_PYTHON) -m experiments.independent_confirmatory.closure zip
+
+independent-smoke:
+	$(INDEPENDENT_ENV) $(INDEPENDENT_PYTHON) -m pytest -q tests/independent_confirmatory
+
+reproduce-independent-confirmatory-closure:
+	@echo "Fail-closed staged workflow: data/models/formative -> commit -> freeze -> commit -> one-shot confirmatory/replay -> claims"
+	@echo "Use make independent-release-check after immutable evidence is committed."
