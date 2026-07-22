@@ -1081,5 +1081,8 @@ operational-audit-replay:
 operational-audit-claims:
 	$(OPAUDIT_ENV) $(OPAUDIT_PYTHON) -m experiments.operational_audit_v16.closure
 
+operational-audit-one-zip: operational-audit-smoke
+	$(OPAUDIT_ENV) $(OPAUDIT_PYTHON) -m experiments.operational_audit_v16.package
+
 operational-audit-smoke:
 	$(OPAUDIT_ENV) $(OPAUDIT_PYTHON) -m pytest -q tests/operational_audit_v16
