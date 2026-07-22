@@ -73,7 +73,9 @@ def main() -> None:
         if phase_id == len(phase_names):
             phase_names.append(event.phase)
         confidence[index] = event.confidence
-        q_prediction[index] = event.predictive_error_probability
+        # The generator probability is used only to sample delayed labels. The
+        # controller sees an observable confidence-derived estimate.
+        q_prediction[index] = 1.0 - event.confidence
         q_route[index] = min(1.0, len(event.route_faults) / 2.0)
         q_explanation[index] = event.explanation_instability
         q_shift[index] = event.shift_score

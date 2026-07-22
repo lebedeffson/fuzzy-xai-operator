@@ -71,15 +71,19 @@ def _boolean_checks(
     route: RouteArtifacts,
     context: DeploymentContext,
 ) -> list[ContractCheck]:
-    route_fault_id = f"route_fault:{route.route_fault_type}" if route.route_fault_type else "registered_route_fault"
-    natural_failure_id = f"natural_failure:{route.natural_failure}" if route.natural_failure else "natural_pipeline_failure"
-    values = (
+    values = [
         ("reduction_loss", explanation.representation_loss <= context.maximum_reduction_loss, "explanation/reduction", 0.7),
         ("forbidden_rule_conflict", not route.forbidden_rule_conflict, "route/rules", 1.0),
         ("critical_data_quality", not route.critical_data_quality_fault, "route/data_quality", 1.0),
-        (route_fault_id, route.route_fault_type is None, "route/fault", 0.9),
-        (natural_failure_id, route.natural_failure is None, "route/runtime", 0.9),
-    )
+    ]
+    if route.route_fault_type:
+        values.extend((f"route_fault:{item}", False, f"route/fault/{item}", 0.9) for item in route.route_fault_type.split("|"))
+    else:
+        values.append(("registered_route_fault", True, "route/fault", 0.9))
+    if route.natural_failure:
+        values.extend((f"natural_failure:{item}", False, f"route/runtime/{item}", 0.9) for item in route.natural_failure.split("|"))
+    else:
+        values.append(("natural_pipeline_failure", True, "route/runtime", 0.9))
     return [
         _check(_require(contract_id, "valid", path, severity), "valid" if valid else "invalid")
         for contract_id, valid, path, severity in values

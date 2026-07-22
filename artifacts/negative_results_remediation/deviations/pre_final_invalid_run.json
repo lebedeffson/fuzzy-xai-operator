@@ -1,0 +1,16 @@
+{
+  "status": "invalid_before_finalization",
+  "implementation_commit": "0a26da41c2733b3096462450b5bd723713430faf",
+  "claim_allowed": false,
+  "reasons": [
+    "replay predictive score used generator latent probability rather than an observable estimate",
+    "H6 conditional strata used held-out target labels",
+    "H5 reported exact solver execution instead of diagnostic-cut ground-truth exact match"
+  ],
+  "preserved_hashes": {
+    "replay_summary": "e207f802715af8eb7a10e59114801f64d407ba7ff5f549c14501952c9bc52553",
+    "h5_summary": "798e9ab15fef898c5afc8e8ade429a48b8fe42e4bbc626ff966a1ca48f5a9331",
+    "h6_real": "64bd58614d3b3c9043faa938827fd2541a2793e618631e1241da167f951df2b0"
+  },
+  "test_opening": "controlled synthetic and exploratory bundled data only; no independent sealed test was opened"
+}

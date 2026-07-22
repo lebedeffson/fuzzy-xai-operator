@@ -47,9 +47,9 @@ def _inject(kind: str, prediction, explanation, route):
     elif kind == "data_quality":
         route = replace(route, critical_data_quality_fault=True)
     elif kind.startswith("registered_"):
-        route = replace(route, route_fault_type=kind)
+        route = replace(route, route_fault_type="|".join(filter(None, (route.route_fault_type, kind))))
     elif kind.startswith("heldout_"):
-        route = replace(route, natural_failure=kind)
+        route = replace(route, natural_failure="|".join(filter(None, (route.natural_failure, kind))))
     else:
         raise ValueError(kind)
     return prediction, explanation, route
@@ -61,6 +61,30 @@ def _simple_or(prediction, explanation, route, context) -> bool:
         or explanation.canonical_sha256 != context.expected_artifact_sha256
         or bool(set(context.mandatory_provenance_channels) - set(route.observed_provenance_channels))
     )
+
+
+def _expected_contract(kind: str) -> str:
+    fixed = {
+        "model_version": "model_version",
+        "explainer_model_pair": "explainer_model_pair",
+        "preprocessing": "preprocessing_version",
+        "calibration": "calibration_artifact",
+        "reference_population": "reference_population",
+        "schema": "feature_schema",
+        "dictionary": "dictionary_version",
+        "canonical": "canonical_integrity",
+        "provenance": "provenance:reference",
+        "reduction": "reduction_loss",
+        "forbidden_rule": "forbidden_rule_conflict",
+        "data_quality": "critical_data_quality",
+    }
+    if kind in fixed:
+        return fixed[kind]
+    if kind.startswith("registered_"):
+        return f"route_fault:{kind}"
+    if kind.startswith("heldout_"):
+        return f"natural_failure:{kind}"
+    raise ValueError(kind)
 
 
 def main() -> None:
@@ -79,13 +103,15 @@ def main() -> None:
                 prediction, explanation, route = _inject(item, prediction, explanation, route)
             certificate = build_action_certificate(prediction, explanation, route, context)
             cut = solve_exact(graph_from_certificate(certificate))
+            expected_cut = tuple(sorted({_expected_contract(item) for item in kinds}))
             records.append(
                 {
                     "group": "registered_single" if composition == 1 else "registered_composition",
                     "faults": kinds,
                     "detected": not certificate.certificate_exists,
                     "cut": cut.contracts,
-                    "cut_exact": cut.exact,
+                    "expected_cut": expected_cut,
+                    "cut_exact_match": cut.contracts == expected_cut,
                     "source_localized": bool(cut.fault_sources),
                     "simple_or_detected": _simple_or(prediction, explanation, route, context),
                 }
@@ -95,13 +121,15 @@ def main() -> None:
         prediction, explanation, route = _inject(kind, prediction, explanation, route)
         certificate = build_action_certificate(prediction, explanation, route, context)
         cut = solve_exact(graph_from_certificate(certificate))
+        expected_cut = (_expected_contract(kind),)
         records.append(
             {
                 "group": "heldout_fault_type",
                 "faults": (kind,),
                 "detected": not certificate.certificate_exists,
                 "cut": cut.contracts,
-                "cut_exact": cut.exact,
+                "expected_cut": expected_cut,
+                "cut_exact_match": cut.contracts == expected_cut,
                 "source_localized": bool(cut.fault_sources),
                 "simple_or_detected": _simple_or(prediction, explanation, route, context),
             }
@@ -111,7 +139,7 @@ def main() -> None:
     typed_recall = float(np.mean([row["detected"] for row in registered_rows]))
     simple_recall = float(np.mean([row["simple_or_detected"] for row in registered_rows]))
     source_localization = float(np.mean([row["source_localized"] for row in registered_rows]))
-    exact_match = float(np.mean([row["cut_exact"] for row in registered_rows]))
+    exact_match = float(np.mean([row["cut_exact_match"] for row in registered_rows]))
     summary = {
         "phase": "controlled_confirmatory_after_protocol_lock",
         "protocol_sha256": verify_protocol(),
@@ -121,7 +149,7 @@ def main() -> None:
         "typed_validator": {
             "registered_recall": typed_recall,
             "source_localization": source_localization,
-            "minimal_cut_solver_exact_rate": exact_match,
+            "minimal_cut_exact_match": exact_match,
             "false_certification": 1.0 - typed_recall,
         },
         "simple_or": {"registered_recall": simple_recall, "false_certification": 1.0 - simple_recall},

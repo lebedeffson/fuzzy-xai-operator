@@ -97,7 +97,10 @@ def _dataset_effect(dataset_id: str, values: np.ndarray, labels: np.ndarray, see
     ranked = sorted(range(len(rules)), key=lambda index: (-importances[index], rules[index].redundancy, index))
     candidate = next((rules[index] for index in ranked if eligible_candidate(rules[index], unique_coverage=importances[index], direction_stable=True, subgroup_leakage=False)), rules[ranked[0]])
     adapter = _TreeRuleAdapter(model, medians, seed)
-    strata = np.asarray([f"class-{value}" for value in test_labels])
+    non_rule_features = [index for index in range(train_values.shape[1]) if index not in candidate.feature_indices]
+    stratification_feature = non_rule_features[0]
+    edges = np.unique(np.quantile(train_values[:, stratification_feature], (0.25, 0.50, 0.75)))
+    strata = np.digitize(test_values[:, stratification_feature], edges)
     data = RuleEffectData(train_values, train_labels, test_values, test_labels, strata, accuracy_score)
     effects = assess_rule_effect(candidate, adapter, data)
     controls = match_controls(candidate, rules, count=5)
@@ -114,7 +117,8 @@ def _dataset_effect(dataset_id: str, values: np.ndarray, labels: np.ndarray, see
         "matched_distances": controls.distances,
         "specific_nonrefit_effect": specific_effect(effects["nonrefit"].effect, control_effects),
         "test_used_for_candidate_selection": False,
-        "conditional_resampling": "within_true_class_strata_for_estimand_diagnostic_only",
+        "conditional_resampling": "within_train_fitted_non_target_feature_quantile_strata",
+        "conditional_strata_used_test_labels": False,
     }
 
 

@@ -28,7 +28,7 @@ def statistics() -> None:
             "simple_or_registered_recall": h5["simple_or"]["registered_recall"],
             "absolute_recall_gain": h5["typed_validator"]["registered_recall"] - h5["simple_or"]["registered_recall"],
             "false_certification": h5["typed_validator"]["false_certification"],
-            "minimal_cut_exact_rate": h5["typed_validator"]["minimal_cut_solver_exact_rate"],
+            "minimal_cut_exact_match": h5["typed_validator"]["minimal_cut_exact_match"],
         },
         "H6-envelope": h6_envelope,
         "multiple_comparison": "Holm adjustment is reported for the single preregistered H3-R4 primary comparison; no unadjusted positive H6 claim is enabled.",
@@ -76,6 +76,7 @@ def claims() -> None:
 def evidence_map() -> None:
     records = []
     mapping = {
+        "deviations/pre_final_invalid_run.json": ("NR-E00", "invalid_preserved_no_claim", []),
         "data/dataset_manifest.json": ("NR-E01", "descriptive", ["H6-R1", "H6-R2", "H6-R3"]),
         "data/leakage_audit.json": ("NR-E02", "audit", ["H3-R1", "H3-R2", "H3-R3"]),
         "lock/negative_remediation_lock.json": ("NR-E03", "protocol_lock", []),
@@ -138,6 +139,7 @@ def chapter() -> None:
 
 def release_check() -> None:
     verify_protocol()
+    require_file(ARTIFACTS / "deviations" / "pre_final_invalid_run.json", "release check must preserve invalid pre-final run")
     require_file(ARTIFACTS / "chapter4" / "negative_results_remediation_supplement.md", "release check")
     registry = read_json(ARTIFACTS / "claims" / "negative_remediation_claim_registry.json")
     lock = read_json(ARTIFACTS / "lock" / "negative_remediation_lock.json")

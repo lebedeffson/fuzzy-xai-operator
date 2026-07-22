@@ -110,3 +110,11 @@ def test_test_or_non_oof_rows_fail_closed() -> None:
         RiskHeadTrainingRow("x", "g", {"a": 1.0}, False, partition="test")
     with pytest.raises(ValueError):
         RiskHeadTrainingRow("x", "g", {"a": 1.0}, False, source_features_are_oof=False)
+
+
+def test_composed_route_faults_remain_individually_localizable() -> None:
+    prediction, explanation, route, context = inputs()
+    route = replace(route, route_fault_type="fault-a|fault-b")
+    certificate = build_action_certificate(prediction, explanation, route, context)
+    cut = solve_exact(graph_from_certificate(certificate))
+    assert cut.contracts == ("route_fault:fault-a", "route_fault:fault-b")
