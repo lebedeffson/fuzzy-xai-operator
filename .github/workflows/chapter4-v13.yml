@@ -2,7 +2,7 @@ name: Chapter 4 v13 reproducibility smoke
 
 on:
   push:
-    branches: [experiments/chapter4-practical-v13]
+    branches: [main, experiments/chapter4-practical-v13]
   pull_request:
   workflow_dispatch:
 
