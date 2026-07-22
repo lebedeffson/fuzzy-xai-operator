@@ -88,3 +88,6 @@ artifacts/chapter4_v13/end_to_end_case/canonical_artifact.json
 artifacts/chapter4_v13/end_to_end_case/user_card.md
 artifacts/chapter4_v13/**/*.lock
 .venv-chapter4-v13/
+
+# Independent confirmatory raw data, encrypted labels and vault keys remain local.
+data/independent_confirmatory/
