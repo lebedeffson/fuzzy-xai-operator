@@ -1,0 +1,9 @@
+# captured_at
+2026-07-22T00:36:30Z
+# gpu
+name, memory.total [MiB], memory.used [MiB], memory.free [MiB], utilization.gpu [%], driver_version
+NVIDIA GeForce RTX 4060 Laptop GPU, 8188 MiB, 7404 MiB, 431 MiB, 100 %, 610.43.03
+# compute_apps
+pid, process_name, used_gpu_memory [MiB]
+225364, /home/lebedeffson/Code/андрей/TNormFilter_handoff/.venv/bin/python, 6456 MiB
+458994, /home/lebedeffson/Code/fuzzy-xai-operator/.venv-confirmatory/bin/python, 922 MiB

@@ -261,6 +261,7 @@ def run() -> dict[str, object]:
         summary_rows.append(row)
     summary_path = ARTIFACTS / "runtime" / "summary.csv"
     pd.DataFrame(summary_rows).to_csv(summary_path, index=False)
+    shared_gpu_snapshot = ARTIFACTS / "runtime" / "environment_snapshots" / "shared_gpu_during_benchmark.txt"
     manifest = {
         "environment": environment_manifest(),
         "benchmark_configuration": {
@@ -274,10 +275,18 @@ def run() -> dict[str, object]:
         "warmups": cfg["warmups"],
         "repetitions": cfg["repetitions"],
         "sizes": sizes,
+        "sizes_by_method": {
+            method: sorted(int(value) for value in group["n"].unique())
+            for method, group in frame.groupby("explainer", sort=True)
+        },
+        "cheap_method_extra_size": int(cfg["cheap_method_extra_size"]),
         "raw_sha256": sha256_file(raw_path),
         "summary_sha256": sha256_file(summary_path),
         "operator_only_five_million_is_separate": True,
         "source_explainer_included": True,
+        "gpu_isolation": "shared_with_unrelated_user_process",
+        "concurrent_gpu_snapshot_sha256": sha256_file(shared_gpu_snapshot),
+        "invalid_oom_attempt_preserved": True,
     }
     write_json(ARTIFACTS / "runtime" / "manifest.json", manifest)
     return manifest

@@ -74,7 +74,7 @@ def build() -> dict[str, object]:
         "fuzzyxai_time_fraction",
         "explainer_time_fraction",
     ]
-    tables["end_to_end_runtime"] = {"path": _write_table("end_to_end_runtime", runtime[runtime_columns]), "sources": [ARTIFACTS / "runtime" / "raw_results.csv", ARTIFACTS / "runtime" / "summary.csv", ARTIFACTS / "runtime" / "manifest.json"], "status": "descriptive"}
+    tables["end_to_end_runtime"] = {"path": _write_table("end_to_end_runtime", runtime[runtime_columns]), "sources": [ARTIFACTS / "runtime" / "raw_results.csv", ARTIFACTS / "runtime" / "summary.csv", ARTIFACTS / "runtime" / "manifest.json", ARTIFACTS / "runtime" / "environment_snapshots" / "shared_gpu_during_benchmark.txt"], "status": "descriptive"}
 
     case = pd.DataFrame([{"object_id": read_json(ARTIFACTS / "end_to_end_case" / "input_reference.json")["object_id"], **case_timing}])
     tables["end_to_end_case"] = {"path": _write_table("end_to_end_case", case), "sources": [ARTIFACTS / "end_to_end_case" / "stage_timings.json", ARTIFACTS / "end_to_end_case" / "action.json"], "status": "descriptive"}
