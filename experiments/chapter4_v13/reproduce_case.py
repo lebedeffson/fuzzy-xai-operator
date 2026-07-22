@@ -119,6 +119,25 @@ def reproduce(config_path: Path, output: Path) -> dict[str, object]:
         "- test label was not loaded by the case reproducer.\n",
         encoding="utf-8",
     )
+    write_json(
+        output / "release_manifest.json",
+        {
+            "public_files": [
+                "input_reference.json",
+                "prediction.json",
+                "provenance_graph.json",
+                "diagnostic_state.json",
+                "action.json",
+                "stage_timings.json",
+                "audit.md",
+                "release_manifest.json",
+                "SHA256SUMS",
+            ],
+            "local_only_files": ["local_explanation.json", "canonical_artifact.json", "user_card.md"],
+            "reason": "AG News upstream dataset card reports license unknown; token-bearing derivatives are not redistributed",
+            "reproduction_command": "python -m experiments.chapter4_v13.reproduce_case --config config/chapter4_v13_case.yaml --output artifacts/chapter4_v13/end_to_end_case",
+        },
+    )
     files = sorted(path for path in output.iterdir() if path.is_file() and path.name != "SHA256SUMS")
     (output / "SHA256SUMS").write_text("".join(f"{sha256_file(path)}  {path.name}\n" for path in files), encoding="utf-8")
     summary = {"object_id": object_id, "canonical_sha256": canonical_hash, "action": assessment["action"], "timings": timings}

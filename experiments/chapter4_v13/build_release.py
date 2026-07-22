@@ -128,8 +128,10 @@ def build() -> dict[str, object]:
             "end_to_end_case/prediction.json",
             "end_to_end_case/diagnostic_state.json",
             "end_to_end_case/action.json",
+            "end_to_end_case/provenance_graph.json",
             "end_to_end_case/stage_timings.json",
             "end_to_end_case/audit.md",
+            "end_to_end_case/release_manifest.json",
             "end_to_end_case/SHA256SUMS",
         ):
             source = ARTIFACTS / relative
