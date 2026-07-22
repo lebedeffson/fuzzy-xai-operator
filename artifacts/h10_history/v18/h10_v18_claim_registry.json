@@ -1,0 +1,79 @@
+{
+  "claims": {
+    "H10-C": "invalid_not_evaluated_independently",
+    "H10-L": "invalid_not_evaluated_independently",
+    "H10-R": "invalid_not_evaluated_independently",
+    "H10-T": "supported_byte_identical_trace_only",
+    "H10-U": "descriptive_only_no_confirmatory_claim"
+  },
+  "manual_positive_override": false,
+  "methodology_audit": {
+    "affected_claims": [
+      "H10-L",
+      "H10-C",
+      "H10-R"
+    ],
+    "findings": {
+      "cut_truth_reuses_evaluated_solver": true,
+      "replay_normal_stream_uses_mutated_sealed_routes": true,
+      "source_truth_and_localizer_share_taxonomy_mapping": true
+    },
+    "post_open_tuning": false,
+    "replay_status": "invalid_due_to_mutated_normal_stream",
+    "required_next_step": "fresh protocol and sealed data with an independent adjudication oracle; do not rescore v18",
+    "sealed_scoring_repeated": false,
+    "status": "INVALID_FOR_COMPARATIVE_CONFIRMATORY_CLAIMS",
+    "unaffected_claims": [
+      "H10-T"
+    ]
+  },
+  "old_claims_changed": false,
+  "primary_tests": [
+    {
+      "baseline": "independent_if_else",
+      "ci_high": 0.06628079653115068,
+      "ci_low": 0.04861813916112752,
+      "dataset_effects": {
+        "uci_raisin": 0.053086419753086415,
+        "uci_sentiment_labelled_sentences": 0.059068627450980404,
+        "ucr_forda": 0.06292048929663609
+      },
+      "direction_consistent": true,
+      "effect": 0.05835851216690097,
+      "margin": 0.02,
+      "metric": "source_f1",
+      "p_holm": 0.00019998000199980003,
+      "p_raw": 9.999000099990002e-05,
+      "repetitions": 10000,
+      "status": "invalid_not_evaluated_independently",
+      "status_before_methodology_audit": "supported",
+      "unit": "dataset_then_object"
+    },
+    {
+      "baseline": "independent_if_else",
+      "ci_high": 0.04564067199632524,
+      "ci_low": 0.025890005950940046,
+      "dataset_effects": {
+        "uci_raisin": 0.029218106995884775,
+        "uci_sentiment_labelled_sentences": 0.03970588235294118,
+        "ucr_forda": 0.04055810397553518
+      },
+      "direction_consistent": true,
+      "effect": 0.03649403110812038,
+      "margin": 0.02,
+      "metric": "repair_f1",
+      "p_holm": 0.001999800019998,
+      "p_raw": 0.001999800019998,
+      "repetitions": 10000,
+      "status": "invalid_not_evaluated_independently",
+      "status_before_methodology_audit": "supported",
+      "unit": "dataset_then_object"
+    }
+  ],
+  "safety": {
+    "false_block_rate": 0.0,
+    "false_certification_rate": 0.0
+  },
+  "scientific_release_allowed": false,
+  "study_id": "FuzzyXAI-H10-Typed-Diagnostic-Cuts-v18"
+}

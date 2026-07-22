@@ -1,0 +1,23 @@
+{
+  "byte_identical_trace_rate": 1.0,
+  "cases": 1926,
+  "datasets": [
+    "uci_raisin",
+    "uci_sentiment_labelled_sentences",
+    "ucr_forda"
+  ],
+  "methods": [
+    "schema_only",
+    "hash_version",
+    "simple_or",
+    "independent_if_else",
+    "untyped_graph",
+    "anomaly_detector",
+    "typed_route",
+    "full_h10"
+  ],
+  "post_lock_tuning": false,
+  "sealed_scoring_openings": 1,
+  "study_id": "FuzzyXAI-H10-Independent-Oracle-v19",
+  "trace_repetitions": 1926
+}

@@ -1,0 +1,3 @@
+c7060ab1f88bb853cd73435bdd5a0e95e4ce9f0cbab2554f77c2a79d854443c4  fuzzyxai-h10-v19-final-handoff.zip
+ba6be5fd5d23576c0795971d09ebd0f7ce2d9cf81de288cd1ec4fd0923b680ed  fuzzyxai-h10-v19-artifacts.zip
+a07f0f6cacaa11f79d3b7f4f56b64534fea9b44b4ce3dc0e05391a3215f3bac2  fuzzyxai-h10-v19-source.zip

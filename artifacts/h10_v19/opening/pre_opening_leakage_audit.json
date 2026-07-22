@@ -1,0 +1,31 @@
+{
+  "clean_routes_sha256": "fb35741d8efaa19a642109b70ed366355d12dd0ca9d6f03df8b9c70d34d35de4",
+  "confirmatory_test_opened": false,
+  "dataset_manifest_sha256": "512e6b6a834dcad3f1052aca2bdf625919e4a74736ad82dac60b6a2a65826a55",
+  "datasets": 3,
+  "identity_intersections": {
+    "uci_raisin": {
+      "development_test": 0,
+      "train_development": 0,
+      "train_test": 0
+    },
+    "uci_sentiment_labelled_sentences": {
+      "development_test": 0,
+      "train_development": 0,
+      "train_test": 0
+    },
+    "ucr_forda": {
+      "development_test": 0,
+      "train_development": 0,
+      "train_test": 0
+    }
+  },
+  "oracle_imports_evaluated_h10": false,
+  "post_lock_tuning": false,
+  "sealed_cases": 1926,
+  "sealed_routes_sha256": "24cbfd2f64c5b086cf80b8cdccf69eca3edb163c35616482a39a3bede6804ac1",
+  "status": "PASS",
+  "test_labels_in_feature_channels": false,
+  "vault_key_in_repository": false,
+  "vault_sha256": "18c21b6ed8cca5f9c29d200896298d6c6b8507e18a7f380285e4c2bab4ef28fa"
+}

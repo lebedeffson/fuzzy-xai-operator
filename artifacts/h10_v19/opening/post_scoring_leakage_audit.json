@@ -1,0 +1,13 @@
+{
+  "baseline_changed": false,
+  "labels_exported": false,
+  "methodology_audit_status": "PASS",
+  "model_changed": false,
+  "opening_count": 1,
+  "post_lock_tuning": false,
+  "purpose": "scoring_only",
+  "raw_results_sha256": "51a2bf9a73ad2fcd691ca327dbe9c3d0d59c298d21811c3746d097d142495574",
+  "repeat_scoring_forbidden": true,
+  "status": "PASS",
+  "thresholds_changed": false
+}

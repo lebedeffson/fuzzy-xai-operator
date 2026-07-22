@@ -1,0 +1,54 @@
+[
+  {
+    "detection_delay_p95": 0.0,
+    "erroneous_repair_actions": 74,
+    "false_alerts_per_10k": 0.0,
+    "hard_block_rate": 0.0,
+    "incident_recall": 1.0,
+    "manual_load": 0.0,
+    "method": "simple_or",
+    "recertification_rate": 1.0,
+    "repair_delay_p95": 20.0,
+    "repair_success": 0.0,
+    "trace_size": 0.0
+  },
+  {
+    "detection_delay_p95": 0.0,
+    "erroneous_repair_actions": 0,
+    "false_alerts_per_10k": 0.0,
+    "hard_block_rate": 0.0,
+    "incident_recall": 1.0,
+    "manual_load": 1.0,
+    "method": "independent_if_else",
+    "recertification_rate": 0.0,
+    "repair_delay_p95": 70.0,
+    "repair_success": 0.0,
+    "trace_size": 0.0
+  },
+  {
+    "detection_delay_p95": 0.0,
+    "erroneous_repair_actions": 0,
+    "false_alerts_per_10k": 0.0,
+    "hard_block_rate": 1.0,
+    "incident_recall": 1.0,
+    "manual_load": 1.0,
+    "method": "typed_route",
+    "recertification_rate": 0.0,
+    "repair_delay_p95": 50.0,
+    "repair_success": 0.0,
+    "trace_size": 0.0
+  },
+  {
+    "detection_delay_p95": 0.0,
+    "erroneous_repair_actions": 5,
+    "false_alerts_per_10k": 0.0,
+    "hard_block_rate": 0.0,
+    "incident_recall": 1.0,
+    "manual_load": 0.2833333333333333,
+    "method": "full_h10",
+    "recertification_rate": 1.0,
+    "repair_delay_p95": 20.0,
+    "repair_success": 0.95,
+    "trace_size": 990.1833333333332
+  }
+]

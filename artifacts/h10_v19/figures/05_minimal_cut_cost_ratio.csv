@@ -1,0 +1,9 @@
+method,cut_cost_ratio
+anomaly_detector,0.0
+full_h10,1.0015199493350222
+hash_version,0.2585439621090393
+independent_if_else,1.635797757545513
+schema_only,0.1475685656187972
+simple_or,1.635797757545513
+typed_route,0.0
+untyped_graph,1.0477600976170385

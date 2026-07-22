@@ -1,0 +1,32 @@
+{
+  "compositions": true,
+  "held_out_leaves": [
+    "excessive_information_loss",
+    "unsupported_projection",
+    "lost_canonical_link"
+  ],
+  "held_out_parent_families": [
+    "reduction"
+  ],
+  "insufficient_evidence": true,
+  "known_leaves": [
+    "hash_corruption",
+    "missing_artifact",
+    "version_mismatch",
+    "model_explainer_mismatch",
+    "preprocessing_mismatch",
+    "dictionary_mismatch",
+    "wrong_reference_population",
+    "stale_calibration",
+    "deployment_context_mismatch",
+    "missing_source",
+    "broken_dependency",
+    "cross_model_artifact_mix"
+  ],
+  "severities": [
+    "subtle",
+    "moderate",
+    "severe"
+  ],
+  "truth_source": "independent mutation log and exhaustive oracle"
+}

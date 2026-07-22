@@ -1,0 +1,46 @@
+{
+  "best_baseline": "independent_if_else",
+  "bootstrap": {
+    "confidence": 0.95,
+    "hierarchy": "dataset_then_object",
+    "repetitions": 10000,
+    "seed": 19191
+  },
+  "clean_routes_sha256": "fb35741d8efaa19a642109b70ed366355d12dd0ca9d6f03df8b9c70d34d35de4",
+  "code_tree_sha256": "244260b15bc1bf0232e94c5a5e3b5a673bb875e9a8bcea8fa445f088d14a3da4",
+  "dataset_manifest_sha256": "512e6b6a834dcad3f1052aca2bdf625919e4a74736ad82dac60b6a2a65826a55",
+  "environment": {
+    "commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+    "cpu_count": 5,
+    "platform": "Linux-6.12.13-x86_64-with-glibc2.41",
+    "processor": "",
+    "python": "3.13.5 (main, May  5 2026, 21:05:52) [GCC 14.2.0]"
+  },
+  "implementation_commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+  "margins": {
+    "repair_set_f1": 0.02,
+    "source_localization_macro_f1": 0.02
+  },
+  "methodology_audit_sha256": "9b30a3e6ba6d97be4914ec13e21915b86cdd0112d2ccd3aef5509eca8df1f30b",
+  "pre_opening_audit_sha256": "9e9954ce7b2805990e0ab4046b0af7080d8a5304b1153c65b9d97ede73aea0c9",
+  "primary_metrics": [
+    "source_localization_macro_f1_known",
+    "repair_set_f1_known"
+  ],
+  "protocol_path": "config/h10_v19_protocol.yaml",
+  "protocol_sha256": "31f5b3068b6f6a97343e842b1e4ffd120dbe3c148c161760747ab981315ca15a",
+  "safety_constraints": {
+    "false_block_rate": 0.01,
+    "false_certification_rate": 0.01
+  },
+  "sealed_routes_sha256": "24cbfd2f64c5b086cf80b8cdccf69eca3edb163c35616482a39a3bede6804ac1",
+  "split_identity_hashes_sha256": "759fd1080cc2aa7ffce632be7c02e7213044e146721a63eedae866ab03f737a9",
+  "status": "LOCKED_UNOPENED",
+  "study_id": "FuzzyXAI-H10-Independent-Oracle-v19",
+  "thresholds": {
+    "anomaly": 1.5,
+    "known": 0.5,
+    "leaf": 0.45
+  },
+  "vault_sha256": "18c21b6ed8cca5f9c29d200896298d6c6b8507e18a7f380285e4c2bab4ef28fa"
+}

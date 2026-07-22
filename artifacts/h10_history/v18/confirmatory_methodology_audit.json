@@ -1,0 +1,20 @@
+{
+  "affected_claims": [
+    "H10-L",
+    "H10-C",
+    "H10-R"
+  ],
+  "findings": {
+    "cut_truth_reuses_evaluated_solver": true,
+    "replay_normal_stream_uses_mutated_sealed_routes": true,
+    "source_truth_and_localizer_share_taxonomy_mapping": true
+  },
+  "post_open_tuning": false,
+  "replay_status": "invalid_due_to_mutated_normal_stream",
+  "required_next_step": "fresh protocol and sealed data with an independent adjudication oracle; do not rescore v18",
+  "sealed_scoring_repeated": false,
+  "status": "INVALID_FOR_COMPARATIVE_CONFIRMATORY_CLAIMS",
+  "unaffected_claims": [
+    "H10-T"
+  ]
+}

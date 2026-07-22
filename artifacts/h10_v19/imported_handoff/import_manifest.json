@@ -1,0 +1,13 @@
+{
+  "artifact_archive_sha256": "ba6be5fd5d23576c0795971d09ebd0f7ce2d9cf81de288cd1ec4fd0923b680ed",
+  "imported_without_sealed_rescoring": true,
+  "main_base_commit": "e678c047896b81ed796ec6be9cdc4370cf12ddca",
+  "outer_handoff_sha256": "c7060ab1f88bb853cd73435bdd5a0e95e4ce9f0cbab2554f77c2a79d854443c4",
+  "protected_history": {
+    "v16_branch_commit": "b4af116f02d8c062420a61ed586729119314d4ed",
+    "v16_tag_commit": "7f148cffad87a73fc2112f2339ba5b26c2227850",
+    "v18_branch_commit": "59a1f45a44c40c871ea955f426a4a31b35dfe85f"
+  },
+  "source_archive_sha256": "a07f0f6cacaa11f79d3b7f4f56b64534fea9b44b4ce3dc0e05391a3215f3bac2",
+  "study_id": "FuzzyXAI-H10-Independent-Oracle-v19"
+}

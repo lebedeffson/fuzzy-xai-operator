@@ -1,0 +1,66 @@
+[
+  {
+    "abstention_accuracy": 0.7612412919569348,
+    "leaf_f1": 0.2200158856235107,
+    "method": "anomaly_detector",
+    "parent_f1": 0.176330420969023,
+    "unknown_auroc": 0.6283223292295472,
+    "unknown_recall": 0.28125
+  },
+  {
+    "abstention_accuracy": 0.83153894870171,
+    "leaf_f1": 0.7180301826846703,
+    "method": "full_h10",
+    "parent_f1": 0.6894360603653693,
+    "unknown_auroc": 0.7147128177124701,
+    "unknown_recall": 0.365625
+  },
+  {
+    "abstention_accuracy": 0.7973400886637112,
+    "leaf_f1": 0.2200158856235107,
+    "method": "hash_version",
+    "parent_f1": 0.176330420969023,
+    "unknown_auroc": 0.5,
+    "unknown_recall": 0.0
+  },
+  {
+    "abstention_accuracy": 0.7973400886637112,
+    "leaf_f1": 0.6433677521842732,
+    "method": "independent_if_else",
+    "parent_f1": 0.744241461477363,
+    "unknown_auroc": 0.5,
+    "unknown_recall": 0.0
+  },
+  {
+    "abstention_accuracy": 0.7973400886637112,
+    "leaf_f1": 0.2200158856235107,
+    "method": "schema_only",
+    "parent_f1": 0.176330420969023,
+    "unknown_auroc": 0.5,
+    "unknown_recall": 0.0
+  },
+  {
+    "abstention_accuracy": 0.7973400886637112,
+    "leaf_f1": 0.2200158856235107,
+    "method": "simple_or",
+    "parent_f1": 0.176330420969023,
+    "unknown_auroc": 0.5,
+    "unknown_recall": 0.0
+  },
+  {
+    "abstention_accuracy": 0.7973400886637112,
+    "leaf_f1": 0.2200158856235107,
+    "method": "typed_route",
+    "parent_f1": 0.7196187450357426,
+    "unknown_auroc": 0.5,
+    "unknown_recall": 0.0
+  },
+  {
+    "abstention_accuracy": 0.7973400886637112,
+    "leaf_f1": 0.2200158856235107,
+    "method": "untyped_graph",
+    "parent_f1": 0.176330420969023,
+    "unknown_auroc": 0.5,
+    "unknown_recall": 0.0
+  }
+]

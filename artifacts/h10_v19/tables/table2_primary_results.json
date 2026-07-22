@@ -1,0 +1,66 @@
+[
+  {
+    "diagnostic_latency": 0.0195489999441633,
+    "false_block": 0.0,
+    "false_certification": 0.6967808930425753,
+    "method": "anomaly_detector",
+    "repair_set_f1": 0.0,
+    "source_localization_f1": 0.0
+  },
+  {
+    "diagnostic_latency": 0.2953885000351874,
+    "false_block": 0.0,
+    "false_certification": 0.0,
+    "method": "full_h10",
+    "repair_set_f1": 0.8685464654487689,
+    "source_localization_f1": 0.8685464654487689
+  },
+  {
+    "diagnostic_latency": 0.005697999995391,
+    "false_block": 0.0,
+    "false_certification": 0.5051921079958464,
+    "method": "hash_version",
+    "repair_set_f1": 0.0,
+    "source_localization_f1": 0.0
+  },
+  {
+    "diagnostic_latency": 0.0153220000811415,
+    "false_block": 0.0,
+    "false_certification": 0.0,
+    "method": "independent_if_else",
+    "repair_set_f1": 0.8188320284428307,
+    "source_localization_f1": 0.8188320284428307
+  },
+  {
+    "diagnostic_latency": 0.0094690000196351,
+    "false_block": 0.0,
+    "false_certification": 0.6827622014537902,
+    "method": "schema_only",
+    "repair_set_f1": 0.0,
+    "source_localization_f1": 0.0
+  },
+  {
+    "diagnostic_latency": 0.0131494999777714,
+    "false_block": 0.0,
+    "false_certification": 0.0,
+    "method": "simple_or",
+    "repair_set_f1": 0.0,
+    "source_localization_f1": 0.0
+  },
+  {
+    "diagnostic_latency": 0.0135400000544905,
+    "false_block": 0.0,
+    "false_certification": 0.0,
+    "method": "typed_route",
+    "repair_set_f1": 0.0,
+    "source_localization_f1": 0.0
+  },
+  {
+    "diagnostic_latency": 0.0176610000721666,
+    "false_block": 0.0,
+    "false_certification": 0.0,
+    "method": "untyped_graph",
+    "repair_set_f1": 0.0,
+    "source_localization_f1": 0.0
+  }
+]

@@ -1,0 +1,22 @@
+{
+  "baseline_independence_failures": [],
+  "environment": {
+    "commit": "17b3150a2fda40278f444a1bab9dbef28ad5d5ec",
+    "cpu_count": 16,
+    "platform": "Linux-7.1.3-arch2-2-x86_64-with-glibc2.43",
+    "processor": "",
+    "python": "3.14.6 (main, Jun 15 2026, 11:36:54) [GCC 16.1.1 20260430]"
+  },
+  "evidence_entries": 188,
+  "figures_pdf": 10,
+  "figures_png": 10,
+  "forbidden_tracked_files": [],
+  "methodology_audit_status": "INVALID_FOR_COMPARATIVE_CONFIRMATORY_CLAIMS",
+  "missing": [],
+  "old_v16_changed": false,
+  "opening_count": 1,
+  "post_lock_tuning": false,
+  "scientific_release_allowed": false,
+  "status": "TECHNICAL_PASS_SCIENTIFIC_INVALID",
+  "tables_csv": 6
+}

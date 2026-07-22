@@ -1,0 +1,9 @@
+{
+  "commit": "768dcc545881e9253c49e3bf097a0745f6c7f215",
+  "methodology_audit_status": "PASS",
+  "opening_count": 1,
+  "post_lock_tuning": false,
+  "protocol_sha256": "31f5b3068b6f6a97343e842b1e4ffd120dbe3c148c161760747ab981315ca15a",
+  "purpose": "scoring_only",
+  "study_id": "FuzzyXAI-H10-Independent-Oracle-v19"
+}

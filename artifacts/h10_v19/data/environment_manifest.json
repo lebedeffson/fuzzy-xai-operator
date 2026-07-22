@@ -1,0 +1,7 @@
+{
+  "commit": "246a74faf4a4f18d4229987db4384487c429734d",
+  "cpu_count": 5,
+  "platform": "Linux-6.12.13-x86_64-with-glibc2.41",
+  "processor": "",
+  "python": "3.13.5 (main, May  5 2026, 21:05:52) [GCC 14.2.0]"
+}

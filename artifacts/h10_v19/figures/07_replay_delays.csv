@@ -1,0 +1,9 @@
+method_delay,events
+simple_or:detection_delay_p95,0.0
+independent_if_else:detection_delay_p95,0.0
+typed_route:detection_delay_p95,0.0
+full_h10:detection_delay_p95,0.0
+simple_or:repair_delay_p95,20.0
+independent_if_else:repair_delay_p95,70.0
+typed_route:repair_delay_p95,50.0
+full_h10:repair_delay_p95,20.0

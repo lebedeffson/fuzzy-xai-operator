@@ -1,0 +1,66 @@
+[
+  {
+    "cut_cost_ratio": 0.0,
+    "cut_exact": 0.0,
+    "cut_jaccard": 0.0,
+    "extra_nodes": 0.0,
+    "method": "anomaly_detector",
+    "runtime_ms": 0.0195489999441633
+  },
+  {
+    "cut_cost_ratio": 1.0015199493350222,
+    "cut_exact": 0.9987333755541482,
+    "cut_jaccard": 0.999366687777074,
+    "extra_nodes": 0.0012666244458518,
+    "method": "full_h10",
+    "runtime_ms": 0.2953885000351874
+  },
+  {
+    "cut_cost_ratio": 0.2585439621090393,
+    "cut_exact": 0.1139962001266624,
+    "cut_jaccard": 0.2036098796706776,
+    "extra_nodes": 0.0943635212159594,
+    "method": "hash_version",
+    "runtime_ms": 0.005697999995391
+  },
+  {
+    "cut_cost_ratio": 1.635797757545513,
+    "cut_exact": 0.4642178594046865,
+    "cut_jaccard": 0.7343360776862994,
+    "extra_nodes": 0.8695376820772641,
+    "method": "independent_if_else",
+    "runtime_ms": 0.0153220000811415
+  },
+  {
+    "cut_cost_ratio": 0.1475685656187972,
+    "cut_exact": 0.0899303356554781,
+    "cut_jaccard": 0.1155794806839772,
+    "extra_nodes": 0.0424319189360354,
+    "method": "schema_only",
+    "runtime_ms": 0.0094690000196351
+  },
+  {
+    "cut_cost_ratio": 1.635797757545513,
+    "cut_exact": 0.4642178594046865,
+    "cut_jaccard": 0.7343360776862994,
+    "extra_nodes": 0.8695376820772641,
+    "method": "simple_or",
+    "runtime_ms": 0.0131494999777714
+  },
+  {
+    "cut_cost_ratio": 0.0,
+    "cut_exact": 0.0,
+    "cut_jaccard": 0.0,
+    "extra_nodes": 0.0,
+    "method": "typed_route",
+    "runtime_ms": 0.0135400000544905
+  },
+  {
+    "cut_cost_ratio": 1.0477600976170385,
+    "cut_exact": 0.7891070297656745,
+    "cut_jaccard": 0.8336288790373654,
+    "extra_nodes": 0.2197593413552881,
+    "method": "untyped_graph",
+    "runtime_ms": 0.0176610000721666
+  }
+]

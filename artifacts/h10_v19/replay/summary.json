@@ -1,0 +1,66 @@
+{
+  "delayed_evidence": true,
+  "events": 1000000,
+  "incidents": 60,
+  "methods": [
+    {
+      "detection_delay_p95": 0.0,
+      "erroneous_repair_actions": 74,
+      "false_alerts_per_10k": 0.0,
+      "hard_block_rate": 0.0,
+      "incident_recall": 1.0,
+      "manual_load": 0.0,
+      "method": "simple_or",
+      "recertification_rate": 1.0,
+      "repair_delay_p95": 20.0,
+      "repair_success": 0.0,
+      "trace_size": 0.0
+    },
+    {
+      "detection_delay_p95": 0.0,
+      "erroneous_repair_actions": 0,
+      "false_alerts_per_10k": 0.0,
+      "hard_block_rate": 0.0,
+      "incident_recall": 1.0,
+      "manual_load": 1.0,
+      "method": "independent_if_else",
+      "recertification_rate": 0.0,
+      "repair_delay_p95": 70.0,
+      "repair_success": 0.0,
+      "trace_size": 0.0
+    },
+    {
+      "detection_delay_p95": 0.0,
+      "erroneous_repair_actions": 0,
+      "false_alerts_per_10k": 0.0,
+      "hard_block_rate": 1.0,
+      "incident_recall": 1.0,
+      "manual_load": 1.0,
+      "method": "typed_route",
+      "recertification_rate": 0.0,
+      "repair_delay_p95": 50.0,
+      "repair_success": 0.0,
+      "trace_size": 0.0
+    },
+    {
+      "detection_delay_p95": 0.0,
+      "erroneous_repair_actions": 5,
+      "false_alerts_per_10k": 0.0,
+      "hard_block_rate": 0.0,
+      "incident_recall": 1.0,
+      "manual_load": 0.2833333333333333,
+      "method": "full_h10",
+      "recertification_rate": 1.0,
+      "repair_delay_p95": 20.0,
+      "repair_success": 0.95,
+      "trace_size": 990.1833333333333
+    }
+  ],
+  "model_lines": 4,
+  "normal_stream_contains_mutated_fault_routes": false,
+  "normal_stream_source": "clean_routes_with_joint_expected_observed_context_drift",
+  "partial_and_failed_repair": true,
+  "peak_rss_kib": 481156,
+  "repair_delay_rule": "10 events per proposed repair target plus 50 events when recertification fails",
+  "service_times_preassigned_to_favor_h10": false
+}

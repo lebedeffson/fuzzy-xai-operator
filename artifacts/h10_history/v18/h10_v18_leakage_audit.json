@@ -1,0 +1,53 @@
+{
+  "methodology_invalidation_is_not_post_lock_tuning": true,
+  "opening": {
+    "commit": "f05244b43d50d8dba83ad434ee65a0c181402d48",
+    "opening_count": 1,
+    "post_lock_tuning": false,
+    "protocol_sha256": "7d7d7b345c44495002cf1dac80eabf5852a8808d11130d6d5529316398609dfa",
+    "purpose": "scoring_only",
+    "study_id": "FuzzyXAI-H10-Typed-Diagnostic-Cuts-v18"
+  },
+  "post_scoring": {
+    "baseline_changed": false,
+    "labels_exported": false,
+    "model_changed": false,
+    "opening_count": 1,
+    "post_lock_tuning": false,
+    "purpose": "scoring_only",
+    "raw_results_sha256": "c8724fb58fe6fb9f68010bb512f630f5188e6e91e8c0299c531ed213afc850dd",
+    "repeat_scoring_forbidden": true,
+    "status": "PASS",
+    "thresholds_changed": false
+  },
+  "pre_opening": {
+    "confirmatory_test_opened": false,
+    "dataset_manifest_sha256": "f7f11e9adb4ca9d094d3194e4aa3df65718309fb723cc201a7f1dea40cf461da",
+    "datasets": 3,
+    "identity_intersections": {
+      "uci_raisin": {
+        "development_test": 0,
+        "train_development": 0,
+        "train_test": 0
+      },
+      "uci_sentiment_labelled_sentences": {
+        "development_test": 0,
+        "train_development": 0,
+        "train_test": 0
+      },
+      "ucr_forda": {
+        "development_test": 0,
+        "train_development": 0,
+        "train_test": 0
+      }
+    },
+    "post_lock_tuning": false,
+    "sealed_cases": 1755,
+    "sealed_routes_sha256": "d945f5df5cb1177de30bd5572ba582099cc3836ff25ac16624d0e707ad0ad0f8",
+    "status": "PASS",
+    "test_labels_in_feature_channels": false,
+    "vault_key_in_repository": false,
+    "vault_sha256": "83d07bb0b99d877c3c48f782eab5bd85be93bcde1afd65149e22f8b25d95365b"
+  },
+  "repeat_scoring_forbidden": true
+}

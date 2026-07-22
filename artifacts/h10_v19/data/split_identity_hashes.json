@@ -1,0 +1,17 @@
+{
+  "uci_raisin": {
+    "development": "cbbd9645cef48ad8c3fd79e265356254f66db7acfede695a3ffbfad76450ec9f",
+    "sealed_test": "242ff354a3460c6a3c235de885a1e030eebadebbe369d37e9f2aadef6ad638fb",
+    "train": "e86f68143c4293bdcd2bf64fac22721badb8621e4e4fd7b3d3bfcf51ae37fc43"
+  },
+  "uci_sentiment_labelled_sentences": {
+    "development": "0091fff89af59a363c8f831e4629f3b0477f77a43c3d2b626bfe187d2479ae95",
+    "sealed_test": "b8473a59f99ff5a097018f96efab8753b96af454478e73275358976478388c74",
+    "train": "36f20a36ce3ae57c60f2f69e5b32e646fbff726db8ed1a3b59eab7b4ea1eaac9"
+  },
+  "ucr_forda": {
+    "development": "b6adc0dc122aa675dd0192f7cfda44866d884b9583100e39aae36133157648b3",
+    "sealed_test": "382c36db02bdf0604eeb1f0a5df8ffcaccb4e150cf41a4fbac4addf508c82260",
+    "train": "59a08e9f821e8ae8850435341e14929bb000eb3274f0622d6e81d821c6689dc7"
+  }
+}

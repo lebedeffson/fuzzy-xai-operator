@@ -1,0 +1,50 @@
+[
+  {
+    "dataset_id": "uci_raisin",
+    "identity_anchor_manifest": "data_seed/v19_identity_anchors.json",
+    "identity_anchor_sha256": "345e0be8dbfc31d4c3f12e2486ebf90a94d8c13884344cc46ec8878e17d41346",
+    "license": "CC BY 4.0",
+    "modality": "tabular",
+    "note": "v19 uses a new salted split and new mutation schedule; predictive labels are not H10 targets",
+    "objects": 900,
+    "source": "UCI Machine Learning Repository",
+    "split_counts": {
+      "development": 197,
+      "sealed_test": 198,
+      "train": 505
+    },
+    "split_manifest_sha256": "15d7f65f336dc916f640248d1135ff12e5c7abb07816e276dab1a48d49621eb3"
+  },
+  {
+    "dataset_id": "uci_sentiment_labelled_sentences",
+    "identity_anchor_manifest": "data_seed/v19_identity_anchors.json",
+    "identity_anchor_sha256": "345e0be8dbfc31d4c3f12e2486ebf90a94d8c13884344cc46ec8878e17d41346",
+    "license": "CC BY 4.0",
+    "modality": "text",
+    "note": "v19 uses a new salted split and new mutation schedule; predictive labels are not H10 targets",
+    "objects": 2983,
+    "source": "UCI Machine Learning Repository",
+    "split_counts": {
+      "development": 693,
+      "sealed_test": 657,
+      "train": 1633
+    },
+    "split_manifest_sha256": "bba737e33f71d3e0f6dc35030e9e8f7ec231a77f33b90cb9923bf782664c28eb"
+  },
+  {
+    "dataset_id": "ucr_forda",
+    "identity_anchor_manifest": "data_seed/v19_identity_anchors.json",
+    "identity_anchor_sha256": "345e0be8dbfc31d4c3f12e2486ebf90a94d8c13884344cc46ec8878e17d41346",
+    "license": "UCR Archive research dataset",
+    "modality": "time_series",
+    "note": "v19 uses a new salted split and new mutation schedule; predictive labels are not H10 targets",
+    "objects": 4921,
+    "source": "UCR Time Series Classification Archive",
+    "split_counts": {
+      "development": 1126,
+      "sealed_test": 1071,
+      "train": 2724
+    },
+    "split_manifest_sha256": "0ad541ea83d52bfc8466843a29d6f2dbb69b5ade562c9c9c502abbb346d80cea"
+  }
+]

@@ -1,0 +1,7 @@
+dataset_method,repair_set_f1
+uci_raisin:full_h10,0.8813333333333334
+uci_raisin:independent_if_else,0.8358095238095239
+uci_sentiment_labelled_sentences:full_h10,0.8586309523809523
+uci_sentiment_labelled_sentences:independent_if_else,0.8016794217687073
+ucr_forda:full_h10,0.8726919339164236
+ucr_forda:independent_if_else,0.8269401638206303

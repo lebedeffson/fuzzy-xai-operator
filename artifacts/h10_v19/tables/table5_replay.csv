@@ -1,0 +1,5 @@
+detection_delay_p95,erroneous_repair_actions,false_alerts_per_10k,hard_block_rate,incident_recall,manual_load,method,recertification_rate,repair_delay_p95,repair_success,trace_size
+0.0,74,0.0,0.0,1.0,0.0,simple_or,1.0,20.0,0.0,0.0
+0.0,0,0.0,0.0,1.0,1.0,independent_if_else,0.0,70.0,0.0,0.0
+0.0,0,0.0,1.0,1.0,1.0,typed_route,0.0,50.0,0.0,0.0
+0.0,5,0.0,0.0,1.0,0.2833333333333333,full_h10,1.0,20.0,0.95,990.1833333333332

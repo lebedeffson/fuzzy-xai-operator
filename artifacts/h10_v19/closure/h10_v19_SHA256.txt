@@ -1,0 +1,2 @@
+d0782643cb413fa94136ca0b7b215bdf00dc56cdf6d4791856cfaab80395144d  fuzzyxai-h10-v19-artifacts.zip
+a07f0f6cacaa11f79d3b7f4f56b64534fea9b44b4ce3dc0e05391a3215f3bac2  fuzzyxai-h10-v19-source.zip

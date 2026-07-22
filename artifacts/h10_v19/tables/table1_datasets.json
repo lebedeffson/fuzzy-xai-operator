@@ -1,0 +1,32 @@
+[
+  {
+    "composite_faults": 46,
+    "dataset": "uci_raisin",
+    "development": 197,
+    "known_faults": 125,
+    "modality": "tabular",
+    "sealed_test": 198,
+    "train": 505,
+    "unknown_faults": 31
+  },
+  {
+    "composite_faults": 151,
+    "dataset": "uci_sentiment_labelled_sentences",
+    "development": 693,
+    "known_faults": 448,
+    "modality": "text",
+    "sealed_test": 657,
+    "train": 1633,
+    "unknown_faults": 106
+  },
+  {
+    "composite_faults": 248,
+    "dataset": "ucr_forda",
+    "development": 1126,
+    "known_faults": 686,
+    "modality": "time_series",
+    "sealed_test": 1071,
+    "train": 2724,
+    "unknown_faults": 183
+  }
+]

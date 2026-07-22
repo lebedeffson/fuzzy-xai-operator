@@ -1,0 +1,23 @@
+[
+  {
+    "dataset_id": "uci_raisin",
+    "explainer_version": "uci_raisin-model-v19",
+    "modality": "tabular",
+    "model_version": "uci_raisin-model-v19",
+    "role": "route identity anchor; predictive labels are not H10 targets"
+  },
+  {
+    "dataset_id": "uci_sentiment_labelled_sentences",
+    "explainer_version": "uci_sentiment_labelled_sentences-model-v19",
+    "modality": "text",
+    "model_version": "uci_sentiment_labelled_sentences-model-v19",
+    "role": "route identity anchor; predictive labels are not H10 targets"
+  },
+  {
+    "dataset_id": "ucr_forda",
+    "explainer_version": "ucr_forda-model-v19",
+    "modality": "time_series",
+    "model_version": "ucr_forda-model-v19",
+    "role": "route identity anchor; predictive labels are not H10 targets"
+  }
+]

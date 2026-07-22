@@ -1,0 +1,4 @@
+composite_faults,dataset,development,known_faults,modality,sealed_test,train,unknown_faults
+46,uci_raisin,197,125,tabular,198,505,31
+151,uci_sentiment_labelled_sentences,693,448,text,657,1633,106
+248,ucr_forda,1126,686,time_series,1071,2724,183
