@@ -1,0 +1,8 @@
+{
+  "best_simple_policy": "calibrated_confidence",
+  "policy_scores_sha256": "281c434d9e74707e91b92ea6e116e103b5c47b9d2f8417d1291955bd2b778c3c",
+  "protocol_sha256": "55e86e3bcc2d1f56dfd4700c3912313e411f9d29481109f45c29bf82e77c102e",
+  "stage": "pre_score_complete",
+  "test_labels_loaded": false,
+  "validation_selection_sha256": "11adad134a67cafe303449e192355d224d6bd3c9406c73d4bf930411e57be961"
+}
