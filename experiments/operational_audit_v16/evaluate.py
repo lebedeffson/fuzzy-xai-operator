@@ -56,7 +56,7 @@ def _cases(dataset_id: str, identities: list[str]) -> list[dict[str, object]]:
     for index, identity in enumerate(identities):
         base = base_artifact(dataset_id, identity)
         for repeat in range(4):
-            cases.append({"id": f"{identity}:valid:{repeat}", "artifact": replace(base, artifact_id=f"{base.artifact_id}:valid:{repeat}"), "families": (), "severity": "valid"})
+            cases.append({"id": f"{identity}:valid:{repeat}", "object_id": identity, "artifact": replace(base, artifact_id=f"{base.artifact_id}:valid:{repeat}"), "families": (), "severity": "valid"})
         family = FAMILIES[index % len(FAMILIES)]
         severity = SEVERITIES[(index // len(FAMILIES)) % len(SEVERITIES)]
         mutated = mutate_route_artifact(base, family, severity)
@@ -67,7 +67,7 @@ def _cases(dataset_id: str, identities: list[str]) -> list[dict[str, object]]:
             families.append(second)
         if index % 29 == 0:
             mutated = replace(mutated, evidence_complete=False)
-        cases.append({"id": f"{identity}:fault", "artifact": mutated, "families": tuple(families), "severity": severity})
+        cases.append({"id": f"{identity}:fault", "object_id": identity, "artifact": mutated, "families": tuple(families), "severity": severity})
     return cases
 
 
@@ -120,6 +120,7 @@ def _evaluate(dataset_id: str, identities: list[str], threshold: float) -> tuple
         values["false"] += int(not fault and detected)
         values["localized"] += int(fault and bool(true_regions & predicted_regions))
         values["repaired"] += int(fault and bool(predicted_repairs))
+        case_method_values = {}
         for name in methods:
             found, regions, repairs = _baseline(name, artifact, truth)
             target = accum[name]
@@ -129,7 +130,8 @@ def _evaluate(dataset_id: str, identities: list[str], threshold: float) -> tuple
             target["false"] += int(not fault and found)
             target["localized"] += int(fault and bool(true_regions & regions))
             target["repaired"] += int(fault and bool(repairs))
-        rows.append({"fault": fault, "typed_localized": bool(true_regions & predicted_regions), "typed_repaired": bool(predicted_repairs), "severity": case["severity"]})
+            case_method_values[name] = {"localized": bool(fault and true_regions & regions), "repaired": bool(fault and repairs)}
+        rows.append({"object_id": case["object_id"], "fault": fault, "typed_localized": bool(fault and true_regions & predicted_regions), "typed_repaired": bool(fault and predicted_repairs), "baselines": case_method_values, "severity": case["severity"]})
     metrics = {}
     for name, value in accum.items():
         metrics[name] = {
@@ -194,9 +196,41 @@ def confirmatory() -> None:
     typed_repair = np.mean([item["methods"]["hierarchical_validator_v16"]["repair_candidate_recall"] for item in datasets])
     baseline_local = np.mean([item["methods"][best_localization]["source_region_localization"] for item in datasets])
     baseline_repair = np.mean([item["methods"][best_repair]["repair_candidate_recall"] for item in datasets])
-    write_json(output, {"datasets": datasets, "best_localization_baseline": best_localization, "best_repair_baseline": best_repair, "A1_localization_gain": typed_local - baseline_local, "A2_repair_gain": typed_repair - baseline_repair, "A4_false_certification": max(item["methods"]["hierarchical_validator_v16"]["false_certification"] for item in datasets), "A5_byte_identical_rate": min(item["byte_identical_trace_rate"] for item in datasets), "hierarchical_resampling_required_for_claims": True, "labels_opened": False, "post_lock_tuning": False})
+    inference = {
+        "A1": _hierarchical(raw_rows, best_localization, "localized", seed=16101),
+        "A2": _hierarchical(raw_rows, best_repair, "repaired", seed=16102),
+    }
+    write_json(output, {"datasets": datasets, "best_localization_baseline": best_localization, "best_repair_baseline": best_repair, "A1_localization_gain": typed_local - baseline_local, "A2_repair_gain": typed_repair - baseline_repair, "A4_false_certification": max(item["methods"]["hierarchical_validator_v16"]["false_certification"] for item in datasets), "A5_byte_identical_rate": min(item["byte_identical_trace_rate"] for item in datasets), "hierarchical_inference": inference, "primary_inference_unit": "dataset then object cluster", "labels_opened": False, "post_lock_tuning": False})
     write_json(ARTIFACTS / "data" / "post_scoring_leakage_audit.json", {"opening_count": 1, "purpose": "route-artifact scoring only", "post_lock_tuning": False, "labels_exported": False, "model_changed": False, "thresholds_changed": False, "repeat_opening_forbidden": True})
     print(f"PASS operational-audit-confirmatory objects={sum(item['objects'] for item in datasets)} labels_opened=false")
+
+
+def _hierarchical(rows: dict[str, list[dict[str, object]]], baseline: str, metric: str, *, seed: int) -> dict[str, object]:
+    rng = np.random.default_rng(seed)
+    datasets = sorted(rows)
+    clustered = {}
+    observed = []
+    for dataset_id in datasets:
+        by_object: dict[str, list[float]] = {}
+        for row in rows[dataset_id]:
+            if not row["fault"]:
+                continue
+            difference = float(row[f"typed_{metric}"]) - float(row["baselines"][baseline][metric])
+            by_object.setdefault(str(row["object_id"]), []).append(difference)
+        values = np.asarray([np.mean(items) for items in by_object.values()])
+        clustered[dataset_id] = values
+        observed.append(float(np.mean(values)))
+    draws = []
+    for _ in range(5000):
+        chosen = rng.integers(0, len(datasets), len(datasets))
+        values = []
+        for index in chosen:
+            source = clustered[datasets[index]]
+            values.append(float(np.mean(source[rng.integers(0, len(source), len(source))])))
+        draws.append(float(np.mean(values)))
+    samples = np.asarray(draws)
+    p_value = min(1.0, 2.0 * min(float(np.mean(samples <= 0.0)), float(np.mean(samples >= 0.0))))
+    return {"effect": float(np.mean(observed)), "ci_95": [float(np.quantile(samples, 0.025)), float(np.quantile(samples, 0.975))], "hierarchical_p": p_value, "dataset_effects": dict(zip(datasets, observed, strict=True)), "iterations": 5000}
 
 
 if __name__ == "__main__":

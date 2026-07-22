@@ -1061,7 +1061,7 @@ reproduce-independent-confirmatory-closure:
 OPAUDIT_PYTHON ?= $(if $(wildcard .venv-confirmatory/bin/python),.venv-confirmatory/bin/python,$(PYTHON))
 OPAUDIT_ENV = OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 PYTHONPATH=framework/fuzzyxai:.
 
-.PHONY: operational-audit-data operational-audit-formative operational-audit-freeze operational-audit-confirmatory operational-audit-smoke
+.PHONY: operational-audit-data operational-audit-formative operational-audit-freeze operational-audit-confirmatory operational-audit-replay operational-audit-claims operational-audit-smoke
 
 operational-audit-data:
 	$(OPAUDIT_ENV) $(OPAUDIT_PYTHON) -m experiments.operational_audit_v16.prepare_data
@@ -1074,6 +1074,12 @@ operational-audit-freeze:
 
 operational-audit-confirmatory:
 	$(OPAUDIT_ENV) $(OPAUDIT_PYTHON) -m experiments.operational_audit_v16.evaluate confirmatory
+
+operational-audit-replay:
+	$(OPAUDIT_ENV) nice -n 15 $(OPAUDIT_PYTHON) -m experiments.operational_audit_v16.replay
+
+operational-audit-claims:
+	$(OPAUDIT_ENV) $(OPAUDIT_PYTHON) -m experiments.operational_audit_v16.closure
 
 operational-audit-smoke:
 	$(OPAUDIT_ENV) $(OPAUDIT_PYTHON) -m pytest -q tests/operational_audit_v16
