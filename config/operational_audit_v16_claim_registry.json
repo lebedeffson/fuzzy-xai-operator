@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0",
+  "protocol_id": "FXAI-Q1-OPERATIONAL-AUDIT-CONFIRMATORY",
+  "claims": {
+    "A1": "blocked_pending_fresh_sealed_confirmation",
+    "A2": "blocked_pending_fresh_sealed_confirmation",
+    "A3": "blocked_pending_registered_replay",
+    "A4": "blocked_pending_fresh_sealed_confirmation",
+    "A5": "blocked_pending_fresh_sealed_confirmation"
+  },
+  "frozen_negative_claims": {
+    "H3-original": "not_supported",
+    "H5-P-original": "not_supported",
+    "H6-general": "not_supported",
+    "H3-R1": "not_supported",
+    "H3-R2": "not_supported",
+    "H5-A3": "not_supported",
+    "H5-A4": "not_supported"
+  },
+  "manual_positive_override_allowed": false
+}

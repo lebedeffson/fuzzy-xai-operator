@@ -1,0 +1,101 @@
+{
+  "schema_version": "1.0",
+  "protocol_id": "FXAI-Q1-OPERATIONAL-AUDIT-CONFIRMATORY",
+  "phase": "registered_before_data_download_and_mutation_generation",
+  "frozen_predecessor": {
+    "branch": "feat/q1-independent-confirmatory-closure",
+    "commit": "f10fbd04ea2c6dc8643d20edbf83bb09e02de750",
+    "sealed_test_reuse_allowed": false,
+    "claim_registry_mutable": false
+  },
+  "central_scope": "operational audit, localization, repair and deterministic trace reproduction",
+  "disallowed_primary_claims": [
+    "predictive accuracy improvement",
+    "safety improvement",
+    "hierarchical policy superiority",
+    "production validation"
+  ],
+  "fresh_datasets": [
+    {
+      "dataset_id": "uci_online_shoppers_468",
+      "modality": "tabular",
+      "objects": 12330,
+      "source": "https://archive.ics.uci.edu/static/public/468/data.csv",
+      "license": "CC BY 4.0"
+    },
+    {
+      "dataset_id": "uci_youtube_spam_380",
+      "modality": "text",
+      "objects": 1956,
+      "source": "https://archive.ics.uci.edu/static/public/380/youtube+spam+collection.zip",
+      "license": "CC BY 4.0"
+    }
+  ],
+  "splits": ["train", "formative_development", "sealed_confirmatory_test"],
+  "controller": {
+    "mode": "lexicographic",
+    "order": ["irreparable_contract_fault", "repairable_contract_fault", "predictive_review", "accept"],
+    "actions": ["block", "repair_then_retry", "review", "accept"],
+    "route_predictive_arithmetic_mixing": false,
+    "weighted_hierarchical_controller_role": "baseline_only"
+  },
+  "mutation_families": [
+    "model_explainer_mismatch",
+    "stale_calibration",
+    "preprocessing_order_change",
+    "feature_schema_incompatibility",
+    "cross_model_artifact_mix",
+    "checksum_corruption",
+    "reduction_link_loss",
+    "reference_population_substitution",
+    "partial_provenance_deletion",
+    "dictionary_or_tokenizer_version_change"
+  ],
+  "mutation_severity": ["subtle", "moderate", "severe"],
+  "validator_stages": ["generic_validity", "source_region_localization", "localized_family_classification"],
+  "validator_outcomes": ["valid_route", "known_fault_type", "unknown_structural_fault", "insufficient_evidence"],
+  "baselines": [
+    "json_schema",
+    "independent_if_else",
+    "simple_or",
+    "weighted_fault_score",
+    "route_only_rules",
+    "nearest_centroid_v15",
+    "hierarchical_validator_v16"
+  ],
+  "hypotheses": {
+    "A1": "source localization improves over the best simple baseline",
+    "A2": "repair candidate recall improves over the best simple baseline",
+    "A3": "typed repair planning reduces time to restoration in controlled replay",
+    "A4": "false certification remains at or below 0.01",
+    "A5": "audit trace replay is byte-identical"
+  },
+  "success_criteria": {
+    "A1_absolute_localization_gain_minimum": 0.10,
+    "A2_absolute_repair_recall_gain_minimum": 0.10,
+    "A3_relative_restoration_time_reduction_minimum": 0.15,
+    "A4_false_certification_maximum": 0.01,
+    "A5_byte_identical_rate": 1.0,
+    "hierarchical_confidence_level": 0.95,
+    "holm_alpha": 0.05
+  },
+  "replay": {
+    "events": 1000000,
+    "minimum_incidents": 30,
+    "model_lanes": 4,
+    "schedule_seed": 16001,
+    "includes_normal_drift_without_faults": true,
+    "includes_load_bursts": true,
+    "includes_delayed_labels": true,
+    "includes_partial_recovery": true,
+    "controllers": ["alert_only", "simple_or", "route_only", "hierarchical_v15", "lexicographic_v16"]
+  },
+  "statistics": {
+    "primary": "hierarchical_bootstrap_with_dataset_as_top_level",
+    "iterations": 5000,
+    "flat_object_tests": "sensitivity_only",
+    "aggregate_only_with_directional_consistency": true,
+    "multiple_comparisons": "Holm"
+  },
+  "claim_policy": "machine_generated_fail_closed_no_manual_positive_override"
+}
