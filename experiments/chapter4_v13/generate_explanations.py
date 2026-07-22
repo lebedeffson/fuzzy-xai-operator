@@ -69,7 +69,16 @@ def integrated_gradients_batch(model: Any, tokenizer: Any, device: Any, texts: S
     return results
 
 
-def token_masking_batch(model: Any, tokenizer: Any, device: Any, explanations: Sequence[dict[str, object]], targets: Sequence[int], *, limit: int) -> list[list[float]]:
+def token_masking_batch(
+    model: Any,
+    tokenizer: Any,
+    device: Any,
+    explanations: Sequence[dict[str, object]],
+    targets: Sequence[int],
+    *,
+    limit: int,
+    forward_batch_size: int | None = None,
+) -> list[list[float]]:
     import torch
 
     max_length = protocol()["modern_contour"]["prediction"]["max_length"]
@@ -98,7 +107,7 @@ def token_masking_batch(model: Any, tokenizer: Any, device: Any, explanations: S
             masked_attention.append(attention[row_index])
             owner.append((row_index, token_index))
     probability_rows: list[np.ndarray] = []
-    forward_batch = int(runtime["masking_forward_batch_size"])
+    forward_batch = int(forward_batch_size or runtime["masking_forward_batch_size"])
     with torch.inference_mode():
         for start in range(0, len(masked_ids), forward_batch):
             ids = torch.stack(masked_ids[start : start + forward_batch])

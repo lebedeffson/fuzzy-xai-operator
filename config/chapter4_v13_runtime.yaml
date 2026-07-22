@@ -5,6 +5,8 @@ runtime:
   prediction_batch_size: 64
   explanation_batch_size: 1
   masking_forward_batch_size: 128
+  benchmark_masking_object_batch_size: 16
+  benchmark_masking_forward_batch_size: 32
   max_length: 128
   deterministic: true
   torch_dtype: float32

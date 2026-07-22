@@ -134,6 +134,32 @@ def _integrated_gradients_chunked(model: Any, tokenizer: Any, device: Any, texts
     return rows
 
 
+def _token_masking_chunked(
+    model: Any,
+    tokenizer: Any,
+    device: Any,
+    explanations: Sequence[dict[str, object]],
+    targets: Sequence[int],
+) -> list[list[float]]:
+    config = runtime_config()
+    object_batch = int(config["benchmark_masking_object_batch_size"])
+    forward_batch = int(config["benchmark_masking_forward_batch_size"])
+    rows: list[list[float]] = []
+    for start in range(0, len(explanations), object_batch):
+        rows.extend(
+            token_masking_batch(
+                model,
+                tokenizer,
+                device,
+                explanations[start : start + object_batch],
+                targets[start : start + object_batch],
+                limit=20,
+                forward_batch_size=forward_batch,
+            )
+        )
+    return rows
+
+
 def run() -> dict[str, object]:
     import psutil
     import torch
@@ -187,7 +213,7 @@ def run() -> dict[str, object]:
                     scores = [item["scores"] for item in explanations]
                 else:
                     explanations = [_token_skeleton(tokenizer, text) for text in texts]
-                    scores, explainer_seconds = _measure(lambda: token_masking_batch(model, tokenizer, device, explanations, targets, limit=20))
+                    scores, explainer_seconds = _measure(lambda: _token_masking_chunked(model, tokenizer, device, explanations, targets))
                 if torch.cuda.is_available():
                     torch.cuda.synchronize()
                 assessments, fuzzyxai_seconds = _measure(lambda: _fuzzyxai_stage(rows, probabilities, explanations, scores))

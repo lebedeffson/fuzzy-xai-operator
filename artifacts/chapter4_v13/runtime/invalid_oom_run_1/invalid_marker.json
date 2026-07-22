@@ -1,0 +1,9 @@
+{
+  "status": "invalid_for_final_runtime_table",
+  "reason": "cuda_out_of_memory_during_token_masking_n_1000",
+  "completed_rows_preserved": 35,
+  "labels_accessed": false,
+  "foreign_gpu_process_terminated": false,
+  "allowed_recovery": "reduce_only_internal_object_and_forward_batch_sizes_then_repeat_all_token_masking_rows",
+  "scientific_objects_explainer_limit_repetitions_and_sizes_changed": false
+}
