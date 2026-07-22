@@ -1,0 +1,25 @@
+study_id: FuzzyXAI-H10-Independent-Oracle-v19-exploratory
+phase: exploratory
+seed: 19017
+samples_per_modality: 240
+known_leaves:
+  - hash_corruption
+  - missing_artifact
+  - version_mismatch
+  - model_explainer_mismatch
+  - preprocessing_mismatch
+  - dictionary_mismatch
+  - wrong_reference_population
+  - stale_calibration
+  - deployment_context_mismatch
+  - missing_source
+  - broken_dependency
+  - cross_model_artifact_mix
+held_out_leaves:
+  - excessive_information_loss
+  - unsupported_projection
+  - lost_canonical_link
+threshold_grid:
+  known: [0.20, 0.30, 0.40, 0.50]
+  anomaly: [0.6, 0.9, 1.2, 1.5]
+  leaf: [0.25, 0.35, 0.45, 0.55]

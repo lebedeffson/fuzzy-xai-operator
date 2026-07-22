@@ -1,0 +1,70 @@
+study_id: FuzzyXAI-H10-Independent-Oracle-v19
+phase: confirmatory_prelock
+exploratory_source: h10_v19_exploratory
+seed: 19019
+datasets:
+  - uci_raisin
+  - uci_sentiment_labelled_sentences
+  - ucr_forda
+modalities:
+  - tabular
+  - text
+  - time_series
+known_leaves:
+  - hash_corruption
+  - missing_artifact
+  - version_mismatch
+  - model_explainer_mismatch
+  - preprocessing_mismatch
+  - dictionary_mismatch
+  - wrong_reference_population
+  - stale_calibration
+  - deployment_context_mismatch
+  - missing_source
+  - broken_dependency
+  - cross_model_artifact_mix
+held_out_parent_families:
+  - reduction
+held_out_leaves:
+  - excessive_information_loss
+  - unsupported_projection
+  - lost_canonical_link
+thresholds:
+  known: 0.50
+  anomaly: 1.50
+  leaf: 0.45
+primary_metrics:
+  - source_localization_macro_f1_known
+  - repair_set_f1_known
+safety_constraints:
+  false_certification_rate: 0.01
+  false_block_rate: 0.01
+practically_relevant_margins:
+  source_localization_macro_f1: 0.02
+  repair_set_f1: 0.02
+margin_source: exploratory v19 planning; frozen before sealed scoring
+best_baseline_selected_on_exploratory: independent_if_else
+bootstrap:
+  hierarchy: dataset_then_object
+  repetitions: 10000
+  confidence: 0.95
+  seed: 19191
+multiple_comparisons: Holm within two primary endpoints
+aggregate_claim_requires_consistent_dataset_direction: true
+replay:
+  events: 1000000
+  incidents: 60
+  model_lines: 4
+opening:
+  maximum_count: 1
+  purpose: scoring_only
+  post_open_tuning: forbidden
+stopping_rules:
+  - stop on oracle independence failure
+  - stop on vault integrity failure
+  - stop on code or protocol hash mismatch
+  - stop when opening record already exists
+  - preserve negative results
+limitations:
+  - public identity anchors reused from invalid v18, but split salt, mutation schedule, oracle, opaque cases, and sealed truths are new
+  - route metadata and faults remain controlled rather than production-observed

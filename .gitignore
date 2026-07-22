@@ -74,6 +74,11 @@ data/confirmatory/**/*.enc
 # OOF rows contain development labels and belong only in the sealed evidence bundle.
 study/final_confirmatory_closure/oof_features/
 
+# H10 v19 sealed labels and local working data never enter source releases.
+.h10_v19_private/
+data/h10_v19/
+artifacts/h10_v19_exploratory/
+
 # Chapter 4 v13 keeps downloaded data, labels, model caches and bulky raw rows local.
 artifacts/chapter4_v13/raw/
 artifacts/chapter4_v13/processed/

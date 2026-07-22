@@ -1,5 +1,13 @@
 schema_version: "1.0"
 operators:
+  - id: h10.typed_auditor
+    dissertation_ref: "separate H10 audit study"
+    callable: fuzzyxai.audit_h10:H10Auditor
+    input_schema: RouteObservation
+    output_schema: AuditDiagnosis
+    tests: [tests/h10/test_h10_core.py, tests/h10/test_v19_oracle_independence.py]
+    artifacts: [artifacts/h10_v19/closure/h10_v19_validation_report.md]
+    visualization: []
   - id: ch2.explain_plan
     dissertation_ref: "chapter 2, ExplainPlan contract"
     callable: fuzzyxai.core.explain_plan:ExplainPlan

@@ -943,3 +943,50 @@ reproduce-chapter4-v13:
 chapter4-v13-release:
 	PYTHONPATH=framework/fuzzyxai:. $(CHAPTER4_V13_PYTHON) -m experiments.chapter4_v13.build_closure
 	PYTHONPATH=framework/fuzzyxai:. $(CHAPTER4_V13_PYTHON) -m experiments.chapter4_v13.build_release
+
+# H10 v19 uses a caller-selected existing Python environment. The reproduction
+# target consumes frozen scoring outputs and never opens the sealed vault.
+H10_PYTHON ?= $(PYTHON)
+H10_ENV = OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 PYTHONPATH=framework/fuzzyxai:.
+
+.PHONY: h10-smoke h10-exploratory h10-data h10-freeze h10-confirmatory h10-replay h10-statistics h10-tables h10-figures h10-evidence h10-validation h10-package reproduce-h10
+
+h10-smoke:
+	$(H10_ENV) $(H10_PYTHON) -m pytest -q tests/h10
+	$(H10_ENV) $(H10_PYTHON) -m ruff check framework/fuzzyxai/fuzzyxai/audit_h10 baselines/h10 experiments/h10 tests/h10
+
+h10-exploratory:
+	$(H10_ENV) $(H10_PYTHON) -m experiments.h10.run_exploratory --config config/h10_v19_exploratory.yaml
+
+h10-data:
+	$(H10_ENV) $(H10_PYTHON) -m experiments.h10.prepare_data --config config/h10_v19_protocol.yaml
+
+h10-freeze:
+	$(H10_ENV) $(H10_PYTHON) -m experiments.h10.freeze_protocol --config config/h10_v19_protocol.yaml
+
+h10-confirmatory:
+	$(H10_ENV) $(H10_PYTHON) -m experiments.h10.run_confirmatory --config config/h10_v19_protocol.yaml
+
+h10-replay:
+	$(H10_ENV) $(H10_PYTHON) -m experiments.h10.run_replay --config config/h10_v19_protocol.yaml
+
+h10-statistics:
+	$(H10_ENV) $(H10_PYTHON) -m experiments.h10.compute_statistics --config config/h10_v19_protocol.yaml
+
+h10-tables:
+	$(H10_ENV) $(H10_PYTHON) -m experiments.h10.build_tables
+
+h10-figures:
+	$(H10_ENV) $(H10_PYTHON) -m experiments.h10.build_figures
+
+h10-evidence:
+	$(H10_ENV) $(H10_PYTHON) -m experiments.h10.validate_evidence evidence
+
+h10-validation:
+	$(H10_ENV) $(H10_PYTHON) -m experiments.h10.validate_evidence validate
+
+h10-package:
+	$(H10_ENV) $(H10_PYTHON) -m experiments.h10.package
+
+reproduce-h10:
+	$(H10_ENV) $(H10_PYTHON) -m experiments.h10.reproduce
