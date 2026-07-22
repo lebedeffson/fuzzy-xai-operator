@@ -69,6 +69,9 @@ def build() -> dict[str, object]:
             "LICENSE",
             "THIRD_PARTY_NOTICES.md",
             "README.md",
+            "Makefile",
+            ".github/workflows/chapter4-v13.yml",
+            "tests/chapter4_v13/test_chapter4_v13.py",
         ):
             files.append((ROOT / relative, f"source/{relative}"))
         for path in sorted((ROOT / "experiments" / "chapter4_v13").glob("*.py")):
@@ -90,6 +93,10 @@ def build() -> dict[str, object]:
             "route_faults/raw_results.jsonl",
             "route_faults/summary.csv",
             "route_faults/manifest.json",
+            "route_faults/invalid_run_1/invalid_marker.json",
+            "route_faults/invalid_run_1/manifest.json",
+            "route_faults/invalid_run_1/raw_results.jsonl",
+            "route_faults/invalid_run_1/summary.csv",
             "runtime/raw_results.csv",
             "runtime/summary.csv",
             "runtime/manifest.json",
