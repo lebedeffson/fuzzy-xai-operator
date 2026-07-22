@@ -1,0 +1,22 @@
+name: Negative Results Remediation
+
+on:
+  push:
+    branches: [main, feat/q1-negative-results-remediation]
+  pull_request:
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+      - run: python -m pip install -e '.[dev]'
+      - name: Controlled remediation smoke and fail-closed claims
+        run: make remediation-smoke REMEDIATION_PYTHON=python

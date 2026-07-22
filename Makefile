@@ -943,3 +943,73 @@ reproduce-chapter4-v13:
 chapter4-v13-release:
 	PYTHONPATH=framework/fuzzyxai:. $(CHAPTER4_V13_PYTHON) -m experiments.chapter4_v13.build_closure
 	PYTHONPATH=framework/fuzzyxai:. $(CHAPTER4_V13_PYTHON) -m experiments.chapter4_v13.build_release
+
+# FXAI-NEGATIVE-RESULTS-REMEDIATION
+REMEDIATION_PYTHON ?= $(if $(wildcard .venv-confirmatory/bin/python),.venv-confirmatory/bin/python,$(PYTHON))
+REMEDIATION_ENV = OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 PYTHONPATH=framework/fuzzyxai:.
+
+.PHONY: remediation-data remediation-oof remediation-certificates remediation-diagnostic-cuts remediation-controller-r1 remediation-controller-r2 remediation-controller-r3 remediation-freeze remediation-h3-confirmatory remediation-h5-confirmatory remediation-rule-envelope remediation-h6-confirmatory remediation-shadow-replay remediation-statistics remediation-claims remediation-chapter4 remediation-release-check remediation-one-zip remediation-smoke reproduce-negative-results-remediation
+
+remediation-data:
+	$(REMEDIATION_ENV) $(REMEDIATION_PYTHON) -m experiments.negative_results_remediation.prepare_data
+
+remediation-oof: remediation-controller-r1
+	@echo "PASS remediation-oof source=R1 heads=4"
+
+remediation-certificates:
+	$(REMEDIATION_ENV) $(REMEDIATION_PYTHON) -m pytest -q tests/negative_remediation/test_audit_and_controller_v2.py
+
+remediation-diagnostic-cuts: remediation-certificates
+	@echo "PASS remediation-diagnostic-cuts exact_and_approximate=true"
+
+remediation-controller-r1: remediation-data
+	$(REMEDIATION_ENV) $(REMEDIATION_PYTHON) -m experiments.negative_results_remediation.fit_controller --iteration R1
+
+remediation-controller-r2: remediation-controller-r1
+	$(REMEDIATION_ENV) $(REMEDIATION_PYTHON) -m experiments.negative_results_remediation.fit_controller --iteration R2
+
+remediation-controller-r3: remediation-controller-r2
+	$(REMEDIATION_ENV) $(REMEDIATION_PYTHON) -m experiments.negative_results_remediation.fit_controller --iteration R3
+
+remediation-freeze: remediation-controller-r3 remediation-diagnostic-cuts
+	$(REMEDIATION_ENV) $(REMEDIATION_PYTHON) -m experiments.negative_results_remediation.freeze
+
+remediation-h3-confirmatory: remediation-freeze
+	$(REMEDIATION_ENV) $(REMEDIATION_PYTHON) -m experiments.negative_results_remediation.run_h3_confirmatory
+
+remediation-h5-confirmatory: remediation-freeze
+	$(REMEDIATION_ENV) $(REMEDIATION_PYTHON) -m experiments.negative_results_remediation.run_h5
+
+remediation-rule-envelope: remediation-freeze
+	$(REMEDIATION_ENV) $(REMEDIATION_PYTHON) -m experiments.negative_results_remediation.run_h6 envelope
+
+remediation-h6-confirmatory: remediation-rule-envelope
+	$(REMEDIATION_ENV) $(REMEDIATION_PYTHON) -m experiments.negative_results_remediation.run_h6 real
+
+remediation-shadow-replay: remediation-freeze
+	$(REMEDIATION_ENV) nice -n 15 $(REMEDIATION_PYTHON) -m experiments.negative_results_remediation.run_replay
+
+remediation-statistics: remediation-h3-confirmatory remediation-h5-confirmatory remediation-h6-confirmatory remediation-shadow-replay
+	$(REMEDIATION_ENV) $(REMEDIATION_PYTHON) -m experiments.negative_results_remediation.closure statistics
+
+remediation-claims: remediation-statistics
+	$(REMEDIATION_ENV) $(REMEDIATION_PYTHON) -m experiments.negative_results_remediation.closure claims
+	$(REMEDIATION_ENV) $(REMEDIATION_PYTHON) -m experiments.negative_results_remediation.closure evidence
+
+remediation-chapter4: remediation-claims
+	$(REMEDIATION_ENV) $(REMEDIATION_PYTHON) -m experiments.negative_results_remediation.closure chapter
+
+remediation-release-check: remediation-chapter4
+	$(REMEDIATION_ENV) $(REMEDIATION_PYTHON) -m pytest -q tests/negative_remediation
+	$(REMEDIATION_ENV) $(REMEDIATION_PYTHON) -m ruff check framework/fuzzyxai/fuzzyxai/audit_certificate framework/fuzzyxai/fuzzyxai/diagnostic_cut framework/fuzzyxai/fuzzyxai/practical_controller_v2 framework/fuzzyxai/fuzzyxai/rule_effects_v2 framework/fuzzyxai/fuzzyxai/replay experiments/negative_results_remediation tests/negative_remediation
+	$(REMEDIATION_ENV) $(REMEDIATION_PYTHON) -m experiments.negative_results_remediation.closure check
+
+remediation-one-zip: remediation-release-check
+	$(REMEDIATION_ENV) $(REMEDIATION_PYTHON) -m experiments.negative_results_remediation.closure zip
+
+remediation-smoke:
+	$(REMEDIATION_ENV) $(REMEDIATION_PYTHON) -m experiments.negative_results_remediation.reproduce_all --smoke
+	$(REMEDIATION_ENV) $(REMEDIATION_PYTHON) -m pytest -q tests/negative_remediation
+
+reproduce-negative-results-remediation:
+	$(REMEDIATION_ENV) nice -n 15 $(REMEDIATION_PYTHON) -m experiments.negative_results_remediation.reproduce_all
