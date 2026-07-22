@@ -32,7 +32,7 @@ jobs:
         run: make reproduce-h10-gold H10_GOLD_PYTHON=python
       - name: Private payload guard
         run: |
-          if git ls-files | grep -E '(^|/)(\.h10_final_gold_private|reviewer_[12]\.csv|opening_record\.json|sealed_test_truth\.jsonl)'; then
+          if git ls-files | grep -E '(^|/)\.h10_final_gold_private|^artifacts/h10_final_gold/(adjudication/reviewer_[12]\.csv|opening/opening_record\.json|.*truth.*|.*\.key)$'; then
             echo "Private Gold payload or human responses are tracked" >&2
             exit 1
           fi
