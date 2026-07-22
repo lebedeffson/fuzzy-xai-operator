@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.0",
+  "protocol_id": "FXAI-NEGATIVE-RESULTS-REMEDIATION",
+  "status": "registration_pending",
+  "splits": [],
+  "requirements": {
+    "training": "train only",
+    "selection": "out_of_fold_development_only",
+    "confirmation": "sealed_test_opened_once",
+    "identity_overlap_allowed": false,
+    "test_labels_as_features_allowed": false
+  }
+}

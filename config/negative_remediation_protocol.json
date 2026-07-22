@@ -1,0 +1,99 @@
+{
+  "schema_version": "1.0",
+  "protocol_id": "FXAI-NEGATIVE-RESULTS-REMEDIATION",
+  "research_phase": "protocol_frozen_before_remediation_runs",
+  "frozen_release": {
+    "tag": "v1.3.0",
+    "commit": "1a71bae98f1554430d537670018dce7dc889e25f",
+    "immutable_claims": {
+      "H3-original": "not_supported",
+      "H5-P-original": "not_supported",
+      "H6-general": "not_supported"
+    }
+  },
+  "development_base_commit": "e678c047896b81ed796ec6be9cdc4370cf12ddca",
+  "new_hypotheses": {
+    "H3-R1": "hierarchical_controller_reduces_invalid_automatic_actions_at_fixed_review_budget",
+    "H3-R2": "hierarchical_controller_increases_coverage_at_fixed_operational_risk",
+    "H3-R3": "separated_route_and_explanation_heads_add_value_beyond_predictive_risk",
+    "H3-R4": "controller_effect_reproduces_in_preregistered_temporal_shadow_replay",
+    "H5-P2": "certificate_and_diagnostic_cut_features_add_predictive_information",
+    "H5-P3": "certificate_features_add_conditional_value_in_preregistered_strata",
+    "H5-A2": "minimal_diagnostic_cut_improves_fault_localization",
+    "H6-R1": "nonrefit_ablation_estimates_current_model_necessity",
+    "H6-R2": "refit_ablation_estimates_information_replaceability",
+    "H6-R3": "conditional_ablation_estimates_in_distribution_rule_effect",
+    "H6-R4": "stable_low_redundancy_rules_outperform_matched_controls",
+    "H6-R5": "certificate_effect_separates_predictive_and_structural_rule_roles"
+  },
+  "risk_heads": {
+    "prediction": {
+      "target": "model_error",
+      "features": ["calibrated_confidence", "entropy", "prediction_margin", "calibration_residual", "boundary_distance", "model_disagreement"]
+    },
+    "route": {
+      "target": "route_not_certifiable",
+      "features": ["certificate_exists", "certificate_coverage", "unsatisfied_contracts", "weighted_contract_severity", "minimal_cut_size", "path_redundancy", "provenance_completeness", "canonical_integrity"]
+    },
+    "explanation": {
+      "target": "explanation_unstable_or_incomplete",
+      "features": ["explainer_disagreement", "seed_instability", "bootstrap_instability", "perturbation_instability", "representation_loss", "source_conflict_count"]
+    },
+    "shift": {
+      "target": "outside_deployment_envelope",
+      "features": ["shift_score", "reference_population_distance", "artifact_age", "version_distance", "rare_group"]
+    }
+  },
+  "selection_scope": "train_and_out_of_fold_development_only",
+  "confirmatory_test_forbidden_uses": ["feature_selection", "model_selection", "cost_selection", "budget_selection", "eligible_region_selection", "rule_selection", "stratum_selection", "calibration"],
+  "review_budgets": [0.05, 0.1, 0.2, 0.3],
+  "primary_review_budget": 0.2,
+  "primary_endpoint": "operationally_invalid_automatic_actions",
+  "primary_baseline_selection": "best_baseline_selected_on_out_of_fold_development_only",
+  "false_block_ceiling": 0.01,
+  "hard_fault_recall_minimum": 0.95,
+  "h3_success": {
+    "relative_invalid_action_reduction": 0.15,
+    "coverage_gain_at_fixed_risk": 0.05,
+    "confidence_level": 0.95,
+    "holm_adjusted_alpha": 0.05
+  },
+  "h5_success": {
+    "predictive_delta_auprc": 0.02,
+    "source_localization_macro_f1_gain": 0.1,
+    "false_certification_maximum": 0.01,
+    "minimal_cut_exact_match_minimum": 0.8
+  },
+  "h6_eligible_region": {
+    "bootstrap_stability_minimum": 0.8,
+    "support_minimum": 0.05,
+    "redundancy_maximum": 0.5,
+    "matched_controls_minimum": 5
+  },
+  "h6_detectability_grid": {
+    "effect_strength": [0.01, 0.02, 0.05, 0.1, 0.2],
+    "support": [0.01, 0.025, 0.05, 0.1, 0.25],
+    "redundancy": [0.0, 0.25, 0.5, 0.75, 0.9],
+    "noise": ["low", "medium", "high"],
+    "interaction_order": [1, 2, 3],
+    "proxy_correlation": [0.0, 0.3, 0.6, 0.9]
+  },
+  "preregistered_strata": ["distribution_shift", "high_confidence_disagreement", "unstable_explanation", "stale_calibration", "rare_group", "boundary_region", "partial_provenance_loss", "multi_fault_composition"],
+  "shadow_replay": {
+    "events": 500000,
+    "seed": 4201,
+    "phases": ["clean", "gradual_shift", "sudden_shift", "stale_calibration", "model_checkpoint_change", "wrong_preprocessing", "partial_provenance_loss", "reference_population_error", "explainer_instability", "double_faults", "triple_faults", "recovery"]
+  },
+  "formative_stop_rule": {
+    "maximum_iterations": 3,
+    "iterations": ["R1", "R2", "R3"],
+    "freeze_after": "R3_regardless_of_result"
+  },
+  "statistics": {
+    "bootstrap_repetitions": 5000,
+    "h3": ["paired_cluster_bootstrap", "mcnemar", "risk_coverage_integration", "hierarchical_bootstrap", "holm"],
+    "h5": ["macro_f1", "paired_bootstrap", "exact_match_interval", "false_certification_comparison", "permutation_test"],
+    "h6": ["paired_bootstrap", "permutation_test", "mixed_effects_by_dataset_and_rule", "matched_control_interval", "holm"]
+  },
+  "claim_policy": "machine_generated_no_manual_positive_override"
+}

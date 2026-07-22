@@ -1,0 +1,9 @@
+{
+  "schema_version": "1.0",
+  "protocol_id": "FXAI-NEGATIVE-RESULTS-REMEDIATION",
+  "source": "config/negative_remediation_protocol.json:risk_heads",
+  "feature_availability": "observable_before_scoring",
+  "out_of_fold_required": true,
+  "binary_critical_gap_as_only_h5_feature_allowed": false,
+  "model_error_and_structural_targets_may_be_merged": false
+}

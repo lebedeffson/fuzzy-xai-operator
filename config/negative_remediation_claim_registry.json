@@ -1,0 +1,24 @@
+{
+  "schema_version": "1.0",
+  "protocol_id": "FXAI-NEGATIVE-RESULTS-REMEDIATION",
+  "immutable_claims": {
+    "H3-original": "not_supported",
+    "H5-P-original": "not_supported",
+    "H6-general": "not_supported"
+  },
+  "new_claims": {
+    "H3-R1": "blocked_pending_confirmatory_evidence",
+    "H3-R2": "blocked_pending_confirmatory_evidence",
+    "H3-R3": "blocked_pending_confirmatory_evidence",
+    "H3-R4": "blocked_pending_preregistered_replay",
+    "H5-P2": "blocked_pending_confirmatory_evidence",
+    "H5-P3": "blocked_pending_confirmatory_evidence",
+    "H5-A2": "blocked_pending_confirmatory_evidence",
+    "H6-R1": "blocked_pending_confirmatory_evidence",
+    "H6-R2": "blocked_pending_confirmatory_evidence",
+    "H6-R3": "blocked_pending_confirmatory_evidence",
+    "H6-R4": "blocked_pending_confirmatory_evidence",
+    "H6-R5": "blocked_pending_confirmatory_evidence"
+  },
+  "manual_positive_override_allowed": false
+}

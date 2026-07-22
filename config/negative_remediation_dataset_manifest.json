@@ -1,0 +1,8 @@
+{
+  "schema_version": "1.0",
+  "protocol_id": "FXAI-NEGATIVE-RESULTS-REMEDIATION",
+  "status": "registration_pending",
+  "datasets": [],
+  "requirement": "at least two independent tabular datasets plus a preregistered temporal replay",
+  "confirmatory_claims_enabled": false
+}
