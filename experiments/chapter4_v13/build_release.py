@@ -17,6 +17,7 @@ OUTPUT_NAMES = (
     "Глава_4_FuzzyXAI_v13_validation_report.md",
     "Глава_4_FuzzyXAI_v13_evidence_map.json",
     "Глава_4_FuzzyXAI_v13_leakage_audit.json",
+    "Глава_4_FuzzyXAI_v13_visual_review.json",
 )
 
 

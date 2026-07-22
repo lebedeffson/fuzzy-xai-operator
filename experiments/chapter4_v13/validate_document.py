@@ -10,6 +10,9 @@ from .build_chapter import CHANGELOG, DOCX, FINAL, PDF, VALIDATION
 from .common import ARTIFACTS, read_json, sha256_file
 
 
+VISUAL_REVIEW = FINAL / "Глава_4_FuzzyXAI_v13_visual_review.json"
+
+
 FORBIDDEN_MAIN_TEXT = (
     "TODO",
     "TBD",
@@ -44,6 +47,7 @@ def validate() -> dict[str, object]:
         CHANGELOG,
         FINAL / "Глава_4_FuzzyXAI_v13_evidence_map.json",
         FINAL / "Глава_4_FuzzyXAI_v13_leakage_audit.json",
+        VISUAL_REVIEW,
     )
     missing = [str(path) for path in required if not path.exists()]
     if missing:
@@ -80,6 +84,7 @@ def validate() -> dict[str, object]:
 
     evidence = read_json(ARTIFACTS / "evidence_map.json")
     leakage = read_json(ARTIFACTS / "leakage_audit.json")
+    visual_review = read_json(VISUAL_REVIEW)
     errors = []
     if forbidden:
         errors.append(f"forbidden_main_text:{forbidden}")
@@ -95,6 +100,8 @@ def validate() -> dict[str, object]:
         errors.append(f"sparse_pdf_pages:{sparse_pages}")
     if not leakage.get("passed"):
         errors.append("leakage_audit_failed")
+    if not visual_review.get("passed") or visual_review.get("pages_reviewed") != pages:
+        errors.append("visual_review_failed_or_incomplete")
     if "Современный прикладной контур" not in main_text or "DistilBERT" not in main_text:
         errors.append("modern_contour_missing_from_main_text")
     if "не показал статистически подтверждённого" not in main_text and "статистически подтверждённое снижение" not in main_text:
@@ -106,6 +113,7 @@ def validate() -> dict[str, object]:
         CHANGELOG.name: sha256_file(CHANGELOG),
         "Глава_4_FuzzyXAI_v13_evidence_map.json": sha256_file(FINAL / "Глава_4_FuzzyXAI_v13_evidence_map.json"),
         "Глава_4_FuzzyXAI_v13_leakage_audit.json": sha256_file(FINAL / "Глава_4_FuzzyXAI_v13_leakage_audit.json"),
+        VISUAL_REVIEW.name: sha256_file(VISUAL_REVIEW),
     }
     status = "PASS" if not errors else "FAIL"
     VALIDATION.write_text(
@@ -122,6 +130,7 @@ def validate() -> dict[str, object]:
         f"- машинные статусы в основном тексте: `{machine_statuses}`\n"
         f"- записей в карте доказательств v13: `{len(evidence['entries'])}`\n"
         f"- аудит утечки: `{leakage.get('passed')}`\n"
+        f"- визуальная постраничная проверка: `{visual_review.get('passed')}`; страниц: `{visual_review.get('pages_reviewed')}`\n"
         f"- неизменённые отрицательные статусы: `H3-original, H5-P-original, H6-general`\n"
         f"- ошибки: `{errors}`\n\n"
         "## Исправленные классы дефектов\n\n"

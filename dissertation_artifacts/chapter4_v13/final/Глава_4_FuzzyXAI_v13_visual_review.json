@@ -1,0 +1,15 @@
+{
+  "passed": true,
+  "pages_reviewed": 82,
+  "review_date": "2026-07-22",
+  "method": "All PDF pages inspected as contact sheets; pages 63-73 with new v13 tables, figures, runtime, case study and conclusions inspected at full resolution.",
+  "checks": {
+    "blank_pages": 0,
+    "clipped_tables": 0,
+    "missing_figures": 0,
+    "detached_figure_captions": 0,
+    "duplicate_figure_captions": 0,
+    "unreadable_v13_tables": 0
+  },
+  "limitations": "Visual review confirms document layout and rendering, not scientific validity beyond the linked evidence checks."
+}

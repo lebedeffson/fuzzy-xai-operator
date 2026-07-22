@@ -1,0 +1,24 @@
+{
+  "counts": {
+    "sealed_test": 7600,
+    "train": 99839,
+    "validation": 20000
+  },
+  "overlaps": {
+    "train__sealed_test": {
+      "identity": 0,
+      "normalized_text": 0
+    },
+    "train__validation": {
+      "identity": 0,
+      "normalized_text": 0
+    },
+    "validation__sealed_test": {
+      "identity": 0,
+      "normalized_text": 0
+    }
+  },
+  "passed": true,
+  "protocol_sha256": "55e86e3bcc2d1f56dfd4700c3912313e411f9d29481109f45c29bf82e77c102e",
+  "test_labels_in_public_test_rows": false
+}
