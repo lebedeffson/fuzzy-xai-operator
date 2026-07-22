@@ -1,0 +1,58 @@
+{
+  "schema_version": "1.0",
+  "protocol_id": "FXAI-Q1-INDEPENDENT-CONFIRMATORY-CLOSURE",
+  "phase": "protocol_registration_before_implementation_and_data_opening",
+  "frozen_predecessor": {
+    "branch": "feat/q1-negative-results-remediation",
+    "commit": "64b2b16e444ccd20ebde9b4c0d1211686d6dd137",
+    "claim_registry_mutable": false,
+    "allowed_claims": ["H3-R4 controlled replay only", "H5-A2 registered fault library only"],
+    "disallowed_claims": ["independent H3 improvement", "model-error prediction", "unknown fault classification", "general rule-effect detection", "production readiness"]
+  },
+  "primary_priorities": ["independent H3", "H5-A2 versus H5-A3 and simple validators"],
+  "actions": ["accept", "short_review", "full_review", "repair_then_retry", "block"],
+  "hard_block_policy": "irreparable mandatory contract violations only",
+  "repair_then_retry_policy": "repairable structural violations with a finite registered repair set",
+  "independent_datasets": [
+    {"dataset_id": "uci_dry_bean", "modality": "tabular", "status": "pending_license_and_identity_audit"},
+    {"dataset_id": "ford_a", "modality": "time_series", "status": "pending_license_and_identity_audit"},
+    {"dataset_id": "cifar10", "modality": "image", "status": "pending_license_and_identity_audit"}
+  ],
+  "required_splits": ["train", "formative_development", "sealed_calibration_check", "sealed_confirmatory_test"],
+  "sealed_test_forbidden_uses": ["head_selection", "cost_selection", "hard_guard_tuning", "budget_selection", "stratum_selection", "baseline_selection", "calibration", "feature_selection"],
+  "H3": {
+    "hypotheses": ["H3-R1", "H3-R2", "H3-R3"],
+    "primary_review_budget": 0.20,
+    "relative_invalid_action_reduction_minimum": 0.15,
+    "coverage_gain_minimum": 0.05,
+    "confidence_level": 0.95,
+    "holm_alpha": 0.05,
+    "hard_block_rate_maximum": 0.05,
+    "false_block_rate_maximum": 0.01
+  },
+  "H5": {
+    "primary_hypotheses": ["H5-A3", "H5-A4"],
+    "secondary_hypotheses": ["H5-P2", "H5-P3"],
+    "outcomes": ["known_fault_type", "unknown_structural_fault", "insufficient_evidence", "valid_route"],
+    "unknown_fault_detection_recall_minimum": 0.85,
+    "false_certification_maximum": 0.01,
+    "known_macro_f1_degradation_maximum": 0.03,
+    "unknown_rejection_auroc_minimum": 0.90,
+    "source_region_localization_minimum": 0.80,
+    "held_out_requirement": "entire fault families absent from formative templates"
+  },
+  "H6": {
+    "hypotheses": ["H6-R6", "H6-R7", "H6-R8"],
+    "formative_gate": {"detection_minimum": 0.80, "sign_accuracy_minimum": 0.90, "fdr_maximum": 0.10},
+    "confirmatory_opening_policy": "blocked_until_formative_gate_passes",
+    "estimands": ["individual_rule", "equivalence_cluster", "minimal_sufficient_rule_subset"],
+    "methods": ["cross_fitted_effect", "doubly_robust", "conditional_sampler_quality_audit", "bootstrap_stability", "orthogonalized_matched_rules", "hierarchical_shrinkage", "power_aware_eligible_region"]
+  },
+  "chronological_replay": {
+    "status": "pending_natural_sequence_registration",
+    "maximum_hard_block_rate": 0.05,
+    "required_metrics": ["invalid_accepts", "false_blocks", "detection_delay", "repair_delay", "incident_recall", "alert_fatigue", "review_workload", "policy_regret", "time_to_restoration", "recertification_after_repair"]
+  },
+  "statistics": ["hierarchical_bootstrap", "paired_cluster_bootstrap", "holm_correction", "effect_size", "confidence_interval"],
+  "claim_policy": "machine_generated_fail_closed_no_manual_positive_override"
+}

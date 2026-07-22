@@ -1,0 +1,19 @@
+{
+  "schema_version": "1.0",
+  "protocol_id": "FXAI-Q1-INDEPENDENT-CONFIRMATORY-CLOSURE",
+  "frozen_predecessor_commit": "64b2b16e444ccd20ebde9b4c0d1211686d6dd137",
+  "predecessor_claim_registry_mutable": false,
+  "claims": {
+    "H3-R1": "blocked_pending_independent_sealed_test",
+    "H3-R2": "blocked_pending_independent_sealed_test",
+    "H3-R3": "blocked_pending_independent_sealed_test",
+    "H5-A3": "blocked_pending_held_out_fault_families",
+    "H5-A4": "blocked_pending_held_out_fault_families",
+    "H5-P2": "secondary_blocked_pending_independent_data",
+    "H5-P3": "secondary_blocked_pending_independent_data",
+    "H6-R6": "blocked_pending_formative_gate",
+    "H6-R7": "blocked_pending_formative_gate",
+    "H6-R8": "blocked_pending_power_analysis"
+  },
+  "manual_positive_override_allowed": false
+}

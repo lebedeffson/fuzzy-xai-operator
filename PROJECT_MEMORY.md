@@ -1,5 +1,37 @@
 # Project Memory
 
+## FXAI-NEGATIVE-RESULTS-REMEDIATION-EXPERIMENTAL-FROZEN
+
+- Date: 2026-07-22
+- Branch: `feat/q1-negative-results-remediation`
+- Frozen commit: `64b2b16e444ccd20ebde9b4c0d1211686d6dd137`
+- Technical status: PASS
+- Scientific status: experimental, not stable
+- Merge status: not merged to `main`
+
+The remediation architecture separates predictive, route, explanation and shift targets; adds action-conditioned
+certificates, minimal diagnostic cuts, repair sets and separate rule-effect estimands. This technical completion does
+not convert the negative `v1.3.0` hypotheses into supported claims. The immutable statuses remain
+`H3-original = not_supported`, `H5-P-original = not_supported`, and `H6-general = not_supported`.
+
+Allowed claims:
+
+- H3-R4 is supported on the preregistered controlled replay only. It reduced invalid accepts in that simulation, but
+  used a 25% hard-block rate and is not independent or production evidence;
+- H5-A2 is supported only for the registered controlled/compositional fault library.
+
+Not evaluated or not supported:
+
+- H3-R1-R3 were not evaluated because no independent sealed confirmatory dataset was registered before lock;
+- H5-P2/P3 were not evaluated on independent model-error data;
+- H6-R5 was not evaluated;
+- the H6 detectability target was not met and H6-R4 was not confirmatory.
+
+Critical limitations: hard-block rate 25%; unknown fault-type identification 0; no independent sealed confirmatory
+dataset. `37 passed` and green CI establish technical reproducibility only, not scientific confirmation. Continue only
+on `feat/q1-independent-confirmatory-closure`; do not alter the frozen remediation claim registry or merge the
+experimental branch into `main`.
+
 ## FXAI-FINAL-ONE-ZIP-PRACTICAL-CLOSURE
 
 - Date: 2026-07-21
