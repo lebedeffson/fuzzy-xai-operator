@@ -1,0 +1,7 @@
+{
+  "formative_sha256": "b4f1dd91448ceaeb2091fb46d2140fd6d59a46c0dff30bbccc3c6e7664b908a1",
+  "implementation_commit": "4e32141533a830b7dfb414758d2832848380e186",
+  "post_lock_tuning": false,
+  "predictive_review_threshold": 0.8,
+  "test_opened": false
+}
