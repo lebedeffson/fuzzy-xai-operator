@@ -82,6 +82,26 @@ def _forbidden_symbol_audit() -> dict[str, Any]:
     return {"status": "PASS" if not findings else "FAIL", "findings": findings}
 
 
+def _resolve_protected_ref(ref: str) -> str:
+    local = subprocess.run(
+        ("git", "rev-parse", "--verify", ref),
+        cwd=ROOT,
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+    if local.returncode == 0:
+        return local.stdout.strip()
+    if ref.startswith("v"):
+        remote_ref = f"refs/tags/{ref.removesuffix('^{}')}^{{}}"
+    else:
+        remote_ref = f"refs/heads/{ref}"
+    output = subprocess.check_output(("git", "ls-remote", "origin", remote_ref), cwd=ROOT, text=True).strip()
+    if not output:
+        raise RuntimeError(f"protected ref is unavailable locally and on origin: {ref}")
+    return output.split()[0]
+
+
 def build(config_path: Path) -> None:
     config = load_config(config_path)
     manifest = json.loads((ARTIFACT_ROOT / "h10_final_gold_manifest.json").read_text())
@@ -142,10 +162,7 @@ def build(config_path: Path) -> None:
         "v1.3.0^{}": "1a71bae98f1554430d537670018dce7dc889e25f",
         "v1.4.0-alpha.audit^{}": "7f148cffad87a73fc2112f2339ba5b26c2227850",
     }
-    protected_actual = {
-        ref: subprocess.check_output(("git", "rev-parse", ref), cwd=ROOT, text=True).strip()
-        for ref in protected_expected
-    }
+    protected_actual = {ref: _resolve_protected_ref(ref) for ref in protected_expected}
     protected_unchanged = protected_actual == protected_expected
     reasons = []
     if not all(path.exists() for path in reviewer_files):
