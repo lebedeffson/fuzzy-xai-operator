@@ -240,3 +240,35 @@ operators:
     tests: [tests/test_evidence_first_framework.py]
     artifacts: [release_evidence/framework_completion/object_85_user.md]
     visualization: [trust_action_panel]
+  - id: framework.action_conditioned_audit_certificate
+    dissertation_ref: "chapter 4, H5-A2 action-conditioned route certification"
+    callable: fuzzyxai.audit_certificate.validator:build_action_certificate
+    input_schema: PredictionExplanationRouteAndDeploymentContract
+    output_schema: ActionConditionedAuditCertificate
+    tests: [tests/negative_remediation/test_audit_and_controller_v2.py]
+    artifacts: [artifacts/negative_results_remediation/protocol/SHA256SUMS]
+    visualization: [diagnostic_contract_graph]
+  - id: framework.minimal_diagnostic_cut
+    dissertation_ref: "chapter 4, H5-A2 minimal diagnostic cut"
+    callable: fuzzyxai.diagnostic_cut.exact_solver:solve_exact
+    input_schema: DiagnosticFailurePathGraph
+    output_schema: MinimalDiagnosticCut
+    tests: [tests/negative_remediation/test_audit_and_controller_v2.py]
+    artifacts: [artifacts/negative_results_remediation/protocol/SHA256SUMS]
+    visualization: [diagnostic_cut]
+  - id: framework.practical_controller_v2
+    dissertation_ref: "chapter 4, H3-R1-H3-R4 hierarchical practical controller"
+    callable: fuzzyxai.practical_controller_v2.actions:assess_action_v2
+    input_schema: PredictionExplanationRouteDeploymentBudgetAndCosts
+    output_schema: ActionAssessmentV2
+    tests: [tests/negative_remediation/test_audit_and_controller_v2.py]
+    artifacts: [artifacts/negative_results_remediation/protocol/SHA256SUMS]
+    visualization: [risk_head_and_action_loss_panel]
+  - id: framework.rule_effects_v2
+    dissertation_ref: "chapter 4, H6-R1-H6-R5 separated rule estimands"
+    callable: fuzzyxai.rule_effects_v2:assess_rule_effect
+    input_schema: RuleModelDataAndEstimands
+    output_schema: RuleEffectEstimateMap
+    tests: [tests/negative_remediation/test_rule_effects_and_replay.py]
+    artifacts: [artifacts/negative_results_remediation/protocol/SHA256SUMS]
+    visualization: [rule_effect_estimands]
