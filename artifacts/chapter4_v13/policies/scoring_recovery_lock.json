@@ -1,0 +1,15 @@
+{
+  "allowed_changes": [
+    "always_accept_action_semantics",
+    "finite_bootstrap_add_one_p_value"
+  ],
+  "invalid_marker_sha256": "2bc2763dce04fba6d0dd784bab3e36c88d40d6d57c0625370d92f2133da74c6a",
+  "label_vault_sha256": "95925cb01e0100f1ac2e7e23829480cf85b440c09c81b1395c15c19d95cfd479",
+  "original_completion_sha256": "25cc6129b32bbea3f3ee407aed6b8131c8ea7443ef673e7ad9ac9bc4e9b78b61",
+  "policy_scores_sha256": "281c434d9e74707e91b92ea6e116e103b5c47b9d2f8417d1291955bd2b778c3c",
+  "policy_scores_thresholds_and_selected_baseline_changed": false,
+  "pre_score_lock_sha256": "1e927b557f1ca03c7529270e1b04a0731668e2cc80bc9443b666cb7dd8f88440",
+  "protocol_sha256": "55e86e3bcc2d1f56dfd4700c3912313e411f9d29481109f45c29bf82e77c102e",
+  "recovery_code_commit": "548ae2ab761b5ad2fc6c7b34961acb15d20c9ede",
+  "stage": "scoring_only_recovery_about_to_open_existing_vault"
+}

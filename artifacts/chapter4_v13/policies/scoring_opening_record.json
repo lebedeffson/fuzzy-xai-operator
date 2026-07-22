@@ -1,0 +1,8 @@
+{
+  "label_vault_sha256": "95925cb01e0100f1ac2e7e23829480cf85b440c09c81b1395c15c19d95cfd479",
+  "policy_scores_sha256": "281c434d9e74707e91b92ea6e116e103b5c47b9d2f8417d1291955bd2b778c3c",
+  "pre_score_lock_sha256": "1e927b557f1ca03c7529270e1b04a0731668e2cc80bc9443b666cb7dd8f88440",
+  "protocol_sha256": "55e86e3bcc2d1f56dfd4700c3912313e411f9d29481109f45c29bf82e77c102e",
+  "scoring_code_commit": "6e2b0558d7b067dd3a27731a444cc5d6e5bfb425",
+  "stage": "test_labels_about_to_open_for_scoring_only"
+}

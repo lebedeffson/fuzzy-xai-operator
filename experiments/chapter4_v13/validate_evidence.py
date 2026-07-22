@@ -15,6 +15,9 @@ REQUIRED = (
     "policies/pre_score_lock.json",
     "policies/policy_results.csv",
     "policies/statistical_tests.json",
+    "policies/scoring_recovery_lock.json",
+    "policies/scoring_recovery_completion.json",
+    "policies/invalid_scoring_run_1/invalid_marker.json",
     "route_faults/raw_results.jsonl",
     "route_faults/summary.csv",
     "runtime/raw_results.csv",
@@ -50,6 +53,14 @@ def validate() -> dict[str, object]:
         errors.append("pre_score_hash_mismatch")
     if lock.get("test_labels_loaded") is not False:
         errors.append("pre_score_opened_labels")
+    recovery_lock = read_json(ARTIFACTS / "policies" / "scoring_recovery_lock.json")
+    recovery_completion = read_json(ARTIFACTS / "policies" / "scoring_recovery_completion.json")
+    if recovery_lock.get("policy_scores_thresholds_and_selected_baseline_changed") is not False:
+        errors.append("scoring_recovery_changed_frozen_inputs")
+    if recovery_completion.get("post_open_tuning") is not False:
+        errors.append("post_open_tuning_detected")
+    if recovery_completion["policy_results_sha256"] != sha256_file(ARTIFACTS / "policies" / "policy_results.csv"):
+        errors.append("recovered_policy_results_hash_mismatch")
 
     evidence = read_json(ARTIFACTS / "evidence_map.json")
     tables = read_json(ARTIFACTS / "manifests" / "tables_manifest.json")

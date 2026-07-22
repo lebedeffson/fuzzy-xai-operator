@@ -1,0 +1,9 @@
+{
+  "opening_record_sha256": "4fc29b57b464f2dc78ceacca836f8b98562d34690f9d7779e2d735325b93a63c",
+  "policy_results_sha256": "7d169aa78b406b0318f6e28df3f70820f8ca9dd7c6b0ccdd67dcddc3f6d42d99",
+  "post_open_tuning": false,
+  "scoring_only_recovery": true,
+  "stage": "scoring_recovery_complete",
+  "statistical_tests_sha256": "b284092118f7ec0f9cf88869edfa11b0a6dbfed68aaa632f1b7930582c717bff",
+  "summary_sha256": "050851488a94a37308443aed79e91848de5b6b87f9e592153cece0fc0bdeb3ce"
+}
