@@ -28,11 +28,15 @@ FORBIDDEN_PARTS = {
 FORBIDDEN_SUFFIXES = {".docx", ".pdf", ".pyc", ".pyo", ".zip"}
 ALLOWED_ROOTS = {
     ".github",
+    "baselines",
+    "config",
     "configs",
     "data_manifests",
     "docs",
     "examples",
+    "experiments",
     "framework",
+    "gold_oracle",
     "research",
     "scripts",
     "study",

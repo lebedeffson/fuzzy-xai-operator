@@ -1,0 +1,38 @@
+name: H10 final Gold preconfirmatory
+
+on:
+  push:
+    branches:
+      - feat/h10-final-gold-v20
+  pull_request:
+
+jobs:
+  preconfirmatory:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install numpy matplotlib PyYAML pytest ruff
+      - name: Gold and independence tests
+        env:
+          PYTHONPATH: framework/fuzzyxai:.
+        run: make h10-gold-test H10_GOLD_PYTHON=python
+      - name: Deterministic preconfirmatory reproduction
+        env:
+          PYTHONPATH: framework/fuzzyxai:.
+        run: make reproduce-h10-gold H10_GOLD_PYTHON=python
+      - name: Private payload guard
+        run: |
+          if git ls-files | grep -E '(^|/)(\.h10_final_gold_private|reviewer_[12]\.csv|opening_record\.json|sealed_test_truth\.jsonl)'; then
+            echo "Private Gold payload or human responses are tracked" >&2
+            exit 1
+          fi
+      - name: Confirm no sealed opening
+        run: test ! -e artifacts/h10_final_gold/opening/opening_record.json

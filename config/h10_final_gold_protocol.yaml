@@ -1,0 +1,47 @@
+study_id: FXAI-H10-FINAL-GOLD
+phase: prelock_exploratory
+seed: 20260723
+cases_per_pipeline: 750
+pipelines:
+  - tabular_tree_a
+  - tabular_boost_b
+  - text_transformer_a
+  - text_encoder_b
+  - image_cnn_a
+  - timeseries_encoder_a
+splits:
+  development: 150
+  protocol_validation: 150
+  sealed_test: 450
+case_distribution:
+  clean: 0.20
+  single: 0.20
+  composite: 0.40
+  unknown_ambiguous: 0.20
+primary_population: composite_known
+primary_metrics:
+  - source_localization_macro_f1
+  - repair_set_macro_f1
+registered_margins:
+  source_localization_macro_f1: 0.04
+  repair_set_macro_f1: 0.04
+safety_constraints:
+  false_certification: 0.01
+  false_block: 0.01
+bootstrap:
+  repetitions: 10000
+  seed: 20260724
+  hierarchy: pipeline_then_case
+  paired: true
+  correction: holm
+adjudication:
+  cases: 200
+  single: 50
+  composite: 100
+  unknown_ambiguous: 50
+  required_reviewers: 2
+  minimum_inter_reviewer_source_f1: 0.85
+  minimum_oracle_source_f1: 0.90
+  maximum_systematic_disagreement_rate: 0.05
+sealed_opening_limit: 1
+scientific_release_requires_manual_adjudication: true

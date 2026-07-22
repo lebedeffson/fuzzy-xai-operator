@@ -990,3 +990,44 @@ h10-package:
 
 reproduce-h10:
 	$(H10_ENV) $(H10_PYTHON) -m experiments.h10.reproduce
+
+# H10 final Gold uses the caller-selected existing environment. It never opens
+# sealed truth as part of ordinary reproduction.
+H10_GOLD_PYTHON ?= $(PYTHON)
+H10_GOLD_ENV = OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 PYTHONPATH=framework/fuzzyxai:.
+
+.PHONY: h10-gold-generate h10-gold-test h10-gold-development h10-gold-power h10-gold-adjudication h10-gold-freeze h10-gold-confirmatory h10-gold-closure h10-gold-figures h10-gold-package reproduce-h10-gold
+
+h10-gold-generate:
+	$(H10_GOLD_ENV) $(H10_GOLD_PYTHON) -m experiments.h10_gold.generate_benchmark
+
+h10-gold-test:
+	$(H10_GOLD_ENV) $(H10_GOLD_PYTHON) -m ruff check gold_oracle experiments/h10_gold baselines/h10_gold framework/fuzzyxai/fuzzyxai/audit_h10/gold_benchmark.py tests/h10_gold
+	$(H10_GOLD_ENV) $(H10_GOLD_PYTHON) -m pytest -q tests/h10_gold
+
+h10-gold-development:
+	$(H10_GOLD_ENV) $(H10_GOLD_PYTHON) -m experiments.h10_gold.run_methods --split development
+
+h10-gold-power:
+	$(H10_GOLD_ENV) $(H10_GOLD_PYTHON) -m experiments.h10_gold.power_analysis
+
+h10-gold-adjudication:
+	$(H10_GOLD_ENV) $(H10_GOLD_PYTHON) -m experiments.h10_gold.validate_adjudication
+
+h10-gold-freeze:
+	$(H10_GOLD_ENV) $(H10_GOLD_PYTHON) -m experiments.h10_gold.freeze_protocol
+
+h10-gold-confirmatory:
+	$(H10_GOLD_ENV) $(H10_GOLD_PYTHON) -m experiments.h10_gold.run_confirmatory
+
+h10-gold-closure:
+	$(H10_GOLD_ENV) $(H10_GOLD_PYTHON) -m experiments.h10_gold.build_closure
+
+h10-gold-figures:
+	$(H10_GOLD_ENV) $(H10_GOLD_PYTHON) -m experiments.h10_gold.build_figures
+
+h10-gold-package:
+	$(H10_GOLD_ENV) $(H10_GOLD_PYTHON) -m experiments.h10_gold.package
+
+reproduce-h10-gold: h10-gold-test h10-gold-generate h10-gold-development h10-gold-power h10-gold-closure h10-gold-figures
+	@echo "H10 Gold preconfirmatory reproduction complete; sealed scoring was not opened."

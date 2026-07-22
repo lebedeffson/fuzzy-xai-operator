@@ -1,5 +1,39 @@
 # Project Memory
 
+## FXAI-H10-FINAL-GOLD-PRECONFIRMATORY
+
+- Date: 2026-07-23
+- Branch: `feat/h10-final-gold-v20`
+- Frozen base: `feat/h10-audit-confirmatory-v19@1713434980d4f4c3fed67be163ae8070d6388cdb`
+- Study: `FXAI-H10-FINAL-GOLD`
+- Phase: preconfirmatory development
+- Sealed opening count: `0`
+- Scientific release: blocked
+
+The independent Gold implementation derives source truth from nodes and edges
+actually changed by low-level transactions, repair truth from inverse
+transactions, and broken paths from graph differences. Its exhaustive cut
+oracle is separate from the evaluated H10 solver and has no H10 imports. The
+generated corpus contains 4,500 cases across six modality-specific route
+pipelines: 900 clean, 900 single, 1,800 composite, and 900 unknown/ambiguous.
+Two real reviewers must still complete the 200-case blind adjudication package;
+the pipeline does not generate reviewer answers.
+
+The first development run exposed an unfairly weak baseline because propagated
+`derived_status` symptoms were treated as independent repair targets. Before
+protocol lock, both independent baselines were strengthened to ignore that
+explicitly derived field. After this correction, Full H10 and the best strong
+baseline both reached source F1 `1.0` and repair F1 `1.0` on the composite
+development subset. The expected H10-L and H10-R effects are therefore `0.0`,
+below the registered `0.04` practical margin; increasing sample size cannot
+recover an absent effect. Full H10 retains a development-only secondary
+minimal-cut exact-match result (`1.0` versus `0.286111...`), but H10-C was not a
+primary confirmatory claim and must not be promoted after observing results.
+
+Protocol lock and sealed scoring fail closed for two reasons: manual
+adjudication is incomplete and the primary power gate is blocked. No sealed
+truth was read, no opening record exists, and v16/v18/v19 remain unchanged.
+
 ## FXAI-H10-V19-REPOSITORY-INTEGRATION
 
 - Date: 2026-07-22

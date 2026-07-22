@@ -76,6 +76,7 @@ study/final_confirmatory_closure/oof_features/
 
 # H10 v19 sealed labels and local working data never enter source releases.
 .h10_v19_private/
+.h10_final_gold_private/
 data/h10_v19/
 artifacts/h10_v19_exploratory/
 
