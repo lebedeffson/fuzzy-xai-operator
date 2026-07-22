@@ -1056,3 +1056,24 @@ independent-smoke:
 reproduce-independent-confirmatory-closure:
 	@echo "Fail-closed staged workflow: data/models/formative -> commit -> freeze -> commit -> one-shot confirmatory/replay -> claims"
 	@echo "Use make independent-release-check after immutable evidence is committed."
+
+# FXAI-Q1-OPERATIONAL-AUDIT-CONFIRMATORY
+OPAUDIT_PYTHON ?= $(if $(wildcard .venv-confirmatory/bin/python),.venv-confirmatory/bin/python,$(PYTHON))
+OPAUDIT_ENV = OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 PYTHONPATH=framework/fuzzyxai:.
+
+.PHONY: operational-audit-data operational-audit-formative operational-audit-freeze operational-audit-confirmatory operational-audit-smoke
+
+operational-audit-data:
+	$(OPAUDIT_ENV) $(OPAUDIT_PYTHON) -m experiments.operational_audit_v16.prepare_data
+
+operational-audit-formative: operational-audit-data
+	$(OPAUDIT_ENV) $(OPAUDIT_PYTHON) -m experiments.operational_audit_v16.evaluate formative
+
+operational-audit-freeze:
+	$(OPAUDIT_ENV) $(OPAUDIT_PYTHON) -m experiments.operational_audit_v16.evaluate freeze
+
+operational-audit-confirmatory:
+	$(OPAUDIT_ENV) $(OPAUDIT_PYTHON) -m experiments.operational_audit_v16.evaluate confirmatory
+
+operational-audit-smoke:
+	$(OPAUDIT_ENV) $(OPAUDIT_PYTHON) -m pytest -q tests/operational_audit_v16

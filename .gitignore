@@ -91,3 +91,4 @@ artifacts/chapter4_v13/**/*.lock
 
 # Independent confirmatory raw data, encrypted labels and vault keys remain local.
 data/independent_confirmatory/
+data/operational_audit_v16/

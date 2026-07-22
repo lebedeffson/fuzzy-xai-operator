@@ -296,3 +296,19 @@ operators:
     tests: [tests/independent_confirmatory/test_h6_advanced.py]
     artifacts: [artifacts/independent_confirmatory/protocol/SHA256SUMS]
     visualization: [rule_effect_interval]
+  - id: framework.operational_audit_lexicographic_controller
+    dissertation_ref: "chapter 4, A1-A5 operational audit and repair"
+    callable: fuzzyxai.operational_audit.controller:LexicographicController
+    input_schema: TypedRouteAssessmentAndPredictiveRisk
+    output_schema: OperationalDecision
+    tests: [tests/operational_audit_v16/test_operational_audit.py]
+    artifacts: [artifacts/operational_audit_v16/protocol/SHA256SUMS]
+    visualization: [route_repair_decision_trace]
+  - id: framework.operational_audit_typed_route_guard
+    dissertation_ref: "chapter 4, A1-A2 typed route localization"
+    callable: fuzzyxai.operational_audit.validator:TypedRouteGuard
+    input_schema: RouteArtifact
+    output_schema: RouteAssessment
+    tests: [tests/operational_audit_v16/test_operational_audit.py]
+    artifacts: [artifacts/operational_audit_v16/protocol/SHA256SUMS]
+    visualization: [localized_route_fault]

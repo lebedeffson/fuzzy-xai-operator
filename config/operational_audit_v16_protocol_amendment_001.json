@@ -1,0 +1,15 @@
+{
+  "schema_version": "1.0",
+  "amendment_id": "FXAI-Q1-OPERATIONAL-AUDIT-CONFIRMATORY-A001",
+  "timing": "before_data_download_before_replay_generation",
+  "parent_protocol_sha256": "724bbbee51ca0cf64978b7e570c4d518c995bbc4d282e6ef46d84d9fe3ea860a",
+  "replay_repair_service_events": {
+    "alert_only": 100,
+    "simple_or": 80,
+    "route_only": 60,
+    "hierarchical_v15": 50,
+    "lexicographic_v16": 20
+  },
+  "interpretation": "controlled service-time model; not observed production latency",
+  "hypotheses_or_success_thresholds_changed": false
+}
