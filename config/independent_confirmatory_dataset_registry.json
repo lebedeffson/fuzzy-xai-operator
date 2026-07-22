@@ -1,11 +1,12 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.1",
   "protocol_id": "FXAI-Q1-INDEPENDENT-CONFIRMATORY-CLOSURE",
+  "effective_amendment": "FXAI-Q1-INDEPENDENT-CONFIRMATORY-CLOSURE-A001",
   "status": "registration_pending",
   "datasets": [
-    {"dataset_id": "uci_dry_bean", "modality": "tabular", "sealed": false},
-    {"dataset_id": "ford_a", "modality": "time_series", "sealed": false},
-    {"dataset_id": "cifar10", "modality": "image", "sealed": false}
+    {"dataset_id": "uci_dry_bean", "modality": "tabular", "license": "CC BY 4.0", "sealed": false},
+    {"dataset_id": "uci_news_aggregator", "modality": "text", "license": "CC BY 4.0", "sealed": false},
+    {"dataset_id": "eurosat_rgb", "modality": "image", "license": "MIT", "sealed": false}
   ],
   "confirmatory_opening_allowed": false
 }

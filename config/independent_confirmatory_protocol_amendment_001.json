@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.0",
+  "amendment_id": "FXAI-Q1-INDEPENDENT-CONFIRMATORY-CLOSURE-A001",
+  "parent_protocol_sha256": "6626389969acc636213c9bfd7aa798825197e2675ef6ce7a8b72861787323fa2",
+  "timing": "before_data_download_before_model_tuning_before_any_sealed_opening",
+  "reason": "FordA official download returned HTTP 401 and CIFAR-10 official page did not provide an explicit dataset license; both are replaced before acquisition by datasets with auditable licenses.",
+  "removed_candidates": [
+    {"dataset_id": "ford_a", "reason": "official_source_access_and_license_not_resolved"},
+    {"dataset_id": "cifar10", "reason": "explicit_dataset_license_not_resolved_on_official_page"}
+  ],
+  "effective_independent_datasets": [
+    {
+      "dataset_id": "uci_dry_bean",
+      "modality": "tabular",
+      "objects": 13611,
+      "source": "https://archive.ics.uci.edu/dataset/602/dry+bean+dataset",
+      "license": "CC BY 4.0"
+    },
+    {
+      "dataset_id": "uci_news_aggregator",
+      "modality": "text",
+      "objects": 422937,
+      "source": "https://archive.ics.uci.edu/dataset/359/news+aggregator",
+      "license": "CC BY 4.0"
+    },
+    {
+      "dataset_id": "eurosat_rgb",
+      "modality": "image",
+      "objects": 27000,
+      "source": "https://github.com/phelber/EuroSAT",
+      "download": "https://zenodo.org/records/7711810/files/EuroSAT_RGB.zip?download=1",
+      "license": "MIT"
+    }
+  ],
+  "hypotheses_metrics_budgets_costs_and_success_criteria_changed": false,
+  "confirmatory_opening_allowed": false
+}
