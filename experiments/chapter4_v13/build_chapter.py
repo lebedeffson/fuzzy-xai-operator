@@ -140,14 +140,15 @@ def _new_section() -> str:
         "positive_effect": "положительный эффект в данном контуре",
         "no_confirmatory_advantage": "подтверждающее преимущество не установлено",
         "measured": "измерена в зарегистрированном контуре",
+        "supported_registered_library": "подтверждена для зарегистрированной библиотеки",
         "descriptive": "описательное измерение",
         "exploratory": "разведочный результат",
     }
     hypotheses["result"] = hypotheses["result"].map(hypothesis_names).fillna(hypotheses["result"])
     hypotheses["scope"] = hypotheses["scope"].str.replace("frozen v1.3.0", "зафиксированный выпуск v1.3.0", regex=False)
     hypotheses["scope"] = hypotheses["scope"].str.replace("matched coverage sealed test", "сопоставимое покрытие, изолированная выборка", regex=False)
-    hypotheses["scope"] = hypotheses["scope"].str.replace("registered and held-out route faults", "зарегистрированные и отложенные нарушения", regex=False)
-    hypotheses["scope"] = hypotheses["scope"].str.replace("end-to-end N=1..1000", "полный конвейер, N=1...1000", regex=False)
+    hypotheses["scope"] = hypotheses["scope"].str.replace("registered single and compositional route faults", "зарегистрированные одиночные и композиционные нарушения", regex=False)
+    hypotheses["scope"] = hypotheses["scope"].str.replace("end-to-end N=1..10000", "полный конвейер, N=1...10 000", regex=False)
     hypotheses["scope"] = hypotheses["scope"].str.replace("held-out fault types", "отложенные типы нарушений", regex=False)
 
     figures = ARTIFACTS / "figures"

@@ -81,6 +81,10 @@ def build() -> dict[str, object]:
 
     h1_supported = explanations["canonical_hash_preservation_rate"] == 1.0
     h2_positive = primary["absolute_rate_reduction"] > 0 and primary["ci_lower"] > 0 and primary["holm_adjusted_p"] < 0.05
+    typed_registered = route[
+        (route["method"] == "typed_route_validator") & route["group"].isin(["registered_single", "registered_compositional"])
+    ]
+    h3_supported = bool((typed_registered["f1"] == 1.0).all() and (typed_registered["component_localization_accuracy"] == 1.0).all())
     hypotheses = pd.DataFrame(
         [
             {"hypothesis": "H3-original", "result": "not_supported", "scope": "frozen v1.3.0"},
@@ -88,8 +92,8 @@ def build() -> dict[str, object]:
             {"hypothesis": "H6-general", "result": "not_supported", "scope": "frozen v1.3.0"},
             {"hypothesis": "V13-H1", "result": "supported" if h1_supported else "not_supported", "scope": "2000 AG News explanations"},
             {"hypothesis": "V13-H2", "result": "positive_effect" if h2_positive else "no_confirmatory_advantage", "scope": "matched coverage sealed test"},
-            {"hypothesis": "V13-H3", "result": "measured", "scope": "registered and held-out route faults"},
-            {"hypothesis": "V13-H4", "result": "descriptive", "scope": "end-to-end N=1..1000"},
+            {"hypothesis": "V13-H3", "result": "supported_registered_library" if h3_supported else "not_supported", "scope": "registered single and compositional route faults"},
+            {"hypothesis": "V13-H4", "result": "descriptive", "scope": "end-to-end N=1..10000"},
             {"hypothesis": "V13-H5", "result": "exploratory", "scope": "held-out fault types"},
         ]
     )
