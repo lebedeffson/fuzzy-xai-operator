@@ -1,7 +1,7 @@
 # H10 final Gold validation report
 
 - Study: `FXAI-H10-FINAL-GOLD`
-- Repository HEAD at report generation: `1145c395ced391cce6ea60ba3a8131121d03cfd3`
+- Repository HEAD at report generation: `13cebceb957cc2ce4759596ff44239b22f4bdf0f`
 - Gold cases generated: `4500` across `6` pipelines
 - Composite cases: `1800`
 - Oracle independence: `PASS`
