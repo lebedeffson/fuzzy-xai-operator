@@ -105,34 +105,35 @@ def _new_section() -> str:
     policy_names = {
         "always_accept": "Безусловное принятие",
         "max_confidence": "Порог уверенности",
-        "calibrated_confidence": "Калиброванная уверенность",
-        "predictive_entropy": "Предиктивная энтропия",
-        "weighted_linear": "Взвешенная линейная",
-        "explainer_disagreement": "Расхождение объяснителей",
-        "simple_or": "Логическое OR",
-        "provenance_only": "Только происхождение",
+        "calibrated_confidence": "Калибр. уверенность",
+        "predictive_entropy": "Энтропия",
+        "weighted_linear": "Взвешенная",
+        "explainer_disagreement": "Расхождение",
+        "simple_or": "OR",
+        "provenance_only": "Происхождение",
         "predictive_risk_P0": "Предиктивный риск P0",
         "full_fuzzyxai_P1": "Риск P1",
         "full_fuzzyxai": "Полный FuzzyXAI",
-        "random_matched_budget": "Случайная проверка",
+        "random_matched_budget": "Случайная",
     }
     policies["policy"] = policies["policy"].map(policy_names)
     policies = policies.sort_values("wrong_automatic_actions")
 
     route_names = {
-        "simple_or": "Логическое OR",
-        "independent_if_else": "Независимые if-else",
-        "weighted_fault_score": "Взвешенная оценка",
-        "typed_route_validator": "Типизированный валидатор",
+        "simple_or": "OR",
+        "independent_if_else": "if-else",
+        "weighted_fault_score": "Взвешенная",
+        "typed_route_validator": "Типизированный",
     }
     group_names = {
-        "clean": "Корректный маршрут",
-        "registered_single": "Одиночные нарушения",
-        "registered_compositional": "Композиционные нарушения",
-        "held_out_fault_types": "Отложенные типы",
+        "clean": "Корректный",
+        "registered_single": "Одиночные",
+        "registered_compositional": "Композиции",
+        "held_out_fault_types": "Отложенные",
     }
     route["method"] = route["method"].map(route_names)
     route["group"] = route["group"].map(group_names)
+    runtime["explainer"] = runtime["explainer"].map({"integrated_gradients": "IG", "token_masking": "Маскирование"})
 
     hypothesis_names = {
         "not_supported": "не подтверждена",
@@ -174,7 +175,7 @@ def _new_section() -> str:
 
 Для каждого выбранного объекта рассчитаны Integrated Gradients и маскирование токенов. Сохраняемый канонический объект включает идентичность токена, знак, величину, ранг, параметры объяснителя, ревизию модели и контрольную сумму. Доля точного сохранения канонического хэша составила {_format(float(explanations['canonical_hash_preservation_rate']))}. Значения верности удаления, устойчивости к малым возмущениям и согласия двух методов приведены как измерения данного контура, а не как доказательство универсального превосходства.
 
-<img src="{(figures / 'explanation_quality.png').resolve()}" style="width:15cm" />
+![]({(figures / 'explanation_quality.png').resolve()}){{width=15cm}}
 
 Рисунок 4.25 — Распределение показателей локального объяснения в современном текстовом контуре
 
@@ -190,7 +191,7 @@ def _new_section() -> str:
 
 Первичная абсолютная разность долей ошибочных автоматических действий составляет {_format(float(primary['absolute_rate_reduction']), 6)}, 95%-й доверительный интервал [{_format(float(primary['ci_lower']), 6)}; {_format(float(primary['ci_upper']), 6)}], скорректированное значение p = {_format(float(primary['holm_adjusted_p']), 6)}. Знак эффекта трактуется относительно простой политики, заранее выбранной на validation-части.
 
-<img src="{(figures / 'policy_risk_coverage.png').resolve()}" style="width:15cm" />
+![]({(figures / 'policy_risk_coverage.png').resolve()}){{width=15cm}}
 
 Рисунок 4.26 — Риск и автоматическое покрытие политик при одинаковых бюджетах проверки
 
@@ -202,7 +203,7 @@ def _new_section() -> str:
 
 Таблица 4.39 — Диагностика одиночных, композиционных и отложенных нарушений
 
-<img src="{(figures / 'route_faults.png').resolve()}" style="width:15cm" />
+![]({(figures / 'route_faults.png').resolve()}){{width=15cm}}
 
 Рисунок 4.27 — Качество обнаружения нарушений для четырёх проверяющих схем
 
@@ -218,7 +219,7 @@ def _new_section() -> str:
 
 Таблица 4.41 — Производительность, память и доли времени
 
-<img src="{(figures / 'runtime_decomposition.png').resolve()}" style="width:16cm" />
+![]({(figures / 'runtime_decomposition.png').resolve()}){{width=16cm}}
 
 Рисунок 4.28 — Декомпозиция полного времени по этапам конвейера
 
