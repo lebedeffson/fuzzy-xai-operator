@@ -133,7 +133,7 @@ def build_zip() -> None:
     check()
     output = ROOT / "release_artifacts" / f"fuzzyxai-independent-confirmatory-{git_commit()[:12]}.zip"
     output.parent.mkdir(parents=True, exist_ok=True)
-    include = [ROOT / record["path"] for record in read_json(EVIDENCE)["records"]]
+    include = [EVIDENCE, *(ROOT / record["path"] for record in read_json(EVIDENCE)["records"])]
     include.extend(
         [
             ROOT / "experiments" / "independent_confirmatory" / name
