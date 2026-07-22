@@ -10,6 +10,7 @@ from .common import ARTIFACTS, LOCK, OPENING, ROOT, git_commit, read_json, sha25
 
 CLAIMS = ARTIFACTS / "closure" / "claim_registry.json"
 EVIDENCE = ARTIFACTS / "closure" / "evidence_map.json"
+REPORT = ARTIFACTS / "closure" / "validation_report.md"
 
 
 def build_claims() -> None:
@@ -61,6 +62,31 @@ def build_claims() -> None:
         "merge_to_main_allowed": False,
     }
     write_json(CLAIMS, registry)
+    report = f"""# Independent Confirmatory Closure Validation Report
+
+- Scientific release status: `experimental_not_stable`
+- Merge to `main`: `false`
+- Sealed scoring objects: `{h3['objects']}`
+- Frozen primary baseline: `{h3['primary_baseline']}`
+- H3-R1 relative reduction: `{h3['relative_reduction']:.8f}` (required: `>= 0.15`)
+- H3-R1 hierarchical 95% CI for full minus baseline: `{h3['hierarchical_bootstrap_ci_95']}`
+- H3-R1 Holm-adjusted p: `{h3['holm_adjusted_p']:.8g}`
+- H3 hard-block rate: `{h3['hard_block_rate']:.8f}`
+- H3 false-block rate: `{h3['false_block_rate']:.8f}`
+- H3-R2 coverage gain: `{h3['coverage_gain']:.8f}`
+- H5 unknown recall / AUROC: `{h5['unknown_fault_recall']:.8f}` / `{h5['unknown_rejection_auroc']:.8f}`
+- H5 known-type macro-F1: `{h5['known_type_macro_f1']:.8f}`
+- H5 source localization: `{h5['source_region_localization']:.8f}`
+- H6 confirmatory opening: `false`
+- Replay incident recall: `{replay['incident_level_recall']:.8f}`
+- Replay hard-block rate: `{replay['controllers']['full_hierarchical_fuzzyxai']['hard_block_rate']:.8f}`
+
+The replay incident-level table was recomputed after a declared aggregation-only defect. Controller actions,
+policy thresholds and sealed H3/H5 results were not changed. The full details are in
+`artifacts/independent_confirmatory/replay/scoring_recovery_deviation.json`.
+"""
+    REPORT.parent.mkdir(parents=True, exist_ok=True)
+    REPORT.write_text(report, encoding="utf-8")
 
 
 def build_evidence() -> None:
@@ -75,7 +101,9 @@ def build_evidence() -> None:
         OPENING.relative_to(ROOT),
         Path("artifacts/independent_confirmatory/confirmatory/summary.json"),
         Path("artifacts/independent_confirmatory/replay/chronological_summary.json"),
+        Path("artifacts/independent_confirmatory/replay/scoring_recovery_deviation.json"),
         CLAIMS.relative_to(ROOT),
+        REPORT.relative_to(ROOT),
     ]
     rows = []
     for index, relative in enumerate(paths, 1):
@@ -86,7 +114,7 @@ def build_evidence() -> None:
 
 def check() -> None:
     verify_protocol()
-    for path in (LOCK, OPENING, ARTIFACTS / "confirmatory" / "summary.json", ARTIFACTS / "replay" / "chronological_summary.json", CLAIMS, EVIDENCE):
+    for path in (LOCK, OPENING, ARTIFACTS / "confirmatory" / "summary.json", ARTIFACTS / "replay" / "chronological_summary.json", CLAIMS, REPORT, EVIDENCE):
         if not path.is_file():
             raise RuntimeError(f"missing closure artifact: {path.relative_to(ROOT)}")
     claims = read_json(CLAIMS)

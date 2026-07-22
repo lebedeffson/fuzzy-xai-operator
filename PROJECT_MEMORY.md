@@ -1,5 +1,39 @@
 # Project Memory
 
+## FXAI-Q1-INDEPENDENT-CONFIRMATORY-CLOSURE-EXPERIMENTAL
+
+- Date: 2026-07-22
+- Branch: `feat/q1-independent-confirmatory-closure`
+- Frozen predecessor: `64b2b16e444ccd20ebde9b4c0d1211686d6dd137`
+- Protocol lock commit: `c59024c7f1950b56f3000101efca82b8237597c6`
+- Scientific status: experimental, not stable
+- Merge to `main`: prohibited by generated claim registry
+
+Three independently registered datasets were sealed before scoring: Dry Bean, News Aggregator and EuroSAT RGB.
+They contain 48,072 confirmatory objects across tabular, text and image modalities. The predictive models and all
+policy scores were generated without loading sealed labels; one immutable scoring opening completed without tuning.
+Route-fault evidence is a deterministic controlled injection on independent predictive objects, not naturally
+observed production failures.
+
+Result boundary:
+
+- H3-R1 is not supported. The hierarchical controller produced 2,279 invalid automatic actions versus 2,316 for the
+  frozen `route_only` baseline: 1.5976% relative reduction, below the registered 15% threshold. The hierarchical
+  bootstrap interval for the absolute full-minus-baseline rate difference crosses zero;
+- H3-R2 is not supported: fixed-risk coverage changed by -0.1077 percentage points;
+- H3-R3 is supported only against `predictive_only` under controlled route-fault injection. It is not evidence of
+  superiority over the best route-aware baseline or production readiness;
+- H5-A3 and H5-A4 are not supported as composite claims. Held-out-family unknown recall and rejection AUROC are 1.0
+  with zero false certification, but known-type macro-F1 is 0.4657 and source/repair localization is 0.6840;
+- H5-P2/P3 were not evaluated. H6-R6-R8 confirmatory testing was not opened because only one independent tabular
+  dataset was registered, despite a passing synthetic formative gate;
+- the 500,000-event chronological replay is controlled descriptive evidence. Hard-block rate is 0.3728%, but invalid
+  accepts are unchanged relative to the frozen route baseline. A declared scoring-only replay recovery corrected
+  incident-ID aggregation without changing actions, policies or sealed H3/H5 results.
+
+The immutable predecessor statuses remain `H3-original = not_supported`, `H5-P-original = not_supported`, and
+`H6-general = not_supported`. Do not create a stable tag or merge this branch to `main`.
+
 ## FXAI-NEGATIVE-RESULTS-REMEDIATION-EXPERIMENTAL-FROZEN
 
 - Date: 2026-07-22

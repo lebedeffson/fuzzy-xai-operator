@@ -1,0 +1,28 @@
+name: Independent Confirmatory Closure
+
+on:
+  push:
+    branches: [feat/q1-independent-confirmatory-closure]
+  pull_request:
+
+jobs:
+  contracts:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+      - run: python -m pip install -e '.[dev,images]'
+      - name: Independent controller and open-set contracts
+        run: make independent-smoke INDEPENDENT_PYTHON=python
+      - name: Static checks
+        run: >-
+          ruff check experiments/independent_confirmatory tests/independent_confirmatory
+          framework/fuzzyxai/fuzzyxai/open_set_validator
+          framework/fuzzyxai/fuzzyxai/rule_effects_v2
+          framework/fuzzyxai/fuzzyxai/replay/chronological.py
