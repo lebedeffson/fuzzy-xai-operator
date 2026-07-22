@@ -1,0 +1,125 @@
+{
+  "datasets": [
+    {
+      "abstention_rate_on_faults": 0.2571080422420796,
+      "byte_identical_trace_rate": 1.0,
+      "dataset_id": "uci_online_shoppers_468",
+      "known_family_accuracy": 0.8974484789008832,
+      "methods": {
+        "hierarchical_validator_v16": {
+          "false_alerts_per_10000_valid": 0.0,
+          "false_certification": 0.0020308692120227455,
+          "generic_fault_recall": 0.9979691307879772,
+          "repair_candidate_recall": 0.9979691307879772,
+          "source_region_localization": 0.9634443541835905
+        },
+        "independent_if_else": {
+          "false_alerts_per_10000_valid": 0.0,
+          "false_certification": 0.0020308692120227455,
+          "generic_fault_recall": 0.9979691307879772,
+          "repair_candidate_recall": 0.9979691307879772,
+          "source_region_localization": 0.9634443541835905
+        },
+        "json_schema": {
+          "false_alerts_per_10000_valid": 0.0,
+          "false_certification": 0.9654752233956133,
+          "generic_fault_recall": 0.03452477660438668,
+          "repair_candidate_recall": 0.0,
+          "source_region_localization": 0.0
+        },
+        "nearest_centroid_v15": {
+          "false_alerts_per_10000_valid": 0.0,
+          "false_certification": 0.0020308692120227455,
+          "generic_fault_recall": 0.9979691307879772,
+          "repair_candidate_recall": 0.0,
+          "source_region_localization": 0.8529650690495532
+        },
+        "route_only_rules": {
+          "false_alerts_per_10000_valid": 0.0,
+          "false_certification": 0.0020308692120227455,
+          "generic_fault_recall": 0.9979691307879772,
+          "repair_candidate_recall": 0.9979691307879772,
+          "source_region_localization": 0.9634443541835905
+        },
+        "simple_or": {
+          "false_alerts_per_10000_valid": 0.0,
+          "false_certification": 0.0020308692120227455,
+          "generic_fault_recall": 0.9979691307879772,
+          "repair_candidate_recall": 0.0,
+          "source_region_localization": 0.0
+        },
+        "weighted_fault_score": {
+          "false_alerts_per_10000_valid": 0.0,
+          "false_certification": 0.0020308692120227455,
+          "generic_fault_recall": 0.9979691307879772,
+          "repair_candidate_recall": 0.0,
+          "source_region_localization": 0.0
+        }
+      },
+      "objects": 2462,
+      "route_checks": 12310
+    },
+    {
+      "abstention_rate_on_faults": 0.2596401028277635,
+      "byte_identical_trace_rate": 1.0,
+      "dataset_id": "uci_youtube_spam_380",
+      "known_family_accuracy": 0.897196261682243,
+      "methods": {
+        "hierarchical_validator_v16": {
+          "false_alerts_per_10000_valid": 0.0,
+          "false_certification": 0.002570694087403599,
+          "generic_fault_recall": 0.9974293059125964,
+          "repair_candidate_recall": 0.9974293059125964,
+          "source_region_localization": 0.961439588688946
+        },
+        "independent_if_else": {
+          "false_alerts_per_10000_valid": 0.0,
+          "false_certification": 0.002570694087403599,
+          "generic_fault_recall": 0.9974293059125964,
+          "repair_candidate_recall": 0.9974293059125964,
+          "source_region_localization": 0.961439588688946
+        },
+        "json_schema": {
+          "false_alerts_per_10000_valid": 0.0,
+          "false_certification": 0.9640102827763496,
+          "generic_fault_recall": 0.03598971722365039,
+          "repair_candidate_recall": 0.0,
+          "source_region_localization": 0.0
+        },
+        "nearest_centroid_v15": {
+          "false_alerts_per_10000_valid": 0.0,
+          "false_certification": 0.002570694087403599,
+          "generic_fault_recall": 0.9974293059125964,
+          "repair_candidate_recall": 0.0,
+          "source_region_localization": 0.8483290488431876
+        },
+        "route_only_rules": {
+          "false_alerts_per_10000_valid": 0.0,
+          "false_certification": 0.002570694087403599,
+          "generic_fault_recall": 0.9974293059125964,
+          "repair_candidate_recall": 0.9974293059125964,
+          "source_region_localization": 0.961439588688946
+        },
+        "simple_or": {
+          "false_alerts_per_10000_valid": 0.0,
+          "false_certification": 0.002570694087403599,
+          "generic_fault_recall": 0.9974293059125964,
+          "repair_candidate_recall": 0.0,
+          "source_region_localization": 0.0
+        },
+        "weighted_fault_score": {
+          "false_alerts_per_10000_valid": 0.0,
+          "false_certification": 0.002570694087403599,
+          "generic_fault_recall": 0.9974293059125964,
+          "repair_candidate_recall": 0.0,
+          "source_region_localization": 0.0
+        }
+      },
+      "objects": 389,
+      "route_checks": 1945
+    }
+  ],
+  "implementation_commit": "d7f510f547eac5d12dcfd0e37985e8b98034e55d",
+  "predictive_review_threshold": 0.8,
+  "test_opened": false
+}

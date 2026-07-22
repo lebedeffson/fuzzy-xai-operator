@@ -1,0 +1,48 @@
+{
+  "datasets": [
+    {
+      "dataset_id": "uci_online_shoppers_468",
+      "license": "CC BY 4.0",
+      "modality": "tabular",
+      "objects": 12330,
+      "overlap_count": 0,
+      "raw_sha256": "b3055ee355f59134d851d32641183cb4a8b45def7124d2f50442a042f358e0d9",
+      "source": "https://archive.ics.uci.edu/static/public/468/data.csv",
+      "split_counts": {
+        "formative_development": 2462,
+        "sealed_confirmatory_test": 2465,
+        "train": 7403
+      },
+      "split_hashes": {
+        "formative_development": "bca6b74ec20a59f2de7f72fe0689c2e40d84b5e4cc2b144cafdafe30b05b8e94",
+        "sealed_confirmatory_test": "8ee613601d7e80ddd77cc3d40ce063b3709227fb042dc05bb1282274cacd580a",
+        "train": "9eadee0dbb4868068de62a5bde7af0d79c7c4618d56fc7f949eabf4dace27de7"
+      },
+      "test_labels_public": false,
+      "vault_sha256": "b78baf206f64c39213d3a35dd5a677db8dd5eebeeade63241bad5564e2bc6251"
+    },
+    {
+      "dataset_id": "uci_youtube_spam_380",
+      "license": "CC BY 4.0",
+      "modality": "text",
+      "objects": 1956,
+      "overlap_count": 0,
+      "raw_sha256": "bd6182891adb3cfc8334b82c062176dfbebc563bf0ba07e31c2645f916865a0a",
+      "source": "https://archive.ics.uci.edu/static/public/380/youtube+spam+collection.zip",
+      "split_counts": {
+        "formative_development": 389,
+        "sealed_confirmatory_test": 377,
+        "train": 1190
+      },
+      "split_hashes": {
+        "formative_development": "2621b174d5f4ce235016f3ab0b9dcb7f43d885bfa0527871ee027bec332f0eff",
+        "sealed_confirmatory_test": "28ea402075f653b3ec771f111617623235e35e2857426a64b60ceabb02552c0e",
+        "train": "e01c66eccf401a1bc6fa397d19373030b963029dc48b13bae23d216bf9f0113e"
+      },
+      "test_labels_public": false,
+      "vault_sha256": "7c37d0ec66e743f3849a738e7c0ed14e23b595bc7313925f7801ef3c6e8bb82c"
+    }
+  ],
+  "fresh_against_registered_manifests": true,
+  "implementation_commit": "d7f510f547eac5d12dcfd0e37985e8b98034e55d"
+}
