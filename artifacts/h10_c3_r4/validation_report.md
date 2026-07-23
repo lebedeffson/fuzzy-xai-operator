@@ -2,12 +2,13 @@
 
 - Implementation commit: `e729834c077ecb5c0011d9fb85d5f00b10129f18`
 - Full regression: `533 passed, 4 skipped`
-- Focused R4/diagnostics: `58 passed`
+- Focused R4/diagnostics: `71 passed`
 - Ruff: `PASS`
 - Gate: `READY_FOR_SEALED_GENERATION`
-- Sealed status: `READY_FOR_SEALED_SCORING`
+- Sealed status: `READY_FOR_SECURE_SEALED_SCORING`
 - Sealed opening count: `0`
-- Sealed private mutation log stored: `false`
+- Sealed private plaintext distributed: `false`
+- Sealed payload: `AES-256-GCM encrypted`
 
 ## Open R4 results
 

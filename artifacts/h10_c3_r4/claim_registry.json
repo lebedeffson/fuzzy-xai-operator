@@ -13,7 +13,7 @@
       "status": "NOT_EVALUATED_CONFIRMATORY"
     }
   ],
-  "scientific_status": "READY_FOR_SEALED_SCORING",
+  "scientific_status": "READY_FOR_SECURE_SEALED_SCORING",
   "sealed_opening_count": 0,
   "study_id": "FXAI-H10-C3-R4-CONFIRMATORY-READINESS"
 }
