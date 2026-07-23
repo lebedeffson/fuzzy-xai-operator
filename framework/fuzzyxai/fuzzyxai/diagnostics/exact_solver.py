@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from itertools import product
 from math import isclose
 
 from .contracts import DefectAtom, OptimalCutSet, RepairCostModel, RouteGraph, ValidationObligation
@@ -23,6 +24,51 @@ class ExactMinimalCutSolver:
         relevant = tuple(item for item in obligations if item.repairable and item.candidate_atoms)
         if not relevant:
             return OptimalCutSet(((),), 0.0, True, False, 1, True)
+        components = self._obligation_components(relevant)
+        if len(components) > 1:
+            component_results = [
+                self.solve(
+                    graph,
+                    component,
+                    tuple(
+                        atom
+                        for atom in atoms
+                        if any(atom in obligation.candidate_atoms for obligation in component)
+                    ),
+                    cost_model,
+                )
+                for component in components
+            ]
+            lower_bound_count = 1
+            for result in component_results:
+                lower_bound_count *= result.lower_bound_count
+            combined: set[tuple[DefectAtom, ...]] = set()
+            truncated = any(result.truncated for result in component_results)
+            for selection in product(*(result.cuts for result in component_results)):
+                candidate = tuple(
+                    sorted(
+                        {atom for cut in selection for atom in cut},
+                        key=lambda atom: atom.key,
+                    )
+                )
+                if len(combined) < self.equivalent_limit:
+                    combined.add(candidate)
+                elif candidate not in combined:
+                    truncated = True
+            ordered = tuple(
+                sorted(combined, key=lambda cut: (len(cut), tuple(atom.key for atom in cut)))
+            )
+            return OptimalCutSet(
+                cuts=ordered,
+                optimal_cost=sum(result.optimal_cost for result in component_results),
+                enumeration_complete=all(
+                    result.enumeration_complete for result in component_results
+                )
+                and not truncated,
+                truncated=truncated,
+                lower_bound_count=lower_bound_count,
+                optimality_proven=all(result.optimality_proven for result in component_results),
+            )
         prepared_atoms = self._remove_dominated(relevant, atoms, cost_model)
         obligation_index = {item.obligation_id: index for index, item in enumerate(relevant)}
         full_mask = (1 << len(relevant)) - 1
@@ -137,3 +183,28 @@ class ExactMinimalCutSolver:
             if not dominated:
                 retained.append(atom)
         return tuple(sorted(retained, key=lambda atom: atom.key))
+
+    @staticmethod
+    def _obligation_components(
+        obligations: tuple[ValidationObligation, ...],
+    ) -> tuple[tuple[ValidationObligation, ...], ...]:
+        remaining = set(obligations)
+        components = []
+        while remaining:
+            seed = min(remaining, key=lambda item: item.obligation_id)
+            component = {seed}
+            frontier = [seed]
+            remaining.remove(seed)
+            while frontier:
+                current = frontier.pop()
+                linked = [
+                    item
+                    for item in remaining
+                    if set(current.candidate_atoms).intersection(item.candidate_atoms)
+                ]
+                for item in linked:
+                    remaining.remove(item)
+                    component.add(item)
+                    frontier.append(item)
+            components.append(tuple(sorted(component, key=lambda item: item.obligation_id)))
+        return tuple(components)

@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from itertools import combinations
+
 from .contracts import ApproximateCut, DefectAtom, RepairCostModel, RouteGraph, ValidationObligation
 from .cut_verification import covered_obligations, verify_cut_elements
 
@@ -44,7 +46,8 @@ class ApproximateMinimalCutSolver:
                 selected = min(useful, key=lambda atom: ordering(atom, gains[atom]))
                 chosen.append(selected)
                 remaining -= set(covered_obligations((selected,), relevant))
-            candidates.append(self._prune(tuple(chosen), relevant))
+            pruned = self._prune(tuple(chosen), relevant)
+            candidates.append(self._local_improve(pruned, atoms, relevant, cost_model))
         feasible = [cut for cut in candidates if target.issubset(covered_obligations(cut, relevant))]
         if not feasible:
             raise ValueError("approximate solver cannot cover the repairable obligations")
@@ -79,3 +82,53 @@ class ApproximateMinimalCutSolver:
             if target.issubset(covered_obligations(candidate, obligations)):
                 selected.remove(atom)
         return tuple(sorted(selected, key=lambda atom: atom.key))
+
+    @classmethod
+    def _local_improve(
+        cls,
+        cut: tuple[DefectAtom, ...],
+        atoms: tuple[DefectAtom, ...],
+        obligations: tuple[ValidationObligation, ...],
+        costs: RepairCostModel,
+    ) -> tuple[DefectAtom, ...]:
+        target = {item.obligation_id for item in obligations}
+        current = cls._prune(cut, obligations)
+        while True:
+            current_cost = sum(costs.cost(atom) for atom in current)
+            best = current
+            best_cost = current_cost
+            outside = tuple(atom for atom in atoms if atom not in current)
+            removals = [
+                subset
+                for size in (1, 2)
+                for subset in combinations(current, size)
+            ]
+            additions = [
+                subset
+                for size in (1, 2)
+                for subset in combinations(outside, size)
+            ]
+            for removed in removals:
+                retained = tuple(atom for atom in current if atom not in removed)
+                for added in additions:
+                    candidate = cls._prune((*retained, *added), obligations)
+                    if not target.issubset(covered_obligations(candidate, obligations)):
+                        continue
+                    candidate_cost = sum(costs.cost(atom) for atom in candidate)
+                    if (
+                        candidate_cost < best_cost
+                        and (
+                            candidate_cost,
+                            len(candidate),
+                            tuple(atom.key for atom in candidate),
+                        )
+                        < (
+                            best_cost,
+                            len(best),
+                            tuple(atom.key for atom in best),
+                        )
+                    ):
+                        best, best_cost = candidate, candidate_cost
+            if best == current:
+                return current
+            current = best

@@ -4,6 +4,7 @@ import csv
 import json
 import os
 import subprocess
+from dataclasses import replace
 from hashlib import sha256
 from pathlib import Path
 from statistics import median
@@ -11,7 +12,7 @@ from statistics import median
 import yaml
 
 from .generator import generate_cases, serialize_cases
-from .baseline_methods import BASELINES, run_baseline, with_cost_multiplier
+from .baseline_methods import BASELINES, run_baseline
 from .fuzzy_method import run_fuzzyxai
 from .oracle import derive_gold
 from .scoring import score
@@ -59,11 +60,24 @@ def generate(split: str) -> Path:
     return path
 
 
-def _run_case(case: object, cost_multiplier: float = 1.0) -> list[dict[str, object]]:
+def _adjust_case_costs(case: object, multiplier: float) -> object:
+    return replace(
+        case,
+        candidates=tuple(
+            replace(
+                candidate,
+                cost=candidate.cost * multiplier
+                if candidate.atom_id.startswith(("greedy-", "direct-"))
+                else candidate.cost,
+            )
+            for candidate in case.candidates
+        ),
+    )
+
+
+def _run_case(case: object) -> list[dict[str, object]]:
     gold = derive_gold(case)
     view = case.method_view()
-    if cost_multiplier != 1.0:
-        view = with_cost_multiplier(view, cost_multiplier)
     methods = [
         *(run_baseline(name, view) for name in BASELINES),
         run_fuzzyxai(view),
@@ -99,10 +113,12 @@ def run(split: str, *, cost_multiplier: float = 1.0) -> Path:
     count = int(cfg["cases_per_pipeline"][split])
     seed = int(cfg["seed"]) + {"development": 1, "protocol_validation": 2}[split]
     cases = generate_cases(split, count, seed)
+    if cost_multiplier != 1.0:
+        cases = [_adjust_case_costs(case, cost_multiplier) for case in cases]
     rows = [
         row
         for case in cases
-        for row in _run_case(case, cost_multiplier=cost_multiplier)
+        for row in _run_case(case)
     ]
     suffix = "" if cost_multiplier == 1.0 else f"_cost_{cost_multiplier:.1f}"
     output = ARTIFACT_ROOT / "results" / f"{split}{suffix}.csv"
@@ -116,8 +132,8 @@ def run(split: str, *, cost_multiplier: float = 1.0) -> Path:
     return output
 
 
-def load_rows(split: str) -> list[dict[str, object]]:
-    path = ARTIFACT_ROOT / "results" / f"{split}.csv"
+def load_rows(split: str, suffix: str = "") -> list[dict[str, object]]:
+    path = ARTIFACT_ROOT / "results" / f"{split}{suffix}.csv"
     with path.open(encoding="utf-8", newline="") as stream:
         rows = list(csv.DictReader(stream))
     for row in rows:
@@ -327,8 +343,72 @@ def stability() -> Path:
                 subset, baseline, metric, repetitions=500, seed=231101
             )["effect"]
             checks.append({"claim": claim, "check": f"leave_family_out:{excluded}", "effect": effect})
+    cost_checks = []
+    for multiplier in (0.8, 1.2):
+        run("protocol_validation", cost_multiplier=multiplier)
+        varied = load_rows("protocol_validation", f"_cost_{multiplier:.1f}")
+        for claim, metric in (
+            ("H10-C3a", "optimal_set_membership"),
+            ("H10-C3b", "full_recertification_success"),
+        ):
+            population = _primary(varied, claim)
+            baseline = selection[claim]["selected"]
+            effect = hierarchical_bootstrap(
+                population, baseline, metric, repetitions=1000, seed=231120
+            )["effect"]
+            cost_checks.append(
+                {
+                    "claim": claim,
+                    "multiplier": multiplier,
+                    "effect": effect,
+                }
+            )
+    seed_checks = []
+    cfg = config()
+    for seed_offset in (11, 12, 13):
+        cases = generate_cases(
+            f"stability_seed_{seed_offset}",
+            60,
+            int(cfg["seed"]) + seed_offset,
+        )
+        seed_rows = [row for case in cases for row in _run_case(case)]
+        for claim, metric in (
+            ("H10-C3a", "optimal_set_membership"),
+            ("H10-C3b", "full_recertification_success"),
+        ):
+            population = _primary(seed_rows, claim)
+            baseline = selection[claim]["selected"]
+            effect = hierarchical_bootstrap(
+                population, baseline, metric, repetitions=500, seed=231130
+            )["effect"]
+            seed_checks.append(
+                {"claim": claim, "seed_offset": seed_offset, "effect": effect}
+            )
+    stratum_pass = all(
+        item["effect"] >= 0 for item in checks if item["check"].startswith("stratum:")
+    )
+    nontrivial_strata_positive = all(
+        item["effect"] > 0
+        for item in checks
+        if item["check"] in {"stratum:S3", "stratum:S5"}
+    )
+    summary = {
+        "checks": checks,
+        "cost_sensitivity": cost_checks,
+        "seed_sensitivity": seed_checks,
+        "status": "PASS"
+        if stratum_pass
+        and nontrivial_strata_positive
+        and all(item["effect"] > 0 for item in cost_checks)
+        and all(item["effect"] > 0 for item in seed_checks)
+        else "FAIL",
+        "interpretation": (
+            "S2 and some S4 comparisons may be parity controls; no stratum may regress, "
+            "and graph-dependent S3/S5 effects must remain positive."
+        ),
+    }
     output = ARTIFACT_ROOT / "results" / "stability.json"
-    write_json(output, checks)
+    write_json(output, summary)
     return output
 
 
@@ -375,6 +455,7 @@ def gate() -> Path:
     development = read_json(ARTIFACT_ROOT / "results" / "development_statistics.json")
     validation = read_json(ARTIFACT_ROOT / "results" / "protocol_validation_statistics.json")
     power_results = read_json(ARTIFACT_ROOT / "power" / "power.json")
+    stability_results = read_json(ARTIFACT_ROOT / "results" / "stability.json")
     rows = load_rows("protocol_validation")
     fuzzy_rows = [row for row in rows if row["method"] == "full_fuzzyxai"]
     selection = read_json(ARTIFACT_ROOT / "lock" / "baseline_selection.json")
@@ -413,6 +494,7 @@ def gate() -> Path:
             item["status"] == "protocol_validation_pass" for item in validation
         ),
         "power": all(item["status"] == "pass" for item in power_results),
+        "stability": stability_results["status"] == "PASS",
         "cost_regret": validation[0]["cost_regret_effect"] > 0
         and validation[0]["cost_regret_ci_low"] > 0,
         "obligation_coverage_noninferior": full_coverage >= baseline_coverage,
