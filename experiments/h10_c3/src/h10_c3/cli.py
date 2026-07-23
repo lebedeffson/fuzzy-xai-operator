@@ -8,6 +8,7 @@ from .audit import (
     run_independence_audit,
     run_leakage_audit,
 )
+from .cost_stability_audit import reproduce_open_splits, run_cost_stability_audit
 from .reporting import (
     build_evidence_map,
     build_handoff_zip,
@@ -43,6 +44,8 @@ def main() -> None:
             "reports",
             "package",
             "score-sealed",
+            "cost-stability-audit",
+            "cost-open-reproduction",
         ),
     )
     args = parser.parse_args()
@@ -77,8 +80,11 @@ def main() -> None:
         print(build_handoff_zip())
     elif args.command == "score-sealed":
         score_sealed()
+    elif args.command == "cost-stability-audit":
+        print(run_cost_stability_audit())
+    elif args.command == "cost-open-reproduction":
+        print(reproduce_open_splits())
 
 
 if __name__ == "__main__":
     main()
-

@@ -1,0 +1,29 @@
+study_id: FXAI-H10-C3-COST-STABILITY-AUDIT
+base_commit: 24b0e4b48c785782c111b86765eefb7ff78db03c
+frozen_implementation: f25852f9c4af5cfb9ed4f088a48342edb8f20649
+selected_baseline_source: artifacts/h10_c3_v23/lock/baseline_selection.json
+global_cost_scale:
+  semantics: multiply_every_registered_cost_component
+  factors: [0.01, 0.1, 0.8, 1.0, 1.2, 10.0, 100.0]
+  required_invariants:
+    - gold_optimal_cuts
+    - fuzzyxai_predicted_cut
+    - selected_baseline_predicted_cut
+    - optimal_set_membership
+    - normalized_cost_regret
+non_uniform_cost_sensitivity:
+  scenarios:
+    - perturbation_id: node_down_edge_up
+      node_multiplier: 0.8
+      edge_multiplier: 1.2
+      human_multiplier: 1.0
+    - perturbation_id: node_up_edge_down_human_up
+      node_multiplier: 1.2
+      edge_multiplier: 0.8
+      human_multiplier: 1.2
+tolerances:
+  absolute: 1.0e-10
+  relative: 1.0e-10
+sealed:
+  generated: false
+  opening_count: 0

@@ -1109,14 +1109,30 @@ h10-c2-package:
 	$(H10_C2_ENV) $(H10_C2_PYTHON) -m h10_c2 package
 	@echo "Diagnostic v21 alpha checks complete; H10-C2 remains BLOCKED_PRECONFIRMATORY."
 
-H10_C3_PYTHON ?= $(PYTHON)
+H10_C3_PROJECT_VENV := $(abspath $(CURDIR)/../venv/bin/python)
+H10_C3_PYTHON ?= $(if $(wildcard $(H10_C3_PROJECT_VENV)),$(H10_C3_PROJECT_VENV),$(PYTHON))
 H10_C3_ENV = PYTHONPATH=experiments/h10_c3/src:framework/fuzzyxai:.
 
-.PHONY: diagnostic-v23-test diagnostic-v23-benchmark h10-c3-generate-development h10-c3-run-development h10-c3-freeze h10-c3-generate-protocol-validation h10-c3-run-protocol-validation h10-c3-stability-analysis h10-c3-power h10-c3-preconfirmatory-gate h10-c3-reports h10-c3-package h10-c3-score-sealed
+.PHONY: diagnostic-v23-test diagnostic-v23-benchmark h10-c3-test full-regression h10-c3-cost-stability-audit h10-c3-cost-open-reproduction h10-c3-cost-stability-package h10-c3-generate-development h10-c3-run-development h10-c3-freeze h10-c3-generate-protocol-validation h10-c3-run-protocol-validation h10-c3-stability-analysis h10-c3-power h10-c3-preconfirmatory-gate h10-c3-reports h10-c3-package h10-c3-score-sealed
 
 diagnostic-v23-test:
 	$(H10_C3_ENV) $(H10_C3_PYTHON) -m ruff check framework/fuzzyxai/fuzzyxai/diagnostics experiments/h10_c3 tests/diagnostics
-	$(H10_C3_ENV) $(H10_C3_PYTHON) -m pytest -q tests/diagnostics experiments/h10_c3/tests
+	$(H10_C3_ENV) $(H10_C3_PYTHON) -m pytest -q tests/diagnostics experiments/h10_c3/tests tests/h10_c3
+
+h10-c3-test: diagnostic-v23-test
+
+full-regression:
+	$(H10_C3_ENV) $(H10_C3_PYTHON) -m pytest -q
+
+h10-c3-cost-stability-audit:
+	$(H10_C3_ENV) $(H10_C3_PYTHON) -m h10_c3 cost-stability-audit
+
+h10-c3-cost-open-reproduction:
+	$(H10_C3_ENV) $(H10_C3_PYTHON) -m h10_c3 cost-open-reproduction
+
+h10-c3-cost-stability-package:
+	$(H10_C3_PYTHON) scripts/build_framework_release.py
+	$(H10_C3_PYTHON) scripts/build_h10_c3_cost_stability_handoff.py
 
 diagnostic-v23-benchmark:
 	$(H10_C3_ENV) $(H10_C3_PYTHON) -m h10_c3 generate-development
@@ -1137,8 +1153,8 @@ h10-c3-generate-protocol-validation:
 h10-c3-run-protocol-validation:
 	$(H10_C3_ENV) $(H10_C3_PYTHON) -m h10_c3 run-protocol-validation
 
-h10-c3-stability-analysis:
-	$(H10_C3_ENV) $(H10_C3_PYTHON) -m h10_c3 stability
+h10-c3-stability-analysis: h10-c3-cost-stability-audit
+	$(H10_C3_PYTHON) -c 'import json, pathlib; p=pathlib.Path("artifacts/h10_c3/cost_stability/stability_gate.json"); d=json.loads(p.read_text()); assert d["status"] == "PASS", d'
 
 h10-c3-power:
 	$(H10_C3_ENV) $(H10_C3_PYTHON) -m h10_c3 power
