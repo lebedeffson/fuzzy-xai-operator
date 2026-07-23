@@ -12,7 +12,8 @@
   "invalid_presealed_attempts_preserved": [
     "INVALID_PRESEALED_STRATUM_ALLOCATION",
     "INVALID_PREOPENING_PLAINTEXT_PRIVATE_LOG",
-    "INVALID_PREOPEN_SEALED_ISOLATION"
+    "INVALID_PREOPEN_SEALED_ISOLATION",
+    "INVALID_PREOPEN_CI_ENVIRONMENT_MISMATCH"
   ],
   "preconfirmatory_gate": {
     "H10-C3a": "NOT_EVALUATED_CONFIRMATORY",
@@ -40,10 +41,10 @@
     "status": "READY_FOR_SEALED_GENERATION"
   },
   "sealed_isolation": {
-    "encrypted_payload_sha256": "8fb4a0783c72b150806c75e133f2ab7cfcfaeeb43c5b5357816c325660dd927b",
-    "plaintext_commitment_sha256": "ee96b93952f72b594d60236530f28464165b82b695ffe50f355e7b07ad7bdf95",
+    "encrypted_payload_sha256": "14f74ed068cf3956296a6e45b3c491d32380860a59d82623ad69ab68e99fb21a",
+    "plaintext_commitment_sha256": "91d3b202a990960078f297d5373881c2733becd5714fe049c6d876eda1fc054b",
     "plaintext_sealed_data_distributed": false,
-    "seed_commitment_sha256": "62061308b66989bb56790d6ce2c8b00b5529b91e6188b9f40925f01e2f6cc3b3"
+    "seed_commitment_sha256": "122755d40614d755a2400a1f729b8326931981f9b462b97dcd28b2c2e0f82dee"
   },
   "sealed_opening_count": 0,
   "sealed_private_truth_stored_in_preopen_handoff": false,
