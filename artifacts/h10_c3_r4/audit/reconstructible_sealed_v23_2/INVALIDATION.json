@@ -1,0 +1,16 @@
+{
+  "classification": "INVALID_PREOPEN_SEALED_ISOLATION",
+  "description": "The v23.2 payload was procedurally gated but reconstructible from public deterministic inputs. It was never scored and is not confirmatory evidence.",
+  "files_removed_from_preopen_distribution": {
+    "artifacts/h10_c3_r4/sealed/data/sealed/cases.jsonl": "4da9550f899e8575bbbc65f522bda9d6a965408505d069e9f8688b432ba06804",
+    "artifacts/h10_c3_r4/sealed/data/sealed/manifest.json": "07d2109961225870ceaa8414ecca9b4fa1548abf53e7d711f1f631e7270aa9d2",
+    "artifacts/h10_c3_r4/sealed/sealed_status.json": "b2da1493c07339b314224955ecaaf1442549015bef3b9bb06b4e40cbff6d6b83",
+    "experiments/h10_c3_r4/templates/sealed/manifest.json": "c72bcdea4d137ab7d32fd18417f95d704e410059a391614096555e09b41f5f2f",
+    "experiments/h10_c3_r4/templates/sealed/templates.jsonl": "8d454a5439881e5a95df4f14cc6c34995d96264cde38bc2be5359a8d5841e3b9"
+  },
+  "H10-C3a": "NOT_EVALUATED_CONFIRMATORY",
+  "H10-C3b": "NOT_EVALUATED_CONFIRMATORY",
+  "opening_count": 0,
+  "scientific_status": "INVALID_NOT_SCORED",
+  "superseded_by": "v23.3 secure secret-derived encrypted sealed design"
+}

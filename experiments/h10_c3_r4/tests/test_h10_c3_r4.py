@@ -437,7 +437,7 @@ def test_sealed_generation_is_blocked_before_lock(
     import h10_c3_r4.runner as runner
 
     monkeypatch.setattr(runner, "ARTIFACT_ROOT", tmp_path)
-    with pytest.raises(FileNotFoundError):
+    with pytest.raises(PermissionError, match="SEALED_SECRET"):
         generate_sealed()
 
 
@@ -456,5 +456,5 @@ def test_repeated_sealed_opening_is_blocked(
     approval = tmp_path / "approval.json"
     approval.write_text("{}\n", encoding="utf-8")
     monkeypatch.setattr(runner, "ARTIFACT_ROOT", tmp_path)
-    with pytest.raises(PermissionError, match="cannot be repeated"):
-        runner.score_sealed(str(approval))
+    with pytest.raises(PermissionError, match="APPROVAL and SEALED_SECRET"):
+        runner.score_sealed(str(approval), None)

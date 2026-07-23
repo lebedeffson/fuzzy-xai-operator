@@ -1,5 +1,28 @@
 # Project Memory
 
+## FXAI-H10-C3-R4-SECURE-PREOPEN
+
+- Date: 2026-07-24
+- Branch: `fix/h10-c3-sealed-isolation-v23.3`
+- Frozen readiness base: `feat/h10-c3-confirmatory-readiness-v23.2@f544e8bcb4b0c2fb31936af07f7087a60044d08e`
+- Locked scientific implementation: `e729834c077ecb5c0011d9fb85d5f00b10129f18`
+- Sealed opening count: `0`
+- H10-C3a/H10-C3b: `NOT_EVALUATED_CONFIRMATORY`
+
+The deterministic plaintext sealed set from v23.2 was invalidated before
+scoring because its cases could be reconstructed from public source. Its
+opening count remained zero. v23.3 changes only the operational isolation
+boundary: the private template bank is derived from an external 256-bit
+secret, stored only as an AES-256-GCM payload, and bound to the scientific and
+operational locks by public commitments. Opening is atomically recorded before
+decryption and cannot be reused after success or failure.
+
+Open development and protocol-validation results, baselines, Gold, metrics,
+margins, statistics, diagnostic algorithms and repair execution are unchanged.
+The preopen handoff may contain only the encrypted payload, commitments,
+design, status and protocol locks. Do not score without a separate protocol
+owner authorization; ordinary reproduction must remain preopen-only.
+
 ## FXAI-H10-C3-R4-CONFIRMATORY-READINESS
 
 - Date: 2026-07-23
@@ -8,7 +31,7 @@
 - Locked implementation: `e729834c077ecb5c0011d9fb85d5f00b10129f18`
 - Package version: `1.4.0a3`
 - Sealed opening count: `0`
-- Scientific status: `READY_FOR_SEALED_SCORING`
+- Scientific status: `SUPERSEDED_BY_SECURE_PREOPEN_V23.3`
 
 R4 uses three structurally disjoint 660-template banks and six genuinely
 different route families. Canonical overlap is zero for graphs, mutation
@@ -20,8 +43,9 @@ Open development and independent protocol-validation effects pass their
 registered margins for H10-C3a and H10-C3b, with positive direction in all six
 pipeline families. These remain preconfirmatory results. Template-level power
 selected 40 templates per family, stratified across S2-S5; the lower power
-bound exceeds 0.80 for both claims. The unopened 240-template sealed set
-contains no private mutation log.
+bound exceeds 0.80 for both claims. The original deterministic 240-template
+set was never opened, but was later found reconstructible from public inputs
+and therefore cannot be used for confirmatory scoring.
 
 Two pre-opening attempts are retained as invalid audit evidence: one selected
 an unstratified S2-only sealed subset, and one stored a plaintext private

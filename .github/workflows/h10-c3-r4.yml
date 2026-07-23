@@ -3,7 +3,7 @@ name: H10-C3 R4
 on:
   push:
     branches:
-      - feat/h10-c3-confirmatory-readiness-v23.2
+      - fix/h10-c3-sealed-isolation-v23.3
   pull_request:
 
 jobs:
@@ -17,5 +17,5 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
-      - run: python -m pip install -e . pytest ruff PyYAML
+      - run: python -m pip install -e . pytest ruff PyYAML cryptography
       - run: make h10-c3-r4-test H10_C3_PYTHON=python

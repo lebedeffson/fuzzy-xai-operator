@@ -5,6 +5,7 @@ import os
 
 from .runner import (
     freeze_method,
+    freeze_secure_protocol,
     gate,
     generate,
     generate_sealed,
@@ -31,6 +32,7 @@ def main() -> None:
             "power",
             "gate",
             "generate-sealed",
+            "freeze-secure-protocol",
             "score-sealed",
         ),
     )
@@ -54,9 +56,16 @@ def main() -> None:
     elif args.command == "gate":
         print(gate())
     elif args.command == "generate-sealed":
-        print(generate_sealed())
+        print(generate_sealed(os.environ.get("SEALED_SECRET")))
+    elif args.command == "freeze-secure-protocol":
+        print(freeze_secure_protocol())
     elif args.command == "score-sealed":
-        score_sealed(os.environ.get("APPROVAL"))
+        print(
+            score_sealed(
+                os.environ.get("APPROVAL"),
+                os.environ.get("SEALED_SECRET"),
+            )
+        )
 
 
 if __name__ == "__main__":

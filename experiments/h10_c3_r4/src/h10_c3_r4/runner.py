@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import csv
-import datetime as dt
 import importlib.metadata
 import json
 import os
@@ -25,6 +24,14 @@ from .methods import (
 from .models import R4Gold
 from .power import design_power_analysis
 from .scoring import score
+from .scientific_classifier import classify_confirmatory_result
+from .secure_sealed import (
+    create_secure_protocol_lock,
+    create_secure_sealed,
+    load_secure_sealed_cases,
+    mark_scoring_complete,
+    mark_scoring_failed,
+)
 from .statistics import (
     hierarchical_bootstrap,
     holm,
@@ -842,194 +849,62 @@ def _verify_protocol_lock() -> dict[str, object]:
     return lock
 
 
-def _sealed_cases(lock: dict[str, object]) -> tuple[object, ...]:
-    designs = {
-        item["claim"]: item
-        for item in lock["selected_designs"]
-    }
-    templates_per_family = max(
-        int(item["templates_per_family"])
-        for item in designs.values()
-    )
-    cases_per_template = max(
-        int(item["cases_per_template"])
-        for item in designs.values()
-    )
-    allocations = {
-        stratum: max(
-            int(item["stratum_allocation"][stratum])
-            for item in designs.values()
-        )
-        for stratum in ("S2", "S3", "S4", "S5")
-    }
-    bank = _bank("sealed")
-    selected = []
-    for pipeline in sorted(
-        {item.pipeline_family for item in bank}
-    ):
-        for stratum, count in allocations.items():
-            pipeline_templates = sorted(
-                (
-                    item
-                    for item in bank
-                    if item.pipeline_family == pipeline
-                    and item.stratum == stratum
-                ),
-                key=lambda item: item.canonical_hash,
-            )
-            if len(pipeline_templates) < count:
-                raise RuntimeError(
-                    f"sealed bank lacks {pipeline}/{stratum} templates"
-                )
-            selected.extend(pipeline_templates[:count])
-    expected = templates_per_family * len(
-        {item.pipeline_family for item in bank}
-    )
-    if len(selected) != expected:
-        raise AssertionError("sealed stratum allocation is inconsistent")
-    return build_cases(
-        tuple(selected),
-        cases_per_template=cases_per_template,
-    )
+def freeze_secure_protocol() -> Path:
+    return create_secure_protocol_lock(REPO_ROOT, ARTIFACT_ROOT)
 
 
-def generate_sealed() -> Path:
-    gate_report = read_json(
-        ARTIFACT_ROOT / "gate" / "preconfirmatory_gate.json"
-    )
-    if gate_report["status"] != "READY_FOR_SEALED_GENERATION":
-        raise PermissionError("R4 gate does not permit sealed generation")
-    lock = _verify_protocol_lock()
-    sealed_root = ARTIFACT_ROOT / "sealed"
-    if sealed_root.exists():
-        raise FileExistsError("sealed R4 set already exists")
-    cases = _sealed_cases(lock)
-    manifest = write_cases(
-        sealed_root,
-        "sealed",
-        cases,
-        include_private=False,
-    )
-    development_manifest = read_json(
-        ARTIFACT_ROOT / "data" / "development" / "manifest.json"
-    )
-    validation_manifest = read_json(
-        ARTIFACT_ROOT
-        / "data"
-        / "protocol_validation"
-        / "manifest.json"
-    )
-    overlap_checks = {
-        "development_case_hash_overlap": bool(
-            set(manifest["case_hashes"])
-            & set(development_manifest["case_hashes"])
-        ),
-        "protocol_validation_case_hash_overlap": bool(
-            set(manifest["case_hashes"])
-            & set(validation_manifest["case_hashes"])
-        ),
-        "development_template_hash_overlap": bool(
-            set(manifest["template_hashes"])
-            & set(development_manifest["template_hashes"])
-        ),
-        "protocol_validation_template_hash_overlap": bool(
-            set(manifest["template_hashes"])
-            & set(validation_manifest["template_hashes"])
-        ),
-    }
-    if any(overlap_checks.values()):
-        raise RuntimeError(f"sealed overlap detected: {overlap_checks}")
-    status = {
-        "status": "READY_FOR_SEALED_SCORING",
-        "sealed_created": True,
-        "sealed_opening_count": 0,
-        "manifest": manifest,
-        "overlap_checks": overlap_checks,
-        "private_mutation_log_stored": False,
-        "protocol_lock_sha256": file_sha256(
-            ARTIFACT_ROOT / "lock" / "protocol_lock.json"
-        ),
-        "H10-C3a": "NOT_EVALUATED_CONFIRMATORY",
-        "H10-C3b": "NOT_EVALUATED_CONFIRMATORY",
-    }
-    output = sealed_root / "sealed_status.json"
-    write_json(output, status)
-    return output
-
-
-def score_sealed(approval_path: str | None) -> Path:
-    if not approval_path:
+def generate_sealed(secret_path: str | None = None) -> Path:
+    if not secret_path:
         raise PermissionError(
-            "sealed scoring requires an explicit approval file"
+            "secure sealed generation requires SEALED_SECRET as an external path"
         )
-    approval = Path(approval_path)
-    if not approval.is_file():
-        raise PermissionError("sealed approval file is missing")
-    status_path = (
-        ARTIFACT_ROOT / "sealed" / "sealed_status.json"
+    return create_secure_sealed(
+        REPO_ROOT,
+        ARTIFACT_ROOT,
+        Path(secret_path),
     )
-    status = read_json(status_path)
-    if int(status["sealed_opening_count"]) != 0:
-        raise PermissionError("sealed R4 scoring cannot be repeated")
-    lock = _verify_protocol_lock()
-    manifest_path = (
-        ARTIFACT_ROOT
-        / "sealed"
-        / "data"
-        / "sealed"
-        / "manifest.json"
-    )
-    approval_payload = read_json(approval)
-    required = {
-        "study_id": lock["study_id"],
-        "protocol_lock_sha256": file_sha256(
-            ARTIFACT_ROOT / "lock" / "protocol_lock.json"
-        ),
-        "sealed_manifest_sha256": file_sha256(manifest_path),
-        "authorization": "AUTHORIZE_ONE_TIME_SEALED_SCORING",
+
+
+def _sealed_safety(rows: list[dict[str, object]]) -> dict[str, float]:
+    full = [row for row in rows if row["method"] == "full_h10"]
+    runtime = sorted(float(row["runtime_ms"]) for row in full)
+    return {
+        "false_certification": sum(
+            bool(row["false_certification"]) for row in full
+        )
+        / len(full),
+        "new_critical_violations": sum(
+            int(row["new_critical_violation_count"]) > 0 for row in full
+        )
+        / len(full),
+        "runtime_p95_ms": runtime[int(0.95 * (len(runtime) - 1))],
     }
-    if any(
-        approval_payload.get(key) != value
-        for key, value in required.items()
-    ):
-        raise PermissionError("sealed approval does not match the R4 lock")
-    opening_path = ARTIFACT_ROOT / "sealed" / "opening_record.json"
-    if opening_path.exists():
-        raise PermissionError("sealed R4 opening record already exists")
-    opening = {
-        "study_id": lock["study_id"],
-        "opening_count_before": 0,
-        "opening_count_after": 1,
-        "opened_at_utc": dt.datetime.now(dt.UTC).isoformat(),
-        "implementation_commit": subprocess.check_output(
-            ["git", "rev-parse", "HEAD"],
-            cwd=REPO_ROOT,
-            text=True,
-        ).strip(),
-        "protocol_lock_sha256": required["protocol_lock_sha256"],
-        "sealed_manifest_sha256": required["sealed_manifest_sha256"],
-        "approval_sha256": file_sha256(approval),
-        "purpose": "one_time_confirmatory_scoring",
-    }
-    # Record opening before reconstructing private outcomes.
-    write_json(opening_path, opening)
-    status.update(
-        {
-            "status": "SEALED_SCORING_IN_PROGRESS",
-            "sealed_opening_count": 1,
-        }
+
+
+def score_sealed(
+    approval_path: str | None,
+    secret_path: str | None = None,
+) -> Path:
+    if not approval_path or not secret_path:
+        raise PermissionError(
+            "sealed scoring requires APPROVAL and SEALED_SECRET paths"
+        )
+    cases = load_secure_sealed_cases(
+        REPO_ROOT,
+        ARTIFACT_ROOT,
+        Path(approval_path),
+        Path(secret_path),
     )
-    write_json(status_path, status)
     try:
         rows = [
             row
-            for case in _sealed_cases(lock)
+            for case in cases
             for row in _run_case(case)
         ]
         output = ARTIFACT_ROOT / "results" / "sealed.csv"
         output.parent.mkdir(parents=True, exist_ok=True)
         with output.open(
-            "w", encoding="utf-8", newline=""
+            "x", encoding="utf-8", newline=""
         ) as stream:
             writer = csv.DictWriter(
                 stream,
@@ -1037,23 +912,18 @@ def score_sealed(approval_path: str | None) -> Path:
             )
             writer.writeheader()
             writer.writerows(rows)
-        analyze("sealed", rows)
-    except Exception as exc:
-        status.update(
-            {
-                "status": "SEALED_SCORING_FAILED_NO_REUSE",
-                "error_type": type(exc).__name__,
-            }
+        statistics_path = analyze("sealed", rows)
+        safety = _sealed_safety(rows)
+        classification = classify_confirmatory_result(
+            read_json(statistics_path),
+            **safety,
         )
-        write_json(status_path, status)
+        mark_scoring_complete(
+            ARTIFACT_ROOT,
+            results_sha256=file_sha256(output),
+            classification=classification,
+        )
+    except Exception as exc:
+        mark_scoring_failed(ARTIFACT_ROOT, exc)
         raise
-    status.update(
-        {
-            "status": "SEALED_SCORED",
-            "results_sha256": file_sha256(output),
-            "H10-C3a": "EVALUATED_CONFIRMATORY",
-            "H10-C3b": "EVALUATED_CONFIRMATORY",
-        }
-    )
-    write_json(status_path, status)
     return output

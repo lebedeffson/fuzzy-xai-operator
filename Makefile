@@ -1174,7 +1174,7 @@ h10-c3-score-sealed:
 
 H10_C3_R4_ENV = PYTHONPATH=experiments/h10_c3_r4/src:framework/fuzzyxai:.
 
-.PHONY: h10-c3-r4-test h10-c3-r4-template-audit h10-c3-r4-generate-development h10-c3-r4-run-development h10-c3-r4-freeze h10-c3-r4-generate-protocol-validation h10-c3-r4-run-protocol-validation h10-c3-r4-stability h10-c3-r4-power h10-c3-r4-preconfirmatory-gate h10-c3-r4-generate-sealed h10-c3-r4-score-sealed h10-c3-r4-package
+.PHONY: h10-c3-r4-test h10-c3-r4-template-audit h10-c3-r4-generate-development h10-c3-r4-run-development h10-c3-r4-freeze h10-c3-r4-generate-protocol-validation h10-c3-r4-run-protocol-validation h10-c3-r4-stability h10-c3-r4-power h10-c3-r4-preconfirmatory-gate h10-c3-r4-freeze-secure-protocol h10-c3-r4-generate-sealed h10-c3-r4-score-sealed h10-c3-r4-package
 
 h10-c3-r4-test:
 	$(H10_C3_R4_ENV) $(H10_C3_PYTHON) -m ruff check framework/fuzzyxai/fuzzyxai/diagnostics experiments/h10_c3_r4 gold_oracle/h10_c3_r4_oracle.py scripts/build_h10_c3_r4_handoff.py
@@ -1207,12 +1207,17 @@ h10-c3-r4-power:
 h10-c3-r4-preconfirmatory-gate:
 	$(H10_C3_R4_ENV) $(H10_C3_PYTHON) -m h10_c3_r4 gate
 
+h10-c3-r4-freeze-secure-protocol:
+	$(H10_C3_R4_ENV) $(H10_C3_PYTHON) -m h10_c3_r4 freeze-secure-protocol
+
 h10-c3-r4-generate-sealed:
-	$(H10_C3_R4_ENV) $(H10_C3_PYTHON) -m h10_c3_r4 generate-sealed
+	@test -n "$(SEALED_SECRET)" || (echo "BLOCKED: set SEALED_SECRET to an owner-only path outside the repository"; exit 2)
+	SEALED_SECRET="$(SEALED_SECRET)" $(H10_C3_R4_ENV) $(H10_C3_PYTHON) -m h10_c3_r4 generate-sealed
 
 h10-c3-r4-score-sealed:
 	@test -n "$(APPROVAL)" || (echo "BLOCKED: set APPROVAL to an explicit one-time scoring authorization"; exit 2)
-	APPROVAL="$(APPROVAL)" $(H10_C3_R4_ENV) $(H10_C3_PYTHON) -m h10_c3_r4 score-sealed
+	@test -n "$(SEALED_SECRET)" || (echo "BLOCKED: set SEALED_SECRET to the external owner-only seed path"; exit 2)
+	APPROVAL="$(APPROVAL)" SEALED_SECRET="$(SEALED_SECRET)" $(H10_C3_R4_ENV) $(H10_C3_PYTHON) -m h10_c3_r4 score-sealed
 
 h10-c3-r4-package:
 	$(H10_C3_R4_ENV) $(H10_C3_PYTHON) scripts/build_h10_c3_r4_handoff.py

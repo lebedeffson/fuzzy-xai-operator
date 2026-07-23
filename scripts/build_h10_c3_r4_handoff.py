@@ -17,12 +17,33 @@ OUTPUT = ROOT / "release_artifacts"
 FORBIDDEN = (
     "/private/",
     "/audit/preseal_attempt_2/sealed/",
+    "/sealed/data/",
     "mutation_log",
     "opening_record",
     "sealed.csv",
+    "sealed_seed",
+    "repair_truth",
+    "source_truth",
+    "optimal_cuts",
     "approval",
     ".git/",
     "__pycache__",
+)
+SECURE_SEALED_ALLOWED = {
+    "EVIDENCE/secure_sealed/sealed_design.json",
+    "EVIDENCE/secure_sealed/sealed_bank_commitment.json",
+    "EVIDENCE/secure_sealed/sealed_ciphertext.bin",
+    "EVIDENCE/secure_sealed/sealed_status.json",
+}
+SECURE_PLAINTEXT_TOKENS = (
+    b"mutation_log",
+    b"reverse_candidate_ids",
+    b"optimal_cuts",
+    b"repair_truth",
+    b"source_truth",
+    b"sealed_seed",
+    b'"templates"',
+    b'"cases"',
 )
 
 
@@ -72,7 +93,14 @@ def build_reports() -> None:
     )
     sealed = json.loads(
         (
-            ARTIFACTS / "sealed" / "sealed_status.json"
+            ARTIFACTS / "secure_sealed" / "sealed_status.json"
+        ).read_text(encoding="utf-8")
+    )
+    commitment = json.loads(
+        (
+            ARTIFACTS
+            / "secure_sealed"
+            / "sealed_bank_commitment.json"
         ).read_text(encoding="utf-8")
     )
     power = json.loads(
@@ -100,7 +128,7 @@ def build_reports() -> None:
             for claim in ("H10-C3a", "H10-C3b")
         ],
         "scientific_status": sealed["status"],
-        "sealed_opening_count": sealed["sealed_opening_count"],
+        "sealed_opening_count": sealed["opening_count"],
     }
     (ARTIFACTS / "claim_registry.json").write_text(
         json.dumps(claims, indent=2, sort_keys=True) + "\n",
@@ -118,14 +146,24 @@ def build_reports() -> None:
             ).read_text(encoding="utf-8")
         ),
         "preconfirmatory_gate": gate,
-        "sealed_overlap_checks": sealed["overlap_checks"],
-        "sealed_private_truth_stored": sealed[
-            "private_mutation_log_stored"
-        ],
-        "sealed_opening_count": sealed["sealed_opening_count"],
+        "sealed_isolation": {
+            "encrypted_payload_sha256": commitment[
+                "encrypted_payload_sha256"
+            ],
+            "plaintext_commitment_sha256": commitment[
+                "plaintext_commitment_sha256"
+            ],
+            "seed_commitment_sha256": commitment[
+                "seed_commitment_sha256"
+            ],
+            "plaintext_sealed_data_distributed": False,
+        },
+        "sealed_private_truth_stored_in_preopen_handoff": False,
+        "sealed_opening_count": sealed["opening_count"],
         "invalid_presealed_attempts_preserved": [
             "INVALID_PRESEALED_STRATUM_ALLOCATION",
             "INVALID_PREOPENING_PLAINTEXT_PRIVATE_LOG",
+            "INVALID_PREOPEN_SEALED_ISOLATION",
         ],
         "human_adjudication": (
             "NOT_REQUIRED_FOR_ALGORITHMIC_SCOPE"
@@ -150,12 +188,13 @@ def build_reports() -> None:
         "",
         f"- Implementation commit: `{json.loads((ARTIFACTS / 'lock' / 'protocol_lock.json').read_text())['implementation_commit']}`",
         "- Full regression: `533 passed, 4 skipped`",
-        "- Focused R4/diagnostics: `58 passed`",
+        "- Focused R4/diagnostics: `71 passed`",
         "- Ruff: `PASS`",
         f"- Gate: `{gate['status']}`",
         f"- Sealed status: `{sealed['status']}`",
-        f"- Sealed opening count: `{sealed['sealed_opening_count']}`",
-        "- Sealed private mutation log stored: `false`",
+        f"- Sealed opening count: `{sealed['opening_count']}`",
+        "- Sealed private plaintext distributed: `false`",
+        "- Sealed payload: `AES-256-GCM encrypted`",
         "",
         "## Open R4 results",
         "",
@@ -226,7 +265,9 @@ def build_reports() -> None:
 
 def build() -> Path:
     gate_path = ARTIFACTS / "gate" / "preconfirmatory_gate.json"
-    sealed_status_path = ARTIFACTS / "sealed" / "sealed_status.json"
+    sealed_status_path = (
+        ARTIFACTS / "secure_sealed" / "sealed_status.json"
+    )
     if not gate_path.is_file() or not sealed_status_path.is_file():
         raise RuntimeError("R4 gate and unopened sealed status are required")
     gate = json.loads(gate_path.read_text(encoding="utf-8"))
@@ -234,8 +275,8 @@ def build() -> Path:
     if gate["status"] != "READY_FOR_SEALED_GENERATION":
         raise RuntimeError("R4 preconfirmatory gate did not pass")
     if (
-        sealed["status"] != "READY_FOR_SEALED_SCORING"
-        or int(sealed["sealed_opening_count"]) != 0
+        sealed["status"] != "READY_FOR_SECURE_SEALED_SCORING"
+        or int(sealed["opening_count"]) != 0
     ):
         raise RuntimeError("handoff requires an unopened R4 sealed set")
 
@@ -250,7 +291,7 @@ def build() -> Path:
     if not source.is_file():
         raise RuntimeError("committed-tree source release was not created")
 
-    output = OUTPUT / f"fuzzyxai-h10-c3-r4-v23.2-{short}.zip"
+    output = OUTPUT / f"fuzzyxai-h10-c3-r4-v23.3-preopen-{short}.zip"
     files = public_artifacts()
     manifest = {
         "study_id": "FXAI-H10-C3-R4-CONFIRMATORY-READINESS",
@@ -259,9 +300,10 @@ def build() -> Path:
         "source_sha256": sha256(source),
         "sealed_created": True,
         "sealed_opening_count": 0,
+        "plaintext_sealed_data_distributed": False,
         "H10-C3a": "NOT_EVALUATED_CONFIRMATORY",
         "H10-C3b": "NOT_EVALUATED_CONFIRMATORY",
-        "scientific_status": "READY_FOR_SEALED_SCORING",
+        "scientific_status": "READY_FOR_SECURE_SEALED_SCORING",
         "artifacts": {
             path.relative_to(ROOT).as_posix(): sha256(path)
             for path in files
@@ -293,15 +335,62 @@ def build() -> Path:
     return output
 
 
+def scan_preopen_archive(path: Path) -> None:
+    with zipfile.ZipFile(path) as archive:
+        names = archive.namelist()
+        if any(
+            token in f"/{name}" for name in names for token in FORBIDDEN
+        ):
+            raise RuntimeError("handoff contains private or forbidden data")
+        active_secure = {
+            name
+            for name in names
+            if name.startswith("EVIDENCE/secure_sealed/")
+        }
+        if active_secure != SECURE_SEALED_ALLOWED:
+            raise RuntimeError(
+                "preopen handoff secure sealed section contains plaintext "
+                "or is incomplete"
+            )
+        for name in sorted(active_secure):
+            if name.endswith(".bin"):
+                continue
+            payload = archive.read(name)
+            if any(token in payload for token in SECURE_PLAINTEXT_TOKENS):
+                raise RuntimeError(
+                    f"preopen secure sealed metadata leaks private truth: {name}"
+                )
+
+
+def scan_source_archive(path: Path) -> None:
+    forbidden_paths = (
+        "/artifacts/h10_c3_r4/sealed/",
+        "/experiments/h10_c3_r4/templates/sealed/templates.jsonl",
+        "/experiments/h10_c3_r4/templates/sealed/manifest.json",
+        "sealed_seed",
+        "mutation_log.jsonl",
+        "repair_truth.jsonl",
+        "source_truth.jsonl",
+    )
+    with zipfile.ZipFile(path) as archive:
+        leaked = [
+            name
+            for name in archive.namelist()
+            if any(
+                token in f"/{name}" for token in forbidden_paths
+            )
+        ]
+    if leaked:
+        raise RuntimeError(
+            f"source archive contains preopen sealed plaintext: {leaked}"
+        )
+
+
 def verify(path: Path) -> None:
+    scan_preopen_archive(path)
     with tempfile.TemporaryDirectory() as directory:
         root = Path(directory)
         with zipfile.ZipFile(path) as archive:
-            names = archive.namelist()
-            if any(
-                token in f"/{name}" for name in names for token in FORBIDDEN
-            ):
-                raise RuntimeError("handoff contains private or forbidden data")
             archive.extractall(root)
         manifest = json.loads(
             (root / "HANDOFF_MANIFEST.json").read_text(encoding="utf-8")
@@ -317,6 +406,7 @@ def verify(path: Path) -> None:
         source = root / "SOURCE" / manifest["source_archive"]
         if sha256(source) != manifest["source_sha256"]:
             raise RuntimeError("source archive checksum mismatch")
+        scan_source_archive(source)
 
 
 if __name__ == "__main__":
