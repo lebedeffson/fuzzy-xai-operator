@@ -1,0 +1,58 @@
+{
+  "old_results_modified": false,
+  "sealed_created": false,
+  "sealed_opening_count": 0,
+  "splits": {
+    "development": {
+      "case_count": 720,
+      "case_identity_match": true,
+      "selected_baselines": {
+        "H10-C3a": "weighted_greedy",
+        "H10-C3b": "typed_without_optimization"
+      },
+      "statistics_comparison": [
+        {
+          "ci_high_equal": true,
+          "ci_low_equal": true,
+          "claim": "H10-C3a",
+          "effect_equal": true,
+          "p_holm_equal": true
+        },
+        {
+          "ci_high_equal": true,
+          "ci_low_equal": true,
+          "claim": "H10-C3b",
+          "effect_equal": true,
+          "p_holm_equal": true
+        }
+      ],
+      "status": "PASS"
+    },
+    "protocol_validation": {
+      "case_count": 720,
+      "case_identity_match": true,
+      "selected_baselines": {
+        "H10-C3a": "weighted_greedy",
+        "H10-C3b": "typed_without_optimization"
+      },
+      "statistics_comparison": [
+        {
+          "ci_high_equal": true,
+          "ci_low_equal": true,
+          "claim": "H10-C3a",
+          "effect_equal": true,
+          "p_holm_equal": true
+        },
+        {
+          "ci_high_equal": true,
+          "ci_low_equal": true,
+          "claim": "H10-C3b",
+          "effect_equal": true,
+          "p_holm_equal": true
+        }
+      ],
+      "status": "PASS"
+    }
+  },
+  "status": "PASS"
+}

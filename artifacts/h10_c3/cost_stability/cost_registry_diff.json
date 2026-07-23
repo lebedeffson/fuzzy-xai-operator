@@ -1,0 +1,287 @@
+[
+  {
+    "affected": {
+      "action_costs": [
+        "authorize-route",
+        "greedy-global-023",
+        "greedy-single-1",
+        "optimal-pair-01",
+        "optimal-pair-23",
+        "preflight-route"
+      ],
+      "atom_costs": [
+        "authorize-route",
+        "greedy-global-023",
+        "greedy-single-1",
+        "optimal-pair-01",
+        "optimal-pair-23",
+        "preflight-route"
+      ],
+      "fixed_costs": [],
+      "human_approval_costs": [
+        "authorize-route"
+      ],
+      "rollback_costs": [
+        "authorize-route",
+        "greedy-global-023",
+        "greedy-single-1",
+        "optimal-pair-01",
+        "optimal-pair-23",
+        "preflight-route"
+      ]
+    },
+    "base_registry_sha256": "531606cdde75b857a5a913c59246a1ba51aee92fb04daa8d070edf069707d520",
+    "components_transformed": [
+      "atom_costs",
+      "action_costs",
+      "rollback_costs",
+      "human_approval_costs",
+      "fixed_costs"
+    ],
+    "multiplier": "0.01",
+    "perturbation_id": null,
+    "transformation_function": "CostRegistry.global_scale",
+    "transformed_registry_sha256": "9e06e16ffe7d32ca70347273768a54a41bb31636ebcba4177227f12b377fdba6"
+  },
+  {
+    "affected": {
+      "action_costs": [
+        "authorize-route",
+        "greedy-global-023",
+        "greedy-single-1",
+        "optimal-pair-01",
+        "optimal-pair-23",
+        "preflight-route"
+      ],
+      "atom_costs": [
+        "authorize-route",
+        "greedy-global-023",
+        "greedy-single-1",
+        "optimal-pair-01",
+        "optimal-pair-23",
+        "preflight-route"
+      ],
+      "fixed_costs": [],
+      "human_approval_costs": [
+        "authorize-route"
+      ],
+      "rollback_costs": [
+        "authorize-route",
+        "greedy-global-023",
+        "greedy-single-1",
+        "optimal-pair-01",
+        "optimal-pair-23",
+        "preflight-route"
+      ]
+    },
+    "base_registry_sha256": "531606cdde75b857a5a913c59246a1ba51aee92fb04daa8d070edf069707d520",
+    "components_transformed": [
+      "atom_costs",
+      "action_costs",
+      "rollback_costs",
+      "human_approval_costs",
+      "fixed_costs"
+    ],
+    "multiplier": "0.1",
+    "perturbation_id": null,
+    "transformation_function": "CostRegistry.global_scale",
+    "transformed_registry_sha256": "b2cea6a4bcfb64dd7a9563085ee25c256a26d385b6b05d7318ee825c952e3780"
+  },
+  {
+    "affected": {
+      "action_costs": [
+        "authorize-route",
+        "greedy-global-023",
+        "greedy-single-1",
+        "optimal-pair-01",
+        "optimal-pair-23",
+        "preflight-route"
+      ],
+      "atom_costs": [
+        "authorize-route",
+        "greedy-global-023",
+        "greedy-single-1",
+        "optimal-pair-01",
+        "optimal-pair-23",
+        "preflight-route"
+      ],
+      "fixed_costs": [],
+      "human_approval_costs": [
+        "authorize-route"
+      ],
+      "rollback_costs": [
+        "authorize-route",
+        "greedy-global-023",
+        "greedy-single-1",
+        "optimal-pair-01",
+        "optimal-pair-23",
+        "preflight-route"
+      ]
+    },
+    "base_registry_sha256": "531606cdde75b857a5a913c59246a1ba51aee92fb04daa8d070edf069707d520",
+    "components_transformed": [
+      "atom_costs",
+      "action_costs",
+      "rollback_costs",
+      "human_approval_costs",
+      "fixed_costs"
+    ],
+    "multiplier": "0.8",
+    "perturbation_id": null,
+    "transformation_function": "CostRegistry.global_scale",
+    "transformed_registry_sha256": "258c4572f6dd55623528984cbcd144d3eb40c9210594b4aaa4a250463a85b419"
+  },
+  {
+    "affected": {
+      "action_costs": [],
+      "atom_costs": [],
+      "fixed_costs": [],
+      "human_approval_costs": [],
+      "rollback_costs": []
+    },
+    "base_registry_sha256": "531606cdde75b857a5a913c59246a1ba51aee92fb04daa8d070edf069707d520",
+    "components_transformed": [
+      "atom_costs",
+      "action_costs",
+      "rollback_costs",
+      "human_approval_costs",
+      "fixed_costs"
+    ],
+    "multiplier": "1.0",
+    "perturbation_id": null,
+    "transformation_function": "CostRegistry.global_scale",
+    "transformed_registry_sha256": "ae303e2f9ce05b81f8300b04e386c14d3a2085a3b49c0d01c36bb12cb2a781c5"
+  },
+  {
+    "affected": {
+      "action_costs": [
+        "authorize-route",
+        "greedy-global-023",
+        "greedy-single-1",
+        "optimal-pair-01",
+        "optimal-pair-23",
+        "preflight-route"
+      ],
+      "atom_costs": [
+        "authorize-route",
+        "greedy-global-023",
+        "greedy-single-1",
+        "optimal-pair-01",
+        "optimal-pair-23",
+        "preflight-route"
+      ],
+      "fixed_costs": [],
+      "human_approval_costs": [
+        "authorize-route"
+      ],
+      "rollback_costs": [
+        "authorize-route",
+        "greedy-global-023",
+        "greedy-single-1",
+        "optimal-pair-01",
+        "optimal-pair-23",
+        "preflight-route"
+      ]
+    },
+    "base_registry_sha256": "531606cdde75b857a5a913c59246a1ba51aee92fb04daa8d070edf069707d520",
+    "components_transformed": [
+      "atom_costs",
+      "action_costs",
+      "rollback_costs",
+      "human_approval_costs",
+      "fixed_costs"
+    ],
+    "multiplier": "1.2",
+    "perturbation_id": null,
+    "transformation_function": "CostRegistry.global_scale",
+    "transformed_registry_sha256": "6d3b2c77dd925ffd98f312e186b9c174baf6b773186753f69d1fe85346438144"
+  },
+  {
+    "affected": {
+      "action_costs": [
+        "authorize-route",
+        "greedy-global-023",
+        "greedy-single-1",
+        "optimal-pair-01",
+        "optimal-pair-23",
+        "preflight-route"
+      ],
+      "atom_costs": [
+        "authorize-route",
+        "greedy-global-023",
+        "greedy-single-1",
+        "optimal-pair-01",
+        "optimal-pair-23",
+        "preflight-route"
+      ],
+      "fixed_costs": [],
+      "human_approval_costs": [
+        "authorize-route"
+      ],
+      "rollback_costs": [
+        "authorize-route",
+        "greedy-global-023",
+        "greedy-single-1",
+        "optimal-pair-01",
+        "optimal-pair-23",
+        "preflight-route"
+      ]
+    },
+    "base_registry_sha256": "531606cdde75b857a5a913c59246a1ba51aee92fb04daa8d070edf069707d520",
+    "components_transformed": [
+      "atom_costs",
+      "action_costs",
+      "rollback_costs",
+      "human_approval_costs",
+      "fixed_costs"
+    ],
+    "multiplier": "10.0",
+    "perturbation_id": null,
+    "transformation_function": "CostRegistry.global_scale",
+    "transformed_registry_sha256": "3b10a07b0351678e10458c7d7803cdd86e93ef817c4d07f189b3ecfeacec4d53"
+  },
+  {
+    "affected": {
+      "action_costs": [
+        "authorize-route",
+        "greedy-global-023",
+        "greedy-single-1",
+        "optimal-pair-01",
+        "optimal-pair-23",
+        "preflight-route"
+      ],
+      "atom_costs": [
+        "authorize-route",
+        "greedy-global-023",
+        "greedy-single-1",
+        "optimal-pair-01",
+        "optimal-pair-23",
+        "preflight-route"
+      ],
+      "fixed_costs": [],
+      "human_approval_costs": [
+        "authorize-route"
+      ],
+      "rollback_costs": [
+        "authorize-route",
+        "greedy-global-023",
+        "greedy-single-1",
+        "optimal-pair-01",
+        "optimal-pair-23",
+        "preflight-route"
+      ]
+    },
+    "base_registry_sha256": "531606cdde75b857a5a913c59246a1ba51aee92fb04daa8d070edf069707d520",
+    "components_transformed": [
+      "atom_costs",
+      "action_costs",
+      "rollback_costs",
+      "human_approval_costs",
+      "fixed_costs"
+    ],
+    "multiplier": "100.0",
+    "perturbation_id": null,
+    "transformation_function": "CostRegistry.global_scale",
+    "transformed_registry_sha256": "fd1135a3fa82edd34e9b5705a4e3aa97b88deaba1d9ae84ffd18daf25780fc56"
+  }
+]

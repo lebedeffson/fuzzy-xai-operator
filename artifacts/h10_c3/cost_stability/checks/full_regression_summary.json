@@ -1,0 +1,7 @@
+{
+  "command": "make full-regression",
+  "exit_code": 0,
+  "result": "533 passed, 4 skipped, 491 warnings in 217.24s",
+  "python": "/home/lebedeffson/Code/venv/bin/python",
+  "tracked_test_side_effects_restored_to_head": true
+}

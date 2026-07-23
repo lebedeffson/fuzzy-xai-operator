@@ -1,0 +1,47 @@
+{
+  "GLOBAL_COST_SCALE_INVARIANCE": "PASS",
+  "H10-C3a": "NOT_EVALUATED_CONFIRMATORY",
+  "H10-C3b": "NOT_EVALUATED_CONFIRMATORY",
+  "NON_UNIFORM_COST_SENSITIVITY": "PASS",
+  "baseline_selection": {
+    "reselected_for_sensitivity": false,
+    "selection_commit": "f25852f9c4af5cfb9ed4f088a48342edb8f20649",
+    "selection_dataset_sha256": "2ccb2e3169c061690485ae5c2a92b3cb045d831ca2fbd1f78988a6cf8db447d9",
+    "selection_metric_c3a": "optimal_set_membership",
+    "selection_metric_c3b": "full_recertification_success"
+  },
+  "cache_key_collisions": 0,
+  "changed_baseline_cuts": 0,
+  "changed_fuzzyxai_cuts": 0,
+  "changed_gold_cuts": 0,
+  "changed_membership": 0,
+  "changed_regret": 0,
+  "global_case_checks": 5040,
+  "global_factors": [
+    "0.01",
+    "0.1",
+    "0.8",
+    "1.0",
+    "1.2",
+    "10.0",
+    "100.0"
+  ],
+  "root_cause": {
+    "aggregation_error": false,
+    "baseline_reselected": false,
+    "classification": "E_NON_UNIFORM_PERTURBATION_MISLABELED_AS_GLOBAL",
+    "previous_function": "_adjust_case_costs",
+    "previously_scaled_prefixes": [
+      "greedy-",
+      "direct-"
+    ],
+    "previously_unscaled_candidates": "all remaining candidates"
+  },
+  "sealed_created": false,
+  "sealed_opening_count": 0,
+  "selected_baseline_source_sha256": "6748ab747413bd74c4515bc3410248932b56fefd934936644d337c5aa47bab51",
+  "selected_baselines": {
+    "H10-C3a": "weighted_greedy",
+    "H10-C3b": "typed_without_optimization"
+  }
+}

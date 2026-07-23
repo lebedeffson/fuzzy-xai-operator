@@ -1,0 +1,7 @@
+{
+  "command": "/home/lebedeffson/Code/venv/bin/python -m ruff check . --statistics",
+  "exit_code": 1,
+  "historical_findings": 313,
+  "changed_scope_status": "PASS",
+  "interpretation": "pre-existing repository-wide lint debt; no changed-scope findings"
+}

@@ -1,0 +1,15 @@
+{
+  "GLOBAL_COST_SCALE_INVARIANCE": "PASS",
+  "H10-C3a": "NOT_EVALUATED_CONFIRMATORY",
+  "H10-C3b": "NOT_EVALUATED_CONFIRMATORY",
+  "NON_UNIFORM_COST_SENSITIVITY": "PASS",
+  "practical_margin_unchanged": 0.04,
+  "sealed_created": false,
+  "sealed_opening_count": 0,
+  "selected_baseline_reselected": false,
+  "selected_baselines": {
+    "H10-C3a": "weighted_greedy",
+    "H10-C3b": "typed_without_optimization"
+  },
+  "status": "PASS"
+}

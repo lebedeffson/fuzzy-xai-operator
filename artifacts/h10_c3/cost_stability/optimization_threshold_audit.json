@@ -1,0 +1,9 @@
+{
+  "epsilon_dominates_registered_scales": false,
+  "gold_arithmetic": "Decimal",
+  "nonzero_absolute_selection_thresholds": [],
+  "normalized_regret_epsilon": "1e-24",
+  "premature_rounding": [],
+  "solver_cost_normalization": "minimum_positive_cost",
+  "status": "PASS"
+}
