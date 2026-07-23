@@ -1,0 +1,16 @@
+{
+  "case_count": 240,
+  "encrypted_payload_sha256": "14f74ed068cf3956296a6e45b3c491d32380860a59d82623ad69ab68e99fb21a",
+  "opening_count": 0,
+  "pipeline_families": 6,
+  "plaintext_commitment_sha256": "91d3b202a990960078f297d5373881c2733becd5714fe049c6d876eda1fc054b",
+  "protocol_lock_sha256": "b12603326c555f68e8450c95ec5efe3ebd515499f2650aa29178f7c876b34beb",
+  "seed_commitment_sha256": "122755d40614d755a2400a1f729b8326931981f9b462b97dcd28b2c2e0f82dee",
+  "stratum_allocation": {
+    "S2": 42,
+    "S3": 66,
+    "S4": 66,
+    "S5": 66
+  },
+  "study_id": "FXAI-H10-C3-R4-CONFIRMATORY-READINESS"
+}

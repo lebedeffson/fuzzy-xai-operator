@@ -1,0 +1,20 @@
+{
+  "case_count": 240,
+  "cases_per_template": 1,
+  "per_pipeline_stratum_allocation": {
+    "S2": 7,
+    "S3": 11,
+    "S4": 11,
+    "S5": 11
+  },
+  "pipeline_families": 6,
+  "protocol_lock_sha256": "b12603326c555f68e8450c95ec5efe3ebd515499f2650aa29178f7c876b34beb",
+  "stratum_allocation": {
+    "S2": 42,
+    "S3": 66,
+    "S4": 66,
+    "S5": 66
+  },
+  "study_id": "FXAI-H10-C3-R4-CONFIRMATORY-READINESS",
+  "templates_per_family": 40
+}
