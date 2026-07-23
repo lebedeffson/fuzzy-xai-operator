@@ -1,0 +1,39 @@
+study_id: FXAI-H10-C3-DIAGNOSTIC-POSITIVE-EVIDENCE
+version: 1.4.0a2
+seed: 231003
+pipelines:
+  - {id: tabular-credit, modality: tabular}
+  - {id: tabular-energy, modality: tabular}
+  - {id: text-news, modality: text}
+  - {id: text-reviews, modality: text}
+  - {id: image-quality, modality: image}
+  - {id: timeseries-sensors, modality: time_series}
+cases_per_pipeline:
+  development: 120
+  protocol_validation: 120
+strata:
+  S1: 0.10
+  S2: 0.20
+  S3: 0.25
+  S4: 0.25
+  S5: 0.20
+primary_population: [S2, S3, S4, S5]
+primary_metrics:
+  H10-C3a: optimal_set_membership
+  H10-C3b: full_recertification_success
+practical_margins:
+  H10-C3a: 0.04
+  H10-C3b: 0.04
+safety:
+  false_certification_max: 0.01
+  new_critical_violation_max: 0.01
+  runtime_p95_ms_max: 50.0
+statistics:
+  bootstrap_repetitions: 10000
+  power_simulations: 2000
+  power_lower_bound_min: 0.80
+sealed:
+  generated: false
+  opening_count: 0
+  ordinary_reproduction_may_score: false
+

@@ -1108,3 +1108,50 @@ h10-c2-score-sealed:
 h10-c2-package:
 	$(H10_C2_ENV) $(H10_C2_PYTHON) -m h10_c2 package
 	@echo "Diagnostic v21 alpha checks complete; H10-C2 remains BLOCKED_PRECONFIRMATORY."
+
+H10_C3_PYTHON ?= $(PYTHON)
+H10_C3_ENV = PYTHONPATH=experiments/h10_c3/src:framework/fuzzyxai:.
+
+.PHONY: diagnostic-v23-test diagnostic-v23-benchmark h10-c3-generate-development h10-c3-run-development h10-c3-freeze h10-c3-generate-protocol-validation h10-c3-run-protocol-validation h10-c3-stability-analysis h10-c3-power h10-c3-preconfirmatory-gate h10-c3-reports h10-c3-package h10-c3-score-sealed
+
+diagnostic-v23-test:
+	$(H10_C3_ENV) $(H10_C3_PYTHON) -m ruff check framework/fuzzyxai/fuzzyxai/diagnostics experiments/h10_c3 tests/diagnostics
+	$(H10_C3_ENV) $(H10_C3_PYTHON) -m pytest -q tests/diagnostics experiments/h10_c3/tests
+
+diagnostic-v23-benchmark:
+	$(H10_C3_ENV) $(H10_C3_PYTHON) -m h10_c3 generate-development
+	$(H10_C3_ENV) $(H10_C3_PYTHON) -m h10_c3 run-development
+
+h10-c3-generate-development:
+	$(H10_C3_ENV) $(H10_C3_PYTHON) -m h10_c3 generate-development
+
+h10-c3-run-development:
+	$(H10_C3_ENV) $(H10_C3_PYTHON) -m h10_c3 run-development
+
+h10-c3-freeze:
+	$(H10_C3_ENV) $(H10_C3_PYTHON) -m h10_c3 freeze
+
+h10-c3-generate-protocol-validation:
+	$(H10_C3_ENV) $(H10_C3_PYTHON) -m h10_c3 generate-protocol-validation
+
+h10-c3-run-protocol-validation:
+	$(H10_C3_ENV) $(H10_C3_PYTHON) -m h10_c3 run-protocol-validation
+
+h10-c3-stability-analysis:
+	$(H10_C3_ENV) $(H10_C3_PYTHON) -m h10_c3 stability
+
+h10-c3-power:
+	$(H10_C3_ENV) $(H10_C3_PYTHON) -m h10_c3 power
+
+h10-c3-preconfirmatory-gate:
+	$(H10_C3_ENV) $(H10_C3_PYTHON) -m h10_c3 audits
+	$(H10_C3_ENV) $(H10_C3_PYTHON) -m h10_c3 gate
+
+h10-c3-reports:
+	$(H10_C3_ENV) $(H10_C3_PYTHON) -m h10_c3 reports
+
+h10-c3-package:
+	$(H10_C3_ENV) $(H10_C3_PYTHON) -m h10_c3 package
+
+h10-c3-score-sealed:
+	$(H10_C3_ENV) $(H10_C3_PYTHON) -m h10_c3 score-sealed
