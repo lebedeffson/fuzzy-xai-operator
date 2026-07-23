@@ -1,0 +1,12 @@
+{
+  "classification": "INVALID_PREOPEN_CI_ENVIRONMENT_MISMATCH",
+  "description": "The encrypted payload was created before remote CI exposed an unpinned Ruff version mismatch. It was never decrypted or scored and was retired before the operational lock was updated.",
+  "encrypted_payload_sha256": "8fb4a0783c72b150806c75e133f2ab7cfcfaeeb43c5b5357816c325660dd927b",
+  "H10-C3a": "NOT_EVALUATED_CONFIRMATORY",
+  "H10-C3b": "NOT_EVALUATED_CONFIRMATORY",
+  "opening_count": 0,
+  "plaintext_commitment_sha256": "ee96b93952f72b594d60236530f28464165b82b695ffe50f355e7b07ad7bdf95",
+  "protocol_lock_sha256": "fbc0bfe87a4fb2af7929b6a5f27bfb8494692e4703b8e0423c9432a37f302706",
+  "scientific_status": "INVALID_NOT_SCORED",
+  "seed_commitment_sha256": "62061308b66989bb56790d6ce2c8b00b5529b91e6188b9f40925f01e2f6cc3b3"
+}

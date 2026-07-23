@@ -86,6 +86,7 @@ OPEN_EVIDENCE_FILES = (
     "artifacts/h10_c3_r4/power/power.json",
     "artifacts/h10_c3_r4/gate/preconfirmatory_gate.json",
     "artifacts/h10_c3_r4/audit/reconstructible_sealed_v23_2/INVALIDATION.json",
+    "artifacts/h10_c3_r4/audit/secure_payload_attempt_v23_3_ci_mismatch/INVALIDATION.json",
 )
 FORBIDDEN_PREOPEN_PATHS = (
     "artifacts/h10_c3_r4/sealed/data/sealed/cases.jsonl",

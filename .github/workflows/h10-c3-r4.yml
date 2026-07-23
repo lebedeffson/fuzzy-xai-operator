@@ -10,6 +10,7 @@ jobs:
   focused:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         python-version: ["3.11", "3.12"]
     steps:
@@ -17,5 +18,5 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
-      - run: python -m pip install -e . pytest ruff PyYAML cryptography
+      - run: python -m pip install -e . pytest ruff==0.15.19 PyYAML cryptography
       - run: make h10-c3-r4-test H10_C3_PYTHON=python

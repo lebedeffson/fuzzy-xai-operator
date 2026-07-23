@@ -164,6 +164,7 @@ def build_reports() -> None:
             "INVALID_PRESEALED_STRATUM_ALLOCATION",
             "INVALID_PREOPENING_PLAINTEXT_PRIVATE_LOG",
             "INVALID_PREOPEN_SEALED_ISOLATION",
+            "INVALID_PREOPEN_CI_ENVIRONMENT_MISMATCH",
         ],
         "human_adjudication": (
             "NOT_REQUIRED_FOR_ALGORITHMIC_SCOPE"
