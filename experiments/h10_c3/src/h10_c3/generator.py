@@ -57,6 +57,10 @@ def _candidate(
         violation_code="contract_unsatisfied",
         covers=covers,
         cost=cost,
+        action_cost=cost,
+        rollback_cost=cost * 0.1,
+        human_approval_cost=0.1 if name == "authorize-route" else 0.0,
+        fixed_cost=0.0,
         **kwargs,
     )
 

@@ -12,6 +12,10 @@ class Candidate:
     violation_code: str
     covers: tuple[str, ...]
     cost: float
+    action_cost: float = 0.0
+    rollback_cost: float = 0.0
+    human_approval_cost: float = 0.0
+    fixed_cost: float = 0.0
     repairable: bool = True
     executable: bool = True
     dependencies: tuple[str, ...] = ()
@@ -84,4 +88,3 @@ class MethodResult:
     predicted_cost: float
     runtime_ms: float
     status: str
-

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from decimal import Decimal
 from time import perf_counter
 
 from .models import Candidate, MethodResult
@@ -50,8 +51,9 @@ def _greedy(
             chosen = min(
                 useful,
                 key=lambda item: (
-                    item.cost / len(remaining.intersection(item.covers)),
-                    item.cost,
+                    Decimal(str(item.cost))
+                    / len(remaining.intersection(item.covers)),
+                    Decimal(str(item.cost)),
                     item.atom_id,
                 ),
             )
@@ -84,7 +86,7 @@ def _cut(name: str, view: dict[str, object]) -> tuple[Candidate, ...]:
                 for item in candidates
                 if obligation in item.covers and item.repairable and item.executable
             ),
-            key=lambda item: (item.cost, item.atom_id),
+            key=lambda item: (Decimal(str(item.cost)), item.atom_id),
         )
         if options:
             selected.append(options[0])
@@ -112,18 +114,3 @@ def run_baseline(name: str, view: dict[str, object]) -> MethodResult:
         runtime_ms=(perf_counter() - started) * 1000,
         status="diagnosed" if cut else "insufficient_evidence",
     )
-
-
-def with_cost_multiplier(view: dict[str, object], multiplier: float) -> dict[str, object]:
-    adjusted = dict(view)
-    adjusted["candidates"] = [
-        {
-            **value,
-            "cost": value["cost"] * multiplier
-            if value["atom_id"].startswith(("greedy-", "direct-"))
-            else value["cost"],
-        }
-        for value in view["candidates"]
-    ]
-    return adjusted
-

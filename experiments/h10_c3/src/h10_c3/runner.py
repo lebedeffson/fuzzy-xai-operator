@@ -4,7 +4,6 @@ import csv
 import json
 import os
 import subprocess
-from dataclasses import replace
 from hashlib import sha256
 from pathlib import Path
 from statistics import median
@@ -13,6 +12,7 @@ import yaml
 
 from .generator import generate_cases, serialize_cases
 from .baseline_methods import BASELINES, run_baseline
+from .cost_registry import CostRegistry, apply_registry
 from .fuzzy_method import run_fuzzyxai
 from .oracle import derive_gold
 from .scoring import score
@@ -61,21 +61,11 @@ def generate(split: str) -> Path:
 
 
 def _adjust_case_costs(case: object, multiplier: float) -> object:
-    return replace(
-        case,
-        candidates=tuple(
-            replace(
-                candidate,
-                cost=candidate.cost * multiplier
-                if candidate.atom_id.startswith(("greedy-", "direct-"))
-                else candidate.cost,
-            )
-            for candidate in case.candidates
-        ),
-    )
+    return apply_registry(case, CostRegistry.from_case(case).global_scale(multiplier))
 
 
 def _run_case(case: object) -> list[dict[str, object]]:
+    registry = CostRegistry.from_case(case)
     gold = derive_gold(case)
     view = case.method_view()
     methods = [
@@ -100,6 +90,7 @@ def _run_case(case: object) -> list[dict[str, object]]:
                 "predicted_plan": json.dumps(result.plan),
                 "predicted_cost": result.predicted_cost,
                 "runtime_ms": result.runtime_ms,
+                "cost_registry_sha256": registry.sha256,
                 **metrics,
             }
         )
@@ -120,7 +111,7 @@ def run(split: str, *, cost_multiplier: float = 1.0) -> Path:
         for case in cases
         for row in _run_case(case)
     ]
-    suffix = "" if cost_multiplier == 1.0 else f"_cost_{cost_multiplier:.1f}"
+    suffix = "" if cost_multiplier == 1.0 else f"_global_scale_{cost_multiplier:g}"
     output = ARTIFACT_ROOT / "results" / f"{split}{suffix}.csv"
     output.parent.mkdir(parents=True, exist_ok=True)
     with output.open("w", encoding="utf-8", newline="") as stream:
@@ -150,8 +141,9 @@ def load_rows(split: str, suffix: str = "") -> list[dict[str, object]]:
             "obligation_coverage",
             "runtime_ms",
             "plan_cost",
+            "raw_cost_regret",
         ):
-            row[key] = float(row[key])
+            row[key] = None if row[key] in {"", "None"} else float(row[key])
     return rows
 
 

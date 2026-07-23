@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from decimal import Decimal
 from time import perf_counter
 
 from fuzzyxai.diagnostics import (
@@ -79,6 +80,8 @@ def run_fuzzyxai(view: dict[str, object]) -> MethodResult:
         and candidate.provider_status == "healthy"
         and candidate.covers
     )
+    positive_costs = [Decimal(str(candidate.cost)) for candidate in usable if candidate.cost > 0]
+    scale = min(positive_costs, default=Decimal(1))
     atoms = tuple(
         DefectAtom(
             subject_kind=candidate.subject_kind,
@@ -86,7 +89,7 @@ def run_fuzzyxai(view: dict[str, object]) -> MethodResult:
             field=candidate.field,
             violation_code=candidate.violation_code,
             repairable=candidate.repairable,
-            repair_cost=candidate.cost,
+            repair_cost=float(Decimal(str(candidate.cost)) / scale),
         )
         for candidate in usable
     )
@@ -136,8 +139,9 @@ def run_fuzzyxai(view: dict[str, object]) -> MethodResult:
         method="full_fuzzyxai",
         cut=cut_ids,
         plan=tuple(plan),
-        predicted_cost=result.optimal_cost,
+        predicted_cost=sum(
+            candidate.cost for candidate in usable if candidate.atom_id in cut_ids
+        ),
         runtime_ms=(perf_counter() - started) * 1000,
         status="diagnosed",
     )
-

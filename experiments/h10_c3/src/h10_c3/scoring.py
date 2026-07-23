@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from decimal import Decimal
+
 from .models import Case, Gold, MethodResult
 
 
@@ -36,7 +38,12 @@ def execute_plan(case: Case, result: MethodResult) -> dict[str, object]:
         "partial_success": bool(covered) and not full,
         "failed_steps": failed,
         "new_critical_violations": new_critical,
-        "plan_cost": sum(by_id[item].cost for item in completed),
+        "plan_cost": sum(
+            by_id[item].action_cost
+            + by_id[item].human_approval_cost
+            + by_id[item].fixed_cost
+            for item in completed
+        ),
         "completed_steps": len(completed),
     }
 
@@ -52,14 +59,21 @@ def score(case: Case, gold: Gold, result: MethodResult) -> dict[str, object]:
     )
     membership = gold.status.startswith("CERTIFIED") and cut in gold.optimal_cuts
     if gold.optimal_cost is None:
+        raw_regret = None
         regret = 0.0
     elif not feasible or not set(case.obligations).issubset(covered):
+        raw_regret = None
         regret = 1.0 + len(set(case.obligations) - covered) / max(1, len(case.obligations))
     else:
-        regret = (result.predicted_cost - gold.optimal_cost) / max(gold.optimal_cost, 1e-12)
+        predicted = Decimal(str(result.predicted_cost))
+        optimal = Decimal(str(gold.optimal_cost))
+        raw = predicted - optimal
+        raw_regret = float(raw)
+        regret = float(raw / max(abs(optimal), Decimal("1e-24")))
     execution = execute_plan(case, result)
     return {
         "optimal_set_membership": membership,
+        "raw_cost_regret": raw_regret,
         "normalized_cost_regret": regret,
         "obligation_coverage": len(covered) / max(1, len(case.obligations)),
         "extra_elements": max(0, len(cut) - min((len(item) for item in gold.optimal_cuts), default=0)),
