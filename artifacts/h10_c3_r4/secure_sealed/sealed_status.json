@@ -1,0 +1,11 @@
+{
+  "H10-C3a": "NOT_EVALUATED_CONFIRMATORY",
+  "H10-C3b": "NOT_EVALUATED_CONFIRMATORY",
+  "implementation": "LOCKED",
+  "opening_count": 0,
+  "plaintext_sealed_data_distributed": false,
+  "scientific_status": "READY_FOR_SECURE_SEALED_SCORING",
+  "sealed_created": true,
+  "status": "READY_FOR_SECURE_SEALED_SCORING",
+  "study_id": "FXAI-H10-C3-R4-CONFIRMATORY-READINESS"
+}
