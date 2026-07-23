@@ -1,0 +1,8 @@
+{
+  "status": "INVALID_PREOPENING_PLAINTEXT_PRIVATE_LOG",
+  "sealed_created": true,
+  "sealed_opening_count": 0,
+  "reason": "The generated unopened sealed directory contained a plaintext private mutation log and the protocol lock omitted explicit environment and independence manifests.",
+  "resolution": "Return to development, remove private truth from sealed generation, add environment and independence manifests to the lock, refreeze, rerun validation, and regenerate sealed.",
+  "scientific_claims_created": false
+}

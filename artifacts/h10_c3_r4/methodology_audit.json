@@ -1,0 +1,80 @@
+{
+  "human_adjudication": "NOT_REQUIRED_FOR_ALGORITHMIC_SCOPE",
+  "human_factors_validation": "NOT_CONDUCTED",
+  "independence_audit": {
+    "checks": {
+      "baselines_do_not_read_gold": true,
+      "gold_independent": true,
+      "seven_registered_baselines": true
+    },
+    "status": "PASS"
+  },
+  "invalid_presealed_attempts_preserved": [
+    "INVALID_PRESEALED_STRATUM_ALLOCATION",
+    "INVALID_PREOPENING_PLAINTEXT_PRIVATE_LOG"
+  ],
+  "preconfirmatory_gate": {
+    "H10-C3a": "NOT_EVALUATED_CONFIRMATORY",
+    "H10-C3b": "NOT_EVALUATED_CONFIRMATORY",
+    "checks": {
+      "development": true,
+      "false_certification": true,
+      "frozen_predecessor_unchanged": true,
+      "new_critical_violations": true,
+      "oracle_and_baseline_independence": true,
+      "power": true,
+      "protocol_validation": true,
+      "runtime": true,
+      "sealed_absent": true,
+      "stability": true,
+      "template_independence": true
+    },
+    "false_certification": 0.0,
+    "human_adjudication": "NOT_REQUIRED_FOR_ALGORITHMIC_SCOPE",
+    "human_factors_validation": "NOT_CONDUCTED",
+    "new_critical_violations": 0.0,
+    "runtime_p95_ms": 0.9771559998625889,
+    "sealed_created": false,
+    "sealed_opening_count": 0,
+    "status": "READY_FOR_SEALED_GENERATION"
+  },
+  "sealed_opening_count": 0,
+  "sealed_overlap_checks": {
+    "development_case_hash_overlap": false,
+    "development_template_hash_overlap": false,
+    "protocol_validation_case_hash_overlap": false,
+    "protocol_validation_template_hash_overlap": false
+  },
+  "sealed_private_truth_stored": false,
+  "template_audit": {
+    "bank_sizes": {
+      "development": 660,
+      "protocol_validation": 660,
+      "sealed": 660
+    },
+    "intersections": {
+      "development:protocol_validation:canonical_hashes": [],
+      "development:protocol_validation:coverage_cost_hashes": [],
+      "development:protocol_validation:graph_hashes": [],
+      "development:protocol_validation:mutation_hashes": [],
+      "development:protocol_validation:repair_dependency_hashes": [],
+      "development:sealed:canonical_hashes": [],
+      "development:sealed:coverage_cost_hashes": [],
+      "development:sealed:graph_hashes": [],
+      "development:sealed:mutation_hashes": [],
+      "development:sealed:repair_dependency_hashes": [],
+      "protocol_validation:sealed:canonical_hashes": [],
+      "protocol_validation:sealed:coverage_cost_hashes": [],
+      "protocol_validation:sealed:graph_hashes": [],
+      "protocol_validation:sealed:mutation_hashes": [],
+      "protocol_validation:sealed:repair_dependency_hashes": []
+    },
+    "pipeline_graph_schemas_distinct": true,
+    "status": "PASS",
+    "unique_templates": {
+      "development": 660,
+      "protocol_validation": 660,
+      "sealed": 660
+    }
+  }
+}

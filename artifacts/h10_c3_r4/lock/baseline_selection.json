@@ -1,0 +1,76 @@
+{
+  "H10-C3a": {
+    "all_baselines": {
+      "greedy_cover": {
+        "mean_cost_regret": 0.09011122740963878,
+        "metric": 0.18518518518518517
+      },
+      "independent_if_else": {
+        "mean_cost_regret": 0.22435197176174382,
+        "metric": 0.5246913580246914
+      },
+      "schema_only": {
+        "mean_cost_regret": 2.0,
+        "metric": 0.0
+      },
+      "simple_or": {
+        "mean_cost_regret": 194.2073311906451,
+        "metric": 0.0
+      },
+      "typed_without_optimization": {
+        "mean_cost_regret": 0.22435197176174382,
+        "metric": 0.5246913580246914
+      },
+      "untyped_graph": {
+        "mean_cost_regret": 0.09011122740963878,
+        "metric": 0.18518518518518517
+      },
+      "weighted_greedy": {
+        "mean_cost_regret": 0.09011122740963878,
+        "metric": 0.18518518518518517
+      }
+    },
+    "development_summary": {
+      "mean_cost_regret": 0.22435197176174382,
+      "metric": 0.5246913580246914
+    },
+    "selected": "typed_without_optimization"
+  },
+  "H10-C3b": {
+    "all_baselines": {
+      "greedy_cover": {
+        "mean_cost_regret": 0.09011122740963878,
+        "metric": 0.625
+      },
+      "independent_if_else": {
+        "mean_cost_regret": 0.22435197176174382,
+        "metric": 0.5246913580246914
+      },
+      "schema_only": {
+        "mean_cost_regret": 2.0,
+        "metric": 0.0
+      },
+      "simple_or": {
+        "mean_cost_regret": 194.2073311906451,
+        "metric": 0.5092592592592593
+      },
+      "typed_without_optimization": {
+        "mean_cost_regret": 0.22435197176174382,
+        "metric": 0.5246913580246914
+      },
+      "untyped_graph": {
+        "mean_cost_regret": 0.09011122740963878,
+        "metric": 0.625
+      },
+      "weighted_greedy": {
+        "mean_cost_regret": 0.09011122740963878,
+        "metric": 0.625
+      }
+    },
+    "development_summary": {
+      "mean_cost_regret": 0.09011122740963878,
+      "metric": 0.625
+    },
+    "selected": "weighted_greedy"
+  }
+}

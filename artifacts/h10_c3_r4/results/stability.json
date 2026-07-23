@@ -1,0 +1,31 @@
+{
+  "checks": [
+    {
+      "claim": "H10-C3a",
+      "pipeline_effects": {
+        "image-quality": 0.5,
+        "tabular-credit": 0.4722222222222222,
+        "tabular-energy": 0.5462962962962963,
+        "text-news": 0.49074074074074076,
+        "text-reviews": 0.37962962962962965,
+        "timeseries-sensors": 0.4537037037037037
+      },
+      "positive_pipeline_families": 6,
+      "status": "PASS"
+    },
+    {
+      "claim": "H10-C3b",
+      "pipeline_effects": {
+        "image-quality": 0.37037037037037035,
+        "tabular-credit": 0.37037037037037035,
+        "tabular-energy": 0.3333333333333333,
+        "text-news": 0.3055555555555556,
+        "text-reviews": 0.4351851851851852,
+        "timeseries-sensors": 0.3611111111111111
+      },
+      "positive_pipeline_families": 6,
+      "status": "PASS"
+    }
+  ],
+  "status": "PASS"
+}

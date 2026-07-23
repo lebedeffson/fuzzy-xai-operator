@@ -1,0 +1,31 @@
+{
+  "bank_sizes": {
+    "development": 660,
+    "protocol_validation": 660,
+    "sealed": 660
+  },
+  "intersections": {
+    "development:protocol_validation:canonical_hashes": [],
+    "development:protocol_validation:coverage_cost_hashes": [],
+    "development:protocol_validation:graph_hashes": [],
+    "development:protocol_validation:mutation_hashes": [],
+    "development:protocol_validation:repair_dependency_hashes": [],
+    "development:sealed:canonical_hashes": [],
+    "development:sealed:coverage_cost_hashes": [],
+    "development:sealed:graph_hashes": [],
+    "development:sealed:mutation_hashes": [],
+    "development:sealed:repair_dependency_hashes": [],
+    "protocol_validation:sealed:canonical_hashes": [],
+    "protocol_validation:sealed:coverage_cost_hashes": [],
+    "protocol_validation:sealed:graph_hashes": [],
+    "protocol_validation:sealed:mutation_hashes": [],
+    "protocol_validation:sealed:repair_dependency_hashes": []
+  },
+  "pipeline_graph_schemas_distinct": true,
+  "status": "PASS",
+  "unique_templates": {
+    "development": 660,
+    "protocol_validation": 660,
+    "sealed": 660
+  }
+}

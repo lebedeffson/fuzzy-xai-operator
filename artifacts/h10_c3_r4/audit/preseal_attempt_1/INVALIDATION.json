@@ -1,0 +1,8 @@
+{
+  "status": "INVALID_PRESEALED_STRATUM_ALLOCATION",
+  "sealed_created": false,
+  "sealed_opening_count": 0,
+  "reason": "The first power-selected design allocated 20 templates per family without a registered S2-S5 allocation; deterministic selection would have selected S2 only.",
+  "resolution": "Return to development, stratify power and sealed allocation across S2-S5, commit, refreeze, and rerun protocol validation.",
+  "scientific_claims_created": false
+}

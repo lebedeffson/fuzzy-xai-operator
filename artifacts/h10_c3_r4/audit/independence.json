@@ -1,0 +1,8 @@
+{
+  "checks": {
+    "baselines_do_not_read_gold": true,
+    "gold_independent": true,
+    "seven_registered_baselines": true
+  },
+  "status": "PASS"
+}

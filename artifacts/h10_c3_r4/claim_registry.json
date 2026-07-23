@@ -1,0 +1,19 @@
+{
+  "claims": [
+    {
+      "claim_id": "H10-C3a",
+      "development_status": "development_pass",
+      "protocol_validation_status": "protocol_validation_pass",
+      "status": "NOT_EVALUATED_CONFIRMATORY"
+    },
+    {
+      "claim_id": "H10-C3b",
+      "development_status": "development_pass",
+      "protocol_validation_status": "protocol_validation_pass",
+      "status": "NOT_EVALUATED_CONFIRMATORY"
+    }
+  ],
+  "scientific_status": "READY_FOR_SEALED_SCORING",
+  "sealed_opening_count": 0,
+  "study_id": "FXAI-H10-C3-R4-CONFIRMATORY-READINESS"
+}

@@ -1,0 +1,23 @@
+{
+  "H10-C3a": "NOT_EVALUATED_CONFIRMATORY",
+  "H10-C3b": "NOT_EVALUATED_CONFIRMATORY",
+  "checks": {
+    "development": true,
+    "false_certification": true,
+    "new_critical_violations": true,
+    "power": true,
+    "protocol_validation": true,
+    "runtime": true,
+    "sealed_absent": true,
+    "stability": true,
+    "template_independence": true
+  },
+  "false_certification": 0.0,
+  "human_adjudication": "NOT_REQUIRED_FOR_ALGORITHMIC_SCOPE",
+  "human_factors_validation": "NOT_CONDUCTED",
+  "new_critical_violations": 0.0,
+  "runtime_p95_ms": 0.9692090025055222,
+  "sealed_created": false,
+  "sealed_opening_count": 0,
+  "status": "READY_FOR_SEALED_GENERATION"
+}
