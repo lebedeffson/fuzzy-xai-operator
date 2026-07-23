@@ -2,6 +2,13 @@ study_id: FXAI-H10-C3-COST-STABILITY-AUDIT
 base_commit: 24b0e4b48c785782c111b86765eefb7ff78db03c
 frozen_implementation: f25852f9c4af5cfb9ed4f088a48342edb8f20649
 selected_baseline_source: artifacts/h10_c3_v23/lock/baseline_selection.json
+frozen_open_inputs:
+  artifacts/h10_c3_v23/lock/baseline_selection.json: 6748ab747413bd74c4515bc3410248932b56fefd934936644d337c5aa47bab51
+  artifacts/h10_c3_v23/data/development/manifest.json: 2ccb2e3169c061690485ae5c2a92b3cb045d831ca2fbd1f78988a6cf8db447d9
+  artifacts/h10_c3_v23/results/development.csv: 73dc6d5bb9577c68a082c06b036dda87c26e38c857b1fd8596eba604694c8735
+  artifacts/h10_c3_v23/results/development_statistics.json: 1e0f44aef9dd8a7e99298fc8768902b09da660353ba0fe63647a0b106e41ed4d
+  artifacts/h10_c3_v23/results/protocol_validation.csv: 0e13ed88ea4b40438936d59ca84a74fab63b826302e4a32d84e8a6883365754b
+  artifacts/h10_c3_v23/results/protocol_validation_statistics.json: 920aa88f81bb621e513cdebcaa32e8000036b8f829e1929ff4bb5a3e23ebed72
 global_cost_scale:
   semantics: multiply_every_registered_cost_component
   factors: [0.01, 0.1, 0.8, 1.0, 1.2, 10.0, 100.0]

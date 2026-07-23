@@ -767,30 +767,69 @@ def _git(*args: str) -> str:
     ).strip()
 
 
+def _git_available() -> bool:
+    return (
+        subprocess.run(
+            ["git", "rev-parse", "--is-inside-work-tree"],
+            cwd=REPO_ROOT,
+            check=False,
+            capture_output=True,
+            text=True,
+        ).returncode
+        == 0
+    )
+
+
 def _write_methodology_audit(
     report: dict[str, object],
     aggregation: dict[str, object],
 ) -> None:
     cfg = _config()
     base_commit = str(cfg["base_commit"])
-    old_v23_changed = bool(
-        subprocess.run(
-            [
-                "git",
-                "diff",
-                "--quiet",
-                base_commit,
-                "--",
-                "artifacts/h10_c3_v23",
-            ],
-            cwd=REPO_ROOT,
-            check=False,
-        ).returncode
+    frozen_hashes = {
+        relative: file_sha256(REPO_ROOT / relative)
+        for relative in cfg["frozen_open_inputs"]
+        if (REPO_ROOT / relative).is_file()
+    }
+    frozen_hashes_match = frozen_hashes == cfg["frozen_open_inputs"]
+    git_available = _git_available()
+    git_history_unchanged = (
+        not bool(
+            subprocess.run(
+                [
+                    "git",
+                    "diff",
+                    "--quiet",
+                    base_commit,
+                    "--",
+                    "artifacts/h10_c3_v23",
+                ],
+                cwd=REPO_ROOT,
+                check=False,
+            ).returncode
+        )
+        if git_available
+        else None
     )
+    previous_path = COST_AUDIT_ROOT / "methodology_audit.json"
+    previous = (
+        json.loads(previous_path.read_text(encoding="utf-8"))
+        if previous_path.is_file()
+        else {}
+    )
+    old_v23_changed = not frozen_hashes_match or git_history_unchanged is False
     payload = {
         "study_id": cfg["study_id"],
-        "audit_commit": _git("rev-parse", "HEAD"),
-        "branch": _git("branch", "--show-current"),
+        "audit_commit": (
+            _git("rev-parse", "HEAD")
+            if git_available
+            else previous.get("audit_commit", "UNAVAILABLE_IN_SOURCE_ARCHIVE")
+        ),
+        "branch": (
+            _git("branch", "--show-current")
+            if git_available
+            else previous.get("branch", "source_archive")
+        ),
         "base_commit": base_commit,
         "frozen_implementation": cfg["frozen_implementation"],
         "root_cause": report["root_cause"],
@@ -807,6 +846,15 @@ def _write_methodology_audit(
             )
         ),
         "scenario_results": aggregation["scenarios"],
+        "frozen_open_input_hashes": frozen_hashes,
+        "frozen_open_input_hashes_match": frozen_hashes_match,
+        "git_history_check": (
+            "PASS"
+            if git_history_unchanged is True
+            else "NOT_AVAILABLE_IN_SOURCE_ARCHIVE"
+            if git_history_unchanged is None
+            else "FAIL"
+        ),
         "old_v23_changed": old_v23_changed,
         "sealed_created": False,
         "sealed_opening_count": 0,
