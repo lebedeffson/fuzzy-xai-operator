@@ -10,10 +10,8 @@ from .statistics import (
 )
 
 DESIGN_GRID = (
-    (4, 20, 1),
-    (5, 20, 1),
-    (6, 20, 1),
-    (6, 30, 1),
+    (4, 40, 1),
+    (5, 40, 1),
     (6, 40, 1),
     (6, 60, 1),
     (6, 80, 1),
@@ -21,11 +19,49 @@ DESIGN_GRID = (
     (6, 40, 2),
     (6, 40, 4),
 )
+STRATA = ("S2", "S3", "S4", "S5")
+STRATUM_WEIGHTS = {"S2": 20, "S3": 30, "S4": 30, "S5": 30}
 
 
 def _normal_quantile_holm_two_sided() -> float:
     # Three registered endpoints use Holm; the first two-sided alpha is 0.05/3.
     return 2.3939797998185104
+
+
+def stratum_allocation(total: int) -> dict[str, int]:
+    weight = sum(STRATUM_WEIGHTS.values())
+    allocation = {
+        stratum: max(
+            1,
+            int(total * STRATUM_WEIGHTS[stratum] / weight),
+        )
+        for stratum in STRATA
+    }
+    while sum(allocation.values()) < total:
+        target = max(
+            STRATA,
+            key=lambda item: (
+                total * STRATUM_WEIGHTS[item] / weight
+                - allocation[item],
+                item,
+            ),
+        )
+        allocation[target] += 1
+    while sum(allocation.values()) > total:
+        target = max(
+            (
+                item
+                for item in STRATA
+                if allocation[item] > 1
+            ),
+            key=lambda item: (
+                allocation[item]
+                - total * STRATUM_WEIGHTS[item] / weight,
+                item,
+            ),
+        )
+        allocation[target] -= 1
+    return allocation
 
 
 def simulate_design(
@@ -44,11 +80,24 @@ def simulate_design(
     eligible_template_fraction: float = 1.0,
 ) -> dict[str, object]:
     grouped = paired_template_differences(rows, baseline, metric)
+    stratum_by_template = {
+        (
+            str(row["pipeline_family"]),
+            str(row["template_hash"]),
+        ): str(row.get("stratum", "S3"))
+        for row in rows
+        if row["method"] == "full_h10"
+    }
     empirical_pipeline_values = {
-        pipeline: [
-            sum(values) / len(values)
-            for values in templates.values()
-        ]
+        pipeline: {
+            stratum: [
+                sum(values) / len(values)
+                for template, values in templates.items()
+                if stratum_by_template[(pipeline, template)]
+                == stratum
+            ]
+            for stratum in STRATA
+        }
         for pipeline, templates in grouped.items()
     }
     available = sorted(empirical_pipeline_values)
@@ -56,7 +105,8 @@ def simulate_design(
         raise ValueError("design requests unavailable pipeline families")
     all_values = [
         value
-        for values in empirical_pipeline_values.values()
+        for strata in empirical_pipeline_values.values()
+        for values in strata.values()
         for value in values
     ]
     heterogeneity = max(pstdev(all_values), 0.05)
@@ -73,6 +123,7 @@ def simulate_design(
     )
     rng = random.Random(seed)
     critical_z = _normal_quantile_holm_two_sided()
+    allocation = stratum_allocation(templates_per_family)
     successes = 0
     for _ in range(simulations):
         sampled_pipelines = rng.sample(
@@ -81,18 +132,21 @@ def simulate_design(
         )
         template_means = []
         for pipeline in sampled_pipelines:
-            source = empirical_pipeline_values[pipeline]
-            for _ in range(templates_per_family):
-                if rng.random() > eligible_template_fraction:
-                    continue
-                latent = rng.choice(source)
-                case_values = [
-                    latent + rng.gauss(0.0, within_sd)
-                    for _ in range(cases_per_template)
-                ]
-                template_means.append(
-                    sum(case_values) / len(case_values)
-                )
+            for stratum, count in allocation.items():
+                source = empirical_pipeline_values[pipeline][stratum]
+                if not source:
+                    source = all_values
+                for _ in range(count):
+                    if rng.random() > eligible_template_fraction:
+                        continue
+                    latent = rng.choice(source)
+                    case_values = [
+                        latent + rng.gauss(0.0, within_sd)
+                        for _ in range(cases_per_template)
+                    ]
+                    template_means.append(
+                        sum(case_values) / len(case_values)
+                    )
         if len(template_means) < 2:
             continue
         effect = sum(template_means) / len(template_means)
@@ -115,6 +169,7 @@ def simulate_design(
         "baseline": baseline,
         "pipeline_families": pipeline_families,
         "templates_per_family": templates_per_family,
+        "stratum_allocation": allocation,
         "cases_per_template": cases_per_template,
         "effective_independent_units": (
             pipeline_families

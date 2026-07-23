@@ -332,6 +332,9 @@ def _power_rows(template_count: int = 80) -> list[dict[str, object]]:
                         "case_id": f"p{pipeline}:t{template}",
                         "template_hash": f"p{pipeline}:t{template}",
                         "pipeline_family": f"pipeline-{pipeline}",
+                        "stratum": ("S2", "S3", "S4", "S5")[
+                            template % 4
+                        ],
                         "method": method,
                         "optimal_set_membership": value,
                     }

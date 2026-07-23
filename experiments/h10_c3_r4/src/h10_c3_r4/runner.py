@@ -742,25 +742,38 @@ def _sealed_cases(lock: dict[str, object]) -> tuple[object, ...]:
         int(item["cases_per_template"])
         for item in designs.values()
     )
+    allocations = {
+        stratum: max(
+            int(item["stratum_allocation"][stratum])
+            for item in designs.values()
+        )
+        for stratum in ("S2", "S3", "S4", "S5")
+    }
     bank = _bank("sealed")
     selected = []
     for pipeline in sorted(
         {item.pipeline_family for item in bank}
     ):
-        pipeline_templates = sorted(
-            (
-                item
-                for item in bank
-                if item.pipeline_family == pipeline
-            ),
-            key=lambda item: (
-                item.stratum,
-                item.canonical_hash,
-            ),
-        )
-        selected.extend(
-            pipeline_templates[:templates_per_family]
-        )
+        for stratum, count in allocations.items():
+            pipeline_templates = sorted(
+                (
+                    item
+                    for item in bank
+                    if item.pipeline_family == pipeline
+                    and item.stratum == stratum
+                ),
+                key=lambda item: item.canonical_hash,
+            )
+            if len(pipeline_templates) < count:
+                raise RuntimeError(
+                    f"sealed bank lacks {pipeline}/{stratum} templates"
+                )
+            selected.extend(pipeline_templates[:count])
+    expected = templates_per_family * len(
+        {item.pipeline_family for item in bank}
+    )
+    if len(selected) != expected:
+        raise AssertionError("sealed stratum allocation is inconsistent")
     return build_cases(
         tuple(selected),
         cases_per_template=cases_per_template,
