@@ -1,0 +1,19 @@
+{
+  "H10-C3a": {
+    "development": "PASS",
+    "protocol_validation": "PASS",
+    "cost_sensitivity": "FAIL_PARITY",
+    "confirmatory": "NOT_EVALUATED",
+    "allowed_claim": "open-part advantage only; not stable to registered cost variation"
+  },
+  "H10-C3b": {
+    "development": "PASS",
+    "protocol_validation": "PASS",
+    "stability": "PASS",
+    "confirmatory": "NOT_EVALUATED",
+    "allowed_claim": "open-part advantage only"
+  },
+  "legacy_claims_changed": false,
+  "sealed_opening_count": 0,
+  "scientific_status": "BLOCKED_PRECONFIRMATORY"
+}
