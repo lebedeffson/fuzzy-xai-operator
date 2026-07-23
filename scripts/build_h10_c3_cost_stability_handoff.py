@@ -12,6 +12,22 @@ ROOT = Path(__file__).resolve().parents[1]
 ARTIFACT_ROOT = ROOT / "artifacts" / "h10_c3" / "cost_stability"
 OUTPUT_ROOT = ROOT / "release_artifacts"
 FIXED_TIME = (1980, 1, 1, 0, 0, 0)
+FROZEN_OPEN_INPUTS = (
+    ROOT / "artifacts" / "h10_c3_v23" / "lock" / "baseline_selection.json",
+    ROOT / "artifacts" / "h10_c3_v23" / "data" / "development" / "manifest.json",
+    ROOT / "artifacts" / "h10_c3_v23" / "results" / "development.csv",
+    ROOT
+    / "artifacts"
+    / "h10_c3_v23"
+    / "results"
+    / "development_statistics.json",
+    ROOT / "artifacts" / "h10_c3_v23" / "results" / "protocol_validation.csv",
+    ROOT
+    / "artifacts"
+    / "h10_c3_v23"
+    / "results"
+    / "protocol_validation_statistics.json",
+)
 FORBIDDEN_NAME_PARTS = (
     "label_vault",
     "sealed_vault",
@@ -64,7 +80,14 @@ def _require_committed_artifacts() -> list[Path]:
     ).returncode:
         raise RuntimeError("cost-stability artifacts differ from HEAD")
     files = sorted(path for path in ARTIFACT_ROOT.rglob("*") if path.is_file())
-    tracked = set(_git("ls-files", str(ARTIFACT_ROOT)).splitlines())
+    files.extend(FROZEN_OPEN_INPUTS)
+    tracked = set(
+        _git(
+            "ls-files",
+            str(ARTIFACT_ROOT),
+            *(str(path) for path in FROZEN_OPEN_INPUTS),
+        ).splitlines()
+    )
     missing = [
         str(path.relative_to(ROOT))
         for path in files
@@ -114,8 +137,8 @@ def main() -> None:
     )
     with zipfile.ZipFile(artifacts_zip, "w") as archive:
         for path in files:
-            relative = path.relative_to(ARTIFACT_ROOT).as_posix()
-            _write_member(archive, f"cost_stability/{relative}", path.read_bytes())
+            relative = path.relative_to(ROOT).as_posix()
+            _write_member(archive, relative, path.read_bytes())
     with zipfile.ZipFile(artifacts_zip) as archive:
         _assert_safe_names(archive.namelist())
 
@@ -132,6 +155,13 @@ def main() -> None:
         "- Sealed created: `false`\n"
         "- Sealed opening count: `0`\n"
         "- Historical v23 evidence changed: `false`\n"
+        "\n"
+        "## Reproduce\n\n"
+        "1. Extract the source ZIP.\n"
+        "2. Extract the artifacts ZIP into the extracted source root.\n"
+        "3. Run `make h10-c3-test`.\n"
+        "4. Run `make h10-c3-cost-stability-audit`.\n"
+        "5. Run `make h10-c3-cost-open-reproduction`.\n"
     ).encode()
     manifest = {
         "schema_version": "h10-c3-cost-stability-handoff-v1",
