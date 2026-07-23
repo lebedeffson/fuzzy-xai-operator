@@ -41,6 +41,8 @@ def build_deliverables() -> dict:
         "adjudication_status.json": ARTIFACT_ROOT / "adjudication" / "status.json",
         "preconfirmatory_gate.json": gate,
         "evidence_map.json": ARTIFACT_ROOT / "audit" / "evidence_map.json",
+        "coverage.json": ARTIFACT_ROOT / "audit" / "coverage.json",
+        "full_regression.json": ARTIFACT_ROOT / "audit" / "full_regression.json",
     }
     for name, source in copies.items():
         shutil.copy2(source, DELIVERABLE_ROOT / name)
@@ -53,11 +55,12 @@ def build_deliverables() -> dict:
     markdown_to_pdf(ARTIFACT_ROOT / "power" / "power_report.md", DELIVERABLE_ROOT / "power_report.pdf")
     gate_value = read_json(gate)
     blockers = gate_value["blockers"]
+    software_status = "PASS" if not any(item.startswith("BLOCKED_CODE") for item in blockers) else "BLOCKED_CODE"
     power_status = "PASS" if not any(item.startswith("BLOCKED_POWER") for item in blockers) else "BLOCKED_POWER"
     protocol_status = "PASS" if not any(item.startswith("BLOCKED_PROTOCOL") for item in blockers) else "BLOCKED_PROTOCOL"
     status = (
         "# H10-C2 handoff status\n\n"
-        "Software implementation: PASS\n\n"
+        f"Software implementation: {software_status}\n\n"
         "v21 integrity: PASS\n\n"
         "Power analysis implementation: PASS\n\n"
         f"Power analysis execution: {power_status}\n\n"
