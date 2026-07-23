@@ -27,14 +27,32 @@ class RouteRecertifier:
         completed = tuple(result.step_id for result in execution_results if result.status == "completed")
         failed = tuple(result.step_id for result in execution_results if result.status != "completed")
         required_steps = {step.step_id for step in plan.steps}
+        remaining_critical = {
+            issue.issue_id
+            for issue in after_result.issues
+            if issue.severity == "error"
+        }
         new_critical = {
             issue.issue_id
             for issue in after_result.issues
             if issue.issue_id not in before_codes and issue.severity == "error"
         }
+        postconditions_verified = all(
+            result.status == "completed"
+            and all(
+                bool(check.get("passed"))
+                for check in result.verification
+            )
+            for result in execution_results
+        ) and required_steps.issubset(completed)
         if new_critical:
             status = "worsened"
-        elif after_result.valid and required_steps.issubset(completed) and not failed:
+        elif (
+            after_result.valid
+            and not remaining_critical
+            and not failed
+            and postconditions_verified
+        ):
             status = "full_success"
         elif failed and not completed:
             status = "not_executable"
@@ -65,4 +83,7 @@ class RouteRecertifier:
             verification_results=checks,
             before_trace_sha256=before.trace_sha256,
             after_trace_sha256=after.trace_sha256,
+            remaining_critical_issues=tuple(sorted(remaining_critical)),
+            new_critical_issues=tuple(sorted(new_critical)),
+            all_required_postconditions_verified=postconditions_verified,
         )

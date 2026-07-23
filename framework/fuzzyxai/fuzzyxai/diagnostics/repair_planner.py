@@ -38,11 +38,29 @@ class ActionableRepairPlanner:
                 unresolved.append(issue.issue_id)
                 continue
             proposed = provider.propose(graph, issue)
+            selected_targets = {
+                (atom.subject_kind, atom.subject_id)
+                for atom in cut.defect_atoms
+            }
+            selected_source_targets = {
+                item for item in selected_targets if item[0] in {"node", "edge"}
+            }
+            filtered = tuple(
+                step
+                for step in proposed
+                if (step.target.subject_kind, step.target.subject_id)
+                in selected_source_targets
+            )
+            if selected_source_targets:
+                proposed = filtered
             if not proposed:
                 unresolved.append(issue.issue_id)
                 continue
             steps.extend(proposed)
-        ordered = self._with_dependencies(self._deduplicate(tuple(steps)))
+        ordered = self._with_dependencies(
+            self._deduplicate(tuple(steps)),
+            graph,
+        )
         costs = [step.estimated_cost for step in ordered]
         total = None if any(value is None for value in costs) else float(sum(value or 0.0 for value in costs))
         payload = {
@@ -94,17 +112,71 @@ class ActionableRepairPlanner:
                             )
                         )
                     ),
+                    "contract_ids": tuple(
+                        dict.fromkeys(
+                            (
+                                *previous.parameters.get(
+                                    "contract_ids",
+                                    (previous.parameters.get("contract_id"),),
+                                ),
+                                *step.parameters.get(
+                                    "contract_ids",
+                                    (step.parameters.get("contract_id"),),
+                                ),
+                            )
+                        )
+                    ),
                 },
             )
         return tuple(merged.values())
 
     @staticmethod
-    def _with_dependencies(steps: tuple) -> tuple:
-        ordered = sorted(steps, key=lambda item: (item.target, item.provider_id, item.step_id))
+    def _with_dependencies(steps: tuple, graph: RouteGraph) -> tuple:
+        registered = {
+            str(target): tuple(str(item) for item in dependencies)
+            for target, dependencies in dict(
+                graph.metadata.get("repair_dependencies", {})
+            ).items()
+        }
+        by_target = {step.target.subject_id: step for step in steps}
+        ordered: list[object] = []
+        pending = {
+            step.step_id: step for step in steps
+        }
+        while pending:
+            ready = [
+                step
+                for step in pending.values()
+                if all(
+                    dependency not in by_target
+                    or by_target[dependency].step_id not in pending
+                    for dependency in registered.get(
+                        step.target.subject_id,
+                        (),
+                    )
+                )
+            ]
+            if not ready:
+                ready = [min(pending.values(), key=lambda item: item.step_id)]
+            for step in sorted(
+                ready,
+                key=lambda item: (item.target, item.provider_id, item.step_id),
+            ):
+                ordered.append(step)
+                pending.pop(step.step_id)
         result = []
         previous: str | None = None
         for step in ordered:
-            dependencies = step.depends_on or ((previous,) if previous else ())
+            dependencies = tuple(
+                by_target[target].step_id
+                for target in registered.get(step.target.subject_id, ())
+                if target in by_target
+            )
+            dependencies = (
+                step.depends_on
+                or dependencies
+                or ((previous,) if previous else ())
+            )
             updated = replace(step, depends_on=tuple(value for value in dependencies if value))
             result.append(updated)
             previous = updated.step_id

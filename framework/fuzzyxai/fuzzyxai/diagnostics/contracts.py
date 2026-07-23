@@ -187,6 +187,9 @@ class RecertificationReport:
     verification_results: tuple[dict[str, object], ...]
     before_trace_sha256: str
     after_trace_sha256: str | None
+    remaining_critical_issues: tuple[str, ...] = ()
+    new_critical_issues: tuple[str, ...] = ()
+    all_required_postconditions_verified: bool = False
 
 
 @dataclass(frozen=True)

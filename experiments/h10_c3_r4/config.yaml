@@ -1,0 +1,34 @@
+study_id: FXAI-H10-C3-R4-CONFIRMATORY-READINESS
+version: 1.4.0a3
+frozen_predecessor: 15f3690347dae304c1c501ceb5af546de2ff7c4a
+formative_status: FORMATIVE_SYNTHETIC_RESULT
+template_banks:
+  development: 410000
+  protocol_validation: 520000
+  sealed: 630000
+cases_per_template:
+  development: 1
+  protocol_validation: 1
+primary_population: [S2, S3, S4, S5]
+primary_metrics:
+  H10-C3a: optimal_set_membership
+  H10-C3b: full_recertification_success
+practical_margins:
+  H10-C3a: 0.04
+  H10-C3b: 0.04
+safety:
+  false_certification_max: 0.01
+  new_critical_violation_max: 0.01
+  runtime_p95_ms_max: 50.0
+statistics:
+  bootstrap_repetitions: 10000
+  power_simulations: 10000
+  power_lower_bound_min: 0.80
+  intracluster_correlation: 0.70
+  holm_family_size: 3
+human_adjudication: NOT_REQUIRED_FOR_ALGORITHMIC_SCOPE
+human_factors_validation: NOT_CONDUCTED
+sealed:
+  generated: false
+  opening_count: 0
+  ordinary_reproduction_may_score: false
