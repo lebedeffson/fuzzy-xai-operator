@@ -1,0 +1,20 @@
+[
+  {
+    "claim": "H10-C3a",
+    "lower_confidence_bound": 0.9980828823994873,
+    "monte_carlo_standard_error": 0.0,
+    "number_of_simulations": 2000,
+    "point_power": 1.0,
+    "status": "pass",
+    "upper_confidence_bound": 1.0000000000000002
+  },
+  {
+    "claim": "H10-C3b",
+    "lower_confidence_bound": 0.9980828823994873,
+    "monte_carlo_standard_error": 0.0,
+    "number_of_simulations": 2000,
+    "point_power": 1.0,
+    "status": "pass",
+    "upper_confidence_bound": 1.0000000000000002
+  }
+]

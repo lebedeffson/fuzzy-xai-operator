@@ -1,0 +1,27 @@
+{
+  "H10-C3a": "NOT_EVALUATED_CONFIRMATORY",
+  "H10-C3b": "NOT_EVALUATED_CONFIRMATORY",
+  "baseline_obligation_coverage": 1.0,
+  "baseline_successful_plan_median_cost": 6.2,
+  "checks": {
+    "cost_regret": true,
+    "development": true,
+    "false_certification": true,
+    "new_critical_violations": true,
+    "obligation_coverage_noninferior": true,
+    "power": true,
+    "protocol_validation": true,
+    "runtime": true,
+    "sealed_opening_count_zero": true,
+    "stability": false,
+    "successful_plan_median_cost": true
+  },
+  "false_certification": 0.0,
+  "full_obligation_coverage": 1.0,
+  "full_successful_plan_median_cost": 4.3,
+  "new_critical_violations": 0.0,
+  "runtime_p95_ms": 0.13919199955125805,
+  "sealed_generated": false,
+  "sealed_opening_count": 0,
+  "status": "BLOCKED_PRECONFIRMATORY"
+}

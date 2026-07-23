@@ -1,0 +1,16 @@
+{
+  "H10-C3a": {
+    "development_summary": {
+      "mean_cost_regret": 0.08818770226537216,
+      "metric": 0.23300970873786409
+    },
+    "selected": "weighted_greedy"
+  },
+  "H10-C3b": {
+    "development_summary": {
+      "mean_cost_regret": 0.35275080906148865,
+      "metric": 0.6601941747572816
+    },
+    "selected": "typed_without_optimization"
+  }
+}
