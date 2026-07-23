@@ -5,7 +5,9 @@ import subprocess
 import zipfile
 from pathlib import Path
 
-from ..hashing import file_sha256
+import yaml
+
+from ..hashing import file_sha256, read_json, write_json
 from ..paths import ARTIFACT_ROOT, DELIVERABLE_ROOT, PROTOCOL_DIR, REPO_ROOT
 from .evidence_map import build_evidence_map
 from .pdf import markdown_to_pdf
@@ -39,20 +41,27 @@ def build_deliverables() -> dict:
         "adjudication_status.json": ARTIFACT_ROOT / "adjudication" / "status.json",
         "preconfirmatory_gate.json": gate,
         "evidence_map.json": ARTIFACT_ROOT / "audit" / "evidence_map.json",
-        "claim_registry.json": PROTOCOL_DIR / "claim_registry.yaml",
     }
     for name, source in copies.items():
         shutil.copy2(source, DELIVERABLE_ROOT / name)
+    write_json(
+        DELIVERABLE_ROOT / "claim_registry.json",
+        yaml.safe_load((PROTOCOL_DIR / "claim_registry.yaml").read_text(encoding="utf-8")),
+    )
     markdown_to_pdf(PROTOCOL_DIR / "protocol.md", DELIVERABLE_ROOT / "protocol.pdf")
     markdown_to_pdf(PROTOCOL_DIR / "statistical_analysis_plan.md", DELIVERABLE_ROOT / "statistical_analysis_plan.pdf")
     markdown_to_pdf(ARTIFACT_ROOT / "power" / "power_report.md", DELIVERABLE_ROOT / "power_report.pdf")
+    gate_value = read_json(gate)
+    blockers = gate_value["blockers"]
+    power_status = "PASS" if not any(item.startswith("BLOCKED_POWER") for item in blockers) else "BLOCKED_POWER"
+    protocol_status = "PASS" if not any(item.startswith("BLOCKED_PROTOCOL") for item in blockers) else "BLOCKED_PROTOCOL"
     status = (
         "# H10-C2 handoff status\n\n"
         "Software implementation: PASS\n\n"
         "v21 integrity: PASS\n\n"
         "Power analysis implementation: PASS\n\n"
-        "Power analysis execution: PASS\n\n"
-        "Protocol package: PASS\n\n"
+        f"Power analysis execution: {power_status}\n\n"
+        f"Protocol package: {protocol_status}\n\n"
         "Gold generator: PASS\n\n"
         "Baseline independence: PASS\n\n"
         "Leakage audit: PASS\n\n"
@@ -61,7 +70,10 @@ def build_deliverables() -> dict:
         "Sealed opening count: 0\n\n"
         "H10-C2a: NOT_EVALUATED\n\n"
         "H10-C2b: NOT_EVALUATED\n\n"
-        "Scientific release: BLOCKED_PRECONFIRMATORY\n"
+        "Scientific release: BLOCKED_PRECONFIRMATORY\n\n"
+        "Current blockers:\n\n"
+        + "\n".join(f"- {item}" for item in blockers)
+        + "\n"
     )
     (DELIVERABLE_ROOT / "HANDOFF_STATUS.md").write_text(status, encoding="utf-8")
     source_zip = DELIVERABLE_ROOT / "h10-c2-source.zip"
@@ -80,4 +92,3 @@ def build_deliverables() -> dict:
         encoding="utf-8",
     )
     return {"status": "BLOCKED_PRECONFIRMATORY", "deliverable_count": len(files) + 1}
-

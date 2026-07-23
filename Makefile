@@ -1061,7 +1061,7 @@ diagnostic-v21-report:
 
 diagnostic-v21-check: diagnostic-v21-test diagnostic-v21-coverage diagnostic-v21-benchmark diagnostic-v21-protocol
 
-.PHONY: h10-c2-bootstrap h10-c2-test h10-c2-power h10-c2-generate-development h10-c2-run-development h10-c2-generate-protocol-validation h10-c2-run-protocol-validation h10-c2-build-adjudication h10-c2-preconfirmatory-gate h10-c2-score-sealed h10-c2-package
+.PHONY: h10-c2-bootstrap h10-c2-test h10-c2-power h10-c2-generate-development h10-c2-run-development h10-c2-generate-protocol-validation h10-c2-run-protocol-validation h10-c2-build-adjudication h10-c2-freeze-protocol h10-c2-generate-sealed h10-c2-preconfirmatory-gate h10-c2-score-sealed h10-c2-package
 
 H10_C2_PYTHON ?= $(PYTHON)
 H10_C2_ENV = PYTHONPATH=experiments/h10_c2/src:framework/fuzzyxai:.
@@ -1084,13 +1084,19 @@ h10-c2-run-development:
 
 h10-c2-generate-protocol-validation:
 	$(H10_C2_ENV) $(H10_C2_PYTHON) -m h10_c2 generate --split protocol_validation
-	$(H10_C2_ENV) $(H10_C2_PYTHON) -m h10_c2 generate --split sealed
 
 h10-c2-run-protocol-validation:
 	$(H10_C2_ENV) $(H10_C2_PYTHON) -m h10_c2 run --split protocol_validation
 
 h10-c2-build-adjudication:
 	$(H10_C2_ENV) $(H10_C2_PYTHON) -m h10_c2 export-adjudication --sample-size 200
+
+h10-c2-freeze-protocol:
+	@test -n "$(H10_C2_DESIGN_APPROVAL)" || (echo "BLOCKED: set H10_C2_DESIGN_APPROVAL to the signed design approval"; exit 2)
+	$(H10_C2_ENV) $(H10_C2_PYTHON) -m h10_c2 freeze-protocol --approval "$(H10_C2_DESIGN_APPROVAL)"
+
+h10-c2-generate-sealed:
+	$(H10_C2_ENV) $(H10_C2_PYTHON) -m h10_c2 generate --split sealed
 
 h10-c2-preconfirmatory-gate:
 	$(H10_C2_ENV) $(H10_C2_PYTHON) -m h10_c2 preconfirmatory-gate

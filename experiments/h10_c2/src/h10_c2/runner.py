@@ -18,6 +18,11 @@ from .statistics.paired_analysis import analyze_primary
 
 def generate_from_design(split: str, *, seed_offset: int = 0) -> dict:
     design = read_json(ARTIFACT_ROOT / "power" / "recommended_design.json")
+    if split == "sealed":
+        if design["status"] != "power_target_reached":
+            raise PermissionError("BLOCKED_POWER: sealed generation requires an adequately powered design")
+        if not (ARTIFACT_ROOT / "lock" / "protocol.lock.json").exists():
+            raise PermissionError("BLOCKED_PROTOCOL: sealed generation requires a protocol lock")
     total = int(design["h10_c2a"]["recommended_total_cases"])
     fractions = {"development": 0.35, "protocol_validation": 0.15, "sealed": 0.50}
     count = max(60, round(total * fractions[split]))

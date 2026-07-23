@@ -22,7 +22,6 @@ run-development:
 
 generate-protocol-validation:
 	cd $(ROOT) && $(ENV) $(PYTHON) -m h10_c2 generate --split protocol_validation
-	cd $(ROOT) && $(ENV) $(PYTHON) -m h10_c2 generate --split sealed
 
 run-protocol-validation:
 	cd $(ROOT) && $(ENV) $(PYTHON) -m h10_c2 run --split protocol_validation
@@ -35,4 +34,3 @@ preconfirmatory-gate:
 
 package:
 	cd $(ROOT) && $(ENV) $(PYTHON) -m h10_c2 package
-

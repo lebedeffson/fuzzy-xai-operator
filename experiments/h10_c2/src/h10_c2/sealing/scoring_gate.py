@@ -63,12 +63,15 @@ def preconfirmatory_gate() -> dict:
     blockers = []
     if not _git_base_unchanged():
         blockers.append("BLOCKED_CODE:v21_core_changed")
+    power_path = ARTIFACT_ROOT / "power" / "recommended_design.json"
+    if not power_path.exists():
+        blockers.append("BLOCKED_POWER:missing_power_design")
+    elif read_json(power_path).get("status") != "power_target_reached":
+        blockers.append("BLOCKED_POWER:candidate_grid_does_not_reach_target")
     required = [
         ARTIFACT_ROOT / "power" / "recommended_design.json",
         ARTIFACT_ROOT / "data" / "development" / "manifest.json",
         ARTIFACT_ROOT / "data" / "protocol_validation" / "manifest.json",
-        ARTIFACT_ROOT / "data" / "sealed" / "manifest.json",
-        ARTIFACT_ROOT / "sealed" / "sealed_manifest.json",
         ARTIFACT_ROOT / "sealed" / "opening_record.json",
     ]
     if any(not path.exists() for path in required):
@@ -84,6 +87,13 @@ def preconfirmatory_gate() -> dict:
         blockers.append("BLOCKED_PROTOCOL:design_not_approved_or_protocol_not_locked")
     if adjudication_status() != "PASS":
         blockers.append("BLOCKED_HUMAN_ADJUDICATION")
+    if not blockers:
+        sealed_required = [
+            ARTIFACT_ROOT / "data" / "sealed" / "manifest.json",
+            ARTIFACT_ROOT / "sealed" / "sealed_manifest.json",
+        ]
+        if any(not path.exists() for path in sealed_required):
+            blockers.append("BLOCKED_GOLD:sealed_inputs_not_created")
     opening = ARTIFACT_ROOT / "sealed" / "opening_record.json"
     opening_count = read_json(opening)["opening_count"] if opening.exists() else None
     if opening_count != 0:
@@ -100,4 +110,3 @@ def preconfirmatory_gate() -> dict:
     }
     write_json(ARTIFACT_ROOT / "audit" / "preconfirmatory_gate.json", report)
     return report
-

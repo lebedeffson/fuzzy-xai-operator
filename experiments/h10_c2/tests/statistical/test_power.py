@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from h10_c2.statistics.power_simulation import approximate_paired_power
+from h10_c2.statistics.power_simulation import approximate_paired_power, simulate_paired_power
 
 
 BASE = {
@@ -36,3 +36,9 @@ def test_more_comparisons_do_not_raise_power() -> None:
     many = approximate_paired_power(cases_per_pipeline=200, effect=0.05, **{**BASE, "comparisons": 4})
     assert few >= many
 
+
+def test_simulated_power_is_reproducible() -> None:
+    parameters = {**BASE, "cases_per_pipeline": 200, "effect": 0.05}
+    first = simulate_paired_power(repetitions=2000, seed=44, **parameters)
+    second = simulate_paired_power(repetitions=2000, seed=44, **parameters)
+    assert first == second

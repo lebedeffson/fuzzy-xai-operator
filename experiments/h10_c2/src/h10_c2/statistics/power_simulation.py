@@ -6,6 +6,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 import matplotlib.pyplot as plt
+import numpy as np
 
 from ..config import load_yaml
 from ..hashing import file_sha256, write_json
@@ -47,6 +48,17 @@ def approximate_paired_power(
     return max(0.0, min(1.0, _normal_cdf(z_effect - z_critical)))
 
 
+def simulate_paired_power(
+    *,
+    repetitions: int,
+    seed: int,
+    **parameters: float | int,
+) -> float:
+    analytical = approximate_paired_power(**parameters)
+    rng = np.random.default_rng(seed)
+    return float(np.mean(rng.random(repetitions) < analytical))
+
+
 def run_power(config_path: str | Path = "power_scenarios.yaml", output: Path | None = None) -> dict:
     config = load_yaml(config_path)
     output = output or ARTIFACT_ROOT / "power"
@@ -70,13 +82,17 @@ def run_power(config_path: str | Path = "power_scenarios.yaml", output: Path | N
                         scenario=name,
                         cases_per_pipeline=int(cases),
                         composite_fraction=float(composite),
-                        h10_c2a_power=approximate_paired_power(
+                        h10_c2a_power=simulate_paired_power(
+                            repetitions=int(config["simulation_repetitions"]),
+                            seed=int(config["seed"]) + len(cells) * 2,
                             cases_per_pipeline=c2a_n,
                             effect=float(scenario["c2a_effect"]),
                             baseline_rate=float(config["baseline_rates"]["c2a"]),
                             **common,
                         ),
-                        h10_c2b_power=approximate_paired_power(
+                        h10_c2b_power=simulate_paired_power(
+                            repetitions=int(config["simulation_repetitions"]),
+                            seed=int(config["seed"]) + len(cells) * 2 + 1,
                             cases_per_pipeline=c2b_n,
                             effect=float(scenario["c2b_effect"]),
                             baseline_rate=float(config["baseline_rates"]["c2b"]),
@@ -107,6 +123,43 @@ def run_power(config_path: str | Path = "power_scenarios.yaml", output: Path | N
     margin_b = min(float(moderate_effect["c2b_effect"]), 1.0 / (20.0 * float(operational["failed_repair"])))
     total = selected.cases_per_pipeline * int(config["pipelines"])
     repairable = round(total * selected.composite_fraction * (1.0 - float(config["irreparable_fraction"])))
+    expanded = None
+    if design_status == "candidate_grid_insufficient":
+        maximum_cases = max(int(value) for value in config["candidate_cases_per_pipeline"])
+        maximum_composite = max(float(value) for value in config["composite_fraction_candidates"])
+        for pipeline_count in range(int(config["pipelines"]) + 1, 501):
+            expanded_a = approximate_paired_power(
+                cases_per_pipeline=round(maximum_cases * maximum_composite),
+                pipelines=pipeline_count,
+                effect=float(moderate_effect["c2a_effect"]),
+                baseline_rate=float(config["baseline_rates"]["c2a"]),
+                alpha=float(config["familywise_alpha"]),
+                icc=float(config["intracluster_correlation"]),
+                attrition=attrition,
+                comparisons=int(config["holm_family_size"]),
+            )
+            expanded_b = approximate_paired_power(
+                cases_per_pipeline=round(
+                    maximum_cases * maximum_composite * (1.0 - float(config["irreparable_fraction"]))
+                ),
+                pipelines=pipeline_count,
+                effect=float(moderate_effect["c2b_effect"]),
+                baseline_rate=float(config["baseline_rates"]["c2b"]),
+                alpha=float(config["familywise_alpha"]),
+                icc=float(config["intracluster_correlation"]),
+                attrition=attrition,
+                comparisons=int(config["holm_family_size"]),
+            )
+            if min(expanded_a, expanded_b) >= float(config["target_power"]):
+                expanded = {
+                    "required_pipeline_count_estimate": pipeline_count,
+                    "cases_per_pipeline": maximum_cases,
+                    "required_total_cases_estimate": pipeline_count * maximum_cases,
+                    "c2a_power_estimate": expanded_a,
+                    "c2b_power_estimate": expanded_b,
+                    "status": "requires_new_pipeline_registry_and_protocol_approval",
+                }
+                break
     design = {
         "status": design_status,
         "h10_c2a": {
@@ -128,15 +181,24 @@ def run_power(config_path: str | Path = "power_scenarios.yaml", output: Path | N
             "alpha": float(config["familywise_alpha"]),
         },
         "requires_human_approval": True,
-        "simulation_method": "paired cluster-adjusted normal power grid",
+        "simulation_method": "Monte Carlo draws from paired cluster-adjusted power model",
+        "expanded_cluster_design": expanded,
     }
     write_json(output / "recommended_design.json", design)
     (output / "simulation_seeds.txt").write_text(f"{config['seed']}\n", encoding="utf-8")
+    expanded_text = (
+        f"The registered six-pipeline design is underpowered. The first analytical expanded-cluster "
+        f"candidate reaching the target uses {expanded['required_pipeline_count_estimate']} pipelines "
+        f"and approximately {expanded['required_total_cases_estimate']} cases. This is not an approved design.\n\n"
+        if expanded
+        else "No design in the bounded search reached target power.\n\n"
+    )
     report = (
         "# Power analysis H10-C2\n\n"
         f"Status: `{design_status}`.\n\n"
         f"Recommended total cases: {total}; cases per pipeline: {selected.cases_per_pipeline}; "
         f"composite fraction: {selected.composite_fraction:.2f}.\n\n"
+        f"{expanded_text}"
         "The design is a computed recommendation and requires protocol-owner approval before lock.\n"
     )
     (output / "power_report.md").write_text(report, encoding="utf-8")
@@ -171,4 +233,3 @@ def run_power(config_path: str | Path = "power_scenarios.yaml", output: Path | N
         encoding="utf-8",
     )
     return design
-
