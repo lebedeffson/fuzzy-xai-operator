@@ -690,3 +690,50 @@ pipelines and 124,320 cases. This is an unapproved design estimate, not a new pr
 Do not generate or score a sealed H10-C2 set until the power assumptions and expanded design are externally reviewed,
 approved, and locked. Do not fill reviewer forms programmatically. Development and protocol-validation outputs remain
 nonconfirmatory.
+
+## FXAI-H10-C3-R4-POSTOPEN
+
+- Date: 2026-07-24
+- Preopen commit: `2e530ae132b6293ba4aa0a265cbccdc9c49bb418`
+- Locked scientific implementation:
+  `e729834c077ecb5c0011d9fb85d5f00b10129f18`
+- Immutable preopen tag: `h10-c3-r4-v23.3-preopen-final`
+- Immutable preopen release:
+  `https://github.com/lebedeffson/fuzzy-xai-operator/releases/tag/h10-c3-r4-v23.3-preopen-final`
+- Immutable postopen release:
+  `https://github.com/lebedeffson/fuzzy-xai-operator/releases/tag/h10-c3-r4-v23.3-postopen`
+- Official sealed opening count: `1`
+- Scientific status: `SCIENTIFIC_PASS`
+
+The AES-256-GCM sealed payload was opened exactly once after an immutable
+preopen release and signed owner authorization. The opening counter changed
+from `0` to `1` before decryption. The official scorer exited with code `0`.
+
+Confirmatory results:
+
+- H10-C3a: `CONFIRMATORY_PASS`; effect `0.5274261603375527`, hierarchical
+  95% CI `[0.459915611814346; 0.5966386554621849]`, Holm p
+  `0.00029997000299970003`, positive direction in `6/6` pipeline families;
+- H10-C3a normalized cost-regret effect `0.24417529978965805`, 95% CI
+  `[0.21007717594013325; 0.27876096379748894]`, Holm p
+  `0.00029997000299970003`;
+- H10-C3b: `CONFIRMATORY_PASS`; effect `0.3333333333333333`, hierarchical
+  95% CI `[0.25523012552301255; 0.4194915254237288]`, Holm p
+  `0.00029997000299970003`, positive direction in `6/6` pipeline families;
+- false certification `0.0`, new critical violations `0.0`, runtime p95
+  `1.0478439999133116 ms`;
+- official sealed result SHA256
+  `3fb4e2ba43c16552e1d52083d1ffec2da312e1c72df5d33079d28e4ac32fe0c8`.
+
+Independent postopen reproduction decrypted the disclosed payload, verified
+the seed and plaintext commitments, reconstructed 240 private templates and
+1,920 method rows, found zero non-runtime scientific-field mismatches,
+reproduced the registered bootstrap statistics, and returned the same
+`SCIENTIFIC_PASS` classification without creating another opening record.
+
+Claim boundary: the result supports controlled algorithmic route diagnostics,
+optimal-cut membership, and full route recertification under the locked R4
+design. It does not establish human comprehension, expert usefulness,
+production or clinical safety, natural-fault generalization, or organizational
+effectiveness. Historical negative H3, H5-P, H6-general, H10-L, and H10-R
+results remain unchanged.

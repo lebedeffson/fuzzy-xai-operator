@@ -333,3 +333,32 @@ No demonstrated-comprehensibility, clinical-validity, or release-readiness claim
 - doctoral archive: separate full historical Git-index export;
 - archives must be built only after the release documentation commit;
 - no `v1.2.0rc3` tag before all external gates and green feature/main CI.
+
+## H10-C3 R4 Confirmatory Postopen
+
+- Immutable preopen tag: `h10-c3-r4-v23.3-preopen-final`
+- Immutable preopen release:
+  `https://github.com/lebedeffson/fuzzy-xai-operator/releases/tag/h10-c3-r4-v23.3-preopen-final`
+- Immutable postopen release:
+  `https://github.com/lebedeffson/fuzzy-xai-operator/releases/tag/h10-c3-r4-v23.3-postopen`
+- Preopen commit: `2e530ae132b6293ba4aa0a265cbccdc9c49bb418`
+- Sealed opening count: `1`
+- H10-C3a: `CONFIRMATORY_PASS`
+- H10-C3b: `CONFIRMATORY_PASS`
+- Safety: `PASS`
+- Scientific status: `SCIENTIFIC_PASS`
+
+The official one-time scoring completed with code `0`. H10-C3a effect is
+`0.5274261603375527` with hierarchical 95% CI
+`[0.459915611814346; 0.5966386554621849]` and Holm p
+`0.00029997000299970003`. H10-C3b effect is `0.3333333333333333` with
+hierarchical 95% CI `[0.25523012552301255; 0.4194915254237288]` and the same
+Holm p. Both effects are positive in all six pipeline families. False
+certification and new critical violations are `0.0`; runtime p95 is
+`1.0478439999133116 ms`.
+
+This status closes the H10-C3 R4 controlled algorithmic confirmatory cycle. It
+does not upgrade human-comprehension, expert-usefulness, production-safety,
+clinical-validity, natural-fault-generalization, or organizational-effectiveness
+claims. Earlier invalidated and negative study records remain part of the
+evidence history.
