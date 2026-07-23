@@ -1,5 +1,34 @@
 # Project Memory
 
+## FXAI-H10-C3-R4-CONFIRMATORY-READINESS
+
+- Date: 2026-07-23
+- Branch: `feat/h10-c3-confirmatory-readiness-v23.2`
+- Frozen predecessor: `fix/h10-c3-cost-stability-v23.1@15f3690347dae304c1c501ceb5af546de2ff7c4a`
+- Locked implementation: `e729834c077ecb5c0011d9fb85d5f00b10129f18`
+- Package version: `1.4.0a3`
+- Sealed opening count: `0`
+- Scientific status: `READY_FOR_SEALED_SCORING`
+
+R4 uses three structurally disjoint 660-template banks and six genuinely
+different route families. Canonical overlap is zero for graphs, mutation
+structure, coverage/cost combinations and repair dependencies. H10-C3b now
+executes repairs against a copied `RouteGraph` through the production
+`RepairExecutor` and requires strict `RouteRecertifier` success.
+
+Open development and independent protocol-validation effects pass their
+registered margins for H10-C3a and H10-C3b, with positive direction in all six
+pipeline families. These remain preconfirmatory results. Template-level power
+selected 40 templates per family, stratified across S2-S5; the lower power
+bound exceeds 0.80 for both claims. The unopened 240-template sealed set
+contains no private mutation log.
+
+Two pre-opening attempts are retained as invalid audit evidence: one selected
+an unstratified S2-only sealed subset, and one stored a plaintext private
+mutation log. Neither attempt opened or scored sealed outcomes. H10-C3a and
+H10-C3b remain `NOT_EVALUATED_CONFIRMATORY`; no prior negative claim was
+changed.
+
 ## FXAI-DIAGNOSTIC-FRAMEWORK-V21
 
 - Date: 2026-07-23
