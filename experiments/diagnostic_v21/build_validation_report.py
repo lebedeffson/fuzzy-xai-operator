@@ -256,6 +256,12 @@ def build(*, python: str, run_full_regression: bool) -> dict[str, object]:
         "",
         "No user-comprehension, prediction-accuracy, or safety claim is made.",
     ]
+    if "full_regression" in checks:
+        lines.insert(
+            -2,
+            f"- Full regression: `{checks['full_regression']['status']}` "
+            f"({checks['full_regression']['stdout'].splitlines()[-1]}).",
+        )
     (OUTPUT / "validation_report.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
     manifest_files = sorted(path for path in OUTPUT.iterdir() if path.is_file() and path.name != "SHA256SUMS")
     (OUTPUT / "SHA256SUMS").write_text(
