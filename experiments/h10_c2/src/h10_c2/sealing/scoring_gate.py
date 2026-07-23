@@ -76,6 +76,11 @@ def preconfirmatory_gate() -> dict:
     ]
     if any(not path.exists() for path in required):
         blockers.append("BLOCKED_CODE:missing_generated_artifacts")
+    coverage_path = ARTIFACT_ROOT / "audit" / "coverage.json"
+    if not coverage_path.exists():
+        blockers.append("BLOCKED_CODE:missing_coverage_report")
+    elif float(read_json(coverage_path)["totals"]["percent_covered"]) < 95.0:
+        blockers.append("BLOCKED_CODE:h10_c2_coverage_below_95")
     try:
         audit_baselines()
         audit_oracle()

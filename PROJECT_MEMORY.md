@@ -614,3 +614,26 @@ Release boundary:
 
 Next step: preserve the technical result and conduct the three independent external protocols. Do not manufacture
 responses or promote formative evidence to a confirmatory claim.
+
+## FXAI-H10-C2-PRECONFIRMATORY
+
+- Date: 2026-07-23
+- Branch: `feat/h10-c2-preconfirmatory-v22`
+- Frozen dependency: `a8f150b1ef3b5c6041c28098a5cc90d0e8e20ae5` (`v21`, `1.4.0a1`)
+- Confirmatory claims: `H10-C2a NOT_EVALUATED`, `H10-C2b NOT_EVALUATED`
+- Sealed opening count: `0`
+- Scientific status: `BLOCKED_POWER`
+
+The new package separates minimum-cut membership from repair recertification, derives Gold from low-level
+transactions with an independent exhaustive oracle, enumerates equivalent optimal cuts, isolates seven baseline
+implementations, exports two blank blinded reviewer packages, and blocks sealed scoring behind protocol,
+adjudication, leakage, and single-opening gates. The FuzzyXAI v21 core is unchanged.
+
+The registered six-pipeline power grid did not reach the target: the highest observed Monte Carlo power in the
+bounded grid was approximately `0.0875` for H10-C2a and `0.0800` for H10-C2b. Under the registered moderate effects
+and ICC, the first analytical expanded-cluster estimate reaching both targets requires approximately 222 independent
+pipelines and 124,320 cases. This is an unapproved design estimate, not a new protocol or scientific result.
+
+Do not generate or score a sealed H10-C2 set until the power assumptions and expanded design are externally reviewed,
+approved, and locked. Do not fill reviewer forms programmatically. Development and protocol-validation outputs remain
+nonconfirmatory.
