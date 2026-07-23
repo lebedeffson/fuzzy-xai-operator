@@ -38,6 +38,12 @@
     "industrial_effectiveness",
     "natural_fault_generalization"
   ],
+  "provenance": {
+    "immutable_bundle_tag": "h10-c3-r4-v23.3-postopen",
+    "locked_method_commit": "2e530ae132b6293ba4aa0a265cbccdc9c49bb418",
+    "postopen_documentation_commit": "35034378ffe00d702e89c83d0af8880bdc9971e1",
+    "postopen_evidence_commit": "1cca8fb947771617a35586eea712dc3637976939"
+  },
   "safety": {
     "checks": {
       "false_certification": true,
