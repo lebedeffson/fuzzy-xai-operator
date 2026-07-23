@@ -1,0 +1,36 @@
+name: diagnostic-v21
+
+on:
+  push:
+    branches: [feat/diagnostic-framework-v21]
+  pull_request:
+    paths:
+      - "framework/fuzzyxai/fuzzyxai/diagnostics/**"
+      - "tests/diagnostics/**"
+      - "experiments/diagnostic_v21/**"
+      - "config/h10_c2_diagnostic_cut_protocol.yaml"
+      - ".github/workflows/diagnostic-v21.yml"
+
+jobs:
+  diagnostics:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+      - name: Install framework and test tools
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e . pytest ruff coverage
+      - name: Diagnostic alpha gate
+        run: make diagnostic-v21-check DIAGNOSTIC_PYTHON=python
+      - name: Gold regression boundary
+        run: |
+          python -m pytest -q tests/h10_gold
+          test "$(git rev-parse 13f82805c69fb974a236df6d8990eea115251c23)" = "13f82805c69fb974a236df6d8990eea115251c23"

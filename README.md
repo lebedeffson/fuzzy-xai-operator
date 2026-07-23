@@ -289,6 +289,31 @@ make h10-smoke H10_PYTHON=/path/to/python
 make reproduce-h10 H10_PYTHON=/path/to/python
 ```
 
+## Diagnostic framework v21 alpha
+
+The branch `feat/diagnostic-framework-v21` exposes structural route diagnostics
+through the canonical `FuzzyXAI` facade:
+
+```python
+report = FuzzyXAI().diagnose(route=route, repair_mode="plan")
+print(report.summary("user"))
+```
+
+The implementation validates a full registered route graph, finds an exact or
+explicitly approximate minimal diagnostic cut, proposes provider-bound repair
+steps, and recertifies only after explicit external execution. Production code
+does not read Gold mutation logs and never copies `expected` values into
+`observed` values.
+
+```bash
+make diagnostic-v21-check DIAGNOSTIC_PYTHON=/home/lebedeffson/Code/venv/bin/python
+```
+
+This is an exploratory alpha implementation. The earlier H10-C result remains
+`BLOCKED_PRECONFIRMATORY`; the draft H10-C2 protocol cannot score sealed cases
+until power analysis and independent two-reviewer adjudication are complete.
+See `docs/DIAGNOSTIC_FRAMEWORK_RU.md`.
+
 `reproduce-h10` rebuilds statistics, replay summaries, tables, figures,
 evidence mapping, validation reports, and release archives from committed
 frozen outputs. It never calls the confirmatory scoring runner or opens a

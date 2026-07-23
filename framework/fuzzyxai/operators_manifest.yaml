@@ -1,5 +1,21 @@
 schema_version: "1.0"
 operators:
+  - id: framework.diagnostic_service
+    dissertation_ref: "diagnostic framework v21 exploratory implementation"
+    callable: fuzzyxai.diagnostics:DiagnosticService
+    input_schema: OperatorRouteOrProofTraceOrRouteGraph
+    output_schema: DiagnosticReport
+    tests: [tests/diagnostics/test_diagnostic_service.py, tests/diagnostics/test_diagnostic_invariants.py]
+    artifacts: [docs/DIAGNOSTIC_FRAMEWORK_RU.md]
+    visualization: [diagnostic_report]
+  - id: framework.minimal_diagnostic_cut
+    dissertation_ref: "diagnostic framework v21 exploratory implementation"
+    callable: fuzzyxai.diagnostics:MinimalDiagnosticCutFinder
+    input_schema: RouteGraphAndValidationResult
+    output_schema: DiagnosticCut
+    tests: [tests/diagnostics/test_minimal_cut.py]
+    artifacts: [docs/MINIMAL_DIAGNOSTIC_CUT_RU.md]
+    visualization: [diagnostic_report]
   - id: h10.typed_auditor
     dissertation_ref: "separate H10 audit study"
     callable: fuzzyxai.audit_h10:H10Auditor

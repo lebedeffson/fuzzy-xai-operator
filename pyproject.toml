@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "fuzzyxai-operator"
-version = "1.3.0"
+version = "1.4.0a1"
 description = "FuzzyXAI operator engine, Studio, proof package, and doctoral readiness audit."
 readme = "README.md"
 license = "MIT"
@@ -19,6 +19,9 @@ dependencies = [
   "nicegui>=1.4",
   "PyYAML>=6.0",
 ]
+
+[project.scripts]
+fuzzyxai = "fuzzyxai.cli:main"
 
 [project.optional-dependencies]
 sklearn = ["scikit-learn>=1.2"]
@@ -42,6 +45,7 @@ all-models = [
 ]
 dev = [
     "pytest>=7.0",
+    "coverage>=7.0",
     "playwright>=1.40",
     "build>=1.2",
     "ruff>=0.5",

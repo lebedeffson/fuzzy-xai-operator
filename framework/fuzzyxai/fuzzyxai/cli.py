@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import argparse
 import json
-import shutil
 import zipfile
 from pathlib import Path
 
@@ -11,6 +10,20 @@ from fuzzyxai.core.types import OperatorEdge, OperatorNode, OperatorRoute, Proof
 from fuzzyxai.operators import list_operators
 from fuzzyxai.proof.verifier import verify_proof_trace
 from fuzzyxai.runtime import FuzzyXAI
+from fuzzyxai.diagnostics.contracts import (
+    DiagnosticCut,
+    RepairPlan,
+    RepairStep,
+    StepExecutionResult,
+)
+from fuzzyxai.diagnostics.recertification import RouteRecertifier
+from fuzzyxai.diagnostics.renderers import (
+    batch_to_dict,
+    write_batch_csv,
+    write_report_html,
+    write_report_json,
+)
+from fuzzyxai.diagnostics.route_graph import RouteGraphBuilder
 from fuzzyxai.schemas import list_schemas, validate_file
 from fuzzyxai.visualization import (
     render_action_boundary,
@@ -134,6 +147,70 @@ def cmd_visualize(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_diagnose(args: argparse.Namespace) -> int:
+    route = _read_json(args.route)
+    mode = "plan" if args.repair_plan else "none"
+    report = FuzzyXAI().diagnose(route=route, repair_mode=mode, audience=args.audience)
+    write_report_json(report, args.output)
+    if args.html:
+        write_report_html(report, args.html)
+    print(f"fuzzyxai diagnose: {report.route_status} {args.output}")
+    return 0 if report.route_status == "valid" else 2
+
+
+def cmd_diagnose_batch(args: argparse.Namespace) -> int:
+    input_path = Path(args.input)
+    routes = [
+        json.loads(line)
+        for line in input_path.read_text(encoding="utf-8").splitlines()
+        if line.strip()
+    ]
+    batch = FuzzyXAI().diagnose_batch(routes=routes, repair_mode="plan" if args.repair_plan else "none")
+    output = Path(args.output)
+    output.mkdir(parents=True, exist_ok=True)
+    (output / "batch_summary.json").write_text(
+        json.dumps(batch_to_dict(batch), ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+    write_batch_csv(batch, output / "batch_reports.csv")
+    for report in batch.reports:
+        write_report_json(report, output / f"{report.route_id.replace('/', '_')}.json")
+    print(f"fuzzyxai diagnose-batch: PASS routes={len(batch.reports)} {output}")
+    return 0
+
+
+def _repair_plan_from_dict(data: dict) -> RepairPlan:
+    cut = DiagnosticCut(**data["cut"])
+    steps = tuple(RepairStep(**item) for item in data.get("steps", ()))
+    return RepairPlan(
+        plan_id=data["plan_id"],
+        cut=cut,
+        steps=steps,
+        total_estimated_cost=data.get("total_estimated_cost"),
+        fully_executable=bool(data.get("fully_executable", False)),
+        unresolved_issues=tuple(data.get("unresolved_issues", ())),
+        trace_sha256=data["trace_sha256"],
+    )
+
+
+def cmd_recertify(args: argparse.Namespace) -> int:
+    builder = RouteGraphBuilder()
+    before = builder.build(_read_json(args.before))
+    after = builder.build(_read_json(args.after))
+    plan = _repair_plan_from_dict(_read_json(args.plan))
+    changed = before.trace_sha256 != after.trace_sha256
+    execution = tuple(
+        StepExecutionResult(step.step_id, "completed", changed)
+        for step in plan.steps
+    )
+    report = RouteRecertifier().recertify(before, after, plan, execution)
+    output = Path(args.output)
+    output.parent.mkdir(parents=True, exist_ok=True)
+    output.write_text(json.dumps(report.__dict__, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    print(f"fuzzyxai recertify: {report.status} {output}")
+    return 0 if report.route_valid_after else 2
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="fuzzyxai")
     sub = parser.add_subparsers(dest="command", required=True)
@@ -166,6 +243,27 @@ def build_parser() -> argparse.ArgumentParser:
 
     sub.add_parser("list-adapters").set_defaults(func=cmd_list_adapters)
     sub.add_parser("list-operators").set_defaults(func=cmd_list_operators)
+
+    diagnose = sub.add_parser("diagnose")
+    diagnose.add_argument("--route", required=True)
+    diagnose.add_argument("--output", required=True)
+    diagnose.add_argument("--repair-plan", action="store_true")
+    diagnose.add_argument("--html")
+    diagnose.add_argument("--audience", choices=("user", "expert", "audit"), default="user")
+    diagnose.set_defaults(func=cmd_diagnose)
+
+    diagnose_batch = sub.add_parser("diagnose-batch")
+    diagnose_batch.add_argument("--input", required=True)
+    diagnose_batch.add_argument("--output", required=True)
+    diagnose_batch.add_argument("--repair-plan", action="store_true")
+    diagnose_batch.set_defaults(func=cmd_diagnose_batch)
+
+    recertify = sub.add_parser("recertify")
+    recertify.add_argument("--before", required=True)
+    recertify.add_argument("--after", required=True)
+    recertify.add_argument("--plan", required=True)
+    recertify.add_argument("--output", required=True)
+    recertify.set_defaults(func=cmd_recertify)
 
     visualize = sub.add_parser("visualize")
     visual_sub = visualize.add_subparsers(dest="visual", required=True)

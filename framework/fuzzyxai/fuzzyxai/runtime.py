@@ -53,6 +53,11 @@ from fuzzyxai.visualization.spec import build_visual_spec
 from fuzzyxai.visualization.view_model import ExplanationViewModel
 from fuzzyxai.explanation_quality import ExplanationQualityReport, build_quality_report
 from fuzzyxai.planner import ExplanationPlanner
+from fuzzyxai.diagnostics.contracts import (
+    BatchDiagnosticReport,
+    DiagnosticReport,
+    RepairExecutionContext,
+)
 
 
 def _as_rows(values: Any) -> list[list[Any]]:
@@ -385,6 +390,79 @@ class ModelExplanationResult:
             "quality_metrics": dict(self.view_model.quality_metrics),
         }
 
+    def diagnose(
+        self,
+        *,
+        repair_mode: str = "plan",
+        repair_context: RepairExecutionContext | None = None,
+        audience: str = "user",
+    ) -> DiagnosticReport:
+        """Diagnose the serialized explanation graph without inferring model error."""
+
+        from fuzzyxai.diagnostics.service import DiagnosticService
+
+        graph = self.explanation_graph
+        route = {
+            "route_id": str(self.view_model.trace.get("trace_id", "explanation")),
+            "schema_version": graph.schema_version,
+            "nodes": [
+                {
+                    "node_id": node.node_id,
+                    "node_type": node.node_type,
+                    "observed_attributes": dict(node.payload),
+                    "mandatory": True,
+                    "repairable": node.node_type not in {"prediction", "action"},
+                    "evidence_refs": tuple(node.evidence_refs),
+                }
+                for node in graph.nodes
+            ],
+            "edges": [
+                {
+                    "edge_id": f"edge:{index}:{edge.source}->{edge.target}",
+                    "source": edge.source,
+                    "target": edge.target,
+                    "relation": edge.relation if edge.relation in {
+                        "produces",
+                        "consumes",
+                        "derived_from",
+                        "explains",
+                        "calibrates",
+                        "transforms",
+                        "validates",
+                        "aggregates",
+                        "reduces",
+                        "certifies",
+                        "blocks",
+                    } else "derived_from",
+                    "mandatory": True,
+                    "registered_contract": {"linked": True},
+                    "observed_contract": {"linked": True},
+                    "evidence_refs": tuple(edge.evidence_refs),
+                }
+                for index, edge in enumerate(graph.edges)
+            ],
+            "metadata": {"missing_evidence": tuple(graph.missing_evidence)},
+            "contracts": [
+                {
+                    "contract_id": f"evidence:{index}:{channel}",
+                    "kind": "equals",
+                    "subject_id": "trace:missing_evidence",
+                    "field": channel,
+                    "expected": True,
+                    "repairable": True,
+                    "category": "provenance",
+                    "source_nodes": ("trace:missing_evidence",),
+                }
+                for index, channel in enumerate(graph.missing_evidence)
+            ],
+        }
+        return DiagnosticService().diagnose(
+            route=route,
+            repair_mode=repair_mode,
+            repair_context=repair_context,
+            audience=audience,
+        )
+
     def quality_report(self) -> ExplanationQualityReport:
         task_type = str(self.prediction.metadata.get("task_type", ""))
         return build_quality_report(self.view_model.quality_metrics, regression=task_type == TaskType.REGRESSION.value)
@@ -544,6 +622,37 @@ class FuzzyXAI:
             "output_schema": {**asdict(output_schema), "task_type": output_schema.task_type.value} if output_schema else None,
             "resolution": self._resolution_report.to_dict() if self._resolution_report else None,
         }
+
+    def diagnose(
+        self,
+        *,
+        route: object,
+        repair_mode: str = "plan",
+        repair_context: RepairExecutionContext | None = None,
+        audience: str = "user",
+    ) -> DiagnosticReport:
+        """Diagnose route integrity independently from prediction correctness."""
+
+        from fuzzyxai.diagnostics.service import DiagnosticService
+
+        return DiagnosticService().diagnose(
+            route=route,
+            repair_mode=repair_mode,
+            repair_context=repair_context,
+            audience=audience,
+        )
+
+    def diagnose_batch(
+        self,
+        *,
+        routes: object,
+        repair_mode: str = "plan",
+    ) -> BatchDiagnosticReport:
+        """Diagnose multiple routes; external repair execution is intentionally disabled."""
+
+        from fuzzyxai.diagnostics.service import DiagnosticService
+
+        return DiagnosticService().diagnose_batch(routes=routes, repair_mode=repair_mode)
 
     def explain(
         self,

@@ -30,7 +30,7 @@ __all__ += ['DatasetRecord', 'infer_dataset_profile']
 __all__ += ['lofo_f1_importance', 'bootstrap_lofo_f1_importance', 'select_top_rules_by_lofo_f1']
 __all__ += ['compute_interpretability_index']
 
-__version__ = "1.3.0rc1"
+__version__ = "1.4.0a1"
 
 
 def build_explanation(*, terms, representation, rules=None, activations=None, uncertainty=0.0, trace=None, metadata=None):
@@ -139,6 +139,16 @@ from .visualization.route_artifacts import save_route_json
 from .visualization.operator_dashboard import render_dashboard
 from .examples import list_examples, load_example
 from .runtime import ExplanationInspection, FuzzyXAI, InspectionResult, ModelExplanationResult
+from .diagnostics import (
+    DiagnosticCut,
+    DiagnosticIssue,
+    DiagnosticReport,
+    DiagnosticService,
+    RepairExecutionContext,
+    RepairPlan,
+    RouteGraph,
+    RouteGraphBuilder,
+)
 from .adapters import (
     AdapterConformanceReport,
     AdapterRegistry,
@@ -432,4 +442,12 @@ __all__ += [
     "find_tabular_counterfactuals",
     "select_explanatory_cases",
     "validate_domain_language",
+    "DiagnosticCut",
+    "DiagnosticIssue",
+    "DiagnosticReport",
+    "DiagnosticService",
+    "RepairExecutionContext",
+    "RepairPlan",
+    "RouteGraph",
+    "RouteGraphBuilder",
 ]

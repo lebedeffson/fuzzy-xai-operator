@@ -1032,3 +1032,32 @@ h10-gold-package:
 
 reproduce-h10-gold: h10-gold-test h10-gold-generate h10-gold-development h10-gold-power h10-gold-closure h10-gold-figures
 	@echo "H10 Gold preconfirmatory reproduction complete; sealed scoring was not opened."
+
+# Diagnostic v21 uses the caller-selected existing environment. It validates the
+# alpha framework and protocol draft but never opens a sealed dataset.
+DIAGNOSTIC_PYTHON ?= $(PYTHON)
+DIAGNOSTIC_ENV = PYTHONPATH=framework/fuzzyxai:.
+
+.PHONY: diagnostic-v21-test diagnostic-v21-coverage diagnostic-v21-benchmark diagnostic-v21-protocol diagnostic-v21-report diagnostic-v21-check
+
+diagnostic-v21-test:
+	$(DIAGNOSTIC_ENV) $(DIAGNOSTIC_PYTHON) -m ruff check framework/fuzzyxai/fuzzyxai/diagnostics tests/diagnostics experiments/diagnostic_v21 examples/diagnose_single_route.py examples/diagnose_batch.py examples/build_repair_plan.py examples/recertify_route.py examples/diagnostic_report_levels.py
+	$(DIAGNOSTIC_ENV) $(DIAGNOSTIC_PYTHON) -m pytest -q tests/diagnostics
+
+diagnostic-v21-coverage:
+	$(DIAGNOSTIC_ENV) $(DIAGNOSTIC_PYTHON) -m coverage erase
+	$(DIAGNOSTIC_ENV) $(DIAGNOSTIC_PYTHON) -m coverage run --source=framework/fuzzyxai/fuzzyxai/diagnostics -m pytest -q tests/diagnostics
+	$(DIAGNOSTIC_ENV) $(DIAGNOSTIC_PYTHON) -m coverage report --fail-under=90
+	$(DIAGNOSTIC_ENV) $(DIAGNOSTIC_PYTHON) -m coverage json -o reports/diagnostic_v21/coverage.json
+
+diagnostic-v21-benchmark:
+	$(DIAGNOSTIC_ENV) $(DIAGNOSTIC_PYTHON) -m experiments.diagnostic_v21.benchmark
+
+diagnostic-v21-protocol:
+	$(DIAGNOSTIC_ENV) $(DIAGNOSTIC_PYTHON) -m experiments.diagnostic_v21.protocol_gate
+
+diagnostic-v21-report:
+	$(DIAGNOSTIC_ENV) $(DIAGNOSTIC_PYTHON) -m experiments.diagnostic_v21.build_validation_report --python $(DIAGNOSTIC_PYTHON)
+
+diagnostic-v21-check: diagnostic-v21-test diagnostic-v21-coverage diagnostic-v21-benchmark diagnostic-v21-protocol
+	@echo "Diagnostic v21 alpha checks complete; H10-C2 remains BLOCKED_PRECONFIRMATORY."

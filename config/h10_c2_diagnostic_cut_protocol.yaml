@@ -1,0 +1,41 @@
+protocol_id: FXAI-H10-C2-DIAGNOSTIC-CUT
+version: draft-1
+status: draft_blocked_manual_adjudication
+scientific_scope: minimal-cost diagnostic cuts for full registered explanation routes
+prior_cycle:
+  branch: feat/h10-final-gold-v20
+  commit: 13f82805c69fb974a236df6d8990eea115251c23
+  status: BLOCKED_PRECONFIRMATORY
+  sealed_opening_count: 0
+sealed_opening_count: 0
+primary_metrics:
+  - membership_in_equivalent_optimal_cut_set
+  - cut_cost_regret
+secondary_metrics:
+  - jaccard
+  - obligation_coverage
+  - false_diagnostic_atoms
+  - runtime_ms
+baselines:
+  - schema_only
+  - simple_or
+  - independent_if_else
+  - untyped_provenance_graph
+  - typed_without_cut
+  - unweighted_cut
+  - weighted_greedy_cover
+manual_adjudication:
+  required: true
+  independent_reviewers: 2
+  completed: false
+power_analysis:
+  required: true
+  completed: false
+effect_margin: null
+confirmatory:
+  scoring_enabled: false
+  new_cases_required: true
+  old_sealed_cases_reused: false
+  hierarchical_resampling: object_within_pipeline
+  multiplicity_correction: holm
+stopping_rule: freeze_after_protocol_lock_and_score_once_regardless_of_result
