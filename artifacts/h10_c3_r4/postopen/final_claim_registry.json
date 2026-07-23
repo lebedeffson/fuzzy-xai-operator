@@ -1,6 +1,10 @@
 {
   "claims": [
     {
+      "ci": [
+        0.459915611814346,
+        0.5966386554621849
+      ],
       "claim_id": "H10-C3a",
       "cost_regret_ci": [
         0.21007717594013325,
@@ -8,33 +12,38 @@
       ],
       "cost_regret_effect": 0.24417529978965805,
       "cost_regret_p_holm": 0.00029997000299970003,
-      "development_status": "development_pass",
       "effect": 0.5274261603375527,
-      "effect_ci": [
-        0.459915611814346,
-        0.5966386554621849
-      ],
       "p_holm": 0.00029997000299970003,
-      "positive_pipeline_families": 6,
-      "protocol_validation_status": "protocol_validation_pass",
+      "primary_metric": "optimal_set_membership",
+      "scope": "sealed confirmatory composite route diagnostics",
       "status": "CONFIRMATORY_PASS"
     },
     {
-      "claim_id": "H10-C3b",
-      "development_status": "development_pass",
-      "effect": 0.3333333333333333,
-      "effect_ci": [
+      "ci": [
         0.25523012552301255,
         0.4194915254237288
       ],
+      "claim_id": "H10-C3b",
+      "effect": 0.3333333333333333,
       "p_holm": 0.00029997000299970003,
-      "positive_pipeline_families": 6,
-      "protocol_validation_status": "protocol_validation_pass",
+      "primary_metric": "full_recertification_success",
+      "scope": "sealed confirmatory repair and full route recertification",
       "status": "CONFIRMATORY_PASS"
     }
   ],
-  "claim_boundary": "Controlled algorithmic route diagnostics only; human comprehension, expert usefulness, production safety, natural-fault generalization, and organizational effectiveness were not evaluated.",
+  "disallowed_claims": [
+    "human_comprehension",
+    "expert_usefulness",
+    "production_safety",
+    "industrial_effectiveness",
+    "natural_fault_generalization"
+  ],
   "safety": {
+    "checks": {
+      "false_certification": true,
+      "new_critical_violations": true,
+      "runtime_p95": true
+    },
     "false_certification": 0.0,
     "new_critical_violations": 0.0,
     "runtime_p95_ms": 1.0478439999133116,

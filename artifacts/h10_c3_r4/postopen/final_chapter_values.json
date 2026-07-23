@@ -1,0 +1,64 @@
+{
+  "H10-C3a": {
+    "baseline": "typed_without_optimization",
+    "ci_high": 0.5966386554621849,
+    "ci_low": 0.459915611814346,
+    "cost_regret_ci_high": 0.27876096379748894,
+    "cost_regret_ci_low": 0.21007717594013325,
+    "cost_regret_effect": 0.24417529978965805,
+    "cost_regret_p_holm": 0.00029997000299970003,
+    "effect": 0.5274261603375527,
+    "metric": "optimal_set_membership",
+    "p_holm": 0.00029997000299970003,
+    "pipeline_families_total": 6,
+    "positive_pipeline_families": 6,
+    "status": "CONFIRMATORY_PASS"
+  },
+  "H10-C3b": {
+    "baseline": "weighted_greedy",
+    "ci_high": 0.4194915254237288,
+    "ci_low": 0.25523012552301255,
+    "effect": 0.3333333333333333,
+    "metric": "full_recertification_success",
+    "p_holm": 0.00029997000299970003,
+    "pipeline_families_total": 6,
+    "positive_pipeline_families": 6,
+    "status": "CONFIRMATORY_PASS"
+  },
+  "claim_boundary": "Controlled algorithmic route diagnostics only. Human comprehension, expert usefulness, production safety, and organizational effectiveness were not evaluated.",
+  "independent_template_units": 237,
+  "opened_at_utc": "2026-07-23T23:33:34.585247+00:00",
+  "opening_count": 1,
+  "safety": {
+    "checks": {
+      "false_certification": true,
+      "new_critical_violations": true,
+      "runtime_p95": true
+    },
+    "false_certification": 0.0,
+    "new_critical_violations": 0.0,
+    "runtime_p95_ms": 1.0478439999133116,
+    "status": "PASS"
+  },
+  "scientific_status": "SCIENTIFIC_PASS",
+  "sealed_case_count": 240,
+  "source_files": {
+    "opening_record": {
+      "path": "opening_record.json",
+      "sha256": "8cee1db5b4714d1f092a5408584a83379a0605deb8f3ee218fd6610409d7ac56"
+    },
+    "sealed_results": {
+      "path": "sealed.csv",
+      "sha256": "3fb4e2ba43c16552e1d52083d1ffec2da312e1c72df5d33079d28e4ac32fe0c8"
+    },
+    "sealed_statistics": {
+      "path": "sealed_statistics.json",
+      "sha256": "72e611d6dc19030b05a7171116d273539bc936edf15c2f7bf064e849c4416849"
+    },
+    "sealed_status": {
+      "path": "sealed_status.json",
+      "sha256": "06c02b53ed1f141f657bb9740cf7ab883b229d3a89d6fd28dc76db415d3e2a31"
+    }
+  },
+  "study_id": "FXAI-H10-C3-R4-CONFIRMATORY-READINESS"
+}

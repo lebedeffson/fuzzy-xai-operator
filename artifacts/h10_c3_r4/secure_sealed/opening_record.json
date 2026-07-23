@@ -1,0 +1,11 @@
+{
+  "approval_sha256": "3a3b438caf4b14c3f7bd27f9b01b886ded4bed0d892ad4e179b8841b66ba50ff",
+  "encrypted_payload_sha256": "14f74ed068cf3956296a6e45b3c491d32380860a59d82623ad69ab68e99fb21a",
+  "opened_at_utc": "2026-07-23T23:33:34.585247+00:00",
+  "opening_count_after": 1,
+  "opening_count_before": 0,
+  "plaintext_commitment_sha256": "91d3b202a990960078f297d5373881c2733becd5714fe049c6d876eda1fc054b",
+  "protocol_lock_sha256": "b12603326c555f68e8450c95ec5efe3ebd515499f2650aa29178f7c876b34beb",
+  "purpose": "one_time_confirmatory_scoring",
+  "study_id": "FXAI-H10-C3-R4-CONFIRMATORY-READINESS"
+}

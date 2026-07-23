@@ -1,0 +1,9 @@
+{
+  "authorization": "AUTHORIZE_ONE_TIME_SEALED_SCORING",
+  "authorized_at_utc": "2026-07-23T22:42:23Z",
+  "authorized_by": "Alex Lebedev",
+  "encrypted_payload_sha256": "14f74ed068cf3956296a6e45b3c491d32380860a59d82623ad69ab68e99fb21a",
+  "plaintext_commitment_sha256": "91d3b202a990960078f297d5373881c2733becd5714fe049c6d876eda1fc054b",
+  "protocol_lock_sha256": "b12603326c555f68e8450c95ec5efe3ebd515499f2650aa29178f7c876b34beb",
+  "study_id": "FXAI-H10-C3-R4-CONFIRMATORY-READINESS"
+}

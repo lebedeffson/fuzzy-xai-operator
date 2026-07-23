@@ -1,11 +1,23 @@
 {
-  "H10-C3a": "NOT_EVALUATED_CONFIRMATORY",
-  "H10-C3b": "NOT_EVALUATED_CONFIRMATORY",
+  "H10-C3a": "CONFIRMATORY_PASS",
+  "H10-C3b": "CONFIRMATORY_PASS",
   "implementation": "LOCKED",
-  "opening_count": 0,
+  "opening_count": 1,
   "plaintext_sealed_data_distributed": false,
-  "scientific_status": "READY_FOR_SECURE_SEALED_SCORING",
+  "results_sha256": "3fb4e2ba43c16552e1d52083d1ffec2da312e1c72df5d33079d28e4ac32fe0c8",
+  "safety": {
+    "checks": {
+      "false_certification": true,
+      "new_critical_violations": true,
+      "runtime_p95": true
+    },
+    "false_certification": 0.0,
+    "new_critical_violations": 0.0,
+    "runtime_p95_ms": 1.0478439999133116,
+    "status": "PASS"
+  },
+  "scientific_status": "SCIENTIFIC_PASS",
   "sealed_created": true,
-  "status": "READY_FOR_SECURE_SEALED_SCORING",
+  "status": "SEALED_SCORED",
   "study_id": "FXAI-H10-C3-R4-CONFIRMATORY-READINESS"
 }

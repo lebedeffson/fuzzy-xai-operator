@@ -1,0 +1,38 @@
+{
+  "case_count": 240,
+  "classification_reproduced": "PASS",
+  "disclosed_seed_commitment": "PASS",
+  "encrypted_payload_sha256": "PASS",
+  "method_row_count": 1920,
+  "non_runtime_mismatch_count": 0,
+  "non_runtime_row_reproduction": "PASS",
+  "note": "Runtime measurements are remeasured and therefore not byte-identical; all scientific row fields, bootstrap statistics, and classification are reproduced.",
+  "official_opening_record_untouched": true,
+  "official_results_sha256": "3fb4e2ba43c16552e1d52083d1ffec2da312e1c72df5d33079d28e4ac32fe0c8",
+  "plaintext_commitment_sha256": "PASS",
+  "private_template_count": 240,
+  "public_template_overlap": 0,
+  "reproduced_at_utc": "2026-07-23T23:44:03Z",
+  "reproduced_classification": {
+    "H10-C3a": "CONFIRMATORY_PASS",
+    "H10-C3b": "CONFIRMATORY_PASS",
+    "safety": {
+      "checks": {
+        "false_certification": true,
+        "new_critical_violations": true,
+        "runtime_p95": true
+      },
+      "false_certification": 0.0,
+      "new_critical_violations": 0.0,
+      "runtime_p95_ms": 0.9133700004895218,
+      "status": "PASS"
+    },
+    "scientific_status": "SCIENTIFIC_PASS"
+  },
+  "reproduced_results_sha256": "6329a1b943a62359fbc5483fe4020683807d6a73e7d8b4755fd17b968de7c721",
+  "reproduction_opening_record_created": false,
+  "signed_tag_verification": "PASS",
+  "source_commit": "2e530ae132b6293ba4aa0a265cbccdc9c49bb418",
+  "source_tag": "h10-c3-r4-v23.3-preopen-final",
+  "statistics_reproduced": "PASS"
+}

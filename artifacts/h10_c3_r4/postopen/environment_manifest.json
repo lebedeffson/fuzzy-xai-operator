@@ -1,0 +1,22 @@
+{
+  "architecture": "x86_64",
+  "captured_at_utc": "2026-07-23T23:37:09Z",
+  "environment_source": [
+    "requirements.lock",
+    ".github/workflows/h10-c3-r4.yml"
+  ],
+  "git_head": "2e530ae132b6293ba4aa0a265cbccdc9c49bb418",
+  "kernel": "7.1.3-arch2-2",
+  "locale": "LC_CTYPE=C.UTF-8;LC_NUMERIC=C;LC_TIME=C;LC_COLLATE=C;LC_MONETARY=C;LC_MESSAGES=C;LC_PAPER=C;LC_NAME=C;LC_ADDRESS=C;LC_TELEPHONE=C;LC_MEASUREMENT=C;LC_IDENTIFICATION=C",
+  "noted_lock_gap": "cryptography is required by secure_sealed.py and installed by the lock-protected CI workflow, but absent from requirements.lock; the scoring environment reproduced both registered sources without modifying repository files.",
+  "os": "Linux-7.1.3-arch2-2-x86_64-with-glibc2.43",
+  "package_manifest_sha256": "dfa46623d769474039edb7411a0592b45bd7351c403c79038e563acdb20a1600",
+  "preopen_tag": "h10-c3-r4-v23.3-preopen-final",
+  "python": "Python 3.12.12",
+  "requirements_lock_sha256": "0755c6666558d14ea859472e33ceaffdae0a582827ccb070d9941985babcc16b",
+  "timezone": [
+    "MSK",
+    "MSK"
+  ],
+  "workflow_sha256": "9ee53a22466643312e921987405c172bd8236974613677649887481e5c87f52a"
+}
