@@ -1,0 +1,17 @@
+{
+  "schema_version": "1.0",
+  "implementation": "diagnostic-framework-v21",
+  "base_commit": "13f82805c69fb974a236df6d8990eea115251c23",
+  "production_imports_gold_oracle": false,
+  "production_mentions_source_truth": false,
+  "production_mentions_repair_truth": false,
+  "production_copies_expected_to_observed": false,
+  "sealed_opening_count": 0,
+  "h10_c2_status": "draft_blocked_manual_adjudication",
+  "manual_adjudication_complete": false,
+  "confirmatory_scoring_enabled": false,
+  "forbidden_old_artifact_changes": [],
+  "software_alpha_release_allowed": true,
+  "scientific_confirmatory_release_allowed": false,
+  "scientific_blocker": "power analysis and independent two-reviewer adjudication are incomplete"
+}

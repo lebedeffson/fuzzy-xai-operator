@@ -1,5 +1,37 @@
 # Project Memory
 
+## FXAI-DIAGNOSTIC-FRAMEWORK-V21
+
+- Date: 2026-07-23
+- Branch: `feat/diagnostic-framework-v21`
+- Frozen predecessor: `feat/h10-final-gold-v20@13f82805c69fb974a236df6d8990eea115251c23`
+- Implementation commit: `91e0dde54a2edf64ac1dd1efcc67eab4af6a0fe5`
+- Package version: `1.4.0a1`
+- Software alpha status: PASS
+- Scientific status: `BLOCKED_PRECONFIRMATORY`
+- Sealed opening count: `0`
+
+The v21 alpha turns the exploratory H10 components into a public structural
+diagnostic framework rather than a decision policy. `FuzzyXAI.diagnose()` now
+builds a complete registered route graph, validates node and edge contracts,
+separates symptom, contract violation, proximate cause and source component,
+finds exact or explicitly approximate weighted diagnostic cuts, proposes
+provider-bound repair steps, and reruns all contracts after explicitly
+authorized external changes.
+
+Production diagnostics do not import `gold_oracle`, read mutation logs, use
+source/repair truth, or copy `expected` values into observations. Repair
+execution is fail-closed without an explicit `RepairExecutionContext`; batch
+execution is disabled. The diagnostic package has 95% measured line coverage,
+40 focused tests, and a six-pipeline operator-only benchmark over 1,200 routes
+with p95 below 1 ms in the recorded local environment.
+
+No scientific H10 result was upgraded. The prior H10-C difference remains
+exploratory, and the draft `FXAI-H10-C2-DIAGNOSTIC-CUT` protocol keeps
+confirmatory scoring disabled until power analysis and independent
+two-reviewer adjudication are complete. No old sealed cases or frozen
+v16/v18/v19/Gold artifacts were changed.
+
 ## FXAI-H10-FINAL-GOLD-PRECONFIRMATORY
 
 - Date: 2026-07-23

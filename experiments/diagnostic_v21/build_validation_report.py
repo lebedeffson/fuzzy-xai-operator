@@ -124,17 +124,34 @@ def build(*, python: str, run_full_regression: bool) -> dict[str, object]:
     coverage_path = OUTPUT / "coverage.json"
     performance = json.loads(performance_path.read_text(encoding="utf-8"))
     coverage = json.loads(coverage_path.read_text(encoding="utf-8"))
+    generation_commit = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
+    methodology_path = OUTPUT / "methodology_audit.json"
+    leakage_output_path = OUTPUT / "leakage_audit.json"
+    methodology_path.write_text(
+        json.dumps(methodology, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+    leakage_output_path.write_text(
+        json.dumps(leakage, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+    common = {
+        "evidence_generation_commit": generation_commit,
+        "closure_packaging_commit": None,
+        "bundle_commit": None,
+    }
     evidence = [
         {
             "evidence_id": "DV21-E01",
             "claim_id": "DV21-PERFORMANCE",
-            "metric": "diagnostic_total_p95_ms",
-            "value": performance["timings"]["total"]["p95_ms"],
+            "metric": "route_count",
+            "value": performance["route_count"],
             "scope": performance["scope"],
             "source_file": "reports/diagnostic_v21/performance.json",
-            "locator": "timings.total.p95_ms",
+            "locator": "route_count",
             "sha256": _sha256(performance_path),
             "status": "descriptive",
+            **common,
         },
         {
             "evidence_id": "DV21-E02",
@@ -145,6 +162,7 @@ def build(*, python: str, run_full_regression: bool) -> dict[str, object]:
             "locator": "totals.percent_covered",
             "sha256": _sha256(coverage_path),
             "status": "technical_validation",
+            **common,
         },
         {
             "evidence_id": "DV21-E03",
@@ -153,9 +171,27 @@ def build(*, python: str, run_full_regression: bool) -> dict[str, object]:
             "value": 0,
             "source_file": "reports/diagnostic_v21/leakage_audit.json",
             "locator": "opening_count",
+            "sha256": _sha256(leakage_output_path),
             "status": "preconfirmatory",
+            **common,
         },
     ]
+    for stage_index, (stage, values) in enumerate(performance["timings"].items(), start=4):
+        for metric_index, (metric, value) in enumerate(values.items()):
+            evidence.append(
+                {
+                    "evidence_id": f"DV21-E{stage_index:02d}-{metric_index + 1}",
+                    "claim_id": "DV21-PERFORMANCE",
+                    "metric": f"{stage}_{metric}",
+                    "value": value,
+                    "scope": performance["scope"],
+                    "source_file": "reports/diagnostic_v21/performance.json",
+                    "locator": f"timings.{stage}.{metric}",
+                    "sha256": _sha256(performance_path),
+                    "status": "descriptive",
+                    **common,
+                }
+            )
     claims = {
         "schema_version": "1.0",
         "claims": [
@@ -194,14 +230,6 @@ def build(*, python: str, run_full_regression: bool) -> dict[str, object]:
         "coverage_percent": coverage["totals"]["percent_covered"],
         "forbidden_old_artifact_changes": forbidden_changes,
     }
-    (OUTPUT / "methodology_audit.json").write_text(
-        json.dumps(methodology, ensure_ascii=False, indent=2) + "\n",
-        encoding="utf-8",
-    )
-    (OUTPUT / "leakage_audit.json").write_text(
-        json.dumps(leakage, ensure_ascii=False, indent=2) + "\n",
-        encoding="utf-8",
-    )
     (OUTPUT / "evidence_map.json").write_text(
         json.dumps(evidence, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",

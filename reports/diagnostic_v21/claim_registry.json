@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.0",
+  "claims": [
+    {
+      "claim_id": "DV21-IMPLEMENTATION",
+      "status": "technical_validation",
+      "statement": "The graph diagnostic, cut, repair planning, and recertification APIs are implemented and tested."
+    },
+    {
+      "claim_id": "H10-C",
+      "status": "exploratory_only",
+      "statement": "The earlier minimal-cut difference remains exploratory."
+    },
+    {
+      "claim_id": "H10-C2",
+      "status": "not_evaluated_preconfirmatory",
+      "statement": "No new sealed scoring was performed."
+    }
+  ]
+}
