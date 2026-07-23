@@ -1060,4 +1060,45 @@ diagnostic-v21-report:
 	$(DIAGNOSTIC_ENV) $(DIAGNOSTIC_PYTHON) -m experiments.diagnostic_v21.build_validation_report --python $(DIAGNOSTIC_PYTHON)
 
 diagnostic-v21-check: diagnostic-v21-test diagnostic-v21-coverage diagnostic-v21-benchmark diagnostic-v21-protocol
+
+.PHONY: h10-c2-bootstrap h10-c2-test h10-c2-power h10-c2-generate-development h10-c2-run-development h10-c2-generate-protocol-validation h10-c2-run-protocol-validation h10-c2-build-adjudication h10-c2-preconfirmatory-gate h10-c2-score-sealed h10-c2-package
+
+H10_C2_PYTHON ?= $(PYTHON)
+H10_C2_ENV = PYTHONPATH=experiments/h10_c2/src:framework/fuzzyxai:.
+
+h10-c2-bootstrap:
+	$(H10_C2_ENV) $(H10_C2_PYTHON) -m h10_c2 bootstrap
+
+h10-c2-test:
+	$(H10_C2_ENV) $(H10_C2_PYTHON) -m pytest -q experiments/h10_c2/tests
+	$(H10_C2_ENV) $(H10_C2_PYTHON) -m ruff check experiments/h10_c2
+
+h10-c2-power:
+	$(H10_C2_ENV) $(H10_C2_PYTHON) -m h10_c2 power
+
+h10-c2-generate-development:
+	$(H10_C2_ENV) $(H10_C2_PYTHON) -m h10_c2 generate --split development
+
+h10-c2-run-development:
+	$(H10_C2_ENV) $(H10_C2_PYTHON) -m h10_c2 run --split development
+
+h10-c2-generate-protocol-validation:
+	$(H10_C2_ENV) $(H10_C2_PYTHON) -m h10_c2 generate --split protocol_validation
+	$(H10_C2_ENV) $(H10_C2_PYTHON) -m h10_c2 generate --split sealed
+
+h10-c2-run-protocol-validation:
+	$(H10_C2_ENV) $(H10_C2_PYTHON) -m h10_c2 run --split protocol_validation
+
+h10-c2-build-adjudication:
+	$(H10_C2_ENV) $(H10_C2_PYTHON) -m h10_c2 export-adjudication --sample-size 200
+
+h10-c2-preconfirmatory-gate:
+	$(H10_C2_ENV) $(H10_C2_PYTHON) -m h10_c2 preconfirmatory-gate
+
+h10-c2-score-sealed:
+	@test -n "$(H10_C2_APPROVAL)" || (echo "BLOCKED: set H10_C2_APPROVAL to a signed scoring approval"; exit 2)
+	$(H10_C2_ENV) $(H10_C2_PYTHON) -m h10_c2 score-sealed --lock artifacts/h10_c2/lock/protocol.lock.json --approval "$(H10_C2_APPROVAL)"
+
+h10-c2-package:
+	$(H10_C2_ENV) $(H10_C2_PYTHON) -m h10_c2 package
 	@echo "Diagnostic v21 alpha checks complete; H10-C2 remains BLOCKED_PRECONFIRMATORY."

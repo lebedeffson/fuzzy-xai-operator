@@ -1,0 +1,18 @@
+operations:
+  - missing_provenance
+  - version_mismatch
+  - schema_mismatch
+  - preprocessing_mismatch
+  - missing_calibration
+  - stale_calibration
+  - checksum_corruption
+  - mandatory_edge_corruption
+  - cyclic_dependency
+  - invalid_reduction
+  - dictionary_mismatch
+  - missing_explanation
+  - unknown_attribute_fault
+composition_sizes: [2, 3, 4]
+include_equivalent_cuts: true
+include_irreparable: true
+

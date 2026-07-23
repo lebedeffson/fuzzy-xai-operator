@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["experiment_id", "base_commit", "protocol_sha256", "method_tree_sha256", "opening_count"],
+  "properties": {
+    "experiment_id": {"const": "FXAI-H10-C2-PRECONFIRMATORY"},
+    "base_commit": {"type": "string", "minLength": 40, "maxLength": 40},
+    "protocol_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "method_tree_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "opening_count": {"const": 0}
+  }
+}
+

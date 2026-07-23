@@ -1,0 +1,22 @@
+seed: 221004
+simulation_repetitions: 400
+target_power: 0.80
+familywise_alpha: 0.05
+holm_family_size: 2
+pipelines: 6
+candidate_cases_per_pipeline: [120, 180, 240, 320, 420, 560]
+composite_fraction_candidates: [0.40, 0.50, 0.60]
+intracluster_correlation: 0.08
+algorithm_failure_rate: 0.03
+adjudication_exclusion_rate: 0.05
+equivalent_cut_fraction: 0.18
+irreparable_fraction: 0.12
+scenarios:
+  conservative: {c2a_effect: 0.025, c2b_effect: 0.020}
+  moderate: {c2a_effect: 0.045, c2b_effect: 0.040}
+  optimistic: {c2a_effect: 0.070, c2b_effect: 0.065}
+baseline_rates: {c2a: 0.58, c2b: 0.52}
+operational_costs:
+  wrong_cut: 3.0
+  failed_repair: 5.0
+

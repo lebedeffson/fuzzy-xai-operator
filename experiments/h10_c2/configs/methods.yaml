@@ -1,0 +1,21 @@
+primary_baseline_selection_split: development
+methods:
+  - schema_only
+  - simple_or
+  - independent_if_else
+  - untyped_graph
+  - typed_without_cut
+  - greedy_cover
+  - weighted_greedy
+  - fuzzyxai_v21
+forbidden_baseline_symbols:
+  - MinimalDiagnosticCutFinder
+  - ActionableRepairPlanner
+  - DiagnosticService
+  - H10Auditor
+  - RepairPlanner
+  - DiagnosticCutSolver
+forbidden_gold_paths:
+  - artifacts/h10_c2/gold
+  - artifacts/h10_c2/sealed/vault
+

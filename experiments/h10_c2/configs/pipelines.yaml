@@ -1,0 +1,19 @@
+pipelines:
+  - id: tabular_credit_v22
+    modality: tabular
+    width: 7
+  - id: tabular_sensor_v22
+    modality: tabular
+    width: 8
+  - id: text_news_v22
+    modality: text
+    width: 9
+  - id: text_reviews_v22
+    modality: text
+    width: 8
+  - id: image_quality_v22
+    modality: image
+    width: 10
+  - id: timeseries_activity_v22
+    modality: time_series
+    width: 9

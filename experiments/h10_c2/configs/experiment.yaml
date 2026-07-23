@@ -1,0 +1,17 @@
+experiment_id: FXAI-H10-C2-PRECONFIRMATORY
+base_commit: a8f150b1ef3b5c6041c28098a5cc90d0e8e20ae5
+seed: 221003
+pipelines: 6
+split_fractions:
+  development: 0.35
+  protocol_validation: 0.15
+  sealed: 0.50
+case_mix:
+  clean: 0.10
+  single: 0.25
+  composite: 0.45
+  unknown_or_irreparable: 0.20
+old_case_hash_files:
+  - artifacts/h10_final_gold/h10_final_gold_manifest.json
+sealed_opening_limit: 1
+

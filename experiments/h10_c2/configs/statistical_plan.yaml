@@ -1,0 +1,15 @@
+primary_claims: [H10-C2a, H10-C2b]
+primary_metrics:
+  H10-C2a: optimal_cut_set_membership
+  H10-C2b: full_recertification_success
+resampling: paired_case_with_pipeline_cluster
+bootstrap_repetitions: 10000
+confidence_level: 0.95
+multiple_testing: holm
+baseline_selection: development_only
+effect_direction_required_pipelines: 5
+practically_relevant_margin_source: power_and_operational_cost_analysis
+secondary_metrics:
+  H10-C2a: [cut_cost_regret, cut_jaccard_best, obligation_coverage, extra_elements, runtime_ms]
+  H10-C2b: [plan_cost_regret, partial_recovery, new_critical_issues, human_actions, recertification_ms]
+

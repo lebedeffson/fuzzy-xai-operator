@@ -1,0 +1,15 @@
+claims:
+  H10-C2a:
+    status: not_evaluated
+    primary_metric: optimal_cut_set_membership
+    scope: new_sealed_h10_c2_cases_only
+  H10-C2b:
+    status: not_evaluated
+    primary_metric: full_recertification_success
+    scope: new_sealed_repairable_h10_c2_cases_only
+legacy:
+  H3: not_supported
+  H5-P: not_supported
+  H6-general: not_supported
+  H10-C: exploratory_only
+

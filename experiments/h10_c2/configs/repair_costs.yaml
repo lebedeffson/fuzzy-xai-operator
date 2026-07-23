@@ -1,0 +1,12 @@
+costs:
+  metadata: 1.0
+  provenance: 1.5
+  artifact: 2.0
+  calibration: 2.5
+  preprocessing: 3.0
+  explainer: 4.0
+  model: 8.0
+  retrain: 20.0
+cost_source: registered_operational_actions
+approval_required_above: 4.0
+
