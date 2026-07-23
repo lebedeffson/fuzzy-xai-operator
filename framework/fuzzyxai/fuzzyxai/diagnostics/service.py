@@ -81,7 +81,7 @@ class DiagnosticService:
         statuses = Counter(report.route_status for report in reports)
         categories = Counter(issue.category for report in reports for issue in report.issues)
         sources = Counter(node for report in reports for issue in report.issues for node in issue.source_nodes)
-        cuts = Counter(report.minimal_cut.defect_atoms for report in reports if report.minimal_cut)
+        cuts = Counter(report.minimal_cut.atom_keys for report in reports if report.minimal_cut)
         plans = [report.repair_plan for report in reports if report.repair_plan]
         executable = sum(plan.fully_executable for plan in plans) / len(plans) if plans else 0.0
         return BatchDiagnosticReport(

@@ -66,6 +66,24 @@ def test_missing_value_is_not_zero(valid_route: dict) -> None:
     assert result.issues[0].confidence is None
 
 
+def test_missing_relation_is_not_invented(valid_route: dict) -> None:
+    route = {
+        **valid_route,
+        "edges": [
+            {
+                key: value
+                for key, value in valid_route["edges"][0].items()
+                if key != "relation"
+            }
+        ],
+    }
+    graph = RouteGraphBuilder().build(route)
+    assert graph.edges[0].relation == "unknown_relation"
+    assert graph.edges[0].relation_status == "insufficient_evidence"
+    result = DiagnosticValidator().validate(graph)
+    assert result.status in {"insufficient_evidence", "partially_valid"}
+
+
 def test_cycle_is_reported_separately(valid_graph) -> None:
     reverse = replace(
         valid_graph.edges[0],

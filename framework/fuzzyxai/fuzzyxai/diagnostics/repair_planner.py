@@ -20,10 +20,13 @@ class ActionableRepairPlanner:
             issue
             for issue in issues
             if any(
-                any(
-                    f"node:{subject}/" in atom or f"edge:{subject}/" in atom
+                atom.subject_id
+                in {
+                    subject.split(":", 1)[1] if subject.startswith(("node:", "edge:")) else subject
                     for subject in (*issue.source_nodes, *issue.affected_nodes, *issue.affected_edges)
-                )
+                }
+                or atom.subject_kind == "contract"
+                and atom.subject_id == issue.violated_contract
                 for atom in cut.defect_atoms
             )
         )
@@ -63,7 +66,12 @@ class ActionableRepairPlanner:
     def _deduplicate(steps: tuple) -> tuple:
         merged: dict[tuple[str, str, str], object] = {}
         for step in steps:
-            key = (step.provider_id, step.operation, step.target)
+            key = (
+                step.provider_id,
+                step.operation,
+                step.target.subject_kind,
+                step.target.subject_id,
+            )
             previous = merged.get(key)
             if previous is None:
                 merged[key] = step

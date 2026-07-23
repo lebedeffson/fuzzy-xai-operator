@@ -102,7 +102,7 @@ class DiagnosticReporter:
         )
         if cut:
             lines.append(
-                f"Диагностический разрез: {', '.join(cut.defect_atoms) or 'пуст'}; "
+                f"Диагностический разрез: {', '.join(cut.atom_keys) or 'пуст'}; "
                 f"стоимость {cut.total_cost:g}; optimal={cut.optimal}."
             )
         if repair_plan:

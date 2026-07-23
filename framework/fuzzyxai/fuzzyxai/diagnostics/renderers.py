@@ -26,10 +26,10 @@ def write_report_html(report: DiagnosticReport, path: str | Path) -> Path:
     ) or "<li>Нарушения не обнаружены.</li>"
     steps = "".join(
         f"<li><strong>{escape(step.title)}</strong> ({escape(step.operation)}); "
-        f"target={escape(step.target)}; approval={step.requires_human_approval}</li>"
+        f"target={escape(step.target.key)}; approval={step.requires_human_approval}</li>"
         for step in (report.repair_plan.steps if report.repair_plan else ())
     ) or "<li>План не требуется или не сформирован.</li>"
-    cut = ", ".join(report.minimal_cut.defect_atoms) if report.minimal_cut else "не требуется"
+    cut = ", ".join(report.minimal_cut.atom_keys) if report.minimal_cut else "не требуется"
     limitations = "".join(f"<li>{escape(item)}</li>" for item in report.limitations)
     output.write_text(
         "<!doctype html><html lang='ru'><meta charset='utf-8'>"

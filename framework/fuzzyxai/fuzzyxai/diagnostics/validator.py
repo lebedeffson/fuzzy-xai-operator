@@ -6,6 +6,7 @@ from .causes import DiagnosticCauseAnalyzer
 from .contract_registry import ContractCheck, ContractRegistry
 from .contracts import (
     Contract,
+    DefectAtom,
     DiagnosticIssue,
     RouteGraph,
     ValidationObligation,
@@ -13,11 +14,28 @@ from .contracts import (
 )
 
 
-def _atom(issue_id: str, subject: str, field: str | None, code: str) -> str:
-    del issue_id
-    location = f"field:{field}" if field else "subject"
-    prefix = "edge" if subject.startswith("edge:") else "node"
-    return f"{prefix}:{subject}/{location}/violation:{code}"
+def _bare_subject(subject: str, kind: str) -> str:
+    prefix = f"{kind}:"
+    return subject[len(prefix) :] if subject.startswith(prefix) else subject
+
+
+def _atom(
+    graph: RouteGraph,
+    kind: str,
+    subject: str,
+    field: str | None,
+    code: str,
+    repairable: bool,
+) -> DefectAtom:
+    subject_id = _bare_subject(subject, kind)
+    costs = dict(graph.metadata.get("repair_costs", {}))
+    candidate_keys = (
+        f"{kind}:{subject_id}/field:{field or '_'}/violation:{code}",
+        f"{kind}:{subject_id}",
+        subject,
+    )
+    cost = next((float(costs[key]) for key in candidate_keys if key in costs), 1.0)
+    return DefectAtom(kind, subject_id, field, code, repairable, cost)
 
 
 def _has_cycle(graph: RouteGraph) -> bool:
@@ -96,7 +114,7 @@ class DiagnosticValidator:
                 }
             )
             issues.append(issue)
-            candidates = self._candidate_atoms(issue, contract)
+            candidates = self._candidate_atoms(graph, issue, contract)
             obligations.append(
                 ValidationObligation(
                     obligation_id=contract.contract_id,
@@ -182,12 +200,39 @@ class DiagnosticValidator:
         )
 
     @staticmethod
-    def _candidate_atoms(issue: DiagnosticIssue, contract: Contract) -> tuple[str, ...]:
+    def _candidate_atoms(
+        graph: RouteGraph,
+        issue: DiagnosticIssue,
+        contract: Contract,
+    ) -> tuple[DefectAtom, ...]:
         if not contract.repairable:
             return ()
-        subjects = tuple(dict.fromkeys((*issue.source_nodes, *issue.affected_edges, *issue.affected_nodes)))
-        specific = tuple(_atom(issue.issue_id, subject, contract.field, issue.code) for subject in subjects)
-        shared_sources = tuple(f"node:{source}/violation:source_component" for source in issue.source_nodes)
+        specific = tuple(
+            dict.fromkeys(
+                (
+                    *(
+                        _atom(graph, "node", subject, contract.field, issue.code, contract.repairable)
+                        for subject in (*issue.source_nodes, *issue.affected_nodes)
+                    ),
+                    *(
+                        _atom(graph, "edge", subject, contract.field, issue.code, contract.repairable)
+                        for subject in issue.affected_edges
+                    ),
+                    _atom(
+                        graph,
+                        "contract",
+                        contract.contract_id,
+                        contract.field,
+                        issue.code,
+                        contract.repairable,
+                    ),
+                )
+            )
+        )
+        shared_sources = tuple(
+            _atom(graph, "node", source, None, "source_component", contract.repairable)
+            for source in issue.source_nodes
+        )
         return tuple(dict.fromkeys((*specific, *shared_sources)))
 
     @staticmethod

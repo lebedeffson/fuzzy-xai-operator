@@ -3,11 +3,20 @@ from __future__ import annotations
 import json
 from dataclasses import asdict, dataclass, field as dataclass_field
 from hashlib import sha256
-from typing import Callable, Mapping
+from typing import Callable, Literal, Mapping
 
 
 SCHEMA_VERSION = "1.0"
 ROUTE_STATUSES = frozenset({"valid", "invalid", "insufficient_evidence", "unknown", "partially_valid"})
+RELATION_STATUSES = frozenset(
+    {
+        "known_valid",
+        "known_invalid",
+        "insufficient_evidence",
+        "unknown_relation",
+        "unsupported_relation",
+    }
+)
 
 
 def canonical_json(value: object) -> bytes:
@@ -48,24 +57,76 @@ class DiagnosticIssue:
     unknown: bool
 
 
+@dataclass(frozen=True, order=True)
+class DefectAtom:
+    subject_kind: Literal["node", "edge", "contract"]
+    subject_id: str
+    field: str | None
+    violation_code: str
+    repairable: bool
+    repair_cost: float
+
+    def __post_init__(self) -> None:
+        if self.subject_kind not in {"node", "edge", "contract"}:
+            raise ValueError(f"unsupported defect subject kind: {self.subject_kind}")
+        if not self.subject_id or self.subject_id.startswith(f"{self.subject_kind}:"):
+            raise ValueError("DefectAtom.subject_id must be a non-prefixed identifier")
+        if self.repair_cost < 0:
+            raise ValueError("DefectAtom.repair_cost cannot be negative")
+
+    @property
+    def key(self) -> str:
+        field = self.field if self.field is not None else "_"
+        return f"{self.subject_kind}:{self.subject_id}/field:{field}/violation:{self.violation_code}"
+
+
+@dataclass(frozen=True)
+class OptimalCutSet:
+    cuts: tuple[tuple[DefectAtom, ...], ...]
+    optimal_cost: float
+    enumeration_complete: bool
+    truncated: bool
+    lower_bound_count: int
+    optimality_proven: bool
+
+
+@dataclass(frozen=True)
+class ApproximateCut:
+    cut: tuple[DefectAtom, ...]
+    cost: float
+    lower_bound: float
+    optimality_gap: float
+    optimality_claimed: bool = False
+
+
 @dataclass(frozen=True)
 class DiagnosticCut:
-    defect_atoms: tuple[str, ...]
+    defect_atoms: tuple[DefectAtom, ...]
     affected_nodes: tuple[str, ...]
     total_cost: float
     optimal: bool
     solver: str
     covered_obligations: tuple[str, ...]
     uncovered_obligations: tuple[str, ...]
-    equivalent_optimal_cuts: tuple[tuple[str, ...], ...]
+    equivalent_optimal_cuts: tuple[tuple[DefectAtom, ...], ...]
     runtime_ms: float
+    enumeration_complete: bool = False
+    truncated: bool = False
+    lower_bound_count: int = 0
+    optimality_proven: bool = False
+    lower_bound: float = 0.0
+    optimality_gap: float = 0.0
+
+    @property
+    def atom_keys(self) -> tuple[str, ...]:
+        return tuple(atom.key for atom in self.defect_atoms)
 
 
 @dataclass(frozen=True)
 class RepairStep:
     step_id: str
     title: str
-    target: str
+    target: DefectAtom
     provider_id: str
     operation: str
     parameters: dict[str, object]
@@ -78,6 +139,18 @@ class RepairStep:
     estimated_cost: float | None
     requires_human_approval: bool
     executable: bool
+
+    @property
+    def dependencies(self) -> tuple[str, ...]:
+        return self.depends_on
+
+    @property
+    def alternatives(self) -> tuple[str, ...]:
+        return self.fallback_step_ids
+
+    @property
+    def rollback(self) -> str | None:
+        return self.rollback_operation
 
 
 @dataclass(frozen=True)
@@ -98,6 +171,7 @@ class StepExecutionResult:
     changed: bool
     verification: tuple[dict[str, object], ...] = ()
     error: str | None = None
+    rollback_verified: bool | None = None
 
 
 @dataclass(frozen=True)
@@ -173,6 +247,11 @@ class RouteEdge:
     observed_contract: dict[str, object]
     repairable: bool
     evidence_refs: tuple[str, ...] = ()
+    relation_status: str = "insufficient_evidence"
+
+    def __post_init__(self) -> None:
+        if self.relation_status not in RELATION_STATUSES:
+            raise ValueError(f"unsupported relation status: {self.relation_status}")
 
 
 @dataclass(frozen=True)
@@ -218,7 +297,7 @@ class RouteGraph:
 class ValidationObligation:
     obligation_id: str
     issue_id: str
-    candidate_atoms: tuple[str, ...]
+    candidate_atoms: tuple[DefectAtom, ...]
     repairable: bool
 
 
@@ -241,8 +320,8 @@ class RepairCostModel:
     costs: Mapping[str, float] = dataclass_field(default_factory=dict)
     default_cost: float = 1.0
 
-    def cost(self, atom: str) -> float:
-        value = float(self.costs.get(atom, self.default_cost))
+    def cost(self, atom: DefectAtom) -> float:
+        value = float(self.costs.get(atom.key, atom.repair_cost if atom.repair_cost is not None else self.default_cost))
         if value < 0:
             raise ValueError(f"repair cost cannot be negative: {atom}")
         return value
@@ -256,6 +335,7 @@ class RepairExecutionContext:
     handlers: Mapping[str, RepairHandler]
     approved_step_ids: frozenset[str] = frozenset()
     allow_external_changes: bool = False
+    satisfied_preconditions: frozenset[str] = frozenset()
 
 
 @dataclass(frozen=True)

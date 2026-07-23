@@ -8,12 +8,15 @@ from .causes import DiagnosticCauseAnalyzer
 from .compat import LEGACY_POLICY_WARNING, diagnose_h10_observation
 from .contract_registry import ContractCheck, ContractRegistry
 from .contracts import (
+    ApproximateCut,
     BatchDiagnosticReport,
     CauseStatement,
     Contract,
+    DefectAtom,
     DiagnosticCut,
     DiagnosticIssue,
     DiagnosticReport,
+    OptimalCutSet,
     RecertificationReport,
     RepairCostModel,
     RepairExecutionContext,
@@ -26,7 +29,12 @@ from .contracts import (
     ValidationObligation,
     ValidationResult,
 )
-from .minimal_cut import MinimalDiagnosticCutFinder, verify_cut
+from .minimal_cut import (
+    ApproximateMinimalCutSolver,
+    ExactMinimalCutSolver,
+    MinimalDiagnosticCutFinder,
+    verify_cut,
+)
 from .recertification import RouteRecertifier
 from .repair_executor import RepairExecutor
 from .repair_planner import ActionableRepairPlanner
@@ -38,11 +46,14 @@ from .validator import DiagnosticValidator
 
 __all__ = [
     "ActionableRepairPlanner",
+    "ApproximateCut",
+    "ApproximateMinimalCutSolver",
     "BatchDiagnosticReport",
     "CauseStatement",
     "Contract",
     "ContractCheck",
     "ContractRegistry",
+    "DefectAtom",
     "DiagnosticCauseAnalyzer",
     "DiagnosticCut",
     "DiagnosticIssue",
@@ -50,7 +61,9 @@ __all__ = [
     "DiagnosticReporter",
     "DiagnosticService",
     "DiagnosticValidator",
+    "ExactMinimalCutSolver",
     "MinimalDiagnosticCutFinder",
+    "OptimalCutSet",
     "LEGACY_POLICY_WARNING",
     "RecertificationReport",
     "RepairCostModel",

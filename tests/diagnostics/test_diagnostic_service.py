@@ -47,7 +47,7 @@ def test_explicit_handler_is_recertified(invalid_route: dict) -> None:
     def restore(graph: RouteGraph, step) -> RouteGraph:
         nodes = []
         for node in graph.nodes:
-            if node.node_id == step.target:
+            if node.node_id == step.target.subject_id:
                 nodes.append(replace(node, observed_attributes=dict(node.registered_attributes)))
             else:
                 nodes.append(node)
@@ -59,7 +59,7 @@ def test_explicit_handler_is_recertified(invalid_route: dict) -> None:
     report = FuzzyXAI().diagnose(route=invalid_route, repair_mode="execute", repair_context=context)
     assert report.recertification is not None
     assert report.recertification.route_valid_after
-    assert report.recertification.status == "complete_recovery"
+    assert report.recertification.status == "full_success"
 
 
 def test_reports_are_byte_deterministic(invalid_route: dict) -> None:

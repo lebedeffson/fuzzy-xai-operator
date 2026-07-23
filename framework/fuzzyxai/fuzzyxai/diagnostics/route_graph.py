@@ -74,9 +74,13 @@ def _node_from_operator(node: OperatorNode) -> RouteNode:
 
 def _edge_from_operator(edge: OperatorEdge) -> RouteEdge:
     values = dict(edge.passed_values)
-    relation = str(values.pop("relation", "transforms"))
-    if relation not in RELATIONS:
-        relation = "transforms"
+    raw_relation = values.pop("relation", None)
+    if raw_relation is None:
+        relation = "unknown_relation"
+        relation_status = "insufficient_evidence"
+    else:
+        relation = str(raw_relation)
+        relation_status = "known_valid" if relation in RELATIONS else "unsupported_relation"
     return RouteEdge(
         edge_id=edge.edge_id,
         source=edge.source_node_id,
@@ -87,6 +91,7 @@ def _edge_from_operator(edge: OperatorEdge) -> RouteEdge:
         observed_contract=dict(values.pop("observed_contract", values)),
         repairable=bool(values.pop("repairable", True)),
         evidence_refs=tuple(values.pop("evidence_refs", ())),
+        relation_status=relation_status,
     )
 
 
@@ -114,21 +119,6 @@ class RouteGraphBuilder:
     def _from_operator_route(self, route: OperatorRoute) -> RouteGraph:
         nodes = tuple(_node_from_operator(node) for node in route.nodes)
         edges = tuple(_edge_from_operator(edge) for edge in route.edges)
-        if not edges and len(nodes) > 1:
-            edges = tuple(
-                RouteEdge(
-                    edge_id=f"edge:{left.node_id}->{right.node_id}",
-                    source=left.node_id,
-                    target=right.node_id,
-                    relation="transforms",
-                    mandatory=True,
-                    registered_contract={"compatible": True},
-                    observed_contract={"compatible": True},
-                    repairable=True,
-                    evidence_refs=tuple(dict.fromkeys((*left.evidence_refs, *right.evidence_refs))),
-                )
-                for left, right in zip(nodes, nodes[1:])
-            )
         contracts = self._contracts_from_nodes_and_edges(nodes, edges)
         return RouteGraph(
             route_id=route.route_id or route.scenario_id,
@@ -175,6 +165,7 @@ class RouteGraphBuilder:
                 registered_contract={"compatible": True},
                 observed_contract={"compatible": True},
                 repairable=True,
+                relation_status="known_valid",
             )
             for source, target in dict.fromkeys(edge_pairs)
         )
@@ -236,7 +227,18 @@ class RouteGraphBuilder:
         data = _mapping(value)
         source = str(data.get("source") or data.get("source_node_id"))
         target = str(data.get("target") or data.get("target_node_id"))
-        relation = str(data.get("relation", "transforms"))
+        raw_relation = data.get("relation")
+        if raw_relation is None:
+            relation = "unknown_relation"
+            relation_status = "insufficient_evidence"
+        else:
+            relation = str(raw_relation)
+            relation_status = str(
+                data.get(
+                    "relation_status",
+                    "known_valid" if relation in RELATIONS else "unsupported_relation",
+                )
+            )
         return RouteEdge(
             edge_id=str(data.get("edge_id") or f"edge:{source}->{target}"),
             source=source,
@@ -247,6 +249,7 @@ class RouteGraphBuilder:
             observed_contract=dict(data.get("observed_contract", {})),
             repairable=bool(data.get("repairable", True)),
             evidence_refs=tuple(str(item) for item in data.get("evidence_refs", ())),
+            relation_status=relation_status,
         )
 
     @staticmethod
@@ -302,6 +305,19 @@ class RouteGraphBuilder:
                     )
                 )
         for edge in edges:
+            contracts.append(
+                Contract(
+                    contract_id=f"edge:{edge.edge_id}:relation",
+                    kind="relation_known",
+                    subject_id=edge.edge_id,
+                    field="relation",
+                    expected="known_valid",
+                    category="provenance",
+                    repairable=edge.repairable,
+                    evidence_refs=edge.evidence_refs,
+                    source_nodes=(edge.source, edge.target),
+                )
+            )
             if edge.mandatory:
                 contracts.append(
                     Contract(

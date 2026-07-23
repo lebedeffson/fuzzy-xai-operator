@@ -166,12 +166,12 @@ def test_recertifier_distinguishes_no_change_partial_and_degraded(invalid_route:
         plan,
         (StepExecutionResult(plan.steps[0].step_id, "completed", True),),
     )
-    assert partial.status == "partial_recovery"
+    assert partial.status == "partial_success"
 
     new_contract = replace(graph.contracts[0], contract_id="new", kind="equals", field="missing", expected="x")
     degraded_graph = replace(graph, contracts=(*graph.contracts, new_contract))
     degraded = RouteRecertifier().recertify(graph, degraded_graph, plan, ())
-    assert degraded.status == "degraded"
+    assert degraded.status == "worsened"
 
 
 def test_repair_registry_rejects_duplicates_and_missing_provider() -> None:

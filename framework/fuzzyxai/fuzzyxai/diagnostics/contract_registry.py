@@ -32,6 +32,16 @@ def _edge_present(contract: Contract, subject: RouteNode | RouteEdge | None, _: 
     return ContractCheck(subject is not None, False, subject is not None, "обязательное ребро присутствует")
 
 
+def _relation_known(contract: Contract, subject: RouteNode | RouteEdge | None, _: RouteGraph) -> ContractCheck:
+    if not isinstance(subject, RouteEdge):
+        return ContractCheck(False, True, None, "ребро отсутствует")
+    if subject.relation_status in {"insufficient_evidence", "unknown_relation"}:
+        return ContractCheck(False, True, subject.relation_status, "тип отношения не подтвержден")
+    if subject.relation_status in {"known_invalid", "unsupported_relation"}:
+        return ContractCheck(False, False, subject.relation_status, "отношение несовместимо с реестром")
+    return ContractCheck(True, False, subject.relation_status, "отношение зарегистрировано")
+
+
 def _required_attribute(contract: Contract, subject: RouteNode | RouteEdge | None, _: RouteGraph) -> ContractCheck:
     attributes = _attributes(subject)
     actual = attributes.get(str(contract.field))
@@ -88,6 +98,7 @@ class ContractRegistry:
             {
                 "node_present": _node_present,
                 "edge_present": _edge_present,
+                "relation_known": _relation_known,
                 "required_attribute": _required_attribute,
                 "equals": _equals,
                 "max_value": _maximum,

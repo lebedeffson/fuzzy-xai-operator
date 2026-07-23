@@ -1,15 +1,32 @@
 from __future__ import annotations
 
-from math import isclose
 from time import perf_counter
 
-from .contracts import DiagnosticCut, RepairCostModel, RouteGraph, ValidationObligation, ValidationResult
+from .approximate_solver import ApproximateMinimalCutSolver
+from .contracts import (
+    DefectAtom,
+    DiagnosticCut,
+    RepairCostModel,
+    RouteGraph,
+    ValidationObligation,
+    ValidationResult,
+)
+from .cut_verification import covered_obligations, verify_cut
+from .exact_solver import ExactMinimalCutSolver
 
 
 class MinimalDiagnosticCutFinder:
-    def __init__(self, *, exact_atom_limit: int = 28, equivalent_limit: int = 256) -> None:
+    def __init__(
+        self,
+        *,
+        exact_atom_limit: int = 32,
+        exact_complexity_limit: int = 4096,
+        equivalent_limit: int = 512,
+    ) -> None:
         self.exact_atom_limit = exact_atom_limit
-        self.equivalent_limit = equivalent_limit
+        self.exact_complexity_limit = exact_complexity_limit
+        self.exact_solver = ExactMinimalCutSolver(equivalent_limit=equivalent_limit)
+        self.approximate_solver = ApproximateMinimalCutSolver()
 
     def find(
         self,
@@ -17,14 +34,37 @@ class MinimalDiagnosticCutFinder:
         validation: ValidationResult,
         costs: RepairCostModel | None = None,
     ) -> DiagnosticCut:
-        del graph
         started = perf_counter()
         cost_model = costs or RepairCostModel()
-        repairable = tuple(item for item in validation.obligations if item.repairable and item.candidate_atoms)
-        impossible = tuple(item.obligation_id for item in validation.obligations if not item.candidate_atoms)
-        atoms = tuple(sorted({atom for item in repairable for atom in item.candidate_atoms}))
+        repairable = tuple(
+            item
+            for item in validation.obligations
+            if item.repairable and item.candidate_atoms
+        )
+        atoms = tuple(
+            sorted(
+                {atom for item in repairable for atom in item.candidate_atoms},
+                key=lambda atom: atom.key,
+            )
+        )
         if not validation.obligations:
-            return DiagnosticCut((), (), 0.0, True, "none", (), (), ((),), (perf_counter() - started) * 1000)
+            return DiagnosticCut(
+                (),
+                (),
+                0.0,
+                True,
+                "none",
+                (),
+                (),
+                ((),),
+                (perf_counter() - started) * 1000,
+                True,
+                False,
+                1,
+                True,
+                0.0,
+                0.0,
+            )
         if not atoms:
             return DiagnosticCut(
                 (),
@@ -37,132 +77,86 @@ class MinimalDiagnosticCutFinder:
                 (),
                 (perf_counter() - started) * 1000,
             )
-        if len(atoms) <= self.exact_atom_limit:
-            solutions, best_cost = self._exact(repairable, cost_model)
-            selected = solutions[0]
-            optimal = True
-            solver = "branch_and_bound"
+        complexity = self._complexity(repairable, atoms)
+        if len(atoms) <= self.exact_atom_limit and complexity <= self.exact_complexity_limit:
+            solution = self.exact_solver.solve(graph, repairable, atoms, cost_model)
+            selected = solution.cuts[0]
+            equivalent = solution.cuts
+            total_cost = solution.optimal_cost
+            solver = "exact_branch_and_bound"
+            optimal = solution.optimality_proven
+            enumeration_complete = solution.enumeration_complete
+            truncated = solution.truncated
+            lower_bound_count = solution.lower_bound_count
+            optimality_proven = solution.optimality_proven
+            lower_bound = total_cost
+            optimality_gap = 0.0
         else:
-            selected = self._greedy(repairable, cost_model)
-            solutions = (selected,)
-            best_cost = sum(cost_model.cost(atom) for atom in selected)
+            solution = self.approximate_solver.solve(graph, repairable, atoms, cost_model)
+            selected = solution.cut
+            equivalent = ()
+            total_cost = solution.cost
+            solver = "approximate_multistart_weighted_cover"
             optimal = False
-            solver = "greedy_weighted_hitting_set"
-        covered = self._covered(selected, repairable)
+            enumeration_complete = False
+            truncated = False
+            lower_bound_count = 0
+            optimality_proven = False
+            lower_bound = solution.lower_bound
+            optimality_gap = solution.optimality_gap
+        covered = covered_obligations(selected, repairable)
         uncovered = tuple(
-            item.obligation_id for item in validation.obligations if item.obligation_id not in covered
+            sorted(
+                item.obligation_id
+                for item in validation.obligations
+                if item.obligation_id not in covered
+            )
         )
-        uncovered = tuple(dict.fromkeys((*uncovered, *impossible)))
         cut = DiagnosticCut(
             defect_atoms=selected,
-            affected_nodes=tuple(sorted({self._atom_subject(atom) for atom in selected})),
-            total_cost=float(best_cost),
+            affected_nodes=tuple(
+                sorted(
+                    {
+                        atom.subject_id
+                        for atom in selected
+                        if atom.subject_kind == "node"
+                    }
+                )
+            ),
+            total_cost=float(total_cost),
             optimal=optimal and not uncovered,
             solver=solver,
             covered_obligations=tuple(sorted(covered)),
-            uncovered_obligations=tuple(sorted(uncovered)),
-            equivalent_optimal_cuts=solutions if optimal else (),
+            uncovered_obligations=uncovered,
+            equivalent_optimal_cuts=equivalent,
             runtime_ms=(perf_counter() - started) * 1000,
+            enumeration_complete=enumeration_complete,
+            truncated=truncated,
+            lower_bound_count=lower_bound_count,
+            optimality_proven=optimality_proven,
+            lower_bound=lower_bound,
+            optimality_gap=optimality_gap,
         )
-        verify_cut(cut, validation.obligations, cost_model)
+        verify_cut(graph, cut, validation.obligations, cost_model)
         return cut
 
-    def _exact(
-        self,
-        obligations: tuple[ValidationObligation, ...],
-        costs: RepairCostModel,
-    ) -> tuple[tuple[tuple[str, ...], ...], float]:
-        best_cost = float("inf")
-        solutions: set[tuple[str, ...]] = set()
-
-        def search(remaining: tuple[ValidationObligation, ...], chosen: frozenset[str], current: float) -> None:
-            nonlocal best_cost
-            if current > best_cost or (isclose(current, best_cost) and len(solutions) >= self.equivalent_limit):
-                return
-            if not remaining:
-                candidate = tuple(sorted(chosen))
-                if current < best_cost and not isclose(current, best_cost):
-                    best_cost = current
-                    solutions.clear()
-                if isclose(current, best_cost):
-                    solutions.add(candidate)
-                return
-            obligation = min(remaining, key=lambda item: (len(item.candidate_atoms), item.obligation_id))
-            for atom in sorted(obligation.candidate_atoms, key=lambda value: (costs.cost(value), value)):
-                added = 0.0 if atom in chosen else costs.cost(atom)
-                if current + added > best_cost:
-                    continue
-                next_remaining = tuple(item for item in remaining if atom not in item.candidate_atoms)
-                search(next_remaining, chosen | {atom}, current + added)
-
-        search(obligations, frozenset(), 0.0)
-        if not solutions:
-            raise ValueError("no repairable diagnostic cut covers every repairable obligation")
-        ordered = tuple(sorted(solutions, key=lambda value: (len(value), value)))
-        return ordered, best_cost
-
     @staticmethod
-    def _greedy(
+    def _complexity(
         obligations: tuple[ValidationObligation, ...],
-        costs: RepairCostModel,
-    ) -> tuple[str, ...]:
-        remaining = list(obligations)
-        chosen: list[str] = []
-        while remaining:
-            atoms = {atom for item in remaining for atom in item.candidate_atoms}
-            if not atoms:
+        atoms: tuple[DefectAtom, ...],
+    ) -> int:
+        branching = 1
+        for obligation in obligations:
+            branching *= max(1, len(obligation.candidate_atoms))
+            if branching > 1_000_000:
                 break
-            selected = min(
-                atoms,
-                key=lambda atom: (
-                    costs.cost(atom) / sum(atom in item.candidate_atoms for item in remaining),
-                    atom,
-                ),
-            )
-            chosen.append(selected)
-            remaining = [item for item in remaining if selected not in item.candidate_atoms]
-        return tuple(sorted(chosen))
-
-    @staticmethod
-    def _covered(
-        selected: tuple[str, ...],
-        obligations: tuple[ValidationObligation, ...],
-    ) -> set[str]:
-        chosen = set(selected)
-        return {
-            item.obligation_id
-            for item in obligations
-            if chosen.intersection(item.candidate_atoms)
-        }
-
-    @staticmethod
-    def _atom_subject(atom: str) -> str:
-        parts = atom.split("/")
-        location = next((part for part in parts if part.startswith(("node:", "edge:"))), atom)
-        return location.split(":", 1)[1] if ":" in location else location
+        density = sum(len(item.candidate_atoms) for item in obligations)
+        return min(branching, 1_000_000) + density * max(1, len(atoms))
 
 
-def verify_cut(
-    cut: DiagnosticCut,
-    obligations: tuple[ValidationObligation, ...],
-    costs: RepairCostModel | None = None,
-) -> None:
-    cost_model = costs or RepairCostModel()
-    selected = set(cut.defect_atoms)
-    expected_covered = {
-        item.obligation_id
-        for item in obligations
-        if selected.intersection(item.candidate_atoms)
-    }
-    expected_uncovered = {item.obligation_id for item in obligations} - expected_covered
-    if expected_covered != set(cut.covered_obligations):
-        raise ValueError("diagnostic cut covered-obligation list is inconsistent")
-    if expected_uncovered != set(cut.uncovered_obligations):
-        raise ValueError("diagnostic cut leaves an unreported obligation")
-    expected_cost = sum(cost_model.cost(atom) for atom in cut.defect_atoms)
-    if not isclose(expected_cost, cut.total_cost):
-        raise ValueError("diagnostic cut cost is inconsistent")
-    if cut.optimal and cut.uncovered_obligations:
-        raise ValueError("an incomplete diagnostic cut cannot be marked optimal")
-    if cut.optimal and cut.defect_atoms not in cut.equivalent_optimal_cuts:
-        raise ValueError("selected exact cut is absent from equivalent optimal cuts")
+__all__ = [
+    "ApproximateMinimalCutSolver",
+    "ExactMinimalCutSolver",
+    "MinimalDiagnosticCutFinder",
+    "verify_cut",
+]

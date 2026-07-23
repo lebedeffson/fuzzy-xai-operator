@@ -3,7 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Protocol
 
-from .contracts import DiagnosticIssue, RepairStep, RouteGraph
+from .contracts import DefectAtom, DiagnosticIssue, RepairStep, RouteGraph
 
 
 @dataclass(frozen=True)
@@ -53,11 +53,19 @@ class ContractRepairProvider:
     def propose(self, graph: RouteGraph, issue: DiagnosticIssue) -> tuple[RepairStep, ...]:
         del graph
         targets = issue.source_nodes or issue.affected_edges or issue.affected_nodes
+        edge_targets = set(issue.affected_edges)
         return tuple(
             RepairStep(
                 step_id=f"step:{issue.issue_id}:{index}",
                 title=self.title,
-                target=target,
+                target=DefectAtom(
+                    subject_kind="edge" if target in edge_targets else "node",
+                    subject_id=target.split(":", 1)[1] if target.startswith(("node:", "edge:")) else target,
+                    field=issue.affected_fields[0] if issue.affected_fields else None,
+                    violation_code=issue.code,
+                    repairable=issue.repairable,
+                    repair_cost=self.cost,
+                ),
                 provider_id=self.provider_id,
                 operation=self.operation,
                 parameters={
@@ -83,14 +91,42 @@ class ContractRepairProvider:
         )
 
     def verify(self, before: RouteGraph, after: RouteGraph, step: RepairStep) -> StepVerification:
+        from .validator import DiagnosticValidator
+
+        before_result = DiagnosticValidator().validate(before)
+        after_result = DiagnosticValidator().validate(after)
+        before_issues = {issue.issue_id for issue in before_result.issues}
+        after_issues = {issue.issue_id for issue in after_result.issues}
+        expected_contracts = {
+            str(contract_id)
+            for contract_id in (
+                step.parameters.get("contract_id"),
+                *step.parameters.get("contract_ids", ()),
+            )
+            if contract_id
+        }
+        expected_issue_ids = {f"issue:{contract_id}" for contract_id in expected_contracts}
+        target_resolved = not expected_issue_ids.intersection(after_issues)
+        no_new_critical = not (after_issues - before_issues)
         changed = before.trace_sha256 != after.trace_sha256
+        passed = changed and target_resolved and no_new_critical
         return StepVerification(
-            passed=changed,
+            passed=passed,
             checks=(
                 {
                     "check": "route_changed",
                     "passed": changed,
                     "step_id": step.step_id,
+                },
+                {
+                    "check": "expected_contracts_satisfied",
+                    "passed": target_resolved,
+                    "contracts": tuple(sorted(expected_contracts)),
+                },
+                {
+                    "check": "no_new_critical_violations",
+                    "passed": no_new_critical,
+                    "new_issues": tuple(sorted(after_issues - before_issues)),
                 },
             ),
         )
