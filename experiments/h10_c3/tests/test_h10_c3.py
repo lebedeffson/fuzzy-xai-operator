@@ -26,6 +26,19 @@ def test_composite_share_is_at_least_seventy_percent() -> None:
     assert composite >= 0.70
 
 
+def test_nonrepairable_rate_is_stable_across_split_seeds() -> None:
+    counts = []
+    for seed in (231004, 231005):
+        cases = generate_cases("development", 120, seed)
+        counts.append(
+            (
+                sum(not item.repairable for item in cases),
+                sum(item.stratum == "S5" for item in cases),
+            )
+        )
+    assert counts[0] == counts[1]
+
+
 def test_oracles_agree_and_multiple_optima_are_preserved() -> None:
     case = _case("S4")
     assert oracle_a(case) == oracle_b(case)
@@ -90,4 +103,3 @@ def test_baseline_module_has_no_fuzzyxai_import() -> None:
 def test_sealed_scoring_is_fail_closed() -> None:
     with pytest.raises(PermissionError, match="no sealed set"):
         score_sealed()
-

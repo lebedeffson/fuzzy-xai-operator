@@ -165,6 +165,7 @@ def generate_cases(split: str, cases_per_pipeline: int, seed: int) -> list[Case]
     cases: list[Case] = []
     for pipeline_index, (pipeline, modality) in enumerate(PIPELINES):
         offset = rng.randrange(len(STRATUM_CYCLE))
+        s5_seen = 0
         for local_index in range(cases_per_pipeline):
             case_index = pipeline_index * cases_per_pipeline + local_index
             case_id = f"h10-c3:{split}:{pipeline}:{case_index:05d}"
@@ -178,7 +179,9 @@ def generate_cases(split: str, cases_per_pipeline: int, seed: int) -> list[Case]
                 deep_dependencies=stratum == "S5"
                 or (stratum == "S3" and local_index % 2 == 0),
             )
-            repairable = not (stratum == "S5" and local_index % 5 == 0)
+            repairable = not (stratum == "S5" and s5_seen % 5 == 0)
+            if stratum == "S5":
+                s5_seen += 1
             if not repairable:
                 candidates = tuple(
                     replace(candidate, repairable=False, executable=False)

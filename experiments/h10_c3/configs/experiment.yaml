@@ -1,5 +1,7 @@
 study_id: FXAI-H10-C3-DIAGNOSTIC-POSITIVE-EVIDENCE
 version: 1.4.0a2
+formative_iteration: R2
+prior_iteration_status: R1_INVALID_STRATUM_INTERACTION
 seed: 231003
 pipelines:
   - {id: tabular-credit, modality: tabular}
@@ -36,4 +38,3 @@ sealed:
   generated: false
   opening_count: 0
   ordinary_reproduction_may_score: false
-
