@@ -167,6 +167,22 @@ def test_cases_start_valid_then_become_invalid() -> None:
     assert not validator.validate(case.mutated_graph).valid
 
 
+def test_sealed_case_writer_does_not_store_private_truth(
+    tmp_path: Path,
+) -> None:
+    from h10_c3_r4.generator import write_cases
+
+    cases = build_cases((_template("sealed"),))
+    manifest = write_cases(
+        tmp_path,
+        "sealed",
+        cases,
+        include_private=False,
+    )
+    assert not manifest["private_mutation_log_stored"]
+    assert not (tmp_path / "private").exists()
+
+
 def test_real_executor_changes_graph_and_recertifies() -> None:
     case = build_cases((_template(),))[0]
     result = run_full_h10(case.mutated_graph)

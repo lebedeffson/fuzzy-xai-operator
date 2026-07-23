@@ -26,6 +26,9 @@ statistics:
   power_lower_bound_min: 0.80
   intracluster_correlation: 0.70
   holm_family_size: 3
+seeds:
+  bootstrap: 730000
+  power: 740000
 human_adjudication: NOT_REQUIRED_FOR_ALGORITHMIC_SCOPE
 human_factors_validation: NOT_CONDUCTED
 sealed:

@@ -282,11 +282,12 @@ def write_cases(
     root: Path,
     split: str,
     cases: tuple[R4Case, ...],
+    *,
+    include_private: bool = True,
 ) -> dict[str, object]:
     public = root / "data" / split / "cases.jsonl"
     private = root / "private" / split / "mutation_log.jsonl"
     public.parent.mkdir(parents=True, exist_ok=True)
-    private.parent.mkdir(parents=True, exist_ok=True)
     public.write_text(
         "".join(
             json.dumps(case.public_view(), sort_keys=True) + "\n"
@@ -294,19 +295,25 @@ def write_cases(
         ),
         encoding="utf-8",
     )
-    private.write_text(
-        "".join(
-            json.dumps(case.private_record(), sort_keys=True) + "\n"
-            for case in cases
-        ),
-        encoding="utf-8",
-    )
+    if include_private:
+        private.parent.mkdir(parents=True, exist_ok=True)
+        private.write_text(
+            "".join(
+                json.dumps(case.private_record(), sort_keys=True) + "\n"
+                for case in cases
+            ),
+            encoding="utf-8",
+        )
     manifest = {
         "split": split,
         "case_count": len(cases),
         "template_count": len({case.template_hash for case in cases}),
         "pipeline_families": len({case.pipeline_family for case in cases}),
         "private_mutation_log_exposed_to_methods": False,
+        "private_mutation_log_stored": include_private,
+        "template_hashes": sorted(
+            {case.template_hash for case in cases}
+        ),
         "case_hashes": [
             sha256(
                 json.dumps(

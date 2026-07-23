@@ -2,9 +2,12 @@ from __future__ import annotations
 
 import csv
 import datetime as dt
+import importlib.metadata
 import json
 import os
+import platform
 import subprocess
+import sys
 from hashlib import sha256
 from pathlib import Path
 
@@ -364,7 +367,9 @@ def analyze(
             repetitions=int(
                 cfg["statistics"]["bootstrap_repetitions"]
             ),
-            seed=730_000 + (1 if claim.endswith("a") else 2),
+            seed=int(cfg["seeds"]["bootstrap"]) + (
+                1 if claim.endswith("a") else 2
+            ),
         )
         result.update(
             {
@@ -391,7 +396,7 @@ def analyze(
                         "bootstrap_repetitions"
                     ]
                 ),
-                seed=730_003,
+                seed=int(cfg["seeds"]["bootstrap"]) + 3,
             )
             result.update(
                 {
@@ -448,6 +453,9 @@ def analyze(
 def _tracked_method_files() -> list[Path]:
     return [
         CONFIG_PATH,
+        REPO_ROOT / "pyproject.toml",
+        REPO_ROOT / "requirements.lock",
+        REPO_ROOT / "framework" / "fuzzyxai" / "pyproject.toml",
         *sorted(
             (
                 EXPERIMENT_ROOT / "src" / "h10_c3_r4"
@@ -571,7 +579,7 @@ def power() -> Path:
         simulations=int(
             cfg["statistics"]["power_simulations"]
         ),
-        seed=740_000,
+        seed=int(cfg["seeds"]["power"]),
         margins={
             claim: float(value)
             for claim, value in cfg["practical_margins"].items()
@@ -585,11 +593,70 @@ def power() -> Path:
     return output
 
 
+def _environment_manifest() -> Path:
+    packages = {}
+    for name in ("pytest", "pyyaml", "ruff"):
+        try:
+            packages[name] = importlib.metadata.version(name)
+        except importlib.metadata.PackageNotFoundError:
+            packages[name] = "not_installed"
+    output = ARTIFACT_ROOT / "lock" / "environment_manifest.json"
+    write_json(
+        output,
+        {
+            "python": sys.version,
+            "implementation": platform.python_implementation(),
+            "platform": platform.platform(),
+            "packages": packages,
+        },
+    )
+    return output
+
+
+def _independence_audit() -> Path:
+    gold = (
+        REPO_ROOT / "gold_oracle" / "h10_c3_r4_oracle.py"
+    ).read_text(encoding="utf-8")
+    methods = (
+        EXPERIMENT_ROOT / "src" / "h10_c3_r4" / "methods.py"
+    ).read_text(encoding="utf-8")
+    forbidden_gold = (
+        "fuzzyxai",
+        "MinimalDiagnosticCutFinder",
+        "ActionableRepairPlanner",
+    )
+    forbidden_baseline = (
+        "gold_oracle",
+        "mutation_log",
+        "reverse_candidate",
+    )
+    checks = {
+        "gold_independent": not any(
+            token in gold for token in forbidden_gold
+        ),
+        "baselines_do_not_read_gold": not any(
+            token in methods for token in forbidden_baseline
+        ),
+        "seven_registered_baselines": len(BASELINES) == 7,
+    }
+    output = ARTIFACT_ROOT / "audit" / "independence.json"
+    write_json(
+        output,
+        {
+            "checks": checks,
+            "status": "PASS" if all(checks.values()) else "FAIL",
+        },
+    )
+    return output
+
+
 def _build_protocol_lock() -> Path:
     power_path = ARTIFACT_ROOT / "power" / "power.json"
     selected = read_json(power_path)["selected_designs"]
     if not selected or any(item is None for item in selected):
         raise RuntimeError("power analysis has no passing R4 design")
+    environment = _environment_manifest()
+    independence = _independence_audit()
     tracked = _tracked_method_files()
     tracked.extend(
         (
@@ -597,6 +664,8 @@ def _build_protocol_lock() -> Path:
             ARTIFACT_ROOT / "lock" / "method_lock.json",
             ARTIFACT_ROOT / "template_audit.json",
             power_path,
+            environment,
+            independence,
         )
     )
     lock = {
@@ -614,6 +683,34 @@ def _build_protocol_lock() -> Path:
         "metrics": config()["primary_metrics"],
         "margins": config()["practical_margins"],
         "statistics": config()["statistics"],
+        "seeds": config()["seeds"],
+        "sealed_design": {
+            "pipeline_families": 6,
+            "templates_per_family": max(
+                int(item["templates_per_family"])
+                for item in selected
+            ),
+            "cases_per_template": max(
+                int(item["cases_per_template"])
+                for item in selected
+            ),
+            "stratum_allocation": {
+                stratum: max(
+                    int(item["stratum_allocation"][stratum])
+                    for item in selected
+                )
+                for stratum in ("S2", "S3", "S4", "S5")
+            },
+        },
+        "report_structure": [
+            "template_audit.json",
+            "development_statistics.json",
+            "protocol_validation_statistics.json",
+            "stability.json",
+            "power.json",
+            "preconfirmatory_gate.json",
+            "sealed_status.json",
+        ],
         "exclusions": [
             "UNCERTIFIED_SOLVER_DISAGREEMENT",
             "INSUFFICIENT_FORMAL_SPECIFICATION",
@@ -629,6 +726,7 @@ def _build_protocol_lock() -> Path:
 
 def gate() -> Path:
     verify_method_lock()
+    independence_path = _independence_audit()
     template_report = read_json(
         ARTIFACT_ROOT / "template_audit.json"
     )
@@ -661,6 +759,21 @@ def gate() -> Path:
     cfg = config()
     checks = {
         "template_independence": template_report["status"] == "PASS",
+        "oracle_and_baseline_independence": (
+            read_json(independence_path)["status"] == "PASS"
+        ),
+        "frozen_predecessor_unchanged": (
+            subprocess.check_output(
+                [
+                    "git",
+                    "rev-parse",
+                    "fix/h10-c3-cost-stability-v23.1",
+                ],
+                cwd=REPO_ROOT,
+                text=True,
+            ).strip()
+            == config()["frozen_predecessor"]
+        ),
         "development": all(
             item["status"] == "development_pass"
             for item in development
@@ -791,12 +904,48 @@ def generate_sealed() -> Path:
     if sealed_root.exists():
         raise FileExistsError("sealed R4 set already exists")
     cases = _sealed_cases(lock)
-    manifest = write_cases(sealed_root, "sealed", cases)
+    manifest = write_cases(
+        sealed_root,
+        "sealed",
+        cases,
+        include_private=False,
+    )
+    development_manifest = read_json(
+        ARTIFACT_ROOT / "data" / "development" / "manifest.json"
+    )
+    validation_manifest = read_json(
+        ARTIFACT_ROOT
+        / "data"
+        / "protocol_validation"
+        / "manifest.json"
+    )
+    overlap_checks = {
+        "development_case_hash_overlap": bool(
+            set(manifest["case_hashes"])
+            & set(development_manifest["case_hashes"])
+        ),
+        "protocol_validation_case_hash_overlap": bool(
+            set(manifest["case_hashes"])
+            & set(validation_manifest["case_hashes"])
+        ),
+        "development_template_hash_overlap": bool(
+            set(manifest["template_hashes"])
+            & set(development_manifest["template_hashes"])
+        ),
+        "protocol_validation_template_hash_overlap": bool(
+            set(manifest["template_hashes"])
+            & set(validation_manifest["template_hashes"])
+        ),
+    }
+    if any(overlap_checks.values()):
+        raise RuntimeError(f"sealed overlap detected: {overlap_checks}")
     status = {
         "status": "READY_FOR_SEALED_SCORING",
         "sealed_created": True,
         "sealed_opening_count": 0,
         "manifest": manifest,
+        "overlap_checks": overlap_checks,
+        "private_mutation_log_stored": False,
         "protocol_lock_sha256": file_sha256(
             ARTIFACT_ROOT / "lock" / "protocol_lock.json"
         ),
