@@ -1,0 +1,9 @@
+{
+  "parent_result": "H10-C3-R4",
+  "source_commit": "5da8d1beec7681f6b18794cf4001decf4ceb3ea2",
+  "source_tag": "h10-c3-r4-v23.3-postopen",
+  "file_count": 54,
+  "inventory_sha256": "1433afb0d11790652c3e1cfaeb9bc9d251e914a60152b3e6f0ae335fd71ec3cf",
+  "verification_command": "sha256sum -c protocol/h10_c4/H10_C3_BASELINE_SHA256SUMS",
+  "status": "BASELINE_LOCKED_BEFORE_H10_C4_EXECUTION"
+}
