@@ -1,0 +1,12 @@
+{
+  "attempt_id": "H10-C4-RUN-ATTEMPT-1",
+  "implementation_commit": "0086a6764dbaaa75e64540d941be14b5364e3fe1",
+  "artifact_tree_sha256": "cea2cfaff7640421ce38cb3529df321641d88b5cf11e1704c43569ed310fe9d1",
+  "artifact_file_count": 15,
+  "status": "INVALIDATED_IMPLEMENTATION_MISMATCH",
+  "reason": "The paired bootstrap used deterministic but different seed offsets for the three registered contrasts. The locked protocol requires one common bootstrap index stream for all strategies.",
+  "criteria_changed": false,
+  "data_design_changed": false,
+  "h10_c3_modified": false,
+  "eligible_for_claims": false
+}

@@ -77,6 +77,7 @@ FAMILY_SPECS: Mapping[str, tuple[tuple[str, ...], tuple[tuple[str, str], ...]]] 
         (
             ("news_document", "tokenizer"),
             ("tokenizer", "news_model"),
+            ("tokenizer", "shap"),
             ("news_model", "shap"),
             ("news_model", "lime"),
             ("shap", "news_report"),
@@ -88,6 +89,8 @@ FAMILY_SPECS: Mapping[str, tuple[tuple[str, ...], tuple[tuple[str, str], ...]]] 
         (
             ("review_document", "dictionary"),
             ("dictionary", "sentiment_model"),
+            ("dictionary", "shap"),
+            ("dictionary", "lime"),
             ("sentiment_model", "shap"),
             ("sentiment_model", "lime"),
             ("shap", "review_report"),
@@ -99,6 +102,7 @@ FAMILY_SPECS: Mapping[str, tuple[tuple[str, ...], tuple[tuple[str, str], ...]]] 
         (
             ("image", "geometry_transform"),
             ("geometry_transform", "vision_model"),
+            ("image", "shap"),
             ("vision_model", "shap"),
             ("vision_model", "lime"),
             ("shap", "image_report"),
@@ -110,6 +114,7 @@ FAMILY_SPECS: Mapping[str, tuple[tuple[str, ...], tuple[tuple[str, str], ...]]] 
         (
             ("signal", "time_aligner"),
             ("time_aligner", "sequence_model"),
+            ("time_aligner", "shap"),
             ("sequence_model", "shap"),
             ("sequence_model", "lime"),
             ("shap", "signal_report"),
@@ -777,14 +782,14 @@ def _quantile(values: list[float], probability: float) -> float:
 def _paired_bootstrap(
     differences: list[float],
     *,
-    seed: int,
-) -> dict[str, float | int | list[float]]:
-    rng = random.Random(seed)
+    index_stream: tuple[tuple[int, ...], ...],
+    index_stream_sha256: str,
+) -> dict[str, object]:
     n = len(differences)
-    estimates = []
-    for _ in range(BOOTSTRAP_ITERATIONS):
-        indexes = [rng.randrange(n) for _ in range(n)]
-        estimates.append(sum(differences[index] for index in indexes) / n)
+    estimates = [
+        sum(differences[index] for index in indexes) / n
+        for indexes in index_stream
+    ]
     estimates.sort()
     lower = estimates[int(0.025 * BOOTSTRAP_ITERATIONS)]
     upper = estimates[min(BOOTSTRAP_ITERATIONS - 1, int(0.975 * BOOTSTRAP_ITERATIONS))]
@@ -803,6 +808,7 @@ def _paired_bootstrap(
         "ci_95": [lower, upper],
         "bootstrap_p_two_sided": p_value,
         "bootstrap_iterations": BOOTSTRAP_ITERATIONS,
+        "bootstrap_index_stream_sha256": index_stream_sha256,
     }
 
 
@@ -821,8 +827,19 @@ def analyze(
 ) -> tuple[list[dict[str, object]], list[dict[str, object]], dict[str, object]]:
     by_key = {(row.scenario_id, row.strategy): row for row in results}
     scenario_ids = sorted({row.scenario_id for row in results})
+    rng = random.Random(BOOTSTRAP_SEED)
+    index_stream = tuple(
+        tuple(rng.randrange(len(scenario_ids)) for _ in scenario_ids)
+        for _ in range(BOOTSTRAP_ITERATIONS)
+    )
+    stream_hasher = hashlib.sha256()
+    for indexes in index_stream:
+        stream_hasher.update(
+            b"".join(index.to_bytes(2, "little") for index in indexes)
+        )
+    index_stream_sha256 = stream_hasher.hexdigest()
     comparisons = []
-    for comparison_index, baseline in enumerate(("B_ALL", "B_FIRST", "B_GREEDY")):
+    for baseline in ("B_ALL", "B_FIRST", "B_GREEDY"):
         differences = [
             by_key[(scenario_id, "O_GLOBAL")].normalized_executable_cost
             - by_key[(scenario_id, baseline)].normalized_executable_cost
@@ -830,7 +847,8 @@ def analyze(
         ]
         summary = _paired_bootstrap(
             differences,
-            seed=BOOTSTRAP_SEED + comparison_index,
+            index_stream=index_stream,
+            index_stream_sha256=index_stream_sha256,
         )
         comparisons.append(
             {
@@ -962,7 +980,8 @@ def _write_csv(path: Path, rows: Iterable[Mapping[str, object]]) -> None:
 
 def _h10_c3_overlap(scenarios: tuple[H10C4Scenario, ...], root: Path) -> dict[str, object]:
     old_ids: set[str] = set()
-    old_hashes: set[str] = set()
+    old_state_hashes: set[str] = set()
+    old_seed_tokens: set[str] = set()
     for path in (
         root / "artifacts/h10_c3_r4/results/development.csv",
         root / "artifacts/h10_c3_r4/results/protocol_validation.csv",
@@ -971,20 +990,46 @@ def _h10_c3_overlap(scenarios: tuple[H10C4Scenario, ...], root: Path) -> dict[st
         with path.open(encoding="utf-8") as handle:
             for row in csv.DictReader(handle):
                 old_ids.add(row["case_id"])
-                old_hashes.add(row["template_hash"])
+                old_state_hashes.update(
+                    {
+                        row["before_trace_sha256"],
+                        row["after_trace_sha256"],
+                    }
+                )
+                old_seed_tokens.update(
+                    token for token in row["case_id"].split(":") if token.isdigit()
+                )
     new_ids = {scenario.scenario_id for scenario in scenarios}
-    new_hashes = {scenario.route_graph_hash for scenario in scenarios}
+    new_state_hashes = {
+        value
+        for scenario in scenarios
+        for value in (
+            scenario.source_snapshot_hash,
+            scenario.route_graph_hash,
+        )
+    }
+    new_seed_tokens = {str(scenario.seed) for scenario in scenarios}
     return {
         "h10_c3_case_id_count": len(old_ids),
-        "h10_c3_template_hash_count": len(old_hashes),
+        "h10_c3_serialized_state_hash_count": len(old_state_hashes),
         "h10_c4_case_id_count": len(new_ids),
-        "h10_c4_route_hash_count": len(new_hashes),
+        "h10_c4_serialized_state_hash_count": len(new_state_hashes),
         "case_id_intersection": sorted(old_ids & new_ids),
-        "serialized_state_hash_intersection": sorted(old_hashes & new_hashes),
-        "seed_namespace_intersection_possible": False,
+        "serialized_state_hash_intersection": sorted(
+            old_state_hashes & new_state_hashes
+        ),
+        "seed_token_intersection": sorted(old_seed_tokens & new_seed_tokens),
+        "seed_namespaces": {
+            "h10_c3": "H10-C3-R4 registered split namespaces",
+            "h10_c4": "H10-C4-HELDOUT-20260725",
+        },
         "status": (
             "PASS"
-            if not (old_ids & new_ids) and not (old_hashes & new_hashes)
+            if (
+                not (old_ids & new_ids)
+                and not (old_state_hashes & new_state_hashes)
+                and not (old_seed_tokens & new_seed_tokens)
+            )
             else "FAIL"
         ),
     }
