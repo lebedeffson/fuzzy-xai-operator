@@ -477,6 +477,54 @@ def calibrate_runtime(
     )
 
 
+def _development_action_registry_sha256(
+    development: tuple[H10C4Scenario, ...],
+) -> str:
+    return _canonical_hash(
+        [
+            asdict(action)
+            for scenario in development
+            for action in scenario.actions
+        ]
+    )
+
+
+def _load_or_create_calibration(
+    development: tuple[H10C4Scenario, ...],
+    path: Path,
+) -> CostCalibration:
+    registry_sha256 = _development_action_registry_sha256(development)
+    if path.exists():
+        payload = json.loads(path.read_text(encoding="utf-8"))
+        if payload["development_action_registry_sha256"] != registry_sha256:
+            raise AssertionError("development calibration action registry changed")
+        return CostCalibration(
+            runtime_ms_by_kind={
+                key: float(value)
+                for key, value in payload["runtime_ms_by_kind"].items()
+            },
+            runtime_scale_ms=float(payload["runtime_scale_ms"]),
+            fitted_split=str(payload["fitted_split"]),
+        )
+    calibration = calibrate_runtime(development)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(
+        json.dumps(
+            {
+                **asdict(calibration),
+                "development_action_registry_sha256": registry_sha256,
+                "held_out_used_for_calibration": False,
+                "status": "FROZEN_BEFORE_HELD_OUT_EXECUTION",
+            },
+            indent=2,
+            sort_keys=True,
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    return calibration
+
+
 class _OperationalRepairProvider:
     provider_id = "h10_c4.execute"
 
@@ -956,6 +1004,69 @@ def analyze(
     return comparisons, descriptive, status
 
 
+def _family_results(
+    results: tuple[PlanLevelResult, ...],
+) -> list[dict[str, object]]:
+    rows = []
+    by_key = {(row.scenario_id, row.strategy): row for row in results}
+    for family in sorted({row.pipeline_family for row in results}):
+        scenario_ids = sorted(
+            {
+                row.scenario_id
+                for row in results
+                if row.pipeline_family == family
+            }
+        )
+        for strategy in ("B_ALL", "B_FIRST", "B_GREEDY", "O_GLOBAL"):
+            selected = [by_key[(scenario_id, strategy)] for scenario_id in scenario_ids]
+            rows.append(
+                {
+                    "pipeline_family": family,
+                    "strategy": strategy,
+                    "scenario_count": len(selected),
+                    "repair_success_rate": sum(
+                        row.repair_success for row in selected
+                    )
+                    / len(selected),
+                    "mean_normalized_executable_cost": statistics.mean(
+                        row.normalized_executable_cost for row in selected
+                    ),
+                    "mean_repair_action_count": statistics.mean(
+                        row.repair_action_count for row in selected
+                    ),
+                    "mean_touched_component_count": statistics.mean(
+                        row.unique_touched_components for row in selected
+                    ),
+                    "mean_recertification_check_count": statistics.mean(
+                        row.recertification_check_count for row in selected
+                    ),
+                    "mean_execution_time_ms": statistics.mean(
+                        row.execution_time_ms for row in selected
+                    ),
+                }
+            )
+        for baseline in ("B_ALL", "B_FIRST", "B_GREEDY"):
+            differences = [
+                by_key[(scenario_id, "O_GLOBAL")].normalized_executable_cost
+                - by_key[(scenario_id, baseline)].normalized_executable_cost
+                for scenario_id in scenario_ids
+            ]
+            rows.append(
+                {
+                    "pipeline_family": family,
+                    "strategy": f"O_GLOBAL_vs_{baseline}",
+                    "scenario_count": len(differences),
+                    "repair_success_rate": "",
+                    "mean_normalized_executable_cost": statistics.mean(differences),
+                    "mean_repair_action_count": "",
+                    "mean_touched_component_count": "",
+                    "mean_recertification_check_count": "",
+                    "mean_execution_time_ms": "",
+                }
+            )
+    return rows
+
+
 def _csv_value(value: object) -> object:
     if isinstance(value, (tuple, list, dict)):
         return json.dumps(value, sort_keys=True)
@@ -1044,17 +1155,22 @@ def run_experiment(root: Path) -> dict[str, object]:
     if overlap["status"] != "PASS":
         raise AssertionError(f"H10-C3 overlap audit failed: {overlap}")
 
-    calibration = calibrate_runtime(development)
-    results = run_scenarios(held_out, calibration)
-    comparisons, descriptive, status = analyze(results)
     result_root = root / "results/h10_c4"
     report_root = root / "reports/h10_c4"
     result_root.mkdir(parents=True, exist_ok=True)
     report_root.mkdir(parents=True, exist_ok=True)
+    calibration = _load_or_create_calibration(
+        development,
+        result_root / "DEVELOPMENT_COST_CALIBRATION.json",
+    )
+    results = run_scenarios(held_out, calibration)
+    comparisons, descriptive, status = analyze(results)
+    family_results = _family_results(results)
 
     manifest_rows = []
     sensitivity_rows = []
     stability_rows = []
+    cost_model_rows = []
     cost = lambda action: action_cost(action, "hybrid", calibration, PRIMARY_WEIGHTS)
     for scenario in held_out:
         valid_sets = enumerate_valid_repair_sets(scenario.actions, scenario.obligations)
@@ -1084,12 +1200,40 @@ def run_experiment(root: Path) -> dict[str, object]:
             scenario.obligations,
             calibration,
         )
+        repair_all_primary = select_repair_all(
+            scenario.actions,
+            scenario.obligations,
+            cost,
+        ).predicted_cost
+        execution_cache: dict[tuple[str, ...], PlanLevelResult] = {}
         for row in sensitivity:
+            execution = execution_cache.get(row.selected_cut)
+            if execution is None:
+                selected = StrategyPlan(
+                    strategy="O_GLOBAL_SENSITIVITY",
+                    action_ids=row.selected_cut,
+                    predicted_cost=row.selected_cut_cost,
+                    covered_obligations=tuple(sorted(scenario.obligations)),
+                    feasible=row.repair_success,
+                    equivalent_optimal_plans=row.alternative_optimal_cuts,
+                )
+                execution = execute_strategy(
+                    scenario,
+                    selected,
+                    calibration,
+                    repair_all_cost=repair_all_primary,
+                )
+                execution_cache[row.selected_cut] = execution
             sensitivity_rows.append(
                 {
                     "scenario_id": scenario.scenario_id,
                     "pipeline_family": scenario.pipeline_family,
                     **asdict(row),
+                    "repair_success": execution.repair_success,
+                    "recertification_status": execution.final_route_status,
+                    "new_critical_violation_count": (
+                        execution.new_critical_violation_count
+                    ),
                 }
             )
         stable = sum(not row.selection_changed for row in sensitivity) / len(sensitivity)
@@ -1110,6 +1254,43 @@ def run_experiment(root: Path) -> dict[str, object]:
                 "stable": stable >= 0.8,
             }
         )
+        for model in ("uniform", "runtime", "dependency_weighted", "hybrid"):
+            model_cost = lambda action, selected=model: action_cost(
+                action,
+                selected,
+                calibration,
+                PRIMARY_WEIGHTS,
+            )
+            selected = select_global_minimum_cut(
+                scenario.actions,
+                scenario.obligations,
+                model_cost,
+            )
+            execution = execution_cache.get(selected.action_ids)
+            if execution is None:
+                execution = execute_strategy(
+                    scenario,
+                    selected,
+                    calibration,
+                    repair_all_cost=repair_all_primary,
+                )
+                execution_cache[selected.action_ids] = execution
+            cost_model_rows.append(
+                {
+                    "scenario_id": scenario.scenario_id,
+                    "pipeline_family": scenario.pipeline_family,
+                    "cost_model": model,
+                    "selected_cut": selected.action_ids,
+                    "selected_cut_cost": selected.predicted_cost,
+                    "alternative_optimal_cuts": selected.equivalent_optimal_plans,
+                    "repair_success": execution.repair_success,
+                    "recertification_status": execution.final_route_status,
+                    "new_critical_violation_count": (
+                        execution.new_critical_violation_count
+                    ),
+                    "execution_time_ms": execution.execution_time_ms,
+                }
+            )
 
     _write_csv(result_root / "SCENARIO_MANIFEST.csv", manifest_rows)
     _write_csv(
@@ -1117,6 +1298,8 @@ def run_experiment(root: Path) -> dict[str, object]:
         (asdict(row) for row in results),
     )
     _write_csv(result_root / "STRATEGY_COMPARISON.csv", descriptive)
+    _write_csv(result_root / "PIPELINE_FAMILY_RESULTS.csv", family_results)
+    _write_csv(result_root / "COST_MODEL_COMPARISON.csv", cost_model_rows)
     _write_csv(result_root / "COST_SENSITIVITY.csv", sensitivity_rows)
     _write_csv(result_root / "BOOTSTRAP_INTERVALS.csv", comparisons)
     _write_csv(
@@ -1274,11 +1457,14 @@ def verify_outputs(root: Path) -> dict[str, object]:
         "SCENARIO_MANIFEST.csv",
         "PLAN_LEVEL_RESULTS.csv",
         "STRATEGY_COMPARISON.csv",
+        "PIPELINE_FAMILY_RESULTS.csv",
+        "COST_MODEL_COMPARISON.csv",
         "COST_SENSITIVITY.csv",
         "BOOTSTRAP_INTERVALS.csv",
         "HOLM_CORRECTION.csv",
         "SELECTION_STABILITY.csv",
         "H10_C4_FINAL_STATUS.json",
+        "DEVELOPMENT_COST_CALIBRATION.json",
     )
     missing = [
         name for name in required if not (root / "results/h10_c4" / name).exists()
@@ -1296,6 +1482,13 @@ def verify_outputs(root: Path) -> dict[str, object]:
         "held_out_scenario_count": len(scenarios) == 120,
         "pipeline_family_count": len({row["pipeline_family"] for row in scenarios}) == 6,
         "strategies_per_scenario": len(plans) == 480,
+        "twenty_scenarios_per_family": all(
+            sum(row["pipeline_family"] == family for row in scenarios) == 20
+            for family in {row["pipeline_family"] for row in scenarios}
+        ),
+        "ten_mutation_families": (
+            len({row["mutation_family"] for row in scenarios}) == 10
+        ),
         "controlled_labels_only": all(
             row["scenario_type"] == SCENARIO_LABEL for row in scenarios
         ),

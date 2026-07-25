@@ -1224,10 +1224,10 @@ h10-c3-r4-package:
 
 H10_C4_ENV = PYTHONPATH=framework/fuzzyxai:.
 
-.PHONY: h10-c4-test h10-c4-run h10-c4-verify
+.PHONY: h10-c4-test h10-c4-run h10-c4-verify h10-c4-chapter h10-c4-package
 
 h10-c4-test:
-	$(H10_C4_ENV) $(H10_C3_PYTHON) -m ruff check framework/fuzzyxai/fuzzyxai/operators/base.py framework/fuzzyxai/fuzzyxai/operators/composition.py framework/fuzzyxai/fuzzyxai/repair framework/fuzzyxai/fuzzyxai/experiments/h10_c4.py scripts/run_h10_c4.py tests/operators tests/h10_c4
+	$(H10_C4_ENV) $(H10_C3_PYTHON) -m ruff check framework/fuzzyxai/fuzzyxai/operators/base.py framework/fuzzyxai/fuzzyxai/operators/composition.py framework/fuzzyxai/fuzzyxai/repair framework/fuzzyxai/fuzzyxai/experiments/h10_c4.py scripts/run_h10_c4.py scripts/build_h10_c4_chapter4.py scripts/build_h10_c4_release.py scripts/manuscript_claim_lint.py tests/operators tests/h10_c4
 	$(H10_C4_ENV) $(H10_C3_PYTHON) -m pytest -q tests/operators tests/h10_c4
 
 h10-c4-run:
@@ -1235,3 +1235,10 @@ h10-c4-run:
 
 h10-c4-verify:
 	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/run_h10_c4.py verify
+
+h10-c4-chapter:
+	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/build_h10_c4_chapter4.py
+	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/manuscript_claim_lint.py docs/chapters/glava_4_FuzzyXAI_h10_c4_revision.docx
+
+h10-c4-package:
+	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/build_h10_c4_release.py
