@@ -1,0 +1,18 @@
+{
+  "protocol_id": "multimodal-interpretable-routes-v1",
+  "status": "LOCKED_BEFORE_EXECUTION",
+  "modalities": ["tabular", "image", "text", "time_series"],
+  "valid_routes_per_modality": 100,
+  "controlled_violations_per_modality": 50,
+  "architecture": "raw_input_to_frozen_extractor_to_interpretable_head",
+  "interpretability_scope": "extracted_feature_space_only",
+  "metrics": [
+    "route_construction_success",
+    "contract_detection_f1",
+    "source_localization_accuracy",
+    "false_certification",
+    "canonical_hash_equality",
+    "recertification_success"
+  ],
+  "predictor_superiority_claim": false
+}

@@ -1,0 +1,26 @@
+{
+  "protocol_id": "h9-e2e-latency-v1",
+  "status": "LOCKED_BEFORE_EXECUTION",
+  "pipelines": ["tabular_shap", "image_gradcam", "text_token_masking"],
+  "warmup_runs": 20,
+  "measured_repetitions": 30,
+  "batch_sizes": [1, 8, 32],
+  "components": [
+    "model",
+    "explainer",
+    "fuzzyxai",
+    "serialization"
+  ],
+  "report_cold_and_warm_cache": true,
+  "report_serialization_on_and_off": true,
+  "targets": {
+    "median_overhead_max": 0.1,
+    "p95_overhead_max": 0.15
+  },
+  "human_time_claim": false,
+  "allowed_final_statuses": [
+    "H9_E2E_TARGET_MET",
+    "H9_E2E_TARGET_NOT_MET",
+    "H9_E2E_INCONCLUSIVE"
+  ]
+}
