@@ -1,0 +1,30 @@
+{
+  "sources": [
+    {
+      "available": true,
+      "expected_sha256": "7a21f37b8bc179c7db5beeb14e88ac538ba283455c776e6b2535bbfb6e3551b4",
+      "path": "/tmp/h10c5_sources/swebench_lite_test.parquet",
+      "revision": "6ec7bb89b9342f664a54a6e0a6ea6501d3437cc2",
+      "role": "executed_primary_screening_source",
+      "sha256": "7a21f37b8bc179c7db5beeb14e88ac538ba283455c776e6b2535bbfb6e3551b4",
+      "source_id": "SWE-bench_Lite_test"
+    },
+    {
+      "available": true,
+      "path": "/tmp/h10c5_sources/BugsInPy",
+      "revision": "11c5f1eea954a42132cfd06bf257766a7963e0fd",
+      "role": "registered_secondary_repository_source_not_scored",
+      "source_id": "BugsInPy"
+    },
+    {
+      "archive_md5": "369726af86ef206b701cce3af6ab88ed",
+      "archive_size_bytes": 2939196386,
+      "limitation": "The 2.94 GB archive was registered but not silently substituted by another source.",
+      "metadata_available": true,
+      "metadata_path": "/tmp/h10c5_sources/zenodo_8376824.json",
+      "role": "registered_domain_source_not_downloaded_or_scored",
+      "source_id": "defect4ML"
+    }
+  ],
+  "status": "PASS"
+}

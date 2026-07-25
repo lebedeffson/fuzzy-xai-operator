@@ -6,7 +6,7 @@ operators:
     input_schema: PublicBuggyRepositoryIncidentWithoutGoldPatch
     output_schema: NaturalIncidentRouteAuditEvidence
     tests: [tests/h10_c5/test_natural_incidents.py]
-    artifacts: [results/h10_c5/H10_C5_FINAL_STATUS.json, reports/h10_c5/EXTERNAL_VALIDATION_REPORT.md]
+    artifacts: [results/h10_c5/H10_C5_FINAL_STATUS.json, reports/h10_c5/NATURAL_INCIDENT_TRANSFER.md]
     visualization: []
   - id: h10_c6.cut_robustness
     dissertation_ref: "H10-C6 prospective cut robustness study"

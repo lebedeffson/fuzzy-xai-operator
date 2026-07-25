@@ -693,5 +693,6 @@
     }
   ],
   "legacy_evidence_integrity": "PASS",
-  "schema_version": "1.0"
+  "schema_version": "1.0",
+  "verification_commit": "2e1e2ea5248f202cf50b6d3dfc762956324a03d0"
 }

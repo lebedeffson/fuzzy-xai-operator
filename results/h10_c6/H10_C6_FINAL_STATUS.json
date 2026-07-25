@@ -1,0 +1,18 @@
+{
+  "median_jaccard": 1.0,
+  "new_critical_violations": 0,
+  "obligation_coverage_stability": 1.0,
+  "perturbed_comparisons": 10500,
+  "protocol_id": "h10-c6-cut-robustness-v1",
+  "random_seeds": [
+    1701,
+    1702,
+    1703,
+    1704,
+    1705
+  ],
+  "recertification_success": 1.0,
+  "route_instances": 1000,
+  "status": "H10_C6_SUPPORTED",
+  "truth_preservation": "PASS"
+}

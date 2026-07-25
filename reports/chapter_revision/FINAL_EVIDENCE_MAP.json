@@ -1,0 +1,66 @@
+{
+  "artifacts": [
+    {
+      "path": "protocol/h10_c5_natural_incidents/H10_C5_PROTOCOL_LOCK.json",
+      "sha256": "5d5ae3169304cfd3c295c4a92dbb3b2d476a0174598f97d9d0cf47edc3bd9afa",
+      "size": 2187
+    },
+    {
+      "path": "protocol/h10_c6_cut_robustness/H10_C6_PROTOCOL_LOCK.json",
+      "sha256": "aab64492ec2b8c77c7081872d6c0540892d5ae09ad0317ad5a241aef140dcb35",
+      "size": 970
+    },
+    {
+      "path": "protocol/h9_e2e_latency/H9_E2E_PROTOCOL_LOCK.json",
+      "sha256": "b05c44e172eed0e48333b00545d45d30d8a75d99202297f0275d355ffb6194ba",
+      "size": 627
+    },
+    {
+      "path": "protocol/multimodal_interpretable_routes/MULTIMODAL_PROTOCOL_LOCK.json",
+      "sha256": "3f3bc247326ad70d22cbc1972f899754c8d953485ac03680f740f1c02d65aca1",
+      "size": 618
+    },
+    {
+      "path": "results/h10_c5/H10_C5_FINAL_STATUS.json",
+      "sha256": "31f305a22037ce79c71c51a800ce2f0a7c73d79557b687d6ec838b74a1ad3941",
+      "size": 822
+    },
+    {
+      "path": "results/h10_c6/H10_C6_FINAL_STATUS.json",
+      "sha256": "b45841e96118b38d07483ed434748b34767f129c2b8b1aef02c5604c0d1dab71",
+      "size": 378
+    },
+    {
+      "path": "results/h9_e2e/H9_E2E_FINAL_STATUS.json",
+      "sha256": "bc7ad662c057e466dcab2becba9296210bf76ab9fdb6f59949d5d63de63ed3f8",
+      "size": 527
+    },
+    {
+      "path": "results/multimodal_routes/FINAL_STATUS.json",
+      "sha256": "87214edf726c2a9d30c50b63182b65909c0bd8fd609fc6dc640ab3842379dfc5",
+      "size": 489
+    },
+    {
+      "path": "reports/chapter_revision/LEGACY_EVIDENCE_IMMUTABILITY.json",
+      "sha256": "53a99cdcf12fa9932a1f051083a26e5fa1acc29cc136d4fab27ae7c829d028f2",
+      "size": 29374
+    },
+    {
+      "path": "reports/chapter_revision/CLAIM_LINT.json",
+      "sha256": "864764d27e37546ee4650e11574ee391e27624f71129e594e97b23baf178586d",
+      "size": 66
+    }
+  ],
+  "chapter_modified": false,
+  "implementation_commit": "2e1e2ea5248f202cf50b6d3dfc762956324a03d0",
+  "overall_status": "COMPLETE_WITH_REGISTERED_NEGATIVE_RESULTS",
+  "schema_version": "1.0",
+  "statuses": {
+    "claim_lint": "PASS",
+    "h10_c5": "H10_C5_NOT_SUPPORTED",
+    "h10_c6": "H10_C6_SUPPORTED",
+    "h9_e2e": "H9_E2E_TARGET_NOT_MET",
+    "legacy_evidence_integrity": "PASS",
+    "multimodal_routes": "MULTIMODAL_ROUTE_VALIDATION_PASS"
+  }
+}

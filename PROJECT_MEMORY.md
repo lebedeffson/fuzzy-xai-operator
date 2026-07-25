@@ -1,5 +1,40 @@
 # Project Memory
 
+## FXAI-CH4-Q1-EVIDENCE-EXPANSION
+
+- Date: 2026-07-26
+- Branch: `feat/ch4-q1-evidence-expansion`
+- Frozen protocol commit: `989502f`
+- Scientific implementation commit: `91eae88`
+- Telemetry-only follow-up: `2e1e2ea`
+- Chapter document modified: no
+
+H10-C3 and H10-C4 evidence remained byte-identical across 86 registered files
+(aggregate SHA256
+`6410afa5261e86748267bdb55f512658a16faccbe1363b9e982f669c88009b9c`).
+The H10-C3 hierarchy is now explicit: H10-C3a is primary, cost regret is its
+key secondary endpoint, and H10-C3b is a linked secondary endpoint rather than
+an independent replication.
+
+Prospective outcomes must be reported without upgrading claims:
+
+- H10-C5 screened 300 SWE-bench Lite incidents and selected 26 incidents from
+  10 repositories and six contract families. O_ROUTE did not outperform the
+  strongest greedy baseline on held-out repositories (`difference = 0`), so
+  natural-incident transfer is `H10_C5_NOT_SUPPORTED`. Local project execution
+  was not completed; natural recovery claims remain disabled.
+- H10-C6 evaluated 1,000 route instances under registered truth-preserving
+  perturbations and is `H10_C6_SUPPORTED`.
+- Four-modality frozen-extractor/interpretable-head route validation covered
+  600 routes and passed. Interpretability is limited to extracted-feature
+  space; predictor superiority is not claimed.
+- H9 end-to-end timing recorded 1,080 measurements. The frozen overhead target
+  was not met (`H9_E2E_TARGET_NOT_MET`); this is machine time, not engineer
+  time.
+
+Claim lint prohibits the historical object-level `p = 0.0234`, independent
+replication wording for H10-C3a/C3b, and human/industrial utility claims.
+
 ## FXAI-H10-C3-R4-SECURE-PREOPEN
 
 - Date: 2026-07-24
