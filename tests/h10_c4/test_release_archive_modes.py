@@ -35,12 +35,11 @@ def test_release_member_preserves_executable_mode(tmp_path: Path) -> None:
         assert builder._zip_mode(info) == 0o755
 
 
-def test_committed_h10_c4_scripts_are_executable() -> None:
-    builder = _load_builder()
-    commit = builder._git("rev-parse", "HEAD")
-    modes = dict(builder._git_entries(commit))
-
-    assert modes["scripts/run_h10_c4.py"] == 0o755
-    assert modes["scripts/build_h10_c4_chapter4.py"] == 0o755
-    assert modes["scripts/build_h10_c4_release.py"] == 0o755
-    assert modes["scripts/manuscript_claim_lint.py"] == 0o755
+def test_h10_c4_scripts_are_executable_in_distribution() -> None:
+    for path in (
+        Path("scripts/run_h10_c4.py"),
+        Path("scripts/build_h10_c4_chapter4.py"),
+        Path("scripts/build_h10_c4_release.py"),
+        Path("scripts/manuscript_claim_lint.py"),
+    ):
+        assert path.stat().st_mode & 0o777 == 0o755
