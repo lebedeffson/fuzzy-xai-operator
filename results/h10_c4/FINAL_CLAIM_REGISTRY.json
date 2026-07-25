@@ -1,0 +1,17 @@
+{
+  "allowed_claim": "On 120 held-out controlled structural mutations, the global minimum diagnostic cut reduced executable repair cost relative to all three registered baselines while preserving full route recertification.",
+  "forbidden_extensions": [
+    "natural_software_incident_generalization",
+    "engineer_time_savings",
+    "human_comprehension",
+    "expert_utility",
+    "organizational_cost_reduction",
+    "production_safety"
+  ],
+  "h10_c3_modified": false,
+  "human_evaluation_conducted": false,
+  "protocol_id": "h10-c4-operational-utility-v1",
+  "real_incidents_evaluated": false,
+  "required_qualifier": "controlled_structural_mutations_only",
+  "status": "H10_C4_SUPPORTED"
+}

@@ -362,3 +362,21 @@ does not upgrade human-comprehension, expert-usefulness, production-safety,
 clinical-validity, natural-fault-generalization, or organizational-effectiveness
 claims. Earlier invalidated and negative study records remain part of the
 evidence history.
+
+## H10-C4 Operational Utility
+
+- Branch: `feat/h10-c4-operational-utility`
+- Protocol: `h10-c4-operational-utility-v1`
+- Parent H10-C3 artifacts: `54/54 PASS`, unchanged
+- Held-out controlled mutations: `120`
+- Actually executed plans: `480`
+- Cost configurations: `48`
+- Global-cut full recertification: `120/120`
+- Global-cut new critical violations: `0`
+- Selection-stable scenarios at the registered 80% threshold: `108/120`
+- Status: `H10_C4_SUPPORTED`
+
+H10-C4 is a separate prospective controlled-mutation experiment. It does not
+modify or reclassify H10-C3 and does not support claims about real incidents,
+engineer labor, human comprehension, organizational cost, or production
+safety.

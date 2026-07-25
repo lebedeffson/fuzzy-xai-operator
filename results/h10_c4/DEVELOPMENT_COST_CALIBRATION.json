@@ -1,0 +1,12 @@
+{
+  "development_action_registry_sha256": "a440d1d69ac3947bfb7cdd8e3581cd911c90cae89b4239add196c3407589fd6d",
+  "fitted_split": "development",
+  "held_out_used_for_calibration": false,
+  "runtime_ms_by_kind": {
+    "direct_restore": 0.044845,
+    "quick_patch": 0.022493,
+    "source_restore": 0.090351
+  },
+  "runtime_scale_ms": 0.044845,
+  "status": "FROZEN_BEFORE_HELD_OUT_EXECUTION"
+}

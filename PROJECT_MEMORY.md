@@ -737,3 +737,46 @@ design. It does not establish human comprehension, expert usefulness,
 production or clinical safety, natural-fault generalization, or organizational
 effectiveness. Historical negative H3, H5-P, H6-general, H10-L, and H10-R
 results remain unchanged.
+
+## FXAI-H10-C4-OPERATIONAL-UTILITY
+
+- Date: 2026-07-25
+- Branch: `feat/h10-c4-operational-utility`
+- Parent result: H10-C3 R4 postopen commit
+  `5da8d1beec7681f6b18794cf4001decf4ceb3ea2`
+- Protocol lock commits: `5770fad`, `e1365e8`
+- Final implementation commit before valid execution: `dbc7e84`
+- Scenarios: 120 held-out controlled structural mutations, six pipeline
+  families, 480 actually executed strategy plans
+- Status: `H10_C4_SUPPORTED`
+
+The global minimum-cut strategy completed full recertification in all 120
+scenarios and created no new critical violations. Its mean normalized
+executable cost was `0.5168489529790097`, compared with `1.0` for `B_ALL` and
+`B_FIRST` and `0.594047367361634` for `B_GREEDY`. Registered paired
+O_GLOBAL-minus-baseline differences were:
+
+- versus `B_ALL`: `-0.4831510470209903`, 95% CI
+  `[-0.5192865706633796; -0.44541653003910625]`, Holm p
+  `0.0005999400059994001`;
+- versus `B_FIRST`: the same registered effect and interval;
+- versus `B_GREEDY`: `-0.07719841438262429`, 95% CI
+  `[-0.09403145075160929; -0.06120465594003043]`, Holm p
+  `0.0005999400059994001`.
+
+The mean action count, touched-component count, and recertification-check count
+fell from `3.1`, `3.1`, and `14.3` under `B_ALL` to `1.0`, `1.0`, and `8.0`
+under `O_GLOBAL`. Of 120 scenarios, 108 met the registered 80% selection
+stability threshold over 48 hybrid-cost configurations. The remaining 12 are
+reported as cost-sensitive, not excluded.
+
+Run attempt 1 is retained as `INVALIDATED_IMPLEMENTATION_MISMATCH` because it
+used different deterministic bootstrap seed offsets for the three contrasts.
+The final run uses one shared index stream with SHA256
+`613432617404501e483c793f94a4ada3bac15273e1d47cdb84687646db6b0e06`.
+All 54 parent H10-C3 artifact hashes remain unchanged.
+
+Claim boundary: H10-C4 supports algorithmic operational savings on controlled
+structural mutations only. It does not establish natural-incident
+generalization, engineer-time savings, human utility, organizational cost
+reduction, or production safety.
