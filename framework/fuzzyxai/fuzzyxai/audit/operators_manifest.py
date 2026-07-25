@@ -8,7 +8,6 @@ from typing import Any
 
 import yaml
 
-
 FRAMEWORK_ROOT = Path(__file__).resolve().parents[2]
 SOURCE_REPOSITORY = Path.cwd() if (Path.cwd() / "framework/fuzzyxai/operators_manifest.yaml").exists() else FRAMEWORK_ROOT.parents[1]
 REPOSITORY_ROOT = SOURCE_REPOSITORY
@@ -64,6 +63,7 @@ def validate_manifest(path: str | Path = DEFAULT_MANIFEST) -> dict[str, Any]:
         "schema_version": payload.get("schema_version") if isinstance(payload, dict) else None,
         "manifest": str(manifest_path),
         "operator_count": len(rows),
+        "operator_ids": sorted(ids),
         "status": "PASS" if rows and not errors else "FAIL",
         "errors": errors,
     }
