@@ -48,7 +48,7 @@ defended operators. The expected count was corrected to 35, and
 ## H10-C4 Gates
 
 ```text
-make h10-c4-test: 28 passed, Ruff PASS
+make h10-c4-test: 30 passed, Ruff PASS
 make h10-c4-verify: PASS
 H10-C3 immutable artifacts: 54/54 PASS
 manuscript claim lint: PASS

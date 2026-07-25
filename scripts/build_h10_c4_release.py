@@ -53,15 +53,39 @@ def _git_bytes(commit: str, path: str) -> bytes:
     return subprocess.check_output(["git", "show", f"{commit}:{path}"], cwd=ROOT)
 
 
+def _git_entries(commit: str) -> list[tuple[str, int]]:
+    entries = []
+    for line in _git("ls-tree", "-r", commit).splitlines():
+        metadata, path = line.split("\t", 1)
+        git_mode = metadata.split(" ", 1)[0]
+        entries.append((path, int(git_mode[-3:], 8)))
+    return entries
+
+
+def _write_member(
+    archive: zipfile.ZipFile,
+    source: Path,
+    archive_name: Path,
+    mode: int,
+) -> None:
+    source.chmod(mode)
+    archive.write(source, archive_name)
+
+
+def _zip_mode(info: zipfile.ZipInfo) -> int:
+    return (info.external_attr >> 16) & 0o777
+
+
 def build() -> tuple[Path, str]:
     if _git("status", "--porcelain"):
         raise RuntimeError("release build requires a clean committed worktree")
     commit = _git("rev-parse", "HEAD")
-    paths = [
-        path
-        for path in _git("ls-tree", "-r", "--name-only", commit).splitlines()
+    entries = [
+        (path, mode)
+        for path, mode in _git_entries(commit)
         if _selected(path)
     ]
+    paths = [path for path, _mode in entries]
     if not paths:
         raise RuntimeError("H10-C4 release allowlist selected no files")
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
@@ -69,11 +93,12 @@ def build() -> tuple[Path, str]:
     checksums = []
     with tempfile.TemporaryDirectory(prefix="h10-c4-release-") as temp:
         staging = Path(temp) / "fuzzyxai-h10-c4"
-        for path in paths:
+        for path, mode in entries:
             target = staging / path
             target.parent.mkdir(parents=True, exist_ok=True)
             data = _git_bytes(commit, path)
             target.write_bytes(data)
+            target.chmod(mode)
             checksums.append(f"{hashlib.sha256(data).hexdigest()}  {path}")
         manifest = {
             "study_id": "FXAI-H10-C4-OPERATIONAL-UTILITY",
@@ -82,6 +107,9 @@ def build() -> tuple[Path, str]:
             "built_at_utc": datetime.now(UTC).isoformat(),
             "source": "committed_git_tree",
             "file_count": len(paths),
+            "executable_files": sorted(
+                path for path, mode in entries if mode & 0o111
+            ),
             "h10_c3_parent_modified": False,
             "h10_c4_status": json.loads(
                 _git_bytes(
@@ -101,7 +129,14 @@ def build() -> tuple[Path, str]:
         with zipfile.ZipFile(output, "w", zipfile.ZIP_DEFLATED, compresslevel=9) as archive:
             for path in sorted(staging.rglob("*")):
                 if path.is_file():
-                    archive.write(path, path.relative_to(staging.parent))
+                    relative = path.relative_to(staging)
+                    mode = dict(entries).get(relative.as_posix(), 0o644)
+                    _write_member(
+                        archive,
+                        path,
+                        path.relative_to(staging.parent),
+                        mode,
+                    )
 
     archive_sha256 = hashlib.sha256(output.read_bytes()).hexdigest()
     output.with_suffix(output.suffix + ".sha256").write_text(
@@ -113,6 +148,14 @@ def build() -> tuple[Path, str]:
         expected = {f"fuzzyxai-h10-c4/{path}" for path in paths}
         if not expected.issubset(names):
             raise AssertionError("release ZIP is missing committed allowlist files")
+        mode_by_path = dict(entries)
+        for path, expected_mode in mode_by_path.items():
+            info = archive.getinfo(f"fuzzyxai-h10-c4/{path}")
+            if _zip_mode(info) != expected_mode:
+                raise AssertionError(
+                    f"release mode mismatch: {path}: "
+                    f"{_zip_mode(info):#o} != {expected_mode:#o}"
+                )
         for line in archive.read("fuzzyxai-h10-c4/SHA256SUMS").decode().splitlines():
             digest, path = line.split("  ", 1)
             actual = hashlib.sha256(
