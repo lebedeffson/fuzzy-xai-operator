@@ -30,6 +30,11 @@ def _manifest_paths(path: Path) -> list[str]:
 
 
 def build() -> dict[str, object]:
+    baseline = (
+        json.loads(OUTPUT_JSON.read_text(encoding="utf-8"))
+        if OUTPUT_JSON.exists()
+        else None
+    )
     h10_c3 = _manifest_paths(
         ROOT / "protocol/h10_c4/H10_C3_BASELINE_SHA256SUMS"
     )
@@ -62,16 +67,31 @@ def build() -> dict[str, object]:
             f"{item['sha256']}  {item['relative_path']}" for item in files
         ).encode()
     ).hexdigest()
+    current_commit = subprocess.check_output(
+        ["git", "rev-parse", "HEAD"], cwd=ROOT, text=True
+    ).strip()
+    unchanged = (
+        baseline is None
+        or (
+            baseline.get("aggregate_sha256") == aggregate
+            and baseline.get("file_count") == len(files)
+        )
+    )
     payload: dict[str, object] = {
         "schema_version": "1.0",
-        "baseline_commit": subprocess.check_output(
-            ["git", "rev-parse", "HEAD"], cwd=ROOT, text=True
-        ).strip(),
-        "legacy_evidence_integrity": "PASS",
+        "baseline_commit": (
+            baseline.get("baseline_commit")
+            if baseline
+            else current_commit
+        ),
+        "verification_commit": current_commit,
+        "legacy_evidence_integrity": "PASS" if unchanged else "FAIL",
         "file_count": len(files),
         "aggregate_sha256": aggregate,
         "files": files,
     }
+    if not unchanged:
+        raise RuntimeError("legacy H10-C3/H10-C4 evidence changed")
     OUTPUT_JSON.parent.mkdir(parents=True, exist_ok=True)
     OUTPUT_JSON.write_text(
         json.dumps(payload, indent=2, sort_keys=True) + "\n",

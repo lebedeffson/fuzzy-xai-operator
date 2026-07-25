@@ -1242,3 +1242,29 @@ h10-c4-chapter:
 
 h10-c4-package:
 	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/build_h10_c4_release.py
+
+.PHONY: ch4-q1-test h10-c5-source-audit h10-c5-run h10-c6-run multimodal-route-validation h9-e2e-latency ch4-q1-claim-lint ch4-q1-evidence
+
+ch4-q1-test:
+	$(H10_C4_ENV) $(H10_C3_PYTHON) -m pytest -q tests/h10_c5 tests/h10_c6 tests/multimodal tests/roles tests/chapter_revision
+
+h10-c5-source-audit:
+	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/prepare_h10_c5_sources.py --root .
+
+h10-c5-run:
+	test -n "$(H10_C5_SOURCE)"
+	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/run_h10_c5.py --source "$(H10_C5_SOURCE)" --root .
+
+h10-c6-run:
+	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/run_h10_c6.py --root .
+
+multimodal-route-validation:
+	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/run_multimodal_routes.py
+
+h9-e2e-latency:
+	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/run_h9_e2e.py
+
+ch4-q1-claim-lint:
+	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/claim_lint.py --root .
+
+ch4-q1-evidence: h10-c5-source-audit h10-c6-run multimodal-route-validation h9-e2e-latency ch4-q1-claim-lint

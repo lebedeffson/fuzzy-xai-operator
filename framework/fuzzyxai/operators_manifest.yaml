@@ -1,5 +1,37 @@
 schema_version: "1.0"
 operators:
+  - id: h10_c5.natural_incident_route_audit
+    dissertation_ref: "H10-C5 prospective natural-incident external validation"
+    callable: fuzzyxai.experiments.h10_c5:run
+    input_schema: PublicBuggyRepositoryIncidentWithoutGoldPatch
+    output_schema: NaturalIncidentRouteAuditEvidence
+    tests: [tests/h10_c5/test_natural_incidents.py]
+    artifacts: [results/h10_c5/H10_C5_FINAL_STATUS.json, reports/h10_c5/EXTERNAL_VALIDATION_REPORT.md]
+    visualization: []
+  - id: h10_c6.cut_robustness
+    dissertation_ref: "H10-C6 prospective cut robustness study"
+    callable: fuzzyxai.robustness:run_cut_robustness
+    input_schema: TruthPreservingRoutePerturbationMatrix
+    output_schema: H10C6CutStabilityEvidence
+    tests: [tests/h10_c6/test_cut_robustness.py]
+    artifacts: [results/h10_c6/H10_C6_FINAL_STATUS.json, reports/h10_c6/CUT_ROBUSTNESS.md]
+    visualization: []
+  - id: multimodal.interpretable_route_validation
+    dissertation_ref: "four-modality frozen-extractor route validation"
+    callable: fuzzyxai.multimodal:run_validation
+    input_schema: RawInputFrozenExtractorInterpretableHeadRoute
+    output_schema: MultimodalRouteValidationEvidence
+    tests: [tests/multimodal/test_interpretable_routes.py]
+    artifacts: [results/multimodal_interpretable_routes/FINAL_STATUS.json]
+    visualization: [operator_route]
+  - id: h9.end_to_end_latency
+    dissertation_ref: "H9 end-to-end model-explainer-framework latency"
+    callable: fuzzyxai.experiments.h9_e2e_latency:run
+    input_schema: RegisteredLatencyProtocol
+    output_schema: EndToEndLatencyEvidence
+    tests: [tests/chapter_revision/test_h9_latency.py]
+    artifacts: [results/h9_e2e_latency/H9_E2E_FINAL_STATUS.json]
+    visualization: []
   - id: h10_c4.contract_composition
     dissertation_ref: "H10-C4 prospective controlled-mutation experiment"
     callable: fuzzyxai.operators:ComposedDiagnosticOperator
