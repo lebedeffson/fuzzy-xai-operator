@@ -1332,6 +1332,96 @@ def run_experiment(root: Path) -> dict[str, object]:
         + "\n",
         encoding="utf-8",
     )
+    descriptive_lookup = {
+        (row["strategy"], row["metric"]): float(row["mean"])
+        for row in descriptive
+    }
+    chapter_values = {
+        "protocol_id": "h10-c4-operational-utility-v1",
+        "scope": "controlled_structural_mutations_only",
+        "scenario_count": len(held_out),
+        "pipeline_family_count": len(FAMILY_SPECS),
+        "strategy_row_count": len(results),
+        "repair_success": {
+            "O_GLOBAL": status["repair_success_global_cut"],
+            **status["repair_success_baselines"],
+        },
+        "mean_normalized_executable_cost": {
+            strategy: descriptive_lookup[
+                (strategy, "normalized_executable_cost")
+            ]
+            for strategy in ("O_GLOBAL", "B_ALL", "B_FIRST", "B_GREEDY")
+        },
+        "primary_comparisons": {
+            row["comparison"]: {
+                "mean_difference": row["mean_difference"],
+                "ci_95": row["ci_95"],
+                "holm_p": row["holm_p"],
+            }
+            for row in comparisons
+        },
+        "mean_operational_metrics": {
+            strategy: {
+                metric: descriptive_lookup[(strategy, metric)]
+                for metric in (
+                    "repair_action_count",
+                    "unique_touched_components",
+                    "recertification_check_count",
+                    "execution_time_ms",
+                )
+            }
+            for strategy in ("O_GLOBAL", "B_ALL", "B_FIRST", "B_GREEDY")
+        },
+        "new_critical_violations_global_cut": status[
+            "new_critical_violations_global_cut"
+        ],
+        "cost_weight_configurations": 48,
+        "scenarios_meeting_80pct_stability": sum(
+            row["stable"] for row in stability_rows
+        ),
+        "scenario_stability_fraction": sum(
+            row["stable"] for row in stability_rows
+        )
+        / len(stability_rows),
+        "bootstrap_iterations": BOOTSTRAP_ITERATIONS,
+        "bootstrap_index_stream_sha256": comparisons[0][
+            "bootstrap_index_stream_sha256"
+        ],
+    }
+    (result_root / "FINAL_CHAPTER_VALUES.json").write_text(
+        json.dumps(chapter_values, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
+    (result_root / "FINAL_CLAIM_REGISTRY.json").write_text(
+        json.dumps(
+            {
+                "protocol_id": "h10-c4-operational-utility-v1",
+                "status": status["status"],
+                "allowed_claim": (
+                    "On 120 held-out controlled structural mutations, the "
+                    "global minimum diagnostic cut reduced executable repair "
+                    "cost relative to all three registered baselines while "
+                    "preserving full route recertification."
+                ),
+                "required_qualifier": "controlled_structural_mutations_only",
+                "forbidden_extensions": [
+                    "natural_software_incident_generalization",
+                    "engineer_time_savings",
+                    "human_comprehension",
+                    "expert_utility",
+                    "organizational_cost_reduction",
+                    "production_safety",
+                ],
+                "h10_c3_modified": False,
+                "real_incidents_evaluated": False,
+                "human_evaluation_conducted": False,
+            },
+            indent=2,
+            sort_keys=True,
+        )
+        + "\n",
+        encoding="utf-8",
+    )
     _write_reports(
         report_root,
         status=status,
@@ -1465,6 +1555,8 @@ def verify_outputs(root: Path) -> dict[str, object]:
         "SELECTION_STABILITY.csv",
         "H10_C4_FINAL_STATUS.json",
         "DEVELOPMENT_COST_CALIBRATION.json",
+        "FINAL_CHAPTER_VALUES.json",
+        "FINAL_CLAIM_REGISTRY.json",
     )
     missing = [
         name for name in required if not (root / "results/h10_c4" / name).exists()
