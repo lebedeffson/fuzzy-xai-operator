@@ -1,5 +1,21 @@
 schema_version: "1.0"
 operators:
+  - id: h10_c4.contract_composition
+    dissertation_ref: "H10-C4 prospective controlled-mutation experiment"
+    callable: fuzzyxai.operators:ComposedDiagnosticOperator
+    input_schema: RouteStateAndCompatibleOperatorContracts
+    output_schema: RouteState
+    tests: [tests/operators/test_operator_composition.py, tests/operators/test_contract_compatibility.py, tests/operators/test_shap_lime_route_composition.py]
+    artifacts: [reports/h10_c4/OPERATOR_COMPOSITION_TRACE.md]
+    visualization: [operator_route]
+  - id: h10_c4.operational_utility
+    dissertation_ref: "H10-C4 prospective controlled-mutation experiment"
+    callable: fuzzyxai.experiments.h10_c4:run_experiment
+    input_schema: ControlledStructuralMutationMatrix
+    output_schema: H10C4OperationalUtilityEvidence
+    tests: [tests/h10_c4/test_global_cut_execution.py, tests/h10_c4/test_full_recertification.py, tests/h10_c4/test_cost_sensitivity.py]
+    artifacts: [results/h10_c4/H10_C4_FINAL_STATUS.json, reports/h10_c4/OPERATIONAL_UTILITY_REPORT.md]
+    visualization: []
   - id: framework.diagnostic_service
     dissertation_ref: "diagnostic framework v21 exploratory implementation"
     callable: fuzzyxai.diagnostics:DiagnosticService
