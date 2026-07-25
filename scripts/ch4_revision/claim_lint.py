@@ -35,8 +35,8 @@ def main() -> None:
         root / "reports/chapter_revision",
         root / "reports/h10_c5",
         root / "reports/h10_c6",
-        root / "reports/h9_e2e_latency",
-        root / "reports/multimodal_interpretable_routes",
+        root / "reports/h9_e2e",
+        root / "reports/multimodal_routes",
     ]
     files: list[Path] = []
     for path in paths:

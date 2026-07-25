@@ -222,10 +222,14 @@ def run_validation(root: Path) -> dict[str, object]:
         "interpretability_scope": "extracted_feature_space_only",
         "predictor_superiority_claim": False,
     }
-    output = root / "results/multimodal_interpretable_routes"
+    output = root / "results/multimodal_routes"
     _write_csv(output / "ROUTE_RESULTS.csv", rows)
+    _write_csv(
+        output / "CONTRACT_MUTATION_RESULTS.csv",
+        [row for row in rows if row["expected_positive"]],
+    )
     (output / "FINAL_STATUS.json").write_text(json.dumps(result, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    report = root / "reports/multimodal_interpretable_routes/VALIDATION_REPORT.md"
+    report = root / "reports/multimodal_routes/MULTIMODAL_INTERPRETABLE_ROUTES.md"
     report.parent.mkdir(parents=True, exist_ok=True)
     report.write_text(
         "# Multimodal Interpretable Routes\n\n"

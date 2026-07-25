@@ -2,6 +2,9 @@ from __future__ import annotations
 
 import csv
 import json
+import os
+import platform
+import resource
 import statistics
 import time
 from dataclasses import dataclass
@@ -132,12 +135,20 @@ def _measure(pipeline: Pipeline, batch_size: int, serialization: bool) -> dict[s
         json.dumps(evidence, sort_keys=True, separators=(",", ":"))
     after_serialization = time.perf_counter_ns()
     divisor = 1_000_000
+    peak_ram_mb = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 1024
+    peak_vram_mb = (
+        torch.cuda.max_memory_allocated() / (1024 * 1024)
+        if torch.cuda.is_available()
+        else 0.0
+    )
     return {
         "model_ms": (after_model - start) / divisor,
         "explainer_ms": (after_explainer - after_model) / divisor,
         "fuzzyxai_ms": (after_fuzzyxai - after_explainer) / divisor,
         "serialization_ms": (after_serialization - after_fuzzyxai) / divisor,
         "total_ms": (after_serialization - start) / divisor,
+        "peak_ram_mb": peak_ram_mb,
+        "peak_vram_mb": peak_vram_mb,
     }
 
 
@@ -158,6 +169,9 @@ def run(root: Path) -> dict[str, object]:
             for serialization in (False, True):
                 for repetition in range(REPETITIONS):
                     measured = _measure(pipeline, batch_size, serialization)
+                    measured["throughput_objects_per_second"] = (
+                        batch_size / max(measured["total_ms"] / 1000, 1e-12)
+                    )
                     base_ms = measured["model_ms"] + measured["explainer_ms"]
                     overhead = (
                         measured["fuzzyxai_ms"] + measured["serialization_ms"]
@@ -182,6 +196,9 @@ def run(root: Path) -> dict[str, object]:
                     measured = _measure(cold, batch_size, serialization)
                     measured["model_ms"] += setup_ms
                     measured["total_ms"] += setup_ms
+                    measured["throughput_objects_per_second"] = (
+                        batch_size / max(measured["total_ms"] / 1000, 1e-12)
+                    )
                     base_ms = measured["model_ms"] + measured["explainer_ms"]
                     overhead = (
                         measured["fuzzyxai_ms"] + measured["serialization_ms"]
@@ -200,6 +217,52 @@ def run(root: Path) -> dict[str, object]:
     warm = [float(row["overhead_ratio"]) for row in rows if row["cache"] == "warm"]
     ordered = sorted(warm)
     p95 = ordered[min(len(ordered) - 1, int(0.95 * len(ordered)))]
+    summaries: list[dict[str, object]] = []
+    group_keys = sorted(
+        {
+            (
+                str(row["pipeline"]),
+                int(row["batch_size"]),
+                str(row["cache"]),
+                bool(row["serialization"]),
+            )
+            for row in rows
+        }
+    )
+    for pipeline_id, batch_size, cache, serialization in group_keys:
+        selected = [
+            row
+            for row in rows
+            if (
+                row["pipeline"],
+                row["batch_size"],
+                row["cache"],
+                row["serialization"],
+            )
+            == (pipeline_id, batch_size, cache, serialization)
+        ]
+        totals = sorted(float(row["total_ms"]) for row in selected)
+        overheads = sorted(float(row["overhead_ratio"]) for row in selected)
+        summaries.append(
+            {
+                "pipeline": pipeline_id,
+                "batch_size": batch_size,
+                "cache": cache,
+                "serialization": serialization,
+                "mean_total_ms": statistics.fmean(totals),
+                "median_total_ms": statistics.median(totals),
+                "p90_total_ms": totals[min(len(totals) - 1, int(0.90 * len(totals)))],
+                "p95_total_ms": totals[min(len(totals) - 1, int(0.95 * len(totals)))],
+                "std_total_ms": statistics.stdev(totals),
+                "median_overhead_ratio": statistics.median(overheads),
+                "p95_overhead_ratio": overheads[min(len(overheads) - 1, int(0.95 * len(overheads)))],
+                "median_throughput_objects_per_second": statistics.median(
+                    float(row["throughput_objects_per_second"]) for row in selected
+                ),
+                "peak_ram_mb": max(float(row["peak_ram_mb"]) for row in selected),
+                "peak_vram_mb": max(float(row["peak_vram_mb"]) for row in selected),
+            }
+        )
     result = {
         "protocol_id": "h9-e2e-latency-v1",
         "status": (
@@ -214,14 +277,23 @@ def run(root: Path) -> dict[str, object]:
         "warm_median_overhead_ratio": statistics.median(warm),
         "warm_p95_overhead_ratio": p95,
         "human_time_claim": False,
+        "environment": {
+            "python": platform.python_version(),
+            "platform": platform.platform(),
+            "processor": platform.processor(),
+            "cpu_count": os.cpu_count(),
+            "torch": torch.__version__,
+            "cuda_available": torch.cuda.is_available(),
+        },
     }
-    output = root / "results/h9_e2e_latency"
-    _write_csv(output / "E2E_LATENCY.csv", rows)
+    output = root / "results/h9_e2e"
+    _write_csv(output / "PER_RUN_TIMES.csv", rows)
+    _write_csv(output / "PIPELINE_SUMMARY.csv", summaries)
     (output / "H9_E2E_FINAL_STATUS.json").write_text(
         json.dumps(result, indent=2, sort_keys=True) + "\n",
         encoding="utf-8",
     )
-    report = root / "reports/h9_e2e_latency/E2E_LATENCY_REPORT.md"
+    report = root / "reports/h9_e2e/END_TO_END_LATENCY.md"
     report.parent.mkdir(parents=True, exist_ok=True)
     report.write_text(
         "# H9 End-to-End Latency\n\n"
