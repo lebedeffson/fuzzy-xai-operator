@@ -1,0 +1,7 @@
+{
+  "schema_version": "1.0",
+  "manifest": "/home/lebedeffson/Code/fuzzy-xai-ch4-q1/framework/fuzzyxai/operators_manifest.yaml",
+  "operator_count": 39,
+  "status": "PASS",
+  "errors": []
+}
