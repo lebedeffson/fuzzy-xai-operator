@@ -1,5 +1,35 @@
 # Project Memory
 
+## FXAI-H10-C5B-REPOSITORY-GROUNDED
+
+- Date: 2026-07-26
+- Branch: `feat/h10-c5b-repository-grounded`
+- Protocol lock commit: `2e55d4c`
+- Implementation and open evidence commit: `92763c4`
+- Chapter document modified: no
+
+H10-C5b now has a repository-grounded AST/import/call/test/runtime graph,
+independent before/after AST Gold, structurally distinct greedy and global
+cover solvers, top-k localization, calibrated abstention, isolated repair
+execution, deterministic source preparation, and runtime-evidence collection.
+The open source matrix contains six development repositories and 24 unscored
+held-out incidents from 12 disjoint repositories. Development remains
+`H10_C5B_BLOCKED_REPOSITORY_DATA`: all six cases have failing-test IDs but no
+reproduced traceback because the local Docker daemon could not be started
+without owner authorization. Held-out scoring and natural recovery claims
+remain disabled.
+
+H9-E2E-v2 replaces tensor `round/tolist` JSON hashing with binary tensor
+digests, Merkle aggregation, a static-artifact cache, batch-native records,
+and separate online/full modes. On 540 registered local microbenchmark
+measurements it is `H9_E2E_V2_TARGET_MET`; worst online median and p95 were
+0.05821 and 0.107473 ms/object, and both relative gates passed. This does not
+modify or erase the original `H9_E2E_TARGET_NOT_MET` result.
+
+The parent H10-C5 and H9-E2E evidence remained byte-identical across 21 files.
+Final local checks were 30 focused tests passed, Ruff PASS, operator manifest
+PASS with 41 operators, and 610 passed / 5 skipped in full regression.
+
 ## FXAI-CH4-Q1-EVIDENCE-EXPANSION
 
 - Date: 2026-07-26
