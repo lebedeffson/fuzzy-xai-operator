@@ -12,6 +12,13 @@
   },
   "primary_question": "Does the globally selected diagnostic cut reduce executable repair effort while preserving recertification success?",
   "primary_endpoint": "normalized_executable_cost",
+  "primary_cost_model": {
+    "id": "hybrid",
+    "alpha": 0.5,
+    "beta": 0.5,
+    "gamma": 0.5,
+    "normalization": "strategy_cost_divided_by_repair_all_cost_within_scenario"
+  },
   "secondary_endpoints": [
     "repair_action_count",
     "unique_touched_components",

@@ -14,6 +14,9 @@ Runtime, dependency fan-out, and rollback/side-effect risk normalization are
 fitted only on the 24 development scenarios. Held-out outcomes are not used to
 set scales or weights.
 
+The primary model is the hybrid model with `alpha = beta = gamma = 0.5`.
+Primary executable cost is divided by the `B_ALL` cost within each scenario.
+
 The hybrid grid is fixed before execution:
 
 ```text

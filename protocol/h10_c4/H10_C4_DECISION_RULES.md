@@ -10,8 +10,11 @@ H10-C3 R4 remains an immutable parent result and is not recomputed.
 ## Primary comparison
 
 The unit of analysis is `scenario_id`. The primary endpoint is normalized
-executable cost. Each strategy starts from the same source snapshot and receives
-the same contracts, allowed repair actions, and verifier.
+executable cost under the preregistered hybrid model with
+`alpha = beta = gamma = 0.5`. Normalization divides each strategy's executed
+cost by the `B_ALL` cost within the same scenario. Each strategy starts from
+the same source snapshot and receives the same contracts, allowed repair
+actions, and verifier.
 
 The three registered paired contrasts are:
 
