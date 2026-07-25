@@ -1,5 +1,21 @@
 schema_version: "1.0"
 operators:
+  - id: h10_c5b.repository_grounded_route_audit
+    dissertation_ref: "H10-C5b prospective repository-grounded transfer"
+    callable: fuzzyxai.experiments.h10_c5b:run
+    input_schema: BuggyRepositoryGraphAndRuntimeEvidenceWithoutFuturePatch
+    output_schema: RepositoryGroundedTopKLocalizationEvidence
+    tests: [tests/h10_c5b/test_structural_distinction.py, tests/h10_c5b/test_experiment_runner.py]
+    artifacts: [protocol/h10_c5b_repository_grounded/H10_C5B_PROTOCOL_LOCK.json]
+    visualization: []
+  - id: h9_e2e_v2.optimized_evidence_path
+    dissertation_ref: "H9-E2E-v2 optimized online evidence path"
+    callable: fuzzyxai.evidence_path:audit_batch
+    input_schema: BatchPredictionsExplanationsAndStaticManifest
+    output_schema: MerkleBatchAuditReport
+    tests: [tests/h9_e2e_v2/test_evidence_path.py]
+    artifacts: [protocol/h9_e2e_v2/H9_E2E_V2_PROTOCOL_LOCK.json]
+    visualization: []
   - id: h10_c5.natural_incident_route_audit
     dissertation_ref: "H10-C5 prospective natural-incident external validation"
     callable: fuzzyxai.experiments.h10_c5:run

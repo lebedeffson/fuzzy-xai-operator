@@ -133,7 +133,7 @@ def test_structural_failure_cannot_be_hidden_by_low_risk() -> None:
 def test_operator_manifest_is_complete_and_resolvable() -> None:
     report = validate_manifest()
     assert report["status"] == "PASS", report["errors"]
-    assert report["operator_count"] == 39
+    assert report["operator_count"] == 41
     assert {
         "h10_c5.natural_incident_route_audit",
         "h10_c6.cut_robustness",

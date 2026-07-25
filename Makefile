@@ -1243,7 +1243,7 @@ h10-c4-chapter:
 h10-c4-package:
 	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/build_h10_c4_release.py
 
-.PHONY: ch4-q1-test h10-c5-source-audit h10-c5-run h10-c6-run multimodal-route-validation h9-e2e-latency ch4-q1-claim-lint ch4-q1-evidence
+.PHONY: ch4-q1-test h10-c5-source-audit h10-c5-run h10-c5b-test h10-c5b-prepare h10-c5b-collect-runtime h10-c5b-run h10-c5b-parent-immutability h10-c6-run multimodal-route-validation h9-e2e-latency h9-e2e-v2 ch4-q1-claim-lint ch4-q1-evidence
 
 ch4-q1-test:
 	$(H10_C4_ENV) $(H10_C3_PYTHON) -m pytest -q tests/h10_c5 tests/h10_c6 tests/multimodal tests/roles tests/chapter_revision
@@ -1255,6 +1255,27 @@ h10-c5-run:
 	test -n "$(H10_C5_SOURCE)"
 	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/run_h10_c5.py --source "$(H10_C5_SOURCE)" --root .
 
+h10-c5b-test:
+	$(H10_C4_ENV) $(H10_C3_PYTHON) -m ruff check framework/fuzzyxai/fuzzyxai/repository_diagnostics framework/fuzzyxai/fuzzyxai/gold_repository framework/fuzzyxai/fuzzyxai/evidence_path framework/fuzzyxai/fuzzyxai/experiments/h10_c5b.py framework/fuzzyxai/fuzzyxai/experiments/h9_e2e_v2.py scripts/ch4_revision/collect_h10_c5b_runtime.py scripts/ch4_revision/prepare_h10_c5b_sources.py scripts/ch4_revision/run_h10_c5b.py scripts/ch4_revision/run_h9_e2e_v2.py scripts/ch4_revision/verify_parent_result_immutability.py tests/h10_c5b tests/h9_e2e_v2
+	$(H10_C4_ENV) $(H10_C3_PYTHON) -m pytest -q tests/h10_c5b tests/h9_e2e_v2
+
+h10-c5b-prepare:
+	test -n "$(H10_C5B_SOURCE_DIR)"
+	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/prepare_h10_c5b_sources.py --output "$(H10_C5B_SOURCE_DIR)"
+
+h10-c5b-collect-runtime:
+	test -n "$(H10_C5B_MANIFEST)"
+	test -n "$(H10_C5B_RUNTIME_COMMANDS)"
+	test -n "$(H10_C5B_RUNTIME_DIR)"
+	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/collect_h10_c5b_runtime.py --manifest "$(H10_C5B_MANIFEST)" --commands "$(H10_C5B_RUNTIME_COMMANDS)" --output "$(H10_C5B_RUNTIME_DIR)"
+
+h10-c5b-run:
+	test -n "$(H10_C5B_MANIFEST)"
+	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/run_h10_c5b.py --manifest "$(H10_C5B_MANIFEST)" --root .
+
+h10-c5b-parent-immutability:
+	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/verify_parent_result_immutability.py --root .
+
 h10-c6-run:
 	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/run_h10_c6.py --root .
 
@@ -1263,6 +1284,9 @@ multimodal-route-validation:
 
 h9-e2e-latency:
 	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/run_h9_e2e.py
+
+h9-e2e-v2:
+	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/run_h9_e2e_v2.py
 
 ch4-q1-claim-lint:
 	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/claim_lint.py --root .
