@@ -93,6 +93,7 @@ def test_method_lock_matches_frozen_scientific_files() -> None:
     )
     assert result["method_commit"] == METHOD_COMMIT
     assert result["scientific_implementation_diff"] == 0
+    assert result["git_object_verified"] is True
 
 
 def test_merge_copies_only_runtime_evidence(tmp_path: Path) -> None:

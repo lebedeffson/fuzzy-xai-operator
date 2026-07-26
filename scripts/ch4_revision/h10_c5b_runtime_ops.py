@@ -96,6 +96,16 @@ def _git_bytes(commit: str, relative_path: str, root: Path) -> bytes:
     return completed.stdout
 
 
+def _git_object_available(root: Path) -> bool:
+    completed = subprocess.run(
+        ["git", "cat-file", "-e", f"{METHOD_COMMIT}^{{commit}}"],
+        cwd=root,
+        capture_output=True,
+        check=False,
+    )
+    return completed.returncode == 0
+
+
 def verify_method_lock(lock_path: Path, root: Path) -> dict[str, Any]:
     lock = json.loads(lock_path.read_text(encoding="utf-8"))
     if lock.get("method_commit") != METHOD_COMMIT:
@@ -106,16 +116,20 @@ def verify_method_lock(lock_path: Path, root: Path) -> dict[str, Any]:
     if not isinstance(protected, dict) or not protected:
         raise ValueError("method lock has no protected files")
 
+    git_object_verified = _git_object_available(root)
     actual: dict[str, str] = {}
     for relative_path, expected in sorted(protected.items()):
-        committed = _git_bytes(METHOD_COMMIT, relative_path, root)
-        committed_sha = hashlib.sha256(committed).hexdigest()
         current_path = root / relative_path
         if not current_path.is_file():
             raise ValueError(f"protected file is missing: {relative_path}")
         current_sha = sha256_path(current_path)
-        if committed_sha != expected or current_sha != expected:
+        if current_sha != expected:
             raise ValueError(f"protected file changed: {relative_path}")
+        if git_object_verified:
+            committed = _git_bytes(METHOD_COMMIT, relative_path, root)
+            committed_sha = hashlib.sha256(committed).hexdigest()
+            if committed_sha != expected:
+                raise ValueError(f"frozen Git blob changed: {relative_path}")
         actual[relative_path] = current_sha
 
     aggregate = canonical_sha256(actual)
@@ -130,6 +144,7 @@ def verify_method_lock(lock_path: Path, root: Path) -> dict[str, Any]:
         "method_code_sha256": aggregate,
         "protected_file_count": len(actual),
         "scientific_implementation_diff": 0,
+        "git_object_verified": git_object_verified,
     }
 
 
