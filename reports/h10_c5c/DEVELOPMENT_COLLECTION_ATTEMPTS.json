@@ -23,6 +23,27 @@
       "runtime_collection_completed": false,
       "scientific_result": "NOT_EVALUATED",
       "status": "FAILED_DURING_RUNTIME_BEFORE_READINESS_AND_SCORING"
+    },
+    {
+      "complete_incidents": 10,
+      "development_scored": false,
+      "failure": "Readiness failed because 18 environments did not complete setup, one failure lacked a project traceback, and one lacked an executed project slice.",
+      "failure_stage": "DEVELOPMENT_READINESS",
+      "head_commit": "fa6f3e0a898f5350d5f8d08ae61cec3c68a7ec22",
+      "held_out_created": false,
+      "held_out_scored": false,
+      "readiness_checks_passed": 18,
+      "readiness_checks_total": 23,
+      "run_id": 30220132486,
+      "runtime_collection_completed": true,
+      "runtime_status_counts": {
+        "BUG_REPRODUCED_WITHOUT_EXECUTED_SLICE": 1,
+        "BUG_REPRODUCED_WITHOUT_PROJECT_TRACE": 1,
+        "BUG_REPRODUCED_WITH_TRACE": 10,
+        "ENVIRONMENT_SETUP_FAILED": 18
+      },
+      "scientific_result": "NOT_EVALUATED",
+      "status": "RUNTIME_INCOMPLETE_SCORING_BLOCKED"
     }
   ],
   "scientific_result": "NOT_EVALUATED"

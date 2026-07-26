@@ -359,6 +359,8 @@ def _run_logged(
             "timed_out": False,
             "stdout_sha256": hashlib.sha256(completed.stdout.encode()).hexdigest(),
             "stderr_sha256": hashlib.sha256(completed.stderr.encode()).hexdigest(),
+            "stdout_tail": completed.stdout[-8000:],
+            "stderr_tail": completed.stderr[-8000:],
         }
     except subprocess.TimeoutExpired as error:
         stdout = (
@@ -377,6 +379,8 @@ def _run_logged(
             "timed_out": True,
             "stdout_sha256": hashlib.sha256(stdout.encode()).hexdigest(),
             "stderr_sha256": hashlib.sha256(stderr.encode()).hexdigest(),
+            "stdout_tail": stdout[-8000:],
+            "stderr_tail": stderr[-8000:],
         }
 
 

@@ -329,7 +329,10 @@ jobs:
           cp -a results/h10_c5c "$H10_C5C_WORK/package/results" || true
           cp "$H10_C5C_WORK/BUGSINPY_COMMIT.txt" "$H10_C5C_WORK/package/" || true
           tar -C "$H10_C5C_WORK/package" -czf "$H10_C5C_WORK/h10-c5c-development-evidence.tgz" .
-          sha256sum "$H10_C5C_WORK/h10-c5c-development-evidence.tgz" > "$H10_C5C_WORK/h10-c5c-development-evidence.tgz.sha256"
+          (
+            cd "$H10_C5C_WORK"
+            sha256sum h10-c5c-development-evidence.tgz > h10-c5c-development-evidence.tgz.sha256
+          )
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -338,6 +341,19 @@ jobs:
             ${{ env.H10_C5C_WORK }}/h10-c5c-development-evidence.tgz
             ${{ env.H10_C5C_WORK }}/h10-c5c-development-evidence.tgz.sha256
           if-no-files-found: error
+          retention-days: 30
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: h10-c5c-development-summary-${{ github.run_id }}
+          path: |
+            ${{ env.H10_C5C_RUNTIME }}/H10_C5C_RUNTIME_EVIDENCE_REPORT.json
+            ${{ env.H10_C5C_RUNTIME }}/H10_C5C_DEVELOPMENT_RUNTIME_ENRICHED.jsonl
+            ${{ env.H10_C5C_READINESS }}
+            ${{ env.H10_C5C_PROVISION_REPORT }}
+            ${{ env.H10_C5C_SOURCE }}/H10_C5C_SELECTION_REPORT.json
+          if-no-files-found: warn
           retention-days: 30
 
       - name: Enforce claim-safe boundary

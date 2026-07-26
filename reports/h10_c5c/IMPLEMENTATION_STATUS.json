@@ -29,7 +29,9 @@
   "registered_requirements_installation": true,
   "required_runtime_provisioning": "provided_map_or_conda_prefix",
   "runtime_manifest_hash_binding": true,
+  "runtime_setup_diagnostics_retained": true,
   "scientific_result": "NOT_EVALUATED",
+  "registered_requirements_encoding_normalized": true,
   "source_registries_portable": true,
   "status": "IMPLEMENTED_AWAITING_DEVELOPMENT_DATA",
   "typed_runtime_collector": true

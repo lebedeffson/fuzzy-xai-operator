@@ -140,6 +140,7 @@ def verify_h10_c5c_development_readiness(
         for value in protocol["registered_h10_c5b_held_out_repositories"]
     }
     base = manifest_path.parent.resolve()
+    command_base = command_registry_path.parent.resolve()
     per_incident: list[dict[str, object]] = []
     all_runtime_complete = True
     all_event_streams_valid = True
@@ -199,6 +200,23 @@ def verify_h10_c5c_development_readiness(
                 and bool(registered_patch_hash)
                 and _sha256(patch_path) == registered_patch_hash
             )
+            for path_field, hash_field in (
+                ("setup_script", "setup_script_materialized_sha256"),
+                ("requirements_path", "requirements_materialized_sha256"),
+            ):
+                expected_hash = str(source.get(hash_field, ""))
+                registered_path = (
+                    str(command.get(path_field, "")).strip()
+                    if command_present
+                    else ""
+                )
+                if expected_hash or registered_path:
+                    materialized_path = _resolve(command_base, registered_path)
+                    source_hashes_valid &= (
+                        materialized_path.is_file()
+                        and bool(expected_hash)
+                        and _sha256(materialized_path) == expected_hash
+                    )
             repository_root = _resolve(base, row.get("repository_root", ""))
             overlays = source.get("exposing_test_overlays", [])
             if isinstance(overlays, list) and overlays:

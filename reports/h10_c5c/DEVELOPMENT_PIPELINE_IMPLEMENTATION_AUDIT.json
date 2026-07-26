@@ -45,7 +45,7 @@
       "status": "PASS"
     },
     "h10_c5c_tests": {
-      "passed": 40,
+      "passed": 41,
       "status": "PASS"
     },
     "python_compileall": "PASS",

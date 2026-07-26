@@ -94,6 +94,22 @@ def _git_is_clean(repository: Path) -> bool:
     ).stdout.strip()
 
 
+def _materialize_registered_text(source: Path, destination: Path) -> str:
+    payload = source.read_bytes()
+    if payload.startswith((b"\xff\xfe", b"\xfe\xff")):
+        encoding = "utf-16"
+    elif payload.startswith(b"\xef\xbb\xbf"):
+        encoding = "utf-8-sig"
+    else:
+        encoding = "utf-8"
+    text = payload.decode(encoding)
+    destination.write_text(
+        text.replace("\r\n", "\n").replace("\r", "\n"),
+        encoding="utf-8",
+    )
+    return encoding
+
+
 def _parse_assignment_file(path: Path) -> dict[str, str]:
     values: dict[str, str] = {}
     for line_number, raw in enumerate(path.read_text(encoding="utf-8").splitlines(), start=1):
@@ -496,8 +512,12 @@ def _materialize_candidate(
     requirements_output = incident_root / "requirements.txt"
     if setup_source.is_file():
         shutil.copy2(setup_source, setup_output)
+    requirements_encoding = ""
     if requirements_source.is_file():
-        shutil.copy2(requirements_source, requirements_output)
+        requirements_encoding = _materialize_registered_text(
+            requirements_source,
+            requirements_output,
+        )
     patch_output.write_text(patch_text, encoding="utf-8")
     before_output.write_text(
         json.dumps(before, sort_keys=True) + "\n",
@@ -571,6 +591,19 @@ def _materialize_candidate(
         "source_patch_sha256": _sha256(candidate.patch_path),
         "bug_info_sha256": _sha256(candidate.bug_root / "bug.info"),
         "run_test_sha256": _sha256(candidate.bug_root / "run_test.sh"),
+        "setup_script_source_sha256": (
+            _sha256(setup_source) if setup_source.is_file() else ""
+        ),
+        "setup_script_materialized_sha256": (
+            _sha256(setup_output) if setup_output.is_file() else ""
+        ),
+        "requirements_source_sha256": (
+            _sha256(requirements_source) if requirements_source.is_file() else ""
+        ),
+        "requirements_materialized_sha256": (
+            _sha256(requirements_output) if requirements_output.is_file() else ""
+        ),
+        "requirements_source_encoding": requirements_encoding,
         "exposing_test_overlays": list(exposing_test_overlays),
         "repository_tree_sha256": hashlib.sha256(
             _run(["git", "rev-parse", f"{candidate.buggy_commit}^{{tree}}"], cwd=repository).stdout.strip().encode()

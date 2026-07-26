@@ -120,6 +120,10 @@ def _build_fixture(tmp_path: Path) -> tuple[Path, Path]:
                 "python test_core.py\n",
                 encoding="utf-8",
             )
+            if bug_index == 0:
+                (bug / "requirements.txt").write_bytes(
+                    "fixture-package==1.0\r\n".encode("utf-16")
+                )
     _commit_all(bugsinpy, "benchmark")
     return bugsinpy, upstream_root
 
@@ -201,6 +205,27 @@ def test_prepare_materializes_uncollected_development_manifest(
         item["exposing_test_overlays"][0]["path"] == "test_core.py"
         for item in source["incidents"]
     )
+    encoded_requirements = [
+        item
+        for item in source["incidents"]
+        if item["requirements_source_encoding"] == "utf-16"
+    ]
+    assert encoded_requirements
+    commands = json.loads(
+        result.command_registry_path.read_text(encoding="utf-8")
+    )
+    for item in encoded_requirements:
+        materialized = base / commands[item["incident_id"]]["requirements_path"]
+        payload = materialized.read_bytes()
+        assert payload == b"fixture-package==1.0\n"
+        assert (
+            hashlib.sha256(payload).hexdigest()
+            == item["requirements_materialized_sha256"]
+        )
+        assert (
+            item["requirements_source_sha256"]
+            != item["requirements_materialized_sha256"]
+        )
     selection = json.loads(result.selection_report_path.read_text(encoding="utf-8"))
     assert all("patch_path" not in item for item in selection["selected"])
     assert all("bug_root" not in item for item in selection["selected"])
@@ -550,6 +575,76 @@ def test_runtime_collector_prepares_isolated_environment_when_enabled(
     assert evidence["python_runtime_exact"] is True
 
 
+def test_runtime_collector_retains_failed_setup_diagnostics(
+    tmp_path: Path,
+) -> None:
+    repository = tmp_path / "repository"
+    repository.mkdir()
+    (repository / "test_failure.py").write_text(
+        "raise AssertionError('must not execute after setup failure')\n",
+        encoding="utf-8",
+    )
+    setup_script = tmp_path / "setup.sh"
+    setup_script.write_text(
+        "printf 'registered setup failed\\n' >&2\nexit 7\n",
+        encoding="utf-8",
+    )
+    manifest = tmp_path / "manifest.jsonl"
+    manifest.write_text(
+        json.dumps(
+            {
+                "incident_id": "fixture-setup-failure",
+                "repository": "fixture/project",
+                "repository_root": str(repository),
+                "failing_tests": ["test_failure.py"],
+                "split": "development",
+                "runtime_evidence_status": "PENDING_COLLECTION",
+            },
+            sort_keys=True,
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    registry = tmp_path / "registry.json"
+    registry.write_text(
+        json.dumps(
+            {
+                "fixture-setup-failure": {
+                    "python_version": (
+                        f"{sys.version_info.major}.{sys.version_info.minor}"
+                    ),
+                    "python_executable": sys.executable,
+                    "commands": [
+                        {
+                            "test_id": "test_failure.py",
+                            "argv": ["python", "test_failure.py"],
+                        }
+                    ],
+                    "setup_script": str(setup_script),
+                }
+            },
+            sort_keys=True,
+        ),
+        encoding="utf-8",
+    )
+    result = collect_h10_c5c_runtime(
+        manifest,
+        registry,
+        tmp_path / "runtime",
+        timeout_seconds=30,
+        allow_setup=True,
+    )
+    assert result.complete_incidents == 0
+    report = json.loads(result.report_path.read_text(encoding="utf-8"))
+    evidence = report["evidence"][0]
+    assert evidence["status"] == "ENVIRONMENT_SETUP_FAILED"
+    assert evidence["setup"]["failure_stage"] == "setup_script"
+    assert (
+        "registered setup failed"
+        in evidence["setup"]["setup_script"]["stderr_tail"]
+    )
+
+
 def test_runtime_collector_fails_closed_on_missing_registered_python(
     tmp_path: Path,
 ) -> None:
@@ -775,3 +870,8 @@ def test_development_workflow_uses_only_the_locked_bugsinpy_commit() -> None:
     assert "default: master" not in workflow
     assert 'test "${#BUGSINPY_REF}" -eq 40' in workflow
     assert 'test "$BUGSINPY_REF" = "$locked_ref"' in workflow
+    assert "h10-c5c-development-summary-${{ github.run_id }}" in workflow
+    assert (
+        "sha256sum h10-c5c-development-evidence.tgz"
+        " > h10-c5c-development-evidence.tgz.sha256"
+    ) in workflow
