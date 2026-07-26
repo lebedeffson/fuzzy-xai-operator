@@ -1,0 +1,27 @@
+{
+  "amendment_id": "h10-c5b-held-out-scoring-amendment-v1",
+  "amendment_scope": "one_time_official_held_out_scoring_only",
+  "created_after_complete_held_out_runtime_evidence": true,
+  "created_before_held_out_scoring": true,
+  "decision_rules_changed": false,
+  "endpoint_changed": false,
+  "gates_changed": false,
+  "gold_or_method_predictions_viewed": false,
+  "method_code_status": "FROZEN_FOR_RUNTIME_COLLECTION",
+  "method_commit": "7aa72a19a70bdb5eedea520742f269bc6c26aeea",
+  "operational_controller_only": true,
+  "parent_protocol": "h10-c5b-repository-grounded-v1",
+  "scoring_policy": {
+    "allowed_final_statuses": [
+      "H10_C5B_NOT_SUPPORTED",
+      "H10_C5B_SUPPORTED"
+    ],
+    "authorization_required": true,
+    "failure_after_opening": "HELD_OUT_SCORING_FAILED_NO_REUSE",
+    "opening_count_before": 0,
+    "opening_record_before_method_execution": true,
+    "repeated_official_scoring_allowed": false,
+    "sealed_scoring": false
+  },
+  "status": "LOCKED_BEFORE_HELD_OUT_SCORING"
+}

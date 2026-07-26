@@ -13,8 +13,10 @@ from scripts.ch4_revision.h10_c5b_runtime_ops import (
     _runtime_test_command,
     build_runtime_inputs,
     freeze_development_runtime,
+    freeze_held_out_scoring,
     merge_runtime_evidence,
     plan_replacements,
+    sha256_path,
     verify_method_lock,
     verify_runtime_readiness,
 )
@@ -537,6 +539,96 @@ def test_development_freeze_rejects_failed_leakage_audit(tmp_path: Path) -> None
             tmp_path / "lock.json",
             Path.cwd(),
         )
+
+
+def test_held_out_scoring_lock_binds_complete_runtime_and_gold(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    runtime_rows = []
+    enriched_rows = []
+    patch = tmp_path / "gold.patch"
+    before = tmp_path / "before.json"
+    after = tmp_path / "after.json"
+    patch.write_text("diff --git a/a.py b/a.py\n", encoding="utf-8")
+    before.write_text("{}\n", encoding="utf-8")
+    after.write_text("{}\n", encoding="utf-8")
+    for index in range(24):
+        row = _manifest_row(
+            tmp_path,
+            f"repo-{index // 3}__project-{index}",
+            split="held_out",
+        )
+        row["repository"] = f"repo-{index // 3}/project"
+        runtime_row = {
+            key: value
+            for key, value in row.items()
+            if key not in {"patch_path", "after_sources_path"}
+        }
+        runtime_rows.append(runtime_row)
+        enriched_rows.append(
+            {
+                **row,
+                "patch_path": str(patch),
+                "before_sources_path": str(before),
+                "after_sources_path": str(after),
+                "runtime_evidence_status": "BUG_REPRODUCED_WITH_TRACE",
+            }
+        )
+    runtime_manifest = tmp_path / "runtime.jsonl"
+    enriched_manifest = tmp_path / "enriched.jsonl"
+    _write_jsonl(runtime_manifest, runtime_rows)
+    _write_jsonl(enriched_manifest, enriched_rows)
+    report = tmp_path / "report.json"
+    report.write_text(
+        json.dumps(
+            {
+                "status": "PASS",
+                "incident_count": 24,
+                "trace_complete_count": 24,
+                "evidence": [
+                    {
+                        "incident_id": row["incident_id"],
+                        "status": "BUG_REPRODUCED_WITH_TRACE",
+                    }
+                    for row in runtime_rows
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+    development_lock = tmp_path / "development-lock.json"
+    development_lock.write_text(
+        json.dumps(
+            {
+                "status": "DEVELOPMENT_RUNTIME_FROZEN",
+                "method_commit": METHOD_COMMIT,
+            }
+        ),
+        encoding="utf-8",
+    )
+    controller = tmp_path / "controller.py"
+    controller.write_text("# locked\n", encoding="utf-8")
+    monkeypatch.setattr(
+        "scripts.ch4_revision.h10_c5b_runtime_ops.verify_method_lock",
+        lambda *_: {"method_code_sha256": "method-sha"},
+    )
+    result = freeze_held_out_scoring(
+        runtime_manifest,
+        report,
+        enriched_manifest,
+        development_lock,
+        tmp_path / "method-lock.json",
+        controller,
+        tmp_path / "held-out-lock.json",
+        tmp_path,
+    )
+    assert result["status"] == "HELD_OUT_SCORING_LOCKED"
+    assert result["incident_count"] == 24
+    assert result["repository_count"] == 8
+    assert result["opening_count"] == 0
+    assert result["held_out_scored"] is False
+    assert result["controller_sha256"] == sha256_path(controller)
 
 
 def test_ci_wires_runtime_targets_without_held_out_scoring() -> None:

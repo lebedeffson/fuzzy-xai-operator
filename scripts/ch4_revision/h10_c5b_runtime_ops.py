@@ -563,6 +563,75 @@ def freeze_development_runtime(
     return lock
 
 
+def freeze_held_out_scoring(
+    runtime_manifest_path: Path,
+    runtime_report_path: Path,
+    enriched_manifest_path: Path,
+    development_lock_path: Path,
+    method_lock_path: Path,
+    controller_path: Path,
+    output: Path,
+    root: Path,
+) -> dict[str, Any]:
+    readiness = verify_runtime_readiness(
+        runtime_manifest_path,
+        runtime_report_path,
+        "held_out",
+        development_lock=development_lock_path,
+    )
+    method = verify_method_lock(method_lock_path, root)
+    runtime_rows = read_jsonl(runtime_manifest_path)
+    enriched_rows = read_jsonl(enriched_manifest_path)
+    runtime_ids = {str(row["incident_id"]) for row in runtime_rows}
+    enriched_ids = {str(row["incident_id"]) for row in enriched_rows}
+    if runtime_ids != enriched_ids:
+        raise ValueError("enriched held-out manifest incident set changed")
+    if any(set(row) & FORBIDDEN_METHOD_FIELDS for row in runtime_rows):
+        raise ValueError("Gold field entered held-out runtime channel")
+    if any(
+        row.get("runtime_evidence_status") != TRACE_COMPLETE
+        for row in enriched_rows
+    ):
+        raise ValueError("enriched held-out runtime evidence is incomplete")
+    required_gold = ("patch_path", "before_sources_path", "after_sources_path")
+    for row in enriched_rows:
+        for field in required_gold:
+            path = Path(str(row.get(field, "")))
+            if not path.is_file():
+                raise ValueError(f"independent Gold input is missing: {field}")
+    lock = {
+        "status": "HELD_OUT_SCORING_LOCKED",
+        "protocol_id": PROTOCOL_ID,
+        "method_commit": METHOD_COMMIT,
+        "method_code_sha256": method["method_code_sha256"],
+        "controller_sha256": sha256_path(controller_path),
+        "runtime_manifest_sha256": sha256_path(runtime_manifest_path),
+        "runtime_evidence_report_path": str(runtime_report_path.resolve()),
+        "runtime_evidence_report_sha256": sha256_path(runtime_report_path),
+        "enriched_manifest_path": str(enriched_manifest_path.resolve()),
+        "enriched_manifest_sha256": sha256_path(enriched_manifest_path),
+        "development_runtime_lock_path": str(development_lock_path.resolve()),
+        "development_runtime_lock_sha256": sha256_path(development_lock_path),
+        "incident_count": readiness["incident_count"],
+        "repository_count": readiness["repository_count"],
+        "trace_complete_count": readiness["trace_complete_count"],
+        "gold_leakage_audit": "PASS",
+        "opening_count": 0,
+        "held_out_scored": False,
+        "sealed_scoring": False,
+        "allowed_final_statuses": [
+            "H10_C5B_NOT_SUPPORTED",
+            "H10_C5B_SUPPORTED",
+        ],
+    }
+    output.parent.mkdir(parents=True, exist_ok=True)
+    output.write_text(
+        json.dumps(lock, indent=2, ensure_ascii=True, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
+    return lock
+
+
 def _json_print(value: object) -> None:
     print(json.dumps(value, indent=2, ensure_ascii=True, sort_keys=True))
 
@@ -608,6 +677,16 @@ def main() -> None:
     freeze.add_argument("--output", type=Path, required=True)
     freeze.add_argument("--root", type=Path, default=Path("."))
 
+    freeze_held_out = subparsers.add_parser("freeze-held-out-scoring")
+    freeze_held_out.add_argument("--runtime-manifest", type=Path, required=True)
+    freeze_held_out.add_argument("--runtime-report", type=Path, required=True)
+    freeze_held_out.add_argument("--enriched-manifest", type=Path, required=True)
+    freeze_held_out.add_argument("--development-lock", type=Path, required=True)
+    freeze_held_out.add_argument("--method-lock", type=Path, required=True)
+    freeze_held_out.add_argument("--controller", type=Path, required=True)
+    freeze_held_out.add_argument("--output", type=Path, required=True)
+    freeze_held_out.add_argument("--root", type=Path, default=Path("."))
+
     args = parser.parse_args()
     if args.command == "verify-method-lock":
         result = verify_method_lock(args.lock.resolve(), args.root.resolve())
@@ -646,12 +725,23 @@ def main() -> None:
                 args.development_lock.resolve() if args.development_lock else None
             ),
         )
-    else:
+    elif args.command == "freeze-development":
         result = freeze_development_runtime(
             args.manifest.resolve(),
             args.runtime_report.resolve(),
             args.development_results.resolve(),
             args.method_lock.resolve(),
+            args.output.resolve(),
+            args.root.resolve(),
+        )
+    else:
+        result = freeze_held_out_scoring(
+            args.runtime_manifest.resolve(),
+            args.runtime_report.resolve(),
+            args.enriched_manifest.resolve(),
+            args.development_lock.resolve(),
+            args.method_lock.resolve(),
+            args.controller.resolve(),
             args.output.resolve(),
             args.root.resolve(),
         )

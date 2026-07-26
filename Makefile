@@ -1243,7 +1243,7 @@ h10-c4-chapter:
 h10-c4-package:
 	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/build_h10_c4_release.py
 
-.PHONY: ch4-q1-test h10-c5-source-audit h10-c5-run h10-c5b-test h10-c5b-ops-test h10-c5b-prepare h10-c5b-prepare-runtime-inputs h10-c5b-collect-runtime h10-c5b-merge-runtime h10-c5b-runtime-readiness h10-c5b-freeze-development h10-c5b-plan-replacements h10-c5b-run h10-c5b-verify-method-lock h10-c5b-parent-immutability h10-c6-run multimodal-route-validation h9-e2e-latency h9-e2e-v2 ch4-q1-claim-lint ch4-q1-evidence
+.PHONY: ch4-q1-test h10-c5-source-audit h10-c5-run h10-c5b-test h10-c5b-ops-test h10-c5b-prepare h10-c5b-prepare-runtime-inputs h10-c5b-collect-runtime h10-c5b-merge-runtime h10-c5b-runtime-readiness h10-c5b-freeze-development h10-c5b-freeze-held-out-scoring h10-c5b-plan-replacements h10-c5b-run h10-c5b-score-held-out h10-c5b-verify-method-lock h10-c5b-parent-immutability h10-c6-run multimodal-route-validation h9-e2e-latency h9-e2e-v2 ch4-q1-claim-lint ch4-q1-evidence
 
 ch4-q1-test:
 	$(H10_C4_ENV) $(H10_C3_PYTHON) -m pytest -q tests/h10_c5 tests/h10_c6 tests/multimodal tests/roles tests/chapter_revision
@@ -1256,12 +1256,12 @@ h10-c5-run:
 	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/run_h10_c5.py --source "$(H10_C5_SOURCE)" --root .
 
 h10-c5b-test:
-	$(H10_C4_ENV) $(H10_C3_PYTHON) -m ruff check framework/fuzzyxai/fuzzyxai/repository_diagnostics framework/fuzzyxai/fuzzyxai/gold_repository framework/fuzzyxai/fuzzyxai/evidence_path framework/fuzzyxai/fuzzyxai/experiments/h10_c5b.py framework/fuzzyxai/fuzzyxai/experiments/h9_e2e_v2.py scripts/ch4_revision/collect_h10_c5b_runtime.py scripts/ch4_revision/h10_c5b_runtime_ops.py scripts/ch4_revision/prepare_h10_c5b_sources.py scripts/ch4_revision/run_h10_c5b.py scripts/ch4_revision/run_h9_e2e_v2.py scripts/ch4_revision/verify_parent_result_immutability.py tests/h10_c5b tests/h9_e2e_v2
+	$(H10_C4_ENV) $(H10_C3_PYTHON) -m ruff check framework/fuzzyxai/fuzzyxai/repository_diagnostics framework/fuzzyxai/fuzzyxai/gold_repository framework/fuzzyxai/fuzzyxai/evidence_path framework/fuzzyxai/fuzzyxai/experiments/h10_c5b.py framework/fuzzyxai/fuzzyxai/experiments/h9_e2e_v2.py scripts/ch4_revision/collect_h10_c5b_runtime.py scripts/ch4_revision/h10_c5b_runtime_ops.py scripts/ch4_revision/prepare_h10_c5b_sources.py scripts/ch4_revision/run_h10_c5b.py scripts/ch4_revision/run_h9_e2e_v2.py scripts/ch4_revision/score_h10_c5b_held_out.py scripts/ch4_revision/verify_parent_result_immutability.py tests/h10_c5b tests/h9_e2e_v2
 	$(H10_C4_ENV) $(H10_C3_PYTHON) -m pytest -q tests/h10_c5b tests/h9_e2e_v2
 
 h10-c5b-ops-test:
-	$(H10_C4_ENV) $(H10_C3_PYTHON) -m ruff check scripts/ch4_revision/h10_c5b_runtime_ops.py tests/h10_c5b/test_runtime_operations.py
-	$(H10_C4_ENV) $(H10_C3_PYTHON) -m pytest -q tests/h10_c5b/test_runtime_operations.py
+	$(H10_C4_ENV) $(H10_C3_PYTHON) -m ruff check scripts/ch4_revision/h10_c5b_runtime_ops.py scripts/ch4_revision/score_h10_c5b_held_out.py tests/h10_c5b/test_held_out_scoring_controller.py tests/h10_c5b/test_runtime_operations.py
+	$(H10_C4_ENV) $(H10_C3_PYTHON) -m pytest -q tests/h10_c5b/test_held_out_scoring_controller.py tests/h10_c5b/test_runtime_operations.py
 
 h10-c5b-prepare:
 	test -n "$(H10_C5B_SOURCE_DIR)"
@@ -1297,6 +1297,14 @@ h10-c5b-freeze-development:
 	test -n "$(H10_C5B_DEVELOPMENT_LOCK)"
 	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/h10_c5b_runtime_ops.py freeze-development --manifest "$(H10_C5B_MANIFEST)" --runtime-report "$(H10_C5B_RUNTIME_REPORT)" --development-results "$(H10_C5B_DEVELOPMENT_RESULTS)" --method-lock protocol/h10_c5b_repository_grounded/METHOD_LOCK.json --output "$(H10_C5B_DEVELOPMENT_LOCK)" --root .
 
+h10-c5b-freeze-held-out-scoring:
+	test -n "$(H10_C5B_MANIFEST)"
+	test -n "$(H10_C5B_RUNTIME_REPORT)"
+	test -n "$(H10_C5B_ENRICHED_MANIFEST)"
+	test -n "$(H10_C5B_DEVELOPMENT_LOCK)"
+	test -n "$(H10_C5B_HELD_OUT_LOCK)"
+	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/h10_c5b_runtime_ops.py freeze-held-out-scoring --runtime-manifest "$(H10_C5B_MANIFEST)" --runtime-report "$(H10_C5B_RUNTIME_REPORT)" --enriched-manifest "$(H10_C5B_ENRICHED_MANIFEST)" --development-lock "$(H10_C5B_DEVELOPMENT_LOCK)" --method-lock protocol/h10_c5b_repository_grounded/METHOD_LOCK.json --controller scripts/ch4_revision/score_h10_c5b_held_out.py --output "$(H10_C5B_HELD_OUT_LOCK)" --root .
+
 h10-c5b-plan-replacements:
 	test -n "$(H10_C5B_CANDIDATES)"
 	test -n "$(H10_C5B_MANIFEST)"
@@ -1307,6 +1315,14 @@ h10-c5b-plan-replacements:
 h10-c5b-run:
 	test -n "$(H10_C5B_MANIFEST)"
 	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/run_h10_c5b.py --manifest "$(H10_C5B_MANIFEST)" --root "$(or $(H10_C5B_ROOT),.)"
+
+h10-c5b-score-held-out:
+	test -n "$(H10_C5B_HELD_OUT_LOCK)"
+	test -n "$(APPROVAL)"
+	test -n "$(H10_C5B_SCORING_STATUS)"
+	test -n "$(H10_C5B_OPENING_RECORD)"
+	test -n "$(H10_C5B_SCORING_ROOT)"
+	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/score_h10_c5b_held_out.py --lock "$(H10_C5B_HELD_OUT_LOCK)" --approval "$(APPROVAL)" --status "$(H10_C5B_SCORING_STATUS)" --opening-record "$(H10_C5B_OPENING_RECORD)" --output-root "$(H10_C5B_SCORING_ROOT)" --repository-root .
 
 h10-c5b-verify-method-lock:
 	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/h10_c5b_runtime_ops.py verify-method-lock --lock protocol/h10_c5b_repository_grounded/METHOD_LOCK.json --root .
