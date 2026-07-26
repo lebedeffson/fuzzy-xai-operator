@@ -1,0 +1,24 @@
+{
+  "amendment_id": "h10-c5c-bugsinpy-development-v1-amendment-002",
+  "applies_to": "h10-c5c-bugsinpy-development-v1",
+  "build_toolchain": {
+    "pip": "20.3.4",
+    "setuptools": "44.1.1",
+    "wheel": "0.36.2"
+  },
+  "created_after_failed_runtime_attempts": [
+    30219776277,
+    30220132486,
+    30220858259
+  ],
+  "created_before_successful_development_readiness": true,
+  "created_before_development_scoring": true,
+  "requirements_install_options": [
+    "--use-deprecated=legacy-resolver",
+    "--no-build-isolation"
+  ],
+  "reason": "The fixed BugsInPy selection requires Python 3.6-3.8 package metadata from 2019-2020. Runtime evidence showed that modern pip and setuptools rejected historical setup.py metadata and conflicting frozen environments before tests could execute. The prospective protocol explicitly permits runner and system-library corrections followed by repetition of the same incidents. This amendment pins the compatibility toolchain and does not alter incident selection, diagnostic inputs, Gold, endpoint, method weights, abstention, or gates.",
+  "scientific_endpoint_changed": false,
+  "selection_rule_changed": false,
+  "status": "LOCKED_BEFORE_RUNTIME_RETRY"
+}

@@ -480,10 +480,82 @@ def _prepare_environment(
         + os.pathsep
         + runtime_environment.get("PATH", "")
     )
+    runtime_environment["PIP_DISABLE_PIP_VERSION_CHECK"] = "1"
+    build_toolchain = registered.get("build_toolchain", {})
+    if not isinstance(build_toolchain, dict):
+        return None, {
+            "status": "FAIL",
+            "failure_stage": "build_toolchain_registry",
+            "error": "build_toolchain must be an object",
+            "venv": venv_result,
+            "build_toolchain": {"status": "INVALID"},
+            "requirements": {"status": "NOT_RUN"},
+            "setup_script": {"status": "NOT_RUN"},
+        }
+    if build_toolchain:
+        required_tools = ("pip", "setuptools", "wheel")
+        if not all(str(build_toolchain.get(name, "")).strip() for name in required_tools):
+            return None, {
+                "status": "FAIL",
+                "failure_stage": "build_toolchain_registry",
+                "error": "pip, setuptools, and wheel versions must be pinned",
+                "venv": venv_result,
+                "build_toolchain": {"status": "INVALID"},
+                "requirements": {"status": "NOT_RUN"},
+                "setup_script": {"status": "NOT_RUN"},
+            }
+        toolchain_result = _run_logged(
+            [
+                str(runtime_python),
+                "-m",
+                "pip",
+                "install",
+                *(f"{name}=={build_toolchain[name]}" for name in required_tools),
+            ],
+            cwd=sandbox,
+            environment=runtime_environment,
+            timeout_seconds=timeout_seconds,
+        )
+    else:
+        toolchain_result = {"status": "NOT_REGISTERED"}
+    if toolchain_result["status"] not in {"PASS", "NOT_REGISTERED"}:
+        return None, {
+            "status": "FAIL",
+            "failure_stage": "build_toolchain",
+            "base_python_executable": base_interpreter,
+            "base_python_version": base_version,
+            "runtime_python_executable": str(runtime_python),
+            "runtime_python_version": runtime_version,
+            "venv": venv_result,
+            "build_toolchain": toolchain_result,
+            "requirements": {"status": "NOT_RUN"},
+            "setup_script": {"status": "NOT_RUN"},
+        }
     requirements_path = Path(str(registered.get("requirements_path", "")))
     if _requirements_have_content(requirements_path):
+        install_options = registered.get("requirements_install_options", [])
+        if not isinstance(install_options, list) or not all(
+            isinstance(option, str) for option in install_options
+        ):
+            return None, {
+                "status": "FAIL",
+                "failure_stage": "requirements_options_registry",
+                "error": "requirements_install_options must be a string list",
+                "venv": venv_result,
+                "build_toolchain": toolchain_result,
+                "requirements": {"status": "NOT_RUN"},
+                "setup_script": {"status": "NOT_RUN"},
+            }
         requirements_result = _run_logged(
-            [str(runtime_python), "-m", "pip", "install", "-r", str(requirements_path)],
+            [
+                str(runtime_python),
+                "-m",
+                "pip",
+                "install",
+                *install_options,
+                "-r",
+                str(requirements_path),
+            ],
             cwd=sandbox,
             environment=runtime_environment,
             timeout_seconds=timeout_seconds,
@@ -501,6 +573,7 @@ def _prepare_environment(
             "runtime_python_executable": str(runtime_python),
             "runtime_python_version": runtime_version,
             "venv": venv_result,
+            "build_toolchain": toolchain_result,
             "requirements": requirements_result,
             "setup_script": {"status": "NOT_RUN"},
         }
@@ -526,6 +599,7 @@ def _prepare_environment(
             "runtime_python_executable": str(runtime_python),
             "runtime_python_version": runtime_version,
             "venv": venv_result,
+            "build_toolchain": toolchain_result,
             "requirements": requirements_result,
             "setup_script": setup_result,
         }
@@ -536,6 +610,7 @@ def _prepare_environment(
         "runtime_python_executable": str(runtime_python),
         "runtime_python_version": runtime_version,
         "venv": venv_result,
+        "build_toolchain": toolchain_result,
         "requirements": requirements_result,
         "setup_script": setup_result,
     }

@@ -9,6 +9,7 @@ from pathlib import Path
 from fuzzyxai.experiments.h10_c5c_data import (
     COLLECTION_LOCK_PATH,
     PROTOCOL_LOCK_PATH,
+    RUNTIME_COMPATIBILITY_AMENDMENT_PATH,
     canonical_repository,
 )
 from fuzzyxai.repository_diagnostics.runtime_events import load_runtime_events
@@ -79,11 +80,19 @@ def _event_key_leakage(path: Path) -> list[str]:
 
 def _load_locks(
     root: Path,
-) -> tuple[dict[str, object], dict[str, object], dict[str, object]]:
+) -> tuple[
+    dict[str, object],
+    dict[str, object],
+    dict[str, object],
+    dict[str, object],
+]:
     protocol = json.loads((root / PROTOCOL_LOCK_PATH).read_text(encoding="utf-8"))
     collection = json.loads((root / COLLECTION_LOCK_PATH).read_text(encoding="utf-8"))
     amendment = json.loads(
         (root / DATA_COLLECTION_AMENDMENT_PATH).read_text(encoding="utf-8")
+    )
+    runtime_compatibility = json.loads(
+        (root / RUNTIME_COMPATIBILITY_AMENDMENT_PATH).read_text(encoding="utf-8")
     )
     if protocol.get("status") != "LOCKED_BEFORE_IMPLEMENTATION":
         raise ValueError("H10-C5c protocol lock is invalid")
@@ -93,7 +102,11 @@ def _load_locks(
         raise ValueError("H10-C5c collection amendment is invalid")
     if amendment.get("applies_to") != collection.get("collection_id"):
         raise ValueError("H10-C5c collection amendment target is invalid")
-    return protocol, collection, amendment
+    if runtime_compatibility.get("status") != "LOCKED_BEFORE_RUNTIME_RETRY":
+        raise ValueError("H10-C5c runtime compatibility amendment is invalid")
+    if runtime_compatibility.get("applies_to") != collection.get("collection_id"):
+        raise ValueError("H10-C5c runtime compatibility target is invalid")
+    return protocol, collection, amendment, runtime_compatibility
 
 
 def verify_h10_c5c_development_readiness(
@@ -104,7 +117,7 @@ def verify_h10_c5c_development_readiness(
     output_path: Path,
     root: Path,
 ) -> DevelopmentReadinessResult:
-    protocol, collection, amendment = _load_locks(root)
+    protocol, collection, amendment, runtime_compatibility = _load_locks(root)
     rows = _load_jsonl(manifest_path)
     commands = json.loads(command_registry_path.read_text(encoding="utf-8"))
     sources = json.loads(source_registry_path.read_text(encoding="utf-8"))
@@ -187,6 +200,13 @@ def verify_h10_c5c_development_readiness(
             else set()
         )
         command_tests_match = command_present and failing_tests == registered_tests
+        runtime_compatibility_matches = (
+            command_present
+            and command.get("build_toolchain")
+            == runtime_compatibility.get("build_toolchain")
+            and command.get("requirements_install_options")
+            == runtime_compatibility.get("requirements_install_options")
+        )
         runtime_record = runtime_by_incident.get(incident_id, {})
         python_runtime_exact = bool(runtime_record.get("python_runtime_exact"))
         source_hashes_valid = False
@@ -240,7 +260,11 @@ def verify_h10_c5c_development_readiness(
         all_source_records_present &= (
             source_present and source_hashes_valid and exposing_tests_valid
         )
-        all_command_records_present &= command_present and command_tests_match
+        all_command_records_present &= (
+            command_present
+            and command_tests_match
+            and runtime_compatibility_matches
+        )
         all_python_runtimes_exact &= python_runtime_exact
         per_incident.append(
             {
@@ -256,6 +280,7 @@ def verify_h10_c5c_development_readiness(
                 "event_stream_valid": event_stream_valid,
                 "test_ids_covered": tests_covered,
                 "command_tests_match": command_tests_match,
+                "runtime_compatibility_matches": runtime_compatibility_matches,
                 "python_runtime_exact": python_runtime_exact,
                 "gold_event_key_leakage": leaked_keys,
                 "source_record_present": source_present,
@@ -321,6 +346,9 @@ def verify_h10_c5c_development_readiness(
     report = {
         "collection_id": collection["collection_id"],
         "data_collection_amendment_id": amendment["amendment_id"],
+        "runtime_compatibility_amendment_id": runtime_compatibility[
+            "amendment_id"
+        ],
         "protocol_id": "h10-c5c-evidence-retrieval-v1",
         "status": status,
         "scientific_result": "NOT_EVALUATED",

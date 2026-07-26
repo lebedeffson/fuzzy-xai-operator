@@ -72,6 +72,16 @@ environment, dependency installation or setup script produces
 `ENVIRONMENT_SETUP_FAILED`; tests are not executed in a partially prepared
 environment.
 
+`H10_C5C_RUNTIME_COMPATIBILITY_AMENDMENT_002.json` was locked after three
+failed infrastructure attempts and before any successful readiness or
+development scoring. It registers `pip==20.3.4`, `setuptools==44.1.1` and
+`wheel==0.36.2`, plus pip's legacy resolver and disabled build isolation, for
+the same fixed 30 incidents. These compatibility settings address historical
+2019-2020 package metadata; they do not change incident selection, diagnostic
+inputs, Gold, method weights, abstention, endpoints or scientific gates. The
+readiness verifier requires every command record to match the amendment
+exactly.
+
 An incident is marked `BUG_REPRODUCED_WITH_TRACE` only when its registered test
 fails and the event stream contains both a project executed slice and a
 project traceback frame. The development scorer rejects any other status.

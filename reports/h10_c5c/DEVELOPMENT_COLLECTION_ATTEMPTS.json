@@ -44,6 +44,27 @@
       },
       "scientific_result": "NOT_EVALUATED",
       "status": "RUNTIME_INCOMPLETE_SCORING_BLOCKED"
+    },
+    {
+      "complete_incidents": 10,
+      "development_scored": false,
+      "failure": "Readiness remained blocked because historical dependency metadata was rejected by the default modern pip/setuptools toolchain; one reproduced failure lacked a project traceback and one lacked an executed project slice.",
+      "failure_stage": "DEVELOPMENT_READINESS",
+      "head_commit": "e8a32cfa1182537100e6df3839615a0d0f75a11a",
+      "held_out_created": false,
+      "held_out_scored": false,
+      "readiness_checks_passed": 18,
+      "readiness_checks_total": 23,
+      "run_id": 30220858259,
+      "runtime_collection_completed": true,
+      "runtime_status_counts": {
+        "BUG_REPRODUCED_WITHOUT_EXECUTED_SLICE": 1,
+        "BUG_REPRODUCED_WITHOUT_PROJECT_TRACE": 1,
+        "BUG_REPRODUCED_WITH_TRACE": 10,
+        "ENVIRONMENT_SETUP_FAILED": 18
+      },
+      "scientific_result": "NOT_EVALUATED",
+      "status": "RUNTIME_INCOMPLETE_SCORING_BLOCKED"
     }
   ],
   "scientific_result": "NOT_EVALUATED"

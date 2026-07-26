@@ -10,6 +10,7 @@ import pytest
 from fuzzyxai.experiments.h10_c5c_data import (
     COLLECTION_LOCK_PATH,
     PROTOCOL_LOCK_PATH,
+    RUNTIME_COMPATIBILITY_AMENDMENT_PATH,
     canonical_repository,
     discover_bugsinpy_candidates,
     prepare_bugsinpy_development,
@@ -55,7 +56,12 @@ def _commit_all(path: Path, message: str) -> str:
 
 def _root_with_locked_benchmark(tmp_path: Path, commit: str) -> Path:
     root = tmp_path / "locked-protocol"
-    for relative in (PROTOCOL_LOCK_PATH, COLLECTION_LOCK_PATH, AMENDMENT_PATH):
+    for relative in (
+        PROTOCOL_LOCK_PATH,
+        COLLECTION_LOCK_PATH,
+        AMENDMENT_PATH,
+        RUNTIME_COMPATIBILITY_AMENDMENT_PATH,
+    ):
         source = ROOT / relative
         target = root / relative
         target.parent.mkdir(parents=True, exist_ok=True)
@@ -213,6 +219,20 @@ def test_prepare_materializes_uncollected_development_manifest(
     assert encoded_requirements
     commands = json.loads(
         result.command_registry_path.read_text(encoding="utf-8")
+    )
+    assert all(
+        command["build_toolchain"]
+        == {
+            "pip": "20.3.4",
+            "setuptools": "44.1.1",
+            "wheel": "0.36.2",
+        }
+        for command in commands.values()
+    )
+    assert all(
+        command["requirements_install_options"]
+        == ["--use-deprecated=legacy-resolver", "--no-build-isolation"]
+        for command in commands.values()
     )
     for item in encoded_requirements:
         materialized = base / commands[item["incident_id"]]["requirements_path"]
@@ -771,7 +791,16 @@ def test_development_readiness_requires_complete_locked_inputs(tmp_path: Path) -
             }
         )
         command_registry[incident_id] = {
-            "commands": [{"test_id": test_id, "argv": ["pytest", "-q", test_id]}]
+            "commands": [{"test_id": test_id, "argv": ["pytest", "-q", test_id]}],
+            "build_toolchain": {
+                "pip": "20.3.4",
+                "setuptools": "44.1.1",
+                "wheel": "0.36.2",
+            },
+            "requirements_install_options": [
+                "--use-deprecated=legacy-resolver",
+                "--no-build-isolation",
+            ],
         }
         source_rows.append(
             {
@@ -845,6 +874,31 @@ def test_development_readiness_requires_complete_locked_inputs(tmp_path: Path) -
     assert report["scientific_result"] == "NOT_EVALUATED"
     assert report["development_scored"] is False
     assert all(report["checks"].values())
+    assert all(
+        row["runtime_compatibility_matches"] for row in report["per_incident"]
+    )
+
+    command_payload = json.loads(command_path.read_text(encoding="utf-8"))
+    command_payload["fixture-00"]["build_toolchain"]["pip"] = "24.0"
+    command_path.write_text(json.dumps(command_payload), encoding="utf-8")
+    failed_toolchain = verify_h10_c5c_development_readiness(
+        manifest,
+        command_path,
+        source_path,
+        runtime_report,
+        tmp_path / "readiness-wrong-toolchain.json",
+        ROOT,
+    )
+    assert failed_toolchain.status == "H10_C5C_DEVELOPMENT_READINESS_FAIL"
+    toolchain_report = json.loads(
+        failed_toolchain.report_path.read_text(encoding="utf-8")
+    )
+    assert toolchain_report["checks"]["all_command_records_present"] is False
+    assert (
+        toolchain_report["per_incident"][0]["runtime_compatibility_matches"]
+        is False
+    )
+    command_path.write_text(json.dumps(command_registry), encoding="utf-8")
 
     source_payload = json.loads(source_path.read_text(encoding="utf-8"))
     source_payload["bugsinpy_commit"] = "0" * 40
