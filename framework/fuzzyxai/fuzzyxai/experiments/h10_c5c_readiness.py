@@ -10,6 +10,7 @@ from fuzzyxai.experiments.h10_c5c_data import (
     COLLECTION_LOCK_PATH,
     PROTOCOL_LOCK_PATH,
     RUNTIME_COMPATIBILITY_AMENDMENT_PATH,
+    RUNTIME_INSTALLATION_AMENDMENT_PATH,
     canonical_repository,
 )
 from fuzzyxai.repository_diagnostics.runtime_events import load_runtime_events
@@ -85,6 +86,7 @@ def _load_locks(
     dict[str, object],
     dict[str, object],
     dict[str, object],
+    dict[str, object],
 ]:
     protocol = json.loads((root / PROTOCOL_LOCK_PATH).read_text(encoding="utf-8"))
     collection = json.loads((root / COLLECTION_LOCK_PATH).read_text(encoding="utf-8"))
@@ -93,6 +95,9 @@ def _load_locks(
     )
     runtime_compatibility = json.loads(
         (root / RUNTIME_COMPATIBILITY_AMENDMENT_PATH).read_text(encoding="utf-8")
+    )
+    runtime_installation = json.loads(
+        (root / RUNTIME_INSTALLATION_AMENDMENT_PATH).read_text(encoding="utf-8")
     )
     if protocol.get("status") != "LOCKED_BEFORE_IMPLEMENTATION":
         raise ValueError("H10-C5c protocol lock is invalid")
@@ -106,7 +111,17 @@ def _load_locks(
         raise ValueError("H10-C5c runtime compatibility amendment is invalid")
     if runtime_compatibility.get("applies_to") != collection.get("collection_id"):
         raise ValueError("H10-C5c runtime compatibility target is invalid")
-    return protocol, collection, amendment, runtime_compatibility
+    if runtime_installation.get("status") != "LOCKED_BEFORE_RUNTIME_RETRY":
+        raise ValueError("H10-C5c runtime installation amendment is invalid")
+    if runtime_installation.get("applies_to") != collection.get("collection_id"):
+        raise ValueError("H10-C5c runtime installation target is invalid")
+    return (
+        protocol,
+        collection,
+        amendment,
+        runtime_compatibility,
+        runtime_installation,
+    )
 
 
 def verify_h10_c5c_development_readiness(
@@ -117,7 +132,13 @@ def verify_h10_c5c_development_readiness(
     output_path: Path,
     root: Path,
 ) -> DevelopmentReadinessResult:
-    protocol, collection, amendment, runtime_compatibility = _load_locks(root)
+    (
+        protocol,
+        collection,
+        amendment,
+        runtime_compatibility,
+        runtime_installation,
+    ) = _load_locks(root)
     rows = _load_jsonl(manifest_path)
     commands = json.loads(command_registry_path.read_text(encoding="utf-8"))
     sources = json.loads(source_registry_path.read_text(encoding="utf-8"))
@@ -206,6 +227,8 @@ def verify_h10_c5c_development_readiness(
             == runtime_compatibility.get("build_toolchain")
             and command.get("requirements_install_options")
             == runtime_compatibility.get("requirements_install_options")
+            and command.get("requirements_install_strategy")
+            == runtime_installation.get("requirements_install_strategy")
         )
         runtime_record = runtime_by_incident.get(incident_id, {})
         python_runtime_exact = bool(runtime_record.get("python_runtime_exact"))
@@ -347,6 +370,9 @@ def verify_h10_c5c_development_readiness(
         "collection_id": collection["collection_id"],
         "data_collection_amendment_id": amendment["amendment_id"],
         "runtime_compatibility_amendment_id": runtime_compatibility[
+            "amendment_id"
+        ],
+        "runtime_installation_amendment_id": runtime_installation[
             "amendment_id"
         ],
         "protocol_id": "h10-c5c-evidence-retrieval-v1",

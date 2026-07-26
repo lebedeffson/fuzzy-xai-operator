@@ -11,6 +11,7 @@ from fuzzyxai.experiments.h10_c5c_data import (
     COLLECTION_LOCK_PATH,
     PROTOCOL_LOCK_PATH,
     RUNTIME_COMPATIBILITY_AMENDMENT_PATH,
+    RUNTIME_INSTALLATION_AMENDMENT_PATH,
     canonical_repository,
     discover_bugsinpy_candidates,
     prepare_bugsinpy_development,
@@ -61,6 +62,7 @@ def _root_with_locked_benchmark(tmp_path: Path, commit: str) -> Path:
         COLLECTION_LOCK_PATH,
         AMENDMENT_PATH,
         RUNTIME_COMPATIBILITY_AMENDMENT_PATH,
+        RUNTIME_INSTALLATION_AMENDMENT_PATH,
     ):
         source = ROOT / relative
         target = root / relative
@@ -232,6 +234,11 @@ def test_prepare_materializes_uncollected_development_manifest(
     assert all(
         command["requirements_install_options"]
         == ["--use-deprecated=legacy-resolver", "--no-build-isolation"]
+        for command in commands.values()
+    )
+    assert all(
+        command["requirements_install_strategy"]
+        == "BENCHMARK_PER_LINE_TWO_PASS"
         for command in commands.values()
     )
     for item in encoded_requirements:
@@ -665,6 +672,83 @@ def test_runtime_collector_retains_failed_setup_diagnostics(
     )
 
 
+def test_runtime_collector_benchmark_strategy_records_requirement_failures(
+    tmp_path: Path,
+) -> None:
+    repository = tmp_path / "repository"
+    repository.mkdir()
+    (repository / "test_failure.py").write_text(
+        "from setup_marker import READY\n"
+        "assert READY is True\n"
+        "raise AssertionError('expected benchmark failure')\n",
+        encoding="utf-8",
+    )
+    setup_script = tmp_path / "setup.sh"
+    setup_script.write_text(
+        "printf 'READY = True\\n' > setup_marker.py\n",
+        encoding="utf-8",
+    )
+    requirements = tmp_path / "requirements.txt"
+    requirements.write_text("./missing-local-package\n", encoding="utf-8")
+    manifest = tmp_path / "manifest.jsonl"
+    manifest.write_text(
+        json.dumps(
+            {
+                "incident_id": "fixture-partial-requirements",
+                "repository": "fixture/project",
+                "repository_root": str(repository),
+                "failing_tests": ["test_failure.py"],
+                "split": "development",
+                "runtime_evidence_status": "PENDING_COLLECTION",
+            },
+            sort_keys=True,
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    registry = tmp_path / "registry.json"
+    registry.write_text(
+        json.dumps(
+            {
+                "fixture-partial-requirements": {
+                    "python_version": (
+                        f"{sys.version_info.major}.{sys.version_info.minor}"
+                    ),
+                    "python_executable": sys.executable,
+                    "commands": [
+                        {
+                            "test_id": "test_failure.py",
+                            "argv": ["python", "test_failure.py"],
+                        }
+                    ],
+                    "setup_script": str(setup_script),
+                    "requirements_path": str(requirements),
+                    "requirements_install_strategy": (
+                        "BENCHMARK_PER_LINE_TWO_PASS"
+                    ),
+                }
+            },
+            sort_keys=True,
+        ),
+        encoding="utf-8",
+    )
+    result = collect_h10_c5c_runtime(
+        manifest,
+        registry,
+        tmp_path / "runtime",
+        timeout_seconds=30,
+        allow_setup=True,
+    )
+    assert result.complete_incidents == 1
+    report = json.loads(result.report_path.read_text(encoding="utf-8"))
+    evidence = report["evidence"][0]
+    assert evidence["status"] == "BUG_REPRODUCED_WITH_TRACE"
+    assert evidence["setup"]["status"] == "PASS"
+    assert evidence["setup"]["requirements"]["status"] == "PARTIAL"
+    assert evidence["setup"]["requirements"]["pre_setup"]["failed_count"] == 1
+    assert evidence["setup"]["requirements"]["post_setup"]["failed_count"] == 1
+
+
 def test_runtime_collector_fails_closed_on_missing_registered_python(
     tmp_path: Path,
 ) -> None:
@@ -801,6 +885,7 @@ def test_development_readiness_requires_complete_locked_inputs(tmp_path: Path) -
                 "--use-deprecated=legacy-resolver",
                 "--no-build-isolation",
             ],
+            "requirements_install_strategy": "BENCHMARK_PER_LINE_TWO_PASS",
         }
         source_rows.append(
             {

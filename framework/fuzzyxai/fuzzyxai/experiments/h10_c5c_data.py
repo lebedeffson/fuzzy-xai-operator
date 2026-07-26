@@ -23,6 +23,10 @@ RUNTIME_COMPATIBILITY_AMENDMENT_PATH = Path(
     "protocol/h10_c5c_evidence_retrieval/"
     "H10_C5C_RUNTIME_COMPATIBILITY_AMENDMENT_002.json"
 )
+RUNTIME_INSTALLATION_AMENDMENT_PATH = Path(
+    "protocol/h10_c5c_evidence_retrieval/"
+    "H10_C5C_RUNTIME_INSTALLATION_AMENDMENT_003.json"
+)
 
 _ASSIGNMENT = re.compile(r"^([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(.*)$")
 _DIFF_HEADER = re.compile(r"^diff --git a/(.+?) b/(.+?)$", re.MULTILINE)
@@ -632,6 +636,13 @@ def prepare_bugsinpy_development(
         raise ValueError("H10-C5c runtime compatibility amendment is invalid")
     if runtime_compatibility.get("applies_to") != collection.get("collection_id"):
         raise ValueError("H10-C5c runtime compatibility target is invalid")
+    runtime_installation = json.loads(
+        (root / RUNTIME_INSTALLATION_AMENDMENT_PATH).read_text(encoding="utf-8")
+    )
+    if runtime_installation.get("status") != "LOCKED_BEFORE_RUNTIME_RETRY":
+        raise ValueError("H10-C5c runtime installation amendment is invalid")
+    if runtime_installation.get("applies_to") != collection.get("collection_id"):
+        raise ValueError("H10-C5c runtime installation target is invalid")
     benchmark = collection["benchmark"]
     if not isinstance(benchmark, dict):
         raise TypeError("H10-C5c benchmark lock must be an object")
@@ -671,6 +682,9 @@ def prepare_bugsinpy_development(
         command_row["build_toolchain"] = runtime_compatibility["build_toolchain"]
         command_row["requirements_install_options"] = runtime_compatibility[
             "requirements_install_options"
+        ]
+        command_row["requirements_install_strategy"] = runtime_installation[
+            "requirements_install_strategy"
         ]
         command_rows[candidate.incident_id] = command_row
         source_rows.append(source_row)

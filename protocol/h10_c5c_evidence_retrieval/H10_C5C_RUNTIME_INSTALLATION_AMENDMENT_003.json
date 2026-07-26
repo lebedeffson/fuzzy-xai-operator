@@ -1,0 +1,15 @@
+{
+  "amendment_id": "h10-c5c-bugsinpy-development-v1-amendment-003",
+  "applies_to": "h10-c5c-bugsinpy-development-v1",
+  "created_after_failed_runtime_attempts": [
+    30221595604
+  ],
+  "created_before_successful_development_readiness": true,
+  "created_before_development_scoring": true,
+  "reason": "The locked BugsInPy framework installs each non-comment requirement independently, runs the registered setup script, and repeats the independent installs. The H10-C5c collector instead used one fail-fast pip install -r invocation, so an unavailable optional, platform-specific, or self-package requirement prevented the exposing test from running. This amendment makes the collector reproduce the benchmark installation order while recording every failed requirement. It does not alter incident selection, source snapshots, exposing tests, diagnostic inputs, Gold, method weights, abstention, endpoints, or scientific gates.",
+  "requirement_failure_policy": "RECORD_AND_CONTINUE_TO_REGISTERED_SETUP_AND_TEST",
+  "requirements_install_strategy": "BENCHMARK_PER_LINE_TWO_PASS",
+  "scientific_endpoint_changed": false,
+  "selection_rule_changed": false,
+  "status": "LOCKED_BEFORE_RUNTIME_RETRY"
+}

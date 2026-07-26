@@ -65,6 +65,27 @@
       },
       "scientific_result": "NOT_EVALUATED",
       "status": "RUNTIME_INCOMPLETE_SCORING_BLOCKED"
+    },
+    {
+      "complete_incidents": 14,
+      "development_scored": false,
+      "failure": "Readiness remained blocked because the collector used one fail-fast requirements transaction while the locked BugsInPy compiler installs requirements independently around the registered setup script. Fourteen incidents completed; fourteen stopped during dependency setup, one reproduced failure lacked an executed project slice, and one registered test did not fail.",
+      "failure_stage": "DEVELOPMENT_READINESS",
+      "head_commit": "904bf9ca60043c6793ad992bf91ceb7efeae824d",
+      "held_out_created": false,
+      "held_out_scored": false,
+      "readiness_checks_passed": 18,
+      "readiness_checks_total": 23,
+      "run_id": 30221595604,
+      "runtime_collection_completed": true,
+      "runtime_status_counts": {
+        "BUG_REPRODUCED_WITHOUT_EXECUTED_SLICE": 1,
+        "BUG_REPRODUCED_WITH_TRACE": 14,
+        "ENVIRONMENT_SETUP_FAILED": 14,
+        "TEST_DID_NOT_FAIL": 1
+      },
+      "scientific_result": "NOT_EVALUATED",
+      "status": "RUNTIME_INCOMPLETE_SCORING_BLOCKED"
     }
   ],
   "scientific_result": "NOT_EVALUATED"

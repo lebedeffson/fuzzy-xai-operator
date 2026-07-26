@@ -82,6 +82,16 @@ inputs, Gold, method weights, abstention, endpoints or scientific gates. The
 readiness verifier requires every command record to match the amendment
 exactly.
 
+`H10_C5C_RUNTIME_INSTALLATION_AMENDMENT_003.json` records a second
+infrastructure-only correction after run `30221595604`: requirements are
+installed independently, the registered setup script is executed, and the
+independent installation pass is repeated. This is the order implemented by
+the locked BugsInPy `bugsinpy-compile` script. Unavailable optional or
+platform-specific requirements are retained as `PARTIAL` evidence rather than
+preventing the exposing test from running. Setup-script failures remain
+fail-closed. The selected incidents, source snapshots, tests, diagnostic
+method and gates are unchanged.
+
 An incident is marked `BUG_REPRODUCED_WITH_TRACE` only when its registered test
 fails and the event stream contains both a project executed slice and a
 project traceback frame. The development scorer rejects any other status.
