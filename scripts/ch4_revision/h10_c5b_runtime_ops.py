@@ -341,6 +341,8 @@ def plan_replacements(
     selected_manifest: Path,
     runtime_report: Path,
     output: Path,
+    *,
+    excluded_incidents: tuple[str, ...] = (),
 ) -> dict[str, Any]:
     selected = read_jsonl(selected_manifest)
     selected_by_id = {str(row["incident_id"]): row for row in selected}
@@ -354,7 +356,7 @@ def plan_replacements(
         {"repository": str(row["repo"]), "incident_id": str(row["instance_id"])}
         for row in frame.to_dict(orient="records")
     ]
-    used = set(selected_by_id)
+    used = set(selected_by_id) | set(excluded_incidents)
     ledger: list[dict[str, Any]] = []
     for incident_id, selected_row in sorted(selected_by_id.items()):
         status = str(evidence[incident_id]["status"])
@@ -401,6 +403,7 @@ def plan_replacements(
         "protocol_id": PROTOCOL_ID,
         "replacement_rule": "next_same_repository_candidate_by_registered_sha256_rank",
         "replacement_count": len(ledger),
+        "excluded_incidents": sorted(set(excluded_incidents)),
         "ledger": ledger,
     }
     output.write_text(
@@ -526,6 +529,7 @@ def main() -> None:
     replace.add_argument("--manifest", type=Path, required=True)
     replace.add_argument("--runtime-report", type=Path, required=True)
     replace.add_argument("--output", type=Path, required=True)
+    replace.add_argument("--exclude-incident", action="append", default=[])
 
     readiness = subparsers.add_parser("verify-runtime-readiness")
     readiness.add_argument("--manifest", type=Path, required=True)
@@ -568,6 +572,7 @@ def main() -> None:
             args.manifest.resolve(),
             args.runtime_report.resolve(),
             args.output.resolve(),
+            excluded_incidents=tuple(args.exclude_incident),
         )
     elif args.command == "verify-runtime-readiness":
         result = verify_runtime_readiness(

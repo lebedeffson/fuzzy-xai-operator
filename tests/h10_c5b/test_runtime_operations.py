@@ -305,6 +305,48 @@ def test_replacement_is_same_repository_and_sha_ranked(tmp_path: Path) -> None:
     assert replacement["gold_or_prediction_viewed"] is False
 
 
+def test_replacement_excludes_prior_attempts(tmp_path: Path) -> None:
+    selected = tmp_path / "selected.jsonl"
+    selected_row = _manifest_row(tmp_path)
+    _write_jsonl(selected, [selected_row])
+    report = tmp_path / "report.json"
+    report.write_text(
+        json.dumps(
+            {
+                "evidence": [
+                    {
+                        "incident_id": selected_row["incident_id"],
+                        "status": "RUNTIME_INFRASTRUCTURE_ERROR",
+                    }
+                ]
+            }
+        ),
+        encoding="utf-8",
+    )
+    candidates = tmp_path / "candidates.parquet"
+    pd.DataFrame(
+        [
+            {"repo": "repo/project", "instance_id": "repo__project-2"},
+            {"repo": "repo/project", "instance_id": "repo__project-3"},
+        ]
+    ).to_parquet(candidates)
+    first = plan_replacements(
+        candidates,
+        selected,
+        report,
+        tmp_path / "first.json",
+    )["ledger"][0]["replacement_incident"]
+    second = plan_replacements(
+        candidates,
+        selected,
+        report,
+        tmp_path / "second.json",
+        excluded_incidents=(str(first),),
+    )
+    assert second["ledger"][0]["replacement_incident"] != first
+    assert second["excluded_incidents"] == [first]
+
+
 def test_runtime_readiness_fails_closed(tmp_path: Path) -> None:
     manifest = tmp_path / "runtime.jsonl"
     _write_jsonl(manifest, [_manifest_row(tmp_path)])

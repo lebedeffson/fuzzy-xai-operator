@@ -9,3 +9,4 @@
 - Upload only `runtime-development` and `runtime-held_out`; a broad `runtime-*` glob also captures the local Python toolchain.
 - With `PrivateTmp=true`, Docker cannot bind a collector sandbox created under the runner's private `/tmp`; set `TMPDIR` to a mode-0700 directory under the Docker-visible runtime source root.
 - Some SWE-bench `FAIL_TO_PASS` entries contain a truncated parametrized suffix; execute the registered test function when brackets are unbalanced, and accept a pytest assertion block with a source location as runtime trace evidence.
+- Repeated runtime replacements must pass all previously attempted incident IDs via `--exclude-incident`; the current manifest alone cannot prevent cycling back to an unavailable candidate.
