@@ -424,6 +424,11 @@ def test_ci_wires_runtime_targets_without_held_out_scoring() -> None:
     assert "collect-held-out" in workflow
     assert "Provision operational Python 3.11" in workflow
     assert "venv --python 3.11 --seed" in workflow
+    assert 'UV_CACHE_DIR="$RUNNER_TEMP/uv-cache"' in workflow
+    assert (
+        'UV_PYTHON_INSTALL_DIR="$H10_C5B_SOURCE_DIR/runtime-tools/uv-python"'
+        in workflow
+    )
     assert "Enforce no automatic held-out scoring" in workflow
     assert "h10-c5b-score" not in workflow
     assert "unregistered CI hardware" in workflow

@@ -142,6 +142,9 @@ jobs:
               uv_bin="$HOME/.local/bin/uv"
             fi
             test -n "$uv_bin"
+            export UV_CACHE_DIR="$RUNNER_TEMP/uv-cache"
+            export UV_PYTHON_INSTALL_DIR="$H10_C5B_SOURCE_DIR/runtime-tools/uv-python"
+            mkdir -p "$UV_CACHE_DIR" "$UV_PYTHON_INSTALL_DIR"
             "$uv_bin" python install 3.11
             "$uv_bin" venv --python 3.11 --seed "$runtime_venv"
           fi
