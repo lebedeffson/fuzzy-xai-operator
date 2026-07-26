@@ -423,6 +423,7 @@ def test_ci_wires_runtime_targets_without_held_out_scoring() -> None:
         assert target in workflow
     assert "collect-held-out" in workflow
     assert "Provision operational Python 3.11" in workflow
+    assert "venv --python 3.11 --seed" in workflow
     assert "Enforce no automatic held-out scoring" in workflow
     assert "h10-c5b-score" not in workflow
     assert "unregistered CI hardware" in workflow
