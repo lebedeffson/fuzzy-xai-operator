@@ -1,0 +1,11 @@
+{
+  "approval_sha256": "4fc1e72fb898008758bb514de3892a7face5784d127d11ab1ba5bae7c9600c11",
+  "authorized_at_utc": "2026-07-26T17:15:13Z",
+  "held_out_scored": false,
+  "held_out_scoring_lock_sha256": "40d838b611b8d9f6353f537ea48d56b89cc2137135805ab5aa861c583764d570",
+  "method_commit": "7aa72a19a70bdb5eedea520742f269bc6c26aeea",
+  "opened_at_utc": "2026-07-26T17:15:38.898693+00:00",
+  "opening_count": 1,
+  "protocol_id": "h10-c5b-repository-grounded-v1",
+  "status": "HELD_OUT_SCORING_OPENED"
+}

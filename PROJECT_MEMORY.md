@@ -3,21 +3,29 @@
 ## FXAI-H10-C5B-REPOSITORY-GROUNDED
 
 - Date: 2026-07-26
-- Branch: `feat/h10-c5b-repository-grounded`
+- Operational branch: `ops/h10-c5b-runtime-collection`
 - Protocol lock commit: `2e55d4c`
-- Implementation and open evidence commit: `92763c4`
+- Frozen scientific method:
+  `7aa72a19a70bdb5eedea520742f269bc6c26aeea`
+- Pre-score lock commit:
+  `361f350c4ac36f73e199ff7e91dd07f8f52dade3`
+- Official opening count: `1`
+- Official status: `H10_C5B_NOT_SUPPORTED`
 - Chapter document modified: no
 
-H10-C5b now has a repository-grounded AST/import/call/test/runtime graph,
-independent before/after AST Gold, structurally distinct greedy and global
-cover solvers, top-k localization, calibrated abstention, isolated repair
-execution, deterministic source preparation, and runtime-evidence collection.
-The open source matrix contains six development repositories and 24 unscored
-held-out incidents from 12 disjoint repositories. Development remains
-`H10_C5B_BLOCKED_REPOSITORY_DATA`: all six cases have failing-test IDs but no
-reproduced traceback because the local Docker daemon could not be started
-without owner authorization. Held-out scoring and natural recovery claims
-remain disabled.
+The frozen repository-grounded method was scored exactly once after complete
+runtime collection. All 24 held-out incidents from 12 repositories had
+`BUG_REPRODUCED_WITH_TRACE`; the independent Gold leakage audit passed.
+O_ROUTE and B_GREEDY both recorded joint file+symbol+contract Hit@3 of
+`0.041666666666666664`. The repository-cluster difference was `0.0`, 95% CI
+`[0.0; 0.0]`, with two-sided bootstrap p `1.0`. O_ROUTE coverage was
+`0.20833333333333334`, below the frozen minimum `0.70`; B_GREEDY coverage was
+`0.6666666666666666`. Therefore H10-C5b is not supported.
+
+The pre-runtime `H10_C5B_BLOCKED_REPOSITORY_DATA` files remain under
+`results/h10_c5b/formative_pre_runtime/` and
+`reports/h10_c5b/formative_pre_runtime/`. They are historical blocked
+evidence, not an effect estimate. Natural recovery remains disabled.
 
 H9-E2E-v2 replaces tensor `round/tolist` JSON hashing with binary tensor
 digests, Merkle aggregation, a static-artifact cache, batch-native records,
@@ -26,9 +34,13 @@ measurements it is `H9_E2E_V2_TARGET_MET`; worst online median and p95 were
 0.05821 and 0.107473 ms/object, and both relative gates passed. This does not
 modify or erase the original `H9_E2E_TARGET_NOT_MET` result.
 
-The parent H10-C5 and H9-E2E evidence remained byte-identical across 21 files.
-Final local checks were 30 focused tests passed, Ruff PASS, operator manifest
-PASS with 41 operators, and 610 passed / 5 skipped in full regression.
+The parent H10-C5 and H9-E2E evidence remain unchanged. One-time scoring was
+bound to lock SHA256
+`40d838b611b8d9f6353f537ea48d56b89cc2137135805ab5aa861c583764d570`;
+the final status SHA256 is
+`a1ac841880e9acac2c09eac79d18721d17f83da5e8cec19a7057fa8cb453fc6d`.
+The opening record was written before method execution and official reuse is
+blocked.
 
 ## FXAI-CH4-Q1-EVIDENCE-EXPANSION
 
@@ -846,30 +858,25 @@ structural mutations only. It does not establish natural-incident
 generalization, engineer-time savings, human utility, organizational cost
 reduction, or production safety.
 
-## FXAI-H10-C5B-RUNTIME-COLLECTION
+## FXAI-H10-C5B-RUNTIME-COLLECTION (HISTORICAL PRE-SCORING STATE)
 
 - Date: 2026-07-26
 - Scientific method commit:
   `7aa72a19a70bdb5eedea520742f269bc6c26aeea`
 - Operational branch: `ops/h10-c5b-runtime-collection`
 - Method status: `FROZEN_FOR_RUNTIME_COLLECTION`
-- H10-C5b status: `H10_C5B_BLOCKED_REPOSITORY_DATA`
+- H10-C5b status at that checkpoint: `H10_C5B_BLOCKED_REPOSITORY_DATA`
 - H9-E2E-v2 status: `H9_E2E_V2_TARGET_MET`
 
 H9-E2E-v2 met its registered absolute and relative gates only within
 `registered_local_microbenchmark_pipelines`. The original negative H9-E2E
 result remains unchanged.
 
-H10-C5b has six open development incidents without complete runtime traceback
-evidence and no scored held-out incident. Its zero bootstrap row is a blocked
-report placeholder, not a comparison result. Repository graph construction,
-top-k ranking, global set cover, weights, abstention, evidence fusion,
-endpoint, and gates are frozen at the method commit above.
+This section records the state before runtime collection and is superseded by
+the official one-time result at the top of this file. Its zero bootstrap row
+was a blocked report placeholder, not a comparison result.
 
-Runtime collection is manual on an ephemeral runner. Repository images must be
-prebuilt and pinned by SHA256 digest; containers run without network or added
-capabilities. Unavailable incidents are replaced only by the next same-split,
-same-repository candidate under the preregistered SHA256 ordering, without
-viewing Gold or method output. Held-out collection requires a frozen complete
-development runtime lock, and no official held-out scoring command exists in
-the operational branch.
+Runtime collection subsequently completed for development and held-out
+incidents using digest-pinned images and fail-closed evidence checks. The
+official held-out controller was added as an operational-only amendment and
+did not change the frozen scientific method, endpoint, or gates.

@@ -1,5 +1,33 @@
 # FuzzyXAI Framework Release Status
 
+## H10-C5b Official Repository-Grounded Held-Out Result
+
+- Date: `2026-07-26`
+- Frozen scientific method:
+  `7aa72a19a70bdb5eedea520742f269bc6c26aeea`
+- Pre-score lock commit:
+  `361f350c4ac36f73e199ff7e91dd07f8f52dade3`
+- Held-out evidence: `24` incidents, `12` repositories, `24/24` traceback
+- Opening count: `1`
+- Gold leakage audit: `PASS`
+- H10-C5b: `H10_C5B_NOT_SUPPORTED`
+- H9-E2E-v2: `H9_E2E_V2_TARGET_MET`
+- Chapter modified: no
+
+The one-time official result did not show a primary-endpoint advantage:
+O_ROUTE and B_GREEDY both achieved joint file+symbol+contract Hit@3 of
+`0.041666666666666664`. The repository-cluster difference was `0.0`, with
+95% CI `[0.0; 0.0]` and bootstrap p `1.0`. O_ROUTE coverage was
+`0.20833333333333334`, below the locked minimum `0.70`. Its lower false
+localization rate cannot support the hypothesis because it was obtained with
+substantially more abstention.
+
+The earlier `H10_C5B_BLOCKED_REPOSITORY_DATA` package is retained as formative
+pre-runtime evidence. It is superseded by, but not rewritten into, the official
+negative result. Natural recovery remains disabled. H9-E2E-v2 remains positive
+only for the registered local microbenchmark pipelines; the original negative
+H9-E2E result remains unchanged.
+
 ## Final One-Zip Practical Closure
 
 - Release target: `v1.3.0` technical stable

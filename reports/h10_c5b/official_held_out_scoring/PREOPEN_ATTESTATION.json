@@ -1,0 +1,20 @@
+{
+  "study_id": "H10-C5B-REPOSITORY-GROUNDED",
+  "protocol_id": "h10-c5b-repository-grounded-v1",
+  "ops_branch": "ops/h10-c5b-runtime-collection",
+  "preopen_commit": "361f350c4ac36f73e199ff7e91dd07f8f52dade3",
+  "method_commit": "7aa72a19a70bdb5eedea520742f269bc6c26aeea",
+  "method_code_sha256": "5e14cbcd583aeb447b70be022147633588f6ee9ae95dcfb637be2e399e47c9ec",
+  "held_out_scoring_lock_sha256": "40d838b611b8d9f6353f537ea48d56b89cc2137135805ab5aa861c583764d570",
+  "runtime_evidence_report_sha256": "63001a8c6eafe81245fad83faa281cf736c33ce15dcdec187be12af8aff1bf12",
+  "enriched_manifest_sha256": "a22a62380249e7744f7387ec0d65b91d6717889b56de8af8e7dcc034a6e59f46",
+  "incident_count": 24,
+  "repository_count": 12,
+  "trace_complete_count": 24,
+  "opening_count": 0,
+  "held_out_scored": false,
+  "sealed_scoring": false,
+  "github_actions_run": "https://github.com/lebedeffson/fuzzy-xai-operator/actions/runs/30212101709",
+  "github_actions_conclusion": "success",
+  "created_at_utc": "2026-07-26T17:15:13Z"
+}

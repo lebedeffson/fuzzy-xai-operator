@@ -1,6 +1,26 @@
 FuzzyXAI full empirical validation technical candidate
 Date: 2026-07-20
 
+H10-C5B OFFICIAL HELD-OUT CLOSURE
+Date: 2026-07-26
+
+PASS: 74 focused H10-C5b and H9-E2E-v2 tests
+PASS: Ruff on repository diagnostics, evidence path, experiments, operations and tests
+PASS: frozen scientific method lock, 11 protected files, diff 0
+PASS: parent H10-C5/H9 immutability, 21 files unchanged
+PASS: 24/24 held-out incidents reproduced with traceback across 12 repositories
+PASS: Gold leakage audit
+PASS: signed approval and pre-score lock verification
+PASS: opening_count changed from 0 to 1 before method execution
+PASS: postopen reproduction byte-identical for final status, per-incident results,
+      repository bootstrap, method summary and scientific report
+PASS: GitHub Actions run 30212101709 on pre-score commit 361f350
+RESULT: H10_C5B_NOT_SUPPORTED
+PRIMARY: O_ROUTE Hit@3 0.041666666666666664; B_GREEDY Hit@3 0.041666666666666664
+DIFFERENCE: 0.0; 95% CI [0.0, 0.0]; bootstrap p 1.0
+COVERAGE: O_ROUTE 0.20833333333333334, below frozen minimum 0.70
+CLAIM BOUNDARY: no natural recovery claim; no algorithm or chapter change
+
 FULL EMPIRICAL VALIDATION
 PASS: four controlled modalities, 10000 objects each
 PASS: E1-E8 measured computational protocols
