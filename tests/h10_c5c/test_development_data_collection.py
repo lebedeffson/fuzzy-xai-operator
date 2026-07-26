@@ -251,6 +251,8 @@ def test_runtime_collector_emits_typed_per_test_events(tmp_path: Path) -> None:
         "from src.core import explode\n\ndef test_failure():\n    explode()\n",
         encoding="utf-8",
     )
+    (repository / "docs").mkdir()
+    (repository / "docs" / "generated.md").symlink_to("_build/generated.md")
     auxiliary = tmp_path / "auxiliary"
     auxiliary.mkdir()
     for name, value in (
@@ -321,6 +323,96 @@ def test_runtime_collector_emits_typed_per_test_events(tmp_path: Path) -> None:
     assert {event.kind for event in events} >= {"coverage", "traceback_frame"}
     assert {event.test_id for event in events} == {test_id}
     assert not any("patch" in event.detail.lower() for event in events)
+
+
+def test_runtime_collector_isolates_unsafe_symlink_failure(
+    tmp_path: Path,
+) -> None:
+    good_repository = tmp_path / "good"
+    good_repository.mkdir()
+    (good_repository / "test_failure.py").write_text(
+        "raise AssertionError('expected failure')\n",
+        encoding="utf-8",
+    )
+    bad_repository = tmp_path / "bad"
+    bad_repository.mkdir()
+    (bad_repository / "test_failure.py").write_text(
+        "raise AssertionError('must not execute')\n",
+        encoding="utf-8",
+    )
+    (bad_repository / "escape").symlink_to("../outside-secret")
+    (tmp_path / "outside-secret").write_text("private\n", encoding="utf-8")
+
+    rows = [
+        {
+            "incident_id": "fixture-good",
+            "repository": "fixture/good",
+            "repository_root": str(good_repository),
+            "failing_tests": ["test_failure.py"],
+            "split": "development",
+            "runtime_evidence_status": "PENDING_COLLECTION",
+        },
+        {
+            "incident_id": "fixture-bad",
+            "repository": "fixture/bad",
+            "repository_root": str(bad_repository),
+            "failing_tests": ["test_failure.py"],
+            "split": "development",
+            "runtime_evidence_status": "PENDING_COLLECTION",
+        },
+    ]
+    manifest = tmp_path / "manifest.jsonl"
+    manifest.write_text(
+        "".join(json.dumps(row, sort_keys=True) + "\n" for row in rows),
+        encoding="utf-8",
+    )
+    registered_minor = f"{sys.version_info.major}.{sys.version_info.minor}"
+    registry = tmp_path / "registry.json"
+    registry.write_text(
+        json.dumps(
+            {
+                row["incident_id"]: {
+                    "python_version": registered_minor,
+                    "python_executable": sys.executable,
+                    "commands": [
+                        {
+                            "test_id": "test_failure.py",
+                            "argv": ["python", "test_failure.py"],
+                        }
+                    ],
+                    "setup_script": "",
+                }
+                for row in rows
+            },
+            sort_keys=True,
+        ),
+        encoding="utf-8",
+    )
+    result = collect_h10_c5c_runtime(
+        manifest,
+        registry,
+        tmp_path / "runtime",
+        timeout_seconds=30,
+        max_workers=2,
+    )
+    assert result.complete_incidents == 1
+    enriched = [
+        json.loads(line)
+        for line in result.enriched_manifest_path.read_text(
+            encoding="utf-8"
+        ).splitlines()
+    ]
+    assert [row["incident_id"] for row in enriched] == [
+        "fixture-good",
+        "fixture-bad",
+    ]
+    assert enriched[0]["runtime_evidence_status"] == "BUG_REPRODUCED_WITH_TRACE"
+    assert enriched[1]["runtime_evidence_status"] == "RUNTIME_INFRASTRUCTURE_ERROR"
+    report = json.loads(result.report_path.read_text(encoding="utf-8"))
+    failed = report["evidence"][1]
+    assert failed["error_type"] == "ValueError"
+    assert "escapes the snapshot" in failed["error_message"]
+    assert failed["gold_fields_present"] is False
 
 
 def test_runtime_collector_supports_parallel_incident_collection(

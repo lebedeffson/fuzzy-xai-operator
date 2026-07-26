@@ -11,6 +11,18 @@
       "runtime_collection_started": false,
       "scientific_result": "NOT_EVALUATED",
       "status": "FAILED_BEFORE_RUNTIME_AND_SCORING"
+    },
+    {
+      "development_scored": false,
+      "failure": "Runtime sandbox copy followed internal dangling documentation symlinks instead of preserving them.",
+      "failure_stage": "COLLECT_TYPED_RUNTIME_EVIDENCE",
+      "head_commit": "3f88959d4969495994013d0691282e6aae401204",
+      "held_out_created": false,
+      "held_out_scored": false,
+      "run_id": 30219776277,
+      "runtime_collection_completed": false,
+      "scientific_result": "NOT_EVALUATED",
+      "status": "FAILED_DURING_RUNTIME_BEFORE_READINESS_AND_SCORING"
     }
   ],
   "scientific_result": "NOT_EVALUATED"

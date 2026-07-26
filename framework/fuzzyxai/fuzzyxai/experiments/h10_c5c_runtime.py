@@ -52,6 +52,19 @@ def _relative(path: Path, base: Path) -> str:
     return Path(os.path.relpath(path.resolve(), base.resolve())).as_posix()
 
 
+def _validate_internal_symlinks(root: Path) -> None:
+    resolved_root = root.resolve()
+    for path in root.rglob("*"):
+        if not path.is_symlink():
+            continue
+        target = Path(os.readlink(path))
+        if target.is_absolute():
+            raise ValueError(f"absolute repository symlink is forbidden: {path}")
+        resolved_target = (path.parent / target).resolve(strict=False)
+        if not resolved_target.is_relative_to(resolved_root):
+            raise ValueError(f"repository symlink escapes the snapshot: {path}")
+
+
 def _normalize_command(argv: tuple[str, ...]) -> tuple[str, ...]:
     if not argv:
         raise ValueError("runtime command is empty")
@@ -540,12 +553,14 @@ def _collect_incident(
         raise FileNotFoundError(source_root)
     incident_output = output_root / incident_id
     incident_output.mkdir(parents=True, exist_ok=True)
+    _validate_internal_symlinks(source_root)
     with tempfile.TemporaryDirectory(prefix=f"h10-c5c-{incident_id}-") as temporary:
         temporary_root = Path(temporary)
         sandbox = temporary_root / "repository"
         shutil.copytree(
             source_root,
             sandbox,
+            symlinks=True,
             ignore=shutil.ignore_patterns(
                 ".git",
                 ".tox",
@@ -781,6 +796,59 @@ def _collect_incident(
     return enriched, evidence
 
 
+def _record_infrastructure_error(
+    row: dict[str, object],
+    output_root: Path,
+    manifest_base: Path,
+    error: Exception,
+) -> tuple[dict[str, object], dict[str, object]]:
+    incident_id = str(row["incident_id"])
+    incident_output = output_root / incident_id
+    incident_output.mkdir(parents=True, exist_ok=True)
+    message = (
+        str(error)
+        .replace(str(manifest_base), "<manifest_root>")
+        .replace(str(output_root), "<output_root>")
+    )
+    error_path = incident_output / "infrastructure_error.txt"
+    events_path = incident_output / "runtime_events.jsonl"
+    error_path.write_text(
+        f"{type(error).__name__}: {message}\n",
+        encoding="utf-8",
+    )
+    events_path.write_text("", encoding="utf-8")
+    enriched = dict(row)
+    for field in (
+        "repository_root",
+        "patch_path",
+        "before_sources_path",
+        "after_sources_path",
+    ):
+        if str(row.get(field, "")).strip():
+            enriched[field] = _relative(_resolve(manifest_base, row[field]), output_root)
+    enriched.update(
+        {
+            "runtime_evidence_status": "RUNTIME_INFRASTRUCTURE_ERROR",
+            "runtime_events_path": _relative(events_path, output_root),
+            "infrastructure_error_path": _relative(error_path, output_root),
+        }
+    )
+    evidence = {
+        "incident_id": incident_id,
+        "repository": row["repository"],
+        "status": "RUNTIME_INFRASTRUCTURE_ERROR",
+        "python_runtime_exact": False,
+        "event_count": 0,
+        "event_kinds": [],
+        "runtime_events_sha256": _sha256(events_path),
+        "infrastructure_error_sha256": _sha256(error_path),
+        "error_type": type(error).__name__,
+        "error_message": message,
+        "gold_fields_present": False,
+    }
+    return enriched, evidence
+
+
 def collect_h10_c5c_runtime(
     manifest_path: Path,
     command_registry_path: Path,
@@ -823,15 +891,23 @@ def collect_h10_c5c_runtime(
             raw = str(prepared_registered.get(field, "")).strip()
             if raw:
                 prepared_registered[field] = str(_resolve(registry_base, raw))
-        return _collect_incident(
-            row,
-            prepared_registered,
-            output_root,
-            manifest_base,
-            timeout_seconds=timeout_seconds,
-            allow_setup=allow_setup,
-            interpreter_map=interpreter_map,
-        )
+        try:
+            return _collect_incident(
+                row,
+                prepared_registered,
+                output_root,
+                manifest_base,
+                timeout_seconds=timeout_seconds,
+                allow_setup=allow_setup,
+                interpreter_map=interpreter_map,
+            )
+        except Exception as error:  # noqa: BLE001
+            return _record_infrastructure_error(
+                row,
+                output_root,
+                manifest_base,
+                error,
+            )
 
     if max_workers == 1:
         collected = [collect_row(row) for row in rows]
