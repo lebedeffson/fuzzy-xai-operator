@@ -14,6 +14,7 @@ def test_h10_c5b_and_h9_v2_evidence_is_in_source_release() -> None:
         "protocol/h10_c5b_repository_grounded/H10_C5B_RUNTIME_PYTEST_ENVIRONMENT_AMENDMENT.json",
         "protocol/h10_c5b_repository_grounded/H10_C5B_RUNTIME_TRACE_NORMALIZATION_AMENDMENT.json",
         "protocol/h10_c5b_repository_grounded/H10_C5B_RUNTIME_TEST_RUNNER_AMENDMENT.json",
+        "protocol/h10_c5b_repository_grounded/H10_C5B_RUNTIME_CUSTOM_TRACE_AMENDMENT.json",
         "protocol/h10_c5b_repository_grounded/METHOD_LOCK.json",
         "protocol/h10_c5b_repository_grounded/CONTAINER_IMAGE_REGISTRY_SCHEMA.json",
         "protocol/h10_c5b_repository_grounded/RUNTIME_COLLECTION_RUNBOOK.md",

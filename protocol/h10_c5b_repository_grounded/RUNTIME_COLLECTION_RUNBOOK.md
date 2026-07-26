@@ -40,6 +40,9 @@ pytest use only the adapters locked in
 `H10_C5B_RUNTIME_TEST_RUNNER_AMENDMENT.json`: Django's `tests/runtests.py` and
 SymPy's `bin/test`. Their target labels still come from registered
 `FAIL_TO_PASS`; the SymPy file path comes from the public test patch.
+Custom-runner output is trace-complete only when it contains both a Python
+source frame and an exception class; warnings alone are insufficient. See
+`H10_C5B_RUNTIME_CUSTOM_TRACE_AMENDMENT.json`.
 
 If an immutable upstream image fails before pytest collection because its
 dependency environment is no longer internally compatible, apply only the

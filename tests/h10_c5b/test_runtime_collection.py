@@ -39,6 +39,19 @@ def test_colored_pytest_failure_is_runtime_trace() -> None:
     assert _has_trace(output)
 
 
+def test_custom_runner_python_frame_and_exception_is_runtime_trace() -> None:
+    output = (
+        '  File "/workspace/sympy/tests/test_value.py", line 42, in test_value\n'
+        "    assert actual == expected\n"
+        "AssertionError\n"
+    )
+    assert _has_trace(output)
+    assert not _has_trace(
+        '  File "/workspace/sympy/tests/test_value.py", line 42, in test_value\n'
+        "DeprecationWarning: old API\n"
+    )
+
+
 @pytest.mark.parametrize(
     "output",
     [

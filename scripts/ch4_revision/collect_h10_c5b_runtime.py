@@ -27,6 +27,14 @@ PYTEST_COLLECTION_FAILURE = re.compile(
     r"No module named ['\"]?pytest"
     r")"
 )
+PYTHON_SOURCE_FRAME = re.compile(
+    r'^\s*File ".+[.]py", line \d+, in [A-Za-z_][A-Za-z0-9_]*$',
+    flags=re.MULTILINE,
+)
+PYTHON_EXCEPTION = re.compile(
+    r"^[A-Za-z_][A-Za-z0-9_.]*(?:Error|Exception)(?::.*)?$",
+    flags=re.MULTILINE,
+)
 INFRASTRUCTURE_RETURNCODES = frozenset({2, 3, 4, 5})
 DOCKER_INFRASTRUCTURE_RETURNCODES = frozenset({125, 126, 127})
 CONTAINER_IMAGE = re.compile(r"^[A-Za-z0-9._/:@-]+@sha256:[0-9a-f]{64}$")
@@ -43,6 +51,9 @@ def _has_trace(value: str) -> bool:
         " FAILURES " in value
         and "FAILED " in value
         and PYTEST_FAILURE_LOCATION.search(value) is not None
+    ) or (
+        PYTHON_SOURCE_FRAME.search(value) is not None
+        and PYTHON_EXCEPTION.search(value) is not None
     )
 
 
