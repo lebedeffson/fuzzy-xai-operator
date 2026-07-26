@@ -955,3 +955,14 @@ versions required by that selection using provided paths or isolated Conda prefi
 collect typed runtime evidence, retain failed-readiness evidence, and run
 development-only scoring only after readiness PASS. It cannot create or score a
 held-out H10-C5c set. H10-C5b remains immutable.
+
+The source release reported as `1b5682c459e361a8c8d9dca8651bbb889d7e705a`
+was recovered byte-for-byte from its SHA-verified archive because that commit
+object was unavailable. Recovery commit `b9b1b4f93646184cf620ce15886d3703d5dbab07`
+preserves the supplied implementation; pre-collection hardening commit
+`f9162347f3582ed1ac106c4619e1c1f652c37b6a` pins BugsInPy at
+`11c5f1eea954a42132cfd06bf257766a7963e0fd`, rejects dirty benchmark trees,
+and removes local checkout paths from registries. GitHub Actions run
+`30219406865` passed on Python 3.11 and 3.12. The local full regression passed
+with 692 tests and 5 skips. Real development runtime collection remains
+unexecuted, so the scientific status remains `NOT_EVALUATED`.

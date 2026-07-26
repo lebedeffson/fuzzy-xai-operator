@@ -30,8 +30,16 @@
   "scientific_result": "NOT_EVALUATED",
   "status": "IMPLEMENTED_AWAITING_EXTERNAL_DEVELOPMENT_DATA",
   "verification": {
-    "full_repository_pytest": "PENDING_FINAL_REGRESSION",
-    "full_repository_pytest_reason": "The final full regression is run after the pre-collection hardening commit.",
+    "full_repository_pytest": {
+      "passed": 692,
+      "skipped": 5,
+      "status": "PASS"
+    },
+    "github_actions_focused_contracts": {
+      "python_3_11": "PASS",
+      "python_3_12": "PASS",
+      "run_id": 30219406865
+    },
     "h10_c5b_h9_non_optional_regression": {
       "passed": 74,
       "status": "PASS"
