@@ -24,6 +24,15 @@ The registered SWE-bench images execute tests with
 is an infrastructure error because it does not contain the incident's pytest
 environment.
 
+If an immutable upstream image fails before pytest collection because its
+dependency environment is no longer internally compatible, apply only the
+prospectively recorded runtime correction in
+`H10_C5B_RUNTIME_ENVIRONMENT_AMENDMENT.json`. The correction must be applied
+uniformly to every development candidate from the affected repository, on top
+of each exact base-image digest, using a SHA256-verified local wheel. Publish
+and execute only the resulting manifest-digest image references. Preserve the
+failed evidence and do not inspect Gold or method predictions before retrying.
+
 Before execution, the collector applies the dataset's registered public
 `test_patch` to the disposable sandbox and verifies its SHA256. The test patch
 is a harness input needed to materialize `FAIL_TO_PASS`; it is not the Gold fix

@@ -1,0 +1,34 @@
+{
+  "amendment_id": "h10-c5b-runtime-environment-amendment-v1",
+  "amendment_scope": "runtime_dependency_compatibility_only",
+  "created_after_blocked_runtime_attempt": true,
+  "development_scoring_before_amendment": false,
+  "endpoint_changed": false,
+  "gates_changed": false,
+  "gold_or_method_predictions_viewed": false,
+  "held_out_runtime_collected": false,
+  "held_out_scoring_enabled": false,
+  "method_code_status": "FROZEN_FOR_RUNTIME_COLLECTION",
+  "method_commit": "7aa72a19a70bdb5eedea520742f269bc6c26aeea",
+  "observed_failure": {
+    "affected_repository": "pvlib/pvlib-python",
+    "failure_stage": "module_import_before_pytest_collection",
+    "installed_numpy_version": "2.0.2",
+    "reason": "The immutable upstream runtime images import np.Inf, which NumPy 2 removed.",
+    "replacement_pool_exhausted": true,
+    "scientific_method_executed_for_failed_incidents": false
+  },
+  "parent_protocol": "h10-c5b-repository-grounded-v1",
+  "runtime_environment_policy": {
+    "apply_uniformly_to_all_development_candidates_in_affected_repository": true,
+    "base_image_manifest_digest_required": true,
+    "derived_image_manifest_digest_required": true,
+    "container_network_during_incident_execution": "none",
+    "correction": "install numpy==1.26.4 from a SHA256-verified local wheel",
+    "gold_fix_patch_applied": false,
+    "method_inputs_changed": false,
+    "public_test_patch_policy_changed": false,
+    "wheel_network_access_during_image_build": false
+  },
+  "status": "LOCKED_BEFORE_RUNTIME_RETRY"
+}
