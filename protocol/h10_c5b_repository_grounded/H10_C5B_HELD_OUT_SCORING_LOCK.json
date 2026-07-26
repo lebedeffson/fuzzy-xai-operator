@@ -1,0 +1,25 @@
+{
+  "allowed_final_statuses": [
+    "H10_C5B_NOT_SUPPORTED",
+    "H10_C5B_SUPPORTED"
+  ],
+  "controller_sha256": "f32d2c434d2703c149d82815118fecfbe91beb13de71a43464c278de3d511100",
+  "development_runtime_lock_path": "/work/h10-c5b/runtime-development/DEVELOPMENT_RUNTIME_LOCK.json",
+  "development_runtime_lock_sha256": "6fe58e5498f41dfa0f1254150f1e5ed32f57010336c838a31830958d8d986916",
+  "enriched_manifest_path": "/work/h10-c5b/runtime-held_out/scoring/H10_C5B_HELD_OUT_SCORING_MANIFEST.jsonl",
+  "enriched_manifest_sha256": "a22a62380249e7744f7387ec0d65b91d6717889b56de8af8e7dcc034a6e59f46",
+  "gold_leakage_audit": "PASS",
+  "held_out_scored": false,
+  "incident_count": 24,
+  "method_code_sha256": "5e14cbcd583aeb447b70be022147633588f6ee9ae95dcfb637be2e399e47c9ec",
+  "method_commit": "7aa72a19a70bdb5eedea520742f269bc6c26aeea",
+  "opening_count": 0,
+  "protocol_id": "h10-c5b-repository-grounded-v1",
+  "repository_count": 12,
+  "runtime_evidence_report_path": "/work/h10-c5b/runtime-held_out/evidence/RUNTIME_EVIDENCE_REPORT.json",
+  "runtime_evidence_report_sha256": "63001a8c6eafe81245fad83faa281cf736c33ce15dcdec187be12af8aff1bf12",
+  "runtime_manifest_sha256": "543400f2f1f2264bef5133c820e84ca400ec8a2d79621f210badf19711b7a3aa",
+  "sealed_scoring": false,
+  "status": "HELD_OUT_SCORING_LOCKED",
+  "trace_complete_count": 24
+}
