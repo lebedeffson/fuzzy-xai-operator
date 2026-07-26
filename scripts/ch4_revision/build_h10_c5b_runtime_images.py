@@ -51,13 +51,19 @@ def render_dockerfile(base_image: str, wheel_name: str, wheel_sha256: str) -> st
 
 
 def _run(command: list[str], *, cwd: Path | None = None) -> subprocess.CompletedProcess[str]:
-    return subprocess.run(
+    completed = subprocess.run(
         command,
         cwd=cwd,
-        check=True,
+        check=False,
         capture_output=True,
         text=True,
     )
+    if completed.returncode:
+        detail = completed.stderr.strip() or completed.stdout.strip()
+        raise RuntimeError(
+            f"command failed with code {completed.returncode}: {command[0]}: {detail}"
+        )
+    return completed
 
 
 def _repository_name(prefix: str, incident_id: str) -> str:
@@ -104,7 +110,6 @@ def build_images(
                 "docker",
                 "build",
                 "--pull=false",
-                "--provenance=false",
                 "--tag",
                 tag,
                 ".",
