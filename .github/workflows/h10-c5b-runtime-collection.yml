@@ -87,7 +87,11 @@ jobs:
           python-version: "3.11"
           cache: pip
       - name: Install focused project
-        run: python -m pip install -e ".[dev]"
+        run: |
+          python -m pip install \
+            --index-url https://download.pytorch.org/whl/cpu \
+            "torch==2.11.0"
+          python -m pip install -e ".[dev]" "shap==0.51.0"
       - name: Run registered H9-E2E-v2 benchmark
         run: |
           make h9-e2e-v2 H10_C3_PYTHON=python
