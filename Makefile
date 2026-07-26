@@ -1243,7 +1243,7 @@ h10-c4-chapter:
 h10-c4-package:
 	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/build_h10_c4_release.py
 
-.PHONY: ch4-q1-test h10-c5-source-audit h10-c5-run h10-c5b-test h10-c5b-prepare h10-c5b-collect-runtime h10-c5b-run h10-c5b-parent-immutability h10-c6-run multimodal-route-validation h9-e2e-latency h9-e2e-v2 ch4-q1-claim-lint ch4-q1-evidence
+.PHONY: ch4-q1-test h10-c5-source-audit h10-c5-run h10-c5b-test h10-c5b-ops-test h10-c5b-prepare h10-c5b-prepare-runtime-inputs h10-c5b-collect-runtime h10-c5b-merge-runtime h10-c5b-runtime-readiness h10-c5b-freeze-development h10-c5b-plan-replacements h10-c5b-run h10-c5b-verify-method-lock h10-c5b-parent-immutability h10-c6-run multimodal-route-validation h9-e2e-latency h9-e2e-v2 ch4-q1-claim-lint ch4-q1-evidence
 
 ch4-q1-test:
 	$(H10_C4_ENV) $(H10_C3_PYTHON) -m pytest -q tests/h10_c5 tests/h10_c6 tests/multimodal tests/roles tests/chapter_revision
@@ -1256,12 +1256,21 @@ h10-c5-run:
 	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/run_h10_c5.py --source "$(H10_C5_SOURCE)" --root .
 
 h10-c5b-test:
-	$(H10_C4_ENV) $(H10_C3_PYTHON) -m ruff check framework/fuzzyxai/fuzzyxai/repository_diagnostics framework/fuzzyxai/fuzzyxai/gold_repository framework/fuzzyxai/fuzzyxai/evidence_path framework/fuzzyxai/fuzzyxai/experiments/h10_c5b.py framework/fuzzyxai/fuzzyxai/experiments/h9_e2e_v2.py scripts/ch4_revision/collect_h10_c5b_runtime.py scripts/ch4_revision/prepare_h10_c5b_sources.py scripts/ch4_revision/run_h10_c5b.py scripts/ch4_revision/run_h9_e2e_v2.py scripts/ch4_revision/verify_parent_result_immutability.py tests/h10_c5b tests/h9_e2e_v2
+	$(H10_C4_ENV) $(H10_C3_PYTHON) -m ruff check framework/fuzzyxai/fuzzyxai/repository_diagnostics framework/fuzzyxai/fuzzyxai/gold_repository framework/fuzzyxai/fuzzyxai/evidence_path framework/fuzzyxai/fuzzyxai/experiments/h10_c5b.py framework/fuzzyxai/fuzzyxai/experiments/h9_e2e_v2.py scripts/ch4_revision/collect_h10_c5b_runtime.py scripts/ch4_revision/h10_c5b_runtime_ops.py scripts/ch4_revision/prepare_h10_c5b_sources.py scripts/ch4_revision/run_h10_c5b.py scripts/ch4_revision/run_h9_e2e_v2.py scripts/ch4_revision/verify_parent_result_immutability.py tests/h10_c5b tests/h9_e2e_v2
 	$(H10_C4_ENV) $(H10_C3_PYTHON) -m pytest -q tests/h10_c5b tests/h9_e2e_v2
+
+h10-c5b-ops-test:
+	$(H10_C4_ENV) $(H10_C3_PYTHON) -m ruff check scripts/ch4_revision/h10_c5b_runtime_ops.py tests/h10_c5b/test_runtime_operations.py
+	$(H10_C4_ENV) $(H10_C3_PYTHON) -m pytest -q tests/h10_c5b/test_runtime_operations.py
 
 h10-c5b-prepare:
 	test -n "$(H10_C5B_SOURCE_DIR)"
 	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/prepare_h10_c5b_sources.py --output "$(H10_C5B_SOURCE_DIR)"
+
+h10-c5b-prepare-runtime-inputs:
+	test -n "$(H10_C5B_MANIFEST)"
+	test -n "$(H10_C5B_RUNTIME_DIR)"
+	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/h10_c5b_runtime_ops.py prepare-runtime-inputs --manifest "$(H10_C5B_MANIFEST)" --output "$(H10_C5B_RUNTIME_DIR)" $(if $(H10_C5B_CONTAINER_IMAGES),--container-images "$(H10_C5B_CONTAINER_IMAGES)")
 
 h10-c5b-collect-runtime:
 	test -n "$(H10_C5B_MANIFEST)"
@@ -1269,9 +1278,38 @@ h10-c5b-collect-runtime:
 	test -n "$(H10_C5B_RUNTIME_DIR)"
 	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/collect_h10_c5b_runtime.py --manifest "$(H10_C5B_MANIFEST)" --commands "$(H10_C5B_RUNTIME_COMMANDS)" --output "$(H10_C5B_RUNTIME_DIR)"
 
+h10-c5b-merge-runtime:
+	test -n "$(H10_C5B_MANIFEST)"
+	test -n "$(H10_C5B_RUNTIME_MANIFEST)"
+	test -n "$(H10_C5B_ENRICHED_MANIFEST)"
+	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/h10_c5b_runtime_ops.py merge-runtime --original-manifest "$(H10_C5B_MANIFEST)" --runtime-manifest "$(H10_C5B_RUNTIME_MANIFEST)" --output "$(H10_C5B_ENRICHED_MANIFEST)"
+
+h10-c5b-runtime-readiness:
+	test -n "$(H10_C5B_MANIFEST)"
+	test -n "$(H10_C5B_RUNTIME_REPORT)"
+	test -n "$(H10_C5B_SPLIT)"
+	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/h10_c5b_runtime_ops.py verify-runtime-readiness --manifest "$(H10_C5B_MANIFEST)" --runtime-report "$(H10_C5B_RUNTIME_REPORT)" --split "$(H10_C5B_SPLIT)" $(if $(H10_C5B_DEVELOPMENT_LOCK),--development-lock "$(H10_C5B_DEVELOPMENT_LOCK)")
+
+h10-c5b-freeze-development:
+	test -n "$(H10_C5B_MANIFEST)"
+	test -n "$(H10_C5B_RUNTIME_REPORT)"
+	test -n "$(H10_C5B_DEVELOPMENT_RESULTS)"
+	test -n "$(H10_C5B_DEVELOPMENT_LOCK)"
+	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/h10_c5b_runtime_ops.py freeze-development --manifest "$(H10_C5B_MANIFEST)" --runtime-report "$(H10_C5B_RUNTIME_REPORT)" --development-results "$(H10_C5B_DEVELOPMENT_RESULTS)" --method-lock protocol/h10_c5b_repository_grounded/METHOD_LOCK.json --output "$(H10_C5B_DEVELOPMENT_LOCK)" --root .
+
+h10-c5b-plan-replacements:
+	test -n "$(H10_C5B_CANDIDATES)"
+	test -n "$(H10_C5B_MANIFEST)"
+	test -n "$(H10_C5B_RUNTIME_REPORT)"
+	test -n "$(H10_C5B_REPLACEMENT_LOG)"
+	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/h10_c5b_runtime_ops.py plan-replacements --candidates "$(H10_C5B_CANDIDATES)" --manifest "$(H10_C5B_MANIFEST)" --runtime-report "$(H10_C5B_RUNTIME_REPORT)" --output "$(H10_C5B_REPLACEMENT_LOG)"
+
 h10-c5b-run:
 	test -n "$(H10_C5B_MANIFEST)"
-	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/run_h10_c5b.py --manifest "$(H10_C5B_MANIFEST)" --root .
+	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/run_h10_c5b.py --manifest "$(H10_C5B_MANIFEST)" --root "$(or $(H10_C5B_ROOT),.)"
+
+h10-c5b-verify-method-lock:
+	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/h10_c5b_runtime_ops.py verify-method-lock --lock protocol/h10_c5b_repository_grounded/METHOD_LOCK.json --root .
 
 h10-c5b-parent-immutability:
 	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/verify_parent_result_immutability.py --root .

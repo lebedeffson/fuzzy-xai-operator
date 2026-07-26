@@ -4,17 +4,121 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 import platform
+import re
 import shutil
 import subprocess
 import tempfile
 from pathlib import Path
 
-TRACE_PATTERNS = ('File "', ": in ")
+TRACEBACK_HEADER = "Traceback (most recent call last):"
+PYTEST_FRAME = re.compile(r"^.+[.]py:\d+: in ", flags=re.MULTILINE)
+INFRASTRUCTURE_RETURNCODES = frozenset({2, 3, 4, 5})
+DOCKER_INFRASTRUCTURE_RETURNCODES = frozenset({125, 126, 127})
+CONTAINER_IMAGE = re.compile(r"^[A-Za-z0-9._/:@-]+@sha256:[0-9a-f]{64}$")
+SAFE_INCIDENT_ID = re.compile(r"^[A-Za-z0-9_.-]+$")
 
 
 def _has_trace(value: str) -> bool:
-    return any(pattern in value for pattern in TRACE_PATTERNS)
+    return (
+        TRACEBACK_HEADER in value and 'File "' in value
+    ) or PYTEST_FRAME.search(value) is not None
+
+
+def _text(value: str | bytes | None) -> str:
+    if value is None:
+        return ""
+    if isinstance(value, bytes):
+        return value.decode("utf-8", errors="replace")
+    return value
+
+
+def _runtime_environment(home: Path) -> dict[str, str]:
+    allowed = {
+        key: os.environ[key]
+        for key in (
+            "PATH",
+            "LANG",
+            "LC_ALL",
+            "TZ",
+            "DOCKER_HOST",
+            "DOCKER_CONTEXT",
+            "DOCKER_TLS_VERIFY",
+            "DOCKER_CERT_PATH",
+        )
+        if key in os.environ
+    }
+    return {
+        **allowed,
+        "HOME": str(home),
+        "PYTHONHASHSEED": "0",
+        "PYTHONNOUSERSITE": "1",
+    }
+
+
+def _execution_command(
+    registered: dict[str, object],
+    command: tuple[str, ...],
+    sandbox: Path,
+    cidfile: Path,
+) -> tuple[tuple[str, ...], str]:
+    backend = str(registered.get("execution_backend", "host"))
+    if backend == "host":
+        return command, backend
+    if backend != "container":
+        raise ValueError(f"unsupported runtime backend: {backend}")
+    image = str(registered.get("container_image", ""))
+    if not CONTAINER_IMAGE.fullmatch(image):
+        raise ValueError("container image must be pinned by sha256 digest")
+    return (
+        (
+            "docker",
+            "run",
+            "--rm",
+            "--network",
+            "none",
+            "--cap-drop",
+            "ALL",
+            "--security-opt",
+            "no-new-privileges",
+            "--pids-limit",
+            "512",
+            "--memory",
+            "8g",
+            "--cpus",
+            "4",
+            "--cidfile",
+            str(cidfile),
+            "--mount",
+            f"type=bind,src={sandbox},dst=/workspace",
+            "--workdir",
+            "/workspace",
+            "--tmpfs",
+            "/tmp:rw,noexec,nosuid,size=2g",
+            "--env",
+            "PYTHONHASHSEED=0",
+            "--env",
+            "PYTHONNOUSERSITE=1",
+            image,
+            *command,
+        ),
+        backend,
+    )
+
+
+def _stop_timed_out_container(cidfile: Path, environment: dict[str, str]) -> None:
+    if not cidfile.is_file():
+        return
+    container_id = cidfile.read_text(encoding="utf-8").strip()
+    if re.fullmatch(r"[0-9a-f]{12,64}", container_id):
+        subprocess.run(
+            ["docker", "rm", "-f", container_id],
+            capture_output=True,
+            check=False,
+            env=environment,
+            timeout=30,
+        )
 
 
 def collect(
@@ -28,6 +132,11 @@ def collect(
         if line.strip()
     ]
     registry = json.loads(command_registry_path.read_text(encoding="utf-8"))
+    incident_ids = [str(row["incident_id"]) for row in rows]
+    if len(incident_ids) != len(set(incident_ids)):
+        raise ValueError("runtime manifest incident IDs must be unique")
+    if any(not SAFE_INCIDENT_ID.fullmatch(incident_id) for incident_id in incident_ids):
+        raise ValueError("runtime manifest contains an unsafe incident ID")
     output.mkdir(parents=True, exist_ok=True)
     enriched = []
     evidence_rows = []
@@ -47,7 +156,11 @@ def collect(
             continue
         command = tuple(str(item) for item in registered["command"])
         with tempfile.TemporaryDirectory(prefix="fuzzyxai-h10-c5b-runtime-") as temporary:
-            sandbox = Path(temporary) / "repository"
+            temporary_root = Path(temporary)
+            sandbox = temporary_root / "repository"
+            home = temporary_root / "home"
+            cidfile = temporary_root / "container.cid"
+            home.mkdir()
             shutil.copytree(
                 Path(str(row["repository_root"])),
                 sandbox,
@@ -59,33 +172,65 @@ def collect(
                     ".pytest_cache",
                 ),
             )
-            completed = subprocess.run(
+            effective_command, backend = _execution_command(
+                registered,
                 command,
-                cwd=sandbox,
-                capture_output=True,
-                text=True,
-                timeout=int(registered.get("timeout_seconds", 900)),
-                check=False,
-                env=None,
+                sandbox,
+                cidfile,
             )
-        combined = f"{completed.stdout}\n{completed.stderr}"
-        reproduced = completed.returncode != 0
-        status = (
-            "BUG_REPRODUCED_WITH_TRACE"
-            if reproduced and _has_trace(combined)
-            else (
-                "BUG_REPRODUCED_WITHOUT_TRACE"
-                if reproduced
-                else "BUG_NOT_REPRODUCED"
-            )
-        )
+            environment = _runtime_environment(home)
+            try:
+                completed = subprocess.run(
+                    effective_command,
+                    cwd=sandbox,
+                    capture_output=True,
+                    text=True,
+                    timeout=int(registered.get("timeout_seconds", 900)),
+                    check=False,
+                    env=environment,
+                )
+                stdout = completed.stdout
+                stderr = completed.stderr
+                returncode: int | None = completed.returncode
+                expected_failure_codes = {
+                    int(code)
+                    for code in registered.get("expected_failure_returncodes", (1,))
+                }
+                combined = f"{stdout}\n{stderr}"
+                if returncode == 0:
+                    status = "BUG_NOT_REPRODUCED"
+                elif returncode in INFRASTRUCTURE_RETURNCODES or (
+                    backend == "container"
+                    and returncode in DOCKER_INFRASTRUCTURE_RETURNCODES
+                ):
+                    status = "RUNTIME_INFRASTRUCTURE_ERROR"
+                elif returncode not in expected_failure_codes:
+                    status = "UNEXPECTED_FAILURE_RETURNCODE"
+                elif _has_trace(combined):
+                    status = "BUG_REPRODUCED_WITH_TRACE"
+                else:
+                    status = "BUG_REPRODUCED_WITHOUT_TRACE"
+            except subprocess.TimeoutExpired as error:
+                if backend == "container":
+                    _stop_timed_out_container(cidfile, environment)
+                stdout = _text(error.stdout)
+                stderr = _text(error.stderr)
+                returncode = None
+                combined = f"{stdout}\n{stderr}"
+                status = "RUNTIME_TIMEOUT"
+            except OSError as error:
+                stdout = ""
+                stderr = str(error)
+                returncode = None
+                combined = stderr
+                status = "RUNTIME_EXECUTION_ERROR"
         incident_output = output / incident_id
         incident_output.mkdir(parents=True, exist_ok=True)
         stdout_path = incident_output / "stdout.txt"
         stderr_path = incident_output / "stderr.txt"
         traceback_path = incident_output / "traceback.txt"
-        stdout_path.write_text(completed.stdout, encoding="utf-8")
-        stderr_path.write_text(completed.stderr, encoding="utf-8")
+        stdout_path.write_text(stdout, encoding="utf-8")
+        stderr_path.write_text(stderr, encoding="utf-8")
         traceback_path.write_text(combined if _has_trace(combined) else "", encoding="utf-8")
         enriched.append(
             {
@@ -100,12 +245,22 @@ def collect(
             {
                 "incident_id": incident_id,
                 "status": status,
-                "returncode": completed.returncode,
-                "command_sha256": hashlib.sha256(
-                    json.dumps(command, separators=(",", ":")).encode()
+                "returncode": returncode,
+                "execution_backend": backend,
+                "container_image": (
+                    str(registered["container_image"])
+                    if backend == "container"
+                    else None
+                ),
+                "runtime_command_sha256": hashlib.sha256(
+                    json.dumps(
+                        registered,
+                        separators=(",", ":"),
+                        sort_keys=True,
+                    ).encode()
                 ).hexdigest(),
-                "stdout_sha256": hashlib.sha256(completed.stdout.encode()).hexdigest(),
-                "stderr_sha256": hashlib.sha256(completed.stderr.encode()).hexdigest(),
+                "stdout_sha256": hashlib.sha256(stdout.encode()).hexdigest(),
+                "stderr_sha256": hashlib.sha256(stderr.encode()).hexdigest(),
             }
         )
     enriched_path = output / "H10_C5B_RUNTIME_ENRICHED_MANIFEST.jsonl"
@@ -126,7 +281,19 @@ def collect(
         ),
         "python": platform.python_version(),
         "platform": platform.platform(),
+        "child_environment_policy": (
+            "PATH_LANG_LOCALE_TZ_HOME_PYTHONHASHSEED_PYTHONNOUSERSITE_ONLY"
+        ),
         "manifest": str(enriched_path),
+        "input_manifest_sha256": hashlib.sha256(
+            manifest_path.read_bytes()
+        ).hexdigest(),
+        "command_registry_sha256": hashlib.sha256(
+            command_registry_path.read_bytes()
+        ).hexdigest(),
+        "enriched_manifest_sha256": hashlib.sha256(
+            enriched_path.read_bytes()
+        ).hexdigest(),
         "evidence": evidence_rows,
     }
     (output / "RUNTIME_EVIDENCE_REPORT.json").write_text(

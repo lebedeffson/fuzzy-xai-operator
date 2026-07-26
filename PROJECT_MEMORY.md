@@ -845,3 +845,31 @@ Claim boundary: H10-C4 supports algorithmic operational savings on controlled
 structural mutations only. It does not establish natural-incident
 generalization, engineer-time savings, human utility, organizational cost
 reduction, or production safety.
+
+## FXAI-H10-C5B-RUNTIME-COLLECTION
+
+- Date: 2026-07-26
+- Scientific method commit:
+  `7aa72a19a70bdb5eedea520742f269bc6c26aeea`
+- Operational branch: `ops/h10-c5b-runtime-collection`
+- Method status: `FROZEN_FOR_RUNTIME_COLLECTION`
+- H10-C5b status: `H10_C5B_BLOCKED_REPOSITORY_DATA`
+- H9-E2E-v2 status: `H9_E2E_V2_TARGET_MET`
+
+H9-E2E-v2 met its registered absolute and relative gates only within
+`registered_local_microbenchmark_pipelines`. The original negative H9-E2E
+result remains unchanged.
+
+H10-C5b has six open development incidents without complete runtime traceback
+evidence and no scored held-out incident. Its zero bootstrap row is a blocked
+report placeholder, not a comparison result. Repository graph construction,
+top-k ranking, global set cover, weights, abstention, evidence fusion,
+endpoint, and gates are frozen at the method commit above.
+
+Runtime collection is manual on an ephemeral runner. Repository images must be
+prebuilt and pinned by SHA256 digest; containers run without network or added
+capabilities. Unavailable incidents are replaced only by the next same-split,
+same-repository candidate under the preregistered SHA256 ordering, without
+viewing Gold or method output. Held-out collection requires a frozen complete
+development runtime lock, and no official held-out scoring command exists in
+the operational branch.

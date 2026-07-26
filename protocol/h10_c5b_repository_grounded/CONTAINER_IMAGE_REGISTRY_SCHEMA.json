@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": {
+    "pattern": "^[A-Za-z0-9._/:@-]+@sha256:[0-9a-f]{64}$",
+    "type": "string"
+  },
+  "description": "Repository names map to prebuilt, immutable runtime images. Tags without a digest are forbidden.",
+  "minProperties": 1,
+  "propertyNames": {
+    "pattern": "^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$"
+  },
+  "type": "object"
+}

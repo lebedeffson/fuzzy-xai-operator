@@ -1,0 +1,218 @@
+name: H10-C5b frozen method and runtime collection
+
+on:
+  push:
+    branches:
+      - ops/h10-c5b-runtime-collection
+  pull_request:
+    paths:
+      - ".github/workflows/h10-c5b-runtime-collection.yml"
+      - "protocol/h10_c5b_repository_grounded/**"
+      - "scripts/ch4_revision/h10_c5b_runtime_ops.py"
+      - "tests/h10_c5b/**"
+      - "Makefile"
+  workflow_dispatch:
+    inputs:
+      operation:
+        description: Validation or a manual runtime operation
+        required: true
+        default: validate
+        type: choice
+        options:
+          - validate
+          - prepare
+          - collect-development
+          - collect-held-out
+      source_dir:
+        description: Absolute path on the dedicated runtime runner
+        required: true
+        default: /work/h10-c5b
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: h10-c5b-${{ github.ref }}-${{ inputs.operation || 'validate' }}
+  cancel-in-progress: false
+
+jobs:
+  frozen-source-gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12"]
+    env:
+      PYTHONHASHSEED: "0"
+      OMP_NUM_THREADS: "1"
+      OPENBLAS_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
+      NUMEXPR_NUM_THREADS: "1"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+      - name: Install focused project
+        run: python -m pip install -e ".[dev]"
+      - name: Verify frozen H10-C5b method
+        run: make h10-c5b-verify-method-lock H10_C3_PYTHON=python
+      - name: Focused H10-C5b contracts
+        run: make h10-c5b-test H10_C3_PYTHON=python
+      - name: Verify parent negative results remain immutable
+        run: make h10-c5b-parent-immutability H10_C3_PYTHON=python
+      - name: Assert no scientific implementation diff
+        run: |
+          test -z "$(git diff --name-only 7aa72a19a70bdb5eedea520742f269bc6c26aeea -- \
+            framework/fuzzyxai/fuzzyxai/repository_diagnostics \
+            framework/fuzzyxai/fuzzyxai/gold_repository \
+            framework/fuzzyxai/fuzzyxai/experiments/h10_c5b.py \
+            framework/fuzzyxai/operators_manifest.yaml \
+            scripts/ch4_revision/prepare_h10_c5b_sources.py \
+            scripts/ch4_revision/run_h10_c5b.py)"
+          git diff --check
+
+  h9-e2e-v2-reproduction:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Install focused project
+        run: python -m pip install -e ".[dev]"
+      - name: Run registered H9-E2E-v2 benchmark
+        run: |
+          make h9-e2e-v2 H10_C3_PYTHON=python
+          test "$(jq -r .status results/h9_e2e_v2/H9_E2E_V2_FINAL_STATUS.json)" = "H9_E2E_V2_TARGET_MET"
+
+  runtime-collection:
+    if: github.event_name == 'workflow_dispatch' && inputs.operation != 'validate'
+    needs: frozen-source-gate
+    runs-on: [self-hosted, linux, h10-c5b-runtime]
+    timeout-minutes: 360
+    env:
+      H10_C5B_SOURCE_DIR: ${{ inputs.source_dir }}
+      H10_C5B_OPERATION: ${{ inputs.operation }}
+      PYTHONHASHSEED: "0"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Install operational dependencies
+        run: python -m pip install -e ".[dev]"
+      - name: Verify runner path and frozen method
+        run: |
+          test "${H10_C5B_SOURCE_DIR#/}" != "$H10_C5B_SOURCE_DIR"
+          mkdir -p "$H10_C5B_SOURCE_DIR"
+          make h10-c5b-verify-method-lock H10_C3_PYTHON=python
+      - name: Prepare registered sources
+        if: inputs.operation == 'prepare'
+        run: make h10-c5b-prepare H10_C3_PYTHON=python
+      - name: Select runtime split
+        if: startsWith(inputs.operation, 'collect-')
+        id: split
+        run: |
+          if test "$H10_C5B_OPERATION" = "collect-development"; then
+            split=development
+            manifest="$H10_C5B_SOURCE_DIR/H10_C5B_DEVELOPMENT_MANIFEST.jsonl"
+          else
+            split=held_out
+            manifest="$H10_C5B_SOURCE_DIR/H10_C5B_HELD_OUT_UNSCORED_MANIFEST.jsonl"
+            test -f "$H10_C5B_SOURCE_DIR/runtime-development/DEVELOPMENT_RUNTIME_LOCK.json"
+          fi
+          test -f "$manifest"
+          echo "split=$split" >> "$GITHUB_OUTPUT"
+          echo "manifest=$manifest" >> "$GITHUB_OUTPUT"
+      - name: Build Gold-free runtime channel
+        if: startsWith(inputs.operation, 'collect-')
+        run: |
+          runtime_dir="$H10_C5B_SOURCE_DIR/runtime-${{ steps.split.outputs.split }}"
+          test -f "$H10_C5B_SOURCE_DIR/H10_C5B_CONTAINER_IMAGES.json"
+          make h10-c5b-prepare-runtime-inputs \
+            H10_C3_PYTHON=python \
+            H10_C5B_MANIFEST="${{ steps.split.outputs.manifest }}" \
+            H10_C5B_RUNTIME_DIR="$runtime_dir/inputs" \
+            H10_C5B_CONTAINER_IMAGES="$H10_C5B_SOURCE_DIR/H10_C5B_CONTAINER_IMAGES.json"
+      - name: Collect runtime evidence
+        if: startsWith(inputs.operation, 'collect-')
+        id: collect
+        continue-on-error: true
+        run: |
+          runtime_dir="$H10_C5B_SOURCE_DIR/runtime-${{ steps.split.outputs.split }}"
+          make h10-c5b-collect-runtime \
+            H10_C3_PYTHON=python \
+            H10_C5B_MANIFEST="$runtime_dir/inputs/H10_C5B_RUNTIME_COLLECTION_MANIFEST.jsonl" \
+            H10_C5B_RUNTIME_COMMANDS="$runtime_dir/inputs/H10_C5B_RUNTIME_COMMANDS.json" \
+            H10_C5B_RUNTIME_DIR="$runtime_dir/evidence"
+      - name: Plan deterministic replacements after unavailable runtime
+        if: startsWith(inputs.operation, 'collect-') && steps.collect.outcome == 'failure'
+        run: |
+          runtime_dir="$H10_C5B_SOURCE_DIR/runtime-${{ steps.split.outputs.split }}"
+          make h10-c5b-plan-replacements \
+            H10_C3_PYTHON=python \
+            H10_C5B_CANDIDATES="$H10_C5B_SOURCE_DIR/sources/${{ steps.split.outputs.split }}.parquet" \
+            H10_C5B_MANIFEST="${{ steps.split.outputs.manifest }}" \
+            H10_C5B_RUNTIME_REPORT="$runtime_dir/evidence/RUNTIME_EVIDENCE_REPORT.json" \
+            H10_C5B_REPLACEMENT_LOG="$runtime_dir/REPLACEMENT_LEDGER.json"
+          exit 2
+      - name: Verify complete runtime evidence
+        if: startsWith(inputs.operation, 'collect-') && steps.collect.outcome == 'success'
+        run: |
+          runtime_dir="$H10_C5B_SOURCE_DIR/runtime-${{ steps.split.outputs.split }}"
+          development_lock_arg=""
+          if test "${{ steps.split.outputs.split }}" = "held_out"; then
+            development_lock_arg="H10_C5B_DEVELOPMENT_LOCK=$H10_C5B_SOURCE_DIR/runtime-development/DEVELOPMENT_RUNTIME_LOCK.json"
+          fi
+          make h10-c5b-runtime-readiness \
+            H10_C3_PYTHON=python \
+            H10_C5B_MANIFEST="$runtime_dir/inputs/H10_C5B_RUNTIME_COLLECTION_MANIFEST.jsonl" \
+            H10_C5B_RUNTIME_REPORT="$runtime_dir/evidence/RUNTIME_EVIDENCE_REPORT.json" \
+            H10_C5B_SPLIT="${{ steps.split.outputs.split }}" \
+            $development_lock_arg
+      - name: Merge and score development only
+        if: inputs.operation == 'collect-development' && steps.collect.outcome == 'success'
+        run: |
+          runtime_dir="$H10_C5B_SOURCE_DIR/runtime-development"
+          score_root="$runtime_dir/development-score"
+          mkdir -p "$score_root"
+          make h10-c5b-merge-runtime \
+            H10_C3_PYTHON=python \
+            H10_C5B_MANIFEST="${{ steps.split.outputs.manifest }}" \
+            H10_C5B_RUNTIME_MANIFEST="$runtime_dir/evidence/H10_C5B_RUNTIME_ENRICHED_MANIFEST.jsonl" \
+            H10_C5B_ENRICHED_MANIFEST="$runtime_dir/H10_C5B_DEVELOPMENT_RUNTIME_MANIFEST.jsonl"
+          make h10-c5b-run \
+            H10_C3_PYTHON=python \
+            H10_C5B_MANIFEST="$runtime_dir/H10_C5B_DEVELOPMENT_RUNTIME_MANIFEST.jsonl" \
+            H10_C5B_ROOT="$score_root"
+          cp "$score_root/results/h10_c5b/H10_C5B_FINAL_STATUS.json" \
+            "$runtime_dir/DEVELOPMENT_RESULTS.json"
+          make h10-c5b-freeze-development \
+            H10_C3_PYTHON=python \
+            H10_C5B_MANIFEST="$runtime_dir/inputs/H10_C5B_RUNTIME_COLLECTION_MANIFEST.jsonl" \
+            H10_C5B_RUNTIME_REPORT="$runtime_dir/evidence/RUNTIME_EVIDENCE_REPORT.json" \
+            H10_C5B_DEVELOPMENT_RESULTS="$runtime_dir/DEVELOPMENT_RESULTS.json" \
+            H10_C5B_DEVELOPMENT_LOCK="$runtime_dir/DEVELOPMENT_RUNTIME_LOCK.json"
+      - name: Enforce no automatic held-out scoring
+        if: inputs.operation == 'collect-held-out'
+        run: |
+          test ! -e "$H10_C5B_SOURCE_DIR/runtime-held_out/results"
+          echo "PASS: held-out runtime was collected but not scored"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: h10-c5b-${{ inputs.operation }}-${{ github.sha }}
+          path: ${{ inputs.source_dir }}/runtime-*
+          if-no-files-found: warn
+          retention-days: 30
