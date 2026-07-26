@@ -256,6 +256,8 @@ jobs:
         if: always()
         with:
           name: h10-c5b-${{ inputs.operation }}-${{ github.sha }}
-          path: ${{ inputs.source_dir }}/runtime-*
+          path: |
+            ${{ inputs.source_dir }}/runtime-development
+            ${{ inputs.source_dir }}/runtime-held_out
           if-no-files-found: warn
           retention-days: 30
