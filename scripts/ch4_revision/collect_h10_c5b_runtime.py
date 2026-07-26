@@ -284,6 +284,62 @@ def _apply_runtime_test_patch(
     return None
 
 
+def _load_reusable_evidence(
+    output: Path,
+    *,
+    input_manifest_sha256: str,
+    command_registry_sha256: str,
+) -> tuple[dict[str, dict[str, object]], dict[str, dict[str, object]]]:
+    report_path = output / "RUNTIME_EVIDENCE_REPORT.json"
+    enriched_path = output / "H10_C5B_RUNTIME_ENRICHED_MANIFEST.jsonl"
+    if not report_path.is_file() or not enriched_path.is_file():
+        return {}, {}
+    report = json.loads(report_path.read_text(encoding="utf-8"))
+    if (
+        report.get("input_manifest_sha256") != input_manifest_sha256
+        or report.get("command_registry_sha256") != command_registry_sha256
+    ):
+        return {}, {}
+    evidence = {
+        str(row["incident_id"]): row
+        for row in report.get("evidence", ())
+        if row.get("status") == "BUG_REPRODUCED_WITH_TRACE"
+        and row.get("container_image_cleanup", {}).get("status") != "FAILED"
+        and row.get("container_image_prepare", {}).get("status") != "FAILED"
+    }
+    enriched = {
+        str(row["incident_id"]): row
+        for row in (
+            json.loads(line)
+            for line in enriched_path.read_text(encoding="utf-8").splitlines()
+            if line.strip()
+        )
+        if row.get("runtime_evidence_status") == "BUG_REPRODUCED_WITH_TRACE"
+    }
+    reusable: dict[str, dict[str, object]] = {}
+    for incident_id in evidence.keys() & enriched.keys():
+        incident_output = output / incident_id
+        stdout_path = incident_output / "stdout.txt"
+        stderr_path = incident_output / "stderr.txt"
+        traceback_path = incident_output / "traceback.txt"
+        if not all(path.is_file() for path in (stdout_path, stderr_path, traceback_path)):
+            continue
+        stdout = stdout_path.read_text(encoding="utf-8")
+        stderr = stderr_path.read_text(encoding="utf-8")
+        traceback = traceback_path.read_text(encoding="utf-8")
+        if (
+            hashlib.sha256(stdout.encode()).hexdigest()
+            != evidence[incident_id].get("stdout_sha256")
+            or hashlib.sha256(stderr.encode()).hexdigest()
+            != evidence[incident_id].get("stderr_sha256")
+            or traceback != f"{stdout}\n{stderr}"
+            or not _has_trace(traceback)
+        ):
+            continue
+        reusable[incident_id] = evidence[incident_id]
+    return reusable, enriched
+
+
 def collect(
     manifest_path: Path,
     command_registry_path: Path,
@@ -301,8 +357,18 @@ def collect(
     if any(not SAFE_INCIDENT_ID.fullmatch(incident_id) for incident_id in incident_ids):
         raise ValueError("runtime manifest contains an unsafe incident ID")
     output.mkdir(parents=True, exist_ok=True)
+    input_manifest_sha256 = hashlib.sha256(manifest_path.read_bytes()).hexdigest()
+    command_registry_sha256 = hashlib.sha256(
+        command_registry_path.read_bytes()
+    ).hexdigest()
+    reusable_evidence, previous_enriched = _load_reusable_evidence(
+        output,
+        input_manifest_sha256=input_manifest_sha256,
+        command_registry_sha256=command_registry_sha256,
+    )
     enriched = []
     evidence_rows = []
+    resumed_evidence_count = 0
     for row in rows:
         incident_id = str(row["incident_id"])
         registered = registry.get(incident_id)
@@ -324,6 +390,16 @@ def collect(
                     },
                 }
             )
+            continue
+        if incident_id in reusable_evidence:
+            enriched.append(previous_enriched[incident_id])
+            evidence_rows.append(
+                {
+                    **reusable_evidence[incident_id],
+                    "reused_existing_evidence": True,
+                }
+            )
+            resumed_evidence_count += 1
             continue
         command = tuple(str(item) for item in registered["command"])
         with tempfile.TemporaryDirectory(prefix="fuzzyxai-h10-c5b-runtime-") as temporary:
@@ -481,6 +557,7 @@ def collect(
                 "stderr_sha256": hashlib.sha256(stderr.encode()).hexdigest(),
                 "container_image_cleanup": cleanup,
                 "container_image_prepare": image_prepare,
+                "reused_existing_evidence": False,
             }
         )
     enriched_path = output / "H10_C5B_RUNTIME_ENRICHED_MANIFEST.jsonl"
@@ -500,6 +577,7 @@ def collect(
             else "INCOMPLETE"
         ),
         "incident_count": len(rows),
+        "resumed_evidence_count": resumed_evidence_count,
         "trace_complete_count": sum(
             row["status"] == "BUG_REPRODUCED_WITH_TRACE" for row in evidence_rows
         ),
@@ -517,12 +595,8 @@ def collect(
             "PATH_LANG_LOCALE_TZ_HOME_PYTHONHASHSEED_PYTHONNOUSERSITE_ONLY"
         ),
         "manifest": str(enriched_path),
-        "input_manifest_sha256": hashlib.sha256(
-            manifest_path.read_bytes()
-        ).hexdigest(),
-        "command_registry_sha256": hashlib.sha256(
-            command_registry_path.read_bytes()
-        ).hexdigest(),
+        "input_manifest_sha256": input_manifest_sha256,
+        "command_registry_sha256": command_registry_sha256,
         "enriched_manifest_sha256": hashlib.sha256(
             enriched_path.read_bytes()
         ).hexdigest(),

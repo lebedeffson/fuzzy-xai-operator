@@ -113,6 +113,61 @@ def test_runtime_collection_requires_reproduced_trace(tmp_path: Path) -> None:
     assert len(report["evidence"][0]["runtime_command_sha256"]) == 64
 
 
+def test_runtime_collection_reuses_only_checksum_verified_trace(tmp_path: Path) -> None:
+    repository = tmp_path / "repository"
+    repository.mkdir()
+    counter = tmp_path / "counter.txt"
+    command = repository / "failure.py"
+    command.write_text(
+        "from pathlib import Path\n"
+        f"counter = Path({str(counter)!r})\n"
+        "counter.write_text(counter.read_text() + 'x' if counter.exists() else 'x')\n"
+        "raise ValueError('registered failure')\n",
+        encoding="utf-8",
+    )
+    manifest = tmp_path / "manifest.jsonl"
+    manifest.write_text(
+        json.dumps(
+            {
+                "incident_id": "incident-1",
+                "repository": "fixture/repo",
+                "repository_root": str(repository),
+            }
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    commands = tmp_path / "commands.json"
+    commands.write_text(
+        json.dumps(
+            {
+                "incident-1": {
+                    "command": [sys.executable, "failure.py"],
+                    "timeout_seconds": 30,
+                }
+            }
+        ),
+        encoding="utf-8",
+    )
+    output = tmp_path / "evidence"
+    first = collect(manifest, commands, output)
+    second = collect(manifest, commands, output)
+
+    assert first["resumed_evidence_count"] == 0
+    assert second["resumed_evidence_count"] == 1
+    assert second["evidence"][0]["reused_existing_evidence"] is True
+    assert counter.read_text(encoding="utf-8") == "x"
+
+    (output / "incident-1/stdout.txt").write_text(
+        "tampered",
+        encoding="utf-8",
+    )
+    third = collect(manifest, commands, output)
+    assert third["resumed_evidence_count"] == 0
+    assert third["evidence"][0]["reused_existing_evidence"] is False
+    assert counter.read_text(encoding="utf-8") == "xx"
+
+
 def test_unregistered_runtime_command_is_incomplete(tmp_path: Path) -> None:
     manifest = tmp_path / "manifest.jsonl"
     manifest.write_text(

@@ -246,7 +246,7 @@ def build_runtime_inputs(
             for row in source_frame.to_dict(orient="records")
         }
         test_patch_root = output / "runtime-test-patches"
-        test_patch_root.mkdir()
+        test_patch_root.mkdir(exist_ok=True)
     splits = {str(row.get("split")) for row in rows}
     if len(splits) != 1 or splits.pop() not in {"development", "held_out"}:
         raise ValueError("runtime input must contain exactly one registered split")
