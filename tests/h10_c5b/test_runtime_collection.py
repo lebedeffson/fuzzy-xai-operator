@@ -30,6 +30,15 @@ FAILED tests/test_contract.py::test_contract - AssertionError: assert 1 == 2
     assert not _has_trace("tests/test_contract.py:42: warning")
 
 
+def test_colored_pytest_failure_is_runtime_trace() -> None:
+    output = (
+        "\x1b[31mFAILED\x1b[0m tests/test_contract.py::test_contract\n"
+        "\x1b[1m\x1b[31mtests/test_contract.py\x1b[0m:42: ValueError\n"
+        " FAILURES "
+    )
+    assert _has_trace(output)
+
+
 @pytest.mark.parametrize(
     "output",
     [

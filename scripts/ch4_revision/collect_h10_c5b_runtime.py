@@ -31,9 +31,11 @@ DOCKER_INFRASTRUCTURE_RETURNCODES = frozenset({125, 126, 127})
 CONTAINER_IMAGE = re.compile(r"^[A-Za-z0-9._/:@-]+@sha256:[0-9a-f]{64}$")
 SAFE_INCIDENT_ID = re.compile(r"^[A-Za-z0-9_.-]+$")
 PATCH_PATH = re.compile(r"^diff --git a/(.+?) b/(.+?)$", flags=re.MULTILINE)
+ANSI_ESCAPE = re.compile(r"\x1b\[[0-?]*[ -/]*[@-~]")
 
 
 def _has_trace(value: str) -> bool:
+    value = ANSI_ESCAPE.sub("", value)
     return (
         TRACEBACK_HEADER in value and 'File "' in value
     ) or PYTEST_FRAME.search(value) is not None or (
@@ -44,7 +46,7 @@ def _has_trace(value: str) -> bool:
 
 
 def _is_collection_failure(value: str) -> bool:
-    return PYTEST_COLLECTION_FAILURE.search(value) is not None
+    return PYTEST_COLLECTION_FAILURE.search(ANSI_ESCAPE.sub("", value)) is not None
 
 
 def _text(value: str | bytes | None) -> str:

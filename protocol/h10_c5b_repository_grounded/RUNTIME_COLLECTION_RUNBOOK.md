@@ -30,6 +30,11 @@ collection is classified as infrastructure, even when pytest returns code 1
 and emits Python frames. See
 `H10_C5B_RUNTIME_PYTEST_ENVIRONMENT_AMENDMENT.json`.
 
+ANSI terminal sequences are removed only from the text used to classify trace
+completeness. Raw stdout, stderr, and traceback evidence remain byte-for-byte
+unchanged. This rule is locked in
+`H10_C5B_RUNTIME_TRACE_NORMALIZATION_AMENDMENT.json`.
+
 If an immutable upstream image fails before pytest collection because its
 dependency environment is no longer internally compatible, apply only the
 prospectively recorded runtime correction in

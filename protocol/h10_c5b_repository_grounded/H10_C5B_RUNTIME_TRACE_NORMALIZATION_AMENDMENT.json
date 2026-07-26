@@ -1,0 +1,27 @@
+{
+  "amendment_id": "h10-c5b-runtime-trace-normalization-amendment-v1",
+  "amendment_scope": "runtime_trace_detection_only",
+  "created_after_incomplete_held_out_runtime_smoke": true,
+  "created_before_complete_held_out_runtime_evidence": true,
+  "development_results_changed": false,
+  "endpoint_changed": false,
+  "gates_changed": false,
+  "gold_or_method_predictions_viewed": false,
+  "held_out_scoring_enabled": false,
+  "method_code_status": "FROZEN_FOR_RUNTIME_COLLECTION",
+  "method_commit": "7aa72a19a70bdb5eedea520742f269bc6c26aeea",
+  "observed_failure": {
+    "incident_id": "astropy__astropy-14365",
+    "reason": "ANSI color sequences split pytest source-location tokens used by trace detection.",
+    "runtime_status_before_correction": "BUG_REPRODUCED_WITHOUT_TRACE",
+    "scientific_method_executed": false
+  },
+  "parent_protocol": "h10-c5b-repository-grounded-v1",
+  "trace_policy": {
+    "ansi_removed_for_classification_only": true,
+    "raw_stderr_retained": true,
+    "raw_stdout_retained": true,
+    "trace_semantics_changed": false
+  },
+  "status": "LOCKED_BEFORE_HELD_OUT_RUNTIME_RETRY"
+}
