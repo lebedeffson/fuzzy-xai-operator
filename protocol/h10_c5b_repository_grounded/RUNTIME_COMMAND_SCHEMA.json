@@ -20,6 +20,9 @@
         ],
         "type": "string"
       },
+      "remove_container_image_after_run": {
+        "type": "boolean"
+      },
       "expected_failure_returncodes": {
         "items": {
           "type": "integer"

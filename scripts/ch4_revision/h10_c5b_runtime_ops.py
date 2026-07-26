@@ -256,6 +256,9 @@ def build_runtime_inputs(
             commands[incident_id]["runtime_test_patch_sha256"] = sha256_path(
                 test_patch_path
             )
+            commands[incident_id]["remove_container_image_after_run"] = (
+                str(row["split"]) == "held_out"
+            )
 
     runtime_manifest = output / "H10_C5B_RUNTIME_COLLECTION_MANIFEST.jsonl"
     command_path = output / "H10_C5B_RUNTIME_COMMANDS.json"

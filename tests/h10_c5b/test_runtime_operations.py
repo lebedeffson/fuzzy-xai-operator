@@ -118,6 +118,7 @@ def test_container_runtime_requires_repository_image_map(tmp_path: Path) -> None
     ]
     assert len(commands["repo__project-1"]["runtime_test_patch_sha256"]) == 64
     assert report["runtime_test_patch_count"] == 1
+    assert commands["repo__project-1"]["remove_container_image_after_run"] is False
 
 
 def test_container_runtime_prefers_incident_image_map(tmp_path: Path) -> None:
@@ -162,6 +163,43 @@ def test_container_runtime_prefers_incident_image_map(tmp_path: Path) -> None:
     )
     assert commands["repo__project-1"]["container_image"].endswith("a" * 64)
     assert commands["repo__project-2"]["container_image"].endswith("b" * 64)
+
+
+def test_held_out_runtime_requests_exact_image_cleanup(tmp_path: Path) -> None:
+    source = tmp_path / "source.jsonl"
+    row = _manifest_row(tmp_path, split="held_out")
+    _write_jsonl(source, [row])
+    images = tmp_path / "images.json"
+    images.write_text(
+        json.dumps(
+            {"repo__project-1": "registry.invalid/project@sha256:" + "a" * 64}
+        ),
+        encoding="utf-8",
+    )
+    source_dataset = tmp_path / "source.parquet"
+    pd.DataFrame(
+        [
+            {
+                "instance_id": row["incident_id"],
+                "test_patch": (
+                    "diff --git a/tests/test_bug.py b/tests/test_bug.py\n"
+                    "--- a/tests/test_bug.py\n"
+                    "+++ b/tests/test_bug.py\n"
+                ),
+            }
+        ]
+    ).to_parquet(source_dataset)
+    report = build_runtime_inputs(
+        source,
+        tmp_path / "runtime",
+        container_images_path=images,
+        source_dataset_path=source_dataset,
+    )
+    commands = json.loads(
+        Path(str(report["command_registry"])).read_text(encoding="utf-8")
+    )
+
+    assert commands["repo__project-1"]["remove_container_image_after_run"] is True
 
 
 def test_container_runtime_rejects_ambiguous_repository_image(

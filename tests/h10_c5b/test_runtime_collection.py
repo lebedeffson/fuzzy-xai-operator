@@ -10,6 +10,7 @@ from scripts.ch4_revision.collect_h10_c5b_runtime import (
     _apply_runtime_test_patch,
     _execution_command,
     _has_trace,
+    _remove_runtime_image,
     collect,
 )
 
@@ -189,6 +190,31 @@ def test_container_backend_requires_digest_pinned_image(tmp_path: Path) -> None:
     assert command[:3] == ("docker", "run", "--rm")
     assert "--network" in command
     assert "none" in command
+
+
+def test_runtime_image_cleanup_removes_only_exact_reference(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    observed: list[list[str]] = []
+
+    class Completed:
+        returncode = 0
+        stdout = "untagged"
+        stderr = ""
+
+    def fake_run(command: list[str], **_: object) -> Completed:
+        observed.append(command)
+        return Completed()
+
+    monkeypatch.setattr(
+        "scripts.ch4_revision.collect_h10_c5b_runtime.subprocess.run",
+        fake_run,
+    )
+    image = "registry.invalid/project@sha256:" + "a" * 64
+    result = _remove_runtime_image(image, {"PATH": "/usr/bin"})
+
+    assert result["status"] == "PASS"
+    assert observed == [["docker", "image", "rm", image]]
 
 
 def test_runtime_test_patch_is_checksum_bound_and_path_safe(tmp_path: Path) -> None:

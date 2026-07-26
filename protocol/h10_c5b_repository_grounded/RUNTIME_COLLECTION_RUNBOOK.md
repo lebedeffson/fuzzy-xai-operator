@@ -81,6 +81,12 @@ Held-out runtime collection is unavailable until the development runtime lock
 exists and verifies against the frozen method commit. The held-out manifest
 must contain at least 24 incidents from at least eight repositories.
 
+To keep bounded storage on the dedicated runner, the collector removes the
+exact held-out image reference after stdout, stderr, traceback, and their
+digests have been recorded. This storage-only behavior is locked in
+`H10_C5B_RUNTIME_STORAGE_AMENDMENT.json`; it never removes unrelated images or
+containers and does not alter the runtime sandbox or method inputs.
+
 The operational workflow can collect held-out runtime evidence, but it does
 not invoke held-out scoring. Official held-out scoring requires a separate
 authorization and a subsequently locked enriched manifest. No such

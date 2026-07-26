@@ -130,6 +130,27 @@ def _stop_timed_out_container(cidfile: Path, environment: dict[str, str]) -> Non
         )
 
 
+def _remove_runtime_image(
+    image: str,
+    environment: dict[str, str],
+) -> dict[str, object]:
+    completed = subprocess.run(
+        ["docker", "image", "rm", image],
+        capture_output=True,
+        text=True,
+        check=False,
+        env=environment,
+        timeout=300,
+    )
+    return {
+        "requested": True,
+        "status": "PASS" if completed.returncode == 0 else "FAILED",
+        "returncode": completed.returncode,
+        "stdout_sha256": hashlib.sha256(completed.stdout.encode()).hexdigest(),
+        "stderr_sha256": hashlib.sha256(completed.stderr.encode()).hexdigest(),
+    }
+
+
 def _apply_runtime_test_patch(
     registered: dict[str, object],
     sandbox: Path,
@@ -196,6 +217,10 @@ def collect(
                 {
                     "incident_id": incident_id,
                     "status": "RUNTIME_COMMAND_NOT_REGISTERED",
+                    "container_image_cleanup": {
+                        "requested": False,
+                        "status": "NOT_REQUESTED",
+                    },
                 }
             )
             continue
@@ -281,6 +306,15 @@ def collect(
                     returncode = None
                     combined = stderr
                     status = "RUNTIME_EXECUTION_ERROR"
+            cleanup = (
+                _remove_runtime_image(
+                    str(registered["container_image"]),
+                    environment,
+                )
+                if backend == "container"
+                and bool(registered.get("remove_container_image_after_run", False))
+                else {"requested": False, "status": "NOT_REQUESTED"}
+            )
         incident_output = output / incident_id
         incident_output.mkdir(parents=True, exist_ok=True)
         stdout_path = incident_output / "stdout.txt"
@@ -323,6 +357,7 @@ def collect(
                 ).hexdigest(),
                 "stdout_sha256": hashlib.sha256(stdout.encode()).hexdigest(),
                 "stderr_sha256": hashlib.sha256(stderr.encode()).hexdigest(),
+                "container_image_cleanup": cleanup,
             }
         )
     enriched_path = output / "H10_C5B_RUNTIME_ENRICHED_MANIFEST.jsonl"
@@ -335,11 +370,19 @@ def collect(
             "PASS"
             if evidence_rows
             and all(row["status"] == "BUG_REPRODUCED_WITH_TRACE" for row in evidence_rows)
+            and all(
+                row["container_image_cleanup"]["status"] != "FAILED"
+                for row in evidence_rows
+            )
             else "INCOMPLETE"
         ),
         "incident_count": len(rows),
         "trace_complete_count": sum(
             row["status"] == "BUG_REPRODUCED_WITH_TRACE" for row in evidence_rows
+        ),
+        "container_image_cleanup_complete": all(
+            row["container_image_cleanup"]["status"] != "FAILED"
+            for row in evidence_rows
         ),
         "python": platform.python_version(),
         "platform": platform.platform(),
