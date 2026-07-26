@@ -9,8 +9,8 @@ from pathlib import Path
 from fuzzyxai.experiments.h10_c5c_data import (
     COLLECTION_LOCK_PATH,
     PROTOCOL_LOCK_PATH,
+    RUNTIME_AVAILABILITY_AMENDMENT_PATH,
     RUNTIME_COMPATIBILITY_AMENDMENT_PATH,
-    RUNTIME_INSTALLATION_AMENDMENT_PATH,
     canonical_repository,
 )
 from fuzzyxai.repository_diagnostics.runtime_events import load_runtime_events
@@ -96,8 +96,8 @@ def _load_locks(
     runtime_compatibility = json.loads(
         (root / RUNTIME_COMPATIBILITY_AMENDMENT_PATH).read_text(encoding="utf-8")
     )
-    runtime_installation = json.loads(
-        (root / RUNTIME_INSTALLATION_AMENDMENT_PATH).read_text(encoding="utf-8")
+    runtime_availability = json.loads(
+        (root / RUNTIME_AVAILABILITY_AMENDMENT_PATH).read_text(encoding="utf-8")
     )
     if protocol.get("status") != "LOCKED_BEFORE_IMPLEMENTATION":
         raise ValueError("H10-C5c protocol lock is invalid")
@@ -111,17 +111,14 @@ def _load_locks(
         raise ValueError("H10-C5c runtime compatibility amendment is invalid")
     if runtime_compatibility.get("applies_to") != collection.get("collection_id"):
         raise ValueError("H10-C5c runtime compatibility target is invalid")
-    if runtime_installation.get("status") != "LOCKED_BEFORE_RUNTIME_RETRY":
-        raise ValueError("H10-C5c runtime installation amendment is invalid")
-    if runtime_installation.get("applies_to") != collection.get("collection_id"):
-        raise ValueError("H10-C5c runtime installation target is invalid")
-    return (
-        protocol,
-        collection,
-        amendment,
-        runtime_compatibility,
-        runtime_installation,
-    )
+    if (
+        runtime_availability.get("status")
+        != "LOCKED_BEFORE_REPLACEMENT_MATERIALIZATION"
+    ):
+        raise ValueError("H10-C5c runtime availability amendment is invalid")
+    if runtime_availability.get("applies_to") != collection.get("collection_id"):
+        raise ValueError("H10-C5c runtime availability target is invalid")
+    return protocol, collection, amendment, runtime_compatibility, runtime_availability
 
 
 def verify_h10_c5c_development_readiness(
@@ -137,7 +134,7 @@ def verify_h10_c5c_development_readiness(
         collection,
         amendment,
         runtime_compatibility,
-        runtime_installation,
+        runtime_availability,
     ) = _load_locks(root)
     rows = _load_jsonl(manifest_path)
     commands = json.loads(command_registry_path.read_text(encoding="utf-8"))
@@ -227,8 +224,6 @@ def verify_h10_c5c_development_readiness(
             == runtime_compatibility.get("build_toolchain")
             and command.get("requirements_install_options")
             == runtime_compatibility.get("requirements_install_options")
-            and command.get("requirements_install_strategy")
-            == runtime_installation.get("requirements_install_strategy")
         )
         runtime_record = runtime_by_incident.get(incident_id, {})
         python_runtime_exact = bool(runtime_record.get("python_runtime_exact"))
@@ -320,8 +315,29 @@ def verify_h10_c5c_development_readiness(
     if not isinstance(benchmark, dict):
         raise TypeError("H10-C5c benchmark lock is invalid")
     locked_bugsinpy_commit = str(benchmark.get("commit", ""))
+    unavailable_ids = {
+        str(row.get("incident_id", ""))
+        for row in runtime_availability.get("unavailable_incidents", [])
+        if isinstance(row, dict)
+    }
+    replacement_ledger = sources.get("replacement_ledger", [])
+    availability_valid = (
+        sources.get("runtime_availability_amendment_id")
+        == runtime_availability.get("amendment_id")
+        and not (set(identifiers) & unavailable_ids)
+        and isinstance(replacement_ledger, list)
+        and all(
+            isinstance(row, dict)
+            and str(row.get("original_incident_id", "")) in unavailable_ids
+            and str(row.get("replacement_incident_id", "")) in identifiers
+            for row in replacement_ledger
+        )
+    )
     checks = {
-        "collection_id_matches": sources.get("collection_id") == collection.get("collection_id"),
+        "collection_id_matches": (
+            sources.get("collection_id") == collection.get("collection_id")
+            and availability_valid
+        ),
         "unique_incident_ids": bool(identifiers) and len(identifiers) == len(set(identifiers)),
         "development_split_only": all(str(row.get("split", "")) == "development" for row in rows),
         "minimum_incidents": len(rows) >= max(MIN_INCIDENTS, int(selection["target_incidents"])),
@@ -372,7 +388,7 @@ def verify_h10_c5c_development_readiness(
         "runtime_compatibility_amendment_id": runtime_compatibility[
             "amendment_id"
         ],
-        "runtime_installation_amendment_id": runtime_installation[
+        "runtime_availability_amendment_id": runtime_availability[
             "amendment_id"
         ],
         "protocol_id": "h10-c5c-evidence-retrieval-v1",

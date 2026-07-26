@@ -5,7 +5,6 @@ import hashlib
 import json
 import os
 import re
-import shlex
 import shutil
 import subprocess
 import sys
@@ -405,95 +404,6 @@ def _requirements_have_content(path: Path) -> bool:
     )
 
 
-def _requirement_entries(path: Path) -> list[tuple[int, str]]:
-    entries: list[tuple[int, str]] = []
-    pending = ""
-    pending_line = 0
-    for line_number, raw in enumerate(
-        path.read_text(encoding="utf-8", errors="replace").splitlines(),
-        start=1,
-    ):
-        stripped = raw.strip()
-        if not pending and (not stripped or stripped.startswith("#")):
-            continue
-        if not pending:
-            pending_line = line_number
-        pending += stripped[:-1].rstrip() + " " if stripped.endswith("\\") else stripped
-        if stripped.endswith("\\"):
-            continue
-        if pending.strip():
-            entries.append((pending_line, pending.strip()))
-        pending = ""
-    if pending.strip():
-        entries.append((pending_line, pending.strip()))
-    return entries
-
-
-def _requirement_arguments(requirement: str) -> list[str]:
-    option_prefixes = (
-        "-e ",
-        "--editable ",
-        "-r ",
-        "--requirement ",
-        "-c ",
-        "--constraint ",
-        "-f ",
-        "--find-links ",
-        "--extra-index-url ",
-        "--index-url ",
-    )
-    return shlex.split(requirement) if requirement.startswith(option_prefixes) else [requirement]
-
-
-def _install_requirements_individually(
-    requirements_path: Path,
-    runtime_python: Path,
-    install_options: list[str],
-    *,
-    cwd: Path,
-    environment: Mapping[str, str],
-    timeout_seconds: int,
-) -> dict[str, object]:
-    entries = _requirement_entries(requirements_path)
-    if not entries:
-        return {"status": "EMPTY", "attempt_count": 0, "failed_count": 0, "attempts": []}
-    attempts = []
-    for line_number, requirement in entries:
-        result = _run_logged(
-            [
-                str(runtime_python),
-                "-m",
-                "pip",
-                "install",
-                *install_options,
-                *_requirement_arguments(requirement),
-            ],
-            cwd=cwd,
-            environment=environment,
-            timeout_seconds=timeout_seconds,
-        )
-        attempts.append(
-            {
-                "line_number": line_number,
-                "requirement_sha256": hashlib.sha256(requirement.encode()).hexdigest(),
-                "status": result["status"],
-                "returncode": result["returncode"],
-                "timed_out": result["timed_out"],
-                "stdout_sha256": result["stdout_sha256"],
-                "stderr_sha256": result["stderr_sha256"],
-                "stdout_tail": str(result["stdout_tail"])[-2000:],
-                "stderr_tail": str(result["stderr_tail"])[-2000:],
-            }
-        )
-    failed_count = sum(attempt["status"] != "PASS" for attempt in attempts)
-    return {
-        "status": "PASS" if failed_count == 0 else "PARTIAL",
-        "attempt_count": len(attempts),
-        "failed_count": failed_count,
-        "attempts": attempts,
-    }
-
-
 def _prepare_environment(
     base_interpreter: str,
     registered: dict[str, object],
@@ -622,22 +532,6 @@ def _prepare_environment(
             "setup_script": {"status": "NOT_RUN"},
         }
     requirements_path = Path(str(registered.get("requirements_path", "")))
-    requirements_strategy = str(
-        registered.get("requirements_install_strategy", "FAIL_FAST_FILE")
-    )
-    if requirements_strategy not in {
-        "FAIL_FAST_FILE",
-        "BENCHMARK_PER_LINE_TWO_PASS",
-    }:
-        return None, {
-            "status": "FAIL",
-            "failure_stage": "requirements_strategy_registry",
-            "error": f"unsupported requirements strategy: {requirements_strategy}",
-            "venv": venv_result,
-            "build_toolchain": toolchain_result,
-            "requirements": {"status": "NOT_RUN"},
-            "setup_script": {"status": "NOT_RUN"},
-        }
     if _requirements_have_content(requirements_path):
         install_options = registered.get("requirements_install_options", [])
         if not isinstance(install_options, list) or not all(
@@ -652,38 +546,25 @@ def _prepare_environment(
                 "requirements": {"status": "NOT_RUN"},
                 "setup_script": {"status": "NOT_RUN"},
             }
-        if requirements_strategy == "BENCHMARK_PER_LINE_TWO_PASS":
-            requirements_result = _install_requirements_individually(
-                requirements_path,
-                runtime_python,
-                install_options,
-                cwd=sandbox,
-                environment=runtime_environment,
-                timeout_seconds=timeout_seconds,
-            )
-        else:
-            requirements_result = _run_logged(
-                [
-                    str(runtime_python),
-                    "-m",
-                    "pip",
-                    "install",
-                    *install_options,
-                    "-r",
-                    str(requirements_path),
-                ],
-                cwd=sandbox,
-                environment=runtime_environment,
-                timeout_seconds=timeout_seconds,
-            )
+        requirements_result = _run_logged(
+            [
+                str(runtime_python),
+                "-m",
+                "pip",
+                "install",
+                *install_options,
+                "-r",
+                str(requirements_path),
+            ],
+            cwd=sandbox,
+            environment=runtime_environment,
+            timeout_seconds=timeout_seconds,
+        )
     elif requirements_path and requirements_path.is_file():
         requirements_result = {"status": "EMPTY", "returncode": 0, "timed_out": False}
     else:
         requirements_result = {"status": "NOT_REGISTERED", "returncode": None, "timed_out": False}
-    if (
-        requirements_strategy == "FAIL_FAST_FILE"
-        and requirements_result["status"] not in {"PASS", "EMPTY", "NOT_REGISTERED"}
-    ):
+    if requirements_result["status"] not in {"PASS", "EMPTY", "NOT_REGISTERED"}:
         return None, {
             "status": "FAIL",
             "failure_stage": "requirements",
@@ -721,29 +602,6 @@ def _prepare_environment(
             "build_toolchain": toolchain_result,
             "requirements": requirements_result,
             "setup_script": setup_result,
-        }
-    if (
-        requirements_strategy == "BENCHMARK_PER_LINE_TWO_PASS"
-        and _requirements_have_content(requirements_path)
-    ):
-        post_setup_requirements = _install_requirements_individually(
-            requirements_path,
-            runtime_python,
-            install_options,
-            cwd=sandbox,
-            environment=runtime_environment,
-            timeout_seconds=timeout_seconds,
-        )
-        requirements_result = {
-            "status": (
-                "PASS"
-                if requirements_result["status"] == "PASS"
-                and post_setup_requirements["status"] == "PASS"
-                else "PARTIAL"
-            ),
-            "strategy": requirements_strategy,
-            "pre_setup": requirements_result,
-            "post_setup": post_setup_requirements,
         }
     return str(runtime_python), {
         "status": "PASS",

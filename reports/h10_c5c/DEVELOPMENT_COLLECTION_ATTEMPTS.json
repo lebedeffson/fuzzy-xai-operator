@@ -86,6 +86,28 @@
       },
       "scientific_result": "NOT_EVALUATED",
       "status": "RUNTIME_INCOMPLETE_SCORING_BLOCKED"
+    },
+    {
+      "complete_incidents": 23,
+      "development_scored": false,
+      "failure": "The per-requirement continuation policy conflicted with the locked prohibition on executing tests after partially unsuccessful environment preparation. This run is excluded from readiness and method evaluation.",
+      "failure_stage": "PROTOCOL_CONFORMANCE_AUDIT",
+      "head_commit": "e1a8c2d1e8aca1153b2042b213d1c5b279a387e2",
+      "held_out_created": false,
+      "held_out_scored": false,
+      "readiness_checks_passed": 18,
+      "readiness_checks_total": 23,
+      "run_id": 30222700928,
+      "runtime_collection_completed": true,
+      "runtime_report_sha256": "cef09722a0d82a5a76332ef9f1c1b230bf2cb9662e0584dba2135878ce2567f3",
+      "runtime_status_counts": {
+        "BUG_REPRODUCED_WITHOUT_EXECUTED_SLICE": 2,
+        "BUG_REPRODUCED_WITH_TRACE": 23,
+        "ENVIRONMENT_SETUP_FAILED": 4,
+        "TEST_DID_NOT_FAIL": 1
+      },
+      "scientific_result": "NOT_EVALUATED",
+      "status": "INVALIDATED_RUNTIME_ATTEMPT_PROTOCOL_CONFLICT"
     }
   ],
   "scientific_result": "NOT_EVALUATED"

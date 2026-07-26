@@ -82,15 +82,20 @@ inputs, Gold, method weights, abstention, endpoints or scientific gates. The
 readiness verifier requires every command record to match the amendment
 exactly.
 
-`H10_C5C_RUNTIME_INSTALLATION_AMENDMENT_003.json` records a second
-infrastructure-only correction after run `30221595604`: requirements are
-installed independently, the registered setup script is executed, and the
-independent installation pass is repeated. This is the order implemented by
-the locked BugsInPy `bugsinpy-compile` script. Unavailable optional or
-platform-specific requirements are retained as `PARTIAL` evidence rather than
-preventing the exposing test from running. Setup-script failures remain
-fail-closed. The selected incidents, source snapshots, tests, diagnostic
-method and gates are unchanged.
+`H10_C5C_RUNTIME_INSTALLATION_AMENDMENT_003.json` and run `30222700928`
+are retained as invalidated operational records. The proposed per-requirement
+continuation conflicted with the locked rule that tests must not run after
+partially unsuccessful environment preparation. No development scoring was
+performed and none of that run's runtime evidence is eligible for readiness.
+
+`H10_C5C_RUNTIME_AVAILABILITY_AMENDMENT_004.json` registers the allowed
+replacement procedure after the valid fail-closed run `30221595604` and before
+development scoring. Every incident whose status was not
+`BUG_REPRODUCED_WITH_TRACE` is replaced automatically by the next SHA256-ranked
+eligible incident from the same repository. Gold and method predictions are
+not inspected. The target count, repository composition, endpoint, method and
+scientific gates remain unchanged. The source registry and readiness report
+bind the replacement ledger to this amendment.
 
 An incident is marked `BUG_REPRODUCED_WITH_TRACE` only when its registered test
 fails and the event stream contains both a project executed slice and a

@@ -10,8 +10,9 @@ import pytest
 from fuzzyxai.experiments.h10_c5c_data import (
     COLLECTION_LOCK_PATH,
     PROTOCOL_LOCK_PATH,
+    RUNTIME_AVAILABILITY_AMENDMENT_PATH,
     RUNTIME_COMPATIBILITY_AMENDMENT_PATH,
-    RUNTIME_INSTALLATION_AMENDMENT_PATH,
+    apply_runtime_availability_replacements,
     canonical_repository,
     discover_bugsinpy_candidates,
     prepare_bugsinpy_development,
@@ -61,8 +62,8 @@ def _root_with_locked_benchmark(tmp_path: Path, commit: str) -> Path:
         PROTOCOL_LOCK_PATH,
         COLLECTION_LOCK_PATH,
         AMENDMENT_PATH,
+        RUNTIME_AVAILABILITY_AMENDMENT_PATH,
         RUNTIME_COMPATIBILITY_AMENDMENT_PATH,
-        RUNTIME_INSTALLATION_AMENDMENT_PATH,
     ):
         source = ROOT / relative
         target = root / relative
@@ -70,6 +71,8 @@ def _root_with_locked_benchmark(tmp_path: Path, commit: str) -> Path:
         data = json.loads(source.read_text(encoding="utf-8"))
         if relative == COLLECTION_LOCK_PATH:
             data["benchmark"]["commit"] = commit
+        if relative == RUNTIME_AVAILABILITY_AMENDMENT_PATH:
+            data["unavailable_incidents"] = []
         target.write_text(
             json.dumps(data, indent=2, sort_keys=True) + "\n",
             encoding="utf-8",
@@ -173,6 +176,54 @@ def test_balanced_selection_meets_locked_counts(tmp_path: Path) -> None:
     assert max(per_repository.values()) <= 4
 
 
+def test_runtime_replacement_uses_next_rank_in_same_repository(
+    tmp_path: Path,
+) -> None:
+    bugsinpy, _upstream = _build_fixture(tmp_path)
+    candidates = discover_bugsinpy_candidates(bugsinpy, ROOT)
+    selected = select_balanced_development(
+        candidates,
+        target_incidents=30,
+        minimum_repositories=8,
+        maximum_per_repository=4,
+    )
+    selected_ids = {candidate.incident_id for candidate in selected}
+    original = next(
+        candidate
+        for candidate in selected
+        if any(
+            other.repository == candidate.repository
+            and other.incident_id not in selected_ids
+            for other in candidates
+        )
+    )
+    expected = min(
+        (
+            candidate
+            for candidate in candidates
+            if candidate.repository == original.repository
+            and candidate.incident_id not in selected_ids
+        ),
+        key=lambda item: (item.selection_rank_sha256, item.incident_id),
+    )
+    replaced, ledger = apply_runtime_availability_replacements(
+        candidates,
+        selected,
+        {original.incident_id},
+    )
+    assert expected.incident_id in {candidate.incident_id for candidate in replaced}
+    assert original.incident_id not in {candidate.incident_id for candidate in replaced}
+    assert ledger == [
+        {
+            "original_incident_id": original.incident_id,
+            "original_selection_rank_sha256": original.selection_rank_sha256,
+            "replacement_incident_id": expected.incident_id,
+            "replacement_selection_rank_sha256": expected.selection_rank_sha256,
+            "repository": original.repository,
+        }
+    ]
+
+
 def test_prepare_materializes_uncollected_development_manifest(
     tmp_path: Path,
 ) -> None:
@@ -234,11 +285,6 @@ def test_prepare_materializes_uncollected_development_manifest(
     assert all(
         command["requirements_install_options"]
         == ["--use-deprecated=legacy-resolver", "--no-build-isolation"]
-        for command in commands.values()
-    )
-    assert all(
-        command["requirements_install_strategy"]
-        == "BENCHMARK_PER_LINE_TWO_PASS"
         for command in commands.values()
     )
     for item in encoded_requirements:
@@ -672,83 +718,6 @@ def test_runtime_collector_retains_failed_setup_diagnostics(
     )
 
 
-def test_runtime_collector_benchmark_strategy_records_requirement_failures(
-    tmp_path: Path,
-) -> None:
-    repository = tmp_path / "repository"
-    repository.mkdir()
-    (repository / "test_failure.py").write_text(
-        "from setup_marker import READY\n"
-        "assert READY is True\n"
-        "raise AssertionError('expected benchmark failure')\n",
-        encoding="utf-8",
-    )
-    setup_script = tmp_path / "setup.sh"
-    setup_script.write_text(
-        "printf 'READY = True\\n' > setup_marker.py\n",
-        encoding="utf-8",
-    )
-    requirements = tmp_path / "requirements.txt"
-    requirements.write_text("./missing-local-package\n", encoding="utf-8")
-    manifest = tmp_path / "manifest.jsonl"
-    manifest.write_text(
-        json.dumps(
-            {
-                "incident_id": "fixture-partial-requirements",
-                "repository": "fixture/project",
-                "repository_root": str(repository),
-                "failing_tests": ["test_failure.py"],
-                "split": "development",
-                "runtime_evidence_status": "PENDING_COLLECTION",
-            },
-            sort_keys=True,
-        )
-        + "\n",
-        encoding="utf-8",
-    )
-    registry = tmp_path / "registry.json"
-    registry.write_text(
-        json.dumps(
-            {
-                "fixture-partial-requirements": {
-                    "python_version": (
-                        f"{sys.version_info.major}.{sys.version_info.minor}"
-                    ),
-                    "python_executable": sys.executable,
-                    "commands": [
-                        {
-                            "test_id": "test_failure.py",
-                            "argv": ["python", "test_failure.py"],
-                        }
-                    ],
-                    "setup_script": str(setup_script),
-                    "requirements_path": str(requirements),
-                    "requirements_install_strategy": (
-                        "BENCHMARK_PER_LINE_TWO_PASS"
-                    ),
-                }
-            },
-            sort_keys=True,
-        ),
-        encoding="utf-8",
-    )
-    result = collect_h10_c5c_runtime(
-        manifest,
-        registry,
-        tmp_path / "runtime",
-        timeout_seconds=30,
-        allow_setup=True,
-    )
-    assert result.complete_incidents == 1
-    report = json.loads(result.report_path.read_text(encoding="utf-8"))
-    evidence = report["evidence"][0]
-    assert evidence["status"] == "BUG_REPRODUCED_WITH_TRACE"
-    assert evidence["setup"]["status"] == "PASS"
-    assert evidence["setup"]["requirements"]["status"] == "PARTIAL"
-    assert evidence["setup"]["requirements"]["pre_setup"]["failed_count"] == 1
-    assert evidence["setup"]["requirements"]["post_setup"]["failed_count"] == 1
-
-
 def test_runtime_collector_fails_closed_on_missing_registered_python(
     tmp_path: Path,
 ) -> None:
@@ -885,7 +854,6 @@ def test_development_readiness_requires_complete_locked_inputs(tmp_path: Path) -
                 "--use-deprecated=legacy-resolver",
                 "--no-build-isolation",
             ],
-            "requirements_install_strategy": "BENCHMARK_PER_LINE_TWO_PASS",
         }
         source_rows.append(
             {
@@ -914,6 +882,10 @@ def test_development_readiness_requires_complete_locked_inputs(tmp_path: Path) -
             {
                 "collection_id": "h10-c5c-bugsinpy-development-v1",
                 "bugsinpy_commit": LOCKED_BUGSINPY_COMMIT,
+                "runtime_availability_amendment_id": (
+                    "h10-c5c-bugsinpy-development-v1-amendment-004"
+                ),
+                "replacement_ledger": [],
                 "incidents": source_rows,
             }
         ),

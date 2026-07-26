@@ -1,0 +1,85 @@
+{
+  "amendment_id": "h10-c5c-bugsinpy-development-v1-amendment-004",
+  "applies_to": "h10-c5c-bugsinpy-development-v1",
+  "created_after_runtime_attempt": 30221595604,
+  "created_before_development_scoring": true,
+  "gold_or_method_results_inspected": false,
+  "replacement_rule": {
+    "candidate_order": "selection_rank_sha256_then_incident_id",
+    "preserve_repository": true,
+    "replace_every_status_other_than": "BUG_REPRODUCED_WITH_TRACE",
+    "replacement_must_not_be_in_original_selection": true,
+    "selection_is_automatic": true
+  },
+  "scientific_endpoint_changed": false,
+  "selection_count_changed": false,
+  "selection_rule_changed": true,
+  "source_runtime_report_sha256": "cfbb0c12d60aa507dffed07f5f941aed7c3ac4ffc5ab75d13925d8b4d6124539",
+  "status": "LOCKED_BEFORE_REPLACEMENT_MATERIALIZATION",
+  "unavailable_incidents": [
+    {
+      "incident_id": "bugsinpy-ansible-10",
+      "runtime_status": "ENVIRONMENT_SETUP_FAILED"
+    },
+    {
+      "incident_id": "bugsinpy-keras-3",
+      "runtime_status": "ENVIRONMENT_SETUP_FAILED"
+    },
+    {
+      "incident_id": "bugsinpy-black-3",
+      "runtime_status": "ENVIRONMENT_SETUP_FAILED"
+    },
+    {
+      "incident_id": "bugsinpy-sanic-3",
+      "runtime_status": "ENVIRONMENT_SETUP_FAILED"
+    },
+    {
+      "incident_id": "bugsinpy-tqdm-1",
+      "runtime_status": "ENVIRONMENT_SETUP_FAILED"
+    },
+    {
+      "incident_id": "bugsinpy-spacy-6",
+      "runtime_status": "ENVIRONMENT_SETUP_FAILED"
+    },
+    {
+      "incident_id": "bugsinpy-luigi-31",
+      "runtime_status": "ENVIRONMENT_SETUP_FAILED"
+    },
+    {
+      "incident_id": "bugsinpy-scrapy-13",
+      "runtime_status": "ENVIRONMENT_SETUP_FAILED"
+    },
+    {
+      "incident_id": "bugsinpy-pandas-16",
+      "runtime_status": "ENVIRONMENT_SETUP_FAILED"
+    },
+    {
+      "incident_id": "bugsinpy-ansible-14",
+      "runtime_status": "ENVIRONMENT_SETUP_FAILED"
+    },
+    {
+      "incident_id": "bugsinpy-keras-37",
+      "runtime_status": "BUG_REPRODUCED_WITHOUT_EXECUTED_SLICE"
+    },
+    {
+      "incident_id": "bugsinpy-sanic-1",
+      "runtime_status": "ENVIRONMENT_SETUP_FAILED"
+    },
+    {
+      "incident_id": "bugsinpy-tqdm-7",
+      "runtime_status": "ENVIRONMENT_SETUP_FAILED"
+    },
+    {
+      "incident_id": "bugsinpy-PySnooper-1",
+      "runtime_status": "TEST_DID_NOT_FAIL"
+    },
+    {
+      "incident_id": "bugsinpy-luigi-24",
+      "runtime_status": "ENVIRONMENT_SETUP_FAILED"
+    },
+    {
+      "incident_id": "bugsinpy-scrapy-39",
+      "runtime_status": "ENVIRONMENT_SETUP_FAILED"
+    }
+  ]
+}

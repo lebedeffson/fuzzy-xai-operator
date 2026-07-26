@@ -23,9 +23,9 @@ RUNTIME_COMPATIBILITY_AMENDMENT_PATH = Path(
     "protocol/h10_c5c_evidence_retrieval/"
     "H10_C5C_RUNTIME_COMPATIBILITY_AMENDMENT_002.json"
 )
-RUNTIME_INSTALLATION_AMENDMENT_PATH = Path(
+RUNTIME_AVAILABILITY_AMENDMENT_PATH = Path(
     "protocol/h10_c5c_evidence_retrieval/"
-    "H10_C5C_RUNTIME_INSTALLATION_AMENDMENT_003.json"
+    "H10_C5C_RUNTIME_AVAILABILITY_AMENDMENT_004.json"
 )
 
 _ASSIGNMENT = re.compile(r"^([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(.*)$")
@@ -339,6 +339,57 @@ def select_balanced_development(
     return tuple(selected)
 
 
+def apply_runtime_availability_replacements(
+    candidates: tuple[BugsInPyCandidate, ...],
+    selected: tuple[BugsInPyCandidate, ...],
+    unavailable_incident_ids: set[str],
+) -> tuple[tuple[BugsInPyCandidate, ...], list[dict[str, str]]]:
+    selected_ids = {candidate.incident_id for candidate in selected}
+    unavailable_selected = selected_ids & unavailable_incident_ids
+    if unavailable_selected != unavailable_incident_ids:
+        missing = sorted(unavailable_incident_ids - selected_ids)
+        raise ValueError(f"runtime-unavailable incidents are not selected: {missing}")
+    by_repository: dict[str, list[BugsInPyCandidate]] = defaultdict(list)
+    for candidate in candidates:
+        by_repository[candidate.repository].append(candidate)
+    for rows in by_repository.values():
+        rows.sort(key=lambda item: (item.selection_rank_sha256, item.incident_id))
+    replaced = list(selected)
+    ledger: list[dict[str, str]] = []
+    for index, original in enumerate(selected):
+        if original.incident_id not in unavailable_incident_ids:
+            continue
+        replacement = next(
+            (
+                candidate
+                for candidate in by_repository[original.repository]
+                if candidate.incident_id not in selected_ids
+                and candidate.incident_id not in unavailable_incident_ids
+            ),
+            None,
+        )
+        if replacement is None:
+            raise ValueError(
+                "no deterministic runtime replacement is available for "
+                f"{original.incident_id}"
+            )
+        replaced[index] = replacement
+        selected_ids.remove(original.incident_id)
+        selected_ids.add(replacement.incident_id)
+        ledger.append(
+            {
+                "original_incident_id": original.incident_id,
+                "original_selection_rank_sha256": original.selection_rank_sha256,
+                "replacement_incident_id": replacement.incident_id,
+                "replacement_selection_rank_sha256": (
+                    replacement.selection_rank_sha256
+                ),
+                "repository": original.repository,
+            }
+        )
+    return tuple(replaced), ledger
+
+
 def _repository_cache_path(candidate: BugsInPyCandidate, cache_root: Path) -> Path:
     return cache_root / candidate.repository.replace("/", "__")
 
@@ -636,13 +687,16 @@ def prepare_bugsinpy_development(
         raise ValueError("H10-C5c runtime compatibility amendment is invalid")
     if runtime_compatibility.get("applies_to") != collection.get("collection_id"):
         raise ValueError("H10-C5c runtime compatibility target is invalid")
-    runtime_installation = json.loads(
-        (root / RUNTIME_INSTALLATION_AMENDMENT_PATH).read_text(encoding="utf-8")
+    runtime_availability = json.loads(
+        (root / RUNTIME_AVAILABILITY_AMENDMENT_PATH).read_text(encoding="utf-8")
     )
-    if runtime_installation.get("status") != "LOCKED_BEFORE_RUNTIME_RETRY":
-        raise ValueError("H10-C5c runtime installation amendment is invalid")
-    if runtime_installation.get("applies_to") != collection.get("collection_id"):
-        raise ValueError("H10-C5c runtime installation target is invalid")
+    if (
+        runtime_availability.get("status")
+        != "LOCKED_BEFORE_REPLACEMENT_MATERIALIZATION"
+    ):
+        raise ValueError("H10-C5c runtime availability amendment is invalid")
+    if runtime_availability.get("applies_to") != collection.get("collection_id"):
+        raise ValueError("H10-C5c runtime availability target is invalid")
     benchmark = collection["benchmark"]
     if not isinstance(benchmark, dict):
         raise TypeError("H10-C5c benchmark lock must be an object")
@@ -667,6 +721,19 @@ def prepare_bugsinpy_development(
         minimum_repositories=int(selection["minimum_repositories"]),
         maximum_per_repository=int(selection["maximum_incidents_per_repository"]),
     )
+    unavailable_rows = runtime_availability.get("unavailable_incidents", [])
+    if not isinstance(unavailable_rows, list):
+        raise TypeError("H10-C5c unavailable incident registry must be a list")
+    unavailable_ids = {
+        str(row.get("incident_id", ""))
+        for row in unavailable_rows
+        if isinstance(row, dict)
+    }
+    selected, replacement_ledger = apply_runtime_availability_replacements(
+        candidates,
+        selected,
+        unavailable_ids,
+    )
     output_root.mkdir(parents=True, exist_ok=True)
     manifest_rows = []
     command_rows = {}
@@ -682,9 +749,6 @@ def prepare_bugsinpy_development(
         command_row["build_toolchain"] = runtime_compatibility["build_toolchain"]
         command_row["requirements_install_options"] = runtime_compatibility[
             "requirements_install_options"
-        ]
-        command_row["requirements_install_strategy"] = runtime_installation[
-            "requirements_install_strategy"
         ]
         command_rows[candidate.incident_id] = command_row
         source_rows.append(source_row)
@@ -707,6 +771,8 @@ def prepare_bugsinpy_development(
         "bugsinpy_commit_sha256": hashlib.sha256(
             bugsinpy_commit.encode()
         ).hexdigest(),
+        "runtime_availability_amendment_id": runtime_availability["amendment_id"],
+        "replacement_ledger": replacement_ledger,
         "incidents": source_rows,
     }
     source_registry_path.write_text(
@@ -720,6 +786,8 @@ def prepare_bugsinpy_development(
         "eligible_repositories": len({item.repository for item in candidates}),
         "selected_incidents": len(selected),
         "selected_repositories": len({item.repository for item in selected}),
+        "runtime_availability_amendment_id": runtime_availability["amendment_id"],
+        "replacement_ledger": replacement_ledger,
         "selected": [
             {
                 "project": item.project,
