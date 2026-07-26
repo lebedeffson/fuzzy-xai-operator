@@ -14,6 +14,10 @@ from pathlib import Path, PurePosixPath
 
 TRACEBACK_HEADER = "Traceback (most recent call last):"
 PYTEST_FRAME = re.compile(r"^.+[.]py:\d+: in ", flags=re.MULTILINE)
+PYTEST_FAILURE_LOCATION = re.compile(
+    r"^.+[.]py:\d+: (?:[A-Za-z][A-Za-z0-9_.]*)(?:: .+)?$",
+    flags=re.MULTILINE,
+)
 INFRASTRUCTURE_RETURNCODES = frozenset({2, 3, 4, 5})
 DOCKER_INFRASTRUCTURE_RETURNCODES = frozenset({125, 126, 127})
 CONTAINER_IMAGE = re.compile(r"^[A-Za-z0-9._/:@-]+@sha256:[0-9a-f]{64}$")
@@ -24,7 +28,11 @@ PATCH_PATH = re.compile(r"^diff --git a/(.+?) b/(.+?)$", flags=re.MULTILINE)
 def _has_trace(value: str) -> bool:
     return (
         TRACEBACK_HEADER in value and 'File "' in value
-    ) or PYTEST_FRAME.search(value) is not None
+    ) or PYTEST_FRAME.search(value) is not None or (
+        " FAILURES " in value
+        and "FAILED " in value
+        and PYTEST_FAILURE_LOCATION.search(value) is not None
+    )
 
 
 def _text(value: str | bytes | None) -> str:

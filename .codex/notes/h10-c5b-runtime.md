@@ -8,3 +8,4 @@
 - Runtime collection may change infrastructure only; the 11 files in `METHOD_LOCK.json` must remain byte-identical.
 - Upload only `runtime-development` and `runtime-held_out`; a broad `runtime-*` glob also captures the local Python toolchain.
 - With `PrivateTmp=true`, Docker cannot bind a collector sandbox created under the runner's private `/tmp`; set `TMPDIR` to a mode-0700 directory under the Docker-visible runtime source root.
+- Some SWE-bench `FAIL_TO_PASS` entries contain a truncated parametrized suffix; execute the registered test function when brackets are unbalanced, and accept a pytest assertion block with a source location as runtime trace evidence.

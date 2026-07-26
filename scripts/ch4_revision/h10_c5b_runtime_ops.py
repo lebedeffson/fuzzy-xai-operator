@@ -52,6 +52,13 @@ SAFE_INCIDENT_ID = re.compile(r"^[A-Za-z0-9_.-]+$")
 SWEBENCH_TESTBED_PYTHON = "/opt/miniconda3/envs/testbed/bin/python"
 
 
+def _normalize_pytest_node_id(value: str) -> str:
+    """Fall back to the parametrized test function for truncated SWE-bench IDs."""
+    if value.count("[") > value.count("]"):
+        return value.split("[", 1)[0]
+    return value
+
+
 def sha256_path(path: Path) -> str:
     digest = hashlib.sha256()
     with path.open("rb") as stream:
@@ -191,7 +198,10 @@ def build_runtime_inputs(
         incident_id = str(row["incident_id"])
         if not SAFE_INCIDENT_ID.fullmatch(incident_id):
             raise ValueError(f"unsafe incident ID: {incident_id}")
-        failing_tests = tuple(str(item) for item in row.get("failing_tests", ()))
+        failing_tests = tuple(
+            _normalize_pytest_node_id(str(item))
+            for item in row.get("failing_tests", ())
+        )
         if not failing_tests:
             raise ValueError(f"no failing test registered for {incident_id}")
         runtime_row = {field: row[field] for field in RUNTIME_FIELDS if field in row}

@@ -9,6 +9,7 @@ import pytest
 
 from scripts.ch4_revision.h10_c5b_runtime_ops import (
     METHOD_COMMIT,
+    _normalize_pytest_node_id,
     build_runtime_inputs,
     freeze_development_runtime,
     merge_runtime_evidence,
@@ -16,6 +17,17 @@ from scripts.ch4_revision.h10_c5b_runtime_ops import (
     verify_method_lock,
     verify_runtime_readiness,
 )
+
+
+def test_truncated_parametrized_node_id_uses_test_function() -> None:
+    assert (
+        _normalize_pytest_node_id("tests/test_module.py::test_value[\\n")
+        == "tests/test_module.py::test_value"
+    )
+    assert (
+        _normalize_pytest_node_id("tests/test_module.py::test_value[valid]")
+        == "tests/test_module.py::test_value[valid]"
+    )
 
 
 def _manifest_row(

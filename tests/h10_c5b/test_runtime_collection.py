@@ -9,8 +9,23 @@ import pytest
 from scripts.ch4_revision.collect_h10_c5b_runtime import (
     _apply_runtime_test_patch,
     _execution_command,
+    _has_trace,
     collect,
 )
+
+
+def test_pytest_assertion_failure_is_runtime_trace() -> None:
+    output = """
+=================================== FAILURES ===================================
+_______________________________ test_contract ________________________________
+>       assert actual == expected
+E       AssertionError: assert 1 == 2
+tests/test_contract.py:42: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_contract.py::test_contract - AssertionError: assert 1 == 2
+"""
+    assert _has_trace(output)
+    assert not _has_trace("tests/test_contract.py:42: warning")
 
 
 def test_runtime_collection_requires_reproduced_trace(tmp_path: Path) -> None:
