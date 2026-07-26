@@ -1267,7 +1267,7 @@ h10-c5b-ops-test:
 h10-c5c-test:
 	$(H10_C4_ENV) $(H10_C3_PYTHON) -m ruff check framework/fuzzyxai/fuzzyxai/repository_diagnostics/retrieval.py framework/fuzzyxai/fuzzyxai/repository_diagnostics/runtime_events.py framework/fuzzyxai/fuzzyxai/repository_diagnostics/executed_slice.py framework/fuzzyxai/fuzzyxai/repository_diagnostics/contract_inference.py framework/fuzzyxai/fuzzyxai/repository_diagnostics/importer_v2.py framework/fuzzyxai/fuzzyxai/repository_diagnostics/auditor_v2.py framework/fuzzyxai/fuzzyxai/repository_diagnostics/evidence_requests.py framework/fuzzyxai/fuzzyxai/repository_diagnostics/practical_recovery.py framework/fuzzyxai/fuzzyxai/repository_diagnostics/reporting.py framework/fuzzyxai/fuzzyxai/experiments/h10_c5c.py scripts/ch4_revision/analyze_h10_c5b_errors.py scripts/ch4_revision/run_h10_c5c_development.py tests/h10_c5c
 	$(H10_C4_ENV) $(H10_C3_PYTHON) -m pytest -q tests/h10_c5c
-	test "$$(git hash-object framework/fuzzyxai/operators_manifest.yaml)" = "$$(git rev-parse 57d0cc9:framework/fuzzyxai/operators_manifest.yaml)"
+	printf '%s  %s\n' 479fa55460426a1726f57a5ed5f745b0ad2e872eeefb21470dd2e3e865133949 framework/fuzzyxai/operators_manifest.yaml | sha256sum -c -
 
 h10-c5c-posthoc:
 	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/analyze_h10_c5b_errors.py --source results/h10_c5b/PER_INCIDENT_RESULTS.csv --output reports/h10_c5c/H10_C5B_POSTHOC_ERROR_ANALYSIS.json
