@@ -1,0 +1,30 @@
+{
+  "amendment_id": "h10-c5b-runtime-pytest-environment-amendment-v1",
+  "amendment_scope": "pytest_runtime_writable_state_and_collection_classification_only",
+  "created_after_cancelled_held_out_runtime_preflight": true,
+  "created_before_complete_held_out_runtime_evidence": true,
+  "development_results_changed": false,
+  "endpoint_changed": false,
+  "gates_changed": false,
+  "gold_or_method_predictions_viewed": false,
+  "held_out_scoring_enabled": false,
+  "method_code_status": "FROZEN_FOR_RUNTIME_COLLECTION",
+  "method_commit": "7aa72a19a70bdb5eedea520742f269bc6c26aeea",
+  "observed_failure": {
+    "incident_id": "astropy__astropy-14365",
+    "reason": "Hypothesis could not create its default database under the bind-mounted repository and raised while loading conftest.",
+    "runtime_status_before_correction": "INVALID_FALSE_TRACE_CLASSIFICATION",
+    "scientific_method_executed": false,
+    "workflow_conclusion": "cancelled"
+  },
+  "parent_protocol": "h10-c5b-repository-grounded-v1",
+  "runtime_policy": {
+    "collection_or_conftest_error_status": "RUNTIME_INFRASTRUCTURE_ERROR",
+    "container_network": "none",
+    "failing_test_targets_changed": false,
+    "hypothesis_storage_directory": "/tmp/hypothesis",
+    "pytest_cache_disabled": true,
+    "workspace_source_snapshot_changed": false
+  },
+  "status": "LOCKED_BEFORE_HELD_OUT_RUNTIME_RETRY"
+}

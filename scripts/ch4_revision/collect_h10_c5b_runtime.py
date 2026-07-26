@@ -18,6 +18,14 @@ PYTEST_FAILURE_LOCATION = re.compile(
     r"^.+[.]py:\d+: (?:[A-Za-z][A-Za-z0-9_.]*)(?:: .+)?$",
     flags=re.MULTILINE,
 )
+PYTEST_COLLECTION_FAILURE = re.compile(
+    r"(?:"
+    r"ImportError while loading conftest|"
+    r"ERROR collecting |"
+    r"Interrupted: [^\n]+ during collection|"
+    r"ERROR: file or directory not found"
+    r")"
+)
 INFRASTRUCTURE_RETURNCODES = frozenset({2, 3, 4, 5})
 DOCKER_INFRASTRUCTURE_RETURNCODES = frozenset({125, 126, 127})
 CONTAINER_IMAGE = re.compile(r"^[A-Za-z0-9._/:@-]+@sha256:[0-9a-f]{64}$")
@@ -33,6 +41,10 @@ def _has_trace(value: str) -> bool:
         and "FAILED " in value
         and PYTEST_FAILURE_LOCATION.search(value) is not None
     )
+
+
+def _is_collection_failure(value: str) -> bool:
+    return PYTEST_COLLECTION_FAILURE.search(value) is not None
 
 
 def _text(value: str | bytes | None) -> str:
@@ -109,6 +121,10 @@ def _execution_command(
             "PYTHONHASHSEED=0",
             "--env",
             "PYTHONNOUSERSITE=1",
+            "--env",
+            "HYPOTHESIS_STORAGE_DIRECTORY=/tmp/hypothesis",
+            "--env",
+            "PYTEST_ADDOPTS=-p no:cacheprovider",
             image,
             *command,
         ),
@@ -284,7 +300,7 @@ def collect(
                     elif returncode in INFRASTRUCTURE_RETURNCODES or (
                         backend == "container"
                         and returncode in DOCKER_INFRASTRUCTURE_RETURNCODES
-                    ):
+                    ) or _is_collection_failure(combined):
                         status = "RUNTIME_INFRASTRUCTURE_ERROR"
                     elif returncode not in expected_failure_codes:
                         status = "UNEXPECTED_FAILURE_RETURNCODE"

@@ -10,6 +10,7 @@ from scripts.ch4_revision.collect_h10_c5b_runtime import (
     _apply_runtime_test_patch,
     _execution_command,
     _has_trace,
+    _is_collection_failure,
     _remove_runtime_image,
     collect,
 )
@@ -27,6 +28,19 @@ FAILED tests/test_contract.py::test_contract - AssertionError: assert 1 == 2
 """
     assert _has_trace(output)
     assert not _has_trace("tests/test_contract.py:42: warning")
+
+
+@pytest.mark.parametrize(
+    "output",
+    [
+        "ImportError while loading conftest '/workspace/conftest.py'.",
+        "ERROR collecting tests/test_module.py",
+        "Interrupted: 1 error during collection",
+        "ERROR: file or directory not found: tests/test_missing.py",
+    ],
+)
+def test_pytest_collection_failure_is_infrastructure(output: str) -> None:
+    assert _is_collection_failure(output)
 
 
 def test_runtime_collection_requires_reproduced_trace(tmp_path: Path) -> None:
@@ -129,6 +143,49 @@ def test_pytest_infrastructure_returncode_is_not_bug_reproduction(
     assert report["trace_complete_count"] == 0
 
 
+def test_collection_error_with_returncode_one_is_infrastructure(
+    tmp_path: Path,
+) -> None:
+    repository = tmp_path / "repository"
+    repository.mkdir()
+    manifest = tmp_path / "manifest.jsonl"
+    manifest.write_text(
+        json.dumps(
+            {
+                "incident_id": "incident-1",
+                "repository": "fixture/repo",
+                "repository_root": str(repository),
+            }
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    commands = tmp_path / "commands.json"
+    commands.write_text(
+        json.dumps(
+            {
+                "incident-1": {
+                    "command": [
+                        sys.executable,
+                        "-c",
+                        (
+                            "print(\"ImportError while loading conftest "
+                            "'/workspace/conftest.py'.\"); raise SystemExit(1)"
+                        ),
+                    ],
+                    "expected_failure_returncodes": [1],
+                    "timeout_seconds": 30,
+                }
+            }
+        ),
+        encoding="utf-8",
+    )
+    report = collect(manifest, commands, tmp_path / "evidence")
+
+    assert report["evidence"][0]["status"] == "RUNTIME_INFRASTRUCTURE_ERROR"
+    assert report["trace_complete_count"] == 0
+
+
 def test_runtime_timeout_is_recorded_without_retry(tmp_path: Path) -> None:
     repository = tmp_path / "repository"
     repository.mkdir()
@@ -190,6 +247,8 @@ def test_container_backend_requires_digest_pinned_image(tmp_path: Path) -> None:
     assert command[:3] == ("docker", "run", "--rm")
     assert "--network" in command
     assert "none" in command
+    assert "HYPOTHESIS_STORAGE_DIRECTORY=/tmp/hypothesis" in command
+    assert "PYTEST_ADDOPTS=-p no:cacheprovider" in command
 
 
 def test_runtime_image_cleanup_removes_only_exact_reference(

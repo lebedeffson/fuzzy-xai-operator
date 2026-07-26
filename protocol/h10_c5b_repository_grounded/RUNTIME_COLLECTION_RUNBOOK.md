@@ -24,6 +24,12 @@ The registered SWE-bench images execute tests with
 is an infrastructure error because it does not contain the incident's pytest
 environment.
 
+The runtime sandbox places Hypothesis state in writable `/tmp` and disables
+pytest's optional cache. A failure while importing `conftest.py` or during test
+collection is classified as infrastructure, even when pytest returns code 1
+and emits Python frames. See
+`H10_C5B_RUNTIME_PYTEST_ENVIRONMENT_AMENDMENT.json`.
+
 If an immutable upstream image fails before pytest collection because its
 dependency environment is no longer internally compatible, apply only the
 prospectively recorded runtime correction in
