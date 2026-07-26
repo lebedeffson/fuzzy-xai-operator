@@ -1,0 +1,24 @@
+{
+  "final_status": "H10_C5B_NOT_SUPPORTED",
+  "held_out_incidents": 24,
+  "held_out_repositories": 12,
+  "held_out_scored": true,
+  "immutable_files": {
+    "protocol/h10_c5b_repository_grounded/H10_C5B_HELD_OUT_SCORING_LOCK.json": "40d838b611b8d9f6353f537ea48d56b89cc2137135805ab5aa861c583764d570",
+    "reports/h10_c5b/official_held_out_scoring/HELD_OUT_SCORING_STATUS.json": "7b3179ec567364d761500239197b5b80f36b5225d1185cba41b54c9a05f9fecf",
+    "reports/h10_c5b/official_held_out_scoring/OPENING_RECORD.json": "fa0cf0bf24246f8e55148c21f5d3067722461629444d397822ea7cc0fcd0fa0c",
+    "reports/h10_c5b/official_held_out_scoring/POSTOPEN_ATTESTATION.json": "04d5d5565cd1e7018371fec0ebb5297060c14a13c649483a9f70953e8ac8532a",
+    "results/h10_c5b/H10_C5B_FINAL_STATUS.json": "a1ac841880e9acac2c09eac79d18721d17f83da5e8cec19a7057fa8cb453fc6d",
+    "results/h10_c5b/PER_INCIDENT_RESULTS.csv": "5524c06c5c6aa7644d50372e0a45d4347860423950d69762cbf233a9f68a20c1",
+    "results/h10_c5b/REPOSITORY_BOOTSTRAP.csv": "930ebb0ee4b7ba30bf8e4801cf8988ea961c6f5127836d5730c8fa3ffed970d0",
+    "results/h10_c5b/SPLIT_METHOD_SUMMARY.csv": "a1268007df2f215c2899aa86c7e5a5296d236f579b6e27eb1084376dda710e17"
+  },
+  "method_commit": "7aa72a19a70bdb5eedea520742f269bc6c26aeea",
+  "opening_count": 1,
+  "postopen_reproduction": "PASS",
+  "protocol_id": "h10-c5b-repository-grounded-v1",
+  "reuse_policy": "POSTHOC_ERROR_ANALYSIS_ONLY",
+  "signed_postopen_tag": "h10-c5b-repository-grounded-v1-postopen",
+  "signed_postopen_tag_commit": "57d0cc9b3e7327984a62e7b0d009ead99a5760fd",
+  "status": "FINAL_NEGATIVE_RESULT_LOCKED"
+}

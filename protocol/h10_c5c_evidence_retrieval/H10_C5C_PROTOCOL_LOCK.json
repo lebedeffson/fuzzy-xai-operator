@@ -1,0 +1,74 @@
+{
+  "abstention_selection": {
+    "development_only": true,
+    "minimum_coverage": 0.7,
+    "selection_curve": [
+      "coverage",
+      "false_localization",
+      "joint_hit_at_3",
+      "calibration_error"
+    ]
+  },
+  "candidate_evidence_sources": [
+    "exact_traceback_frames",
+    "test_to_invoked_symbol",
+    "dynamic_failing_test_coverage",
+    "executed_path_call_graph",
+    "assertion_difference",
+    "exception_type",
+    "runtime_reads_and_writes",
+    "manifest_and_configuration_references",
+    "dependency_versions_and_constraints"
+  ],
+  "created_before_h10_c5c_implementation": true,
+  "development_gate": {
+    "contract_accuracy_improves_over_h10_c5b": true,
+    "false_localization_not_worse_than_b_greedy": true,
+    "gold_leakage": 0,
+    "minimum_coverage": 0.7,
+    "minimum_incidents": 20,
+    "minimum_repositories": 8,
+    "o_route_hit_at_3_strictly_greater_than_b_greedy": true,
+    "top_k_lists_structurally_distinct": true
+  },
+  "held_out_design": {
+    "minimum_incidents": 30,
+    "minimum_repositories": 10,
+    "repositories_disjoint_from_development": true,
+    "repositories_disjoint_from_h10_c5b_official_held_out": true,
+    "scoring_allowed_before_development_gate": false
+  },
+  "held_out_status": "NOT_CREATED",
+  "human_evaluation": false,
+  "old_held_out_policy": "POSTHOC_ERROR_ANALYSIS_ONLY",
+  "parent_result": "H10_C5B_NOT_SUPPORTED",
+  "parent_result_modified": false,
+  "pipeline": [
+    "runtime_evidence",
+    "candidate_retrieval",
+    "contract_inference",
+    "evidence_calibration",
+    "multi_obligation_graph",
+    "global_cut_optimization",
+    "abstention"
+  ],
+  "primary_comparison": "O_ROUTE_vs_B_GREEDY",
+  "primary_endpoint": "joint_file_symbol_contract_hit_at_3",
+  "protocol_id": "h10-c5c-evidence-retrieval-v1",
+  "registered_h10_c5b_held_out_repositories": [
+    "astropy/astropy",
+    "django/django",
+    "matplotlib/matplotlib",
+    "mwaskom/seaborn",
+    "pallets/flask",
+    "psf/requests",
+    "pydata/xarray",
+    "pylint-dev/pylint",
+    "pytest-dev/pytest",
+    "scikit-learn/scikit-learn",
+    "sphinx-doc/sphinx",
+    "sympy/sympy"
+  ],
+  "sealed_scoring": false,
+  "status": "LOCKED_BEFORE_IMPLEMENTATION"
+}
