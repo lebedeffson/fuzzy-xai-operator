@@ -429,6 +429,7 @@ def test_ci_wires_runtime_targets_without_held_out_scoring() -> None:
         'UV_PYTHON_INSTALL_DIR="$H10_C5B_SOURCE_DIR/runtime-tools/uv-python"'
         in workflow
     )
+    assert 'echo "TMPDIR=$runtime_tmp" >> "$GITHUB_ENV"' in workflow
     assert "Enforce no automatic held-out scoring" in workflow
     assert "${{ inputs.source_dir }}/runtime-*" not in workflow
     assert "${{ inputs.source_dir }}/runtime-development" in workflow

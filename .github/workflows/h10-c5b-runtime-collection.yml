@@ -158,6 +158,10 @@ jobs:
         run: |
           test "${H10_C5B_SOURCE_DIR#/}" != "$H10_C5B_SOURCE_DIR"
           mkdir -p "$H10_C5B_SOURCE_DIR"
+          runtime_tmp="$H10_C5B_SOURCE_DIR/runner-tmp"
+          mkdir -p "$runtime_tmp"
+          chmod 0700 "$runtime_tmp"
+          echo "TMPDIR=$runtime_tmp" >> "$GITHUB_ENV"
           make h10-c5b-verify-method-lock H10_C3_PYTHON=python
       - name: Prepare registered sources
         if: inputs.operation == 'prepare'

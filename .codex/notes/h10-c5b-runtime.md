@@ -7,3 +7,4 @@
 - Pass the registered split parquet as `H10_C5B_RUNTIME_SOURCE_DATASET` so the FAIL_TO_PASS patch is checksum-bound before execution.
 - Runtime collection may change infrastructure only; the 11 files in `METHOD_LOCK.json` must remain byte-identical.
 - Upload only `runtime-development` and `runtime-held_out`; a broad `runtime-*` glob also captures the local Python toolchain.
+- With `PrivateTmp=true`, Docker cannot bind a collector sandbox created under the runner's private `/tmp`; set `TMPDIR` to a mode-0700 directory under the Docker-visible runtime source root.
