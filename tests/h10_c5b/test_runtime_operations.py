@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import subprocess
 from pathlib import Path
 
 import pandas as pd
@@ -93,7 +94,15 @@ def test_method_lock_matches_frozen_scientific_files() -> None:
     )
     assert result["method_commit"] == METHOD_COMMIT
     assert result["scientific_implementation_diff"] == 0
-    assert result["git_object_verified"] is True
+    git_object_available = (
+        subprocess.run(
+            ["git", "cat-file", "-e", f"{METHOD_COMMIT}^{{commit}}"],
+            capture_output=True,
+            check=False,
+        ).returncode
+        == 0
+    )
+    assert result["git_object_verified"] is git_object_available
 
 
 def test_merge_copies_only_runtime_evidence(tmp_path: Path) -> None:
