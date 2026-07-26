@@ -46,6 +46,7 @@ def test_colored_pytest_failure_is_runtime_trace() -> None:
         "ERROR collecting tests/test_module.py",
         "Interrupted: 1 error during collection",
         "ERROR: file or directory not found: tests/test_missing.py",
+        "/usr/bin/python: No module named pytest",
     ],
 )
 def test_pytest_collection_failure_is_infrastructure(output: str) -> None:

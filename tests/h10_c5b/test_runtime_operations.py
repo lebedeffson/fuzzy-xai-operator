@@ -10,6 +10,7 @@ import pytest
 from scripts.ch4_revision.h10_c5b_runtime_ops import (
     METHOD_COMMIT,
     _normalize_pytest_node_id,
+    _runtime_test_command,
     build_runtime_inputs,
     freeze_development_runtime,
     merge_runtime_evidence,
@@ -24,6 +25,42 @@ def test_truncated_parametrized_node_id_uses_test_function() -> None:
         _normalize_pytest_node_id("tests/test_module.py::test_value[\\n")
         == "tests/test_module.py::test_value"
     )
+
+
+def test_django_runtime_uses_registered_native_runner() -> None:
+    command = _runtime_test_command(
+        "django/django",
+        ("test_value (forms_tests.tests.TestCase)",),
+        python_command="/testbed/python",
+    )
+    assert command == [
+        "/testbed/python",
+        "tests/runtests.py",
+        "forms_tests.tests.TestCase.test_value",
+        "--verbosity",
+        "2",
+    ]
+
+
+def test_sympy_runtime_uses_public_patch_test_file() -> None:
+    command = _runtime_test_command(
+        "sympy/sympy",
+        ("test_value",),
+        test_patch=(
+            "diff --git a/sympy/core/tests/test_value.py "
+            "b/sympy/core/tests/test_value.py\n"
+        ),
+        python_command="/testbed/python",
+    )
+    assert command == [
+        "/testbed/python",
+        "bin/test",
+        "--no-colors",
+        "-C",
+        "-k",
+        "test_value",
+        "sympy/core/tests/test_value.py",
+    ]
     assert (
         _normalize_pytest_node_id("tests/test_module.py::test_value[valid]")
         == "tests/test_module.py::test_value[valid]"

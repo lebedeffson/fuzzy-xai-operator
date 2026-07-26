@@ -50,6 +50,8 @@ RUNTIME_FIELDS = (
 )
 SAFE_INCIDENT_ID = re.compile(r"^[A-Za-z0-9_.-]+$")
 SWEBENCH_TESTBED_PYTHON = "/opt/miniconda3/envs/testbed/bin/python"
+PATCH_TARGET = re.compile(r"^diff --git a/(.+?) b/(.+?)$", flags=re.MULTILINE)
+UNITTEST_LABEL = re.compile(r"^([A-Za-z_][A-Za-z0-9_]*) \(([^)]+)\)$")
 
 
 def _normalize_pytest_node_id(value: str) -> str:
@@ -57,6 +59,61 @@ def _normalize_pytest_node_id(value: str) -> str:
     if value.count("[") > value.count("]"):
         return value.split("[", 1)[0]
     return value
+
+
+def _runtime_test_command(
+    repository: str,
+    failing_tests: tuple[str, ...],
+    *,
+    test_patch: str = "",
+    python_command: str = "python",
+) -> list[str]:
+    if repository == "django/django":
+        labels = []
+        for value in failing_tests:
+            match = UNITTEST_LABEL.fullmatch(value)
+            labels.append(f"{match.group(2)}.{match.group(1)}" if match else value)
+        return [
+            python_command,
+            "tests/runtests.py",
+            *labels,
+            "--verbosity",
+            "2",
+        ]
+    if repository == "sympy/sympy":
+        if not test_patch:
+            return [
+                python_command,
+                "-m",
+                "pytest",
+                *failing_tests,
+                "-x",
+                "-vv",
+            ]
+        paths = {
+            right
+            for _, right in PATCH_TARGET.findall(test_patch)
+            if right.endswith(".py") and "/tests/" in right
+        }
+        if len(paths) != 1 or len(failing_tests) != 1:
+            raise ValueError("SymPy runtime target is ambiguous")
+        return [
+            python_command,
+            "bin/test",
+            "--no-colors",
+            "-C",
+            "-k",
+            failing_tests[0],
+            paths.pop(),
+        ]
+    return [
+        python_command,
+        "-m",
+        "pytest",
+        *failing_tests,
+        "-x",
+        "-vv",
+    ]
 
 
 def sha256_path(path: Path) -> str:
@@ -209,18 +266,15 @@ def build_runtime_inputs(
             raise ValueError("Gold field entered runtime collection channel")
         runtime_rows.append(runtime_row)
         commands[incident_id] = {
-            "command": [
-                (
+            "command": _runtime_test_command(
+                str(row["repository"]),
+                failing_tests,
+                python_command=(
                     SWEBENCH_TESTBED_PYTHON
                     if container_images_path is not None
                     else python_command
                 ),
-                "-m",
-                "pytest",
-                *failing_tests,
-                "-x",
-                "-vv",
-            ],
+            ),
             "expected_failure_returncodes": [1],
             "execution_backend": (
                 "container" if container_images_path is not None else "host"
@@ -247,6 +301,12 @@ def build_runtime_inputs(
             test_patch = str(source_row.get("test_patch", ""))
             if not test_patch.strip():
                 raise ValueError(f"runtime test patch missing for {incident_id}")
+            commands[incident_id]["command"] = _runtime_test_command(
+                repository,
+                failing_tests,
+                test_patch=test_patch,
+                python_command=SWEBENCH_TESTBED_PYTHON,
+            )
             test_patch_path = test_patch_root / f"{incident_id}.patch"
             test_patch_path.write_text(test_patch, encoding="utf-8")
             commands[incident_id]["container_image"] = str(image)

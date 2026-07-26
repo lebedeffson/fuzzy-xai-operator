@@ -35,6 +35,12 @@ completeness. Raw stdout, stderr, and traceback evidence remain byte-for-byte
 unchanged. This rule is locked in
 `H10_C5B_RUNTIME_TRACE_NORMALIZATION_AMENDMENT.json`.
 
+The default runner is pytest. Repositories whose registered harness is not
+pytest use only the adapters locked in
+`H10_C5B_RUNTIME_TEST_RUNNER_AMENDMENT.json`: Django's `tests/runtests.py` and
+SymPy's `bin/test`. Their target labels still come from registered
+`FAIL_TO_PASS`; the SymPy file path comes from the public test patch.
+
 If an immutable upstream image fails before pytest collection because its
 dependency environment is no longer internally compatible, apply only the
 prospectively recorded runtime correction in

@@ -23,7 +23,8 @@ PYTEST_COLLECTION_FAILURE = re.compile(
     r"ImportError while loading conftest|"
     r"ERROR collecting |"
     r"Interrupted: [^\n]+ during collection|"
-    r"ERROR: file or directory not found"
+    r"ERROR: file or directory not found|"
+    r"No module named ['\"]?pytest"
     r")"
 )
 INFRASTRUCTURE_RETURNCODES = frozenset({2, 3, 4, 5})
