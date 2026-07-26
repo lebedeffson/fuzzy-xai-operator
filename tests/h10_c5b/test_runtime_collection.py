@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import subprocess
 import sys
 from pathlib import Path
 
@@ -11,6 +12,7 @@ from scripts.ch4_revision.collect_h10_c5b_runtime import (
     _execution_command,
     _has_trace,
     _is_collection_failure,
+    _prepare_runtime_image,
     _remove_runtime_image,
     collect,
 )
@@ -254,8 +256,9 @@ def test_container_backend_requires_digest_pinned_image(tmp_path: Path) -> None:
                 "container_image": "python:latest",
             },
             ("python", "-m", "pytest"),
-            tmp_path,
             tmp_path / "container.cid",
+            tmp_path / "bootstrap.sh",
+            tmp_path / "test.patch",
         )
     command, backend = _execution_command(
         {
@@ -263,8 +266,9 @@ def test_container_backend_requires_digest_pinned_image(tmp_path: Path) -> None:
             "container_image": "python@sha256:" + "a" * 64,
         },
         ("python", "-m", "pytest"),
-        tmp_path,
         tmp_path / "container.cid",
+        tmp_path / "bootstrap.sh",
+        tmp_path / "test.patch",
     )
     assert backend == "container"
     assert command[:3] == ("docker", "run", "--rm")
@@ -272,6 +276,11 @@ def test_container_backend_requires_digest_pinned_image(tmp_path: Path) -> None:
     assert "none" in command
     assert "HYPOTHESIS_STORAGE_DIRECTORY=/tmp/hypothesis" in command
     assert "PYTEST_ADDOPTS=-p no:cacheprovider" in command
+    assert "/testbed" in command
+    assert "/workspace" not in command
+    assert "--pull" in command
+    assert "never" in command
+    assert any("dst=/runtime-test.patch,readonly" in item for item in command)
 
 
 def test_runtime_image_cleanup_removes_only_exact_reference(
@@ -297,6 +306,85 @@ def test_runtime_image_cleanup_removes_only_exact_reference(
 
     assert result["status"] == "PASS"
     assert observed == [["docker", "image", "rm", image]]
+
+
+def test_runtime_image_prepare_retries_exact_digest(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    observed: list[list[str]] = []
+    outcomes = iter((1, 1, 0))
+
+    class Completed:
+        def __init__(self, returncode: int) -> None:
+            self.returncode = returncode
+            self.stdout = "output"
+            self.stderr = "" if returncode == 0 else "connection reset"
+
+    def fake_run(command: list[str], **_: object) -> Completed:
+        observed.append(command)
+        if command[1:3] == ["image", "inspect"]:
+            return Completed(1)
+        return Completed(next(outcomes))
+
+    monkeypatch.setattr(
+        "scripts.ch4_revision.collect_h10_c5b_runtime.subprocess.run",
+        fake_run,
+    )
+    monkeypatch.setattr(
+        "scripts.ch4_revision.collect_h10_c5b_runtime.time.sleep",
+        lambda _: None,
+    )
+    image = "registry.invalid/project@sha256:" + "a" * 64
+    result = _prepare_runtime_image(image, {"PATH": "/usr/bin"})
+
+    assert result["status"] == "PASS"
+    assert result["attempts"] == 3
+    assert observed == [
+        ["docker", "image", "inspect", image],
+        ["docker", "pull", image],
+        ["docker", "pull", image],
+        ["docker", "pull", image],
+    ]
+
+
+def test_runtime_image_prepare_records_pull_timeout(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    observed = 0
+
+    class Completed:
+        returncode = 1
+        stdout = ""
+        stderr = "missing"
+
+    def fake_run(command: list[str], **_: object) -> Completed:
+        nonlocal observed
+        observed += 1
+        if command[1:3] == ["image", "inspect"]:
+            return Completed()
+        raise TimeoutError
+
+    def timeout_run(command: list[str], **kwargs: object) -> Completed:
+        try:
+            return fake_run(command, **kwargs)
+        except TimeoutError as error:
+            raise subprocess.TimeoutExpired(command, 300) from error
+
+    monkeypatch.setattr(
+        "scripts.ch4_revision.collect_h10_c5b_runtime.subprocess.run",
+        timeout_run,
+    )
+    monkeypatch.setattr(
+        "scripts.ch4_revision.collect_h10_c5b_runtime.time.sleep",
+        lambda _: None,
+    )
+    image = "registry.invalid/project@sha256:" + "b" * 64
+    result = _prepare_runtime_image(image, {"PATH": "/usr/bin"}, attempts=1)
+
+    assert result["status"] == "FAILED"
+    assert result["returncode"] == 124
+    assert result["attempts"] == 1
+    assert observed == 2
 
 
 def test_runtime_test_patch_is_checksum_bound_and_path_safe(tmp_path: Path) -> None:

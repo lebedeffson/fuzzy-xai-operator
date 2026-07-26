@@ -1,0 +1,48 @@
+{
+  "amendment_id": "h10-c5b-runtime-image-workdir-amendment-v1",
+  "amendment_scope": "container_runtime_harness_only",
+  "created_after_incomplete_held_out_runtime_collection": true,
+  "created_before_complete_held_out_runtime_evidence": true,
+  "development_results_changed": false,
+  "endpoint_changed": false,
+  "gates_changed": false,
+  "gold_or_method_predictions_viewed": false,
+  "held_out_scoring_enabled": false,
+  "incomplete_collection": {
+    "incident_count": 24,
+    "runtime_infrastructure_error_count": 5,
+    "scientific_method_executed": false,
+    "trace_complete_count": 19
+  },
+  "method_code_status": "FROZEN_FOR_RUNTIME_COLLECTION",
+  "method_commit": "7aa72a19a70bdb5eedea520742f269bc6c26aeea",
+  "observed_failures": [
+    {
+      "reason": "The host repository bind mount hid native extensions already built in the digest-pinned image.",
+      "repositories": [
+        "matplotlib/matplotlib",
+        "scikit-learn/scikit-learn"
+      ]
+    },
+    {
+      "reason": "A transient registry connection reset interrupted an image download.",
+      "repositories": [
+        "matplotlib/matplotlib",
+        "pydata/xarray"
+      ]
+    }
+  ],
+  "parent_protocol": "h10-c5b-repository-grounded-v1",
+  "replacement_selection_used": false,
+  "runtime_policy": {
+    "container_network": "none",
+    "container_repository_root": "/testbed",
+    "digest_pinning_required": true,
+    "image_pull_attempts": 3,
+    "previous_incomplete_evidence_retained": true,
+    "public_test_patch_applied_in_ephemeral_container": true,
+    "public_test_patch_mount": "read_only",
+    "recollect_all_held_out_runtime_evidence": true
+  },
+  "status": "LOCKED_BEFORE_HELD_OUT_RUNTIME_RECOLLECTION"
+}

@@ -10,6 +10,7 @@ import re
 import shutil
 import subprocess
 import tempfile
+import time
 from pathlib import Path, PurePosixPath
 
 TRACEBACK_HEADER = "Traceback (most recent call last):"
@@ -95,8 +96,9 @@ def _runtime_environment(home: Path) -> dict[str, str]:
 def _execution_command(
     registered: dict[str, object],
     command: tuple[str, ...],
-    sandbox: Path,
     cidfile: Path,
+    bootstrap_path: Path,
+    patch_path: Path,
 ) -> tuple[tuple[str, ...], str]:
     backend = str(registered.get("execution_backend", "host"))
     if backend == "host":
@@ -126,9 +128,11 @@ def _execution_command(
             "--cidfile",
             str(cidfile),
             "--mount",
-            f"type=bind,src={sandbox},dst=/workspace",
+            f"type=bind,src={bootstrap_path},dst=/runtime-bootstrap.sh,readonly",
+            "--mount",
+            f"type=bind,src={patch_path},dst=/runtime-test.patch,readonly",
             "--workdir",
-            "/workspace",
+            "/testbed",
             "--tmpfs",
             "/tmp:rw,noexec,nosuid,size=2g",
             "--env",
@@ -139,7 +143,11 @@ def _execution_command(
             "HYPOTHESIS_STORAGE_DIRECTORY=/tmp/hypothesis",
             "--env",
             "PYTEST_ADDOPTS=-p no:cacheprovider",
+            "--pull",
+            "never",
             image,
+            "/bin/sh",
+            "/runtime-bootstrap.sh",
             *command,
         ),
         backend,
@@ -178,6 +186,65 @@ def _remove_runtime_image(
         "returncode": completed.returncode,
         "stdout_sha256": hashlib.sha256(completed.stdout.encode()).hexdigest(),
         "stderr_sha256": hashlib.sha256(completed.stderr.encode()).hexdigest(),
+    }
+
+
+def _prepare_runtime_image(
+    image: str,
+    environment: dict[str, str],
+    *,
+    attempts: int = 3,
+) -> dict[str, object]:
+    inspect = subprocess.run(
+        ["docker", "image", "inspect", image],
+        capture_output=True,
+        text=True,
+        check=False,
+        env=environment,
+        timeout=60,
+    )
+    if inspect.returncode == 0:
+        return {
+            "attempts": 0,
+            "status": "PASS_ALREADY_PRESENT",
+            "returncode": 0,
+            "stdout_sha256": hashlib.sha256(inspect.stdout.encode()).hexdigest(),
+            "stderr_sha256": hashlib.sha256(inspect.stderr.encode()).hexdigest(),
+        }
+
+    stdout_parts: list[str] = []
+    stderr_parts: list[str] = []
+    returncode = 1
+    for attempt in range(1, attempts + 1):
+        try:
+            completed = subprocess.run(
+                ["docker", "pull", image],
+                capture_output=True,
+                text=True,
+                check=False,
+                env=environment,
+                timeout=300,
+            )
+            stdout_parts.append(completed.stdout)
+            stderr_parts.append(completed.stderr)
+            returncode = completed.returncode
+        except subprocess.TimeoutExpired as error:
+            stdout_parts.append(_text(error.stdout))
+            stderr_parts.append(_text(error.stderr))
+            stderr_parts.append("digest-pinned image pull timed out\n")
+            returncode = 124
+        if returncode == 0:
+            break
+        if attempt < attempts:
+            time.sleep(attempt)
+    stdout = "".join(stdout_parts)
+    stderr = "".join(stderr_parts)
+    return {
+        "attempts": attempt,
+        "status": "PASS" if returncode == 0 else "FAILED",
+        "returncode": returncode,
+        "stdout_sha256": hashlib.sha256(stdout.encode()).hexdigest(),
+        "stderr_sha256": hashlib.sha256(stderr.encode()).hexdigest(),
     }
 
 
@@ -251,6 +318,10 @@ def collect(
                         "requested": False,
                         "status": "NOT_REQUESTED",
                     },
+                    "container_image_prepare": {
+                        "attempts": 0,
+                        "status": "NOT_REQUESTED",
+                    },
                 }
             )
             continue
@@ -260,6 +331,7 @@ def collect(
             sandbox = temporary_root / "repository"
             home = temporary_root / "home"
             cidfile = temporary_root / "container.cid"
+            bootstrap_path = temporary_root / "runtime-bootstrap.sh"
             home.mkdir()
             shutil.copytree(
                 Path(str(row["repository_root"])),
@@ -272,17 +344,37 @@ def collect(
                     ".pytest_cache",
                 ),
             )
-            effective_command, backend = _execution_command(
-                registered,
-                command,
-                sandbox,
-                cidfile,
-            )
             environment = _runtime_environment(home)
+            backend = str(registered.get("execution_backend", "host"))
             patch_error = (
                 _apply_runtime_test_patch(registered, sandbox)
                 if backend == "container"
                 else None
+            )
+            image_prepare: dict[str, object] = {
+                "attempts": 0,
+                "status": "NOT_REQUESTED",
+            }
+            if backend == "container" and patch_error is None:
+                bootstrap_path.write_text(
+                    "#!/bin/sh\n"
+                    "set -eu\n"
+                    "git apply --whitespace=nowarn /runtime-test.patch\n"
+                    "exec \"$@\"\n",
+                    encoding="utf-8",
+                )
+                image_prepare = _prepare_runtime_image(
+                    str(registered["container_image"]),
+                    environment,
+                )
+                if image_prepare["status"] == "FAILED":
+                    patch_error = "digest-pinned container image could not be loaded"
+            effective_command, backend = _execution_command(
+                registered,
+                command,
+                cidfile,
+                bootstrap_path,
+                Path(str(registered.get("runtime_test_patch_path", ""))),
             )
             if patch_error is not None:
                 stdout = ""
@@ -388,6 +480,7 @@ def collect(
                 "stdout_sha256": hashlib.sha256(stdout.encode()).hexdigest(),
                 "stderr_sha256": hashlib.sha256(stderr.encode()).hexdigest(),
                 "container_image_cleanup": cleanup,
+                "container_image_prepare": image_prepare,
             }
         )
     enriched_path = output / "H10_C5B_RUNTIME_ENRICHED_MANIFEST.jsonl"
@@ -412,6 +505,10 @@ def collect(
         ),
         "container_image_cleanup_complete": all(
             row["container_image_cleanup"]["status"] != "FAILED"
+            for row in evidence_rows
+        ),
+        "container_image_prepare_complete": all(
+            row["container_image_prepare"]["status"] != "FAILED"
             for row in evidence_rows
         ),
         "python": platform.python_version(),
