@@ -136,7 +136,19 @@ def _score_h10_c5c(
 def run_development(
     manifest_path: Path,
     root: Path,
+    readiness_report_path: Path,
 ) -> dict[str, object]:
+    readiness = json.loads(readiness_report_path.read_text(encoding="utf-8"))
+    if readiness.get("status") != "H10_C5C_DEVELOPMENT_READINESS_PASS":
+        raise ValueError("H10-C5c development readiness gate did not pass")
+    if readiness.get("scientific_result") != "NOT_EVALUATED":
+        raise ValueError("H10-C5c readiness report has an invalid scientific status")
+    expected_manifest_hash = readiness.get("input_hashes", {}).get(
+        "manifest_sha256"
+    )
+    observed_manifest_hash = hashlib.sha256(manifest_path.read_bytes()).hexdigest()
+    if expected_manifest_hash != observed_manifest_hash:
+        raise ValueError("H10-C5c readiness report does not bind the input manifest")
     records = validate_development_manifest(manifest_path, root)
     event_paths = _runtime_event_paths(manifest_path)
     importer = EvidenceGroundedRepositoryImporter()
@@ -251,6 +263,13 @@ def run_development(
                 sort_keys=True,
             )
             row["repair_executable"] = float(repair is not None and repair.executable)
+            row["repair_execution_status"] = (
+                "NOT_RUN_DEVELOPMENT_SCORING_ONLY"
+                if repair is not None
+                else "NOT_APPLICABLE_NO_CANDIDATE"
+            )
+            row["regression_status"] = "NOT_EVALUATED"
+            row["recertification_status"] = "NOT_EVALUATED"
             rows.append(row)
 
     by_method = {method: [row for row in rows if row["method"] == method] for method in METHODS}
@@ -307,6 +326,7 @@ def run_development(
         "protocol_id": "h10-c5c-evidence-retrieval-v1",
         "protocol_amendment": "h10-c5c-evidence-retrieval-v1-amendment-001",
         "status": status,
+        "scientific_result": "NOT_EVALUATED",
         "development_incidents": len(records),
         "development_repositories": len({record.repository for record in records}),
         "abstention_threshold": abstention_threshold,
@@ -319,7 +339,10 @@ def run_development(
         "held_out_created": False,
         "held_out_scored": False,
         "gold_leakage_audit": "PASS",
-        "input_manifest_sha256": hashlib.sha256(manifest_path.read_bytes()).hexdigest(),
+        "input_manifest_sha256": observed_manifest_hash,
+        "readiness_report_sha256": hashlib.sha256(
+            readiness_report_path.read_bytes()
+        ).hexdigest(),
     }
     (output / "H10_C5C_DEVELOPMENT_STATUS.json").write_text(
         json.dumps(result, indent=2, sort_keys=True) + "\n",

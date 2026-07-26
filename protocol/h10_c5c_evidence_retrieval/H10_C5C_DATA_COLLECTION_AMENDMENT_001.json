@@ -1,0 +1,20 @@
+{
+  "amendment_id": "h10-c5c-bugsinpy-development-v1-amendment-001",
+  "applies_to": "h10-c5c-bugsinpy-development-v1",
+  "changes": {
+    "exact_registered_python_minor_required": true,
+    "fixed_revision_exposing_tests_overlaid_before_runtime": true,
+    "isolated_virtual_environment_per_incident_when_setup_enabled": true,
+    "missing_registered_runtime_fails_closed": true,
+    "registered_requirements_installed_before_test_execution": true,
+    "runtime_report_bound_to_manifest_and_command_registry_hashes": true,
+    "runtime_report_records_requested_and_resolved_interpreter": true,
+    "workflow_dispatch_collection_is_operational_only": true
+  },
+  "created_before_development_data_collection": true,
+  "created_before_development_scoring": true,
+  "reason": "BugsInPy incidents register project-specific Python versions and exposing tests. Runtime evidence is valid only when the fixed-revision exposing test is overlaid onto the buggy revision, the instrumented command executes under the registered major.minor interpreter in an isolated dependency environment, and the readiness report is cryptographically bound to the collected manifest and command registry. Silent runtime fallback or an unbound evidence report could create false reproduction or false non-reproduction.",
+  "scientific_endpoint_changed": false,
+  "selection_rule_changed": false,
+  "status": "LOCKED_BEFORE_DEVELOPMENT_COLLECTION"
+}

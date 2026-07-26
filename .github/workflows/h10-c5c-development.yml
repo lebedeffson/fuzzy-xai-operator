@@ -17,15 +17,64 @@ on:
       - "framework/fuzzyxai/fuzzyxai/repository_diagnostics/importer_v2.py"
       - "framework/fuzzyxai/fuzzyxai/repository_diagnostics/auditor_v2.py"
       - "framework/fuzzyxai/fuzzyxai/experiments/h10_c5c.py"
+      - "framework/fuzzyxai/fuzzyxai/experiments/h10_c5c_data.py"
+      - "framework/fuzzyxai/fuzzyxai/experiments/h10_c5c_runtime.py"
+      - "framework/fuzzyxai/fuzzyxai/experiments/h10_c5c_readiness.py"
       - "protocol/h10_c5c_evidence_retrieval/**"
       - "scripts/ch4_revision/analyze_h10_c5b_errors.py"
+      - "scripts/ch4_revision/prepare_h10_c5c_bugsinpy.py"
+      - "scripts/ch4_revision/collect_h10_c5c_runtime.py"
+      - "scripts/ch4_revision/verify_h10_c5c_development_readiness.py"
       - "scripts/ch4_revision/run_h10_c5c_development.py"
       - "tests/h10_c5c/**"
       - "Makefile"
   workflow_dispatch:
+    inputs:
+      operation:
+        description: Validation only or real BugsInPy development collection
+        required: true
+        default: validate
+        type: choice
+        options:
+          - validate
+          - collect-development
+      runner_label:
+        description: GitHub-hosted or self-hosted runner label
+        required: true
+        default: ubuntu-latest
+        type: string
+      interpreter_map_json:
+        description: Optional exact Python major.minor to executable JSON map for a prepared runner
+        required: true
+        default: "{}"
+        type: string
+      bugsinpy_ref:
+        description: BugsInPy branch, tag, or commit to record and use
+        required: true
+        default: master
+        type: string
+      timeout_seconds:
+        description: Per stage and incident command timeout
+        required: true
+        default: "900"
+        type: string
+      workers:
+        description: Concurrent incident collectors
+        required: true
+        default: "2"
+        type: string
+      allow_setup:
+        description: Permit isolated environment, dependencies, and registered setup script
+        required: true
+        default: true
+        type: boolean
 
 permissions:
   contents: read
+
+concurrency:
+  group: h10-c5c-development-${{ github.ref }}-${{ inputs.operation || 'validate' }}
+  cancel-in-progress: false
 
 jobs:
   focused-contracts:
@@ -60,3 +109,237 @@ jobs:
           test ! -e results/h10_c5c/HELD_OUT_PER_INCIDENT.csv
           test ! -e results/h10_c5c/H10_C5C_FINAL_STATUS.json
           git diff --check
+
+  collect-development-data:
+    if: github.event_name == 'workflow_dispatch' && inputs.operation == 'collect-development'
+    needs: focused-contracts
+    runs-on: ${{ inputs.runner_label }}
+    timeout-minutes: 360
+    env:
+      H10_C5C_WORK: ${{ github.workspace }}/.h10-c5c-development
+      H10_C5C_BUGSINPY: ${{ github.workspace }}/.h10-c5c-development/BugsInPy
+      H10_C5C_SOURCE: ${{ github.workspace }}/.h10-c5c-development/source
+      H10_C5C_CACHE: ${{ github.workspace }}/.h10-c5c-development/repository-cache
+      H10_C5C_RUNTIME: ${{ github.workspace }}/.h10-c5c-development/runtime
+      H10_C5C_INTERPRETERS: ${{ github.workspace }}/.h10-c5c-development/interpreters.json
+      H10_C5C_PROVISION_REPORT: ${{ github.workspace }}/.h10-c5c-development/interpreter-provisioning.json
+      H10_C5C_READINESS: ${{ github.workspace }}/.h10-c5c-development/H10_C5C_DEVELOPMENT_READINESS.json
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - id: controller-python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Install controller dependencies
+        run: python -m pip install -e ".[dev]"
+
+      - uses: conda-incubator/setup-miniconda@v4
+        with:
+          activate-environment: ""
+          auto-activate: false
+          miniconda-version: latest
+          channels: conda-forge,defaults
+          channel-priority: flexible
+
+      - name: Checkout and pin BugsInPy
+        env:
+          BUGSINPY_REF: ${{ inputs.bugsinpy_ref }}
+        run: |
+          mkdir -p "$H10_C5C_WORK"
+          git clone --filter=blob:none https://github.com/soarsmu/BugsInPy.git "$H10_C5C_BUGSINPY"
+          git -C "$H10_C5C_BUGSINPY" checkout --detach "$BUGSINPY_REF"
+          git -C "$H10_C5C_BUGSINPY" rev-parse HEAD | tee "$H10_C5C_WORK/BUGSINPY_COMMIT.txt"
+
+      - name: Materialize locked development selection
+        run: |
+          make h10-c5c-prepare-bugsinpy \
+            H10_C3_PYTHON=python \
+            H10_C5C_BUGSINPY_ROOT="$H10_C5C_BUGSINPY" \
+            H10_C5C_SOURCE_DIR="$H10_C5C_SOURCE" \
+            H10_C5C_REPOSITORY_CACHE="$H10_C5C_CACHE" \
+            H10_C5C_ALLOW_NETWORK=1
+
+      - name: Provision exact registered Python runtimes
+        shell: bash -el {0}
+        env:
+          PROVIDED_INTERPRETER_MAP: ${{ inputs.interpreter_map_json }}
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          import shutil
+          import subprocess
+          from pathlib import Path
+
+          registry_path = Path(os.environ["H10_C5C_SOURCE"]) / "H10_C5C_COMMAND_REGISTRY.json"
+          registry = json.loads(registry_path.read_text())
+          required = sorted(
+              {
+                  ".".join(str(row.get("python_version", "")).split(".")[:2])
+                  for row in registry.values()
+                  if str(row.get("python_version", "")).strip()
+              },
+              key=lambda value: tuple(int(part) for part in value.split(".")),
+          )
+          try:
+              provided = json.loads(os.environ.get("PROVIDED_INTERPRETER_MAP", "{}"))
+          except json.JSONDecodeError as error:
+              raise SystemExit(f"invalid interpreter_map_json: {error}")
+          if not isinstance(provided, dict):
+              raise SystemExit("interpreter_map_json must be a JSON object")
+
+          def version(executable):
+              completed = subprocess.run(
+                  [str(executable), "-c", "import sys; print('{}.{}.{}'.format(*sys.version_info[:3]))"],
+                  check=True,
+                  capture_output=True,
+                  text=True,
+              )
+              return completed.stdout.strip()
+
+          available = {}
+          attempts = []
+          work = Path(os.environ["H10_C5C_WORK"])
+          for requested in required:
+              candidates = []
+              supplied = str(provided.get(requested, "")).strip()
+              if supplied:
+                  candidates.append(supplied)
+              discovered = shutil.which("python" + requested)
+              if discovered:
+                  candidates.append(discovered)
+              selected = None
+              for candidate in dict.fromkeys(candidates):
+                  path = Path(candidate).expanduser().resolve()
+                  if not path.is_file():
+                      continue
+                  try:
+                      actual = version(path)
+                  except (OSError, subprocess.CalledProcessError) as error:
+                      attempts.append({"requested": requested, "candidate": str(path), "status": "ERROR", "error": str(error)})
+                      continue
+                  if ".".join(actual.split(".")[:2]) == requested:
+                      selected = path
+                      attempts.append({"requested": requested, "candidate": str(path), "status": "REUSED", "actual": actual})
+                      break
+                  attempts.append({"requested": requested, "candidate": str(path), "status": "VERSION_MISMATCH", "actual": actual})
+              if selected is None:
+                  prefix = work / ("python-" + requested)
+                  command = ["conda", "create", "--yes", "--prefix", str(prefix), "python=" + requested, "pip"]
+                  completed = subprocess.run(command, capture_output=True, text=True, check=False)
+                  attempts.append(
+                      {
+                          "requested": requested,
+                          "candidate": str(prefix),
+                          "status": "CONDA_PASS" if completed.returncode == 0 else "CONDA_FAIL",
+                          "returncode": completed.returncode,
+                          "stdout_tail": completed.stdout[-4000:],
+                          "stderr_tail": completed.stderr[-4000:],
+                      }
+                  )
+                  candidate = prefix / "bin" / "python"
+                  if completed.returncode == 0 and candidate.is_file():
+                      actual = version(candidate)
+                      if ".".join(actual.split(".")[:2]) == requested:
+                          selected = candidate.resolve()
+              if selected is not None:
+                  available[requested] = str(selected)
+
+          map_path = Path(os.environ["H10_C5C_INTERPRETERS"])
+          report_path = Path(os.environ["H10_C5C_PROVISION_REPORT"])
+          map_path.write_text(json.dumps(available, indent=2, sort_keys=True) + "\n")
+          report = {
+              "required": required,
+              "available": available,
+              "missing": sorted(set(required) - set(available)),
+              "all_required_available": set(required) == set(available),
+              "attempts": attempts,
+          }
+          report_path.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n")
+          print(report_path.read_text())
+          PY
+
+      - name: Collect typed runtime evidence
+        env:
+          ALLOW_SETUP: ${{ inputs.allow_setup }}
+          TIMEOUT_SECONDS: ${{ inputs.timeout_seconds }}
+          WORKERS: ${{ inputs.workers }}
+        run: |
+          setup_flag=""
+          if [ "$ALLOW_SETUP" = "true" ]; then
+            setup_flag="1"
+          fi
+          make h10-c5c-collect-runtime \
+            H10_C3_PYTHON=python \
+            H10_C5C_UNCOLLECTED_MANIFEST="$H10_C5C_SOURCE/H10_C5C_DEVELOPMENT_UNCOLLECTED.jsonl" \
+            H10_C5C_COMMAND_REGISTRY="$H10_C5C_SOURCE/H10_C5C_COMMAND_REGISTRY.json" \
+            H10_C5C_RUNTIME_DIR="$H10_C5C_RUNTIME" \
+            H10_C5C_ALLOW_SETUP="$setup_flag" \
+            H10_C5C_INTERPRETER_MAP="$H10_C5C_INTERPRETERS" \
+            H10_C5C_TIMEOUT_SECONDS="$TIMEOUT_SECONDS" \
+            H10_C5C_WORKERS="$WORKERS"
+
+      - name: Verify development readiness
+        id: readiness
+        continue-on-error: true
+        run: |
+          make h10-c5c-development-readiness \
+            H10_C3_PYTHON=python \
+            H10_C5C_DEVELOPMENT_MANIFEST="$H10_C5C_RUNTIME/H10_C5C_DEVELOPMENT_RUNTIME_ENRICHED.jsonl" \
+            H10_C5C_COMMAND_REGISTRY="$H10_C5C_SOURCE/H10_C5C_COMMAND_REGISTRY.json" \
+            H10_C5C_SOURCE_REGISTRY="$H10_C5C_SOURCE/H10_C5C_SOURCE_REGISTRY.json" \
+            H10_C5C_RUNTIME_REPORT="$H10_C5C_RUNTIME/H10_C5C_RUNTIME_EVIDENCE_REPORT.json" \
+            H10_C5C_READINESS_REPORT="$H10_C5C_READINESS"
+
+      - name: Run development-only scoring
+        if: steps.readiness.outcome == 'success'
+        run: |
+          make h10-c5c-run-development \
+            H10_C3_PYTHON=python \
+            H10_C5C_DEVELOPMENT_MANIFEST="$H10_C5C_RUNTIME/H10_C5C_DEVELOPMENT_RUNTIME_ENRICHED.jsonl" \
+            H10_C5C_READINESS_REPORT="$H10_C5C_READINESS"
+
+      - name: Package operational evidence
+        if: always()
+        run: |
+          mkdir -p "$H10_C5C_WORK/package"
+          cp -a "$H10_C5C_SOURCE" "$H10_C5C_WORK/package/source" || true
+          cp -a "$H10_C5C_RUNTIME" "$H10_C5C_WORK/package/runtime" || true
+          cp "$H10_C5C_INTERPRETERS" "$H10_C5C_WORK/package/interpreters.json" || true
+          cp "$H10_C5C_PROVISION_REPORT" "$H10_C5C_WORK/package/interpreter-provisioning.json" || true
+          cp "$H10_C5C_READINESS" "$H10_C5C_WORK/package/readiness.json" || true
+          cp -a results/h10_c5c "$H10_C5C_WORK/package/results" || true
+          cp "$H10_C5C_WORK/BUGSINPY_COMMIT.txt" "$H10_C5C_WORK/package/" || true
+          tar -C "$H10_C5C_WORK/package" -czf "$H10_C5C_WORK/h10-c5c-development-evidence.tgz" .
+          sha256sum "$H10_C5C_WORK/h10-c5c-development-evidence.tgz" > "$H10_C5C_WORK/h10-c5c-development-evidence.tgz.sha256"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: h10-c5c-development-evidence-${{ github.run_id }}
+          path: |
+            ${{ env.H10_C5C_WORK }}/h10-c5c-development-evidence.tgz
+            ${{ env.H10_C5C_WORK }}/h10-c5c-development-evidence.tgz.sha256
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Enforce claim-safe boundary
+        if: always()
+        run: |
+          test ! -e results/h10_c5c/HELD_OUT_PER_INCIDENT.csv
+          test ! -e results/h10_c5c/H10_C5C_FINAL_STATUS.json
+          if [ "${{ steps.readiness.outcome }}" != "success" ]; then
+            echo "Development readiness did not pass; evidence artifact was retained." >&2
+            exit 1
+          fi
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          status = json.loads(Path("results/h10_c5c/H10_C5C_DEVELOPMENT_STATUS.json").read_text())
+          assert status["scientific_result"] == "NOT_EVALUATED"
+          assert status["held_out_created"] is False
+          assert status["held_out_scored"] is False
+          PY

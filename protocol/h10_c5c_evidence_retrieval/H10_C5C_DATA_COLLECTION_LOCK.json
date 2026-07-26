@@ -1,0 +1,61 @@
+{
+  "applies_to": "h10-c5c-evidence-retrieval-v1-amendment-001",
+  "benchmark": {
+    "local_checkout_commit_must_be_recorded": true,
+    "name": "BugsInPy",
+    "project_repository_commit_must_be_recorded": true,
+    "repository": "https://github.com/soarsmu/BugsInPy"
+  },
+  "collection_id": "h10-c5c-bugsinpy-development-v1",
+  "created_after_implementation": true,
+  "created_before_development_data_collection": true,
+  "created_before_development_scoring": true,
+  "eligibility": {
+    "exclude_h10_c5b_official_held_out_repositories": true,
+    "instrumentable_test_commands": [
+      "pytest",
+      "py.test",
+      "python",
+      "python -m",
+      "direct Python script",
+      "nosetests",
+      "nose2"
+    ],
+    "nonempty_patch": true,
+    "nonempty_test_command": true,
+    "python_major": 3,
+    "required_bug_fields": [
+      "buggy_commit_id",
+      "fixed_commit_id"
+    ],
+    "required_files": [
+      "project.info",
+      "bug.info",
+      "bug_patch.txt",
+      "run_test.sh"
+    ]
+  },
+  "gold_boundary": {
+    "gold_materialized_only_for_post_prediction_scoring": true,
+    "patch_and_fixed_revision_hidden_from_method": true,
+    "runtime_events_forbid_gold_fields": true
+  },
+  "runtime_collection": {
+    "minimum_event_kinds": [
+      "coverage",
+      "traceback_frame"
+    ],
+    "one_event_stream_per_incident": true,
+    "required_status_for_scoring": "BUG_REPRODUCED_WITH_TRACE",
+    "test_id_attached_to_every_event": true
+  },
+  "selection": {
+    "balanced_round_robin": true,
+    "deterministic_rank": "sha256(collection_id\\0canonical_repository\\0bug_id)",
+    "maximum_incidents_per_repository": 4,
+    "minimum_repositories": 8,
+    "split": "development",
+    "target_incidents": 30
+  },
+  "status": "LOCKED_BEFORE_DEVELOPMENT_COLLECTION"
+}

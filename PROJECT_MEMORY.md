@@ -29,6 +29,29 @@ development gate fails closed. No H10-C5c scientific effect exists until new
 development data pass all locked technical gates and a disjoint held-out
 protocol is created.
 
+The development collection now fails closed on Python-runtime identity. Each
+instrumented command must run under the BugsInPy-registered major.minor
+interpreter; silent fallback to the controller Python is forbidden. A manual
+GitHub Actions collection operation records the BugsInPy commit, provisions
+the exact Python versions required by the locked selection, runs materialization,
+bounded parallel runtime collection, readiness and development-only scoring, and
+uploads evidence even when readiness fails. This is operational infrastructure
+only: development data and scientific scoring remain absent in the repository.
+
+A prospective BugsInPy development-data lock and materialization pipeline are
+now included. The preparer deterministically selects 30 Python-3 incidents
+from at least eight repositories outside the H10-C5b held-out repository set,
+records benchmark and upstream commit identities, and emits an uncollected
+manifest. A sandboxed runtime collector records per-test coverage, project
+calls and traceback frames. A separate fail-closed readiness verifier binds the
+enriched manifest to the source and command registries, validates locked sample
+composition, per-test runtime evidence, source hashes and the Gold boundary,
+and must pass before development scoring. The development scorer only creates
+repair plans; it explicitly records repair execution, regression and
+recertification as not evaluated. These additions do not change the current
+status: development data have not been collected or scored, and the scientific
+result remains `NOT_EVALUATED`.
+
 ## FXAI-H10-C5B-REPOSITORY-GROUNDED
 
 - Date: 2026-07-26
@@ -909,3 +932,26 @@ Runtime collection subsequently completed for development and held-out
 incidents using digest-pinned images and fail-closed evidence checks. The
 official held-out controller was added as an operational-only amendment and
 did not change the frozen scientific method, endpoint, or gates.
+
+## FXAI-H10-C5C-DEVELOPMENT-COLLECTION-READINESS
+
+- Date: 2026-07-26
+- Local branch: `local/h10-c5c-development-data-readiness`
+- Scientific status: `NOT_EVALUATED`
+- Operational status: development collection pipeline implemented; real BugsInPy
+  development data not collected in the source-release sandbox.
+
+The prospective collection pipeline now materializes the benchmark exposing tests
+from fixed revisions onto commit-pinned buggy snapshots, enforces the exact
+registered Python major.minor, optionally builds one isolated virtual environment
+per incident, installs registered requirements, runs the registered setup script,
+and fails closed on any environment error. Runtime reports are bound to the exact
+enriched manifest and command registry, and readiness checks one-to-one incident
+identity plus exposing-test and patch hashes.
+
+A manual GitHub Actions collection operation can clone a pinned BugsInPy revision,
+materialize the locked 30-incident development selection, provision only the Python
+versions required by that selection using provided paths or isolated Conda prefixes,
+collect typed runtime evidence, retain failed-readiness evidence, and run
+development-only scoring only after readiness PASS. It cannot create or score a
+held-out H10-C5c set. H10-C5b remains immutable.
