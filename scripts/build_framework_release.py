@@ -83,10 +83,13 @@ ALLOWED_PREFIXES = (
     "release_evidence/final_confirmatory_closure/",
     "experiments/model_universality/",
     "protocol/h10_c5b_repository_grounded/",
+    "protocol/h10_c5c_evidence_retrieval/",
     "protocol/h9_e2e_v2/",
     "reports/h10_c5b/",
+    "reports/h10_c5c/",
     "reports/h9_e2e_v2/",
     "results/h10_c5b/",
+    "results/h10_c5c/",
     "results/h9_e2e_v2/",
     "reports/release/universal_model_integration_completion.md",
 )

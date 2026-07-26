@@ -1,0 +1,62 @@
+name: H10-C5c prospective development implementation
+
+on:
+  push:
+    branches:
+      - feat/h10-c5c-evidence-retrieval
+  pull_request:
+    paths:
+      - ".github/workflows/h10-c5c-development.yml"
+      - "framework/fuzzyxai/fuzzyxai/repository_diagnostics/retrieval.py"
+      - "framework/fuzzyxai/fuzzyxai/repository_diagnostics/runtime_events.py"
+      - "framework/fuzzyxai/fuzzyxai/repository_diagnostics/executed_slice.py"
+      - "framework/fuzzyxai/fuzzyxai/repository_diagnostics/evidence_requests.py"
+      - "framework/fuzzyxai/fuzzyxai/repository_diagnostics/practical_recovery.py"
+      - "framework/fuzzyxai/fuzzyxai/repository_diagnostics/reporting.py"
+      - "framework/fuzzyxai/fuzzyxai/repository_diagnostics/contract_inference.py"
+      - "framework/fuzzyxai/fuzzyxai/repository_diagnostics/importer_v2.py"
+      - "framework/fuzzyxai/fuzzyxai/repository_diagnostics/auditor_v2.py"
+      - "framework/fuzzyxai/fuzzyxai/experiments/h10_c5c.py"
+      - "protocol/h10_c5c_evidence_retrieval/**"
+      - "scripts/ch4_revision/analyze_h10_c5b_errors.py"
+      - "scripts/ch4_revision/run_h10_c5c_development.py"
+      - "tests/h10_c5c/**"
+      - "Makefile"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  focused-contracts:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+      - name: Install project
+        run: python -m pip install -e ".[dev]"
+      - name: Verify final H10-C5b evidence remains immutable
+        run: |
+          make h10-c5b-verify-method-lock H10_C3_PYTHON=python
+          make h10-c5b-parent-immutability H10_C3_PYTHON=python
+      - name: Validate H10-C5c implementation
+        run: make h10-c5c-test H10_C3_PYTHON=python
+      - name: Reproduce post-hoc counts without rescoring
+        run: |
+          make h10-c5c-posthoc H10_C3_PYTHON=python
+          git diff --exit-code -- reports/h10_c5c/H10_C5B_POSTHOC_ERROR_ANALYSIS.json
+      - name: Verify no held-out result exists
+        run: |
+          test ! -e results/h10_c5c/HELD_OUT_PER_INCIDENT.csv
+          test ! -e results/h10_c5c/H10_C5C_FINAL_STATUS.json
+          git diff --check

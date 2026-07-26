@@ -1,5 +1,26 @@
 # FuzzyXAI Framework Release Status
 
+## H10-C5c Prospective Evidence Retrieval
+
+- Protocol: `h10-c5c-evidence-retrieval-v1`
+- Protocol lock commit: `b82a614`
+- Implementation status: `IMPLEMENTED_AWAITING_DEVELOPMENT_DATA`
+- Parent H10-C5b result modified: no
+- Development scored: no
+- Held-out created: no
+- Held-out scored: no
+- Scientific result: `NOT_EVALUATED`
+
+The implementation adds per-test runtime evidence, evidence-grounded candidate
+retrieval, independent contract inference, distinct greedy/global rankings,
+fail-closed parse states and development-only coverage-risk calibration. The
+official H10-C5b files remain immutable and its 24 held-out incidents are used
+only for post-hoc error counts. H10-C5c has no confirmatory or transfer claim.
+The practical path now includes per-test executed slices, read-only evidence
+requests, bounded repair plans, isolated execution, FAIL_TO_PASS, regression
+and route recertification. These are implementation capabilities, not measured
+operational effectiveness.
+
 ## H10-C5b Official Repository-Grounded Held-Out Result
 
 - Date: `2026-07-26`

@@ -1223,6 +1223,7 @@ h10-c3-r4-package:
 	$(H10_C3_R4_ENV) $(H10_C3_PYTHON) scripts/build_h10_c3_r4_handoff.py
 
 H10_C4_ENV = PYTHONPATH=framework/fuzzyxai:.
+H10_C5B_POSTOPEN_EVIDENCE ?= release_artifacts/fuzzyxai-h10-c5b-postopen-evidence-57d0cc9b3e73.zip
 
 .PHONY: h10-c4-test h10-c4-run h10-c4-verify h10-c4-chapter h10-c4-package
 
@@ -1243,7 +1244,7 @@ h10-c4-chapter:
 h10-c4-package:
 	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/build_h10_c4_release.py
 
-.PHONY: ch4-q1-test h10-c5-source-audit h10-c5-run h10-c5b-test h10-c5b-ops-test h10-c5b-prepare h10-c5b-prepare-runtime-inputs h10-c5b-collect-runtime h10-c5b-merge-runtime h10-c5b-runtime-readiness h10-c5b-freeze-development h10-c5b-freeze-held-out-scoring h10-c5b-plan-replacements h10-c5b-run h10-c5b-score-held-out h10-c5b-verify-method-lock h10-c5b-parent-immutability h10-c6-run multimodal-route-validation h9-e2e-latency h9-e2e-v2 ch4-q1-claim-lint ch4-q1-evidence
+.PHONY: ch4-q1-test h10-c5-source-audit h10-c5-run h10-c5b-test h10-c5b-ops-test h10-c5b-prepare h10-c5b-prepare-runtime-inputs h10-c5b-collect-runtime h10-c5b-merge-runtime h10-c5b-runtime-readiness h10-c5b-freeze-development h10-c5b-freeze-held-out-scoring h10-c5b-plan-replacements h10-c5b-run h10-c5b-score-held-out h10-c5b-verify-method-lock h10-c5b-parent-immutability h10-c5c-test h10-c5c-posthoc h10-c5c-posthoc-detailed h10-c5c-run-development h10-c6-run multimodal-route-validation h9-e2e-latency h9-e2e-v2 ch4-q1-claim-lint ch4-q1-evidence
 
 ch4-q1-test:
 	$(H10_C4_ENV) $(H10_C3_PYTHON) -m pytest -q tests/h10_c5 tests/h10_c6 tests/multimodal tests/roles tests/chapter_revision
@@ -1262,6 +1263,22 @@ h10-c5b-test:
 h10-c5b-ops-test:
 	$(H10_C4_ENV) $(H10_C3_PYTHON) -m ruff check scripts/ch4_revision/h10_c5b_runtime_ops.py scripts/ch4_revision/score_h10_c5b_held_out.py tests/h10_c5b/test_held_out_scoring_controller.py tests/h10_c5b/test_runtime_operations.py
 	$(H10_C4_ENV) $(H10_C3_PYTHON) -m pytest -q tests/h10_c5b/test_held_out_scoring_controller.py tests/h10_c5b/test_runtime_operations.py
+
+h10-c5c-test:
+	$(H10_C4_ENV) $(H10_C3_PYTHON) -m ruff check framework/fuzzyxai/fuzzyxai/repository_diagnostics/retrieval.py framework/fuzzyxai/fuzzyxai/repository_diagnostics/runtime_events.py framework/fuzzyxai/fuzzyxai/repository_diagnostics/executed_slice.py framework/fuzzyxai/fuzzyxai/repository_diagnostics/contract_inference.py framework/fuzzyxai/fuzzyxai/repository_diagnostics/importer_v2.py framework/fuzzyxai/fuzzyxai/repository_diagnostics/auditor_v2.py framework/fuzzyxai/fuzzyxai/repository_diagnostics/evidence_requests.py framework/fuzzyxai/fuzzyxai/repository_diagnostics/practical_recovery.py framework/fuzzyxai/fuzzyxai/repository_diagnostics/reporting.py framework/fuzzyxai/fuzzyxai/experiments/h10_c5c.py scripts/ch4_revision/analyze_h10_c5b_errors.py scripts/ch4_revision/run_h10_c5c_development.py tests/h10_c5c
+	$(H10_C4_ENV) $(H10_C3_PYTHON) -m pytest -q tests/h10_c5c
+	$(H10_C4_ENV) $(H10_C3_PYTHON) -m fuzzyxai.audit.operators_manifest --output /tmp/operators_manifest.json
+
+h10-c5c-posthoc:
+	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/analyze_h10_c5b_errors.py --source results/h10_c5b/PER_INCIDENT_RESULTS.csv --output reports/h10_c5c/H10_C5B_POSTHOC_ERROR_ANALYSIS.json
+
+h10-c5c-posthoc-detailed:
+	test -f "$(H10_C5B_POSTOPEN_EVIDENCE)"
+	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/analyze_h10_c5b_errors.py --source results/h10_c5b/PER_INCIDENT_RESULTS.csv --output reports/h10_c5c/H10_C5B_POSTHOC_ERROR_ANALYSIS.json --evidence-archive "$(H10_C5B_POSTOPEN_EVIDENCE)" --table-output reports/h10_c5c/H10_C5B_INCIDENT_ERROR_CLASSIFICATION.csv
+
+h10-c5c-run-development:
+	test -n "$(H10_C5C_DEVELOPMENT_MANIFEST)"
+	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/run_h10_c5c_development.py --manifest "$(H10_C5C_DEVELOPMENT_MANIFEST)" --root .
 
 h10-c5b-prepare:
 	test -n "$(H10_C5B_SOURCE_DIR)"

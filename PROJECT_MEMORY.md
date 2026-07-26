@@ -1,5 +1,34 @@
 # Project Memory
 
+## FXAI-H10-C5C-EVIDENCE-RETRIEVAL
+
+- Date: 2026-07-26
+- Branch: `feat/h10-c5c-evidence-retrieval`
+- Protocol lock commit: `b82a614`
+- Parent H10-C5b status: `H10_C5B_NOT_SUPPORTED`
+- Current status: `IMPLEMENTED_AWAITING_DEVELOPMENT_DATA`
+- Development scored: no
+- Held-out created/scored: no/no
+- Chapter document modified: no
+
+H10-C5c is a separate prospective cycle. It does not rescore the 24 official
+H10-C5b held-out incidents; those incidents are restricted to post-hoc error
+analysis. The new implementation separates evidence-grounded candidate
+retrieval, contract inference, strategy-specific ranking, global set-cover and
+development-only abstention calibration. Per-test runtime events prevent one
+combined traceback from being broadcast to every diagnostic obligation.
+For medium-confidence cases it emits a bounded read-only evidence request.
+Registered repairs execute only inside a temporary sandbox and require
+FAIL_TO_PASS, regression and recertification success.
+
+The development runner requires at least 30 incidents from at least eight
+repositories, complete `BUG_REPRODUCED_WITH_TRACE` evidence and typed runtime
+event streams. It rejects repositories from the official H10-C5b held-out
+split. If no abstention threshold satisfies coverage `>= 0.70`, the
+development gate fails closed. No H10-C5c scientific effect exists until new
+development data pass all locked technical gates and a disjoint held-out
+protocol is created.
+
 ## FXAI-H10-C5B-REPOSITORY-GROUNDED
 
 - Date: 2026-07-26

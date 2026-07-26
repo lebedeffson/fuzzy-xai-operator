@@ -1,0 +1,16 @@
+{
+  "development_data_complete": false,
+  "development_scored": false,
+  "executed_slice_builder": true,
+  "evidence_request_planner": true,
+  "held_out_created": false,
+  "held_out_scored": false,
+  "minimum_development_incidents": 30,
+  "minimum_development_repositories": 8,
+  "parent_h10_c5b_status": "H10_C5B_NOT_SUPPORTED",
+  "practical_repair_executor": true,
+  "protocol_id": "h10-c5c-evidence-retrieval-v1",
+  "protocol_amendment": "h10-c5c-evidence-retrieval-v1-amendment-001",
+  "scientific_result": "NOT_EVALUATED",
+  "status": "IMPLEMENTED_AWAITING_DEVELOPMENT_DATA"
+}

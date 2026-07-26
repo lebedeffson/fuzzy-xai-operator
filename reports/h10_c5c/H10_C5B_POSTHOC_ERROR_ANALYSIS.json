@@ -1,0 +1,15 @@
+{
+  "analysis_type": "POSTHOC_ERROR_ANALYSIS_ONLY",
+  "candidate_generation_boundary": "global optimization cannot recover a Gold atom absent from the shared retrieved candidate ranking",
+  "identical_top_k_incidents": 24,
+  "incident_count": 24,
+  "limitation_counts": {
+    "contract_family_not_supported_by_evidence": 12,
+    "no_structural_candidate": 6
+  },
+  "o_route_abstained": 19,
+  "o_route_diagnosed": 5,
+  "o_route_false_localizations_among_diagnosed": 5,
+  "official_result_modified": false,
+  "reuse_policy": "these incidents must not be rescored"
+}
