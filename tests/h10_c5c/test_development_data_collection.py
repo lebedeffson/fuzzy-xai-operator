@@ -6,7 +6,10 @@ import subprocess
 import sys
 from pathlib import Path
 
+import pytest
 from fuzzyxai.experiments.h10_c5c_data import (
+    COLLECTION_LOCK_PATH,
+    PROTOCOL_LOCK_PATH,
     canonical_repository,
     discover_bugsinpy_candidates,
     prepare_bugsinpy_development,
@@ -19,6 +22,12 @@ from fuzzyxai.experiments.h10_c5c_runtime import collect_h10_c5c_runtime
 from fuzzyxai.repository_diagnostics.runtime_events import load_runtime_events
 
 ROOT = Path(__file__).resolve().parents[2]
+AMENDMENT_PATH = Path(
+    "protocol/h10_c5c_evidence_retrieval/H10_C5C_DATA_COLLECTION_AMENDMENT_001.json"
+)
+LOCKED_BUGSINPY_COMMIT = json.loads(
+    (ROOT / COLLECTION_LOCK_PATH).read_text(encoding="utf-8")
+)["benchmark"]["commit"]
 
 
 def _run(*arguments: str, cwd: Path) -> str:
@@ -42,6 +51,22 @@ def _commit_all(path: Path, message: str) -> str:
     _run("git", "add", ".", cwd=path)
     _run("git", "commit", "-qm", message, cwd=path)
     return _run("git", "rev-parse", "HEAD", cwd=path)
+
+
+def _root_with_locked_benchmark(tmp_path: Path, commit: str) -> Path:
+    root = tmp_path / "locked-protocol"
+    for relative in (PROTOCOL_LOCK_PATH, COLLECTION_LOCK_PATH, AMENDMENT_PATH):
+        source = ROOT / relative
+        target = root / relative
+        target.parent.mkdir(parents=True, exist_ok=True)
+        data = json.loads(source.read_text(encoding="utf-8"))
+        if relative == COLLECTION_LOCK_PATH:
+            data["benchmark"]["commit"] = commit
+        target.write_text(
+            json.dumps(data, indent=2, sort_keys=True) + "\n",
+            encoding="utf-8",
+        )
+    return root
 
 
 def _build_fixture(tmp_path: Path) -> tuple[Path, Path]:
@@ -127,11 +152,13 @@ def test_prepare_materializes_uncollected_development_manifest(
     tmp_path: Path,
 ) -> None:
     bugsinpy, _upstream = _build_fixture(tmp_path)
+    fixture_commit = _run("git", "rev-parse", "HEAD", cwd=bugsinpy)
+    protocol_root = _root_with_locked_benchmark(tmp_path, fixture_commit)
     result = prepare_bugsinpy_development(
         bugsinpy,
         tmp_path / "output",
         tmp_path / "cache",
-        ROOT,
+        protocol_root,
         allow_network=True,
     )
     rows = [
@@ -153,12 +180,50 @@ def test_prepare_materializes_uncollected_development_manifest(
             "# exposing test from the fixed revision"
         )
     source = json.loads(result.source_registry_path.read_text(encoding="utf-8"))
-    assert source["bugsinpy_commit"]
+    assert source["bugsinpy_commit"] == fixture_commit
+    assert source["bugsinpy_repository"].endswith("/BugsInPy.git")
+    assert "bugsinpy_checkout" not in source
     assert len(source["incidents"]) == 30
     assert all(
         item["exposing_test_overlays"][0]["path"] == "test_core.py"
         for item in source["incidents"]
     )
+    selection = json.loads(result.selection_report_path.read_text(encoding="utf-8"))
+    assert all("patch_path" not in item for item in selection["selected"])
+    assert all("bug_root" not in item for item in selection["selected"])
+    assert str(bugsinpy.resolve()) not in result.source_registry_path.read_text(
+        encoding="utf-8"
+    )
+    assert str(bugsinpy.resolve()) not in result.selection_report_path.read_text(
+        encoding="utf-8"
+    )
+
+
+def test_prepare_rejects_unlocked_or_dirty_bugsinpy_checkout(
+    tmp_path: Path,
+) -> None:
+    bugsinpy, _upstream = _build_fixture(tmp_path)
+    fixture_commit = _run("git", "rev-parse", "HEAD", cwd=bugsinpy)
+    mismatched_root = _root_with_locked_benchmark(tmp_path, "0" * 40)
+    with pytest.raises(ValueError, match="does not match the locked commit"):
+        prepare_bugsinpy_development(
+            bugsinpy,
+            tmp_path / "mismatch-output",
+            tmp_path / "mismatch-cache",
+            mismatched_root,
+            allow_network=True,
+        )
+
+    protocol_root = _root_with_locked_benchmark(tmp_path, fixture_commit)
+    (bugsinpy / "untracked.txt").write_text("dirty\n", encoding="utf-8")
+    with pytest.raises(ValueError, match="must be clean"):
+        prepare_bugsinpy_development(
+            bugsinpy,
+            tmp_path / "dirty-output",
+            tmp_path / "dirty-cache",
+            protocol_root,
+            allow_network=True,
+        )
 
 
 def test_runtime_collector_emits_typed_per_test_events(tmp_path: Path) -> None:
@@ -534,7 +599,7 @@ def test_development_readiness_requires_complete_locked_inputs(tmp_path: Path) -
         json.dumps(
             {
                 "collection_id": "h10-c5c-bugsinpy-development-v1",
-                "bugsinpy_commit": "benchmark-commit",
+                "bugsinpy_commit": LOCKED_BUGSINPY_COMMIT,
                 "incidents": source_rows,
             }
         ),
@@ -580,3 +645,28 @@ def test_development_readiness_requires_complete_locked_inputs(tmp_path: Path) -
     assert report["scientific_result"] == "NOT_EVALUATED"
     assert report["development_scored"] is False
     assert all(report["checks"].values())
+
+    source_payload = json.loads(source_path.read_text(encoding="utf-8"))
+    source_payload["bugsinpy_commit"] = "0" * 40
+    source_path.write_text(json.dumps(source_payload), encoding="utf-8")
+    failed = verify_h10_c5c_development_readiness(
+        manifest,
+        command_path,
+        source_path,
+        runtime_report,
+        tmp_path / "readiness-wrong-commit.json",
+        ROOT,
+    )
+    assert failed.status == "H10_C5C_DEVELOPMENT_READINESS_FAIL"
+    failed_report = json.loads(failed.report_path.read_text(encoding="utf-8"))
+    assert failed_report["checks"]["bugsinpy_commit_matches_lock"] is False
+
+
+def test_development_workflow_uses_only_the_locked_bugsinpy_commit() -> None:
+    workflow = (ROOT / ".github/workflows/h10-c5c-development.yml").read_text(
+        encoding="utf-8"
+    )
+    assert f"default: {LOCKED_BUGSINPY_COMMIT}" in workflow
+    assert "default: master" not in workflow
+    assert 'test "${#BUGSINPY_REF}" -eq 40' in workflow
+    assert 'test "$BUGSINPY_REF" = "$locked_ref"' in workflow

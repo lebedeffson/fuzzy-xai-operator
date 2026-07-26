@@ -10,9 +10,9 @@ import subprocess
 import sys
 import tempfile
 import textwrap
+from collections.abc import Mapping
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Mapping
 
 _TRACEBACK_FILE = re.compile(r'^\s*File "([^"]+)", line \d+, in ([^\n]+)\s*$')
 _PYTEST_FRAME = re.compile(r"^\s*(.+?\.py):(\d+): in ([^\n]+)\s*$")
@@ -307,7 +307,7 @@ def _assertion_difference(text: str) -> str:
     selected = []
     for raw in text.splitlines():
         stripped = raw.strip()
-        if stripped.startswith("E ") or stripped.startswith("E\t"):
+        if stripped.startswith(("E ", "E\t")):
             selected.append(stripped[1:].strip())
         elif stripped.startswith(("AssertionError", "assert ")):
             selected.append(stripped)
@@ -563,7 +563,7 @@ def _collect_incident(
             first_command.get("argv"),
             list,
         ):
-            raise ValueError(f"invalid runtime command for {incident_id}")
+            raise TypeError(f"invalid runtime command for {incident_id}")
         setup_interpreter = None
         setup_resolution_error = ""
         try:
@@ -596,7 +596,7 @@ def _collect_incident(
         command_results = []
         for index, command_record in enumerate(commands):
             if not isinstance(command_record, dict):
-                raise ValueError(f"invalid runtime command for {incident_id}")
+                raise TypeError(f"invalid runtime command for {incident_id}")
             test_id = str(command_record.get("test_id", "")).strip()
             raw_argv = command_record.get("argv", ())
             if not test_id or not isinstance(raw_argv, list):
@@ -796,7 +796,7 @@ def collect_h10_c5c_runtime(
     registry_base = command_registry_path.parent.resolve()
     registry = json.loads(command_registry_path.read_text(encoding="utf-8"))
     if not isinstance(registry, dict):
-        raise ValueError("H10-C5c command registry must be an object")
+        raise TypeError("H10-C5c command registry must be an object")
     identifiers = [str(row["incident_id"]) for row in rows]
     if len(identifiers) != len(set(identifiers)):
         raise ValueError("H10-C5c runtime manifest has duplicate incident IDs")

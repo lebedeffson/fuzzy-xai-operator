@@ -3,14 +3,15 @@
   "development_data_collected": false,
   "development_scored": false,
   "external_blocker": {
-    "network_available_in_sandbox": false,
-    "required_next_input": "A local commit-pinned BugsInPy checkout and upstream repository cache or network access",
-    "status": "DATA_NOT_PRESENT_IN_UPLOADED_RELEASE"
+    "network_available_in_sandbox": true,
+    "required_next_input": "Run the manual collect-development workflow against the locked BugsInPy commit and retain its evidence artifact",
+    "status": "REAL_DEVELOPMENT_COLLECTION_NOT_YET_EXECUTED"
   },
   "held_out_created": false,
   "held_out_scored": false,
   "implemented": {
     "bounded_parallel_incident_collection": true,
+    "bugsinpy_commit_and_clean_tree_enforced": true,
     "deterministic_balanced_materialization": true,
     "development_runner_bound_to_readiness_hash": true,
     "exact_registered_python_minor_enforcement": true,
@@ -20,6 +21,7 @@
     "manual_remote_collection_workflow": true,
     "prospective_bugsinpy_collection_lock": true,
     "registered_requirements_installation": true,
+    "portable_source_and_selection_registries": true,
     "repair_execution_status_explicit": true,
     "runtime_manifest_and_registry_hash_binding": true,
     "selection_driven_exact_runtime_provisioning": true,
@@ -28,19 +30,18 @@
   "scientific_result": "NOT_EVALUATED",
   "status": "IMPLEMENTED_AWAITING_EXTERNAL_DEVELOPMENT_DATA",
   "verification": {
-    "full_repository_pytest": "NOT_RUNNABLE_IN_SOURCE_RELEASE_SANDBOX",
-    "full_repository_pytest_reason": "The source release contains test groups with separate import roots and historical application modules that are not on this sandbox PYTHONPATH. Collection fails before tests run.",
+    "full_repository_pytest": "PENDING_FINAL_REGRESSION",
+    "full_repository_pytest_reason": "The final full regression is run after the pre-collection hardening commit.",
     "h10_c5b_h9_non_optional_regression": {
-      "excluded": "tests/h10_c5b/test_runtime_operations.py requires an unavailable parquet engine in this sandbox",
-      "passed": 56,
+      "passed": 74,
       "status": "PASS"
     },
     "h10_c5c_tests": {
-      "passed": 36,
+      "passed": 38,
       "status": "PASS"
     },
     "python_compileall": "PASS",
-    "ruff": "NOT_RUN_MISSING_DEPENDENCY",
+    "ruff": "PASS",
     "synthetic_30_incident_end_to_end": {
       "incidents": 30,
       "readiness_checks_passed": 23,

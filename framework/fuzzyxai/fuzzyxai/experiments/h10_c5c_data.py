@@ -9,7 +9,7 @@ import shutil
 import subprocess
 import tarfile
 from collections import defaultdict
-from dataclasses import asdict, dataclass
+from dataclasses import dataclass
 from pathlib import Path, PurePosixPath
 from urllib.parse import urlparse
 
@@ -87,6 +87,13 @@ def _git_commit(repository: Path) -> str:
     return _run(["git", "rev-parse", "HEAD"], cwd=repository).stdout.strip()
 
 
+def _git_is_clean(repository: Path) -> bool:
+    return not _run(
+        ["git", "status", "--porcelain"],
+        cwd=repository,
+    ).stdout.strip()
+
+
 def _parse_assignment_file(path: Path) -> dict[str, str]:
     values: dict[str, str] = {}
     for line_number, raw in enumerate(path.read_text(encoding="utf-8").splitlines(), start=1):
@@ -106,7 +113,7 @@ def _parse_assignment_file(path: Path) -> dict[str, str]:
         except (SyntaxError, ValueError):
             parsed = encoded
         if not isinstance(parsed, (str, int, float)):
-            raise ValueError(f"unsupported value in {path}:{line_number}: {raw}")
+            raise TypeError(f"unsupported value in {path}:{line_number}: {raw}")
         values[key] = str(parsed)
     return values
 
@@ -581,8 +588,23 @@ def prepare_bugsinpy_development(
     allow_network: bool = False,
 ) -> PreparedDevelopmentData:
     _protocol, collection = _load_locks(root)
+    benchmark = collection["benchmark"]
+    if not isinstance(benchmark, dict):
+        raise TypeError("H10-C5c benchmark lock must be an object")
+    bugsinpy_commit = _git_commit(bugsinpy_root)
+    expected_commit = str(benchmark.get("commit", ""))
+    if not re.fullmatch(r"[0-9a-f]{40}", expected_commit):
+        raise ValueError("H10-C5c BugsInPy lock must contain a full commit SHA")
+    if bugsinpy_commit != expected_commit:
+        raise ValueError(
+            "BugsInPy checkout does not match the locked commit: "
+            f"{bugsinpy_commit} != {expected_commit}"
+        )
+    if not _git_is_clean(bugsinpy_root):
+        raise ValueError("BugsInPy checkout must be clean before materialization")
     selection = collection["selection"]
-    assert isinstance(selection, dict)
+    if not isinstance(selection, dict):
+        raise TypeError("H10-C5c selection lock must be an object")
     candidates = discover_bugsinpy_candidates(bugsinpy_root, root)
     selected = select_balanced_development(
         candidates,
@@ -618,10 +640,10 @@ def prepare_bugsinpy_development(
     )
     source_registry = {
         "collection_id": collection["collection_id"],
-        "bugsinpy_checkout": str(bugsinpy_root.resolve()),
-        "bugsinpy_commit": _git_commit(bugsinpy_root),
-        "bugsinpy_checkout_sha256": hashlib.sha256(
-            _git_commit(bugsinpy_root).encode()
+        "bugsinpy_repository": str(benchmark["repository"]),
+        "bugsinpy_commit": bugsinpy_commit,
+        "bugsinpy_commit_sha256": hashlib.sha256(
+            bugsinpy_commit.encode()
         ).hexdigest(),
         "incidents": source_rows,
     }
@@ -636,7 +658,21 @@ def prepare_bugsinpy_development(
         "eligible_repositories": len({item.repository for item in candidates}),
         "selected_incidents": len(selected),
         "selected_repositories": len({item.repository for item in selected}),
-        "selected": [asdict(item) | {"patch_path": str(item.patch_path), "bug_root": str(item.bug_root)} for item in selected],
+        "selected": [
+            {
+                "project": item.project,
+                "bug_id": item.bug_id,
+                "incident_id": item.incident_id,
+                "repository": item.repository,
+                "python_version": item.python_version,
+                "buggy_commit": item.buggy_commit,
+                "fixed_commit": item.fixed_commit,
+                "test_file": item.test_file,
+                "test_commands": [list(command) for command in item.test_commands],
+                "selection_rank_sha256": item.selection_rank_sha256,
+            }
+            for item in selected
+        ],
         "manifest_sha256": _sha256(manifest_path),
         "command_registry_sha256": _sha256(command_registry_path),
         "source_registry_sha256": _sha256(source_registry_path),

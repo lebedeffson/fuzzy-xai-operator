@@ -1,5 +1,7 @@
 {
   "bounded_parallel_incident_collection": true,
+  "bugsinpy_commit_locked": "11c5f1eea954a42132cfd06bf257766a7963e0fd",
+  "bugsinpy_dirty_checkout_rejected": true,
   "bugsinpy_development_preparer": true,
   "data_collection_amendment": "h10-c5c-bugsinpy-development-v1-amendment-001",
   "data_collection_lock": "h10-c5c-bugsinpy-development-v1",
@@ -28,6 +30,7 @@
   "required_runtime_provisioning": "provided_map_or_conda_prefix",
   "runtime_manifest_hash_binding": true,
   "scientific_result": "NOT_EVALUATED",
+  "source_registries_portable": true,
   "status": "IMPLEMENTED_AWAITING_DEVELOPMENT_DATA",
   "typed_runtime_collector": true
 }

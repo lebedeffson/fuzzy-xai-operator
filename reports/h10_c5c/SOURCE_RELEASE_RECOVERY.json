@@ -1,0 +1,11 @@
+{
+  "archive_file": "fuzzyxai-source-release-1b5682c459e3.zip",
+  "archive_file_count_verified": 2136,
+  "archive_sha256": "f0ec774fc38b929303b83c0e3faf36d264295890a8db2605cf768c08c30b1ba2",
+  "archive_to_recovered_tree_mismatches": 0,
+  "recovered_parent_commit": "fd68955c82f0b1d8b2d5a2a27b84db6476b01eb1",
+  "recovery_commit": "b9b1b4f93646184cf620ce15886d3703d5dbab07",
+  "reported_source_commit": "1b5682c459e361a8c8d9dca8651bbb889d7e705a",
+  "reported_source_commit_object_available": false,
+  "status": "SOURCE_RELEASE_RECOVERED_AND_VERIFIED"
+}

@@ -1,10 +1,13 @@
 {
   "applies_to": "h10-c5c-evidence-retrieval-v1-amendment-001",
   "benchmark": {
+    "commit": "11c5f1eea954a42132cfd06bf257766a7963e0fd",
+    "commit_must_match_exactly": true,
     "local_checkout_commit_must_be_recorded": true,
     "name": "BugsInPy",
     "project_repository_commit_must_be_recorded": true,
-    "repository": "https://github.com/soarsmu/BugsInPy"
+    "repository": "https://github.com/soarsmu/BugsInPy.git",
+    "working_tree_must_be_clean": true
   },
   "collection_id": "h10-c5c-bugsinpy-development-v1",
   "created_after_implementation": true,

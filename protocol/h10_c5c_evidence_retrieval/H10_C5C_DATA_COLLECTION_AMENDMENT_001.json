@@ -2,6 +2,8 @@
   "amendment_id": "h10-c5c-bugsinpy-development-v1-amendment-001",
   "applies_to": "h10-c5c-bugsinpy-development-v1",
   "changes": {
+    "bugsinpy_checkout_must_be_clean": true,
+    "bugsinpy_checkout_must_match_locked_commit": true,
     "exact_registered_python_minor_required": true,
     "fixed_revision_exposing_tests_overlaid_before_runtime": true,
     "isolated_virtual_environment_per_incident_when_setup_enabled": true,
@@ -13,7 +15,7 @@
   },
   "created_before_development_data_collection": true,
   "created_before_development_scoring": true,
-  "reason": "BugsInPy incidents register project-specific Python versions and exposing tests. Runtime evidence is valid only when the fixed-revision exposing test is overlaid onto the buggy revision, the instrumented command executes under the registered major.minor interpreter in an isolated dependency environment, and the readiness report is cryptographically bound to the collected manifest and command registry. Silent runtime fallback or an unbound evidence report could create false reproduction or false non-reproduction.",
+  "reason": "BugsInPy incidents register project-specific Python versions and exposing tests. Runtime evidence is valid only when the benchmark checkout matches the prospectively locked commit, the fixed-revision exposing test is overlaid onto the buggy revision, the instrumented command executes under the registered major.minor interpreter in an isolated dependency environment, and the readiness report is cryptographically bound to the collected manifest and command registry. A floating benchmark revision, silent runtime fallback, or an unbound evidence report could create false reproduction or false non-reproduction.",
   "scientific_endpoint_changed": false,
   "selection_rule_changed": false,
   "status": "LOCKED_BEFORE_DEVELOPMENT_COLLECTION"

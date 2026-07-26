@@ -49,9 +49,9 @@ on:
         default: "{}"
         type: string
       bugsinpy_ref:
-        description: BugsInPy branch, tag, or commit to record and use
+        description: Exact locked 40-character BugsInPy commit SHA
         required: true
-        default: master
+        default: 11c5f1eea954a42132cfd06bf257766a7963e0fd
         type: string
       timeout_seconds:
         description: Per stage and incident command timeout
@@ -148,10 +148,25 @@ jobs:
         env:
           BUGSINPY_REF: ${{ inputs.bugsinpy_ref }}
         run: |
+          case "$BUGSINPY_REF" in
+            (*[!0-9a-f]*|'') echo "bugsinpy_ref must be a lowercase hexadecimal commit SHA" >&2; exit 2 ;;
+          esac
+          test "${#BUGSINPY_REF}" -eq 40 || {
+            echo "bugsinpy_ref must contain exactly 40 characters" >&2
+            exit 2
+          }
+          locked_ref="$(python -c 'import json; print(json.load(open("protocol/h10_c5c_evidence_retrieval/H10_C5C_DATA_COLLECTION_LOCK.json"))["benchmark"]["commit"])')"
+          test "$BUGSINPY_REF" = "$locked_ref" || {
+            echo "bugsinpy_ref does not match the prospective data lock" >&2
+            exit 2
+          }
           mkdir -p "$H10_C5C_WORK"
           git clone --filter=blob:none https://github.com/soarsmu/BugsInPy.git "$H10_C5C_BUGSINPY"
           git -C "$H10_C5C_BUGSINPY" checkout --detach "$BUGSINPY_REF"
-          git -C "$H10_C5C_BUGSINPY" rev-parse HEAD | tee "$H10_C5C_WORK/BUGSINPY_COMMIT.txt"
+          actual_ref="$(git -C "$H10_C5C_BUGSINPY" rev-parse HEAD)"
+          test "$actual_ref" = "$BUGSINPY_REF"
+          test -z "$(git -C "$H10_C5C_BUGSINPY" status --porcelain)"
+          printf '%s\n' "$actual_ref" | tee "$H10_C5C_WORK/BUGSINPY_COMMIT.txt"
 
       - name: Materialize locked development selection
         run: |

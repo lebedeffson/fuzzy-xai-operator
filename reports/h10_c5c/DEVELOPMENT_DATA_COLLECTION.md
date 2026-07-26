@@ -6,7 +6,10 @@ release does not create a scientific result by itself.
 ## Source boundary
 
 The development source is a locally checked-out, commit-pinned copy of
-BugsInPy. The preparer reads `project.info`, `bug.info`, `bug_patch.txt` and
+BugsInPy. The prospective lock pins
+`11c5f1eea954a42132cfd06bf257766a7963e0fd`; materialization rejects any other
+commit and any dirty benchmark checkout. The preparer reads `project.info`,
+`bug.info`, `bug_patch.txt` and
 `run_test.sh` without evaluating shell assignments. It excludes all official
 H10-C5b held-out repositories and all non-Python-3 incidents. Selection is a
 locked deterministic balanced round-robin: 30 incidents, at least eight
@@ -14,7 +17,8 @@ repositories and no more than four incidents per repository.
 
 The benchmark checkout commit, each upstream project commit, the buggy and
 fixed revisions and metadata-file SHA256 values are written to the source
-registry. Gold patches and fixed-source snapshots remain outside the public
+registry. Local checkout paths are not serialized into the source or selection
+registries. Gold patches and fixed-source snapshots remain outside the public
 incident object and are opened only by the development scorer after the
 prediction has been produced.
 
@@ -131,8 +135,9 @@ is prohibited. Collection may use a bounded worker pool through
 incident writes to an independent evidence directory.
 
 The `H10-C5c prospective development implementation` GitHub Actions workflow
-has a manual `collect-development` operation. It checks out and records an
-explicit BugsInPy ref, materializes the locked 30-incident development selection,
+has a manual `collect-development` operation. It accepts only the exact
+40-character BugsInPy commit from the prospective lock, materializes the locked
+30-incident development selection,
 reads the exact Python versions required by that selection, reuses explicitly
 provided interpreters or provisions missing versions in isolated Conda prefixes,
 collects runtime evidence, runs readiness and, only after readiness PASS, executes

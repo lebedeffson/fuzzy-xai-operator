@@ -120,12 +120,12 @@ def verify_h10_c5c_development_readiness(
         else {}
     )
     if not isinstance(commands, dict):
-        raise ValueError("H10-C5c command registry must be an object")
+        raise TypeError("H10-C5c command registry must be an object")
     if not isinstance(sources, dict):
-        raise ValueError("H10-C5c source registry must be an object")
+        raise TypeError("H10-C5c source registry must be an object")
     source_rows = sources.get("incidents", [])
     if not isinstance(source_rows, list):
-        raise ValueError("H10-C5c source registry incidents must be a list")
+        raise TypeError("H10-C5c source registry incidents must be a list")
 
     identifiers = [str(row.get("incident_id", "")) for row in rows]
     repositories = [canonical_repository(str(row.get("repository", ""))) for row in rows]
@@ -249,7 +249,11 @@ def verify_h10_c5c_development_readiness(
 
     selection = collection["selection"]
     if not isinstance(selection, dict):
-        raise ValueError("H10-C5c collection selection lock is invalid")
+        raise TypeError("H10-C5c collection selection lock is invalid")
+    benchmark = collection["benchmark"]
+    if not isinstance(benchmark, dict):
+        raise TypeError("H10-C5c benchmark lock is invalid")
+    locked_bugsinpy_commit = str(benchmark.get("commit", ""))
     checks = {
         "collection_id_matches": sources.get("collection_id") == collection.get("collection_id"),
         "unique_incident_ids": bool(identifiers) and len(identifiers) == len(set(identifiers)),
@@ -286,7 +290,10 @@ def verify_h10_c5c_development_readiness(
         ),
         "runtime_report_scientific_result_not_evaluated": runtime_report.get("scientific_result") == "NOT_EVALUATED",
         "gold_event_key_leakage_zero": all_gold_boundaries_clean,
-        "bugsinpy_commit_recorded": bool(sources.get("bugsinpy_commit")),
+        "bugsinpy_commit_matches_lock": (
+            bool(locked_bugsinpy_commit)
+            and sources.get("bugsinpy_commit") == locked_bugsinpy_commit
+        ),
     }
     status = (
         "H10_C5C_DEVELOPMENT_READINESS_PASS"
