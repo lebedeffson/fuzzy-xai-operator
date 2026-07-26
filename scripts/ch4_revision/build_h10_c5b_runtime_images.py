@@ -59,7 +59,9 @@ def _run(command: list[str], *, cwd: Path | None = None) -> subprocess.Completed
         text=True,
     )
     if completed.returncode:
-        detail = completed.stderr.strip() or completed.stdout.strip()
+        detail = "\n".join(
+            part for part in (completed.stdout.strip(), completed.stderr.strip()) if part
+        )
         raise RuntimeError(
             f"command failed with code {completed.returncode}: {command[0]}: {detail}"
         )
