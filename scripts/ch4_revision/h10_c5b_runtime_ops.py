@@ -168,6 +168,10 @@ def build_runtime_inputs(
         if container_images_path is not None
         else {}
     )
+    repository_counts: dict[str, int] = {}
+    for row in rows:
+        repository = str(row["repository"])
+        repository_counts[repository] = repository_counts.get(repository, 0) + 1
     source_rows: dict[str, dict[str, Any]] = {}
     if container_images_path is not None:
         if source_dataset_path is None:
@@ -215,8 +219,18 @@ def build_runtime_inputs(
         }
         if container_images_path is not None:
             repository = str(row["repository"])
-            if repository not in container_images:
-                raise ValueError(f"no container image registered for {repository}")
+            image = container_images.get(incident_id)
+            if image is None:
+                image = container_images.get(repository)
+                if image is not None and repository_counts[repository] > 1:
+                    raise ValueError(
+                        "repository-level container image is ambiguous for "
+                        f"{repository}; register each incident ID"
+                    )
+            if image is None:
+                raise ValueError(
+                    f"no container image registered for incident {incident_id}"
+                )
             source_row = source_rows.get(incident_id)
             if source_row is None:
                 raise ValueError(f"incident missing from registered source: {incident_id}")
@@ -225,9 +239,7 @@ def build_runtime_inputs(
                 raise ValueError(f"runtime test patch missing for {incident_id}")
             test_patch_path = test_patch_root / f"{incident_id}.patch"
             test_patch_path.write_text(test_patch, encoding="utf-8")
-            commands[incident_id]["container_image"] = str(
-                container_images[repository]
-            )
+            commands[incident_id]["container_image"] = str(image)
             commands[incident_id]["runtime_test_patch_path"] = str(
                 test_patch_path.resolve()
             )

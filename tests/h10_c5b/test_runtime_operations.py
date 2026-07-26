@@ -108,6 +108,89 @@ def test_container_runtime_requires_repository_image_map(tmp_path: Path) -> None
     assert report["runtime_test_patch_count"] == 1
 
 
+def test_container_runtime_prefers_incident_image_map(tmp_path: Path) -> None:
+    source = tmp_path / "source.jsonl"
+    rows = [
+        _manifest_row(tmp_path, "repo__project-1"),
+        _manifest_row(tmp_path, "repo__project-2"),
+    ]
+    _write_jsonl(source, rows)
+    images = tmp_path / "images.json"
+    images.write_text(
+        json.dumps(
+            {
+                "repo__project-1": "registry.invalid/one@sha256:" + "a" * 64,
+                "repo__project-2": "registry.invalid/two@sha256:" + "b" * 64,
+            }
+        ),
+        encoding="utf-8",
+    )
+    source_dataset = tmp_path / "source.parquet"
+    pd.DataFrame(
+        [
+            {
+                "instance_id": row["incident_id"],
+                "test_patch": (
+                    "diff --git a/tests/test_bug.py b/tests/test_bug.py\n"
+                    "--- a/tests/test_bug.py\n"
+                    "+++ b/tests/test_bug.py\n"
+                ),
+            }
+            for row in rows
+        ]
+    ).to_parquet(source_dataset)
+    report = build_runtime_inputs(
+        source,
+        tmp_path / "runtime",
+        container_images_path=images,
+        source_dataset_path=source_dataset,
+    )
+    commands = json.loads(
+        Path(str(report["command_registry"])).read_text(encoding="utf-8")
+    )
+    assert commands["repo__project-1"]["container_image"].endswith("a" * 64)
+    assert commands["repo__project-2"]["container_image"].endswith("b" * 64)
+
+
+def test_container_runtime_rejects_ambiguous_repository_image(
+    tmp_path: Path,
+) -> None:
+    source = tmp_path / "source.jsonl"
+    rows = [
+        _manifest_row(tmp_path, "repo__project-1"),
+        _manifest_row(tmp_path, "repo__project-2"),
+    ]
+    _write_jsonl(source, rows)
+    images = tmp_path / "images.json"
+    images.write_text(
+        json.dumps(
+            {"repo/project": "registry.invalid/project@sha256:" + "a" * 64}
+        ),
+        encoding="utf-8",
+    )
+    source_dataset = tmp_path / "source.parquet"
+    pd.DataFrame(
+        [
+            {
+                "instance_id": row["incident_id"],
+                "test_patch": (
+                    "diff --git a/tests/test_bug.py b/tests/test_bug.py\n"
+                    "--- a/tests/test_bug.py\n"
+                    "+++ b/tests/test_bug.py\n"
+                ),
+            }
+            for row in rows
+        ]
+    ).to_parquet(source_dataset)
+    with pytest.raises(ValueError, match="ambiguous"):
+        build_runtime_inputs(
+            source,
+            tmp_path / "runtime",
+            container_images_path=images,
+            source_dataset_path=source_dataset,
+        )
+
+
 def test_container_runtime_requires_registered_source_dataset(tmp_path: Path) -> None:
     source = tmp_path / "source.jsonl"
     _write_jsonl(source, [_manifest_row(tmp_path)])
@@ -343,3 +426,4 @@ def test_ci_wires_runtime_targets_without_held_out_scoring() -> None:
     assert "h10-c5b-score" not in workflow
     assert "unregistered CI hardware" in workflow
     assert "does not replace the registered local microbenchmark" in workflow
+    assert "H10_C5B_RUNTIME_SOURCE_DATASET=" in workflow

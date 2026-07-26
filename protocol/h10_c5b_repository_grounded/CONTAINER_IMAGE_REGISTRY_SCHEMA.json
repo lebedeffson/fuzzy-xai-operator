@@ -4,10 +4,10 @@
     "pattern": "^[A-Za-z0-9._/:@-]+@sha256:[0-9a-f]{64}$",
     "type": "string"
   },
-  "description": "Repository names map to prebuilt, immutable runtime images. Tags without a digest are forbidden.",
+  "description": "Incident IDs map to prebuilt, immutable runtime images. A repository key is accepted only when the selected split contains one incident from that repository. Tags without a digest are forbidden.",
   "minProperties": 1,
   "propertyNames": {
-    "pattern": "^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$"
+    "pattern": "^(?:[A-Za-z0-9_.-]+__[A-Za-z0-9_.-]+|[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+)$"
   },
   "type": "object"
 }
