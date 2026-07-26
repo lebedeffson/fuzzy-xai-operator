@@ -9,6 +9,10 @@ image pinned by `@sha256:<digest>` in:
 
 `/work/h10-c5b/H10_C5B_CONTAINER_IMAGES.json`.
 
+The runner must provide Python 3.11 directly or `uv` for provisioning a
+dedicated Python 3.11 virtual environment. GitHub's `setup-python` toolcache is
+not assumed on non-Ubuntu self-hosted distributions.
+
 The image must contain the buggy project's registered dependencies. Runtime
 containers have no network, no added capabilities, `no-new-privileges`, a PID
 limit, a memory limit, and a CPU limit. A Docker infrastructure exit code,
