@@ -49,6 +49,7 @@ RUNTIME_FIELDS = (
     "split",
 )
 SAFE_INCIDENT_ID = re.compile(r"^[A-Za-z0-9_.-]+$")
+SWEBENCH_TESTBED_PYTHON = "/opt/miniconda3/envs/testbed/bin/python"
 
 
 def sha256_path(path: Path) -> str:
@@ -154,6 +155,7 @@ def build_runtime_inputs(
     *,
     python_command: str = "python",
     container_images_path: Path | None = None,
+    source_dataset_path: Path | None = None,
 ) -> dict[str, Any]:
     rows = read_jsonl(manifest_path)
     if not rows:
@@ -166,6 +168,17 @@ def build_runtime_inputs(
         if container_images_path is not None
         else {}
     )
+    source_rows: dict[str, dict[str, Any]] = {}
+    if container_images_path is not None:
+        if source_dataset_path is None:
+            raise ValueError("container runtime requires the registered source dataset")
+        source_frame = pd.read_parquet(source_dataset_path)
+        source_rows = {
+            str(row["instance_id"]): row
+            for row in source_frame.to_dict(orient="records")
+        }
+        test_patch_root = output / "runtime-test-patches"
+        test_patch_root.mkdir()
     splits = {str(row.get("split")) for row in rows}
     if len(splits) != 1 or splits.pop() not in {"development", "held_out"}:
         raise ValueError("runtime input must contain exactly one registered split")
@@ -183,7 +196,11 @@ def build_runtime_inputs(
         runtime_rows.append(runtime_row)
         commands[incident_id] = {
             "command": [
-                python_command,
+                (
+                    SWEBENCH_TESTBED_PYTHON
+                    if container_images_path is not None
+                    else python_command
+                ),
                 "-m",
                 "pytest",
                 *failing_tests,
@@ -200,8 +217,22 @@ def build_runtime_inputs(
             repository = str(row["repository"])
             if repository not in container_images:
                 raise ValueError(f"no container image registered for {repository}")
+            source_row = source_rows.get(incident_id)
+            if source_row is None:
+                raise ValueError(f"incident missing from registered source: {incident_id}")
+            test_patch = str(source_row.get("test_patch", ""))
+            if not test_patch.strip():
+                raise ValueError(f"runtime test patch missing for {incident_id}")
+            test_patch_path = test_patch_root / f"{incident_id}.patch"
+            test_patch_path.write_text(test_patch, encoding="utf-8")
             commands[incident_id]["container_image"] = str(
                 container_images[repository]
+            )
+            commands[incident_id]["runtime_test_patch_path"] = str(
+                test_patch_path.resolve()
+            )
+            commands[incident_id]["runtime_test_patch_sha256"] = sha256_path(
+                test_patch_path
             )
 
     runtime_manifest = output / "H10_C5B_RUNTIME_COLLECTION_MANIFEST.jsonl"
@@ -227,6 +258,12 @@ def build_runtime_inputs(
             sha256_path(container_images_path)
             if container_images_path is not None
             else None
+        ),
+        "source_dataset_sha256": (
+            sha256_path(source_dataset_path) if source_dataset_path else None
+        ),
+        "runtime_test_patch_count": (
+            len(runtime_rows) if container_images_path is not None else 0
         ),
     }
     (output / "RUNTIME_INPUT_REPORT.json").write_text(
@@ -455,6 +492,7 @@ def main() -> None:
     prepare.add_argument("--output", type=Path, required=True)
     prepare.add_argument("--python-command", default="python")
     prepare.add_argument("--container-images", type=Path)
+    prepare.add_argument("--source-dataset", type=Path)
 
     merge = subparsers.add_parser("merge-runtime")
     merge.add_argument("--original-manifest", type=Path, required=True)
@@ -491,6 +529,9 @@ def main() -> None:
             python_command=args.python_command,
             container_images_path=(
                 args.container_images.resolve() if args.container_images else None
+            ),
+            source_dataset_path=(
+                args.source_dataset.resolve() if args.source_dataset else None
             ),
         )
     elif args.command == "merge-runtime":

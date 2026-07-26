@@ -169,7 +169,8 @@ jobs:
             H10_C3_PYTHON=python \
             H10_C5B_MANIFEST="${{ steps.split.outputs.manifest }}" \
             H10_C5B_RUNTIME_DIR="$runtime_dir/inputs" \
-            H10_C5B_CONTAINER_IMAGES="$H10_C5B_SOURCE_DIR/H10_C5B_CONTAINER_IMAGES.json"
+            H10_C5B_CONTAINER_IMAGES="$H10_C5B_SOURCE_DIR/H10_C5B_CONTAINER_IMAGES.json" \
+            H10_C5B_RUNTIME_SOURCE_DATASET="$H10_C5B_SOURCE_DIR/sources/${{ steps.split.outputs.split }}.parquet"
       - name: Collect runtime evidence
         if: startsWith(inputs.operation, 'collect-')
         id: collect

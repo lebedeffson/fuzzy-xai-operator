@@ -75,16 +75,55 @@ def test_container_runtime_requires_repository_image_map(tmp_path: Path) -> None
         ),
         encoding="utf-8",
     )
+    source_dataset = tmp_path / "source.parquet"
+    pd.DataFrame(
+        [
+            {
+                "instance_id": "repo__project-1",
+                "test_patch": (
+                    "diff --git a/tests/test_bug.py b/tests/test_bug.py\n"
+                    "--- a/tests/test_bug.py\n"
+                    "+++ b/tests/test_bug.py\n"
+                ),
+            }
+        ]
+    ).to_parquet(source_dataset)
     report = build_runtime_inputs(
         source,
         tmp_path / "runtime",
         container_images_path=images,
+        source_dataset_path=source_dataset,
     )
     commands = json.loads(
         Path(str(report["command_registry"])).read_text(encoding="utf-8")
     )
     assert report["execution_backend"] == "container"
     assert commands["repo__project-1"]["container_image"].endswith("a" * 64)
+    assert commands["repo__project-1"]["command"][:3] == [
+        "/opt/miniconda3/envs/testbed/bin/python",
+        "-m",
+        "pytest",
+    ]
+    assert len(commands["repo__project-1"]["runtime_test_patch_sha256"]) == 64
+    assert report["runtime_test_patch_count"] == 1
+
+
+def test_container_runtime_requires_registered_source_dataset(tmp_path: Path) -> None:
+    source = tmp_path / "source.jsonl"
+    _write_jsonl(source, [_manifest_row(tmp_path)])
+    images = tmp_path / "images.json"
+    images.write_text(
+        json.dumps(
+            {"repo/project": "registry.invalid/project@sha256:" + "a" * 64}
+        ),
+        encoding="utf-8",
+    )
+    with pytest.raises(ValueError, match="source dataset"):
+        build_runtime_inputs(
+            source,
+            tmp_path / "runtime",
+            container_images_path=images,
+        )
 
 
 def test_method_lock_matches_frozen_scientific_files() -> None:

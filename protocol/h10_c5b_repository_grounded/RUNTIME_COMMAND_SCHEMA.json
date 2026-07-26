@@ -28,6 +28,14 @@
         "type": "array",
         "uniqueItems": true
       },
+      "runtime_test_patch_path": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "runtime_test_patch_sha256": {
+        "pattern": "^[0-9a-f]{64}$",
+        "type": "string"
+      },
       "timeout_seconds": {
         "maximum": 3600,
         "minimum": 1,
@@ -39,6 +47,8 @@
       "container_image",
       "execution_backend",
       "expected_failure_returncodes",
+      "runtime_test_patch_path",
+      "runtime_test_patch_sha256",
       "timeout_seconds"
     ],
     "type": "object"

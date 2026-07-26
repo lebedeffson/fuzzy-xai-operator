@@ -1270,7 +1270,7 @@ h10-c5b-prepare:
 h10-c5b-prepare-runtime-inputs:
 	test -n "$(H10_C5B_MANIFEST)"
 	test -n "$(H10_C5B_RUNTIME_DIR)"
-	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/h10_c5b_runtime_ops.py prepare-runtime-inputs --manifest "$(H10_C5B_MANIFEST)" --output "$(H10_C5B_RUNTIME_DIR)" $(if $(H10_C5B_CONTAINER_IMAGES),--container-images "$(H10_C5B_CONTAINER_IMAGES)")
+	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/h10_c5b_runtime_ops.py prepare-runtime-inputs --manifest "$(H10_C5B_MANIFEST)" --output "$(H10_C5B_RUNTIME_DIR)" $(if $(H10_C5B_CONTAINER_IMAGES),--container-images "$(H10_C5B_CONTAINER_IMAGES)") $(if $(H10_C5B_RUNTIME_SOURCE_DATASET),--source-dataset "$(H10_C5B_RUNTIME_SOURCE_DATASET)")
 
 h10-c5b-collect-runtime:
 	test -n "$(H10_C5B_MANIFEST)"

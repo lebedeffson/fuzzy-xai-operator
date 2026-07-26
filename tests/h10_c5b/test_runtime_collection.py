@@ -6,7 +6,11 @@ from pathlib import Path
 
 import pytest
 
-from scripts.ch4_revision.collect_h10_c5b_runtime import _execution_command, collect
+from scripts.ch4_revision.collect_h10_c5b_runtime import (
+    _apply_runtime_test_patch,
+    _execution_command,
+    collect,
+)
 
 
 def test_runtime_collection_requires_reproduced_trace(tmp_path: Path) -> None:
@@ -170,3 +174,32 @@ def test_container_backend_requires_digest_pinned_image(tmp_path: Path) -> None:
     assert command[:3] == ("docker", "run", "--rm")
     assert "--network" in command
     assert "none" in command
+
+
+def test_runtime_test_patch_is_checksum_bound_and_path_safe(tmp_path: Path) -> None:
+    sandbox = tmp_path / "repository"
+    sandbox.mkdir()
+    target = sandbox / "test_sample.py"
+    target.write_text("value = 1\n", encoding="utf-8")
+    patch = tmp_path / "test.patch"
+    patch.write_text(
+        "diff --git a/test_sample.py b/test_sample.py\n"
+        "--- a/test_sample.py\n"
+        "+++ b/test_sample.py\n"
+        "@@ -1 +1 @@\n"
+        "-value = 1\n"
+        "+value = 2\n",
+        encoding="utf-8",
+    )
+    import hashlib
+
+    registered = {
+        "runtime_test_patch_path": str(patch),
+        "runtime_test_patch_sha256": hashlib.sha256(patch.read_bytes()).hexdigest(),
+    }
+    assert _apply_runtime_test_patch(registered, sandbox) is None
+    assert target.read_text(encoding="utf-8") == "value = 2\n"
+    registered["runtime_test_patch_sha256"] = "0" * 64
+    assert "checksum mismatch" in str(
+        _apply_runtime_test_patch(registered, sandbox)
+    )

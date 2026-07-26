@@ -15,6 +15,16 @@ limit, a memory limit, and a CPU limit. A Docker infrastructure exit code,
 timeout, missing traceback, or pytest collection error is not a reproduced
 incident.
 
+The registered SWE-bench images execute tests with
+`/opt/miniconda3/envs/testbed/bin/python`. Calling the base Conda interpreter
+is an infrastructure error because it does not contain the incident's pytest
+environment.
+
+Before execution, the collector applies the dataset's registered public
+`test_patch` to the disposable sandbox and verifies its SHA256. The test patch
+is a harness input needed to materialize `FAIL_TO_PASS`; it is not the Gold fix
+patch and is never copied into the RouteAuditor manifest or scoring features.
+
 ## Development
 
 Prepare the registered sources:
@@ -30,7 +40,8 @@ Create the Gold-free runtime channel:
 make h10-c5b-prepare-runtime-inputs \
   H10_C5B_MANIFEST=/work/h10-c5b/H10_C5B_DEVELOPMENT_MANIFEST.jsonl \
   H10_C5B_RUNTIME_DIR=/work/h10-c5b/runtime-development/inputs \
-  H10_C5B_CONTAINER_IMAGES=/work/h10-c5b/H10_C5B_CONTAINER_IMAGES.json
+  H10_C5B_CONTAINER_IMAGES=/work/h10-c5b/H10_C5B_CONTAINER_IMAGES.json \
+  H10_C5B_RUNTIME_SOURCE_DATASET=/work/h10-c5b/sources/development.parquet
 ```
 
 Collect evidence:

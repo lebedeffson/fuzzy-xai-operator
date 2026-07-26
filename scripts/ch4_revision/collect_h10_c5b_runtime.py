@@ -10,7 +10,7 @@ import re
 import shutil
 import subprocess
 import tempfile
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 
 TRACEBACK_HEADER = "Traceback (most recent call last):"
 PYTEST_FRAME = re.compile(r"^.+[.]py:\d+: in ", flags=re.MULTILINE)
@@ -18,6 +18,7 @@ INFRASTRUCTURE_RETURNCODES = frozenset({2, 3, 4, 5})
 DOCKER_INFRASTRUCTURE_RETURNCODES = frozenset({125, 126, 127})
 CONTAINER_IMAGE = re.compile(r"^[A-Za-z0-9._/:@-]+@sha256:[0-9a-f]{64}$")
 SAFE_INCIDENT_ID = re.compile(r"^[A-Za-z0-9_.-]+$")
+PATCH_PATH = re.compile(r"^diff --git a/(.+?) b/(.+?)$", flags=re.MULTILINE)
 
 
 def _has_trace(value: str) -> bool:
@@ -121,6 +122,42 @@ def _stop_timed_out_container(cidfile: Path, environment: dict[str, str]) -> Non
         )
 
 
+def _apply_runtime_test_patch(
+    registered: dict[str, object],
+    sandbox: Path,
+) -> str | None:
+    raw_path = str(registered.get("runtime_test_patch_path", ""))
+    expected = str(registered.get("runtime_test_patch_sha256", ""))
+    if not raw_path or not re.fullmatch(r"[0-9a-f]{64}", expected):
+        return "registered runtime test patch is incomplete"
+    patch_path = Path(raw_path)
+    if not patch_path.is_file():
+        return "registered runtime test patch is missing"
+    actual = hashlib.sha256(patch_path.read_bytes()).hexdigest()
+    if actual != expected:
+        return "registered runtime test patch checksum mismatch"
+    patch_text = patch_path.read_text(encoding="utf-8")
+    paths = PATCH_PATH.findall(patch_text)
+    if not paths:
+        return "registered runtime test patch has no diff entries"
+    for pair in paths:
+        for raw in pair:
+            path = PurePosixPath(raw)
+            if path.is_absolute() or ".." in path.parts:
+                return "registered runtime test patch contains an unsafe path"
+    completed = subprocess.run(
+        ["git", "apply", "--whitespace=nowarn", str(patch_path)],
+        cwd=sandbox,
+        capture_output=True,
+        text=True,
+        timeout=60,
+        check=False,
+    )
+    if completed.returncode:
+        return f"runtime test patch application failed: {completed.stderr.strip()}"
+    return None
+
+
 def collect(
     manifest_path: Path,
     command_registry_path: Path,
@@ -179,51 +216,63 @@ def collect(
                 cidfile,
             )
             environment = _runtime_environment(home)
-            try:
-                completed = subprocess.run(
-                    effective_command,
-                    cwd=sandbox,
-                    capture_output=True,
-                    text=True,
-                    timeout=int(registered.get("timeout_seconds", 900)),
-                    check=False,
-                    env=environment,
-                )
-                stdout = completed.stdout
-                stderr = completed.stderr
-                returncode: int | None = completed.returncode
-                expected_failure_codes = {
-                    int(code)
-                    for code in registered.get("expected_failure_returncodes", (1,))
-                }
-                combined = f"{stdout}\n{stderr}"
-                if returncode == 0:
-                    status = "BUG_NOT_REPRODUCED"
-                elif returncode in INFRASTRUCTURE_RETURNCODES or (
-                    backend == "container"
-                    and returncode in DOCKER_INFRASTRUCTURE_RETURNCODES
-                ):
-                    status = "RUNTIME_INFRASTRUCTURE_ERROR"
-                elif returncode not in expected_failure_codes:
-                    status = "UNEXPECTED_FAILURE_RETURNCODE"
-                elif _has_trace(combined):
-                    status = "BUG_REPRODUCED_WITH_TRACE"
-                else:
-                    status = "BUG_REPRODUCED_WITHOUT_TRACE"
-            except subprocess.TimeoutExpired as error:
-                if backend == "container":
-                    _stop_timed_out_container(cidfile, environment)
-                stdout = _text(error.stdout)
-                stderr = _text(error.stderr)
-                returncode = None
-                combined = f"{stdout}\n{stderr}"
-                status = "RUNTIME_TIMEOUT"
-            except OSError as error:
+            patch_error = (
+                _apply_runtime_test_patch(registered, sandbox)
+                if backend == "container"
+                else None
+            )
+            if patch_error is not None:
                 stdout = ""
-                stderr = str(error)
-                returncode = None
+                stderr = patch_error
+                returncode = 4
                 combined = stderr
-                status = "RUNTIME_EXECUTION_ERROR"
+                status = "RUNTIME_INFRASTRUCTURE_ERROR"
+            else:
+                try:
+                    completed = subprocess.run(
+                        effective_command,
+                        cwd=sandbox,
+                        capture_output=True,
+                        text=True,
+                        timeout=int(registered.get("timeout_seconds", 900)),
+                        check=False,
+                        env=environment,
+                    )
+                    stdout = completed.stdout
+                    stderr = completed.stderr
+                    returncode: int | None = completed.returncode
+                    expected_failure_codes = {
+                        int(code)
+                        for code in registered.get("expected_failure_returncodes", (1,))
+                    }
+                    combined = f"{stdout}\n{stderr}"
+                    if returncode == 0:
+                        status = "BUG_NOT_REPRODUCED"
+                    elif returncode in INFRASTRUCTURE_RETURNCODES or (
+                        backend == "container"
+                        and returncode in DOCKER_INFRASTRUCTURE_RETURNCODES
+                    ):
+                        status = "RUNTIME_INFRASTRUCTURE_ERROR"
+                    elif returncode not in expected_failure_codes:
+                        status = "UNEXPECTED_FAILURE_RETURNCODE"
+                    elif _has_trace(combined):
+                        status = "BUG_REPRODUCED_WITH_TRACE"
+                    else:
+                        status = "BUG_REPRODUCED_WITHOUT_TRACE"
+                except subprocess.TimeoutExpired as error:
+                    if backend == "container":
+                        _stop_timed_out_container(cidfile, environment)
+                    stdout = _text(error.stdout)
+                    stderr = _text(error.stderr)
+                    returncode = None
+                    combined = f"{stdout}\n{stderr}"
+                    status = "RUNTIME_TIMEOUT"
+                except OSError as error:
+                    stdout = ""
+                    stderr = str(error)
+                    returncode = None
+                    combined = stderr
+                    status = "RUNTIME_EXECUTION_ERROR"
         incident_output = output / incident_id
         incident_output.mkdir(parents=True, exist_ok=True)
         stdout_path = incident_output / "stdout.txt"
@@ -249,6 +298,11 @@ def collect(
                 "execution_backend": backend,
                 "container_image": (
                     str(registered["container_image"])
+                    if backend == "container"
+                    else None
+                ),
+                "runtime_test_patch_sha256": (
+                    str(registered["runtime_test_patch_sha256"])
                     if backend == "container"
                     else None
                 ),
