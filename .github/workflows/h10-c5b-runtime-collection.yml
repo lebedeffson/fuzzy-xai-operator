@@ -77,7 +77,7 @@ jobs:
             scripts/ch4_revision/run_h10_c5b.py)"
           git diff --check
 
-  h9-e2e-v2-reproduction:
+  h9-e2e-v2-unregistered-runner-smoke:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
@@ -92,10 +92,31 @@ jobs:
             --index-url https://download.pytorch.org/whl/cpu \
             "torch==2.11.0"
           python -m pip install -e ".[dev]" "shap==0.51.0"
-      - name: Run registered H9-E2E-v2 benchmark
+      - name: Verify committed registered H9-E2E-v2 evidence
+        run: |
+          sha256sum -c results/h9_e2e_v2/SHA256SUMS
+          test "$(jq -r .status results/h9_e2e_v2/H9_E2E_V2_FINAL_STATUS.json)" = "H9_E2E_V2_TARGET_MET"
+          test "$(jq -r .benchmark_scope results/h9_e2e_v2/H9_E2E_V2_FINAL_STATUS.json)" = "registered_local_microbenchmark_pipelines"
+      - name: Run H9-E2E-v2 smoke on unregistered CI hardware
         run: |
           make h9-e2e-v2 H10_C3_PYTHON=python
-          test "$(jq -r .status results/h9_e2e_v2/H9_E2E_V2_FINAL_STATUS.json)" = "H9_E2E_V2_TARGET_MET"
+          test "$(jq -r .measurements results/h9_e2e_v2/H9_E2E_V2_FINAL_STATUS.json)" = "540"
+          test "$(jq -r .protocol_id results/h9_e2e_v2/H9_E2E_V2_FINAL_STATUS.json)" = "h9-e2e-v2-optimized-evidence-path"
+          {
+            echo "### H9-E2E-v2 unregistered runner smoke"
+            echo
+            echo "This run does not replace the registered local microbenchmark."
+            echo
+            jq -r '"- runner status: `" + .status + "`"' results/h9_e2e_v2/H9_E2E_V2_FINAL_STATUS.json
+          } >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: h9-e2e-v2-unregistered-runner-${{ github.sha }}
+          path: |
+            results/h9_e2e_v2
+            reports/h9_e2e_v2
+          retention-days: 30
 
   runtime-collection:
     if: github.event_name == 'workflow_dispatch' && inputs.operation != 'validate'

@@ -302,3 +302,5 @@ def test_ci_wires_runtime_targets_without_held_out_scoring() -> None:
     assert "collect-held-out" in workflow
     assert "Enforce no automatic held-out scoring" in workflow
     assert "h10-c5b-score" not in workflow
+    assert "unregistered CI hardware" in workflow
+    assert "does not replace the registered local microbenchmark" in workflow
