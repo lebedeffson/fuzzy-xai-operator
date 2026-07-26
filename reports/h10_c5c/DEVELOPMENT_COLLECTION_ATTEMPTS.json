@@ -1,0 +1,17 @@
+{
+  "attempts": [
+    {
+      "development_scored": false,
+      "failure": "The safe assignment parser rejected whitespace around '=' in a BugsInPy project.info file.",
+      "failure_stage": "MATERIALIZE_LOCKED_DEVELOPMENT_SELECTION",
+      "head_commit": "0af345f241f5030077a0b12142b2629ed6ca657a",
+      "held_out_created": false,
+      "held_out_scored": false,
+      "run_id": 30219587263,
+      "runtime_collection_started": false,
+      "scientific_result": "NOT_EVALUATED",
+      "status": "FAILED_BEFORE_RUNTIME_AND_SCORING"
+    }
+  ],
+  "scientific_result": "NOT_EVALUATED"
+}

@@ -20,7 +20,7 @@ PROTOCOL_LOCK_PATH = Path(
     "protocol/h10_c5c_evidence_retrieval/H10_C5C_PROTOCOL_LOCK.json"
 )
 
-_ASSIGNMENT = re.compile(r"^([A-Za-z_][A-Za-z0-9_]*)=(.*)$")
+_ASSIGNMENT = re.compile(r"^([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(.*)$")
 _DIFF_HEADER = re.compile(r"^diff --git a/(.+?) b/(.+?)$", re.MULTILINE)
 _SAFE_PROJECT = re.compile(r"^[A-Za-z0-9_.-]+$")
 _SAFE_BUG = re.compile(r"^[A-Za-z0-9_.-]+$")

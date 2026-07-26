@@ -130,6 +130,19 @@ def test_canonical_repository_accepts_https_ssh_and_file_paths() -> None:
     assert canonical_repository("file:///tmp/org/repo") == "org/repo"
 
 
+def test_bugsinpy_assignment_parser_accepts_spaces_around_equals(
+    tmp_path: Path,
+) -> None:
+    bugsinpy, _upstream = _build_fixture(tmp_path)
+    project_info = bugsinpy / "projects/project0/project.info"
+    project_info.write_text(
+        project_info.read_text(encoding="utf-8") + 'PYTHONPATH = "pkg"\n',
+        encoding="utf-8",
+    )
+    candidates = discover_bugsinpy_candidates(bugsinpy, ROOT)
+    assert candidates
+
+
 def test_balanced_selection_meets_locked_counts(tmp_path: Path) -> None:
     bugsinpy, _upstream = _build_fixture(tmp_path)
     candidates = discover_bugsinpy_candidates(bugsinpy, ROOT)
