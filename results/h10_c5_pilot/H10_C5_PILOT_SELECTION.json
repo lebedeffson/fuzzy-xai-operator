@@ -1,0 +1,678 @@
+{
+  "candidate_audit": [
+    {
+      "buggy_commit": "863e49066ca4d61c9adfe62aca3bf21b90e1af8c",
+      "eligible": false,
+      "incident_id": "pydata__xarray-3364",
+      "rejection_reasons": [
+        "DIGEST_PINNED_CONTAINER_MISSING",
+        "EXECUTABLE_REPAIR_PLAN_MISSING",
+        "LITERAL_FAIL_TO_PASS_COMMAND_MISSING",
+        "REPAIR_OPERATION_ARGUMENTS_MISSING"
+      ],
+      "repository": "pydata/xarray",
+      "selection_rank": "0094a973229e6fd8f9b31dc5ab9553b9ddef87f36abda61c91e2c1b9fcb8338f",
+      "source": "H10-C5b"
+    },
+    {
+      "buggy_commit": "4ec6cbe341fd84468c448e20082c778043bbea4b",
+      "eligible": false,
+      "incident_id": "sphinx-doc__sphinx-7975",
+      "rejection_reasons": [
+        "DIGEST_PINNED_CONTAINER_MISSING",
+        "EXECUTABLE_REPAIR_PLAN_MISSING",
+        "LITERAL_FAIL_TO_PASS_COMMAND_MISSING",
+        "REPAIR_OPERATION_ARGUMENTS_MISSING"
+      ],
+      "repository": "sphinx-doc/sphinx",
+      "selection_rank": "07374fb7bf54ceef6d175b282fd4cf890aa46fa5a8c7a38016ae652f0daf4807",
+      "source": "H10-C5b"
+    },
+    {
+      "buggy_commit": "c5cef2499d6eed024b0db5c792d6ec7c53baa470",
+      "eligible": false,
+      "incident_id": "sympy__sympy-23117",
+      "rejection_reasons": [
+        "DIGEST_PINNED_CONTAINER_MISSING",
+        "LITERAL_FAIL_TO_PASS_COMMAND_MISSING",
+        "REPAIR_OPERATION_ARGUMENTS_MISSING"
+      ],
+      "repository": "sympy/sympy",
+      "selection_rank": "09864979723768796fc6c8917d2651b64a6426d26c9205bf1a1f36a1b0542087",
+      "source": "H10-C5"
+    },
+    {
+      "buggy_commit": "e148998d9bed9d1b53a91587ad48f9bb43c7737f",
+      "eligible": false,
+      "incident_id": "matplotlib__matplotlib-24265",
+      "rejection_reasons": [
+        "DIGEST_PINNED_CONTAINER_MISSING",
+        "LITERAL_FAIL_TO_PASS_COMMAND_MISSING",
+        "REPAIR_OPERATION_ARGUMENTS_MISSING"
+      ],
+      "repository": "matplotlib/matplotlib",
+      "selection_rank": "0d142cc840d8a463e7c3406907c2c1fc8507dc57f1a354a19cc2dc9253e0ae74",
+      "source": "H10-C5"
+    },
+    {
+      "buggy_commit": "9ef28fba5b4d6d0168237c9c005a550e6dc27d81",
+      "eligible": false,
+      "incident_id": "sympy__sympy-15346",
+      "rejection_reasons": [
+        "DIGEST_PINNED_CONTAINER_MISSING",
+        "EXECUTABLE_REPAIR_PLAN_MISSING",
+        "LITERAL_FAIL_TO_PASS_COMMAND_MISSING",
+        "NONEMPTY_DIAGNOSTIC_CUT_MISSING",
+        "REPAIR_OPERATION_ARGUMENTS_MISSING"
+      ],
+      "repository": "sympy/sympy",
+      "selection_rank": "1ab09cb58e191ab38faa2b2a0f552692eae843d68cb2158e09b86ea6066fa524",
+      "source": "H10-C5b"
+    },
+    {
+      "buggy_commit": "397c1703e8ae6349d33f7b99f45b2ccaf581e666",
+      "eligible": false,
+      "incident_id": "pylint-dev__pylint-7114",
+      "rejection_reasons": [
+        "DIGEST_PINNED_CONTAINER_MISSING",
+        "LITERAL_FAIL_TO_PASS_COMMAND_MISSING",
+        "REPAIR_OPERATION_ARGUMENTS_MISSING"
+      ],
+      "repository": "pylint-dev/pylint",
+      "selection_rank": "1f099a07513882146f935d793633c73c46d1b3ca9af6c34b87c83236d7152283",
+      "source": "H10-C5"
+    },
+    {
+      "buggy_commit": "09786a173e7a0a488f46dd6000177c23e5d24eed",
+      "eligible": false,
+      "incident_id": "sympy__sympy-16792",
+      "rejection_reasons": [
+        "DIGEST_PINNED_CONTAINER_MISSING",
+        "LITERAL_FAIL_TO_PASS_COMMAND_MISSING",
+        "REPAIR_OPERATION_ARGUMENTS_MISSING"
+      ],
+      "repository": "sympy/sympy",
+      "selection_rank": "2457175d4a5cf373de5f7b4b292cf474931bdb49bfd2278792fd087973233da8",
+      "source": "H10-C5"
+    },
+    {
+      "buggy_commit": "3aefc834dce72e850bff48689bea3c7dff5f3fad",
+      "eligible": false,
+      "incident_id": "scikit-learn__scikit-learn-13496",
+      "rejection_reasons": [
+        "DIGEST_PINNED_CONTAINER_MISSING",
+        "EXECUTABLE_REPAIR_PLAN_MISSING",
+        "LITERAL_FAIL_TO_PASS_COMMAND_MISSING",
+        "NONEMPTY_DIAGNOSTIC_CUT_MISSING",
+        "REPAIR_OPERATION_ARGUMENTS_MISSING"
+      ],
+      "repository": "scikit-learn/scikit-learn",
+      "selection_rank": "28cbe4a60d613947330ce7dc677b6a0eca7642e42dc4e71cfadbb6e5cfd4f177",
+      "source": "H10-C5b"
+    },
+    {
+      "buggy_commit": "04b15022e8d1f49af69d8a1e6cd678f31f1280ff",
+      "eligible": false,
+      "incident_id": "django__django-16229",
+      "rejection_reasons": [
+        "DIGEST_PINNED_CONTAINER_MISSING",
+        "EXECUTABLE_REPAIR_PLAN_MISSING",
+        "LITERAL_FAIL_TO_PASS_COMMAND_MISSING",
+        "NONEMPTY_DIAGNOSTIC_CUT_MISSING",
+        "REPAIR_OPERATION_ARGUMENTS_MISSING"
+      ],
+      "repository": "django/django",
+      "selection_rank": "3045256ed324fe260f30cb5a4b41880e3167caed5743c1e0bb405aff8bb4718e",
+      "source": "H10-C5b"
+    },
+    {
+      "buggy_commit": "752d3285d250bbaf673cff25e83f03f247502021",
+      "eligible": false,
+      "incident_id": "sphinx-doc__sphinx-7686",
+      "rejection_reasons": [
+        "DIGEST_PINNED_CONTAINER_MISSING",
+        "EXECUTABLE_REPAIR_PLAN_MISSING",
+        "LITERAL_FAIL_TO_PASS_COMMAND_MISSING",
+        "NONEMPTY_DIAGNOSTIC_CUT_MISSING",
+        "REPAIR_OPERATION_ARGUMENTS_MISSING"
+      ],
+      "repository": "sphinx-doc/sphinx",
+      "selection_rank": "388358253cf53aafe9b7a7c029a9ba8eb61c48d8abb85326e704832aeb887bca",
+      "source": "H10-C5b"
+    },
+    {
+      "buggy_commit": "56bf819c2f4eaf8b36bd8c42c06bb59d5a3bfc0f",
+      "eligible": false,
+      "incident_id": "pytest-dev__pytest-7220",
+      "rejection_reasons": [
+        "DIGEST_PINNED_CONTAINER_MISSING",
+        "LITERAL_FAIL_TO_PASS_COMMAND_MISSING",
+        "REPAIR_OPERATION_ARGUMENTS_MISSING"
+      ],
+      "repository": "pytest-dev/pytest",
+      "selection_rank": "3dc33e200fbad70235fba4ab9ad31b5d46408a0ccf9d344bddba861acc3ed78d",
+      "source": "H10-C5"
+    },
+    {
+      "buggy_commit": "2c867b8f822eb7a684f0d5c4359e4426e1c9cfe0",
+      "eligible": false,
+      "incident_id": "scikit-learn__scikit-learn-25747",
+      "rejection_reasons": [
+        "DIGEST_PINNED_CONTAINER_MISSING",
+        "LITERAL_FAIL_TO_PASS_COMMAND_MISSING",
+        "REPAIR_OPERATION_ARGUMENTS_MISSING"
+      ],
+      "repository": "scikit-learn/scikit-learn",
+      "selection_rank": "3e91435822801d0d5ffd9f1597dcf9c2de9fe0a647187167304ae173e361ccdb",
+      "source": "H10-C5"
+    },
+    {
+      "buggy_commit": "a5f53e203c52a7605d5db799864046471115d04f",
+      "eligible": false,
+      "incident_id": "pydata__xarray-4493",
+      "rejection_reasons": [
+        "DIGEST_PINNED_CONTAINER_MISSING",
+        "LITERAL_FAIL_TO_PASS_COMMAND_MISSING",
+        "REPAIR_OPERATION_ARGUMENTS_MISSING"
+      ],
+      "repository": "pydata/xarray",
+      "selection_rank": "409dff430fc868ab590400a55b2af0690531e75ade9c9a5cd7ab85bad6802da0",
+      "source": "H10-C5"
+    },
+    {
+      "buggy_commit": "cd25abee0ad0ac95225d4a9be8948eff69f49690",
+      "eligible": false,
+      "incident_id": "scikit-learn__scikit-learn-25570",
+      "rejection_reasons": [
+        "DIGEST_PINNED_CONTAINER_MISSING",
+        "LITERAL_FAIL_TO_PASS_COMMAND_MISSING",
+        "REPAIR_OPERATION_ARGUMENTS_MISSING"
+      ],
+      "repository": "scikit-learn/scikit-learn",
+      "selection_rank": "41fcf59cbb2424238b4ff789077bf84b12f82d55eb8f7942344d979b7c672510",
+      "source": "H10-C5"
+    },
+    {
+      "buggy_commit": "7f7a36478abe7dd1fa993b115d22606aa0e35e88",
+      "eligible": false,
+      "incident_id": "pytest-dev__pytest-7490",
+      "rejection_reasons": [
+        "DIGEST_PINNED_CONTAINER_MISSING",
+        "EXECUTABLE_REPAIR_PLAN_MISSING",
+        "LITERAL_FAIL_TO_PASS_COMMAND_MISSING",
+        "NONEMPTY_DIAGNOSTIC_CUT_MISSING",
+        "REPAIR_OPERATION_ARGUMENTS_MISSING"
+      ],
+      "repository": "pytest-dev/pytest",
+      "selection_rank": "48eb85b6516e90926bd56a54cb6967c659faefba1c2917104f57be168f5522c6",
+      "source": "H10-C5b"
+    },
+    {
+      "buggy_commit": "f0adf3b9b7a19cdee05368ff0c0c2d087f011180",
+      "eligible": false,
+      "incident_id": "django__django-11848",
+      "rejection_reasons": [
+        "DIGEST_PINNED_CONTAINER_MISSING",
+        "EXECUTABLE_REPAIR_PLAN_MISSING",
+        "LITERAL_FAIL_TO_PASS_COMMAND_MISSING",
+        "REPAIR_OPERATION_ARGUMENTS_MISSING"
+      ],
+      "repository": "django/django",
+      "selection_rank": "4cf34068da3593605181e113fa1e6938552860e4b3930646e54e9b28ddf9509f",
+      "source": "H10-C5b"
+    },
+    {
+      "buggy_commit": "7269fa3e33e8d02485a647da91a5a2a60a06af61",
+      "eligible": false,
+      "incident_id": "astropy__astropy-14365",
+      "rejection_reasons": [
+        "DIGEST_PINNED_CONTAINER_MISSING",
+        "EXECUTABLE_REPAIR_PLAN_MISSING",
+        "LITERAL_FAIL_TO_PASS_COMMAND_MISSING",
+        "NONEMPTY_DIAGNOSTIC_CUT_MISSING",
+        "REPAIR_OPERATION_ARGUMENTS_MISSING"
+      ],
+      "repository": "astropy/astropy",
+      "selection_rank": "591d1d7ea404ee9b41bb3266c0dd1dde091960e3512dc7b2a428d4880e1bc7ec",
+      "source": "H10-C5b"
+    },
+    {
+      "buggy_commit": "df7dd8391148a873d157328a4f0328528a0c4ed9",
+      "eligible": false,
+      "incident_id": "scikit-learn__scikit-learn-14092",
+      "rejection_reasons": [
+        "DIGEST_PINNED_CONTAINER_MISSING",
+        "EXECUTABLE_REPAIR_PLAN_MISSING",
+        "LITERAL_FAIL_TO_PASS_COMMAND_MISSING",
+        "REPAIR_OPERATION_ARGUMENTS_MISSING"
+      ],
+      "repository": "scikit-learn/scikit-learn",
+      "selection_rank": "6636c9fb39fd61d139dd8bd6eeffa285da40ed32b3a10a2849caddd23f02f3e8",
+      "source": "H10-C5b"
+    },
+    {
+      "buggy_commit": "269c0b94b4fcf8b1135011c1556eac29dc09de15",
+      "eligible": false,
+      "incident_id": "matplotlib__matplotlib-23964",
+      "rejection_reasons": [
+        "DIGEST_PINNED_CONTAINER_MISSING",
+        "LITERAL_FAIL_TO_PASS_COMMAND_MISSING",
+        "REPAIR_OPERATION_ARGUMENTS_MISSING"
+      ],
+      "repository": "matplotlib/matplotlib",
+      "selection_rank": "6db32f2af5c737613292cb2cc1c61b87a61d49af4ed39e15ccafbb124bf84787",
+      "source": "H10-C5"
+    },
+    {
+      "buggy_commit": "98dc1f4ea18738492e074e9e51ddfed5cd30ab94",
+      "eligible": false,
+      "incident_id": "pydata__xarray-4248",
+      "rejection_reasons": [
+        "DIGEST_PINNED_CONTAINER_MISSING",
+        "EXECUTABLE_REPAIR_PLAN_MISSING",
+        "LITERAL_FAIL_TO_PASS_COMMAND_MISSING",
+        "NONEMPTY_DIAGNOSTIC_CUT_MISSING",
+        "REPAIR_OPERATION_ARGUMENTS_MISSING"
+      ],
+      "repository": "pydata/xarray",
+      "selection_rank": "7aa29e14160637dd280dd32889559af9a9efd11a82e10f8da9cc60b358b9239b",
+      "source": "H10-C5b"
+    },
+    {
+      "buggy_commit": "182ce3dd15dfa3537391c3efaf9c3ff407d134d4",
+      "eligible": false,
+      "incident_id": "pallets__flask-5063",
+      "rejection_reasons": [
+        "DIGEST_PINNED_CONTAINER_MISSING",
+        "EXECUTABLE_REPAIR_PLAN_MISSING",
+        "LITERAL_FAIL_TO_PASS_COMMAND_MISSING",
+        "NONEMPTY_DIAGNOSTIC_CUT_MISSING",
+        "REPAIR_OPERATION_ARGUMENTS_MISSING"
+      ],
+      "repository": "pallets/flask",
+      "selection_rank": "7cf1970f1d82ea5ffef965ad48c3e4947a8c391cab40fc393f052e03dc43b912",
+      "source": "H10-C5b"
+    },
+    {
+      "buggy_commit": "3ed7590ed411bd93b26098faab4f23619cdb2267",
+      "eligible": false,
+      "incident_id": "sphinx-doc__sphinx-8713",
+      "rejection_reasons": [
+        "DIGEST_PINNED_CONTAINER_MISSING",
+        "LITERAL_FAIL_TO_PASS_COMMAND_MISSING",
+        "REPAIR_OPERATION_ARGUMENTS_MISSING"
+      ],
+      "repository": "sphinx-doc/sphinx",
+      "selection_rank": "804f8f98049f0bcf2e5db9b9fb0e761e416cb2755a49f295222d59960a4ce014",
+      "source": "H10-C5"
+    },
+    {
+      "buggy_commit": "60dc957a825232fdda9138e2f8878b2ca407a7c9",
+      "eligible": false,
+      "incident_id": "django__django-11583",
+      "rejection_reasons": [
+        "DIGEST_PINNED_CONTAINER_MISSING",
+        "LITERAL_FAIL_TO_PASS_COMMAND_MISSING",
+        "REPAIR_OPERATION_ARGUMENTS_MISSING"
+      ],
+      "repository": "django/django",
+      "selection_rank": "8365dabe7ba5a898f6c2a5703efa678efc86407ae2d5c7224e9eb3ade99283ed",
+      "source": "H10-C5"
+    },
+    {
+      "buggy_commit": "b330b918e979ea39a21d47b61172d112caf432c3",
+      "eligible": false,
+      "incident_id": "django__django-12453",
+      "rejection_reasons": [
+        "DIGEST_PINNED_CONTAINER_MISSING",
+        "LITERAL_FAIL_TO_PASS_COMMAND_MISSING",
+        "REPAIR_OPERATION_ARGUMENTS_MISSING"
+      ],
+      "repository": "django/django",
+      "selection_rank": "89912082e884c2aabb87a93f412384fb99ee1ef76e87a496fd2b6d682c61debb",
+      "source": "H10-C5"
+    },
+    {
+      "buggy_commit": "f35ad6411f86a15dd78db39c29d1e5291f66f9b5",
+      "eligible": false,
+      "incident_id": "sympy__sympy-14396",
+      "rejection_reasons": [
+        "DIGEST_PINNED_CONTAINER_MISSING",
+        "LITERAL_FAIL_TO_PASS_COMMAND_MISSING",
+        "REPAIR_OPERATION_ARGUMENTS_MISSING"
+      ],
+      "repository": "sympy/sympy",
+      "selection_rank": "8ed6035327f1d07576a9d8eb727bafe0b031819f5cca842e82bfcbf6d65cbb51",
+      "source": "H10-C5"
+    },
+    {
+      "buggy_commit": "e90702074e68e20dc8e5df5013ee3ecf22139c3e",
+      "eligible": false,
+      "incident_id": "pylint-dev__pylint-7993",
+      "rejection_reasons": [
+        "DIGEST_PINNED_CONTAINER_MISSING",
+        "EXECUTABLE_REPAIR_PLAN_MISSING",
+        "LITERAL_FAIL_TO_PASS_COMMAND_MISSING",
+        "NONEMPTY_DIAGNOSTIC_CUT_MISSING",
+        "REPAIR_OPERATION_ARGUMENTS_MISSING"
+      ],
+      "repository": "pylint-dev/pylint",
+      "selection_rank": "90bcf0af414028aa162695a584bed59b237c4740cd762dae3101bf891757f8ee",
+      "source": "H10-C5b"
+    },
+    {
+      "buggy_commit": "3c5eca2ded3dd2b59ebaf23eb289453b5d2930f0",
+      "eligible": false,
+      "incident_id": "pylint-dev__pylint-7080",
+      "rejection_reasons": [
+        "DIGEST_PINNED_CONTAINER_MISSING",
+        "LITERAL_FAIL_TO_PASS_COMMAND_MISSING",
+        "REPAIR_OPERATION_ARGUMENTS_MISSING"
+      ],
+      "repository": "pylint-dev/pylint",
+      "selection_rank": "9183c11ce34396fc152a23e5360668db7407cfde9e86f4f0e0c1cc7a3dc03b3e",
+      "source": "H10-C5"
+    },
+    {
+      "buggy_commit": "515286e02be3e4c0ff2ef4addb34a53c4a676ee4",
+      "eligible": false,
+      "incident_id": "mwaskom__seaborn-3407",
+      "rejection_reasons": [
+        "DIGEST_PINNED_CONTAINER_MISSING",
+        "EXECUTABLE_REPAIR_PLAN_MISSING",
+        "LITERAL_FAIL_TO_PASS_COMMAND_MISSING",
+        "REPAIR_OPERATION_ARGUMENTS_MISSING"
+      ],
+      "repository": "mwaskom/seaborn",
+      "selection_rank": "9858dce259ec4b6879de244623973950c626ad4512210a6022fdd087ab957149",
+      "source": "H10-C5b"
+    },
+    {
+      "buggy_commit": "514579c655bf22e2af14f0743376ae1d7befe345",
+      "eligible": false,
+      "incident_id": "sympy__sympy-24066",
+      "rejection_reasons": [
+        "DIGEST_PINNED_CONTAINER_MISSING",
+        "LITERAL_FAIL_TO_PASS_COMMAND_MISSING",
+        "REPAIR_OPERATION_ARGUMENTS_MISSING"
+      ],
+      "repository": "sympy/sympy",
+      "selection_rank": "9920a313dcf209f2bcc3f7f49b8ec1698dd2433305e00d6403920806a57314f1",
+      "source": "H10-C5"
+    },
+    {
+      "buggy_commit": "4c288bc97ea371817199908d0d9b12de9dae327e",
+      "eligible": false,
+      "incident_id": "pallets__flask-4992",
+      "rejection_reasons": [
+        "DIGEST_PINNED_CONTAINER_MISSING",
+        "EXECUTABLE_REPAIR_PLAN_MISSING",
+        "LITERAL_FAIL_TO_PASS_COMMAND_MISSING",
+        "NONEMPTY_DIAGNOSTIC_CUT_MISSING",
+        "REPAIR_OPERATION_ARGUMENTS_MISSING"
+      ],
+      "repository": "pallets/flask",
+      "selection_rank": "99f2e8c2e055920d6f5b36ac8da24f4183ed5177e14c6c3c2dc814b9bb59b345",
+      "source": "H10-C5b"
+    },
+    {
+      "buggy_commit": "0a4204fd7555cfedd43f43017c94d24ef48244a5",
+      "eligible": false,
+      "incident_id": "pylint-dev__pylint-6506",
+      "rejection_reasons": [
+        "DIGEST_PINNED_CONTAINER_MISSING",
+        "LITERAL_FAIL_TO_PASS_COMMAND_MISSING",
+        "REPAIR_OPERATION_ARGUMENTS_MISSING"
+      ],
+      "repository": "pylint-dev/pylint",
+      "selection_rank": "ad4f10f624f3e0474b2cef31a5fba37dd08b47d00b5886d44fa42fcf1ec2d497",
+      "source": "H10-C5"
+    },
+    {
+      "buggy_commit": "a64cf2d5476e7bbda099b34c40b7be1880dbd39a",
+      "eligible": false,
+      "incident_id": "pydata__xarray-4094",
+      "rejection_reasons": [
+        "DIGEST_PINNED_CONTAINER_MISSING",
+        "LITERAL_FAIL_TO_PASS_COMMAND_MISSING",
+        "REPAIR_OPERATION_ARGUMENTS_MISSING"
+      ],
+      "repository": "pydata/xarray",
+      "selection_rank": "ba71fec9e31d6a5858071c0be4b91dcd14adf838544fe31f9cdc16db3055a28f",
+      "source": "H10-C5"
+    },
+    {
+      "buggy_commit": "5c4595267ccd3daf78f5fd05693b7ecbcd575c1e",
+      "eligible": false,
+      "incident_id": "matplotlib__matplotlib-23913",
+      "rejection_reasons": [
+        "DIGEST_PINNED_CONTAINER_MISSING",
+        "EXECUTABLE_REPAIR_PLAN_MISSING",
+        "LITERAL_FAIL_TO_PASS_COMMAND_MISSING",
+        "NONEMPTY_DIAGNOSTIC_CUT_MISSING",
+        "REPAIR_OPERATION_ARGUMENTS_MISSING"
+      ],
+      "repository": "matplotlib/matplotlib",
+      "selection_rank": "bc1a38cde778c097fe6e3172e821515c8671cfed1c16016f70393d643b674ec7",
+      "source": "H10-C5b"
+    },
+    {
+      "buggy_commit": "4db04923a754b6a2defa1b172f55d492b85d165e",
+      "eligible": false,
+      "incident_id": "scikit-learn__scikit-learn-25500",
+      "rejection_reasons": [
+        "DIGEST_PINNED_CONTAINER_MISSING",
+        "LITERAL_FAIL_TO_PASS_COMMAND_MISSING",
+        "REPAIR_OPERATION_ARGUMENTS_MISSING"
+      ],
+      "repository": "scikit-learn/scikit-learn",
+      "selection_rank": "c23f3d1714cde4afa4f1ce833d158984f21692180a6434c3f3155a72ada24434",
+      "source": "H10-C5"
+    },
+    {
+      "buggy_commit": "4a9e54962a29c12a8b103d75f838e0e795a6974d",
+      "eligible": false,
+      "incident_id": "mwaskom__seaborn-3190",
+      "rejection_reasons": [
+        "DIGEST_PINNED_CONTAINER_MISSING",
+        "EXECUTABLE_REPAIR_PLAN_MISSING",
+        "LITERAL_FAIL_TO_PASS_COMMAND_MISSING",
+        "NONEMPTY_DIAGNOSTIC_CUT_MISSING",
+        "REPAIR_OPERATION_ARGUMENTS_MISSING"
+      ],
+      "repository": "mwaskom/seaborn",
+      "selection_rank": "c7218db26f08cf26882078f892a0a55180a6b80fe64dfa7b8c286035930efc12",
+      "source": "H10-C5b"
+    },
+    {
+      "buggy_commit": "182cc539b8154c0710fcea7e522267e42eba8899",
+      "eligible": false,
+      "incident_id": "pylint-dev__pylint-5859",
+      "rejection_reasons": [
+        "DIGEST_PINNED_CONTAINER_MISSING",
+        "EXECUTABLE_REPAIR_PLAN_MISSING",
+        "LITERAL_FAIL_TO_PASS_COMMAND_MISSING",
+        "NONEMPTY_DIAGNOSTIC_CUT_MISSING",
+        "REPAIR_OPERATION_ARGUMENTS_MISSING"
+      ],
+      "repository": "pylint-dev/pylint",
+      "selection_rank": "c91457ebe4570fc7986ecf23584a76d92ce01b87661f57442125f22b85591480",
+      "source": "H10-C5b"
+    },
+    {
+      "buggy_commit": "191f6a9a4586b5e5f79f4f42f190e7ad4bbacc84",
+      "eligible": false,
+      "incident_id": "django__django-16816",
+      "rejection_reasons": [
+        "DIGEST_PINNED_CONTAINER_MISSING",
+        "LITERAL_FAIL_TO_PASS_COMMAND_MISSING",
+        "REPAIR_OPERATION_ARGUMENTS_MISSING"
+      ],
+      "repository": "django/django",
+      "selection_rank": "ca3824396de2f3daf49ab08869e17e73370f79bfa7a501bd1eafb170bdf3778e",
+      "source": "H10-C5"
+    },
+    {
+      "buggy_commit": "2f7415cfbc4b6ca62f9013f1abd27136f46b9653",
+      "eligible": false,
+      "incident_id": "pytest-dev__pytest-11148",
+      "rejection_reasons": [
+        "DIGEST_PINNED_CONTAINER_MISSING",
+        "LITERAL_FAIL_TO_PASS_COMMAND_MISSING",
+        "REPAIR_OPERATION_ARGUMENTS_MISSING"
+      ],
+      "repository": "pytest-dev/pytest",
+      "selection_rank": "d409073e15b29bdeb37656213c6f1446ddfd3b16d9fa81077f352f85dd4472f1",
+      "source": "H10-C5"
+    },
+    {
+      "buggy_commit": "fe693c492242ae532211e0c173324f09ca8cf227",
+      "eligible": false,
+      "incident_id": "psf__requests-2148",
+      "rejection_reasons": [
+        "DIGEST_PINNED_CONTAINER_MISSING",
+        "EXECUTABLE_REPAIR_PLAN_MISSING",
+        "LITERAL_FAIL_TO_PASS_COMMAND_MISSING",
+        "NONEMPTY_DIAGNOSTIC_CUT_MISSING",
+        "REPAIR_OPERATION_ARGUMENTS_MISSING"
+      ],
+      "repository": "psf/requests",
+      "selection_rank": "d6087b0b33377babe558937507e8ad155708cafa520a9000c0eb60622db58c54",
+      "source": "H10-C5b"
+    },
+    {
+      "buggy_commit": "b16c7d12ccbc7b2d20364b89fb44285bcbfede54",
+      "eligible": false,
+      "incident_id": "astropy__astropy-14995",
+      "rejection_reasons": [
+        "DIGEST_PINNED_CONTAINER_MISSING",
+        "EXECUTABLE_REPAIR_PLAN_MISSING",
+        "LITERAL_FAIL_TO_PASS_COMMAND_MISSING",
+        "NONEMPTY_DIAGNOSTIC_CUT_MISSING",
+        "REPAIR_OPERATION_ARGUMENTS_MISSING"
+      ],
+      "repository": "astropy/astropy",
+      "selection_rank": "de9e1908e413e75f7b43877118edc6a2800f23da5b3e6dedde4eba83ea595286",
+      "source": "H10-C5b"
+    },
+    {
+      "buggy_commit": "3b5abf76597ce6aff76192869f92647c1b5259e7",
+      "eligible": false,
+      "incident_id": "scikit-learn__scikit-learn-10949",
+      "rejection_reasons": [
+        "DIGEST_PINNED_CONTAINER_MISSING",
+        "LITERAL_FAIL_TO_PASS_COMMAND_MISSING",
+        "REPAIR_OPERATION_ARGUMENTS_MISSING"
+      ],
+      "repository": "scikit-learn/scikit-learn",
+      "selection_rank": "df5d73401bb1516493b9d201cba4a712b8efe97a5ba57e4006c9cc36b6eef0eb",
+      "source": "H10-C5"
+    },
+    {
+      "buggy_commit": "0c42cdf0d2422f4c080e93594d5d15381d6e955e",
+      "eligible": false,
+      "incident_id": "django__django-13925",
+      "rejection_reasons": [
+        "DIGEST_PINNED_CONTAINER_MISSING",
+        "LITERAL_FAIL_TO_PASS_COMMAND_MISSING",
+        "REPAIR_OPERATION_ARGUMENTS_MISSING"
+      ],
+      "repository": "django/django",
+      "selection_rank": "e13702659e516f7f28441a59236c3e7ce0ddaf997b818101c97cdcf19fb4b2b1",
+      "source": "H10-C5"
+    },
+    {
+      "buggy_commit": "0be38a0c37c59c4b66ce908731da15b401655113",
+      "eligible": false,
+      "incident_id": "psf__requests-2674",
+      "rejection_reasons": [
+        "DIGEST_PINNED_CONTAINER_MISSING",
+        "EXECUTABLE_REPAIR_PLAN_MISSING",
+        "LITERAL_FAIL_TO_PASS_COMMAND_MISSING",
+        "NONEMPTY_DIAGNOSTIC_CUT_MISSING",
+        "REPAIR_OPERATION_ARGUMENTS_MISSING"
+      ],
+      "repository": "psf/requests",
+      "selection_rank": "e20a6ce0a5e944a074018455605306d5583022f31e5dbfc166a345f34d7d601f",
+      "source": "H10-C5b"
+    },
+    {
+      "buggy_commit": "4a2fdce62b73944030cff9b3e52862868ca9584d",
+      "eligible": false,
+      "incident_id": "pytest-dev__pytest-5221",
+      "rejection_reasons": [
+        "DIGEST_PINNED_CONTAINER_MISSING",
+        "EXECUTABLE_REPAIR_PLAN_MISSING",
+        "LITERAL_FAIL_TO_PASS_COMMAND_MISSING",
+        "NONEMPTY_DIAGNOSTIC_CUT_MISSING",
+        "REPAIR_OPERATION_ARGUMENTS_MISSING"
+      ],
+      "repository": "pytest-dev/pytest",
+      "selection_rank": "e4534fb7307f173132ad47613668a8ad8bac05394f3302cb4506240ad4679c8c",
+      "source": "H10-C5b"
+    },
+    {
+      "buggy_commit": "d597f252915ddcaaa15ccdfcb35670152cb83587",
+      "eligible": false,
+      "incident_id": "pylint-dev__pylint-7228",
+      "rejection_reasons": [
+        "DIGEST_PINNED_CONTAINER_MISSING",
+        "LITERAL_FAIL_TO_PASS_COMMAND_MISSING",
+        "REPAIR_OPERATION_ARGUMENTS_MISSING"
+      ],
+      "repository": "pylint-dev/pylint",
+      "selection_rank": "f037ec8e7dbdd02c8303fb847556cf7ed41ea270a687ada3fb05f5705ca4abc8",
+      "source": "H10-C5"
+    },
+    {
+      "buggy_commit": "67e3c956083d0128a621f65ee86a7dacd4f9f19f",
+      "eligible": false,
+      "incident_id": "sympy__sympy-13647",
+      "rejection_reasons": [
+        "DIGEST_PINNED_CONTAINER_MISSING",
+        "EXECUTABLE_REPAIR_PLAN_MISSING",
+        "LITERAL_FAIL_TO_PASS_COMMAND_MISSING",
+        "NONEMPTY_DIAGNOSTIC_CUT_MISSING",
+        "REPAIR_OPERATION_ARGUMENTS_MISSING"
+      ],
+      "repository": "sympy/sympy",
+      "selection_rank": "f461d4f668e911c7c48fe3bf59d9746bc8e7b5953dd40d50cd7a085d2c807092",
+      "source": "H10-C5b"
+    },
+    {
+      "buggy_commit": "73394f2b11321e03a5df199ec0196f27a728b0b0",
+      "eligible": false,
+      "incident_id": "matplotlib__matplotlib-25442",
+      "rejection_reasons": [
+        "DIGEST_PINNED_CONTAINER_MISSING",
+        "EXECUTABLE_REPAIR_PLAN_MISSING",
+        "LITERAL_FAIL_TO_PASS_COMMAND_MISSING",
+        "NONEMPTY_DIAGNOSTIC_CUT_MISSING",
+        "REPAIR_OPERATION_ARGUMENTS_MISSING"
+      ],
+      "repository": "matplotlib/matplotlib",
+      "selection_rank": "fb0337f9dc0b32c89c3908b49ba8f4aa87e8d56e82b59c8ff03c495fbb9be694",
+      "source": "H10-C5b"
+    },
+    {
+      "buggy_commit": "4787fd64a4ca0dba5528b5651bddd254102fe9f3",
+      "eligible": false,
+      "incident_id": "pytest-dev__pytest-7168",
+      "rejection_reasons": [
+        "DIGEST_PINNED_CONTAINER_MISSING",
+        "LITERAL_FAIL_TO_PASS_COMMAND_MISSING",
+        "REPAIR_OPERATION_ARGUMENTS_MISSING"
+      ],
+      "repository": "pytest-dev/pytest",
+      "selection_rank": "ffeae5bb7bdcefe5e8315e0d9cfb3da1fee2eff9a4d7f38045e6e0c8446bde69",
+      "source": "H10-C5"
+    }
+  ],
+  "eligible_N": 0,
+  "gold_accessed_during_selection": false,
+  "pilot_id": "h10-c5-pilot-executable-recovery-v1",
+  "selected": [],
+  "selected_N": 0,
+  "selection_rule": "SHA256(repository + incident_id + buggy_commit)",
+  "target_N": 5
+}
