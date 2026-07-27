@@ -148,6 +148,27 @@
       },
       "scientific_result": "NOT_EVALUATED",
       "status": "RUNTIME_INCOMPLETE_SCORING_BLOCKED"
+    },
+    {
+      "complete_incidents": 30,
+      "development_scored": false,
+      "failure": "Runtime collection and all readiness checks passed. Development scoring stopped before metrics were emitted because the graph augmenter did not resolve a registered pytest node ID to its AST test node.",
+      "failure_stage": "DEVELOPMENT_SCORING_IMPORT",
+      "head_commit": "15884e216c4003fd8a2a988b5a801072a2f8be5a",
+      "held_out_created": false,
+      "held_out_scored": false,
+      "readiness_checks_passed": 23,
+      "readiness_checks_total": 23,
+      "readiness_report_sha256": "60c7c8cba808aa8468a038f3768bf8e7bcb5b9280de5112f727c3b2023ca4433",
+      "run_id": 30252520510,
+      "runtime_collection_completed": true,
+      "runtime_manifest_sha256": "2db9ab1402fad106201329f091d2d355d5a539b49ec0033f204f04af7bc40824",
+      "runtime_report_sha256": "53d7460ec6e00605ac4257abbda88bc3b8168a884e08831b29c1830361ed7435",
+      "runtime_status_counts": {
+        "BUG_REPRODUCED_WITH_TRACE": 30
+      },
+      "scientific_result": "NOT_EVALUATED",
+      "status": "DEVELOPMENT_READY_SCORING_INFRASTRUCTURE_FAILED"
     }
   ],
   "scientific_result": "NOT_EVALUATED"

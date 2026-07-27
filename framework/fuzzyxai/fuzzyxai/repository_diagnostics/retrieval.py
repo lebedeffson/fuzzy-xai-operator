@@ -13,6 +13,7 @@ NON_REPAIRABLE_KINDS = frozenset(
         "package",
         "repository",
         "runtime_exception",
+        "runtime_test_support",
         "source_parse_state",
         "test",
     }

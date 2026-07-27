@@ -25,6 +25,16 @@ EVENT_KINDS = frozenset(
 )
 
 
+def _is_test_path(path: str) -> bool:
+    normalized = path.replace("\\", "/").lower()
+    return (
+        normalized.startswith(("test/", "tests/"))
+        or "/tests/" in normalized
+        or "/test_" in normalized
+        or normalized.endswith("_test.py")
+    )
+
+
 @dataclass(frozen=True)
 class RuntimeEvent:
     event_id: str
@@ -83,7 +93,6 @@ class RuntimeEvidenceAugmenter:
         nodes = {node.node_id: node for node in graph.nodes}
         edges = {edge.edge_id: edge for edge in graph.edges}
         evidence = {item.evidence_id: item for item in graph.evidence}
-        test_nodes = {str(node.symbol): node for node in graph.nodes if node.kind == "test" and node.symbol}
         runtime_nodes = {str(node.symbol): node for node in graph.nodes if node.kind == "runtime_exception" and node.symbol}
         event_tests = {event.test_id for event in events}
         unknown_tests = sorted(event_tests - set(runtime_nodes))
@@ -97,13 +106,18 @@ class RuntimeEvidenceAugmenter:
                 del edges[edge_id]
 
         for event in events:
-            source = self._find_node(nodes.values(), event.source_file, event.source_symbol)
-            if source is None:
-                raise ValueError(f"runtime event source is absent from graph: {event.source_file}:{event.source_symbol}")
             ref = self._evidence_ref(event)
             evidence[ref.evidence_id] = ref
+            source = self._runtime_symbol(
+                nodes,
+                edges,
+                event.source_file,
+                event.source_symbol,
+                ref,
+                role="source",
+            )
             runtime = runtime_nodes[event.test_id]
-            test = test_nodes.get(event.test_id)
+            test = self._test_for_runtime(nodes, edges, runtime)
 
             if event.kind == "traceback_frame":
                 self._add_edge(edges, source, runtime, "produces", ref)
@@ -112,7 +126,7 @@ class RuntimeEvidenceAugmenter:
                     raise ValueError(f"failing test node is absent: {event.test_id}")
                 self._add_edge(edges, test, source, "executes", ref)
             elif event.kind == "call":
-                target = self._required_target(nodes, event)
+                target = self._required_target(nodes, edges, event, ref)
                 self._add_edge(edges, source, target, "runtime_calls", ref)
             elif event.kind in {"read", "write"}:
                 target = self._artifact_target(nodes, source, event)
@@ -149,6 +163,22 @@ class RuntimeEvidenceAugmenter:
         )
 
     @staticmethod
+    def _test_for_runtime(
+        nodes: dict[str, RepositoryNode],
+        edges: dict[str, RepositoryEdge],
+        runtime: RepositoryNode,
+    ) -> RepositoryNode | None:
+        matches = tuple(
+            nodes[edge.source]
+            for edge in edges.values()
+            if edge.relation == "fails_in"
+            and edge.target == runtime.node_id
+            and edge.source in nodes
+            and nodes[edge.source].kind == "test"
+        )
+        return matches[0] if len(matches) == 1 else None
+
+    @staticmethod
     def _find_node(
         nodes: Iterable[RepositoryNode],
         file_path: str,
@@ -165,17 +195,83 @@ class RuntimeEvidenceAugmenter:
                 return symbolic
         return next(iter(candidates), None)
 
+    def _runtime_symbol(
+        self,
+        nodes: dict[str, RepositoryNode],
+        edges: dict[str, RepositoryEdge],
+        file_path: str,
+        symbol: str | None,
+        evidence: EvidenceRef,
+        *,
+        role: str,
+    ) -> RepositoryNode:
+        node = self._find_node(nodes.values(), file_path, symbol)
+        if node is not None:
+            return node
+        file_node = next(
+            (
+                candidate
+                for candidate in nodes.values()
+                if candidate.kind == "file"
+                and candidate.file_path == file_path
+            ),
+            None,
+        )
+        if file_node is None:
+            if _is_test_path(file_path):
+                node_id = "runtime_test_support:" + hashlib.sha256(
+                    f"{file_path}\0{symbol}".encode()
+                ).hexdigest()[:16]
+                node = RepositoryNode(
+                    node_id,
+                    "runtime_test_support",
+                    next(iter(nodes.values())).repository,
+                    file_path,
+                    symbol,
+                    {"observed_at_runtime": True, "source_unavailable": True},
+                    (evidence.evidence_id,),
+                )
+                nodes[node_id] = node
+                return node
+            raise ValueError(
+                f"runtime event {role} is absent from graph: "
+                f"{file_path}:{symbol}"
+            )
+        if symbol is None:
+            return file_node
+        node_id = "runtime_symbol:" + hashlib.sha256(
+            f"{file_path}\0{symbol}".encode()
+        ).hexdigest()[:16]
+        node = RepositoryNode(
+            node_id,
+            "runtime_symbol",
+            file_node.repository,
+            file_path,
+            symbol,
+            {"observed_at_runtime": True},
+            (evidence.evidence_id,),
+        )
+        nodes[node_id] = node
+        self._add_edge(edges, file_node, node, "contains", evidence)
+        return node
+
     def _required_target(
         self,
         nodes: dict[str, RepositoryNode],
+        edges: dict[str, RepositoryEdge],
         event: RuntimeEvent,
+        evidence: EvidenceRef,
     ) -> RepositoryNode:
         if event.target_file is None:
             raise ValueError(f"{event.kind} event requires target_file")
-        target = self._find_node(nodes.values(), event.target_file, event.target_symbol)
-        if target is None:
-            raise ValueError(f"runtime event target is absent from graph: {event.target_file}:{event.target_symbol}")
-        return target
+        return self._runtime_symbol(
+            nodes,
+            edges,
+            event.target_file,
+            event.target_symbol,
+            evidence,
+            role="target",
+        )
 
     def _artifact_target(
         self,

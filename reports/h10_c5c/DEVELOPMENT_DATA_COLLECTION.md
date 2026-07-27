@@ -113,6 +113,15 @@ Run `30250367292` completed 29 of 30 incidents. Before scoring,
 remaining fail-closed incident, `bugsinpy-pandas-35`, to the incident-level
 availability exclusions and repeated the same balanced SHA256 selection.
 
+Run `30252520510` completed all 30 incidents and passed all 23 readiness
+checks. Development scoring emitted no metrics because the runtime graph
+augmenter could not map a registered pytest node ID to the corresponding AST
+test node. Before retrying development scoring,
+`H10_C5C_DEVELOPMENT_SCORING_INFRASTRUCTURE_AMENDMENT_007.json` locked the
+permitted graph-mapping correction and explicitly prohibited changes to
+retrieval scores, contract inference, global optimization, abstention,
+development gates and the scientific endpoint.
+
 An incident is marked `BUG_REPRODUCED_WITH_TRACE` only when its registered test
 fails and the event stream contains both a project executed slice and a
 project traceback frame. The development scorer rejects any other status.

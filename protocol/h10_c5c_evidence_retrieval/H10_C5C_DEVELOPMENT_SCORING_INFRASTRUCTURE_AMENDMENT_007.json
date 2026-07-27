@@ -1,0 +1,35 @@
+{
+  "amendment_id": "h10-c5c-development-scoring-infrastructure-amendment-007",
+  "applies_to": "h10-c5c-bugsinpy-development-v1",
+  "created_after_runtime_attempt": 30252520510,
+  "created_before_successful_development_scoring": true,
+  "development_metrics_inspected": false,
+  "failure": {
+    "exception": "ValueError: failing test node is absent: tests/test_additional_responses_router.py::test_openapi_schema",
+    "stage": "DEVELOPMENT_SCORING_IMPORT",
+    "type": "RUNTIME_EVIDENCE_GRAPH_MAPPING"
+  },
+  "held_out_created": false,
+  "held_out_scored": false,
+  "permitted_changes": [
+    "Resolve a registered pytest node ID to an AST test node only when file path and symbol agree.",
+    "Represent a runtime-observed non-AST symbol only when its source file is already registered in the repository graph.",
+    "Represent an observed exposing-test support path as a non-repairable runtime node when the overlay file is absent from the packaged buggy snapshot.",
+    "Retain fail-closed rejection for runtime events whose non-test source or target file is absent from the repository graph."
+  ],
+  "prohibited_changes": [
+    "candidate retrieval scores",
+    "contract inference",
+    "global optimization",
+    "abstention calibration",
+    "development gates",
+    "scientific endpoint",
+    "held-out data"
+  ],
+  "readiness_report_sha256": "60c7c8cba808aa8468a038f3768bf8e7bcb5b9280de5112f727c3b2023ca4433",
+  "runtime_evidence_report_sha256": "53d7460ec6e00605ac4257abbda88bc3b8168a884e08831b29c1830361ed7435",
+  "runtime_manifest_sha256": "2db9ab1402fad106201329f091d2d355d5a539b49ec0033f204f04af7bc40824",
+  "runtime_readiness_status": "H10_C5C_DEVELOPMENT_READINESS_PASS",
+  "scientific_result": "NOT_EVALUATED",
+  "status": "LOCKED_BEFORE_SCORING_RETRY"
+}
