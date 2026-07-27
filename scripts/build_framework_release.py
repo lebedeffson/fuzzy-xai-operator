@@ -90,6 +90,7 @@ ALLOWED_PREFIXES = (
     "protocol/h9_e2e_v2/",
     "reports/h10_c5b/",
     "reports/h10_c5c/",
+    "reports/h10_c5c_posthoc/",
     "reports/h9_e2e_v2/",
     "reports/h10_c6_noise/",
     "reports/h10_c5_pilot/",

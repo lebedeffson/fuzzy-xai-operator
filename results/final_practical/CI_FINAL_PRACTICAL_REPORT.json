@@ -16,6 +16,14 @@
   "h10_c6_n": "H10_C6_N_SUPPORTED",
   "mlflow_integration": "MLFLOW_INTEGRATION_PASS",
   "operator_manifest_addendum": "PASS",
+  "posthoc_oracle": {
+    "artifact_id": 8652935390,
+    "artifact_zip_download_sha256": "b1968e4154e19535381f05f2b6735432c373fec95a5391c4d7251bc7352d161c",
+    "job_status": "PASS",
+    "run_id": 30264074879,
+    "scientific_result": "NOT_EVALUATED",
+    "status": "POSTHOC_DECOMPOSITION_COMPLETE"
+  },
   "parent_result_immutability": "PASS",
   "run_id": 30264795977,
   "workflow": ".github/workflows/h10-c5c-development.yml"
