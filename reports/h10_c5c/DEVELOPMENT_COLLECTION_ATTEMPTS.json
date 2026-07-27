@@ -108,6 +108,26 @@
       },
       "scientific_result": "NOT_EVALUATED",
       "status": "INVALIDATED_RUNTIME_ATTEMPT_PROTOCOL_CONFLICT"
+    },
+    {
+      "complete_incidents": 17,
+      "development_scored": false,
+      "failure": "Thirteen deterministic same-repository replacements failed the locked fail-closed dependency setup. Each of seven repositories now had at least two distinct runtime-unavailable incidents, so repository-level availability handling was required before scoring.",
+      "failure_stage": "DEVELOPMENT_READINESS",
+      "head_commit": "19aec5ace04150c2c541dcaaea9f034cbe7720b2",
+      "held_out_created": false,
+      "held_out_scored": false,
+      "readiness_checks_passed": 18,
+      "readiness_checks_total": 23,
+      "run_id": 30225417941,
+      "runtime_collection_completed": true,
+      "runtime_report_sha256": "a0b9a76e5d48e52bf44b48c88ec277bfd9c879b7e46f87a8cf24410a1790fb4f",
+      "runtime_status_counts": {
+        "BUG_REPRODUCED_WITH_TRACE": 17,
+        "ENVIRONMENT_SETUP_FAILED": 13
+      },
+      "scientific_result": "NOT_EVALUATED",
+      "status": "RUNTIME_INCOMPLETE_SCORING_BLOCKED"
     }
   ],
   "scientific_result": "NOT_EVALUATED"

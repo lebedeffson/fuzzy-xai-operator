@@ -1,0 +1,86 @@
+{
+  "amendment_id": "h10-c5c-bugsinpy-development-v1-amendment-005",
+  "applies_to": "h10-c5c-bugsinpy-development-v1",
+  "created_after_runtime_attempt": 30225417941,
+  "created_before_development_scoring": true,
+  "gold_or_method_results_inspected": false,
+  "repository_exclusion_rule": {
+    "minimum_distinct_failed_incidents": 2,
+    "reason": "The repository is runtime-unavailable when at least two deterministic candidates fail the locked fail-closed runtime gate before method scoring.",
+    "rerun_balanced_round_robin_after_exclusions": true
+  },
+  "runtime_unavailable_repositories": [
+    {
+      "failed_incidents": [
+        "bugsinpy-ansible-10",
+        "bugsinpy-ansible-14",
+        "bugsinpy-ansible-4",
+        "bugsinpy-ansible-6"
+      ],
+      "repository": "ansible/ansible"
+    },
+    {
+      "failed_incidents": [
+        "bugsinpy-keras-3",
+        "bugsinpy-keras-37",
+        "bugsinpy-keras-39",
+        "bugsinpy-keras-7"
+      ],
+      "repository": "keras-team/keras"
+    },
+    {
+      "failed_incidents": [
+        "bugsinpy-sanic-1",
+        "bugsinpy-sanic-3",
+        "bugsinpy-sanic-4",
+        "bugsinpy-sanic-5"
+      ],
+      "repository": "huge-success/sanic"
+    },
+    {
+      "failed_incidents": [
+        "bugsinpy-tqdm-1",
+        "bugsinpy-tqdm-3",
+        "bugsinpy-tqdm-5",
+        "bugsinpy-tqdm-7"
+      ],
+      "repository": "tqdm/tqdm"
+    },
+    {
+      "failed_incidents": [
+        "bugsinpy-spacy-6",
+        "bugsinpy-spacy-8"
+      ],
+      "repository": "explosion/spaCy"
+    },
+    {
+      "failed_incidents": [
+        "bugsinpy-luigi-6",
+        "bugsinpy-luigi-24",
+        "bugsinpy-luigi-31",
+        "bugsinpy-luigi-33"
+      ],
+      "repository": "spotify/luigi"
+    },
+    {
+      "failed_incidents": [
+        "bugsinpy-scrapy-13",
+        "bugsinpy-scrapy-22",
+        "bugsinpy-scrapy-33",
+        "bugsinpy-scrapy-39"
+      ],
+      "repository": "scrapy/scrapy"
+    }
+  ],
+  "scientific_endpoint_changed": false,
+  "selection_count_changed": false,
+  "selection_rule_changed": true,
+  "source_runtime_report_sha256": "a0b9a76e5d48e52bf44b48c88ec277bfd9c879b7e46f87a8cf24410a1790fb4f",
+  "status": "LOCKED_BEFORE_REPLACEMENT_MATERIALIZATION",
+  "supersedes": "h10-c5c-bugsinpy-development-v1-amendment-004",
+  "unavailable_incidents": [
+    "bugsinpy-black-3",
+    "bugsinpy-pandas-16",
+    "bugsinpy-PySnooper-1"
+  ]
+}

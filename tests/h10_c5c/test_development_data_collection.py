@@ -31,6 +31,9 @@ AMENDMENT_PATH = Path(
 LOCKED_BUGSINPY_COMMIT = json.loads(
     (ROOT / COLLECTION_LOCK_PATH).read_text(encoding="utf-8")
 )["benchmark"]["commit"]
+RUNTIME_AVAILABILITY = json.loads(
+    (ROOT / RUNTIME_AVAILABILITY_AMENDMENT_PATH).read_text(encoding="utf-8")
+)
 
 
 def _run(*arguments: str, cwd: Path) -> str:
@@ -73,6 +76,7 @@ def _root_with_locked_benchmark(tmp_path: Path, commit: str) -> Path:
             data["benchmark"]["commit"] = commit
         if relative == RUNTIME_AVAILABILITY_AMENDMENT_PATH:
             data["unavailable_incidents"] = []
+            data["runtime_unavailable_repositories"] = []
         target.write_text(
             json.dumps(data, indent=2, sort_keys=True) + "\n",
             encoding="utf-8",
@@ -883,9 +887,19 @@ def test_development_readiness_requires_complete_locked_inputs(tmp_path: Path) -
                 "collection_id": "h10-c5c-bugsinpy-development-v1",
                 "bugsinpy_commit": LOCKED_BUGSINPY_COMMIT,
                 "runtime_availability_amendment_id": (
-                    "h10-c5c-bugsinpy-development-v1-amendment-004"
+                    "h10-c5c-bugsinpy-development-v1-amendment-005"
                 ),
-                "replacement_ledger": [],
+                    "availability_exclusions": {
+                        "incident_ids": sorted(
+                            RUNTIME_AVAILABILITY["unavailable_incidents"]
+                        ),
+                        "repositories": sorted(
+                            row["repository"]
+                            for row in RUNTIME_AVAILABILITY[
+                                "runtime_unavailable_repositories"
+                            ]
+                        ),
+                    },
                 "incidents": source_rows,
             }
         ),

@@ -25,7 +25,7 @@ RUNTIME_COMPATIBILITY_AMENDMENT_PATH = Path(
 )
 RUNTIME_AVAILABILITY_AMENDMENT_PATH = Path(
     "protocol/h10_c5c_evidence_retrieval/"
-    "H10_C5C_RUNTIME_AVAILABILITY_AMENDMENT_004.json"
+    "H10_C5C_RUNTIME_REPOSITORY_AVAILABILITY_AMENDMENT_005.json"
 )
 
 _ASSIGNMENT = re.compile(r"^([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(.*)$")
@@ -715,25 +715,37 @@ def prepare_bugsinpy_development(
     if not isinstance(selection, dict):
         raise TypeError("H10-C5c selection lock must be an object")
     candidates = discover_bugsinpy_candidates(bugsinpy_root, root)
+    unavailable_rows = runtime_availability.get("unavailable_incidents", [])
+    if not isinstance(unavailable_rows, list):
+        raise TypeError("H10-C5c unavailable incident registry must be a list")
+    unavailable_ids = {str(incident_id) for incident_id in unavailable_rows}
+    repository_rows = runtime_availability.get(
+        "runtime_unavailable_repositories",
+        [],
+    )
+    if not isinstance(repository_rows, list):
+        raise TypeError("H10-C5c unavailable repository registry must be a list")
+    unavailable_repositories = {
+        str(row.get("repository", ""))
+        for row in repository_rows
+        if isinstance(row, dict)
+    }
+    available_candidates = tuple(
+        candidate
+        for candidate in candidates
+        if candidate.incident_id not in unavailable_ids
+        and candidate.repository not in unavailable_repositories
+    )
     selected = select_balanced_development(
-        candidates,
+        available_candidates,
         target_incidents=int(selection["target_incidents"]),
         minimum_repositories=int(selection["minimum_repositories"]),
         maximum_per_repository=int(selection["maximum_incidents_per_repository"]),
     )
-    unavailable_rows = runtime_availability.get("unavailable_incidents", [])
-    if not isinstance(unavailable_rows, list):
-        raise TypeError("H10-C5c unavailable incident registry must be a list")
-    unavailable_ids = {
-        str(row.get("incident_id", ""))
-        for row in unavailable_rows
-        if isinstance(row, dict)
+    availability_exclusions = {
+        "incident_ids": sorted(unavailable_ids),
+        "repositories": sorted(unavailable_repositories),
     }
-    selected, replacement_ledger = apply_runtime_availability_replacements(
-        candidates,
-        selected,
-        unavailable_ids,
-    )
     output_root.mkdir(parents=True, exist_ok=True)
     manifest_rows = []
     command_rows = {}
@@ -772,7 +784,7 @@ def prepare_bugsinpy_development(
             bugsinpy_commit.encode()
         ).hexdigest(),
         "runtime_availability_amendment_id": runtime_availability["amendment_id"],
-        "replacement_ledger": replacement_ledger,
+        "availability_exclusions": availability_exclusions,
         "incidents": source_rows,
     }
     source_registry_path.write_text(
@@ -787,7 +799,7 @@ def prepare_bugsinpy_development(
         "selected_incidents": len(selected),
         "selected_repositories": len({item.repository for item in selected}),
         "runtime_availability_amendment_id": runtime_availability["amendment_id"],
-        "replacement_ledger": replacement_ledger,
+        "availability_exclusions": availability_exclusions,
         "selected": [
             {
                 "project": item.project,

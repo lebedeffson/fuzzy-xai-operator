@@ -316,22 +316,28 @@ def verify_h10_c5c_development_readiness(
         raise TypeError("H10-C5c benchmark lock is invalid")
     locked_bugsinpy_commit = str(benchmark.get("commit", ""))
     unavailable_ids = {
-        str(row.get("incident_id", ""))
-        for row in runtime_availability.get("unavailable_incidents", [])
+        str(incident_id)
+        for incident_id in runtime_availability.get("unavailable_incidents", [])
+    }
+    unavailable_repositories = {
+        str(row.get("repository", ""))
+        for row in runtime_availability.get(
+            "runtime_unavailable_repositories",
+            [],
+        )
         if isinstance(row, dict)
     }
-    replacement_ledger = sources.get("replacement_ledger", [])
+    availability_exclusions = sources.get("availability_exclusions", {})
     availability_valid = (
         sources.get("runtime_availability_amendment_id")
         == runtime_availability.get("amendment_id")
         and not (set(identifiers) & unavailable_ids)
-        and isinstance(replacement_ledger, list)
-        and all(
-            isinstance(row, dict)
-            and str(row.get("original_incident_id", "")) in unavailable_ids
-            and str(row.get("replacement_incident_id", "")) in identifiers
-            for row in replacement_ledger
-        )
+        and not (set(repositories) & unavailable_repositories)
+        and isinstance(availability_exclusions, dict)
+        and availability_exclusions.get("incident_ids")
+        == sorted(unavailable_ids)
+        and availability_exclusions.get("repositories")
+        == sorted(unavailable_repositories)
     )
     checks = {
         "collection_id_matches": (

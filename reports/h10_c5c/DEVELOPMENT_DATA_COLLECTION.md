@@ -97,6 +97,17 @@ not inspected. The target count, repository composition, endpoint, method and
 scientific gates remain unchanged. The source registry and readiness report
 bind the replacement ledger to this amendment.
 
+Run `30225417941` showed that 13 of the deterministic replacements remained
+unavailable, all within seven repositories that had already produced a second
+independent fail-closed runtime failure. Before development scoring,
+`H10_C5C_RUNTIME_REPOSITORY_AVAILABILITY_AMENDMENT_005.json` therefore
+superseded amendment 004. It excludes only repositories with at least two
+distinct runtime-unavailable candidates, excludes the three remaining
+incident-specific failures, and reruns the original balanced SHA256
+round-robin. The resulting selection has 30 incidents from eight repositories
+with no more than four per repository. Readiness binds the exact exclusions
+and amendment ID.
+
 An incident is marked `BUG_REPRODUCED_WITH_TRACE` only when its registered test
 fails and the event stream contains both a project executed slice and a
 project traceback frame. The development scorer rejects any other status.
