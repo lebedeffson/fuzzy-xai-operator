@@ -41,6 +41,7 @@ on:
           - validate
           - collect-development
           - posthoc-final
+          - final-practical
       runner_label:
         description: GitHub-hosted or self-hosted runner label
         required: true
@@ -442,7 +443,9 @@ jobs:
           retention-days: 30
 
   full-regression:
-    if: github.event_name == 'workflow_dispatch' && inputs.operation == 'posthoc-final'
+    if: >-
+      github.event_name == 'workflow_dispatch' &&
+      (inputs.operation == 'posthoc-final' || inputs.operation == 'final-practical')
     needs: focused-contracts
     runs-on: ubuntu-latest
     timeout-minutes: 90
@@ -462,3 +465,81 @@ jobs:
           python -m pip install -e ".[dev]" "shap==0.51.0"
       - name: Run full regression
         run: make full-regression H10_C3_PYTHON=python
+
+  final-practical-evidence:
+    if: github.event_name == 'workflow_dispatch' && inputs.operation == 'final-practical'
+    needs: focused-contracts
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Install final practical dependencies
+        run: python -m pip install -e ".[dev,mlflow]"
+      - name: Verify focused implementations
+        run: |
+          make h10-c6-n-test H10_C3_PYTHON=python
+          make h10-c5-pilot-test H10_C3_PYTHON=python
+          make mlflow-integration-test H10_C3_PYTHON=python
+      - name: Run prospective noise experiment
+        run: make h10-c6-n-run H10_C3_PYTHON=python
+      - name: Run isolated local MLflow integration
+        run: make mlflow-integration-run H10_C3_PYTHON=python
+      - name: Reproduce blocked recovery-pilot selection
+        run: |
+          make h10-c5-pilot-run H10_C3_PYTHON=python
+          git diff --exit-code -- \
+            results/h10_c5_pilot \
+            reports/h10_c5_pilot
+      - name: Verify parent immutability and claims
+        run: |
+          make final-practical-parent-immutability H10_C3_PYTHON=python
+          python scripts/ch4_revision/claim_lint.py --root .
+          git diff --exit-code -- \
+            reports/final_practical \
+            reports/chapter_revision/CLAIM_LINT.json
+      - name: Record environment
+        run: |
+          mkdir -p results/final_practical
+          python - <<'PY'
+          import json
+          import platform
+          import sys
+          from pathlib import Path
+
+          import mlflow
+          import numpy
+          import pandas
+          import sklearn
+
+          value = {
+              "architecture": platform.machine(),
+              "kernel": platform.release(),
+              "mlflow": mlflow.__version__,
+              "numpy": numpy.__version__,
+              "os": platform.platform(),
+              "pandas": pandas.__version__,
+              "python": sys.version,
+              "scikit_learn": sklearn.__version__,
+          }
+          Path("results/final_practical/CI_ENVIRONMENT.json").write_text(
+              json.dumps(value, indent=2, sort_keys=True) + "\n",
+              encoding="utf-8",
+          )
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ch4-final-practical-evidence-${{ github.run_id }}
+          path: |
+            results/h10_c6_noise
+            reports/h10_c6_noise
+            results/integrations
+            reports/integrations
+            results/final_practical
+          if-no-files-found: error
+          retention-days: 30
