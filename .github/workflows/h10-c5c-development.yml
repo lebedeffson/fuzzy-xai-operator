@@ -454,7 +454,11 @@ jobs:
         with:
           python-version: "3.11"
           cache: pip
-      - name: Install project
-        run: python -m pip install -e ".[dev]"
+      - name: Install full regression dependencies
+        run: |
+          python -m pip install \
+            --index-url https://download.pytorch.org/whl/cpu \
+            "torch==2.11.0"
+          python -m pip install -e ".[dev]" "shap==0.51.0"
       - name: Run full regression
         run: make full-regression H10_C3_PYTHON=python
