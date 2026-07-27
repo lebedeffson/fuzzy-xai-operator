@@ -887,7 +887,7 @@ def test_development_readiness_requires_complete_locked_inputs(tmp_path: Path) -
                 "collection_id": "h10-c5c-bugsinpy-development-v1",
                 "bugsinpy_commit": LOCKED_BUGSINPY_COMMIT,
                 "runtime_availability_amendment_id": (
-                    "h10-c5c-bugsinpy-development-v1-amendment-005"
+                    "h10-c5c-bugsinpy-development-v1-amendment-006"
                 ),
                     "availability_exclusions": {
                         "incident_ids": sorted(

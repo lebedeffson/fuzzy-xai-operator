@@ -1,0 +1,46 @@
+{
+  "amendment_id": "h10-c5c-bugsinpy-development-v1-amendment-006",
+  "applies_to": "h10-c5c-bugsinpy-development-v1",
+  "created_after_runtime_attempt": 30250367292,
+  "created_before_development_scoring": true,
+  "gold_or_method_results_inspected": false,
+  "repository_exclusion_rule": {
+    "minimum_distinct_failed_incidents": 2,
+    "rerun_balanced_round_robin_after_exclusions": true
+  },
+  "runtime_unavailable_repositories": [
+    {
+      "repository": "ansible/ansible"
+    },
+    {
+      "repository": "keras-team/keras"
+    },
+    {
+      "repository": "huge-success/sanic"
+    },
+    {
+      "repository": "tqdm/tqdm"
+    },
+    {
+      "repository": "explosion/spaCy"
+    },
+    {
+      "repository": "spotify/luigi"
+    },
+    {
+      "repository": "scrapy/scrapy"
+    }
+  ],
+  "scientific_endpoint_changed": false,
+  "selection_count_changed": false,
+  "selection_rule_changed": true,
+  "source_runtime_report_sha256": "f25ad0be882f3d0938ec8a5819dbfaf4873a4048259ba74d9c918119738cbd83",
+  "status": "LOCKED_BEFORE_REPLACEMENT_MATERIALIZATION",
+  "supersedes": "h10-c5c-bugsinpy-development-v1-amendment-005",
+  "unavailable_incidents": [
+    "bugsinpy-black-3",
+    "bugsinpy-pandas-16",
+    "bugsinpy-PySnooper-1",
+    "bugsinpy-pandas-35"
+  ]
+}

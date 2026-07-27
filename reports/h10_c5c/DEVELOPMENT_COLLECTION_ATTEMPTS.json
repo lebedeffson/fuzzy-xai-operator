@@ -128,6 +128,26 @@
       },
       "scientific_result": "NOT_EVALUATED",
       "status": "RUNTIME_INCOMPLETE_SCORING_BLOCKED"
+    },
+    {
+      "complete_incidents": 29,
+      "development_scored": false,
+      "failure": "One automatically selected incident, bugsinpy-pandas-35, failed the locked fail-closed requirements stage. No method scoring occurred.",
+      "failure_stage": "DEVELOPMENT_READINESS",
+      "head_commit": "42dc7eb5ed1ccfcb3fcc69c083f26da8cbe10976",
+      "held_out_created": false,
+      "held_out_scored": false,
+      "readiness_checks_passed": 18,
+      "readiness_checks_total": 23,
+      "run_id": 30250367292,
+      "runtime_collection_completed": true,
+      "runtime_report_sha256": "f25ad0be882f3d0938ec8a5819dbfaf4873a4048259ba74d9c918119738cbd83",
+      "runtime_status_counts": {
+        "BUG_REPRODUCED_WITH_TRACE": 29,
+        "ENVIRONMENT_SETUP_FAILED": 1
+      },
+      "scientific_result": "NOT_EVALUATED",
+      "status": "RUNTIME_INCOMPLETE_SCORING_BLOCKED"
     }
   ],
   "scientific_result": "NOT_EVALUATED"

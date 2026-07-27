@@ -108,6 +108,11 @@ round-robin. The resulting selection has 30 incidents from eight repositories
 with no more than four per repository. Readiness binds the exact exclusions
 and amendment ID.
 
+Run `30250367292` completed 29 of 30 incidents. Before scoring,
+`H10_C5C_RUNTIME_FINAL_AVAILABILITY_AMENDMENT_006.json` added the single
+remaining fail-closed incident, `bugsinpy-pandas-35`, to the incident-level
+availability exclusions and repeated the same balanced SHA256 selection.
+
 An incident is marked `BUG_REPRODUCED_WITH_TRACE` only when its registered test
 fails and the event stream contains both a project executed slice and a
 project traceback frame. The development scorer rejects any other status.
