@@ -1,5 +1,46 @@
 # FuzzyXAI Framework Release Status
 
+## Chapter 4 Final Practical Closure
+
+- Date: `2026-07-27`
+- Branch: `feat/ch4-final-practical-closure`
+- Evidence implementation commit: `acc95bd`
+- CI run: `30264795977`
+- Full regression: `712 passed, 7 skipped`
+- Parent-result immutability: `PASS`, 114 files
+- Claim lint: `PASS`
+- Chapter/DOCX modified: no
+
+H10-C6-N completed on 1,000 deterministically selected UCI Bank Marketing
+objects with 3,000 registered perturbation comparisons. The median diagnostic
+cut Jaccard at sigma 0.05 was `1.0`, obligation-coverage stability was `1.0`,
+full recertification was `1.0`, and no new critical violation was created.
+The status is `H10_C6_N_SUPPORTED` only for cut stability under registered
+numeric feature noise with one fixed structural defect. It is not a general
+predictor, industrial, or human-factor robustness claim.
+
+The isolated MLflow 2.22.5 demonstration registered and loaded a local
+scikit-learn model, transferred run ID, model version, parameters, tags and
+artifact URI, built run-to-model-to-explanation provenance, and passed route
+verification. Its status is `MLFLOW_INTEGRATION_PASS`; it is an engineering
+integration, not a product comparison.
+
+H10-C5-PILOT ended as
+`H10_C5_PILOT_BLOCKED_NO_ELIGIBLE_INCIDENTS`. No published H10-C5/H10-C5b
+incident contained all preregistered executable-command, operation-argument,
+and digest-pinned-container inputs. No manual replacement or Gold-assisted
+execution was performed.
+
+H10-C5c remains `H10_C5C_DEVELOPMENT_GATE_FAIL` with scientific result
+`NOT_EVALUATED`; no held-out set was created or scored. The locked post-hoc
+oracle decomposition on disclosed development Gold completed only as an error
+analysis and indicated `RETRIEVAL_CONTRACT_INTERACTION`. Its values are upper
+bounds, not method performance.
+
+H9-E2E-v2 was not recalculated. The chapter-ready scope patch limits it to the
+registered local microbenchmark pipelines and explicitly excludes industrial
+latency, arbitrary hardware, external-explainer time, and human work time.
+
 ## H10-C5c Prospective Evidence Retrieval
 
 - Protocol: `h10-c5c-evidence-retrieval-v1`

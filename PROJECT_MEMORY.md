@@ -983,3 +983,49 @@ and removes local checkout paths from registries. GitHub Actions run
 `30219406865` passed on Python 3.11 and 3.12. The local full regression passed
 with 692 tests and 5 skips. Real development runtime collection remains
 unexecuted, so the scientific status remains `NOT_EVALUATED`.
+
+## FXAI-CH4-FINAL-PRACTICAL-CLOSURE
+
+- Date: 2026-07-27
+- Branch: `feat/ch4-final-practical-closure`
+- Evidence implementation commit: `acc95bd`
+- Final practical CI: `30264795977`
+- Full regression: `712 passed, 7 skipped`
+- Chapter/DOCX modified: no
+
+H10-C6-N used the locked UCI Bank Marketing dataset archive, a deterministic
+train/test split, 1,000 test object IDs chosen before scoring, train-only
+feature scales, and fixed noise levels 0.01, 0.05, and 0.10. All 3,000
+perturbed routes completed. At sigma 0.05 the median cut Jaccard,
+obligation-coverage stability, and full-recertification rate were each `1.0`;
+new critical violations were `0`. The status is `H10_C6_N_SUPPORTED` within
+the registered fixed-structural-defect feature-noise scope only.
+
+The MLflow engineering example uses an isolated local file-backed MLflow
+2.22.5 tracking store and Model Registry. It records a real run, parameters,
+tags, registered model version, model artifact, and run-to-model-to-explanation
+provenance edge. Route verification passed. This demonstrates reproducible
+metadata integration and does not compare FuzzyXAI with MLflow as products.
+
+H10-C5-PILOT was selected without Gold from the published H10-C5/H10-C5b
+operational fields. Zero incidents had all strict execution prerequisites, so
+the final status is `H10_C5_PILOT_BLOCKED_NO_ELIGIBLE_INCIDENTS`. No test,
+repair, or recertification result was fabricated.
+
+H10-C5c remains a development-gate stop with scientific result
+`NOT_EVALUATED`. A locked post-hoc oracle decomposition used disclosed
+development Gold and produced diagnostic upper bounds: Candidate-only joint
+Hit@3 `0.1333`, Contract-only `0.1000`, and Candidate+Contract `0.1667`.
+The interpretation is `RETRIEVAL_CONTRACT_INTERACTION`; no held-out data were
+created or scored and these numbers are not method performance.
+
+The H9-E2E-v2 scope patch preserves the original H9-E2E negative result and
+the prospective H9-E2E-v2 positive microbenchmark result. It forbids
+generalization to industrial latency, arbitrary hardware, external-explainer
+time, or human work time.
+
+Parent immutability verified 114 published files across H10-C3, H10-C4,
+H10-C5, H10-C5b, H10-C5c, H10-C6, H9-E2E, H9-E2E-v2 and multimodal routes.
+The main operator manifest retained SHA256
+`479fa55460426a1726f57a5ed5f745b0ad2e872eeefb21470dd2e3e865133949`;
+the three new traceability entries are isolated in a hash-bound addendum.
