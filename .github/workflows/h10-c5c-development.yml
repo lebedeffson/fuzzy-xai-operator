@@ -20,24 +20,27 @@ on:
       - "framework/fuzzyxai/fuzzyxai/experiments/h10_c5c_data.py"
       - "framework/fuzzyxai/fuzzyxai/experiments/h10_c5c_runtime.py"
       - "framework/fuzzyxai/fuzzyxai/experiments/h10_c5c_readiness.py"
+      - "framework/fuzzyxai/fuzzyxai/experiments/h10_c5c_posthoc.py"
       - "protocol/h10_c5c_evidence_retrieval/**"
       - "scripts/ch4_revision/analyze_h10_c5b_errors.py"
       - "scripts/ch4_revision/prepare_h10_c5c_bugsinpy.py"
       - "scripts/ch4_revision/collect_h10_c5c_runtime.py"
       - "scripts/ch4_revision/verify_h10_c5c_development_readiness.py"
       - "scripts/ch4_revision/run_h10_c5c_development.py"
+      - "scripts/ch4_revision/run_h10_c5c_posthoc_oracles.py"
       - "tests/h10_c5c/**"
       - "Makefile"
   workflow_dispatch:
     inputs:
       operation:
-        description: Validation only or real BugsInPy development collection
+        description: Validation, development collection, or final post-hoc analysis
         required: true
         default: validate
         type: choice
         options:
           - validate
           - collect-development
+          - posthoc-final
       runner_label:
         description: GitHub-hosted or self-hosted runner label
         required: true
@@ -70,6 +73,7 @@ on:
         type: boolean
 
 permissions:
+  actions: read
   contents: read
 
 concurrency:
@@ -374,3 +378,83 @@ jobs:
           assert status["held_out_created"] is False
           assert status["held_out_scored"] is False
           PY
+
+  posthoc-oracle-decomposition:
+    if: github.event_name == 'workflow_dispatch' && inputs.operation == 'posthoc-final'
+    needs: focused-contracts
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Install project
+        run: python -m pip install -e ".[dev]"
+      - name: Download locked development evidence
+        uses: actions/download-artifact@v4
+        with:
+          name: h10-c5c-development-evidence-30252520510
+          path: .h10-c5c-evidence
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: "30252520510"
+      - name: Verify and extract development evidence
+        run: |
+          cd .h10-c5c-evidence
+          sha256sum -c h10-c5c-development-evidence.tgz.sha256
+          test "$(sha256sum h10-c5c-development-evidence.tgz | cut -d' ' -f1)" = \
+            "7a438d3a233c7804228bd922b73ef32672615a991617e170b43d7b1d37ff391e"
+          mkdir extracted
+          tar -xzf h10-c5c-development-evidence.tgz -C extracted
+      - name: Run locked development-only oracle decomposition
+        run: |
+          make h10-c5c-posthoc-oracles \
+            H10_C3_PYTHON=python \
+            H10_C5C_DEVELOPMENT_MANIFEST="$PWD/.h10-c5c-evidence/extracted/runtime/H10_C5C_DEVELOPMENT_RUNTIME_ENRICHED.jsonl" \
+            H10_C5C_POSTHOC_OUTPUT="$PWD/.h10-c5c-posthoc-results"
+      - name: Enforce non-confirmatory boundary
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          value = json.loads(
+              Path(".h10-c5c-posthoc-results/ORACLE_DECOMPOSITION_SUMMARY.json")
+              .read_text(encoding="utf-8")
+          )
+          assert value["scientific_result"] == "NOT_EVALUATED"
+          assert value["scientific_claim_permitted"] is False
+          assert value["held_out_created"] is False
+          assert value["held_out_scored"] is False
+          assert value["incident_count"] == 30
+          PY
+          test ! -e results/h10_c5c/HELD_OUT_PER_INCIDENT.csv
+          test ! -e results/h10_c5c/H10_C5C_FINAL_STATUS.json
+          git diff --check
+      - uses: actions/upload-artifact@v4
+        with:
+          name: h10-c5c-posthoc-oracle-decomposition-${{ github.run_id }}
+          path: .h10-c5c-posthoc-results
+          if-no-files-found: error
+          retention-days: 30
+
+  full-regression:
+    if: github.event_name == 'workflow_dispatch' && inputs.operation == 'posthoc-final'
+    needs: focused-contracts
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Install project
+        run: python -m pip install -e ".[dev]"
+      - name: Run full regression
+        run: make full-regression H10_C3_PYTHON=python
