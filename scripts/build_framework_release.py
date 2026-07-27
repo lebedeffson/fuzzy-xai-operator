@@ -69,6 +69,7 @@ ALLOWED_EXACT = {
 }
 ALLOWED_PREFIXES = (
     "data/confirmatory/",
+    "data/h10_c6_noise/",
     "experiments/real_training_experiment/",
     "release_evidence/explanation_experience/",
     "release_evidence/chapter4_explanation_experience/",
@@ -88,9 +89,11 @@ ALLOWED_PREFIXES = (
     "reports/h10_c5b/",
     "reports/h10_c5c/",
     "reports/h9_e2e_v2/",
+    "reports/h10_c6_noise/",
     "results/h10_c5b/",
     "results/h10_c5c/",
     "results/h9_e2e_v2/",
+    "results/h10_c6_noise/",
     "reports/release/universal_model_integration_completion.md",
 )
 REQUIRED_PATHS = {

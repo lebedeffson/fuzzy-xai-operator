@@ -1,0 +1,105 @@
+{
+  "allowed_statuses": [
+    "H10_C6_N_SUPPORTED",
+    "H10_C6_N_NOT_SUPPORTED",
+    "H10_C6_N_BLOCKED"
+  ],
+  "categorical_and_binary_noise": "disabled",
+  "contract_registry_version": "diagnostic-schema-1.0",
+  "cost_model": "diagnostic default registered cost",
+  "dataset": "UCI Bank Marketing dataset 222, bank-additional-full",
+  "dataset_relative_path": "data/h10_c6_noise/bank_marketing_uci_222.zip",
+  "dataset_rows": 41188,
+  "dataset_sha256": "e0bf5f5de5b846e2f18e9d90606637267d46dfa260e0f17bb12e605db5efbeb4",
+  "empty_base_cut_is_evidence": false,
+  "explainer": "linear coefficient contribution in transformed feature space",
+  "explainer_version": "linear-coefficient-v1",
+  "feature_scales": {
+    "age": {
+      "maximum": 98.0,
+      "minimum": 17.0,
+      "standard_deviation": 10.446699042344353
+    },
+    "campaign": {
+      "maximum": 56.0,
+      "minimum": 1.0,
+      "standard_deviation": 2.7635190756053305
+    },
+    "cons.conf.idx": {
+      "maximum": -26.9,
+      "minimum": -50.8,
+      "standard_deviation": 4.638055954756685
+    },
+    "cons.price.idx": {
+      "maximum": 94.767,
+      "minimum": 92.201,
+      "standard_deviation": 0.5808169549450994
+    },
+    "duration": {
+      "maximum": 4199.0,
+      "minimum": 0.0,
+      "standard_deviation": 256.700630068399
+    },
+    "emp.var.rate": {
+      "maximum": 1.4,
+      "minimum": -3.4,
+      "standard_deviation": 1.5729796220467012
+    },
+    "euribor3m": {
+      "maximum": 5.045,
+      "minimum": 0.634,
+      "standard_deviation": 1.7325996620424422
+    },
+    "nr.employed": {
+      "maximum": 5228.1,
+      "minimum": 4963.6,
+      "standard_deviation": 72.06138337836188
+    },
+    "pdays": {
+      "maximum": 999.0,
+      "minimum": 0.0,
+      "standard_deviation": 188.05452436331504
+    },
+    "previous": {
+      "maximum": 6.0,
+      "minimum": 0.0,
+      "standard_deviation": 0.4976857475520229
+    }
+  },
+  "feature_scales_sha256": "b0e5b327de2be17d63fa8c7b76b62122d95bb1448218d8f93e857db1efbf8e8a",
+  "feature_scales_source": "training split only",
+  "human_or_industrial_claim_permitted": false,
+  "model": "scikit-learn LogisticRegression with train-only preprocessing",
+  "model_version": "bank-logistic-v1",
+  "noise_levels": [
+    0.01,
+    0.05,
+    0.1
+  ],
+  "noise_random_seed": 6101,
+  "numeric_columns": [
+    "age",
+    "duration",
+    "campaign",
+    "pdays",
+    "previous",
+    "emp.var.rate",
+    "cons.price.idx",
+    "cons.conf.idx",
+    "euribor3m",
+    "nr.employed"
+  ],
+  "object_count": 1000,
+  "object_ids_sha256": "2ab08ee0c83743a4de8b6cd8326cd9ce1bbb3fc7105bb264e828f987e8572b72",
+  "parent_h10_c6_modified": false,
+  "primary_endpoint": "median_jaccard_sigma_0.05",
+  "primary_threshold": 0.8,
+  "protocol_id": "h10-c6-n-feature-noise-v1",
+  "registered_defect_family": "MODEL_EXPLAINER_VERSION",
+  "scikit_learn_version": "1.7.2",
+  "selection_uses_outcome": false,
+  "split_random_seed": 6101,
+  "status": "LOCKED_BEFORE_EXECUTION",
+  "test_rows": 12357,
+  "training_rows": 28831
+}
