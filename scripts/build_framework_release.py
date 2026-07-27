@@ -324,6 +324,16 @@ def validate_archive(path: Path, manifest_artifacts: set[str]) -> tuple[int, lis
     with zipfile.ZipFile(path) as archive:
         names = archive.namelist()
         name_set = set(names)
+        checksum_name = "fuzzy-xai-operator/SHA256SUMS"
+        if checksum_name not in name_set:
+            raise RuntimeError("source archive has no internal SHA256SUMS")
+        for line in archive.read(checksum_name).decode("ascii").splitlines():
+            expected, name = line.split(maxsplit=1)
+            member = f"fuzzy-xai-operator/{name.lstrip('*')}"
+            if member not in name_set:
+                raise RuntimeError(f"source checksum member is missing: {member}")
+            if hashlib.sha256(archive.read(member)).hexdigest() != expected:
+                raise RuntimeError(f"source checksum mismatch: {member}")
         manifest_paths = {f"fuzzy-xai-operator/{item}" for item in manifest_artifacts}
         missing = sorted((REQUIRED_PATHS | manifest_paths) - name_set)
         if missing:
@@ -393,10 +403,20 @@ def main() -> None:
             compression=zipfile.ZIP_DEFLATED,
             compresslevel=9,
         ) as archive:
-            for source in sorted(path for path in export_root.rglob("*") if path.is_file()):
-                if not include_in_source_release(source.relative_to(export_root), manifest_artifacts):
-                    continue
+            checksum_lines = []
+            sources = sorted(
+                path
+                for path in export_root.rglob("*")
+                if path.is_file()
+                and include_in_source_release(
+                    path.relative_to(export_root),
+                    manifest_artifacts,
+                )
+            )
+            for source in sources:
                 mode = 0o100755 if source.stat().st_mode & 0o111 else 0o100644
+                data = source.read_bytes()
+                relative = source.relative_to(export_root)
                 info = zipfile.ZipInfo(
                     source.relative_to(export_root.parent).as_posix(),
                     date_time=(1980, 1, 1, 0, 0, 0),
@@ -404,10 +424,24 @@ def main() -> None:
                 info.external_attr = mode << 16
                 archive.writestr(
                     info,
-                    source.read_bytes(),
+                    data,
                     compress_type=zipfile.ZIP_DEFLATED,
                     compresslevel=9,
                 )
+                checksum_lines.append(
+                    f"{hashlib.sha256(data).hexdigest()}  {relative.as_posix()}"
+                )
+            checksum_info = zipfile.ZipInfo(
+                "fuzzy-xai-operator/SHA256SUMS",
+                date_time=(1980, 1, 1, 0, 0, 0),
+            )
+            checksum_info.external_attr = 0o100644 << 16
+            archive.writestr(
+                checksum_info,
+                ("\n".join(checksum_lines) + "\n").encode("ascii"),
+                compress_type=zipfile.ZIP_DEFLATED,
+                compresslevel=9,
+            )
     file_count, _ = validate_archive(archive_path, manifest_artifacts)
     archive_hash = sha256(archive_path)
     checksum_path = archive_path.with_suffix(".zip.sha256")
