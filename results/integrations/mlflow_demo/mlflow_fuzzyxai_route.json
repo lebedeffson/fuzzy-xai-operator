@@ -1,0 +1,968 @@
+{
+  "route_id": "mlflow:25f0c5a7436044ec9e7fcfcaf12252b4:fuzzyxai-demo:1",
+  "scenario_id": "mlflow_tabular_classification",
+  "scenario_title_ru": "Локальная интеграция MLflow и FuzzyXAI",
+  "title": "MLflow provenance FuzzyXAI OperatorRoute",
+  "created_at": "2026-07-27T12:15:28.300763+00:00",
+  "nodes": [
+    {
+      "node_id": "mlflow_run",
+      "title": "MLflow run",
+      "input_summary": "локальное MLflow-хранилище",
+      "output_summary": "зарегистрированные параметры и tags",
+      "value": "25f0c5a7436044ec9e7fcfcaf12252b4",
+      "threshold": "",
+      "status": "passed",
+      "explanation": "Метаданные запуска получены из локального MLflow.",
+      "formula_ref": "",
+      "trace_ref": "mlflow-run:25f0c5a7436044ec9e7fcfcaf12252b4",
+      "value_source": "mlflow_tracking_store",
+      "raw": {
+        "run_id": "25f0c5a7436044ec9e7fcfcaf12252b4",
+        "artifact_uri": "file:///home/runner/work/fuzzy-xai-operator/fuzzy-xai-operator/results/integrations/mlflow_demo/mlruns/413852068116036394/25f0c5a7436044ec9e7fcfcaf12252b4/artifacts/model",
+        "mlflow_version": "2.22.5",
+        "params": {
+          "dataset": "sklearn_iris_binary",
+          "model_family": "LogisticRegression",
+          "random_state": "7421"
+        },
+        "tags": {
+          "mlflow.source.name": "scripts/ch4_revision/run_mlflow_integration.py",
+          "mlflow.source.type": "LOCAL",
+          "mlflow.source.git.commit": "b30482583115b967193632d384ec123a960e5826",
+          "fuzzyxai.explainer": "linear-coefficient",
+          "mlflow.log-model.history": "[{\"run_id\": \"25f0c5a7436044ec9e7fcfcaf12252b4\", \"artifact_path\": \"model\", \"utc_time_created\": \"2026-07-27 12:15:24.610141\", \"model_uuid\": \"98150876ab5f43cd8e3bd914c8f44254\", \"flavors\": {\"python_function\": {\"model_path\": \"model.pkl\", \"predict_fn\": \"predict\", \"loader_module\": \"mlflow.sklearn\", \"python_version\": \"3.11.15\", \"env\": {\"conda\": \"conda.yaml\", \"virtualenv\": \"python_env.yaml\"}}, \"sklearn\": {\"pickled_model\": \"model.pkl\", \"sklearn_version\": \"1.9.0\", \"serialization_format\": \"cloudpickle\", \"code\": null}}}]",
+          "fuzzyxai.integration": "local-demo",
+          "mlflow.user": "runner",
+          "mlflow.runName": "youthful-ox-427"
+        }
+      },
+      "title_ru": "Запуск MLflow",
+      "operator_type": "external_provenance",
+      "input_refs": [],
+      "output_refs": [
+        "mlflow_registered_model"
+      ],
+      "input_values": {},
+      "output_values": {
+        "run_id": "25f0c5a7436044ec9e7fcfcaf12252b4",
+        "artifact_uri": "file:///home/runner/work/fuzzy-xai-operator/fuzzy-xai-operator/results/integrations/mlflow_demo/mlruns/413852068116036394/25f0c5a7436044ec9e7fcfcaf12252b4/artifacts/model"
+      },
+      "formula_id": null,
+      "formula_text": null,
+      "formula_latex": null,
+      "components": {},
+      "thresholds": {},
+      "status_reason_ru": "Запуск и его метаданные зарегистрированы.",
+      "interpretation_ru": "MLflow предоставляет внешние сведения происхождения; FuzzyXAI не пересчитывает их.",
+      "next_node_ids": [
+        "mlflow_registered_model"
+      ],
+      "source_commit": "",
+      "details": {
+        "provider": "MLflow"
+      }
+    },
+    {
+      "node_id": "mlflow_registered_model",
+      "title": "MLflow registered model",
+      "input_summary": "MLflow run",
+      "output_summary": "модель и версия",
+      "value": "fuzzyxai-demo:1",
+      "threshold": "",
+      "status": "passed",
+      "explanation": "Версия модели связана с исходным MLflow run.",
+      "formula_ref": "",
+      "trace_ref": "mlflow-model:fuzzyxai-demo:1",
+      "value_source": "mlflow_model_registry",
+      "raw": {
+        "model_name": "fuzzyxai-demo",
+        "model_version": "1",
+        "run_id": "25f0c5a7436044ec9e7fcfcaf12252b4",
+        "artifact_uri": "file:///home/runner/work/fuzzy-xai-operator/fuzzy-xai-operator/results/integrations/mlflow_demo/mlruns/413852068116036394/25f0c5a7436044ec9e7fcfcaf12252b4/artifacts/model"
+      },
+      "title_ru": "Зарегистрированная модель MLflow",
+      "operator_type": "model_registry",
+      "input_refs": [
+        "mlflow_run"
+      ],
+      "output_refs": [
+        "input_artifact",
+        "explanation_object"
+      ],
+      "input_values": {
+        "run_id": "25f0c5a7436044ec9e7fcfcaf12252b4"
+      },
+      "output_values": {
+        "model_version": "1",
+        "artifact_uri": "file:///home/runner/work/fuzzy-xai-operator/fuzzy-xai-operator/results/integrations/mlflow_demo/mlruns/413852068116036394/25f0c5a7436044ec9e7fcfcaf12252b4/artifacts/model"
+      },
+      "formula_id": null,
+      "formula_text": null,
+      "formula_latex": null,
+      "components": {},
+      "thresholds": {},
+      "status_reason_ru": "Версия модели загружена из Model Registry.",
+      "interpretation_ru": "Зарегистрированная версия передана в объяснительный маршрут.",
+      "next_node_ids": [
+        "input_artifact",
+        "explanation_object"
+      ],
+      "source_commit": "",
+      "details": {
+        "provider": "MLflow"
+      }
+    },
+    {
+      "node_id": "input_artifact",
+      "title": "Внешняя модель",
+      "input_summary": "payload внешней модели",
+      "output_summary": "AdaptedInput",
+      "value": "p=0.01604858485021505; class=0",
+      "threshold": "",
+      "status": "passed",
+      "explanation": "Адаптер принимает внешний результат модели.",
+      "formula_ref": "adapter",
+      "trace_ref": "adapted_input",
+      "value_source": "external_model_payload",
+      "raw": {
+        "source_type": "mlflow_model_registry",
+        "model_name": "fuzzyxai-demo",
+        "dataset_name": "sklearn_iris_binary",
+        "predicted_class": 0,
+        "class_probability": 0.01604858485021505,
+        "feature_values": {
+          "sepal length (cm)": 5.1,
+          "sepal width (cm)": 3.5,
+          "petal length (cm)": 1.4,
+          "petal width (cm)": 0.2
+        },
+        "feature_importance": {
+          "sepal length (cm)": 0.2532094346234114,
+          "sepal width (cm)": 0.35952634088978763,
+          "petal length (cm)": 0.36555247401985314,
+          "petal width (cm)": 0.021711750466947694
+        },
+        "top_k_importance": 4,
+        "missing_rate": 0.0,
+        "feature_range_violation": 0.0,
+        "context_values": {
+          "task_type": "tabular_classification"
+        },
+        "run_id": "25f0c5a7436044ec9e7fcfcaf12252b4",
+        "model_version": "1",
+        "artifact_uri": "file:///home/runner/work/fuzzy-xai-operator/fuzzy-xai-operator/results/integrations/mlflow_demo/mlruns/413852068116036394/25f0c5a7436044ec9e7fcfcaf12252b4/artifacts/model",
+        "mlflow_version": "2.22.5",
+        "mlflow_params": {
+          "dataset": "sklearn_iris_binary",
+          "model_family": "LogisticRegression",
+          "random_state": "7421"
+        },
+        "mlflow_tags": {
+          "mlflow.source.name": "scripts/ch4_revision/run_mlflow_integration.py",
+          "mlflow.source.type": "LOCAL",
+          "mlflow.source.git.commit": "b30482583115b967193632d384ec123a960e5826",
+          "fuzzyxai.explainer": "linear-coefficient",
+          "mlflow.log-model.history": "[{\"run_id\": \"25f0c5a7436044ec9e7fcfcaf12252b4\", \"artifact_path\": \"model\", \"utc_time_created\": \"2026-07-27 12:15:24.610141\", \"model_uuid\": \"98150876ab5f43cd8e3bd914c8f44254\", \"flavors\": {\"python_function\": {\"model_path\": \"model.pkl\", \"predict_fn\": \"predict\", \"loader_module\": \"mlflow.sklearn\", \"python_version\": \"3.11.15\", \"env\": {\"conda\": \"conda.yaml\", \"virtualenv\": \"python_env.yaml\"}}, \"sklearn\": {\"pickled_model\": \"model.pkl\", \"sklearn_version\": \"1.9.0\", \"serialization_format\": \"cloudpickle\", \"code\": null}}}]",
+          "fuzzyxai.integration": "local-demo",
+          "mlflow.user": "runner",
+          "mlflow.runName": "youthful-ox-427"
+        }
+      },
+      "title_ru": "Внешняя модель",
+      "operator_type": "adapter",
+      "input_refs": [],
+      "output_refs": [],
+      "input_values": {
+        "source_type": "mlflow_model_registry",
+        "model_name": "fuzzyxai-demo",
+        "dataset_name": "sklearn_iris_binary",
+        "model_output": {
+          "predicted_class": 0,
+          "class_probability": 0.01604858485021505
+        },
+        "quality_metrics": {
+          "missing_rate": 0.0,
+          "feature_range_violation": 0.0
+        },
+        "feature_values": {
+          "sepal length (cm)": 5.1,
+          "sepal width (cm)": 3.5,
+          "petal length (cm)": 1.4,
+          "petal width (cm)": 0.2
+        },
+        "attribution_values": {
+          "sepal length (cm)": 0.2532094346234114,
+          "sepal width (cm)": 0.35952634088978763,
+          "petal length (cm)": 0.36555247401985314,
+          "petal width (cm)": 0.021711750466947694
+        },
+        "context_values": {
+          "task_type": "tabular_classification"
+        }
+      },
+      "output_values": {
+        "adapted_input_id": "external_wine_classification:fuzzyxai-demo",
+        "trace_origin": "external_model_payload",
+        "class_probability": 0.01604858485021505,
+        "feature_importance": {
+          "sepal length (cm)": 0.2532094346234114,
+          "sepal width (cm)": 0.35952634088978763,
+          "petal length (cm)": 0.36555247401985314,
+          "petal width (cm)": 0.021711750466947694
+        }
+      },
+      "formula_id": null,
+      "formula_text": "Нормализация внешнего входа",
+      "formula_latex": null,
+      "components": {
+        "model_name": "fuzzyxai-demo",
+        "dataset_name": "sklearn_iris_binary",
+        "source_type": "mlflow_model_registry",
+        "task_type": "tabular_classification",
+        "perturbation": "external_payload"
+      },
+      "thresholds": {},
+      "status_reason_ru": "Внешний payload успешно приведён к AdaptedInput.",
+      "interpretation_ru": "Фреймворк получил уверенность модели, признаки, важности признаков, метрики качества и контекст ограничения.",
+      "next_node_ids": [
+        "explanation_object"
+      ],
+      "source_commit": "b30482583115b967193632d384ec123a960e5826",
+      "details": {
+        "applications_used": false
+      }
+    },
+    {
+      "node_id": "explanation_object",
+      "title": "Объяснительный объект E_k",
+      "input_summary": "предыдущее состояние маршрута",
+      "output_summary": "выход оператора",
+      "value": "E_k сформирован",
+      "threshold": "",
+      "status": "passed",
+      "explanation": "Внешний payload переведён в объяснительный объект.",
+      "formula_ref": "E_k",
+      "trace_ref": "explanation_object",
+      "value_source": "computed",
+      "raw": {
+        "value_source": "computed"
+      },
+      "title_ru": "Объяснительный объект E_k",
+      "operator_type": "explanation_object",
+      "input_refs": [
+        "input_artifact"
+      ],
+      "output_refs": [
+        "representation"
+      ],
+      "input_values": {
+        "class_probability": 0.01604858485021505,
+        "feature_importance": {
+          "sepal length (cm)": 0.2532094346234114,
+          "sepal width (cm)": 0.35952634088978763,
+          "petal length (cm)": 0.36555247401985314,
+          "petal width (cm)": 0.021711750466947694
+        }
+      },
+      "output_values": {
+        "terms": [
+          "sepal length (cm)",
+          "sepal width (cm)",
+          "petal length (cm)",
+          "petal width (cm)"
+        ],
+        "memberships": {
+          "sepal length (cm)": 0.2532094346234114,
+          "sepal width (cm)": 0.35952634088978763,
+          "petal length (cm)": 0.36555247401985314,
+          "petal width (cm)": 0.021711750466947694
+        },
+        "rules": [],
+        "activations": {
+          "predicted_class": 0
+        },
+        "uncertainty": 0.983951,
+        "trace": "external_wine_classification:fuzzyxai-demo",
+        "object_summary": "табличный объект с вероятностью класса и top-k атрибуциями"
+      },
+      "formula_id": "E_k",
+      "formula_text": "E_k = {L_k, μ_k, R_k, α_k, u_k, τ_k}",
+      "formula_latex": null,
+      "components": {
+        "terms": [
+          "sepal length (cm)",
+          "sepal width (cm)",
+          "petal length (cm)",
+          "petal width (cm)"
+        ],
+        "uncertainty": 0.983951
+      },
+      "thresholds": {},
+      "status_reason_ru": "Объект объяснения содержит вероятность, признаки и атрибуции.",
+      "interpretation_ru": "E_k фиксирует, что модель уверена не полностью и объяснение редуцировано до top-k признаков.",
+      "next_node_ids": [
+        "representation"
+      ],
+      "source_commit": "b30482583115b967193632d384ec123a960e5826",
+      "details": {}
+    },
+    {
+      "node_id": "representation",
+      "title": "Класс представления F",
+      "input_summary": "предыдущее состояние маршрута",
+      "output_summary": "выход оператора",
+      "value": "F0",
+      "threshold": "",
+      "status": "passed",
+      "explanation": "Табличный результат представлен через обычное нечёткое представление.",
+      "formula_ref": "F",
+      "trace_ref": "representation",
+      "value_source": "computed",
+      "raw": {
+        "value_source": "computed"
+      },
+      "title_ru": "Класс представления F",
+      "operator_type": "representation",
+      "input_refs": [
+        "explanation_object"
+      ],
+      "output_refs": [
+        "alignment",
+        "reduction"
+      ],
+      "input_values": {
+        "source_type": "mlflow_model_registry",
+        "task_type": "tabular_classification",
+        "has_single_probability": true,
+        "has_top_k_importance": true,
+        "context": {
+          "task_type": "tabular_classification"
+        }
+      },
+      "output_values": {
+        "class_id": "F0",
+        "class_title_ru": "обычное нечёткое представление",
+        "output_representation": "confidence + top-k attribution + context metrics"
+      },
+      "formula_id": "F0-selection",
+      "formula_text": "class_id выбирается по task_type, interval, source/quality conflict и multilevel context",
+      "formula_latex": null,
+      "components": {
+        "input_conditions": [
+          "tabular_classification",
+          "external_payload"
+        ],
+        "interval_width": 0.0,
+        "quality_penalty": 0.0,
+        "conflict_component": 0.0
+      },
+      "thresholds": {},
+      "status_reason_ru": "Выбран класс F0.",
+      "interpretation_ru": "Базовое представление достаточно для одной уверенности и top-k объяснения.",
+      "next_node_ids": [
+        "alignment",
+        "reduction"
+      ],
+      "source_commit": "b30482583115b967193632d384ec123a960e5826",
+      "details": {}
+    },
+    {
+      "node_id": "alignment",
+      "title": "Согласование T_ij",
+      "input_summary": "предыдущее состояние маршрута",
+      "output_summary": "выход оператора",
+      "value": "gamma=0.983951",
+      "threshold": "",
+      "status": "warning",
+      "explanation": "gamma=max(1-p, quality_penalty, conflict_component, interval_width).",
+      "formula_ref": "gamma",
+      "trace_ref": "alignment",
+      "value_source": "computed",
+      "raw": {
+        "uncertainty": 0.983951,
+        "quality_penalty": 0.0,
+        "conflict_component": 0.0,
+        "interval_width": 0.0,
+        "gamma": 0.983951,
+        "value_source": "computed"
+      },
+      "title_ru": "Согласование T_ij",
+      "operator_type": "alignment",
+      "input_refs": [
+        "representation"
+      ],
+      "output_refs": [
+        "risk"
+      ],
+      "input_values": {
+        "class_probability": 0.01604858485021505,
+        "missing_rate": 0.0,
+        "feature_range_violation": 0.0,
+        "conflict_component": 0.0,
+        "interval_width": 0.0
+      },
+      "output_values": {
+        "gamma": 0.983951
+      },
+      "formula_id": "external_tabular_gamma",
+      "formula_text": "gamma = max(1 - class_probability, quality_penalty, conflict_component, interval_width)",
+      "formula_latex": "\\gamma=\\max(1-p,q,c,w)",
+      "components": {
+        "uncertainty": 0.983951,
+        "quality_penalty": 0.0,
+        "conflict_component": 0.0,
+        "interval_width": 0.0,
+        "calculation": "max(0.983951, 0.0, 0.0, 0.0) = 0.983951"
+      },
+      "thresholds": {
+        "gamma_warning": 0.35
+      },
+      "status_reason_ru": "Рассогласование ненулевое, потому что вероятность класса меньше 1.",
+      "interpretation_ru": "Уверенность модели неполная; это ограничивает автоматическое доверие.",
+      "next_node_ids": [
+        "risk"
+      ],
+      "source_commit": "b30482583115b967193632d384ec123a960e5826",
+      "details": {}
+    },
+    {
+      "node_id": "reduction",
+      "title": "Потери представления",
+      "input_summary": "предыдущее состояние маршрута",
+      "output_summary": "выход оператора",
+      "value": "Delta=0.0",
+      "threshold": "",
+      "status": "passed",
+      "explanation": "Delta=1-sum(feature_importance) для переданного набора важностей.",
+      "formula_ref": "Delta",
+      "trace_ref": "reduction",
+      "value_source": "computed",
+      "raw": {
+        "delta": 0.0,
+        "importance_sum": 0.9999999999999999,
+        "value_source": "computed"
+      },
+      "title_ru": "Потери представления",
+      "operator_type": "reduction",
+      "input_refs": [
+        "representation"
+      ],
+      "output_refs": [
+        "risk"
+      ],
+      "input_values": {
+        "selected_features": [
+          "sepal length (cm)",
+          "sepal width (cm)",
+          "petal length (cm)",
+          "petal width (cm)"
+        ],
+        "feature_importance": {
+          "sepal length (cm)": 0.2532094346234114,
+          "sepal width (cm)": 0.35952634088978763,
+          "petal length (cm)": 0.36555247401985314,
+          "petal width (cm)": 0.021711750466947694
+        },
+        "top_k": 4
+      },
+      "output_values": {
+        "delta": 0.0,
+        "top_k_importance_sum": 1.0
+      },
+      "formula_id": "external_tabular_delta",
+      "formula_text": "delta = 1 - sum(top_k_feature_importance)",
+      "formula_latex": "\\Delta=1-\\sum importance_{top-k}",
+      "components": {
+        "selected_features": [
+          "sepal length (cm)",
+          "sepal width (cm)",
+          "petal length (cm)",
+          "petal width (cm)"
+        ],
+        "top_k_importance_sum": 1.0,
+        "calculation": "1 - 1.0 = 0.0"
+      },
+      "thresholds": {
+        "delta_warning": 0.35
+      },
+      "status_reason_ru": "Часть объяснения потеряна при top-k редукции.",
+      "interpretation_ru": "Delta показывает, какая доля атрибутивного объяснения не попала в сокращённый набор признаков.",
+      "next_node_ids": [
+        "risk"
+      ],
+      "source_commit": "b30482583115b967193632d384ec123a960e5826",
+      "details": {}
+    },
+    {
+      "node_id": "risk",
+      "title": "Риск rho",
+      "input_summary": "предыдущее состояние маршрута",
+      "output_summary": "выход оператора",
+      "value": "rho=0.983951",
+      "threshold": "",
+      "status": "warning",
+      "explanation": "rho=max(gamma, Delta, quality_component, conflict_component).",
+      "formula_ref": "rho",
+      "trace_ref": "risk",
+      "value_source": "computed",
+      "raw": {
+        "rho": 0.983951,
+        "theta_accept": 0.35,
+        "theta_warning": 0.6,
+        "value_source": "computed"
+      },
+      "title_ru": "Риск rho",
+      "operator_type": "risk",
+      "input_refs": [
+        "alignment",
+        "reduction"
+      ],
+      "output_refs": [
+        "diagnostics"
+      ],
+      "input_values": {
+        "gamma": 0.983951,
+        "delta": 0.0,
+        "quality_component": 0.0,
+        "conflict_component": 0.0
+      },
+      "output_values": {
+        "rho": 0.983951,
+        "risk_zone": "audit",
+        "dominant_component": "gamma"
+      },
+      "formula_id": "external_tabular_rho",
+      "formula_text": "rho = max(gamma, delta, quality_component, conflict_component)",
+      "formula_latex": "\\rho=\\max(\\gamma,\\Delta)",
+      "components": {
+        "gamma": 0.983951,
+        "delta": 0.0,
+        "quality_component": 0.0,
+        "conflict_component": 0.0,
+        "calculation": "max(0.983951, 0.0, 0.0, 0.0) = 0.983951"
+      },
+      "thresholds": {
+        "theta_accept": 0.35,
+        "theta_warning": 0.6
+      },
+      "status_reason_ru": "rho попал в зону audit.",
+      "interpretation_ru": "Основной вклад в риск: gamma.",
+      "next_node_ids": [
+        "diagnostics"
+      ],
+      "source_commit": "b30482583115b967193632d384ec123a960e5826",
+      "details": {}
+    },
+    {
+      "node_id": "diagnostics",
+      "title": "Диагностика D",
+      "input_summary": "предыдущее состояние маршрута",
+      "output_summary": "выход оператора",
+      "value": "D_external_tabular_uncertainty",
+      "threshold": "",
+      "status": "warning",
+      "explanation": "ограниченная уверенность внешней табличной модели",
+      "formula_ref": "D",
+      "trace_ref": "diagnostics",
+      "value_source": "computed",
+      "raw": {
+        "diagnostics": [
+          {
+            "diagnostic_id": "D_external_tabular_uncertainty",
+            "diagnostic_type": "external_tabular_uncertainty",
+            "source": "external_tabular_adapter",
+            "criticality": "high",
+            "message_ru": "ограниченная уверенность внешней табличной модели",
+            "recommended_action": "audit"
+          }
+        ],
+        "value_source": "computed"
+      },
+      "title_ru": "Диагностика D",
+      "operator_type": "diagnostics",
+      "input_refs": [
+        "risk"
+      ],
+      "output_refs": [
+        "action"
+      ],
+      "input_values": {
+        "rho": 0.983951,
+        "risk_zone": "audit",
+        "gamma": 0.983951,
+        "delta": 0.0,
+        "task_type": "tabular_classification",
+        "dominant_component": "gamma"
+      },
+      "output_values": {
+        "diagnostic_id": "D_external_tabular_uncertainty",
+        "diagnostic_title_ru": "ограниченная уверенность внешней табличной модели",
+        "severity": "high",
+        "recommended_action_level": "audit"
+      },
+      "formula_id": "diagnostic-policy",
+      "formula_text": "diagnostic_id выбирается по task_type, risk_zone и доминирующему компоненту риска",
+      "formula_latex": null,
+      "components": {
+        "reason_components": {
+          "gamma": 0.983951,
+          "delta": 0.0,
+          "rho": 0.983951,
+          "dominant_component": "gamma",
+          "task_type": "tabular_classification"
+        }
+      },
+      "thresholds": {},
+      "status_reason_ru": "ограниченная уверенность внешней табличной модели",
+      "interpretation_ru": "Диагностика означает ограничение доверия, а не запрет или утверждение о плохой модели.",
+      "next_node_ids": [
+        "action"
+      ],
+      "source_commit": "b30482583115b967193632d384ec123a960e5826",
+      "details": {}
+    },
+    {
+      "node_id": "action",
+      "title": "Действие",
+      "input_summary": "предыдущее состояние маршрута",
+      "output_summary": "выход оператора",
+      "value": "audit",
+      "threshold": "",
+      "status": "warning",
+      "explanation": "Действие выбрано политикой FuzzyXAI.",
+      "formula_ref": "action policy",
+      "trace_ref": "action",
+      "value_source": "computed",
+      "raw": {
+        "action": "audit",
+        "value_source": "computed"
+      },
+      "title_ru": "Действие",
+      "operator_type": "action",
+      "input_refs": [
+        "diagnostics"
+      ],
+      "output_refs": [
+        "proof"
+      ],
+      "input_values": {
+        "rho": 0.983951,
+        "diagnostic_id": "D_external_tabular_uncertainty",
+        "risk_zone": "audit"
+      },
+      "output_values": {
+        "action_id": "audit",
+        "action_title_ru": "audit"
+      },
+      "formula_id": "action-policy",
+      "formula_text": "if rho < 0.35: accept; elif rho < 0.60: lower_confidence; else: audit",
+      "formula_latex": null,
+      "components": {
+        "rho": 0.983951,
+        "diagnostic_id": "D_external_tabular_uncertainty",
+        "alternative_actions": [
+          "accept",
+          "lower_confidence",
+          "audit"
+        ]
+      },
+      "thresholds": {
+        "theta_accept": 0.35,
+        "theta_warning": 0.6
+      },
+      "status_reason_ru": "Риск ненулевой, но не критический.",
+      "interpretation_ru": "Результат не блокируется, но автоматическое доверие понижается из-за ненулевого риска.",
+      "next_node_ids": [
+        "proof"
+      ],
+      "source_commit": "b30482583115b967193632d384ec123a960e5826",
+      "details": {}
+    },
+    {
+      "node_id": "proof",
+      "title": "Доказательный след",
+      "input_summary": "предыдущее состояние маршрута",
+      "output_summary": "выход оператора",
+      "value": "proof trace готов",
+      "threshold": "",
+      "status": "passed",
+      "explanation": "Маршрут сохраняется как проверяемый доказательный след.",
+      "formula_ref": "proof trace",
+      "trace_ref": "proof",
+      "value_source": "computed",
+      "raw": {
+        "value_source": "computed"
+      },
+      "title_ru": "Доказательный след",
+      "operator_type": "proof",
+      "input_refs": [
+        "action"
+      ],
+      "output_refs": [],
+      "input_values": {
+        "computed_result": {
+          "model_name": "fuzzyxai-demo",
+          "dataset_name": "sklearn_iris_binary",
+          "task_type": "tabular_classification",
+          "perturbation": "external_payload",
+          "representation_class": "F0",
+          "class_probability": 0.01604858485021505,
+          "uncertainty": 0.983951,
+          "quality_penalty": 0.0,
+          "uncertainty_component": 0.983951,
+          "quality_component": 0.0,
+          "reduction_component": 0.0,
+          "conflict_component": 0.0,
+          "interval_component": 0.0,
+          "gamma": 0.983951,
+          "delta": 0.0,
+          "rho": 0.983951,
+          "risk_dominant_component": "gamma",
+          "diagnostic_id": "D_external_tabular_uncertainty",
+          "action_id": "audit",
+          "action": "audit"
+        },
+        "diagnostics": [
+          {
+            "diagnostic_id": "D_external_tabular_uncertainty",
+            "diagnostic_type": "external_tabular_uncertainty",
+            "source": "external_tabular_adapter",
+            "criticality": "high",
+            "message_ru": "ограниченная уверенность внешней табличной модели",
+            "recommended_action": "audit"
+          }
+        ],
+        "action": "audit"
+      },
+      "output_values": {
+        "verification_status": "PASS",
+        "source_commit": "b30482583115b967193632d384ec123a960e5826"
+      },
+      "formula_id": "proof-trace",
+      "formula_text": "proof_trace = hashable route + computed_result + diagnostics + action + source_commit",
+      "formula_latex": null,
+      "components": {
+        "scenario_id": "external_wine_classification",
+        "source_commit": "b30482583115b967193632d384ec123a960e5826"
+      },
+      "thresholds": {},
+      "status_reason_ru": "Proof trace содержит значения маршрута и source_commit.",
+      "interpretation_ru": "Доказательный след связывает route, значения операторов, диагностику и действие.",
+      "next_node_ids": [],
+      "source_commit": "b30482583115b967193632d384ec123a960e5826",
+      "details": {}
+    }
+  ],
+  "edges": [
+    {
+      "edge_id": "edge_mlflow_run_model",
+      "source_node_id": "mlflow_run",
+      "target_node_id": "mlflow_registered_model",
+      "passed_values": {
+        "run_id": "25f0c5a7436044ec9e7fcfcaf12252b4",
+        "model_version": "1",
+        "artifact_uri": "file:///home/runner/work/fuzzy-xai-operator/fuzzy-xai-operator/results/integrations/mlflow_demo/mlruns/413852068116036394/25f0c5a7436044ec9e7fcfcaf12252b4/artifacts/model"
+      },
+      "explanation_ru": "Запуск MLflow породил зарегистрированную версию модели."
+    },
+    {
+      "edge_id": "edge_mlflow_model_input",
+      "source_node_id": "mlflow_registered_model",
+      "target_node_id": "input_artifact",
+      "passed_values": {
+        "model_version": "1",
+        "artifact_uri": "file:///home/runner/work/fuzzy-xai-operator/fuzzy-xai-operator/results/integrations/mlflow_demo/mlruns/413852068116036394/25f0c5a7436044ec9e7fcfcaf12252b4/artifacts/model"
+      },
+      "explanation_ru": "Зарегистрированная модель передана внешнему адаптеру."
+    },
+    {
+      "edge_id": "edge_mlflow_model_explanation",
+      "source_node_id": "mlflow_registered_model",
+      "target_node_id": "explanation_object",
+      "passed_values": {
+        "run_id": "25f0c5a7436044ec9e7fcfcaf12252b4",
+        "model_version": "1"
+      },
+      "explanation_ru": "Объяснение связано с той же зарегистрированной моделью."
+    },
+    {
+      "edge_id": "edge_input_explanation",
+      "source_node_id": "input_artifact",
+      "target_node_id": "explanation_object",
+      "passed_values": {
+        "class_probability": 0.01604858485021505,
+        "feature_importance": {
+          "sepal length (cm)": 0.2532094346234114,
+          "sepal width (cm)": 0.35952634088978763,
+          "petal length (cm)": 0.36555247401985314,
+          "petal width (cm)": 0.021711750466947694
+        }
+      },
+      "explanation_ru": "Адаптированный вход передан в объяснительный объект."
+    },
+    {
+      "edge_id": "edge_explanation_representation",
+      "source_node_id": "explanation_object",
+      "target_node_id": "representation",
+      "passed_values": {
+        "terms": [
+          "sepal length (cm)",
+          "sepal width (cm)",
+          "petal length (cm)",
+          "petal width (cm)"
+        ],
+        "uncertainty": 0.983951
+      },
+      "explanation_ru": "Объяснительный объект передан в выбор представления."
+    },
+    {
+      "edge_id": "edge_representation_alignment",
+      "source_node_id": "representation",
+      "target_node_id": "alignment",
+      "passed_values": {
+        "class_probability": 0.01604858485021505,
+        "quality_metrics": {
+          "missing_rate": 0.0,
+          "feature_range_violation": 0.0
+        },
+        "context": {
+          "task_type": "tabular_classification"
+        }
+      },
+      "explanation_ru": "Вероятность, качество и контекст переданы в оператор согласования."
+    },
+    {
+      "edge_id": "edge_representation_reduction",
+      "source_node_id": "representation",
+      "target_node_id": "reduction",
+      "passed_values": {
+        "feature_importance": {
+          "sepal length (cm)": 0.2532094346234114,
+          "sepal width (cm)": 0.35952634088978763,
+          "petal length (cm)": 0.36555247401985314,
+          "petal width (cm)": 0.021711750466947694
+        },
+        "top_k": 4
+      },
+      "explanation_ru": "Top-k атрибуции переданы в оператор редукции."
+    },
+    {
+      "edge_id": "edge_alignment_risk",
+      "source_node_id": "alignment",
+      "target_node_id": "risk",
+      "passed_values": {
+        "gamma": 0.983951
+      },
+      "explanation_ru": "Рассогласование передано в наблюдатель риска."
+    },
+    {
+      "edge_id": "edge_reduction_risk",
+      "source_node_id": "reduction",
+      "target_node_id": "risk",
+      "passed_values": {
+        "delta": 0.0
+      },
+      "explanation_ru": "Потери редукции переданы в наблюдатель риска."
+    },
+    {
+      "edge_id": "edge_risk_diagnostics",
+      "source_node_id": "risk",
+      "target_node_id": "diagnostics",
+      "passed_values": {
+        "rho": 0.983951,
+        "risk_zone": "audit"
+      },
+      "explanation_ru": "Риск переведён в диагностическое состояние."
+    },
+    {
+      "edge_id": "edge_diagnostics_action",
+      "source_node_id": "diagnostics",
+      "target_node_id": "action",
+      "passed_values": {
+        "diagnostic_id": "D_external_tabular_uncertainty",
+        "recommended_action": "audit"
+      },
+      "explanation_ru": "Диагностика передана в политику действия."
+    },
+    {
+      "edge_id": "edge_action_proof",
+      "source_node_id": "action",
+      "target_node_id": "proof",
+      "passed_values": {
+        "action_id": "audit",
+        "computed_result": {
+          "model_name": "fuzzyxai-demo",
+          "dataset_name": "sklearn_iris_binary",
+          "task_type": "tabular_classification",
+          "perturbation": "external_payload",
+          "representation_class": "F0",
+          "class_probability": 0.01604858485021505,
+          "uncertainty": 0.983951,
+          "quality_penalty": 0.0,
+          "uncertainty_component": 0.983951,
+          "quality_component": 0.0,
+          "reduction_component": 0.0,
+          "conflict_component": 0.0,
+          "interval_component": 0.0,
+          "gamma": 0.983951,
+          "delta": 0.0,
+          "rho": 0.983951,
+          "risk_dominant_component": "gamma",
+          "diagnostic_id": "D_external_tabular_uncertainty",
+          "action_id": "audit",
+          "action": "audit"
+        }
+      },
+      "explanation_ru": "Итоговое действие сохранено в proof trace."
+    }
+  ],
+  "computed_result": {
+    "model_name": "fuzzyxai-demo",
+    "dataset_name": "sklearn_iris_binary",
+    "task_type": "tabular_classification",
+    "perturbation": "external_payload",
+    "representation_class": "F0",
+    "class_probability": 0.01604858485021505,
+    "uncertainty": 0.983951,
+    "quality_penalty": 0.0,
+    "uncertainty_component": 0.983951,
+    "quality_component": 0.0,
+    "reduction_component": 0.0,
+    "conflict_component": 0.0,
+    "interval_component": 0.0,
+    "gamma": 0.983951,
+    "delta": 0.0,
+    "rho": 0.983951,
+    "risk_dominant_component": "gamma",
+    "diagnostic_id": "D_external_tabular_uncertainty",
+    "action_id": "audit",
+    "action": "audit"
+  },
+  "diagnostics": [
+    {
+      "diagnostic_id": "D_external_tabular_uncertainty",
+      "diagnostic_type": "external_tabular_uncertainty",
+      "source": "external_tabular_adapter",
+      "criticality": "high",
+      "message_ru": "ограниченная уверенность внешней табличной модели",
+      "recommended_action": "audit"
+    }
+  ],
+  "final_action": "audit",
+  "final_action_id": "audit",
+  "final_diagnostic_id": "D_external_tabular_uncertainty",
+  "verifier_status": "PASS",
+  "source_commit": "b30482583115b967193632d384ec123a960e5826",
+  "proof_ref": "proof_trace.json",
+  "dashboard_ref": "operator_dashboard_v2.png",
+  "verification_summary": {
+    "overall_status": "passed",
+    "checks": [
+      "mlflow_run_registered",
+      "model_version_registered",
+      "artifact_uri_registered",
+      "run_model_explanation_provenance_linked"
+    ]
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "schema_version": "1.0",
+  "manifest": "framework/fuzzyxai/operators_manifest_final_practical_addendum.yaml",
+  "operator_count": 3,
+  "operator_ids": [
+    "h10_c5_pilot.executable_recovery_selection",
+    "h10_c6_n.feature_noise_robustness",
+    "integration.mlflow_provenance"
+  ],
+  "status": "PASS",
+  "errors": []
+}

@@ -1,0 +1,10 @@
+{
+  "architecture": "x86_64",
+  "kernel": "6.17.0-1020-azure",
+  "mlflow": "2.22.5",
+  "numpy": "2.4.6",
+  "os": "Linux-6.17.0-1020-azure-x86_64-with-glibc2.39",
+  "pandas": "2.3.3",
+  "python": "3.11.15 (main, Jun 16 2026, 21:41:52) [GCC 13.3.0]",
+  "scikit_learn": "1.9.0"
+}

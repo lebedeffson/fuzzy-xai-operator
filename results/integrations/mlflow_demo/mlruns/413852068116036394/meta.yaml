@@ -1,0 +1,6 @@
+artifact_location: file:///home/runner/work/fuzzy-xai-operator/fuzzy-xai-operator/results/integrations/mlflow_demo/mlruns/413852068116036394
+creation_time: 1785154524541
+experiment_id: '413852068116036394'
+last_update_time: 1785154524541
+lifecycle_stage: active
+name: fuzzyxai-local-integration

@@ -1,0 +1,28 @@
+{
+  "artifacts": {
+    "lock_sha256": "e8ef8f72b001c9d3d9ddfa50936de18158415adb46b8bc2536240efdd8e73a83",
+    "object_ids_sha256": "2ab08ee0c83743a4de8b6cd8326cd9ce1bbb3fc7105bb264e828f987e8572b72",
+    "runs_sha256": "6d9f9ae8ced75d071fb353d003b9ef8e920df39f2acc9ac93ec64a85ef44afa4",
+    "summary_sha256": "5ffb3fb0d4452bf743c6bf673c0922ffa1c467ee3dfd5b5a019ea1074fd19414"
+  },
+  "coverage_stability_sigma_0.05": 1.0,
+  "dataset": "UCI Bank Marketing dataset 222, bank-additional-full",
+  "excluded_objects": [],
+  "feature_scale_leakage": false,
+  "human_or_industrial_claim_permitted": false,
+  "median_jaccard_sigma_0.05": 1.0,
+  "new_critical_violations": 0,
+  "noise_levels": [
+    0.01,
+    0.05,
+    0.1
+  ],
+  "objects_analyzed": 1000,
+  "objects_registered": 1000,
+  "parent_h10_c6_modified": false,
+  "protocol_id": "h10-c6-n-feature-noise-v1",
+  "recertification_sigma_0.05": 1.0,
+  "run_count": 3000,
+  "scientific_scope": "diagnostic-cut stability under registered numeric feature noise with a fixed structural defect",
+  "status": "H10_C6_N_SUPPORTED"
+}

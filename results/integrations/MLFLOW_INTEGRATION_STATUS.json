@@ -1,0 +1,15 @@
+{
+  "artifact_uri": "file:///home/runner/work/fuzzy-xai-operator/fuzzy-xai-operator/results/integrations/mlflow_demo/mlruns/413852068116036394/25f0c5a7436044ec9e7fcfcaf12252b4/artifacts/model",
+  "external_network_required": false,
+  "mlflow_version": "2.22.5",
+  "model_version": 1,
+  "product_comparison": false,
+  "registered_model_name": "fuzzyxai-demo",
+  "route_id": "mlflow:25f0c5a7436044ec9e7fcfcaf12252b4:fuzzyxai-demo:1",
+  "route_verification": true,
+  "run_id": "25f0c5a7436044ec9e7fcfcaf12252b4",
+  "scientific_hypothesis": false,
+  "scikit_learn_model": "LogisticRegression",
+  "status": "MLFLOW_INTEGRATION_PASS",
+  "tracking_uri": "file:///home/runner/work/fuzzy-xai-operator/fuzzy-xai-operator/results/integrations/mlflow_demo/mlruns"
+}
