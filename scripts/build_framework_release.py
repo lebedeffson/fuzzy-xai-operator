@@ -284,20 +284,36 @@ def sha256(path: Path) -> str:
 def manifest_artifact_paths(export_root: Path) -> set[str]:
     """Return repository-relative evidence paths declared by the operator manifest."""
 
-    manifest_path = export_root / "framework/fuzzyxai/operators_manifest.yaml"
-    payload = yaml.safe_load(manifest_path.read_text(encoding="utf-8"))
-    rows = payload.get("operators", []) if isinstance(payload, dict) else []
     artifacts: set[str] = set()
-    for row in rows:
-        if not isinstance(row, dict):
+    manifest_paths = [
+        export_root / "framework/fuzzyxai/operators_manifest.yaml",
+        export_root
+        / "framework/fuzzyxai/operators_manifest_final_practical_addendum.yaml",
+    ]
+    for manifest_path in manifest_paths:
+        if not manifest_path.is_file():
             continue
-        for value in row.get("artifacts", []):
-            relative = Path(str(value))
-            if relative.is_absolute() or ".." in relative.parts:
-                raise RuntimeError(f"operator manifest contains unsafe artifact path: {value}")
-            if not (export_root / relative).is_file():
-                raise RuntimeError(f"operator manifest artifact is missing from HEAD: {value}")
-            artifacts.add(relative.as_posix())
+        payload = yaml.safe_load(manifest_path.read_text(encoding="utf-8"))
+        if "parent_manifest_sha256" in payload:
+            parent = export_root / str(payload["parent_manifest"])
+            if sha256(parent) != payload["parent_manifest_sha256"]:
+                raise RuntimeError("operator addendum parent hash mismatch")
+        rows = payload.get("operators", []) if isinstance(payload, dict) else []
+        for row in rows:
+            if not isinstance(row, dict):
+                continue
+            for value in row.get("artifacts", []):
+                relative = Path(str(value))
+                if relative.is_absolute() or ".." in relative.parts:
+                    raise RuntimeError(
+                        f"operator manifest contains unsafe artifact path: {value}"
+                    )
+                if not (export_root / relative).is_file():
+                    raise RuntimeError(
+                        "operator manifest artifact is missing from HEAD: "
+                        f"{value}"
+                    )
+                artifacts.add(relative.as_posix())
     if not artifacts:
         raise RuntimeError("operator manifest does not declare any evidence artifacts")
     return artifacts
