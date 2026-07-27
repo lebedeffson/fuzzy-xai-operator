@@ -169,6 +169,28 @@
       },
       "scientific_result": "NOT_EVALUATED",
       "status": "DEVELOPMENT_READY_SCORING_INFRASTRUCTURE_FAILED"
+    },
+    {
+      "complete_incidents": 30,
+      "development_scored": true,
+      "development_status_sha256": "60810d8ee58b20c6d9b1a5e4800c23fc678ce9e698ad70d339e91d37a7f69ba1",
+      "execution_id": "development-score-8be65ed-2db9ab1402fa",
+      "failure": "The prospective development technical gate did not pass. Held-out creation and scoring remain prohibited.",
+      "failure_stage": "DEVELOPMENT_GATE",
+      "head_commit": "8be65ed2338325a02ddda5b4d2bb361dcc9b2fa1",
+      "held_out_created": false,
+      "held_out_scored": false,
+      "readiness_checks_passed": 23,
+      "readiness_checks_total": 23,
+      "readiness_report_sha256": "60c7c8cba808aa8468a038f3768bf8e7bcb5b9280de5112f727c3b2023ca4433",
+      "runtime_collection_completed": true,
+      "runtime_manifest_sha256": "2db9ab1402fad106201329f091d2d355d5a539b49ec0033f204f04af7bc40824",
+      "runtime_report_sha256": "53d7460ec6e00605ac4257abbda88bc3b8168a884e08831b29c1830361ed7435",
+      "runtime_status_counts": {
+        "BUG_REPRODUCED_WITH_TRACE": 30
+      },
+      "scientific_result": "NOT_EVALUATED",
+      "status": "H10_C5C_DEVELOPMENT_GATE_FAIL"
     }
   ],
   "scientific_result": "NOT_EVALUATED"

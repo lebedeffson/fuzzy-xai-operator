@@ -122,6 +122,12 @@ permitted graph-mapping correction and explicitly prohibited changes to
 retrieval scores, contract inference, global optimization, abstention,
 development gates and the scientific endpoint.
 
+Development-only scoring completed on the readiness-bound manifest. The locked
+technical gate failed: Recall@10 was `0.5666666667`, O_ROUTE contract accuracy
+was `0.1333333333`, coverage was `0.80`, and O_ROUTE joint Hit@3 was `0`
+compared with `0.0666666667` for B_GREEDY. No held-out set was created or
+scored. The scientific result remains `NOT_EVALUATED`.
+
 An incident is marked `BUG_REPRODUCED_WITH_TRACE` only when its registered test
 fails and the event stream contains both a project executed slice and a
 project traceback frame. The development scorer rejects any other status.

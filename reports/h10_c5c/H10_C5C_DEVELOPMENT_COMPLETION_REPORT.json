@@ -1,0 +1,51 @@
+{
+  "chapter_modified": false,
+  "development_artifacts": {
+    "DEVELOPMENT_PER_INCIDENT.csv": "02e6f18b56a0e986c3d5eea3dda6890d2c4b98049fd567daa8b469904bfc5810",
+    "EXECUTED_SLICE_MANIFEST.csv": "14072411d0ed445b65183deed716d29323473abc2cef510d383b2dc881fda2da",
+    "H10_C5C_DEVELOPMENT_STATUS.json": "60810d8ee58b20c6d9b1a5e4800c23fc678ce9e698ad70d339e91d37a7f69ba1"
+  },
+  "development_commit": "8be65ed2338325a02ddda5b4d2bb361dcc9b2fa1",
+  "development_gate": "FAIL",
+  "development_incidents": 30,
+  "development_repositories": 8,
+  "development_scored": true,
+  "gate_checks": {
+    "candidate_recall_at_10_at_least_0_75": false,
+    "contract_accuracy_at_least_0_60": false,
+    "coverage_at_least_0_70": true,
+    "false_localization_not_worse": false,
+    "gold_leakage_zero": true,
+    "o_route_hit_at_3_strictly_greater": false,
+    "top_k_lists_structurally_distinct": true
+  },
+  "github_runtime_collection_run": 30252520510,
+  "held_out_created": false,
+  "held_out_scored": false,
+  "metrics": {
+    "B_GREEDY": {
+      "candidate_recall_at_10": 0.5666666666666667,
+      "contract_accuracy": 0.16666666666666666,
+      "coverage": 0.8,
+      "false_localization": 0.7,
+      "joint_hit_at_3": 0.06666666666666667
+    },
+    "O_ROUTE": {
+      "candidate_recall_at_10": 0.5666666666666667,
+      "contract_accuracy": 0.13333333333333333,
+      "coverage": 0.8,
+      "false_localization": 0.7666666666666667,
+      "joint_hit_at_3": 0.0
+    }
+  },
+  "readiness_checks_passed": 23,
+  "readiness_checks_total": 23,
+  "readiness_report_sha256": "60c7c8cba808aa8468a038f3768bf8e7bcb5b9280de5112f727c3b2023ca4433",
+  "runtime_evidence_artifact_id": 8648650840,
+  "runtime_evidence_artifact_zip_sha256": "7b7bd0bba2eb9eef3955d2b5e313ecf4bccd02703427117f741c382e7658db09",
+  "runtime_evidence_report_sha256": "53d7460ec6e00605ac4257abbda88bc3b8168a884e08831b29c1830361ed7435",
+  "runtime_manifest_sha256": "2db9ab1402fad106201329f091d2d355d5a539b49ec0033f204f04af7bc40824",
+  "runtime_status": "DEVELOPMENT_RUNTIME_COMPLETE",
+  "scientific_result": "NOT_EVALUATED",
+  "status": "H10_C5C_DEVELOPMENT_GATE_FAIL"
+}

@@ -2,14 +2,31 @@
 
 ## FXAI-H10-C5C-EVIDENCE-RETRIEVAL
 
-- Date: 2026-07-26
+- Date: 2026-07-27
 - Branch: `feat/h10-c5c-evidence-retrieval`
 - Protocol lock commit: `b82a614`
 - Parent H10-C5b status: `H10_C5B_NOT_SUPPORTED`
-- Current status: `IMPLEMENTED_AWAITING_DEVELOPMENT_DATA`
-- Development scored: no
+- Current status: `H10_C5C_DEVELOPMENT_GATE_FAIL`
+- Development scored: yes, development-only
 - Held-out created/scored: no/no
 - Chapter document modified: no
+
+GitHub Actions run `30252520510` collected complete typed runtime evidence for
+30 BugsInPy incidents from eight repositories. All 30 incidents reached
+`BUG_REPRODUCED_WITH_TRACE`, all 23 readiness checks passed, the exact Python
+runtimes were used, and the Gold leakage audit passed. The readiness-bound
+manifest SHA256 is
+`2db9ab1402fad106201329f091d2d355d5a539b49ec0033f204f04af7bc40824`.
+
+Development-only scoring then completed on commit
+`8be65ed2338325a02ddda5b4d2bb361dcc9b2fa1`. The locked technical gate failed:
+candidate Recall@10 was `0.5666666667` against `0.75`; O_ROUTE contract
+accuracy was `0.1333333333` against `0.60`; coverage was `0.80`; and joint
+Hit@3 was `0` for O_ROUTE versus `0.0666666667` for B_GREEDY. O_ROUTE false
+localization was also worse (`0.7666666667` versus `0.70`). Consequently no
+H10-C5c held-out set was created or scored, and no scientific H10-C5c result
+exists. The development status SHA256 is
+`60810d8ee58b20c6d9b1a5e4800c23fc678ce9e698ad70d339e91d37a7f69ba1`.
 
 H10-C5c is a separate prospective cycle. It does not rescore the 24 official
 H10-C5b held-out incidents; those incidents are restricted to post-hoc error
