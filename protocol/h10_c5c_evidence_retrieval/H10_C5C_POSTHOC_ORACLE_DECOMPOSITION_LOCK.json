@@ -1,0 +1,29 @@
+{
+  "analysis_id": "h10-c5c-development-posthoc-oracle-decomposition-v1",
+  "analysis_type": "POSTHOC_DEVELOPMENT_ERROR_DECOMPOSITION_ONLY",
+  "baseline_results_sha256": "02e6f18b56a0e986c3d5eea3dda6890d2c4b98049fd567daa8b469904bfc5810",
+  "created_before_oracle_results": true,
+  "development_status_sha256": "60810d8ee58b20c6d9b1a5e4800c23fc678ce9e698ad70d339e91d37a7f69ba1",
+  "held_out_created": false,
+  "held_out_scored": false,
+  "input_manifest_sha256": "2db9ab1402fad106201329f091d2d355d5a539b49ec0033f204f04af7bc40824",
+  "interventions": {
+    "BASELINE": "Recompute the frozen O_ROUTE development prediction without oracle input and require exact agreement with the committed top-k signature.",
+    "ORACLE_BOTH": "Combine ORACLE_CANDIDATE and ORACLE_CONTRACT, then execute the unchanged global cut optimizer.",
+    "ORACLE_CANDIDATE": "Add every independent Gold file-symbol atom to the retrieved pool. Use the maximum observed retrieval score and confidence, or 1.0 when the pool is empty, and assign all registered incident obligations. Contract inference and global optimization remain unchanged.",
+    "ORACLE_CONTRACT": "Keep the observed retrieved pool and pass the exact independent Gold contract family to contract inference. Do not normalize or map unregistered Gold families. Global optimization remains unchanged."
+  },
+  "method_or_gate_changed": false,
+  "oracle_results_may_support_scientific_claim": false,
+  "primary_descriptive_endpoint": "joint_file_symbol_contract_hit_at_3",
+  "prohibited_uses": [
+    "scientific hypothesis testing",
+    "replacement of the failed development gate",
+    "held-out creation or scoring",
+    "method weight or threshold tuning",
+    "claiming oracle performance as method performance"
+  ],
+  "scientific_result": "NOT_EVALUATED",
+  "source_commit": "df77eb70aa241cd603f5ce178a21ac1aca0f889f",
+  "status": "LOCKED_BEFORE_POSTHOC_ORACLE_EXECUTION"
+}
