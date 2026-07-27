@@ -9,11 +9,10 @@ import shutil
 import subprocess
 import tempfile
 import zipfile
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 import yaml
-
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT_DIR = ROOT / "release_artifacts"
@@ -26,6 +25,9 @@ FORBIDDEN_PARTS = {
     "site/dubnaxai",
 }
 FORBIDDEN_SUFFIXES = {".docx", ".pdf", ".pyc", ".pyo", ".zip"}
+ALLOWED_ARCHIVES = {
+    "data/h10_c6_noise/bank_marketing_uci_222.zip",
+}
 ALLOWED_ROOTS = {
     ".github",
     "baselines",
@@ -92,12 +94,16 @@ ALLOWED_PREFIXES = (
     "reports/h10_c6_noise/",
     "reports/h10_c5_pilot/",
     "reports/integrations/",
+    "reports/chapter_updates/",
+    "reports/final_practical/",
     "results/h10_c5b/",
     "results/h10_c5c/",
     "results/h9_e2e_v2/",
     "results/h10_c6_noise/",
     "results/h10_c5_pilot/",
     "results/integrations/",
+    "results/final_practical/",
+    "results/h10_c5c_posthoc/",
     "reports/release/universal_model_integration_completion.md",
 )
 REQUIRED_PATHS = {
@@ -310,7 +316,11 @@ def validate_archive(path: Path, manifest_artifacts: set[str]) -> tuple[int, lis
             normalized = name.rstrip("/")
             if any(part in normalized for part in FORBIDDEN_PARTS):
                 forbidden.append(name)
-            if Path(normalized).suffix in FORBIDDEN_SUFFIXES:
+            repository_name = normalized.removeprefix("fuzzy-xai-operator/")
+            if (
+                Path(normalized).suffix in FORBIDDEN_SUFFIXES
+                and repository_name not in ALLOWED_ARCHIVES
+            ):
                 forbidden.append(name)
         if forbidden:
             raise RuntimeError(f"release archive contains generated or quarantined files: {sorted(set(forbidden))}")
@@ -324,7 +334,10 @@ def validate_archive(path: Path, manifest_artifacts: set[str]) -> tuple[int, lis
 
 def include_in_source_release(path: Path, manifest_artifacts: set[str]) -> bool:
     relative = path.as_posix()
-    if path.suffix.lower() in FORBIDDEN_SUFFIXES:
+    if (
+        path.suffix.lower() in FORBIDDEN_SUFFIXES
+        and relative not in ALLOWED_ARCHIVES
+    ):
         return False
     if relative in ALLOWED_EXACT:
         return True
@@ -384,7 +397,7 @@ def main() -> None:
     checksum_path.write_text(f"{archive_hash}  {archive_path.name}\n", encoding="ascii")
     manifest = {
         "schema_version": "1.0",
-        "created_at": datetime.now(timezone.utc).isoformat(),
+        "created_at": datetime.now(UTC).isoformat(),
         "commit": commit,
         "branch": run_git("branch", "--show-current"),
         "archive": archive_path.name,
