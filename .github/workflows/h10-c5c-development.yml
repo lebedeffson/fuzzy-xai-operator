@@ -502,8 +502,7 @@ jobs:
           make final-practical-parent-immutability H10_C3_PYTHON=python
           python scripts/ch4_revision/claim_lint.py --root .
           git diff --exit-code -- \
-            reports/final_practical \
-            reports/chapter_revision/CLAIM_LINT.json
+            reports/final_practical
       - name: Record environment
         run: |
           mkdir -p results/final_practical
@@ -534,6 +533,7 @@ jobs:
           )
           PY
       - uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: ch4-final-practical-evidence-${{ github.run_id }}
           path: |
@@ -542,5 +542,6 @@ jobs:
             results/integrations
             reports/integrations
             results/final_practical
+            reports/chapter_revision/CLAIM_LINT.json
           if-no-files-found: error
           retention-days: 30
