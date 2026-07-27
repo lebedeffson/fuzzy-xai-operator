@@ -33,6 +33,7 @@ tensorflow = ["tensorflow>=2.14"]
 onnx = ["onnx>=1.15", "onnxruntime>=1.16"]
 images = ["pillow>=10.0"]
 evidence = ["pyarrow>=16.0"]
+mlflow = ["mlflow==2.22.5"]
 all-models = [
     "xgboost>=1.7",
     "lightgbm>=4.0",

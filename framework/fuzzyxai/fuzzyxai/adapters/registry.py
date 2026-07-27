@@ -3,12 +3,14 @@ from __future__ import annotations
 from typing import Type
 
 from fuzzyxai.adapters.base import BaseAdapter
+from fuzzyxai.adapters.mlflow_tabular import MlflowTabularAdapter
 from fuzzyxai.adapters.tabular_classification import TabularClassificationAdapter
 
 
 ADAPTERS: dict[str, Type[BaseAdapter]] = {
     "tabular_classification": TabularClassificationAdapter,
     "external_wine_classification": TabularClassificationAdapter,
+    "mlflow_tabular": MlflowTabularAdapter,
 }
 
 

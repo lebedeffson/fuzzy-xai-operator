@@ -1,0 +1,37 @@
+{
+  "allowed_final_statuses": [
+    "H10_C5_PILOT_COMPLETE",
+    "H10_C5_PILOT_LIMITED_N",
+    "H10_C5_PILOT_BLOCKED_NO_ELIGIBLE_INCIDENTS",
+    "H10_C5_PILOT_INFRASTRUCTURE_BLOCKED"
+  ],
+  "confirmation_claim_permitted": false,
+  "gold_fields_forbidden_during_selection_and_execution": [
+    "gold_source_component",
+    "gold_contract_family",
+    "gold_repair_operation",
+    "gold_atom_count",
+    "gold_changed_files"
+  ],
+  "parent_inputs": {
+    "h10_c5_incident_manifest_sha256": "65eba738ff36d1cb9bc59c7a4392aed5fc68628c5eabd73d27e7cb10ceaeaa8e",
+    "h10_c5_per_incident_sha256": "61bfb8bde292976889bf2f037e1962de5e0d2363a46380b080a4588e4c6bdcc4",
+    "h10_c5b_final_status_sha256": "a1ac841880e9acac2c09eac79d18721d17f83da5e8cec19a7057fa8cb453fc6d",
+    "h10_c5b_per_incident_sha256": "5524c06c5c6aa7644d50372e0a45d4347860423950d69762cbf233a9f68a20c1"
+  },
+  "pilot_id": "h10-c5-pilot-executable-recovery-v1",
+  "practical_threshold": "RESTORATION_CONFIRMED >= 3 of 5 when N=5",
+  "prospective": true,
+  "selection_rank": "SHA256(repository + incident_id + buggy_commit)",
+  "selection_size": 5,
+  "status": "LOCKED_BEFORE_SELECTION",
+  "strict_eligibility": [
+    "published H10-C5 or H10-C5b incident",
+    "buggy commit registered",
+    "literal FAIL_TO_PASS command registered",
+    "O_ROUTE non-empty diagnostic cut",
+    "O_ROUTE executable repair plan with operation arguments",
+    "digest-pinned container registered"
+  ],
+  "universal_practical_claim_permitted": false
+}

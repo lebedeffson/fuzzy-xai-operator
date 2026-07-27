@@ -90,10 +90,14 @@ ALLOWED_PREFIXES = (
     "reports/h10_c5c/",
     "reports/h9_e2e_v2/",
     "reports/h10_c6_noise/",
+    "reports/h10_c5_pilot/",
+    "reports/integrations/",
     "results/h10_c5b/",
     "results/h10_c5c/",
     "results/h9_e2e_v2/",
     "results/h10_c6_noise/",
+    "results/h10_c5_pilot/",
+    "results/integrations/",
     "reports/release/universal_model_integration_completion.md",
 )
 REQUIRED_PATHS = {
