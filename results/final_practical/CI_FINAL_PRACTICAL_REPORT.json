@@ -1,0 +1,22 @@
+{
+  "artifact_id": 8652464341,
+  "artifact_name": "ch4-final-practical-evidence-30264795977",
+  "artifact_zip_download_sha256": "ca9e23da955d17c12b77d6becd82667a76c729173431f87904989cfefa8c80eb",
+  "claim_lint": "PASS",
+  "commit": "b30482583115b967193632d384ec123a960e5826",
+  "focused_python_3_11": "PASS",
+  "focused_python_3_12": "PASS",
+  "full_regression": {
+    "passed": 712,
+    "skipped": 7,
+    "status": "PASS",
+    "warnings": 84
+  },
+  "h10_c5_pilot": "H10_C5_PILOT_BLOCKED_NO_ELIGIBLE_INCIDENTS",
+  "h10_c6_n": "H10_C6_N_SUPPORTED",
+  "mlflow_integration": "MLFLOW_INTEGRATION_PASS",
+  "operator_manifest_addendum": "PASS",
+  "parent_result_immutability": "PASS",
+  "run_id": 30264795977,
+  "workflow": ".github/workflows/h10-c5c-development.yml"
+}
