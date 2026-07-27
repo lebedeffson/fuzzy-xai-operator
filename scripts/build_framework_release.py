@@ -98,6 +98,7 @@ ALLOWED_PREFIXES = (
     "reports/chapter_updates/",
     "reports/final_practical/",
     "results/h10_c5b/",
+    "results/h10_c5/",
     "results/h10_c5c/",
     "results/h9_e2e_v2/",
     "results/h10_c6_noise/",
