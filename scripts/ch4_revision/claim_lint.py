@@ -15,6 +15,16 @@ FORBIDDEN = (
     "снижает трудозатраты",
     "подтверждено на реальных инцидентах",
     "H10-C3a и H10-C3b независимо подтверждены",
+    "industrial performance proved",
+    "practical utility proved",
+    "human time reduced",
+    "natural incident repair confirmed universally",
+    "noise robustness confirmed",
+    "доказана промышленная производительность",
+    "доказана универсальная практическая полезность",
+    "сокращено время работы специалиста",
+    "универсально подтверждено восстановление естественных инцидентов",
+    "подтверждена устойчивость к шуму",
 )
 
 
@@ -36,6 +46,12 @@ def main() -> None:
         root / "reports/h10_c5",
         root / "reports/h10_c6",
         root / "reports/h9_e2e",
+        root / "reports/h9_e2e_v2",
+        root / "reports/h10_c5_pilot",
+        root / "reports/h10_c6_noise",
+        root / "reports/integrations",
+        root / "reports/final_practical",
+        root / "reports/chapter_updates",
         root / "reports/multimodal_routes",
     ]
     files: list[Path] = []
