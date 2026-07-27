@@ -100,6 +100,13 @@ def main() -> None:
         source_root.mkdir()
         shutil.copy2(source, source_root / source.name)
         shutil.copy2(source_sidecar, source_root / source_sidecar.name)
+        clean_source_report = OUTPUT / "CLEAN_SOURCE_RELEASE_TESTS.json"
+        if not clean_source_report.is_file():
+            raise RuntimeError("clean source release test report is missing")
+        shutil.copy2(
+            clean_source_report,
+            source_root / clean_source_report.name,
+        )
         identity = {
             "schema_version": "1.0",
             "commit": commit,
