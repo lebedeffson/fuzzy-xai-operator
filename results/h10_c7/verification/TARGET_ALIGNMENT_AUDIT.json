@@ -1,0 +1,1076 @@
+{
+  "checks": {
+    "correct_pairs_in_top_3": false,
+    "correct_top_1_pairs": false,
+    "misaligned_old_positive_labels": false
+  },
+  "expected": {
+    "correct_pairs_in_top_3": 14,
+    "correct_top_1_pairs": 11,
+    "misaligned_old_positive_labels": 3
+  },
+  "misaligned_incident_ids": [
+    "bugsinpy-black-23",
+    "bugsinpy-pandas-73",
+    "bugsinpy-thefuck-22",
+    "bugsinpy-tornado-8"
+  ],
+  "observed": {
+    "correct_pairs_in_top_3": 12,
+    "correct_top_1_pairs": 10,
+    "misaligned_old_positive_labels": 4
+  },
+  "rows": [
+    {
+      "incident_id": "bugsinpy-fastapi-13",
+      "old_target": 0,
+      "pair_targets": [
+        0,
+        0,
+        0
+      ],
+      "repository": "tiangolo/fastapi",
+      "top_1_pair_target": 0,
+      "top_3_pair_hit": 0,
+      "top_3_pairs": [
+        {
+          "contract": "CONFIGURATION",
+          "file_path": "fastapi/routing.py",
+          "rank": 1,
+          "symbol": "APIRouter.get",
+          "target": 0
+        },
+        {
+          "contract": "CONFIGURATION",
+          "file_path": "fastapi/openapi/utils.py",
+          "rank": 2,
+          "symbol": "get_openapi_path",
+          "target": 0
+        },
+        {
+          "contract": "CONFIGURATION",
+          "file_path": "fastapi/applications.py",
+          "rank": 3,
+          "symbol": "FastAPI",
+          "target": 0
+        }
+      ]
+    },
+    {
+      "incident_id": "bugsinpy-tornado-16",
+      "old_target": 0,
+      "pair_targets": [
+        0,
+        0,
+        0
+      ],
+      "repository": "tornadoweb/tornado",
+      "top_1_pair_target": 0,
+      "top_3_pair_hit": 0,
+      "top_3_pairs": [
+        {
+          "contract": "CONFIGURATION",
+          "file_path": "tornado/concurrent.py",
+          "rank": 1,
+          "symbol": "Future.result",
+          "target": 0
+        },
+        {
+          "contract": "CONFIGURATION",
+          "file_path": "tornado/ioloop.py",
+          "rank": 2,
+          "symbol": "IOLoop.run_sync",
+          "target": 0
+        },
+        {
+          "contract": "CONFIGURATION",
+          "file_path": "tornado/gen.py",
+          "rank": 3,
+          "symbol": "Runner.run",
+          "target": 0
+        }
+      ]
+    },
+    {
+      "incident_id": "bugsinpy-black-18",
+      "old_target": 1,
+      "pair_targets": [
+        1,
+        0,
+        0
+      ],
+      "repository": "psf/black",
+      "top_1_pair_target": 1,
+      "top_3_pair_hit": 1,
+      "top_3_pairs": [
+        {
+          "contract": "CONFIGURATION",
+          "file_path": "black.py",
+          "rank": 1,
+          "symbol": "format_file_in_place",
+          "target": 1
+        },
+        {
+          "contract": "CONFIGURATION",
+          "file_path": "black.py",
+          "rank": 2,
+          "symbol": "format_str",
+          "target": 0
+        },
+        {
+          "contract": "CONFIGURATION",
+          "file_path": "black.py",
+          "rank": 3,
+          "symbol": "format_file_contents",
+          "target": 0
+        }
+      ]
+    },
+    {
+      "incident_id": "bugsinpy-thefuck-24",
+      "old_target": 0,
+      "pair_targets": [
+        0,
+        0,
+        0
+      ],
+      "repository": "nvbn/thefuck",
+      "top_1_pair_target": 0,
+      "top_3_pair_hit": 0,
+      "top_3_pairs": [
+        {
+          "contract": "CONFIGURATION",
+          "file_path": "tests/test_types.py",
+          "rank": 1,
+          "symbol": "TestCorrectedCommand",
+          "target": 0
+        },
+        {
+          "contract": "CONFIGURATION",
+          "file_path": "thefuck/types.py",
+          "rank": 2,
+          "symbol": "SortedCorrectedCommandsSequence",
+          "target": 0
+        },
+        {
+          "contract": "CONFIGURATION",
+          "file_path": "thefuck/conf.py",
+          "rank": 3,
+          "symbol": "_DefaultRulesNames",
+          "target": 0
+        }
+      ]
+    },
+    {
+      "incident_id": "bugsinpy-youtube-dl-13",
+      "old_target": 1,
+      "pair_targets": [
+        1,
+        0,
+        0
+      ],
+      "repository": "ytdl-org/youtube-dl",
+      "top_1_pair_target": 1,
+      "top_3_pair_hit": 1,
+      "top_3_pairs": [
+        {
+          "contract": "ARTIFACT_PROVENANCE",
+          "file_path": "youtube_dl/utils.py",
+          "rank": 1,
+          "symbol": "urljoin",
+          "target": 1
+        },
+        {
+          "contract": "ARTIFACT_PROVENANCE",
+          "file_path": "youtube_dl/downloader/rtmp.py",
+          "rank": 2,
+          "symbol": "RtmpFD",
+          "target": 0
+        },
+        {
+          "contract": "ARTIFACT_PROVENANCE",
+          "file_path": "youtube_dl/utils.py",
+          "rank": 3,
+          "symbol": "ContentTooShortError",
+          "target": 0
+        }
+      ]
+    },
+    {
+      "incident_id": "bugsinpy-PySnooper-2",
+      "old_target": 0,
+      "pair_targets": [
+        0,
+        0,
+        0
+      ],
+      "repository": "cool-RR/PySnooper",
+      "top_1_pair_target": 0,
+      "top_3_pair_hit": 0,
+      "top_3_pairs": [
+        {
+          "contract": "UNKNOWN_CONTRACT",
+          "file_path": "pysnooper/variables.py",
+          "rank": 1,
+          "symbol": "Attrs",
+          "target": 0
+        },
+        {
+          "contract": "UNKNOWN_CONTRACT",
+          "file_path": "pysnooper/variables.py",
+          "rank": 2,
+          "symbol": "Exploding",
+          "target": 0
+        },
+        {
+          "contract": "UNKNOWN_CONTRACT",
+          "file_path": "pysnooper/tracer.py",
+          "rank": 3,
+          "symbol": "FileWriter",
+          "target": 0
+        }
+      ]
+    },
+    {
+      "incident_id": "bugsinpy-pandas-73",
+      "old_target": 1,
+      "pair_targets": [
+        0,
+        0,
+        0
+      ],
+      "repository": "pandas-dev/pandas",
+      "top_1_pair_target": 0,
+      "top_3_pair_hit": 0,
+      "top_3_pairs": [
+        {
+          "contract": "DATA_CONTRACT",
+          "file_path": "pandas/core/frame.py",
+          "rank": 1,
+          "symbol": "DataFrame",
+          "target": 0
+        },
+        {
+          "contract": "DATA_CONTRACT",
+          "file_path": "pandas/tests/frame/test_arithmetic.py",
+          "rank": 2,
+          "symbol": "TestFrameArithmetic",
+          "target": 0
+        },
+        {
+          "contract": "DATA_CONTRACT",
+          "file_path": "pandas/tests/frame/test_arithmetic.py",
+          "rank": 3,
+          "symbol": "TestFrameFlexArithmetic",
+          "target": 0
+        }
+      ]
+    },
+    {
+      "incident_id": "bugsinpy-httpie-3",
+      "old_target": 0,
+      "pair_targets": [
+        0,
+        0,
+        0
+      ],
+      "repository": "jakubroztocil/httpie",
+      "top_1_pair_target": 0,
+      "top_3_pair_hit": 0,
+      "top_3_pairs": [
+        {
+          "contract": "CONFIGURATION",
+          "file_path": "httpie/core.py",
+          "rank": 1,
+          "symbol": "main",
+          "target": 0
+        },
+        {
+          "contract": "CONFIGURATION",
+          "file_path": "httpie/sessions.py",
+          "rank": 2,
+          "symbol": "get_response",
+          "target": 0
+        },
+        {
+          "contract": "CONFIGURATION",
+          "file_path": "httpie/client.py",
+          "rank": 3,
+          "symbol": "get_response",
+          "target": 0
+        }
+      ]
+    },
+    {
+      "incident_id": "bugsinpy-fastapi-6",
+      "old_target": 0,
+      "pair_targets": [
+        0,
+        0,
+        0
+      ],
+      "repository": "tiangolo/fastapi",
+      "top_1_pair_target": 0,
+      "top_3_pair_hit": 0,
+      "top_3_pairs": [
+        {
+          "contract": "CONFIGURATION",
+          "file_path": "fastapi/dependencies/utils.py",
+          "rank": 1,
+          "symbol": "request_params_to_args",
+          "target": 0
+        },
+        {
+          "contract": "CONFIGURATION",
+          "file_path": "fastapi/dependencies/utils.py",
+          "rank": 2,
+          "symbol": "request_body_to_args",
+          "target": 0
+        },
+        {
+          "contract": "CONFIGURATION",
+          "file_path": "fastapi/routing.py",
+          "rank": 3,
+          "symbol": "APIRouter.post",
+          "target": 0
+        }
+      ]
+    },
+    {
+      "incident_id": "bugsinpy-tornado-15",
+      "old_target": 0,
+      "pair_targets": [
+        0,
+        0,
+        0
+      ],
+      "repository": "tornadoweb/tornado",
+      "top_1_pair_target": 0,
+      "top_3_pair_hit": 0,
+      "top_3_pairs": [
+        {
+          "contract": "CONFIGURATION",
+          "file_path": "tornado/testing.py",
+          "rank": 1,
+          "symbol": "_TestMethodWrapper.__call__",
+          "target": 0
+        },
+        {
+          "contract": "CONFIGURATION",
+          "file_path": "tornado/testing.py",
+          "rank": 2,
+          "symbol": "ExpectLog.__exit__",
+          "target": 0
+        },
+        {
+          "contract": "CONFIGURATION",
+          "file_path": "tornado/test/web_test.py",
+          "rank": 3,
+          "symbol": "StaticFileTest.get_and_head",
+          "target": 0
+        }
+      ]
+    },
+    {
+      "incident_id": "bugsinpy-black-5",
+      "old_target": 0,
+      "pair_targets": [
+        0,
+        0,
+        0
+      ],
+      "repository": "psf/black",
+      "top_1_pair_target": 0,
+      "top_3_pair_hit": 0,
+      "top_3_pairs": [
+        {
+          "contract": "UNKNOWN_CONTRACT",
+          "file_path": "tests/test_black.py",
+          "rank": 1,
+          "symbol": "read_data",
+          "target": 0
+        },
+        {
+          "contract": "UNKNOWN_CONTRACT",
+          "file_path": "blib2to3/pytree.py",
+          "rank": 2,
+          "symbol": "Base",
+          "target": 0
+        },
+        {
+          "contract": "UNKNOWN_CONTRACT",
+          "file_path": "black.py",
+          "rank": 3,
+          "symbol": "BracketTracker",
+          "target": 0
+        }
+      ]
+    },
+    {
+      "incident_id": "bugsinpy-thefuck-9",
+      "old_target": 1,
+      "pair_targets": [
+        1,
+        0,
+        0
+      ],
+      "repository": "nvbn/thefuck",
+      "top_1_pair_target": 1,
+      "top_3_pair_hit": 1,
+      "top_3_pairs": [
+        {
+          "contract": "CONFIGURATION",
+          "file_path": "thefuck/rules/git_push.py",
+          "rank": 1,
+          "symbol": "get_new_command",
+          "target": 1
+        },
+        {
+          "contract": "CONFIGURATION",
+          "file_path": "thefuck/specific/git.py",
+          "rank": 2,
+          "symbol": "git_support",
+          "target": 0
+        },
+        {
+          "contract": "CONFIGURATION",
+          "file_path": "thefuck/types.py",
+          "rank": 3,
+          "symbol": "Command",
+          "target": 0
+        }
+      ]
+    },
+    {
+      "incident_id": "bugsinpy-youtube-dl-37",
+      "old_target": 1,
+      "pair_targets": [
+        1,
+        0,
+        0
+      ],
+      "repository": "ytdl-org/youtube-dl",
+      "top_1_pair_target": 1,
+      "top_3_pair_hit": 1,
+      "top_3_pairs": [
+        {
+          "contract": "SERIALIZATION",
+          "file_path": "youtube_dl/utils.py",
+          "rank": 1,
+          "symbol": "uppercase_escape",
+          "target": 1
+        },
+        {
+          "contract": "SERIALIZATION",
+          "file_path": "youtube_dl/downloader/rtmp.py",
+          "rank": 2,
+          "symbol": "RtmpFD",
+          "target": 0
+        },
+        {
+          "contract": "SERIALIZATION",
+          "file_path": "youtube_dl/downloader/common.py",
+          "rank": 3,
+          "symbol": "FileDownloader",
+          "target": 0
+        }
+      ]
+    },
+    {
+      "incident_id": "bugsinpy-PySnooper-3",
+      "old_target": 0,
+      "pair_targets": [
+        0,
+        0,
+        0
+      ],
+      "repository": "cool-RR/PySnooper",
+      "top_1_pair_target": 0,
+      "top_3_pair_hit": 0,
+      "top_3_pairs": [
+        {
+          "contract": "CONFIGURATION",
+          "file_path": "pysnooper/pysnooper.py",
+          "rank": 1,
+          "symbol": "snoop.decorate",
+          "target": 0
+        },
+        {
+          "contract": "CONFIGURATION",
+          "file_path": "pysnooper/tracer.py",
+          "rank": 2,
+          "symbol": "Tracer.trace",
+          "target": 0
+        },
+        {
+          "contract": "CONFIGURATION",
+          "file_path": "pysnooper/pysnooper.py",
+          "rank": 3,
+          "symbol": "snoop",
+          "target": 0
+        }
+      ]
+    },
+    {
+      "incident_id": "bugsinpy-pandas-7",
+      "old_target": 0,
+      "pair_targets": [
+        0,
+        0,
+        0
+      ],
+      "repository": "pandas-dev/pandas",
+      "top_1_pair_target": 0,
+      "top_3_pair_hit": 0,
+      "top_3_pairs": [
+        {
+          "contract": "DATA_CONTRACT",
+          "file_path": "pandas/core/indexes/base.py",
+          "rank": 1,
+          "symbol": "Index.get_indexer",
+          "target": 0
+        },
+        {
+          "contract": "DATA_CONTRACT",
+          "file_path": "pandas/core/indexes/base.py",
+          "rank": 2,
+          "symbol": "Index",
+          "target": 0
+        },
+        {
+          "contract": "DATA_CONTRACT",
+          "file_path": "pandas/core/indexes/base.py",
+          "rank": 3,
+          "symbol": "Index.reindex",
+          "target": 0
+        }
+      ]
+    },
+    {
+      "incident_id": "bugsinpy-httpie-4",
+      "old_target": 0,
+      "pair_targets": [
+        0,
+        0,
+        0
+      ],
+      "repository": "jakubroztocil/httpie",
+      "top_1_pair_target": 0,
+      "top_3_pair_hit": 0,
+      "top_3_pairs": [
+        {
+          "contract": "CONFIGURATION",
+          "file_path": "httpie/core.py",
+          "rank": 1,
+          "symbol": "main",
+          "target": 0
+        },
+        {
+          "contract": "CONFIGURATION",
+          "file_path": "httpie/input.py",
+          "rank": 2,
+          "symbol": "AuthCredentials",
+          "target": 0
+        },
+        {
+          "contract": "CONFIGURATION",
+          "file_path": "httpie/output/formatters/xml.py",
+          "rank": 3,
+          "symbol": "XMLFormatter",
+          "target": 0
+        }
+      ]
+    },
+    {
+      "incident_id": "bugsinpy-fastapi-16",
+      "old_target": 1,
+      "pair_targets": [
+        1,
+        0,
+        0
+      ],
+      "repository": "tiangolo/fastapi",
+      "top_1_pair_target": 1,
+      "top_3_pair_hit": 1,
+      "top_3_pairs": [
+        {
+          "contract": "CONFIGURATION",
+          "file_path": "fastapi/encoders.py",
+          "rank": 1,
+          "symbol": "jsonable_encoder",
+          "target": 1
+        },
+        {
+          "contract": "CONFIGURATION",
+          "file_path": "tests/test_jsonable_encoder.py",
+          "rank": 2,
+          "symbol": "DictablePerson",
+          "target": 0
+        },
+        {
+          "contract": "CONFIGURATION",
+          "file_path": "fastapi/applications.py",
+          "rank": 3,
+          "symbol": "FastAPI",
+          "target": 0
+        }
+      ]
+    },
+    {
+      "incident_id": "bugsinpy-tornado-14",
+      "old_target": 1,
+      "pair_targets": [
+        1,
+        0,
+        0
+      ],
+      "repository": "tornadoweb/tornado",
+      "top_1_pair_target": 1,
+      "top_3_pair_hit": 1,
+      "top_3_pairs": [
+        {
+          "contract": "CONFIGURATION",
+          "file_path": "tornado/ioloop.py",
+          "rank": 1,
+          "symbol": "IOLoop.initialize",
+          "target": 1
+        },
+        {
+          "contract": "CONFIGURATION",
+          "file_path": "tornado/platform/epoll.py",
+          "rank": 2,
+          "symbol": "EPollIOLoop.initialize",
+          "target": 0
+        },
+        {
+          "contract": "CONFIGURATION",
+          "file_path": "tornado/ioloop.py",
+          "rank": 3,
+          "symbol": "PollIOLoop",
+          "target": 0
+        }
+      ]
+    },
+    {
+      "incident_id": "bugsinpy-black-14",
+      "old_target": 1,
+      "pair_targets": [
+        1,
+        0,
+        0
+      ],
+      "repository": "psf/black",
+      "top_1_pair_target": 1,
+      "top_3_pair_hit": 1,
+      "top_3_pairs": [
+        {
+          "contract": "DATA_CONTRACT",
+          "file_path": "black.py",
+          "rank": 1,
+          "symbol": "get_future_imports",
+          "target": 1
+        },
+        {
+          "contract": "DATA_CONTRACT",
+          "file_path": "black.py",
+          "rank": 2,
+          "symbol": "lib2to3_parse",
+          "target": 0
+        },
+        {
+          "contract": "DATA_CONTRACT",
+          "file_path": "blib2to3/pgen2/tokenize.py",
+          "rank": 3,
+          "symbol": "generate_tokens",
+          "target": 0
+        }
+      ]
+    },
+    {
+      "incident_id": "bugsinpy-thefuck-10",
+      "old_target": 1,
+      "pair_targets": [
+        1,
+        0,
+        0
+      ],
+      "repository": "nvbn/thefuck",
+      "top_1_pair_target": 1,
+      "top_3_pair_hit": 1,
+      "top_3_pairs": [
+        {
+          "contract": "CONFIGURATION",
+          "file_path": "thefuck/rules/man.py",
+          "rank": 1,
+          "symbol": "get_new_command",
+          "target": 1
+        },
+        {
+          "contract": "CONFIGURATION",
+          "file_path": "thefuck/types.py",
+          "rank": 2,
+          "symbol": "Command",
+          "target": 0
+        },
+        {
+          "contract": "CONFIGURATION",
+          "file_path": "thefuck/types.py",
+          "rank": 3,
+          "symbol": "Rule",
+          "target": 0
+        }
+      ]
+    },
+    {
+      "incident_id": "bugsinpy-youtube-dl-36",
+      "old_target": 0,
+      "pair_targets": [
+        0,
+        0,
+        0
+      ],
+      "repository": "ytdl-org/youtube-dl",
+      "top_1_pair_target": 0,
+      "top_3_pair_hit": 0,
+      "top_3_pairs": [
+        {
+          "contract": "UNKNOWN_CONTRACT",
+          "file_path": "youtube_dl/downloader/rtmp.py",
+          "rank": 1,
+          "symbol": "RtmpFD",
+          "target": 0
+        },
+        {
+          "contract": "UNKNOWN_CONTRACT",
+          "file_path": "youtube_dl/extractor/common.py",
+          "rank": 2,
+          "symbol": "InfoExtractor.suitable",
+          "target": 0
+        },
+        {
+          "contract": "UNKNOWN_CONTRACT",
+          "file_path": "youtube_dl/extractor/facebook.py",
+          "rank": 3,
+          "symbol": "FacebookIE",
+          "target": 0
+        }
+      ]
+    },
+    {
+      "incident_id": "bugsinpy-pandas-71",
+      "old_target": 1,
+      "pair_targets": [
+        1,
+        0,
+        0
+      ],
+      "repository": "pandas-dev/pandas",
+      "top_1_pair_target": 1,
+      "top_3_pair_hit": 1,
+      "top_3_pairs": [
+        {
+          "contract": "DATA_CONTRACT",
+          "file_path": "pandas/core/reshape/tile.py",
+          "rank": 1,
+          "symbol": "cut",
+          "target": 1
+        },
+        {
+          "contract": "DATA_CONTRACT",
+          "file_path": "pandas/core/reshape/tile.py",
+          "rank": 2,
+          "symbol": "_bins_to_cuts",
+          "target": 0
+        },
+        {
+          "contract": "DATA_CONTRACT",
+          "file_path": "pandas/tests/arrays/test_integer.py",
+          "rank": 3,
+          "symbol": "TestArithmeticOps",
+          "target": 0
+        }
+      ]
+    },
+    {
+      "incident_id": "bugsinpy-httpie-5",
+      "old_target": 0,
+      "pair_targets": [
+        0,
+        0,
+        0
+      ],
+      "repository": "jakubroztocil/httpie",
+      "top_1_pair_target": 0,
+      "top_3_pair_hit": 0,
+      "top_3_pairs": [
+        {
+          "contract": "CONFIGURATION",
+          "file_path": "httpie/cli.py",
+          "rank": 1,
+          "symbol": "parse_items",
+          "target": 0
+        },
+        {
+          "contract": "CONFIGURATION",
+          "file_path": "tests/tests.py",
+          "rank": 2,
+          "symbol": "BaseTest",
+          "target": 0
+        },
+        {
+          "contract": "CONFIGURATION",
+          "file_path": "httpie/cli.py",
+          "rank": 3,
+          "symbol": "HTTPieArgumentParser",
+          "target": 0
+        }
+      ]
+    },
+    {
+      "incident_id": "bugsinpy-fastapi-5",
+      "old_target": 0,
+      "pair_targets": [
+        0,
+        0,
+        0
+      ],
+      "repository": "tiangolo/fastapi",
+      "top_1_pair_target": 0,
+      "top_3_pair_hit": 0,
+      "top_3_pairs": [
+        {
+          "contract": "CONFIGURATION",
+          "file_path": "tests/test_filter_pydantic_sub_model.py",
+          "rank": 1,
+          "symbol": "ModelA",
+          "target": 0
+        },
+        {
+          "contract": "CONFIGURATION",
+          "file_path": "fastapi/routing.py",
+          "rank": 2,
+          "symbol": "APIRoute.__init__",
+          "target": 0
+        },
+        {
+          "contract": "CONFIGURATION",
+          "file_path": "fastapi/routing.py",
+          "rank": 3,
+          "symbol": "APIRoute",
+          "target": 0
+        }
+      ]
+    },
+    {
+      "incident_id": "bugsinpy-tornado-8",
+      "old_target": 1,
+      "pair_targets": [
+        0,
+        1,
+        0
+      ],
+      "repository": "tornadoweb/tornado",
+      "top_1_pair_target": 0,
+      "top_3_pair_hit": 1,
+      "top_3_pairs": [
+        {
+          "contract": "CONFIGURATION",
+          "file_path": "tornado/web.py",
+          "rank": 1,
+          "symbol": "RequestHandler._stack_context_handle_exception",
+          "target": 0
+        },
+        {
+          "contract": "CONFIGURATION",
+          "file_path": "tornado/websocket.py",
+          "rank": 2,
+          "symbol": "WebSocketProtocol13.accept_connection",
+          "target": 1
+        },
+        {
+          "contract": "CONFIGURATION",
+          "file_path": "tornado/websocket.py",
+          "rank": 3,
+          "symbol": "WebSocketHandler.get",
+          "target": 0
+        }
+      ]
+    },
+    {
+      "incident_id": "bugsinpy-black-23",
+      "old_target": 1,
+      "pair_targets": [
+        0,
+        0,
+        0
+      ],
+      "repository": "psf/black",
+      "top_1_pair_target": 0,
+      "top_3_pair_hit": 0,
+      "top_3_pairs": [
+        {
+          "contract": "CONFIGURATION",
+          "file_path": "tests/test_black.py",
+          "rank": 1,
+          "symbol": "BlackTestCase.assertFormatEqual",
+          "target": 0
+        },
+        {
+          "contract": "CONFIGURATION",
+          "file_path": "black.py",
+          "rank": 2,
+          "symbol": "Visitor.visit",
+          "target": 0
+        },
+        {
+          "contract": "CONFIGURATION",
+          "file_path": "black.py",
+          "rank": 3,
+          "symbol": "whitespace",
+          "target": 0
+        }
+      ]
+    },
+    {
+      "incident_id": "bugsinpy-thefuck-22",
+      "old_target": 1,
+      "pair_targets": [
+        0,
+        1,
+        0
+      ],
+      "repository": "nvbn/thefuck",
+      "top_1_pair_target": 0,
+      "top_3_pair_hit": 1,
+      "top_3_pairs": [
+        {
+          "contract": "CONFIGURATION",
+          "file_path": "thefuck/types.py",
+          "rank": 1,
+          "symbol": "SortedCorrectedCommandsSequence.__iter__",
+          "target": 0
+        },
+        {
+          "contract": "CONFIGURATION",
+          "file_path": "thefuck/types.py",
+          "rank": 2,
+          "symbol": "SortedCorrectedCommandsSequence._realise",
+          "target": 1
+        },
+        {
+          "contract": "CONFIGURATION",
+          "file_path": "thefuck/types.py",
+          "rank": 3,
+          "symbol": "CorrectedCommand",
+          "target": 0
+        }
+      ]
+    },
+    {
+      "incident_id": "bugsinpy-youtube-dl-8",
+      "old_target": 1,
+      "pair_targets": [
+        1,
+        0,
+        0
+      ],
+      "repository": "ytdl-org/youtube-dl",
+      "top_1_pair_target": 1,
+      "top_3_pair_hit": 1,
+      "top_3_pairs": [
+        {
+          "contract": "CONFIGURATION",
+          "file_path": "youtube_dl/YoutubeDL.py",
+          "rank": 1,
+          "symbol": "YoutubeDL.build_format_selector",
+          "target": 1
+        },
+        {
+          "contract": "CONFIGURATION",
+          "file_path": "youtube_dl/YoutubeDL.py",
+          "rank": 2,
+          "symbol": "YoutubeDL.build_format_selector._build_selector_function",
+          "target": 0
+        },
+        {
+          "contract": "CONFIGURATION",
+          "file_path": "youtube_dl/YoutubeDL.py",
+          "rank": 3,
+          "symbol": "YoutubeDL.process_video_result",
+          "target": 0
+        }
+      ]
+    },
+    {
+      "incident_id": "bugsinpy-pandas-48",
+      "old_target": 0,
+      "pair_targets": [
+        0,
+        0,
+        0
+      ],
+      "repository": "pandas-dev/pandas",
+      "top_1_pair_target": 0,
+      "top_3_pair_hit": 0,
+      "top_3_pairs": [
+        {
+          "contract": "DATA_CONTRACT",
+          "file_path": "pandas/core/arrays/integer.py",
+          "rank": 1,
+          "symbol": "coerce_to_array",
+          "target": 0
+        },
+        {
+          "contract": "DATA_CONTRACT",
+          "file_path": "pandas/core/arrays/integer.py",
+          "rank": 2,
+          "symbol": "Int16Dtype",
+          "target": 0
+        },
+        {
+          "contract": "DATA_CONTRACT",
+          "file_path": "pandas/core/arrays/integer.py",
+          "rank": 3,
+          "symbol": "integer_array",
+          "target": 0
+        }
+      ]
+    },
+    {
+      "incident_id": "bugsinpy-httpie-2",
+      "old_target": 0,
+      "pair_targets": [
+        0,
+        0,
+        0
+      ],
+      "repository": "jakubroztocil/httpie",
+      "top_1_pair_target": 0,
+      "top_3_pair_hit": 0,
+      "top_3_pairs": [
+        {
+          "contract": "CONFIGURATION",
+          "file_path": "httpie/core.py",
+          "rank": 1,
+          "symbol": "main",
+          "target": 0
+        },
+        {
+          "contract": "CONFIGURATION",
+          "file_path": "httpie/input.py",
+          "rank": 2,
+          "symbol": "AuthCredentials",
+          "target": 0
+        },
+        {
+          "contract": "CONFIGURATION",
+          "file_path": "httpie/downloads.py",
+          "rank": 3,
+          "symbol": "ContentRangeError",
+          "target": 0
+        }
+      ]
+    }
+  ],
+  "status": "H10_C7_R5V_TARGET_ALIGNMENT_FAIL"
+}

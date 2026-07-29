@@ -116,6 +116,7 @@ class GuidedCandidate:
     rank_sources: tuple[str, ...]
     line_count: int
     obligations: tuple[str, ...]
+    evidence: tuple[str, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -462,6 +463,7 @@ class GuidedNaturalDiagnosisEngine:
                     item.rank_sources,
                     item.line_count,
                     item.obligations,
+                    item.evidence,
                 )
             )
         if variant in {"R5", "R6", "R8"}:

@@ -1,5 +1,34 @@
 # Project Memory
 
+## FXAI-H10-C7-R5V-PAIR-VERIFICATION-AUDIT
+
+- Protocol: `H10-C7-R5V`
+- Status: `H10_C7_R5V_BLOCKED_AUDIT`
+- Scientific result: `NOT_EVALUATED`
+- Retrieval modified: `false`
+- V0/V1 executed: `false/false`
+- Held-out created/scored: `false/false`
+
+The strict target-alignment audit counts a correct pair only when file,
+symbol, and evaluation contract family match the same Gold atom. The frozen
+R5 replay produced 10 correct top-1 pairs, 12 correct pairs in top-3, and four
+old labels that do not match the strict top-1 pair target. These values differ
+from the preregistered controls 11, 14, and 3, so pair-model execution stopped
+before fitting or threshold selection.
+
+The 30-incident replay contains 12,724 call events, 12,768 coverage events,
+and 104 traceback frames. It contains no argument values, return values,
+assertion operands, last-writer events, or value-flow events; candidate-bound
+value provenance is therefore available for 0/90 top-3 pairs. Incident-level
+assertion and exception text must not be counted as evidence for every
+candidate. A future verifier replay requires a one-time candidate-specific
+trace collection plus an explicit protocol amendment resolving the incorrect
+expected alignment counts without weakening the strict pair target.
+
+Acceptance completed with 59 focused H10-C7 tests and a full regression of
+772 passed, 6 skipped. Ruff, compileall, claim lint, operator-addendum binding,
+and all 114 parent-result SHA256 checks passed.
+
 ## FXAI-H10-C7-R5C-CALIBRATED-CONFIRMATION
 
 - Date: 2026-07-29

@@ -12,6 +12,8 @@ from .importer import FORBIDDEN_GOLD_FIELDS
 EVENT_KINDS = frozenset(
     {
         "assertion",
+        "assertion_operand",
+        "argument_value",
         "call",
         "config_read",
         "coverage",
@@ -19,7 +21,10 @@ EVENT_KINDS = frozenset(
         "exception",
         "import",
         "read",
+        "last_writer",
+        "return_value",
         "traceback_frame",
+        "value_flow",
         "write",
     }
 )
