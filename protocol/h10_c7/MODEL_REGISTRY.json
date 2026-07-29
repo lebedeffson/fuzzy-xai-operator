@@ -1,0 +1,34 @@
+{
+  "cross_encoders": [
+    {
+      "backend": "local_transformer",
+      "model_name": "cross-encoder/ms-marco-MiniLM-L-6-v2",
+      "repository_revision": "c5ee24cb16019beea0893ab7796b1df96625c6b8",
+      "revision": "c5ee24cb16019beea0893ab7796b1df96625c6b8",
+      "weights_sha256": "PENDING_LOCAL_WEIGHT_VERIFICATION"
+    }
+  ],
+  "dense_encoders": [
+    {
+      "backend": "local_transformer",
+      "model_name": "microsoft/graphcodebert-base",
+      "repository_revision": "2b0488a7bb0eefc7041f1bb2cad1ab26b0da269d",
+      "revision": "2b0488a7bb0eefc7041f1bb2cad1ab26b0da269d",
+      "weights_sha256": "PENDING_LOCAL_WEIGHT_VERIFICATION"
+    },
+    {
+      "backend": "local_transformer",
+      "model_name": "microsoft/unixcoder-base",
+      "repository_revision": "5604afdc964f6c53782a6813140ade5216b99006",
+      "revision": "5604afdc964f6c53782a6813140ade5216b99006",
+      "weights_sha256": "PENDING_LOCAL_WEIGHT_VERIFICATION"
+    }
+  ],
+  "inference_policy": {
+    "allow_network": false,
+    "deterministic": true,
+    "local_files_only": true,
+    "temperature": 0.0
+  },
+  "status": "REGISTERED_BEFORE_DEVELOPMENT_DOWNLOAD"
+}

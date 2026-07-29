@@ -1,5 +1,19 @@
 # FuzzyXAI Framework Release Status
 
+## H10-C7 Prospective Implementation
+
+- Protocol: `H10-C7-v1`, `LOCKED_BEFORE_DEVELOPMENT`
+- Status: `IMPLEMENTED_AWAITING_NEW_DEVELOPMENT_DATA`
+- Scientific result: `NOT_EVALUATED`
+- Parent results modified: no
+- Development/held-out scoring: no/no
+
+The guided diagnosis implementation and fail-closed development tournament are
+available on `feat/h10-c7-guided-natural-diagnosis`. No H10-C7 performance
+claim is permitted until pinned model weights are hash-verified, new observable
+runtime evidence is collected, the development gate passes, and a
+repository-disjoint held-out protocol is created.
+
 ## Chapter 4 Final Practical Closure
 
 - Date: `2026-07-27`

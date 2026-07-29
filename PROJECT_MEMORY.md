@@ -1,5 +1,43 @@
 # Project Memory
 
+## FXAI-H10-C7-GUIDED-NATURAL-DIAGNOSIS
+
+- Date: 2026-07-29
+- Branch: `feat/h10-c7-guided-natural-diagnosis`
+- Parent release commit:
+  `1fed9ac074295bc4b6cad33841b73a4022bcafcd`
+- Protocol: `H10-C7-v1`, locked before development
+- Implementation status: `IMPLEMENTED_AWAITING_NEW_DEVELOPMENT_DATA`
+- Scientific result: `NOT_EVALUATED`
+- Development collected/scored: no/no
+- Held-out created/scored: no/no
+- Chapter document modified: no
+
+H10-C7 is a new prospective cycle and does not rescore or replace H10-C5b or
+H10-C5c. Their result files and the canonical operator manifest retain their
+published SHA256. All 20 repositories used by those cycles are excluded from
+future H10-C7 confirmatory selection, although disclosed incidents may be used
+as open development/error-analysis data.
+
+The implementation separates observable incident evidence from a development
+Gold file and recursively rejects patch, fixed-state, changed-file and
+changed-symbol channels from method input. It implements deterministic BM25,
+local-only pinned dense-encoder interfaces, reciprocal-rank fusion, a
+personalized repository graph, structural reranking, hierarchical contract
+inference with `UNKNOWN_CONTRACT`, bounded read-only evidence requests, an
+incident router and a twelve-action repository explorer. R0-R8 and the
+registered B_TRACE, B_BM25, B_DENSE, B_RRF, B_GREEDY, B_REPOGRAPH,
+B_AGENTLESS_LOC and O_ROUTE baselines are scored in one repository-folded
+development matrix.
+
+The development runner writes a method lock only when every registered gate
+passes. Held-out validation requires that lock, at least 40 incidents from 12
+new repositories, complete `BUG_REPRODUCED_WITH_TRACE` evidence and zero
+overlap with H10-C5b/H10-C5c repositories. The two code encoders and the
+cross-encoder are pinned by repository revision and are local-only; their
+weight SHA256 values must be recorded before real development execution.
+Smoke hashing encoders are test-only and cannot support a scientific result.
+
 ## FXAI-H10-C5C-EVIDENCE-RETRIEVAL
 
 - Date: 2026-07-27

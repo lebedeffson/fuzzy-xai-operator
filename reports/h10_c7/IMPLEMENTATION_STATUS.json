@@ -1,0 +1,11 @@
+{
+  "development_data_collected": false,
+  "development_scored": false,
+  "held_out_created": false,
+  "held_out_scored": false,
+  "model_weights_verified": false,
+  "parent_results_modified": false,
+  "protocol_id": "H10-C7-v1",
+  "scientific_result": "NOT_EVALUATED",
+  "status": "IMPLEMENTED_AWAITING_NEW_DEVELOPMENT_DATA"
+}

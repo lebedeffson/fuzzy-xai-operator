@@ -87,10 +87,12 @@ ALLOWED_PREFIXES = (
     "experiments/model_universality/",
     "protocol/h10_c5b_repository_grounded/",
     "protocol/h10_c5c_evidence_retrieval/",
+    "protocol/h10_c7/",
     "protocol/h9_e2e_v2/",
     "reports/h10_c5b/",
     "reports/h10_c5c/",
     "reports/h10_c5c_posthoc/",
+    "reports/h10_c7/",
     "reports/h9_e2e_v2/",
     "reports/h10_c6_noise/",
     "reports/h10_c5_pilot/",
@@ -106,6 +108,7 @@ ALLOWED_PREFIXES = (
     "results/integrations/",
     "results/final_practical/",
     "results/h10_c5c_posthoc/",
+    "results/h10_c7/",
     "reports/release/universal_model_integration_completion.md",
 )
 REQUIRED_PATHS = {

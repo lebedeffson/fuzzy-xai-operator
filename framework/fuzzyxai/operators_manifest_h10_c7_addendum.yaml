@@ -1,0 +1,18 @@
+schema_version: "1.0"
+parent_manifest: framework/fuzzyxai/operators_manifest.yaml
+parent_manifest_sha256: 479fa55460426a1726f57a5ed5f745b0ad2e872eeefb21470dd2e3e865133949
+status: prospective_not_evaluated
+operators:
+  - id: h10_c7.guided_natural_diagnosis
+    dissertation_ref: "H10-C7 prospective guided natural diagnosis"
+    callable: fuzzyxai.experiments.h10_c7:run_development_tournament
+    input_schema: ObservableIncidentRepositoryGraphAndSeparateDevelopmentGold
+    output_schema: H10C7DevelopmentTournamentAndFailClosedGate
+    tests:
+      - tests/h10_c7/test_guided_retrieval.py
+      - tests/h10_c7/test_contract_active_repair.py
+      - tests/h10_c7/test_tournament_boundary.py
+    artifacts:
+      - protocol/h10_c7/H10_C7_PROTOCOL_LOCK.json
+      - reports/h10_c7/IMPLEMENTATION_STATUS.json
+    visualization: []
