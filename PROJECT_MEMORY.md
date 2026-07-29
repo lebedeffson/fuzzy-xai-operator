@@ -1,5 +1,36 @@
 # Project Memory
 
+## FXAI-H10-C7A-MATCHED-RECALL-DEVELOPMENT
+
+- Protocol: `H10-C7A`
+- Status: `H10_C7A_BLOCKED_DEVELOPMENT_GATE`
+- Scientific result: `NOT_EVALUATED`
+- Development: `40 incidents / 16 repositories`
+- Held-out created/scored: `false/false`
+- Retrieval modified: `false`
+
+The original primary endpoint remains
+`search_space_reduction_at_recall_20_ge_0_80`; confirmation coverage is not
+an H10-C7A gate. The first ten disclosed H10-C5b incidents by their already
+registered `selection_rank_sha256` extended the autonomous H10-C5c replay
+without rerunning tests or reinstalling project dependencies. Observable and
+Gold manifests remain physically separate, all 40 incidents retain
+project-grounded traceback evidence, and every used repository is excluded
+from future confirmatory selection.
+
+The frozen R5 top-10/top-20 prefixes and all five 30-incident replay metrics
+reproduced exactly. On the 40-incident development set, R5 reached Recall
+`0.90` at `k*=20`; the strongest available matched-recall baseline B_BM25
+reached Recall `0.875` at `k*=160`. Mean symbol-space reduction was `0.9680`
+for R5 and `0.8089` for B_BM25.
+
+The preregistered development gate did not pass because contract macro-F1 was
+`0.5360`, below the locked `0.55` minimum. No method, budget, or baseline lock
+was created and no held-out set was opened. Focused H10-C7 acceptance passed
+with `64 passed`; the final full regression passed with `777 passed, 6
+skipped`. Ruff, compileall, claim lint, Gold-leakage audit, frozen-prefix
+audit, and development-bundle SHA256 verification passed.
+
 ## FXAI-H10-C7-R5V-PAIR-VERIFICATION-AUDIT
 
 - Protocol: `H10-C7-R5V`

@@ -1,0 +1,19 @@
+{
+  "claim_lint": {
+    "files_checked": 30,
+    "status": "PASS",
+    "violations": []
+  },
+  "compileall": "PASS",
+  "focused_h10_c7": {
+    "passed": 64,
+    "status": "PASS"
+  },
+  "full_regression": {
+    "passed": 777,
+    "skipped": 6,
+    "status": "PASS",
+    "warnings": 491
+  },
+  "ruff": "PASS"
+}

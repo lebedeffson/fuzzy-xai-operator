@@ -1,0 +1,21 @@
+{
+  "dominance_endpoint": false,
+  "method_budgets": {
+    "B_BM25": {
+      "k_star": 160,
+      "mean_search_space_reduction": 0.808865533190423,
+      "recall": 0.875
+    },
+    "R5": {
+      "k_star": 20,
+      "mean_search_space_reduction": 0.9680228741884853,
+      "recall": 0.9
+    }
+  },
+  "minimum_recall": 0.8,
+  "selected_baseline": "B_BM25",
+  "unavailable_optional_methods": [
+    "B_DENSE",
+    "B_RRF"
+  ]
+}

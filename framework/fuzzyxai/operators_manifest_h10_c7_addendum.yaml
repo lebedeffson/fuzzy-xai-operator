@@ -40,3 +40,14 @@ operators:
       - results/h10_c7/verification/R5V_STATUS.json
       - reports/h10_c7/R5V_AUDIT_REPORT.md
     visualization: []
+  - id: h10_c7a.matched_recall_budget_scoring
+    dissertation_ref: "H10-C7A prospective search-space reduction"
+    callable: fuzzyxai.experiments.h10_c7a:budget_rows
+    input_schema: FrozenR5ObservableDevelopmentGraphRuntimeAndSeparateGold
+    output_schema: MatchedRecallBudgetCurvesAndFailClosedDevelopmentGate
+    tests:
+      - tests/h10_c7/test_h10_c7a_budget.py
+    artifacts:
+      - protocol/h10_c7/H10_C7_PROTOCOL_LOCK.json
+      - protocol/h10_c7/H10_C7A_PRIMARY_ENDPOINT_AMENDMENT.json
+    visualization: []
