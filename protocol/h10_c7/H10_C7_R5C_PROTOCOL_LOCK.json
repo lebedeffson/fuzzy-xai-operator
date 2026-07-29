@@ -1,0 +1,42 @@
+{
+  "allowed_changes": [
+    "confirmation feature extraction",
+    "confirmation probability calibration",
+    "confirmation threshold selection",
+    "confirmation status assignment",
+    "offline active evidence application"
+  ],
+  "baseline_commit": "cf1c1dbb04004b2b423fc96d79eca3913e9a7f6d",
+  "calibration_mode": "leave_one_repository_out",
+  "confirmation_models": [
+    "C0",
+    "C1"
+  ],
+  "confirmation_threshold_rule": "maximum training confirmation coverage at selective precision >= 0.80",
+  "development_incidents": 30,
+  "development_repositories": 8,
+  "gate": {
+    "confirmation_coverage": 0.4,
+    "confirmed_correct_minimum": 10,
+    "contract_macro_f1": 0.6,
+    "false_confirmed_maximum": 3,
+    "joint_hit_at_3": 0.3,
+    "mrr": 0.45,
+    "recall_at_10": 0.8,
+    "recall_at_20": 0.9,
+    "repository_improvement_count": 6,
+    "selective_precision": 0.8,
+    "test_symbol_false_confirmation": 0,
+    "unknown_contract_confirmation": 0
+  },
+  "held_out_created": false,
+  "held_out_scored": false,
+  "locked_before_recorded_replay": true,
+  "neural_models_allowed": false,
+  "new_data_allowed": false,
+  "parent_protocol": "H10-C7-v1",
+  "protocol_id": "H10-C7-R5C",
+  "retrieval_modified": false,
+  "scientific_result": "NOT_EVALUATED",
+  "status": "LOCKED_BEFORE_RECORDED_REPLAY"
+}

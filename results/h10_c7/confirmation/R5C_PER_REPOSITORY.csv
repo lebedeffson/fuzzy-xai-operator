@@ -1,0 +1,9 @@
+repository,confirmed_total,confirmed_correct,confirmed_false,selective_precision,confirmation_coverage,probable_diagnoses,candidate_only_diagnoses,insufficient_evidence,unknown_contract_confirmed,test_symbol_false_confirmation,mean_independent_evidence_groups,mean_rank_stability
+cool-RR/PySnooper,0,0,0,1.0,0.0,1,0,1,0,0,9.0,1.0
+jakubroztocil/httpie,0,0,0,1.0,0.0,4,0,0,0,0,8.0,0.95
+nvbn/thefuck,0,0,0,1.0,0.0,4,0,0,0,0,9.5,0.9
+pandas-dev/pandas,0,0,0,1.0,0.0,4,0,0,0,0,8.25,0.9
+psf/black,0,0,0,1.0,0.0,3,0,1,0,0,7.0,1.0
+tiangolo/fastapi,0,0,0,1.0,0.0,4,0,0,0,0,9.0,0.9
+tornadoweb/tornado,0,0,0,1.0,0.0,4,0,0,0,0,8.0,0.95
+ytdl-org/youtube-dl,0,0,0,1.0,0.0,3,0,1,0,0,7.0,1.0

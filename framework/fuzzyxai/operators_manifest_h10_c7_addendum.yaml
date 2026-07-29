@@ -16,3 +16,15 @@ operators:
       - protocol/h10_c7/H10_C7_PROTOCOL_LOCK.json
       - reports/h10_c7/IMPLEMENTATION_STATUS.json
     visualization: []
+  - id: h10_c7.calibrated_diagnosis_confirmation
+    dissertation_ref: "H10-C7-R5C open-development confirmation calibration"
+    callable: fuzzyxai.experiments.h10_c7_confirmation:run_r5c_confirmation
+    input_schema: UnchangedR5RankingAndObservableReplayEvidence
+    output_schema: LeaveOneRepositoryOutConfirmationDecision
+    tests:
+      - tests/h10_c7/test_calibrated_confirmation.py
+    artifacts:
+      - protocol/h10_c7/H10_C7_R5C_PROTOCOL_LOCK.json
+      - results/h10_c7/confirmation/R5C_STATUS.json
+      - reports/h10_c7/R5C_CONFIRMATION_REPORT.md
+    visualization: []

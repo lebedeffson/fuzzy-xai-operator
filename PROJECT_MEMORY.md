@@ -1,5 +1,40 @@
 # Project Memory
 
+## FXAI-H10-C7-R5C-CALIBRATED-CONFIRMATION
+
+- Date: 2026-07-29
+- Branch: `feat/h10-c7-calibrated-confirmation`
+- Baseline commit:
+  `cf1c1dbb04004b2b423fc96d79eca3913e9a7f6d`
+- Protocol: `H10-C7-R5C`
+- Status: `H10_C7_OPEN_REPLAY_NO_GO`
+- Scientific result: `NOT_EVALUATED`
+- Ready for official development extension: no
+- Held-out created/scored: no/no
+- Chapter document modified: no
+
+R5 retrieval was preserved byte-for-byte at the recorded metric and top-k
+boundary. Recall@10 remained `0.8666666667`, Recall@20 `0.9333333333`, MRR
+`0.5298015873`, contract macro-F1 `0.6238521169`, and joint Hit@3
+`0.4666666667`.
+
+The confirmation-only extension groups independent observable evidence,
+measures candidate/contract margins, estimates leave-channel-out stability,
+and compares a deterministic C0 rule with a fixed-seed logistic C1 model.
+Every reported decision is leave-one-repository-out; repository identity,
+incident identity and Gold fields are excluded from the model feature schema.
+
+The locked open-replay gate did not pass. C0 failed closed with zero
+confirmations. C1 produced seven out-of-fold confirmations, all false, so it
+was rejected by the registered lexicographic rule. The selected C0 therefore
+had confirmation coverage `0.0`, below the locked `0.40` minimum. No threshold
+was weakened, no repository-specific exception was added, and no new data,
+project environment, failing test, neural model or held-out set was opened.
+
+The full regression completed with `767 passed, 6 skipped`; focused H10-C7
+tests completed with `54 passed`. Parent immutability verified all 114
+registered files.
+
 ## FXAI-H10-C7-GUIDED-NATURAL-DIAGNOSIS
 
 - Date: 2026-07-29

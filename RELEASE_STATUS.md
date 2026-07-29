@@ -507,3 +507,18 @@ H10-C4 is a separate prospective controlled-mutation experiment. It does not
 modify or reclassify H10-C3 and does not support claims about real incidents,
 engineer labor, human comprehension, organizational cost, or production
 safety.
+# H10-C7-R5C calibrated confirmation
+
+- Status: `H10_C7_OPEN_REPLAY_NO_GO`
+- Scientific result: `NOT_EVALUATED`
+- R5 retrieval modified: no
+- Calibration: leave-one-repository-out
+- Selected confirmer: C0 fail-closed
+- Confirmation coverage: `0.0`
+- Selective precision: `1.0` with zero confirmed diagnoses
+- Ready for development extension: no
+- Held-out created/scored: no/no
+- Full regression: `767 passed, 6 skipped`
+
+The source and evidence releases preserve the negative engineering gate. They
+do not claim H10-C7 support or natural-incident repair.
