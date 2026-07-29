@@ -8,6 +8,9 @@ from fuzzyxai.repository_diagnostics.contract_inference_v2 import (
     HierarchicalContractInferenceEngine,
 )
 from fuzzyxai.repository_diagnostics.graph import RepositoryGraph, RepositoryNode
+from fuzzyxai.repository_diagnostics.guided_diagnosis import (
+    GuidedNaturalDiagnosisEngine,
+)
 from fuzzyxai.repository_diagnostics.guided_retrieval import (
     IncidentQuery,
     RankedSymbol,
@@ -16,6 +19,7 @@ from fuzzyxai.repository_diagnostics.repair_validation import (
     RepairExecutionEvidence,
     classify_repair_execution,
 )
+from fuzzyxai.repository_diagnostics.runtime_events import RuntimeEvent
 
 
 def _candidate(node_id: str = "cause") -> RankedSymbol:
@@ -86,6 +90,25 @@ def test_unknown_contract_is_explicit(
     assert result[0].confidence == 0.0
 
 
+def test_behavioral_contract_maps_to_published_configuration_family(
+    route_graph: RepositoryGraph,
+) -> None:
+    result = HierarchicalContractInferenceEngine().infer(
+        _query("500 != 400 response status code"),
+        RankedSymbol(
+            "cause",
+            "src/websocket.py",
+            "accept_connection",
+            0.5,
+            ("traceback",),
+            12,
+            ("protocol_failure",),
+        ),
+        route_graph,
+    )
+    assert result[0].family == "PROTOCOL_RESPONSE"
+
+
 def test_evidence_request_distinguishes_close_hypotheses() -> None:
     requests = ActiveEvidenceRequestPlanner().plan(
         "tests/test_loader.py::test_schema_shape",
@@ -116,6 +139,40 @@ def test_registered_probe_observation_improves_true_rank() -> None:
     )
     assert reranked[0].node_id == "cause"
     assert "registered_probe_observation" in reranked[0].rank_sources
+
+
+def test_replay_probe_uses_saved_traceback_observation(
+    route_graph: RepositoryGraph,
+) -> None:
+    candidates = (
+        RankedSymbol(
+            "decoy",
+            "src/decoy.py",
+            "render",
+            1.0,
+            ("bm25",),
+            1,
+            (),
+        ),
+        _candidate("cause"),
+    )
+    event = RuntimeEvent(
+        "probe",
+        "tests/test_loader.py::test_schema_shape",
+        "traceback_frame",
+        "src/loader.py",
+        "load_schema",
+    )
+    reranked, status, details = (
+        GuidedNaturalDiagnosisEngine._apply_replay_probe(
+            route_graph,
+            candidates,
+            (event,),
+        )
+    )
+    assert status == "ACTIVE_EVIDENCE_APPLIED"
+    assert reranked[0].node_id == "cause"
+    assert dict(details)["rank_before"] == "2"
 
 
 def test_repair_requires_all_verification_stages() -> None:

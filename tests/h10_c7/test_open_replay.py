@@ -4,7 +4,7 @@ import json
 from dataclasses import asdict
 from pathlib import Path
 
-from fuzzyxai.experiments.h10_c7 import load_development_inputs
+from fuzzyxai.experiments.h10_c7 import _metrics, load_development_inputs
 from fuzzyxai.experiments.h10_c7_replay import verify_h10_c5c_baseline
 from fuzzyxai.repository_diagnostics.graph import RepositoryGraph
 from fuzzyxai.repository_diagnostics.guided_diagnosis import (
@@ -119,3 +119,39 @@ def test_unknown_contract_remains_candidate_not_confirmed(
     )
     assert result.candidates[0].contract.family == "UNKNOWN_CONTRACT"
     assert result.status == "DIAGNOSIS_CANDIDATES"
+
+
+def test_selective_precision_uses_confirmed_diagnoses_as_denominator() -> None:
+    def row(correct: bool) -> dict[str, object]:
+        return {
+            "available": True,
+            "repository": "example/repository",
+            "candidate_recall_at_5": float(correct),
+            "candidate_recall_at_10": float(correct),
+            "candidate_recall_at_20": float(correct),
+            "reciprocal_rank": float(correct),
+            "file_hit_at_3": float(correct),
+            "symbol_hit_at_3": float(correct),
+            "gold_contracts": '["CONFIGURATION"]',
+            "predicted_contract": "CONFIGURATION",
+            "joint_hit_at_3": float(correct),
+            "status": "DIAGNOSIS_CONFIRMED",
+            "coverage": 1.0,
+            "retrieval_coverage": 1.0,
+            "contract_coverage": 1.0,
+            "confirmed_diagnosis_coverage": 1.0,
+            "repair_coverage": 0.0,
+            "confirmed_correct": float(correct),
+            "false_localization": float(not correct),
+            "candidate_count": 20,
+            "context_lines": 100,
+            "search_space_reduction": 0.9,
+            "runtime_ms": 1.0,
+            "evidence_request_count": 0,
+            "active_evidence_status": "NOT_REQUESTED",
+        }
+
+    result = _metrics([row(True), row(False)])
+    assert result["selective_precision"] == 0.5
+    assert result["conditional_confirmation_error"] == 0.5
+    assert result["false_localization"] == 0.5

@@ -10,14 +10,141 @@ from itertools import pairwise
 from typing import ClassVar, Protocol
 
 from .graph import RepositoryGraph
+from .runtime_events import RuntimeEvent
 
 TOKEN_RE = re.compile(r"[A-Za-z_][A-Za-z0-9_]{1,}|[0-9]+")
+CAMEL_BOUNDARY_RE = re.compile(
+    r"(?<=[a-z0-9])(?=[A-Z])|(?<=[A-Z])(?=[A-Z][a-z])"
+)
+ABSOLUTE_PATH_RE = re.compile(
+    r"(?:/home/runner/work|/tmp|/private/tmp|[A-Za-z]:\\Temp)"
+    r"[/\\][^\s:]+"
+)
 SOURCE_KINDS = frozenset({"class", "configuration_key", "dependency", "file", "function", "method"})
 TRACEBACK_KINDS = frozenset({"runtime_exception", "runtime_traceback_frame", "traceback"})
+NOISE_MARKERS = (
+    "_distutils_hack",
+    "distutils-precedence.pth",
+    "runtime_launcher.py",
+    "site-packages",
+    "deprecationwarning",
+    "error processing line 1 of",
+)
 
 
 def tokenize(value: str) -> tuple[str, ...]:
-    return tuple(token.lower() for token in TOKEN_RE.findall(value))
+    """Tokenize prose and split Python identifiers into searchable subtokens."""
+    values: list[str] = []
+    for raw in TOKEN_RE.findall(value):
+        lowered = raw.lower()
+        values.append(lowered)
+        parts = re.split(r"[_./\\:-]+", raw)
+        for part in parts:
+            if not part:
+                continue
+            for subtoken in CAMEL_BOUNDARY_RE.split(part):
+                normalized = subtoken.lower()
+                if len(normalized) >= 2 and normalized != lowered:
+                    values.append(normalized)
+                    if len(normalized) > 4 and normalized.endswith("s"):
+                        values.append(normalized[:-1])
+    return tuple(values)
+
+
+@dataclass(frozen=True)
+class NormalizedIncident:
+    issue: str
+    failing_tests: str
+    traceback: str
+    assertion: str
+    exception: str
+    weighted_text: str
+    identifiers: tuple[str, ...]
+
+
+class IncidentNormalizer:
+    """Remove collection noise and preserve evidence channels separately."""
+
+    CHANNEL_WEIGHTS: ClassVar[dict[str, int]] = {
+        "assertion": 4,
+        "failing_tests": 3,
+        "traceback": 3,
+        "exception": 3,
+        "issue": 2,
+    }
+
+    def normalize(self, query: IncidentQuery) -> NormalizedIncident:
+        issue = self._clean(query.issue)
+        traceback = self._clean(query.traceback)
+        assertion = self._clean(query.assertion)
+        failing_tests = " ".join(query.failing_tests)
+        exception = self._exception_text(traceback, assertion)
+        channels = {
+            "issue": issue,
+            "failing_tests": failing_tests,
+            "traceback": traceback,
+            "assertion": assertion,
+            "exception": exception,
+        }
+        weighted = " ".join(
+            text
+            for name, text in channels.items()
+            for _ in range(self.CHANNEL_WEIGHTS[name])
+            if text
+        )
+        identifiers = tuple(
+            dict.fromkeys(
+                token
+                for text in (
+                    failing_tests,
+                    traceback,
+                    assertion,
+                    issue,
+                )
+                for token in tokenize(text)
+                if len(token) >= 3 and token not in {"test", "tests", "assert"}
+            )
+        )
+        return NormalizedIncident(
+            issue,
+            failing_tests,
+            traceback,
+            assertion,
+            exception,
+            weighted,
+            identifiers,
+        )
+
+    @staticmethod
+    def _clean(value: str) -> str:
+        lines: list[str] = []
+        previous = ""
+        for raw in value.splitlines():
+            lowered = raw.lower()
+            if any(marker in lowered for marker in NOISE_MARKERS):
+                continue
+            line = ABSOLUTE_PATH_RE.sub("<runtime-path>", raw).strip()
+            if not line or line == previous:
+                continue
+            if re.fullmatch(r"[-=_]{3,}", line):
+                continue
+            lines.append(line)
+            previous = line
+        return "\n".join(lines[-160:])
+
+    @staticmethod
+    def _exception_text(traceback: str, assertion: str) -> str:
+        patterns = (
+            r"(?m)^([A-Za-z_][A-Za-z0-9_.]*(?:Error|Exception):[^\n]+)$",
+            r"(?m)^(AssertionError(?::[^\n]+)?)$",
+        )
+        matches = [
+            match.group(1)
+            for source in (assertion, traceback)
+            for pattern in patterns
+            for match in re.finditer(pattern, source)
+        ]
+        return " ".join(dict.fromkeys(matches[-8:]))
 
 
 @dataclass(frozen=True)
@@ -30,9 +157,7 @@ class IncidentQuery:
 
     @property
     def text(self) -> str:
-        return " ".join(
-            (self.issue, *self.failing_tests, self.traceback, self.assertion)
-        )
+        return IncidentNormalizer().normalize(self).weighted_text
 
 
 @dataclass(frozen=True)
@@ -47,6 +172,11 @@ class SymbolDocument:
     dynamic_call_distance: float | None = None
     obligations: tuple[str, ...] = ()
     attributes: dict[str, object] = field(default_factory=dict)
+    directed_caller_distance: float | None = None
+    directed_callee_distance: float | None = None
+    execution_frequency: int = 0
+    last_touch_proximity: float = 0.0
+    failing_test_frequency: float = 0.0
 
 
 @dataclass(frozen=True)
@@ -141,7 +271,10 @@ class LocalTransformerCodeEncoder:
         return output
 
 
-def documents_from_graph(graph: RepositoryGraph) -> tuple[SymbolDocument, ...]:
+def documents_from_graph(
+    graph: RepositoryGraph,
+    runtime_events: Sequence[RuntimeEvent] = (),
+) -> tuple[SymbolDocument, ...]:
     evidence_by_id = {item.evidence_id: item for item in graph.evidence}
     nodes_by_id = {node.node_id: node for node in graph.nodes}
     executed_nodes = {
@@ -165,11 +298,15 @@ def documents_from_graph(graph: RepositoryGraph) -> tuple[SymbolDocument, ...]:
         )
     }
     runtime_adjacency: dict[str, set[str]] = defaultdict(set)
+    forward_adjacency: dict[str, set[str]] = defaultdict(set)
+    reverse_adjacency: dict[str, set[str]] = defaultdict(set)
     for edge in graph.edges:
         if edge.relation != "runtime_calls":
             continue
         runtime_adjacency[edge.source].add(edge.target)
         runtime_adjacency[edge.target].add(edge.source)
+        forward_adjacency[edge.source].add(edge.target)
+        reverse_adjacency[edge.target].add(edge.source)
     runtime_distance = {node_id: 0 for node_id in traceback_nodes}
     frontier = list(traceback_nodes)
     while frontier:
@@ -179,6 +316,9 @@ def documents_from_graph(graph: RepositoryGraph) -> tuple[SymbolDocument, ...]:
                 continue
             runtime_distance[target] = runtime_distance[source] + 1
             frontier.append(target)
+    caller_distance = _reverse_distance(traceback_nodes, reverse_adjacency)
+    callee_distance = _reverse_distance(traceback_nodes, forward_adjacency)
+    runtime_profile = _runtime_profile(graph, runtime_events)
     obligations_by_node: dict[str, set[str]] = defaultdict(set)
     for edge in graph.edges:
         target = nodes_by_id.get(edge.target)
@@ -210,13 +350,29 @@ def documents_from_graph(graph: RepositoryGraph) -> tuple[SymbolDocument, ...]:
                 node_evidence if node.node_id in traceback_nodes else "",
             )
         )
+        attributes = dict(node.attributes)
+        line_count = max(
+            1,
+            int(
+                attributes.get(
+                    "line_count",
+                    max(
+                        1,
+                        int(attributes.get("end_lineno", 1))
+                        - int(attributes.get("lineno", 1))
+                        + 1,
+                    ),
+                )
+            ),
+        )
+        profile = runtime_profile.get(node.node_id, {})
         documents.append(
             SymbolDocument(
                 node.node_id,
                 node.file_path,
                 node.symbol,
                 text,
-                max(1, int(node.attributes.get("line_count", 1))),
+                line_count,
                 node.node_id in executed_nodes or node.node_id in traceback_nodes,
                 0.0 if node.node_id in traceback_nodes else None,
                 (
@@ -225,10 +381,88 @@ def documents_from_graph(graph: RepositoryGraph) -> tuple[SymbolDocument, ...]:
                     else None
                 ),
                 tuple(sorted(obligations_by_node[node.node_id])),
-                dict(node.attributes),
+                attributes,
+                (
+                    float(caller_distance[node.node_id])
+                    if node.node_id in caller_distance
+                    else None
+                ),
+                (
+                    float(callee_distance[node.node_id])
+                    if node.node_id in callee_distance
+                    else None
+                ),
+                int(profile.get("execution_frequency", 0)),
+                float(profile.get("last_touch_proximity", 0.0)),
+                float(profile.get("failing_test_frequency", 0.0)),
             )
         )
     return tuple(documents)
+
+
+def _reverse_distance(
+    seeds: set[str],
+    adjacency: dict[str, set[str]],
+) -> dict[str, int]:
+    distance = {node_id: 0 for node_id in seeds}
+    frontier = list(seeds)
+    while frontier:
+        source = frontier.pop(0)
+        for target in adjacency[source]:
+            if target in distance:
+                continue
+            distance[target] = distance[source] + 1
+            frontier.append(target)
+    return distance
+
+
+def _runtime_profile(
+    graph: RepositoryGraph,
+    runtime_events: Sequence[RuntimeEvent],
+) -> dict[str, dict[str, float]]:
+    if not runtime_events:
+        return {}
+    nodes = tuple(graph.nodes)
+    event_positions: dict[str, list[int]] = defaultdict(list)
+    event_tests: dict[str, set[str]] = defaultdict(set)
+    total = len(runtime_events)
+    all_tests = {event.test_id for event in runtime_events}
+
+    def node_for(file_path: str | None, symbol: str | None) -> str | None:
+        if not file_path:
+            return None
+        candidates = [
+            node
+            for node in nodes
+            if node.file_path == file_path
+            and (
+                symbol is None
+                or node.symbol == symbol
+                or (node.symbol or "").rsplit(".", 1)[-1] == symbol
+            )
+        ]
+        symbolic = next((node for node in candidates if node.symbol), None)
+        node = symbolic or next(iter(candidates), None)
+        return node.node_id if node is not None else None
+
+    for index, event in enumerate(runtime_events):
+        identifiers = {
+            node_for(event.source_file, event.source_symbol),
+            node_for(event.target_file, event.target_symbol),
+        }
+        for node_id in identifiers - {None}:
+            event_positions[node_id].append(index)
+            event_tests[node_id].add(event.test_id)
+    return {
+        node_id: {
+            "execution_frequency": float(len(positions)),
+            "last_touch_proximity": 1.0
+            / (1.0 + max(0, total - 1 - max(positions))),
+            "failing_test_frequency": len(event_tests[node_id])
+            / max(1, len(all_tests)),
+        }
+        for node_id, positions in event_positions.items()
+    }
 
 
 class BM25Retriever:
@@ -393,13 +627,17 @@ def reciprocal_rank_fusion(
     *,
     k: int = 60,
     limit: int = 50,
+    weights: Sequence[float] | None = None,
 ) -> tuple[RankedSymbol, ...]:
+    if weights is not None and len(weights) != len(rankings):
+        raise ValueError("RRF weights must match the number of rankings")
     scores: dict[str, float] = defaultdict(float)
     records: dict[str, RankedSymbol] = {}
     sources: dict[str, set[str]] = defaultdict(set)
-    for ranking in rankings:
+    for ranking_index, ranking in enumerate(rankings):
+        weight = weights[ranking_index] if weights is not None else 1.0
         for rank, item in enumerate(ranking, start=1):
-            scores[item.node_id] += 1.0 / (k + rank)
+            scores[item.node_id] += weight / (k + rank)
             records[item.node_id] = item
             sources[item.node_id].update(item.rank_sources)
     fused = [
@@ -423,6 +661,138 @@ def reciprocal_rank_fusion(
     )
 
 
+class ExactSymbolExtractor:
+    """Keep exact identifier evidence even when rank fusion is diffuse."""
+
+    def rank(
+        self,
+        query: IncidentQuery,
+        documents: Sequence[SymbolDocument],
+    ) -> tuple[RankedSymbol, ...]:
+        normalized = IncidentNormalizer().normalize(query)
+        query_tokens = set(normalized.identifiers)
+        values = []
+        for document in documents:
+            symbol_tokens = set(tokenize(document.symbol or ""))
+            file_tokens = set(tokenize(document.file_path))
+            overlap = symbol_tokens.intersection(query_tokens)
+            semantic_tokens = set(
+                tokenize(
+                    " ".join(
+                        str(item)
+                        for item in document.attributes.get(
+                            "semantic_tokens",
+                            (),
+                        )
+                    )
+                )
+            )
+            semantic_overlap = semantic_tokens.intersection(query_tokens)
+            exact_symbol = bool(
+                document.symbol
+                and (document.symbol.lower() in normalized.weighted_text.lower())
+            )
+            if (
+                not overlap
+                and not exact_symbol
+                and len(semantic_overlap) < 2
+            ):
+                continue
+            score = (
+                4.0 * float(exact_symbol)
+                + 1.5 * len(overlap)
+                + 0.65 * len(semantic_overlap)
+                + 0.25 * len(file_tokens.intersection(query_tokens))
+            )
+            values.append(
+                RankedSymbol(
+                    document.node_id,
+                    document.file_path,
+                    document.symbol,
+                    score,
+                    ("exact_symbol",),
+                    document.line_count,
+                    document.obligations,
+                    tuple(
+                        sorted(
+                            (
+                                *(
+                                    f"identifier:{item}"
+                                    for item in overlap
+                                ),
+                                *(
+                                    f"semantic_identifier:{item}"
+                                    for item in semantic_overlap
+                                ),
+                            )
+                        )
+                    ),
+                )
+            )
+        return tuple(
+            sorted(
+                values,
+                key=lambda item: (-item.score, item.file_path, item.symbol or ""),
+            )
+        )
+
+
+class CandidateReservoir:
+    """Union independent channels before the final top-k decision."""
+
+    MINIMUM_LIMIT = 150
+    MAXIMUM_LIMIT = 300
+
+    def build(
+        self,
+        channels: Sequence[Sequence[RankedSymbol]],
+        *,
+        limit: int = MAXIMUM_LIMIT,
+        weights: Sequence[float] | None = None,
+    ) -> tuple[RankedSymbol, ...]:
+        bounded = max(self.MINIMUM_LIMIT, min(limit, self.MAXIMUM_LIMIT))
+        if weights is not None and len(weights) != len(channels):
+            raise ValueError(
+                "reservoir weights must match the number of channels"
+            )
+        scores: dict[str, float] = defaultdict(float)
+        records: dict[str, RankedSymbol] = {}
+        sources: dict[str, set[str]] = defaultdict(set)
+        evidence: dict[str, set[str]] = defaultdict(set)
+        for channel_index, ranking in enumerate(channels):
+            weight = weights[channel_index] if weights is not None else 1.0
+            channel_name = (
+                ranking[0].rank_sources[0] if ranking else f"channel-{channel_index}"
+            )
+            for rank, item in enumerate(ranking[:bounded], start=1):
+                scores[item.node_id] += weight / math.sqrt(rank)
+                records[item.node_id] = item
+                sources[item.node_id].update(item.rank_sources)
+                evidence[item.node_id].update(item.evidence)
+                evidence[item.node_id].add(
+                    f"channel_rank:{channel_name}:{rank}"
+                )
+        values = (
+            RankedSymbol(
+                node_id,
+                item.file_path,
+                item.symbol,
+                scores[node_id],
+                tuple(sorted(sources[node_id])),
+                item.line_count,
+                item.obligations,
+                tuple(sorted(evidence[node_id])),
+            )
+            for node_id, item in records.items()
+        )
+        return tuple(
+            sorted(
+                values,
+                key=lambda item: (-item.score, item.file_path, item.symbol or ""),
+            )[:bounded]
+        )
+
+
 class StructuralReranker:
     """Fixed feature combiner; learned weights must be supplied by a method lock."""
 
@@ -431,9 +801,17 @@ class StructuralReranker:
         "executed": 0.35,
         "traceback": 0.55,
         "dynamic": 0.25,
+        "caller": 0.22,
+        "callee": 0.10,
+        "frequency": 0.08,
+        "last_touch": 0.20,
+        "failing_test_frequency": 0.25,
+        "exact_symbol": 0.55,
+        "assertion_overlap": 0.30,
         "obligations": 0.20,
         "risk": -0.05,
-        "test_path": -0.25,
+        "test_path": -1.00,
+        "documentation_path": -0.35,
     }
 
     def __init__(self, weights: dict[str, float] | None = None) -> None:
@@ -445,13 +823,41 @@ class StructuralReranker:
         documents: Sequence[SymbolDocument],
         *,
         limit: int = 20,
+        query: IncidentQuery | None = None,
     ) -> tuple[RankedSymbol, ...]:
         by_id = {item.node_id: item for item in documents}
+        normalized = (
+            IncidentNormalizer().normalize(query) if query is not None else None
+        )
+        query_identifiers = set(normalized.identifiers) if normalized else set()
+        assertion_tokens = (
+            set(tokenize(normalized.assertion)) if normalized else set()
+        )
         rescored = []
         for item in ranking:
             document = by_id[item.node_id]
             risk = math.log1p(
                 float(document.attributes.get("fan_out", 0))
+            )
+            symbol_tokens = set(tokenize(document.symbol or ""))
+            document_tokens = set(tokenize(document.text))
+            exact_symbol = float(
+                bool(symbol_tokens.intersection(query_identifiers))
+                or "exact_symbol" in item.rank_sources
+            )
+            assertion_overlap = (
+                len(assertion_tokens.intersection(document_tokens))
+                / max(1, len(assertion_tokens))
+            )
+            normalized_path = document.file_path.lower().replace("\\", "/")
+            is_test = (
+                normalized_path.startswith(("test/", "tests/"))
+                or "/test/" in normalized_path
+                or "/tests/" in normalized_path
+                or normalized_path.endswith("_test.py")
+            )
+            is_documentation = normalized_path.startswith(
+                ("doc/", "docs/", "example/", "examples/")
             )
             score = (
                 self.weights["base"] * item.score
@@ -464,14 +870,35 @@ class StructuralReranker:
                     if document.dynamic_call_distance is not None
                     else 0.0
                 )
+                + self.weights["caller"]
+                * (
+                    1.0 / (1.0 + document.directed_caller_distance)
+                    if document.directed_caller_distance is not None
+                    else 0.0
+                )
+                + self.weights["callee"]
+                * (
+                    1.0 / (1.0 + document.directed_callee_distance)
+                    if document.directed_callee_distance is not None
+                    else 0.0
+                )
+                + self.weights["frequency"]
+                * math.log1p(document.execution_frequency)
+                + self.weights["last_touch"] * document.last_touch_proximity
+                + self.weights["failing_test_frequency"]
+                * document.failing_test_frequency
+                + self.weights["exact_symbol"] * exact_symbol
+                + self.weights["assertion_overlap"] * assertion_overlap
                 + self.weights["obligations"] * len(document.obligations)
                 + self.weights["risk"] * risk
-                + self.weights["test_path"]
-                * float(
-                    document.file_path.startswith(("test/", "tests/"))
-                    or "/test/" in document.file_path
-                    or "/tests/" in document.file_path
-                )
+                + self.weights["test_path"] * float(is_test)
+                + self.weights["documentation_path"] * float(is_documentation)
+            )
+            evidence = (
+                *item.evidence,
+                f"execution_frequency:{document.execution_frequency}",
+                f"last_touch_proximity:{document.last_touch_proximity:.6f}",
+                f"assertion_overlap:{assertion_overlap:.6f}",
             )
             rescored.append(
                 RankedSymbol(
@@ -482,7 +909,7 @@ class StructuralReranker:
                     (*item.rank_sources, "structural_reranker"),
                     item.line_count,
                     item.obligations,
-                    item.evidence,
+                    evidence,
                 )
             )
         return tuple(

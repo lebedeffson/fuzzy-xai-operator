@@ -3,16 +3,20 @@
 ## H10-C7 Prospective Implementation
 
 - Protocol: `H10-C7-v1`, `LOCKED_BEFORE_DEVELOPMENT`
-- Status: `IMPLEMENTED_AWAITING_NEW_DEVELOPMENT_DATA`
+- Status: `H10_C7_OPEN_REPLAY_NO_GO`
 - Scientific result: `NOT_EVALUATED`
 - Parent results modified: no
-- Development/held-out scoring: no/no
+- Open replay/held-out scoring: development-only/no
 
 The guided diagnosis implementation and fail-closed development tournament are
-available on `feat/h10-c7-guided-natural-diagnosis`. No H10-C7 performance
-claim is permitted until pinned model weights are hash-verified, new observable
-runtime evidence is collected, the development gate passes, and a
-repository-disjoint held-out protocol is created.
+available on `feat/h10-c7-guided-natural-diagnosis`. The disclosed 30-incident
+H10-C5c runtime package was replayed offline without project setup, new data or
+neural models. R5 reached Recall@10 `0.8667`, Recall@20 `0.9333`, MRR `0.5298`,
+contract macro-F1 `0.6239`, joint Hit@3 `0.4667`, and improved six of eight
+repositories. Selective precision was `0.8571`, but confirmation coverage was
+only `0.2333` against the locked `0.40` gate. The result is therefore
+`H10_C7_OPEN_REPLAY_NO_GO`; new development data and neural variants remain
+blocked. No H10-C7 scientific performance claim is permitted.
 
 ## Chapter 4 Final Practical Closure
 

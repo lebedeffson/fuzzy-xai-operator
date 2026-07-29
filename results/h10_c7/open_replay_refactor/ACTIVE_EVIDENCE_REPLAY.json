@@ -1,0 +1,326 @@
+[
+  {
+    "details": {
+      "contract_after": "PROTOCOL_RESPONSE",
+      "contract_before": "PROTOCOL_RESPONSE",
+      "entropy_after": "1.081113170",
+      "entropy_before": "1.068700424",
+      "event_id": "trace-77d3301593017c298ca2829c",
+      "event_kind": "traceback_frame",
+      "observed_node": "file:tests/test_additional_responses_router.py",
+      "rank_after": "2",
+      "rank_before": "6"
+    },
+    "incident_id": "bugsinpy-fastapi-13",
+    "status": "ACTIVE_EVIDENCE_APPLIED"
+  },
+  {
+    "details": {
+      "contract_after": "API_BEHAVIOR",
+      "contract_before": "API_BEHAVIOR",
+      "reason": "probe_did_not_distinguish_candidates"
+    },
+    "incident_id": "bugsinpy-tornado-16",
+    "status": "ACTIVE_EVIDENCE_UNAVAILABLE"
+  },
+  {
+    "details": {
+      "contract_after": "OUTPUT_FORMAT",
+      "contract_before": "OUTPUT_FORMAT",
+      "reason": "probe_did_not_distinguish_candidates"
+    },
+    "incident_id": "bugsinpy-black-18",
+    "status": "ACTIVE_EVIDENCE_UNAVAILABLE"
+  },
+  {
+    "details": {
+      "contract_after": "API_BEHAVIOR",
+      "contract_before": "API_BEHAVIOR",
+      "reason": "probe_did_not_distinguish_candidates"
+    },
+    "incident_id": "bugsinpy-thefuck-24",
+    "status": "ACTIVE_EVIDENCE_UNAVAILABLE"
+  },
+  {
+    "details": {
+      "contract_after": "ARTIFACT_PROVENANCE",
+      "contract_before": "ARTIFACT_PROVENANCE",
+      "reason": "probe_did_not_distinguish_candidates"
+    },
+    "incident_id": "bugsinpy-youtube-dl-13",
+    "status": "ACTIVE_EVIDENCE_UNAVAILABLE"
+  },
+  {
+    "details": {
+      "contract_after": "UNKNOWN_CONTRACT",
+      "contract_before": "UNKNOWN_CONTRACT",
+      "reason": "probe_did_not_distinguish_candidates"
+    },
+    "incident_id": "bugsinpy-PySnooper-2",
+    "status": "ACTIVE_EVIDENCE_UNAVAILABLE"
+  },
+  {
+    "details": {
+      "contract_after": "DATA_TYPE",
+      "contract_before": "DATA_TYPE",
+      "reason": "probe_did_not_distinguish_candidates"
+    },
+    "incident_id": "bugsinpy-pandas-73",
+    "status": "ACTIVE_EVIDENCE_UNAVAILABLE"
+  },
+  {
+    "details": {
+      "contract_after": "PROTOCOL_RESPONSE",
+      "contract_before": "PROTOCOL_RESPONSE",
+      "entropy_after": "0.973378042",
+      "entropy_before": "0.880496027",
+      "event_id": "trace-85ccb611df70fdbefdb08869",
+      "event_kind": "traceback_frame",
+      "observed_node": "function:httpie/client.py::get_response",
+      "rank_after": "3",
+      "rank_before": "3"
+    },
+    "incident_id": "bugsinpy-httpie-3",
+    "status": "ACTIVE_EVIDENCE_APPLIED"
+  },
+  {
+    "details": {
+      "contract_after": "PROTOCOL_RESPONSE",
+      "contract_before": "PROTOCOL_RESPONSE",
+      "entropy_after": "1.073921096",
+      "entropy_before": "1.085994535",
+      "event_id": "trace-499c5aa93db7ab20e91fe7fc",
+      "event_kind": "traceback_frame",
+      "observed_node": "file:tests/test_forms_from_non_typing_sequences.py",
+      "rank_after": "1",
+      "rank_before": "5"
+    },
+    "incident_id": "bugsinpy-fastapi-6",
+    "status": "ACTIVE_EVIDENCE_APPLIED"
+  },
+  {
+    "details": {
+      "contract_after": "API_BEHAVIOR",
+      "contract_before": "API_BEHAVIOR",
+      "reason": "probe_did_not_distinguish_candidates"
+    },
+    "incident_id": "bugsinpy-tornado-15",
+    "status": "ACTIVE_EVIDENCE_UNAVAILABLE"
+  },
+  {
+    "details": {
+      "contract_after": "UNKNOWN_CONTRACT",
+      "contract_before": "UNKNOWN_CONTRACT",
+      "reason": "probe_did_not_distinguish_candidates"
+    },
+    "incident_id": "bugsinpy-black-5",
+    "status": "ACTIVE_EVIDENCE_UNAVAILABLE"
+  },
+  {
+    "details": {
+      "contract_after": "CONTROL_FLOW",
+      "contract_before": "CONTROL_FLOW",
+      "entropy_after": "0.701532240",
+      "entropy_before": "0.675341089",
+      "event_id": "trace-e01fd81dd5d2726a9ae2cb58",
+      "event_kind": "traceback_frame",
+      "observed_node": "file:thefuck/rules/git_push.py",
+      "rank_after": "3",
+      "rank_before": "5"
+    },
+    "incident_id": "bugsinpy-thefuck-9",
+    "status": "ACTIVE_EVIDENCE_APPLIED"
+  },
+  {
+    "details": {
+      "contract_after": "SERIALIZATION_FORMAT",
+      "contract_before": "SERIALIZATION_FORMAT",
+      "reason": "probe_did_not_distinguish_candidates"
+    },
+    "incident_id": "bugsinpy-youtube-dl-37",
+    "status": "ACTIVE_EVIDENCE_UNAVAILABLE"
+  },
+  {
+    "details": {
+      "contract_after": "API_BEHAVIOR",
+      "contract_before": "API_BEHAVIOR",
+      "entropy_after": "0.805289043",
+      "entropy_before": "0.805289043",
+      "event_id": "trace-0cae2120960519bc10165c22",
+      "event_kind": "traceback_frame",
+      "observed_node": "file:pysnooper/pysnooper.py",
+      "rank_after": "8",
+      "rank_before": "11"
+    },
+    "incident_id": "bugsinpy-PySnooper-3",
+    "status": "ACTIVE_EVIDENCE_APPLIED"
+  },
+  {
+    "details": {
+      "contract_after": "DATA_TYPE",
+      "contract_before": "DATA_TYPE",
+      "reason": "probe_did_not_distinguish_candidates"
+    },
+    "incident_id": "bugsinpy-pandas-7",
+    "status": "ACTIVE_EVIDENCE_UNAVAILABLE"
+  },
+  {
+    "details": {
+      "contract_after": "PROTOCOL_RESPONSE",
+      "contract_before": "PROTOCOL_RESPONSE",
+      "reason": "probe_did_not_distinguish_candidates"
+    },
+    "incident_id": "bugsinpy-httpie-4",
+    "status": "ACTIVE_EVIDENCE_UNAVAILABLE"
+  },
+  {
+    "details": {
+      "contract_after": "API_BEHAVIOR",
+      "contract_before": "API_BEHAVIOR",
+      "entropy_after": "0.606017392",
+      "entropy_before": "0.509243472",
+      "event_id": "trace-013ccda7ff524f3cf4ca3211",
+      "event_kind": "traceback_frame",
+      "observed_node": "file:fastapi/encoders.py",
+      "rank_after": "2",
+      "rank_before": "4"
+    },
+    "incident_id": "bugsinpy-fastapi-16",
+    "status": "ACTIVE_EVIDENCE_APPLIED"
+  },
+  {
+    "details": {
+      "contract_after": "API_BEHAVIOR",
+      "contract_before": "API_BEHAVIOR",
+      "reason": "probe_did_not_distinguish_candidates"
+    },
+    "incident_id": "bugsinpy-tornado-14",
+    "status": "ACTIVE_EVIDENCE_UNAVAILABLE"
+  },
+  {
+    "details": {
+      "contract_after": "DATA_SCHEMA",
+      "contract_before": "DATA_SCHEMA",
+      "reason": "probe_did_not_distinguish_candidates"
+    },
+    "incident_id": "bugsinpy-black-14",
+    "status": "ACTIVE_EVIDENCE_UNAVAILABLE"
+  },
+  {
+    "details": {
+      "contract_after": "API_BEHAVIOR",
+      "contract_before": "API_BEHAVIOR",
+      "entropy_after": "1.094884015",
+      "entropy_before": "1.074635531",
+      "event_id": "trace-1d6ba4fa4089b8eeb855aa3e",
+      "event_kind": "traceback_frame",
+      "observed_node": "file:tests/rules/test_man.py",
+      "rank_after": "3",
+      "rank_before": "6"
+    },
+    "incident_id": "bugsinpy-thefuck-10",
+    "status": "ACTIVE_EVIDENCE_APPLIED"
+  },
+  {
+    "details": {
+      "contract_after": "UNKNOWN_CONTRACT",
+      "contract_before": "UNKNOWN_CONTRACT",
+      "reason": "probe_did_not_distinguish_candidates"
+    },
+    "incident_id": "bugsinpy-youtube-dl-36",
+    "status": "ACTIVE_EVIDENCE_UNAVAILABLE"
+  },
+  {
+    "details": {
+      "contract_after": "DATA_TYPE",
+      "contract_before": "DATA_TYPE",
+      "entropy_after": "0.710393249",
+      "entropy_before": "0.777948125",
+      "event_id": "trace-9d7ffa5189160aab78d9ea14",
+      "event_kind": "traceback_frame",
+      "observed_node": "function:pandas/core/reshape/tile.py::_bins_to_cuts",
+      "rank_after": "1",
+      "rank_before": "2"
+    },
+    "incident_id": "bugsinpy-pandas-71",
+    "status": "ACTIVE_EVIDENCE_APPLIED"
+  },
+  {
+    "details": {
+      "contract_after": "PROTOCOL_RESPONSE",
+      "contract_before": "PROTOCOL_RESPONSE",
+      "reason": "probe_did_not_distinguish_candidates"
+    },
+    "incident_id": "bugsinpy-httpie-5",
+    "status": "ACTIVE_EVIDENCE_UNAVAILABLE"
+  },
+  {
+    "details": {
+      "contract_after": "FILTERING_POLICY",
+      "contract_before": "FILTERING_POLICY",
+      "reason": "probe_did_not_distinguish_candidates"
+    },
+    "incident_id": "bugsinpy-fastapi-5",
+    "status": "ACTIVE_EVIDENCE_UNAVAILABLE"
+  },
+  {
+    "details": {
+      "contract_after": "PROTOCOL_RESPONSE",
+      "contract_before": "PROTOCOL_RESPONSE",
+      "reason": "probe_did_not_distinguish_candidates"
+    },
+    "incident_id": "bugsinpy-tornado-8",
+    "status": "ACTIVE_EVIDENCE_UNAVAILABLE"
+  },
+  {
+    "details": {
+      "contract_after": "OUTPUT_FORMAT",
+      "contract_before": "OUTPUT_FORMAT",
+      "reason": "probe_did_not_distinguish_candidates"
+    },
+    "incident_id": "bugsinpy-black-23",
+    "status": "ACTIVE_EVIDENCE_UNAVAILABLE"
+  },
+  {
+    "details": {
+      "contract_after": "CONTROL_FLOW",
+      "contract_before": "CONTROL_FLOW",
+      "reason": "probe_did_not_distinguish_candidates"
+    },
+    "incident_id": "bugsinpy-thefuck-22",
+    "status": "ACTIVE_EVIDENCE_UNAVAILABLE"
+  },
+  {
+    "details": {
+      "contract_after": "API_BEHAVIOR",
+      "contract_before": "API_BEHAVIOR",
+      "reason": "probe_did_not_distinguish_candidates"
+    },
+    "incident_id": "bugsinpy-youtube-dl-8",
+    "status": "ACTIVE_EVIDENCE_UNAVAILABLE"
+  },
+  {
+    "details": {
+      "contract_after": "DATA_TYPE",
+      "contract_before": "DATA_TYPE",
+      "entropy_after": "1.096804217",
+      "entropy_before": "1.053589670",
+      "event_id": "trace-5313a4bfec06c1ec5652aca5",
+      "event_kind": "traceback_frame",
+      "observed_node": "function:pandas/core/arrays/integer.py::integer_array",
+      "rank_after": "2",
+      "rank_before": "3"
+    },
+    "incident_id": "bugsinpy-pandas-48",
+    "status": "ACTIVE_EVIDENCE_APPLIED"
+  },
+  {
+    "details": {
+      "contract_after": "PIPELINE_CONFIGURATION",
+      "contract_before": "PIPELINE_CONFIGURATION",
+      "reason": "probe_did_not_distinguish_candidates"
+    },
+    "incident_id": "bugsinpy-httpie-2",
+    "status": "ACTIVE_EVIDENCE_UNAVAILABLE"
+  }
+]

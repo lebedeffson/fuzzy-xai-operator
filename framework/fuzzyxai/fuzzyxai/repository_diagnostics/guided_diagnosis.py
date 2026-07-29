@@ -1,10 +1,15 @@
 from __future__ import annotations
 
+import math
 from collections.abc import Sequence
 from dataclasses import dataclass, replace
 from typing import Protocol
 
-from .active_evidence import ActiveEvidenceRequestPlanner, EvidenceRequest
+from .active_evidence import (
+    ActiveEvidenceRequestPlanner,
+    EvidenceRequest,
+    apply_probe_observation,
+)
 from .contract_inference_v2 import (
     ContractPrediction,
     HierarchicalContractInferenceEngine,
@@ -12,8 +17,10 @@ from .contract_inference_v2 import (
 from .graph import RepositoryGraph
 from .guided_retrieval import (
     BM25Retriever,
+    CandidateReservoir,
     DenseCodeEncoder,
     DenseRetriever,
+    ExactSymbolExtractor,
     IncidentQuery,
     RankedSymbol,
     RepoGraphRanker,
@@ -24,6 +31,7 @@ from .guided_retrieval import (
 )
 from .incident_router import IncidentRouter, RoutingDecision
 from .retrieval import EvidenceGroundedCandidateRetriever
+from .runtime_events import RuntimeEvent
 
 VARIANTS = tuple(f"R{index}" for index in range(9))
 BASELINES = (
@@ -126,6 +134,22 @@ class GuidedDiagnosis:
     route: RoutingDecision
     trajectory: tuple[ExplorerAction, ...] = ()
     unavailable_reason: str | None = None
+    active_evidence_status: str = "NOT_REQUESTED"
+    active_evidence_details: tuple[tuple[str, str], ...] = ()
+
+
+class EvidenceCalibrator:
+    """Fail closed unless independent observations support the diagnosis."""
+
+    @staticmethod
+    def is_confirmed(candidate: GuidedCandidate) -> bool:
+        if candidate.contract.family == "UNKNOWN_CONTRACT":
+            return False
+        direct_observations = sum(
+            evidence.startswith("direct_observation:")
+            for evidence in candidate.contract.evidence
+        )
+        return direct_observations >= 2
 
 
 class BoundedRepositoryExplorer:
@@ -191,7 +215,10 @@ class GuidedNaturalDiagnosisEngine:
         self.bm25 = BM25Retriever()
         self.graph_ranker = RepoGraphRanker()
         self.reranker = StructuralReranker()
+        self.exact_symbols = ExactSymbolExtractor()
+        self.reservoir = CandidateReservoir()
         self.contracts = HierarchicalContractInferenceEngine()
+        self.calibrator = EvidenceCalibrator()
         self.evidence_planner = ActiveEvidenceRequestPlanner()
         self.router = IncidentRouter()
         self.explorer = BoundedRepositoryExplorer(action_budget)
@@ -200,21 +227,35 @@ class GuidedNaturalDiagnosisEngine:
         self._cache_graph_ranking: tuple[RankedSymbol, ...] = ()
         self._cache_bm25_query = ""
         self._cache_bm25_ranking: tuple[RankedSymbol, ...] = ()
+        self._cache_runtime_signature: tuple[str, ...] = ()
+        self._cache_structural_query = ""
+        self._cache_structural_ranking: tuple[RankedSymbol, ...] = ()
 
     def _documents(
         self,
         graph: RepositoryGraph,
+        runtime_events: Sequence[RuntimeEvent] = (),
     ) -> tuple[SymbolDocument, ...]:
         graph_id = id(graph)
-        if self._cache_graph_id != graph_id:
+        runtime_signature = tuple(item.event_id for item in runtime_events)
+        if (
+            self._cache_graph_id != graph_id
+            or self._cache_runtime_signature != runtime_signature
+        ):
             self._cache_graph_id = graph_id
-            self._cache_documents = documents_from_graph(graph)
+            self._cache_runtime_signature = runtime_signature
+            self._cache_documents = documents_from_graph(
+                graph,
+                runtime_events,
+            )
             self._cache_graph_ranking = self.graph_ranker.rank(
                 graph,
                 self._cache_documents,
             )
             self._cache_bm25_query = ""
             self._cache_bm25_ranking = ()
+            self._cache_structural_query = ""
+            self._cache_structural_ranking = ()
         return self._cache_documents
 
     def _graph_ranking(
@@ -222,7 +263,6 @@ class GuidedNaturalDiagnosisEngine:
         graph: RepositoryGraph,
         documents: tuple[SymbolDocument, ...],
     ) -> tuple[RankedSymbol, ...]:
-        self._documents(graph)
         return self._cache_graph_ranking
 
     def _bm25_ranking(
@@ -231,7 +271,6 @@ class GuidedNaturalDiagnosisEngine:
         query: IncidentQuery,
         documents: tuple[SymbolDocument, ...],
     ) -> tuple[RankedSymbol, ...]:
-        self._documents(graph)
         if self._cache_bm25_query != query.text:
             self._cache_bm25_query = query.text
             self._cache_bm25_ranking = self.bm25.rank(
@@ -256,6 +295,15 @@ class GuidedNaturalDiagnosisEngine:
             if item.dynamic_call_distance is not None:
                 score += 4.0 / (1.0 + item.dynamic_call_distance)
                 sources.append("dynamic_call_distance")
+            if item.directed_caller_distance is not None:
+                score += 3.0 / (1.0 + item.directed_caller_distance)
+                sources.append("directed_caller_distance")
+            if item.directed_callee_distance is not None:
+                score += 1.5 / (1.0 + item.directed_callee_distance)
+                sources.append("directed_callee_distance")
+            score += 0.35 * min(math.log1p(item.execution_frequency), 5.0)
+            score += 0.75 * item.last_touch_proximity
+            score += 0.75 * item.failing_test_frequency
             score += min(len(item.obligations), 3)
             values.append(
                 RankedSymbol(
@@ -276,7 +324,7 @@ class GuidedNaturalDiagnosisEngine:
                     item.file_path,
                     item.symbol or "",
                 ),
-            )[:50]
+            )[:100]
         )
 
     def diagnose(
@@ -284,6 +332,7 @@ class GuidedNaturalDiagnosisEngine:
         graph: RepositoryGraph,
         query: IncidentQuery,
         variant: str,
+        runtime_events: Sequence[RuntimeEvent] = (),
     ) -> GuidedDiagnosis:
         if variant not in METHODS:
             raise ValueError(f"unsupported H10-C7 variant: {variant}")
@@ -295,10 +344,15 @@ class GuidedNaturalDiagnosisEngine:
         }
         if variant in aliases:
             return replace(
-                self.diagnose(graph, query, aliases[variant]),
+                self.diagnose(
+                    graph,
+                    query,
+                    aliases[variant],
+                    runtime_events,
+                ),
                 variant=variant,
             )
-        documents = self._documents(graph)
+        documents = self._documents(graph, runtime_events)
         route = self.router.route(query, graph)
         if not documents:
             return GuidedDiagnosis(
@@ -379,6 +433,21 @@ class GuidedNaturalDiagnosisEngine:
                 documents,
                 ranking,
             )
+        active_status = "NOT_REQUESTED"
+        active_details: tuple[tuple[str, str], ...] = ()
+        active_contract_before = ""
+        if variant == "R6":
+            if ranking:
+                active_contract_before = self.contracts.infer(
+                    query,
+                    ranking[0],
+                    graph,
+                )[0].family
+            ranking, active_status, active_details = self._apply_replay_probe(
+                graph,
+                ranking,
+                runtime_events,
+            )
         candidates = []
         for item in ranking[:20]:
             hypotheses = self.contracts.infer(query, item, graph)
@@ -394,6 +463,17 @@ class GuidedNaturalDiagnosisEngine:
                     item.line_count,
                     item.obligations,
                 )
+            )
+        if variant in {"R5", "R6", "R8"}:
+            candidates = self._joint_candidate_contract_order(
+                candidates,
+                self.contracts.infer_incident(query),
+            )
+        if variant == "R6" and candidates:
+            active_details = (
+                *active_details,
+                ("contract_before", active_contract_before),
+                ("contract_after", candidates[0].contract.family),
             )
         requests = (
             self.evidence_planner.plan(query.failing_tests[0], ranking)
@@ -412,9 +492,8 @@ class GuidedNaturalDiagnosisEngine:
             )
             status = (
                 "DIAGNOSIS_CONFIRMED"
-                if top.contract.family != "UNKNOWN_CONTRACT"
-                and top.contract.confidence >= 0.75
-                and has_runtime_support
+                if has_runtime_support
+                and self.calibrator.is_confirmed(top)
                 else "DIAGNOSIS_CANDIDATES"
             )
         return GuidedDiagnosis(
@@ -424,6 +503,8 @@ class GuidedNaturalDiagnosisEngine:
             requests[:1],
             route,
             trajectory,
+            active_evidence_status=active_status,
+            active_evidence_details=active_details,
         )
 
     def _ranking(
@@ -443,7 +524,6 @@ class GuidedNaturalDiagnosisEngine:
         ):
             return (), "no_registered_dense_encoder"
         bm25 = self._bm25_ranking(graph, query, documents)
-        runtime = self._runtime_ranking(documents)
         dense = tuple(
             DenseRetriever(encoder).rank(query.text, documents)
             for encoder in self.dense_encoders
@@ -451,11 +531,29 @@ class GuidedNaturalDiagnosisEngine:
         fused = reciprocal_rank_fusion((bm25, *dense))
         if variant == "R2":
             return fused[:20], None
-        fused = reciprocal_rank_fusion(
-            (fused, graph_ranking, runtime),
-            limit=50,
-        )
-        reranked = self.reranker.rank(fused, documents)
+        if self._cache_structural_query != query.text:
+            runtime = self._runtime_ranking(documents)
+            exact = self.exact_symbols.rank(query, documents)
+            legacy = self._legacy_ranking(graph, documents)
+            reservoir = self.reservoir.build(
+                (exact, bm25, graph_ranking, runtime, legacy, *dense),
+                weights=(
+                    1.5,
+                    1.0,
+                    0.9,
+                    1.35,
+                    1.25,
+                    *(1.0 for _ in dense),
+                ),
+            )
+            self._cache_structural_query = query.text
+            self._cache_structural_ranking = self.reranker.rank(
+                reservoir,
+                documents,
+                limit=100,
+                query=query,
+            )
+        reranked = self._cache_structural_ranking
         if variant == "R3":
             return reranked, None
         if variant == "R4":
@@ -466,7 +564,204 @@ class GuidedNaturalDiagnosisEngine:
         # is unavailable; availability is recorded in the method matrix.
         if self.cross_encoder is not None:
             reranked = self._cross_rerank(query, documents, reranked)
-        return self._global_order(reranked, graph.obligations), None
+        globally_ordered = self._global_order(reranked, graph.obligations)
+        return (
+            self._contract_pair_ranking(
+                query,
+                graph,
+                globally_ordered,
+            ),
+            None,
+        )
+
+    def _contract_pair_ranking(
+        self,
+        query: IncidentQuery,
+        graph: RepositoryGraph,
+        ranking: Sequence[RankedSymbol],
+    ) -> tuple[RankedSymbol, ...]:
+        incident = {
+            prediction.family: prediction.confidence
+            for prediction in self.contracts.infer_incident(query)
+        }
+        values = []
+        for item in ranking:
+            hypotheses = self.contracts.infer(query, item, graph)
+            compatibility = 0.0
+            evidence_bonus = 0.0
+            for hypothesis in hypotheses:
+                pair_score = (
+                    hypothesis.confidence
+                    * incident.get(hypothesis.family, 0.0)
+                )
+                compatibility = max(compatibility, pair_score)
+                compatibility_evidence = [
+                    evidence
+                    for evidence in hypothesis.evidence
+                    if evidence.startswith("candidate_compatibility:")
+                ]
+                if pair_score and compatibility_evidence:
+                    match_count = max(
+                        evidence.count("+") + 1
+                        for evidence in compatibility_evidence
+                    )
+                    evidence_bonus = max(
+                        evidence_bonus,
+                        hypothesis.confidence
+                        * (1.0 + 0.25 * (match_count - 1)),
+                    )
+            values.append(
+                RankedSymbol(
+                    item.node_id,
+                    item.file_path,
+                    item.symbol,
+                    item.score
+                    + 0.45 * compatibility
+                    + 0.85 * evidence_bonus,
+                    (*item.rank_sources, "candidate_contract_pair"),
+                    item.line_count,
+                    item.obligations,
+                    (
+                        *item.evidence,
+                        f"contract_pair_compatibility:{compatibility:.6f}",
+                        f"candidate_contract_evidence:{evidence_bonus:.6f}",
+                    ),
+                )
+            )
+        return tuple(
+            sorted(
+                values,
+                key=lambda item: (-item.score, item.file_path, item.symbol or ""),
+            )
+        )
+
+    @staticmethod
+    def _joint_candidate_contract_order(
+        candidates: Sequence[GuidedCandidate],
+        incident_hypotheses: Sequence[ContractPrediction],
+    ) -> list[GuidedCandidate]:
+        incident_families = {
+            prediction.family: prediction.confidence
+            for prediction in incident_hypotheses
+        }
+
+        def score(candidate: GuidedCandidate) -> tuple[float, float, str]:
+            compatibility = max(
+                (
+                    prediction.confidence
+                    * incident_families.get(prediction.family, 0.0)
+                    for prediction in candidate.contract_hypotheses
+                ),
+                default=0.0,
+            )
+            runtime = float(
+                bool(
+                    {"traceback", "dynamic_call_distance", "executed_slice"}
+                    .intersection(candidate.rank_sources)
+                )
+            )
+            return (
+                candidate.score + 0.30 * compatibility + 0.05 * runtime,
+                compatibility,
+                candidate.node_id,
+            )
+
+        return sorted(candidates, key=score, reverse=True)
+
+    @staticmethod
+    def _apply_replay_probe(
+        graph: RepositoryGraph,
+        ranking: Sequence[RankedSymbol],
+        runtime_events: Sequence[RuntimeEvent],
+    ) -> tuple[
+        tuple[RankedSymbol, ...],
+        str,
+        tuple[tuple[str, str], ...],
+    ]:
+        if not runtime_events or len(ranking) < 2:
+            return (
+                tuple(ranking),
+                "ACTIVE_EVIDENCE_UNAVAILABLE",
+                (("reason", "no_withheld_runtime_observation"),),
+            )
+        nodes = tuple(graph.nodes)
+        by_key = {
+            (node.file_path, node.symbol): node.node_id
+            for node in nodes
+            if node.file_path
+        }
+        candidate_ids = {item.node_id for item in ranking[:20]}
+        start = max(0, int(len(runtime_events) * 0.75))
+        observed: list[str] = []
+        selected_event = None
+        for event in reversed(runtime_events[start:]):
+            if event.kind != "traceback_frame":
+                continue
+            identifiers = (
+                by_key.get((event.source_file, event.source_symbol)),
+                by_key.get((event.target_file, event.target_symbol)),
+            )
+            matched = [
+                node_id
+                for node_id in identifiers
+                if node_id in candidate_ids
+                and node_id != ranking[0].node_id
+            ]
+            if matched:
+                observed = matched
+                selected_event = event
+                break
+        if selected_event is None:
+            return (
+                tuple(ranking),
+                "ACTIVE_EVIDENCE_UNAVAILABLE",
+                (("reason", "probe_did_not_distinguish_candidates"),),
+            )
+        reranked = apply_probe_observation(
+            ranking,
+            observed,
+            confidence=0.65,
+        )
+        before = next(
+            index
+            for index, item in enumerate(ranking, start=1)
+            if item.node_id == observed[0]
+        )
+        after = next(
+            index
+            for index, item in enumerate(reranked, start=1)
+            if item.node_id == observed[0]
+        )
+        before_entropy = GuidedNaturalDiagnosisEngine._ranking_entropy(ranking)
+        after_entropy = GuidedNaturalDiagnosisEngine._ranking_entropy(reranked)
+        return (
+            reranked,
+            "ACTIVE_EVIDENCE_APPLIED",
+            (
+                ("event_id", selected_event.event_id),
+                ("event_kind", selected_event.kind),
+                ("observed_node", observed[0]),
+                ("rank_before", str(before)),
+                ("rank_after", str(after)),
+                ("entropy_before", f"{before_entropy:.9f}"),
+                ("entropy_after", f"{after_entropy:.9f}"),
+            ),
+        )
+
+    @staticmethod
+    def _ranking_entropy(ranking: Sequence[RankedSymbol]) -> float:
+        scores = [item.score for item in ranking[:3]]
+        if not scores:
+            return 0.0
+        maximum = max(scores)
+        exponentials = [math.exp(value - maximum) for value in scores]
+        total = sum(exponentials)
+        probabilities = [value / total for value in exponentials]
+        return -sum(
+            probability * math.log(probability)
+            for probability in probabilities
+            if probability
+        )
 
     @staticmethod
     def _legacy_ranking(

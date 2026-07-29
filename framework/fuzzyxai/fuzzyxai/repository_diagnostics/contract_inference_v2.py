@@ -6,12 +6,28 @@ from collections import defaultdict
 from dataclasses import dataclass
 
 from .graph import RepositoryGraph
-from .guided_retrieval import IncidentQuery, RankedSymbol, tokenize
+from .guided_retrieval import (
+    IncidentNormalizer,
+    IncidentQuery,
+    RankedSymbol,
+    tokenize,
+)
 
 CONTRACT_HIERARCHY = {
     "DATA": ("DATA_SCHEMA", "DATA_TYPE", "DATA_SHAPE"),
     "DEPENDENCY": ("DEPENDENCY_VERSION",),
-    "CONFIGURATION": ("PIPELINE_CONFIGURATION",),
+    "CONFIGURATION": (
+        "PIPELINE_CONFIGURATION",
+        "OUTPUT_FORMAT",
+        "CONTROL_FLOW",
+        "FILTERING_POLICY",
+        "PROTOCOL_RESPONSE",
+        "PATH_VALIDATION",
+        "SELECTION_POLICY",
+        "DEFAULT_VALUE_POLICY",
+        "STATE_TRANSITION",
+        "API_BEHAVIOR",
+    ),
     "ARTIFACT": ("ARTIFACT_PROVENANCE", "ARTIFACT_CHECKSUM"),
     "SERIALIZATION": ("SERIALIZATION_FORMAT",),
     "MODEL": ("MODEL_LOADING", "MODEL_EXPLAINER_VERSION"),
@@ -34,6 +50,59 @@ RULES = {
         "output_path",
         "setting",
     ),
+    "OUTPUT_FORMAT": (
+        "carriage return",
+        "line ending",
+        "newline",
+        "output format",
+        "whitespace",
+    ),
+    "CONTROL_FLOW": (
+        "index out of range",
+        "pop index",
+        "empty sequence",
+        "iteration",
+    ),
+    "FILTERING_POLICY": (
+        "exclude",
+        "filter",
+        "omitting",
+        "password",
+        "remove duplicates",
+    ),
+    "PROTOCOL_RESPONSE": (
+        "header",
+        "host",
+        "response",
+        "status code",
+    ),
+    "PATH_VALIDATION": (
+        "absolute path",
+        "path traversal",
+        "validate path",
+    ),
+    "SELECTION_POLICY": (
+        "selector",
+        "sorted",
+        "priority",
+        "order",
+    ),
+    "DEFAULT_VALUE_POLICY": (
+        "default",
+        "missing",
+        "none",
+    ),
+    "STATE_TRANSITION": (
+        "initialize",
+        "state transition",
+        "lifecycle",
+    ),
+    "API_BEHAVIOR": (
+        "attributeerror",
+        "expected behavior",
+        "public api",
+        "return value",
+    ),
     "ARTIFACT_PROVENANCE": ("artifact", "metadata", "provenance"),
     "ARTIFACT_CHECKSUM": ("checksum", "digest", "hash mismatch"),
     "SERIALIZATION_FORMAT": ("decode", "deserialize", "pickle", "serialize"),
@@ -47,6 +116,15 @@ EVALUATION_FAMILY = {
     "DATA_TYPE": "DATA_CONTRACT",
     "DATA_SHAPE": "DATA_CONTRACT",
     "PIPELINE_CONFIGURATION": "CONFIGURATION",
+    "OUTPUT_FORMAT": "CONFIGURATION",
+    "CONTROL_FLOW": "CONFIGURATION",
+    "FILTERING_POLICY": "CONFIGURATION",
+    "PROTOCOL_RESPONSE": "CONFIGURATION",
+    "PATH_VALIDATION": "CONFIGURATION",
+    "SELECTION_POLICY": "CONFIGURATION",
+    "DEFAULT_VALUE_POLICY": "CONFIGURATION",
+    "STATE_TRANSITION": "CONFIGURATION",
+    "API_BEHAVIOR": "CONFIGURATION",
     "SERIALIZATION_FORMAT": "SERIALIZATION",
 }
 
@@ -65,68 +143,122 @@ class ContractPrediction:
 
 
 class HierarchicalContractInferenceEngine:
+    def infer_incident(
+        self,
+        query: IncidentQuery,
+    ) -> tuple[ContractPrediction, ...]:
+        normalized_incident = IncidentNormalizer().normalize(query)
+        normalized = " ".join(
+            tokenize(
+                " ".join(
+                    (
+                        normalized_incident.assertion,
+                        normalized_incident.exception,
+                        normalized_incident.traceback[-6000:],
+                        normalized_incident.issue,
+                    )
+                )
+            )
+        )
+        scores: dict[str, float] = defaultdict(float)
+        reasons: dict[str, set[str]] = defaultdict(set)
+        self._apply_rules(normalized, scores, reasons)
+        self._apply_direct_observations(normalized, scores, reasons)
+        raw_assertion = normalized_incident.assertion.lower()
+        if "\\r\\n" in raw_assertion and "\\n" in raw_assertion:
+            scores["OUTPUT_FORMAT"] += 8.0
+            reasons["OUTPUT_FORMAT"].add(
+                "direct_observation:line_ending_bytes"
+            )
+        if "422" in raw_assertion and any(
+            term in normalized
+            for term in ("form", "field", "param", "sequence", "list")
+        ):
+            scores["DATA_SCHEMA"] += 8.0
+            reasons["DATA_SCHEMA"].add(
+                "direct_observation:validation_status_422"
+            )
+        if any(
+            term in normalized
+            for term in (
+                "at index diff",
+                "extra items in the left set",
+                "hashable",
+                "test equality",
+            )
+        ):
+            scores["DATA_SCHEMA"] += 6.0
+            reasons["DATA_SCHEMA"].add(
+                "direct_observation:collection_semantics"
+            )
+        if "type" in normalized and any(
+            term in normalized
+            for term in ("import as names", "expected node", "parse")
+        ):
+            scores["DATA_SCHEMA"] += 6.0
+            reasons["DATA_SCHEMA"].add(
+                "direct_observation:parser_node_type"
+            )
+        if not scores:
+            return (self._unknown(),)
+        return self._rank(scores, reasons)
+
     def infer(
         self,
         query: IncidentQuery,
         candidate: RankedSymbol,
         graph: RepositoryGraph,
     ) -> tuple[ContractPrediction, ...]:
-        traceback = "\n".join(
-            line
-            for line in query.traceback.splitlines()
-            if not any(
-                marker in line
-                for marker in (
-                    ".h10-c5c-development",
-                    "_distutils_hack",
-                    "runtime_launcher.py",
-                )
-            )
-        )
-        text = " ".join(
-            (
-                query.assertion,
-                traceback[-6000:],
-                *query.failing_tests,
-                candidate.file_path,
-                candidate.symbol or "",
-            )
-        ).lower()
-        normalized = " ".join(tokenize(text))
+        incident = self.infer_incident(query)
         scores: dict[str, float] = defaultdict(float)
         reasons: dict[str, set[str]] = defaultdict(set)
-        for family, patterns in RULES.items():
-            for pattern in patterns:
-                count = len(re.findall(rf"\b{re.escape(pattern)}\b", normalized))
-                if count:
-                    scores[family] += 1.0 + math.log1p(count)
-                    reasons[family].add(f"observed:{pattern}")
-        direct_observations = {
-            "DATA_SCHEMA": (
-                ("status code", "422"),
-                ("extra items",),
-                ("column", "different"),
+        incident_supported = any(
+            prediction.family != "UNKNOWN_CONTRACT"
+            for prediction in incident
+        )
+        for prediction in incident:
+            if prediction.family == "UNKNOWN_CONTRACT":
+                continue
+            scores[prediction.family] += 5.0 * prediction.confidence
+            reasons[prediction.family].update(prediction.evidence)
+            reasons[prediction.family].add("incident_level_hypothesis")
+        candidate_text = " ".join(
+            tokenize(f"{candidate.file_path} {candidate.symbol or ''}")
+        )
+        if incident_supported:
+            self._apply_rules(candidate_text, scores, reasons, weight=0.50)
+        symbol = (candidate.symbol or "").lower()
+        path = candidate.file_path.lower()
+        compatibility = {
+            "OUTPUT_FORMAT": ("format", "render", "write"),
+            "CONTROL_FLOW": ("iter", "next", "pop", "sequence"),
+            "FILTERING_POLICY": ("filter", "exclude", "field", "clone"),
+            "PROTOCOL_RESPONSE": (
+                "header",
+                "request",
+                "response",
+                "router",
+                "websocket",
             ),
-            "DATA_TYPE": (
-                ("float64", "int64"),
-                ("boolean value", "ambiguous"),
-            ),
-            "ARTIFACT_PROVENANCE": (
-                ("urljoin",),
-                ("rtmp",),
-                ("expected log message",),
-            ),
-            "SERIALIZATION_FORMAT": (
-                ("unicode escape", "decode"),
-                ("reader", "writer"),
-            ),
+            "PATH_VALIDATION": ("path", "file", "url"),
+            "SELECTION_POLICY": ("select", "sort", "priority", "nearest"),
+            "DEFAULT_VALUE_POLICY": ("default", "missing", "optional"),
+            "STATE_TRANSITION": ("initialize", "state", "loop"),
+            "API_BEHAVIOR": ("api", "call", "command", "encode"),
+            "DATA_SCHEMA": ("field", "schema", "frame", "args"),
+            "DATA_TYPE": ("dtype", "cast", "integer", "array"),
+            "SERIALIZATION_FORMAT": ("serialize", "decode", "escape"),
+            "ARTIFACT_PROVENANCE": ("artifact", "url", "path", "session"),
         }
-        for family, observations in direct_observations.items():
-            for terms in observations:
-                if all(term in normalized for term in terms):
-                    scores[family] += 5.0
+        if incident_supported:
+            for family, terms in compatibility.items():
+                matches = [
+                    term for term in terms if term in symbol or term in path
+                ]
+                if matches:
+                    scores[family] += 0.6 + 0.2 * len(matches)
                     reasons[family].add(
-                        f"direct_observation:{'+'.join(terms)}"
+                        f"candidate_compatibility:{'+'.join(matches)}"
                     )
         node = graph.node(candidate.node_id)
         if node is not None:
@@ -139,17 +271,102 @@ class HierarchicalContractInferenceEngine:
                     "node_kind:configuration_key"
                 )
         if not scores:
-            return (
-                ContractPrediction(
-                    "UNKNOWN_CONTRACT",
-                    "UNKNOWN",
-                    0.0,
-                    ("no_registered_contract_supported",),
-                ),
-            )
+            return (self._unknown(),)
+        return self._rank(scores, reasons)
+
+    @staticmethod
+    def _apply_rules(
+        normalized: str,
+        scores: dict[str, float],
+        reasons: dict[str, set[str]],
+        *,
+        weight: float = 1.0,
+    ) -> None:
+        for family, patterns in RULES.items():
+            for pattern in patterns:
+                tokens = " ".join(tokenize(pattern))
+                count = len(re.findall(rf"\b{re.escape(tokens)}\b", normalized))
+                if count:
+                    scores[family] += weight * (1.0 + math.log1p(count))
+                    reasons[family].add(f"observed:{pattern}")
+
+    @staticmethod
+    def _apply_direct_observations(
+        normalized: str,
+        scores: dict[str, float],
+        reasons: dict[str, set[str]],
+    ) -> None:
+        observations = {
+            "DATA_SCHEMA": (
+                ("status code", "422"),
+                ("column", "different"),
+            ),
+            "DATA_TYPE": (
+                ("float64", "int64"),
+                ("boolean value", "ambiguous"),
+                ("dtype", "different"),
+            ),
+            "FILTERING_POLICY": (
+                ("password", "differing items"),
+                ("extra items",),
+            ),
+            "OUTPUT_FORMAT": (
+                ("not found", "newline"),
+                ("whitespace",),
+            ),
+            "PROTOCOL_RESPONSE": (
+                ("status code",),
+                ("response", "assert"),
+                ("header",),
+            ),
+            "CONTROL_FLOW": (
+                ("indexerror",),
+                ("pop index",),
+                ("list index",),
+            ),
+            "ARTIFACT_PROVENANCE": (
+                ("urljoin",),
+                ("rtmp",),
+                ("path traversal",),
+            ),
+            "SERIALIZATION_FORMAT": (
+                ("unicode escape",),
+                ("reader", "writer"),
+                ("decode",),
+            ),
+            "API_BEHAVIOR": (
+                ("attributeerror",),
+                ("nameerror",),
+            ),
+        }
+        for family, variants in observations.items():
+            for terms in variants:
+                if all(" ".join(tokenize(term)) in normalized for term in terms):
+                    scores[family] += 5.0
+                    reasons[family].add(
+                        f"direct_observation:{'+'.join(terms)}"
+                    )
+
+    @staticmethod
+    def _unknown() -> ContractPrediction:
+        return ContractPrediction(
+            "UNKNOWN_CONTRACT",
+            "UNKNOWN",
+            0.0,
+            ("no_registered_contract_supported",),
+        )
+
+    @staticmethod
+    def _rank(
+        scores: dict[str, float],
+        reasons: dict[str, set[str]],
+    ) -> tuple[ContractPrediction, ...]:
         maximum = max(scores.values())
         ranked = []
-        for family, score in sorted(scores.items(), key=lambda item: (-item[1], item[0])):
+        for family, score in sorted(
+            scores.items(),
+            key=lambda item: (-item[1], item[0]),
+        ):
             coarse = next(
                 name
                 for name, children in CONTRACT_HIERARCHY.items()

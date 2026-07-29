@@ -5,8 +5,10 @@ import hashlib
 import json
 import shutil
 import statistics
+import time
 from collections import Counter
 from dataclasses import asdict
+from itertools import pairwise
 from pathlib import Path
 
 from fuzzyxai.experiments.h10_c7 import (
@@ -75,6 +77,63 @@ def _write_jsonl(path: Path, values: list[dict[str, object]]) -> None:
     with path.open("w", encoding="utf-8") as target:
         for value in values:
             target.write(json.dumps(value, sort_keys=True) + "\n")
+
+
+def _write_replay_report(
+    path: Path,
+    result: dict[str, object],
+) -> None:
+    lines = [
+        "# H10-C7 open replay refactor report",
+        "",
+        f"Status: `{result['status']}`",
+        "",
+        "Scientific result: `NOT_EVALUATED`.",
+        "",
+        (
+            "This development-only replay reused the 30 disclosed H10-C5c "
+            "incidents. It collected no new incidents, installed no project "
+            "environment, executed no failing test, and used no neural model."
+        ),
+        "",
+        (
+            "| Variant | Recall@10 | Recall@20 | MRR | Contract macro-F1 | "
+            "Joint Hit@3 | Selective precision | Confirmation coverage |"
+        ),
+        "| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |",
+    ]
+    metrics = result["metrics"]
+    for variant in STRUCTURAL_VARIANTS:
+        values = metrics[variant]
+        lines.append(
+            f"| {variant} | {values['recall_at_10']:.4f} | "
+            f"{values['recall_at_20']:.4f} | {values['mrr']:.4f} | "
+            f"{values['contract_macro_f1']:.4f} | "
+            f"{values['joint_hit_at_3']:.4f} | "
+            f"{values['selective_precision']:.4f} | "
+            f"{values['confirmed_diagnosis_coverage']:.4f} |"
+        )
+    lines.extend(
+        (
+            "",
+            "## Interpretation",
+            "",
+            (
+                "Retrieval and contract gates are engineering diagnostics, "
+                "not a confirmatory scientific result. New data and neural "
+                "variants remain blocked unless every registered open-replay "
+                "gate passes."
+            ),
+            "",
+            (
+                "`false_localization` remains the population-normalized "
+                "error count for compatibility. `selective_precision` uses "
+                "confirmed diagnoses as its denominator and is the primary "
+                "safety interpretation for confirmation."
+            ),
+        )
+    )
+    path.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
 def _resolve(base: Path, value: object) -> Path:
@@ -476,17 +535,30 @@ def run_open_replay_tournament(
             _graph(_json(graph_path)),
             int(value["repository_symbol_count"]),
         )
+        runtime_events = load_runtime_events(
+            (bundle / str(value["runtime_events_path"])).resolve()
+        )
         available_runtime_signals = _gold_runtime_signals(
             incident,
             gold[incident.incident_id],
         )
         for variant in STRUCTURAL_VARIANTS:
+            started = time.perf_counter_ns()
             diagnosis = engine.diagnose(
                 incident.graph,
                 incident.query,
                 variant,
+                runtime_events,
             )
-            rows.append(_row(incident, diagnosis, gold[incident.incident_id], 0.0))
+            elapsed = (time.perf_counter_ns() - started) / 1_000_000
+            rows.append(
+                _row(
+                    incident,
+                    diagnosis,
+                    gold[incident.incident_id],
+                    elapsed,
+                )
+            )
             cards.append(
                 _error_card(
                     incident=incident,
@@ -545,14 +617,55 @@ def run_open_replay_tournament(
         bundle / "h10_c5c_development_status.json"
     )["metrics"]["B_GREEDY"]
     checks_by_variant = {}
+    repository_metrics: dict[str, dict[str, float]] = {}
+    predecessor = {"R1": "R0", "R3": "R1", "R5": "R3", "R6": "R5"}
     for variant, values in metrics.items():
+        variant_rows = [row for row in rows if row["variant"] == variant]
+        by_repository = {
+            repository: statistics.fmean(
+                float(row["candidate_recall_at_10"])
+                for row in variant_rows
+                if row["repository"] == repository
+            )
+            for repository in {str(row["repository"]) for row in variant_rows}
+        }
+        repository_metrics[variant] = by_repository
+        fastapi_recall = by_repository.get("tiangolo/fastapi", 0.0)
+        pysnooper_recall = by_repository.get("cool-RR/PySnooper", 0.0)
+        r0_pysnooper = repository_metrics.get("R0", {}).get(
+            "cool-RR/PySnooper",
+            0.0,
+        )
+        previous = predecessor.get(variant)
+        no_op = bool(
+            previous
+            and all(
+                row["top_k_signature"]
+                == next(
+                    candidate["top_k_signature"]
+                    for candidate in rows
+                    if candidate["variant"] == previous
+                    and candidate["incident_id"] == row["incident_id"]
+                )
+                for row in variant_rows
+            )
+        )
         checks_by_variant[variant] = {
-            "recall_at_10_at_least_0_70": values["recall_at_10"] >= 0.70,
-            "recall_at_20_at_least_0_80": values["recall_at_20"] >= 0.80,
-            "contract_macro_f1_at_least_0_40": (
-                values["contract_macro_f1"] >= 0.40
+            "recall_at_10_at_least_0_80": values["recall_at_10"] >= 0.80,
+            "recall_at_20_at_least_0_90": values["recall_at_20"] >= 0.90,
+            "mrr_at_least_0_45": values["mrr"] >= 0.45,
+            "contract_macro_f1_at_least_0_60": (
+                values["contract_macro_f1"] >= 0.60
             ),
-            "coverage_at_least_0_80": values["coverage"] >= 0.80,
+            "joint_hit_at_3_at_least_0_30": (
+                values["joint_hit_at_3"] >= 0.30
+            ),
+            "selective_precision_at_least_0_80": (
+                values["selective_precision"] >= 0.80
+            ),
+            "confirmation_coverage_at_least_0_40": (
+                values["confirmed_diagnosis_coverage"] >= 0.40
+            ),
             "false_localization_not_worse_than_b_greedy": (
                 values["false_localization"]
                 <= float(baseline_greedy["false_localization"])
@@ -570,6 +683,9 @@ def run_open_replay_tournament(
                 - BASELINE_TARGETS["contract_accuracy"]
                 >= 0.15
             ),
+            "fastapi_recall_at_10_is_1": fastapi_recall == 1.0,
+            "pysnooper_not_below_r0": pysnooper_recall >= r0_pysnooper,
+            "variant_is_not_no_op": not no_op,
         }
     passing = [
         variant
@@ -612,6 +728,7 @@ def run_open_replay_tournament(
         "metrics": metrics,
         "checks": checks_by_variant,
         "repository_improvements": repository_improvements,
+        "repository_recall_at_10": repository_metrics,
         "error_summary": error_summary,
         "development_incidents": len(records),
         "development_repositories": len(
@@ -623,6 +740,47 @@ def run_open_replay_tournament(
         "held_out_created": False,
         "held_out_scored": False,
     }
+    variant_differences = {}
+    for previous, current in pairwise(STRUCTURAL_VARIANTS):
+        previous_rows = {
+            row["incident_id"]: row
+            for row in rows
+            if row["variant"] == previous
+        }
+        current_rows = [
+            row for row in rows if row["variant"] == current
+        ]
+        variant_differences[f"{previous}_to_{current}"] = {
+            "changed_top_10_incidents": sum(
+                row["top_k_signature"]
+                != previous_rows[row["incident_id"]]["top_k_signature"]
+                for row in current_rows
+            ),
+            "identical_on_all_incidents": all(
+                row["top_k_signature"]
+                == previous_rows[row["incident_id"]]["top_k_signature"]
+                for row in current_rows
+            ),
+        }
+    active_evidence = [
+        {
+            "incident_id": row["incident_id"],
+            "status": row["active_evidence_status"],
+            "details": json.loads(str(row["active_evidence_details"])),
+        }
+        for row in rows
+        if row["variant"] == "R6"
+    ]
     _write_json(output / "OPEN_REPLAY_STATUS.json", result)
     _write_json(output / "ERROR_SUMMARY.json", error_summary)
+    _write_json(
+        output / "VARIANT_DIFFERENCE_REPORT.json",
+        variant_differences,
+    )
+    _write_json(
+        output / "ACTIVE_EVIDENCE_REPLAY.json",
+        active_evidence,
+    )
+    _write_replay_report(output / "OPEN_REPLAY_REPORT.md", result)
+    _write_sha256sums(output)
     return result

@@ -5,14 +5,17 @@ from fuzzyxai.repository_diagnostics.guided_diagnosis import (
     GuidedNaturalDiagnosisEngine,
 )
 from fuzzyxai.repository_diagnostics.guided_retrieval import (
+    CandidateReservoir,
     DenseRetriever,
     HashingCodeEncoder,
+    IncidentNormalizer,
     IncidentQuery,
     RankedSymbol,
     RepoGraphRanker,
     SymbolDocument,
     documents_from_graph,
     reciprocal_rank_fusion,
+    tokenize,
 )
 
 
@@ -35,7 +38,7 @@ def test_true_cause_is_retrieved_from_traceback(
         "R1",
     )
     assert result.candidates[0].node_id == "cause"
-    assert result.status == "DIAGNOSIS_CONFIRMED"
+    assert result.status == "DIAGNOSIS_CANDIDATES"
 
 
 def test_caller_of_traceback_symbol_remains_in_small_context(
@@ -103,6 +106,80 @@ def test_rrf_merges_independent_rank_sources() -> None:
     fused = reciprocal_rank_fusion(((first, other), (second,)))
     assert fused[0].node_id == "a"
     assert fused[0].rank_sources == ("bm25", "dense")
+
+
+def test_incident_normalizer_removes_collection_noise() -> None:
+    query = IncidentQuery(
+        "fixture",
+        (
+            "Error processing line 1 of /tmp/run/site-packages/a.pth\n"
+            "_distutils_hack failed\n"
+            "real project failure"
+        ),
+        ("tests/test_loader.py::test_shape",),
+        "/tmp/run/runtime_launcher.py failed\nValueError: wrong shape",
+        "expected shape 4 observed shape 3",
+    )
+    normalized = IncidentNormalizer().normalize(query)
+    assert "_distutils_hack" not in normalized.weighted_text
+    assert "runtime_launcher.py" not in normalized.weighted_text
+    assert "real project failure" in normalized.weighted_text
+    assert "ValueError: wrong shape" in normalized.weighted_text
+
+
+def test_identifier_tokenizer_splits_program_symbols() -> None:
+    values = set(
+        tokenize(
+            "test_Host_header_overwrite "
+            "FacebookIE StaticFileHandler.validate_absolute_path"
+        )
+    )
+    assert {"host", "header", "overwrite", "facebook", "static", "path"} <= values
+
+
+def test_candidate_reservoir_preserves_single_channel_candidate() -> None:
+    decoys = tuple(
+        RankedSymbol(
+            f"decoy-{index}",
+            f"src/decoy_{index}.py",
+            f"decoy_{index}",
+            1.0,
+            ("bm25",),
+            1,
+            (),
+        )
+        for index in range(80)
+    )
+    cause = RankedSymbol(
+        "cause",
+        "src/cause.py",
+        "cause",
+        1.0,
+        ("executed_slice",),
+        1,
+        (),
+    )
+    runtime_decoys = tuple(
+        RankedSymbol(
+            item.node_id,
+            item.file_path,
+            item.symbol,
+            item.score,
+            ("executed_slice",),
+            item.line_count,
+            (),
+        )
+        for item in decoys
+    )
+    values = CandidateReservoir().build(
+        (
+            decoys,
+            (*runtime_decoys[:13], cause, *runtime_decoys[13:]),
+        ),
+        weights=(1.0, 1.35),
+    )
+    selected = next(item for item in values if item.node_id == "cause")
+    assert "channel_rank:executed_slice:14" in selected.evidence
 
 
 def test_global_order_prefers_one_shared_upstream_cause() -> None:

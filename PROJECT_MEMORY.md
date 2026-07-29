@@ -7,9 +7,9 @@
 - Parent release commit:
   `1fed9ac074295bc4b6cad33841b73a4022bcafcd`
 - Protocol: `H10-C7-v1`, locked before development
-- Implementation status: `IMPLEMENTED_AWAITING_NEW_DEVELOPMENT_DATA`
+- Implementation status: `OPEN_REPLAY_REFACTORED_NO_GO`
 - Scientific result: `NOT_EVALUATED`
-- Development collected/scored: no/no
+- Open development replay: `30 incidents / 8 repositories`
 - Held-out created/scored: no/no
 - Chapter document modified: no
 
@@ -37,6 +37,27 @@ overlap with H10-C5b/H10-C5c repositories. The two code encoders and the
 cross-encoder are pinned by repository revision and are local-only; their
 weight SHA256 values must be recorded before real development execution.
 Smoke hashing encoders are test-only and cannot support a scientific result.
+
+The disclosed H10-C5c runtime evidence was subsequently repackaged as an
+offline open replay and used to correct implementation defects before opening
+new data. The refactor removes collector noise, splits code identifiers,
+preserves single-channel candidates in a 150-300 item reservoir, combines the
+legacy R0 channel with runtime and graph evidence, retains directed runtime
+features, ranks candidate-contract pairs before final top-20 truncation, and
+applies saved traceback observations in R6. No project environment or neural
+model was executed.
+
+On the 30 disclosed incidents, R5 reached Recall@10 `0.8666666667`,
+Recall@20 `0.9333333333`, MRR `0.5298015873`, contract macro-F1
+`0.6238521169`, and joint Hit@3 `0.4666666667`. It improved Recall@10 in six
+of eight repositories, preserved PySnooper at `1.0`, and raised FastAPI to
+`1.0`. Confirmation now requires two independent direct contract
+observations. Selective precision rose to `0.8571428571`, but confirmation
+coverage was only `0.2333333333` against the locked `0.40` minimum.
+Therefore the open replay remains `H10_C7_OPEN_REPLAY_NO_GO`; no new
+development incidents, neural tournament, method lock, or held-out set may be
+opened. These values are engineering development diagnostics, not a scientific
+H10-C7 result.
 
 ## FXAI-H10-C5C-EVIDENCE-RETRIEVAL
 

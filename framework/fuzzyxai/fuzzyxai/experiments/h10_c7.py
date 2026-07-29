@@ -241,6 +241,10 @@ def _row(
         "DIAGNOSIS_CONFIRMED",
     }
     confirmed = diagnosis.status == "DIAGNOSIS_CONFIRMED"
+    contract_covered = bool(
+        diagnosis.candidates
+        and diagnosis.candidates[0].contract.family != "UNKNOWN_CONTRACT"
+    )
     return {
         "incident_id": incident.incident_id,
         "repository": incident.repository,
@@ -271,12 +275,22 @@ def _row(
         "predicted_contract": contract,
         "joint_hit_at_3": float(joint_hit_at_3),
         "coverage": float(coverage),
+        "retrieval_coverage": float(bool(diagnosis.candidates)),
+        "contract_coverage": float(contract_covered),
+        "confirmed_diagnosis_coverage": float(confirmed),
+        "repair_coverage": 0.0,
+        "confirmed_correct": float(confirmed and joint_hit_at_3),
         "false_localization": float(confirmed and not joint_hit_at_3),
         "candidate_count": context_symbols,
         "context_lines": context_lines,
         "search_space_reduction": reduction,
         "runtime_ms": runtime_ms,
         "evidence_request_count": len(diagnosis.evidence_requests),
+        "active_evidence_status": diagnosis.active_evidence_status,
+        "active_evidence_details": json.dumps(
+            dict(diagnosis.active_evidence_details),
+            sort_keys=True,
+        ),
         "route": diagnosis.route.route,
         "top_k_signature": json.dumps(
             [item.node_id for item in diagnosis.candidates[:10]],
@@ -335,6 +349,12 @@ def _macro_f1(rows: list[dict[str, object]]) -> float:
 
 def _metrics(rows: list[dict[str, object]]) -> dict[str, object]:
     available = [row for row in rows if row["available"]]
+    confirmed = [
+        row for row in available if row["status"] == "DIAGNOSIS_CONFIRMED"
+    ]
+    confirmed_correct = sum(
+        float(row["confirmed_correct"]) for row in confirmed
+    )
     return {
         "incident_count": len(rows),
         "available_incident_count": len(available),
@@ -348,6 +368,21 @@ def _metrics(rows: list[dict[str, object]]) -> dict[str, object]:
         "contract_macro_f1": _macro_f1(available),
         "joint_hit_at_3": _mean(available, "joint_hit_at_3"),
         "coverage": _mean(rows, "coverage"),
+        "retrieval_coverage": _mean(rows, "retrieval_coverage"),
+        "contract_coverage": _mean(rows, "contract_coverage"),
+        "confirmed_diagnosis_coverage": _mean(
+            rows,
+            "confirmed_diagnosis_coverage",
+        ),
+        "repair_coverage": _mean(rows, "repair_coverage"),
+        "confirmed_diagnosis_count": len(confirmed),
+        "confirmed_correct_count": int(confirmed_correct),
+        "selective_precision": (
+            confirmed_correct / len(confirmed) if confirmed else 0.0
+        ),
+        "conditional_confirmation_error": (
+            1.0 - confirmed_correct / len(confirmed) if confirmed else 0.0
+        ),
         "false_localization": _mean(rows, "false_localization"),
         "median_candidate_symbols": (
             statistics.median(
@@ -375,6 +410,26 @@ def _metrics(rows: list[dict[str, object]]) -> dict[str, object]:
         "mean_evidence_requests": _mean(
             available,
             "evidence_request_count",
+        ),
+        "active_evidence_applied_rate": (
+            sum(
+                row["active_evidence_status"]
+                == "ACTIVE_EVIDENCE_APPLIED"
+                for row in available
+            )
+            / len(available)
+            if available
+            else 0.0
+        ),
+        "active_evidence_unavailable_rate": (
+            sum(
+                row["active_evidence_status"]
+                == "ACTIVE_EVIDENCE_UNAVAILABLE"
+                for row in available
+            )
+            / len(available)
+            if available
+            else 0.0
         ),
     }
 
