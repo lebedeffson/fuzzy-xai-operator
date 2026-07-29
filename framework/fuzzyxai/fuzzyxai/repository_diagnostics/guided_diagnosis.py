@@ -104,6 +104,7 @@ class GuidedCandidate:
     symbol: str | None
     score: float
     contract: ContractPrediction
+    contract_hypotheses: tuple[ContractPrediction, ...]
     rank_sources: tuple[str, ...]
     line_count: int
     obligations: tuple[str, ...]
@@ -182,9 +183,11 @@ class GuidedNaturalDiagnosisEngine:
         dense_encoders: Sequence[DenseCodeEncoder] = (),
         cross_encoder: CrossEncoder | None = None,
         action_budget: int = 12,
+        structural_only: bool = False,
     ) -> None:
         self.dense_encoders = tuple(dense_encoders)
         self.cross_encoder = cross_encoder
+        self.structural_only = structural_only
         self.bm25 = BM25Retriever()
         self.graph_ranker = RepoGraphRanker()
         self.reranker = StructuralReranker()
@@ -192,6 +195,89 @@ class GuidedNaturalDiagnosisEngine:
         self.evidence_planner = ActiveEvidenceRequestPlanner()
         self.router = IncidentRouter()
         self.explorer = BoundedRepositoryExplorer(action_budget)
+        self._cache_graph_id: int | None = None
+        self._cache_documents: tuple[SymbolDocument, ...] = ()
+        self._cache_graph_ranking: tuple[RankedSymbol, ...] = ()
+        self._cache_bm25_query = ""
+        self._cache_bm25_ranking: tuple[RankedSymbol, ...] = ()
+
+    def _documents(
+        self,
+        graph: RepositoryGraph,
+    ) -> tuple[SymbolDocument, ...]:
+        graph_id = id(graph)
+        if self._cache_graph_id != graph_id:
+            self._cache_graph_id = graph_id
+            self._cache_documents = documents_from_graph(graph)
+            self._cache_graph_ranking = self.graph_ranker.rank(
+                graph,
+                self._cache_documents,
+            )
+            self._cache_bm25_query = ""
+            self._cache_bm25_ranking = ()
+        return self._cache_documents
+
+    def _graph_ranking(
+        self,
+        graph: RepositoryGraph,
+        documents: tuple[SymbolDocument, ...],
+    ) -> tuple[RankedSymbol, ...]:
+        self._documents(graph)
+        return self._cache_graph_ranking
+
+    def _bm25_ranking(
+        self,
+        graph: RepositoryGraph,
+        query: IncidentQuery,
+        documents: tuple[SymbolDocument, ...],
+    ) -> tuple[RankedSymbol, ...]:
+        self._documents(graph)
+        if self._cache_bm25_query != query.text:
+            self._cache_bm25_query = query.text
+            self._cache_bm25_ranking = self.bm25.rank(
+                query.text,
+                documents,
+            )
+        return self._cache_bm25_ranking
+
+    @staticmethod
+    def _runtime_ranking(
+        documents: tuple[SymbolDocument, ...],
+    ) -> tuple[RankedSymbol, ...]:
+        values = []
+        for item in documents:
+            if not item.executed:
+                continue
+            score = 1.0
+            sources = ["executed_slice"]
+            if item.traceback_distance == 0.0:
+                score += 6.0
+                sources.append("traceback")
+            if item.dynamic_call_distance is not None:
+                score += 4.0 / (1.0 + item.dynamic_call_distance)
+                sources.append("dynamic_call_distance")
+            score += min(len(item.obligations), 3)
+            values.append(
+                RankedSymbol(
+                    item.node_id,
+                    item.file_path,
+                    item.symbol,
+                    score,
+                    tuple(sources),
+                    item.line_count,
+                    item.obligations,
+                )
+            )
+        return tuple(
+            sorted(
+                values,
+                key=lambda item: (
+                    -item.score,
+                    item.file_path,
+                    item.symbol or "",
+                ),
+            )[:50]
+        )
 
     def diagnose(
         self,
@@ -212,7 +298,7 @@ class GuidedNaturalDiagnosisEngine:
                 self.diagnose(graph, query, aliases[variant]),
                 variant=variant,
             )
-        documents = documents_from_graph(graph)
+        documents = self._documents(graph)
         route = self.router.route(query, graph)
         if not documents:
             return GuidedDiagnosis(
@@ -239,7 +325,7 @@ class GuidedNaturalDiagnosisEngine:
             )
             unavailable = None
         elif variant == "B_BM25":
-            ranking = self.bm25.rank(query.text, documents, limit=20)
+            ranking = self._bm25_ranking(graph, query, documents)[:20]
             unavailable = None
         elif variant == "B_DENSE":
             if not self.dense_encoders:
@@ -293,33 +379,48 @@ class GuidedNaturalDiagnosisEngine:
                 documents,
                 ranking,
             )
-        candidates = tuple(
-            GuidedCandidate(
-                item.node_id,
-                item.file_path,
-                item.symbol,
-                item.score,
-                self.contracts.infer(query, item, graph)[0],
-                item.rank_sources,
-                item.line_count,
-                item.obligations,
+        candidates = []
+        for item in ranking[:20]:
+            hypotheses = self.contracts.infer(query, item, graph)
+            candidates.append(
+                GuidedCandidate(
+                    item.node_id,
+                    item.file_path,
+                    item.symbol,
+                    item.score,
+                    hypotheses[0],
+                    hypotheses,
+                    item.rank_sources,
+                    item.line_count,
+                    item.obligations,
+                )
             )
-            for item in ranking[:20]
-        )
         requests = (
             self.evidence_planner.plan(query.failing_tests[0], ranking)
             if variant in {"R6", "R8"} and query.failing_tests
             else ()
         )
-        status = (
-            "DIAGNOSIS_CANDIDATES"
-            if candidates
-            else "INSUFFICIENT_EVIDENCE"
-        )
+        status = "INSUFFICIENT_EVIDENCE"
+        if candidates:
+            top = candidates[0]
+            has_runtime_support = bool(
+                top.obligations
+                or
+                {"traceback", "dynamic_call_distance"}.intersection(
+                    top.rank_sources
+                )
+            )
+            status = (
+                "DIAGNOSIS_CONFIRMED"
+                if top.contract.family != "UNKNOWN_CONTRACT"
+                and top.contract.confidence >= 0.75
+                and has_runtime_support
+                else "DIAGNOSIS_CANDIDATES"
+            )
         return GuidedDiagnosis(
             variant,
             status,
-            candidates,
+            tuple(candidates),
             requests[:1],
             route,
             trajectory,
@@ -334,20 +435,26 @@ class GuidedNaturalDiagnosisEngine:
     ) -> tuple[tuple[RankedSymbol, ...], str | None]:
         if variant == "R0":
             return self._legacy_ranking(graph, documents), None
-        graph_ranking = self.graph_ranker.rank(graph, documents)
+        graph_ranking = self._graph_ranking(graph, documents)
         if variant == "R1":
             return self.reranker.rank(graph_ranking, documents), None
-        if not self.dense_encoders:
+        if not self.dense_encoders and not (
+            self.structural_only and variant in {"R3", "R5", "R6"}
+        ):
             return (), "no_registered_dense_encoder"
-        bm25 = self.bm25.rank(query.text, documents)
-        dense = [
+        bm25 = self._bm25_ranking(graph, query, documents)
+        runtime = self._runtime_ranking(documents)
+        dense = tuple(
             DenseRetriever(encoder).rank(query.text, documents)
             for encoder in self.dense_encoders
-        ]
+        )
         fused = reciprocal_rank_fusion((bm25, *dense))
         if variant == "R2":
             return fused[:20], None
-        fused = reciprocal_rank_fusion((fused, graph_ranking))
+        fused = reciprocal_rank_fusion(
+            (fused, graph_ranking, runtime),
+            limit=50,
+        )
         reranked = self.reranker.rank(fused, documents)
         if variant == "R3":
             return reranked, None
@@ -453,7 +560,7 @@ class GuidedNaturalDiagnosisEngine:
         ranking: tuple[RankedSymbol, ...],
     ) -> tuple[RankedSymbol, ...]:
         if route.route == "EXECUTED_SLICE_GRAPH":
-            graph_ranking = self.graph_ranker.rank(graph, documents)
+            graph_ranking = self._graph_ranking(graph, documents)
             return self.reranker.rank(
                 reciprocal_rank_fusion((ranking, graph_ranking)),
                 documents,
@@ -463,6 +570,6 @@ class GuidedNaturalDiagnosisEngine:
             "DEPENDENCY_RESOLVER",
             "SERIALIZATION_PATH",
         }:
-            lexical = self.bm25.rank(query.text, documents)
+            lexical = self._bm25_ranking(graph, query, tuple(documents))
             return reciprocal_rank_fusion((lexical, ranking), limit=20)
         return ranking

@@ -1,0 +1,31 @@
+{
+  "checks": {
+    "contract_accuracy_exact": true,
+    "held_out_not_created_or_scored": true,
+    "incident_count_30": true,
+    "joint_hit_at_3_exact": true,
+    "published_coverage_exact": true,
+    "recall_at_10_exact": true,
+    "recall_at_20_exact": true,
+    "repository_count_8": true,
+    "scientific_result_not_evaluated": true
+  },
+  "coverage_representation_note": "The locked status reports pre-threshold coverage 0.8. The final per-incident CSV records post-threshold coverage 0.7666666667. Both immutable representations are retained; neither is rewritten.",
+  "per_incident_sha256": "02e6f18b56a0e986c3d5eea3dda6890d2c4b98049fd567daa8b469904bfc5810",
+  "published_metrics": {
+    "candidate_recall_at_10": 0.5666666666666667,
+    "candidate_recall_at_20": 0.5666666666666667,
+    "contract_accuracy": 0.13333333333333333,
+    "coverage": 0.8,
+    "joint_hit_at_3": 0.0
+  },
+  "recalculated_from_final_per_incident_records": {
+    "candidate_recall_at_10": 0.5666666666666667,
+    "candidate_recall_at_20": 0.5666666666666667,
+    "contract_accuracy": 0.13333333333333333,
+    "coverage_from_final_per_incident_status": 0.7666666666666667,
+    "joint_hit_at_3": 0.0
+  },
+  "status": "H10_C7_OPEN_REPLAY_BASELINE_PASS",
+  "status_sha256": "60810d8ee58b20c6d9b1a5e4800c23fc678ce9e698ad70d339e91d37a7f69ba1"
+}

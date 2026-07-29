@@ -142,11 +142,17 @@ class LocalTransformerCodeEncoder:
 
 
 def documents_from_graph(graph: RepositoryGraph) -> tuple[SymbolDocument, ...]:
-    evidence = " ".join(item.detail for item in graph.evidence)
-    call_edges = {
-        edge.target
+    evidence_by_id = {item.evidence_id: item for item in graph.evidence}
+    nodes_by_id = {node.node_id: node for node in graph.nodes}
+    executed_nodes = {
+        node_id
         for edge in graph.edges
-        if edge.relation in {"runtime_calls", "tested_by"}
+        if edge.relation in {"executes", "runtime_calls", "tested_by"}
+        for node_id in (
+            (edge.source, edge.target)
+            if edge.relation == "runtime_calls"
+            else (edge.target,)
+        )
     }
     traceback_nodes = {
         edge.source
@@ -158,9 +164,24 @@ def documents_from_graph(graph: RepositoryGraph) -> tuple[SymbolDocument, ...]:
             for item in graph.evidence
         )
     }
+    runtime_adjacency: dict[str, set[str]] = defaultdict(set)
+    for edge in graph.edges:
+        if edge.relation != "runtime_calls":
+            continue
+        runtime_adjacency[edge.source].add(edge.target)
+        runtime_adjacency[edge.target].add(edge.source)
+    runtime_distance = {node_id: 0 for node_id in traceback_nodes}
+    frontier = list(traceback_nodes)
+    while frontier:
+        source = frontier.pop(0)
+        for target in runtime_adjacency[source]:
+            if target in runtime_distance:
+                continue
+            runtime_distance[target] = runtime_distance[source] + 1
+            frontier.append(target)
     obligations_by_node: dict[str, set[str]] = defaultdict(set)
     for edge in graph.edges:
-        target = graph.node(edge.target)
+        target = nodes_by_id.get(edge.target)
         if target and target.kind == "runtime_exception":
             obligation = target.attributes.get("obligation")
             if obligation:
@@ -169,6 +190,12 @@ def documents_from_graph(graph: RepositoryGraph) -> tuple[SymbolDocument, ...]:
     for node in graph.nodes:
         if node.kind not in SOURCE_KINDS or not node.file_path:
             continue
+        node_evidence = " ".join(
+            evidence_by_id[reference].detail
+            for reference in node.evidence_refs
+            if reference in evidence_by_id
+            and evidence_by_id[reference].kind in TRACEBACK_KINDS
+        )[:4096]
         semantic = " ".join(
             str(value)
             for value in node.attributes.get("semantic_tokens", ())
@@ -180,7 +207,7 @@ def documents_from_graph(graph: RepositoryGraph) -> tuple[SymbolDocument, ...]:
                 node.kind,
                 semantic,
                 str(node.attributes.get("source_excerpt", "")),
-                evidence if node.node_id in traceback_nodes else "",
+                node_evidence if node.node_id in traceback_nodes else "",
             )
         )
         documents.append(
@@ -190,9 +217,13 @@ def documents_from_graph(graph: RepositoryGraph) -> tuple[SymbolDocument, ...]:
                 node.symbol,
                 text,
                 max(1, int(node.attributes.get("line_count", 1))),
-                node.node_id in call_edges or node.node_id in traceback_nodes,
+                node.node_id in executed_nodes or node.node_id in traceback_nodes,
                 0.0 if node.node_id in traceback_nodes else None,
-                0.0 if node.node_id in call_edges else None,
+                (
+                    float(runtime_distance[node.node_id])
+                    if node.node_id in runtime_distance
+                    else None
+                ),
                 tuple(sorted(obligations_by_node[node.node_id])),
                 dict(node.attributes),
             )
@@ -402,6 +433,7 @@ class StructuralReranker:
         "dynamic": 0.25,
         "obligations": 0.20,
         "risk": -0.05,
+        "test_path": -0.25,
     }
 
     def __init__(self, weights: dict[str, float] | None = None) -> None:
@@ -427,9 +459,19 @@ class StructuralReranker:
                 + self.weights["traceback"]
                 * float(document.traceback_distance == 0.0)
                 + self.weights["dynamic"]
-                * float(document.dynamic_call_distance is not None)
+                * (
+                    1.0 / (1.0 + document.dynamic_call_distance)
+                    if document.dynamic_call_distance is not None
+                    else 0.0
+                )
                 + self.weights["obligations"] * len(document.obligations)
                 + self.weights["risk"] * risk
+                + self.weights["test_path"]
+                * float(
+                    document.file_path.startswith(("test/", "tests/"))
+                    or "/test/" in document.file_path
+                    or "/tests/" in document.file_path
+                )
             )
             rescored.append(
                 RankedSymbol(

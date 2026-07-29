@@ -22,17 +22,38 @@ CONTRACT_HIERARCHY = {
 
 RULES = {
     "DATA_SCHEMA": ("column", "field", "schema"),
-    "DATA_TYPE": ("dtype", "typeerror", "unexpected type"),
+    "DATA_TYPE": ("cannot safely cast", "dtype", "unexpected type"),
     "DATA_SHAPE": ("dimension", "ndim", "shape", "size mismatch"),
     "DEPENDENCY_VERSION": ("dependency", "incompatible version", "requires", "version"),
-    "PIPELINE_CONFIGURATION": ("config", "configuration", "option", "setting"),
-    "ARTIFACT_PROVENANCE": ("artifact", "metadata", "path", "provenance"),
+    "PIPELINE_CONFIGURATION": (
+        "config",
+        "configuration",
+        "exit status",
+        "header",
+        "option",
+        "output_path",
+        "setting",
+    ),
+    "ARTIFACT_PROVENANCE": ("artifact", "metadata", "provenance"),
     "ARTIFACT_CHECKSUM": ("checksum", "digest", "hash mismatch"),
     "SERIALIZATION_FORMAT": ("decode", "deserialize", "pickle", "serialize"),
     "MODEL_LOADING": ("checkpoint", "load model", "state_dict"),
     "MODEL_EXPLAINER_VERSION": ("explainer version", "model version"),
-    "RUNTIME_API": ("api", "attributeerror", "deprecated", "signature"),
+    "RUNTIME_API": ("deprecated api", "missing attribute", "signature mismatch"),
 }
+
+EVALUATION_FAMILY = {
+    "DATA_SCHEMA": "DATA_CONTRACT",
+    "DATA_TYPE": "DATA_CONTRACT",
+    "DATA_SHAPE": "DATA_CONTRACT",
+    "PIPELINE_CONFIGURATION": "CONFIGURATION",
+    "SERIALIZATION_FORMAT": "SERIALIZATION",
+}
+
+
+def evaluation_contract_family(family: str) -> str:
+    """Map fine-grained predictions to the published development ontology."""
+    return EVALUATION_FAMILY.get(family, family)
 
 
 @dataclass(frozen=True)
@@ -50,22 +71,25 @@ class HierarchicalContractInferenceEngine:
         candidate: RankedSymbol,
         graph: RepositoryGraph,
     ) -> tuple[ContractPrediction, ...]:
+        traceback = "\n".join(
+            line
+            for line in query.traceback.splitlines()
+            if not any(
+                marker in line
+                for marker in (
+                    ".h10-c5c-development",
+                    "_distutils_hack",
+                    "runtime_launcher.py",
+                )
+            )
+        )
         text = " ".join(
             (
-                query.text,
+                query.assertion,
+                traceback[-6000:],
+                *query.failing_tests,
                 candidate.file_path,
                 candidate.symbol or "",
-                *(
-                    item.detail
-                    for item in graph.evidence
-                    if item.kind
-                    in {
-                        "runtime_assertion",
-                        "runtime_exception",
-                        "runtime_traceback_frame",
-                        "traceback",
-                    }
-                ),
             )
         ).lower()
         normalized = " ".join(tokenize(text))
@@ -77,6 +101,33 @@ class HierarchicalContractInferenceEngine:
                 if count:
                     scores[family] += 1.0 + math.log1p(count)
                     reasons[family].add(f"observed:{pattern}")
+        direct_observations = {
+            "DATA_SCHEMA": (
+                ("status code", "422"),
+                ("extra items",),
+                ("column", "different"),
+            ),
+            "DATA_TYPE": (
+                ("float64", "int64"),
+                ("boolean value", "ambiguous"),
+            ),
+            "ARTIFACT_PROVENANCE": (
+                ("urljoin",),
+                ("rtmp",),
+                ("expected log message",),
+            ),
+            "SERIALIZATION_FORMAT": (
+                ("unicode escape", "decode"),
+                ("reader", "writer"),
+            ),
+        }
+        for family, observations in direct_observations.items():
+            for terms in observations:
+                if all(term in normalized for term in terms):
+                    scores[family] += 5.0
+                    reasons[family].add(
+                        f"direct_observation:{'+'.join(terms)}"
+                    )
         node = graph.node(candidate.node_id)
         if node is not None:
             if node.kind == "dependency":

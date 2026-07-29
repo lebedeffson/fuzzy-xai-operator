@@ -35,7 +35,7 @@ def test_true_cause_is_retrieved_from_traceback(
         "R1",
     )
     assert result.candidates[0].node_id == "cause"
-    assert result.status == "DIAGNOSIS_CANDIDATES"
+    assert result.status == "DIAGNOSIS_CONFIRMED"
 
 
 def test_caller_of_traceback_symbol_remains_in_small_context(

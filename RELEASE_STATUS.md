@@ -467,6 +467,25 @@ clinical-validity, natural-fault-generalization, or organizational-effectiveness
 claims. Earlier invalidated and negative study records remain part of the
 evidence history.
 
+## H10-C7 Open Replay
+
+- source H10-C5c runtime artifact: SHA256
+  `7b7bd0bba2eb9eef3955d2b5e313ecf4bccd02703427117f741c382e7658db09`;
+- baseline replay: PASS for 30 incidents and 8 repositories;
+- best structural variant: R3;
+- Recall@10: `0.7000`;
+- Recall@20: `0.8333`;
+- contract macro-F1: `0.4070`;
+- coverage: `1.0000`;
+- false localization: `0.2333`;
+- repository improvements: `4/8`;
+- status: `H10_C7_OPEN_REPLAY_NO_GO`;
+- scientific result: `NOT_EVALUATED`.
+
+No neural model was executed and no new development or held-out incident was
+opened. The six-of-eight repository transfer criterion remains unchanged and
+blocks promotion despite the aggregate development improvements.
+
 ## H10-C4 Operational Utility
 
 - Branch: `feat/h10-c4-operational-utility`

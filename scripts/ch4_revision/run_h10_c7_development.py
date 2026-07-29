@@ -6,6 +6,7 @@ import json
 from pathlib import Path
 
 from fuzzyxai.experiments.h10_c7 import run_development_tournament
+from fuzzyxai.experiments.h10_c7_model_lock import verify_model_weight_lock
 from fuzzyxai.repository_diagnostics.guided_diagnosis import (
     GuidedNaturalDiagnosisEngine,
     LocalTransformerCrossEncoder,
@@ -21,6 +22,7 @@ def main() -> int:
     parser.add_argument("--manifest", type=Path, required=True)
     parser.add_argument("--gold", type=Path, required=True)
     parser.add_argument("--model-registry", type=Path, required=True)
+    parser.add_argument("--model-weight-lock", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--root", type=Path, default=Path.cwd())
     parser.add_argument("--allow-smoke-encoders", action="store_true")
@@ -29,6 +31,11 @@ def main() -> int:
     encoders = []
     cross_encoder = None
     if not args.allow_smoke_encoders:
+        verify_model_weight_lock(
+            args.model_registry,
+            args.model_weight_lock,
+            require_read_only=True,
+        )
         pending = [
             item.get("model_name")
             for group in ("dense_encoders", "cross_encoders")

@@ -1067,3 +1067,25 @@ H10-C5, H10-C5b, H10-C5c, H10-C6, H9-E2E, H9-E2E-v2 and multimodal routes.
 The main operator manifest retained SHA256
 `479fa55460426a1726f57a5ed5f745b0ad2e872eeefb21470dd2e3e865133949`;
 the three new traceability entries are isolated in a hash-bound addendum.
+
+## FXAI-H10-C7-OPEN-REPLAY
+
+- Date: 2026-07-29
+- Source runtime artifact SHA256:
+  `7b7bd0bba2eb9eef3955d2b5e313ecf4bccd02703427117f741c382e7658db09`
+- Open development incidents: 30 from 8 repositories
+- Structural variants: R0, R1, R3, R5, R6
+- Best structural variant: R3
+- Status: `H10_C7_OPEN_REPLAY_NO_GO`
+- Scientific result: `NOT_EVALUATED`
+
+The autonomous replay bundle reproduces the published H10-C5c baseline without
+network access, project setup, dependency installation, or failing-test
+execution. R3 improved Recall@10 from `0.5667` to `0.7000`, Recall@20 to
+`0.8333`, and the development contract score to macro-F1 `0.4070`. Coverage
+was `1.0`, false localization was `0.2333`, and joint Hit@3 was `0.1667`.
+
+The internal go/no-go did not pass because Recall@10 improved in only four of
+eight repositories instead of the registered minimum of six. Neural variants
+were not executed, new development data were not collected, no method lock was
+created, and held-out data remain unopened.

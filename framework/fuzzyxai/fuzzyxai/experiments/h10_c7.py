@@ -9,6 +9,9 @@ from collections.abc import Iterable
 from dataclasses import asdict, dataclass
 from pathlib import Path
 
+from fuzzyxai.repository_diagnostics.contract_inference_v2 import (
+    evaluation_contract_family,
+)
 from fuzzyxai.repository_diagnostics.graph import (
     EvidenceRef,
     RepositoryEdge,
@@ -131,7 +134,12 @@ def load_development_inputs(
             raise ValueError("H10-C7 development runner accepts development only")
         query = value["query"]
         assert isinstance(query, dict)
-        graph = value["graph"]
+        graph = value.get("graph")
+        if graph is None:
+            graph_path = Path(str(value["graph_path"]))
+            if not graph_path.is_absolute():
+                graph_path = (manifest_path.parent / graph_path).resolve()
+            graph = json.loads(graph_path.read_text(encoding="utf-8"))
         assert isinstance(graph, dict)
         incidents.append(
             DevelopmentIncident(
@@ -215,7 +223,7 @@ def _row(
 ) -> dict[str, object]:
     rank = _rank(diagnosis, gold)
     contract = (
-        diagnosis.candidates[0].contract.family
+        evaluation_contract_family(diagnosis.candidates[0].contract.family)
         if diagnosis.candidates
         else "UNKNOWN_CONTRACT"
     )
@@ -228,7 +236,11 @@ def _row(
         incident.repository_symbol_count,
         1,
     )
-    coverage = diagnosis.status == "DIAGNOSIS_CANDIDATES"
+    coverage = diagnosis.status in {
+        "DIAGNOSIS_CANDIDATES",
+        "DIAGNOSIS_CONFIRMED",
+    }
+    confirmed = diagnosis.status == "DIAGNOSIS_CONFIRMED"
     return {
         "incident_id": incident.incident_id,
         "repository": incident.repository,
@@ -259,7 +271,7 @@ def _row(
         "predicted_contract": contract,
         "joint_hit_at_3": float(joint_hit_at_3),
         "coverage": float(coverage),
-        "false_localization": float(coverage and not joint_hit_at_3),
+        "false_localization": float(confirmed and not joint_hit_at_3),
         "candidate_count": context_symbols,
         "context_lines": context_lines,
         "search_space_reduction": reduction,

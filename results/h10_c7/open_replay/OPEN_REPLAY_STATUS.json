@@ -1,0 +1,217 @@
+{
+  "best_structural_variant": "R3",
+  "checks": {
+    "R0": {
+      "contract_gain_at_least_0_15": true,
+      "contract_macro_f1_at_least_0_40": false,
+      "coverage_at_least_0_80": true,
+      "false_localization_not_worse_than_b_greedy": true,
+      "improved_in_at_least_6_repositories": false,
+      "recall_at_10_at_least_0_70": false,
+      "recall_at_20_at_least_0_80": false,
+      "recall_gain_at_least_0_10": false
+    },
+    "R1": {
+      "contract_gain_at_least_0_15": true,
+      "contract_macro_f1_at_least_0_40": true,
+      "coverage_at_least_0_80": true,
+      "false_localization_not_worse_than_b_greedy": true,
+      "improved_in_at_least_6_repositories": false,
+      "recall_at_10_at_least_0_70": false,
+      "recall_at_20_at_least_0_80": false,
+      "recall_gain_at_least_0_10": false
+    },
+    "R3": {
+      "contract_gain_at_least_0_15": true,
+      "contract_macro_f1_at_least_0_40": true,
+      "coverage_at_least_0_80": true,
+      "false_localization_not_worse_than_b_greedy": true,
+      "improved_in_at_least_6_repositories": false,
+      "recall_at_10_at_least_0_70": true,
+      "recall_at_20_at_least_0_80": true,
+      "recall_gain_at_least_0_10": true
+    },
+    "R5": {
+      "contract_gain_at_least_0_15": true,
+      "contract_macro_f1_at_least_0_40": true,
+      "coverage_at_least_0_80": true,
+      "false_localization_not_worse_than_b_greedy": true,
+      "improved_in_at_least_6_repositories": false,
+      "recall_at_10_at_least_0_70": true,
+      "recall_at_20_at_least_0_80": true,
+      "recall_gain_at_least_0_10": true
+    },
+    "R6": {
+      "contract_gain_at_least_0_15": true,
+      "contract_macro_f1_at_least_0_40": true,
+      "coverage_at_least_0_80": true,
+      "false_localization_not_worse_than_b_greedy": true,
+      "improved_in_at_least_6_repositories": false,
+      "recall_at_10_at_least_0_70": true,
+      "recall_at_20_at_least_0_80": true,
+      "recall_gain_at_least_0_10": true
+    }
+  },
+  "development_incidents": 30,
+  "development_repositories": 8,
+  "error_summary": {
+    "R0": {
+      "CANDIDATE_ABSENT_FROM_POOL": 13,
+      "CONTRACT_INFERENCE_MISS": 12,
+      "MATCH": 5
+    },
+    "R1": {
+      "CANDIDATE_ABSENT_FROM_POOL": 16,
+      "CANDIDATE_LOW_RANKED": 2,
+      "CONTRACT_INFERENCE_MISS": 10,
+      "JOINT_LOCALIZATION_MISS": 1,
+      "MATCH": 1
+    },
+    "R3": {
+      "CANDIDATE_ABSENT_FROM_POOL": 5,
+      "CANDIDATE_LOW_RANKED": 4,
+      "CONTRACT_INFERENCE_MISS": 14,
+      "JOINT_LOCALIZATION_MISS": 2,
+      "MATCH": 5
+    },
+    "R5": {
+      "CANDIDATE_ABSENT_FROM_POOL": 5,
+      "CANDIDATE_LOW_RANKED": 4,
+      "CONTRACT_INFERENCE_MISS": 14,
+      "JOINT_LOCALIZATION_MISS": 2,
+      "MATCH": 5
+    },
+    "R6": {
+      "CANDIDATE_ABSENT_FROM_POOL": 5,
+      "CANDIDATE_LOW_RANKED": 4,
+      "CONTRACT_INFERENCE_MISS": 14,
+      "JOINT_LOCALIZATION_MISS": 2,
+      "MATCH": 5
+    }
+  },
+  "execution_profile": "STRUCTURAL_ONLY_OFFLINE",
+  "go_variants": [],
+  "held_out_created": false,
+  "held_out_scored": false,
+  "metrics": {
+    "R0": {
+      "available_incident_count": 30,
+      "contract_macro_f1": 0.3514529914529914,
+      "coverage": 1.0,
+      "false_localization": 0.3,
+      "file_hit_at_3": 0.4666666666666667,
+      "incident_count": 30,
+      "joint_hit_at_3": 0.16666666666666666,
+      "mean_evidence_requests": 0.0,
+      "mean_search_space_reduction": 0.9686221390084685,
+      "median_candidate_symbols": 20.0,
+      "median_context_lines": 20.0,
+      "median_runtime_ms": 0.0,
+      "mrr": 0.2908730158730159,
+      "recall_at_10": 0.5666666666666667,
+      "recall_at_20": 0.5666666666666667,
+      "recall_at_5": 0.4666666666666667,
+      "repository_count": 8,
+      "symbol_hit_at_3": 0.4666666666666667
+    },
+    "R1": {
+      "available_incident_count": 30,
+      "contract_macro_f1": 0.407008547008547,
+      "coverage": 1.0,
+      "false_localization": 0.16666666666666666,
+      "file_hit_at_3": 0.23333333333333334,
+      "incident_count": 30,
+      "joint_hit_at_3": 0.03333333333333333,
+      "mean_evidence_requests": 0.0,
+      "mean_search_space_reduction": 0.9590768109228874,
+      "median_candidate_symbols": 20.0,
+      "median_context_lines": 20.0,
+      "median_runtime_ms": 0.0,
+      "mrr": 0.1526070226070226,
+      "recall_at_10": 0.4,
+      "recall_at_20": 0.4666666666666667,
+      "recall_at_5": 0.3,
+      "repository_count": 8,
+      "symbol_hit_at_3": 0.23333333333333334
+    },
+    "R3": {
+      "available_incident_count": 30,
+      "contract_macro_f1": 0.407008547008547,
+      "coverage": 1.0,
+      "false_localization": 0.23333333333333334,
+      "file_hit_at_3": 0.36666666666666664,
+      "incident_count": 30,
+      "joint_hit_at_3": 0.16666666666666666,
+      "mean_evidence_requests": 0.0,
+      "mean_search_space_reduction": 0.9590768109228874,
+      "median_candidate_symbols": 20.0,
+      "median_context_lines": 20.0,
+      "median_runtime_ms": 0.0,
+      "mrr": 0.3602191619296882,
+      "recall_at_10": 0.7,
+      "recall_at_20": 0.8333333333333334,
+      "recall_at_5": 0.6,
+      "repository_count": 8,
+      "symbol_hit_at_3": 0.36666666666666664
+    },
+    "R5": {
+      "available_incident_count": 30,
+      "contract_macro_f1": 0.407008547008547,
+      "coverage": 1.0,
+      "false_localization": 0.23333333333333334,
+      "file_hit_at_3": 0.36666666666666664,
+      "incident_count": 30,
+      "joint_hit_at_3": 0.16666666666666666,
+      "mean_evidence_requests": 0.0,
+      "mean_search_space_reduction": 0.9590768109228874,
+      "median_candidate_symbols": 20.0,
+      "median_context_lines": 20.0,
+      "median_runtime_ms": 0.0,
+      "mrr": 0.3602191619296882,
+      "recall_at_10": 0.7,
+      "recall_at_20": 0.8333333333333334,
+      "recall_at_5": 0.6,
+      "repository_count": 8,
+      "symbol_hit_at_3": 0.36666666666666664
+    },
+    "R6": {
+      "available_incident_count": 30,
+      "contract_macro_f1": 0.407008547008547,
+      "coverage": 1.0,
+      "false_localization": 0.23333333333333334,
+      "file_hit_at_3": 0.36666666666666664,
+      "incident_count": 30,
+      "joint_hit_at_3": 0.16666666666666666,
+      "mean_evidence_requests": 1.0,
+      "mean_search_space_reduction": 0.9590768109228874,
+      "median_candidate_symbols": 20.0,
+      "median_context_lines": 20.0,
+      "median_runtime_ms": 0.0,
+      "mrr": 0.3602191619296882,
+      "recall_at_10": 0.7,
+      "recall_at_20": 0.8333333333333334,
+      "recall_at_5": 0.6,
+      "repository_count": 8,
+      "symbol_hit_at_3": 0.36666666666666664
+    }
+  },
+  "neural_models_executed": false,
+  "new_development_data_collected": false,
+  "project_environments_installed": false,
+  "repository_improvements": {
+    "R0": 0,
+    "R1": 0,
+    "R3": 4,
+    "R5": 4,
+    "R6": 4
+  },
+  "scientific_result": "NOT_EVALUATED",
+  "status": "H10_C7_OPEN_REPLAY_NO_GO",
+  "variants": [
+    "R0",
+    "R1",
+    "R3",
+    "R5",
+    "R6"
+  ]
+}
