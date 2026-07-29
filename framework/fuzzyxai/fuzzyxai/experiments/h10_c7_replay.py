@@ -502,7 +502,11 @@ def run_open_replay_tournament(
         encoding="utf-8",
         newline="",
     ) as target:
-        writer = csv.DictWriter(target, fieldnames=fieldnames)
+        writer = csv.DictWriter(
+            target,
+            fieldnames=fieldnames,
+            lineterminator="\n",
+        )
         writer.writeheader()
         writer.writerows(rows)
     _write_jsonl(output / "ERROR_CARDS.jsonl", cards)
