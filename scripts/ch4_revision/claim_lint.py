@@ -38,6 +38,7 @@ def _text(path: Path) -> str:
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--root", type=Path, default=Path("."))
+    parser.add_argument("--output", type=Path)
     parser.add_argument("paths", nargs="*", type=Path)
     args = parser.parse_args()
     root = args.root.resolve()
@@ -53,6 +54,7 @@ def main() -> None:
         root / "reports/final_practical",
         root / "reports/chapter_updates",
         root / "reports/multimodal_routes",
+        root / "reports/h10_c7r",
     ]
     files: list[Path] = []
     for path in paths:
@@ -74,7 +76,11 @@ def main() -> None:
         if re.search(r"H10-C3\s+(?:подтверждено|подтверждена)(?![^.\n]{0,100}контролируем)", content, re.IGNORECASE):
             violations.append({"path": str(path.relative_to(root)), "phrase": "unqualified H10-C3 confirmation"})
     report = {"status": "PASS" if not violations else "FAIL", "files_checked": len(files), "violations": violations}
-    output = root / "reports/chapter_revision/CLAIM_LINT.json"
+    output = (
+        args.output.resolve()
+        if args.output
+        else root / "reports/chapter_revision/CLAIM_LINT.json"
+    )
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     print(json.dumps(report, indent=2))

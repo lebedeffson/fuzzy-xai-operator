@@ -1231,3 +1231,27 @@ The internal go/no-go did not pass because Recall@10 improved in only four of
 eight repositories instead of the registered minimum of six. Neural variants
 were not executed, new development data were not collected, no method lock was
 created, and held-out data remain unopened.
+
+## FXAI-H10-C7R-PROSPECTIVE-CLOSURE
+
+- Date: 2026-07-30
+- Protocol: `H10-C7R-v1`
+- Frozen method commit: `358ed40a0fb7f5adc1291695ff15affa39cae485`
+- R5 candidate budget: 20
+- Frozen baseline: `B_BM25`, budget 160
+- Official scoring openings: 1
+- Held-out: 40 incidents from 30 repository-disjoint repositories
+- Official status: `H10_C7R_NOT_SUPPORTED`
+- Scientific result: `NOT_SUPPORTED`
+
+The one-time held-out scoring produced R5 Recall@20 `0.55`, B_BM25
+Recall@160 `0.775`, and R5 coverage `1.0`. Mean candidate-space reduction was
+`0.990383` for R5 and `0.923068` for B_BM25. The repository-cluster bootstrap
+difference was `0.069949`, with 95% CI `[0.047706, 0.096248]`.
+
+The reduction interval was positive, but the registered R5 Recall@20 minimum
+of `0.80` and the recall noninferiority condition both failed. The result is
+therefore not supported. It cannot be described as practical search-space
+reduction at the registered recall level. Contract inference remained
+descriptive, and automatic root-cause confirmation, repair, and developer-time
+reduction were not evaluated.

@@ -1,0 +1,13 @@
+{
+  "checks": {
+    "gold_fields_absent_from_observable": true,
+    "minimum_12_repositories": true,
+    "minimum_40_incidents": true,
+    "observable_gold_ids_match": true,
+    "repository_exclusion_overlap_zero": true,
+    "runtime_evidence_complete": true
+  },
+  "excluded_repository_overlap": [],
+  "gold_leakage": 0,
+  "status": "PASS"
+}

@@ -1,0 +1,13 @@
+{
+  "authorization_checks": {
+    "authorization_status": true,
+    "gold_sha256": true,
+    "lock_manifest_sha256": true,
+    "manifest_sha256": true,
+    "opening_count_zero": true
+  },
+  "budget_signature_passed": true,
+  "gold_leakage": 0,
+  "method_signature_passed": true,
+  "opening_count": 1
+}

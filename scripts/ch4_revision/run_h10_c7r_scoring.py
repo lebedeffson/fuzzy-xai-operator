@@ -112,6 +112,34 @@ Held-out: {status["incident_count"]} incidents from
 Contract-family inference is descriptive and did not affect this status.
 The result concerns candidate-space reduction, not automatic root-cause
 confirmation or repair.
+
+Although the repository-cluster confidence interval for the reduction
+difference is strictly positive, the primary recall condition failed.
+Therefore the larger reduction cannot be interpreted as supported practical
+search-space reduction at the registered recall level.
+"""
+
+
+def _chapter_fragment(status: dict[str, object]) -> str:
+    bootstrap = status["bootstrap"]
+    return f"""# H10-C7R chapter fragment
+
+On a new repository-disjoint held-out set of {status["incident_count"]}
+natural incidents from {status["repository_count"]} repositories, frozen R5
+retained the target program element within 20 candidates in
+{status["r5_recall_at_20"]:.1%} of incidents. The frozen B_BM25 baseline
+reached {status["baseline_recall_at_160"]:.1%} recall with 160 candidates.
+R5 produced greater mean search-space reduction
+({status["mean_r5_search_space_reduction"]:.4f} versus
+{status["mean_baseline_search_space_reduction"]:.4f}); the
+repository-cluster 95% confidence interval for the reduction difference was
+[{bootstrap["ci_lower"]:.4f}, {bootstrap["ci_upper"]:.4f}].
+
+The registered minimum R5 Recall@20 was 0.80, but the observed value was
+{status["r5_recall_at_20"]:.2f}. H10-C7R therefore has official status
+`{status["status"]}`. The result does not support practical candidate-space
+reduction at the registered recall level and does not evaluate automatic
+root-cause confirmation, repair, or developer-time reduction.
 """
 
 
@@ -199,10 +227,7 @@ def main() -> int:
         encoding="utf-8",
     )
     (reports / "H10_C7R_CHAPTER_FRAGMENT.md").write_text(
-        (
-            "H10-C7R must be interpreted only as candidate-space reduction. "
-            f"Official status: {status['status']}.\n"
-        ),
+        _chapter_fragment(status),
         encoding="utf-8",
     )
     _write_json(
