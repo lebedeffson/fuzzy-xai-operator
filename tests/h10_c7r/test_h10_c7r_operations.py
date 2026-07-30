@@ -131,6 +131,19 @@ def test_pytest_node_event_requires_observed_project_test(tmp_path: Path) -> Non
     assert event["source_file"] == "tests/test_module.py"
     assert event["source_symbol"] == "Suite.test_failure"
     assert runtime._pytest_node_event(tmp_path, test_id, "other output") is None
+    nested = tmp_path / "packages/instrumentation/tests/test_nested.py"
+    nested.parent.mkdir(parents=True)
+    nested.write_text("def test_nested(): pass\n", encoding="utf-8")
+    nested_id = "tests/test_nested.py::test_nested"
+    nested_event = runtime._pytest_node_event(
+        tmp_path,
+        nested_id,
+        f"FAILED {nested_id}",
+    )
+    assert nested_event is not None
+    assert nested_event["source_file"] == (
+        "packages/instrumentation/tests/test_nested.py"
+    )
 
 
 def test_runtime_collection_uses_one_image_as_rolling_cache(

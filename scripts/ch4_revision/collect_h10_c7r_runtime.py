@@ -203,8 +203,18 @@ def _pytest_node_event(
         return None
     parts = test_id.split("::")
     relative = Path(parts[0])
-    if relative.suffix != ".py" or not (root / relative).is_file():
+    if relative.suffix != ".py":
         return None
+    source_path = root / relative
+    if not source_path.is_file():
+        matches = sorted(
+            path
+            for path in root.glob(f"**/{relative.as_posix()}")
+            if path.is_file()
+        )
+        if len(matches) != 1:
+            return None
+        relative = matches[0].relative_to(root)
     symbol_parts = [
         part.split("[", 1)[0]
         for part in parts[1:]
