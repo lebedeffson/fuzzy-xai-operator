@@ -317,6 +317,9 @@ def collect_one(
                     test_id=fail_to_pass[0],
                 )
             )
+            events = [
+                event for event in events if _project_python_event(event)
+            ]
             unique = {str(event["event_id"]): event for event in events}
             events = [unique[key] for key in sorted(unique)]
             kinds = {str(event["kind"]) for event in events}
