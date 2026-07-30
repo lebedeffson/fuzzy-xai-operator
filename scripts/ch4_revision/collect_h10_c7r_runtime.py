@@ -542,6 +542,7 @@ def collect(
             )
             image_tag = str(registry[identifier]["container_image_tag"])
             newly_collected = not cached.is_file()
+            cached_failure = False
             try:
                 image_status = str(
                     availability[identifier]["availability_status"]
@@ -558,10 +559,8 @@ def collect(
                         failure_cache.unlink()
                         row = collect_one(public, registry[identifier], output)
                     else:
-                        raise RuntimeError(
-                            "CACHED_RUNTIME_FAILURE: "
-                            + str(failure["reason"])
-                        )
+                        cached_failure = True
+                        raise RuntimeError(str(failure["reason"]))
                 else:
                     row = collect_one(public, registry[identifier], output)
                 if failure_cache.is_file():
@@ -581,24 +580,30 @@ def collect(
                     retained_image = image_tag
             except Exception as error:  # noqa: BLE001 - preserve runtime ledger
                 incident_dir = output / "incidents" / identifier
-                write_json(
-                    incident_dir / "runtime_failure.json",
-                    {
-                        "collector_capability": COLLECTOR_CAPABILITY,
-                        "incident_id": identifier,
-                        "reason": str(error),
-                        "status": (
-                            "RUNTIME_INFRASTRUCTURE_OR_REPRODUCTION_FAILED"
-                        ),
-                    },
-                )
+                reason = str(error)
+                if not cached_failure:
+                    write_json(
+                        incident_dir / "runtime_failure.json",
+                        {
+                            "collector_capability": COLLECTOR_CAPABILITY,
+                            "incident_id": identifier,
+                            "reason": reason,
+                            "status": (
+                                "RUNTIME_INFRASTRUCTURE_OR_REPRODUCTION_FAILED"
+                            ),
+                        },
+                    )
                 ledger.append(
                     {
                         "incident_id": identifier,
                         "selection_rank": public["selection_rank"],
                         "selection_role": public["selection_role"],
                         "status": "RUNTIME_INFRASTRUCTURE_OR_REPRODUCTION_FAILED",
-                        "reason": str(error),
+                        "reason": (
+                            f"CACHED_RUNTIME_FAILURE: {reason}"
+                            if cached_failure
+                            else reason
+                        ),
                     }
                 )
                 if prune_images and image_tag != retained_image:
