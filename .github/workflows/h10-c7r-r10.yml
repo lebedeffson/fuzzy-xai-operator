@@ -41,7 +41,7 @@ jobs:
           python -m pip install \
             --index-url https://download.pytorch.org/whl/cpu \
             torch
-          python -m pip install ".[dev,evidence,lightgbm]" shap
+          python -m pip install -e ".[dev,evidence,lightgbm]" shap
       - name: Focused R10 checks
         run: make h10-c7r-r10-test H10_C3_PYTHON=python
       - name: Full regression
