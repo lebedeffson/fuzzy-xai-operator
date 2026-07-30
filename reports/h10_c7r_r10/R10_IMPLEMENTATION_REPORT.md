@@ -1,0 +1,41 @@
+# H10-C7R R10 implementation report
+
+R10 fixes the runtime chronology representation and replaces direct
+repository-wide symbol compression with a file-first retrieval path.
+
+Implemented components:
+
+- monotonic runtime `sequence_id`, timestamp, thread, depth and occurrence
+  counts;
+- a bounded full event tail plus aggregated prefix;
+- typed argument, return, exception, assertion, last-writer and value-flow
+  observations;
+- fail-closed raw-runtime readiness auditing;
+- top-20 file retrieval followed by a maximum 200-symbol pool;
+- source-aware reranking with candidate-specific causal bonuses;
+- a bounded schema and planner for at most two read-only targeted probes;
+- contract inference only after localization.
+
+The disclosed 40 incidents have not been recollected or rescored. Their old
+runtime files do not contain recoverable execution chronology, so they cannot
+be used to claim R10 causal performance.
+
+Status:
+`H10_C7R_R10_IMPLEMENTED_AWAITING_CAUSAL_DEVELOPMENT_RECOLLECTION`.
+
+Scientific result: `NOT_EVALUATED`.
+
+No container execution, neural inference, new held-out creation, or held-out
+scoring was performed.
+
+Targeted probes were not executed. R10D remains unavailable until both a
+source-aware model lock and candidate-specific probe observations exist.
+
+## Verification
+
+- Local focused compatibility: `176 passed`.
+- GitHub focused R10 gate: `54 passed`.
+- GitHub full regression: `819 passed, 6 skipped`.
+- Ruff, compileall, claim lint and operator manifest: `PASS`.
+- Parent H10-C7R-v1 and R9 protected hashes: `PASS`.
+- CI run: `30563208205`.
