@@ -119,6 +119,66 @@ def test_pytest_node_event_requires_observed_project_test(tmp_path: Path) -> Non
     assert runtime._pytest_node_event(tmp_path, test_id, "other output") is None
 
 
+def test_runtime_collection_uses_one_image_as_rolling_cache(
+    tmp_path: Path,
+    monkeypatch,
+) -> None:
+    selection = tmp_path / "selection.jsonl"
+    registry = tmp_path / "registry.jsonl"
+    public_rows = [
+        {
+            "incident_id": f"incident-{index}",
+            "repository": f"repository-{index}",
+            "selection_rank": index,
+            "selection_role": "PRIMARY",
+        }
+        for index in range(1, 4)
+    ]
+    registry_rows = [
+        {
+            "incident_id": f"incident-{index}",
+            "container_image_tag": f"image-{index}",
+        }
+        for index in range(1, 4)
+    ]
+    runtime.write_jsonl(selection, public_rows)
+    runtime.write_jsonl(registry, registry_rows)
+    operations: list[str] = []
+
+    def fake_collect_one(public, registered, output):
+        operations.append(f"collect:{registered['container_image_tag']}")
+        return {
+            **public,
+            "runtime_evidence_status": "BUG_REPRODUCED_WITH_TRACE",
+        }
+
+    def fake_run(arguments, **_kwargs):
+        if arguments[:3] == ["docker", "image", "rm"]:
+            operations.append(f"remove:{arguments[3]}")
+        return runtime.subprocess.CompletedProcess(arguments, 0, "", "")
+
+    monkeypatch.setattr(runtime, "collect_one", fake_collect_one)
+    monkeypatch.setattr(runtime, "run", fake_run)
+    report = runtime.collect(
+        selection,
+        registry,
+        tmp_path / "runtime",
+        target_incidents=3,
+        minimum_repositories=3,
+        prune_images=True,
+    )
+
+    assert report["status"] == "H10_C7R_RUNTIME_EVIDENCE_COMPLETE"
+    assert operations == [
+        "collect:image-1",
+        "collect:image-2",
+        "remove:image-1",
+        "collect:image-3",
+        "remove:image-2",
+        "remove:image-3",
+    ]
+
+
 def test_gold_builder_binds_hunk_to_graph_symbol(tmp_path: Path) -> None:
     graph = {
         "nodes": [

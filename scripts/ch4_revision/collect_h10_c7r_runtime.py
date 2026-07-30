@@ -223,8 +223,6 @@ def collect_one(
     public: dict[str, Any],
     registry: dict[str, Any],
     output: Path,
-    *,
-    prune_image: bool,
 ) -> dict[str, object]:
     identifier = str(public["incident_id"])
     incident_dir = output / "incidents" / identifier
@@ -438,8 +436,6 @@ def collect_one(
     finally:
         events_dir.chmod(0o755)
         run(["docker", "rm", "-f", container])
-        if prune_image:
-            run(["docker", "image", "rm", image_tag])
 
 
 def collect(
@@ -468,42 +464,50 @@ def collect(
     )
     completed = []
     ledger = []
-    for public in ordered:
-        identifier = str(public["incident_id"])
-        if len(completed) >= target_incidents:
-            break
-        cached = output / "incidents" / identifier / "observable.json"
-        try:
-            if cached.is_file():
-                row = json.loads(cached.read_text(encoding="utf-8"))
-            else:
-                row = collect_one(
-                    public,
-                    registry[identifier],
-                    output,
-                    prune_image=prune_images,
+    retained_image: str | None = None
+    try:
+        for public in ordered:
+            identifier = str(public["incident_id"])
+            if len(completed) >= target_incidents:
+                break
+            cached = output / "incidents" / identifier / "observable.json"
+            image_tag = str(registry[identifier]["container_image_tag"])
+            newly_collected = not cached.is_file()
+            try:
+                if cached.is_file():
+                    row = json.loads(cached.read_text(encoding="utf-8"))
+                else:
+                    row = collect_one(public, registry[identifier], output)
+                completed.append(row)
+                ledger.append(
+                    {
+                        "incident_id": identifier,
+                        "selection_rank": public["selection_rank"],
+                        "selection_role": public["selection_role"],
+                        "status": "BUG_REPRODUCED_WITH_TRACE",
+                    }
                 )
-            completed.append(row)
-            ledger.append(
-                {
-                    "incident_id": identifier,
-                    "selection_rank": public["selection_rank"],
-                    "selection_role": public["selection_role"],
-                    "status": "BUG_REPRODUCED_WITH_TRACE",
-                }
-            )
-        except Exception as error:  # noqa: BLE001 - preserve the runtime ledger
-            ledger.append(
-                {
-                    "incident_id": identifier,
-                    "selection_rank": public["selection_rank"],
-                    "selection_role": public["selection_role"],
-                    "status": "RUNTIME_INFRASTRUCTURE_OR_REPRODUCTION_FAILED",
-                    "reason": str(error),
-                }
-            )
-        write_jsonl(output / "RUNTIME_AVAILABILITY_LEDGER.jsonl", ledger)
-        write_jsonl(output / "HELD_OUT_MANIFEST.jsonl", completed)
+                if prune_images and newly_collected:
+                    if retained_image and retained_image != image_tag:
+                        run(["docker", "image", "rm", retained_image])
+                    retained_image = image_tag
+            except Exception as error:  # noqa: BLE001 - preserve runtime ledger
+                ledger.append(
+                    {
+                        "incident_id": identifier,
+                        "selection_rank": public["selection_rank"],
+                        "selection_role": public["selection_role"],
+                        "status": "RUNTIME_INFRASTRUCTURE_OR_REPRODUCTION_FAILED",
+                        "reason": str(error),
+                    }
+                )
+                if prune_images and image_tag != retained_image:
+                    run(["docker", "image", "rm", image_tag])
+            write_jsonl(output / "RUNTIME_AVAILABILITY_LEDGER.jsonl", ledger)
+            write_jsonl(output / "HELD_OUT_MANIFEST.jsonl", completed)
+    finally:
+        if prune_images and retained_image:
+            run(["docker", "image", "rm", retained_image])
 
     repositories = {str(row["repository"]) for row in completed}
     complete = (
