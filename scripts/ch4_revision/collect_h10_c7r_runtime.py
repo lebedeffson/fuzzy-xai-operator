@@ -24,6 +24,7 @@ from fuzzyxai.repository_diagnostics.importer import RepositoryIncident
 from fuzzyxai.repository_diagnostics.importer_v2 import (
     EvidenceGroundedRepositoryImporter,
 )
+from fuzzyxai.repository_diagnostics.runtime_events import RuntimeEvent
 
 
 def read_jsonl(path: Path) -> list[dict[str, Any]]:
@@ -69,9 +70,16 @@ def _instrumented_command(
     test_commands: list[str],
     fail_to_pass: list[str],
 ) -> tuple[list[str], str]:
+    parsed = [shlex.split(command) for command in test_commands]
+    ordered = sorted(
+        parsed,
+        key=lambda tokens: (
+            0 if tokens and tokens[0] in {"pytest", "py.test"} else 1,
+            len(tokens),
+        ),
+    )
     selected: list[str] | None = None
-    for command in reversed(test_commands):
-        tokens = shlex.split(command)
+    for tokens in ordered:
         if "pytest" in tokens:
             selected = tokens
             break
@@ -86,16 +94,23 @@ def _instrumented_command(
 
     pytest_index = selected.index("pytest")
     prefix = selected[:pytest_index]
-    argv = ["pytest", "-vv", "-x", "-n", "0", *fail_to_pass]
+    argv = ["pytest", "-vv", "-x", *fail_to_pass]
     if (
         prefix[:2] in (["uv", "run"], ["poetry", "run"])
         or prefix
         and all("=" in token for token in prefix)
     ):
-        wrapper = [*prefix, "python", "/h10/runtime_launcher.py"]
+        python_prefix = [*prefix, "python"]
     else:
-        wrapper = ["python", "/h10/runtime_launcher.py"]
-    return argv, shlex.join(wrapper)
+        python_prefix = ["python"]
+    help_command = shlex.join([*python_prefix, "-m", "pytest", "--help"])
+    normal = shlex.join([*python_prefix, "/h10/runtime_launcher.py"])
+    xdist = shlex.join([*python_prefix, "/h10/runtime_launcher_xdist.py"])
+    wrapper = (
+        f"if {help_command} 2>/dev/null | grep -q -- '--numprocesses'; "
+        f"then {xdist}; else {normal}; fi"
+    )
+    return argv, wrapper
 
 
 def _image_digest(tag: str) -> tuple[str, int]:
@@ -128,6 +143,32 @@ def _probe_events(event_dir: Path) -> list[dict[str, object]]:
     return [values[key] for key in sorted(values)]
 
 
+def _project_python_event(event: dict[str, object]) -> bool:
+    paths = [
+        str(event[field])
+        for field in ("source_file", "target_file")
+        if event.get(field)
+    ]
+    if not paths:
+        return False
+    for value in paths:
+        path = Path(value)
+        if path.suffix != ".py":
+            return False
+        if any(
+            part in {
+                ".venv",
+                "venv",
+                "site-packages",
+                "dist-packages",
+                "__pycache__",
+            }
+            for part in path.parts
+        ):
+            return False
+    return True
+
+
 def _source_lines(root: Path) -> int:
     total = 0
     for path in root.rglob("*.py"):
@@ -157,6 +198,8 @@ def collect_one(
     incident_dir.mkdir(parents=True, exist_ok=True)
     events_dir = incident_dir / "events"
     events_dir.mkdir(exist_ok=True)
+    for stale_event in events_dir.glob("probe-*.jsonl"):
+        stale_event.unlink()
     events_dir.chmod(0o777)
     (incident_dir / "test.patch").write_text(
         str(registry["test_patch"]),
@@ -171,8 +214,17 @@ def collect_one(
         _launcher_source(
             Path("/testbed"),
             Path("/h10/events"),
-            identifier,
+            fail_to_pass[0],
             tuple(argv),
+        ),
+        encoding="utf-8",
+    )
+    (incident_dir / "runtime_launcher_xdist.py").write_text(
+        _launcher_source(
+            Path("/testbed"),
+            Path("/h10/events"),
+            fail_to_pass[0],
+            (*argv[:3], "-n", "0", *argv[3:]),
         ),
         encoding="utf-8",
     )
@@ -185,6 +237,13 @@ def collect_one(
         "git apply /h10/test.patch; "
         "elif git apply --reverse --check /h10/test.patch; then :; "
         "else exit 86; fi; "
+    )
+    execution = (
+        overlay
+        + "set +e; "
+        + wrapper
+        + "; rc=$?; chmod 0644 /h10/events/probe-*.jsonl 2>/dev/null || :; "
+        + "exit $rc"
     )
     command = [
         "docker",
@@ -208,7 +267,7 @@ def collect_one(
         image_digest,
         "bash",
         "-lc",
-        overlay + wrapper,
+        execution,
     ]
     started = time.monotonic()
     timed_out = False
@@ -252,16 +311,24 @@ def collect_one(
                 "/testbed/",
                 f"{source_root.as_posix()}/",
             )
-            events = _probe_events(events_dir)
-            for event in _traceback_events(
-                normalized,
-                root=source_root,
-                test_id=fail_to_pass[0],
-            ):
-                events.append(event)
+            events = [
+                event
+                for event in _probe_events(events_dir)
+                if _project_python_event(event)
+            ]
+            events.extend(
+                _traceback_events(
+                    normalized,
+                    root=source_root,
+                    test_id=fail_to_pass[0],
+                )
+            )
             unique = {str(event["event_id"]): event for event in events}
             events = [unique[key] for key in sorted(unique)]
             kinds = {str(event["kind"]) for event in events}
+            typed_events = tuple(
+                RuntimeEvent.from_mapping(event) for event in events
+            )
             reproduced = returncode not in (0, 86, 124)
             status = (
                 "BUG_REPRODUCED_WITH_TRACE"
@@ -288,9 +355,9 @@ def collect_one(
             )
             graph = EvidenceGroundedRepositoryImporter().build(
                 incident,
-                runtime_events=tuple(events),
+                runtime_events=typed_events,
             )
-            documents = documents_from_graph(graph, tuple(events))
+            documents = documents_from_graph(graph, typed_events)
             graph_path = incident_dir / "repository_graph.json"
             events_path = incident_dir / "runtime_events.jsonl"
             write_json(graph_path, asdict(graph))

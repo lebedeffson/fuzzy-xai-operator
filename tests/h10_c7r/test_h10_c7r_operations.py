@@ -69,17 +69,38 @@ def test_instrumented_pytest_command_supports_registered_wrappers() -> None:
     fail_to_pass = ["tests/test_x.py::test_failure"]
     argv, direct = runtime._instrumented_command(["pytest -rA"], fail_to_pass)
     assert argv[-1] == fail_to_pass[0]
-    assert direct == "python /h10/runtime_launcher.py"
+    assert "python /h10/runtime_launcher.py" in direct
+    assert "python /h10/runtime_launcher_xdist.py" in direct
     _, uv = runtime._instrumented_command(
         ["uv run -p .venv pytest -rA"],
         fail_to_pass,
     )
-    assert uv == "uv run -p .venv python /h10/runtime_launcher.py"
+    assert "uv run -p .venv python /h10/runtime_launcher.py" in uv
     _, poetry = runtime._instrumented_command(
         ["poetry run pytest tests -v"],
         fail_to_pass,
     )
-    assert poetry == "poetry run python /h10/runtime_launcher.py"
+    assert "poetry run python /h10/runtime_launcher.py" in poetry
+    _, preferred = runtime._instrumented_command(
+        ["pytest -rA", "uv run pytest -rA"],
+        fail_to_pass,
+    )
+    assert "uv run" not in preferred
+
+
+def test_runtime_event_filter_excludes_environment_and_non_python() -> None:
+    assert runtime._project_python_event(
+        {
+            "source_file": "tests/test_x.py",
+            "target_file": "pkg/module.py",
+        }
+    )
+    assert not runtime._project_python_event(
+        {"source_file": ".venv/lib/site-packages/pkg/module.py"}
+    )
+    assert not runtime._project_python_event(
+        {"source_file": "src/propcache/_helpers_c.pyx"}
+    )
 
 
 def test_gold_builder_binds_hunk_to_graph_symbol(tmp_path: Path) -> None:
