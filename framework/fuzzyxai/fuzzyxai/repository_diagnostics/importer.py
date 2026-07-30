@@ -74,10 +74,9 @@ def _evidence_id(kind: str, source: str, detail: str) -> str:
 
 
 class _PythonIndex(ast.NodeVisitor):
-    def __init__(self, repository: str, relative: str, source: str) -> None:
+    def __init__(self, repository: str, relative: str) -> None:
         self.repository = repository
         self.relative = relative
-        self.source = source
         self.nodes: list[RepositoryNode] = []
         self.edges: list[tuple[str, str, str, int]] = []
         self.scope: list[str] = []
@@ -143,10 +142,6 @@ class _PythonIndex(ast.NodeVisitor):
                         else None
                     ),
                     "semantic_tokens": semantic_tokens,
-                    "docstring": (ast.get_docstring(node) or "")[:2000],
-                    "source_excerpt": (
-                        ast.get_source_segment(self.source, node) or ""
-                    )[:12000],
                     "decorators": tuple(
                         ast.unparse(item) for item in getattr(node, "decorator_list", ())
                     ),
@@ -308,7 +303,7 @@ class RepositoryStructureImporter:
             except SyntaxError as exc:
                 limitations.append(f"syntax_error:{relative}:{exc.lineno}")
                 continue
-            index = _PythonIndex(incident.repository, relative, source)
+            index = _PythonIndex(incident.repository, relative)
             index.visit(tree)
             for node in index.nodes:
                 nodes[node.node_id] = RepositoryNode(

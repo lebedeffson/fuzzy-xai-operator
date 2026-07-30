@@ -8,6 +8,7 @@ from fuzzyxai.experiments.h10_c5c_runtime import _launcher_source
 from fuzzyxai.experiments.h10_c7r_r10 import (
     audit_runtime_rows,
     development_gates,
+    enrich_graph_with_source_excerpts,
     summarize_r10,
 )
 from fuzzyxai.repository_diagnostics.active_evidence import (
@@ -421,3 +422,35 @@ def test_r10_contract_inference_does_not_reorder_localization(
     assert [item.node_id for item in diagnosis.candidates] == [
         item.node_id for item in ranking
     ]
+
+
+def test_r10_source_excerpt_is_added_without_modifying_frozen_importer(
+    tmp_path: Path,
+) -> None:
+    source = tmp_path / "src" / "sample.py"
+    source.parent.mkdir()
+    source.write_text(
+        "def build_payload(value):\n    return {'value': value}\n",
+        encoding="utf-8",
+    )
+    graph = RepositoryGraph(
+        "repo",
+        "buggy",
+        (
+            RepositoryNode(
+                "node",
+                "function",
+                "repo",
+                "src/sample.py",
+                "build_payload",
+                {"lineno": 1, "end_lineno": 2},
+            ),
+        ),
+        (),
+        (),
+        (),
+    )
+    enriched = enrich_graph_with_source_excerpts(graph, tmp_path)
+    assert "return {'value': value}" in str(
+        enriched.nodes[0].attributes["source_excerpt"]
+    )

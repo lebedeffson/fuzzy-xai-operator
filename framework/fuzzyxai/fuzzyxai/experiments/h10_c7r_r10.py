@@ -4,11 +4,12 @@ import json
 import statistics
 from collections import Counter, defaultdict
 from collections.abc import Mapping, Sequence
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, replace
 from pathlib import Path
 
 from fuzzyxai.experiments.h10_c7 import GoldLocalization
 from fuzzyxai.experiments.h10_c7r import HeldOutInputs
+from fuzzyxai.repository_diagnostics.graph import RepositoryGraph
 from fuzzyxai.repository_diagnostics.guided_diagnosis import (
     GuidedNaturalDiagnosisEngine,
 )
@@ -162,6 +163,41 @@ def audit_runtime_rows(
 
 def audit_runtime_file(path: Path) -> RuntimeReadiness:
     return audit_runtime_rows(read_raw_runtime_rows(path))
+
+
+def enrich_graph_with_source_excerpts(
+    graph: RepositoryGraph,
+    repository_root: Path,
+) -> RepositoryGraph:
+    """Add observable source spans in the R10 collector, outside frozen importers."""
+    source_cache: dict[str, tuple[str, ...]] = {}
+    nodes = []
+    for node in graph.nodes:
+        if not node.file_path:
+            nodes.append(node)
+            continue
+        path = repository_root / node.file_path
+        if path.suffix != ".py" or not path.is_file():
+            nodes.append(node)
+            continue
+        lines = source_cache.get(node.file_path)
+        if lines is None:
+            lines = tuple(
+                path.read_text(encoding="utf-8", errors="replace").splitlines()
+            )
+            source_cache[node.file_path] = lines
+        start = max(1, _integer(node.attributes.get("lineno"), fallback=1))
+        end = max(
+            start,
+            _integer(node.attributes.get("end_lineno"), fallback=start + 40),
+        )
+        excerpt = "\n".join(lines[start - 1 : min(end, start + 160)])
+        attributes = {
+            **node.attributes,
+            "source_excerpt": excerpt[:12000],
+        }
+        nodes.append(replace(node, attributes=attributes))
+    return replace(graph, nodes=tuple(nodes))
 
 
 def summarize_runtime_readiness(

@@ -18,6 +18,9 @@ from fuzzyxai.experiments.h10_c5c_runtime import (
     _launcher_source,
     _traceback_events,
 )
+from fuzzyxai.experiments.h10_c7r_r10 import (
+    enrich_graph_with_source_excerpts,
+)
 from fuzzyxai.repository_diagnostics.guided_retrieval import (
     documents_from_graph,
 )
@@ -464,6 +467,7 @@ def collect_one(
                 incident,
                 runtime_events=typed_events,
             )
+            graph = enrich_graph_with_source_excerpts(graph, source_root)
             documents = documents_from_graph(graph, typed_events)
             graph_path = incident_dir / "repository_graph.json"
             events_path = incident_dir / "runtime_events.jsonl"
