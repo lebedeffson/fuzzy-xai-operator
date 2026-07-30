@@ -1,0 +1,15 @@
+{
+  "amendment_id": "H10-C7R-RUNTIME-AVAILABILITY-A1",
+  "applies_before_gold_opening": true,
+  "changes_scientific_endpoint": false,
+  "gold_used": false,
+  "held_out_scored": false,
+  "max_compressed_image_bytes": 2147483648,
+  "max_layer_bytes": 2147483648,
+  "method_commit": "358ed40a0fb7f5adc1291695ff15affa39cae485",
+  "reason": "The registered runner enforces a 1800 second image-pull timeout. At the observed sustainable runner bandwidth, images above this fixed budget cannot be materialized reproducibly within that timeout. The rule uses only container metadata and is applied to every candidate before Gold construction or scientific scoring.",
+  "replacement_rule": "Unavailable candidates are retained in the availability ledger and replaced only by the next candidate in the locked SHA256 order.",
+  "scientific_result": "NOT_EVALUATED",
+  "threshold_basis": "runner_capacity_and_registered_pull_timeout",
+  "title": "Prospective runtime image availability bound"
+}

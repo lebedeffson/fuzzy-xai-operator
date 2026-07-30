@@ -5,6 +5,7 @@ import json
 from pathlib import Path
 
 import pandas as pd
+import pytest
 
 from scripts.ch4_revision import build_h10_c7r_gold as gold_builder
 from scripts.ch4_revision import collect_h10_c7r_runtime as runtime
@@ -125,6 +126,7 @@ def test_runtime_collection_uses_one_image_as_rolling_cache(
 ) -> None:
     selection = tmp_path / "selection.jsonl"
     registry = tmp_path / "registry.jsonl"
+    availability = tmp_path / "availability.json"
     public_rows = [
         {
             "incident_id": f"incident-{index}",
@@ -143,6 +145,22 @@ def test_runtime_collection_uses_one_image_as_rolling_cache(
     ]
     runtime.write_jsonl(selection, public_rows)
     runtime.write_jsonl(registry, registry_rows)
+    availability.write_text(
+        json.dumps(
+            {
+                "entries": [
+                    {
+                        **row,
+                        "availability_status": (
+                            "AVAILABLE_WITHIN_RUNNER_IMAGE_BUDGET"
+                        ),
+                    }
+                    for row in registry_rows
+                ]
+            }
+        ),
+        encoding="utf-8",
+    )
     operations: list[str] = []
 
     def fake_collect_one(public, registered, output):
@@ -162,6 +180,7 @@ def test_runtime_collection_uses_one_image_as_rolling_cache(
     report = runtime.collect(
         selection,
         registry,
+        availability,
         tmp_path / "runtime",
         target_incidents=3,
         minimum_repositories=3,
@@ -177,6 +196,81 @@ def test_runtime_collection_uses_one_image_as_rolling_cache(
         "remove:image-2",
         "remove:image-3",
     ]
+
+
+def test_runtime_collection_rejects_unavailable_image_before_cache(
+    tmp_path: Path,
+    monkeypatch,
+) -> None:
+    selection = tmp_path / "selection.jsonl"
+    registry = tmp_path / "registry.jsonl"
+    availability = tmp_path / "availability.json"
+    output = tmp_path / "runtime"
+    public = {
+        "incident_id": "incident-1",
+        "repository": "repository-1",
+        "selection_rank": 1,
+        "selection_role": "PRIMARY",
+    }
+    registered = {
+        "incident_id": "incident-1",
+        "container_image_tag": "image-1",
+    }
+    runtime.write_jsonl(selection, [public])
+    runtime.write_jsonl(registry, [registered])
+    availability.write_text(
+        json.dumps(
+            {
+                "entries": [
+                    {
+                        **registered,
+                        "availability_status": (
+                            "RUNTIME_INFRASTRUCTURE_UNAVAILABLE_IMAGE_BUDGET"
+                        ),
+                    }
+                ]
+            }
+        ),
+        encoding="utf-8",
+    )
+    cached = output / "incidents/incident-1/observable.json"
+    cached.parent.mkdir(parents=True)
+    cached.write_text(
+        json.dumps(
+            {
+                **public,
+                "runtime_evidence_status": "BUG_REPRODUCED_WITH_TRACE",
+            }
+        ),
+        encoding="utf-8",
+    )
+    monkeypatch.setattr(
+        runtime,
+        "collect_one",
+        lambda *_args, **_kwargs: pytest.fail("collector must not run"),
+    )
+
+    with pytest.raises(RuntimeError):
+        runtime.collect(
+            selection,
+            registry,
+            availability,
+            output,
+            target_incidents=1,
+            minimum_repositories=1,
+            prune_images=True,
+        )
+
+    ledger = [
+        json.loads(line)
+        for line in (output / "RUNTIME_AVAILABILITY_LEDGER.jsonl")
+        .read_text(encoding="utf-8")
+        .splitlines()
+    ]
+    assert ledger[0]["status"] == (
+        "RUNTIME_INFRASTRUCTURE_OR_REPRODUCTION_FAILED"
+    )
+    assert "IMAGE_BUDGET" in ledger[0]["reason"]
 
 
 def test_gold_builder_binds_hunk_to_graph_symbol(tmp_path: Path) -> None:

@@ -441,6 +441,7 @@ def collect_one(
 def collect(
     selection: Path,
     registry_path: Path,
+    image_availability_lock: Path,
     output: Path,
     *,
     target_incidents: int,
@@ -455,6 +456,21 @@ def collect(
     }
     if set(public_rows) != set(registry):
         raise ValueError("selection and runtime registry differ")
+    availability_payload = json.loads(
+        image_availability_lock.read_text(encoding="utf-8")
+    )
+    availability = {
+        str(row["incident_id"]): row
+        for row in availability_payload["entries"]
+    }
+    if set(public_rows) != set(availability):
+        raise ValueError("selection and image availability lock differ")
+    for identifier, registered in registry.items():
+        if (
+            availability[identifier]["container_image_tag"]
+            != registered["container_image_tag"]
+        ):
+            raise ValueError(f"image availability tag mismatch: {identifier}")
     ordered = sorted(
         public_rows.values(),
         key=lambda row: (
@@ -474,6 +490,11 @@ def collect(
             image_tag = str(registry[identifier]["container_image_tag"])
             newly_collected = not cached.is_file()
             try:
+                image_status = str(
+                    availability[identifier]["availability_status"]
+                )
+                if image_status != "AVAILABLE_WITHIN_RUNNER_IMAGE_BUDGET":
+                    raise RuntimeError(image_status)
                 if cached.is_file():
                     row = json.loads(cached.read_text(encoding="utf-8"))
                 else:
@@ -521,6 +542,7 @@ def collect(
         "failed_candidates": sum(
             row["status"] != "BUG_REPRODUCED_WITH_TRACE" for row in ledger
         ),
+        "image_availability_lock": str(image_availability_lock),
         "network_during_execution": "none",
         "status": (
             "H10_C7R_RUNTIME_EVIDENCE_COMPLETE"
@@ -538,6 +560,7 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--selection", type=Path, required=True)
     parser.add_argument("--runtime-registry", type=Path, required=True)
+    parser.add_argument("--image-availability-lock", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--target-incidents", type=int, default=40)
     parser.add_argument("--minimum-repositories", type=int, default=12)
@@ -548,6 +571,7 @@ def main() -> None:
             collect(
                 args.selection.resolve(),
                 args.runtime_registry.resolve(),
+                args.image_availability_lock.resolve(),
                 args.output.resolve(),
                 target_incidents=args.target_incidents,
                 minimum_repositories=args.minimum_repositories,
