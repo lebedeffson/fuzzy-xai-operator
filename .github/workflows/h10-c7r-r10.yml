@@ -37,7 +37,7 @@ jobs:
           python-version: "3.11"
           cache: pip
       - name: Install test dependencies
-        run: python -m pip install ".[dev,evidence,lightgbm]"
+        run: python -m pip install ".[dev,evidence,lightgbm]" shap
       - name: Focused R10 checks
         run: make h10-c7r-r10-test H10_C3_PYTHON=python
       - name: Full regression
