@@ -16,14 +16,18 @@ from .contract_inference_v2 import (
 )
 from .graph import RepositoryGraph
 from .guided_retrieval import (
+    R9_SOURCE_KINDS,
     BM25Retriever,
     CandidateReservoir,
     DenseCodeEncoder,
     DenseRetriever,
     ExactSymbolExtractor,
     IncidentQuery,
+    R9CandidateCompressor,
+    R9CompressionConfig,
     RankedSymbol,
     RepoGraphRanker,
+    StrictIdentifierExtractor,
     StructuralReranker,
     SymbolDocument,
     documents_from_graph,
@@ -34,6 +38,7 @@ from .retrieval import EvidenceGroundedCandidateRetriever
 from .runtime_events import RuntimeEvent
 
 VARIANTS = tuple(f"R{index}" for index in range(9))
+R9_VARIANTS = ("R9A", "R9B", "R9C")
 BASELINES = (
     "B_TRACE",
     "B_BM25",
@@ -44,7 +49,7 @@ BASELINES = (
     "B_AGENTLESS_LOC",
     "O_ROUTE",
 )
-METHODS = (*VARIANTS, *BASELINES)
+METHODS = (*VARIANTS, *R9_VARIANTS, *BASELINES)
 
 
 class CrossEncoder(Protocol):
@@ -218,6 +223,9 @@ class GuidedNaturalDiagnosisEngine:
         self.reranker = StructuralReranker()
         self.exact_symbols = ExactSymbolExtractor()
         self.reservoir = CandidateReservoir()
+        self.r9_config = R9CompressionConfig()
+        self.r9_identifiers = StrictIdentifierExtractor()
+        self.r9_compressor = R9CandidateCompressor(self.r9_config)
         self.contracts = HierarchicalContractInferenceEngine()
         self.calibrator = EvidenceCalibrator()
         self.evidence_planner = ActiveEvidenceRequestPlanner()
@@ -328,6 +336,55 @@ class GuidedNaturalDiagnosisEngine:
             )[:100]
         )
 
+    @staticmethod
+    def _runtime_ranking_v2(
+        documents: tuple[SymbolDocument, ...],
+        *,
+        limit: int = 300,
+    ) -> tuple[RankedSymbol, ...]:
+        values = []
+        for item in documents:
+            if not item.executed:
+                continue
+            score = 0.25
+            sources = ["runtime_v2"]
+            if item.traceback_distance == 0.0:
+                score += 5.0
+                sources.append("traceback")
+            if item.dynamic_call_distance is not None:
+                score += 3.0 / (1.0 + item.dynamic_call_distance)
+                sources.append("dynamic_call_distance")
+            if item.directed_caller_distance is not None:
+                score += 2.5 / (1.0 + item.directed_caller_distance)
+                sources.append("directed_caller_distance")
+            if item.directed_callee_distance is not None:
+                score += 1.0 / (1.0 + item.directed_callee_distance)
+                sources.append("directed_callee_distance")
+            score += 2.0 * item.last_touch_proximity
+            score += 1.25 * item.failing_test_frequency
+            score -= 0.05 * math.log1p(item.execution_frequency)
+            values.append(
+                RankedSymbol(
+                    item.node_id,
+                    item.file_path,
+                    item.symbol,
+                    score,
+                    tuple(sources),
+                    item.line_count,
+                    item.obligations,
+                    (
+                        f"r9_execution_frequency:{item.execution_frequency}",
+                        f"r9_last_touch:{item.last_touch_proximity:.6f}",
+                    ),
+                )
+            )
+        return tuple(
+            sorted(
+                values,
+                key=lambda item: (-item.score, item.file_path, item.symbol or ""),
+            )[:limit]
+        )
+
     def diagnose(
         self,
         graph: RepositoryGraph,
@@ -353,7 +410,15 @@ class GuidedNaturalDiagnosisEngine:
                 ),
                 variant=variant,
             )
-        documents = self._documents(graph, runtime_events)
+        documents = (
+            documents_from_graph(
+                graph,
+                runtime_events,
+                source_kinds=R9_SOURCE_KINDS,
+            )
+            if variant in R9_VARIANTS
+            else self._documents(graph, runtime_events)
+        )
         route = self.router.route(query, graph)
         if not documents:
             return GuidedDiagnosis(
@@ -516,6 +581,13 @@ class GuidedNaturalDiagnosisEngine:
         documents: tuple[SymbolDocument, ...],
         variant: str,
     ) -> tuple[tuple[RankedSymbol, ...], str | None]:
+        if variant in R9_VARIANTS:
+            return self._r9_ranking(
+                graph,
+                query,
+                documents,
+                variant,
+            )
         if variant == "R0":
             return self._legacy_ranking(graph, documents), None
         graph_ranking = self._graph_ranking(graph, documents)
@@ -575,6 +647,95 @@ class GuidedNaturalDiagnosisEngine:
             ),
             None,
         )
+
+    def _r9_ranking(
+        self,
+        graph: RepositoryGraph,
+        query: IncidentQuery,
+        documents: tuple[SymbolDocument, ...],
+        variant: str,
+    ) -> tuple[tuple[RankedSymbol, ...], str | None]:
+        config = self.r9_config
+        channels = self._r9_channels(
+            graph,
+            query,
+            documents,
+            include_dense=variant == "R9C",
+        )
+        hierarchical = variant in {"R9B", "R9C"}
+        if variant == "R9C":
+            if not self.dense_encoders:
+                return (), "no_registered_dense_encoder"
+            if self.cross_encoder is None:
+                return (), "no_registered_cross_encoder"
+            top_40 = self.r9_compressor.rank(
+                channels,
+                documents,
+                hierarchical=True,
+                limit=config.rerank_limit,
+            )
+            channels["cross"] = self._cross_rerank(
+                query,
+                documents,
+                top_40,
+            )
+        ranking = self.r9_compressor.rank(
+            channels,
+            documents,
+            hierarchical=hierarchical,
+            limit=config.final_limit,
+        )
+        return ranking, None
+
+    def _r9_channels(
+        self,
+        graph: RepositoryGraph,
+        query: IncidentQuery,
+        documents: tuple[SymbolDocument, ...],
+        *,
+        include_dense: bool = False,
+    ) -> dict[str, tuple[RankedSymbol, ...]]:
+        config = self.r9_config
+        channels: dict[str, tuple[RankedSymbol, ...]] = {
+            "bm25": self.bm25.rank(
+                query.text,
+                documents,
+                limit=config.bm25_limit,
+            ),
+            "repograph": self.graph_ranker.rank(
+                graph,
+                documents,
+                limit=config.graph_limit,
+            ),
+            "runtime": self._runtime_ranking_v2(
+                documents,
+                limit=config.runtime_limit,
+            ),
+            "strict_identifier": self.r9_identifiers.rank(
+                query,
+                documents,
+                limit=config.strict_identifier_limit,
+            ),
+            "legacy": self._legacy_ranking(
+                graph,
+                documents,
+                limit=config.legacy_limit,
+            ),
+        }
+        if include_dense and self.dense_encoders:
+            dense_rankings = tuple(
+                DenseRetriever(encoder).rank(
+                    query.text,
+                    documents,
+                    limit=config.dense_limit,
+                )
+                for encoder in self.dense_encoders
+            )
+            channels["dense"] = reciprocal_rank_fusion(
+                dense_rankings,
+                limit=config.dense_limit,
+            )
+        return channels
 
     def _contract_pair_ranking(
         self,
@@ -769,11 +930,13 @@ class GuidedNaturalDiagnosisEngine:
     def _legacy_ranking(
         graph: RepositoryGraph,
         documents: Sequence[SymbolDocument],
+        *,
+        limit: int = 20,
     ) -> tuple[RankedSymbol, ...]:
         by_id = {item.node_id: item for item in documents}
         values = []
         for item in EvidenceGroundedCandidateRetriever(
-            max_candidates=20
+            max_candidates=limit
         ).retrieve(graph):
             document = by_id.get(item.node_id)
             if document is None or item.file_path is None:

@@ -4,7 +4,7 @@ import hashlib
 import math
 import re
 from collections import Counter, defaultdict
-from collections.abc import Sequence
+from collections.abc import Mapping, Sequence
 from dataclasses import dataclass, field
 from itertools import pairwise
 from typing import ClassVar, Protocol
@@ -21,7 +21,25 @@ ABSOLUTE_PATH_RE = re.compile(
     r"[/\\][^\s:]+"
 )
 SOURCE_KINDS = frozenset({"class", "configuration_key", "dependency", "file", "function", "method"})
+R9_SOURCE_KINDS = SOURCE_KINDS | frozenset(
+    {"module", "runtime_symbol", "serialized_artifact"}
+)
 TRACEBACK_KINDS = frozenset({"runtime_exception", "runtime_traceback_frame", "traceback"})
+COMMON_IDENTIFIER_TOKENS = frozenset(
+    {
+        "config",
+        "data",
+        "get",
+        "init",
+        "load",
+        "main",
+        "run",
+        "set",
+        "test",
+        "tests",
+        "value",
+    }
+)
 NOISE_MARKERS = (
     "_distutils_hack",
     "distutils-precedence.pth",
@@ -274,6 +292,8 @@ class LocalTransformerCodeEncoder:
 def documents_from_graph(
     graph: RepositoryGraph,
     runtime_events: Sequence[RuntimeEvent] = (),
+    *,
+    source_kinds: frozenset[str] = SOURCE_KINDS,
 ) -> tuple[SymbolDocument, ...]:
     evidence_by_id = {item.evidence_id: item for item in graph.evidence}
     nodes_by_id = {node.node_id: node for node in graph.nodes}
@@ -328,7 +348,14 @@ def documents_from_graph(
                 obligations_by_node[edge.source].add(str(obligation))
     documents = []
     for node in graph.nodes:
-        if node.kind not in SOURCE_KINDS or not node.file_path:
+        attributes = dict(node.attributes)
+        file_path = node.file_path or str(
+            attributes.get("artifact_path")
+            or attributes.get("module_path")
+            or attributes.get("path")
+            or ""
+        )
+        if node.kind not in source_kinds or not file_path:
             continue
         node_evidence = " ".join(
             evidence_by_id[reference].detail
@@ -342,7 +369,7 @@ def documents_from_graph(
         )
         text = " ".join(
             (
-                node.file_path,
+                file_path,
                 node.symbol or "",
                 node.kind,
                 semantic,
@@ -350,7 +377,7 @@ def documents_from_graph(
                 node_evidence if node.node_id in traceback_nodes else "",
             )
         )
-        attributes = dict(node.attributes)
+        attributes.setdefault("node_kind", node.kind)
         line_count = max(
             1,
             int(
@@ -369,7 +396,7 @@ def documents_from_graph(
         documents.append(
             SymbolDocument(
                 node.node_id,
-                node.file_path,
+                file_path,
                 node.symbol,
                 text,
                 line_count,
@@ -737,6 +764,92 @@ class ExactSymbolExtractor:
         )
 
 
+class StrictIdentifierExtractor:
+    """Return literal or rare identifier matches, never semantic-token matches."""
+
+    MAXIMUM_CANDIDATES = 500
+
+    def rank(
+        self,
+        query: IncidentQuery,
+        documents: Sequence[SymbolDocument],
+        *,
+        limit: int = MAXIMUM_CANDIDATES,
+    ) -> tuple[RankedSymbol, ...]:
+        normalized = IncidentNormalizer().normalize(query)
+        query_text = normalized.weighted_text.lower()
+        query_tokens = set(normalized.identifiers) - COMMON_IDENTIFIER_TOKENS
+        document_tokens = [
+            set(tokenize(document.symbol or ""))
+            | set(tokenize(document.file_path))
+            for document in documents
+        ]
+        frequencies = Counter(
+            token for tokens in document_tokens for token in tokens
+        )
+        rare_limit = max(2, math.ceil(len(documents) * 0.01))
+        values = []
+        for document, tokens in zip(documents, document_tokens):
+            symbol = (document.symbol or "").lower()
+            terminal = symbol.rsplit(".", 1)[-1]
+            file_stem = document.file_path.rsplit("/", 1)[-1].split(".", 1)[0]
+            full_match = bool(symbol and symbol in query_text)
+            terminal_match = bool(
+                terminal
+                and terminal not in COMMON_IDENTIFIER_TOKENS
+                and re.search(rf"\b{re.escape(terminal)}\b", query_text)
+            )
+            file_match = bool(
+                file_stem
+                and file_stem not in COMMON_IDENTIFIER_TOKENS
+                and re.search(rf"\b{re.escape(file_stem.lower())}\b", query_text)
+            )
+            rare = sorted(
+                token
+                for token in tokens.intersection(query_tokens)
+                if len(token) >= 4 and frequencies[token] <= rare_limit
+            )
+            if not full_match and not terminal_match and not file_match and not rare:
+                continue
+            level = (
+                "full_symbol"
+                if full_match
+                else "terminal_symbol"
+                if terminal_match
+                else "file_basename"
+                if file_match
+                else "rare_identifier"
+            )
+            score = (
+                4.0 * float(full_match)
+                + 3.0 * float(terminal_match)
+                + 2.0 * float(file_match)
+                + min(len(rare), 3)
+            )
+            values.append(
+                RankedSymbol(
+                    document.node_id,
+                    document.file_path,
+                    document.symbol,
+                    score,
+                    ("strict_identifier",),
+                    document.line_count,
+                    document.obligations,
+                    (
+                        f"exact_identifier_level:{level}",
+                        *(f"rare_identifier:{token}" for token in rare),
+                    ),
+                )
+            )
+        bounded = max(1, min(limit, self.MAXIMUM_CANDIDATES))
+        return tuple(
+            sorted(
+                values,
+                key=lambda item: (-item.score, item.file_path, item.symbol or ""),
+            )[:bounded]
+        )
+
+
 class CandidateReservoir:
     """Union independent channels before the final top-k decision."""
 
@@ -791,6 +904,239 @@ class CandidateReservoir:
                 key=lambda item: (-item.score, item.file_path, item.symbol or ""),
             )[:bounded]
         )
+
+
+@dataclass(frozen=True)
+class R9CompressionConfig:
+    bm25_limit: int = 300
+    graph_limit: int = 300
+    runtime_limit: int = 300
+    legacy_limit: int = 50
+    dense_limit: int = 300
+    strict_identifier_limit: int = 500
+    file_limit: int = 15
+    symbols_per_file: int = 3
+    rerank_limit: int = 40
+    final_limit: int = 20
+
+
+class R9CandidateCompressor:
+    """Compress explicit channel rankings without mixing incomparable raw scores."""
+
+    CHANNEL_WEIGHTS: ClassVar[dict[str, float]] = {
+        "bm25": 1.15,
+        "runtime": 1.25,
+        "repograph": 0.95,
+        "strict_identifier": 1.35,
+        "legacy": 1.05,
+        "dense": 1.00,
+        "cross": 1.10,
+    }
+    CHANNEL_QUOTAS: ClassVar[dict[str, int]] = {
+        "bm25": 5,
+        "runtime": 4,
+        "repograph": 3,
+        "strict_identifier": 3,
+    }
+    DEFAULT_FEATURE_WEIGHTS: ClassVar[dict[str, float]] = {
+        **{
+            f"rank_{channel}": weight
+            for channel, weight in CHANNEL_WEIGHTS.items()
+        },
+        "channel_consensus": 0.16,
+        "best_rank_signal": 0.20,
+        "executed": 0.10,
+        "traceback": 0.90,
+        "dynamic": 0.40,
+        "caller": 0.35,
+        "callee": 0.15,
+        "frequency": -0.03,
+        "last_touch": 0.90,
+        "failing_test_frequency": 0.60,
+    }
+
+    def __init__(
+        self,
+        config: R9CompressionConfig | None = None,
+        *,
+        feature_weights: dict[str, float] | None = None,
+    ) -> None:
+        self.config = config or R9CompressionConfig()
+        self.feature_weights = {
+            **self.DEFAULT_FEATURE_WEIGHTS,
+            **(feature_weights or {}),
+        }
+
+    @staticmethod
+    def _rank_signal(rank: int) -> float:
+        return 1.0 / math.log2(2.0 + rank)
+
+    def rank(
+        self,
+        channels: dict[str, Sequence[RankedSymbol]],
+        documents: Sequence[SymbolDocument],
+        *,
+        hierarchical: bool,
+        limit: int | None = None,
+        feature_weights: Mapping[str, float] | None = None,
+        feature_rows: Mapping[str, Mapping[str, float]] | None = None,
+        score_overrides: Mapping[str, float] | None = None,
+    ) -> tuple[RankedSymbol, ...]:
+        final_limit = limit or self.config.final_limit
+        by_id = {item.node_id: item for item in documents}
+        records: dict[str, RankedSymbol] = {}
+        sources: dict[str, set[str]] = defaultdict(set)
+        evidence: dict[str, set[str]] = defaultdict(set)
+        for channel, ranking in channels.items():
+            for rank, item in enumerate(ranking, start=1):
+                if item.node_id not in by_id:
+                    continue
+                records[item.node_id] = item
+                sources[item.node_id].update(item.rank_sources)
+                evidence[item.node_id].update(item.evidence)
+                evidence[item.node_id].add(f"r9_channel_rank:{channel}:{rank}")
+
+        features = feature_rows or self.feature_rows(channels, documents)
+        weights = feature_weights or self.feature_weights
+        scored: dict[str, RankedSymbol] = {}
+        for node_id, item in records.items():
+            score = (
+                score_overrides[node_id]
+                if score_overrides is not None
+                else sum(
+                    weights.get(name, 0.0) * value
+                    for name, value in features[node_id].items()
+                )
+            )
+            scored[node_id] = RankedSymbol(
+                item.node_id,
+                item.file_path,
+                item.symbol,
+                score,
+                tuple(sorted((*sources[node_id], "r9_normalized_rank"))),
+                item.line_count,
+                item.obligations,
+                tuple(sorted(evidence[node_id])),
+            )
+
+        ordered = sorted(
+            scored.values(),
+            key=lambda item: (-item.score, item.file_path, item.symbol or ""),
+        )
+        eligible = self._hierarchical_pool(ordered) if hierarchical else ordered
+        eligible_ids = {item.node_id for item in eligible}
+        protected_ids = {
+            item.node_id
+            for channel, quota in self.CHANNEL_QUOTAS.items()
+            for item in channels.get(channel, ())[:quota]
+        }
+        eligible_ids.update(protected_ids)
+        eligible = [item for item in ordered if item.node_id in eligible_ids]
+
+        selected: list[RankedSymbol] = []
+        selected_ids: set[str] = set()
+        for channel, quota in self.CHANNEL_QUOTAS.items():
+            for item in channels.get(channel, ())[:quota]:
+                candidate = scored.get(item.node_id)
+                if candidate is None or candidate.node_id in selected_ids:
+                    continue
+                selected.append(candidate)
+                selected_ids.add(candidate.node_id)
+                if len(selected) >= final_limit:
+                    break
+            if len(selected) >= final_limit:
+                break
+        for item in eligible:
+            if item.node_id in selected_ids:
+                continue
+            selected.append(item)
+            selected_ids.add(item.node_id)
+            if len(selected) >= final_limit:
+                break
+        return tuple(
+            sorted(
+                selected,
+                key=lambda item: (-item.score, item.file_path, item.symbol or ""),
+            )
+        )
+
+    def feature_rows(
+        self,
+        channels: Mapping[str, Sequence[RankedSymbol]],
+        documents: Sequence[SymbolDocument],
+    ) -> dict[str, dict[str, float]]:
+        """Return only observable, candidate-specific compression features."""
+        by_id = {item.node_id: item for item in documents}
+        ranks: dict[str, dict[str, int]] = defaultdict(dict)
+        for channel, ranking in channels.items():
+            for rank, item in enumerate(ranking, start=1):
+                if item.node_id in by_id:
+                    ranks[item.node_id][channel] = rank
+
+        rows: dict[str, dict[str, float]] = {}
+        for node_id, channel_ranks in ranks.items():
+            document = by_id[node_id]
+            rank_signals = {
+                channel: self._rank_signal(rank)
+                for channel, rank in channel_ranks.items()
+            }
+            rows[node_id] = {
+                **{
+                    f"rank_{channel}": rank_signals.get(channel, 0.0)
+                    for channel in self.CHANNEL_WEIGHTS
+                },
+                "channel_consensus": len(channel_ranks)
+                / max(1.0, float(len(channels))),
+                "best_rank_signal": max(rank_signals.values(), default=0.0),
+                "executed": float(document.executed),
+                "traceback": float(document.traceback_distance == 0.0),
+                "dynamic": self._distance_signal(
+                    document.dynamic_call_distance
+                ),
+                "caller": self._distance_signal(
+                    document.directed_caller_distance
+                ),
+                "callee": self._distance_signal(
+                    document.directed_callee_distance
+                ),
+                "frequency": math.log1p(document.execution_frequency),
+                "last_touch": document.last_touch_proximity,
+                "failing_test_frequency": document.failing_test_frequency,
+            }
+        return rows
+
+    def _hierarchical_pool(
+        self,
+        ordered: Sequence[RankedSymbol],
+    ) -> list[RankedSymbol]:
+        by_file: dict[str, list[RankedSymbol]] = defaultdict(list)
+        for item in ordered:
+            by_file[item.file_path].append(item)
+        file_scores = {
+            file_path: values[0].score
+            + 0.20 * sum(item.score for item in values[1:3])
+            for file_path, values in by_file.items()
+        }
+        selected_files = {
+            file_path
+            for file_path, _ in sorted(
+                file_scores.items(),
+                key=lambda value: (-value[1], value[0]),
+            )[: self.config.file_limit]
+        }
+        values = [
+            item
+            for file_path in selected_files
+            for item in by_file[file_path][: self.config.symbols_per_file]
+        ]
+        return sorted(
+            values,
+            key=lambda item: (-item.score, item.file_path, item.symbol or ""),
+        )[: self.config.rerank_limit]
+
+    @staticmethod
+    def _distance_signal(distance: float | None) -> float:
+        return 1.0 / (1.0 + distance) if distance is not None else 0.0
 
 
 class StructuralReranker:
