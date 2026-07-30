@@ -18,9 +18,7 @@ jobs:
     if: >-
       github.event_name == 'workflow_dispatch' ||
       contains(github.event.head_commit.message, '[collect-r10-10]')
-    runs-on:
-      - self-hosted
-      - h10-c7-runtime
+    runs-on: ubuntu-latest
     timeout-minutes: 300
     env:
       PYTHONPATH: "experiments/h10_c3/src:framework/fuzzyxai:."
@@ -36,6 +34,11 @@ jobs:
           cache: pip
       - name: Install controller
         run: python -m pip install -e ".[dev,evidence]"
+      - name: Verify isolated Docker capacity
+        run: |
+          docker version
+          docker system df
+          df -h .
       - name: Audit locked observable inputs
         run: |
           python scripts/ch4_revision/audit_h10_c7r_r10_recollection_inputs.py \
