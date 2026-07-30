@@ -92,23 +92,17 @@ def _instrumented_command(
     if selected is None:
         raise ValueError("no instrumentable pytest command")
 
-    pytest_index = selected.index("pytest")
-    prefix = selected[:pytest_index]
     argv = ["pytest", "-vv", "-x", *fail_to_pass]
-    if (
-        prefix[:2] in (["uv", "run"], ["poetry", "run"])
-        or prefix
-        and all("=" in token for token in prefix)
-    ):
-        python_prefix = [*prefix, "python"]
-    else:
-        python_prefix = ["python"]
-    help_command = shlex.join([*python_prefix, "-m", "pytest", "--help"])
-    normal = shlex.join([*python_prefix, "/h10/runtime_launcher.py"])
-    xdist = shlex.join([*python_prefix, "/h10/runtime_launcher_xdist.py"])
     wrapper = (
-        f"if {help_command} 2>/dev/null | grep -q -- '--numprocesses'; "
-        f"then {xdist}; else {normal}; fi"
+        "py=''; "
+        "for candidate in .venv/bin/python /opt/venv/bin/python "
+        "/venv/bin/python python; do "
+        "if \"$candidate\" -m pytest --help >/tmp/h10-pytest-help 2>/dev/null; "
+        "then py=\"$candidate\"; break; fi; done; "
+        "[ -n \"$py\" ] || exit 87; "
+        "if grep -q -- '--numprocesses' /tmp/h10-pytest-help; "
+        "then \"$py\" /h10/runtime_launcher_xdist.py; "
+        "else \"$py\" /h10/runtime_launcher.py; fi"
     )
     return argv, wrapper
 

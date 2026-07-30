@@ -69,18 +69,21 @@ def test_instrumented_pytest_command_supports_registered_wrappers() -> None:
     fail_to_pass = ["tests/test_x.py::test_failure"]
     argv, direct = runtime._instrumented_command(["pytest -rA"], fail_to_pass)
     assert argv[-1] == fail_to_pass[0]
-    assert "python /h10/runtime_launcher.py" in direct
-    assert "python /h10/runtime_launcher_xdist.py" in direct
+    assert ".venv/bin/python" in direct
+    assert '\"$py\" /h10/runtime_launcher.py' in direct
+    assert '\"$py\" /h10/runtime_launcher_xdist.py' in direct
     _, uv = runtime._instrumented_command(
         ["uv run -p .venv pytest -rA"],
         fail_to_pass,
     )
-    assert "uv run -p .venv python /h10/runtime_launcher.py" in uv
+    assert ".venv/bin/python" in uv
+    assert "uv run" not in uv
     _, poetry = runtime._instrumented_command(
         ["poetry run pytest tests -v"],
         fail_to_pass,
     )
-    assert "poetry run python /h10/runtime_launcher.py" in poetry
+    assert ".venv/bin/python" in poetry
+    assert "poetry run" not in poetry
     _, preferred = runtime._instrumented_command(
         ["pytest -rA", "uv run pytest -rA"],
         fail_to_pass,
