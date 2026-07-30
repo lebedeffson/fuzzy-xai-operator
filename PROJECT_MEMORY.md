@@ -1255,3 +1255,25 @@ therefore not supported. It cannot be described as practical search-space
 reduction at the registered recall level. Contract inference remained
 descriptive, and automatic root-cause confirmation, repair, and developer-time
 reduction were not evaluated.
+
+## FXAI-H10-C7R-R9-DEVELOPMENT
+
+- Date: 2026-07-30
+- Base result: H10-C7R-v1, preserved as `H10_C7R_NOT_SUPPORTED`
+- Development data: 40 disclosed incidents from 30 repositories
+- Variants: R9-A structural compressor; R9-B LORO LambdaMART
+- Status: `H10_C7R_R9_DEVELOPMENT_NO_GO`
+- Scientific result: `NOT_EVALUATED`
+
+R9 expanded the retrievable schema, removed early 50/100 channel limits,
+separated contract inference from localization, tightened identifier matching,
+reduced the runtime frequency bias, and added channel quotas plus file-to-symbol
+ranking. The broad structural union contained a registered diagnostic Gold atom
+in 39 of 40 incidents.
+
+Repository-held-out compression did not transfer. Fixed R9-A reached Recall@20
+`0.50`; R9-B reached `0.375`; the training-fold-selected result was `0.40`.
+The registered `0.82` Recall@20 and `0.75` repository lower-quartile gates
+failed. No containers, runtime recollection, neural models, new held-out data,
+or official scoring were used. A new held-out must not be created from this
+state.
