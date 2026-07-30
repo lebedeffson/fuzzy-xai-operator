@@ -180,6 +180,18 @@ def _launcher_source(
             relative = os.path.relpath(real, ROOT).replace(os.sep, '/')
             if relative.startswith('../'):
                 return None
+            if any(
+                part in {{
+                    '.tox',
+                    '.venv',
+                    '__pycache__',
+                    'dist-packages',
+                    'site-packages',
+                    'venv',
+                }}
+                for part in relative.split('/')
+            ):
+                return None
             return relative
 
         def _symbol(frame):
@@ -206,7 +218,12 @@ def _launcher_source(
                 payload['length'] = len(value)
             except Exception:
                 pass
-            shape = getattr(value, 'shape', None)
+            shape = None
+            if type_name.startswith(('numpy.', 'pandas.', 'torch.')):
+                try:
+                    shape = object.__getattribute__(value, 'shape')
+                except Exception:
+                    pass
             if shape is not None:
                 try:
                     payload['shape'] = [int(item) for item in shape]

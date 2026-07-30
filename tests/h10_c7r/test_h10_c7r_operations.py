@@ -133,6 +133,35 @@ def test_runtime_collection_requires_exact_container_digest() -> None:
         )
 
 
+def test_collector_stamps_only_postprocess_observations() -> None:
+    stamped = runtime._stamp_collector_observations(
+        [
+            {
+                "event_id": "trace",
+                "test_id": "test",
+                "kind": "traceback_frame",
+                "source_file": "src/module.py",
+            }
+        ]
+    )
+    assert stamped[0]["timestamp_ns"] > 0
+    assert stamped[0]["timestamp_source"] == "collector_postprocess"
+    assert stamped[0]["occurrence_count"] == 1
+
+
+def test_collector_prunes_copied_environments(tmp_path: Path) -> None:
+    environment = tmp_path / "tests/demo/.tox/py/site-packages"
+    environment.mkdir(parents=True)
+    (environment / "dependency.py").write_text("value = 1\n", encoding="utf-8")
+    project = tmp_path / "src"
+    project.mkdir()
+    (project / "module.py").write_text("value = 1\n", encoding="utf-8")
+    removed = runtime._prune_environment_trees(tmp_path)
+    assert "tests/demo/.tox" in removed
+    assert not environment.exists()
+    assert (project / "module.py").is_file()
+
+
 def test_pytest_node_event_requires_observed_project_test(tmp_path: Path) -> None:
     test_file = tmp_path / "tests/test_module.py"
     test_file.parent.mkdir()

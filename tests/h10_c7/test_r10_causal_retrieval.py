@@ -141,6 +141,10 @@ def test_launcher_uses_ordered_tail_and_causal_event_types() -> None:
     assert "TAIL_LIMIT = 20000" in source
     assert "sorted(EVENTS.values()" not in source
     assert "sys.settrace(_trace)" in source
+    assert "'.venv'" in source
+    assert "'site-packages'" in source
+    assert "object.__getattribute__(value, 'shape')" in source
+    assert "shape = getattr(value, 'shape', None)" not in source
     for kind in (
         "argument_value",
         "return_value",

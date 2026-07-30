@@ -1,0 +1,71 @@
+{
+  "artifact": {
+    "artifact_id": 8770315175,
+    "download_sha256": "b0b5f44e93f9cd12df9f5fde19ab93274a2c9eea6d60afbd19a5262f5a99471b",
+    "name": "h10-c7r-r10-recollection-first-10",
+    "run_id": 30566975780,
+    "url": "https://github.com/lebedeffson/fuzzy-xai-operator/actions/runs/30566975780"
+  },
+  "collector_capability": "causal-chronology-tail-v4",
+  "complete_incidents": 5,
+  "development_scored": false,
+  "failed_incidents": 5,
+  "held_out_created": false,
+  "held_out_scored": false,
+  "incidents": [
+    {
+      "classification": "COLLECTOR_SAFE_VALUE_RECURSION",
+      "incident_id": "stanfordnlp__dspy-8360",
+      "runtime_readiness": "R10_RUNTIME_RECOLLECTION_REQUIRED"
+    },
+    {
+      "classification": "COLLECTOR_SYNTHETIC_TIMESTAMP_MISSING",
+      "incident_id": "Textualize__textual-5829",
+      "runtime_readiness": "R10_RUNTIME_RECOLLECTION_REQUIRED"
+    },
+    {
+      "classification": "READY",
+      "incident_id": "python__mypy-19290",
+      "runtime_readiness": "R10_RUNTIME_READY"
+    },
+    {
+      "classification": "COLLECTOR_SOURCE_PROJECTION_PERMISSION",
+      "incident_id": "tox-dev__tox-3540",
+      "runtime_readiness": "R10_RUNTIME_RECOLLECTION_REQUIRED"
+    },
+    {
+      "classification": "READY",
+      "incident_id": "python__mypy-19249",
+      "runtime_readiness": "R10_RUNTIME_READY"
+    },
+    {
+      "classification": "READY",
+      "incident_id": "aws-cloudformation__cfn-lint-4162",
+      "runtime_readiness": "R10_RUNTIME_READY"
+    },
+    {
+      "classification": "READY",
+      "incident_id": "gitpython-developers__GitPython-2035",
+      "runtime_readiness": "R10_RUNTIME_READY"
+    },
+    {
+      "classification": "COLLECTOR_SAFE_VALUE_RECURSION",
+      "incident_id": "Flexget__Flexget-4441",
+      "runtime_readiness": "R10_RUNTIME_RECOLLECTION_REQUIRED"
+    },
+    {
+      "classification": "READY",
+      "incident_id": "networkx__networkx-8105",
+      "runtime_readiness": "R10_RUNTIME_READY"
+    },
+    {
+      "classification": "COLLECTOR_SAFE_VALUE_RECURSION",
+      "incident_id": "traceloop__openllmetry-2979",
+      "runtime_readiness": "R10_RUNTIME_RECOLLECTION_REQUIRED"
+    }
+  ],
+  "run_commit": "f0472254759442aca965616ac24ccdd75df246d9",
+  "scientific_result": "NOT_EVALUATED",
+  "status": "H10_C7R_R10_CAUSAL_DEVELOPMENT_RECOLLECTION_IN_PROGRESS",
+  "technical_barrier_passed": false
+}

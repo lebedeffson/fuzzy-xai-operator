@@ -4,7 +4,9 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 import shlex
+import shutil
 import subprocess
 import tempfile
 import time
@@ -37,7 +39,7 @@ from fuzzyxai.repository_diagnostics.runtime_events import (
     normalize_runtime_event_rows,
 )
 
-COLLECTOR_CAPABILITY = "causal-chronology-tail-v4"
+COLLECTOR_CAPABILITY = "causal-chronology-tail-v5"
 
 
 def read_jsonl(path: Path) -> list[dict[str, Any]]:
@@ -203,6 +205,48 @@ def _probe_events(event_dir: Path) -> list[dict[str, object]]:
         )
     )
     return normalize_runtime_event_rows(values)
+
+
+def _stamp_collector_observations(
+    events: list[dict[str, object]],
+) -> list[dict[str, object]]:
+    """Timestamp post-execution observations without inventing runtime order."""
+    stamped = []
+    for source in events:
+        event = dict(source)
+        if int(event.get("timestamp_ns", 0)) <= 0:
+            event["timestamp_ns"] = time.monotonic_ns()
+            event["timestamp_source"] = "collector_postprocess"
+        event.setdefault("thread_id", 0)
+        event.setdefault("call_depth", 0)
+        event.setdefault("occurrence_count", 1)
+        stamped.append(event)
+    return stamped
+
+
+def _prune_environment_trees(root: Path) -> tuple[str, ...]:
+    """Remove copied environments from the temporary source projection."""
+    excluded = {
+        ".tox",
+        ".venv",
+        "__pycache__",
+        "dist-packages",
+        "site-packages",
+        "venv",
+    }
+    removed: list[str] = []
+    for parent, directory_names, _file_names in os.walk(root, topdown=True):
+        parent_path = Path(parent)
+        selected = [name for name in directory_names if name in excluded]
+        directory_names[:] = [
+            name for name in directory_names if name not in excluded
+        ]
+        for name in selected:
+            path = parent_path / name
+            run(["chmod", "-R", "u+rwX", str(path)])
+            shutil.rmtree(path)
+            removed.append(path.relative_to(root).as_posix())
+    return tuple(sorted(removed))
 
 
 def _project_python_event(event: dict[str, object]) -> bool:
@@ -427,6 +471,7 @@ def collect_one(
             if copied.returncode:
                 raise RuntimeError(f"docker cp failed: {copied.stderr}")
             source_root = source_parent / "testbed"
+            pruned_environment_trees = _prune_environment_trees(source_root)
             normalized = (stdout + "\n" + stderr).replace(
                 "/testbed/",
                 f"{source_root.as_posix()}/",
@@ -436,17 +481,21 @@ def collect_one(
                 for event in _probe_events(events_dir)
                 if _project_python_event(event)
             ]
-            traceback_events = _traceback_events(
-                normalized,
-                root=source_root,
-                test_id=fail_to_pass[0],
+            traceback_events = _stamp_collector_observations(
+                _traceback_events(
+                    normalized,
+                    root=source_root,
+                    test_id=fail_to_pass[0],
+                )
             )
             events.extend(traceback_events)
             events.extend(
-                _failure_observation_events(
-                    normalized,
-                    test_id=fail_to_pass[0],
-                    traceback_events=traceback_events,
+                _stamp_collector_observations(
+                    _failure_observation_events(
+                        normalized,
+                        test_id=fail_to_pass[0],
+                        traceback_events=traceback_events,
+                    )
                 )
             )
             events = [
@@ -459,7 +508,7 @@ def collect_one(
                     stdout + "\n" + stderr,
                 )
                 if node_event is not None:
-                    events.append(node_event)
+                    events.extend(_stamp_collector_observations([node_event]))
             events = normalize_runtime_event_rows(events)
             readiness = audit_runtime_rows(events)
             if not readiness.ready:
@@ -579,6 +628,9 @@ def collect_one(
                     ),
                     "file_candidate_count": len(files),
                     "symbol_pool_size": len(symbol_pool),
+                    "pruned_environment_trees": list(
+                        pruned_environment_trees
+                    ),
                     "runtime_evidence_sha256": _sha256(events_path),
                     "runtime_readiness": readiness.to_mapping(),
                     "status": "BUG_REPRODUCED_WITH_TRACE",

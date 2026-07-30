@@ -51,7 +51,15 @@
   "release_diff_classification": "REPORTS_AND_RELEASE_METADATA_ONLY",
   "r9_status": "H10_C7R_R9_DEVELOPMENT_NO_GO",
   "ruff": "PASS",
-  "runtime_collection_executed": false,
+  "runtime_collection": {
+    "artifact_sha256": "b0b5f44e93f9cd12df9f5fde19ab93274a2c9eea6d60afbd19a5262f5a99471b",
+    "ready_incidents": 5,
+    "run_id": 30566975780,
+    "status": "H10_C7R_RUNTIME_EVIDENCE_INCOMPLETE",
+    "target_incidents": 10,
+    "technical_barrier_passed": false
+  },
+  "runtime_collection_executed": true,
   "scientific_result": "NOT_EVALUATED",
-  "status": "H10_C7R_R10_IMPLEMENTED_AWAITING_CAUSAL_DEVELOPMENT_RECOLLECTION"
+  "status": "H10_C7R_R10_CAUSAL_DEVELOPMENT_RECOLLECTION_IN_PROGRESS"
 }

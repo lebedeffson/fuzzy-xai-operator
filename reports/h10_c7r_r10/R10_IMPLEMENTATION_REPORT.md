@@ -25,8 +25,12 @@ Status:
 
 Scientific result: `NOT_EVALUATED`.
 
-No container execution, neural inference, new held-out creation, or held-out
-scoring was performed.
+At release commit `4642278...`, no container execution, neural inference, new
+held-out creation, or held-out scoring had been performed. The subsequent
+technical recollection run `30566975780` executed the locked ten development
+containers and produced five ready and five fail-closed incidents. It did not
+perform development scoring; details are preserved in
+`R10_RECOLLECTION_RUN_1_REPORT.md`.
 
 Targeted probes were not executed. R10D remains unavailable until both a
 source-aware model lock and candidate-specific probe observations exist.

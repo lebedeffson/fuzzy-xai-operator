@@ -1283,7 +1283,9 @@ state.
 - Date: 2026-07-30
 - Base: preserved H10-C7R-v1 and R9 results
 - Protocol: `H10-C7R-R10-development-v1`
-- Status: `H10_C7R_R10_IMPLEMENTED_AWAITING_CAUSAL_DEVELOPMENT_RECOLLECTION`
+- Implementation commit: `e74570a9272527bde92e7a089d1d27a722c3e378`
+- Release commit: `4642278de6a8d60aa6bb3d8b301e48398737020f`
+- Status: `H10_C7R_R10_CAUSAL_DEVELOPMENT_RECOLLECTION_IN_PROGRESS`
 - Scientific result: `NOT_EVALUATED`
 
 R10 corrects the runtime event representation by preserving monotonic
@@ -1298,7 +1300,14 @@ and a final top-20. Contract inference does not reorder localization.
 Source-aware neural variants fail closed until model weights are independently
 locked, and targeted probes are bounded to two read-only requests.
 
-No old development incident was rerun, no container or neural model was
-executed, no R10 performance metric was calculated, and no new held-out was
-created or scored. Development scoring is prohibited until all 40 disclosed
-incidents pass the new causal-runtime readiness audit.
+The first locked technical-barrier run recollected the same ten disclosed
+development incidents on an isolated runner. Five passed fail-closed runtime
+readiness and five exposed general collector defects in safe value inspection,
+synthetic event timestamps, and copied environment traversal. No retrieval
+metric was calculated. Collector capability v5 fixes only those collection
+defects; the incident order, event schema, candidate budgets, gates, and
+protocol lock remain unchanged.
+
+No neural model was executed and no new held-out was created or scored.
+Development scoring is prohibited until all 40 disclosed incidents pass the
+new causal-runtime readiness audit.
