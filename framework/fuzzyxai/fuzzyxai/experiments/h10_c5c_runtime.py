@@ -248,14 +248,15 @@ def _launcher_source(
             existing['sequence_id'] = existing['first_sequence_id']
 
         def _emit(kind, source_file, source_symbol=None, target_file=None, target_symbol=None, detail=''):
-            key = (TEST_ID, kind, source_file, source_symbol, target_file, target_symbol, detail)
+            event_key = (TEST_ID, kind, source_file, source_symbol, target_file, target_symbol, detail)
+            aggregate_key = (TEST_ID, kind, source_file, source_symbol, target_file, target_symbol)
             with EVENT_LOCK:
                 sequence_id = next(SEQUENCE)
                 timestamp_ns = time.monotonic_ns()
                 thread_id = threading.get_ident()
                 call_depth = max(0, int(getattr(DEPTH, 'value', 0)))
                 encoded = (
-                    '\\0'.join('' if value is None else str(value) for value in key)
+                    '\\0'.join('' if value is None else str(value) for value in event_key)
                     + '\\0' + str(sequence_id)
                     + '\\0' + str(timestamp_ns)
                 ).encode('utf-8', errors='replace')
@@ -275,7 +276,7 @@ def _launcher_source(
                     'first_sequence_id': sequence_id,
                     'last_sequence_id': sequence_id,
                     'detail': detail,
-                    '_aggregate_key': key,
+                    '_aggregate_key': aggregate_key,
                 }}
                 if len(EVENTS) >= TAIL_LIMIT:
                     _prefix_record(EVENTS.popleft())

@@ -1303,10 +1303,15 @@ locked, and targeted probes are bounded to two read-only requests.
 The first locked technical-barrier run recollected the same ten disclosed
 development incidents on an isolated runner. Five passed fail-closed runtime
 readiness and five exposed general collector defects in safe value inspection,
-synthetic event timestamps, and copied environment traversal. No retrieval
-metric was calculated. Collector capability v5 fixes only those collection
-defects; the incident order, event schema, candidate budgets, gates, and
-protocol lock remain unchanged.
+synthetic event timestamps, and copied environment traversal. Collector v5
+raised readiness to eight of ten. Its two remaining failures were a broad
+pytest fallback after an unresolved parametrized node ID and an unbounded
+prefix-aggregate key containing volatile value details. Collector v6 applies
+the single final permitted technical correction: file-scoped fallback and
+structural prefix aggregation with a detailed 20,000-event tail.
+
+No retrieval metric was calculated. The incident order, event schema,
+candidate budgets, timeouts, gates, and protocol lock remain unchanged.
 
 No neural model was executed and no new held-out was created or scored.
 Development scoring is prohibited until all 40 disclosed incidents pass the

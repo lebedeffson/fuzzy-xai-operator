@@ -73,7 +73,7 @@ def test_instrumented_pytest_command_supports_registered_wrappers() -> None:
         fail_to_pass,
     )
     assert argv[-1] == fail_to_pass[0]
-    assert fallback == ["pytest", "tests", "-rA"]
+    assert fallback == ["pytest", "-vv", "-x", "tests/test_x.py"]
     assert ".venv/bin/python" in direct
     assert "/h10/runtime_launcher.py" in direct
     assert "/h10/runtime_launcher_xdist.py" in direct
@@ -103,7 +103,18 @@ def test_instrumented_pytest_command_supports_registered_wrappers() -> None:
         fail_to_pass,
     )
     assert package.startswith("cd /testbed/packages/instrumentation;")
-    assert package_fallback == ["pytest", "tests", "-rA"]
+    assert package_fallback == ["pytest", "-vv", "-x", "tests/test_x.py"]
+
+
+def test_pytest_fallback_is_file_scoped_and_deduplicated() -> None:
+    _, fallback, _ = runtime._instrumented_command(
+        ["poetry run pytest tests/ -n 16"],
+        [
+            "tests/test_markup.py::test_to_content[[b][on",
+            "tests/test_markup.py::test_to_content[other]",
+        ],
+    )
+    assert fallback == ["pytest", "-vv", "-x", "tests/test_markup.py"]
 
 
 def test_runtime_event_filter_excludes_environment_and_non_python() -> None:

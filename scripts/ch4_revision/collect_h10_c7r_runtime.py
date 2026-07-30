@@ -39,7 +39,7 @@ from fuzzyxai.repository_diagnostics.runtime_events import (
     normalize_runtime_event_rows,
 )
 
-COLLECTOR_CAPABILITY = "causal-chronology-tail-v5"
+COLLECTOR_CAPABILITY = "causal-chronology-tail-v6"
 
 
 def read_jsonl(path: Path) -> list[dict[str, Any]]:
@@ -116,8 +116,17 @@ def _instrumented_command(
         working_directory = str(Path("/testbed") / relative_workdir)
         selected = selected[3:]
     argv = ["pytest", "-vv", "-x", *fail_to_pass]
-    pytest_index = selected.index("pytest")
-    fallback_argv = ["pytest", *selected[pytest_index + 1 :]]
+    fallback_files = list(
+        dict.fromkeys(test_id.split("::", 1)[0] for test_id in fail_to_pass)
+    )
+    if not fallback_files or any(
+        Path(path).is_absolute() or ".." in Path(path).parts
+        for path in fallback_files
+    ):
+        raise ValueError("registered pytest fallback paths are unsafe")
+    # A malformed parametrized node ID must not broaden recollection to the
+    # repository's complete test suite.
+    fallback_argv = ["pytest", "-vv", "-x", *fallback_files]
     wrapper = (
         f"cd {shlex.quote(working_directory)}; "
         "py=''; mode=''; "

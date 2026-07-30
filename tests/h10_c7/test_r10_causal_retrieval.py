@@ -140,6 +140,9 @@ def test_launcher_uses_ordered_tail_and_causal_event_types() -> None:
     assert "EVENTS = collections.deque()" in source
     assert "TAIL_LIMIT = 20000" in source
     assert "sorted(EVENTS.values()" not in source
+    assert "'_aggregate_key': aggregate_key" in source
+    assert "aggregate_key = (TEST_ID, kind, source_file" in source
+    assert "aggregate_key = (TEST_ID, kind, source_file, source_symbol, target_file, target_symbol, detail)" not in source
     assert "sys.settrace(_trace)" in source
     assert "'.venv'" in source
     assert "'site-packages'" in source

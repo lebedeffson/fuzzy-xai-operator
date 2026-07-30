@@ -21,7 +21,7 @@ runtime files do not contain recoverable execution chronology, so they cannot
 be used to claim R10 causal performance.
 
 Status:
-`H10_C7R_R10_IMPLEMENTED_AWAITING_CAUSAL_DEVELOPMENT_RECOLLECTION`.
+`H10_C7R_R10_CAUSAL_DEVELOPMENT_RECOLLECTION_IN_PROGRESS`.
 
 Scientific result: `NOT_EVALUATED`.
 
@@ -31,6 +31,13 @@ technical recollection run `30566975780` executed the locked ten development
 containers and produced five ready and five fail-closed incidents. It did not
 perform development scoring; details are preserved in
 `R10_RECOLLECTION_RUN_1_REPORT.md`.
+
+The unchanged second run `30571013615` raised readiness to eight of ten. It
+confirmed that collector v5 fixed the earlier recursion, synthetic timestamp,
+and copied-environment failures. The two remaining timeouts were traced to a
+repository-wide pytest fallback and an aggregate key containing volatile value
+details. Collector v6 contains the final protocol-permitted technical patch;
+the next execution is the last permitted retry of the same ten incidents.
 
 Targeted probes were not executed. R10D remains unavailable until both a
 source-aware model lock and candidate-specific probe observations exist.

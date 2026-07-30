@@ -37,6 +37,7 @@ PACKAGE_FILES = (
     Path("reports/h10_c7r_r10/R10_CLAIM_LINT.json"),
     Path("reports/h10_c7r_r10/R10_IMPLEMENTATION_REPORT.md"),
     Path("reports/h10_c7r_r10/R10_RECOLLECTION_RUN_1_REPORT.md"),
+    Path("reports/h10_c7r_r10/R10_RECOLLECTION_RUN_2_REPORT.md"),
     Path("reports/h10_c7r_r10/R10_REPRODUCTION.md"),
     Path("results/h10_c7r_r10/R10_IMPLEMENTATION_STATUS.json"),
     Path(
@@ -46,6 +47,10 @@ PACKAGE_FILES = (
     Path(
         "results/h10_c7r_r10/recollection/"
         "R10_RECOLLECTION_RUN_1_STATUS.json"
+    ),
+    Path(
+        "results/h10_c7r_r10/recollection/"
+        "R10_RECOLLECTION_RUN_2_STATUS.json"
     ),
     Path("results/h10_c7r_r10/R10_RELEASE_PROVENANCE.json"),
     Path("results/h10_c7r_r10/R10_VERIFICATION_STATUS.json"),

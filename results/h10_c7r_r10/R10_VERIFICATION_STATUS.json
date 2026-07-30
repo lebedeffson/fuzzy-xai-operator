@@ -52,9 +52,10 @@
   "r9_status": "H10_C7R_R9_DEVELOPMENT_NO_GO",
   "ruff": "PASS",
   "runtime_collection": {
-    "artifact_sha256": "b0b5f44e93f9cd12df9f5fde19ab93274a2c9eea6d60afbd19a5262f5a99471b",
-    "ready_incidents": 5,
-    "run_id": 30566975780,
+    "artifact_sha256": "a50001cd2c4ae964b4940a5e58f27f9734be35003b40b97e3e90654c92213bc6",
+    "collector_capability": "causal-chronology-tail-v5",
+    "ready_incidents": 8,
+    "run_id": 30571013615,
     "status": "H10_C7R_RUNTIME_EVIDENCE_INCOMPLETE",
     "target_incidents": 10,
     "technical_barrier_passed": false
