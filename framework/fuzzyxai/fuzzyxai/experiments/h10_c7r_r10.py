@@ -54,11 +54,14 @@ class RuntimeReadiness:
     status: str
     event_count: int
     test_count: int
+    max_sequence_id: int
     event_kinds: tuple[str, ...]
     causal_event_kinds: tuple[str, ...]
     missing_fields: tuple[str, ...]
     chronology_errors: tuple[str, ...]
     occurrence_count_total: int
+    aggregated_event_count: int
+    full_tail_end_preserved: bool
     has_core_runtime: bool
     has_causal_observation: bool
     has_value_provenance: bool
@@ -99,6 +102,8 @@ def audit_runtime_rows(
     event_ids: set[str] = set()
     kinds: Counter[str] = Counter()
     occurrence_total = 0
+    aggregated_events = 0
+    max_sequence = -1
     tests: set[str] = set()
 
     for index, row in enumerate(rows):
@@ -128,6 +133,8 @@ def audit_runtime_rows(
             chronology_errors.append(f"row[{index}]:invalid_occurrence_count")
         previous[test_id] = max(previous[test_id], last)
         occurrence_total += max(occurrence, 0)
+        aggregated_events += int(occurrence > 1 or last > first)
+        max_sequence = max(max_sequence, last)
         kinds[kind] += 1
 
     kind_set = set(kinds)
@@ -135,6 +142,15 @@ def audit_runtime_rows(
     core = REQUIRED_CORE_KINDS.issubset(kind_set)
     causal_observation = bool(causal & REQUIRED_CAUSAL_OBSERVATIONS)
     provenance = bool(causal & {"last_writer", "value_flow"})
+    tail_end_preserved = bool(rows) and not any(
+        error.endswith(
+            (
+                "non_monotonic_sequence",
+                "invalid_sequence_interval",
+            )
+        )
+        for error in chronology_errors
+    )
     ready = (
         bool(rows)
         and not missing
@@ -150,11 +166,14 @@ def audit_runtime_rows(
         ),
         event_count=len(rows),
         test_count=len(tests),
+        max_sequence_id=max_sequence,
         event_kinds=tuple(sorted(kind_set)),
         causal_event_kinds=tuple(sorted(causal)),
         missing_fields=tuple(missing),
         chronology_errors=tuple(chronology_errors[:100]),
         occurrence_count_total=occurrence_total,
+        aggregated_event_count=aggregated_events,
+        full_tail_end_preserved=tail_end_preserved,
         has_core_runtime=core,
         has_causal_observation=causal_observation,
         has_value_provenance=provenance,

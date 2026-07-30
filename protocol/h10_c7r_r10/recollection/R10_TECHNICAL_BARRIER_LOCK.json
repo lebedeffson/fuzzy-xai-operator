@@ -1,0 +1,31 @@
+{
+  "protocol_id": "H10-C7R-R10-development-v1",
+  "status": "LOCKED_BEFORE_CAUSAL_RECOLLECTION",
+  "purpose": "technical readiness barrier only",
+  "scientific_result": "NOT_EVALUATED",
+  "source_evidence_zip_sha256": "1016bbd2222ba2f93719f8b3df2d04f96ad7ed6aa422b86b8cfa97d167eb8f63",
+  "selection_rule": "ten disclosed difficult incidents fixed before R10 recollection; preserve source selection_rank order",
+  "incident_ids": [
+    "stanfordnlp__dspy-8360",
+    "Textualize__textual-5829",
+    "python__mypy-19290",
+    "tox-dev__tox-3540",
+    "python__mypy-19249",
+    "aws-cloudformation__cfn-lint-4162",
+    "gitpython-developers__GitPython-2035",
+    "Flexget__Flexget-4441",
+    "networkx__networkx-8105",
+    "traceloop__openllmetry-2979"
+  ],
+  "incident_count": 10,
+  "repository_count": 9,
+  "continuation_policy": "same original 40-case source order after 10/10 readiness",
+  "development_scoring_allowed": false,
+  "new_held_out_created": false,
+  "new_held_out_scored": false,
+  "sha256": {
+    "selection": "96cbc9bec485ded406d0dc02937585d60be6f24f2ea8e028eef838c7fcbb4557",
+    "runtime_registry": "05461562aed1b0ae2ddc688454a5d2c258caae57c43218ee519447d79b271351",
+    "image_lock": "a83432224f6751cb3d10aa5371ce878f52a1cf2bb6be56da2931da8573d9d402"
+  }
+}

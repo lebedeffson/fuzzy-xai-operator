@@ -121,6 +121,18 @@ def test_runtime_event_filter_excludes_environment_and_non_python() -> None:
     )
 
 
+def test_runtime_collection_requires_exact_container_digest() -> None:
+    runtime._verify_image_digest(
+        "example/image@sha256:abc",
+        "sha256:abc",
+    )
+    with pytest.raises(RuntimeError, match="container image digest mismatch"):
+        runtime._verify_image_digest(
+            "example/image@sha256:changed",
+            "sha256:locked",
+        )
+
+
 def test_pytest_node_event_requires_observed_project_test(tmp_path: Path) -> None:
     test_file = tmp_path / "tests/test_module.py"
     test_file.parent.mkdir()
@@ -177,6 +189,7 @@ def test_runtime_collection_uses_one_image_as_rolling_cache(
                 "entries": [
                     {
                         **row,
+                        "manifest_digest": f"sha256:digest-{row['incident_id']}",
                         "availability_status": (
                             "AVAILABLE_WITHIN_RUNNER_IMAGE_BUDGET"
                         ),
@@ -189,10 +202,25 @@ def test_runtime_collection_uses_one_image_as_rolling_cache(
     )
     operations: list[str] = []
 
-    def fake_collect_one(public, registered, output):
+    def fake_collect_one(public, registered, expected_digest, output):
         operations.append(f"collect:{registered['container_image_tag']}")
+        incident_dir = output / "incidents" / str(public["incident_id"])
+        incident_dir.mkdir(parents=True)
+        runtime.write_json(
+            incident_dir / "runtime_status.json",
+            {
+                "event_count": 10,
+                "causal_event_kinds": ["exception"],
+                "max_sequence_id": 9,
+                "project_grounded_file_count": 2,
+                "symbol_pool_size": 20,
+                "container_digest": expected_digest,
+                "runtime_evidence_sha256": "evidence",
+            },
+        )
         return {
             **public,
+            "collector_capability": runtime.COLLECTOR_CAPABILITY,
             "runtime_evidence_status": "BUG_REPRODUCED_WITH_TRACE",
         }
 

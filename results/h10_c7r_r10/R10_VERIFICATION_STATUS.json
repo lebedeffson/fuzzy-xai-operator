@@ -1,5 +1,5 @@
 {
-  "ci": {
+  "implementation_ci": {
     "conclusion": "success",
     "full_regression": {
       "passed": 819,
@@ -11,6 +11,7 @@
     "run_id": 30563208205,
     "url": "https://github.com/lebedeffson/fuzzy-xai-operator/actions/runs/30563208205"
   },
+  "implementation_commit": "e74570a9272527bde92e7a089d1d27a722c3e378",
   "claim_lint": "PASS",
   "compileall": "PASS",
   "focused_ci_tests": {
@@ -30,6 +31,24 @@
     "status": "PASS"
   },
   "parent_immutability": "PASS",
+  "release_ci": {
+    "conclusion": "success",
+    "focused": {
+      "passed": 54,
+      "status": "PASS"
+    },
+    "full_regression": {
+      "passed": 819,
+      "skipped": 6,
+      "status": "PASS",
+      "warnings": 84
+    },
+    "head_sha": "4642278de6a8d60aa6bb3d8b301e48398737020f",
+    "run_id": 30563604221,
+    "url": "https://github.com/lebedeffson/fuzzy-xai-operator/actions/runs/30563604221"
+  },
+  "release_commit": "4642278de6a8d60aa6bb3d8b301e48398737020f",
+  "release_diff_classification": "REPORTS_AND_RELEASE_METADATA_ONLY",
   "r9_status": "H10_C7R_R9_DEVELOPMENT_NO_GO",
   "ruff": "PASS",
   "runtime_collection_executed": false,

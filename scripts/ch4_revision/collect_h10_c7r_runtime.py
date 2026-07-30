@@ -19,9 +19,13 @@ from fuzzyxai.experiments.h10_c5c_runtime import (
     _traceback_events,
 )
 from fuzzyxai.experiments.h10_c7r_r10 import (
+    audit_runtime_rows,
     enrich_graph_with_source_excerpts,
 )
 from fuzzyxai.repository_diagnostics.guided_retrieval import (
+    FileRetriever,
+    IncidentQuery,
+    R10SymbolPoolBuilder,
     documents_from_graph,
 )
 from fuzzyxai.repository_diagnostics.importer import RepositoryIncident
@@ -167,6 +171,26 @@ def _image_digest(tag: str) -> tuple[str, int]:
     return str(digests[0]), int(size)
 
 
+def _manifest_digest(value: str) -> str:
+    return value.rsplit("@", 1)[-1]
+
+
+def _verify_image_digest(actual: str, expected: str) -> None:
+    if _manifest_digest(actual) != _manifest_digest(expected):
+        raise RuntimeError(
+            "container image digest mismatch: "
+            f"expected={expected}, actual={actual}"
+        )
+
+
+def _sha256(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as source:
+        for chunk in iter(lambda: source.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
 def _probe_events(event_dir: Path) -> list[dict[str, object]]:
     values: list[dict[str, object]] = []
     for path in sorted(event_dir.glob("probe-*.jsonl")):
@@ -267,6 +291,7 @@ def _container_name(identifier: str) -> str:
 def collect_one(
     public: dict[str, Any],
     registry: dict[str, Any],
+    expected_image_digest: str,
     output: Path,
 ) -> dict[str, object]:
     identifier = str(public["incident_id"])
@@ -324,6 +349,7 @@ def collect_one(
     )
     image_tag = str(registry["container_image_tag"])
     image_digest, image_size = _image_digest(image_tag)
+    _verify_image_digest(image_digest, expected_image_digest)
     container = _container_name(identifier)
     run(["docker", "rm", "-f", container])
     overlay = (
@@ -435,6 +461,12 @@ def collect_one(
                 if node_event is not None:
                     events.append(node_event)
             events = normalize_runtime_event_rows(events)
+            readiness = audit_runtime_rows(events)
+            if not readiness.ready:
+                raise RuntimeError(
+                    "R10_RUNTIME_RECOLLECTION_REQUIRED: "
+                    + json.dumps(readiness.to_mapping(), sort_keys=True)
+                )
             kinds = {str(event["kind"]) for event in events}
             typed_events = tuple(
                 RuntimeEvent.from_mapping(event) for event in events
@@ -469,12 +501,33 @@ def collect_one(
             )
             graph = enrich_graph_with_source_excerpts(graph, source_root)
             documents = documents_from_graph(graph, typed_events)
+            query = IncidentQuery(
+                identifier,
+                str(public["query"].get("issue", "")),
+                tuple(fail_to_pass),
+                stdout + "\n" + stderr,
+                assertion,
+            )
+            files = FileRetriever().rank(
+                query,
+                documents,
+                typed_events,
+                limit=20,
+            )
+            symbol_pool = R10SymbolPoolBuilder().build(
+                query,
+                files,
+                documents,
+                symbols_per_file=10,
+                pool_limit=200,
+            )
             graph_path = incident_dir / "repository_graph.json"
             events_path = incident_dir / "runtime_events.jsonl"
             write_json(graph_path, asdict(graph))
             write_jsonl(events_path, events)
             row = {
                 **public,
+                "collector_capability": COLLECTOR_CAPABILITY,
                 "runtime_evidence_status": "BUG_REPRODUCED_WITH_TRACE",
                 "graph_path": str(graph_path.relative_to(output)),
                 "runtime_events_path": str(events_path.relative_to(output)),
@@ -498,10 +551,14 @@ def collect_one(
                     "timed_out": timed_out,
                     "event_count": len(events),
                     "event_kinds": sorted(kinds),
-                    "event_schema": "R10_CAUSAL_RUNTIME_V1",
-                    "chronology_preserved": all(
-                        event.sequence_id >= 0 for event in typed_events
+                    "max_sequence_id": readiness.max_sequence_id,
+                    "occurrence_count_total": readiness.occurrence_count_total,
+                    "aggregated_event_count": readiness.aggregated_event_count,
+                    "full_tail_end_preserved": (
+                        readiness.full_tail_end_preserved
                     ),
+                    "event_schema": "R10_CAUSAL_RUNTIME_V1",
+                    "chronology_preserved": readiness.ready,
                     "causal_event_kinds": sorted(
                         kinds
                         & {
@@ -513,6 +570,17 @@ def collect_one(
                             "value_flow",
                         }
                     ),
+                    "project_grounded_file_count": len(
+                        {
+                            str(event["source_file"])
+                            for event in events
+                            if event.get("source_file")
+                        }
+                    ),
+                    "file_candidate_count": len(files),
+                    "symbol_pool_size": len(symbol_pool),
+                    "runtime_evidence_sha256": _sha256(events_path),
+                    "runtime_readiness": readiness.to_mapping(),
                     "status": "BUG_REPRODUCED_WITH_TRACE",
                 },
             )
@@ -585,18 +653,36 @@ def collect(
                     raise RuntimeError(image_status)
                 if cached.is_file():
                     row = json.loads(cached.read_text(encoding="utf-8"))
+                    if row.get("collector_capability") != COLLECTOR_CAPABILITY:
+                        cached.unlink()
+                        row = collect_one(
+                            public,
+                            registry[identifier],
+                            str(availability[identifier]["manifest_digest"]),
+                            output,
+                        )
                 elif failure_cache.is_file():
                     failure = json.loads(
                         failure_cache.read_text(encoding="utf-8")
                     )
                     if failure.get("collector_capability") != COLLECTOR_CAPABILITY:
                         failure_cache.unlink()
-                        row = collect_one(public, registry[identifier], output)
+                        row = collect_one(
+                            public,
+                            registry[identifier],
+                            str(availability[identifier]["manifest_digest"]),
+                            output,
+                        )
                     else:
                         cached_failure = True
                         raise RuntimeError(str(failure["reason"]))
                 else:
-                    row = collect_one(public, registry[identifier], output)
+                    row = collect_one(
+                        public,
+                        registry[identifier],
+                        str(availability[identifier]["manifest_digest"]),
+                        output,
+                    )
                 if failure_cache.is_file():
                     failure_cache.unlink()
                 completed.append(row)
@@ -608,6 +694,39 @@ def collect(
                         "status": "BUG_REPRODUCED_WITH_TRACE",
                     }
                 )
+                runtime_status = json.loads(
+                    (
+                        output
+                        / "incidents"
+                        / identifier
+                        / "runtime_status.json"
+                    ).read_text(encoding="utf-8")
+                )
+                checkpoint = {
+                    "incident_id": identifier,
+                    "repository_id": str(public["repository"]),
+                    "runtime_readiness": "R10_RUNTIME_READY",
+                    "event_count": int(runtime_status["event_count"]),
+                    "causal_event_kinds": runtime_status[
+                        "causal_event_kinds"
+                    ],
+                    "max_sequence_id": int(
+                        runtime_status["max_sequence_id"]
+                    ),
+                    "project_grounded_file_count": int(
+                        runtime_status["project_grounded_file_count"]
+                    ),
+                    "symbol_pool_size": int(
+                        runtime_status["symbol_pool_size"]
+                    ),
+                    "collector_error": "",
+                    "container_digest": str(
+                        runtime_status["container_digest"]
+                    ),
+                    "evidence_sha256": str(
+                        runtime_status["runtime_evidence_sha256"]
+                    ),
+                }
                 if prune_images and newly_collected:
                     if retained_image and retained_image != image_tag:
                         run(["docker", "image", "rm", retained_image])
@@ -640,8 +759,41 @@ def collect(
                         ),
                     }
                 )
+                checkpoint = {
+                    "incident_id": identifier,
+                    "repository_id": str(public["repository"]),
+                    "runtime_readiness": "R10_RUNTIME_RECOLLECTION_REQUIRED",
+                    "event_count": 0,
+                    "causal_event_kinds": [],
+                    "max_sequence_id": -1,
+                    "project_grounded_file_count": 0,
+                    "symbol_pool_size": 0,
+                    "collector_error": reason,
+                    "container_digest": str(
+                        availability[identifier].get("manifest_digest", "")
+                    ),
+                    "evidence_sha256": "",
+                }
                 if prune_images and image_tag != retained_image:
                     run(["docker", "image", "rm", image_tag])
+            checkpoint_rows = [
+                row
+                for row in (
+                    json.loads(line)
+                    for line in (
+                        output / "R10_CAUSAL_RECOLLECTION_CHECKPOINT.jsonl"
+                    ).read_text(encoding="utf-8").splitlines()
+                    if line.strip()
+                )
+                if row["incident_id"] != identifier
+            ] if (
+                output / "R10_CAUSAL_RECOLLECTION_CHECKPOINT.jsonl"
+            ).is_file() else []
+            checkpoint_rows.append(checkpoint)
+            write_jsonl(
+                output / "R10_CAUSAL_RECOLLECTION_CHECKPOINT.jsonl",
+                checkpoint_rows,
+            )
             write_jsonl(output / "RUNTIME_AVAILABILITY_LEDGER.jsonl", ledger)
             write_jsonl(output / "HELD_OUT_MANIFEST.jsonl", completed)
     finally:
@@ -662,6 +814,20 @@ def collect(
         ),
         "image_availability_lock": str(image_availability_lock),
         "network_during_execution": "none",
+        "technical_barrier_passed": complete
+        and all(
+            row["runtime_readiness"] == "R10_RUNTIME_READY"
+            for row in checkpoint_rows
+        ),
+        "lifecycle_status": (
+            "H10_C7R_R10_CAUSAL_DEVELOPMENT_READY_FOR_SCORING"
+            if complete and target_incidents >= 40
+            else "H10_C7R_R10_CAUSAL_DEVELOPMENT_RECOLLECTION_IN_PROGRESS"
+        ),
+        "scientific_result": "NOT_EVALUATED",
+        "development_scored": False,
+        "held_out_created": False,
+        "held_out_scored": False,
         "status": (
             "H10_C7R_RUNTIME_EVIDENCE_COMPLETE"
             if complete

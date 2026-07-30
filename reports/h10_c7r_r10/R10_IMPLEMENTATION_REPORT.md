@@ -38,4 +38,14 @@ source-aware model lock and candidate-specific probe observations exist.
 - GitHub full regression: `819 passed, 6 skipped`.
 - Ruff, compileall, claim lint and operator manifest: `PASS`.
 - Parent H10-C7R-v1 and R9 protected hashes: `PASS`.
-- CI run: `30563208205`.
+
+## Commit and CI provenance
+
+- Implementation commit: `e74570a9272527bde92e7a089d1d27a722c3e378`.
+- Implementation CI run: `30563208205`.
+- Release commit: `4642278de6a8d60aa6bb3d8b301e48398737020f`.
+- Release CI run: `30563604221`.
+- The six files changed between those commits are confined to
+  `reports/h10_c7r_r10/` and `results/h10_c7r_r10/`.
+- No framework code, collector, scoring logic, tests, workflow, protocol lock,
+  or parent result changed between the implementation and release commits.

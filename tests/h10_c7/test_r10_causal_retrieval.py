@@ -313,6 +313,8 @@ def test_r10_runtime_audit_accepts_collected_causal_chronology() -> None:
     assert readiness.ready
     assert readiness.has_core_runtime
     assert readiness.has_causal_observation
+    assert readiness.max_sequence_id == 3
+    assert readiness.full_tail_end_preserved
 
 
 def test_r10_runtime_audit_rejects_hash_ordered_sequence() -> None:
@@ -360,6 +362,23 @@ def test_r10_protocol_matches_implementation_budgets() -> None:
     }
     assert payload["maximum_targeted_probes"] == 2
     assert payload["scientific_result"] == "NOT_EVALUATED"
+
+
+def test_r10_release_provenance_separates_commit_and_ci_pairs() -> None:
+    payload = json.loads(
+        Path(
+            "results/h10_c7r_r10/R10_RELEASE_PROVENANCE.json"
+        ).read_text(encoding="utf-8")
+    )
+    assert payload["implementation_ci"]["head_sha"] == (
+        payload["implementation_commit"]
+    )
+    assert payload["release_ci"]["head_sha"] == payload["release_commit"]
+    assert not payload["code_changed_between_implementation_and_release"]
+    assert all(
+        path.startswith(("reports/h10_c7r_r10/", "results/h10_c7r_r10/"))
+        for path in payload["changed_files"]
+    )
 
 
 def test_r10_parent_results_match_locked_sha256() -> None:

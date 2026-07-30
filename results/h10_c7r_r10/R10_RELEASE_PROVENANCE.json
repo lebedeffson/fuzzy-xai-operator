@@ -1,0 +1,31 @@
+{
+  "changed_file_count": 6,
+  "changed_files": [
+    "reports/h10_c7r_r10/R10_CLAIM_LINT.json",
+    "reports/h10_c7r_r10/R10_IMPLEMENTATION_REPORT.md",
+    "reports/h10_c7r_r10/R10_REPRODUCTION.md",
+    "results/h10_c7r_r10/R10_IMPLEMENTATION_STATUS.json",
+    "results/h10_c7r_r10/R10_VERIFICATION_STATUS.json",
+    "results/h10_c7r_r10/SHA256SUMS"
+  ],
+  "code_changed_between_implementation_and_release": false,
+  "diff_sha256": "25f9b822d9feda70c893b194e2fc574f268a21b8ccec7623dfdb3883b6255132",
+  "implementation_ci": {
+    "conclusion": "success",
+    "head_sha": "e74570a9272527bde92e7a089d1d27a722c3e378",
+    "run_id": 30563208205,
+    "url": "https://github.com/lebedeffson/fuzzy-xai-operator/actions/runs/30563208205"
+  },
+  "implementation_commit": "e74570a9272527bde92e7a089d1d27a722c3e378",
+  "implementation_tree": "ecfbe26daaf905eb440442fdb4e0069305bb63cf",
+  "release_ci": {
+    "conclusion": "success",
+    "head_sha": "4642278de6a8d60aa6bb3d8b301e48398737020f",
+    "run_id": 30563604221,
+    "url": "https://github.com/lebedeffson/fuzzy-xai-operator/actions/runs/30563604221"
+  },
+  "release_commit": "4642278de6a8d60aa6bb3d8b301e48398737020f",
+  "release_diff_classification": "REPORTS_AND_RELEASE_METADATA_ONLY",
+  "release_tree": "074d8314529dd1aa5ed05681e3dd69bb17b410f7",
+  "scientific_result": "NOT_EVALUATED"
+}

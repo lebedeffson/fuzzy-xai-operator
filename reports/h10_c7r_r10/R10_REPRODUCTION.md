@@ -40,3 +40,12 @@ held-out set.
 
 R10B, R10C and R10D remain unavailable until a local source-aware model lock is
 created. There is no network fallback.
+
+## Provenance
+
+`R10_RELEASE_PROVENANCE.json` distinguishes the implementation verification
+from the final release verification. Run the offline audit with:
+
+```bash
+python scripts/ch4_revision/verify_h10_c7r_r10_provenance.py
+```
