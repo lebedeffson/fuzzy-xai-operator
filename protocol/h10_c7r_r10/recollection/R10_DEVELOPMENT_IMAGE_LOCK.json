@@ -1,0 +1,359 @@
+{
+  "artifact": "H10_C7R_IMAGE_AVAILABILITY_LOCK",
+  "created_at": "2026-07-30T10:24:13.259064+00:00",
+  "created_before_gold_opening": true,
+  "entries": [
+    {
+      "availability_status": "AVAILABLE_WITHIN_RUNNER_IMAGE_BUDGET",
+      "compressed_bytes": 741231723,
+      "container_image_tag": "starryzhang/sweb.eval.x86_64.agentops-ai_1776_agentops-1091:latest",
+      "incident_id": "AgentOps-AI__agentops-1091",
+      "manifest_digest": "sha256:35845f2cc44a6fcd98eff22c43ce98f664ae89527b3de2c394c5d9fdf09d247c",
+      "max_layer_bytes": 366935458
+    },
+    {
+      "availability_status": "AVAILABLE_WITHIN_RUNNER_IMAGE_BUDGET",
+      "compressed_bytes": 693254849,
+      "container_image_tag": "starryzhang/sweb.eval.x86_64.flexget_1776_flexget-4441:latest",
+      "incident_id": "Flexget__Flexget-4441",
+      "manifest_digest": "sha256:a073cb6da84a772ad96770cd200f88abe82fc9ebd418d9c82b6b1bc93060363f",
+      "max_layer_bytes": 318958584
+    },
+    {
+      "availability_status": "AVAILABLE_WITHIN_RUNNER_IMAGE_BUDGET",
+      "compressed_bytes": 1114969502,
+      "container_image_tag": "starryzhang/sweb.eval.x86_64.pyomo_1776_pyomo-3633:latest",
+      "incident_id": "Pyomo__pyomo-3633",
+      "manifest_digest": "sha256:c8268735af4e45a1181512987e6cc8036a2a3942876f46579f6b81a0f83333ec",
+      "max_layer_bytes": 740673237
+    },
+    {
+      "availability_status": "AVAILABLE_WITHIN_RUNNER_IMAGE_BUDGET",
+      "compressed_bytes": 1104750098,
+      "container_image_tag": "starryzhang/sweb.eval.x86_64.textualize_1776_textual-5829:latest",
+      "incident_id": "Textualize__textual-5829",
+      "manifest_digest": "sha256:8b41f072fe0e7f9d57eea38fe976e859980a5b524c7e91342a74ba2166006779",
+      "max_layer_bytes": 730453833
+    },
+    {
+      "availability_status": "AVAILABLE_WITHIN_RUNNER_IMAGE_BUDGET",
+      "compressed_bytes": 1111053154,
+      "container_image_tag": "starryzhang/sweb.eval.x86_64.textualize_1776_textual-5851:latest",
+      "incident_id": "Textualize__textual-5851",
+      "manifest_digest": "sha256:5602ac3b10b4b597495b2bf4baf81638871357cd1469812d642e0626ee01b497",
+      "max_layer_bytes": 737563889
+    },
+    {
+      "availability_status": "AVAILABLE_WITHIN_RUNNER_IMAGE_BUDGET",
+      "compressed_bytes": 1104787393,
+      "container_image_tag": "starryzhang/sweb.eval.x86_64.textualize_1776_textual-5863:latest",
+      "incident_id": "Textualize__textual-5863",
+      "manifest_digest": "sha256:495586bc11a90b7be9821372fc51e7784eb87001fb236fc427aeb64fd1d2359f",
+      "max_layer_bytes": 730491128
+    },
+    {
+      "availability_status": "AVAILABLE_WITHIN_RUNNER_IMAGE_BUDGET",
+      "compressed_bytes": 734873686,
+      "container_image_tag": "starryzhang/sweb.eval.x86_64.aws-cloudformation_1776_cfn-lint-4162:latest",
+      "incident_id": "aws-cloudformation__cfn-lint-4162",
+      "manifest_digest": "sha256:e33c4f2f03121b04722957e26cd39330068d1a400220bec2adbb048586a1552f",
+      "max_layer_bytes": 360577421
+    },
+    {
+      "availability_status": "AVAILABLE_WITHIN_RUNNER_IMAGE_BUDGET",
+      "compressed_bytes": 450975197,
+      "container_image_tag": "starryzhang/sweb.eval.x86_64.beeware_1776_briefcase-2333:latest",
+      "incident_id": "beeware__briefcase-2333",
+      "manifest_digest": "sha256:1c2e46173cf6bdceb6906dbd104b6646efa9c1466cf70e192ab25aa835850976",
+      "max_layer_bytes": 211370316
+    },
+    {
+      "availability_status": "AVAILABLE_WITHIN_RUNNER_IMAGE_BUDGET",
+      "compressed_bytes": 601532650,
+      "container_image_tag": "starryzhang/sweb.eval.x86_64.certbot_1776_certbot-10317:latest",
+      "incident_id": "certbot__certbot-10317",
+      "manifest_digest": "sha256:841efcf3ab3763e13a0cf41aa5083406899bdf2f0e48c604043a70f6e19eeb2a",
+      "max_layer_bytes": 227236385
+    },
+    {
+      "availability_status": "AVAILABLE_WITHIN_RUNNER_IMAGE_BUDGET",
+      "compressed_bytes": 523468367,
+      "container_image_tag": "starryzhang/sweb.eval.x86_64.conan-io_1776_conan-18410:latest",
+      "incident_id": "conan-io__conan-18410",
+      "manifest_digest": "sha256:61cbb1f7f89baaf85c264c01cb50e5bfe319239d88598a1cf57c47fbf5d991c2",
+      "max_layer_bytes": 211370316
+    },
+    {
+      "availability_status": "AVAILABLE_WITHIN_RUNNER_IMAGE_BUDGET",
+      "compressed_bytes": 449910523,
+      "container_image_tag": "starryzhang/sweb.eval.x86_64.dbcli_1776_mycli-1238:latest",
+      "incident_id": "dbcli__mycli-1238",
+      "manifest_digest": "sha256:3d4dd93faabf72b0734f15e88a3ca5203e716c9e17ab6b28e5cbcce91a9058e5",
+      "max_layer_bytes": 211370316
+    },
+    {
+      "availability_status": "AVAILABLE_WITHIN_RUNNER_IMAGE_BUDGET",
+      "compressed_bytes": 417473001,
+      "container_image_tag": "starryzhang/sweb.eval.x86_64.eventlet_1776_eventlet-1047:latest",
+      "incident_id": "eventlet__eventlet-1047",
+      "manifest_digest": "sha256:45a05ff0b68ed679ef667e45529f4a20840f744bcb452c300e8f3912c2a1a028",
+      "max_layer_bytes": 211370316
+    },
+    {
+      "availability_status": "AVAILABLE_WITHIN_RUNNER_IMAGE_BUDGET",
+      "compressed_bytes": 438193252,
+      "container_image_tag": "starryzhang/sweb.eval.x86_64.falconry_1776_falcon-2459:latest",
+      "incident_id": "falconry__falcon-2459",
+      "manifest_digest": "sha256:e6abd8170141098cceb9bd7cc6345453f85d34a377cb83726ef0f304823285b9",
+      "max_layer_bytes": 211370316
+    },
+    {
+      "availability_status": "AVAILABLE_WITHIN_RUNNER_IMAGE_BUDGET",
+      "compressed_bytes": 906926987,
+      "container_image_tag": "starryzhang/sweb.eval.x86_64.fsspec_1776_filesystem_spec-1862:latest",
+      "incident_id": "fsspec__filesystem_spec-1862",
+      "manifest_digest": "sha256:0b09b4adbdfe1d595ebf8c0da5e1935c04e73eb343b08897a9b9f3ac1b52d42c",
+      "max_layer_bytes": 532630722
+    },
+    {
+      "availability_status": "AVAILABLE_WITHIN_RUNNER_IMAGE_BUDGET",
+      "compressed_bytes": 493295011,
+      "container_image_tag": "starryzhang/sweb.eval.x86_64.gitpython-developers_1776_gitpython-2035:latest",
+      "incident_id": "gitpython-developers__GitPython-2035",
+      "manifest_digest": "sha256:c245357561f1e52c718da494ca8170f703c28bd034abff44d4831b35ac3b563f",
+      "max_layer_bytes": 211039785
+    },
+    {
+      "availability_status": "AVAILABLE_WITHIN_RUNNER_IMAGE_BUDGET",
+      "compressed_bytes": 827026682,
+      "container_image_tag": "starryzhang/sweb.eval.x86_64.iterative_1776_dvc-10778:latest",
+      "incident_id": "iterative__dvc-10778",
+      "manifest_digest": "sha256:d433c705ba5a763dc1e31213eb3b54ffa7295035c4c97a08b458d3b12655585a",
+      "max_layer_bytes": 452730417
+    },
+    {
+      "availability_status": "AVAILABLE_WITHIN_RUNNER_IMAGE_BUDGET",
+      "compressed_bytes": 528736181,
+      "container_image_tag": "starryzhang/sweb.eval.x86_64.jlowin_1776_fastmcp-677:latest",
+      "incident_id": "jlowin__fastmcp-677",
+      "manifest_digest": "sha256:97b15931c3b441a4e0b6e95d67a24e8f58c3b857ee31a3f14956ce116561dcb2",
+      "max_layer_bytes": 211370316
+    },
+    {
+      "availability_status": "AVAILABLE_WITHIN_RUNNER_IMAGE_BUDGET",
+      "compressed_bytes": 556667425,
+      "container_image_tag": "starryzhang/sweb.eval.x86_64.jlowin_1776_fastmcp-690:latest",
+      "incident_id": "jlowin__fastmcp-690",
+      "manifest_digest": "sha256:ea93c271346a00abae08b8c87fe9516117e36f301ebdc57a5c08b420af17ba04",
+      "max_layer_bytes": 211370316
+    },
+    {
+      "availability_status": "AVAILABLE_WITHIN_RUNNER_IMAGE_BUDGET",
+      "compressed_bytes": 529607150,
+      "container_image_tag": "starryzhang/sweb.eval.x86_64.jlowin_1776_fastmcp-754:latest",
+      "incident_id": "jlowin__fastmcp-754",
+      "manifest_digest": "sha256:7d3d3bedd19abc657c8f1c71919487fec8b57c18a28aaf3eb644ab83a103e186",
+      "max_layer_bytes": 211370316
+    },
+    {
+      "availability_status": "AVAILABLE_WITHIN_RUNNER_IMAGE_BUDGET",
+      "compressed_bytes": 469081605,
+      "container_image_tag": "starryzhang/sweb.eval.x86_64.koxudaxi_1776_datamodel-code-generator-2412:latest",
+      "incident_id": "koxudaxi__datamodel-code-generator-2412",
+      "manifest_digest": "sha256:28a3c672114f88b4c79976c05c7b6b2a278370107043abbfa7c6f2540fe2b1b5",
+      "max_layer_bytes": 211370316
+    },
+    {
+      "availability_status": "AVAILABLE_WITHIN_RUNNER_IMAGE_BUDGET",
+      "compressed_bytes": 469336131,
+      "container_image_tag": "starryzhang/sweb.eval.x86_64.koxudaxi_1776_datamodel-code-generator-2418:latest",
+      "incident_id": "koxudaxi__datamodel-code-generator-2418",
+      "manifest_digest": "sha256:eaf4fb0526799c92c89c57ece0d036d45f6e6ab8320c31ecb8444121e2f436fe",
+      "max_layer_bytes": 211370316
+    },
+    {
+      "availability_status": "AVAILABLE_WITHIN_RUNNER_IMAGE_BUDGET",
+      "compressed_bytes": 480960688,
+      "container_image_tag": "starryzhang/sweb.eval.x86_64.mesonbuild_1776_meson-14698:latest",
+      "incident_id": "mesonbuild__meson-14698",
+      "manifest_digest": "sha256:fb18f9f81de99fc384491606357c4759634c7d8bc7fcced523bdc698f2777ea5",
+      "max_layer_bytes": 211039785
+    },
+    {
+      "availability_status": "AVAILABLE_WITHIN_RUNNER_IMAGE_BUDGET",
+      "compressed_bytes": 720922707,
+      "container_image_tag": "starryzhang/sweb.eval.x86_64.networkx_1776_networkx-8105:latest",
+      "incident_id": "networkx__networkx-8105",
+      "manifest_digest": "sha256:bc9cd810b358f20274fe76a70083448564a1a1537dab814fd37a88f6e623cb73",
+      "max_layer_bytes": 342166724
+    },
+    {
+      "availability_status": "AVAILABLE_WITHIN_RUNNER_IMAGE_BUDGET",
+      "compressed_bytes": 478495239,
+      "container_image_tag": "starryzhang/sweb.eval.x86_64.patroni_1776_patroni-3373:latest",
+      "incident_id": "patroni__patroni-3373",
+      "manifest_digest": "sha256:1d40cc1b6685da7239b236ada3701f2a3b4648a7bf627a1a9641dc98e3bf4f44",
+      "max_layer_bytes": 211370316
+    },
+    {
+      "availability_status": "AVAILABLE_WITHIN_RUNNER_IMAGE_BUDGET",
+      "compressed_bytes": 599963970,
+      "container_image_tag": "starryzhang/sweb.eval.x86_64.piskvorky_1776_smart_open-863:latest",
+      "incident_id": "piskvorky__smart_open-863",
+      "manifest_digest": "sha256:e9844b703ba55190f987c3487152668b7b1fd1dfca83640a41a54f28e46c8f23",
+      "max_layer_bytes": 221207987
+    },
+    {
+      "availability_status": "AVAILABLE_WITHIN_RUNNER_IMAGE_BUDGET",
+      "compressed_bytes": 933237790,
+      "container_image_tag": "starryzhang/sweb.eval.x86_64.py-pdf_1776_pypdf-3317:latest",
+      "incident_id": "py-pdf__pypdf-3317",
+      "manifest_digest": "sha256:6d000d0eee208662af792891f4cf0501553871f664cfb649d20746e212efb50a",
+      "max_layer_bytes": 559748525
+    },
+    {
+      "availability_status": "AVAILABLE_WITHIN_RUNNER_IMAGE_BUDGET",
+      "compressed_bytes": 1250403247,
+      "container_image_tag": "starryzhang/sweb.eval.x86_64.pyca_1776_cryptography-13032:latest",
+      "incident_id": "pyca__cryptography-13032",
+      "manifest_digest": "sha256:2bf85b48f07833f82c7c3b984a84514272748063da7715b574910eb64a342620",
+      "max_layer_bytes": 871647264
+    },
+    {
+      "availability_status": "AVAILABLE_WITHIN_RUNNER_IMAGE_BUDGET",
+      "compressed_bytes": 491622114,
+      "container_image_tag": "starryzhang/sweb.eval.x86_64.pyinfra-dev_1776_pyinfra-1367:latest",
+      "incident_id": "pyinfra-dev__pyinfra-1367",
+      "manifest_digest": "sha256:6cf25f2c8a0328042f634db0ef4ff236208debe87122d0506ac834507be13fd4",
+      "max_layer_bytes": 211370316
+    },
+    {
+      "availability_status": "AVAILABLE_WITHIN_RUNNER_IMAGE_BUDGET",
+      "compressed_bytes": 569709939,
+      "container_image_tag": "starryzhang/sweb.eval.x86_64.pymodbus-dev_1776_pymodbus-2678:latest",
+      "incident_id": "pymodbus-dev__pymodbus-2678",
+      "manifest_digest": "sha256:523c290006dca9d0f27f3b808f6b60eab65f79f6db224cca024a2e7e1fb049ab",
+      "max_layer_bytes": 211370316
+    },
+    {
+      "availability_status": "AVAILABLE_WITHIN_RUNNER_IMAGE_BUDGET",
+      "compressed_bytes": 431303034,
+      "container_image_tag": "starryzhang/sweb.eval.x86_64.pypa_1776_twine-1249:latest",
+      "incident_id": "pypa__twine-1249",
+      "manifest_digest": "sha256:de419e495c1f2e01d94fb1082e49ab90234daf996004f236a046887dc56ae6c6",
+      "max_layer_bytes": 211370316
+    },
+    {
+      "availability_status": "AVAILABLE_WITHIN_RUNNER_IMAGE_BUDGET",
+      "compressed_bytes": 748960570,
+      "container_image_tag": "starryzhang/sweb.eval.x86_64.python_1776_mypy-19190:latest",
+      "incident_id": "python__mypy-19190",
+      "manifest_digest": "sha256:e808e7fb71353af56893a111084486aaf5237bc3f7289b5536546506ce8ac305",
+      "max_layer_bytes": 374664305
+    },
+    {
+      "availability_status": "AVAILABLE_WITHIN_RUNNER_IMAGE_BUDGET",
+      "compressed_bytes": 756204773,
+      "container_image_tag": "starryzhang/sweb.eval.x86_64.python_1776_mypy-19249:latest",
+      "incident_id": "python__mypy-19249",
+      "manifest_digest": "sha256:dbefc0eb6e3bfb61cda15657f93b5a120fbfd25b7149f455ce9432a14c996d89",
+      "max_layer_bytes": 381908508
+    },
+    {
+      "availability_status": "AVAILABLE_WITHIN_RUNNER_IMAGE_BUDGET",
+      "compressed_bytes": 751549609,
+      "container_image_tag": "starryzhang/sweb.eval.x86_64.python_1776_mypy-19290:latest",
+      "incident_id": "python__mypy-19290",
+      "manifest_digest": "sha256:de9d75fc8694d9929deeddf3390836783e6e83b78aada9fb7b445d9aa1542064",
+      "max_layer_bytes": 377253344
+    },
+    {
+      "availability_status": "AVAILABLE_WITHIN_RUNNER_IMAGE_BUDGET",
+      "compressed_bytes": 672503502,
+      "container_image_tag": "starryzhang/sweb.eval.x86_64.sissbruecker_1776_linkding-1101:latest",
+      "incident_id": "sissbruecker__linkding-1101",
+      "manifest_digest": "sha256:5dbfc1656e7fd001a257a6492e25ab0ca22cc29a7fd70a8748c70cc5dc5e2b6f",
+      "max_layer_bytes": 293747519
+    },
+    {
+      "availability_status": "AVAILABLE_WITHIN_RUNNER_IMAGE_BUDGET",
+      "compressed_bytes": 550107375,
+      "container_image_tag": "starryzhang/sweb.eval.x86_64.slackapi_1776_python-slack-sdk-1703:latest",
+      "incident_id": "slackapi__python-slack-sdk-1703",
+      "manifest_digest": "sha256:3596c99f028c2ea5fb45841cf5874519a3bd8544c4f593f885a11bb9fc525e86",
+      "max_layer_bytes": 211265642
+    },
+    {
+      "availability_status": "AVAILABLE_WITHIN_RUNNER_IMAGE_BUDGET",
+      "compressed_bytes": 571257748,
+      "container_image_tag": "starryzhang/sweb.eval.x86_64.sooperset_1776_mcp-atlassian-531:latest",
+      "incident_id": "sooperset__mcp-atlassian-531",
+      "manifest_digest": "sha256:ba2e4e691b832145243f3a47ac3b57ee5ede5a1d89a397c6499942249c30a6f2",
+      "max_layer_bytes": 211370316
+    },
+    {
+      "availability_status": "AVAILABLE_WITHIN_RUNNER_IMAGE_BUDGET",
+      "compressed_bytes": 516549867,
+      "container_image_tag": "starryzhang/sweb.eval.x86_64.sooperset_1776_mcp-atlassian-533:latest",
+      "incident_id": "sooperset__mcp-atlassian-533",
+      "manifest_digest": "sha256:ab60c95d5556026cb1f28b789bc7ec77e1907652effc3da364dd317c1dcb59a4",
+      "max_layer_bytes": 211370316
+    },
+    {
+      "availability_status": "AVAILABLE_WITHIN_RUNNER_IMAGE_BUDGET",
+      "compressed_bytes": 571261956,
+      "container_image_tag": "starryzhang/sweb.eval.x86_64.sooperset_1776_mcp-atlassian-536:latest",
+      "incident_id": "sooperset__mcp-atlassian-536",
+      "manifest_digest": "sha256:facfdd5beeb52e57817b315bac7010f53cc5a8b71eb4adcde7d67cc48acd43bd",
+      "max_layer_bytes": 211370316
+    },
+    {
+      "availability_status": "AVAILABLE_WITHIN_RUNNER_IMAGE_BUDGET",
+      "compressed_bytes": 978461023,
+      "container_image_tag": "starryzhang/sweb.eval.x86_64.stanfordnlp_1776_dspy-8340:latest",
+      "incident_id": "stanfordnlp__dspy-8340",
+      "manifest_digest": "sha256:74bc37be18291b1145633077d79a5370ee43e65957bcd80d081551a8a1e31733",
+      "max_layer_bytes": 599705040
+    },
+    {
+      "availability_status": "AVAILABLE_WITHIN_RUNNER_IMAGE_BUDGET",
+      "compressed_bytes": 804496122,
+      "container_image_tag": "starryzhang/sweb.eval.x86_64.stanfordnlp_1776_dspy-8360:latest",
+      "incident_id": "stanfordnlp__dspy-8360",
+      "manifest_digest": "sha256:3bd0c2e764710bdf4043542fe885ebd81dbfa6a110e20501f905020c560786a2",
+      "max_layer_bytes": 425740139
+    },
+    {
+      "availability_status": "AVAILABLE_WITHIN_RUNNER_IMAGE_BUDGET",
+      "compressed_bytes": 788072942,
+      "container_image_tag": "starryzhang/sweb.eval.x86_64.stanfordnlp_1776_dspy-8394:latest",
+      "incident_id": "stanfordnlp__dspy-8394",
+      "manifest_digest": "sha256:beed2a8b18cd98fc0397713e1ed8766f68fb9ff3d6c5d0a8d1311c87a6043957",
+      "max_layer_bytes": 409316959
+    },
+    {
+      "availability_status": "AVAILABLE_WITHIN_RUNNER_IMAGE_BUDGET",
+      "compressed_bytes": 493647645,
+      "container_image_tag": "starryzhang/sweb.eval.x86_64.tox-dev_1776_tox-3540:latest",
+      "incident_id": "tox-dev__tox-3540",
+      "manifest_digest": "sha256:f393183881ccaaa4acf878035c678470eb3adc34fb0c910eb8ffac66915a1085",
+      "max_layer_bytes": 211370316
+    },
+    {
+      "availability_status": "AVAILABLE_WITHIN_RUNNER_IMAGE_BUDGET",
+      "compressed_bytes": 628877513,
+      "container_image_tag": "starryzhang/sweb.eval.x86_64.traceloop_1776_openllmetry-2979:latest",
+      "incident_id": "traceloop__openllmetry-2979",
+      "manifest_digest": "sha256:c070465f984b2e54a3987c2132b12f1c0308a147de9bfb96a416c1a577991a77",
+      "max_layer_bytes": 250121530
+    }
+  ],
+  "gold_used": false,
+  "max_compressed_bytes": 2147483648,
+  "max_layer_bytes": 2147483648,
+  "pull_timeout_seconds": 1800,
+  "registry_path": "/home/lebedeffson/.local/share/fuzzyxai/h10-c7r/selection/RUNTIME_REGISTRY.jsonl",
+  "registry_sha256": "9394c0f50399b29da8854cc5792a8b08b6b2570040c514e63444e8a8acbbd95e",
+  "rule": "A digest-pinned image is runtime-available only when both its total compressed size and largest compressed layer do not exceed the fixed runner budget.",
+  "scientific_scoring_started": false
+}

@@ -34,10 +34,27 @@ PACKAGE_FILES = (
         "protocol/h10_c7r_r10/recollection/"
         "R10_TECHNICAL_BARRIER_SELECTION.jsonl"
     ),
+    Path(
+        "protocol/h10_c7r_r10/recollection/"
+        "R10_DEVELOPMENT_IMAGE_LOCK.json"
+    ),
+    Path(
+        "protocol/h10_c7r_r10/recollection/"
+        "R10_DEVELOPMENT_RECOLLECTION_LOCK.json"
+    ),
+    Path(
+        "protocol/h10_c7r_r10/recollection/"
+        "R10_DEVELOPMENT_RUNTIME_REGISTRY.jsonl"
+    ),
+    Path(
+        "protocol/h10_c7r_r10/recollection/"
+        "R10_DEVELOPMENT_SELECTION.jsonl"
+    ),
     Path("reports/h10_c7r_r10/R10_CLAIM_LINT.json"),
     Path("reports/h10_c7r_r10/R10_IMPLEMENTATION_REPORT.md"),
     Path("reports/h10_c7r_r10/R10_RECOLLECTION_RUN_1_REPORT.md"),
     Path("reports/h10_c7r_r10/R10_RECOLLECTION_RUN_2_REPORT.md"),
+    Path("reports/h10_c7r_r10/R10_RECOLLECTION_RUN_3_REPORT.md"),
     Path("reports/h10_c7r_r10/R10_REPRODUCTION.md"),
     Path("results/h10_c7r_r10/R10_IMPLEMENTATION_STATUS.json"),
     Path(
@@ -46,11 +63,19 @@ PACKAGE_FILES = (
     ),
     Path(
         "results/h10_c7r_r10/recollection/"
+        "R10_DEVELOPMENT_INPUT_AUDIT.json"
+    ),
+    Path(
+        "results/h10_c7r_r10/recollection/"
         "R10_RECOLLECTION_RUN_1_STATUS.json"
     ),
     Path(
         "results/h10_c7r_r10/recollection/"
         "R10_RECOLLECTION_RUN_2_STATUS.json"
+    ),
+    Path(
+        "results/h10_c7r_r10/recollection/"
+        "R10_RECOLLECTION_RUN_3_STATUS.json"
     ),
     Path("results/h10_c7r_r10/R10_RELEASE_PROVENANCE.json"),
     Path("results/h10_c7r_r10/R10_VERIFICATION_STATUS.json"),

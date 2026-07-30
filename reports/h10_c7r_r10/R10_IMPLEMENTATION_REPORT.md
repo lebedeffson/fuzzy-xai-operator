@@ -37,7 +37,10 @@ confirmed that collector v5 fixed the earlier recursion, synthetic timestamp,
 and copied-environment failures. The two remaining timeouts were traced to a
 repository-wide pytest fallback and an aggregate key containing volatile value
 details. Collector v6 contains the final protocol-permitted technical patch;
-the next execution is the last permitted retry of the same ten incidents.
+run `30585822320` then passed all ten locked incidents with zero collector
+errors. The same v6 collector is authorized to continue the original
+pre-existing source order to 40 runtime-ready development incidents. No
+development metric has yet been calculated.
 
 Targeted probes were not executed. R10D remains unavailable until both a
 source-aware model lock and candidate-specific probe observations exist.

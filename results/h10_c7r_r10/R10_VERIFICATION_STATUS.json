@@ -52,13 +52,14 @@
   "r9_status": "H10_C7R_R9_DEVELOPMENT_NO_GO",
   "ruff": "PASS",
   "runtime_collection": {
-    "artifact_sha256": "a50001cd2c4ae964b4940a5e58f27f9734be35003b40b97e3e90654c92213bc6",
-    "collector_capability": "causal-chronology-tail-v5",
-    "ready_incidents": 8,
-    "run_id": 30571013615,
-    "status": "H10_C7R_RUNTIME_EVIDENCE_INCOMPLETE",
+    "artifact_sha256": "85c90808750c713a25e36a8b203d532e80835abcb030f4a0c6dd7d184e5538f9",
+    "collector_capability": "causal-chronology-tail-v6",
+    "collector_errors": 0,
+    "ready_incidents": 10,
+    "run_id": 30585822320,
+    "status": "H10_C7R_RUNTIME_EVIDENCE_COMPLETE",
     "target_incidents": 10,
-    "technical_barrier_passed": false
+    "technical_barrier_passed": true
   },
   "runtime_collection_executed": true,
   "scientific_result": "NOT_EVALUATED",

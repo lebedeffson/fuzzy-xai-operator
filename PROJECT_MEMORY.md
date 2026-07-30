@@ -1313,6 +1313,14 @@ structural prefix aggregation with a detailed 20,000-event tail.
 No retrieval metric was calculated. The incident order, event schema,
 candidate budgets, timeouts, gates, and protocol lock remain unchanged.
 
+The final technical-barrier run `30585822320` passed readiness for all ten
+locked incidents with zero collector errors. Its artifact SHA256 is
+`85c90808750c713a25e36a8b203d532e80835abcb030f4a0c6dd7d184e5538f9`.
+Continuation to 40 uses the same collector v6 and the original disclosed
+49-entry order filtered only by the pre-existing image availability lock:
+43 digest-pinned candidates from 32 repositories, stopping after the first
+40 runtime-ready incidents.
+
 No neural model was executed and no new held-out was created or scored.
 Development scoring is prohibited until all 40 disclosed incidents pass the
 new causal-runtime readiness audit.

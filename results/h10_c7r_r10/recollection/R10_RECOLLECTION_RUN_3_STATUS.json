@@ -1,0 +1,22 @@
+{
+  "artifact": {
+    "artifact_id": 8777450953,
+    "download_sha256": "85c90808750c713a25e36a8b203d532e80835abcb030f4a0c6dd7d184e5538f9",
+    "name": "h10-c7r-r10-recollection-first-10",
+    "run_id": 30585822320,
+    "url": "https://github.com/lebedeffson/fuzzy-xai-operator/actions/runs/30585822320"
+  },
+  "collector_capability": "causal-chronology-tail-v6",
+  "collector_errors": 0,
+  "complete_incidents": 10,
+  "complete_repositories": 9,
+  "development_scored": false,
+  "gold_leakage": 0,
+  "held_out_created": false,
+  "held_out_scored": false,
+  "run_commit": "a5d2580d4905a10faf172599d2438903a043d397",
+  "scientific_result": "NOT_EVALUATED",
+  "selection_lock_unchanged": true,
+  "status": "H10_C7R_R10_CAUSAL_DEVELOPMENT_RECOLLECTION_IN_PROGRESS",
+  "technical_barrier_passed": true
+}
