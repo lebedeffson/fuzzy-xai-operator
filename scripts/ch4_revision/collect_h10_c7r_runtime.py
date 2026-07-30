@@ -69,7 +69,7 @@ def run(
 def _instrumented_command(
     test_commands: list[str],
     fail_to_pass: list[str],
-) -> tuple[list[str], str]:
+) -> tuple[list[str], list[str], str]:
     parsed = [shlex.split(command) for command in test_commands]
     ordered = sorted(
         parsed,
@@ -93,6 +93,8 @@ def _instrumented_command(
         raise ValueError("no instrumentable pytest command")
 
     argv = ["pytest", "-vv", "-x", *fail_to_pass]
+    pytest_index = selected.index("pytest")
+    fallback_argv = ["pytest", *selected[pytest_index + 1 :]]
     wrapper = (
         "py=''; mode=''; "
         "for candidate in .venv/bin/python /opt/venv/bin/python "
@@ -107,13 +109,22 @@ def _instrumented_command(
         ">/tmp/h10-pytest-help 2>/dev/null; then mode='uv'; fi; "
         "[ -n \"$mode\" ] || exit 87; "
         "launcher='/h10/runtime_launcher.py'; "
+        "fallback='/h10/runtime_launcher_fallback.py'; "
         "if grep -q -- '--numprocesses' /tmp/h10-pytest-help; "
-        "then launcher='/h10/runtime_launcher_xdist.py'; fi; "
+        "then launcher='/h10/runtime_launcher_xdist.py'; "
+        "fallback='/h10/runtime_launcher_fallback_xdist.py'; fi; "
         "if [ \"$mode\" = 'direct' ]; then \"$py\" \"$launcher\"; "
         "elif [ \"$mode\" = 'poetry' ]; then poetry run python \"$launcher\"; "
-        "else uv run --offline --no-sync python \"$launcher\"; fi"
+        "else uv run --offline --no-sync python \"$launcher\"; fi; "
+        "rc=$?; "
+        "if [ \"$rc\" -eq 4 ]; then "
+        "if [ \"$mode\" = 'direct' ]; then \"$py\" \"$fallback\"; "
+        "elif [ \"$mode\" = 'poetry' ]; "
+        "then poetry run python \"$fallback\"; "
+        "else uv run --offline --no-sync python \"$fallback\"; fi; "
+        "else (exit \"$rc\"); fi"
     )
-    return argv, wrapper
+    return argv, fallback_argv, wrapper
 
 
 def _image_digest(tag: str) -> tuple[str, int]:
@@ -237,7 +248,7 @@ def collect_one(
         encoding="utf-8",
     )
     fail_to_pass = [str(item) for item in registry["fail_to_pass"]]
-    argv, wrapper = _instrumented_command(
+    argv, fallback_argv, wrapper = _instrumented_command(
         [str(item) for item in registry["test_commands"]],
         fail_to_pass,
     )
@@ -256,6 +267,24 @@ def collect_one(
             Path("/h10/events"),
             fail_to_pass[0],
             (*argv[:3], "-n", "0", *argv[3:]),
+        ),
+        encoding="utf-8",
+    )
+    (incident_dir / "runtime_launcher_fallback.py").write_text(
+        _launcher_source(
+            Path("/testbed"),
+            Path("/h10/events"),
+            fail_to_pass[0],
+            tuple(fallback_argv),
+        ),
+        encoding="utf-8",
+    )
+    (incident_dir / "runtime_launcher_fallback_xdist.py").write_text(
+        _launcher_source(
+            Path("/testbed"),
+            Path("/h10/events"),
+            fail_to_pass[0],
+            (*fallback_argv[:1], "-n", "0", *fallback_argv[1:]),
         ),
         encoding="utf-8",
     )

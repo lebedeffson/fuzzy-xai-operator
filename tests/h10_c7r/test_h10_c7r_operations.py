@@ -68,25 +68,29 @@ def test_selection_is_deterministic_and_gold_is_separate(
 
 def test_instrumented_pytest_command_supports_registered_wrappers() -> None:
     fail_to_pass = ["tests/test_x.py::test_failure"]
-    argv, direct = runtime._instrumented_command(["pytest -rA"], fail_to_pass)
+    argv, fallback, direct = runtime._instrumented_command(
+        ["pytest tests -rA"],
+        fail_to_pass,
+    )
     assert argv[-1] == fail_to_pass[0]
+    assert fallback == ["pytest", "tests", "-rA"]
     assert ".venv/bin/python" in direct
     assert "/h10/runtime_launcher.py" in direct
     assert "/h10/runtime_launcher_xdist.py" in direct
     assert '\"$py\" \"$launcher\"' in direct
-    _, uv = runtime._instrumented_command(
+    _, _, uv = runtime._instrumented_command(
         ["uv run -p .venv pytest -rA"],
         fail_to_pass,
     )
     assert ".venv/bin/python" in uv
     assert "uv run --offline --no-sync" in uv
-    _, poetry = runtime._instrumented_command(
+    _, _, poetry = runtime._instrumented_command(
         ["poetry run pytest tests -v"],
         fail_to_pass,
     )
     assert ".venv/bin/python" in poetry
     assert "poetry run python" in poetry
-    _, preferred = runtime._instrumented_command(
+    _, _, preferred = runtime._instrumented_command(
         ["pytest -rA", "uv run pytest -rA"],
         fail_to_pass,
     )
