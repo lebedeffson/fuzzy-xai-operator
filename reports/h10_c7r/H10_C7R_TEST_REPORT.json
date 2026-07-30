@@ -10,8 +10,9 @@
     "status": "PASS"
   },
   "full_regression": {
+    "commit": "0988eba0f98fb96a9f5e6991b1b50f60a16f327c",
     "passed": 791,
-    "seconds": 234.84,
+    "seconds": 238.77,
     "skipped": 6,
     "status": "PASS"
   },
@@ -20,5 +21,6 @@
     "status": "PASS"
   },
   "ruff": "PASS",
+  "subsequent_diff_classification": "REPORT_ONLY",
   "scoring_repeated_by_tests": false
 }
