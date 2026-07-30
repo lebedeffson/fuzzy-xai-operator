@@ -1,0 +1,12 @@
+{
+  "protected_sha256": {
+    "framework/fuzzyxai/operators_manifest.yaml": "479fa55460426a1726f57a5ed5f745b0ad2e872eeefb21470dd2e3e865133949",
+    "protocol/h10_c7r_r9/H10_C7R_V1_IMMUTABILITY.json": "3b131ddcb749b60e1370dbff70477ea861e5bbb0a82cb7b253d5127ab1989c62",
+    "protocol/h10_c7r_r9/R9_DEVELOPMENT_PROTOCOL_LOCK.json": "aeef18e02c2dd47ef1f9cc67a6aadc83dbe3aa06b1d7bdc094640114e6248087",
+    "results/h10_c7r/H10_C7R_FINAL_STATUS.json": "ff74593c0cad7b19d4ccd4bcfa94af10467a118f093387b88c41013d70e17aab",
+    "results/h10_c7r_r9/R9_VERIFICATION_STATUS.json": "14c9b6b00fbf9f88ae40804b39be38665262d2103e74a44b9831eab9fa5860ec",
+    "results/h10_c7r_r9/SHA256SUMS": "e77a07547556181c701d903d2649e98606a7c57cde2a254e5c066d36562cf37d"
+  },
+  "r9_status": "H10_C7R_R9_DEVELOPMENT_NO_GO",
+  "v1_status": "H10_C7R_NOT_SUPPORTED"
+}

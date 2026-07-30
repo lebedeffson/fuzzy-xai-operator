@@ -10,9 +10,15 @@ import subprocess
 import sys
 import tempfile
 import textwrap
+import threading
+import time
 from collections.abc import Mapping
 from dataclasses import dataclass
 from pathlib import Path
+
+from fuzzyxai.repository_diagnostics.runtime_events import (
+    normalize_runtime_event_rows,
+)
 
 _TRACEBACK_FILE = re.compile(r'^\s*File "([^"]+)", line \d+, in ([^\n]+)\s*$')
 _PYTEST_FRAME = re.compile(r"^\s*(.+?\.py):(\d+): in ([^\n]+)\s*$")
@@ -140,18 +146,27 @@ def _launcher_source(
     return textwrap.dedent(
         f"""
         import atexit
+        import collections
         import hashlib
+        import itertools
         import json
         import os
         import runpy
         import sys
         import threading
+        import time
 
         ROOT = os.path.realpath({str(root)!r})
         EVENT_DIR = {str(event_dir)!r}
         TEST_ID = {test_id!r}
         ARGV = {list(argv)!r}
-        EVENTS = {{}}
+        TAIL_LIMIT = 20000
+        EVENTS = collections.deque()
+        PREFIX_AGGREGATES = {{}}
+        SEQUENCE = itertools.count()
+        EVENT_LOCK = threading.Lock()
+        DEPTH = threading.local()
+        LAST_WRITER = {{}}
 
         def _relative(filename):
             if not filename or filename.startswith('<'):
@@ -171,52 +186,209 @@ def _launcher_source(
             value = getattr(frame.f_code, 'co_qualname', frame.f_code.co_name)
             return value.replace('.<locals>.', '.') if value not in ('<module>', '') else None
 
+        def _safe_value(value):
+            type_name = type(value).__module__ + '.' + type(value).__qualname__
+            try:
+                preview = repr(value)
+            except Exception as error:
+                preview = '<repr failed: ' + type(error).__name__ + '>'
+            preview = preview[:160]
+            encoded = (type_name + '\\0' + preview).encode('utf-8', errors='replace')
+            payload = {{
+                'type': type_name,
+                'digest': 'sha256:' + hashlib.sha256(encoded).hexdigest(),
+                'preview': preview,
+                'object_id': 'run:' + hashlib.sha256(
+                    (str(id(value)) + '\\0' + type_name).encode()
+                ).hexdigest()[:20],
+            }}
+            try:
+                payload['length'] = len(value)
+            except Exception:
+                pass
+            shape = getattr(value, 'shape', None)
+            if shape is not None:
+                try:
+                    payload['shape'] = [int(item) for item in shape]
+                except Exception:
+                    payload['shape'] = str(shape)[:80]
+            if isinstance(value, dict):
+                payload['fields'] = sorted(str(key)[:80] for key in value)[:32]
+            return payload
+
+        def _prefix_record(event):
+            key = event.pop('_aggregate_key')
+            existing = PREFIX_AGGREGATES.get(key)
+            if existing is None:
+                encoded = repr(key).encode('utf-8', errors='replace')
+                existing = dict(event)
+                existing['event_id'] = 'aggregate-' + hashlib.sha256(encoded).hexdigest()[:24]
+                existing['occurrence_count'] = 0
+                existing['first_sequence_id'] = event['sequence_id']
+                PREFIX_AGGREGATES[key] = existing
+            existing['occurrence_count'] += event.get('occurrence_count', 1)
+            existing['last_sequence_id'] = event['sequence_id']
+            existing['sequence_id'] = existing['first_sequence_id']
+
         def _emit(kind, source_file, source_symbol=None, target_file=None, target_symbol=None, detail=''):
             key = (TEST_ID, kind, source_file, source_symbol, target_file, target_symbol, detail)
-            if key in EVENTS:
-                return
-            encoded = '\\0'.join('' if value is None else str(value) for value in key).encode('utf-8', errors='replace')
-            EVENTS[key] = {{
-                'event_id': 'probe-' + hashlib.sha256(encoded).hexdigest()[:24],
-                'test_id': TEST_ID,
-                'kind': kind,
-                'source_file': source_file,
-                'source_symbol': source_symbol,
-                'target_file': target_file,
-                'target_symbol': target_symbol,
-                'detail': detail,
-            }}
+            with EVENT_LOCK:
+                sequence_id = next(SEQUENCE)
+                timestamp_ns = time.monotonic_ns()
+                thread_id = threading.get_ident()
+                call_depth = max(0, int(getattr(DEPTH, 'value', 0)))
+                encoded = (
+                    '\\0'.join('' if value is None else str(value) for value in key)
+                    + '\\0' + str(sequence_id)
+                    + '\\0' + str(timestamp_ns)
+                ).encode('utf-8', errors='replace')
+                event = {{
+                    'event_id': 'probe-' + hashlib.sha256(encoded).hexdigest()[:24],
+                    'sequence_id': sequence_id,
+                    'timestamp_ns': timestamp_ns,
+                    'thread_id': thread_id,
+                    'call_depth': call_depth,
+                    'test_id': TEST_ID,
+                    'kind': kind,
+                    'source_file': source_file,
+                    'source_symbol': source_symbol,
+                    'target_file': target_file,
+                    'target_symbol': target_symbol,
+                    'occurrence_count': 1,
+                    'first_sequence_id': sequence_id,
+                    'last_sequence_id': sequence_id,
+                    'detail': detail,
+                    '_aggregate_key': key,
+                }}
+                if len(EVENTS) >= TAIL_LIMIT:
+                    _prefix_record(EVENTS.popleft())
+                EVENTS.append(event)
+                return event
+
+        def _value_event(kind, frame, value, source_file, source_symbol):
+            payload = _safe_value(value)
+            detail = json.dumps(payload, sort_keys=True)
+            event = _emit(kind, source_file, source_symbol, detail=detail)
+            object_id = payload['object_id']
+            writer = LAST_WRITER.get(object_id)
+            if writer is not None and writer[:2] != (source_file, source_symbol):
+                writer_file, writer_symbol, writer_sequence = writer
+                flow = dict(payload)
+                flow['writer_sequence_id'] = writer_sequence
+                flow_detail = json.dumps(flow, sort_keys=True)
+                _emit(
+                    'last_writer',
+                    writer_file,
+                    writer_symbol,
+                    source_file,
+                    source_symbol,
+                    flow_detail,
+                )
+                _emit(
+                    'value_flow',
+                    writer_file,
+                    writer_symbol,
+                    source_file,
+                    source_symbol,
+                    flow_detail,
+                )
+            return payload, event
 
         def _profile(frame, event, arg):
-            if event != 'call':
+            target_file = _relative(frame.f_code.co_filename)
+            if event == 'call':
+                depth = max(0, int(getattr(DEPTH, 'value', 0)))
+                DEPTH.value = depth + 1
+                if target_file is None:
+                    return
+                target_symbol = _symbol(frame)
+                _emit('coverage', target_file, target_symbol, detail='function entered')
+                caller = frame.f_back
+                if caller is not None:
+                    source_file = _relative(caller.f_code.co_filename)
+                    if source_file is not None:
+                        _emit(
+                            'call',
+                            source_file,
+                            _symbol(caller),
+                            target_file,
+                            target_symbol,
+                            'runtime call',
+                        )
+                argument_count = (
+                    frame.f_code.co_argcount
+                    + frame.f_code.co_kwonlyargcount
+                )
+                for name in frame.f_code.co_varnames[:argument_count][:12]:
+                    if name in frame.f_locals:
+                        _value_event(
+                            'argument_value',
+                            frame,
+                            frame.f_locals[name],
+                            target_file,
+                            target_symbol,
+                        )
                 return
+            if event == 'return':
+                DEPTH.value = max(0, int(getattr(DEPTH, 'value', 1)) - 1)
+                if target_file is None:
+                    return
+                target_symbol = _symbol(frame)
+                payload, value_event = _value_event(
+                    'return_value',
+                    frame,
+                    arg,
+                    target_file,
+                    target_symbol,
+                )
+                LAST_WRITER[payload['object_id']] = (
+                    target_file,
+                    target_symbol,
+                    value_event['sequence_id'],
+                )
+                return
+        def _trace(frame, event, arg):
+            if event != 'exception':
+                return _trace
             target_file = _relative(frame.f_code.co_filename)
             if target_file is None:
-                return
+                return _trace
             target_symbol = _symbol(frame)
-            _emit('coverage', target_file, target_symbol, detail='function entered')
-            caller = frame.f_back
-            if caller is None:
-                return
-            source_file = _relative(caller.f_code.co_filename)
-            if source_file is None:
-                return
-            _emit(
-                'call',
-                source_file,
-                _symbol(caller),
+            exception = arg[1] if isinstance(arg, tuple) and len(arg) > 1 else arg
+            _value_event(
+                'exception',
+                frame,
+                exception,
                 target_file,
                 target_symbol,
-                'runtime call',
             )
+            if type(exception).__name__ == 'AssertionError':
+                for name, value in list(frame.f_locals.items())[:12]:
+                    operand = _safe_value(value)
+                    operand['name'] = name
+                    _emit(
+                        'assertion_operand',
+                        target_file,
+                        target_symbol,
+                        detail=json.dumps(operand, sort_keys=True),
+                    )
+            return _trace
 
         def _flush():
-            if not EVENTS:
+            if not EVENTS and not PREFIX_AGGREGATES:
                 return
             os.makedirs(EVENT_DIR, exist_ok=True)
             path = os.path.join(EVENT_DIR, 'probe-' + str(os.getpid()) + '.jsonl')
             with open(path, 'w', encoding='utf-8') as stream:
-                for value in sorted(EVENTS.values(), key=lambda item: item['event_id']):
+                values = [
+                    *sorted(
+                        PREFIX_AGGREGATES.values(),
+                        key=lambda item: item['first_sequence_id'],
+                    ),
+                    *list(EVENTS),
+                ]
+                for value in values:
+                    value.pop('_aggregate_key', None)
                     stream.write(json.dumps(value, sort_keys=True) + '\\n')
 
         def _execute():
@@ -249,6 +421,8 @@ def _launcher_source(
 
         sys.setprofile(_profile)
         threading.setprofile(_profile)
+        sys.settrace(_trace)
+        threading.settrace(_trace)
         atexit.register(_flush)
         _execute()
         """
@@ -304,12 +478,17 @@ def _traceback_events(
         events.append(
             {
                 "event_id": "trace-" + hashlib.sha256(encoded).hexdigest()[:24],
+                "sequence_id": len(events),
+                "timestamp_ns": time.monotonic_ns(),
+                "thread_id": threading.get_ident(),
+                "call_depth": 0,
                 "test_id": test_id,
                 "kind": "traceback_frame",
                 "source_file": relative,
                 "source_symbol": normalized_symbol,
                 "target_file": None,
                 "target_symbol": None,
+                "occurrence_count": 1,
                 "detail": raw.strip(),
             }
         )
@@ -327,13 +506,104 @@ def _assertion_difference(text: str) -> str:
     return "\n".join(dict.fromkeys(selected))
 
 
+def _failure_observation_events(
+    text: str,
+    *,
+    test_id: str,
+    traceback_events: list[dict[str, object]],
+) -> list[dict[str, object]]:
+    """Convert pytest failure text into typed, safely summarized observations."""
+    if not traceback_events:
+        return []
+    source = traceback_events[-1]
+    source_file = str(source["source_file"])
+    source_symbol = source.get("source_symbol")
+    assertion = _assertion_difference(text)
+    exception_type = "Exception"
+    exception_preview = ""
+    for raw in reversed(text.splitlines()):
+        stripped = raw.strip()
+        match = re.match(
+            r"^(?:E\s+)?([A-Za-z_][A-Za-z0-9_.]*(?:Error|Exception))"
+            r"(?::\s*(.*))?$",
+            stripped,
+        )
+        if match:
+            exception_type = match.group(1)
+            exception_preview = (match.group(2) or "")[:160]
+            break
+
+    observations = [
+        _text_observation_event(
+            test_id,
+            "exception",
+            source_file,
+            source_symbol,
+            exception_type,
+            exception_preview,
+        )
+    ]
+    if assertion:
+        observations.append(
+            _text_observation_event(
+                test_id,
+                "assertion_operand",
+                source_file,
+                source_symbol,
+                "pytest_assertion_difference",
+                assertion[:320],
+            )
+        )
+    return observations
+
+
+def _text_observation_event(
+    test_id: str,
+    kind: str,
+    source_file: str,
+    source_symbol: object,
+    value_type: str,
+    preview: str,
+) -> dict[str, object]:
+    detail = {
+        "type": value_type,
+        "preview": preview,
+        "digest": "sha256:"
+        + hashlib.sha256(preview.encode("utf-8", errors="replace")).hexdigest(),
+    }
+    encoded = (
+        f"{test_id}\0{kind}\0{source_file}\0{source_symbol}\0"
+        f"{detail['digest']}"
+    ).encode()
+    return {
+        "event_id": "failure-" + hashlib.sha256(encoded).hexdigest()[:24],
+        "sequence_id": 0,
+        "timestamp_ns": time.monotonic_ns(),
+        "thread_id": threading.get_ident(),
+        "call_depth": 0,
+        "test_id": test_id,
+        "kind": kind,
+        "source_file": source_file,
+        "source_symbol": source_symbol,
+        "target_file": None,
+        "target_symbol": None,
+        "occurrence_count": 1,
+        "detail": json.dumps(detail, sort_keys=True),
+    }
+
+
 def _merge_probe_events(event_dir: Path) -> list[dict[str, object]]:
-    rows: dict[str, dict[str, object]] = {}
+    rows: list[dict[str, object]] = []
     for path in sorted(event_dir.glob("probe-*.jsonl")):
-        for row in _load_jsonl(path):
-            event_id = str(row["event_id"])
-            rows[event_id] = row
-    return [rows[key] for key in sorted(rows)]
+        rows.extend(_load_jsonl(path))
+    rows.sort(
+        key=lambda row: (
+            int(row.get("timestamp_ns", 0)) <= 0,
+            int(row.get("timestamp_ns", 0)),
+            int(row.get("sequence_id", -1)),
+        )
+    )
+    return normalize_runtime_event_rows(rows)
 
 
 def _run_logged(
@@ -686,7 +956,7 @@ def _collect_incident(
             )
         combined_stdout: list[str] = []
         combined_stderr: list[str] = []
-        all_events: dict[str, dict[str, object]] = {}
+        all_events: list[dict[str, object]] = []
         command_results = []
         for index, command_record in enumerate(commands):
             if not isinstance(command_record, dict):
@@ -763,14 +1033,21 @@ def _collect_incident(
             combined_stdout.append(stdout)
             combined_stderr.append(stderr)
             events = _merge_probe_events(event_dir)
-            for event in events:
-                all_events[str(event["event_id"])] = event
-            for event in _traceback_events(
-                f"{stdout}\n{stderr}",
+            all_events.extend(events)
+            failure_text = f"{stdout}\n{stderr}"
+            traceback_events = _traceback_events(
+                failure_text,
                 root=sandbox,
                 test_id=test_id,
-            ):
-                all_events[str(event["event_id"])] = event
+            )
+            all_events.extend(traceback_events)
+            all_events.extend(
+                _failure_observation_events(
+                    failure_text,
+                    test_id=test_id,
+                    traceback_events=traceback_events,
+                )
+            )
             command_results.append(
                 {
                     "test_id": test_id,
@@ -793,7 +1070,7 @@ def _collect_incident(
     stdout_text = "\n".join(combined_stdout)
     stderr_text = "\n".join(combined_stderr)
     merged_text = f"{stdout_text}\n{stderr_text}"
-    event_rows = [all_events[key] for key in sorted(all_events)]
+    event_rows = normalize_runtime_event_rows(all_events)
     event_kinds = {str(event["kind"]) for event in event_rows}
     runtime_unavailable = any(
         result.get("runtime_status") == "PYTHON_RUNTIME_UNAVAILABLE"

@@ -14,6 +14,7 @@ from typing import Any
 
 from fuzzyxai.experiments.h10_c5c_runtime import (
     _assertion_difference,
+    _failure_observation_events,
     _launcher_source,
     _traceback_events,
 )
@@ -24,9 +25,12 @@ from fuzzyxai.repository_diagnostics.importer import RepositoryIncident
 from fuzzyxai.repository_diagnostics.importer_v2 import (
     EvidenceGroundedRepositoryImporter,
 )
-from fuzzyxai.repository_diagnostics.runtime_events import RuntimeEvent
+from fuzzyxai.repository_diagnostics.runtime_events import (
+    RuntimeEvent,
+    normalize_runtime_event_rows,
+)
 
-COLLECTOR_CAPABILITY = "registered-suite-cwd-fallback-v3"
+COLLECTOR_CAPABILITY = "causal-chronology-tail-v4"
 
 
 def read_jsonl(path: Path) -> list[dict[str, Any]]:
@@ -161,11 +165,17 @@ def _image_digest(tag: str) -> tuple[str, int]:
 
 
 def _probe_events(event_dir: Path) -> list[dict[str, object]]:
-    values: dict[str, dict[str, object]] = {}
+    values: list[dict[str, object]] = []
     for path in sorted(event_dir.glob("probe-*.jsonl")):
-        for row in read_jsonl(path):
-            values[str(row["event_id"])] = row
-    return [values[key] for key in sorted(values)]
+        values.extend(read_jsonl(path))
+    values.sort(
+        key=lambda row: (
+            int(row.get("timestamp_ns", 0)) <= 0,
+            int(row.get("timestamp_ns", 0)),
+            int(row.get("sequence_id", -1)),
+        )
+    )
+    return normalize_runtime_event_rows(values)
 
 
 def _project_python_event(event: dict[str, object]) -> bool:
@@ -397,11 +407,17 @@ def collect_one(
                 for event in _probe_events(events_dir)
                 if _project_python_event(event)
             ]
+            traceback_events = _traceback_events(
+                normalized,
+                root=source_root,
+                test_id=fail_to_pass[0],
+            )
+            events.extend(traceback_events)
             events.extend(
-                _traceback_events(
+                _failure_observation_events(
                     normalized,
-                    root=source_root,
                     test_id=fail_to_pass[0],
+                    traceback_events=traceback_events,
                 )
             )
             events = [
@@ -415,8 +431,7 @@ def collect_one(
                 )
                 if node_event is not None:
                     events.append(node_event)
-            unique = {str(event["event_id"]): event for event in events}
-            events = [unique[key] for key in sorted(unique)]
+            events = normalize_runtime_event_rows(events)
             kinds = {str(event["kind"]) for event in events}
             typed_events = tuple(
                 RuntimeEvent.from_mapping(event) for event in events
@@ -479,6 +494,21 @@ def collect_one(
                     "timed_out": timed_out,
                     "event_count": len(events),
                     "event_kinds": sorted(kinds),
+                    "event_schema": "R10_CAUSAL_RUNTIME_V1",
+                    "chronology_preserved": all(
+                        event.sequence_id >= 0 for event in typed_events
+                    ),
+                    "causal_event_kinds": sorted(
+                        kinds
+                        & {
+                            "argument_value",
+                            "assertion_operand",
+                            "exception",
+                            "last_writer",
+                            "return_value",
+                            "value_flow",
+                        }
+                    ),
                     "status": "BUG_REPRODUCED_WITH_TRACE",
                 },
             )

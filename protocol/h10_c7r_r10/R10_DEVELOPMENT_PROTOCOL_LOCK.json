@@ -1,0 +1,80 @@
+{
+  "candidate_budgets": {
+    "file_candidates": 20,
+    "final_symbols": 20,
+    "semantic_rerank_candidates": 100,
+    "symbol_pool": 200,
+    "symbols_per_file": 10
+  },
+  "development_data": {
+    "incidents": 40,
+    "requires_runtime_recollection": true,
+    "source": "disclosed H10-C7R-v1 held-out",
+    "use": "development_only"
+  },
+  "development_gates": {
+    "coverage": 0.9,
+    "file_recall_at_10": 0.9,
+    "file_recall_at_20": 0.97,
+    "gold_leakage": 0,
+    "repository_recall_lower_quartile": 0.75,
+    "symbol_pool_recall_at_200": 0.95,
+    "symbol_recall_at_20": 0.85
+  },
+  "event_schema": {
+    "aggregation": "full_tail_plus_prefix_count_first_sequence_last_sequence",
+    "causal_event_kinds": [
+      "argument_value",
+      "assertion_operand",
+      "exception",
+      "last_writer",
+      "return_value",
+      "value_flow"
+    ],
+    "identifier": "R10_CAUSAL_RUNTIME_V1",
+    "required_fields": [
+      "event_id",
+      "sequence_id",
+      "timestamp_ns",
+      "thread_id",
+      "call_depth",
+      "test_id",
+      "kind",
+      "source_file",
+      "occurrence_count"
+    ],
+    "tail_event_limit": 20000
+  },
+  "held_out_policy": {
+    "create_before_development_go": false,
+    "new_held_out_created": false,
+    "new_held_out_scored": false
+  },
+  "localization_order": [
+    "file_retrieval",
+    "symbol_pool",
+    "source_aware_reranking",
+    "causal_runtime_bonus",
+    "targeted_probe_when_ambiguous",
+    "top_20_localization",
+    "contract_inference_after_localization"
+  ],
+  "maximum_targeted_probes": 2,
+  "protocol_id": "H10-C7R-R10-development-v1",
+  "scientific_result": "NOT_EVALUATED",
+  "source_aware_model": {
+    "required_for": [
+      "R10B",
+      "R10C",
+      "R10D"
+    ],
+    "status": "NOT_LOCKED",
+    "unavailable_behavior": "VARIANT_UNAVAILABLE"
+  },
+  "variants": {
+    "R10A": "causal chronology plus file-first deterministic symbol ranking",
+    "R10B": "R10A plus locked source-aware cross-encoder",
+    "R10C": "R10B plus value-flow and last-writer evidence",
+    "R10D": "R10C plus at most two targeted probes"
+  }
+}

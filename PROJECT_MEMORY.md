@@ -1277,3 +1277,28 @@ The registered `0.82` Recall@20 and `0.75` repository lower-quartile gates
 failed. No containers, runtime recollection, neural models, new held-out data,
 or official scoring were used. A new held-out must not be created from this
 state.
+
+## FXAI-H10-C7R-R10-CAUSAL-RETRIEVAL
+
+- Date: 2026-07-30
+- Base: preserved H10-C7R-v1 and R9 results
+- Protocol: `H10-C7R-R10-development-v1`
+- Status: `H10_C7R_R10_IMPLEMENTED_AWAITING_CAUSAL_DEVELOPMENT_RECOLLECTION`
+- Scientific result: `NOT_EVALUATED`
+
+R10 corrects the runtime event representation by preserving monotonic
+sequence, timestamp, thread, call depth, occurrence count, and a bounded full
+tail. It records safe argument, return, exception, assertion, last-writer, and
+value-flow observations. A raw-file readiness audit rejects old traces whose
+physical order was reconstructed after collection.
+
+Retrieval is now file-first: at most 20 files, up to 10 symbols per file, a
+200-symbol pool, source-aware reranking, candidate-specific causal bonuses,
+and a final top-20. Contract inference does not reorder localization.
+Source-aware neural variants fail closed until model weights are independently
+locked, and targeted probes are bounded to two read-only requests.
+
+No old development incident was rerun, no container or neural model was
+executed, no R10 performance metric was calculated, and no new held-out was
+created or scored. Development scoring is prohibited until all 40 disclosed
+incidents pass the new causal-runtime readiness audit.

@@ -82,6 +82,64 @@ class ActiveEvidenceRequestPlanner:
         )
 
 
+class R10TargetedProbePlanner:
+    """Request at most two read-only observations that separate top symbols."""
+
+    def plan(
+        self,
+        failing_test: str,
+        candidates: Sequence[RankedSymbol],
+    ) -> tuple[EvidenceRequest, ...]:
+        if len(candidates) < 2:
+            return ()
+        top = candidates[:3]
+        hypotheses = tuple(item.node_id for item in top)
+        targets = ",".join(
+            f"{item.file_path}:{item.symbol or ''}" for item in top
+        )
+        return (
+            EvidenceRequest(
+                (
+                    "env",
+                    f"FUZZYXAI_R10_TARGETS={targets}",
+                    "python",
+                    "-m",
+                    "pytest",
+                    failing_test,
+                    "-x",
+                    "-vv",
+                    "--showlocals",
+                ),
+                "candidate-specific arguments, returns, and assertion operands",
+                hypotheses,
+                1.0,
+                300,
+                "READ_ONLY_TEST_EXECUTION",
+                float(len(hypotheses)),
+            ),
+            EvidenceRequest(
+                (
+                    "env",
+                    f"FUZZYXAI_R10_TARGETS={targets}",
+                    "FUZZYXAI_R10_VALUE_FLOW_DEPTH=3",
+                    "python",
+                    "-m",
+                    "pytest",
+                    failing_test,
+                    "-x",
+                    "-vv",
+                    "--full-trace",
+                ),
+                "last writer and bounded value flow between competing candidates",
+                hypotheses,
+                1.5,
+                300,
+                "READ_ONLY_TEST_EXECUTION",
+                float(len(hypotheses)) / 1.5,
+            ),
+        )
+
+
 def apply_probe_observation(
     candidates: Sequence[RankedSymbol],
     observed_node_ids: Sequence[str],

@@ -90,6 +90,7 @@ ALLOWED_PREFIXES = (
     "protocol/h10_c7/",
     "protocol/h10_c7r/",
     "protocol/h10_c7r_r9/",
+    "protocol/h10_c7r_r10/",
     "protocol/h9_e2e_v2/",
     "reports/h10_c5b/",
     "reports/h10_c5c/",
@@ -97,6 +98,7 @@ ALLOWED_PREFIXES = (
     "reports/h10_c7/",
     "reports/h10_c7r/",
     "reports/h10_c7r_r9/",
+    "reports/h10_c7r_r10/",
     "reports/h9_e2e_v2/",
     "reports/h10_c6_noise/",
     "reports/h10_c5_pilot/",
@@ -116,6 +118,7 @@ ALLOWED_PREFIXES = (
     "results/h10_c7a/",
     "results/h10_c7r/",
     "results/h10_c7r_r9/",
+    "results/h10_c7r_r10/",
     "reports/release/universal_model_integration_completion.md",
 )
 REQUIRED_PATHS = {

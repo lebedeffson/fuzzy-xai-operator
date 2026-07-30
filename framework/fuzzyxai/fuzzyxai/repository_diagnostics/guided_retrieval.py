@@ -450,10 +450,19 @@ def _runtime_profile(
     if not runtime_events:
         return {}
     nodes = tuple(graph.nodes)
-    event_positions: dict[str, list[int]] = defaultdict(list)
+    event_positions: dict[str, list[tuple[str, int]]] = defaultdict(list)
+    event_occurrences: dict[str, int] = defaultdict(int)
     event_tests: dict[str, set[str]] = defaultdict(set)
-    total = len(runtime_events)
     all_tests = {event.test_id for event in runtime_events}
+    test_last_sequence: dict[str, int] = defaultdict(int)
+    for index, event in enumerate(runtime_events):
+        sequence = event.sequence_id if event.sequence_id >= 0 else index
+        test_last_sequence[event.test_id] = max(
+            test_last_sequence[event.test_id],
+            event.last_sequence_id
+            if event.last_sequence_id >= 0
+            else sequence,
+        )
 
     def node_for(file_path: str | None, symbol: str | None) -> str | None:
         if not file_path:
@@ -473,18 +482,31 @@ def _runtime_profile(
         return node.node_id if node is not None else None
 
     for index, event in enumerate(runtime_events):
+        sequence = event.sequence_id if event.sequence_id >= 0 else index
+        last_sequence = (
+            event.last_sequence_id
+            if event.last_sequence_id >= 0
+            else sequence
+        )
         identifiers = {
             node_for(event.source_file, event.source_symbol),
             node_for(event.target_file, event.target_symbol),
         }
         for node_id in identifiers - {None}:
-            event_positions[node_id].append(index)
+            event_positions[node_id].append((event.test_id, last_sequence))
+            event_occurrences[node_id] += event.occurrence_count
             event_tests[node_id].add(event.test_id)
     return {
         node_id: {
-            "execution_frequency": float(len(positions)),
+            "execution_frequency": float(event_occurrences[node_id]),
             "last_touch_proximity": 1.0
-            / (1.0 + max(0, total - 1 - max(positions))),
+            / (
+                1.0
+                + min(
+                    max(0, test_last_sequence[test_id] - sequence)
+                    for test_id, sequence in positions
+                )
+            ),
             "failing_test_frequency": len(event_tests[node_id])
             / max(1, len(all_tests)),
         }
@@ -1137,6 +1159,364 @@ class R9CandidateCompressor:
     @staticmethod
     def _distance_signal(distance: float | None) -> float:
         return 1.0 / (1.0 + distance) if distance is not None else 0.0
+
+
+@dataclass(frozen=True)
+class RankedFile:
+    file_path: str
+    score: float
+    rank_sources: tuple[str, ...]
+    symbol_count: int
+    line_count: int
+
+
+@dataclass(frozen=True)
+class R10RetrievalConfig:
+    file_limit: int = 20
+    symbols_per_file: int = 10
+    pool_limit: int = 200
+    final_limit: int = 20
+    semantic_rerank_limit: int = 100
+    maximum_probes: int = 2
+
+
+class FileRetriever:
+    """Rank repository files before comparing heterogeneous symbols."""
+
+    CHANNEL_WEIGHTS: ClassVar[dict[str, float]] = {
+        "assertion": 4.0,
+        "failing_tests": 3.0,
+        "traceback": 3.0,
+        "exception": 3.0,
+        "issue": 2.0,
+    }
+
+    def __init__(self) -> None:
+        self.bm25 = BM25Retriever()
+
+    def rank(
+        self,
+        query: IncidentQuery,
+        documents: Sequence[SymbolDocument],
+        runtime_events: Sequence[RuntimeEvent] = (),
+        *,
+        limit: int = 20,
+    ) -> tuple[RankedFile, ...]:
+        by_file: dict[str, list[SymbolDocument]] = defaultdict(list)
+        for document in documents:
+            by_file[document.file_path].append(document)
+        file_documents = tuple(
+            SymbolDocument(
+                f"r10-file:{hashlib.sha256(file_path.encode()).hexdigest()[:20]}",
+                file_path,
+                None,
+                " ".join(
+                    (
+                        file_path,
+                        " ".join(
+                            item.symbol or ""
+                            for item in sorted(
+                                values,
+                                key=lambda item: item.symbol or "",
+                            )
+                        ),
+                        " ".join(item.text for item in values)[:24000],
+                    )
+                ),
+                sum(item.line_count for item in values),
+                any(item.executed for item in values),
+            )
+            for file_path, values in sorted(by_file.items())
+        )
+        normalized = IncidentNormalizer().normalize(query)
+        channel_text = {
+            "assertion": normalized.assertion,
+            "failing_tests": normalized.failing_tests,
+            "traceback": normalized.traceback,
+            "exception": normalized.exception,
+            "issue": normalized.issue,
+        }
+        scores: dict[str, float] = defaultdict(float)
+        sources: dict[str, set[str]] = defaultdict(set)
+        for channel, text in channel_text.items():
+            if not text:
+                continue
+            ranking = self.bm25.rank(
+                text,
+                file_documents,
+                limit=len(file_documents),
+            )
+            weight = self.CHANNEL_WEIGHTS[channel]
+            for rank, item in enumerate(ranking, start=1):
+                scores[item.file_path] += weight / math.log2(2.0 + rank)
+                sources[item.file_path].add(f"file_bm25:{channel}")
+
+        runtime = self._runtime_file_features(runtime_events)
+        for file_path, features in runtime.items():
+            if file_path not in by_file:
+                continue
+            scores[file_path] += 2.0 * features["observed"]
+            scores[file_path] += 2.5 * features["last_touch"]
+            scores[file_path] += 1.5 * features["causal"]
+            sources[file_path].add("runtime_file")
+        values = [
+            RankedFile(
+                file_path,
+                scores[file_path],
+                tuple(sorted(sources[file_path])),
+                len(by_file[file_path]),
+                sum(item.line_count for item in by_file[file_path]),
+            )
+            for file_path in by_file
+        ]
+        return tuple(
+            sorted(
+                values,
+                key=lambda item: (-item.score, item.file_path),
+            )[:limit]
+        )
+
+    @staticmethod
+    def _runtime_file_features(
+        events: Sequence[RuntimeEvent],
+    ) -> dict[str, dict[str, float]]:
+        if not events:
+            return {}
+        last_by_test: dict[str, int] = defaultdict(int)
+        for index, event in enumerate(events):
+            sequence = event.last_sequence_id
+            if sequence < 0:
+                sequence = event.sequence_id if event.sequence_id >= 0 else index
+            last_by_test[event.test_id] = max(
+                last_by_test[event.test_id], sequence
+            )
+        values: dict[str, dict[str, float]] = defaultdict(
+            lambda: {"observed": 0.0, "last_touch": 0.0, "causal": 0.0}
+        )
+        for index, event in enumerate(events):
+            sequence = event.last_sequence_id
+            if sequence < 0:
+                sequence = event.sequence_id if event.sequence_id >= 0 else index
+            proximity = 1.0 / (
+                1.0 + max(0, last_by_test[event.test_id] - sequence)
+            )
+            for file_path in {
+                event.source_file,
+                event.target_file,
+            } - {None}:
+                values[file_path]["observed"] = 1.0
+                values[file_path]["last_touch"] = max(
+                    values[file_path]["last_touch"],
+                    proximity,
+                )
+                if event.kind in {
+                    "assertion_operand",
+                    "exception",
+                    "last_writer",
+                    "value_flow",
+                }:
+                    values[file_path]["causal"] = 1.0
+        return dict(values)
+
+
+class R10SymbolPoolBuilder:
+    """Select a bounded local symbol set from the highest-ranked files."""
+
+    def __init__(self) -> None:
+        self.bm25 = BM25Retriever()
+        self.identifiers = StrictIdentifierExtractor()
+
+    def build(
+        self,
+        query: IncidentQuery,
+        files: Sequence[RankedFile],
+        documents: Sequence[SymbolDocument],
+        *,
+        symbols_per_file: int = 10,
+        pool_limit: int = 200,
+    ) -> tuple[RankedSymbol, ...]:
+        by_file: dict[str, list[SymbolDocument]] = defaultdict(list)
+        for document in documents:
+            by_file[document.file_path].append(document)
+        file_rank = {
+            item.file_path: rank for rank, item in enumerate(files, start=1)
+        }
+        strict = {
+            item.node_id: rank
+            for rank, item in enumerate(
+                self.identifiers.rank(query, documents, limit=500),
+                start=1,
+            )
+        }
+        selected: list[RankedSymbol] = []
+        for file in files:
+            local_documents = tuple(by_file.get(file.file_path, ()))
+            lexical = {
+                item.node_id: (rank, item)
+                for rank, item in enumerate(
+                    self.bm25.rank(
+                        query.text,
+                        local_documents,
+                        limit=len(local_documents),
+                    ),
+                    start=1,
+                )
+            }
+            local_values = []
+            for document in local_documents:
+                lexical_rank = lexical.get(document.node_id, (10_000, None))[0]
+                score = 2.0 / math.log2(2.0 + file_rank[file.file_path])
+                score += 2.0 / math.log2(2.0 + lexical_rank)
+                if document.node_id in strict:
+                    score += 1.5 / math.log2(2.0 + strict[document.node_id])
+                score += 1.25 * document.last_touch_proximity
+                score += 0.75 * self._distance_signal(
+                    document.dynamic_call_distance
+                )
+                score += 0.75 * float(document.traceback_distance == 0.0)
+                local_values.append(
+                    RankedSymbol(
+                        document.node_id,
+                        document.file_path,
+                        document.symbol,
+                        score,
+                        ("r10_file_first", "r10_local_symbol"),
+                        document.line_count,
+                        document.obligations,
+                        (
+                            f"r10_file_rank:{file_rank[file.file_path]}",
+                            f"r10_local_rank:{lexical_rank}",
+                        ),
+                    )
+                )
+            selected.extend(
+                sorted(
+                    local_values,
+                    key=lambda item: (
+                        -item.score,
+                        item.file_path,
+                        item.symbol or "",
+                    ),
+                )[:symbols_per_file]
+            )
+        return tuple(
+            sorted(
+                selected,
+                key=lambda item: (
+                    -item.score,
+                    item.file_path,
+                    item.symbol or "",
+                ),
+            )[:pool_limit]
+        )
+
+    @staticmethod
+    def _distance_signal(distance: float | None) -> float:
+        return 1.0 / (1.0 + distance) if distance is not None else 0.0
+
+
+class R10SourceAwareReranker:
+    """Combine source-aware semantic scores with observable causal evidence."""
+
+    CAUSAL_BONUS: ClassVar[dict[str, float]] = {
+        "last_writer": 2.0,
+        "value_flow": 1.5,
+        "assertion_operand": 1.25,
+        "traceback_frame": 1.0,
+        "exception": 1.0,
+        "argument_value": 0.35,
+        "return_value": 0.50,
+    }
+
+    def rerank(
+        self,
+        ranking: Sequence[RankedSymbol],
+        documents: Sequence[SymbolDocument],
+        runtime_events: Sequence[RuntimeEvent],
+        *,
+        semantic_scores: Sequence[float] | None = None,
+    ) -> tuple[RankedSymbol, ...]:
+        if semantic_scores is not None and len(semantic_scores) != len(ranking):
+            raise ValueError("semantic scores must match the candidate pool")
+        by_id = {document.node_id: document for document in documents}
+        causal = self._causal_scores(ranking, runtime_events)
+        values = []
+        for index, item in enumerate(ranking):
+            document = by_id[item.node_id]
+            semantic = (
+                float(semantic_scores[index])
+                if semantic_scores is not None
+                else item.score
+            )
+            initialization_only = (
+                (document.symbol or "") in {"<module>", "__init__"}
+                and not causal.get(item.node_id)
+            )
+            score = semantic + causal.get(item.node_id, 0.0)
+            score -= 0.7 * float(initialization_only)
+            values.append(
+                RankedSymbol(
+                    item.node_id,
+                    item.file_path,
+                    item.symbol,
+                    score,
+                    (
+                        *item.rank_sources,
+                        "r10_source_aware",
+                        *(
+                            ("r10_causal_runtime",)
+                            if causal.get(item.node_id)
+                            else ()
+                        ),
+                    ),
+                    item.line_count,
+                    item.obligations,
+                    item.evidence,
+                )
+            )
+        return tuple(
+            sorted(
+                values,
+                key=lambda item: (
+                    -item.score,
+                    item.file_path,
+                    item.symbol or "",
+                ),
+            )
+        )
+
+    def _causal_scores(
+        self,
+        ranking: Sequence[RankedSymbol],
+        events: Sequence[RuntimeEvent],
+    ) -> dict[str, float]:
+        by_key = {
+            (item.file_path, item.symbol): item.node_id for item in ranking
+        }
+        by_terminal = {
+            (item.file_path, (item.symbol or "").rsplit(".", 1)[-1]): item.node_id
+            for item in ranking
+            if item.symbol
+        }
+        scores: dict[str, float] = defaultdict(float)
+        for event in events:
+            bonus = self.CAUSAL_BONUS.get(event.kind, 0.0)
+            if not bonus:
+                continue
+            for file_path, symbol, direction_weight in (
+                (event.source_file, event.source_symbol, 1.0),
+                (event.target_file, event.target_symbol, 0.25),
+            ):
+                if not file_path:
+                    continue
+                node_id = by_key.get((file_path, symbol))
+                if node_id is None and symbol:
+                    node_id = by_terminal.get(
+                        (file_path, symbol.rsplit(".", 1)[-1])
+                    )
+                if node_id is not None:
+                    scores[node_id] += bonus * direction_weight
+        return dict(scores)
 
 
 class StructuralReranker:

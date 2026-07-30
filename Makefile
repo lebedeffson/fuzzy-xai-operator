@@ -1244,7 +1244,7 @@ h10-c4-chapter:
 h10-c4-package:
 	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/build_h10_c4_release.py
 
-.PHONY: ch4-q1-test h10-c5-source-audit h10-c5-run h10-c5b-test h10-c5b-ops-test h10-c5b-prepare h10-c5b-prepare-runtime-inputs h10-c5b-collect-runtime h10-c5b-merge-runtime h10-c5b-runtime-readiness h10-c5b-freeze-development h10-c5b-freeze-held-out-scoring h10-c5b-plan-replacements h10-c5b-run h10-c5b-score-held-out h10-c5b-verify-method-lock h10-c5b-parent-immutability h10-c5c-test h10-c5c-posthoc h10-c5c-posthoc-detailed h10-c5c-posthoc-oracles h10-c5c-prepare-bugsinpy h10-c5c-collect-runtime h10-c5c-development-readiness h10-c5c-run-development h10-c7-test h10-c7-build-open-replay h10-c7-open-replay h10-c7-confirmation h10-c7-r5v-audit h10-c7-prepare-development h10-c7-run-development h10-c7a-prepare-development h10-c7a-run-development h10-c7r-test h10-c7r-lock h10-c7r-prepare-held-out h10-c7r-lock-images h10-c7r-collect-runtime h10-c7r-build-gold h10-c7r-authorize h10-c7r-score h10-c7r-r9-test h10-c7r-r9-development h10-c5-pilot-test h10-c5-pilot-run h10-c6-run h10-c6-n-test h10-c6-n-prepare h10-c6-n-run mlflow-integration-test mlflow-integration-run final-practical-parent-immutability final-practical-package multimodal-route-validation h9-e2e-latency h9-e2e-v2 ch4-q1-claim-lint ch4-q1-evidence
+.PHONY: ch4-q1-test h10-c5-source-audit h10-c5-run h10-c5b-test h10-c5b-ops-test h10-c5b-prepare h10-c5b-prepare-runtime-inputs h10-c5b-collect-runtime h10-c5b-merge-runtime h10-c5b-runtime-readiness h10-c5b-freeze-development h10-c5b-freeze-held-out-scoring h10-c5b-plan-replacements h10-c5b-run h10-c5b-score-held-out h10-c5b-verify-method-lock h10-c5b-parent-immutability h10-c5c-test h10-c5c-posthoc h10-c5c-posthoc-detailed h10-c5c-posthoc-oracles h10-c5c-prepare-bugsinpy h10-c5c-collect-runtime h10-c5c-development-readiness h10-c5c-run-development h10-c7-test h10-c7-build-open-replay h10-c7-open-replay h10-c7-confirmation h10-c7-r5v-audit h10-c7-prepare-development h10-c7-run-development h10-c7a-prepare-development h10-c7a-run-development h10-c7r-test h10-c7r-lock h10-c7r-prepare-held-out h10-c7r-lock-images h10-c7r-collect-runtime h10-c7r-build-gold h10-c7r-authorize h10-c7r-score h10-c7r-r9-test h10-c7r-r9-development h10-c7r-r10-test h10-c7r-r10-runtime-audit h10-c7r-r10-development h10-c5-pilot-test h10-c5-pilot-run h10-c6-run h10-c6-n-test h10-c6-n-prepare h10-c6-n-run mlflow-integration-test mlflow-integration-run final-practical-parent-immutability final-practical-package multimodal-route-validation h9-e2e-latency h9-e2e-v2 ch4-q1-claim-lint ch4-q1-evidence
 
 ch4-q1-test:
 	$(H10_C4_ENV) $(H10_C3_PYTHON) -m pytest -q tests/h10_c5 tests/h10_c6 tests/multimodal tests/roles tests/chapter_revision
@@ -1400,6 +1400,22 @@ h10-c7r-r9-test:
 h10-c7r-r9-development:
 	test -n "$(H10_C7R_OPERATION_ROOT)"
 	HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 $(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/run_h10_c7r_r9_development.py --manifest "$(H10_C7R_OPERATION_ROOT)/runtime/HELD_OUT_MANIFEST.jsonl" --gold "$(H10_C7R_OPERATION_ROOT)/sealed-gold/HELD_OUT_GOLD.jsonl" --exclusion-lock protocol/h10_c7r/H10_C7R_EXCLUSION_LOCK.json --v1-results results/h10_c7r/PER_INCIDENT_RESULTS.jsonl --output results/h10_c7r_r9/development --reports reports/h10_c7r_r9
+
+h10-c7r-r10-test:
+	$(H10_C4_ENV) $(H10_C3_PYTHON) -m ruff check framework/fuzzyxai/fuzzyxai/experiments/h10_c5c_runtime.py framework/fuzzyxai/fuzzyxai/experiments/h10_c7r_r10.py framework/fuzzyxai/fuzzyxai/repository_diagnostics/active_evidence.py framework/fuzzyxai/fuzzyxai/repository_diagnostics/guided_diagnosis.py framework/fuzzyxai/fuzzyxai/repository_diagnostics/guided_retrieval.py framework/fuzzyxai/fuzzyxai/repository_diagnostics/importer.py framework/fuzzyxai/fuzzyxai/repository_diagnostics/runtime_events.py scripts/ch4_revision/audit_h10_c7r_r10_runtime.py scripts/ch4_revision/collect_h10_c7r_runtime.py scripts/ch4_revision/run_h10_c7r_r10_development.py tests/h10_c7/test_r10_causal_retrieval.py
+	$(H10_C4_ENV) $(H10_C3_PYTHON) -m pytest -q tests/h10_c7/test_r10_causal_retrieval.py tests/h10_c7/test_guided_retrieval.py tests/h10_c7/test_r9_retrieval.py tests/h10_c7r
+
+h10-c7r-r10-runtime-audit:
+	test -n "$(H10_C7R_R10_MANIFEST)"
+	test -n "$(H10_C7R_R10_READINESS)"
+	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/audit_h10_c7r_r10_runtime.py --manifest "$(H10_C7R_R10_MANIFEST)" --output "$(H10_C7R_R10_READINESS)"
+
+h10-c7r-r10-development:
+	test -n "$(H10_C7R_R10_MANIFEST)"
+	test -n "$(H10_C7R_R10_GOLD)"
+	test -n "$(H10_C7R_R10_READINESS)"
+	test -n "$(H10_C7R_R10_OUTPUT)"
+	HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 $(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/run_h10_c7r_r10_development.py --manifest "$(H10_C7R_R10_MANIFEST)" --gold "$(H10_C7R_R10_GOLD)" --exclusion-lock protocol/h10_c7r/H10_C7R_EXCLUSION_LOCK.json --readiness "$(H10_C7R_R10_READINESS)" --output "$(H10_C7R_R10_OUTPUT)"
 
 h10-c5b-prepare:
 	test -n "$(H10_C5B_SOURCE_DIR)"

@@ -8,6 +8,7 @@ from typing import Protocol
 from .active_evidence import (
     ActiveEvidenceRequestPlanner,
     EvidenceRequest,
+    R10TargetedProbePlanner,
     apply_probe_observation,
 )
 from .contract_inference_v2 import (
@@ -22,9 +23,14 @@ from .guided_retrieval import (
     DenseCodeEncoder,
     DenseRetriever,
     ExactSymbolExtractor,
+    FileRetriever,
+    IncidentNormalizer,
     IncidentQuery,
     R9CandidateCompressor,
     R9CompressionConfig,
+    R10RetrievalConfig,
+    R10SourceAwareReranker,
+    R10SymbolPoolBuilder,
     RankedSymbol,
     RepoGraphRanker,
     StrictIdentifierExtractor,
@@ -39,6 +45,7 @@ from .runtime_events import RuntimeEvent
 
 VARIANTS = tuple(f"R{index}" for index in range(9))
 R9_VARIANTS = ("R9A", "R9B", "R9C")
+R10_VARIANTS = ("R10A", "R10B", "R10C", "R10D")
 BASELINES = (
     "B_TRACE",
     "B_BM25",
@@ -49,7 +56,7 @@ BASELINES = (
     "B_AGENTLESS_LOC",
     "O_ROUTE",
 )
-METHODS = (*VARIANTS, *R9_VARIANTS, *BASELINES)
+METHODS = (*VARIANTS, *R9_VARIANTS, *R10_VARIANTS, *BASELINES)
 
 
 class CrossEncoder(Protocol):
@@ -226,9 +233,14 @@ class GuidedNaturalDiagnosisEngine:
         self.r9_config = R9CompressionConfig()
         self.r9_identifiers = StrictIdentifierExtractor()
         self.r9_compressor = R9CandidateCompressor(self.r9_config)
+        self.r10_config = R10RetrievalConfig()
+        self.r10_files = FileRetriever()
+        self.r10_pool = R10SymbolPoolBuilder()
+        self.r10_reranker = R10SourceAwareReranker()
         self.contracts = HierarchicalContractInferenceEngine()
         self.calibrator = EvidenceCalibrator()
         self.evidence_planner = ActiveEvidenceRequestPlanner()
+        self.r10_evidence_planner = R10TargetedProbePlanner()
         self.router = IncidentRouter()
         self.explorer = BoundedRepositoryExplorer(action_budget)
         self._cache_graph_id: int | None = None
@@ -416,7 +428,7 @@ class GuidedNaturalDiagnosisEngine:
                 runtime_events,
                 source_kinds=R9_SOURCE_KINDS,
             )
-            if variant in R9_VARIANTS
+            if variant in {*R9_VARIANTS, *R10_VARIANTS}
             else self._documents(graph, runtime_events)
         )
         route = self.router.route(query, graph)
@@ -472,6 +484,13 @@ class GuidedNaturalDiagnosisEngine:
                     limit=20,
                 )
                 unavailable = None
+        elif variant in R10_VARIANTS:
+            ranking, unavailable = self._r10_ranking(
+                query,
+                documents,
+                runtime_events,
+                variant,
+            )
         else:
             ranking, unavailable = self._ranking(
                 graph,
@@ -542,11 +561,17 @@ class GuidedNaturalDiagnosisEngine:
                 ("contract_before", active_contract_before),
                 ("contract_after", candidates[0].contract.family),
             )
-        requests = (
-            self.evidence_planner.plan(query.failing_tests[0], ranking)
-            if variant in {"R6", "R8"} and query.failing_tests
-            else ()
-        )
+        requests: tuple[EvidenceRequest, ...] = ()
+        if query.failing_tests and variant in {"R6", "R8"}:
+            requests = self.evidence_planner.plan(
+                query.failing_tests[0],
+                ranking,
+            )
+        elif query.failing_tests and variant == "R10D":
+            requests = self.r10_evidence_planner.plan(
+                query.failing_tests[0],
+                ranking,
+            )
         status = "INSUFFICIENT_EVIDENCE"
         if candidates:
             top = candidates[0]
@@ -567,7 +592,13 @@ class GuidedNaturalDiagnosisEngine:
             variant,
             status,
             tuple(candidates),
-            requests[:1],
+            requests[
+                : (
+                    self.r10_config.maximum_probes
+                    if variant == "R10D"
+                    else 1
+                )
+            ],
             route,
             trajectory,
             active_evidence_status=active_status,
@@ -736,6 +767,62 @@ class GuidedNaturalDiagnosisEngine:
                 limit=config.dense_limit,
             )
         return channels
+
+    def _r10_ranking(
+        self,
+        query: IncidentQuery,
+        documents: tuple[SymbolDocument, ...],
+        runtime_events: Sequence[RuntimeEvent],
+        variant: str,
+    ) -> tuple[tuple[RankedSymbol, ...], str | None]:
+        config = self.r10_config
+        files = self.r10_files.rank(
+            query,
+            documents,
+            runtime_events,
+            limit=config.file_limit,
+        )
+        pool = self.r10_pool.build(
+            query,
+            files,
+            documents,
+            symbols_per_file=config.symbols_per_file,
+            pool_limit=config.pool_limit,
+        )
+        if variant == "R10A":
+            ranking = self.r10_reranker.rerank(
+                pool,
+                documents,
+                runtime_events,
+            )
+            return ranking[: config.final_limit], None
+        if self.cross_encoder is None:
+            return (), "no_registered_source_aware_cross_encoder"
+        selected = pool[: config.semantic_rerank_limit]
+        by_id = {document.node_id: document for document in documents}
+        semantic_documents = [by_id[item.node_id] for item in selected]
+        semantic_scores = self.cross_encoder.score(
+            self._r10_semantic_query(query),
+            semantic_documents,
+        )
+        ranking = self.r10_reranker.rerank(
+            selected,
+            documents,
+            runtime_events if variant in {"R10C", "R10D"} else (),
+            semantic_scores=semantic_scores,
+        )
+        return ranking[: config.final_limit], None
+
+    @staticmethod
+    def _r10_semantic_query(query: IncidentQuery) -> str:
+        normalized = IncidentNormalizer().normalize(query)
+        return (
+            f"[INCIDENT]\n{normalized.issue}\n"
+            f"[FAILING TEST]\n{normalized.failing_tests}\n"
+            f"[TRACEBACK]\n{normalized.traceback}\n"
+            f"[ASSERTION]\n{normalized.assertion}\n"
+            f"[EXCEPTION]\n{normalized.exception}"
+        )
 
     def _contract_pair_ranking(
         self,
