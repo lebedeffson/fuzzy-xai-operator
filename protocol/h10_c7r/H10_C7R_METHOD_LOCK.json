@@ -1,0 +1,18 @@
+{
+  "development_incidents": 40,
+  "development_repositories": 16,
+  "development_top20_signatures_sha256": "f3ad88d430e922ba6ecfeff0de2e32031675610f800c539b0cfa3d33625623e1",
+  "frozen_file_sha256": {
+    "framework/fuzzyxai/fuzzyxai/experiments/h10_c7a.py": "bb9d459566701f84b28a4bd219fab512516f22ce05912738c6a72253f1c1e4b4",
+    "framework/fuzzyxai/fuzzyxai/repository_diagnostics/guided_diagnosis.py": "417fed753d0a140be93847f326c58c290b17d359fd24936b7eea1648841cea92",
+    "framework/fuzzyxai/fuzzyxai/repository_diagnostics/guided_retrieval.py": "3e0cd22dc14215a091827e443cfedf4a5dd2a25e26e6adb8a09f0c868703192e",
+    "framework/fuzzyxai/fuzzyxai/repository_diagnostics/runtime_events.py": "e20a8d57c54701be006ce7a20b9cfb2ef81ef2fec966301a00d3539404c90840"
+  },
+  "method": "R5",
+  "method_commit": "358ed40a0fb7f5adc1291695ff15affa39cae485",
+  "r5_budget": 20,
+  "reference_prefix_incidents": 30,
+  "reference_prefix_mismatches": 0,
+  "retrieval_changed": false,
+  "status": "LOCKED_BEFORE_HELD_OUT"
+}

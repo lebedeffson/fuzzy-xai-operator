@@ -51,3 +51,17 @@ operators:
       - protocol/h10_c7/H10_C7_PROTOCOL_LOCK.json
       - protocol/h10_c7/H10_C7A_PRIMARY_ENDPOINT_AMENDMENT.json
     visualization: []
+  - id: h10_c7r.prospective_candidate_space_reduction
+    dissertation_ref: "H10-C7R prospective matched-recall candidate-space reduction"
+    callable: fuzzyxai.experiments.h10_c7r:score_incidents
+    input_schema: SealedRepositoryDisjointObservableHeldOutAndSeparateGold
+    output_schema: CandidateSpaceReductionRepositoryClusterBootstrapAndFinalStatus
+    tests:
+      - tests/h10_c7r/test_h10_c7r_protocol.py
+    artifacts:
+      - protocol/h10_c7r/H10_C7R_PROTOCOL_LOCK.json
+      - protocol/h10_c7r/H10_C7R_METHOD_LOCK.json
+      - protocol/h10_c7r/H10_C7R_BUDGET_LOCK.json
+      - protocol/h10_c7r/H10_C7R_BASELINE_LOCK.json
+      - protocol/h10_c7r/H10_C7R_EXCLUSION_LOCK.json
+    visualization: []

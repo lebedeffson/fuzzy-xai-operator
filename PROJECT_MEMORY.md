@@ -1,5 +1,31 @@
 # Project Memory
 
+## FXAI-H10-C7R-PROSPECTIVE-RETRIEVAL-LOCK
+
+- Protocol: `H10-C7R-v1`
+- Status: `H10_C7R_LOCKED_AWAITING_HELD_OUT`
+- Scientific result: `NOT_EVALUATED`
+- Method commit: `358ed40a0fb7f5adc1291695ff15affa39cae485`
+- Method/budget: `R5`, 20 candidates
+- Baseline/budget: `B_BM25`, 160 candidates
+- Held-out created/scored: `false/false`
+
+H10-C7R isolates the preregistered candidate-space-reduction endpoint from
+contract classification. Contract metrics remain descriptive and cannot
+change the H10-C7R status. The frozen 40-incident development replay produced
+the expected R5 top-20 signature
+`f3ad88d430e922ba6ecfeff0de2e32031675610f800c539b0cfa3d33625623e1`.
+All 20 repositories used in earlier cycles are locked out of the new
+confirmatory set.
+
+The prospective implementation requires at least 40 incidents from at least
+12 repository-disjoint repositories, complete failing-test reproduction and
+project-grounded tracebacks, physically separate Gold, and one scoring
+opening. The focused suite passed with 70 tests across H10-C7 and H10-C7R;
+the canonical full regression passed with `783 passed, 6 skipped`. Ruff,
+compileall, claim lint, operator-addendum validation, and all 114 registered
+parent-result hashes passed.
+
 ## FXAI-H10-C7A-MATCHED-RECALL-DEVELOPMENT
 
 - Protocol: `H10-C7A`

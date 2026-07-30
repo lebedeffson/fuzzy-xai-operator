@@ -1,0 +1,14 @@
+{
+  "held_out_manifest_created": false,
+  "lock_sha256": {
+    "H10_C7R_BASELINE_LOCK.json": "1c5a04813bc15fa118ee103109dd6b9ca674eecfde209630d4553c7285b9d88a",
+    "H10_C7R_BUDGET_LOCK.json": "ce0038de88686bc3e18effe0503747c138f0a5cf8f9534d7b48541e5adcbe344",
+    "H10_C7R_EXCLUSION_LOCK.json": "5a1de3a2048dc34482258f6c2c6e79c65540e8009e2b3dd1ff9780c89a6e3d6f",
+    "H10_C7R_METHOD_LOCK.json": "0dbb6fc479911ece95391fbffc04c1dacc4baf25ff394df7469b453ac86016fd",
+    "H10_C7R_PROTOCOL_LOCK.json": "ae6320c4f4e500a5769c2526ad0cc382e81301a498574f5460a5f1df97caf3ac"
+  },
+  "method_commit": "358ed40a0fb7f5adc1291695ff15affa39cae485",
+  "protocol_id": "H10-C7R-v1",
+  "source_release_sha256": "cd33dd6689623c043dfb74485d1618d10b2922f6a9934047db5ce43293f56a4b",
+  "status": "H10_C7R_LOCK_PACKAGE_COMPLETE"
+}
