@@ -26,6 +26,8 @@ from fuzzyxai.repository_diagnostics.importer_v2 import (
 )
 from fuzzyxai.repository_diagnostics.runtime_events import RuntimeEvent
 
+COLLECTOR_CAPABILITY = "registered-suite-cwd-fallback-v3"
+
 
 def read_jsonl(path: Path) -> list[dict[str, Any]]:
     return [
@@ -75,6 +77,7 @@ def _instrumented_command(
         parsed,
         key=lambda tokens: (
             0 if tokens and tokens[0] in {"pytest", "py.test"} else 1,
+            0 if len(tokens) >= 3 and tokens[0] == "cd" else 1,
             len(tokens),
         ),
     )
@@ -92,10 +95,18 @@ def _instrumented_command(
     if selected is None:
         raise ValueError("no instrumentable pytest command")
 
+    working_directory = "/testbed"
+    if len(selected) >= 4 and selected[0] == "cd" and selected[2] == "&&":
+        relative_workdir = Path(selected[1])
+        if relative_workdir.is_absolute() or ".." in relative_workdir.parts:
+            raise ValueError("registered pytest working directory is unsafe")
+        working_directory = str(Path("/testbed") / relative_workdir)
+        selected = selected[3:]
     argv = ["pytest", "-vv", "-x", *fail_to_pass]
     pytest_index = selected.index("pytest")
     fallback_argv = ["pytest", *selected[pytest_index + 1 :]]
     wrapper = (
+        f"cd {shlex.quote(working_directory)}; "
         "py=''; mode=''; "
         "for candidate in .venv/bin/python /opt/venv/bin/python "
         "/venv/bin/python python; do "
@@ -516,6 +527,9 @@ def collect(
             if len(completed) >= target_incidents:
                 break
             cached = output / "incidents" / identifier / "observable.json"
+            failure_cache = (
+                output / "incidents" / identifier / "runtime_failure.json"
+            )
             image_tag = str(registry[identifier]["container_image_tag"])
             newly_collected = not cached.is_file()
             try:
@@ -526,8 +540,22 @@ def collect(
                     raise RuntimeError(image_status)
                 if cached.is_file():
                     row = json.loads(cached.read_text(encoding="utf-8"))
+                elif failure_cache.is_file():
+                    failure = json.loads(
+                        failure_cache.read_text(encoding="utf-8")
+                    )
+                    if failure.get("collector_capability") != COLLECTOR_CAPABILITY:
+                        failure_cache.unlink()
+                        row = collect_one(public, registry[identifier], output)
+                    else:
+                        raise RuntimeError(
+                            "CACHED_RUNTIME_FAILURE: "
+                            + str(failure["reason"])
+                        )
                 else:
                     row = collect_one(public, registry[identifier], output)
+                if failure_cache.is_file():
+                    failure_cache.unlink()
                 completed.append(row)
                 ledger.append(
                     {
@@ -542,6 +570,18 @@ def collect(
                         run(["docker", "image", "rm", retained_image])
                     retained_image = image_tag
             except Exception as error:  # noqa: BLE001 - preserve runtime ledger
+                incident_dir = output / "incidents" / identifier
+                write_json(
+                    incident_dir / "runtime_failure.json",
+                    {
+                        "collector_capability": COLLECTOR_CAPABILITY,
+                        "incident_id": identifier,
+                        "reason": str(error),
+                        "status": (
+                            "RUNTIME_INFRASTRUCTURE_OR_REPRODUCTION_FAILED"
+                        ),
+                    },
+                )
                 ledger.append(
                     {
                         "incident_id": identifier,

@@ -95,6 +95,15 @@ def test_instrumented_pytest_command_supports_registered_wrappers() -> None:
         fail_to_pass,
     )
     assert "uv run --offline --no-sync" in preferred
+    _, package_fallback, package = runtime._instrumented_command(
+        [
+            "poetry run pytest -rA",
+            "cd packages/instrumentation && poetry run pytest tests -rA",
+        ],
+        fail_to_pass,
+    )
+    assert package.startswith("cd /testbed/packages/instrumentation;")
+    assert package_fallback == ["pytest", "tests", "-rA"]
 
 
 def test_runtime_event_filter_excludes_environment_and_non_python() -> None:
