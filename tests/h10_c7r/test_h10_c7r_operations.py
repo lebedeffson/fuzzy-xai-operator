@@ -70,25 +70,26 @@ def test_instrumented_pytest_command_supports_registered_wrappers() -> None:
     argv, direct = runtime._instrumented_command(["pytest -rA"], fail_to_pass)
     assert argv[-1] == fail_to_pass[0]
     assert ".venv/bin/python" in direct
-    assert '\"$py\" /h10/runtime_launcher.py' in direct
-    assert '\"$py\" /h10/runtime_launcher_xdist.py' in direct
+    assert "/h10/runtime_launcher.py" in direct
+    assert "/h10/runtime_launcher_xdist.py" in direct
+    assert '\"$py\" \"$launcher\"' in direct
     _, uv = runtime._instrumented_command(
         ["uv run -p .venv pytest -rA"],
         fail_to_pass,
     )
     assert ".venv/bin/python" in uv
-    assert "uv run" not in uv
+    assert "uv run --offline --no-sync" in uv
     _, poetry = runtime._instrumented_command(
         ["poetry run pytest tests -v"],
         fail_to_pass,
     )
     assert ".venv/bin/python" in poetry
-    assert "poetry run" not in poetry
+    assert "poetry run python" in poetry
     _, preferred = runtime._instrumented_command(
         ["pytest -rA", "uv run pytest -rA"],
         fail_to_pass,
     )
-    assert "uv run" not in preferred
+    assert "uv run --offline --no-sync" in preferred
 
 
 def test_runtime_event_filter_excludes_environment_and_non_python() -> None:
@@ -104,6 +105,18 @@ def test_runtime_event_filter_excludes_environment_and_non_python() -> None:
     assert not runtime._project_python_event(
         {"source_file": "src/propcache/_helpers_c.pyx"}
     )
+
+
+def test_pytest_node_event_requires_observed_project_test(tmp_path: Path) -> None:
+    test_file = tmp_path / "tests/test_module.py"
+    test_file.parent.mkdir()
+    test_file.write_text("def test_failure(): pass\n", encoding="utf-8")
+    test_id = "tests/test_module.py::Suite::test_failure[value]"
+    event = runtime._pytest_node_event(tmp_path, test_id, f"FAILED {test_id}")
+    assert event is not None
+    assert event["source_file"] == "tests/test_module.py"
+    assert event["source_symbol"] == "Suite.test_failure"
+    assert runtime._pytest_node_event(tmp_path, test_id, "other output") is None
 
 
 def test_gold_builder_binds_hunk_to_graph_symbol(tmp_path: Path) -> None:

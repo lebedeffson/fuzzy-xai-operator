@@ -94,15 +94,24 @@ def _instrumented_command(
 
     argv = ["pytest", "-vv", "-x", *fail_to_pass]
     wrapper = (
-        "py=''; "
+        "py=''; mode=''; "
         "for candidate in .venv/bin/python /opt/venv/bin/python "
         "/venv/bin/python python; do "
         "if \"$candidate\" -m pytest --help >/tmp/h10-pytest-help 2>/dev/null; "
-        "then py=\"$candidate\"; break; fi; done; "
-        "[ -n \"$py\" ] || exit 87; "
+        "then py=\"$candidate\"; mode='direct'; break; fi; done; "
+        "if [ -z \"$mode\" ] && command -v poetry >/dev/null "
+        "&& poetry run python -m pytest --help "
+        ">/tmp/h10-pytest-help 2>/dev/null; then mode='poetry'; fi; "
+        "if [ -z \"$mode\" ] && command -v uv >/dev/null "
+        "&& uv run --offline --no-sync python -m pytest --help "
+        ">/tmp/h10-pytest-help 2>/dev/null; then mode='uv'; fi; "
+        "[ -n \"$mode\" ] || exit 87; "
+        "launcher='/h10/runtime_launcher.py'; "
         "if grep -q -- '--numprocesses' /tmp/h10-pytest-help; "
-        "then \"$py\" /h10/runtime_launcher_xdist.py; "
-        "else \"$py\" /h10/runtime_launcher.py; fi"
+        "then launcher='/h10/runtime_launcher_xdist.py'; fi; "
+        "if [ \"$mode\" = 'direct' ]; then \"$py\" \"$launcher\"; "
+        "elif [ \"$mode\" = 'poetry' ]; then poetry run python \"$launcher\"; "
+        "else uv run --offline --no-sync python \"$launcher\"; fi"
     )
     return argv, wrapper
 
@@ -161,6 +170,36 @@ def _project_python_event(event: dict[str, object]) -> bool:
         ):
             return False
     return True
+
+
+def _pytest_node_event(
+    root: Path,
+    test_id: str,
+    output: str,
+) -> dict[str, object] | None:
+    if test_id not in output:
+        return None
+    parts = test_id.split("::")
+    relative = Path(parts[0])
+    if relative.suffix != ".py" or not (root / relative).is_file():
+        return None
+    symbol_parts = [
+        part.split("[", 1)[0]
+        for part in parts[1:]
+        if part.split("[", 1)[0]
+    ]
+    symbol = ".".join(symbol_parts) or None
+    encoded = f"{test_id}\0traceback_frame\0{relative.as_posix()}".encode()
+    return {
+        "event_id": "trace-" + hashlib.sha256(encoded).hexdigest()[:24],
+        "test_id": test_id,
+        "kind": "traceback_frame",
+        "source_file": relative.as_posix(),
+        "source_symbol": symbol,
+        "target_file": None,
+        "target_symbol": None,
+        "detail": f"pytest failing node: {test_id}",
+    }
 
 
 def _source_lines(root: Path) -> int:
@@ -320,6 +359,14 @@ def collect_one(
             events = [
                 event for event in events if _project_python_event(event)
             ]
+            if not any(event["kind"] == "traceback_frame" for event in events):
+                node_event = _pytest_node_event(
+                    source_root,
+                    fail_to_pass[0],
+                    stdout + "\n" + stderr,
+                )
+                if node_event is not None:
+                    events.append(node_event)
             unique = {str(event["event_id"]): event for event in events}
             events = [unique[key] for key in sorted(unique)]
             kinds = {str(event["kind"]) for event in events}
