@@ -1,5 +1,36 @@
 # Project Memory
 
+## FUZZYXAI-ML-PIPELINE-V2-COMPARATIVE
+
+- Date: 2026-07-31
+- Branch: `feat/fuzzyxai-ml-pipeline-v2-comparative`
+- Protocol: `FUZZYXAI_ML_PIPELINE_V2_COMPARATIVE_V1`
+- Implementation commit: `641f2abb7167549748643c65e50bf5dc97f97a58`
+- Protocol lock/scoring commit: `1a9d6f91001433b0bdd2a41ede122913e0f07d9d`
+- Status: `FUZZYXAI_ML_PIPELINE_V2_COMPARATIVE_SUPPORTED`
+- DOCX/PDF modified: `false`
+
+The unchanged S1-S18 registry was evaluated through nine preregistered modes:
+standard logs, stock MLflow observation, strong local checks, greedy local
+diagnosis, and four incremental RouteGraph/contract/cut/recertification
+ablations. All 162 scenario-mode decisions were produced before scoring Gold,
+and each pair was logged as a distinct MLflow run.
+
+Strong local checks B2 reached `0.6667` detection, stage, contract, component
+and action accuracy and falsely certified six cross-stage violations. Full
+FuzzyXAI A4/O reached `1.0` on those metrics, zero false certifications,
+complete evidence, and five of five repairs with all 28 contracts rechecked.
+It added three preregistered cross-stage diagnoses beyond B2. The paired
+bootstrap interval for the O-B2 difference was `[0.1111, 0.5556]`, while the
+Holm-adjusted McNemar result was not significant (`p=0.5`), so interpretation
+remains descriptive for the fixed scenario registry.
+
+Focused validation passed 66 tests and full regression passed 895 tests with
+five skips. Ruff, compileall, claim lint, operator manifest, protocol SHA256,
+and 2142-file parent immutability passed. This does not establish arbitrary ML
+error detection, replacement of MLflow, human-time benefit, user utility, or
+transfer to natural software incidents.
+
 ## FUZZYXAI-ML-PIPELINE-V2
 
 - Date: 2026-07-31

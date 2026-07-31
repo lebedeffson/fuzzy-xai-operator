@@ -1,0 +1,35 @@
+{
+  "status": "FUZZYXAI_ML_PIPELINE_V2_COMPARATIVE_SUPPORTED",
+  "evaluation_status": "FUZZYXAI_ML_PIPELINE_V2_COMPARATIVE_EVALUATION",
+  "supported": true,
+  "scenario_count": 18,
+  "mode_count": 9,
+  "mode_decision_count": 162,
+  "mlflow_run_count": 162,
+  "cross_stage_advantage_count": 3,
+  "gates": {
+    "fuzzyxai_false_certification_zero": true,
+    "fuzzyxai_stage_accuracy_one": true,
+    "fuzzyxai_contract_accuracy_one": true,
+    "fuzzyxai_action_accuracy_one": true,
+    "fuzzyxai_repair_recertification_five_of_five": true,
+    "fuzzyxai_evidence_completeness_one": true,
+    "cross_stage_advantage_at_least_two": true,
+    "a2_contract_accuracy_exceeds_a1": true,
+    "a4_recertification_exceeds_a3": true,
+    "all_a4_repairs_recheck_28_contracts": true
+  },
+  "protocol_lock_sha256": "d8567cacf6566e367d328223562090f796dd2339458c2254f8c6ba04a0d3fe1f",
+  "implementation_commit": "641f2abb7167549748643c65e50bf5dc97f97a58",
+  "scoring_commit": "1a9d6f91001433b0bdd2a41ede122913e0f07d9d",
+  "parent_pipeline_status": "FUZZYXAI_ML_PIPELINE_V2_IMPLEMENTED",
+  "parent_results_modified": false,
+  "docx_pdf_modified": false,
+  "claims": {
+    "arbitrary_ml_error_detection": false,
+    "replaces_mlflow_or_kubeflow": false,
+    "human_time_reduction": false,
+    "user_utility": false,
+    "natural_incident_transfer": false
+  }
+}
