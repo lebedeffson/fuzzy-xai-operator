@@ -4,6 +4,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import subprocess
 from pathlib import Path
 from statistics import median
 from typing import Any
@@ -38,6 +39,17 @@ def write_jsonl(path: Path, rows: list[dict[str, Any]]) -> None:
     path.write_text("".join(json.dumps(row, ensure_ascii=False, sort_keys=True, default=str) + "\n" for row in rows), encoding="utf-8")
 
 
+def repository_head() -> str:
+    try:
+        return subprocess.check_output(
+            ["git", "rev-parse", "HEAD"],
+            cwd=ROOT,
+            text=True,
+        ).strip()
+    except (OSError, subprocess.CalledProcessError):
+        return "unavailable"
+
+
 def legacy_signature(payload: dict[str, Any]) -> tuple[Any, ...]:
     diagnosis = payload["diagnosis"]
     return (
@@ -53,8 +65,10 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--tracking-uri", default=(ROOT / "results/ml_pipeline_v2/mlruns").as_uri())
     parser.add_argument("--skip-mlflow", action="store_true")
+    parser.add_argument("--git-commit", default=repository_head())
     args = parser.parse_args()
     os.environ["MLFLOW_TRACKING_URI"] = args.tracking_uri
+    os.environ["FUZZYXAI_GIT_COMMIT"] = args.git_commit
     get_pipeline_service.cache_clear()
     service = get_pipeline_service()
     service.persist_dir = ROOT / "results/ml_pipeline_v2/runtime"

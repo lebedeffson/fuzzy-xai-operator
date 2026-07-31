@@ -26,6 +26,7 @@ env:
   MKL_NUM_THREADS: "1"
   NUMEXPR_NUM_THREADS: "1"
   PYTHONPATH: "framework/fuzzyxai:."
+  FUZZYXAI_GIT_COMMIT: ${{ github.sha }}
 
 jobs:
   acceptance:

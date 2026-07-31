@@ -12,6 +12,7 @@ services:
     environment:
       FUZZYXAI_RUN_DIR: /app/results/ml_vertical_v1/runtime
       FUZZYXAI_PIPELINE_RUN_DIR: /app/results/ml_pipeline_v2/runtime
+      FUZZYXAI_GIT_COMMIT: ${FUZZYXAI_GIT_COMMIT:-unavailable}
       MLFLOW_TRACKING_URI: http://mlflow:5000
     ports:
       - "${FUZZYXAI_API_PORT:-8000}:8000"
