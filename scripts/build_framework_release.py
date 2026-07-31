@@ -54,6 +54,7 @@ ALLOWED_EXACT = {
     "Dockerfile.q1",
     "Dockerfile.q1-final",
     "Dockerfile.practical",
+    "Dockerfile.ml-vertical",
     "LICENSE",
     "Makefile",
     "PROJECT_MEMORY.md",
@@ -92,6 +93,7 @@ ALLOWED_PREFIXES = (
     "protocol/h10_c7r_r9/",
     "protocol/h10_c7r_r10/",
     "protocol/h10_c7r_r10m/",
+    "protocol/ml_vertical_v1/",
     "protocol/h9_e2e_v2/",
     "reports/h10_c5b/",
     "reports/h10_c5c/",
@@ -101,6 +103,7 @@ ALLOWED_PREFIXES = (
     "reports/h10_c7r_r9/",
     "reports/h10_c7r_r10/",
     "reports/h10_c7r_r10m/",
+    "reports/ml_vertical_v1/",
     "reports/h9_e2e_v2/",
     "reports/h10_c6_noise/",
     "reports/h10_c5_pilot/",
@@ -122,6 +125,7 @@ ALLOWED_PREFIXES = (
     "results/h10_c7r_r9/",
     "results/h10_c7r_r10/",
     "results/h10_c7r_r10m/",
+    "results/ml_vertical_v1/",
     "reports/release/universal_model_integration_completion.md",
 )
 REQUIRED_PATHS = {

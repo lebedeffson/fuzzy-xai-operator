@@ -393,6 +393,7 @@ def run_ui(port: int = 8096) -> None:  # pragma: no cover
             t_fuzzy = ui.tab('Иерархия неопределённости')
             t_cat = ui.tab('Категория / HoTT / топос')
             t_risk = ui.tab('Риск-наблюдатель')
+            t_ml = ui.tab('ML vertical v1')
             t_exp = ui.tab('Эксперименты')
             t_art = ui.tab('Артефакты')
 
@@ -971,6 +972,70 @@ def run_ui(port: int = 8096) -> None:  # pragma: no cover
 
                     ui.button('Refresh from current case', on_click=refresh_risk)
                     refresh_risk()
+
+            with ui.tab_panel(t_ml):
+                from fuzzyxai.ml_vertical.service import MLVerticalService, SCENARIOS
+
+                ml_service = MLVerticalService()
+                with ui.column().classes('panel w-full gap-3'):
+                    ui.label('FuzzyXAI ML Vertical v1').classes('text-2xl font-semibold')
+                    ui.markdown(
+                        'Один проверяемый маршрут: **Breast Cancer Wisconsin → LogisticRegression → SHAP → '
+                        'fuzzy representation → contracts → observer → repair/recertification**. '
+                        'Контур является воспроизводимой программной демонстрацией, а не клинической системой.'
+                    )
+                    ml_scenario = ui.select(
+                        {key: key for key in SCENARIOS}, value='S1_NORMAL', label='Registered scenario'
+                    ).classes('w-full')
+                    ml_status = ui.markdown('Выберите сценарий и запустите маршрут.')
+                    ml_claims = ui.table(
+                        columns=[
+                            {'name': 'claim_id', 'label': 'Claim', 'field': 'claim_id'},
+                            {'name': 'text', 'label': 'Evidence-bound statement', 'field': 'text'},
+                            {'name': 'status', 'label': 'Status', 'field': 'status'},
+                        ],
+                        rows=[],
+                    ).classes('w-full')
+                    ml_issues = ui.table(
+                        columns=[
+                            {'name': 'violated_contract', 'label': 'Contract', 'field': 'violated_contract'},
+                            {'name': 'severity', 'label': 'Severity', 'field': 'severity'},
+                            {'name': 'symptom', 'label': 'Observed issue', 'field': 'symptom'},
+                        ],
+                        rows=[],
+                    ).classes('w-full')
+                    ml_views = ui.tabs().classes('w-full')
+                    with ml_views:
+                        ml_user_tab = ui.tab('User')
+                        ml_engineer_tab = ui.tab('Engineer')
+                        ml_auditor_tab = ui.tab('Auditor')
+                    with ui.tab_panels(ml_views, value=ml_user_tab).classes('w-full'):
+                        with ui.tab_panel(ml_user_tab):
+                            ml_user = ui.code('{}').classes('w-full')
+                        with ui.tab_panel(ml_engineer_tab):
+                            ml_engineer = ui.code('{}').classes('w-full')
+                        with ui.tab_panel(ml_auditor_tab):
+                            ml_auditor = ui.code('{}').classes('w-full')
+
+                    def run_ml_vertical() -> None:
+                        import json as _json
+
+                        result = ml_service.execute(ml_service.scenario_request(str(ml_scenario.value)))
+                        ml_status.content = (
+                            f"**Action:** `{result.observer['action']}`  \n"
+                            f"**Representation:** `{result.representation['representation_id']}`  \n"
+                            f"**Route:** `{result.diagnosis['route_status']}`  \n"
+                            f"**Canonical SHA256:** `{result.canonical_sha256}`"
+                        )
+                        ml_claims.rows = list(result.claims)
+                        ml_claims.update()
+                        ml_issues.rows = list(result.diagnosis['issues'])
+                        ml_issues.update()
+                        ml_user.content = _json.dumps(result.views['user'], ensure_ascii=False, indent=2, default=str)
+                        ml_engineer.content = _json.dumps(result.views['engineer'], ensure_ascii=False, indent=2, default=str)
+                        ml_auditor.content = _json.dumps(result.views['auditor'], ensure_ascii=False, indent=2, default=str)
+
+                    ui.button('Run registered route', on_click=run_ml_vertical).classes('bg-blue-700 text-white')
 
             with ui.tab_panel(t_exp):
                 with ui.column().classes('panel w-full gap-2'):

@@ -1,0 +1,16 @@
+FROM python:3.11-slim
+
+WORKDIR /app
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONPATH=/app/framework/fuzzyxai \
+    OMP_NUM_THREADS=1 \
+    OPENBLAS_NUM_THREADS=1 \
+    MKL_NUM_THREADS=1 \
+    NUMEXPR_NUM_THREADS=1
+
+COPY pyproject.toml README.md LICENSE /app/
+COPY framework /app/framework
+RUN python -m pip install --no-cache-dir ".[ml-vertical]"
+COPY . /app
+
+CMD ["python", "-m", "uvicorn", "fuzzyxai.ml_vertical.api:app", "--host", "0.0.0.0", "--port", "8000"]
