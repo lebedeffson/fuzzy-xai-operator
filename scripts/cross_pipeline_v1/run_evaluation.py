@@ -369,7 +369,18 @@ def main() -> None:
                 ),
                 decision["mode_id"],
             )
-            logged = log_practical_run(result, artifacts_by_pipeline[result.pipeline_id], tracking_uri=tracking_uri, git_commit=git_commit)
+            logged = log_practical_run(
+                result,
+                artifacts_by_pipeline[result.pipeline_id],
+                tracking_uri=tracking_uri,
+                git_commit=git_commit,
+                scoring_metrics={
+                    "stage_correct": row["stage_correct"],
+                    "contract_correct": row["contract_correct"],
+                    "root_cause_correct": row["root_cause_correct"],
+                    "false_certification": row["false_certification"],
+                },
+            )
             mlflow_runs.append(
                 {
                     **logged,

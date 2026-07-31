@@ -31,6 +31,7 @@ def log_practical_run(
     *,
     tracking_uri: str,
     git_commit: str,
+    scoring_metrics: dict[str, float | bool],
     experiment_name: str = "fuzzyxai-cross-pipeline-practical-v1",
 ) -> dict[str, Any]:
     mlflow.set_tracking_uri(tracking_uri)
@@ -57,7 +58,10 @@ def log_practical_run(
         mlflow.log_metrics(
             {
                 "detected": float(result.detected),
-                "false_certification": 0.0,
+                "stage_correct": float(scoring_metrics["stage_correct"]),
+                "contract_correct": float(scoring_metrics["contract_correct"]),
+                "root_cause_correct": float(scoring_metrics["root_cause_correct"]),
+                "false_certification": float(scoring_metrics["false_certification"]),
                 "evidence_completeness": result.evidence_completeness,
                 "cut_size": float((result.diagnostic_cut or {}).get("size", 0)),
                 "repair_success": float(result.target_contract_repaired),

@@ -48,6 +48,14 @@ def test_mlflow_payload_has_complete_required_artifacts(service) -> None:
     assert tuple(manifests) == REQUIRED_ARTIFACTS
 
 
+def test_mlflow_logger_requires_scored_correctness_metrics() -> None:
+    from inspect import signature
+
+    from fuzzyxai.pipelines.practical_tracking import log_practical_run
+
+    assert "scoring_metrics" in signature(log_practical_run).parameters
+
+
 def test_route_graph_records_component_versions_and_hashes(service) -> None:
     graph = service.prepare(PIPELINE).route_graph.to_dict()
     assert graph["metadata"]["model_sha256"]
