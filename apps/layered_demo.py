@@ -974,7 +974,7 @@ def run_ui(port: int = 8096) -> None:  # pragma: no cover
                     refresh_risk()
 
             with ui.tab_panel(t_ml):
-                from fuzzyxai.ml_vertical.service import MLVerticalService, SCENARIOS
+                from fuzzyxai.ml_vertical.service import SCENARIOS, MLVerticalService
 
                 ml_service = MLVerticalService()
                 with ui.column().classes('panel w-full gap-3'):
@@ -1172,6 +1172,87 @@ def run_ui(port: int = 8096) -> None:  # pragma: no cover
     ui.run(port=port, title='FuzzyXAI Layered Demo')
 
 
+def run_ml_vertical_ui(port: int = 8092) -> None:  # pragma: no cover
+    """Run the integrated ML vertical without optional historical reports."""
+    from fuzzyxai.ml_vertical.service import SCENARIOS, MLVerticalService
+    from nicegui import ui
+
+    service = MLVerticalService()
+    ui.add_head_html(
+        """
+        <style>
+        body { background: linear-gradient(145deg,#eef6ff,#f8fbff 45%,#edf9f1); }
+        .ml-shell { max-width: 1320px; margin: 0 auto; padding: 18px; }
+        .ml-hero { background: linear-gradient(125deg,#10243e,#0b5d66,#16846f); color:#fff; border-radius:20px; padding:22px; }
+        .ml-panel { background:#fff; border:1px solid #d8e4e8; border-radius:16px; padding:18px; box-shadow:0 10px 30px rgba(15,35,60,.08); }
+        </style>
+        """
+    )
+
+    with ui.column().classes('ml-shell w-full gap-4'):
+        with ui.column().classes('ml-hero w-full gap-1'):
+            ui.label('FuzzyXAI ML Vertical v1').classes('text-3xl font-semibold')
+            ui.markdown(
+                'Проверяемый маршрут: **Breast Cancer Wisconsin → LogisticRegression → SHAP → '
+                'fuzzy representation → contracts → observer → repair/recertification**.'
+            )
+            ui.label('Воспроизводимая программная демонстрация, не клиническая система.').classes('text-sm opacity-80')
+
+        with ui.column().classes('ml-panel w-full gap-3'):
+            scenario = ui.select(
+                {key: key for key in SCENARIOS}, value='S1_NORMAL', label='Registered scenario'
+            ).classes('w-full')
+            status = ui.markdown('Выберите сценарий и запустите маршрут.')
+            claims = ui.table(
+                columns=[
+                    {'name': 'claim_id', 'label': 'Claim', 'field': 'claim_id'},
+                    {'name': 'text', 'label': 'Evidence-bound statement', 'field': 'text'},
+                    {'name': 'status', 'label': 'Status', 'field': 'status'},
+                ],
+                rows=[],
+            ).classes('w-full')
+            issues = ui.table(
+                columns=[
+                    {'name': 'violated_contract', 'label': 'Contract', 'field': 'violated_contract'},
+                    {'name': 'severity', 'label': 'Severity', 'field': 'severity'},
+                    {'name': 'symptom', 'label': 'Observed issue', 'field': 'symptom'},
+                ],
+                rows=[],
+            ).classes('w-full')
+            views = ui.tabs().classes('w-full')
+            with views:
+                user_tab = ui.tab('User')
+                engineer_tab = ui.tab('Engineer')
+                auditor_tab = ui.tab('Auditor')
+            with ui.tab_panels(views, value=user_tab).classes('w-full'):
+                with ui.tab_panel(user_tab):
+                    user_view = ui.code('{}').classes('w-full')
+                with ui.tab_panel(engineer_tab):
+                    engineer_view = ui.code('{}').classes('w-full')
+                with ui.tab_panel(auditor_tab):
+                    auditor_view = ui.code('{}').classes('w-full')
+
+            def execute() -> None:
+                result = service.execute(service.scenario_request(str(scenario.value)))
+                status.content = (
+                    f"**Action:** `{result.observer['action']}`  \n"
+                    f"**Representation:** `{result.representation['representation_id']}`  \n"
+                    f"**Route:** `{result.diagnosis['route_status']}`  \n"
+                    f"**Canonical SHA256:** `{result.canonical_sha256}`"
+                )
+                claims.rows = list(result.claims)
+                claims.update()
+                issues.rows = list(result.diagnosis['issues'])
+                issues.update()
+                user_view.content = json.dumps(result.views['user'], ensure_ascii=False, indent=2, default=str)
+                engineer_view.content = json.dumps(result.views['engineer'], ensure_ascii=False, indent=2, default=str)
+                auditor_view.content = json.dumps(result.views['auditor'], ensure_ascii=False, indent=2, default=str)
+
+            ui.button('Run registered route', on_click=execute).classes('bg-teal-700 text-white')
+
+    ui.run(port=port, title='FuzzyXAI ML Vertical v1')
+
+
 def _route_statuses(state: dict[str, Any]) -> list[str]:
     return [str(v) for v in state.get('route_header', {}).values()]
 
@@ -1179,8 +1260,12 @@ def _route_statuses(state: dict[str, Any]) -> list[str]:
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument('--port', type=int, default=8096)
+    parser.add_argument('--ml-vertical-only', action='store_true')
     args = parser.parse_args()
-    run_ui(port=args.port)
+    if args.ml_vertical_only:
+        run_ml_vertical_ui(port=args.port)
+    else:
+        run_ui(port=args.port)
 
 
 if __name__ in {'__main__', '__mp_main__'}:

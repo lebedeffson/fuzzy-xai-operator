@@ -13,7 +13,7 @@ services:
       FUZZYXAI_RUN_DIR: /app/results/ml_vertical_v1/runtime
       MLFLOW_TRACKING_URI: http://mlflow:5000
     ports:
-      - "8000:8000"
+      - "${FUZZYXAI_API_PORT:-8000}:8000"
     volumes:
       - ml-results:/app/results/ml_vertical_v1/runtime
     depends_on:
@@ -27,11 +27,11 @@ services:
 
   ui:
     <<: *ml-vertical
-    command: ["python", "apps/layered_demo.py", "--port", "8092"]
+    command: ["python", "-m", "apps.layered_demo", "--port", "8092", "--ml-vertical-only"]
     environment:
       FUZZYXAI_API_URL: http://api:8000
     ports:
-      - "8092:8092"
+      - "${FUZZYXAI_UI_PORT:-8092}:8092"
     depends_on:
       api:
         condition: service_healthy
@@ -50,7 +50,7 @@ services:
       - --default-artifact-root
       - /app/results/ml_vertical_v1/mlruns
     ports:
-      - "5000:5000"
+      - "${MLFLOW_PORT:-5001}:5000"
     volumes:
       - ml-results:/app/results/ml_vertical_v1
     healthcheck:
