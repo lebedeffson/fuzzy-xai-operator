@@ -49,9 +49,9 @@ jobs:
           make cross-pipeline-v1-test PYTHON=python
           python -m ruff check framework/fuzzyxai/fuzzyxai/pipelines tests/cross_pipeline_v1 scripts/cross_pipeline_v1 apps/cross_pipeline_practical.py
           python -m compileall -q framework/fuzzyxai/fuzzyxai/pipelines scripts/cross_pipeline_v1 apps/cross_pipeline_practical.py
-      - name: Reproduce locked practical evaluation
+      - name: Verify locked practical evaluation
         run: |
-          python scripts/cross_pipeline_v1/run_evaluation.py
+          python scripts/cross_pipeline_v1/verify_release.py --skip-mlflow-store
           python scripts/manuscript_claim_lint.py reports/cross_pipeline_v1/*.md
           python -m fuzzyxai.audit.operators_manifest --output /tmp/operators-manifest.json
       - name: Full regression

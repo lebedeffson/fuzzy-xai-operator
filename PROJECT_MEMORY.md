@@ -1,5 +1,38 @@
 # Project Memory
 
+## FUZZYXAI-CROSS-PIPELINE-PRACTICAL-V1
+
+- Date: 2026-07-31
+- Branch: `feat/fuzzyxai-cross-pipeline-practical-v1`
+- Protocol: `FUZZYXAI_CROSS_PIPELINE_PRACTICAL_V1`
+- Implementation commit: `9036be2d767951bc989b4e6e52f170b81e0ac9cd`
+- Protocol commit: `90b0cc1d29647457639703febabefff2a0df29f5`
+- Status: `FUZZYXAI_CROSS_PIPELINE_PRACTICAL_V1_SUPPORTED`
+- DOCX/PDF modified: `false`
+
+Five packaged, deterministic ML/XAI pipelines execute real preprocessing,
+model fitting, prediction and SHAP explanation: binary and multiclass linear
+classification, linear regression, multiclass random forest with TreeSHAP,
+and a mixed-feature `ColumnTransformer` pipeline. The preregistered matrix has
+eight mutation families at five levels, producing 200 controlled cases and
+1,000 mode decisions. These are controlled mutations, not natural incidents.
+
+Full FuzzyXAI reached cross-stage contract recall, stage/contract/root-cause
+accuracy, evidence completeness, registered repair success and full
+recertification of `1.0`, with zero false certifications and zero new critical
+violations. Strong pairwise rules retained contract recall `1.0`; the graph
+advantage is specifically root-cause attribution and removal of redundant
+repairs, not superior pairwise detection. The local baseline cross-stage
+contract recall was `0.375`; the hierarchical bootstrap interval for the
+contract-accuracy difference was `[0.33125, 0.60625]`.
+
+Exactly 1,000 MLflow runs completed with all required metrics and 12 artifacts
+per run. Focused plus parent ML tests passed `114`; full regression passed
+`943` with five skips. Parent immutability passed for 2,164 files. This result
+does not establish arbitrary ML error detection, transfer to natural software
+incidents, human-time benefit, clinical suitability, or replacement of MLflow
+or orchestration systems.
+
 ## FUZZYXAI-ML-PIPELINE-V2-COMPARATIVE
 
 - Date: 2026-07-31
