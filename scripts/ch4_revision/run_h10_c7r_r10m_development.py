@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+import gc
 import hashlib
 import json
 import statistics
@@ -10,8 +11,13 @@ from collections import defaultdict
 from collections.abc import Mapping, Sequence
 from pathlib import Path
 
-from fuzzyxai.experiments.h10_c7 import GoldLocalization
-from fuzzyxai.experiments.h10_c7r import load_held_out_inputs
+from fuzzyxai.experiments.h10_c7 import (
+    GoldAtom,
+    GoldLocalization,
+    _graph,
+    _reject_gold,
+)
+from fuzzyxai.experiments.h10_c7a import BudgetCase
 from fuzzyxai.experiments.h10_c7r_r10m import (
     FrozenBGEReranker,
     FrozenGraphCodeBERT,
@@ -25,9 +31,11 @@ from fuzzyxai.repository_diagnostics.guided_diagnosis import (
 from fuzzyxai.repository_diagnostics.guided_retrieval import (
     R9_SOURCE_KINDS,
     BM25Retriever,
+    IncidentQuery,
     RankedSymbol,
     documents_from_graph,
 )
+from fuzzyxai.repository_diagnostics.runtime_events import load_runtime_events
 
 METHODS = ("B_TRACE", "B_BM25", "R9", "R10A", "R10M")
 
@@ -59,6 +67,79 @@ def _snapshot_sha256(path: Path) -> str:
         digest = hashlib.sha256(file_path.read_bytes()).hexdigest()
         rows.append(f"{digest}  {file_path.relative_to(path)}\n")
     return hashlib.sha256("".join(rows).encode()).hexdigest()
+
+
+def _read_jsonl(path: Path) -> list[dict[str, object]]:
+    return [
+        json.loads(line)
+        for line in path.read_text(encoding="utf-8").splitlines()
+        if line.strip()
+    ]
+
+
+def _stream_cases(
+    root: Path,
+    gold_path: Path,
+    exclusion_path: Path,
+) -> tuple[list[dict[str, object]], dict[str, GoldLocalization]]:
+    manifest = _read_jsonl(root / "HELD_OUT_MANIFEST.jsonl")
+    exclusion = json.loads(exclusion_path.read_text(encoding="utf-8"))
+    excluded = set(exclusion["excluded_repositories"])
+    identifiers = []
+    repositories = set()
+    for index, value in enumerate(manifest):
+        _reject_gold(value, f"$[{index}]")
+        if value.get("runtime_evidence_status") != "BUG_REPRODUCED_WITH_TRACE":
+            raise ValueError("R10M requires reproduced project traceback")
+        identifier = str(value["incident_id"])
+        repository = str(value["repository"])
+        if repository in excluded:
+            raise ValueError(f"excluded repository in development: {repository}")
+        identifiers.append(identifier)
+        repositories.add(repository)
+    gold = {}
+    for value in _read_jsonl(gold_path):
+        identifier = str(value["incident_id"])
+        atoms = tuple(
+            GoldAtom(
+                str(atom["file_path"]),
+                str(atom["symbol"]) if atom.get("symbol") is not None else None,
+                str(atom.get("contract", "NOT_SCORED")),
+            )
+            for atom in value["atoms"]
+        )
+        gold[identifier] = GoldLocalization(identifier, atoms)
+    if (
+        len(manifest) != 40
+        or len(set(identifiers)) != 40
+        or len(repositories) < 12
+        or set(identifiers) != set(gold)
+    ):
+        raise ValueError("invalid R10M development manifest or Gold set")
+    return manifest, gold
+
+
+def _load_case(root: Path, value: Mapping[str, object]) -> BudgetCase:
+    query = value["query"]
+    if not isinstance(query, dict):
+        raise TypeError("query must be a mapping")
+    return BudgetCase(
+        incident_id=str(value["incident_id"]),
+        repository=str(value["repository"]),
+        query=IncidentQuery(
+            str(value["incident_id"]),
+            str(query.get("issue", "")),
+            tuple(str(item) for item in query.get("failing_tests", ())),
+            str(query.get("traceback", "")),
+            str(query.get("assertion", "")),
+        ),
+        graph=_graph(json.loads((root / str(value["graph_path"])).read_text())),
+        runtime_events=load_runtime_events(
+            root / str(value["runtime_events_path"])
+        ),
+        repository_symbol_count=int(value["repository_symbol_count"]),
+        repository_source_lines=int(value.get("repository_source_lines", 0)),
+    )
 
 
 def _rank(candidates: Sequence[RankedSymbol], gold: GoldLocalization) -> int:
@@ -204,8 +285,8 @@ def main() -> int:
     args = parser.parse_args()
 
     root = args.recollection_root.resolve()
-    inputs = load_held_out_inputs(
-        root / "HELD_OUT_MANIFEST.jsonl",
+    manifest, gold_by_id = _stream_cases(
+        root,
         args.gold,
         args.exclusion_lock,
     )
@@ -255,15 +336,17 @@ def main() -> int:
         )
     }
 
-    for index, case in enumerate(inputs.cases, start=1):
-        if case.incident_id in completed:
+    for index, value in enumerate(manifest, start=1):
+        identifier = str(value["incident_id"])
+        if identifier in completed:
             continue
+        case = _load_case(root, value)
         documents = documents_from_graph(
             case.graph,
             case.runtime_events,
             source_kinds=R9_SOURCE_KINDS,
         )
-        gold = inputs.gold[case.incident_id]
+        gold = gold_by_id[case.incident_id]
         metrics: dict[str, object] = {}
 
         start = time.perf_counter()
@@ -376,6 +459,8 @@ def main() -> int:
             ),
             flush=True,
         )
+        del case, documents, r10m
+        gc.collect()
 
     rows = list(completed.values())
     aggregates = {method: _aggregate(rows, method) for method in METHODS}
