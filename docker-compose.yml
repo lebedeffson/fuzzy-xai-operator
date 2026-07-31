@@ -2,7 +2,7 @@ x-ml-vertical: &ml-vertical
   build:
     context: .
     dockerfile: Dockerfile.ml-vertical
-  image: fuzzyxai-ml-vertical-v1:local
+  image: fuzzyxai-ml-pipeline-v2:local
   restart: unless-stopped
 
 services:
@@ -11,11 +11,13 @@ services:
     command: ["python", "-m", "uvicorn", "fuzzyxai.ml_vertical.api:app", "--host", "0.0.0.0", "--port", "8000"]
     environment:
       FUZZYXAI_RUN_DIR: /app/results/ml_vertical_v1/runtime
+      FUZZYXAI_PIPELINE_RUN_DIR: /app/results/ml_pipeline_v2/runtime
       MLFLOW_TRACKING_URI: http://mlflow:5000
     ports:
       - "${FUZZYXAI_API_PORT:-8000}:8000"
     volumes:
       - ml-results:/app/results/ml_vertical_v1/runtime
+      - ml-pipeline-results:/app/results/ml_pipeline_v2/runtime
     depends_on:
       mlflow:
         condition: service_healthy
@@ -46,13 +48,14 @@ services:
       - --port
       - "5000"
       - --backend-store-uri
-      - sqlite:////app/results/ml_vertical_v1/mlflow.db
+      - sqlite:////app/results/ml_pipeline_v2/mlflow.db
       - --default-artifact-root
-      - /app/results/ml_vertical_v1/mlruns
+      - /app/results/ml_pipeline_v2/mlruns
     ports:
       - "${MLFLOW_PORT:-5001}:5000"
     volumes:
       - ml-results:/app/results/ml_vertical_v1
+      - ml-pipeline-results:/app/results/ml_pipeline_v2
     healthcheck:
       test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:5000/health', timeout=5)"]
       interval: 10s
@@ -81,3 +84,4 @@ services:
 
 volumes:
   ml-results:
+  ml-pipeline-results:

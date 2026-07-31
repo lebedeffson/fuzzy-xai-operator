@@ -9,8 +9,9 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
 
 from .contracts import PredictionRequest
+from .pipeline import ALL_SCENARIOS, MLPipelineService
 from .service import SCENARIOS, MLVerticalService
-from .tracking import log_run
+from .tracking import log_pipeline_run, log_run
 
 
 class RunRequest(BaseModel):
@@ -27,7 +28,17 @@ def get_service() -> MLVerticalService:
     return MLVerticalService(persist_dir=os.getenv("FUZZYXAI_RUN_DIR"))
 
 
-app = FastAPI(title="FuzzyXAI ML Vertical v1", version="1.0.0")
+@lru_cache(maxsize=1)
+def get_pipeline_service() -> MLPipelineService:
+    return MLPipelineService(persist_dir=os.getenv("FUZZYXAI_PIPELINE_RUN_DIR"))
+
+
+app = FastAPI(title="FuzzyXAI ML Pipeline", version="2.0.0")
+
+
+class PipelineRequest(BaseModel):
+    scenario_id: str = "S1_NORMAL"
+    log_to_mlflow: bool = False
 
 
 def _execute(body: RunRequest):
@@ -121,5 +132,68 @@ def get_view(run_id: str, audience: str) -> dict[str, Any]:
         raise HTTPException(404, "audience must be user, engineer, or auditor")
     try:
         return get_service().get(run_id).views[audience]
+    except KeyError as exc:
+        raise HTTPException(404, str(exc)) from exc
+
+
+def _pipeline_execute(scenario_id: str, *, log_to_mlflow: bool) -> dict[str, Any]:
+    if scenario_id not in ALL_SCENARIOS:
+        raise HTTPException(404, f"unknown pipeline scenario: {scenario_id}")
+    run = get_pipeline_service().execute_scenario(scenario_id)
+    result = asdict(run)
+    if log_to_mlflow:
+        result["mlflow"] = log_pipeline_run(
+            run,
+            tracking_uri=os.getenv("MLFLOW_TRACKING_URI", "file:./results/ml_pipeline_v2/mlruns"),
+        )
+    return result
+
+
+@app.post("/api/v1/pipeline/run")
+def pipeline_run(body: PipelineRequest) -> dict[str, Any]:
+    return _pipeline_execute(body.scenario_id, log_to_mlflow=body.log_to_mlflow)
+
+
+@app.post("/api/v1/pipeline/scenario/{scenario_id}")
+def pipeline_scenario(scenario_id: str, body: PipelineRequest | None = None) -> dict[str, Any]:
+    return _pipeline_execute(scenario_id, log_to_mlflow=bool(body and body.log_to_mlflow))
+
+
+@app.get("/api/v1/pipeline/run/{run_id}")
+def pipeline_get_run(run_id: str) -> dict[str, Any]:
+    try:
+        return asdict(get_pipeline_service().get(run_id))
+    except KeyError as exc:
+        raise HTTPException(404, str(exc)) from exc
+
+
+@app.get("/api/v1/pipeline/run/{run_id}/graph")
+def pipeline_get_graph(run_id: str) -> dict[str, Any]:
+    try:
+        return get_pipeline_service().get(run_id).route_graph
+    except KeyError as exc:
+        raise HTTPException(404, str(exc)) from exc
+
+
+@app.get("/api/v1/pipeline/run/{run_id}/diagnosis")
+def pipeline_get_diagnosis(run_id: str) -> dict[str, Any]:
+    try:
+        return get_pipeline_service().get(run_id).diagnosis
+    except KeyError as exc:
+        raise HTTPException(404, str(exc)) from exc
+
+
+@app.post("/api/v1/pipeline/run/{run_id}/repair")
+def pipeline_repair(run_id: str) -> dict[str, Any]:
+    try:
+        return get_pipeline_service().repair(run_id)
+    except KeyError as exc:
+        raise HTTPException(404, str(exc)) from exc
+
+
+@app.post("/api/v1/pipeline/run/{run_id}/recertify")
+def pipeline_recertify(run_id: str) -> dict[str, Any]:
+    try:
+        return get_pipeline_service().recertify(run_id)
     except KeyError as exc:
         raise HTTPException(404, str(exc)) from exc

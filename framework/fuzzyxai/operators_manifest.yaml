@@ -1,5 +1,13 @@
 schema_version: "1.0"
 operators:
+  - id: framework.ml_pipeline_control
+    dissertation_ref: "full ML/XAI pipeline engineering validation v2"
+    callable: fuzzyxai.ml_vertical.pipeline:MLPipelineService
+    input_schema: RegisteredPipelineScenarioAndObservableStageEvidence
+    output_schema: CanonicalPipelineRunDiagnosisRepairAndRecertification
+    tests: [tests/ml_pipeline_v2/test_pipeline_contracts.py, tests/ml_pipeline_v2/test_pipeline_integration.py]
+    artifacts: [protocol/ml_pipeline_v2/PIPELINE_CONTRACTS.json, protocol/ml_pipeline_v2/SCENARIO_LOCK.json]
+    visualization: [diagnostic_report, operator_route]
   - id: h10_c5b.repository_grounded_route_audit
     dissertation_ref: "H10-C5b prospective repository-grounded transfer"
     callable: fuzzyxai.experiments.h10_c5b:run

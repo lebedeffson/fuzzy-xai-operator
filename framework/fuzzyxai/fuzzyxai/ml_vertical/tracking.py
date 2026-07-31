@@ -1,12 +1,14 @@
 from __future__ import annotations
 
 import json
+import os
 import tempfile
 from dataclasses import asdict
 from pathlib import Path
 from typing import Any
 
 from .contracts import VerticalRun
+from .pipeline import V2_SCENARIOS, PipelineRun
 
 ARTIFACTS = {
     "request.json": "request",
@@ -68,4 +70,104 @@ def log_run(run: VerticalRun, *, tracking_uri: str, experiment_name: str = "fuzz
             "artifact_uri": active.info.artifact_uri,
             "tracking_uri": tracking_uri,
             "artifacts": tuple(ARTIFACTS),
+        }
+
+
+PIPELINE_ARTIFACTS = {
+    "canonical_result.json": None,
+    "route_graph.json": "route_graph",
+    "contract_report.json": "contract_report",
+    "diagnosis.json": "diagnosis",
+    "repair_plan.json": "repair_plan",
+    "recertification.json": "recertification",
+    "user_view.json": ("views", "user"),
+    "engineering_view.json": ("views", "engineering"),
+    "audit_view.json": ("views", "audit"),
+    "dataset_manifest.json": ("manifests", "dataset_manifest"),
+    "split_manifest.json": ("manifests", "split_manifest"),
+    "training_configuration.json": ("manifests", "training_configuration"),
+    "model_manifest.json": ("manifests", "model_manifest"),
+    "preprocessor_manifest.json": ("manifests", "preprocessor_manifest"),
+}
+
+
+def log_pipeline_run(
+    run: PipelineRun,
+    *,
+    tracking_uri: str,
+    experiment_name: str = "fuzzyxai-ml-pipeline-v2",
+) -> dict[str, Any]:
+    """Log the complete pipeline run and its stage-level evidence to MLflow."""
+    try:
+        import mlflow
+    except ImportError as exc:  # pragma: no cover
+        raise RuntimeError("MLflow integration requires the locked ml-vertical extra") from exc
+
+    payload = asdict(run)
+    manifests = run.manifests
+    expected = V2_SCENARIOS.get(run.scenario_id)
+    diagnosis_correct = not expected or (
+        run.diagnosis["failed_stage"] == expected["stage"]
+        and run.diagnosis["violated_contract"] == expected["contract"]
+    )
+    action_correct = not expected or run.diagnosis["recommended_action"] == expected["action"]
+    critical = sum(item["severity"] == "HIGH" for item in run.contract_report["violations"])
+    repaired = bool(run.recertification and run.recertification.get("full_recertification"))
+    false_certification = run.diagnosis["recommended_action"] == "ACCEPT" and critical > 0 and not repaired
+    mlflow.set_tracking_uri(tracking_uri)
+    mlflow.set_experiment(experiment_name)
+    with mlflow.start_run(run_name=run.run_id.replace(":", "-")) as active:
+        mlflow.log_params(
+            {
+                "scenario_id": run.scenario_id,
+                "pipeline_version": run.pipeline_version,
+                "dataset_id": manifests["dataset_manifest"]["dataset_id"],
+                "dataset_sha256": manifests["dataset_manifest"]["dataset_sha256"],
+                "split_sha256": manifests["split_manifest"]["split_sha256"],
+                "preprocessor_sha256": manifests["preprocessor_manifest"]["artifact_sha256"],
+                "model_sha256": manifests["model_manifest"]["model_sha256"],
+                "feature_schema_sha256": manifests["model_manifest"]["feature_schema_sha256"],
+                "explainer_version": manifests["explainer_manifest"]["version"],
+                "git_commit": os.getenv("FUZZYXAI_GIT_COMMIT", "unavailable"),
+            }
+        )
+        mlflow.log_metrics(
+            {
+                "pipeline_valid": float(run.pipeline_status == "VALID"),
+                "critical_violation_count": float(critical),
+                "contract_accuracy": float(diagnosis_correct),
+                "stage_localization_accuracy": float(diagnosis_correct),
+                "observer_action_accuracy": float(action_correct),
+                "repair_success": float(repaired),
+                "recertification_success": float(repaired),
+                "false_certification": float(false_certification),
+                "runtime_ms": float(run.runtime_ms),
+            }
+        )
+        mlflow.set_tags(
+            {
+                "fuzzyxai.run_id": run.run_id,
+                "fuzzyxai.canonical_sha256": run.canonical_sha256,
+                "fuzzyxai.failed_stage": str(run.diagnosis["failed_stage"]),
+                "fuzzyxai.violated_contract": str(run.diagnosis["violated_contract"]),
+            }
+        )
+        with tempfile.TemporaryDirectory(prefix="fuzzyxai-mlp2-") as temp:
+            root = Path(temp)
+            for filename, selector in PIPELINE_ARTIFACTS.items():
+                if selector is None:
+                    value = payload
+                elif isinstance(selector, str):
+                    value = payload[selector]
+                else:
+                    value = payload[selector[0]][selector[1]]
+                path = root / filename
+                path.write_text(json.dumps(value, ensure_ascii=False, indent=2, default=str) + "\n", encoding="utf-8")
+                mlflow.log_artifact(str(path), artifact_path="pipeline")
+        return {
+            "status": "PIPELINE_MLFLOW_INTEGRATION_PASS",
+            "run_id": active.info.run_id,
+            "artifact_uri": active.info.artifact_uri,
+            "tracking_uri": tracking_uri,
+            "artifacts": tuple(PIPELINE_ARTIFACTS),
         }

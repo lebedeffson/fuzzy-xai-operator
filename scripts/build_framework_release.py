@@ -95,6 +95,7 @@ ALLOWED_PREFIXES = (
     "protocol/h10_c7r_r10/",
     "protocol/h10_c7r_r10m/",
     "protocol/ml_vertical_v1/",
+    "protocol/ml_pipeline_v2/",
     "protocol/h9_e2e_v2/",
     "reports/h10_c5b/",
     "reports/h10_c5c/",
@@ -105,6 +106,7 @@ ALLOWED_PREFIXES = (
     "reports/h10_c7r_r10/",
     "reports/h10_c7r_r10m/",
     "reports/ml_vertical_v1/",
+    "reports/ml_pipeline_v2/",
     "reports/h9_e2e_v2/",
     "reports/h10_c6_noise/",
     "reports/h10_c5_pilot/",
@@ -127,6 +129,7 @@ ALLOWED_PREFIXES = (
     "results/h10_c7r_r10/",
     "results/h10_c7r_r10m/",
     "results/ml_vertical_v1/",
+    "results/ml_pipeline_v2/",
     "reports/release/universal_model_integration_completion.md",
 )
 REQUIRED_PATHS = {
