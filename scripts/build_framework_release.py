@@ -74,6 +74,7 @@ ALLOWED_EXACT = {
 ALLOWED_PREFIXES = (
     "data/confirmatory/",
     "data/h10_c6_noise/",
+    "data/cross_pipeline_v1/",
     "experiments/real_training_experiment/",
     "release_evidence/explanation_experience/",
     "release_evidence/chapter4_explanation_experience/",
@@ -97,6 +98,7 @@ ALLOWED_PREFIXES = (
     "protocol/ml_vertical_v1/",
     "protocol/ml_pipeline_v2/",
     "protocol/ml_pipeline_v2_comparative/",
+    "protocol/cross_pipeline_v1/",
     "protocol/h9_e2e_v2/",
     "reports/h10_c5b/",
     "reports/h10_c5c/",
@@ -109,6 +111,7 @@ ALLOWED_PREFIXES = (
     "reports/ml_vertical_v1/",
     "reports/ml_pipeline_v2/",
     "reports/ml_pipeline_v2_comparative/",
+    "reports/cross_pipeline_v1/",
     "reports/h9_e2e_v2/",
     "reports/h10_c6_noise/",
     "reports/h10_c5_pilot/",
@@ -133,6 +136,7 @@ ALLOWED_PREFIXES = (
     "results/ml_vertical_v1/",
     "results/ml_pipeline_v2/",
     "results/ml_pipeline_v2_comparative/",
+    "results/cross_pipeline_v1/",
     "reports/release/universal_model_integration_completion.md",
 )
 REQUIRED_PATHS = {

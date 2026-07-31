@@ -442,6 +442,20 @@ ml-pipeline-v2-comparative-test:
 ml-pipeline-v2-comparative-evaluation:
 	PYTHONPATH=framework/fuzzyxai:. $(PYTHON) scripts/ml_pipeline_v2_comparative/run_evaluation.py
 
+.PHONY: cross-pipeline-v1-test cross-pipeline-v1-lock cross-pipeline-v1-evaluation cross-pipeline-v1-api
+
+cross-pipeline-v1-test:
+	PYTHONPATH=framework/fuzzyxai:. $(PYTHON) -m pytest tests/cross_pipeline_v1 tests/ml_pipeline_v2_comparative tests/ml_pipeline_v2 tests/ml_vertical_v1 -q
+
+cross-pipeline-v1-lock:
+	PYTHONPATH=framework/fuzzyxai:. $(PYTHON) scripts/cross_pipeline_v1/build_protocol.py
+
+cross-pipeline-v1-evaluation:
+	PYTHONPATH=framework/fuzzyxai:. $(PYTHON) scripts/cross_pipeline_v1/run_evaluation.py --log-mlflow
+
+cross-pipeline-v1-api:
+	PYTHONPATH=framework/fuzzyxai:. $(PYTHON) -m uvicorn fuzzyxai.pipelines.practical_api:app --host 0.0.0.0 --port $(PORT)
+
 studio:
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) apps/fuzzyxai_studio.py --port $(PORT)
 
