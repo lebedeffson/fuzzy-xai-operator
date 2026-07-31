@@ -41,7 +41,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           python -m pip install --index-url https://download.pytorch.org/whl/cpu torch
-          python -m pip install -e ".[dev,ml-vertical]"
+          python -m pip install -e ".[dev,ml-vertical,lightgbm]"
       - name: Focused tests and static checks
         run: |
           make ml-pipeline-v2-comparative-test PYTHON=python
