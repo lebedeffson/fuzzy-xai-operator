@@ -10,7 +10,7 @@
   "torch": "NOT_REQUIRED",
   "dependency_lock_sha256": "3b5a67650500ecde0659648bedfc6ca017187feef0e230fa9932785734fd7470",
   "docker_image": "fuzzyxai-ml-pipeline-v2:local",
-  "docker_image_id": "sha256:70f24ced8c5fd25fe15a6b27a23d4b020ee51f2c8639d7fe517d12fae1d978b7",
-  "docker_image_size_bytes": 496689986,
+  "docker_image_id": "sha256:f7b5cb37209db5c3c08151f71049d0616c4448a40c12d22fe373fa7cea9bbb5c",
+  "docker_image_size_bytes": 496691148,
   "dependency_layer_cache_reused": true
 }

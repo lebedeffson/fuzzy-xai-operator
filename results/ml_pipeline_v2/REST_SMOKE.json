@@ -6,11 +6,11 @@
     "health": 200,
     "ready": 200,
     "scenario": 200,
-    "run": 200,
     "graph": 200,
     "diagnosis": 200,
     "repair": 200,
-    "recertify": 200
+    "recertify": 200,
+    "mlflow_run": 200
   },
   "diagnosis_contract": "PREPROCESSOR_FIT_SCOPE",
   "graph_nodes": 21,
@@ -21,6 +21,7 @@
   "new_critical_violations": 0,
   "mlflow_status": "PIPELINE_MLFLOW_INTEGRATION_PASS",
   "mlflow_artifact_count": 14,
+  "mlflow_git_commit": "b3f945db3a42d9f4e158ba32b120de43216d2104",
   "canonical_sha256": "698ff1db5c8ab9e8c0fdcefd27be6f468adb85e70935307ebe0cb531e0beb165",
   "recertified_sha256": "291ae250c8efd94469cc0288729195a38243ae3ad89814a5b2a8392f247ee19b"
 }

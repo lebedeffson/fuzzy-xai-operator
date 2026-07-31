@@ -1,8 +1,8 @@
 [
   {
     "status": "PIPELINE_MLFLOW_INTEGRATION_PASS",
-    "run_id": "5b321b304a0146b1934a56177784bd8d",
-    "artifact_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-pipeline-v2/results/ml_pipeline_v2/mlruns/274257985337479149/5b321b304a0146b1934a56177784bd8d/artifacts",
+    "run_id": "36243e194525478aa4c6ae0850fca2e5",
+    "artifact_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-pipeline-v2/results/ml_pipeline_v2/mlruns/698303757075264832/36243e194525478aa4c6ae0850fca2e5/artifacts",
     "tracking_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-pipeline-v2/results/ml_pipeline_v2/mlruns",
     "artifacts": [
       "canonical_result.json",
@@ -23,8 +23,8 @@
   },
   {
     "status": "PIPELINE_MLFLOW_INTEGRATION_PASS",
-    "run_id": "579638bb4e784248a13328bab0096915",
-    "artifact_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-pipeline-v2/results/ml_pipeline_v2/mlruns/274257985337479149/579638bb4e784248a13328bab0096915/artifacts",
+    "run_id": "b5dd4c69e87f40e18c709ce09eb911ea",
+    "artifact_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-pipeline-v2/results/ml_pipeline_v2/mlruns/698303757075264832/b5dd4c69e87f40e18c709ce09eb911ea/artifacts",
     "tracking_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-pipeline-v2/results/ml_pipeline_v2/mlruns",
     "artifacts": [
       "canonical_result.json",
@@ -45,8 +45,8 @@
   },
   {
     "status": "PIPELINE_MLFLOW_INTEGRATION_PASS",
-    "run_id": "ebea8f0e75ac4a3d8f8c55a5b6a29544",
-    "artifact_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-pipeline-v2/results/ml_pipeline_v2/mlruns/274257985337479149/ebea8f0e75ac4a3d8f8c55a5b6a29544/artifacts",
+    "run_id": "9a17d4a6a92841f497f747db59d8e9e8",
+    "artifact_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-pipeline-v2/results/ml_pipeline_v2/mlruns/698303757075264832/9a17d4a6a92841f497f747db59d8e9e8/artifacts",
     "tracking_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-pipeline-v2/results/ml_pipeline_v2/mlruns",
     "artifacts": [
       "canonical_result.json",
@@ -67,8 +67,8 @@
   },
   {
     "status": "PIPELINE_MLFLOW_INTEGRATION_PASS",
-    "run_id": "665dec372652425e83105a9011631fb9",
-    "artifact_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-pipeline-v2/results/ml_pipeline_v2/mlruns/274257985337479149/665dec372652425e83105a9011631fb9/artifacts",
+    "run_id": "dbea58fa37824edaa4819a919af51427",
+    "artifact_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-pipeline-v2/results/ml_pipeline_v2/mlruns/698303757075264832/dbea58fa37824edaa4819a919af51427/artifacts",
     "tracking_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-pipeline-v2/results/ml_pipeline_v2/mlruns",
     "artifacts": [
       "canonical_result.json",
@@ -89,8 +89,8 @@
   },
   {
     "status": "PIPELINE_MLFLOW_INTEGRATION_PASS",
-    "run_id": "5ee204fdbb2347e18be2fe27b3ffd200",
-    "artifact_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-pipeline-v2/results/ml_pipeline_v2/mlruns/274257985337479149/5ee204fdbb2347e18be2fe27b3ffd200/artifacts",
+    "run_id": "3c04ff73137948df946aa092ee4b43c7",
+    "artifact_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-pipeline-v2/results/ml_pipeline_v2/mlruns/698303757075264832/3c04ff73137948df946aa092ee4b43c7/artifacts",
     "tracking_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-pipeline-v2/results/ml_pipeline_v2/mlruns",
     "artifacts": [
       "canonical_result.json",
@@ -111,8 +111,8 @@
   },
   {
     "status": "PIPELINE_MLFLOW_INTEGRATION_PASS",
-    "run_id": "6523ad6119ea4d79bae064b3ce97be26",
-    "artifact_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-pipeline-v2/results/ml_pipeline_v2/mlruns/274257985337479149/6523ad6119ea4d79bae064b3ce97be26/artifacts",
+    "run_id": "af6b66fe388e4ad4839b200656ae7999",
+    "artifact_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-pipeline-v2/results/ml_pipeline_v2/mlruns/698303757075264832/af6b66fe388e4ad4839b200656ae7999/artifacts",
     "tracking_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-pipeline-v2/results/ml_pipeline_v2/mlruns",
     "artifacts": [
       "canonical_result.json",
@@ -133,8 +133,8 @@
   },
   {
     "status": "PIPELINE_MLFLOW_INTEGRATION_PASS",
-    "run_id": "f115721449774cb2878425026820f51b",
-    "artifact_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-pipeline-v2/results/ml_pipeline_v2/mlruns/274257985337479149/f115721449774cb2878425026820f51b/artifacts",
+    "run_id": "90a51d1d067d48999f1909fbd8170d4c",
+    "artifact_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-pipeline-v2/results/ml_pipeline_v2/mlruns/698303757075264832/90a51d1d067d48999f1909fbd8170d4c/artifacts",
     "tracking_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-pipeline-v2/results/ml_pipeline_v2/mlruns",
     "artifacts": [
       "canonical_result.json",
@@ -155,8 +155,8 @@
   },
   {
     "status": "PIPELINE_MLFLOW_INTEGRATION_PASS",
-    "run_id": "f0cdcd8099aa4dd1a9e3d097aec34d63",
-    "artifact_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-pipeline-v2/results/ml_pipeline_v2/mlruns/274257985337479149/f0cdcd8099aa4dd1a9e3d097aec34d63/artifacts",
+    "run_id": "bb555352a0a144809d2dc51dabae1eb0",
+    "artifact_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-pipeline-v2/results/ml_pipeline_v2/mlruns/698303757075264832/bb555352a0a144809d2dc51dabae1eb0/artifacts",
     "tracking_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-pipeline-v2/results/ml_pipeline_v2/mlruns",
     "artifacts": [
       "canonical_result.json",
@@ -177,8 +177,8 @@
   },
   {
     "status": "PIPELINE_MLFLOW_INTEGRATION_PASS",
-    "run_id": "952be554f4464884b46eb7d293117e01",
-    "artifact_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-pipeline-v2/results/ml_pipeline_v2/mlruns/274257985337479149/952be554f4464884b46eb7d293117e01/artifacts",
+    "run_id": "3da634eae54a407da790fa989995ccd2",
+    "artifact_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-pipeline-v2/results/ml_pipeline_v2/mlruns/698303757075264832/3da634eae54a407da790fa989995ccd2/artifacts",
     "tracking_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-pipeline-v2/results/ml_pipeline_v2/mlruns",
     "artifacts": [
       "canonical_result.json",
@@ -199,8 +199,8 @@
   },
   {
     "status": "PIPELINE_MLFLOW_INTEGRATION_PASS",
-    "run_id": "1fd59e7dd3c445118cd506d3bf0f7d47",
-    "artifact_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-pipeline-v2/results/ml_pipeline_v2/mlruns/274257985337479149/1fd59e7dd3c445118cd506d3bf0f7d47/artifacts",
+    "run_id": "d3e881c31c6542a9b2b408884e881ee7",
+    "artifact_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-pipeline-v2/results/ml_pipeline_v2/mlruns/698303757075264832/d3e881c31c6542a9b2b408884e881ee7/artifacts",
     "tracking_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-pipeline-v2/results/ml_pipeline_v2/mlruns",
     "artifacts": [
       "canonical_result.json",
@@ -221,8 +221,8 @@
   },
   {
     "status": "PIPELINE_MLFLOW_INTEGRATION_PASS",
-    "run_id": "4af0954849594364acf336afac586c75",
-    "artifact_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-pipeline-v2/results/ml_pipeline_v2/mlruns/274257985337479149/4af0954849594364acf336afac586c75/artifacts",
+    "run_id": "2d3a8b163b6f44fe98e8649d750a2e94",
+    "artifact_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-pipeline-v2/results/ml_pipeline_v2/mlruns/698303757075264832/2d3a8b163b6f44fe98e8649d750a2e94/artifacts",
     "tracking_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-pipeline-v2/results/ml_pipeline_v2/mlruns",
     "artifacts": [
       "canonical_result.json",
@@ -243,8 +243,8 @@
   },
   {
     "status": "PIPELINE_MLFLOW_INTEGRATION_PASS",
-    "run_id": "b9fb9a8a1d9c4ebf91f2e3d17e943926",
-    "artifact_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-pipeline-v2/results/ml_pipeline_v2/mlruns/274257985337479149/b9fb9a8a1d9c4ebf91f2e3d17e943926/artifacts",
+    "run_id": "2f2346f11b724f63a9c69b4dbb0f5cb3",
+    "artifact_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-pipeline-v2/results/ml_pipeline_v2/mlruns/698303757075264832/2f2346f11b724f63a9c69b4dbb0f5cb3/artifacts",
     "tracking_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-pipeline-v2/results/ml_pipeline_v2/mlruns",
     "artifacts": [
       "canonical_result.json",
@@ -265,8 +265,8 @@
   },
   {
     "status": "PIPELINE_MLFLOW_INTEGRATION_PASS",
-    "run_id": "095dc27031104bdcbec3112d53da72b9",
-    "artifact_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-pipeline-v2/results/ml_pipeline_v2/mlruns/274257985337479149/095dc27031104bdcbec3112d53da72b9/artifacts",
+    "run_id": "d1fa08324610422d9f1fcc1b2f888862",
+    "artifact_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-pipeline-v2/results/ml_pipeline_v2/mlruns/698303757075264832/d1fa08324610422d9f1fcc1b2f888862/artifacts",
     "tracking_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-pipeline-v2/results/ml_pipeline_v2/mlruns",
     "artifacts": [
       "canonical_result.json",
@@ -287,8 +287,8 @@
   },
   {
     "status": "PIPELINE_MLFLOW_INTEGRATION_PASS",
-    "run_id": "38e7134407624f399ec9d6ce4a2dda29",
-    "artifact_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-pipeline-v2/results/ml_pipeline_v2/mlruns/274257985337479149/38e7134407624f399ec9d6ce4a2dda29/artifacts",
+    "run_id": "331df001465f417881c84952e605596e",
+    "artifact_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-pipeline-v2/results/ml_pipeline_v2/mlruns/698303757075264832/331df001465f417881c84952e605596e/artifacts",
     "tracking_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-pipeline-v2/results/ml_pipeline_v2/mlruns",
     "artifacts": [
       "canonical_result.json",
@@ -309,8 +309,8 @@
   },
   {
     "status": "PIPELINE_MLFLOW_INTEGRATION_PASS",
-    "run_id": "620bf07825af41d481a62e8043fab3b1",
-    "artifact_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-pipeline-v2/results/ml_pipeline_v2/mlruns/274257985337479149/620bf07825af41d481a62e8043fab3b1/artifacts",
+    "run_id": "89396b9d0614425db12f23e45d4fead5",
+    "artifact_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-pipeline-v2/results/ml_pipeline_v2/mlruns/698303757075264832/89396b9d0614425db12f23e45d4fead5/artifacts",
     "tracking_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-pipeline-v2/results/ml_pipeline_v2/mlruns",
     "artifacts": [
       "canonical_result.json",
@@ -331,8 +331,8 @@
   },
   {
     "status": "PIPELINE_MLFLOW_INTEGRATION_PASS",
-    "run_id": "f5760f1d17214e42b205643e1a2fc03a",
-    "artifact_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-pipeline-v2/results/ml_pipeline_v2/mlruns/274257985337479149/f5760f1d17214e42b205643e1a2fc03a/artifacts",
+    "run_id": "390d2273431a464d83d8c1733ba09023",
+    "artifact_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-pipeline-v2/results/ml_pipeline_v2/mlruns/698303757075264832/390d2273431a464d83d8c1733ba09023/artifacts",
     "tracking_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-pipeline-v2/results/ml_pipeline_v2/mlruns",
     "artifacts": [
       "canonical_result.json",
@@ -353,8 +353,8 @@
   },
   {
     "status": "PIPELINE_MLFLOW_INTEGRATION_PASS",
-    "run_id": "924dc2d72c1e4c0baf4347a8f8eae498",
-    "artifact_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-pipeline-v2/results/ml_pipeline_v2/mlruns/274257985337479149/924dc2d72c1e4c0baf4347a8f8eae498/artifacts",
+    "run_id": "0263448c44204175a998abc86e87ddf7",
+    "artifact_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-pipeline-v2/results/ml_pipeline_v2/mlruns/698303757075264832/0263448c44204175a998abc86e87ddf7/artifacts",
     "tracking_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-pipeline-v2/results/ml_pipeline_v2/mlruns",
     "artifacts": [
       "canonical_result.json",
@@ -375,8 +375,8 @@
   },
   {
     "status": "PIPELINE_MLFLOW_INTEGRATION_PASS",
-    "run_id": "449f3400059644ab8cdc2b77e83d24eb",
-    "artifact_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-pipeline-v2/results/ml_pipeline_v2/mlruns/274257985337479149/449f3400059644ab8cdc2b77e83d24eb/artifacts",
+    "run_id": "0f65dee490e14a13b31050a78041c17c",
+    "artifact_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-pipeline-v2/results/ml_pipeline_v2/mlruns/698303757075264832/0f65dee490e14a13b31050a78041c17c/artifacts",
     "tracking_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-pipeline-v2/results/ml_pipeline_v2/mlruns",
     "artifacts": [
       "canonical_result.json",

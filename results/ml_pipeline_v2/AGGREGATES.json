@@ -18,7 +18,7 @@
   "repairs_attempted": 5,
   "repairs_completed": 5,
   "recertifications_completed": 5,
-  "runtime_median_ms": 7.090256500305259,
-  "runtime_p95_ms": 10.258055649956074,
+  "runtime_median_ms": 6.609478499740362,
+  "runtime_p95_ms": 9.928092349582581,
   "mlflow_runs": 18
 }

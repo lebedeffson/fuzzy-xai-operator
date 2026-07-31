@@ -1,6 +1,6 @@
 {
   "status": "PASS",
-  "implementation_commit": "14d4137d51356f719fe44bd08639aad912cca58b",
+  "implementation_commit": "b3f945db3a42d9f4e158ba32b120de43216d2104",
   "branch": "feat/fuzzyxai-ml-pipeline-v2",
   "checks": {
     "focused_tests": {
@@ -45,11 +45,16 @@
     "ui_smoke": "PASS",
     "docker_smoke": "PASS",
     "docker_dependency_layer_cache": "PASS",
-    "v1_semantic_immutability": "PASS"
+    "v1_semantic_immutability": "PASS",
+    "mlflow_provenance": {
+      "status": "PASS",
+      "runs": 18,
+      "implementation_commit": "b3f945db3a42d9f4e158ba32b120de43216d2104"
+    }
   },
   "docker_image": {
     "name": "fuzzyxai-ml-pipeline-v2:local",
-    "id": "sha256:70f24ced8c5fd25fe15a6b27a23d4b020ee51f2c8639d7fe517d12fae1d978b7"
+    "id": "sha256:f7b5cb37209db5c3c08151f71049d0616c4448a40c12d22fe373fa7cea9bbb5c"
   },
   "claim_boundary": {
     "scientific_result": "ENGINEERING_IMPLEMENTATION",

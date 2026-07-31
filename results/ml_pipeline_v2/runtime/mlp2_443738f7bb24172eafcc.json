@@ -5931,6 +5931,6 @@
     "repair": null,
     "canonical_sha256": "73e1e33dfbd1142312bd2f82d8706b1d143bf1dd3779dc68f9e2fb8a71d6ab8a"
   },
-  "runtime_ms": 8.455961000436218,
+  "runtime_ms": 7.528191999881528,
   "canonical_sha256": "6c924be5aaf4c8359a7ad7c186aa0268939261832805a6986b1c4e639abfc87f"
 }

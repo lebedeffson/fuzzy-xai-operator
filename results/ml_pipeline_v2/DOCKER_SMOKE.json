@@ -1,8 +1,8 @@
 {
   "status": "PASS",
   "image": "fuzzyxai-ml-pipeline-v2:local",
-  "image_id": "sha256:70f24ced8c5fd25fe15a6b27a23d4b020ee51f2c8639d7fe517d12fae1d978b7",
-  "image_size_bytes": 496689986,
+  "image_id": "sha256:f7b5cb37209db5c3c08151f71049d0616c4448a40c12d22fe373fa7cea9bbb5c",
+  "image_size_bytes": 496691148,
   "dependency_layer_cache_reused": true,
   "api_health": {
     "status": "ok"
