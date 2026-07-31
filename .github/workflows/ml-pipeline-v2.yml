@@ -54,7 +54,7 @@ jobs:
           python -m compileall -q framework/fuzzyxai/fuzzyxai/ml_vertical scripts/ml_pipeline_v2 apps/layered_demo.py
       - name: Engineering acceptance and evidence audits
         run: |
-          make ml-pipeline-v2-acceptance PYTHON=python
+          python scripts/ml_pipeline_v2/run_acceptance.py --tracking-uri file:///tmp/ml-pipeline-v2-ci-mlruns
           python scripts/ml_pipeline_v2/verify_mlflow_artifacts.py
           python scripts/ml_pipeline_v2/verify_parent_immutability.py
           python scripts/manuscript_claim_lint.py reports/ml_pipeline_v2/*.md
