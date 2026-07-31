@@ -57,6 +57,7 @@ def main() -> None:
         root / "reports/h10_c7r",
         root / "reports/h10_c7r_r9",
         root / "reports/h10_c7r_r10",
+        root / "reports/h10_c7r_r10m",
     ]
     files: list[Path] = []
     for path in paths:

@@ -1,0 +1,882 @@
+{
+  "B_BM25": {
+    "coverage": 1.0,
+    "false_localization": 0.55,
+    "file_hit_at_1": 0.075,
+    "file_hit_at_10": 0.55,
+    "file_hit_at_20": 0.55,
+    "file_hit_at_5": 0.475,
+    "incident_count": 40,
+    "median_inspected_symbols": 20.0,
+    "method": "B_BM25",
+    "per_repository": {
+      "AgentOps-AI/agentops": {
+        "incident_count": 1,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      },
+      "Flexget/Flexget": {
+        "incident_count": 1,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      },
+      "Pyomo/pyomo": {
+        "incident_count": 1,
+        "mrr": 0.1,
+        "symbol_recall_at_20": 1.0
+      },
+      "Textualize/textual": {
+        "incident_count": 2,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      },
+      "aws-cloudformation/cfn-lint": {
+        "incident_count": 1,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      },
+      "beeware/briefcase": {
+        "incident_count": 1,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      },
+      "certbot/certbot": {
+        "incident_count": 1,
+        "mrr": 0.3333333333333333,
+        "symbol_recall_at_20": 1.0
+      },
+      "conan-io/conan": {
+        "incident_count": 1,
+        "mrr": 0.14285714285714285,
+        "symbol_recall_at_20": 1.0
+      },
+      "dbcli/mycli": {
+        "incident_count": 1,
+        "mrr": 0.2,
+        "symbol_recall_at_20": 1.0
+      },
+      "eventlet/eventlet": {
+        "incident_count": 1,
+        "mrr": 0.125,
+        "symbol_recall_at_20": 1.0
+      },
+      "falconry/falcon": {
+        "incident_count": 1,
+        "mrr": 0.08333333333333333,
+        "symbol_recall_at_20": 1.0
+      },
+      "gitpython-developers/GitPython": {
+        "incident_count": 1,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      },
+      "iterative/dvc": {
+        "incident_count": 1,
+        "mrr": 0.3333333333333333,
+        "symbol_recall_at_20": 1.0
+      },
+      "jlowin/fastmcp": {
+        "incident_count": 3,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      },
+      "koxudaxi/datamodel-code-generator": {
+        "incident_count": 1,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      },
+      "mesonbuild/meson": {
+        "incident_count": 1,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      },
+      "networkx/networkx": {
+        "incident_count": 1,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      },
+      "patroni/patroni": {
+        "incident_count": 1,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      },
+      "piskvorky/smart_open": {
+        "incident_count": 1,
+        "mrr": 1.0,
+        "symbol_recall_at_20": 1.0
+      },
+      "py-pdf/pypdf": {
+        "incident_count": 1,
+        "mrr": 1.0,
+        "symbol_recall_at_20": 1.0
+      },
+      "pyca/cryptography": {
+        "incident_count": 1,
+        "mrr": 0.3333333333333333,
+        "symbol_recall_at_20": 1.0
+      },
+      "pyinfra-dev/pyinfra": {
+        "incident_count": 1,
+        "mrr": 0.2,
+        "symbol_recall_at_20": 1.0
+      },
+      "pymodbus-dev/pymodbus": {
+        "incident_count": 1,
+        "mrr": 0.3333333333333333,
+        "symbol_recall_at_20": 1.0
+      },
+      "pypa/twine": {
+        "incident_count": 1,
+        "mrr": 0.1111111111111111,
+        "symbol_recall_at_20": 1.0
+      },
+      "python/mypy": {
+        "incident_count": 3,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      },
+      "sissbruecker/linkding": {
+        "incident_count": 1,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      },
+      "slackapi/python-slack-sdk": {
+        "incident_count": 1,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      },
+      "sooperset/mcp-atlassian": {
+        "incident_count": 3,
+        "mrr": 0.39999999999999997,
+        "symbol_recall_at_20": 1.0
+      },
+      "stanfordnlp/dspy": {
+        "incident_count": 3,
+        "mrr": 0.030303030303030304,
+        "symbol_recall_at_20": 0.3333333333333333
+      },
+      "tox-dev/tox": {
+        "incident_count": 1,
+        "mrr": 0.05555555555555555,
+        "symbol_recall_at_20": 1.0
+      },
+      "traceloop/openllmetry": {
+        "incident_count": 1,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      }
+    },
+    "reciprocal_rank": 0.1410524891774892,
+    "repository_count": 31,
+    "repository_recall_lower_quartile": 0.0,
+    "runtime_seconds": 2.087378401099886,
+    "symbol_hit_at_10": 0.375,
+    "symbol_hit_at_20": 0.45,
+    "symbol_hit_at_5": 0.275,
+    "symbol_pool_hit_at_200": 0.45
+  },
+  "B_TRACE": {
+    "coverage": 0.875,
+    "false_localization": 0.925,
+    "file_hit_at_1": 0.075,
+    "file_hit_at_10": 0.1,
+    "file_hit_at_20": 0.1,
+    "file_hit_at_5": 0.1,
+    "incident_count": 40,
+    "median_inspected_symbols": 1.0,
+    "method": "B_TRACE",
+    "per_repository": {
+      "AgentOps-AI/agentops": {
+        "incident_count": 1,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      },
+      "Flexget/Flexget": {
+        "incident_count": 1,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      },
+      "Pyomo/pyomo": {
+        "incident_count": 1,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      },
+      "Textualize/textual": {
+        "incident_count": 2,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      },
+      "aws-cloudformation/cfn-lint": {
+        "incident_count": 1,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      },
+      "beeware/briefcase": {
+        "incident_count": 1,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      },
+      "certbot/certbot": {
+        "incident_count": 1,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      },
+      "conan-io/conan": {
+        "incident_count": 1,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      },
+      "dbcli/mycli": {
+        "incident_count": 1,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      },
+      "eventlet/eventlet": {
+        "incident_count": 1,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      },
+      "falconry/falcon": {
+        "incident_count": 1,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      },
+      "gitpython-developers/GitPython": {
+        "incident_count": 1,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      },
+      "iterative/dvc": {
+        "incident_count": 1,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      },
+      "jlowin/fastmcp": {
+        "incident_count": 3,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      },
+      "koxudaxi/datamodel-code-generator": {
+        "incident_count": 1,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      },
+      "mesonbuild/meson": {
+        "incident_count": 1,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      },
+      "networkx/networkx": {
+        "incident_count": 1,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      },
+      "patroni/patroni": {
+        "incident_count": 1,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      },
+      "piskvorky/smart_open": {
+        "incident_count": 1,
+        "mrr": 0.16666666666666666,
+        "symbol_recall_at_20": 1.0
+      },
+      "py-pdf/pypdf": {
+        "incident_count": 1,
+        "mrr": 0.3333333333333333,
+        "symbol_recall_at_20": 1.0
+      },
+      "pyca/cryptography": {
+        "incident_count": 1,
+        "mrr": 0.3333333333333333,
+        "symbol_recall_at_20": 1.0
+      },
+      "pyinfra-dev/pyinfra": {
+        "incident_count": 1,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      },
+      "pymodbus-dev/pymodbus": {
+        "incident_count": 1,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      },
+      "pypa/twine": {
+        "incident_count": 1,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      },
+      "python/mypy": {
+        "incident_count": 3,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      },
+      "sissbruecker/linkding": {
+        "incident_count": 1,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      },
+      "slackapi/python-slack-sdk": {
+        "incident_count": 1,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      },
+      "sooperset/mcp-atlassian": {
+        "incident_count": 3,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      },
+      "stanfordnlp/dspy": {
+        "incident_count": 3,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      },
+      "tox-dev/tox": {
+        "incident_count": 1,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      },
+      "traceloop/openllmetry": {
+        "incident_count": 1,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      }
+    },
+    "reciprocal_rank": 0.020833333333333332,
+    "repository_count": 31,
+    "repository_recall_lower_quartile": 0.0,
+    "runtime_seconds": 0.0001731480755552184,
+    "symbol_hit_at_10": 0.075,
+    "symbol_hit_at_20": 0.075,
+    "symbol_hit_at_5": 0.05,
+    "symbol_pool_hit_at_200": 0.075
+  },
+  "R10A": {
+    "coverage": 1.0,
+    "false_localization": 0.6,
+    "file_hit_at_1": 0.15,
+    "file_hit_at_10": 0.825,
+    "file_hit_at_20": 0.825,
+    "file_hit_at_5": 0.775,
+    "incident_count": 40,
+    "median_inspected_symbols": 20.0,
+    "method": "R10A",
+    "per_repository": {
+      "AgentOps-AI/agentops": {
+        "incident_count": 1,
+        "mrr": 0.1,
+        "symbol_recall_at_20": 1.0
+      },
+      "Flexget/Flexget": {
+        "incident_count": 1,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      },
+      "Pyomo/pyomo": {
+        "incident_count": 1,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      },
+      "Textualize/textual": {
+        "incident_count": 2,
+        "mrr": 0.11309523809523808,
+        "symbol_recall_at_20": 1.0
+      },
+      "aws-cloudformation/cfn-lint": {
+        "incident_count": 1,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      },
+      "beeware/briefcase": {
+        "incident_count": 1,
+        "mrr": 1.0,
+        "symbol_recall_at_20": 1.0
+      },
+      "certbot/certbot": {
+        "incident_count": 1,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      },
+      "conan-io/conan": {
+        "incident_count": 1,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      },
+      "dbcli/mycli": {
+        "incident_count": 1,
+        "mrr": 0.3333333333333333,
+        "symbol_recall_at_20": 1.0
+      },
+      "eventlet/eventlet": {
+        "incident_count": 1,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      },
+      "falconry/falcon": {
+        "incident_count": 1,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      },
+      "gitpython-developers/GitPython": {
+        "incident_count": 1,
+        "mrr": 0.1,
+        "symbol_recall_at_20": 1.0
+      },
+      "iterative/dvc": {
+        "incident_count": 1,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      },
+      "jlowin/fastmcp": {
+        "incident_count": 3,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      },
+      "koxudaxi/datamodel-code-generator": {
+        "incident_count": 1,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      },
+      "mesonbuild/meson": {
+        "incident_count": 1,
+        "mrr": 0.5,
+        "symbol_recall_at_20": 1.0
+      },
+      "networkx/networkx": {
+        "incident_count": 1,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      },
+      "patroni/patroni": {
+        "incident_count": 1,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      },
+      "piskvorky/smart_open": {
+        "incident_count": 1,
+        "mrr": 0.16666666666666666,
+        "symbol_recall_at_20": 1.0
+      },
+      "py-pdf/pypdf": {
+        "incident_count": 1,
+        "mrr": 0.25,
+        "symbol_recall_at_20": 1.0
+      },
+      "pyca/cryptography": {
+        "incident_count": 1,
+        "mrr": 0.14285714285714285,
+        "symbol_recall_at_20": 1.0
+      },
+      "pyinfra-dev/pyinfra": {
+        "incident_count": 1,
+        "mrr": 0.1,
+        "symbol_recall_at_20": 1.0
+      },
+      "pymodbus-dev/pymodbus": {
+        "incident_count": 1,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      },
+      "pypa/twine": {
+        "incident_count": 1,
+        "mrr": 0.25,
+        "symbol_recall_at_20": 1.0
+      },
+      "python/mypy": {
+        "incident_count": 3,
+        "mrr": 0.06666666666666667,
+        "symbol_recall_at_20": 0.3333333333333333
+      },
+      "sissbruecker/linkding": {
+        "incident_count": 1,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      },
+      "slackapi/python-slack-sdk": {
+        "incident_count": 1,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      },
+      "sooperset/mcp-atlassian": {
+        "incident_count": 3,
+        "mrr": 0.16666666666666666,
+        "symbol_recall_at_20": 0.6666666666666666
+      },
+      "stanfordnlp/dspy": {
+        "incident_count": 3,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      },
+      "tox-dev/tox": {
+        "incident_count": 1,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      },
+      "traceloop/openllmetry": {
+        "incident_count": 1,
+        "mrr": 0.1,
+        "symbol_recall_at_20": 1.0
+      }
+    },
+    "reciprocal_rank": 0.09922619047619048,
+    "repository_count": 31,
+    "repository_recall_lower_quartile": 0.0,
+    "runtime_seconds": 4.616968574549719,
+    "symbol_hit_at_10": 0.375,
+    "symbol_hit_at_20": 0.4,
+    "symbol_hit_at_5": 0.175,
+    "symbol_pool_hit_at_200": 0.4
+  },
+  "R10M": {
+    "coverage": 1.0,
+    "false_localization": 0.475,
+    "file_hit_at_1": 0.125,
+    "file_hit_at_10": 0.95,
+    "file_hit_at_20": 0.95,
+    "file_hit_at_5": 0.75,
+    "incident_count": 40,
+    "median_inspected_symbols": 20.0,
+    "method": "R10M",
+    "per_repository": {
+      "AgentOps-AI/agentops": {
+        "incident_count": 1,
+        "mrr": 0.05,
+        "symbol_recall_at_20": 1.0
+      },
+      "Flexget/Flexget": {
+        "incident_count": 1,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      },
+      "Pyomo/pyomo": {
+        "incident_count": 1,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      },
+      "Textualize/textual": {
+        "incident_count": 2,
+        "mrr": 0.11666666666666667,
+        "symbol_recall_at_20": 1.0
+      },
+      "aws-cloudformation/cfn-lint": {
+        "incident_count": 1,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      },
+      "beeware/briefcase": {
+        "incident_count": 1,
+        "mrr": 0.09090909090909091,
+        "symbol_recall_at_20": 1.0
+      },
+      "certbot/certbot": {
+        "incident_count": 1,
+        "mrr": 0.1,
+        "symbol_recall_at_20": 1.0
+      },
+      "conan-io/conan": {
+        "incident_count": 1,
+        "mrr": 0.2,
+        "symbol_recall_at_20": 1.0
+      },
+      "dbcli/mycli": {
+        "incident_count": 1,
+        "mrr": 0.25,
+        "symbol_recall_at_20": 1.0
+      },
+      "eventlet/eventlet": {
+        "incident_count": 1,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      },
+      "falconry/falcon": {
+        "incident_count": 1,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      },
+      "gitpython-developers/GitPython": {
+        "incident_count": 1,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      },
+      "iterative/dvc": {
+        "incident_count": 1,
+        "mrr": 0.16666666666666666,
+        "symbol_recall_at_20": 1.0
+      },
+      "jlowin/fastmcp": {
+        "incident_count": 3,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      },
+      "koxudaxi/datamodel-code-generator": {
+        "incident_count": 1,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      },
+      "mesonbuild/meson": {
+        "incident_count": 1,
+        "mrr": 0.16666666666666666,
+        "symbol_recall_at_20": 1.0
+      },
+      "networkx/networkx": {
+        "incident_count": 1,
+        "mrr": 0.09090909090909091,
+        "symbol_recall_at_20": 1.0
+      },
+      "patroni/patroni": {
+        "incident_count": 1,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      },
+      "piskvorky/smart_open": {
+        "incident_count": 1,
+        "mrr": 0.5,
+        "symbol_recall_at_20": 1.0
+      },
+      "py-pdf/pypdf": {
+        "incident_count": 1,
+        "mrr": 0.2,
+        "symbol_recall_at_20": 1.0
+      },
+      "pyca/cryptography": {
+        "incident_count": 1,
+        "mrr": 1.0,
+        "symbol_recall_at_20": 1.0
+      },
+      "pyinfra-dev/pyinfra": {
+        "incident_count": 1,
+        "mrr": 0.1,
+        "symbol_recall_at_20": 1.0
+      },
+      "pymodbus-dev/pymodbus": {
+        "incident_count": 1,
+        "mrr": 0.3333333333333333,
+        "symbol_recall_at_20": 1.0
+      },
+      "pypa/twine": {
+        "incident_count": 1,
+        "mrr": 0.5,
+        "symbol_recall_at_20": 1.0
+      },
+      "python/mypy": {
+        "incident_count": 3,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      },
+      "sissbruecker/linkding": {
+        "incident_count": 1,
+        "mrr": 0.05263157894736842,
+        "symbol_recall_at_20": 1.0
+      },
+      "slackapi/python-slack-sdk": {
+        "incident_count": 1,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      },
+      "sooperset/mcp-atlassian": {
+        "incident_count": 3,
+        "mrr": 0.3666666666666667,
+        "symbol_recall_at_20": 0.6666666666666666
+      },
+      "stanfordnlp/dspy": {
+        "incident_count": 3,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      },
+      "tox-dev/tox": {
+        "incident_count": 1,
+        "mrr": 0.07142857142857142,
+        "symbol_recall_at_20": 1.0
+      },
+      "traceloop/openllmetry": {
+        "incident_count": 1,
+        "mrr": 0.1111111111111111,
+        "symbol_recall_at_20": 1.0
+      }
+    },
+    "reciprocal_rank": 0.13292473608263083,
+    "repository_count": 31,
+    "repository_recall_lower_quartile": 0.0,
+    "runtime_seconds": 16.082878463775888,
+    "symbol_hit_at_10": 0.375,
+    "symbol_hit_at_20": 0.525,
+    "symbol_hit_at_5": 0.2,
+    "symbol_pool_hit_at_200": 0.875
+  },
+  "R9": {
+    "coverage": 1.0,
+    "false_localization": 0.45,
+    "file_hit_at_1": 0.1,
+    "file_hit_at_10": 0.875,
+    "file_hit_at_20": 0.875,
+    "file_hit_at_5": 0.8,
+    "incident_count": 40,
+    "median_inspected_symbols": 20.0,
+    "method": "R9",
+    "per_repository": {
+      "AgentOps-AI/agentops": {
+        "incident_count": 1,
+        "mrr": 0.5,
+        "symbol_recall_at_20": 1.0
+      },
+      "Flexget/Flexget": {
+        "incident_count": 1,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      },
+      "Pyomo/pyomo": {
+        "incident_count": 1,
+        "mrr": 0.3333333333333333,
+        "symbol_recall_at_20": 1.0
+      },
+      "Textualize/textual": {
+        "incident_count": 2,
+        "mrr": 0.25,
+        "symbol_recall_at_20": 1.0
+      },
+      "aws-cloudformation/cfn-lint": {
+        "incident_count": 1,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      },
+      "beeware/briefcase": {
+        "incident_count": 1,
+        "mrr": 0.125,
+        "symbol_recall_at_20": 1.0
+      },
+      "certbot/certbot": {
+        "incident_count": 1,
+        "mrr": 0.5,
+        "symbol_recall_at_20": 1.0
+      },
+      "conan-io/conan": {
+        "incident_count": 1,
+        "mrr": 0.5,
+        "symbol_recall_at_20": 1.0
+      },
+      "dbcli/mycli": {
+        "incident_count": 1,
+        "mrr": 0.5,
+        "symbol_recall_at_20": 1.0
+      },
+      "eventlet/eventlet": {
+        "incident_count": 1,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      },
+      "falconry/falcon": {
+        "incident_count": 1,
+        "mrr": 0.2,
+        "symbol_recall_at_20": 1.0
+      },
+      "gitpython-developers/GitPython": {
+        "incident_count": 1,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      },
+      "iterative/dvc": {
+        "incident_count": 1,
+        "mrr": 0.05,
+        "symbol_recall_at_20": 1.0
+      },
+      "jlowin/fastmcp": {
+        "incident_count": 3,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      },
+      "koxudaxi/datamodel-code-generator": {
+        "incident_count": 1,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      },
+      "mesonbuild/meson": {
+        "incident_count": 1,
+        "mrr": 0.5,
+        "symbol_recall_at_20": 1.0
+      },
+      "networkx/networkx": {
+        "incident_count": 1,
+        "mrr": 0.25,
+        "symbol_recall_at_20": 1.0
+      },
+      "patroni/patroni": {
+        "incident_count": 1,
+        "mrr": 0.125,
+        "symbol_recall_at_20": 1.0
+      },
+      "piskvorky/smart_open": {
+        "incident_count": 1,
+        "mrr": 0.25,
+        "symbol_recall_at_20": 1.0
+      },
+      "py-pdf/pypdf": {
+        "incident_count": 1,
+        "mrr": 1.0,
+        "symbol_recall_at_20": 1.0
+      },
+      "pyca/cryptography": {
+        "incident_count": 1,
+        "mrr": 1.0,
+        "symbol_recall_at_20": 1.0
+      },
+      "pyinfra-dev/pyinfra": {
+        "incident_count": 1,
+        "mrr": 0.2,
+        "symbol_recall_at_20": 1.0
+      },
+      "pymodbus-dev/pymodbus": {
+        "incident_count": 1,
+        "mrr": 0.3333333333333333,
+        "symbol_recall_at_20": 1.0
+      },
+      "pypa/twine": {
+        "incident_count": 1,
+        "mrr": 0.5,
+        "symbol_recall_at_20": 1.0
+      },
+      "python/mypy": {
+        "incident_count": 3,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      },
+      "sissbruecker/linkding": {
+        "incident_count": 1,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      },
+      "slackapi/python-slack-sdk": {
+        "incident_count": 1,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      },
+      "sooperset/mcp-atlassian": {
+        "incident_count": 3,
+        "mrr": 0.25416666666666665,
+        "symbol_recall_at_20": 1.0
+      },
+      "stanfordnlp/dspy": {
+        "incident_count": 3,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      },
+      "tox-dev/tox": {
+        "incident_count": 1,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      },
+      "traceloop/openllmetry": {
+        "incident_count": 1,
+        "mrr": 0.0,
+        "symbol_recall_at_20": 0.0
+      }
+    },
+    "reciprocal_rank": 0.20322916666666666,
+    "repository_count": 31,
+    "repository_recall_lower_quartile": 0.0,
+    "runtime_seconds": 12.88375846814979,
+    "symbol_hit_at_10": 0.5,
+    "symbol_hit_at_20": 0.55,
+    "symbol_hit_at_5": 0.425,
+    "symbol_pool_hit_at_200": 0.55
+  }
+}

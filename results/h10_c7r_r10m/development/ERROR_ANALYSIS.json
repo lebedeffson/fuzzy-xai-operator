@@ -1,0 +1,379 @@
+{
+  "categories": {
+    "FINAL_RERANK_MISS": 14,
+    "SYMBOL_POOL_MISS": 5,
+    "TOP20_HIT": 21
+  },
+  "file_retrieval_miss_at_20": 2,
+  "incidents": [
+    {
+      "category": "TOP20_HIT",
+      "file_rank": 2,
+      "incident_id": "pymodbus-dev__pymodbus-2678",
+      "pool_rank": 13,
+      "r9_symbol_rank": 3,
+      "repository": "pymodbus-dev/pymodbus",
+      "symbol_rank": 3
+    },
+    {
+      "category": "FINAL_RERANK_MISS",
+      "file_rank": 2,
+      "incident_id": "patroni__patroni-3373",
+      "pool_rank": 15,
+      "r9_symbol_rank": 8,
+      "repository": "patroni/patroni",
+      "symbol_rank": 0
+    },
+    {
+      "category": "FINAL_RERANK_MISS",
+      "file_rank": 8,
+      "incident_id": "jlowin__fastmcp-677",
+      "pool_rank": 107,
+      "r9_symbol_rank": 0,
+      "repository": "jlowin/fastmcp",
+      "symbol_rank": 0
+    },
+    {
+      "category": "SYMBOL_POOL_MISS",
+      "file_rank": 0,
+      "incident_id": "stanfordnlp__dspy-8360",
+      "pool_rank": 0,
+      "r9_symbol_rank": 0,
+      "repository": "stanfordnlp/dspy",
+      "symbol_rank": 0
+    },
+    {
+      "category": "TOP20_HIT",
+      "file_rank": 4,
+      "incident_id": "Textualize__textual-5829",
+      "pool_rank": 8,
+      "r9_symbol_rank": 6,
+      "repository": "Textualize/textual",
+      "symbol_rank": 6
+    },
+    {
+      "category": "SYMBOL_POOL_MISS",
+      "file_rank": 2,
+      "incident_id": "python__mypy-19290",
+      "pool_rank": 0,
+      "r9_symbol_rank": 0,
+      "repository": "python/mypy",
+      "symbol_rank": 0
+    },
+    {
+      "category": "TOP20_HIT",
+      "file_rank": 8,
+      "incident_id": "tox-dev__tox-3540",
+      "pool_rank": 18,
+      "r9_symbol_rank": 0,
+      "repository": "tox-dev/tox",
+      "symbol_rank": 14
+    },
+    {
+      "category": "TOP20_HIT",
+      "file_rank": 5,
+      "incident_id": "mesonbuild__meson-14698",
+      "pool_rank": 1,
+      "r9_symbol_rank": 2,
+      "repository": "mesonbuild/meson",
+      "symbol_rank": 6
+    },
+    {
+      "category": "TOP20_HIT",
+      "file_rank": 3,
+      "incident_id": "certbot__certbot-10317",
+      "pool_rank": 117,
+      "r9_symbol_rank": 2,
+      "repository": "certbot/certbot",
+      "symbol_rank": 10
+    },
+    {
+      "category": "TOP20_HIT",
+      "file_rank": 3,
+      "incident_id": "dbcli__mycli-1238",
+      "pool_rank": 3,
+      "r9_symbol_rank": 2,
+      "repository": "dbcli/mycli",
+      "symbol_rank": 4
+    },
+    {
+      "category": "TOP20_HIT",
+      "file_rank": 1,
+      "incident_id": "piskvorky__smart_open-863",
+      "pool_rank": 11,
+      "r9_symbol_rank": 4,
+      "repository": "piskvorky/smart_open",
+      "symbol_rank": 2
+    },
+    {
+      "category": "FINAL_RERANK_MISS",
+      "file_rank": 6,
+      "incident_id": "slackapi__python-slack-sdk-1703",
+      "pool_rank": 56,
+      "r9_symbol_rank": 0,
+      "repository": "slackapi/python-slack-sdk",
+      "symbol_rank": 0
+    },
+    {
+      "category": "TOP20_HIT",
+      "file_rank": 2,
+      "incident_id": "iterative__dvc-10778",
+      "pool_rank": 83,
+      "r9_symbol_rank": 20,
+      "repository": "iterative/dvc",
+      "symbol_rank": 6
+    },
+    {
+      "category": "SYMBOL_POOL_MISS",
+      "file_rank": 6,
+      "incident_id": "python__mypy-19249",
+      "pool_rank": 0,
+      "r9_symbol_rank": 0,
+      "repository": "python/mypy",
+      "symbol_rank": 0
+    },
+    {
+      "category": "TOP20_HIT",
+      "file_rank": 1,
+      "incident_id": "AgentOps-AI__agentops-1091",
+      "pool_rank": 56,
+      "r9_symbol_rank": 2,
+      "repository": "AgentOps-AI/agentops",
+      "symbol_rank": 20
+    },
+    {
+      "category": "TOP20_HIT",
+      "file_rank": 2,
+      "incident_id": "sooperset__mcp-atlassian-533",
+      "pool_rank": 11,
+      "r9_symbol_rank": 2,
+      "repository": "sooperset/mcp-atlassian",
+      "symbol_rank": 1
+    },
+    {
+      "category": "FINAL_RERANK_MISS",
+      "file_rank": 10,
+      "incident_id": "python__mypy-19190",
+      "pool_rank": 5,
+      "r9_symbol_rank": 0,
+      "repository": "python/mypy",
+      "symbol_rank": 0
+    },
+    {
+      "category": "FINAL_RERANK_MISS",
+      "file_rank": 5,
+      "incident_id": "jlowin__fastmcp-754",
+      "pool_rank": 36,
+      "r9_symbol_rank": 0,
+      "repository": "jlowin/fastmcp",
+      "symbol_rank": 0
+    },
+    {
+      "category": "FINAL_RERANK_MISS",
+      "file_rank": 8,
+      "incident_id": "aws-cloudformation__cfn-lint-4162",
+      "pool_rank": 122,
+      "r9_symbol_rank": 0,
+      "repository": "aws-cloudformation/cfn-lint",
+      "symbol_rank": 0
+    },
+    {
+      "category": "FINAL_RERANK_MISS",
+      "file_rank": 4,
+      "incident_id": "eventlet__eventlet-1047",
+      "pool_rank": 11,
+      "r9_symbol_rank": 0,
+      "repository": "eventlet/eventlet",
+      "symbol_rank": 0
+    },
+    {
+      "category": "TOP20_HIT",
+      "file_rank": 5,
+      "incident_id": "sissbruecker__linkding-1101",
+      "pool_rank": 131,
+      "r9_symbol_rank": 0,
+      "repository": "sissbruecker/linkding",
+      "symbol_rank": 19
+    },
+    {
+      "category": "TOP20_HIT",
+      "file_rank": 3,
+      "incident_id": "pyca__cryptography-13032",
+      "pool_rank": 10,
+      "r9_symbol_rank": 1,
+      "repository": "pyca/cryptography",
+      "symbol_rank": 1
+    },
+    {
+      "category": "TOP20_HIT",
+      "file_rank": 2,
+      "incident_id": "pyinfra-dev__pyinfra-1367",
+      "pool_rank": 103,
+      "r9_symbol_rank": 5,
+      "repository": "pyinfra-dev/pyinfra",
+      "symbol_rank": 10
+    },
+    {
+      "category": "TOP20_HIT",
+      "file_rank": 3,
+      "incident_id": "sooperset__mcp-atlassian-536",
+      "pool_rank": 51,
+      "r9_symbol_rank": 5,
+      "repository": "sooperset/mcp-atlassian",
+      "symbol_rank": 10
+    },
+    {
+      "category": "FINAL_RERANK_MISS",
+      "file_rank": 5,
+      "incident_id": "falconry__falcon-2459",
+      "pool_rank": 120,
+      "r9_symbol_rank": 5,
+      "repository": "falconry/falcon",
+      "symbol_rank": 0
+    },
+    {
+      "category": "FINAL_RERANK_MISS",
+      "file_rank": 2,
+      "incident_id": "stanfordnlp__dspy-8340",
+      "pool_rank": 47,
+      "r9_symbol_rank": 0,
+      "repository": "stanfordnlp/dspy",
+      "symbol_rank": 0
+    },
+    {
+      "category": "TOP20_HIT",
+      "file_rank": 2,
+      "incident_id": "pypa__twine-1249",
+      "pool_rank": 4,
+      "r9_symbol_rank": 2,
+      "repository": "pypa/twine",
+      "symbol_rank": 2
+    },
+    {
+      "category": "FINAL_RERANK_MISS",
+      "file_rank": 2,
+      "incident_id": "stanfordnlp__dspy-8394",
+      "pool_rank": 29,
+      "r9_symbol_rank": 0,
+      "repository": "stanfordnlp/dspy",
+      "symbol_rank": 0
+    },
+    {
+      "category": "FINAL_RERANK_MISS",
+      "file_rank": 6,
+      "incident_id": "jlowin__fastmcp-690",
+      "pool_rank": 112,
+      "r9_symbol_rank": 0,
+      "repository": "jlowin/fastmcp",
+      "symbol_rank": 0
+    },
+    {
+      "category": "FINAL_RERANK_MISS",
+      "file_rank": 1,
+      "incident_id": "sooperset__mcp-atlassian-531",
+      "pool_rank": 89,
+      "r9_symbol_rank": 16,
+      "repository": "sooperset/mcp-atlassian",
+      "symbol_rank": 0
+    },
+    {
+      "category": "SYMBOL_POOL_MISS",
+      "file_rank": 9,
+      "incident_id": "koxudaxi__datamodel-code-generator-2418",
+      "pool_rank": 0,
+      "r9_symbol_rank": 0,
+      "repository": "koxudaxi/datamodel-code-generator",
+      "symbol_rank": 0
+    },
+    {
+      "category": "SYMBOL_POOL_MISS",
+      "file_rank": 5,
+      "incident_id": "gitpython-developers__GitPython-2035",
+      "pool_rank": 0,
+      "r9_symbol_rank": 0,
+      "repository": "gitpython-developers/GitPython",
+      "symbol_rank": 0
+    },
+    {
+      "category": "FINAL_RERANK_MISS",
+      "file_rank": 2,
+      "incident_id": "Pyomo__pyomo-3633",
+      "pool_rank": 2,
+      "r9_symbol_rank": 3,
+      "repository": "Pyomo/pyomo",
+      "symbol_rank": 0
+    },
+    {
+      "category": "TOP20_HIT",
+      "file_rank": 1,
+      "incident_id": "beeware__briefcase-2333",
+      "pool_rank": 36,
+      "r9_symbol_rank": 8,
+      "repository": "beeware/briefcase",
+      "symbol_rank": 11
+    },
+    {
+      "category": "TOP20_HIT",
+      "file_rank": 2,
+      "incident_id": "Textualize__textual-5863",
+      "pool_rank": 15,
+      "r9_symbol_rank": 3,
+      "repository": "Textualize/textual",
+      "symbol_rank": 15
+    },
+    {
+      "category": "FINAL_RERANK_MISS",
+      "file_rank": 22,
+      "incident_id": "Flexget__Flexget-4441",
+      "pool_rank": 108,
+      "r9_symbol_rank": 0,
+      "repository": "Flexget/Flexget",
+      "symbol_rank": 0
+    },
+    {
+      "category": "TOP20_HIT",
+      "file_rank": 2,
+      "incident_id": "conan-io__conan-18410",
+      "pool_rank": 9,
+      "r9_symbol_rank": 2,
+      "repository": "conan-io/conan",
+      "symbol_rank": 5
+    },
+    {
+      "category": "TOP20_HIT",
+      "file_rank": 2,
+      "incident_id": "py-pdf__pypdf-3317",
+      "pool_rank": 9,
+      "r9_symbol_rank": 1,
+      "repository": "py-pdf/pypdf",
+      "symbol_rank": 5
+    },
+    {
+      "category": "TOP20_HIT",
+      "file_rank": 2,
+      "incident_id": "networkx__networkx-8105",
+      "pool_rank": 63,
+      "r9_symbol_rank": 4,
+      "repository": "networkx/networkx",
+      "symbol_rank": 11
+    },
+    {
+      "category": "TOP20_HIT",
+      "file_rank": 1,
+      "incident_id": "traceloop__openllmetry-2979",
+      "pool_rank": 18,
+      "r9_symbol_rank": 0,
+      "repository": "traceloop/openllmetry",
+      "symbol_rank": 9
+    }
+  ],
+  "interpretation": "File localization transferred, but the frozen symbol pool and final four-rank RRF did not reach the registered symbol endpoint.",
+  "protocol_id": "H10-C7R-R10M-v1",
+  "r10m_r9_overlap": {
+    "R10M_HIT|R9_HIT": 18,
+    "R10M_HIT|R9_MISS": 3,
+    "R10M_MISS|R9_HIT": 4,
+    "R10M_MISS|R9_MISS": 15
+  },
+  "status": "H10_C7R_R10M_DEVELOPMENT_NOT_SUPPORTED"
+}

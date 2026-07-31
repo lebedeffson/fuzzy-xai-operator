@@ -1,0 +1,36 @@
+{
+  "derived_gold": [
+    {
+      "atom_count": 2,
+      "atoms": [
+        {
+          "contract": "NOT_SCORED",
+          "file_path": "conan/internal/api/detect/detect_api.py",
+          "symbol": "_cc_compiler"
+        },
+        {
+          "contract": "NOT_SCORED",
+          "file_path": "conan/internal/api/detect/detect_api.py",
+          "symbol": "detect_gcc_compiler"
+        }
+      ],
+      "derivation": "changed_old_lines_to_enclosing_source_definition",
+      "incident_id": "conan-io__conan-18410"
+    }
+  ],
+  "deterministically_derived_gold_count": 1,
+  "development_gold_sha256": "2f26307c38f1a5e5550e6eb125bf8040d444b7a5f24e225bc8356e9e4398466a",
+  "held_out_created": false,
+  "held_out_scored": false,
+  "incident_count": 40,
+  "observable_gold_leakage": 0,
+  "observable_manifest_sha256": "5f96dca0ceed7dc2395f414c339f631ab9b9b0b86505bf6604e44b5e8ffe4772",
+  "protocol_id": "H10-C7R-R10M-v1",
+  "repository_count": 31,
+  "reused_sealed_gold_count": 39,
+  "runtime_readiness_sha256": "e1c98b7715d6cb75e14b243582ba38e8de21a243964cdd65cfc62a25946f2e02",
+  "runtime_ready_count": 40,
+  "scientific_result": "NOT_EVALUATED",
+  "status": "PASS",
+  "v1_evidence_sha256": "1016bbd2222ba2f93719f8b3df2d04f96ad7ed6aa422b86b8cfa97d167eb8f63"
+}

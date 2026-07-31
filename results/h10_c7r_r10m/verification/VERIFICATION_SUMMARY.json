@@ -1,0 +1,41 @@
+{
+  "claim_lint": {
+    "files_checked": 58,
+    "status": "PASS",
+    "violations": 0
+  },
+  "clean_source_release": {
+    "status": "PENDING_ARCHIVE_BUILD"
+  },
+  "compileall": {
+    "status": "PASS"
+  },
+  "focused_tests": {
+    "passed": 115,
+    "status": "PASS"
+  },
+  "full_regression": {
+    "passed": 828,
+    "skipped": 6,
+    "status": "PASS"
+  },
+  "internal_sha256_manifests": {
+    "status": "PENDING_ARCHIVE_BUILD"
+  },
+  "operator_manifest": {
+    "operator_count": 41,
+    "status": "PASS"
+  },
+  "parent_result_immutability": {
+    "files_checked": 114,
+    "status": "PASS"
+  },
+  "ruff_changed_scope": {
+    "status": "PASS"
+  },
+  "ruff_repository_baseline": {
+    "finding_count": 702,
+    "status": "HISTORICAL_FINDINGS_OUTSIDE_R10M_SCOPE"
+  },
+  "status": "PASS"
+}

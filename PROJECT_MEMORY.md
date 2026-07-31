@@ -1,5 +1,40 @@
 # Project Memory
 
+## FXAI-H10-C7R-R10M-FINAL-DEVELOPMENT
+
+- Date: 2026-07-31
+- Branch: `feat/h10-c7r-r10-causal-retrieval`
+- Protocol: `H10-C7R-R10M-v1`
+- Implementation/scoring commit: `045cecaccd49f09001eb4c31436bb9d490480083`
+- Status: `H10_C7R_R10M_DEVELOPMENT_NOT_SUPPORTED`
+- Scientific result: `NOT_EVALUATED`
+- Development: `40 incidents / 31 repositories`, all `R10_RUNTIME_READY`
+- Held-out created/scored: `false/false`
+- Chapter DOCX/PDF modified: `false`
+
+The final registered R10M contour used frozen GraphCodeBERT and BGE reranker
+snapshots with local-only inference, deterministic file-first retrieval,
+causal runtime evidence, a 200-symbol pool and fixed RRF fusion. The model
+weights were not fine-tuned on the 40 disclosed development incidents. Gold
+remained physically separate and the observable leakage audit passed with
+zero violations.
+
+The single development scoring produced coverage `1.0`, file Recall@10
+`0.95`, file Recall@20 `0.95`, symbol-pool Recall@200 `0.875`, symbol
+Recall@20 `0.525`, MRR `0.1329`, false localization `0.475`, and repository
+lower-quartile recall `0.0`. R10M did not exceed frozen R9 symbol Recall@20
+`0.55`, did not exceed B_BM25 MRR `0.1411`, and did not pass the registered
+development gate. No threshold, model, channel, budget, incident, or protocol
+criterion was changed after scoring. Per protocol, no confirmatory held-out
+was created and no further R10/R11/R12 variant is opened.
+
+Acceptance completed with `115` focused tests and a full regression of `828
+passed, 6 skipped`. Changed-scope Ruff, compileall, claim lint, operator
+manifest validation, and all `114` parent-result SHA256 checks passed. The
+repository-wide Ruff baseline still contains historical findings outside the
+R10M change scope and is preserved in the verification evidence rather than
+silently rewritten.
+
 ## FXAI-H10-C7R-PROSPECTIVE-RETRIEVAL-LOCK
 
 - Protocol: `H10-C7R-v1`
