@@ -1423,6 +1423,21 @@ h10-c7r-r10-development:
 	test -n "$(H10_C7R_R10_OUTPUT)"
 	HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 $(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/run_h10_c7r_r10_development.py --manifest "$(H10_C7R_R10_MANIFEST)" --gold "$(H10_C7R_R10_GOLD)" --exclusion-lock protocol/h10_c7r/H10_C7R_EXCLUSION_LOCK.json --readiness "$(H10_C7R_R10_READINESS)" --output "$(H10_C7R_R10_OUTPUT)"
 
+.PHONY: h10-c7r-r10m-test h10-c7r-r10m-prepare h10-c7r-r10m-development
+
+h10-c7r-r10m-test:
+	$(H10_C4_ENV) $(H10_C3_PYTHON) -m ruff check framework/fuzzyxai/fuzzyxai/experiments/h10_c7r_r10m.py scripts/ch4_revision/lock_h10_c7r_r10m.py scripts/ch4_revision/prepare_h10_c7r_r10m_development.py scripts/ch4_revision/run_h10_c7r_r10m_development.py tests/h10_c7/test_r10m_retrieval.py
+	$(H10_C4_ENV) $(H10_C3_PYTHON) -m pytest -q tests/h10_c7/test_r10m_retrieval.py tests/h10_c7/test_r10_causal_retrieval.py
+
+h10-c7r-r10m-prepare:
+	test -n "$(H10_C7R_R10_RECOLLECTION_ROOT)"
+	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/prepare_h10_c7r_r10m_development.py --recollection-root "$(H10_C7R_R10_RECOLLECTION_ROOT)" --v1-evidence release_artifacts/fuzzyxai-h10-c7r-evidence-e08dcfe465dd.zip --output results/h10_c7r_r10m/inputs
+
+h10-c7r-r10m-development:
+	test -n "$(H10_C7R_R10_RECOLLECTION_ROOT)"
+	test -n "$(H10_C7R_R10M_MODEL_CACHE)"
+	HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 $(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/run_h10_c7r_r10m_development.py --recollection-root "$(H10_C7R_R10_RECOLLECTION_ROOT)" --gold results/h10_c7r_r10m/inputs/DEVELOPMENT_GOLD.jsonl --exclusion-lock protocol/h10_c7r/H10_C7R_EXCLUSION_LOCK.json --model-lock protocol/h10_c7r_r10m/R10M_MODEL_LOCK.json --cache "$(H10_C7R_R10M_MODEL_CACHE)" --output results/h10_c7r_r10m/development
+
 h10-c5b-prepare:
 	test -n "$(H10_C5B_SOURCE_DIR)"
 	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/prepare_h10_c5b_sources.py --output "$(H10_C5B_SOURCE_DIR)"
