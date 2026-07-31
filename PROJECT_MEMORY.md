@@ -1,5 +1,37 @@
 # Project Memory
 
+## FUZZYXAI-ML-PIPELINE-V2
+
+- Date: 2026-07-31
+- Branch: `feat/fuzzyxai-ml-pipeline-v2`
+- Protocol: `FUZZYXAI_ML_PIPELINE_V2`
+- Protocol commit: `59f3d2e3f46f80e5356f180a61dd6b78dfc9c709`
+- Implementation commit: `1733833`
+- Status: `FUZZYXAI_ML_PIPELINE_V2_IMPLEMENTED`
+- Result type: `ENGINEERING_IMPLEMENTATION`
+- DOCX/PDF modified: `false`
+
+The existing ML Vertical v1 was extended without changing S1-S10. The V2
+pipeline executes real deterministic dataset preparation, split,
+`StandardScaler`, `LogisticRegression`, model serialization, inference, SHAP,
+FuzzyXAI diagnosis, registered repair and full-route recertification. S11-S18
+cover target leakage, split overlap, preprocessor fit scope, feature order,
+model convergence, artifact integrity, SHAP consistency and explanation
+provenance.
+
+Acceptance passed all `18/18` scenarios with zero false certifications and
+stage-localization, violated-contract, representation and observer-action
+accuracy of `1.0`. All five registered repair scenarios completed full
+recertification with rollback verification and zero new critical violations.
+Exactly 18 MLflow runs were recorded, each with all 14 required artifacts.
+REST, UI and Docker smoke checks passed. Parent immutability verified 1322
+files, and V1 semantic immutability was `1.0`.
+
+Focused validation passed `48` tests. The final detached-worktree regression
+passed `874` tests with `8` skips. This result demonstrates engineering
+execution and contract control only; it is not a clinical evaluation, user
+study, or evidence of reduced human time.
+
 ## FXAI-H10-C7R-R10M-FINAL-DEVELOPMENT
 
 - Date: 2026-07-31
