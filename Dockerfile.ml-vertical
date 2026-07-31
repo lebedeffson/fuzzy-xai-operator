@@ -9,8 +9,17 @@ ENV PYTHONUNBUFFERED=1 \
     NUMEXPR_NUM_THREADS=1
 
 COPY pyproject.toml README.md LICENSE /app/
+RUN python - <<'PY'
+import tomllib
+from pathlib import Path
+
+project = tomllib.loads(Path("pyproject.toml").read_text())["project"]
+requirements = [*project["dependencies"], *project["optional-dependencies"]["ml-vertical"]]
+Path("/tmp/ml-pipeline-requirements.txt").write_text("\n".join(requirements) + "\n")
+PY
+RUN python -m pip install --no-cache-dir -r /tmp/ml-pipeline-requirements.txt
 COPY framework /app/framework
-RUN python -m pip install --no-cache-dir ".[ml-vertical]"
+RUN python -m pip install --no-cache-dir --no-deps .
 COPY . /app
 
 CMD ["python", "-m", "uvicorn", "fuzzyxai.ml_vertical.api:app", "--host", "0.0.0.0", "--port", "8000"]
