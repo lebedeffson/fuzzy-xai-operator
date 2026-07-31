@@ -1,0 +1,28 @@
+{
+  "case_count": 200,
+  "decision_count": 1000,
+  "gold_available_to_modes": false,
+  "implementation_commit": "a4a59fdba563dbd8ee76c32540d0299cff9b457e",
+  "locked_source_sha256": {
+    "apps/cross_pipeline_practical.py": "ab52620a39c8bc15d99316892a859c92f55f5ef54385e06045a72d02edc63d8a",
+    "data/cross_pipeline_v1/mixed_features.csv": "bb7cc5876217d161881c455147fedfa47c87da60d50fcb5f39cab827e6f76f0a",
+    "framework/fuzzyxai/fuzzyxai/pipelines/practical.py": "080a4e37e196a1af1720ecb27042914f342261ec87def447ebfea9fccfb40d8f",
+    "framework/fuzzyxai/fuzzyxai/pipelines/practical_api.py": "7c9428c214166086a9417c9052c7df0d2e8a3806f965cd781f2f323779b66819",
+    "framework/fuzzyxai/fuzzyxai/pipelines/practical_tracking.py": "820a81590a9b0516eb76ceefe6a398e9322cfd168fa7c465485aa5c94a108f51",
+    "framework/fuzzyxai/fuzzyxai/pipelines/registry.py": "7c350bf8b2974b57ecc6509d75b38498f0f3c9fcb4160454531843882214da87",
+    "scripts/cross_pipeline_v1/run_evaluation.py": "238d57c0bf70d0aeb8b2d062f78dba3c9a8ed5092fa47fa8e1dd129980a52231"
+  },
+  "mode_count": 5,
+  "protocol": "FUZZYXAI_CROSS_PIPELINE_PRACTICAL_V1",
+  "protocol_file_sha256": {
+    "ACCEPTANCE_CRITERIA.json": "132a573f56d3dd31c4036bc86c890dcc701b9683036260b3eabb23a6c2252aa0",
+    "BASELINE_LOCK.json": "8b9a85e317056562de21973ede8f1730a7d57a9e6bc455e1121faf564bfef6e8",
+    "METRIC_LOCK.json": "a43da15812eb85f52c8370e76df8d0cfcdc9576c1fc0c973ebb57e98db8555be",
+    "MUTATION_MATRIX.json": "b3427e8e7928db8c70e3ed4ad167cadae9998f590b91bd4370355301fe86bba7",
+    "PARENT_FILES_SHA256.json": "d6afa74c680b7f62ea9d6785f5c0c487e8f4e6f5d2ff796ea181aeadc2d646b7",
+    "PIPELINE_LOCK.json": "6c2f36dd8d8504b3adece4cb71de91f551dd7af596fdfc7ea6047ef438beed9b",
+    "REPAIR_REGISTRY.json": "d7edee02a5fc94c94f94d39417d9487b965289a2055a85f170ba070c67148312",
+    "STATISTICAL_PLAN.json": "cb6a68b52de9eaf4dda1f870a73b0d923e6d2eda79b3c23e87ee8ca1c7a03a76"
+  },
+  "status": "LOCKED_BEFORE_SCORING"
+}

@@ -1,0 +1,2005 @@
+{
+  "case_count": 200,
+  "cases": [
+    {
+      "category": "LOCAL",
+      "description": "registered positive control",
+      "expected_action": "ACCEPT",
+      "expected_contract": null,
+      "expected_stage": null,
+      "mutation_family": "TRANSFORM_FINITE",
+      "mutation_level": "L0",
+      "pipeline_id": "breast-cancer-logreg-linearshap"
+    },
+    {
+      "category": "LOCAL",
+      "description": "one NaN",
+      "expected_action": "BLOCK",
+      "expected_contract": "FINITE_TRANSFORMED_VALUES",
+      "expected_stage": "PREPROCESSING",
+      "mutation_family": "TRANSFORM_FINITE",
+      "mutation_level": "L1",
+      "pipeline_id": "breast-cancer-logreg-linearshap"
+    },
+    {
+      "category": "LOCAL",
+      "description": "one positive infinity",
+      "expected_action": "BLOCK",
+      "expected_contract": "FINITE_TRANSFORMED_VALUES",
+      "expected_stage": "PREPROCESSING",
+      "mutation_family": "TRANSFORM_FINITE",
+      "mutation_level": "L2",
+      "pipeline_id": "breast-cancer-logreg-linearshap"
+    },
+    {
+      "category": "LOCAL",
+      "description": "one negative infinity",
+      "expected_action": "BLOCK",
+      "expected_contract": "FINITE_TRANSFORMED_VALUES",
+      "expected_stage": "PREPROCESSING",
+      "mutation_family": "TRANSFORM_FINITE",
+      "mutation_level": "L3",
+      "pipeline_id": "breast-cancer-logreg-linearshap"
+    },
+    {
+      "category": "LOCAL",
+      "description": "multiple non-finite values",
+      "expected_action": "BLOCK",
+      "expected_contract": "FINITE_TRANSFORMED_VALUES",
+      "expected_stage": "PREPROCESSING",
+      "mutation_family": "TRANSFORM_FINITE",
+      "mutation_level": "L4",
+      "pipeline_id": "breast-cancer-logreg-linearshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "registered positive control",
+      "expected_action": "ACCEPT",
+      "expected_contract": null,
+      "expected_stage": null,
+      "mutation_family": "MODEL_ARTIFACT",
+      "mutation_level": "L0",
+      "pipeline_id": "breast-cancer-logreg-linearshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "one-byte mutation",
+      "expected_action": "BLOCK",
+      "expected_contract": "MODEL_ARTIFACT_HASH",
+      "expected_stage": "MODEL_ARTIFACT",
+      "mutation_family": "MODEL_ARTIFACT",
+      "mutation_level": "L1",
+      "pipeline_id": "breast-cancer-logreg-linearshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "truncated artifact",
+      "expected_action": "BLOCK",
+      "expected_contract": "MODEL_ARTIFACT_HASH",
+      "expected_stage": "MODEL_ARTIFACT",
+      "mutation_family": "MODEL_ARTIFACT",
+      "mutation_level": "L2",
+      "pipeline_id": "breast-cancer-logreg-linearshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "foreign model digest",
+      "expected_action": "BLOCK",
+      "expected_contract": "MODEL_ARTIFACT_HASH",
+      "expected_stage": "MODEL_ARTIFACT",
+      "mutation_family": "MODEL_ARTIFACT",
+      "mutation_level": "L3",
+      "pipeline_id": "breast-cancer-logreg-linearshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "stale artifact digest",
+      "expected_action": "BLOCK",
+      "expected_contract": "MODEL_ARTIFACT_HASH",
+      "expected_stage": "MODEL_ARTIFACT",
+      "mutation_family": "MODEL_ARTIFACT",
+      "mutation_level": "L4",
+      "pipeline_id": "breast-cancer-logreg-linearshap"
+    },
+    {
+      "category": "PAIRWISE",
+      "description": "registered positive control",
+      "expected_action": "ACCEPT",
+      "expected_contract": null,
+      "expected_stage": null,
+      "mutation_family": "SPLIT_OVERLAP",
+      "mutation_level": "L0",
+      "pipeline_id": "breast-cancer-logreg-linearshap"
+    },
+    {
+      "category": "PAIRWISE",
+      "description": "one overlapping row",
+      "expected_action": "BLOCK",
+      "expected_contract": "TRAIN_VALIDATION_TEST_DISJOINTNESS",
+      "expected_stage": "DATA_SPLIT",
+      "mutation_family": "SPLIT_OVERLAP",
+      "mutation_level": "L1",
+      "pipeline_id": "breast-cancer-logreg-linearshap"
+    },
+    {
+      "category": "PAIRWISE",
+      "description": "five percent overlap",
+      "expected_action": "BLOCK",
+      "expected_contract": "TRAIN_VALIDATION_TEST_DISJOINTNESS",
+      "expected_stage": "DATA_SPLIT",
+      "mutation_family": "SPLIT_OVERLAP",
+      "mutation_level": "L2",
+      "pipeline_id": "breast-cancer-logreg-linearshap"
+    },
+    {
+      "category": "PAIRWISE",
+      "description": "twenty percent overlap",
+      "expected_action": "BLOCK",
+      "expected_contract": "TRAIN_VALIDATION_TEST_DISJOINTNESS",
+      "expected_stage": "DATA_SPLIT",
+      "mutation_family": "SPLIT_OVERLAP",
+      "mutation_level": "L3",
+      "pipeline_id": "breast-cancer-logreg-linearshap"
+    },
+    {
+      "category": "PAIRWISE",
+      "description": "full test included in train",
+      "expected_action": "BLOCK",
+      "expected_contract": "TRAIN_VALIDATION_TEST_DISJOINTNESS",
+      "expected_stage": "DATA_SPLIT",
+      "mutation_family": "SPLIT_OVERLAP",
+      "mutation_level": "L4",
+      "pipeline_id": "breast-cancer-logreg-linearshap"
+    },
+    {
+      "category": "PAIRWISE",
+      "description": "registered positive control",
+      "expected_action": "ACCEPT",
+      "expected_contract": null,
+      "expected_stage": null,
+      "mutation_family": "FIT_SCOPE",
+      "mutation_level": "L0",
+      "pipeline_id": "breast-cancer-logreg-linearshap"
+    },
+    {
+      "category": "PAIRWISE",
+      "description": "train plus validation",
+      "expected_action": "BLOCK",
+      "expected_contract": "PREPROCESSOR_FIT_SCOPE",
+      "expected_stage": "PREPROCESSING",
+      "mutation_family": "FIT_SCOPE",
+      "mutation_level": "L1",
+      "pipeline_id": "breast-cancer-logreg-linearshap"
+    },
+    {
+      "category": "PAIRWISE",
+      "description": "full dataset",
+      "expected_action": "BLOCK",
+      "expected_contract": "PREPROCESSOR_FIT_SCOPE",
+      "expected_stage": "PREPROCESSING",
+      "mutation_family": "FIT_SCOPE",
+      "mutation_level": "L2",
+      "pipeline_id": "breast-cancer-logreg-linearshap"
+    },
+    {
+      "category": "PAIRWISE",
+      "description": "test only",
+      "expected_action": "BLOCK",
+      "expected_contract": "PREPROCESSOR_FIT_SCOPE",
+      "expected_stage": "PREPROCESSING",
+      "mutation_family": "FIT_SCOPE",
+      "mutation_level": "L3",
+      "pipeline_id": "breast-cancer-logreg-linearshap"
+    },
+    {
+      "category": "PAIRWISE",
+      "description": "different train split",
+      "expected_action": "BLOCK",
+      "expected_contract": "PREPROCESSOR_FIT_SCOPE",
+      "expected_stage": "PREPROCESSING",
+      "mutation_family": "FIT_SCOPE",
+      "mutation_level": "L4",
+      "pipeline_id": "breast-cancer-logreg-linearshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "registered positive control",
+      "expected_action": "ACCEPT",
+      "expected_contract": null,
+      "expected_stage": null,
+      "mutation_family": "FEATURE_SCHEMA_CASCADE",
+      "mutation_level": "L0",
+      "pipeline_id": "breast-cancer-logreg-linearshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "swap two features",
+      "expected_action": "BLOCK",
+      "expected_contract": "FEATURE_ORDER",
+      "expected_stage": "PREPROCESSING",
+      "mutation_family": "FEATURE_SCHEMA_CASCADE",
+      "mutation_level": "L1",
+      "pipeline_id": "breast-cancer-logreg-linearshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "remove one feature",
+      "expected_action": "BLOCK",
+      "expected_contract": "FEATURE_COUNT",
+      "expected_stage": "PREPROCESSING",
+      "mutation_family": "FEATURE_SCHEMA_CASCADE",
+      "mutation_level": "L2",
+      "pipeline_id": "breast-cancer-logreg-linearshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "add one feature",
+      "expected_action": "BLOCK",
+      "expected_contract": "FEATURE_COUNT",
+      "expected_stage": "PREPROCESSING",
+      "mutation_family": "FEATURE_SCHEMA_CASCADE",
+      "mutation_level": "L3",
+      "pipeline_id": "breast-cancer-logreg-linearshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "rename one feature",
+      "expected_action": "BLOCK",
+      "expected_contract": "FEATURE_ORDER",
+      "expected_stage": "PREPROCESSING",
+      "mutation_family": "FEATURE_SCHEMA_CASCADE",
+      "mutation_level": "L4",
+      "pipeline_id": "breast-cancer-logreg-linearshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "registered positive control",
+      "expected_action": "ACCEPT",
+      "expected_contract": null,
+      "expected_stage": null,
+      "mutation_family": "EXPLAINER_BINDING",
+      "mutation_level": "L0",
+      "pipeline_id": "breast-cancer-logreg-linearshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "stale explainer version",
+      "expected_action": "BLOCK",
+      "expected_contract": "MODEL_EXPLAINER_VERSION",
+      "expected_stage": "POST_HOC_EXPLANATION",
+      "mutation_family": "EXPLAINER_BINDING",
+      "mutation_level": "L1",
+      "pipeline_id": "breast-cancer-logreg-linearshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "foreign model hash",
+      "expected_action": "BLOCK",
+      "expected_contract": "MODEL_EXPLAINER_VERSION",
+      "expected_stage": "POST_HOC_EXPLANATION",
+      "mutation_family": "EXPLAINER_BINDING",
+      "mutation_level": "L2",
+      "pipeline_id": "breast-cancer-logreg-linearshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "foreign object id",
+      "expected_action": "BLOCK",
+      "expected_contract": "EXPLANATION_OBJECT_ID",
+      "expected_stage": "POST_HOC_EXPLANATION",
+      "mutation_family": "EXPLAINER_BINDING",
+      "mutation_level": "L3",
+      "pipeline_id": "breast-cancer-logreg-linearshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "foreign feature schema",
+      "expected_action": "BLOCK",
+      "expected_contract": "EXPLANATION_FEATURE_SCHEMA",
+      "expected_stage": "POST_HOC_EXPLANATION",
+      "mutation_family": "EXPLAINER_BINDING",
+      "mutation_level": "L4",
+      "pipeline_id": "breast-cancer-logreg-linearshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "registered positive control",
+      "expected_action": "ACCEPT",
+      "expected_contract": null,
+      "expected_stage": null,
+      "mutation_family": "SHAP_CONSISTENCY",
+      "mutation_level": "L0",
+      "pipeline_id": "breast-cancer-logreg-linearshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "changed base value",
+      "expected_action": "BLOCK",
+      "expected_contract": "EXPLANATION_OUTPUT_CONSISTENCY",
+      "expected_stage": "POST_HOC_EXPLANATION",
+      "mutation_family": "SHAP_CONSISTENCY",
+      "mutation_level": "L1",
+      "pipeline_id": "breast-cancer-logreg-linearshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "changed one attribution",
+      "expected_action": "BLOCK",
+      "expected_contract": "EXPLANATION_OUTPUT_CONSISTENCY",
+      "expected_stage": "POST_HOC_EXPLANATION",
+      "mutation_family": "SHAP_CONSISTENCY",
+      "mutation_level": "L2",
+      "pipeline_id": "breast-cancer-logreg-linearshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "changed multiple attributions",
+      "expected_action": "BLOCK",
+      "expected_contract": "EXPLANATION_OUTPUT_CONSISTENCY",
+      "expected_stage": "POST_HOC_EXPLANATION",
+      "mutation_family": "SHAP_CONSISTENCY",
+      "mutation_level": "L3",
+      "pipeline_id": "breast-cancer-logreg-linearshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "permuted attribution binding",
+      "expected_action": "BLOCK",
+      "expected_contract": "EXPLANATION_FEATURE_SCHEMA",
+      "expected_stage": "POST_HOC_EXPLANATION",
+      "mutation_family": "SHAP_CONSISTENCY",
+      "mutation_level": "L4",
+      "pipeline_id": "breast-cancer-logreg-linearshap"
+    },
+    {
+      "category": "LOCAL",
+      "description": "registered positive control",
+      "expected_action": "ACCEPT",
+      "expected_contract": null,
+      "expected_stage": null,
+      "mutation_family": "OUTPUT_SEMANTICS",
+      "mutation_level": "L0",
+      "pipeline_id": "breast-cancer-logreg-linearshap"
+    },
+    {
+      "category": "LOCAL",
+      "description": "reversed or invalid semantics",
+      "expected_action": "BLOCK",
+      "expected_contract": "PREDICTION_OUTPUT_SANITY",
+      "expected_stage": "INFERENCE",
+      "mutation_family": "OUTPUT_SEMANTICS",
+      "mutation_level": "L1",
+      "pipeline_id": "breast-cancer-logreg-linearshap"
+    },
+    {
+      "category": "LOCAL",
+      "description": "missing output",
+      "expected_action": "BLOCK",
+      "expected_contract": "PREDICTION_OUTPUT_SANITY",
+      "expected_stage": "INFERENCE",
+      "mutation_family": "OUTPUT_SEMANTICS",
+      "mutation_level": "L2",
+      "pipeline_id": "breast-cancer-logreg-linearshap"
+    },
+    {
+      "category": "LOCAL",
+      "description": "extra output",
+      "expected_action": "BLOCK",
+      "expected_contract": "PREDICTION_OUTPUT_SANITY",
+      "expected_stage": "INFERENCE",
+      "mutation_family": "OUTPUT_SEMANTICS",
+      "mutation_level": "L3",
+      "pipeline_id": "breast-cancer-logreg-linearshap"
+    },
+    {
+      "category": "LOCAL",
+      "description": "unknown selected output",
+      "expected_action": "BLOCK",
+      "expected_contract": "PREDICTION_OUTPUT_SANITY",
+      "expected_stage": "INFERENCE",
+      "mutation_family": "OUTPUT_SEMANTICS",
+      "mutation_level": "L4",
+      "pipeline_id": "breast-cancer-logreg-linearshap"
+    },
+    {
+      "category": "LOCAL",
+      "description": "registered positive control",
+      "expected_action": "ACCEPT",
+      "expected_contract": null,
+      "expected_stage": null,
+      "mutation_family": "TRANSFORM_FINITE",
+      "mutation_level": "L0",
+      "pipeline_id": "wine-logreg-linearshap"
+    },
+    {
+      "category": "LOCAL",
+      "description": "one NaN",
+      "expected_action": "BLOCK",
+      "expected_contract": "FINITE_TRANSFORMED_VALUES",
+      "expected_stage": "PREPROCESSING",
+      "mutation_family": "TRANSFORM_FINITE",
+      "mutation_level": "L1",
+      "pipeline_id": "wine-logreg-linearshap"
+    },
+    {
+      "category": "LOCAL",
+      "description": "one positive infinity",
+      "expected_action": "BLOCK",
+      "expected_contract": "FINITE_TRANSFORMED_VALUES",
+      "expected_stage": "PREPROCESSING",
+      "mutation_family": "TRANSFORM_FINITE",
+      "mutation_level": "L2",
+      "pipeline_id": "wine-logreg-linearshap"
+    },
+    {
+      "category": "LOCAL",
+      "description": "one negative infinity",
+      "expected_action": "BLOCK",
+      "expected_contract": "FINITE_TRANSFORMED_VALUES",
+      "expected_stage": "PREPROCESSING",
+      "mutation_family": "TRANSFORM_FINITE",
+      "mutation_level": "L3",
+      "pipeline_id": "wine-logreg-linearshap"
+    },
+    {
+      "category": "LOCAL",
+      "description": "multiple non-finite values",
+      "expected_action": "BLOCK",
+      "expected_contract": "FINITE_TRANSFORMED_VALUES",
+      "expected_stage": "PREPROCESSING",
+      "mutation_family": "TRANSFORM_FINITE",
+      "mutation_level": "L4",
+      "pipeline_id": "wine-logreg-linearshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "registered positive control",
+      "expected_action": "ACCEPT",
+      "expected_contract": null,
+      "expected_stage": null,
+      "mutation_family": "MODEL_ARTIFACT",
+      "mutation_level": "L0",
+      "pipeline_id": "wine-logreg-linearshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "one-byte mutation",
+      "expected_action": "BLOCK",
+      "expected_contract": "MODEL_ARTIFACT_HASH",
+      "expected_stage": "MODEL_ARTIFACT",
+      "mutation_family": "MODEL_ARTIFACT",
+      "mutation_level": "L1",
+      "pipeline_id": "wine-logreg-linearshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "truncated artifact",
+      "expected_action": "BLOCK",
+      "expected_contract": "MODEL_ARTIFACT_HASH",
+      "expected_stage": "MODEL_ARTIFACT",
+      "mutation_family": "MODEL_ARTIFACT",
+      "mutation_level": "L2",
+      "pipeline_id": "wine-logreg-linearshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "foreign model digest",
+      "expected_action": "BLOCK",
+      "expected_contract": "MODEL_ARTIFACT_HASH",
+      "expected_stage": "MODEL_ARTIFACT",
+      "mutation_family": "MODEL_ARTIFACT",
+      "mutation_level": "L3",
+      "pipeline_id": "wine-logreg-linearshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "stale artifact digest",
+      "expected_action": "BLOCK",
+      "expected_contract": "MODEL_ARTIFACT_HASH",
+      "expected_stage": "MODEL_ARTIFACT",
+      "mutation_family": "MODEL_ARTIFACT",
+      "mutation_level": "L4",
+      "pipeline_id": "wine-logreg-linearshap"
+    },
+    {
+      "category": "PAIRWISE",
+      "description": "registered positive control",
+      "expected_action": "ACCEPT",
+      "expected_contract": null,
+      "expected_stage": null,
+      "mutation_family": "SPLIT_OVERLAP",
+      "mutation_level": "L0",
+      "pipeline_id": "wine-logreg-linearshap"
+    },
+    {
+      "category": "PAIRWISE",
+      "description": "one overlapping row",
+      "expected_action": "BLOCK",
+      "expected_contract": "TRAIN_VALIDATION_TEST_DISJOINTNESS",
+      "expected_stage": "DATA_SPLIT",
+      "mutation_family": "SPLIT_OVERLAP",
+      "mutation_level": "L1",
+      "pipeline_id": "wine-logreg-linearshap"
+    },
+    {
+      "category": "PAIRWISE",
+      "description": "five percent overlap",
+      "expected_action": "BLOCK",
+      "expected_contract": "TRAIN_VALIDATION_TEST_DISJOINTNESS",
+      "expected_stage": "DATA_SPLIT",
+      "mutation_family": "SPLIT_OVERLAP",
+      "mutation_level": "L2",
+      "pipeline_id": "wine-logreg-linearshap"
+    },
+    {
+      "category": "PAIRWISE",
+      "description": "twenty percent overlap",
+      "expected_action": "BLOCK",
+      "expected_contract": "TRAIN_VALIDATION_TEST_DISJOINTNESS",
+      "expected_stage": "DATA_SPLIT",
+      "mutation_family": "SPLIT_OVERLAP",
+      "mutation_level": "L3",
+      "pipeline_id": "wine-logreg-linearshap"
+    },
+    {
+      "category": "PAIRWISE",
+      "description": "full test included in train",
+      "expected_action": "BLOCK",
+      "expected_contract": "TRAIN_VALIDATION_TEST_DISJOINTNESS",
+      "expected_stage": "DATA_SPLIT",
+      "mutation_family": "SPLIT_OVERLAP",
+      "mutation_level": "L4",
+      "pipeline_id": "wine-logreg-linearshap"
+    },
+    {
+      "category": "PAIRWISE",
+      "description": "registered positive control",
+      "expected_action": "ACCEPT",
+      "expected_contract": null,
+      "expected_stage": null,
+      "mutation_family": "FIT_SCOPE",
+      "mutation_level": "L0",
+      "pipeline_id": "wine-logreg-linearshap"
+    },
+    {
+      "category": "PAIRWISE",
+      "description": "train plus validation",
+      "expected_action": "BLOCK",
+      "expected_contract": "PREPROCESSOR_FIT_SCOPE",
+      "expected_stage": "PREPROCESSING",
+      "mutation_family": "FIT_SCOPE",
+      "mutation_level": "L1",
+      "pipeline_id": "wine-logreg-linearshap"
+    },
+    {
+      "category": "PAIRWISE",
+      "description": "full dataset",
+      "expected_action": "BLOCK",
+      "expected_contract": "PREPROCESSOR_FIT_SCOPE",
+      "expected_stage": "PREPROCESSING",
+      "mutation_family": "FIT_SCOPE",
+      "mutation_level": "L2",
+      "pipeline_id": "wine-logreg-linearshap"
+    },
+    {
+      "category": "PAIRWISE",
+      "description": "test only",
+      "expected_action": "BLOCK",
+      "expected_contract": "PREPROCESSOR_FIT_SCOPE",
+      "expected_stage": "PREPROCESSING",
+      "mutation_family": "FIT_SCOPE",
+      "mutation_level": "L3",
+      "pipeline_id": "wine-logreg-linearshap"
+    },
+    {
+      "category": "PAIRWISE",
+      "description": "different train split",
+      "expected_action": "BLOCK",
+      "expected_contract": "PREPROCESSOR_FIT_SCOPE",
+      "expected_stage": "PREPROCESSING",
+      "mutation_family": "FIT_SCOPE",
+      "mutation_level": "L4",
+      "pipeline_id": "wine-logreg-linearshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "registered positive control",
+      "expected_action": "ACCEPT",
+      "expected_contract": null,
+      "expected_stage": null,
+      "mutation_family": "FEATURE_SCHEMA_CASCADE",
+      "mutation_level": "L0",
+      "pipeline_id": "wine-logreg-linearshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "swap two features",
+      "expected_action": "BLOCK",
+      "expected_contract": "FEATURE_ORDER",
+      "expected_stage": "PREPROCESSING",
+      "mutation_family": "FEATURE_SCHEMA_CASCADE",
+      "mutation_level": "L1",
+      "pipeline_id": "wine-logreg-linearshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "remove one feature",
+      "expected_action": "BLOCK",
+      "expected_contract": "FEATURE_COUNT",
+      "expected_stage": "PREPROCESSING",
+      "mutation_family": "FEATURE_SCHEMA_CASCADE",
+      "mutation_level": "L2",
+      "pipeline_id": "wine-logreg-linearshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "add one feature",
+      "expected_action": "BLOCK",
+      "expected_contract": "FEATURE_COUNT",
+      "expected_stage": "PREPROCESSING",
+      "mutation_family": "FEATURE_SCHEMA_CASCADE",
+      "mutation_level": "L3",
+      "pipeline_id": "wine-logreg-linearshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "rename one feature",
+      "expected_action": "BLOCK",
+      "expected_contract": "FEATURE_ORDER",
+      "expected_stage": "PREPROCESSING",
+      "mutation_family": "FEATURE_SCHEMA_CASCADE",
+      "mutation_level": "L4",
+      "pipeline_id": "wine-logreg-linearshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "registered positive control",
+      "expected_action": "ACCEPT",
+      "expected_contract": null,
+      "expected_stage": null,
+      "mutation_family": "EXPLAINER_BINDING",
+      "mutation_level": "L0",
+      "pipeline_id": "wine-logreg-linearshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "stale explainer version",
+      "expected_action": "BLOCK",
+      "expected_contract": "MODEL_EXPLAINER_VERSION",
+      "expected_stage": "POST_HOC_EXPLANATION",
+      "mutation_family": "EXPLAINER_BINDING",
+      "mutation_level": "L1",
+      "pipeline_id": "wine-logreg-linearshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "foreign model hash",
+      "expected_action": "BLOCK",
+      "expected_contract": "MODEL_EXPLAINER_VERSION",
+      "expected_stage": "POST_HOC_EXPLANATION",
+      "mutation_family": "EXPLAINER_BINDING",
+      "mutation_level": "L2",
+      "pipeline_id": "wine-logreg-linearshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "foreign object id",
+      "expected_action": "BLOCK",
+      "expected_contract": "EXPLANATION_OBJECT_ID",
+      "expected_stage": "POST_HOC_EXPLANATION",
+      "mutation_family": "EXPLAINER_BINDING",
+      "mutation_level": "L3",
+      "pipeline_id": "wine-logreg-linearshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "foreign feature schema",
+      "expected_action": "BLOCK",
+      "expected_contract": "EXPLANATION_FEATURE_SCHEMA",
+      "expected_stage": "POST_HOC_EXPLANATION",
+      "mutation_family": "EXPLAINER_BINDING",
+      "mutation_level": "L4",
+      "pipeline_id": "wine-logreg-linearshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "registered positive control",
+      "expected_action": "ACCEPT",
+      "expected_contract": null,
+      "expected_stage": null,
+      "mutation_family": "SHAP_CONSISTENCY",
+      "mutation_level": "L0",
+      "pipeline_id": "wine-logreg-linearshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "changed base value",
+      "expected_action": "BLOCK",
+      "expected_contract": "EXPLANATION_OUTPUT_CONSISTENCY",
+      "expected_stage": "POST_HOC_EXPLANATION",
+      "mutation_family": "SHAP_CONSISTENCY",
+      "mutation_level": "L1",
+      "pipeline_id": "wine-logreg-linearshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "changed one attribution",
+      "expected_action": "BLOCK",
+      "expected_contract": "EXPLANATION_OUTPUT_CONSISTENCY",
+      "expected_stage": "POST_HOC_EXPLANATION",
+      "mutation_family": "SHAP_CONSISTENCY",
+      "mutation_level": "L2",
+      "pipeline_id": "wine-logreg-linearshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "changed multiple attributions",
+      "expected_action": "BLOCK",
+      "expected_contract": "EXPLANATION_OUTPUT_CONSISTENCY",
+      "expected_stage": "POST_HOC_EXPLANATION",
+      "mutation_family": "SHAP_CONSISTENCY",
+      "mutation_level": "L3",
+      "pipeline_id": "wine-logreg-linearshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "permuted attribution binding",
+      "expected_action": "BLOCK",
+      "expected_contract": "EXPLANATION_FEATURE_SCHEMA",
+      "expected_stage": "POST_HOC_EXPLANATION",
+      "mutation_family": "SHAP_CONSISTENCY",
+      "mutation_level": "L4",
+      "pipeline_id": "wine-logreg-linearshap"
+    },
+    {
+      "category": "LOCAL",
+      "description": "registered positive control",
+      "expected_action": "ACCEPT",
+      "expected_contract": null,
+      "expected_stage": null,
+      "mutation_family": "OUTPUT_SEMANTICS",
+      "mutation_level": "L0",
+      "pipeline_id": "wine-logreg-linearshap"
+    },
+    {
+      "category": "LOCAL",
+      "description": "reversed or invalid semantics",
+      "expected_action": "BLOCK",
+      "expected_contract": "PREDICTION_OUTPUT_SANITY",
+      "expected_stage": "INFERENCE",
+      "mutation_family": "OUTPUT_SEMANTICS",
+      "mutation_level": "L1",
+      "pipeline_id": "wine-logreg-linearshap"
+    },
+    {
+      "category": "LOCAL",
+      "description": "missing output",
+      "expected_action": "BLOCK",
+      "expected_contract": "PREDICTION_OUTPUT_SANITY",
+      "expected_stage": "INFERENCE",
+      "mutation_family": "OUTPUT_SEMANTICS",
+      "mutation_level": "L2",
+      "pipeline_id": "wine-logreg-linearshap"
+    },
+    {
+      "category": "LOCAL",
+      "description": "extra output",
+      "expected_action": "BLOCK",
+      "expected_contract": "PREDICTION_OUTPUT_SANITY",
+      "expected_stage": "INFERENCE",
+      "mutation_family": "OUTPUT_SEMANTICS",
+      "mutation_level": "L3",
+      "pipeline_id": "wine-logreg-linearshap"
+    },
+    {
+      "category": "LOCAL",
+      "description": "unknown selected output",
+      "expected_action": "BLOCK",
+      "expected_contract": "PREDICTION_OUTPUT_SANITY",
+      "expected_stage": "INFERENCE",
+      "mutation_family": "OUTPUT_SEMANTICS",
+      "mutation_level": "L4",
+      "pipeline_id": "wine-logreg-linearshap"
+    },
+    {
+      "category": "LOCAL",
+      "description": "registered positive control",
+      "expected_action": "ACCEPT",
+      "expected_contract": null,
+      "expected_stage": null,
+      "mutation_family": "TRANSFORM_FINITE",
+      "mutation_level": "L0",
+      "pipeline_id": "diabetes-ridge-linearshap"
+    },
+    {
+      "category": "LOCAL",
+      "description": "one NaN",
+      "expected_action": "BLOCK",
+      "expected_contract": "FINITE_TRANSFORMED_VALUES",
+      "expected_stage": "PREPROCESSING",
+      "mutation_family": "TRANSFORM_FINITE",
+      "mutation_level": "L1",
+      "pipeline_id": "diabetes-ridge-linearshap"
+    },
+    {
+      "category": "LOCAL",
+      "description": "one positive infinity",
+      "expected_action": "BLOCK",
+      "expected_contract": "FINITE_TRANSFORMED_VALUES",
+      "expected_stage": "PREPROCESSING",
+      "mutation_family": "TRANSFORM_FINITE",
+      "mutation_level": "L2",
+      "pipeline_id": "diabetes-ridge-linearshap"
+    },
+    {
+      "category": "LOCAL",
+      "description": "one negative infinity",
+      "expected_action": "BLOCK",
+      "expected_contract": "FINITE_TRANSFORMED_VALUES",
+      "expected_stage": "PREPROCESSING",
+      "mutation_family": "TRANSFORM_FINITE",
+      "mutation_level": "L3",
+      "pipeline_id": "diabetes-ridge-linearshap"
+    },
+    {
+      "category": "LOCAL",
+      "description": "multiple non-finite values",
+      "expected_action": "BLOCK",
+      "expected_contract": "FINITE_TRANSFORMED_VALUES",
+      "expected_stage": "PREPROCESSING",
+      "mutation_family": "TRANSFORM_FINITE",
+      "mutation_level": "L4",
+      "pipeline_id": "diabetes-ridge-linearshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "registered positive control",
+      "expected_action": "ACCEPT",
+      "expected_contract": null,
+      "expected_stage": null,
+      "mutation_family": "MODEL_ARTIFACT",
+      "mutation_level": "L0",
+      "pipeline_id": "diabetes-ridge-linearshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "one-byte mutation",
+      "expected_action": "BLOCK",
+      "expected_contract": "MODEL_ARTIFACT_HASH",
+      "expected_stage": "MODEL_ARTIFACT",
+      "mutation_family": "MODEL_ARTIFACT",
+      "mutation_level": "L1",
+      "pipeline_id": "diabetes-ridge-linearshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "truncated artifact",
+      "expected_action": "BLOCK",
+      "expected_contract": "MODEL_ARTIFACT_HASH",
+      "expected_stage": "MODEL_ARTIFACT",
+      "mutation_family": "MODEL_ARTIFACT",
+      "mutation_level": "L2",
+      "pipeline_id": "diabetes-ridge-linearshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "foreign model digest",
+      "expected_action": "BLOCK",
+      "expected_contract": "MODEL_ARTIFACT_HASH",
+      "expected_stage": "MODEL_ARTIFACT",
+      "mutation_family": "MODEL_ARTIFACT",
+      "mutation_level": "L3",
+      "pipeline_id": "diabetes-ridge-linearshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "stale artifact digest",
+      "expected_action": "BLOCK",
+      "expected_contract": "MODEL_ARTIFACT_HASH",
+      "expected_stage": "MODEL_ARTIFACT",
+      "mutation_family": "MODEL_ARTIFACT",
+      "mutation_level": "L4",
+      "pipeline_id": "diabetes-ridge-linearshap"
+    },
+    {
+      "category": "PAIRWISE",
+      "description": "registered positive control",
+      "expected_action": "ACCEPT",
+      "expected_contract": null,
+      "expected_stage": null,
+      "mutation_family": "SPLIT_OVERLAP",
+      "mutation_level": "L0",
+      "pipeline_id": "diabetes-ridge-linearshap"
+    },
+    {
+      "category": "PAIRWISE",
+      "description": "one overlapping row",
+      "expected_action": "BLOCK",
+      "expected_contract": "TRAIN_VALIDATION_TEST_DISJOINTNESS",
+      "expected_stage": "DATA_SPLIT",
+      "mutation_family": "SPLIT_OVERLAP",
+      "mutation_level": "L1",
+      "pipeline_id": "diabetes-ridge-linearshap"
+    },
+    {
+      "category": "PAIRWISE",
+      "description": "five percent overlap",
+      "expected_action": "BLOCK",
+      "expected_contract": "TRAIN_VALIDATION_TEST_DISJOINTNESS",
+      "expected_stage": "DATA_SPLIT",
+      "mutation_family": "SPLIT_OVERLAP",
+      "mutation_level": "L2",
+      "pipeline_id": "diabetes-ridge-linearshap"
+    },
+    {
+      "category": "PAIRWISE",
+      "description": "twenty percent overlap",
+      "expected_action": "BLOCK",
+      "expected_contract": "TRAIN_VALIDATION_TEST_DISJOINTNESS",
+      "expected_stage": "DATA_SPLIT",
+      "mutation_family": "SPLIT_OVERLAP",
+      "mutation_level": "L3",
+      "pipeline_id": "diabetes-ridge-linearshap"
+    },
+    {
+      "category": "PAIRWISE",
+      "description": "full test included in train",
+      "expected_action": "BLOCK",
+      "expected_contract": "TRAIN_VALIDATION_TEST_DISJOINTNESS",
+      "expected_stage": "DATA_SPLIT",
+      "mutation_family": "SPLIT_OVERLAP",
+      "mutation_level": "L4",
+      "pipeline_id": "diabetes-ridge-linearshap"
+    },
+    {
+      "category": "PAIRWISE",
+      "description": "registered positive control",
+      "expected_action": "ACCEPT",
+      "expected_contract": null,
+      "expected_stage": null,
+      "mutation_family": "FIT_SCOPE",
+      "mutation_level": "L0",
+      "pipeline_id": "diabetes-ridge-linearshap"
+    },
+    {
+      "category": "PAIRWISE",
+      "description": "train plus validation",
+      "expected_action": "BLOCK",
+      "expected_contract": "PREPROCESSOR_FIT_SCOPE",
+      "expected_stage": "PREPROCESSING",
+      "mutation_family": "FIT_SCOPE",
+      "mutation_level": "L1",
+      "pipeline_id": "diabetes-ridge-linearshap"
+    },
+    {
+      "category": "PAIRWISE",
+      "description": "full dataset",
+      "expected_action": "BLOCK",
+      "expected_contract": "PREPROCESSOR_FIT_SCOPE",
+      "expected_stage": "PREPROCESSING",
+      "mutation_family": "FIT_SCOPE",
+      "mutation_level": "L2",
+      "pipeline_id": "diabetes-ridge-linearshap"
+    },
+    {
+      "category": "PAIRWISE",
+      "description": "test only",
+      "expected_action": "BLOCK",
+      "expected_contract": "PREPROCESSOR_FIT_SCOPE",
+      "expected_stage": "PREPROCESSING",
+      "mutation_family": "FIT_SCOPE",
+      "mutation_level": "L3",
+      "pipeline_id": "diabetes-ridge-linearshap"
+    },
+    {
+      "category": "PAIRWISE",
+      "description": "different train split",
+      "expected_action": "BLOCK",
+      "expected_contract": "PREPROCESSOR_FIT_SCOPE",
+      "expected_stage": "PREPROCESSING",
+      "mutation_family": "FIT_SCOPE",
+      "mutation_level": "L4",
+      "pipeline_id": "diabetes-ridge-linearshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "registered positive control",
+      "expected_action": "ACCEPT",
+      "expected_contract": null,
+      "expected_stage": null,
+      "mutation_family": "FEATURE_SCHEMA_CASCADE",
+      "mutation_level": "L0",
+      "pipeline_id": "diabetes-ridge-linearshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "swap two features",
+      "expected_action": "BLOCK",
+      "expected_contract": "FEATURE_ORDER",
+      "expected_stage": "PREPROCESSING",
+      "mutation_family": "FEATURE_SCHEMA_CASCADE",
+      "mutation_level": "L1",
+      "pipeline_id": "diabetes-ridge-linearshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "remove one feature",
+      "expected_action": "BLOCK",
+      "expected_contract": "FEATURE_COUNT",
+      "expected_stage": "PREPROCESSING",
+      "mutation_family": "FEATURE_SCHEMA_CASCADE",
+      "mutation_level": "L2",
+      "pipeline_id": "diabetes-ridge-linearshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "add one feature",
+      "expected_action": "BLOCK",
+      "expected_contract": "FEATURE_COUNT",
+      "expected_stage": "PREPROCESSING",
+      "mutation_family": "FEATURE_SCHEMA_CASCADE",
+      "mutation_level": "L3",
+      "pipeline_id": "diabetes-ridge-linearshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "rename one feature",
+      "expected_action": "BLOCK",
+      "expected_contract": "FEATURE_ORDER",
+      "expected_stage": "PREPROCESSING",
+      "mutation_family": "FEATURE_SCHEMA_CASCADE",
+      "mutation_level": "L4",
+      "pipeline_id": "diabetes-ridge-linearshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "registered positive control",
+      "expected_action": "ACCEPT",
+      "expected_contract": null,
+      "expected_stage": null,
+      "mutation_family": "EXPLAINER_BINDING",
+      "mutation_level": "L0",
+      "pipeline_id": "diabetes-ridge-linearshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "stale explainer version",
+      "expected_action": "BLOCK",
+      "expected_contract": "MODEL_EXPLAINER_VERSION",
+      "expected_stage": "POST_HOC_EXPLANATION",
+      "mutation_family": "EXPLAINER_BINDING",
+      "mutation_level": "L1",
+      "pipeline_id": "diabetes-ridge-linearshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "foreign model hash",
+      "expected_action": "BLOCK",
+      "expected_contract": "MODEL_EXPLAINER_VERSION",
+      "expected_stage": "POST_HOC_EXPLANATION",
+      "mutation_family": "EXPLAINER_BINDING",
+      "mutation_level": "L2",
+      "pipeline_id": "diabetes-ridge-linearshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "foreign object id",
+      "expected_action": "BLOCK",
+      "expected_contract": "EXPLANATION_OBJECT_ID",
+      "expected_stage": "POST_HOC_EXPLANATION",
+      "mutation_family": "EXPLAINER_BINDING",
+      "mutation_level": "L3",
+      "pipeline_id": "diabetes-ridge-linearshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "foreign feature schema",
+      "expected_action": "BLOCK",
+      "expected_contract": "EXPLANATION_FEATURE_SCHEMA",
+      "expected_stage": "POST_HOC_EXPLANATION",
+      "mutation_family": "EXPLAINER_BINDING",
+      "mutation_level": "L4",
+      "pipeline_id": "diabetes-ridge-linearshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "registered positive control",
+      "expected_action": "ACCEPT",
+      "expected_contract": null,
+      "expected_stage": null,
+      "mutation_family": "SHAP_CONSISTENCY",
+      "mutation_level": "L0",
+      "pipeline_id": "diabetes-ridge-linearshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "changed base value",
+      "expected_action": "BLOCK",
+      "expected_contract": "EXPLANATION_OUTPUT_CONSISTENCY",
+      "expected_stage": "POST_HOC_EXPLANATION",
+      "mutation_family": "SHAP_CONSISTENCY",
+      "mutation_level": "L1",
+      "pipeline_id": "diabetes-ridge-linearshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "changed one attribution",
+      "expected_action": "BLOCK",
+      "expected_contract": "EXPLANATION_OUTPUT_CONSISTENCY",
+      "expected_stage": "POST_HOC_EXPLANATION",
+      "mutation_family": "SHAP_CONSISTENCY",
+      "mutation_level": "L2",
+      "pipeline_id": "diabetes-ridge-linearshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "changed multiple attributions",
+      "expected_action": "BLOCK",
+      "expected_contract": "EXPLANATION_OUTPUT_CONSISTENCY",
+      "expected_stage": "POST_HOC_EXPLANATION",
+      "mutation_family": "SHAP_CONSISTENCY",
+      "mutation_level": "L3",
+      "pipeline_id": "diabetes-ridge-linearshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "permuted attribution binding",
+      "expected_action": "BLOCK",
+      "expected_contract": "EXPLANATION_FEATURE_SCHEMA",
+      "expected_stage": "POST_HOC_EXPLANATION",
+      "mutation_family": "SHAP_CONSISTENCY",
+      "mutation_level": "L4",
+      "pipeline_id": "diabetes-ridge-linearshap"
+    },
+    {
+      "category": "LOCAL",
+      "description": "registered positive control",
+      "expected_action": "ACCEPT",
+      "expected_contract": null,
+      "expected_stage": null,
+      "mutation_family": "OUTPUT_SEMANTICS",
+      "mutation_level": "L0",
+      "pipeline_id": "diabetes-ridge-linearshap"
+    },
+    {
+      "category": "LOCAL",
+      "description": "reversed or invalid semantics",
+      "expected_action": "BLOCK",
+      "expected_contract": "PREDICTION_OUTPUT_SANITY",
+      "expected_stage": "INFERENCE",
+      "mutation_family": "OUTPUT_SEMANTICS",
+      "mutation_level": "L1",
+      "pipeline_id": "diabetes-ridge-linearshap"
+    },
+    {
+      "category": "LOCAL",
+      "description": "missing output",
+      "expected_action": "BLOCK",
+      "expected_contract": "PREDICTION_OUTPUT_SANITY",
+      "expected_stage": "INFERENCE",
+      "mutation_family": "OUTPUT_SEMANTICS",
+      "mutation_level": "L2",
+      "pipeline_id": "diabetes-ridge-linearshap"
+    },
+    {
+      "category": "LOCAL",
+      "description": "extra output",
+      "expected_action": "BLOCK",
+      "expected_contract": "PREDICTION_OUTPUT_SANITY",
+      "expected_stage": "INFERENCE",
+      "mutation_family": "OUTPUT_SEMANTICS",
+      "mutation_level": "L3",
+      "pipeline_id": "diabetes-ridge-linearshap"
+    },
+    {
+      "category": "LOCAL",
+      "description": "unknown selected output",
+      "expected_action": "BLOCK",
+      "expected_contract": "PREDICTION_OUTPUT_SANITY",
+      "expected_stage": "INFERENCE",
+      "mutation_family": "OUTPUT_SEMANTICS",
+      "mutation_level": "L4",
+      "pipeline_id": "diabetes-ridge-linearshap"
+    },
+    {
+      "category": "LOCAL",
+      "description": "registered positive control",
+      "expected_action": "ACCEPT",
+      "expected_contract": null,
+      "expected_stage": null,
+      "mutation_family": "TRANSFORM_FINITE",
+      "mutation_level": "L0",
+      "pipeline_id": "digits-random-forest-treeshap"
+    },
+    {
+      "category": "LOCAL",
+      "description": "one NaN",
+      "expected_action": "BLOCK",
+      "expected_contract": "FINITE_TRANSFORMED_VALUES",
+      "expected_stage": "PREPROCESSING",
+      "mutation_family": "TRANSFORM_FINITE",
+      "mutation_level": "L1",
+      "pipeline_id": "digits-random-forest-treeshap"
+    },
+    {
+      "category": "LOCAL",
+      "description": "one positive infinity",
+      "expected_action": "BLOCK",
+      "expected_contract": "FINITE_TRANSFORMED_VALUES",
+      "expected_stage": "PREPROCESSING",
+      "mutation_family": "TRANSFORM_FINITE",
+      "mutation_level": "L2",
+      "pipeline_id": "digits-random-forest-treeshap"
+    },
+    {
+      "category": "LOCAL",
+      "description": "one negative infinity",
+      "expected_action": "BLOCK",
+      "expected_contract": "FINITE_TRANSFORMED_VALUES",
+      "expected_stage": "PREPROCESSING",
+      "mutation_family": "TRANSFORM_FINITE",
+      "mutation_level": "L3",
+      "pipeline_id": "digits-random-forest-treeshap"
+    },
+    {
+      "category": "LOCAL",
+      "description": "multiple non-finite values",
+      "expected_action": "BLOCK",
+      "expected_contract": "FINITE_TRANSFORMED_VALUES",
+      "expected_stage": "PREPROCESSING",
+      "mutation_family": "TRANSFORM_FINITE",
+      "mutation_level": "L4",
+      "pipeline_id": "digits-random-forest-treeshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "registered positive control",
+      "expected_action": "ACCEPT",
+      "expected_contract": null,
+      "expected_stage": null,
+      "mutation_family": "MODEL_ARTIFACT",
+      "mutation_level": "L0",
+      "pipeline_id": "digits-random-forest-treeshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "one-byte mutation",
+      "expected_action": "BLOCK",
+      "expected_contract": "MODEL_ARTIFACT_HASH",
+      "expected_stage": "MODEL_ARTIFACT",
+      "mutation_family": "MODEL_ARTIFACT",
+      "mutation_level": "L1",
+      "pipeline_id": "digits-random-forest-treeshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "truncated artifact",
+      "expected_action": "BLOCK",
+      "expected_contract": "MODEL_ARTIFACT_HASH",
+      "expected_stage": "MODEL_ARTIFACT",
+      "mutation_family": "MODEL_ARTIFACT",
+      "mutation_level": "L2",
+      "pipeline_id": "digits-random-forest-treeshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "foreign model digest",
+      "expected_action": "BLOCK",
+      "expected_contract": "MODEL_ARTIFACT_HASH",
+      "expected_stage": "MODEL_ARTIFACT",
+      "mutation_family": "MODEL_ARTIFACT",
+      "mutation_level": "L3",
+      "pipeline_id": "digits-random-forest-treeshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "stale artifact digest",
+      "expected_action": "BLOCK",
+      "expected_contract": "MODEL_ARTIFACT_HASH",
+      "expected_stage": "MODEL_ARTIFACT",
+      "mutation_family": "MODEL_ARTIFACT",
+      "mutation_level": "L4",
+      "pipeline_id": "digits-random-forest-treeshap"
+    },
+    {
+      "category": "PAIRWISE",
+      "description": "registered positive control",
+      "expected_action": "ACCEPT",
+      "expected_contract": null,
+      "expected_stage": null,
+      "mutation_family": "SPLIT_OVERLAP",
+      "mutation_level": "L0",
+      "pipeline_id": "digits-random-forest-treeshap"
+    },
+    {
+      "category": "PAIRWISE",
+      "description": "one overlapping row",
+      "expected_action": "BLOCK",
+      "expected_contract": "TRAIN_VALIDATION_TEST_DISJOINTNESS",
+      "expected_stage": "DATA_SPLIT",
+      "mutation_family": "SPLIT_OVERLAP",
+      "mutation_level": "L1",
+      "pipeline_id": "digits-random-forest-treeshap"
+    },
+    {
+      "category": "PAIRWISE",
+      "description": "five percent overlap",
+      "expected_action": "BLOCK",
+      "expected_contract": "TRAIN_VALIDATION_TEST_DISJOINTNESS",
+      "expected_stage": "DATA_SPLIT",
+      "mutation_family": "SPLIT_OVERLAP",
+      "mutation_level": "L2",
+      "pipeline_id": "digits-random-forest-treeshap"
+    },
+    {
+      "category": "PAIRWISE",
+      "description": "twenty percent overlap",
+      "expected_action": "BLOCK",
+      "expected_contract": "TRAIN_VALIDATION_TEST_DISJOINTNESS",
+      "expected_stage": "DATA_SPLIT",
+      "mutation_family": "SPLIT_OVERLAP",
+      "mutation_level": "L3",
+      "pipeline_id": "digits-random-forest-treeshap"
+    },
+    {
+      "category": "PAIRWISE",
+      "description": "full test included in train",
+      "expected_action": "BLOCK",
+      "expected_contract": "TRAIN_VALIDATION_TEST_DISJOINTNESS",
+      "expected_stage": "DATA_SPLIT",
+      "mutation_family": "SPLIT_OVERLAP",
+      "mutation_level": "L4",
+      "pipeline_id": "digits-random-forest-treeshap"
+    },
+    {
+      "category": "PAIRWISE",
+      "description": "registered positive control",
+      "expected_action": "ACCEPT",
+      "expected_contract": null,
+      "expected_stage": null,
+      "mutation_family": "FIT_SCOPE",
+      "mutation_level": "L0",
+      "pipeline_id": "digits-random-forest-treeshap"
+    },
+    {
+      "category": "PAIRWISE",
+      "description": "train plus validation",
+      "expected_action": "BLOCK",
+      "expected_contract": "PREPROCESSOR_FIT_SCOPE",
+      "expected_stage": "PREPROCESSING",
+      "mutation_family": "FIT_SCOPE",
+      "mutation_level": "L1",
+      "pipeline_id": "digits-random-forest-treeshap"
+    },
+    {
+      "category": "PAIRWISE",
+      "description": "full dataset",
+      "expected_action": "BLOCK",
+      "expected_contract": "PREPROCESSOR_FIT_SCOPE",
+      "expected_stage": "PREPROCESSING",
+      "mutation_family": "FIT_SCOPE",
+      "mutation_level": "L2",
+      "pipeline_id": "digits-random-forest-treeshap"
+    },
+    {
+      "category": "PAIRWISE",
+      "description": "test only",
+      "expected_action": "BLOCK",
+      "expected_contract": "PREPROCESSOR_FIT_SCOPE",
+      "expected_stage": "PREPROCESSING",
+      "mutation_family": "FIT_SCOPE",
+      "mutation_level": "L3",
+      "pipeline_id": "digits-random-forest-treeshap"
+    },
+    {
+      "category": "PAIRWISE",
+      "description": "different train split",
+      "expected_action": "BLOCK",
+      "expected_contract": "PREPROCESSOR_FIT_SCOPE",
+      "expected_stage": "PREPROCESSING",
+      "mutation_family": "FIT_SCOPE",
+      "mutation_level": "L4",
+      "pipeline_id": "digits-random-forest-treeshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "registered positive control",
+      "expected_action": "ACCEPT",
+      "expected_contract": null,
+      "expected_stage": null,
+      "mutation_family": "FEATURE_SCHEMA_CASCADE",
+      "mutation_level": "L0",
+      "pipeline_id": "digits-random-forest-treeshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "swap two features",
+      "expected_action": "BLOCK",
+      "expected_contract": "FEATURE_ORDER",
+      "expected_stage": "PREPROCESSING",
+      "mutation_family": "FEATURE_SCHEMA_CASCADE",
+      "mutation_level": "L1",
+      "pipeline_id": "digits-random-forest-treeshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "remove one feature",
+      "expected_action": "BLOCK",
+      "expected_contract": "FEATURE_COUNT",
+      "expected_stage": "PREPROCESSING",
+      "mutation_family": "FEATURE_SCHEMA_CASCADE",
+      "mutation_level": "L2",
+      "pipeline_id": "digits-random-forest-treeshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "add one feature",
+      "expected_action": "BLOCK",
+      "expected_contract": "FEATURE_COUNT",
+      "expected_stage": "PREPROCESSING",
+      "mutation_family": "FEATURE_SCHEMA_CASCADE",
+      "mutation_level": "L3",
+      "pipeline_id": "digits-random-forest-treeshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "rename one feature",
+      "expected_action": "BLOCK",
+      "expected_contract": "FEATURE_ORDER",
+      "expected_stage": "PREPROCESSING",
+      "mutation_family": "FEATURE_SCHEMA_CASCADE",
+      "mutation_level": "L4",
+      "pipeline_id": "digits-random-forest-treeshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "registered positive control",
+      "expected_action": "ACCEPT",
+      "expected_contract": null,
+      "expected_stage": null,
+      "mutation_family": "EXPLAINER_BINDING",
+      "mutation_level": "L0",
+      "pipeline_id": "digits-random-forest-treeshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "stale explainer version",
+      "expected_action": "BLOCK",
+      "expected_contract": "MODEL_EXPLAINER_VERSION",
+      "expected_stage": "POST_HOC_EXPLANATION",
+      "mutation_family": "EXPLAINER_BINDING",
+      "mutation_level": "L1",
+      "pipeline_id": "digits-random-forest-treeshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "foreign model hash",
+      "expected_action": "BLOCK",
+      "expected_contract": "MODEL_EXPLAINER_VERSION",
+      "expected_stage": "POST_HOC_EXPLANATION",
+      "mutation_family": "EXPLAINER_BINDING",
+      "mutation_level": "L2",
+      "pipeline_id": "digits-random-forest-treeshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "foreign object id",
+      "expected_action": "BLOCK",
+      "expected_contract": "EXPLANATION_OBJECT_ID",
+      "expected_stage": "POST_HOC_EXPLANATION",
+      "mutation_family": "EXPLAINER_BINDING",
+      "mutation_level": "L3",
+      "pipeline_id": "digits-random-forest-treeshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "foreign feature schema",
+      "expected_action": "BLOCK",
+      "expected_contract": "EXPLANATION_FEATURE_SCHEMA",
+      "expected_stage": "POST_HOC_EXPLANATION",
+      "mutation_family": "EXPLAINER_BINDING",
+      "mutation_level": "L4",
+      "pipeline_id": "digits-random-forest-treeshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "registered positive control",
+      "expected_action": "ACCEPT",
+      "expected_contract": null,
+      "expected_stage": null,
+      "mutation_family": "SHAP_CONSISTENCY",
+      "mutation_level": "L0",
+      "pipeline_id": "digits-random-forest-treeshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "changed base value",
+      "expected_action": "BLOCK",
+      "expected_contract": "EXPLANATION_OUTPUT_CONSISTENCY",
+      "expected_stage": "POST_HOC_EXPLANATION",
+      "mutation_family": "SHAP_CONSISTENCY",
+      "mutation_level": "L1",
+      "pipeline_id": "digits-random-forest-treeshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "changed one attribution",
+      "expected_action": "BLOCK",
+      "expected_contract": "EXPLANATION_OUTPUT_CONSISTENCY",
+      "expected_stage": "POST_HOC_EXPLANATION",
+      "mutation_family": "SHAP_CONSISTENCY",
+      "mutation_level": "L2",
+      "pipeline_id": "digits-random-forest-treeshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "changed multiple attributions",
+      "expected_action": "BLOCK",
+      "expected_contract": "EXPLANATION_OUTPUT_CONSISTENCY",
+      "expected_stage": "POST_HOC_EXPLANATION",
+      "mutation_family": "SHAP_CONSISTENCY",
+      "mutation_level": "L3",
+      "pipeline_id": "digits-random-forest-treeshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "permuted attribution binding",
+      "expected_action": "BLOCK",
+      "expected_contract": "EXPLANATION_FEATURE_SCHEMA",
+      "expected_stage": "POST_HOC_EXPLANATION",
+      "mutation_family": "SHAP_CONSISTENCY",
+      "mutation_level": "L4",
+      "pipeline_id": "digits-random-forest-treeshap"
+    },
+    {
+      "category": "LOCAL",
+      "description": "registered positive control",
+      "expected_action": "ACCEPT",
+      "expected_contract": null,
+      "expected_stage": null,
+      "mutation_family": "OUTPUT_SEMANTICS",
+      "mutation_level": "L0",
+      "pipeline_id": "digits-random-forest-treeshap"
+    },
+    {
+      "category": "LOCAL",
+      "description": "reversed or invalid semantics",
+      "expected_action": "BLOCK",
+      "expected_contract": "PREDICTION_OUTPUT_SANITY",
+      "expected_stage": "INFERENCE",
+      "mutation_family": "OUTPUT_SEMANTICS",
+      "mutation_level": "L1",
+      "pipeline_id": "digits-random-forest-treeshap"
+    },
+    {
+      "category": "LOCAL",
+      "description": "missing output",
+      "expected_action": "BLOCK",
+      "expected_contract": "PREDICTION_OUTPUT_SANITY",
+      "expected_stage": "INFERENCE",
+      "mutation_family": "OUTPUT_SEMANTICS",
+      "mutation_level": "L2",
+      "pipeline_id": "digits-random-forest-treeshap"
+    },
+    {
+      "category": "LOCAL",
+      "description": "extra output",
+      "expected_action": "BLOCK",
+      "expected_contract": "PREDICTION_OUTPUT_SANITY",
+      "expected_stage": "INFERENCE",
+      "mutation_family": "OUTPUT_SEMANTICS",
+      "mutation_level": "L3",
+      "pipeline_id": "digits-random-forest-treeshap"
+    },
+    {
+      "category": "LOCAL",
+      "description": "unknown selected output",
+      "expected_action": "BLOCK",
+      "expected_contract": "PREDICTION_OUTPUT_SANITY",
+      "expected_stage": "INFERENCE",
+      "mutation_family": "OUTPUT_SEMANTICS",
+      "mutation_level": "L4",
+      "pipeline_id": "digits-random-forest-treeshap"
+    },
+    {
+      "category": "LOCAL",
+      "description": "registered positive control",
+      "expected_action": "ACCEPT",
+      "expected_contract": null,
+      "expected_stage": null,
+      "mutation_family": "TRANSFORM_FINITE",
+      "mutation_level": "L0",
+      "pipeline_id": "mixed-logreg-linearshap"
+    },
+    {
+      "category": "LOCAL",
+      "description": "one NaN",
+      "expected_action": "BLOCK",
+      "expected_contract": "FINITE_TRANSFORMED_VALUES",
+      "expected_stage": "PREPROCESSING",
+      "mutation_family": "TRANSFORM_FINITE",
+      "mutation_level": "L1",
+      "pipeline_id": "mixed-logreg-linearshap"
+    },
+    {
+      "category": "LOCAL",
+      "description": "one positive infinity",
+      "expected_action": "BLOCK",
+      "expected_contract": "FINITE_TRANSFORMED_VALUES",
+      "expected_stage": "PREPROCESSING",
+      "mutation_family": "TRANSFORM_FINITE",
+      "mutation_level": "L2",
+      "pipeline_id": "mixed-logreg-linearshap"
+    },
+    {
+      "category": "LOCAL",
+      "description": "one negative infinity",
+      "expected_action": "BLOCK",
+      "expected_contract": "FINITE_TRANSFORMED_VALUES",
+      "expected_stage": "PREPROCESSING",
+      "mutation_family": "TRANSFORM_FINITE",
+      "mutation_level": "L3",
+      "pipeline_id": "mixed-logreg-linearshap"
+    },
+    {
+      "category": "LOCAL",
+      "description": "multiple non-finite values",
+      "expected_action": "BLOCK",
+      "expected_contract": "FINITE_TRANSFORMED_VALUES",
+      "expected_stage": "PREPROCESSING",
+      "mutation_family": "TRANSFORM_FINITE",
+      "mutation_level": "L4",
+      "pipeline_id": "mixed-logreg-linearshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "registered positive control",
+      "expected_action": "ACCEPT",
+      "expected_contract": null,
+      "expected_stage": null,
+      "mutation_family": "MODEL_ARTIFACT",
+      "mutation_level": "L0",
+      "pipeline_id": "mixed-logreg-linearshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "one-byte mutation",
+      "expected_action": "BLOCK",
+      "expected_contract": "MODEL_ARTIFACT_HASH",
+      "expected_stage": "MODEL_ARTIFACT",
+      "mutation_family": "MODEL_ARTIFACT",
+      "mutation_level": "L1",
+      "pipeline_id": "mixed-logreg-linearshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "truncated artifact",
+      "expected_action": "BLOCK",
+      "expected_contract": "MODEL_ARTIFACT_HASH",
+      "expected_stage": "MODEL_ARTIFACT",
+      "mutation_family": "MODEL_ARTIFACT",
+      "mutation_level": "L2",
+      "pipeline_id": "mixed-logreg-linearshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "foreign model digest",
+      "expected_action": "BLOCK",
+      "expected_contract": "MODEL_ARTIFACT_HASH",
+      "expected_stage": "MODEL_ARTIFACT",
+      "mutation_family": "MODEL_ARTIFACT",
+      "mutation_level": "L3",
+      "pipeline_id": "mixed-logreg-linearshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "stale artifact digest",
+      "expected_action": "BLOCK",
+      "expected_contract": "MODEL_ARTIFACT_HASH",
+      "expected_stage": "MODEL_ARTIFACT",
+      "mutation_family": "MODEL_ARTIFACT",
+      "mutation_level": "L4",
+      "pipeline_id": "mixed-logreg-linearshap"
+    },
+    {
+      "category": "PAIRWISE",
+      "description": "registered positive control",
+      "expected_action": "ACCEPT",
+      "expected_contract": null,
+      "expected_stage": null,
+      "mutation_family": "SPLIT_OVERLAP",
+      "mutation_level": "L0",
+      "pipeline_id": "mixed-logreg-linearshap"
+    },
+    {
+      "category": "PAIRWISE",
+      "description": "one overlapping row",
+      "expected_action": "BLOCK",
+      "expected_contract": "TRAIN_VALIDATION_TEST_DISJOINTNESS",
+      "expected_stage": "DATA_SPLIT",
+      "mutation_family": "SPLIT_OVERLAP",
+      "mutation_level": "L1",
+      "pipeline_id": "mixed-logreg-linearshap"
+    },
+    {
+      "category": "PAIRWISE",
+      "description": "five percent overlap",
+      "expected_action": "BLOCK",
+      "expected_contract": "TRAIN_VALIDATION_TEST_DISJOINTNESS",
+      "expected_stage": "DATA_SPLIT",
+      "mutation_family": "SPLIT_OVERLAP",
+      "mutation_level": "L2",
+      "pipeline_id": "mixed-logreg-linearshap"
+    },
+    {
+      "category": "PAIRWISE",
+      "description": "twenty percent overlap",
+      "expected_action": "BLOCK",
+      "expected_contract": "TRAIN_VALIDATION_TEST_DISJOINTNESS",
+      "expected_stage": "DATA_SPLIT",
+      "mutation_family": "SPLIT_OVERLAP",
+      "mutation_level": "L3",
+      "pipeline_id": "mixed-logreg-linearshap"
+    },
+    {
+      "category": "PAIRWISE",
+      "description": "full test included in train",
+      "expected_action": "BLOCK",
+      "expected_contract": "TRAIN_VALIDATION_TEST_DISJOINTNESS",
+      "expected_stage": "DATA_SPLIT",
+      "mutation_family": "SPLIT_OVERLAP",
+      "mutation_level": "L4",
+      "pipeline_id": "mixed-logreg-linearshap"
+    },
+    {
+      "category": "PAIRWISE",
+      "description": "registered positive control",
+      "expected_action": "ACCEPT",
+      "expected_contract": null,
+      "expected_stage": null,
+      "mutation_family": "FIT_SCOPE",
+      "mutation_level": "L0",
+      "pipeline_id": "mixed-logreg-linearshap"
+    },
+    {
+      "category": "PAIRWISE",
+      "description": "train plus validation",
+      "expected_action": "BLOCK",
+      "expected_contract": "PREPROCESSOR_FIT_SCOPE",
+      "expected_stage": "PREPROCESSING",
+      "mutation_family": "FIT_SCOPE",
+      "mutation_level": "L1",
+      "pipeline_id": "mixed-logreg-linearshap"
+    },
+    {
+      "category": "PAIRWISE",
+      "description": "full dataset",
+      "expected_action": "BLOCK",
+      "expected_contract": "PREPROCESSOR_FIT_SCOPE",
+      "expected_stage": "PREPROCESSING",
+      "mutation_family": "FIT_SCOPE",
+      "mutation_level": "L2",
+      "pipeline_id": "mixed-logreg-linearshap"
+    },
+    {
+      "category": "PAIRWISE",
+      "description": "test only",
+      "expected_action": "BLOCK",
+      "expected_contract": "PREPROCESSOR_FIT_SCOPE",
+      "expected_stage": "PREPROCESSING",
+      "mutation_family": "FIT_SCOPE",
+      "mutation_level": "L3",
+      "pipeline_id": "mixed-logreg-linearshap"
+    },
+    {
+      "category": "PAIRWISE",
+      "description": "different train split",
+      "expected_action": "BLOCK",
+      "expected_contract": "PREPROCESSOR_FIT_SCOPE",
+      "expected_stage": "PREPROCESSING",
+      "mutation_family": "FIT_SCOPE",
+      "mutation_level": "L4",
+      "pipeline_id": "mixed-logreg-linearshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "registered positive control",
+      "expected_action": "ACCEPT",
+      "expected_contract": null,
+      "expected_stage": null,
+      "mutation_family": "FEATURE_SCHEMA_CASCADE",
+      "mutation_level": "L0",
+      "pipeline_id": "mixed-logreg-linearshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "swap two features",
+      "expected_action": "BLOCK",
+      "expected_contract": "FEATURE_ORDER",
+      "expected_stage": "PREPROCESSING",
+      "mutation_family": "FEATURE_SCHEMA_CASCADE",
+      "mutation_level": "L1",
+      "pipeline_id": "mixed-logreg-linearshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "remove one feature",
+      "expected_action": "BLOCK",
+      "expected_contract": "FEATURE_COUNT",
+      "expected_stage": "PREPROCESSING",
+      "mutation_family": "FEATURE_SCHEMA_CASCADE",
+      "mutation_level": "L2",
+      "pipeline_id": "mixed-logreg-linearshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "add one feature",
+      "expected_action": "BLOCK",
+      "expected_contract": "FEATURE_COUNT",
+      "expected_stage": "PREPROCESSING",
+      "mutation_family": "FEATURE_SCHEMA_CASCADE",
+      "mutation_level": "L3",
+      "pipeline_id": "mixed-logreg-linearshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "rename one feature",
+      "expected_action": "BLOCK",
+      "expected_contract": "FEATURE_ORDER",
+      "expected_stage": "PREPROCESSING",
+      "mutation_family": "FEATURE_SCHEMA_CASCADE",
+      "mutation_level": "L4",
+      "pipeline_id": "mixed-logreg-linearshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "registered positive control",
+      "expected_action": "ACCEPT",
+      "expected_contract": null,
+      "expected_stage": null,
+      "mutation_family": "EXPLAINER_BINDING",
+      "mutation_level": "L0",
+      "pipeline_id": "mixed-logreg-linearshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "stale explainer version",
+      "expected_action": "BLOCK",
+      "expected_contract": "MODEL_EXPLAINER_VERSION",
+      "expected_stage": "POST_HOC_EXPLANATION",
+      "mutation_family": "EXPLAINER_BINDING",
+      "mutation_level": "L1",
+      "pipeline_id": "mixed-logreg-linearshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "foreign model hash",
+      "expected_action": "BLOCK",
+      "expected_contract": "MODEL_EXPLAINER_VERSION",
+      "expected_stage": "POST_HOC_EXPLANATION",
+      "mutation_family": "EXPLAINER_BINDING",
+      "mutation_level": "L2",
+      "pipeline_id": "mixed-logreg-linearshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "foreign object id",
+      "expected_action": "BLOCK",
+      "expected_contract": "EXPLANATION_OBJECT_ID",
+      "expected_stage": "POST_HOC_EXPLANATION",
+      "mutation_family": "EXPLAINER_BINDING",
+      "mutation_level": "L3",
+      "pipeline_id": "mixed-logreg-linearshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "foreign feature schema",
+      "expected_action": "BLOCK",
+      "expected_contract": "EXPLANATION_FEATURE_SCHEMA",
+      "expected_stage": "POST_HOC_EXPLANATION",
+      "mutation_family": "EXPLAINER_BINDING",
+      "mutation_level": "L4",
+      "pipeline_id": "mixed-logreg-linearshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "registered positive control",
+      "expected_action": "ACCEPT",
+      "expected_contract": null,
+      "expected_stage": null,
+      "mutation_family": "SHAP_CONSISTENCY",
+      "mutation_level": "L0",
+      "pipeline_id": "mixed-logreg-linearshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "changed base value",
+      "expected_action": "BLOCK",
+      "expected_contract": "EXPLANATION_OUTPUT_CONSISTENCY",
+      "expected_stage": "POST_HOC_EXPLANATION",
+      "mutation_family": "SHAP_CONSISTENCY",
+      "mutation_level": "L1",
+      "pipeline_id": "mixed-logreg-linearshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "changed one attribution",
+      "expected_action": "BLOCK",
+      "expected_contract": "EXPLANATION_OUTPUT_CONSISTENCY",
+      "expected_stage": "POST_HOC_EXPLANATION",
+      "mutation_family": "SHAP_CONSISTENCY",
+      "mutation_level": "L2",
+      "pipeline_id": "mixed-logreg-linearshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "changed multiple attributions",
+      "expected_action": "BLOCK",
+      "expected_contract": "EXPLANATION_OUTPUT_CONSISTENCY",
+      "expected_stage": "POST_HOC_EXPLANATION",
+      "mutation_family": "SHAP_CONSISTENCY",
+      "mutation_level": "L3",
+      "pipeline_id": "mixed-logreg-linearshap"
+    },
+    {
+      "category": "GLOBAL",
+      "description": "permuted attribution binding",
+      "expected_action": "BLOCK",
+      "expected_contract": "EXPLANATION_FEATURE_SCHEMA",
+      "expected_stage": "POST_HOC_EXPLANATION",
+      "mutation_family": "SHAP_CONSISTENCY",
+      "mutation_level": "L4",
+      "pipeline_id": "mixed-logreg-linearshap"
+    },
+    {
+      "category": "LOCAL",
+      "description": "registered positive control",
+      "expected_action": "ACCEPT",
+      "expected_contract": null,
+      "expected_stage": null,
+      "mutation_family": "OUTPUT_SEMANTICS",
+      "mutation_level": "L0",
+      "pipeline_id": "mixed-logreg-linearshap"
+    },
+    {
+      "category": "LOCAL",
+      "description": "reversed or invalid semantics",
+      "expected_action": "BLOCK",
+      "expected_contract": "PREDICTION_OUTPUT_SANITY",
+      "expected_stage": "INFERENCE",
+      "mutation_family": "OUTPUT_SEMANTICS",
+      "mutation_level": "L1",
+      "pipeline_id": "mixed-logreg-linearshap"
+    },
+    {
+      "category": "LOCAL",
+      "description": "missing output",
+      "expected_action": "BLOCK",
+      "expected_contract": "PREDICTION_OUTPUT_SANITY",
+      "expected_stage": "INFERENCE",
+      "mutation_family": "OUTPUT_SEMANTICS",
+      "mutation_level": "L2",
+      "pipeline_id": "mixed-logreg-linearshap"
+    },
+    {
+      "category": "LOCAL",
+      "description": "extra output",
+      "expected_action": "BLOCK",
+      "expected_contract": "PREDICTION_OUTPUT_SANITY",
+      "expected_stage": "INFERENCE",
+      "mutation_family": "OUTPUT_SEMANTICS",
+      "mutation_level": "L3",
+      "pipeline_id": "mixed-logreg-linearshap"
+    },
+    {
+      "category": "LOCAL",
+      "description": "unknown selected output",
+      "expected_action": "BLOCK",
+      "expected_contract": "PREDICTION_OUTPUT_SANITY",
+      "expected_stage": "INFERENCE",
+      "mutation_family": "OUTPUT_SEMANTICS",
+      "mutation_level": "L4",
+      "pipeline_id": "mixed-logreg-linearshap"
+    }
+  ]
+}

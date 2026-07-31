@@ -1,0 +1,21 @@
+{
+  "bootstrap": "hierarchical: resample pipelines, then mutation families within pipeline",
+  "confidence": 0.95,
+  "iterations": 10000,
+  "p_value_release_gate": false,
+  "primary_comparisons": [
+    [
+      "O_FUZZYXAI",
+      "B_LOCAL_STRONG"
+    ],
+    [
+      "O_FUZZYXAI",
+      "B_PAIRWISE_RULES"
+    ],
+    [
+      "O_FUZZYXAI",
+      "B_GREEDY_CROSS_STAGE"
+    ]
+  ],
+  "seed": 1729
+}
