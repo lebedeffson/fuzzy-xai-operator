@@ -1,0 +1,6 @@
+pipeline_id,case_count,violation_recall,cross_stage_contract_recall,stage_accuracy,contract_accuracy,root_cause_accuracy,repair_success,recertification
+breast-cancer-logreg-linearshap,40,1.0,1.0,1.0,1.0,1.0,1.0,1.0
+diabetes-ridge-linearshap,40,1.0,1.0,1.0,1.0,1.0,1.0,1.0
+digits-random-forest-treeshap,40,1.0,1.0,1.0,1.0,1.0,1.0,1.0
+mixed-logreg-linearshap,40,1.0,1.0,1.0,1.0,1.0,1.0,1.0
+wine-logreg-linearshap,40,1.0,1.0,1.0,1.0,1.0,1.0,1.0

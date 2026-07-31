@@ -1,0 +1,6 @@
+mode_id,case_count,violation_recall,local_contract_recall,cross_stage_contract_recall,stage_accuracy,contract_accuracy,root_cause_accuracy,action_accuracy,false_certification_count,false_certification_rate,evidence_completeness,repair_success,full_recertification,new_critical_violations,diagnostic_cut_mean,reported_symptoms_mean,proposed_repairs_mean,redundant_repairs_mean,runtime_median_ms,runtime_p95_ms
+B_LOCAL_STRONG,200,0.53125,1.0,0.375,0.53125,0.53125,0.0,0.625,75,0.46875,1.0,0.0,0.0,0,0.0,0.54375,0.0,0.0,0.0028760000532201957,0.00391904995922232
+B_PAIRWISE_RULES,200,1.0,1.0,1.0,1.0,1.0,0.0,1.0,0,0.0,1.0,0.0,0.0,0,0.0,1.6375,1.2625,0.2625,0.003421499968681019,0.004836000289287765
+B_MLFLOW_QUERY,200,0.1875,0.0,0.25,0.1875,0.1875,0.0,0.35,130,0.8125,1.0,0.0,0.0,0,0.0,0.3125,0.0,0.0,0.002735499947448261,0.003712050329340853
+B_GREEDY_CROSS_STAGE,200,1.0,1.0,1.0,1.0,1.0,1.0,1.0,0,0.0,1.0,0.0,0.0,0,0.0,1.6375,0.0,0.0,0.0024895002752600703,0.003113550019406824
+O_FUZZYXAI,200,1.0,1.0,1.0,1.0,1.0,1.0,1.0,0,0.0,1.0,1.0,1.0,0,1.0,1.6375,1.0,0.0,0.08001099968169001,0.13039714986007309

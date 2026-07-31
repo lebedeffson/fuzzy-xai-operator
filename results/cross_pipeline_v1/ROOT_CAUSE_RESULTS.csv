@@ -1,0 +1,6 @@
+mode_id,root_cause_accuracy,diagnostic_cut_mean,reported_symptoms_mean,redundant_repairs_mean
+B_LOCAL_STRONG,0.0,0.0,0.54375,0.0
+B_PAIRWISE_RULES,0.0,0.0,1.6375,0.2625
+B_MLFLOW_QUERY,0.0,0.0,0.3125,0.0
+B_GREEDY_CROSS_STAGE,1.0,0.0,1.6375,0.0
+O_FUZZYXAI,1.0,1.0,1.6375,0.0

@@ -1,0 +1,9 @@
+mutation_family,case_count,violation_recall,cross_stage_contract_recall,stage_accuracy,contract_accuracy,root_cause_accuracy,repair_success,recertification
+EXPLAINER_BINDING,25,1.0,1.0,1.0,1.0,1.0,1.0,1.0
+FEATURE_SCHEMA_CASCADE,25,1.0,1.0,1.0,1.0,1.0,1.0,1.0
+FIT_SCOPE,25,1.0,1.0,1.0,1.0,1.0,1.0,1.0
+MODEL_ARTIFACT,25,1.0,1.0,1.0,1.0,1.0,1.0,1.0
+OUTPUT_SEMANTICS,25,1.0,0.0,1.0,1.0,1.0,1.0,1.0
+SHAP_CONSISTENCY,25,1.0,1.0,1.0,1.0,1.0,1.0,1.0
+SPLIT_OVERLAP,25,1.0,1.0,1.0,1.0,1.0,1.0,1.0
+TRANSFORM_FINITE,25,1.0,0.0,1.0,1.0,1.0,1.0,1.0
