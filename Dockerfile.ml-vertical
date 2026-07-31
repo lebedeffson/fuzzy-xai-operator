@@ -15,9 +15,9 @@ from pathlib import Path
 
 project = tomllib.loads(Path("pyproject.toml").read_text())["project"]
 requirements = [*project["dependencies"], *project["optional-dependencies"]["ml-vertical"]]
-Path("/tmp/ml-pipeline-requirements.txt").write_text("\n".join(requirements) + "\n")
+Path("/app/ml-pipeline-requirements.txt").write_text("\n".join(requirements) + "\n")
 PY
-RUN python -m pip install --no-cache-dir -r /tmp/ml-pipeline-requirements.txt
+RUN python -m pip install --no-cache-dir -r /app/ml-pipeline-requirements.txt
 COPY framework /app/framework
 RUN python -m pip install --no-cache-dir --no-deps .
 COPY . /app
