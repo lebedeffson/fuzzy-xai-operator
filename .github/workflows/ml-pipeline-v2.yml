@@ -25,7 +25,7 @@ env:
   OPENBLAS_NUM_THREADS: "1"
   MKL_NUM_THREADS: "1"
   NUMEXPR_NUM_THREADS: "1"
-  PYTHONPATH: "framework/fuzzyxai:."
+  PYTHONPATH: "experiments/h10_c3/src:framework/fuzzyxai:."
   FUZZYXAI_GIT_COMMIT: ${{ github.sha }}
 
 jobs:
@@ -44,7 +44,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           python -m pip install --index-url https://download.pytorch.org/whl/cpu torch
-          python -m pip install -e ".[dev,ml-vertical]"
+          python -m pip install -e ".[dev,ml-vertical,lightgbm]"
       - name: Focused tests
         run: make ml-pipeline-v2-test PYTHON=python
       - name: Static checks
