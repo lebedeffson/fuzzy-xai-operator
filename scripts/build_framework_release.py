@@ -30,6 +30,7 @@ ALLOWED_ARCHIVES = {
 }
 ALLOWED_ROOTS = {
     ".github",
+    "apps",
     "baselines",
     "config",
     "configs",
