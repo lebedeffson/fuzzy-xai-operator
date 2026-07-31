@@ -1,0 +1,47 @@
+{
+  "diagnosis_id": "diagnosis:mlp2:05c4cf24fee49c98ad37",
+  "pipeline_status": "INVALID",
+  "failed_stage": "MODEL_ARTIFACT",
+  "source_component": "serialized_model",
+  "violated_contract": "MODEL_ARTIFACT_HASH",
+  "violated_contracts": [
+    {
+      "contract_id": "MODEL_ARTIFACT_HASH",
+      "stage": "MODEL_ARTIFACT",
+      "component_id": "serialized_model",
+      "passed": false,
+      "severity": "HIGH",
+      "action": "BLOCK",
+      "observed_value": "5e1768fd210e535f0c3782f4226cfc9b0c23b78362c4ffefa3f90560b4ea0672",
+      "expected_value": "5de1ed8251b147befef90e6bfee3f5bcda23056d5bb66212153ce1104668ca8c",
+      "evidence_refs": [
+        "obs:3d4391fa1a45143ddfb2"
+      ]
+    }
+  ],
+  "affected_field": "model_artifact_hash",
+  "observed_value": "5e1768fd210e535f0c3782f4226cfc9b0c23b78362c4ffefa3f90560b4ea0672",
+  "expected_value": "5de1ed8251b147befef90e6bfee3f5bcda23056d5bb66212153ce1104668ca8c",
+  "severity": "HIGH",
+  "recommended_action": "BLOCK",
+  "evidence_refs": [
+    "obs:3d4391fa1a45143ddfb2"
+  ],
+  "nearest_confirmed_cause": {
+    "component": "serialized_model",
+    "mutation": {
+      "tampered_artifact_sha256": "5e1768fd210e535f0c3782f4226cfc9b0c23b78362c4ffefa3f90560b4ea0672",
+      "registered_artifact_sha256": "5de1ed8251b147befef90e6bfee3f5bcda23056d5bb66212153ce1104668ca8c"
+    }
+  },
+  "diagnostic_cut": {
+    "contracts": [
+      "MODEL_ARTIFACT_HASH"
+    ],
+    "evidence_refs": [
+      "obs:3d4391fa1a45143ddfb2"
+    ]
+  },
+  "confidence": 1.0,
+  "observation_count": 28
+}

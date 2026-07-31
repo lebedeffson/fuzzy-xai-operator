@@ -1,0 +1,98 @@
+{
+  "status": "PASS",
+  "run_count": 18,
+  "complete_runs": 18,
+  "required_artifacts_per_run": 14,
+  "runs": [
+    {
+      "run_id": "5b321b304a0146b1934a56177784bd8d",
+      "artifact_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-pipeline-v2/results/ml_pipeline_v2/mlruns/274257985337479149/5b321b304a0146b1934a56177784bd8d/artifacts",
+      "missing": []
+    },
+    {
+      "run_id": "579638bb4e784248a13328bab0096915",
+      "artifact_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-pipeline-v2/results/ml_pipeline_v2/mlruns/274257985337479149/579638bb4e784248a13328bab0096915/artifacts",
+      "missing": []
+    },
+    {
+      "run_id": "ebea8f0e75ac4a3d8f8c55a5b6a29544",
+      "artifact_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-pipeline-v2/results/ml_pipeline_v2/mlruns/274257985337479149/ebea8f0e75ac4a3d8f8c55a5b6a29544/artifacts",
+      "missing": []
+    },
+    {
+      "run_id": "665dec372652425e83105a9011631fb9",
+      "artifact_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-pipeline-v2/results/ml_pipeline_v2/mlruns/274257985337479149/665dec372652425e83105a9011631fb9/artifacts",
+      "missing": []
+    },
+    {
+      "run_id": "5ee204fdbb2347e18be2fe27b3ffd200",
+      "artifact_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-pipeline-v2/results/ml_pipeline_v2/mlruns/274257985337479149/5ee204fdbb2347e18be2fe27b3ffd200/artifacts",
+      "missing": []
+    },
+    {
+      "run_id": "6523ad6119ea4d79bae064b3ce97be26",
+      "artifact_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-pipeline-v2/results/ml_pipeline_v2/mlruns/274257985337479149/6523ad6119ea4d79bae064b3ce97be26/artifacts",
+      "missing": []
+    },
+    {
+      "run_id": "f115721449774cb2878425026820f51b",
+      "artifact_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-pipeline-v2/results/ml_pipeline_v2/mlruns/274257985337479149/f115721449774cb2878425026820f51b/artifacts",
+      "missing": []
+    },
+    {
+      "run_id": "f0cdcd8099aa4dd1a9e3d097aec34d63",
+      "artifact_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-pipeline-v2/results/ml_pipeline_v2/mlruns/274257985337479149/f0cdcd8099aa4dd1a9e3d097aec34d63/artifacts",
+      "missing": []
+    },
+    {
+      "run_id": "952be554f4464884b46eb7d293117e01",
+      "artifact_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-pipeline-v2/results/ml_pipeline_v2/mlruns/274257985337479149/952be554f4464884b46eb7d293117e01/artifacts",
+      "missing": []
+    },
+    {
+      "run_id": "1fd59e7dd3c445118cd506d3bf0f7d47",
+      "artifact_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-pipeline-v2/results/ml_pipeline_v2/mlruns/274257985337479149/1fd59e7dd3c445118cd506d3bf0f7d47/artifacts",
+      "missing": []
+    },
+    {
+      "run_id": "4af0954849594364acf336afac586c75",
+      "artifact_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-pipeline-v2/results/ml_pipeline_v2/mlruns/274257985337479149/4af0954849594364acf336afac586c75/artifacts",
+      "missing": []
+    },
+    {
+      "run_id": "b9fb9a8a1d9c4ebf91f2e3d17e943926",
+      "artifact_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-pipeline-v2/results/ml_pipeline_v2/mlruns/274257985337479149/b9fb9a8a1d9c4ebf91f2e3d17e943926/artifacts",
+      "missing": []
+    },
+    {
+      "run_id": "095dc27031104bdcbec3112d53da72b9",
+      "artifact_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-pipeline-v2/results/ml_pipeline_v2/mlruns/274257985337479149/095dc27031104bdcbec3112d53da72b9/artifacts",
+      "missing": []
+    },
+    {
+      "run_id": "38e7134407624f399ec9d6ce4a2dda29",
+      "artifact_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-pipeline-v2/results/ml_pipeline_v2/mlruns/274257985337479149/38e7134407624f399ec9d6ce4a2dda29/artifacts",
+      "missing": []
+    },
+    {
+      "run_id": "620bf07825af41d481a62e8043fab3b1",
+      "artifact_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-pipeline-v2/results/ml_pipeline_v2/mlruns/274257985337479149/620bf07825af41d481a62e8043fab3b1/artifacts",
+      "missing": []
+    },
+    {
+      "run_id": "f5760f1d17214e42b205643e1a2fc03a",
+      "artifact_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-pipeline-v2/results/ml_pipeline_v2/mlruns/274257985337479149/f5760f1d17214e42b205643e1a2fc03a/artifacts",
+      "missing": []
+    },
+    {
+      "run_id": "924dc2d72c1e4c0baf4347a8f8eae498",
+      "artifact_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-pipeline-v2/results/ml_pipeline_v2/mlruns/274257985337479149/924dc2d72c1e4c0baf4347a8f8eae498/artifacts",
+      "missing": []
+    },
+    {
+      "run_id": "449f3400059644ab8cdc2b77e83d24eb",
+      "artifact_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-pipeline-v2/results/ml_pipeline_v2/mlruns/274257985337479149/449f3400059644ab8cdc2b77e83d24eb/artifacts",
+      "missing": []
+    }
+  ]
+}

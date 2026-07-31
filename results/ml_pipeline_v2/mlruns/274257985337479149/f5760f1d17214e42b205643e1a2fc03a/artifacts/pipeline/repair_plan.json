@@ -1,0 +1,29 @@
+{
+  "plan_id": "repair:mlp2:05c4cf24fee49c98ad37",
+  "operation": {
+    "operation_id": "restore_registered_model_artifact",
+    "supported_contracts": [
+      "MODEL_ARTIFACT_HASH"
+    ],
+    "target_component_type": "model_artifact",
+    "preconditions": [
+      "registered_model_snapshot_available"
+    ],
+    "postconditions": [
+      "model_hash_matches",
+      "prediction_and_shap_rebuilt",
+      "all_contracts_rechecked"
+    ],
+    "rollback_operation": "restore_tampered_artifact_snapshot",
+    "maximum_cost": 0.5,
+    "mutates_state": true
+  },
+  "target_contracts": [
+    "MODEL_ARTIFACT_HASH"
+  ],
+  "preconditions": {
+    "registered_model_snapshot_available": true
+  },
+  "executable": true,
+  "network_required": false
+}

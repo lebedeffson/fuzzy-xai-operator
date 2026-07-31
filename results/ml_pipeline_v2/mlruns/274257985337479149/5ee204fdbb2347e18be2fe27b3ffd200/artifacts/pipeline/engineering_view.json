@@ -1,0 +1,55 @@
+{
+  "run_id": "mlp2:417ed4261f5235ac595a",
+  "scenario_id": "S5_INTERVAL_UNCERTAINTY",
+  "action": "WARN",
+  "pipeline_status": "VALID",
+  "canonical_source": "MLPipelineService",
+  "diagnosis": {
+    "diagnosis_id": "diagnosis:mlp2:417ed4261f5235ac595a",
+    "pipeline_status": "VALID",
+    "failed_stage": null,
+    "source_component": null,
+    "violated_contract": null,
+    "violated_contracts": [],
+    "affected_field": null,
+    "observed_value": null,
+    "expected_value": null,
+    "severity": null,
+    "recommended_action": "WARN",
+    "evidence_refs": [],
+    "nearest_confirmed_cause": {},
+    "diagnostic_cut": {
+      "contracts": [],
+      "evidence_refs": []
+    },
+    "confidence": 1.0,
+    "observation_count": 28
+  },
+  "representation": {
+    "representation_id": "F_int",
+    "membership": {
+      "low": [
+        0.8794460852969871,
+        1.0
+      ],
+      "medium": [
+        0.0,
+        0.12
+      ],
+      "high": [
+        0.0,
+        0.12
+      ]
+    },
+    "covered_uncertainties": [
+      "u_int",
+      "u_ling",
+      "u_num"
+    ],
+    "cognitive_complexity": 2.0,
+    "computational_complexity": 2.0,
+    "selection_reason": "registered feature intervals require interval membership"
+  },
+  "repair_plan": null,
+  "recertification": null
+}

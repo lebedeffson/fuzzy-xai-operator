@@ -1,0 +1,45 @@
+{
+  "run_id": "mlp2:8581c5f75a86a7b1a148",
+  "scenario_id": "S10_DETERMINISM",
+  "action": "ACCEPT",
+  "pipeline_status": "VALID",
+  "canonical_source": "MLPipelineService",
+  "diagnosis": {
+    "diagnosis_id": "diagnosis:mlp2:8581c5f75a86a7b1a148",
+    "pipeline_status": "VALID",
+    "failed_stage": null,
+    "source_component": null,
+    "violated_contract": null,
+    "violated_contracts": [],
+    "affected_field": null,
+    "observed_value": null,
+    "expected_value": null,
+    "severity": null,
+    "recommended_action": "ACCEPT",
+    "evidence_refs": [],
+    "nearest_confirmed_cause": {},
+    "diagnostic_cut": {
+      "contracts": [],
+      "evidence_refs": []
+    },
+    "confidence": 1.0,
+    "observation_count": 28
+  },
+  "representation": {
+    "representation_id": "F0",
+    "membership": {
+      "low": 0.9994460852969871,
+      "medium": 0.0,
+      "high": 0.0
+    },
+    "covered_uncertainties": [
+      "u_ling",
+      "u_num"
+    ],
+    "cognitive_complexity": 1.0,
+    "computational_complexity": 1.0,
+    "selection_reason": "point evidence is complete and has no registered conflict"
+  },
+  "repair_plan": null,
+  "recertification": null
+}

@@ -1,0 +1,15 @@
+artifact_uri: file:///home/lebedeffson/Code/fuzzy-xai-ml-pipeline-v2/results/ml_pipeline_v2/mlruns/274257985337479149/f115721449774cb2878425026820f51b/artifacts
+end_time: 1785515796758
+entry_point_name: ''
+experiment_id: '274257985337479149'
+lifecycle_stage: active
+run_id: f115721449774cb2878425026820f51b
+run_name: mlp2-33ab600ddce002440653
+run_uuid: f115721449774cb2878425026820f51b
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1785515796626
+status: 3
+tags: []
+user_id: lebedeffson

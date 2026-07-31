@@ -1,0 +1,44 @@
+{
+  "diagnosis_id": "diagnosis:mlp2:82c5a89603ac891d35bf",
+  "pipeline_status": "INVALID",
+  "failed_stage": "POST_HOC_EXPLANATION",
+  "source_component": "logistic_regression",
+  "violated_contract": "MODEL_EXPLAINER_VERSION",
+  "violated_contracts": [
+    {
+      "contract_id": "MODEL_EXPLAINER_VERSION",
+      "stage": "POST_HOC_EXPLANATION",
+      "component_id": "logistic_regression",
+      "passed": false,
+      "severity": "MEDIUM",
+      "action": "ACCEPT",
+      "observed_value": "legacy_vertical_violation",
+      "expected_value": "registered_contract_satisfied",
+      "evidence_refs": [
+        "obs:e1a400f9fd5df6ab27ae"
+      ]
+    }
+  ],
+  "affected_field": "model_explainer_version",
+  "observed_value": "legacy_vertical_violation",
+  "expected_value": "registered_contract_satisfied",
+  "severity": "MEDIUM",
+  "recommended_action": "ACCEPT",
+  "evidence_refs": [
+    "obs:e1a400f9fd5df6ab27ae"
+  ],
+  "nearest_confirmed_cause": {
+    "component": "logistic_regression",
+    "mutation": {}
+  },
+  "diagnostic_cut": {
+    "contracts": [
+      "MODEL_EXPLAINER_VERSION"
+    ],
+    "evidence_refs": [
+      "obs:e1a400f9fd5df6ab27ae"
+    ]
+  },
+  "confidence": 1.0,
+  "observation_count": 29
+}

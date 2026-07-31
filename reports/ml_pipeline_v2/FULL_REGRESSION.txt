@@ -1,0 +1,124 @@
+........................................................................ [  8%]
+........................................................................ [ 16%]
+...............................s........................................ [ 24%]
+........................................................................ [ 32%]
+........................................................................ [ 40%]
+........................................................................ [ 49%]
+....................................s................................... [ 57%]
+.s.sss.................................................................. [ 65%]
+........................................................................ [ 73%]
+........................................................................ [ 81%]
+........................................................................ [ 90%]
+........................................................................ [ 98%]
+................                                                         [100%]
+=============================== warnings summary ===============================
+tests/optional/test_boosting_adapters.py::test_lightgbm_native_contributions
+tests/optional/test_boosting_adapters.py::test_lightgbm_native_contributions
+tests/optional/test_boosting_adapters.py::test_lightgbm_native_contributions
+tests/optional/test_boosting_adapters.py::test_lightgbm_native_contributions
+tests/optional/test_boosting_adapters.py::test_lightgbm_native_contributions
+tests/optional/test_boosting_adapters.py::test_lightgbm_native_contributions
+  /home/lebedeffson/Code/venv/lib/python3.14/site-packages/sklearn/utils/validation.py:2749: UserWarning: X does not have valid feature names, but LGBMClassifier was fitted with feature names
+    warnings.warn(
+
+tests/test_chapter5_web_demo_smoke.py: 2 warnings
+tests/test_dataset_quality_hardening.py: 42 warnings
+tests/test_defense_presets.py: 6 warnings
+tests/test_explainplan_changes_action.py: 2 warnings
+tests/test_fuzzyxai_studio_core.py: 6 warnings
+tests/test_operator_trace.py: 4 warnings
+tests/test_real_reduction_example.py: 3 warnings
+tests/test_report_export_contains_required_fields.py: 2 warnings
+tests/test_thesis_practice_tables.py: 338 warnings
+tests/test_universal_model_adapters.py: 4 warnings
+  /home/lebedeffson/Code/venv/lib/python3.14/site-packages/sklearn/utils/validation.py:2749: UserWarning: X does not have valid feature names, but RandomForestClassifier was fitted with feature names
+    warnings.warn(
+
+tests/test_real_reduction_example.py: 1 warning
+tests/test_universal_model_adapters.py: 21 warnings
+  /home/lebedeffson/Code/venv/lib/python3.14/site-packages/sklearn/utils/validation.py:2749: UserWarning: X does not have valid feature names, but LogisticRegression was fitted with feature names
+    warnings.warn(
+
+tests/test_universal_model_adapters.py::test_sklearn_family_resolution_and_explanation[<lambda>-SklearnLinearAdapter1]
+tests/test_universal_model_adapters.py::test_sklearn_family_resolution_and_explanation[<lambda>-SklearnLinearAdapter1]
+tests/test_universal_model_adapters.py::test_sklearn_family_resolution_and_explanation[<lambda>-SklearnLinearAdapter1]
+tests/test_universal_model_adapters.py::test_sklearn_family_resolution_and_explanation[<lambda>-SklearnLinearAdapter1]
+  /home/lebedeffson/Code/venv/lib/python3.14/site-packages/sklearn/utils/validation.py:2749: UserWarning: X does not have valid feature names, but RidgeClassifier was fitted with feature names
+    warnings.warn(
+
+tests/test_universal_model_adapters.py::test_sklearn_family_resolution_and_explanation[<lambda>-SklearnTreeAdapter]
+tests/test_universal_model_adapters.py::test_sklearn_family_resolution_and_explanation[<lambda>-SklearnTreeAdapter]
+tests/test_universal_model_adapters.py::test_sklearn_family_resolution_and_explanation[<lambda>-SklearnTreeAdapter]
+tests/test_universal_model_adapters.py::test_sklearn_family_resolution_and_explanation[<lambda>-SklearnTreeAdapter]
+tests/test_universal_model_adapters.py::test_batch_global_why_not_and_model_comparison
+tests/test_universal_model_adapters.py::test_batch_global_why_not_and_model_comparison
+tests/test_universal_model_adapters.py::test_batch_global_why_not_and_model_comparison
+tests/test_universal_model_adapters.py::test_batch_global_why_not_and_model_comparison
+  /home/lebedeffson/Code/venv/lib/python3.14/site-packages/sklearn/utils/validation.py:2749: UserWarning: X does not have valid feature names, but DecisionTreeClassifier was fitted with feature names
+    warnings.warn(
+
+tests/test_universal_model_adapters.py::test_sklearn_family_resolution_and_explanation[<lambda>-SklearnEnsembleAdapter1]
+tests/test_universal_model_adapters.py::test_sklearn_family_resolution_and_explanation[<lambda>-SklearnEnsembleAdapter1]
+tests/test_universal_model_adapters.py::test_sklearn_family_resolution_and_explanation[<lambda>-SklearnEnsembleAdapter1]
+tests/test_universal_model_adapters.py::test_sklearn_family_resolution_and_explanation[<lambda>-SklearnEnsembleAdapter1]
+  /home/lebedeffson/Code/venv/lib/python3.14/site-packages/sklearn/utils/validation.py:2749: UserWarning: X does not have valid feature names, but ExtraTreesClassifier was fitted with feature names
+    warnings.warn(
+
+tests/test_universal_model_adapters.py::test_sklearn_family_resolution_and_explanation[<lambda>-SklearnEnsembleAdapter2]
+tests/test_universal_model_adapters.py::test_sklearn_family_resolution_and_explanation[<lambda>-SklearnEnsembleAdapter2]
+tests/test_universal_model_adapters.py::test_sklearn_family_resolution_and_explanation[<lambda>-SklearnEnsembleAdapter2]
+tests/test_universal_model_adapters.py::test_sklearn_family_resolution_and_explanation[<lambda>-SklearnEnsembleAdapter2]
+tests/test_universal_model_adapters.py::test_sklearn_family_resolution_and_explanation[<lambda>-SklearnEnsembleAdapter2]
+tests/test_universal_model_adapters.py::test_sklearn_family_resolution_and_explanation[<lambda>-SklearnEnsembleAdapter2]
+  /home/lebedeffson/Code/venv/lib/python3.14/site-packages/sklearn/utils/validation.py:2749: UserWarning: X does not have valid feature names, but GradientBoostingClassifier was fitted with feature names
+    warnings.warn(
+
+tests/test_universal_model_adapters.py::test_sklearn_family_resolution_and_explanation[<lambda>-SklearnSVMAdapter0]
+tests/test_universal_model_adapters.py::test_sklearn_family_resolution_and_explanation[<lambda>-SklearnSVMAdapter0]
+tests/test_universal_model_adapters.py::test_sklearn_family_resolution_and_explanation[<lambda>-SklearnSVMAdapter0]
+tests/test_universal_model_adapters.py::test_sklearn_family_resolution_and_explanation[<lambda>-SklearnSVMAdapter0]
+tests/test_universal_model_adapters.py::test_decision_score_is_not_labeled_probability
+tests/test_universal_model_adapters.py::test_decision_score_is_not_labeled_probability
+tests/test_universal_model_adapters.py::test_decision_score_is_not_labeled_probability
+tests/test_universal_model_adapters.py::test_decision_score_is_not_labeled_probability
+  /home/lebedeffson/Code/venv/lib/python3.14/site-packages/sklearn/utils/validation.py:2749: UserWarning: X does not have valid feature names, but LinearSVC was fitted with feature names
+    warnings.warn(
+
+tests/test_universal_model_adapters.py::test_sklearn_family_resolution_and_explanation[<lambda>-SklearnSVMAdapter1]
+tests/test_universal_model_adapters.py::test_sklearn_family_resolution_and_explanation[<lambda>-SklearnSVMAdapter1]
+tests/test_universal_model_adapters.py::test_sklearn_family_resolution_and_explanation[<lambda>-SklearnSVMAdapter1]
+tests/test_universal_model_adapters.py::test_sklearn_family_resolution_and_explanation[<lambda>-SklearnSVMAdapter1]
+tests/test_universal_model_adapters.py::test_sklearn_family_resolution_and_explanation[<lambda>-SklearnSVMAdapter1]
+tests/test_universal_model_adapters.py::test_sklearn_family_resolution_and_explanation[<lambda>-SklearnSVMAdapter1]
+tests/test_universal_model_adapters.py::test_sklearn_family_resolution_and_explanation[<lambda>-SklearnSVMAdapter1]
+tests/test_universal_model_adapters.py::test_nonlinear_svm_surrogate_has_measured_fidelity
+  /home/lebedeffson/Code/venv/lib/python3.14/site-packages/sklearn/utils/validation.py:2749: UserWarning: X does not have valid feature names, but SVC was fitted with feature names
+    warnings.warn(
+
+tests/test_universal_model_adapters.py::test_sklearn_family_resolution_and_explanation[<lambda>-SklearnKNNAdapter]
+tests/test_universal_model_adapters.py::test_sklearn_family_resolution_and_explanation[<lambda>-SklearnKNNAdapter]
+tests/test_universal_model_adapters.py::test_sklearn_family_resolution_and_explanation[<lambda>-SklearnKNNAdapter]
+tests/test_universal_model_adapters.py::test_sklearn_family_resolution_and_explanation[<lambda>-SklearnKNNAdapter]
+tests/test_universal_model_adapters.py::test_sklearn_family_resolution_and_explanation[<lambda>-SklearnKNNAdapter]
+  /home/lebedeffson/Code/venv/lib/python3.14/site-packages/sklearn/utils/validation.py:2749: UserWarning: X does not have valid feature names, but KNeighborsClassifier was fitted with feature names
+    warnings.warn(
+
+tests/test_universal_model_adapters.py::test_sklearn_family_resolution_and_explanation[<lambda>-SklearnNaiveBayesAdapter]
+tests/test_universal_model_adapters.py::test_sklearn_family_resolution_and_explanation[<lambda>-SklearnNaiveBayesAdapter]
+tests/test_universal_model_adapters.py::test_sklearn_family_resolution_and_explanation[<lambda>-SklearnNaiveBayesAdapter]
+tests/test_universal_model_adapters.py::test_sklearn_family_resolution_and_explanation[<lambda>-SklearnNaiveBayesAdapter]
+  /home/lebedeffson/Code/venv/lib/python3.14/site-packages/sklearn/utils/validation.py:2749: UserWarning: X does not have valid feature names, but GaussianNB was fitted with feature names
+    warnings.warn(
+
+tests/test_universal_model_adapters.py::test_pipeline_restores_feature_provenance
+tests/test_universal_model_adapters.py::test_pipeline_restores_feature_provenance
+tests/test_universal_model_adapters.py::test_pipeline_restores_feature_provenance
+tests/test_universal_model_adapters.py::test_pipeline_restores_feature_provenance
+tests/test_universal_model_adapters.py::test_pipeline_restores_feature_provenance
+tests/test_universal_model_adapters.py::test_pipeline_restores_feature_provenance
+tests/test_universal_model_adapters.py::test_pipeline_restores_feature_provenance
+  /home/lebedeffson/Code/venv/lib/python3.14/site-packages/sklearn/utils/validation.py:2749: UserWarning: X does not have valid feature names, but StandardScaler was fitted with feature names
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+874 passed, 8 skipped, 491 warnings in 259.02s (0:04:19)

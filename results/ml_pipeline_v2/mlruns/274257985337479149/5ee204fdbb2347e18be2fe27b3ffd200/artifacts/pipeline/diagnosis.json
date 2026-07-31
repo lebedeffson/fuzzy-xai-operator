@@ -1,0 +1,21 @@
+{
+  "diagnosis_id": "diagnosis:mlp2:417ed4261f5235ac595a",
+  "pipeline_status": "VALID",
+  "failed_stage": null,
+  "source_component": null,
+  "violated_contract": null,
+  "violated_contracts": [],
+  "affected_field": null,
+  "observed_value": null,
+  "expected_value": null,
+  "severity": null,
+  "recommended_action": "WARN",
+  "evidence_refs": [],
+  "nearest_confirmed_cause": {},
+  "diagnostic_cut": {
+    "contracts": [],
+    "evidence_refs": []
+  },
+  "confidence": 1.0,
+  "observation_count": 28
+}

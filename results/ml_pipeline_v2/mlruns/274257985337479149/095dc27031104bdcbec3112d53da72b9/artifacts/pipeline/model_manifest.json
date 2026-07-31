@@ -1,0 +1,59 @@
+{
+  "model_id": "bcw-logistic-regression",
+  "model_version": "1.0.0",
+  "library_version": "1.9.0",
+  "model_sha256": "c5b042bd9cd865ecc209de958a2cf64ab04b7d0dbba0a6d7d2865895aad7a8e7",
+  "model_artifact_sha256": "5de1ed8251b147befef90e6bfee3f5bcda23056d5bb66212153ce1104668ca8c",
+  "feature_schema_sha256": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+  "n_features_in": 30,
+  "feature_names_in": [
+    "mean radius",
+    "mean texture",
+    "mean perimeter",
+    "mean area",
+    "mean smoothness",
+    "mean compactness",
+    "mean concavity",
+    "mean concave points",
+    "mean symmetry",
+    "mean fractal dimension",
+    "radius error",
+    "texture error",
+    "perimeter error",
+    "area error",
+    "smoothness error",
+    "compactness error",
+    "concavity error",
+    "concave points error",
+    "symmetry error",
+    "fractal dimension error",
+    "worst radius",
+    "worst texture",
+    "worst perimeter",
+    "worst area",
+    "worst smoothness",
+    "worst compactness",
+    "worst concavity",
+    "worst concave points",
+    "worst symmetry",
+    "worst fractal dimension"
+  ],
+  "classes": [
+    0,
+    1
+  ],
+  "training_data_hash": {
+    "dataset": "47e9aa4e33b5350407b6d31fa140e2b1767a038c37796e0990eb99ad2bc7ba12",
+    "train": "d96d63ac85a124109a38337843ea08b792d579afb5e10d85d232020ce67fb3bb",
+    "target": "be56573cf0b8dafd36c7e0caeb2e3906dd345494e709f9226b1535e643da2ef5"
+  },
+  "metrics": {
+    "accuracy": 0.989010989010989,
+    "precision": 1.0,
+    "recall": 0.9705882352941176,
+    "f1": 0.9850746268656716,
+    "log_loss": 0.0631161320381037,
+    "roc_auc": 0.9979360165118679,
+    "sample_count": 91.0
+  }
+}

@@ -1,0 +1,1559 @@
+{
+  "run_id": "mlp2:33ab600ddce002440653",
+  "scenario_id": "S7_REDUCTION_LOSS_EXCEEDED",
+  "action": "WARN",
+  "pipeline_status": "INVALID",
+  "canonical_source": "MLPipelineService",
+  "diagnosis": {
+    "diagnosis_id": "diagnosis:mlp2:33ab600ddce002440653",
+    "pipeline_status": "INVALID",
+    "failed_stage": "REDUCTION",
+    "source_component": "fuzzyxai_presenter",
+    "violated_contract": "REDUCTION_LOSS_LIMIT",
+    "violated_contracts": [
+      {
+        "contract_id": "REDUCTION_LOSS_LIMIT",
+        "stage": "REDUCTION",
+        "component_id": "fuzzyxai_presenter",
+        "passed": false,
+        "severity": "MEDIUM",
+        "action": "WARN",
+        "observed_value": "legacy_vertical_violation",
+        "expected_value": "registered_contract_satisfied",
+        "evidence_refs": [
+          "obs:2c66b6521f9c23a04a25"
+        ]
+      }
+    ],
+    "affected_field": "reduction_loss_limit",
+    "observed_value": "legacy_vertical_violation",
+    "expected_value": "registered_contract_satisfied",
+    "severity": "MEDIUM",
+    "recommended_action": "WARN",
+    "evidence_refs": [
+      "obs:2c66b6521f9c23a04a25"
+    ],
+    "nearest_confirmed_cause": {
+      "component": "fuzzyxai_presenter",
+      "mutation": {}
+    },
+    "diagnostic_cut": {
+      "contracts": [
+        "REDUCTION_LOSS_LIMIT"
+      ],
+      "evidence_refs": [
+        "obs:2c66b6521f9c23a04a25"
+      ]
+    },
+    "confidence": 1.0,
+    "observation_count": 29
+  },
+  "route_graph": {
+    "schema_version": "2.0",
+    "route_id": "route:mlp2:33ab600ddce002440653",
+    "nodes": [
+      {
+        "node_id": "dataset",
+        "node_type": "dataset",
+        "stage": "DATA_PREPARATION",
+        "component_id": "dataset",
+        "component_type": "dataset",
+        "version": "2.0.0",
+        "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "configuration": {},
+        "artifact_sha256": "47e9aa4e33b5350407b6d31fa140e2b1767a038c37796e0990eb99ad2bc7ba12",
+        "evidence_refs": [
+          "obs:20efaf888e12d2700be2",
+          "obs:26eafb1a7ee87b1de27c",
+          "obs:323fc57a2780fdeaa1cb",
+          "obs:9ca530e932b28ac52b84"
+        ],
+        "execution_status": "PASS"
+      },
+      {
+        "node_id": "split_manifest",
+        "node_type": "split_manifest",
+        "stage": "DATA_SPLIT",
+        "component_id": "split_manifest",
+        "component_type": "split_manifest",
+        "version": "2.0.0",
+        "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "configuration": {
+          "random_state": 1729,
+          "stratified": true
+        },
+        "artifact_sha256": "5cb8248a79fe2464c45575cdb50c2dd1ba887c819311031b970fa10adb6afc8e",
+        "evidence_refs": [
+          "obs:c7e935057b569d0e09a4",
+          "obs:34557fb75e98708429cc"
+        ],
+        "execution_status": "PASS"
+      },
+      {
+        "node_id": "train_partition",
+        "node_type": "partition",
+        "stage": "DATA_SPLIT",
+        "component_id": "train_partition",
+        "component_type": "partition",
+        "version": "2.0.0",
+        "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "configuration": {},
+        "artifact_sha256": null,
+        "evidence_refs": [
+          "obs:c7e935057b569d0e09a4",
+          "obs:34557fb75e98708429cc"
+        ],
+        "execution_status": "PASS"
+      },
+      {
+        "node_id": "validation_partition",
+        "node_type": "partition",
+        "stage": "DATA_SPLIT",
+        "component_id": "validation_partition",
+        "component_type": "partition",
+        "version": "2.0.0",
+        "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "configuration": {},
+        "artifact_sha256": null,
+        "evidence_refs": [
+          "obs:c7e935057b569d0e09a4",
+          "obs:34557fb75e98708429cc"
+        ],
+        "execution_status": "PASS"
+      },
+      {
+        "node_id": "test_partition",
+        "node_type": "partition",
+        "stage": "DATA_SPLIT",
+        "component_id": "test_partition",
+        "component_type": "partition",
+        "version": "2.0.0",
+        "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "configuration": {},
+        "artifact_sha256": null,
+        "evidence_refs": [
+          "obs:c7e935057b569d0e09a4",
+          "obs:34557fb75e98708429cc"
+        ],
+        "execution_status": "PASS"
+      },
+      {
+        "node_id": "preprocessor",
+        "node_type": "preprocessor",
+        "stage": "PREPROCESSING",
+        "component_id": "preprocessor",
+        "component_type": "preprocessor",
+        "version": "2.0.0",
+        "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "configuration": {
+          "class": "StandardScaler"
+        },
+        "artifact_sha256": "3496f956bcee015f773859d8e072ab6ff637663c57e470ebee3f823c3146ed24",
+        "evidence_refs": [
+          "obs:90ba273ce0f21c848592",
+          "obs:f7d273025dcfb7d54715",
+          "obs:ca719e683dcf7898cb8a",
+          "obs:2ef23b34e2c37759083a",
+          "obs:be6b04a437c29f03c9d2",
+          "obs:342db6399cf9ec95c6cc"
+        ],
+        "execution_status": "PASS"
+      },
+      {
+        "node_id": "transformed_train",
+        "node_type": "dataset",
+        "stage": "PREPROCESSING",
+        "component_id": "transformed_train",
+        "component_type": "dataset",
+        "version": "2.0.0",
+        "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "configuration": {},
+        "artifact_sha256": null,
+        "evidence_refs": [
+          "obs:90ba273ce0f21c848592",
+          "obs:f7d273025dcfb7d54715",
+          "obs:ca719e683dcf7898cb8a",
+          "obs:2ef23b34e2c37759083a",
+          "obs:be6b04a437c29f03c9d2",
+          "obs:342db6399cf9ec95c6cc"
+        ],
+        "execution_status": "PASS"
+      },
+      {
+        "node_id": "training_configuration",
+        "node_type": "configuration",
+        "stage": "TRAINING",
+        "component_id": "training_configuration",
+        "component_type": "configuration",
+        "version": "2.0.0",
+        "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "configuration": {},
+        "artifact_sha256": null,
+        "evidence_refs": [
+          "obs:c0b15c054164375aef4b",
+          "obs:8855a8bbe6de5a56ec2f",
+          "obs:726da1dbd7d4a31af135",
+          "obs:a38b64961b4388fc392c",
+          "obs:4c2d1ff72fb2fb863ff0"
+        ],
+        "execution_status": "PASS"
+      },
+      {
+        "node_id": "trained_model",
+        "node_type": "model",
+        "stage": "TRAINING",
+        "component_id": "trained_model",
+        "component_type": "model",
+        "version": "2.0.0",
+        "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "configuration": {
+          "model_id": "bcw-logistic-regression",
+          "model_version": "1.0.0"
+        },
+        "artifact_sha256": "5de1ed8251b147befef90e6bfee3f5bcda23056d5bb66212153ce1104668ca8c",
+        "evidence_refs": [
+          "obs:c0b15c054164375aef4b",
+          "obs:8855a8bbe6de5a56ec2f",
+          "obs:726da1dbd7d4a31af135",
+          "obs:a38b64961b4388fc392c",
+          "obs:4c2d1ff72fb2fb863ff0"
+        ],
+        "execution_status": "PASS"
+      },
+      {
+        "node_id": "model_artifact",
+        "node_type": "artifact",
+        "stage": "MODEL_ARTIFACT",
+        "component_id": "model_artifact",
+        "component_type": "artifact",
+        "version": "2.0.0",
+        "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "configuration": {
+          "model_id": "bcw-logistic-regression",
+          "model_version": "1.0.0"
+        },
+        "artifact_sha256": "5de1ed8251b147befef90e6bfee3f5bcda23056d5bb66212153ce1104668ca8c",
+        "evidence_refs": [
+          "obs:1eb5b9c994dd5284074c"
+        ],
+        "execution_status": "PASS"
+      },
+      {
+        "node_id": "inference_object",
+        "node_type": "input",
+        "stage": "INFERENCE",
+        "component_id": "inference_object",
+        "component_type": "input",
+        "version": "2.0.0",
+        "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "configuration": {},
+        "artifact_sha256": null,
+        "evidence_refs": [
+          "obs:3008c69dbbd78e12fbaa",
+          "obs:b8cb6dc859735f1ddce3",
+          "obs:513f2aba37e068a13be9"
+        ],
+        "execution_status": "PASS"
+      },
+      {
+        "node_id": "prediction",
+        "node_type": "prediction",
+        "stage": "INFERENCE",
+        "component_id": "prediction",
+        "component_type": "prediction",
+        "version": "2.0.0",
+        "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "configuration": {},
+        "artifact_sha256": null,
+        "evidence_refs": [
+          "obs:3008c69dbbd78e12fbaa",
+          "obs:b8cb6dc859735f1ddce3",
+          "obs:513f2aba37e068a13be9"
+        ],
+        "execution_status": "PASS"
+      },
+      {
+        "node_id": "shap_explainer",
+        "node_type": "explainer",
+        "stage": "POST_HOC_EXPLANATION",
+        "component_id": "shap_explainer",
+        "component_type": "explainer",
+        "version": "2.0.0",
+        "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "configuration": {},
+        "artifact_sha256": null,
+        "evidence_refs": [
+          "obs:26e7bd24b627e1782635",
+          "obs:53ba79e4fbe6e723d317",
+          "obs:5e78ee67e5ddcccf2f90",
+          "obs:bea506106823f1122909",
+          "obs:ccc76ace374571c6234e"
+        ],
+        "execution_status": "PASS"
+      },
+      {
+        "node_id": "shap_values",
+        "node_type": "explanation",
+        "stage": "POST_HOC_EXPLANATION",
+        "component_id": "shap_values",
+        "component_type": "explanation",
+        "version": "2.0.0",
+        "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "configuration": {},
+        "artifact_sha256": null,
+        "evidence_refs": [
+          "obs:26e7bd24b627e1782635",
+          "obs:53ba79e4fbe6e723d317",
+          "obs:5e78ee67e5ddcccf2f90",
+          "obs:bea506106823f1122909",
+          "obs:ccc76ace374571c6234e"
+        ],
+        "execution_status": "PASS"
+      },
+      {
+        "node_id": "fuzzy_representation",
+        "node_type": "representation",
+        "stage": "FUZZY_REPRESENTATION",
+        "component_id": "fuzzy_representation",
+        "component_type": "representation",
+        "version": "2.0.0",
+        "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "configuration": {},
+        "artifact_sha256": null,
+        "evidence_refs": [],
+        "execution_status": "PASS"
+      },
+      {
+        "node_id": "reduced_explanation",
+        "node_type": "reduction",
+        "stage": "REDUCTION",
+        "component_id": "reduced_explanation",
+        "component_type": "reduction",
+        "version": "2.0.0",
+        "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "configuration": {},
+        "artifact_sha256": null,
+        "evidence_refs": [
+          "obs:773436c8f1f1da56702b",
+          "obs:2c66b6521f9c23a04a25"
+        ],
+        "execution_status": "FAIL"
+      },
+      {
+        "node_id": "user_view",
+        "node_type": "presentation",
+        "stage": "PRESENTATION",
+        "component_id": "user_view",
+        "component_type": "presentation",
+        "version": "2.0.0",
+        "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "configuration": {},
+        "artifact_sha256": null,
+        "evidence_refs": [
+          "obs:c70b5ff75c1629fd1161"
+        ],
+        "execution_status": "PASS"
+      },
+      {
+        "node_id": "engineering_view",
+        "node_type": "presentation",
+        "stage": "PRESENTATION",
+        "component_id": "engineering_view",
+        "component_type": "presentation",
+        "version": "2.0.0",
+        "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "configuration": {},
+        "artifact_sha256": null,
+        "evidence_refs": [
+          "obs:c70b5ff75c1629fd1161"
+        ],
+        "execution_status": "PASS"
+      },
+      {
+        "node_id": "audit_view",
+        "node_type": "presentation",
+        "stage": "PRESENTATION",
+        "component_id": "audit_view",
+        "component_type": "presentation",
+        "version": "2.0.0",
+        "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "configuration": {},
+        "artifact_sha256": null,
+        "evidence_refs": [
+          "obs:c70b5ff75c1629fd1161"
+        ],
+        "execution_status": "PASS"
+      },
+      {
+        "node_id": "repair_plan",
+        "node_type": "repair",
+        "stage": "REPAIR",
+        "component_id": "repair_plan",
+        "component_type": "repair",
+        "version": "2.0.0",
+        "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "configuration": {},
+        "artifact_sha256": null,
+        "evidence_refs": [],
+        "execution_status": "NOT_RUN"
+      },
+      {
+        "node_id": "recertification_result",
+        "node_type": "recertification",
+        "stage": "RECERTIFICATION",
+        "component_id": "recertification_result",
+        "component_type": "recertification",
+        "version": "2.0.0",
+        "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "configuration": {},
+        "artifact_sha256": null,
+        "evidence_refs": [],
+        "execution_status": "NOT_RUN"
+      }
+    ],
+    "edges": [
+      {
+        "source": "dataset",
+        "target": "split_manifest",
+        "relation": "derived_from"
+      },
+      {
+        "source": "train_partition",
+        "target": "preprocessor",
+        "relation": "fitted_on"
+      },
+      {
+        "source": "train_partition",
+        "target": "transformed_train",
+        "relation": "transformed_by"
+      },
+      {
+        "source": "transformed_train",
+        "target": "trained_model",
+        "relation": "trained_on"
+      },
+      {
+        "source": "training_configuration",
+        "target": "trained_model",
+        "relation": "configured_by"
+      },
+      {
+        "source": "trained_model",
+        "target": "model_artifact",
+        "relation": "produced_by"
+      },
+      {
+        "source": "inference_object",
+        "target": "prediction",
+        "relation": "produced_by"
+      },
+      {
+        "source": "trained_model",
+        "target": "shap_explainer",
+        "relation": "explained_by"
+      },
+      {
+        "source": "prediction",
+        "target": "shap_values",
+        "relation": "explained_by"
+      },
+      {
+        "source": "shap_values",
+        "target": "fuzzy_representation",
+        "relation": "represented_by"
+      },
+      {
+        "source": "fuzzy_representation",
+        "target": "reduced_explanation",
+        "relation": "reduced_to"
+      },
+      {
+        "source": "reduced_explanation",
+        "target": "user_view",
+        "relation": "displayed_as"
+      },
+      {
+        "source": "reduced_explanation",
+        "target": "engineering_view",
+        "relation": "displayed_as"
+      },
+      {
+        "source": "reduced_explanation",
+        "target": "audit_view",
+        "relation": "displayed_as"
+      },
+      {
+        "source": "repair_plan",
+        "target": "recertification_result",
+        "relation": "recertified_as"
+      }
+    ],
+    "contracts": [
+      {
+        "contract_id": "DATASET_IDENTITY",
+        "stage": "DATA_PREPARATION",
+        "component_id": "breast_cancer_dataset",
+        "passed": true,
+        "severity": "NONE",
+        "action": "NONE",
+        "observed_value": "47e9aa4e33b5350407b6d31fa140e2b1767a038c37796e0990eb99ad2bc7ba12",
+        "expected_value": "47e9aa4e33b5350407b6d31fa140e2b1767a038c37796e0990eb99ad2bc7ba12",
+        "evidence_refs": [
+          "obs:20efaf888e12d2700be2"
+        ]
+      },
+      {
+        "contract_id": "DATASET_SCHEMA",
+        "stage": "DATA_PREPARATION",
+        "component_id": "breast_cancer_dataset",
+        "passed": true,
+        "severity": "NONE",
+        "action": "NONE",
+        "observed_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "expected_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "evidence_refs": [
+          "obs:26eafb1a7ee87b1de27c"
+        ]
+      },
+      {
+        "contract_id": "TARGET_NOT_IN_FEATURES",
+        "stage": "DATA_PREPARATION",
+        "component_id": "breast_cancer_dataset",
+        "passed": true,
+        "severity": "NONE",
+        "action": "NONE",
+        "observed_value": true,
+        "expected_value": true,
+        "evidence_refs": [
+          "obs:323fc57a2780fdeaa1cb"
+        ]
+      },
+      {
+        "contract_id": "CLASS_MAPPING",
+        "stage": "DATA_PREPARATION",
+        "component_id": "breast_cancer_dataset",
+        "passed": true,
+        "severity": "NONE",
+        "action": "NONE",
+        "observed_value": {
+          "source": [
+            0,
+            1
+          ],
+          "encoded": [
+            1,
+            0
+          ],
+          "model_classes": [
+            0,
+            1
+          ]
+        },
+        "expected_value": {
+          "source": [
+            0,
+            1
+          ],
+          "encoded": [
+            1,
+            0
+          ],
+          "model_classes": [
+            0,
+            1
+          ]
+        },
+        "evidence_refs": [
+          "obs:9ca530e932b28ac52b84"
+        ]
+      },
+      {
+        "contract_id": "TRAIN_VALIDATION_TEST_DISJOINTNESS",
+        "stage": "DATA_SPLIT",
+        "component_id": "deterministic_splitter",
+        "passed": true,
+        "severity": "NONE",
+        "action": "NONE",
+        "observed_value": {
+          "train_validation": 0,
+          "train_test": 0,
+          "validation_test": 0
+        },
+        "expected_value": {
+          "train_validation": 0,
+          "train_test": 0,
+          "validation_test": 0
+        },
+        "evidence_refs": [
+          "obs:c7e935057b569d0e09a4"
+        ]
+      },
+      {
+        "contract_id": "SPLIT_REPRODUCIBILITY",
+        "stage": "DATA_SPLIT",
+        "component_id": "deterministic_splitter",
+        "passed": true,
+        "severity": "NONE",
+        "action": "NONE",
+        "observed_value": "5cb8248a79fe2464c45575cdb50c2dd1ba887c819311031b970fa10adb6afc8e",
+        "expected_value": "5cb8248a79fe2464c45575cdb50c2dd1ba887c819311031b970fa10adb6afc8e",
+        "evidence_refs": [
+          "obs:34557fb75e98708429cc"
+        ]
+      },
+      {
+        "contract_id": "PREPROCESSOR_VERSION",
+        "stage": "PREPROCESSING",
+        "component_id": "standard_scaler",
+        "passed": true,
+        "severity": "NONE",
+        "action": "NONE",
+        "observed_value": "sklearn.StandardScaler/1.9.0",
+        "expected_value": "sklearn.StandardScaler/1.9.0",
+        "evidence_refs": [
+          "obs:90ba273ce0f21c848592"
+        ]
+      },
+      {
+        "contract_id": "PREPROCESSOR_FIT_SCOPE",
+        "stage": "PREPROCESSING",
+        "component_id": "standard_scaler",
+        "passed": true,
+        "severity": "NONE",
+        "action": "NONE",
+        "observed_value": "d96d63ac85a124109a38337843ea08b792d579afb5e10d85d232020ce67fb3bb",
+        "expected_value": "d96d63ac85a124109a38337843ea08b792d579afb5e10d85d232020ce67fb3bb",
+        "evidence_refs": [
+          "obs:f7d273025dcfb7d54715"
+        ]
+      },
+      {
+        "contract_id": "FEATURE_ORDER",
+        "stage": "PREPROCESSING",
+        "component_id": "standard_scaler",
+        "passed": true,
+        "severity": "NONE",
+        "action": "NONE",
+        "observed_value": [
+          "mean radius",
+          "mean texture",
+          "mean perimeter",
+          "mean area",
+          "mean smoothness",
+          "mean compactness",
+          "mean concavity",
+          "mean concave points",
+          "mean symmetry",
+          "mean fractal dimension",
+          "radius error",
+          "texture error",
+          "perimeter error",
+          "area error",
+          "smoothness error",
+          "compactness error",
+          "concavity error",
+          "concave points error",
+          "symmetry error",
+          "fractal dimension error",
+          "worst radius",
+          "worst texture",
+          "worst perimeter",
+          "worst area",
+          "worst smoothness",
+          "worst compactness",
+          "worst concavity",
+          "worst concave points",
+          "worst symmetry",
+          "worst fractal dimension"
+        ],
+        "expected_value": [
+          "mean radius",
+          "mean texture",
+          "mean perimeter",
+          "mean area",
+          "mean smoothness",
+          "mean compactness",
+          "mean concavity",
+          "mean concave points",
+          "mean symmetry",
+          "mean fractal dimension",
+          "radius error",
+          "texture error",
+          "perimeter error",
+          "area error",
+          "smoothness error",
+          "compactness error",
+          "concavity error",
+          "concave points error",
+          "symmetry error",
+          "fractal dimension error",
+          "worst radius",
+          "worst texture",
+          "worst perimeter",
+          "worst area",
+          "worst smoothness",
+          "worst compactness",
+          "worst concavity",
+          "worst concave points",
+          "worst symmetry",
+          "worst fractal dimension"
+        ],
+        "evidence_refs": [
+          "obs:ca719e683dcf7898cb8a"
+        ]
+      },
+      {
+        "contract_id": "FEATURE_COUNT",
+        "stage": "PREPROCESSING",
+        "component_id": "standard_scaler",
+        "passed": true,
+        "severity": "NONE",
+        "action": "NONE",
+        "observed_value": 30,
+        "expected_value": 30,
+        "evidence_refs": [
+          "obs:2ef23b34e2c37759083a"
+        ]
+      },
+      {
+        "contract_id": "TRANSFORM_OUTPUT_SCHEMA",
+        "stage": "PREPROCESSING",
+        "component_id": "standard_scaler",
+        "passed": true,
+        "severity": "NONE",
+        "action": "NONE",
+        "observed_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "expected_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "evidence_refs": [
+          "obs:be6b04a437c29f03c9d2"
+        ]
+      },
+      {
+        "contract_id": "FINITE_TRANSFORMED_VALUES",
+        "stage": "PREPROCESSING",
+        "component_id": "standard_scaler",
+        "passed": true,
+        "severity": "NONE",
+        "action": "NONE",
+        "observed_value": true,
+        "expected_value": true,
+        "evidence_refs": [
+          "obs:342db6399cf9ec95c6cc"
+        ]
+      },
+      {
+        "contract_id": "TRAINING_CONFIGURATION",
+        "stage": "TRAINING",
+        "component_id": "logistic_regression",
+        "passed": true,
+        "severity": "NONE",
+        "action": "NONE",
+        "observed_value": "f72bbde93f0b50126b8592d4993f21b174e7eb6a237dc5c29a4f405f78ae8a31",
+        "expected_value": "f72bbde93f0b50126b8592d4993f21b174e7eb6a237dc5c29a4f405f78ae8a31",
+        "evidence_refs": [
+          "obs:c0b15c054164375aef4b"
+        ]
+      },
+      {
+        "contract_id": "MODEL_CONVERGENCE",
+        "stage": "TRAINING",
+        "component_id": "logistic_regression",
+        "passed": true,
+        "severity": "NONE",
+        "action": "NONE",
+        "observed_value": true,
+        "expected_value": true,
+        "evidence_refs": [
+          "obs:8855a8bbe6de5a56ec2f"
+        ]
+      },
+      {
+        "contract_id": "MODEL_FEATURE_SCHEMA",
+        "stage": "TRAINING",
+        "component_id": "logistic_regression",
+        "passed": true,
+        "severity": "NONE",
+        "action": "NONE",
+        "observed_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "expected_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "evidence_refs": [
+          "obs:726da1dbd7d4a31af135"
+        ]
+      },
+      {
+        "contract_id": "TRAINING_DATA_HASH",
+        "stage": "TRAINING",
+        "component_id": "logistic_regression",
+        "passed": true,
+        "severity": "NONE",
+        "action": "NONE",
+        "observed_value": {
+          "dataset": "47e9aa4e33b5350407b6d31fa140e2b1767a038c37796e0990eb99ad2bc7ba12",
+          "train": "d96d63ac85a124109a38337843ea08b792d579afb5e10d85d232020ce67fb3bb",
+          "target": "be56573cf0b8dafd36c7e0caeb2e3906dd345494e709f9226b1535e643da2ef5"
+        },
+        "expected_value": {
+          "dataset": "47e9aa4e33b5350407b6d31fa140e2b1767a038c37796e0990eb99ad2bc7ba12",
+          "train": "d96d63ac85a124109a38337843ea08b792d579afb5e10d85d232020ce67fb3bb",
+          "target": "be56573cf0b8dafd36c7e0caeb2e3906dd345494e709f9226b1535e643da2ef5"
+        },
+        "evidence_refs": [
+          "obs:a38b64961b4388fc392c"
+        ]
+      },
+      {
+        "contract_id": "MODEL_ARTIFACT_HASH",
+        "stage": "MODEL_ARTIFACT",
+        "component_id": "serialized_model",
+        "passed": true,
+        "severity": "NONE",
+        "action": "NONE",
+        "observed_value": "5de1ed8251b147befef90e6bfee3f5bcda23056d5bb66212153ce1104668ca8c",
+        "expected_value": "5de1ed8251b147befef90e6bfee3f5bcda23056d5bb66212153ce1104668ca8c",
+        "evidence_refs": [
+          "obs:1eb5b9c994dd5284074c"
+        ]
+      },
+      {
+        "contract_id": "METRIC_SANITY",
+        "stage": "TRAINING",
+        "component_id": "logistic_regression",
+        "passed": true,
+        "severity": "NONE",
+        "action": "NONE",
+        "observed_value": true,
+        "expected_value": true,
+        "evidence_refs": [
+          "obs:4c2d1ff72fb2fb863ff0"
+        ]
+      },
+      {
+        "contract_id": "MODEL_INPUT_SCHEMA",
+        "stage": "INFERENCE",
+        "component_id": "logistic_regression",
+        "passed": true,
+        "severity": "NONE",
+        "action": "NONE",
+        "observed_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "expected_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "evidence_refs": [
+          "obs:3008c69dbbd78e12fbaa"
+        ]
+      },
+      {
+        "contract_id": "PREDICTION_OBJECT_BINDING",
+        "stage": "INFERENCE",
+        "component_id": "prediction",
+        "passed": true,
+        "severity": "NONE",
+        "action": "NONE",
+        "observed_value": true,
+        "expected_value": true,
+        "evidence_refs": [
+          "obs:b8cb6dc859735f1ddce3"
+        ]
+      },
+      {
+        "contract_id": "PREDICTION_OUTPUT_SANITY",
+        "stage": "INFERENCE",
+        "component_id": "prediction",
+        "passed": true,
+        "severity": "NONE",
+        "action": "NONE",
+        "observed_value": true,
+        "expected_value": true,
+        "evidence_refs": [
+          "obs:513f2aba37e068a13be9"
+        ]
+      },
+      {
+        "contract_id": "MODEL_EXPLAINER_VERSION",
+        "stage": "POST_HOC_EXPLANATION",
+        "component_id": "logistic_regression",
+        "passed": true,
+        "severity": "NONE",
+        "action": "NONE",
+        "observed_value": "1.0.0",
+        "expected_value": "1.0.0",
+        "evidence_refs": [
+          "obs:26e7bd24b627e1782635"
+        ]
+      },
+      {
+        "contract_id": "EXPLANATION_OBJECT_ID",
+        "stage": "POST_HOC_EXPLANATION",
+        "component_id": "shap_linear_explainer",
+        "passed": true,
+        "severity": "NONE",
+        "action": "NONE",
+        "observed_value": "bcw:pipeline-default",
+        "expected_value": "bcw:pipeline-default",
+        "evidence_refs": [
+          "obs:53ba79e4fbe6e723d317"
+        ]
+      },
+      {
+        "contract_id": "EXPLANATION_OUTPUT_CONSISTENCY",
+        "stage": "POST_HOC_EXPLANATION",
+        "component_id": "shap_linear_explainer",
+        "passed": true,
+        "severity": "NONE",
+        "action": "NONE",
+        "observed_value": 0.0,
+        "expected_value": 1e-08,
+        "evidence_refs": [
+          "obs:5e78ee67e5ddcccf2f90"
+        ]
+      },
+      {
+        "contract_id": "EXPLANATION_FEATURE_SCHEMA",
+        "stage": "POST_HOC_EXPLANATION",
+        "component_id": "shap_linear_explainer",
+        "passed": true,
+        "severity": "NONE",
+        "action": "NONE",
+        "observed_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "expected_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "evidence_refs": [
+          "obs:bea506106823f1122909"
+        ]
+      },
+      {
+        "contract_id": "REQUIRED_PROVENANCE",
+        "stage": "POST_HOC_EXPLANATION",
+        "component_id": "shap_linear_explainer",
+        "passed": true,
+        "severity": "NONE",
+        "action": "NONE",
+        "observed_value": true,
+        "expected_value": true,
+        "evidence_refs": [
+          "obs:ccc76ace374571c6234e"
+        ]
+      },
+      {
+        "contract_id": "REDUCTION_LOSS_LIMIT",
+        "stage": "REDUCTION",
+        "component_id": "fuzzyxai_presenter",
+        "passed": true,
+        "severity": "NONE",
+        "action": "NONE",
+        "observed_value": 0.0,
+        "expected_value": 0.25,
+        "evidence_refs": [
+          "obs:773436c8f1f1da56702b"
+        ]
+      },
+      {
+        "contract_id": "USER_CLAIM_EVIDENCE_BINDING",
+        "stage": "PRESENTATION",
+        "component_id": "fuzzyxai_presenter",
+        "passed": true,
+        "severity": "NONE",
+        "action": "NONE",
+        "observed_value": true,
+        "expected_value": true,
+        "evidence_refs": [
+          "obs:c70b5ff75c1629fd1161"
+        ]
+      },
+      {
+        "contract_id": "REDUCTION_LOSS_LIMIT",
+        "stage": "REDUCTION",
+        "component_id": "fuzzyxai_presenter",
+        "passed": false,
+        "severity": "MEDIUM",
+        "action": "WARN",
+        "observed_value": "legacy_vertical_violation",
+        "expected_value": "registered_contract_satisfied",
+        "evidence_refs": [
+          "obs:2c66b6521f9c23a04a25"
+        ]
+      }
+    ],
+    "metadata": {
+      "pipeline_version": "2.0.0"
+    },
+    "trace_sha256": "a387533ce2060e9ffbd6990dc84c6d45d435fe6be55614cec38f85564e9c77c6"
+  },
+  "observations": [
+    {
+      "observation_id": "obs:20efaf888e12d2700be2",
+      "run_id": "mlp2:33ab600ddce002440653",
+      "stage": "DATA_PREPARATION",
+      "component_id": "breast_cancer_dataset",
+      "field_name": "dataset_identity",
+      "observed_value": "47e9aa4e33b5350407b6d31fa140e2b1767a038c37796e0990eb99ad2bc7ba12",
+      "expected_value": "47e9aa4e33b5350407b6d31fa140e2b1767a038c37796e0990eb99ad2bc7ba12",
+      "evidence_type": "measured_contract_value",
+      "source_uri": "sklearn://datasets/load_breast_cancer",
+      "sha256": "20efaf888e12d2700be2b9db6f8ed363e620e2467d83048f6b4b1b6691b88a69",
+      "timestamp_utc": "2000-01-01T00:00:00Z"
+    },
+    {
+      "observation_id": "obs:26eafb1a7ee87b1de27c",
+      "run_id": "mlp2:33ab600ddce002440653",
+      "stage": "DATA_PREPARATION",
+      "component_id": "breast_cancer_dataset",
+      "field_name": "dataset_schema",
+      "observed_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "expected_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "evidence_type": "measured_contract_value",
+      "source_uri": "sklearn://datasets/load_breast_cancer",
+      "sha256": "26eafb1a7ee87b1de27c89ba9f97616764ce07e163455f254295cc5eda2f108a",
+      "timestamp_utc": "2000-01-01T00:00:00Z"
+    },
+    {
+      "observation_id": "obs:323fc57a2780fdeaa1cb",
+      "run_id": "mlp2:33ab600ddce002440653",
+      "stage": "DATA_PREPARATION",
+      "component_id": "breast_cancer_dataset",
+      "field_name": "target_not_in_features",
+      "observed_value": true,
+      "expected_value": true,
+      "evidence_type": "measured_contract_value",
+      "source_uri": "sklearn://datasets/load_breast_cancer",
+      "sha256": "323fc57a2780fdeaa1cb423828d94e1f3ec84e6995d18ace0f01c0df0d6867a8",
+      "timestamp_utc": "2000-01-01T00:00:00Z"
+    },
+    {
+      "observation_id": "obs:9ca530e932b28ac52b84",
+      "run_id": "mlp2:33ab600ddce002440653",
+      "stage": "DATA_PREPARATION",
+      "component_id": "breast_cancer_dataset",
+      "field_name": "class_mapping",
+      "observed_value": {
+        "source": [
+          0,
+          1
+        ],
+        "encoded": [
+          1,
+          0
+        ],
+        "model_classes": [
+          0,
+          1
+        ]
+      },
+      "expected_value": {
+        "source": [
+          0,
+          1
+        ],
+        "encoded": [
+          1,
+          0
+        ],
+        "model_classes": [
+          0,
+          1
+        ]
+      },
+      "evidence_type": "measured_contract_value",
+      "source_uri": "sklearn://datasets/load_breast_cancer",
+      "sha256": "9ca530e932b28ac52b840fbcbb149f129637fefa8b21c4770e6ed14c31a00ae4",
+      "timestamp_utc": "2000-01-01T00:00:00Z"
+    },
+    {
+      "observation_id": "obs:c7e935057b569d0e09a4",
+      "run_id": "mlp2:33ab600ddce002440653",
+      "stage": "DATA_SPLIT",
+      "component_id": "deterministic_splitter",
+      "field_name": "train_validation_test_disjointness",
+      "observed_value": {
+        "train_validation": 0,
+        "train_test": 0,
+        "validation_test": 0
+      },
+      "expected_value": {
+        "train_validation": 0,
+        "train_test": 0,
+        "validation_test": 0
+      },
+      "evidence_type": "measured_contract_value",
+      "source_uri": "memory://split-manifest",
+      "sha256": "c7e935057b569d0e09a41e23e69e0235bfb76ab2eb155f4a0a11da9c59891f94",
+      "timestamp_utc": "2000-01-01T00:00:00Z"
+    },
+    {
+      "observation_id": "obs:34557fb75e98708429cc",
+      "run_id": "mlp2:33ab600ddce002440653",
+      "stage": "DATA_SPLIT",
+      "component_id": "deterministic_splitter",
+      "field_name": "split_reproducibility",
+      "observed_value": "5cb8248a79fe2464c45575cdb50c2dd1ba887c819311031b970fa10adb6afc8e",
+      "expected_value": "5cb8248a79fe2464c45575cdb50c2dd1ba887c819311031b970fa10adb6afc8e",
+      "evidence_type": "measured_contract_value",
+      "source_uri": "memory://split-manifest",
+      "sha256": "34557fb75e98708429cc74097cd4ff918a0ab49a5b78648b1d1424320b8ed113",
+      "timestamp_utc": "2000-01-01T00:00:00Z"
+    },
+    {
+      "observation_id": "obs:90ba273ce0f21c848592",
+      "run_id": "mlp2:33ab600ddce002440653",
+      "stage": "PREPROCESSING",
+      "component_id": "standard_scaler",
+      "field_name": "preprocessor_version",
+      "observed_value": "sklearn.StandardScaler/1.9.0",
+      "expected_value": "sklearn.StandardScaler/1.9.0",
+      "evidence_type": "measured_contract_value",
+      "source_uri": "memory://standard-scaler",
+      "sha256": "90ba273ce0f21c848592fe0fd7b7cf398ae92cd837f03ee730721d99adb2353d",
+      "timestamp_utc": "2000-01-01T00:00:00Z"
+    },
+    {
+      "observation_id": "obs:f7d273025dcfb7d54715",
+      "run_id": "mlp2:33ab600ddce002440653",
+      "stage": "PREPROCESSING",
+      "component_id": "standard_scaler",
+      "field_name": "preprocessor_fit_scope",
+      "observed_value": "d96d63ac85a124109a38337843ea08b792d579afb5e10d85d232020ce67fb3bb",
+      "expected_value": "d96d63ac85a124109a38337843ea08b792d579afb5e10d85d232020ce67fb3bb",
+      "evidence_type": "measured_contract_value",
+      "source_uri": "memory://standard-scaler",
+      "sha256": "f7d273025dcfb7d5471570aa56f8eff3ad36472faaf2374aafa4fa251e3f24fd",
+      "timestamp_utc": "2000-01-01T00:00:00Z"
+    },
+    {
+      "observation_id": "obs:ca719e683dcf7898cb8a",
+      "run_id": "mlp2:33ab600ddce002440653",
+      "stage": "PREPROCESSING",
+      "component_id": "standard_scaler",
+      "field_name": "feature_order",
+      "observed_value": [
+        "mean radius",
+        "mean texture",
+        "mean perimeter",
+        "mean area",
+        "mean smoothness",
+        "mean compactness",
+        "mean concavity",
+        "mean concave points",
+        "mean symmetry",
+        "mean fractal dimension",
+        "radius error",
+        "texture error",
+        "perimeter error",
+        "area error",
+        "smoothness error",
+        "compactness error",
+        "concavity error",
+        "concave points error",
+        "symmetry error",
+        "fractal dimension error",
+        "worst radius",
+        "worst texture",
+        "worst perimeter",
+        "worst area",
+        "worst smoothness",
+        "worst compactness",
+        "worst concavity",
+        "worst concave points",
+        "worst symmetry",
+        "worst fractal dimension"
+      ],
+      "expected_value": [
+        "mean radius",
+        "mean texture",
+        "mean perimeter",
+        "mean area",
+        "mean smoothness",
+        "mean compactness",
+        "mean concavity",
+        "mean concave points",
+        "mean symmetry",
+        "mean fractal dimension",
+        "radius error",
+        "texture error",
+        "perimeter error",
+        "area error",
+        "smoothness error",
+        "compactness error",
+        "concavity error",
+        "concave points error",
+        "symmetry error",
+        "fractal dimension error",
+        "worst radius",
+        "worst texture",
+        "worst perimeter",
+        "worst area",
+        "worst smoothness",
+        "worst compactness",
+        "worst concavity",
+        "worst concave points",
+        "worst symmetry",
+        "worst fractal dimension"
+      ],
+      "evidence_type": "measured_contract_value",
+      "source_uri": "memory://standard-scaler",
+      "sha256": "ca719e683dcf7898cb8a1a8f224eef8bbaeb9b1609775fd9e8960b289f1b0c9e",
+      "timestamp_utc": "2000-01-01T00:00:00Z"
+    },
+    {
+      "observation_id": "obs:2ef23b34e2c37759083a",
+      "run_id": "mlp2:33ab600ddce002440653",
+      "stage": "PREPROCESSING",
+      "component_id": "standard_scaler",
+      "field_name": "feature_count",
+      "observed_value": 30,
+      "expected_value": 30,
+      "evidence_type": "measured_contract_value",
+      "source_uri": "memory://standard-scaler",
+      "sha256": "2ef23b34e2c37759083a66189afbae574f44f2501dfc0c0ddc1e190aed761850",
+      "timestamp_utc": "2000-01-01T00:00:00Z"
+    },
+    {
+      "observation_id": "obs:be6b04a437c29f03c9d2",
+      "run_id": "mlp2:33ab600ddce002440653",
+      "stage": "PREPROCESSING",
+      "component_id": "standard_scaler",
+      "field_name": "transform_output_schema",
+      "observed_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "expected_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "evidence_type": "measured_contract_value",
+      "source_uri": "memory://standard-scaler",
+      "sha256": "be6b04a437c29f03c9d2d260350bb72db007e8c42028b4af54221cd687ee4c4f",
+      "timestamp_utc": "2000-01-01T00:00:00Z"
+    },
+    {
+      "observation_id": "obs:342db6399cf9ec95c6cc",
+      "run_id": "mlp2:33ab600ddce002440653",
+      "stage": "PREPROCESSING",
+      "component_id": "standard_scaler",
+      "field_name": "finite_transformed_values",
+      "observed_value": true,
+      "expected_value": true,
+      "evidence_type": "measured_contract_value",
+      "source_uri": "memory://standard-scaler",
+      "sha256": "342db6399cf9ec95c6cc7ef2e1761b8233b518c19c3008ca0a30a1f61d95d6e7",
+      "timestamp_utc": "2000-01-01T00:00:00Z"
+    },
+    {
+      "observation_id": "obs:c0b15c054164375aef4b",
+      "run_id": "mlp2:33ab600ddce002440653",
+      "stage": "TRAINING",
+      "component_id": "logistic_regression",
+      "field_name": "training_configuration",
+      "observed_value": "f72bbde93f0b50126b8592d4993f21b174e7eb6a237dc5c29a4f405f78ae8a31",
+      "expected_value": "f72bbde93f0b50126b8592d4993f21b174e7eb6a237dc5c29a4f405f78ae8a31",
+      "evidence_type": "measured_contract_value",
+      "source_uri": "memory://logistic-regression",
+      "sha256": "c0b15c054164375aef4b37247484fc1ca53f502aab5951a3d1aad55f2a5d5e41",
+      "timestamp_utc": "2000-01-01T00:00:00Z"
+    },
+    {
+      "observation_id": "obs:8855a8bbe6de5a56ec2f",
+      "run_id": "mlp2:33ab600ddce002440653",
+      "stage": "TRAINING",
+      "component_id": "logistic_regression",
+      "field_name": "model_convergence",
+      "observed_value": true,
+      "expected_value": true,
+      "evidence_type": "measured_contract_value",
+      "source_uri": "memory://logistic-regression",
+      "sha256": "8855a8bbe6de5a56ec2fbdd31e1544837b4f4428f2d308aba1b37e2aa43b22b1",
+      "timestamp_utc": "2000-01-01T00:00:00Z"
+    },
+    {
+      "observation_id": "obs:726da1dbd7d4a31af135",
+      "run_id": "mlp2:33ab600ddce002440653",
+      "stage": "TRAINING",
+      "component_id": "logistic_regression",
+      "field_name": "model_feature_schema",
+      "observed_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "expected_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "evidence_type": "measured_contract_value",
+      "source_uri": "memory://logistic-regression",
+      "sha256": "726da1dbd7d4a31af135508be30e9655d4c73de86165d2cced69c5ddb4b51344",
+      "timestamp_utc": "2000-01-01T00:00:00Z"
+    },
+    {
+      "observation_id": "obs:a38b64961b4388fc392c",
+      "run_id": "mlp2:33ab600ddce002440653",
+      "stage": "TRAINING",
+      "component_id": "logistic_regression",
+      "field_name": "training_data_hash",
+      "observed_value": {
+        "dataset": "47e9aa4e33b5350407b6d31fa140e2b1767a038c37796e0990eb99ad2bc7ba12",
+        "train": "d96d63ac85a124109a38337843ea08b792d579afb5e10d85d232020ce67fb3bb",
+        "target": "be56573cf0b8dafd36c7e0caeb2e3906dd345494e709f9226b1535e643da2ef5"
+      },
+      "expected_value": {
+        "dataset": "47e9aa4e33b5350407b6d31fa140e2b1767a038c37796e0990eb99ad2bc7ba12",
+        "train": "d96d63ac85a124109a38337843ea08b792d579afb5e10d85d232020ce67fb3bb",
+        "target": "be56573cf0b8dafd36c7e0caeb2e3906dd345494e709f9226b1535e643da2ef5"
+      },
+      "evidence_type": "measured_contract_value",
+      "source_uri": "memory://logistic-regression",
+      "sha256": "a38b64961b4388fc392c62371db75d71b2e21846b1adf8b259b23ff9f7b40a07",
+      "timestamp_utc": "2000-01-01T00:00:00Z"
+    },
+    {
+      "observation_id": "obs:1eb5b9c994dd5284074c",
+      "run_id": "mlp2:33ab600ddce002440653",
+      "stage": "MODEL_ARTIFACT",
+      "component_id": "serialized_model",
+      "field_name": "model_artifact_hash",
+      "observed_value": "5de1ed8251b147befef90e6bfee3f5bcda23056d5bb66212153ce1104668ca8c",
+      "expected_value": "5de1ed8251b147befef90e6bfee3f5bcda23056d5bb66212153ce1104668ca8c",
+      "evidence_type": "measured_contract_value",
+      "source_uri": "memory://serialized-model",
+      "sha256": "1eb5b9c994dd5284074c6c348dcf12fe254edf71fe33625c95e1a9c5148b9528",
+      "timestamp_utc": "2000-01-01T00:00:00Z"
+    },
+    {
+      "observation_id": "obs:4c2d1ff72fb2fb863ff0",
+      "run_id": "mlp2:33ab600ddce002440653",
+      "stage": "TRAINING",
+      "component_id": "logistic_regression",
+      "field_name": "metric_sanity",
+      "observed_value": true,
+      "expected_value": true,
+      "evidence_type": "measured_contract_value",
+      "source_uri": "memory://logistic-regression",
+      "sha256": "4c2d1ff72fb2fb863ff0f227912a8e256eb618cf23be27fc708201f5c0dcb92d",
+      "timestamp_utc": "2000-01-01T00:00:00Z"
+    },
+    {
+      "observation_id": "obs:3008c69dbbd78e12fbaa",
+      "run_id": "mlp2:33ab600ddce002440653",
+      "stage": "INFERENCE",
+      "component_id": "logistic_regression",
+      "field_name": "model_input_schema",
+      "observed_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "expected_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "evidence_type": "measured_contract_value",
+      "source_uri": "memory://prediction",
+      "sha256": "3008c69dbbd78e12fbaac378a44907501ddbda56c4b98efa283f673332b211b3",
+      "timestamp_utc": "2000-01-01T00:00:00Z"
+    },
+    {
+      "observation_id": "obs:b8cb6dc859735f1ddce3",
+      "run_id": "mlp2:33ab600ddce002440653",
+      "stage": "INFERENCE",
+      "component_id": "prediction",
+      "field_name": "prediction_object_binding",
+      "observed_value": true,
+      "expected_value": true,
+      "evidence_type": "measured_contract_value",
+      "source_uri": "memory://prediction",
+      "sha256": "b8cb6dc859735f1ddce348ef8aa786c728b747dda1d79d3c6ffb08f1ee0b86aa",
+      "timestamp_utc": "2000-01-01T00:00:00Z"
+    },
+    {
+      "observation_id": "obs:513f2aba37e068a13be9",
+      "run_id": "mlp2:33ab600ddce002440653",
+      "stage": "INFERENCE",
+      "component_id": "prediction",
+      "field_name": "prediction_output_sanity",
+      "observed_value": true,
+      "expected_value": true,
+      "evidence_type": "measured_contract_value",
+      "source_uri": "memory://prediction",
+      "sha256": "513f2aba37e068a13be9071cf7d17e491a6ef2bb04018c1573d129d6078ed6de",
+      "timestamp_utc": "2000-01-01T00:00:00Z"
+    },
+    {
+      "observation_id": "obs:26e7bd24b627e1782635",
+      "run_id": "mlp2:33ab600ddce002440653",
+      "stage": "POST_HOC_EXPLANATION",
+      "component_id": "logistic_regression",
+      "field_name": "model_explainer_version",
+      "observed_value": "1.0.0",
+      "expected_value": "1.0.0",
+      "evidence_type": "measured_contract_value",
+      "source_uri": "memory://shap-linear-explainer",
+      "sha256": "26e7bd24b627e178263513d2c5d6b04b1592147d2c2bc6764a70f1408919e83f",
+      "timestamp_utc": "2000-01-01T00:00:00Z"
+    },
+    {
+      "observation_id": "obs:53ba79e4fbe6e723d317",
+      "run_id": "mlp2:33ab600ddce002440653",
+      "stage": "POST_HOC_EXPLANATION",
+      "component_id": "shap_linear_explainer",
+      "field_name": "explanation_object_id",
+      "observed_value": "bcw:pipeline-default",
+      "expected_value": "bcw:pipeline-default",
+      "evidence_type": "measured_contract_value",
+      "source_uri": "memory://shap-linear-explainer",
+      "sha256": "53ba79e4fbe6e723d317e616727d44e44c3e6dc5926186aa231fb3a6e89a1706",
+      "timestamp_utc": "2000-01-01T00:00:00Z"
+    },
+    {
+      "observation_id": "obs:5e78ee67e5ddcccf2f90",
+      "run_id": "mlp2:33ab600ddce002440653",
+      "stage": "POST_HOC_EXPLANATION",
+      "component_id": "shap_linear_explainer",
+      "field_name": "explanation_output_consistency",
+      "observed_value": 0.0,
+      "expected_value": 1e-08,
+      "evidence_type": "measured_contract_value",
+      "source_uri": "memory://shap-linear-explainer",
+      "sha256": "5e78ee67e5ddcccf2f90e880f652a520cdaec54d4745933578c34c912f172501",
+      "timestamp_utc": "2000-01-01T00:00:00Z"
+    },
+    {
+      "observation_id": "obs:bea506106823f1122909",
+      "run_id": "mlp2:33ab600ddce002440653",
+      "stage": "POST_HOC_EXPLANATION",
+      "component_id": "shap_linear_explainer",
+      "field_name": "explanation_feature_schema",
+      "observed_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "expected_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "evidence_type": "measured_contract_value",
+      "source_uri": "memory://shap-linear-explainer",
+      "sha256": "bea506106823f1122909c1e030609037aedf6de58533feef6bb6b2b60aa94805",
+      "timestamp_utc": "2000-01-01T00:00:00Z"
+    },
+    {
+      "observation_id": "obs:ccc76ace374571c6234e",
+      "run_id": "mlp2:33ab600ddce002440653",
+      "stage": "POST_HOC_EXPLANATION",
+      "component_id": "shap_linear_explainer",
+      "field_name": "required_provenance",
+      "observed_value": true,
+      "expected_value": true,
+      "evidence_type": "measured_contract_value",
+      "source_uri": "memory://shap-linear-explainer",
+      "sha256": "ccc76ace374571c6234ed655afdf386d00a7a9159d198db0e5dc77391023cff7",
+      "timestamp_utc": "2000-01-01T00:00:00Z"
+    },
+    {
+      "observation_id": "obs:773436c8f1f1da56702b",
+      "run_id": "mlp2:33ab600ddce002440653",
+      "stage": "REDUCTION",
+      "component_id": "fuzzyxai_presenter",
+      "field_name": "reduction_loss_limit",
+      "observed_value": 0.0,
+      "expected_value": 0.25,
+      "evidence_type": "measured_contract_value",
+      "source_uri": "memory://fuzzyxai-route",
+      "sha256": "773436c8f1f1da56702be378cfec7d6bdfd888734dd4e31897a20e3e3113cc6f",
+      "timestamp_utc": "2000-01-01T00:00:00Z"
+    },
+    {
+      "observation_id": "obs:c70b5ff75c1629fd1161",
+      "run_id": "mlp2:33ab600ddce002440653",
+      "stage": "PRESENTATION",
+      "component_id": "fuzzyxai_presenter",
+      "field_name": "user_claim_evidence_binding",
+      "observed_value": true,
+      "expected_value": true,
+      "evidence_type": "measured_contract_value",
+      "source_uri": "memory://fuzzyxai-route",
+      "sha256": "c70b5ff75c1629fd1161458bf4297669f3a067e783df2f9ddfdcf63ecd1e7e61",
+      "timestamp_utc": "2000-01-01T00:00:00Z"
+    },
+    {
+      "observation_id": "obs:2c66b6521f9c23a04a25",
+      "run_id": "mlp2:33ab600ddce002440653",
+      "stage": "REDUCTION",
+      "component_id": "fuzzyxai_presenter",
+      "field_name": "reduction_loss_limit",
+      "observed_value": "legacy_vertical_violation",
+      "expected_value": "registered_contract_satisfied",
+      "evidence_type": "legacy_vertical_measured_diagnosis",
+      "source_uri": "memory://ml-vertical-v1",
+      "sha256": "2c66b6521f9c23a04a25c859a59c4329b171f8725d6d3fd227e7df2d6b656538",
+      "timestamp_utc": "2000-01-01T00:00:00Z"
+    }
+  ],
+  "explanation": {
+    "object_id": "bcw:pipeline-default",
+    "explainer_id": "shap.LinearExplainer",
+    "explainer_version": "0.51.0",
+    "model_version": "1.0.0",
+    "base_value": -1.2264799258326975,
+    "shap_values": {
+      "mean radius": -0.19244878416558725,
+      "mean texture": -0.5911771035309462,
+      "mean perimeter": -0.18195722404349318,
+      "mean area": -0.2198343234510549,
+      "mean smoothness": 0.10582201610778671,
+      "mean compactness": 0.07671506417851988,
+      "mean concavity": -0.6297281886336548,
+      "mean concave points": -0.700739425513308,
+      "mean symmetry": 0.6356697979811631,
+      "mean fractal dimension": -0.412358594440218,
+      "radius error": 0.5806998603520946,
+      "texture error": -0.10287860105656914,
+      "perimeter error": 0.18880719910824606,
+      "area error": -0.037913384808470445,
+      "smoothness error": -0.059593037818181024,
+      "compactness error": 0.44905955345084314,
+      "concavity error": 0.15649623472206758,
+      "concave points error": -0.08636767912061792,
+      "symmetry error": 0.17914948862675287,
+      "fractal dimension error": -0.7151021564103659,
+      "worst radius": -0.906413636475313,
+      "worst texture": -1.4917113088679261,
+      "worst perimeter": -0.7661725162075523,
+      "worst area": -0.6460166794220196,
+      "worst smoothness": -0.026225073289457893,
+      "worst compactness": -0.21526927648231106,
+      "worst concavity": -0.8931696619551441,
+      "worst concave points": -1.1107887674753651,
+      "worst symmetry": 0.6512330735698741,
+      "worst fractal dimension": -0.0026769726973898227
+    },
+    "feature_values": {
+      "mean radius": 10.17,
+      "mean texture": 14.88,
+      "mean perimeter": 64.55,
+      "mean area": 311.9,
+      "mean smoothness": 0.1134,
+      "mean compactness": 0.08061,
+      "mean concavity": 0.01084,
+      "mean concave points": 0.0129,
+      "mean symmetry": 0.2743,
+      "mean fractal dimension": 0.0696,
+      "radius error": 0.5158,
+      "texture error": 1.441,
+      "perimeter error": 3.312,
+      "area error": 34.62,
+      "smoothness error": 0.007514,
+      "compactness error": 0.01099,
+      "concavity error": 0.007665,
+      "concave points error": 0.008193,
+      "symmetry error": 0.04183,
+      "fractal dimension error": 0.005953,
+      "worst radius": 11.02,
+      "worst texture": 17.45,
+      "worst perimeter": 69.86,
+      "worst area": 368.6,
+      "worst smoothness": 0.1275,
+      "worst compactness": 0.09866,
+      "worst concavity": 0.02168,
+      "worst concave points": 0.02579,
+      "worst symmetry": 0.3557,
+      "worst fractal dimension": 0.0802
+    },
+    "output_sum": -8.191370033600295,
+    "output_difference": 0.0,
+    "artifact_sha256": "9bae1b379735fae001ed1edfcb565143357e3b7bc5d42b89db7d57ce4693d3a6"
+  },
+  "repair_plan": null,
+  "recertification": null
+}

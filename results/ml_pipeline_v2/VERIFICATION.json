@@ -1,0 +1,60 @@
+{
+  "status": "PASS",
+  "implementation_commit": "14d4137d51356f719fe44bd08639aad912cca58b",
+  "branch": "feat/fuzzyxai-ml-pipeline-v2",
+  "checks": {
+    "focused_tests": {
+      "status": "PASS",
+      "passed": 48,
+      "warnings": 4,
+      "python": "3.11"
+    },
+    "full_regression": {
+      "status": "PASS",
+      "passed": 874,
+      "skipped": 8,
+      "warnings": 491,
+      "duration_seconds": 259.02,
+      "python": "3.14",
+      "isolated_worktree": true
+    },
+    "ruff_core": "PASS",
+    "ruff_existing_ui": "PASS",
+    "compileall": "PASS",
+    "claim_lint": {
+      "status": "PASS",
+      "files": 5
+    },
+    "operator_manifest": {
+      "status": "PASS",
+      "operators": 41,
+      "frozen_sha256": "479fa55460426a1726f57a5ed5f745b0ad2e872eeefb21470dd2e3e865133949",
+      "environment": "/home/lebedeffson/Code/venv"
+    },
+    "protocol_internal_sha256": "PASS",
+    "parent_immutability": {
+      "status": "PASS",
+      "checked_files": 1322
+    },
+    "mlflow_artifacts": {
+      "status": "PASS",
+      "runs": 18,
+      "artifacts_per_run": 14
+    },
+    "rest_smoke": "PASS",
+    "ui_smoke": "PASS",
+    "docker_smoke": "PASS",
+    "docker_dependency_layer_cache": "PASS",
+    "v1_semantic_immutability": "PASS"
+  },
+  "docker_image": {
+    "name": "fuzzyxai-ml-pipeline-v2:local",
+    "id": "sha256:70f24ced8c5fd25fe15a6b27a23d4b020ee51f2c8639d7fe517d12fae1d978b7"
+  },
+  "claim_boundary": {
+    "scientific_result": "ENGINEERING_IMPLEMENTATION",
+    "clinical_claims_allowed": false,
+    "human_time_claims_allowed": false,
+    "docx_pdf_modified": false
+  }
+}
