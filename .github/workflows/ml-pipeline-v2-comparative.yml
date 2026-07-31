@@ -1,0 +1,67 @@
+name: FuzzyXAI ML Pipeline V2 Comparative
+
+on:
+  push:
+    branches:
+      - feat/fuzzyxai-ml-pipeline-v2-comparative
+  pull_request:
+    paths:
+      - "framework/fuzzyxai/fuzzyxai/ml_vertical/comparative.py"
+      - "protocol/ml_pipeline_v2_comparative/**"
+      - "results/ml_pipeline_v2_comparative/**"
+      - "reports/ml_pipeline_v2_comparative/**"
+      - "scripts/ml_pipeline_v2_comparative/**"
+      - "tests/ml_pipeline_v2_comparative/**"
+      - ".github/workflows/ml-pipeline-v2-comparative.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  OMP_NUM_THREADS: "1"
+  OPENBLAS_NUM_THREADS: "1"
+  MKL_NUM_THREADS: "1"
+  NUMEXPR_NUM_THREADS: "1"
+  PYTHONPATH: "experiments/h10_c3/src:framework/fuzzyxai:."
+
+jobs:
+  comparative:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Install locked dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install --index-url https://download.pytorch.org/whl/cpu torch
+          python -m pip install -e ".[dev,ml-vertical]"
+      - name: Focused tests and static checks
+        run: |
+          make ml-pipeline-v2-comparative-test PYTHON=python
+          python -m ruff check framework/fuzzyxai/fuzzyxai/ml_vertical/comparative.py tests/ml_pipeline_v2_comparative scripts/ml_pipeline_v2_comparative
+          python -m compileall -q framework/fuzzyxai/fuzzyxai/ml_vertical scripts/ml_pipeline_v2_comparative
+      - name: Reproduce comparative evaluation
+        run: |
+          python scripts/ml_pipeline_v2_comparative/run_evaluation.py --tracking-uri file:///tmp/ml-pipeline-v2-comparative-mlruns
+          python scripts/ml_pipeline_v2_comparative/verify_parent_immutability.py
+          python scripts/manuscript_claim_lint.py reports/ml_pipeline_v2_comparative/*.md
+          python -m fuzzyxai.audit.operators_manifest --output /tmp/operators-manifest.json
+          (cd protocol/ml_pipeline_v2_comparative && sha256sum -c SHA256SUMS)
+      - name: Full regression
+        run: python -m pytest -q
+      - name: Upload evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: fuzzyxai-ml-pipeline-v2-comparative-${{ github.sha }}
+          path: |
+            protocol/ml_pipeline_v2_comparative
+            results/ml_pipeline_v2_comparative
+            reports/ml_pipeline_v2_comparative
+          if-no-files-found: error

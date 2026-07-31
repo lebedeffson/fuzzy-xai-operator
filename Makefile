@@ -434,6 +434,14 @@ ml-pipeline-v2-test:
 ml-pipeline-v2-acceptance:
 	PYTHONPATH=framework/fuzzyxai:. $(PYTHON) scripts/ml_pipeline_v2/run_acceptance.py
 
+.PHONY: ml-pipeline-v2-comparative-test ml-pipeline-v2-comparative-evaluation
+
+ml-pipeline-v2-comparative-test:
+	PYTHONPATH=framework/fuzzyxai:. $(PYTHON) -m pytest tests/ml_pipeline_v2_comparative tests/ml_pipeline_v2 tests/ml_vertical_v1 -q
+
+ml-pipeline-v2-comparative-evaluation:
+	PYTHONPATH=framework/fuzzyxai:. $(PYTHON) scripts/ml_pipeline_v2_comparative/run_evaluation.py
+
 studio:
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) apps/fuzzyxai_studio.py --port $(PORT)
 
