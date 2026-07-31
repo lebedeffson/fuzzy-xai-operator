@@ -5,7 +5,10 @@
     "violations": 0
   },
   "clean_source_release": {
-    "status": "PENDING_ARCHIVE_BUILD"
+    "compileall": "PASS",
+    "focused_tests_passed": 4,
+    "internal_files_verified": 2467,
+    "status": "PASS"
   },
   "compileall": {
     "status": "PASS"
@@ -20,7 +23,8 @@
     "status": "PASS"
   },
   "internal_sha256_manifests": {
-    "status": "PENDING_ARCHIVE_BUILD"
+    "source_release": "PASS",
+    "status": "PASS"
   },
   "operator_manifest": {
     "operator_count": 41,
