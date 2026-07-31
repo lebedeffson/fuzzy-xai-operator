@@ -1,0 +1,53 @@
+{
+  "protocol_id": "FUZZYXAI_ML_PIPELINE_V2_COMPARATIVE_V1",
+  "modes": {
+    "B0": {
+      "role": "STANDARD_EXECUTION_LOG",
+      "allowed": ["stdout", "stderr", "python_exception", "warning", "return_code", "model_metrics"],
+      "forbidden": ["route_graph", "contract_results", "diagnostic_cut", "repair", "recertification"]
+    },
+    "B1": {
+      "role": "STOCK_MLFLOW_OBSERVATION",
+      "allowed": ["parameters", "metrics", "tags", "registered_artifacts", "artifact_hashes_if_registered"],
+      "forbidden": ["fuzzyxai_diagnosis", "contract_report", "route_graph", "pipeline_valid_diagnostic_metric", "repair", "recertification"]
+    },
+    "B2": {
+      "role": "STRONG_LOCAL_COMPONENT_CHECKS",
+      "allowed": ["local_stage_observations", "local_contract_results"],
+      "forbidden": ["route_graph", "cross_stage_contracts", "diagnostic_cut", "repair", "recertification"]
+    },
+    "B3": {
+      "role": "FIXED_GREEDY_LOCAL_DIAGNOSIS",
+      "allowed": ["local_stage_observations", "local_contract_results"],
+      "selection_order": ["severity", "stage_order", "component_id", "contract_id"],
+      "forbidden": ["route_graph", "cross_stage_contracts", "global_diagnostic_cut", "repair", "recertification"]
+    },
+    "A0": {
+      "role": "LOCAL_CHECKS_ABLATION",
+      "equivalent_computation": "B2",
+      "allowed": ["local_stage_observations", "local_contract_results"]
+    },
+    "A1": {
+      "role": "LOCAL_CHECKS_PLUS_ROUTE_GRAPH",
+      "allowed": ["local_stage_observations", "local_contract_results", "route_graph"],
+      "forbidden": ["cross_stage_contracts", "diagnostic_cut", "repair", "recertification"]
+    },
+    "A2": {
+      "role": "ROUTE_GRAPH_PLUS_CROSS_STAGE_CONTRACTS",
+      "allowed": ["all_stage_observations", "all_contract_results", "route_graph"],
+      "forbidden": ["diagnostic_cut", "repair", "recertification"]
+    },
+    "A3": {
+      "role": "DIAGNOSTIC_CUT_WITHOUT_EXECUTION",
+      "allowed": ["all_stage_observations", "all_contract_results", "route_graph", "diagnostic_cut", "repair_availability"],
+      "forbidden": ["repair_execution", "recertification"]
+    },
+    "A4": {
+      "role": "O_FULL_FUZZYXAI",
+      "allowed": ["route_graph", "local_contracts", "cross_stage_contracts", "diagnostic_cut", "observer_action", "repair_planner", "repair_executor", "route_recertifier"]
+    }
+  },
+  "logged_mode_count": 9,
+  "scenario_count": 18,
+  "expected_mlflow_runs": 162
+}
