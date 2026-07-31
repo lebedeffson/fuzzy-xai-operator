@@ -1,0 +1,10 @@
+{
+  "status": "FUZZYXAI_ML_VERTICAL_V1_IMPLEMENTED",
+  "acceptance_passed": true,
+  "scientific_result": "NOT_A_NEW_SCIENTIFIC_HYPOTHESIS",
+  "clinical_claims_allowed": false,
+  "human_time_claims_allowed": false,
+  "scenarios_executed": 10,
+  "held_out_created": false,
+  "aggregates_sha256": "e2e56e9b67f0d372616b6606cfb4a1c58762cc26aca8fd90b92c636eb339348a"
+}

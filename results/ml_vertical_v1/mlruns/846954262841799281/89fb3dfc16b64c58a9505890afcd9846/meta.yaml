@@ -1,0 +1,15 @@
+artifact_uri: file:///home/lebedeffson/Code/fuzzy-xai-ml-vertical-v1-release/results/ml_vertical_v1/mlruns/846954262841799281/89fb3dfc16b64c58a9505890afcd9846/artifacts
+end_time: 1785508698849
+entry_point_name: ''
+experiment_id: '846954262841799281'
+lifecycle_stage: active
+run_id: 89fb3dfc16b64c58a9505890afcd9846
+run_name: mlv1-29f0a696170ca345f4c5
+run_uuid: 89fb3dfc16b64c58a9505890afcd9846
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1785508698841
+status: 3
+tags: []
+user_id: lebedeffson

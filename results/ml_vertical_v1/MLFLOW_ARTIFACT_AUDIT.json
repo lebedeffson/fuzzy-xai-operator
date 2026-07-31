@@ -1,0 +1,16 @@
+{
+  "status": "PASS",
+  "run_count": 10,
+  "required_artifacts": [
+    "auditor_response.json",
+    "diagnostic_report.json",
+    "engineer_response.json",
+    "explainable_object.json",
+    "local_explanation.json",
+    "prediction.json",
+    "request.json",
+    "route_graph.json",
+    "user_response.json"
+  ],
+  "artifacts_per_run": 9
+}

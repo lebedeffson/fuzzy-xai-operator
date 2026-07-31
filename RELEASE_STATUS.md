@@ -522,3 +522,19 @@ safety.
 
 The source and evidence releases preserve the negative engineering gate. They
 do not claim H10-C7 support or natural-incident repair.
+
+## FuzzyXAI ML Vertical v1
+
+- Status: `FUZZYXAI_ML_VERTICAL_V1_IMPLEMENTED`
+- Acceptance scenarios: `10/10 PASS`
+- False certification: `0`
+- Representation selection accuracy: `1.0`
+- Observer action accuracy: `1.0`
+- Repair and recertification success: `1.0`
+- MLflow integration: `10/10` runs with nine required artifacts each
+- Scientific result: `NOT_A_NEW_SCIENTIFIC_HYPOTHESIS`
+
+The release exposes the vertical through REST, the existing layered NiceGUI
+application, and Docker Compose with local MLflow storage. It is a reproducible
+software demonstration and does not support clinical, human-time, or universal
+practical-utility claims. DOCX and PDF were not modified.

@@ -1,0 +1,71 @@
+{
+  "run_id": "mlv1:f35878540d9c3a903154",
+  "scenario_id": "S10_DETERMINISM",
+  "action": "ACCEPT",
+  "claims": [
+    {
+      "claim_id": "claim:prediction",
+      "text": "The registered model produced score 0.000277 for object bcw:s10_determinism.",
+      "evidence_refs": [
+        "evidence:prediction"
+      ],
+      "status": "observed",
+      "text_code": "registered_template",
+      "arguments": {},
+      "allowed_views": [
+        "user",
+        "engineer",
+        "auditor"
+      ],
+      "blocked": false
+    },
+    {
+      "claim_id": "claim:features",
+      "text": "Largest local SHAP contributions: worst texture, worst concave points, worst radius.",
+      "evidence_refs": [
+        "evidence:local_explanation"
+      ],
+      "status": "observed",
+      "text_code": "registered_template",
+      "arguments": {},
+      "allowed_views": [
+        "user",
+        "engineer",
+        "auditor"
+      ],
+      "blocked": false
+    },
+    {
+      "claim_id": "claim:action",
+      "text": "The route observer selected ACCEPT.",
+      "evidence_refs": [
+        "evidence:observer_action"
+      ],
+      "status": "observed",
+      "text_code": "registered_template",
+      "arguments": {},
+      "allowed_views": [
+        "user",
+        "engineer",
+        "auditor"
+      ],
+      "blocked": false
+    }
+  ],
+  "explainable_object_sha256": "c3101d83463a82dd94ed5fe4e9616212490b8e0b374a1aaaa5f85681015c5ecd",
+  "view": "user",
+  "prediction": {
+    "object_id": "bcw:s10_determinism",
+    "predicted_class": 0,
+    "probability": 0.00027695735150644503,
+    "raw_score": -8.191370033600295,
+    "model_id": "bcw-logistic-regression",
+    "model_version": "1.0.0",
+    "model_sha256": "c5b042bd9cd865ecc209de958a2cf64ab04b7d0dbba0a6d7d2865895aad7a8e7",
+    "feature_schema_sha256": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba"
+  },
+  "limitations": [
+    "Заключение относится к структурной целостности маршрута и не доказывает ошибочность прогноза.",
+    "Ближайшая причина не считается корневой причинно-следственной связью без независимого журнала изменений."
+  ]
+}

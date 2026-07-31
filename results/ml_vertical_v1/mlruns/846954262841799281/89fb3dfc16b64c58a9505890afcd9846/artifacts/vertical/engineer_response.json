@@ -1,0 +1,237 @@
+{
+  "run_id": "mlv1:29f0a696170ca345f4c5",
+  "scenario_id": "S7_REDUCTION_LOSS_EXCEEDED",
+  "action": "WARN",
+  "claims": [
+    {
+      "claim_id": "claim:prediction",
+      "text": "The registered model produced score 0.000277 for object bcw:s7_reduction_loss_exceeded.",
+      "evidence_refs": [
+        "evidence:prediction"
+      ],
+      "status": "observed",
+      "text_code": "registered_template",
+      "arguments": {},
+      "allowed_views": [
+        "user",
+        "engineer",
+        "auditor"
+      ],
+      "blocked": false
+    },
+    {
+      "claim_id": "claim:features",
+      "text": "Largest local SHAP contributions: worst texture, worst concave points, worst radius.",
+      "evidence_refs": [
+        "evidence:local_explanation"
+      ],
+      "status": "observed",
+      "text_code": "registered_template",
+      "arguments": {},
+      "allowed_views": [
+        "user",
+        "engineer",
+        "auditor"
+      ],
+      "blocked": false
+    },
+    {
+      "claim_id": "claim:action",
+      "text": "The route observer selected WARN.",
+      "evidence_refs": [
+        "evidence:observer_action"
+      ],
+      "status": "observed",
+      "text_code": "registered_template",
+      "arguments": {},
+      "allowed_views": [
+        "user",
+        "engineer",
+        "auditor"
+      ],
+      "blocked": false
+    }
+  ],
+  "explainable_object_sha256": "f94786b933056452c6f2b3b655da26717e86f3619b5b4bc20d61c8ea98e915d4",
+  "view": "engineer",
+  "explanation": {
+    "object_id": "bcw:s7_reduction_loss_exceeded",
+    "explainer_id": "shap.LinearExplainer",
+    "explainer_version": "0.51.0",
+    "model_version": "1.0.0",
+    "base_value": -1.2264799258326975,
+    "shap_values": {
+      "mean radius": -0.19244878416558725,
+      "mean texture": -0.5911771035309462,
+      "mean perimeter": -0.18195722404349318,
+      "mean area": -0.2198343234510549,
+      "mean smoothness": 0.10582201610778671,
+      "mean compactness": 0.07671506417851988,
+      "mean concavity": -0.6297281886336548,
+      "mean concave points": -0.700739425513308,
+      "mean symmetry": 0.6356697979811631,
+      "mean fractal dimension": -0.412358594440218,
+      "radius error": 0.5806998603520946,
+      "texture error": -0.10287860105656914,
+      "perimeter error": 0.18880719910824606,
+      "area error": -0.037913384808470445,
+      "smoothness error": -0.059593037818181024,
+      "compactness error": 0.44905955345084314,
+      "concavity error": 0.15649623472206758,
+      "concave points error": -0.08636767912061792,
+      "symmetry error": 0.17914948862675287,
+      "fractal dimension error": -0.7151021564103659,
+      "worst radius": -0.906413636475313,
+      "worst texture": -1.4917113088679261,
+      "worst perimeter": -0.7661725162075523,
+      "worst area": -0.6460166794220196,
+      "worst smoothness": -0.026225073289457893,
+      "worst compactness": -0.21526927648231106,
+      "worst concavity": -0.8931696619551441,
+      "worst concave points": -1.1107887674753651,
+      "worst symmetry": 0.6512330735698741,
+      "worst fractal dimension": -0.0026769726973898227
+    },
+    "feature_values": {
+      "mean radius": 10.17,
+      "mean texture": 14.88,
+      "mean perimeter": 64.55,
+      "mean area": 311.9,
+      "mean smoothness": 0.1134,
+      "mean compactness": 0.08061,
+      "mean concavity": 0.01084,
+      "mean concave points": 0.0129,
+      "mean symmetry": 0.2743,
+      "mean fractal dimension": 0.0696,
+      "radius error": 0.5158,
+      "texture error": 1.441,
+      "perimeter error": 3.312,
+      "area error": 34.62,
+      "smoothness error": 0.007514,
+      "compactness error": 0.01099,
+      "concavity error": 0.007665,
+      "concave points error": 0.008193,
+      "symmetry error": 0.04183,
+      "fractal dimension error": 0.005953,
+      "worst radius": 11.02,
+      "worst texture": 17.45,
+      "worst perimeter": 69.86,
+      "worst area": 368.6,
+      "worst smoothness": 0.1275,
+      "worst compactness": 0.09866,
+      "worst concavity": 0.02168,
+      "worst concave points": 0.02579,
+      "worst symmetry": 0.3557,
+      "worst fractal dimension": 0.0802
+    },
+    "output_sum": -8.191370033600295,
+    "output_difference": 0.0,
+    "artifact_sha256": "def39c958275ddfd73fef3c3342950672da23f39f1dc0a30aa692adcc512bc23"
+  },
+  "representation": {
+    "representation_id": "F_int",
+    "membership": {
+      "low": [
+        0.8794460852969871,
+        1.0
+      ],
+      "medium": [
+        0.0,
+        0.12
+      ],
+      "high": [
+        0.0,
+        0.12
+      ]
+    },
+    "covered_uncertainties": [
+      "u_int",
+      "u_ling",
+      "u_num"
+    ],
+    "cognitive_complexity": 2.0,
+    "computational_complexity": 2.0,
+    "selection_reason": "registered feature intervals require interval membership"
+  },
+  "reduction": {
+    "source_representation": "F_int",
+    "target_representation": "F0",
+    "reduced_membership": {
+      "low": 0.9397230426484935,
+      "medium": 0.06,
+      "high": 0.06
+    },
+    "loss": 0.4,
+    "accepted": false,
+    "maximum_loss": 0.25
+  },
+  "issues": [
+    {
+      "issue_id": "issue:REDUCTION_LOSS_LIMIT",
+      "category": "reduction",
+      "code": "contract_max_value_failed",
+      "severity": "error",
+      "symptom": "Контракт REDUCTION_LOSS_LIMIT не выполнен: значение не превышает зарегистрированный предел.",
+      "violated_contract": "REDUCTION_LOSS_LIMIT",
+      "affected_nodes": [
+        "reduction"
+      ],
+      "affected_edges": [],
+      "affected_fields": [
+        "loss"
+      ],
+      "source_nodes": [
+        "reduction"
+      ],
+      "cause_candidates": [
+        {
+          "cause_id": "issue:REDUCTION_LOSS_LIMIT:symptom",
+          "level": "symptom",
+          "statement": "Контракт REDUCTION_LOSS_LIMIT не выполнен: значение не превышает зарегистрированный предел.",
+          "supporting_evidence": [
+            "evidence:reduction"
+          ],
+          "confidence": 1.0,
+          "status": "observed"
+        },
+        {
+          "cause_id": "issue:REDUCTION_LOSS_LIMIT:contract",
+          "level": "contract_violation",
+          "statement": "Не выполнен контракт REDUCTION_LOSS_LIMIT.",
+          "supporting_evidence": [
+            "evidence:reduction"
+          ],
+          "confidence": 1.0,
+          "status": "verified"
+        },
+        {
+          "cause_id": "issue:REDUCTION_LOSS_LIMIT:proximate",
+          "level": "proximate_cause",
+          "statement": "Ближайшее установленное нарушение связано с reduction.",
+          "supporting_evidence": [
+            "evidence:reduction"
+          ],
+          "confidence": 1.0,
+          "status": "evidence_supported"
+        },
+        {
+          "cause_id": "issue:REDUCTION_LOSS_LIMIT:source",
+          "level": "source_component",
+          "statement": "Компонент-источник: reduction.",
+          "supporting_evidence": [
+            "evidence:reduction"
+          ],
+          "confidence": 1.0,
+          "status": "localized"
+        }
+      ],
+      "evidence_refs": [
+        "evidence:reduction"
+      ],
+      "confidence": 1.0,
+      "repairable": true,
+      "insufficient_evidence": false,
+      "unknown": false
+    }
+  ]
+}

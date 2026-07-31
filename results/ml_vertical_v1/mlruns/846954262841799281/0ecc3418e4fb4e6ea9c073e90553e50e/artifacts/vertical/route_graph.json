@@ -1,0 +1,629 @@
+{
+  "route_id": "route:S6_MULTILEVEL_UNCERTAINTY:bcw:s6_multilevel_uncertainty",
+  "nodes": [
+    {
+      "node_id": "input",
+      "node_type": "input",
+      "component_id": "mlv1.input",
+      "component_version": "1.0.0",
+      "registered_attributes": {
+        "schema_complete": true,
+        "values_finite": true,
+        "object_id": "bcw:s6_multilevel_uncertainty"
+      },
+      "observed_attributes": {
+        "schema_complete": true,
+        "values_finite": true,
+        "object_id": "bcw:s6_multilevel_uncertainty"
+      },
+      "mandatory": true,
+      "repairable": false,
+      "evidence_refs": [
+        "evidence:input"
+      ]
+    },
+    {
+      "node_id": "feature_schema",
+      "node_type": "schema",
+      "component_id": "mlv1.feature_schema",
+      "component_version": "1.0.0",
+      "registered_attributes": {
+        "schema_sha256": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba"
+      },
+      "observed_attributes": {
+        "schema_sha256": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba"
+      },
+      "mandatory": true,
+      "repairable": false,
+      "evidence_refs": [
+        "evidence:feature_schema"
+      ]
+    },
+    {
+      "node_id": "preprocessor",
+      "node_type": "preprocessor",
+      "component_id": "mlv1.preprocessor",
+      "component_version": "1.0.0",
+      "registered_attributes": {
+        "version": "sklearn.StandardScaler/1"
+      },
+      "observed_attributes": {
+        "version": "sklearn.StandardScaler/1"
+      },
+      "mandatory": true,
+      "repairable": false,
+      "evidence_refs": [
+        "evidence:preprocessor"
+      ]
+    },
+    {
+      "node_id": "model",
+      "node_type": "model",
+      "component_id": "mlv1.model",
+      "component_version": "1.0.0",
+      "registered_attributes": {
+        "model_id": "bcw-logistic-regression",
+        "model_version": "1.0.0",
+        "feature_schema_sha256": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba"
+      },
+      "observed_attributes": {
+        "model_id": "bcw-logistic-regression",
+        "model_version": "1.0.0",
+        "feature_schema_sha256": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba"
+      },
+      "mandatory": true,
+      "repairable": false,
+      "evidence_refs": [
+        "evidence:model"
+      ]
+    },
+    {
+      "node_id": "prediction",
+      "node_type": "prediction",
+      "component_id": "mlv1.prediction",
+      "component_version": "1.0.0",
+      "registered_attributes": {
+        "object_id": "bcw:s6_multilevel_uncertainty",
+        "probability": 0.00027695735150644503
+      },
+      "observed_attributes": {
+        "object_id": "bcw:s6_multilevel_uncertainty",
+        "probability": 0.00027695735150644503
+      },
+      "mandatory": true,
+      "repairable": false,
+      "evidence_refs": [
+        "evidence:prediction"
+      ]
+    },
+    {
+      "node_id": "explainer",
+      "node_type": "explainer",
+      "component_id": "mlv1.explainer",
+      "component_version": "1.0.0",
+      "registered_attributes": {
+        "explainer_version": "0.51.0",
+        "model_version": "1.0.0"
+      },
+      "observed_attributes": {
+        "explainer_version": "0.51.0",
+        "model_version": "1.0.0"
+      },
+      "mandatory": true,
+      "repairable": true,
+      "evidence_refs": [
+        "evidence:explainer"
+      ]
+    },
+    {
+      "node_id": "local_explanation",
+      "node_type": "explanation",
+      "component_id": "mlv1.local_explanation",
+      "component_version": "1.0.0",
+      "registered_attributes": {
+        "object_id": "bcw:s6_multilevel_uncertainty",
+        "output_difference": 0.0
+      },
+      "observed_attributes": {
+        "object_id": "bcw:s6_multilevel_uncertainty",
+        "output_difference": 0.0
+      },
+      "mandatory": true,
+      "repairable": false,
+      "evidence_refs": [
+        "evidence:local_explanation"
+      ]
+    },
+    {
+      "node_id": "rule_source",
+      "node_type": "rule_source",
+      "component_id": "mlv1.rule_source",
+      "component_version": "1.0.0",
+      "registered_attributes": {
+        "version": "bcw-rules/1.0.0"
+      },
+      "observed_attributes": {
+        "version": "bcw-rules/1.0.0"
+      },
+      "mandatory": true,
+      "repairable": false,
+      "evidence_refs": [
+        "evidence:rule_source"
+      ]
+    },
+    {
+      "node_id": "uncertainty",
+      "node_type": "uncertainty",
+      "component_id": "mlv1.uncertainty",
+      "component_version": "1.0.0",
+      "registered_attributes": {
+        "coverage_complete": true
+      },
+      "observed_attributes": {
+        "coverage_complete": true
+      },
+      "mandatory": true,
+      "repairable": false,
+      "evidence_refs": [
+        "evidence:uncertainty"
+      ]
+    },
+    {
+      "node_id": "reduction",
+      "node_type": "reduction",
+      "component_id": "mlv1.reduction",
+      "component_version": "1.0.0",
+      "registered_attributes": {
+        "loss": 0.65
+      },
+      "observed_attributes": {
+        "loss": 0.65
+      },
+      "mandatory": true,
+      "repairable": true,
+      "evidence_refs": [
+        "evidence:reduction"
+      ]
+    },
+    {
+      "node_id": "observer_action",
+      "node_type": "observer",
+      "component_id": "mlv1.observer_action",
+      "component_version": "1.0.0",
+      "registered_attributes": {
+        "registered": true
+      },
+      "observed_attributes": {
+        "registered": true
+      },
+      "mandatory": true,
+      "repairable": false,
+      "evidence_refs": [
+        "evidence:observer_action"
+      ]
+    },
+    {
+      "node_id": "user_claim",
+      "node_type": "claim",
+      "component_id": "mlv1.user_claim",
+      "component_version": "1.0.0",
+      "registered_attributes": {
+        "evidence_bound": true
+      },
+      "observed_attributes": {
+        "evidence_bound": true
+      },
+      "mandatory": true,
+      "repairable": false,
+      "evidence_refs": [
+        "evidence:user_claim"
+      ]
+    },
+    {
+      "node_id": "audit_artifact",
+      "node_type": "audit",
+      "component_id": "mlv1.audit_artifact",
+      "component_version": "1.0.0",
+      "registered_attributes": {
+        "artifact_sha256": "6736f11a81271f77e3b47715f63ec79124841d15ad305e50b720caa9b93e8a0e",
+        "plan_sha256": "dc758d1762500f6b63775cc4211e182de71d401f69c1e9caa2f652ba93e16943"
+      },
+      "observed_attributes": {
+        "artifact_sha256": "6736f11a81271f77e3b47715f63ec79124841d15ad305e50b720caa9b93e8a0e",
+        "plan_sha256": "dc758d1762500f6b63775cc4211e182de71d401f69c1e9caa2f652ba93e16943"
+      },
+      "mandatory": true,
+      "repairable": true,
+      "evidence_refs": [
+        "evidence:audit_artifact"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "edge_id": "edge:input:feature_schema",
+      "source": "input",
+      "target": "feature_schema",
+      "relation": "adapts",
+      "mandatory": true,
+      "registered_contract": {
+        "relation": "adapts"
+      },
+      "observed_contract": {
+        "relation": "adapts"
+      },
+      "repairable": false,
+      "evidence_refs": [],
+      "relation_status": "known_valid"
+    },
+    {
+      "edge_id": "edge:feature_schema:preprocessor",
+      "source": "feature_schema",
+      "target": "preprocessor",
+      "relation": "defines",
+      "mandatory": true,
+      "registered_contract": {
+        "relation": "defines"
+      },
+      "observed_contract": {
+        "relation": "defines"
+      },
+      "repairable": false,
+      "evidence_refs": [],
+      "relation_status": "known_valid"
+    },
+    {
+      "edge_id": "edge:preprocessor:model",
+      "source": "preprocessor",
+      "target": "model",
+      "relation": "transforms",
+      "mandatory": true,
+      "registered_contract": {
+        "relation": "transforms"
+      },
+      "observed_contract": {
+        "relation": "transforms"
+      },
+      "repairable": false,
+      "evidence_refs": [],
+      "relation_status": "known_valid"
+    },
+    {
+      "edge_id": "edge:model:prediction",
+      "source": "model",
+      "target": "prediction",
+      "relation": "predicts",
+      "mandatory": true,
+      "registered_contract": {
+        "relation": "predicts"
+      },
+      "observed_contract": {
+        "relation": "predicts"
+      },
+      "repairable": false,
+      "evidence_refs": [],
+      "relation_status": "known_valid"
+    },
+    {
+      "edge_id": "edge:prediction:explainer",
+      "source": "prediction",
+      "target": "explainer",
+      "relation": "explains",
+      "mandatory": true,
+      "registered_contract": {
+        "relation": "explains"
+      },
+      "observed_contract": {
+        "relation": "explains"
+      },
+      "repairable": false,
+      "evidence_refs": [],
+      "relation_status": "known_valid"
+    },
+    {
+      "edge_id": "edge:explainer:local_explanation",
+      "source": "explainer",
+      "target": "local_explanation",
+      "relation": "instantiates",
+      "mandatory": true,
+      "registered_contract": {
+        "relation": "instantiates"
+      },
+      "observed_contract": {
+        "relation": "instantiates"
+      },
+      "repairable": false,
+      "evidence_refs": [],
+      "relation_status": "known_valid"
+    },
+    {
+      "edge_id": "edge:local_explanation:rule_source",
+      "source": "local_explanation",
+      "target": "rule_source",
+      "relation": "constrains",
+      "mandatory": true,
+      "registered_contract": {
+        "relation": "constrains"
+      },
+      "observed_contract": {
+        "relation": "constrains"
+      },
+      "repairable": false,
+      "evidence_refs": [],
+      "relation_status": "known_valid"
+    },
+    {
+      "edge_id": "edge:rule_source:uncertainty",
+      "source": "rule_source",
+      "target": "uncertainty",
+      "relation": "profiles",
+      "mandatory": true,
+      "registered_contract": {
+        "relation": "profiles"
+      },
+      "observed_contract": {
+        "relation": "profiles"
+      },
+      "repairable": false,
+      "evidence_refs": [],
+      "relation_status": "known_valid"
+    },
+    {
+      "edge_id": "edge:uncertainty:reduction",
+      "source": "uncertainty",
+      "target": "reduction",
+      "relation": "reduces",
+      "mandatory": true,
+      "registered_contract": {
+        "relation": "reduces"
+      },
+      "observed_contract": {
+        "relation": "reduces"
+      },
+      "repairable": false,
+      "evidence_refs": [],
+      "relation_status": "known_valid"
+    },
+    {
+      "edge_id": "edge:reduction:observer_action",
+      "source": "reduction",
+      "target": "observer_action",
+      "relation": "observes",
+      "mandatory": true,
+      "registered_contract": {
+        "relation": "observes"
+      },
+      "observed_contract": {
+        "relation": "observes"
+      },
+      "repairable": false,
+      "evidence_refs": [],
+      "relation_status": "known_valid"
+    },
+    {
+      "edge_id": "edge:observer_action:user_claim",
+      "source": "observer_action",
+      "target": "user_claim",
+      "relation": "binds",
+      "mandatory": true,
+      "registered_contract": {
+        "relation": "binds"
+      },
+      "observed_contract": {
+        "relation": "binds"
+      },
+      "repairable": false,
+      "evidence_refs": [],
+      "relation_status": "known_valid"
+    },
+    {
+      "edge_id": "edge:user_claim:audit_artifact",
+      "source": "user_claim",
+      "target": "audit_artifact",
+      "relation": "records",
+      "mandatory": true,
+      "registered_contract": {
+        "relation": "records"
+      },
+      "observed_contract": {
+        "relation": "records"
+      },
+      "repairable": false,
+      "evidence_refs": [],
+      "relation_status": "known_valid"
+    }
+  ],
+  "contracts": [
+    {
+      "contract_id": "INPUT_FEATURE_SCHEMA",
+      "kind": "equals",
+      "subject_id": "input",
+      "field": "schema_complete",
+      "expected": true,
+      "severity": "error",
+      "category": "data",
+      "mandatory": true,
+      "repairable": false,
+      "evidence_refs": [],
+      "source_nodes": [],
+      "parameters": {}
+    },
+    {
+      "contract_id": "INPUT_VALUE_DOMAIN",
+      "kind": "equals",
+      "subject_id": "input",
+      "field": "values_finite",
+      "expected": true,
+      "severity": "error",
+      "category": "data",
+      "mandatory": true,
+      "repairable": false,
+      "evidence_refs": [],
+      "source_nodes": [],
+      "parameters": {}
+    },
+    {
+      "contract_id": "MODEL_VERSION",
+      "kind": "equals",
+      "subject_id": "model",
+      "field": "model_version",
+      "expected": "1.0.0",
+      "severity": "error",
+      "category": "model",
+      "mandatory": true,
+      "repairable": true,
+      "evidence_refs": [],
+      "source_nodes": [],
+      "parameters": {}
+    },
+    {
+      "contract_id": "MODEL_FEATURE_SCHEMA",
+      "kind": "equals",
+      "subject_id": "model",
+      "field": "feature_schema_sha256",
+      "expected": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "severity": "error",
+      "category": "model",
+      "mandatory": true,
+      "repairable": true,
+      "evidence_refs": [],
+      "source_nodes": [],
+      "parameters": {}
+    },
+    {
+      "contract_id": "MODEL_EXPLAINER_VERSION",
+      "kind": "equals",
+      "subject_id": "explainer",
+      "field": "model_version",
+      "expected": "1.0.0",
+      "severity": "error",
+      "category": "explainer",
+      "mandatory": true,
+      "repairable": true,
+      "evidence_refs": [],
+      "source_nodes": [
+        "explainer"
+      ],
+      "parameters": {}
+    },
+    {
+      "contract_id": "EXPLANATION_OBJECT_ID",
+      "kind": "equals",
+      "subject_id": "local_explanation",
+      "field": "object_id",
+      "expected": "bcw:s6_multilevel_uncertainty",
+      "severity": "error",
+      "category": "explainer",
+      "mandatory": true,
+      "repairable": true,
+      "evidence_refs": [],
+      "source_nodes": [],
+      "parameters": {}
+    },
+    {
+      "contract_id": "EXPLANATION_OUTPUT_CONSISTENCY",
+      "kind": "max_value",
+      "subject_id": "local_explanation",
+      "field": "output_difference",
+      "expected": 1e-08,
+      "severity": "error",
+      "category": "explainer",
+      "mandatory": true,
+      "repairable": true,
+      "evidence_refs": [],
+      "source_nodes": [],
+      "parameters": {}
+    },
+    {
+      "contract_id": "RULE_SOURCE_VERSION",
+      "kind": "equals",
+      "subject_id": "rule_source",
+      "field": "version",
+      "expected": "bcw-rules/1.0.0",
+      "severity": "error",
+      "category": "representation",
+      "mandatory": true,
+      "repairable": true,
+      "evidence_refs": [],
+      "source_nodes": [],
+      "parameters": {}
+    },
+    {
+      "contract_id": "REQUIRED_PROVENANCE",
+      "kind": "required_attribute",
+      "subject_id": "audit_artifact",
+      "field": "plan_sha256",
+      "expected": null,
+      "severity": "error",
+      "category": "provenance",
+      "mandatory": true,
+      "repairable": true,
+      "evidence_refs": [],
+      "source_nodes": [],
+      "parameters": {}
+    },
+    {
+      "contract_id": "UNCERTAINTY_REPRESENTATION_COVERAGE",
+      "kind": "equals",
+      "subject_id": "uncertainty",
+      "field": "coverage_complete",
+      "expected": true,
+      "severity": "error",
+      "category": "representation",
+      "mandatory": true,
+      "repairable": true,
+      "evidence_refs": [],
+      "source_nodes": [],
+      "parameters": {}
+    },
+    {
+      "contract_id": "REDUCTION_LOSS_LIMIT",
+      "kind": "max_value",
+      "subject_id": "reduction",
+      "field": "loss",
+      "expected": 0.25,
+      "severity": "error",
+      "category": "reduction",
+      "mandatory": true,
+      "repairable": true,
+      "evidence_refs": [],
+      "source_nodes": [],
+      "parameters": {}
+    },
+    {
+      "contract_id": "USER_CLAIM_EVIDENCE_BINDING",
+      "kind": "equals",
+      "subject_id": "user_claim",
+      "field": "evidence_bound",
+      "expected": true,
+      "severity": "error",
+      "category": "provenance",
+      "mandatory": true,
+      "repairable": true,
+      "evidence_refs": [],
+      "source_nodes": [],
+      "parameters": {}
+    },
+    {
+      "contract_id": "AUDIT_ARTIFACT_HASH",
+      "kind": "required_attribute",
+      "subject_id": "audit_artifact",
+      "field": "artifact_sha256",
+      "expected": null,
+      "severity": "error",
+      "category": "provenance",
+      "mandatory": true,
+      "repairable": true,
+      "evidence_refs": [],
+      "source_nodes": [],
+      "parameters": {}
+    }
+  ],
+  "metadata": {
+    "explainable_object": "526b7f348e5707d58e1d13097190514788e6aef761ba13fcc2487d2386296b8b",
+    "repair_costs": {
+      "node:explainer": 0.1
+    }
+  },
+  "schema_version": "1.0"
+}

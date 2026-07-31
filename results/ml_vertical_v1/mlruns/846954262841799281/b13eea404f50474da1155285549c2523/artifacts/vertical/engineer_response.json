@@ -1,0 +1,390 @@
+{
+  "run_id": "mlv1:8874582d5c2dc9db4da5",
+  "scenario_id": "S3_MISSING_REQUIRED_FEATURE",
+  "action": "REQUEST_DATA",
+  "claims": [
+    {
+      "claim_id": "claim:missing",
+      "text": "A prediction was not produced because required input is missing.",
+      "evidence_refs": [
+        "evidence:input"
+      ],
+      "status": "limited",
+      "text_code": "registered_template",
+      "arguments": {},
+      "allowed_views": [
+        "user",
+        "engineer",
+        "auditor"
+      ],
+      "blocked": false
+    }
+  ],
+  "explainable_object_sha256": "a08a35b0bdc5d45d02e94f992747ab6a32c2e417f164b60c91d8be8c7527fb74",
+  "view": "engineer",
+  "explanation": null,
+  "representation": {
+    "representation_id": "F0",
+    "membership": {
+      "low": 0.0,
+      "medium": 1.0,
+      "high": 0.0
+    },
+    "covered_uncertainties": [
+      "u_ling",
+      "u_num"
+    ],
+    "cognitive_complexity": 1.0,
+    "computational_complexity": 1.0,
+    "selection_reason": "point evidence is complete and has no registered conflict"
+  },
+  "reduction": {
+    "source_representation": "F0",
+    "target_representation": "F0",
+    "reduced_membership": {
+      "low": 0.0,
+      "medium": 1.0,
+      "high": 0.0
+    },
+    "loss": 0.0,
+    "accepted": true,
+    "maximum_loss": 0.25
+  },
+  "issues": [
+    {
+      "issue_id": "issue:AUDIT_ARTIFACT_HASH",
+      "category": "provenance",
+      "code": "insufficient_evidence",
+      "severity": "error",
+      "symptom": "Контракт AUDIT_ARTIFACT_HASH не может быть проверен: обязательное значение доступно.",
+      "violated_contract": "AUDIT_ARTIFACT_HASH",
+      "affected_nodes": [
+        "audit_artifact"
+      ],
+      "affected_edges": [],
+      "affected_fields": [
+        "artifact_sha256"
+      ],
+      "source_nodes": [
+        "audit_artifact"
+      ],
+      "cause_candidates": [
+        {
+          "cause_id": "issue:AUDIT_ARTIFACT_HASH:symptom",
+          "level": "symptom",
+          "statement": "Контракт AUDIT_ARTIFACT_HASH не может быть проверен: обязательное значение доступно.",
+          "supporting_evidence": [
+            "evidence:audit_artifact"
+          ],
+          "confidence": null,
+          "status": "observed"
+        },
+        {
+          "cause_id": "issue:AUDIT_ARTIFACT_HASH:contract",
+          "level": "contract_violation",
+          "statement": "Не выполнен контракт AUDIT_ARTIFACT_HASH.",
+          "supporting_evidence": [
+            "evidence:audit_artifact"
+          ],
+          "confidence": 1.0,
+          "status": "verified"
+        },
+        {
+          "cause_id": "issue:AUDIT_ARTIFACT_HASH:proximate",
+          "level": "proximate_cause",
+          "statement": "Ближайшее установленное нарушение связано с audit_artifact.",
+          "supporting_evidence": [
+            "evidence:audit_artifact"
+          ],
+          "confidence": null,
+          "status": "evidence_supported"
+        },
+        {
+          "cause_id": "issue:AUDIT_ARTIFACT_HASH:source",
+          "level": "source_component",
+          "statement": "Компонент-источник: audit_artifact.",
+          "supporting_evidence": [
+            "evidence:audit_artifact"
+          ],
+          "confidence": null,
+          "status": "localized"
+        }
+      ],
+      "evidence_refs": [
+        "evidence:audit_artifact"
+      ],
+      "confidence": null,
+      "repairable": true,
+      "insufficient_evidence": true,
+      "unknown": false
+    },
+    {
+      "issue_id": "issue:EXPLANATION_OBJECT_ID",
+      "category": "explainer",
+      "code": "insufficient_evidence",
+      "severity": "error",
+      "symptom": "Контракт EXPLANATION_OBJECT_ID не может быть проверен: наблюдаемое значение отсутствует.",
+      "violated_contract": "EXPLANATION_OBJECT_ID",
+      "affected_nodes": [
+        "local_explanation"
+      ],
+      "affected_edges": [],
+      "affected_fields": [
+        "object_id"
+      ],
+      "source_nodes": [
+        "local_explanation"
+      ],
+      "cause_candidates": [
+        {
+          "cause_id": "issue:EXPLANATION_OBJECT_ID:symptom",
+          "level": "symptom",
+          "statement": "Контракт EXPLANATION_OBJECT_ID не может быть проверен: наблюдаемое значение отсутствует.",
+          "supporting_evidence": [
+            "evidence:local_explanation"
+          ],
+          "confidence": null,
+          "status": "observed"
+        },
+        {
+          "cause_id": "issue:EXPLANATION_OBJECT_ID:contract",
+          "level": "contract_violation",
+          "statement": "Не выполнен контракт EXPLANATION_OBJECT_ID.",
+          "supporting_evidence": [
+            "evidence:local_explanation"
+          ],
+          "confidence": 1.0,
+          "status": "verified"
+        },
+        {
+          "cause_id": "issue:EXPLANATION_OBJECT_ID:proximate",
+          "level": "proximate_cause",
+          "statement": "Ближайшее установленное нарушение связано с local_explanation.",
+          "supporting_evidence": [
+            "evidence:local_explanation"
+          ],
+          "confidence": null,
+          "status": "evidence_supported"
+        },
+        {
+          "cause_id": "issue:EXPLANATION_OBJECT_ID:source",
+          "level": "source_component",
+          "statement": "Компонент-источник: local_explanation.",
+          "supporting_evidence": [
+            "evidence:local_explanation"
+          ],
+          "confidence": null,
+          "status": "localized"
+        }
+      ],
+      "evidence_refs": [
+        "evidence:local_explanation"
+      ],
+      "confidence": null,
+      "repairable": true,
+      "insufficient_evidence": true,
+      "unknown": false
+    },
+    {
+      "issue_id": "issue:EXPLANATION_OUTPUT_CONSISTENCY",
+      "category": "explainer",
+      "code": "insufficient_evidence",
+      "severity": "error",
+      "symptom": "Контракт EXPLANATION_OUTPUT_CONSISTENCY не может быть проверен: наблюдаемое значение отсутствует.",
+      "violated_contract": "EXPLANATION_OUTPUT_CONSISTENCY",
+      "affected_nodes": [
+        "local_explanation"
+      ],
+      "affected_edges": [],
+      "affected_fields": [
+        "output_difference"
+      ],
+      "source_nodes": [
+        "local_explanation"
+      ],
+      "cause_candidates": [
+        {
+          "cause_id": "issue:EXPLANATION_OUTPUT_CONSISTENCY:symptom",
+          "level": "symptom",
+          "statement": "Контракт EXPLANATION_OUTPUT_CONSISTENCY не может быть проверен: наблюдаемое значение отсутствует.",
+          "supporting_evidence": [
+            "evidence:local_explanation"
+          ],
+          "confidence": null,
+          "status": "observed"
+        },
+        {
+          "cause_id": "issue:EXPLANATION_OUTPUT_CONSISTENCY:contract",
+          "level": "contract_violation",
+          "statement": "Не выполнен контракт EXPLANATION_OUTPUT_CONSISTENCY.",
+          "supporting_evidence": [
+            "evidence:local_explanation"
+          ],
+          "confidence": 1.0,
+          "status": "verified"
+        },
+        {
+          "cause_id": "issue:EXPLANATION_OUTPUT_CONSISTENCY:proximate",
+          "level": "proximate_cause",
+          "statement": "Ближайшее установленное нарушение связано с local_explanation.",
+          "supporting_evidence": [
+            "evidence:local_explanation"
+          ],
+          "confidence": null,
+          "status": "evidence_supported"
+        },
+        {
+          "cause_id": "issue:EXPLANATION_OUTPUT_CONSISTENCY:source",
+          "level": "source_component",
+          "statement": "Компонент-источник: local_explanation.",
+          "supporting_evidence": [
+            "evidence:local_explanation"
+          ],
+          "confidence": null,
+          "status": "localized"
+        }
+      ],
+      "evidence_refs": [
+        "evidence:local_explanation"
+      ],
+      "confidence": null,
+      "repairable": true,
+      "insufficient_evidence": true,
+      "unknown": false
+    },
+    {
+      "issue_id": "issue:INPUT_FEATURE_SCHEMA",
+      "category": "data",
+      "code": "contract_mismatch",
+      "severity": "error",
+      "symptom": "Для input.schema_complete получено False, требуется True.",
+      "violated_contract": "INPUT_FEATURE_SCHEMA",
+      "affected_nodes": [
+        "input"
+      ],
+      "affected_edges": [],
+      "affected_fields": [
+        "schema_complete"
+      ],
+      "source_nodes": [
+        "input"
+      ],
+      "cause_candidates": [
+        {
+          "cause_id": "issue:INPUT_FEATURE_SCHEMA:symptom",
+          "level": "symptom",
+          "statement": "Для input.schema_complete получено False, требуется True.",
+          "supporting_evidence": [
+            "evidence:input"
+          ],
+          "confidence": 1.0,
+          "status": "observed"
+        },
+        {
+          "cause_id": "issue:INPUT_FEATURE_SCHEMA:contract",
+          "level": "contract_violation",
+          "statement": "Не выполнен контракт INPUT_FEATURE_SCHEMA.",
+          "supporting_evidence": [
+            "evidence:input"
+          ],
+          "confidence": 1.0,
+          "status": "verified"
+        },
+        {
+          "cause_id": "issue:INPUT_FEATURE_SCHEMA:proximate",
+          "level": "proximate_cause",
+          "statement": "Ближайшее установленное нарушение связано с input.",
+          "supporting_evidence": [
+            "evidence:input"
+          ],
+          "confidence": 1.0,
+          "status": "evidence_supported"
+        },
+        {
+          "cause_id": "issue:INPUT_FEATURE_SCHEMA:source",
+          "level": "source_component",
+          "statement": "Компонент-источник: input.",
+          "supporting_evidence": [
+            "evidence:input"
+          ],
+          "confidence": 1.0,
+          "status": "localized"
+        }
+      ],
+      "evidence_refs": [
+        "evidence:input"
+      ],
+      "confidence": 1.0,
+      "repairable": false,
+      "insufficient_evidence": false,
+      "unknown": false
+    },
+    {
+      "issue_id": "issue:MODEL_EXPLAINER_VERSION",
+      "category": "explainer",
+      "code": "insufficient_evidence",
+      "severity": "error",
+      "symptom": "Контракт MODEL_EXPLAINER_VERSION не может быть проверен: наблюдаемое значение отсутствует.",
+      "violated_contract": "MODEL_EXPLAINER_VERSION",
+      "affected_nodes": [
+        "explainer"
+      ],
+      "affected_edges": [],
+      "affected_fields": [
+        "model_version"
+      ],
+      "source_nodes": [
+        "explainer"
+      ],
+      "cause_candidates": [
+        {
+          "cause_id": "issue:MODEL_EXPLAINER_VERSION:symptom",
+          "level": "symptom",
+          "statement": "Контракт MODEL_EXPLAINER_VERSION не может быть проверен: наблюдаемое значение отсутствует.",
+          "supporting_evidence": [
+            "evidence:explainer"
+          ],
+          "confidence": null,
+          "status": "observed"
+        },
+        {
+          "cause_id": "issue:MODEL_EXPLAINER_VERSION:contract",
+          "level": "contract_violation",
+          "statement": "Не выполнен контракт MODEL_EXPLAINER_VERSION.",
+          "supporting_evidence": [
+            "evidence:explainer"
+          ],
+          "confidence": 1.0,
+          "status": "verified"
+        },
+        {
+          "cause_id": "issue:MODEL_EXPLAINER_VERSION:proximate",
+          "level": "proximate_cause",
+          "statement": "Ближайшее установленное нарушение связано с explainer.",
+          "supporting_evidence": [
+            "evidence:explainer"
+          ],
+          "confidence": null,
+          "status": "evidence_supported"
+        },
+        {
+          "cause_id": "issue:MODEL_EXPLAINER_VERSION:source",
+          "level": "source_component",
+          "statement": "Компонент-источник: explainer.",
+          "supporting_evidence": [
+            "evidence:explainer"
+          ],
+          "confidence": null,
+          "status": "localized"
+        }
+      ],
+      "evidence_refs": [
+        "evidence:explainer"
+      ],
+      "confidence": null,
+      "repairable": true,
+      "insufficient_evidence": true,
+      "unknown": false
+    }
+  ]
+}

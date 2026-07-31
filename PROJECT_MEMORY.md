@@ -1359,3 +1359,23 @@ Continuation to 40 uses the same collector v6 and the original disclosed
 No neural model was executed and no new held-out was created or scored.
 Development scoring is prohibited until all 40 disclosed incidents pass the
 new causal-runtime readiness audit.
+
+## FuzzyXAI ML Vertical v1
+
+- Protocol: `FuzzyXAI-ML-Vertical-v1`
+- Dataset: deterministic Breast Cancer Wisconsin software demonstration
+- Model: sklearn `LogisticRegression`, version `1.0.0`
+- Explainer: real `shap.LinearExplainer`, SHAP `0.51.0`
+- Status: `FUZZYXAI_ML_VERTICAL_V1_IMPLEMENTED`
+- Registered acceptance scenarios: `10/10 PASS`
+
+The vertical implements one evidence-first route from a real tabular model and
+local SHAP explanation through fuzzy representation selection, RouteGraph
+contracts, safe observer actions, registered repair, recertification, audience
+views, REST, NiceGUI, MLflow, and Docker Compose. Critical-issue false
+certification is `0`; representation and observer action accuracy are `1.0` on
+the ten locked software acceptance scenarios.
+
+This is an engineering implementation result, not a new scientific hypothesis.
+The dataset is not used for clinical validation, no human-time or user-benefit
+claim is allowed, and prior Chapter 4 results remain unchanged.
