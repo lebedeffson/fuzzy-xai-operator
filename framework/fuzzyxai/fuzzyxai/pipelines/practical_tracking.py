@@ -3,8 +3,6 @@ from __future__ import annotations
 from dataclasses import asdict
 from typing import Any
 
-import mlflow
-
 from fuzzyxai.diagnostics.contracts import canonical_sha256
 
 from .practical import ModeResult, PipelineArtifacts
@@ -34,6 +32,11 @@ def log_practical_run(
     scoring_metrics: dict[str, float | bool],
     experiment_name: str = "fuzzyxai-cross-pipeline-practical-v1",
 ) -> dict[str, Any]:
+    try:
+        import mlflow
+    except ImportError as exc:
+        raise RuntimeError("MLflow logging requires the 'mlflow' optional dependency") from exc
+
     mlflow.set_tracking_uri(tracking_uri)
     mlflow.set_experiment(experiment_name)
     payload = asdict(result)
