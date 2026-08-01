@@ -5,15 +5,14 @@ import json
 import pickle
 import platform
 from dataclasses import dataclass
+from importlib.metadata import PackageNotFoundError, version
 from pathlib import Path
 from typing import Any
 
-import mlflow
 import numpy as np
 import pandas as pd
 import shap
 import sklearn
-from lime.lime_tabular import LimeTabularExplainer
 from sklearn.compose import ColumnTransformer
 from sklearn.datasets import load_breast_cancer, load_diabetes, load_digits, load_wine
 from sklearn.ensemble import RandomForestClassifier
@@ -95,6 +94,13 @@ def _write(path: Path, payload: dict[str, Any]) -> None:
 
 def _sha(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def _package_version(package: str) -> str:
+    try:
+        return version(package)
+    except PackageNotFoundError:
+        return "not-installed"
 
 
 def _split(frame: pd.DataFrame, target: np.ndarray, *, stratify: bool) -> tuple[Any, ...]:
@@ -206,6 +212,11 @@ def run_external_pipeline(spec: ExternalSpec, root: Path, *, retrained: bool = F
     if spec.pipeline_id.startswith("ext2"):
         explanation = _shap_tree(model, sample, int(selected or 0))
     elif spec.pipeline_id.startswith("ext4"):
+        try:
+            from lime.lime_tabular import LimeTabularExplainer
+        except ImportError as exc:
+            raise RuntimeError("EXT-4 execution requires the 'lime' optional dependency") from exc
+
         lime_explainer = LimeTabularExplainer(
             transformed_train,
             feature_names=[str(name) for name in frame.columns],
@@ -292,7 +303,7 @@ def run_external_pipeline(spec: ExternalSpec, root: Path, *, retrained: bool = F
         "python_version": platform.python_version(),
         "sklearn_version": sklearn.__version__,
         "shap_version": shap.__version__,
-        "mlflow_version": mlflow.__version__,
+        "mlflow_version": _package_version("mlflow"),
     }
     pipeline_payload = {
         "pipeline_id": spec.pipeline_id,
@@ -316,6 +327,11 @@ def run_external_pipeline(spec: ExternalSpec, root: Path, *, retrained: bool = F
     ):
         _write(output / f"{name}_manifest.json", payload)
     if spec.pipeline_id.startswith("ext3"):
+        try:
+            import mlflow
+        except ImportError as exc:
+            raise RuntimeError("EXT-3 execution requires the 'mlflow' optional dependency") from exc
+
         tracking = output / "mlruns"
         mlflow.set_tracking_uri(tracking.resolve().as_uri())
         mlflow.set_experiment("external-pipeline-fixture")
