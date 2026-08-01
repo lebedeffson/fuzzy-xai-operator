@@ -1,0 +1,10 @@
+{
+  "mlflow_version": "2.22.5",
+  "model_sha256": "76606520b405a4de488fe8097622d48bc2441f17f2be4efff9250c910474874f",
+  "python_version": "3.11.15",
+  "registered_model_version": "baseline",
+  "run_id": "external:ext1-sklearn-column-transformer:baseline",
+  "shap_version": "0.51.0",
+  "sklearn_version": "1.9.0",
+  "variant": "baseline"
+}

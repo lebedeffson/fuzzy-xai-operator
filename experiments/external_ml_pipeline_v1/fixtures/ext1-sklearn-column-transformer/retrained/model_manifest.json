@@ -1,0 +1,25 @@
+{
+  "artifact_path": "model.pkl",
+  "artifact_sha256": "60da6cbb9bf1c89cacd51697518cfb8f4f2345c313fd40bd2b177ec0a6faa9fa",
+  "feature_count": 15,
+  "feature_names": [
+    "numeric__mean radius",
+    "numeric__mean texture",
+    "numeric__mean perimeter",
+    "numeric__mean area",
+    "numeric__mean smoothness",
+    "numeric__mean compactness",
+    "numeric__mean concavity",
+    "numeric__mean concave points",
+    "categorical__radius_band_q1",
+    "categorical__radius_band_q2",
+    "categorical__radius_band_q3",
+    "categorical__radius_band_q4",
+    "categorical__texture_band_high",
+    "categorical__texture_band_low",
+    "categorical__texture_band_mid"
+  ],
+  "model_class": "LogisticRegression",
+  "model_version": "retrained",
+  "registered_artifact_sha256": "60da6cbb9bf1c89cacd51697518cfb8f4f2345c313fd40bd2b177ec0a6faa9fa"
+}

@@ -1,0 +1,11 @@
+{
+  "mlflow_run_id": "8239df62514649b48230b20cb46e89f7",
+  "mlflow_version": "2.22.5",
+  "model_sha256": "252bbdab43b5e90275eef589b5191d086bea3299730f5f5b3865f01ca5959f9d",
+  "python_version": "3.11.15",
+  "registered_model_version": "retrained",
+  "run_id": "external:ext3-mlflow-elasticnet:retrained",
+  "shap_version": "0.51.0",
+  "sklearn_version": "1.9.0",
+  "variant": "retrained"
+}

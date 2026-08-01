@@ -1,0 +1,9 @@
+{
+  "input_sha256": "6ae60f8049ab42356e441fafc540f0f9c144a4ca5efdcb5efc759fa11d5fa560",
+  "model_output": 0.8911389732905391,
+  "model_sha256": "60da6cbb9bf1c89cacd51697518cfb8f4f2345c313fd40bd2b177ec0a6faa9fa",
+  "object_id": "ext1-sklearn-column-transformer:row:506",
+  "prediction": 1,
+  "run_id": "external:ext1-sklearn-column-transformer:retrained",
+  "selected_output": 1
+}

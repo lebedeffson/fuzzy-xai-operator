@@ -1,0 +1,10 @@
+{
+  "mlflow_version": "2.22.5",
+  "model_sha256": "cdc9c653b95bc739a608bdbe6a4c39fe25a0faab02d0053de9cf03ecb78e3bc9",
+  "python_version": "3.11.15",
+  "registered_model_version": "retrained",
+  "run_id": "external:ext4-lime-tabular:retrained",
+  "shap_version": "0.51.0",
+  "sklearn_version": "1.9.0",
+  "variant": "retrained"
+}
