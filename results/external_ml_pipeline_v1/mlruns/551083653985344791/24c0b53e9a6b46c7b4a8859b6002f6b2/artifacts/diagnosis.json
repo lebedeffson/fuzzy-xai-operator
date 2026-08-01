@@ -1,0 +1,9 @@
+{
+  "contract_id": "MODEL_ARTIFACT_HASH",
+  "dependent_violations": [],
+  "evidence_refs": [
+    "model_manifest.json"
+  ],
+  "root_cause": null,
+  "stage": "MODEL_ARTIFACT"
+}

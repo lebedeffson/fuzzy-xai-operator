@@ -1,0 +1,74 @@
+{
+  "action": "BLOCK",
+  "action_correct": true,
+  "artifact_bytes": 9869,
+  "canonical_sha256": "6f02072b4b1e52b86d8939ac03e7137cb41d44d02dfdd8d6f71aa1a072424e06",
+  "case_id": "E2_TRAIN_TEST_OVERLAP",
+  "component_correct": true,
+  "component_id": "external.data_split.train_validation_test_disjointness",
+  "contract_correct": true,
+  "contract_id": "TRAIN_VALIDATION_TEST_DISJOINTNESS",
+  "contracts_checked": 28,
+  "dependent_violations": [],
+  "detected": true,
+  "detected_correct": true,
+  "diagnostic_cut": {
+    "atoms": [
+      "node:cause:train_validation_test_disjointness/field:_/violation:source_component"
+    ],
+    "optimal": true,
+    "size": 1,
+    "solver": "exact_branch_and_bound"
+  },
+  "evidence_completeness": 1.0,
+  "evidence_refs": [
+    "split_manifest.json"
+  ],
+  "expected_action": "BLOCK",
+  "expected_contract": "TRAIN_VALIDATION_TEST_DISJOINTNESS",
+  "expected_invalid": true,
+  "expected_root_cause": "TRAIN_VALIDATION_TEST_DISJOINTNESS",
+  "expected_stage": "DATA_SPLIT",
+  "false_blocking": false,
+  "false_certification": false,
+  "fault_category": "CROSS_STAGE",
+  "mode_id": "O_FUZZYXAI",
+  "new_critical_violations": 0,
+  "peak_rss_kb": 393892,
+  "pipeline_id": "ext3-mlflow-elasticnet",
+  "pipeline_status": "INVALID",
+  "proposed_repair_count": 1,
+  "recertified": true,
+  "redundant_repair_count": 0,
+  "repair_executed": true,
+  "repair_plan": {
+    "fully_executable": false,
+    "operations": [
+      "restore_split_manifest"
+    ],
+    "rollback": [
+      "restore_previous_artifact_snapshot"
+    ],
+    "step_ids": [
+      "step:issue:TRAIN_VALIDATION_TEST_DISJOINTNESS:1"
+    ]
+  },
+  "repairable": true,
+  "reported_symptom_count": 1,
+  "repository_commit": "6e168e696062942ee34410048ce17cf24b5118bc",
+  "rollback_verified": true,
+  "root_cause": "TRAIN_VALIDATION_TEST_DISJOINTNESS",
+  "root_cause_correct": true,
+  "run_id": "external:0bde71cfcee1979916fd",
+  "runtime_breakdown_ms": {
+    "audit": 0.6692460001431755,
+    "diagnostic_cut": 0.10528299935685936,
+    "graph_build": 0.40323900066141505,
+    "recertification": 2.6530380000622245,
+    "repair_planning": 0.057004000154847745,
+    "total": 3.887810000378522
+  },
+  "stage": "DATA_SPLIT",
+  "stage_correct": true,
+  "target_contract_repaired": true
+}

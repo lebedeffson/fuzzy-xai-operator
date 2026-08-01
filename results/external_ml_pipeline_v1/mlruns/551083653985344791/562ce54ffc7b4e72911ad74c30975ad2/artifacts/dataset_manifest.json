@@ -1,0 +1,20 @@
+{
+  "column_count": 10,
+  "dataset_sha256": "94f7203d94ac7a122641f440fde719b20f135e5a678d126c0689c7880e5368b5",
+  "dataset_source": "sklearn.datasets.load_breast_cancer",
+  "feature_names": [
+    "mean radius",
+    "mean texture",
+    "mean perimeter",
+    "mean area",
+    "mean smoothness",
+    "mean compactness",
+    "mean concavity",
+    "mean concave points",
+    "radius_band",
+    "texture_band"
+  ],
+  "row_count": 569,
+  "target_in_features": false,
+  "target_name": "target"
+}

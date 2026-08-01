@@ -1,0 +1,9 @@
+{
+  "contract_id": "TRAIN_VALIDATION_TEST_DISJOINTNESS",
+  "dependent_violations": [],
+  "evidence_refs": [
+    "split_manifest.json"
+  ],
+  "root_cause": null,
+  "stage": "DATA_SPLIT"
+}

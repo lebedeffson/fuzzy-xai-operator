@@ -1,0 +1,161 @@
+pipeline_id,case_id,mode_id,root_cause,dependent_violations,diagnostic_cut,proposed_repair_count,redundant_repair_count,root_cause_correct
+ext1-sklearn-column-transformer,E1_TARGET_LEAKAGE,B_LOCAL_STRONG,,[],null,0,0,False
+ext1-sklearn-column-transformer,E1_TARGET_LEAKAGE,B_PAIRWISE_RULES,,[],null,1,0,False
+ext1-sklearn-column-transformer,E1_TARGET_LEAKAGE,B_MLFLOW_QUERY,,[],null,0,0,False
+ext1-sklearn-column-transformer,E1_TARGET_LEAKAGE,B_GREEDY_CROSS_STAGE,TARGET_NOT_IN_FEATURES,[],null,0,0,True
+ext1-sklearn-column-transformer,E1_TARGET_LEAKAGE,O_FUZZYXAI,TARGET_NOT_IN_FEATURES,[],"{""atoms"": [], ""optimal"": false, ""size"": 0, ""solver"": ""unavailable""}",0,0,True
+ext1-sklearn-column-transformer,E2_TRAIN_TEST_OVERLAP,B_LOCAL_STRONG,,[],null,0,0,False
+ext1-sklearn-column-transformer,E2_TRAIN_TEST_OVERLAP,B_PAIRWISE_RULES,,[],null,1,0,False
+ext1-sklearn-column-transformer,E2_TRAIN_TEST_OVERLAP,B_MLFLOW_QUERY,,[],null,0,0,False
+ext1-sklearn-column-transformer,E2_TRAIN_TEST_OVERLAP,B_GREEDY_CROSS_STAGE,TRAIN_VALIDATION_TEST_DISJOINTNESS,[],null,0,0,True
+ext1-sklearn-column-transformer,E2_TRAIN_TEST_OVERLAP,O_FUZZYXAI,TRAIN_VALIDATION_TEST_DISJOINTNESS,[],"{""atoms"": [""node:cause:train_validation_test_disjointness/field:_/violation:source_component""], ""optimal"": true, ""size"": 1, ""solver"": ""exact_branch_and_bound""}",1,0,True
+ext1-sklearn-column-transformer,E3_PREPROCESSOR_FIT_SCOPE,B_LOCAL_STRONG,,[],null,0,0,False
+ext1-sklearn-column-transformer,E3_PREPROCESSOR_FIT_SCOPE,B_PAIRWISE_RULES,,[],null,1,0,False
+ext1-sklearn-column-transformer,E3_PREPROCESSOR_FIT_SCOPE,B_MLFLOW_QUERY,,[],null,0,0,False
+ext1-sklearn-column-transformer,E3_PREPROCESSOR_FIT_SCOPE,B_GREEDY_CROSS_STAGE,PREPROCESSOR_FIT_SCOPE,[],null,0,0,True
+ext1-sklearn-column-transformer,E3_PREPROCESSOR_FIT_SCOPE,O_FUZZYXAI,PREPROCESSOR_FIT_SCOPE,[],"{""atoms"": [""node:cause:preprocessor_fit_scope/field:_/violation:source_component""], ""optimal"": true, ""size"": 1, ""solver"": ""exact_branch_and_bound""}",1,0,True
+ext1-sklearn-column-transformer,E4_FEATURE_SCHEMA_OR_ORDER,B_LOCAL_STRONG,,[],null,0,0,False
+ext1-sklearn-column-transformer,E4_FEATURE_SCHEMA_OR_ORDER,B_PAIRWISE_RULES,,"[""MODEL_INPUT_SCHEMA"", ""PREDICTION_OUTPUT_SANITY"", ""EXPLANATION_OUTPUT_CONSISTENCY"", ""USER_CLAIM_EVIDENCE_BINDING""]",null,5,4,False
+ext1-sklearn-column-transformer,E4_FEATURE_SCHEMA_OR_ORDER,B_MLFLOW_QUERY,,[],null,0,0,False
+ext1-sklearn-column-transformer,E4_FEATURE_SCHEMA_OR_ORDER,B_GREEDY_CROSS_STAGE,FEATURE_ORDER,[],null,0,0,True
+ext1-sklearn-column-transformer,E4_FEATURE_SCHEMA_OR_ORDER,O_FUZZYXAI,FEATURE_ORDER,"[""MODEL_INPUT_SCHEMA"", ""PREDICTION_OUTPUT_SANITY"", ""EXPLANATION_OUTPUT_CONSISTENCY"", ""USER_CLAIM_EVIDENCE_BINDING""]","{""atoms"": [""node:cause:feature_order/field:_/violation:source_component""], ""optimal"": false, ""size"": 1, ""solver"": ""exact_branch_and_bound""}",1,0,True
+ext1-sklearn-column-transformer,E5_MODEL_ARTIFACT_MISMATCH,B_LOCAL_STRONG,,[],null,0,0,False
+ext1-sklearn-column-transformer,E5_MODEL_ARTIFACT_MISMATCH,B_PAIRWISE_RULES,,[],null,1,0,False
+ext1-sklearn-column-transformer,E5_MODEL_ARTIFACT_MISMATCH,B_MLFLOW_QUERY,,[],null,0,0,False
+ext1-sklearn-column-transformer,E5_MODEL_ARTIFACT_MISMATCH,B_GREEDY_CROSS_STAGE,MODEL_ARTIFACT_HASH,[],null,0,0,True
+ext1-sklearn-column-transformer,E5_MODEL_ARTIFACT_MISMATCH,O_FUZZYXAI,MODEL_ARTIFACT_HASH,[],"{""atoms"": [""node:cause:model_artifact_hash/field:_/violation:source_component""], ""optimal"": true, ""size"": 1, ""solver"": ""exact_branch_and_bound""}",1,0,True
+ext1-sklearn-column-transformer,E6_MODEL_EXPLAINER_VERSION,B_LOCAL_STRONG,,[],null,0,0,False
+ext1-sklearn-column-transformer,E6_MODEL_EXPLAINER_VERSION,B_PAIRWISE_RULES,,[],null,1,0,False
+ext1-sklearn-column-transformer,E6_MODEL_EXPLAINER_VERSION,B_MLFLOW_QUERY,,[],null,0,0,False
+ext1-sklearn-column-transformer,E6_MODEL_EXPLAINER_VERSION,B_GREEDY_CROSS_STAGE,MODEL_EXPLAINER_VERSION,[],null,0,0,True
+ext1-sklearn-column-transformer,E6_MODEL_EXPLAINER_VERSION,O_FUZZYXAI,MODEL_EXPLAINER_VERSION,[],"{""atoms"": [""node:cause:model_explainer_version/field:_/violation:source_component""], ""optimal"": true, ""size"": 1, ""solver"": ""exact_branch_and_bound""}",1,0,True
+ext1-sklearn-column-transformer,E7_PREDICTION_EXPLANATION_BINDING,B_LOCAL_STRONG,,[],null,0,0,False
+ext1-sklearn-column-transformer,E7_PREDICTION_EXPLANATION_BINDING,B_PAIRWISE_RULES,,[],null,1,0,False
+ext1-sklearn-column-transformer,E7_PREDICTION_EXPLANATION_BINDING,B_MLFLOW_QUERY,,[],null,0,0,False
+ext1-sklearn-column-transformer,E7_PREDICTION_EXPLANATION_BINDING,B_GREEDY_CROSS_STAGE,PREDICTION_OBJECT_BINDING,[],null,0,0,True
+ext1-sklearn-column-transformer,E7_PREDICTION_EXPLANATION_BINDING,O_FUZZYXAI,PREDICTION_OBJECT_BINDING,[],"{""atoms"": [""node:cause:prediction_object_binding/field:_/violation:source_component""], ""optimal"": true, ""size"": 1, ""solver"": ""exact_branch_and_bound""}",1,0,True
+ext1-sklearn-column-transformer,E8_EXPLANATION_PROVENANCE,B_LOCAL_STRONG,,[],null,0,0,False
+ext1-sklearn-column-transformer,E8_EXPLANATION_PROVENANCE,B_PAIRWISE_RULES,,[],null,1,0,False
+ext1-sklearn-column-transformer,E8_EXPLANATION_PROVENANCE,B_MLFLOW_QUERY,,[],null,0,0,False
+ext1-sklearn-column-transformer,E8_EXPLANATION_PROVENANCE,B_GREEDY_CROSS_STAGE,REQUIRED_PROVENANCE,[],null,0,0,True
+ext1-sklearn-column-transformer,E8_EXPLANATION_PROVENANCE,O_FUZZYXAI,REQUIRED_PROVENANCE,[],"{""atoms"": [""node:cause:required_provenance/field:_/violation:source_component""], ""optimal"": true, ""size"": 1, ""solver"": ""exact_branch_and_bound""}",1,0,True
+ext2-shap-tree-explainer,E1_TARGET_LEAKAGE,B_LOCAL_STRONG,,[],null,0,0,False
+ext2-shap-tree-explainer,E1_TARGET_LEAKAGE,B_PAIRWISE_RULES,,[],null,1,0,False
+ext2-shap-tree-explainer,E1_TARGET_LEAKAGE,B_MLFLOW_QUERY,,[],null,0,0,False
+ext2-shap-tree-explainer,E1_TARGET_LEAKAGE,B_GREEDY_CROSS_STAGE,TARGET_NOT_IN_FEATURES,[],null,0,0,True
+ext2-shap-tree-explainer,E1_TARGET_LEAKAGE,O_FUZZYXAI,TARGET_NOT_IN_FEATURES,[],"{""atoms"": [], ""optimal"": false, ""size"": 0, ""solver"": ""unavailable""}",0,0,True
+ext2-shap-tree-explainer,E2_TRAIN_TEST_OVERLAP,B_LOCAL_STRONG,,[],null,0,0,False
+ext2-shap-tree-explainer,E2_TRAIN_TEST_OVERLAP,B_PAIRWISE_RULES,,[],null,1,0,False
+ext2-shap-tree-explainer,E2_TRAIN_TEST_OVERLAP,B_MLFLOW_QUERY,,[],null,0,0,False
+ext2-shap-tree-explainer,E2_TRAIN_TEST_OVERLAP,B_GREEDY_CROSS_STAGE,TRAIN_VALIDATION_TEST_DISJOINTNESS,[],null,0,0,True
+ext2-shap-tree-explainer,E2_TRAIN_TEST_OVERLAP,O_FUZZYXAI,TRAIN_VALIDATION_TEST_DISJOINTNESS,[],"{""atoms"": [""node:cause:train_validation_test_disjointness/field:_/violation:source_component""], ""optimal"": true, ""size"": 1, ""solver"": ""exact_branch_and_bound""}",1,0,True
+ext2-shap-tree-explainer,E3_PREPROCESSOR_FIT_SCOPE,B_LOCAL_STRONG,,[],null,0,0,False
+ext2-shap-tree-explainer,E3_PREPROCESSOR_FIT_SCOPE,B_PAIRWISE_RULES,,[],null,1,0,False
+ext2-shap-tree-explainer,E3_PREPROCESSOR_FIT_SCOPE,B_MLFLOW_QUERY,,[],null,0,0,False
+ext2-shap-tree-explainer,E3_PREPROCESSOR_FIT_SCOPE,B_GREEDY_CROSS_STAGE,PREPROCESSOR_FIT_SCOPE,[],null,0,0,True
+ext2-shap-tree-explainer,E3_PREPROCESSOR_FIT_SCOPE,O_FUZZYXAI,PREPROCESSOR_FIT_SCOPE,[],"{""atoms"": [""node:cause:preprocessor_fit_scope/field:_/violation:source_component""], ""optimal"": true, ""size"": 1, ""solver"": ""exact_branch_and_bound""}",1,0,True
+ext2-shap-tree-explainer,E4_FEATURE_SCHEMA_OR_ORDER,B_LOCAL_STRONG,,[],null,0,0,False
+ext2-shap-tree-explainer,E4_FEATURE_SCHEMA_OR_ORDER,B_PAIRWISE_RULES,,"[""MODEL_INPUT_SCHEMA"", ""PREDICTION_OUTPUT_SANITY"", ""EXPLANATION_OUTPUT_CONSISTENCY"", ""USER_CLAIM_EVIDENCE_BINDING""]",null,5,4,False
+ext2-shap-tree-explainer,E4_FEATURE_SCHEMA_OR_ORDER,B_MLFLOW_QUERY,,[],null,0,0,False
+ext2-shap-tree-explainer,E4_FEATURE_SCHEMA_OR_ORDER,B_GREEDY_CROSS_STAGE,FEATURE_ORDER,[],null,0,0,True
+ext2-shap-tree-explainer,E4_FEATURE_SCHEMA_OR_ORDER,O_FUZZYXAI,FEATURE_ORDER,"[""MODEL_INPUT_SCHEMA"", ""PREDICTION_OUTPUT_SANITY"", ""EXPLANATION_OUTPUT_CONSISTENCY"", ""USER_CLAIM_EVIDENCE_BINDING""]","{""atoms"": [""node:cause:feature_order/field:_/violation:source_component""], ""optimal"": false, ""size"": 1, ""solver"": ""exact_branch_and_bound""}",1,0,True
+ext2-shap-tree-explainer,E5_MODEL_ARTIFACT_MISMATCH,B_LOCAL_STRONG,,[],null,0,0,False
+ext2-shap-tree-explainer,E5_MODEL_ARTIFACT_MISMATCH,B_PAIRWISE_RULES,,[],null,1,0,False
+ext2-shap-tree-explainer,E5_MODEL_ARTIFACT_MISMATCH,B_MLFLOW_QUERY,,[],null,0,0,False
+ext2-shap-tree-explainer,E5_MODEL_ARTIFACT_MISMATCH,B_GREEDY_CROSS_STAGE,MODEL_ARTIFACT_HASH,[],null,0,0,True
+ext2-shap-tree-explainer,E5_MODEL_ARTIFACT_MISMATCH,O_FUZZYXAI,MODEL_ARTIFACT_HASH,[],"{""atoms"": [""node:cause:model_artifact_hash/field:_/violation:source_component""], ""optimal"": true, ""size"": 1, ""solver"": ""exact_branch_and_bound""}",1,0,True
+ext2-shap-tree-explainer,E6_MODEL_EXPLAINER_VERSION,B_LOCAL_STRONG,,[],null,0,0,False
+ext2-shap-tree-explainer,E6_MODEL_EXPLAINER_VERSION,B_PAIRWISE_RULES,,[],null,1,0,False
+ext2-shap-tree-explainer,E6_MODEL_EXPLAINER_VERSION,B_MLFLOW_QUERY,,[],null,0,0,False
+ext2-shap-tree-explainer,E6_MODEL_EXPLAINER_VERSION,B_GREEDY_CROSS_STAGE,MODEL_EXPLAINER_VERSION,[],null,0,0,True
+ext2-shap-tree-explainer,E6_MODEL_EXPLAINER_VERSION,O_FUZZYXAI,MODEL_EXPLAINER_VERSION,[],"{""atoms"": [""node:cause:model_explainer_version/field:_/violation:source_component""], ""optimal"": true, ""size"": 1, ""solver"": ""exact_branch_and_bound""}",1,0,True
+ext2-shap-tree-explainer,E7_PREDICTION_EXPLANATION_BINDING,B_LOCAL_STRONG,,[],null,0,0,False
+ext2-shap-tree-explainer,E7_PREDICTION_EXPLANATION_BINDING,B_PAIRWISE_RULES,,[],null,1,0,False
+ext2-shap-tree-explainer,E7_PREDICTION_EXPLANATION_BINDING,B_MLFLOW_QUERY,,[],null,0,0,False
+ext2-shap-tree-explainer,E7_PREDICTION_EXPLANATION_BINDING,B_GREEDY_CROSS_STAGE,PREDICTION_OBJECT_BINDING,[],null,0,0,True
+ext2-shap-tree-explainer,E7_PREDICTION_EXPLANATION_BINDING,O_FUZZYXAI,PREDICTION_OBJECT_BINDING,[],"{""atoms"": [""node:cause:prediction_object_binding/field:_/violation:source_component""], ""optimal"": true, ""size"": 1, ""solver"": ""exact_branch_and_bound""}",1,0,True
+ext2-shap-tree-explainer,E8_EXPLANATION_PROVENANCE,B_LOCAL_STRONG,,[],null,0,0,False
+ext2-shap-tree-explainer,E8_EXPLANATION_PROVENANCE,B_PAIRWISE_RULES,,[],null,1,0,False
+ext2-shap-tree-explainer,E8_EXPLANATION_PROVENANCE,B_MLFLOW_QUERY,,[],null,0,0,False
+ext2-shap-tree-explainer,E8_EXPLANATION_PROVENANCE,B_GREEDY_CROSS_STAGE,REQUIRED_PROVENANCE,[],null,0,0,True
+ext2-shap-tree-explainer,E8_EXPLANATION_PROVENANCE,O_FUZZYXAI,REQUIRED_PROVENANCE,[],"{""atoms"": [""node:cause:required_provenance/field:_/violation:source_component""], ""optimal"": true, ""size"": 1, ""solver"": ""exact_branch_and_bound""}",1,0,True
+ext3-mlflow-elasticnet,E1_TARGET_LEAKAGE,B_LOCAL_STRONG,,[],null,0,0,False
+ext3-mlflow-elasticnet,E1_TARGET_LEAKAGE,B_PAIRWISE_RULES,,[],null,1,0,False
+ext3-mlflow-elasticnet,E1_TARGET_LEAKAGE,B_MLFLOW_QUERY,,[],null,0,0,False
+ext3-mlflow-elasticnet,E1_TARGET_LEAKAGE,B_GREEDY_CROSS_STAGE,TARGET_NOT_IN_FEATURES,[],null,0,0,True
+ext3-mlflow-elasticnet,E1_TARGET_LEAKAGE,O_FUZZYXAI,TARGET_NOT_IN_FEATURES,[],"{""atoms"": [], ""optimal"": false, ""size"": 0, ""solver"": ""unavailable""}",0,0,True
+ext3-mlflow-elasticnet,E2_TRAIN_TEST_OVERLAP,B_LOCAL_STRONG,,[],null,0,0,False
+ext3-mlflow-elasticnet,E2_TRAIN_TEST_OVERLAP,B_PAIRWISE_RULES,,[],null,1,0,False
+ext3-mlflow-elasticnet,E2_TRAIN_TEST_OVERLAP,B_MLFLOW_QUERY,,[],null,0,0,False
+ext3-mlflow-elasticnet,E2_TRAIN_TEST_OVERLAP,B_GREEDY_CROSS_STAGE,TRAIN_VALIDATION_TEST_DISJOINTNESS,[],null,0,0,True
+ext3-mlflow-elasticnet,E2_TRAIN_TEST_OVERLAP,O_FUZZYXAI,TRAIN_VALIDATION_TEST_DISJOINTNESS,[],"{""atoms"": [""node:cause:train_validation_test_disjointness/field:_/violation:source_component""], ""optimal"": true, ""size"": 1, ""solver"": ""exact_branch_and_bound""}",1,0,True
+ext3-mlflow-elasticnet,E3_PREPROCESSOR_FIT_SCOPE,B_LOCAL_STRONG,,[],null,0,0,False
+ext3-mlflow-elasticnet,E3_PREPROCESSOR_FIT_SCOPE,B_PAIRWISE_RULES,,[],null,1,0,False
+ext3-mlflow-elasticnet,E3_PREPROCESSOR_FIT_SCOPE,B_MLFLOW_QUERY,,[],null,0,0,False
+ext3-mlflow-elasticnet,E3_PREPROCESSOR_FIT_SCOPE,B_GREEDY_CROSS_STAGE,PREPROCESSOR_FIT_SCOPE,[],null,0,0,True
+ext3-mlflow-elasticnet,E3_PREPROCESSOR_FIT_SCOPE,O_FUZZYXAI,PREPROCESSOR_FIT_SCOPE,[],"{""atoms"": [""node:cause:preprocessor_fit_scope/field:_/violation:source_component""], ""optimal"": true, ""size"": 1, ""solver"": ""exact_branch_and_bound""}",1,0,True
+ext3-mlflow-elasticnet,E4_FEATURE_SCHEMA_OR_ORDER,B_LOCAL_STRONG,,[],null,0,0,False
+ext3-mlflow-elasticnet,E4_FEATURE_SCHEMA_OR_ORDER,B_PAIRWISE_RULES,,"[""MODEL_INPUT_SCHEMA"", ""PREDICTION_OUTPUT_SANITY"", ""EXPLANATION_OUTPUT_CONSISTENCY"", ""USER_CLAIM_EVIDENCE_BINDING""]",null,5,4,False
+ext3-mlflow-elasticnet,E4_FEATURE_SCHEMA_OR_ORDER,B_MLFLOW_QUERY,,[],null,0,0,False
+ext3-mlflow-elasticnet,E4_FEATURE_SCHEMA_OR_ORDER,B_GREEDY_CROSS_STAGE,FEATURE_ORDER,[],null,0,0,True
+ext3-mlflow-elasticnet,E4_FEATURE_SCHEMA_OR_ORDER,O_FUZZYXAI,FEATURE_ORDER,"[""MODEL_INPUT_SCHEMA"", ""PREDICTION_OUTPUT_SANITY"", ""EXPLANATION_OUTPUT_CONSISTENCY"", ""USER_CLAIM_EVIDENCE_BINDING""]","{""atoms"": [""node:cause:feature_order/field:_/violation:source_component""], ""optimal"": false, ""size"": 1, ""solver"": ""exact_branch_and_bound""}",1,0,True
+ext3-mlflow-elasticnet,E5_MODEL_ARTIFACT_MISMATCH,B_LOCAL_STRONG,,[],null,0,0,False
+ext3-mlflow-elasticnet,E5_MODEL_ARTIFACT_MISMATCH,B_PAIRWISE_RULES,,[],null,1,0,False
+ext3-mlflow-elasticnet,E5_MODEL_ARTIFACT_MISMATCH,B_MLFLOW_QUERY,,[],null,0,0,False
+ext3-mlflow-elasticnet,E5_MODEL_ARTIFACT_MISMATCH,B_GREEDY_CROSS_STAGE,MODEL_ARTIFACT_HASH,[],null,0,0,True
+ext3-mlflow-elasticnet,E5_MODEL_ARTIFACT_MISMATCH,O_FUZZYXAI,MODEL_ARTIFACT_HASH,[],"{""atoms"": [""node:cause:model_artifact_hash/field:_/violation:source_component""], ""optimal"": true, ""size"": 1, ""solver"": ""exact_branch_and_bound""}",1,0,True
+ext3-mlflow-elasticnet,E6_MODEL_EXPLAINER_VERSION,B_LOCAL_STRONG,,[],null,0,0,False
+ext3-mlflow-elasticnet,E6_MODEL_EXPLAINER_VERSION,B_PAIRWISE_RULES,,[],null,1,0,False
+ext3-mlflow-elasticnet,E6_MODEL_EXPLAINER_VERSION,B_MLFLOW_QUERY,,[],null,0,0,False
+ext3-mlflow-elasticnet,E6_MODEL_EXPLAINER_VERSION,B_GREEDY_CROSS_STAGE,MODEL_EXPLAINER_VERSION,[],null,0,0,True
+ext3-mlflow-elasticnet,E6_MODEL_EXPLAINER_VERSION,O_FUZZYXAI,MODEL_EXPLAINER_VERSION,[],"{""atoms"": [""node:cause:model_explainer_version/field:_/violation:source_component""], ""optimal"": true, ""size"": 1, ""solver"": ""exact_branch_and_bound""}",1,0,True
+ext3-mlflow-elasticnet,E7_PREDICTION_EXPLANATION_BINDING,B_LOCAL_STRONG,,[],null,0,0,False
+ext3-mlflow-elasticnet,E7_PREDICTION_EXPLANATION_BINDING,B_PAIRWISE_RULES,,[],null,1,0,False
+ext3-mlflow-elasticnet,E7_PREDICTION_EXPLANATION_BINDING,B_MLFLOW_QUERY,,[],null,0,0,False
+ext3-mlflow-elasticnet,E7_PREDICTION_EXPLANATION_BINDING,B_GREEDY_CROSS_STAGE,PREDICTION_OBJECT_BINDING,[],null,0,0,True
+ext3-mlflow-elasticnet,E7_PREDICTION_EXPLANATION_BINDING,O_FUZZYXAI,PREDICTION_OBJECT_BINDING,[],"{""atoms"": [""node:cause:prediction_object_binding/field:_/violation:source_component""], ""optimal"": true, ""size"": 1, ""solver"": ""exact_branch_and_bound""}",1,0,True
+ext3-mlflow-elasticnet,E8_EXPLANATION_PROVENANCE,B_LOCAL_STRONG,,[],null,0,0,False
+ext3-mlflow-elasticnet,E8_EXPLANATION_PROVENANCE,B_PAIRWISE_RULES,,[],null,1,0,False
+ext3-mlflow-elasticnet,E8_EXPLANATION_PROVENANCE,B_MLFLOW_QUERY,,[],null,0,0,False
+ext3-mlflow-elasticnet,E8_EXPLANATION_PROVENANCE,B_GREEDY_CROSS_STAGE,REQUIRED_PROVENANCE,[],null,0,0,True
+ext3-mlflow-elasticnet,E8_EXPLANATION_PROVENANCE,O_FUZZYXAI,REQUIRED_PROVENANCE,[],"{""atoms"": [""node:cause:required_provenance/field:_/violation:source_component""], ""optimal"": true, ""size"": 1, ""solver"": ""exact_branch_and_bound""}",1,0,True
+ext4-lime-tabular,E1_TARGET_LEAKAGE,B_LOCAL_STRONG,,[],null,0,0,False
+ext4-lime-tabular,E1_TARGET_LEAKAGE,B_PAIRWISE_RULES,,[],null,1,0,False
+ext4-lime-tabular,E1_TARGET_LEAKAGE,B_MLFLOW_QUERY,,[],null,0,0,False
+ext4-lime-tabular,E1_TARGET_LEAKAGE,B_GREEDY_CROSS_STAGE,TARGET_NOT_IN_FEATURES,[],null,0,0,True
+ext4-lime-tabular,E1_TARGET_LEAKAGE,O_FUZZYXAI,TARGET_NOT_IN_FEATURES,[],"{""atoms"": [], ""optimal"": false, ""size"": 0, ""solver"": ""unavailable""}",0,0,True
+ext4-lime-tabular,E2_TRAIN_TEST_OVERLAP,B_LOCAL_STRONG,,[],null,0,0,False
+ext4-lime-tabular,E2_TRAIN_TEST_OVERLAP,B_PAIRWISE_RULES,,[],null,1,0,False
+ext4-lime-tabular,E2_TRAIN_TEST_OVERLAP,B_MLFLOW_QUERY,,[],null,0,0,False
+ext4-lime-tabular,E2_TRAIN_TEST_OVERLAP,B_GREEDY_CROSS_STAGE,TRAIN_VALIDATION_TEST_DISJOINTNESS,[],null,0,0,True
+ext4-lime-tabular,E2_TRAIN_TEST_OVERLAP,O_FUZZYXAI,TRAIN_VALIDATION_TEST_DISJOINTNESS,[],"{""atoms"": [""node:cause:train_validation_test_disjointness/field:_/violation:source_component""], ""optimal"": true, ""size"": 1, ""solver"": ""exact_branch_and_bound""}",1,0,True
+ext4-lime-tabular,E3_PREPROCESSOR_FIT_SCOPE,B_LOCAL_STRONG,,[],null,0,0,False
+ext4-lime-tabular,E3_PREPROCESSOR_FIT_SCOPE,B_PAIRWISE_RULES,,[],null,1,0,False
+ext4-lime-tabular,E3_PREPROCESSOR_FIT_SCOPE,B_MLFLOW_QUERY,,[],null,0,0,False
+ext4-lime-tabular,E3_PREPROCESSOR_FIT_SCOPE,B_GREEDY_CROSS_STAGE,PREPROCESSOR_FIT_SCOPE,[],null,0,0,True
+ext4-lime-tabular,E3_PREPROCESSOR_FIT_SCOPE,O_FUZZYXAI,PREPROCESSOR_FIT_SCOPE,[],"{""atoms"": [""node:cause:preprocessor_fit_scope/field:_/violation:source_component""], ""optimal"": true, ""size"": 1, ""solver"": ""exact_branch_and_bound""}",1,0,True
+ext4-lime-tabular,E4_FEATURE_SCHEMA_OR_ORDER,B_LOCAL_STRONG,,[],null,0,0,False
+ext4-lime-tabular,E4_FEATURE_SCHEMA_OR_ORDER,B_PAIRWISE_RULES,,"[""MODEL_INPUT_SCHEMA"", ""PREDICTION_OUTPUT_SANITY"", ""EXPLANATION_OUTPUT_CONSISTENCY"", ""USER_CLAIM_EVIDENCE_BINDING""]",null,5,4,False
+ext4-lime-tabular,E4_FEATURE_SCHEMA_OR_ORDER,B_MLFLOW_QUERY,,[],null,0,0,False
+ext4-lime-tabular,E4_FEATURE_SCHEMA_OR_ORDER,B_GREEDY_CROSS_STAGE,FEATURE_ORDER,[],null,0,0,True
+ext4-lime-tabular,E4_FEATURE_SCHEMA_OR_ORDER,O_FUZZYXAI,FEATURE_ORDER,"[""MODEL_INPUT_SCHEMA"", ""PREDICTION_OUTPUT_SANITY"", ""EXPLANATION_OUTPUT_CONSISTENCY"", ""USER_CLAIM_EVIDENCE_BINDING""]","{""atoms"": [""node:cause:feature_order/field:_/violation:source_component""], ""optimal"": false, ""size"": 1, ""solver"": ""exact_branch_and_bound""}",1,0,True
+ext4-lime-tabular,E5_MODEL_ARTIFACT_MISMATCH,B_LOCAL_STRONG,,[],null,0,0,False
+ext4-lime-tabular,E5_MODEL_ARTIFACT_MISMATCH,B_PAIRWISE_RULES,,[],null,1,0,False
+ext4-lime-tabular,E5_MODEL_ARTIFACT_MISMATCH,B_MLFLOW_QUERY,,[],null,0,0,False
+ext4-lime-tabular,E5_MODEL_ARTIFACT_MISMATCH,B_GREEDY_CROSS_STAGE,MODEL_ARTIFACT_HASH,[],null,0,0,True
+ext4-lime-tabular,E5_MODEL_ARTIFACT_MISMATCH,O_FUZZYXAI,MODEL_ARTIFACT_HASH,[],"{""atoms"": [""node:cause:model_artifact_hash/field:_/violation:source_component""], ""optimal"": true, ""size"": 1, ""solver"": ""exact_branch_and_bound""}",1,0,True
+ext4-lime-tabular,E6_MODEL_EXPLAINER_VERSION,B_LOCAL_STRONG,,[],null,0,0,False
+ext4-lime-tabular,E6_MODEL_EXPLAINER_VERSION,B_PAIRWISE_RULES,,[],null,1,0,False
+ext4-lime-tabular,E6_MODEL_EXPLAINER_VERSION,B_MLFLOW_QUERY,,[],null,0,0,False
+ext4-lime-tabular,E6_MODEL_EXPLAINER_VERSION,B_GREEDY_CROSS_STAGE,MODEL_EXPLAINER_VERSION,[],null,0,0,True
+ext4-lime-tabular,E6_MODEL_EXPLAINER_VERSION,O_FUZZYXAI,MODEL_EXPLAINER_VERSION,[],"{""atoms"": [""node:cause:model_explainer_version/field:_/violation:source_component""], ""optimal"": true, ""size"": 1, ""solver"": ""exact_branch_and_bound""}",1,0,True
+ext4-lime-tabular,E7_PREDICTION_EXPLANATION_BINDING,B_LOCAL_STRONG,,[],null,0,0,False
+ext4-lime-tabular,E7_PREDICTION_EXPLANATION_BINDING,B_PAIRWISE_RULES,,[],null,1,0,False
+ext4-lime-tabular,E7_PREDICTION_EXPLANATION_BINDING,B_MLFLOW_QUERY,,[],null,0,0,False
+ext4-lime-tabular,E7_PREDICTION_EXPLANATION_BINDING,B_GREEDY_CROSS_STAGE,PREDICTION_OBJECT_BINDING,[],null,0,0,True
+ext4-lime-tabular,E7_PREDICTION_EXPLANATION_BINDING,O_FUZZYXAI,PREDICTION_OBJECT_BINDING,[],"{""atoms"": [""node:cause:prediction_object_binding/field:_/violation:source_component""], ""optimal"": true, ""size"": 1, ""solver"": ""exact_branch_and_bound""}",1,0,True
+ext4-lime-tabular,E8_EXPLANATION_PROVENANCE,B_LOCAL_STRONG,,[],null,0,0,False
+ext4-lime-tabular,E8_EXPLANATION_PROVENANCE,B_PAIRWISE_RULES,,[],null,1,0,False
+ext4-lime-tabular,E8_EXPLANATION_PROVENANCE,B_MLFLOW_QUERY,,[],null,0,0,False
+ext4-lime-tabular,E8_EXPLANATION_PROVENANCE,B_GREEDY_CROSS_STAGE,REQUIRED_PROVENANCE,[],null,0,0,True
+ext4-lime-tabular,E8_EXPLANATION_PROVENANCE,O_FUZZYXAI,REQUIRED_PROVENANCE,[],"{""atoms"": [""node:cause:required_provenance/field:_/violation:source_component""], ""optimal"": true, ""size"": 1, ""solver"": ""exact_branch_and_bound""}",1,0,True

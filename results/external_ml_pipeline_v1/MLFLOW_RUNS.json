@@ -1,0 +1,1406 @@
+{
+  "expected": 200,
+  "logged": 200,
+  "runs": [
+    {
+      "artifact_count": 12,
+      "case_id": "C1_BASELINE",
+      "mode_id": "B_LOCAL_STRONG",
+      "pipeline_id": "ext1-sklearn-column-transformer",
+      "run_id": "562ce54ffc7b4e72911ad74c30975ad2"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "C1_BASELINE",
+      "mode_id": "B_PAIRWISE_RULES",
+      "pipeline_id": "ext1-sklearn-column-transformer",
+      "run_id": "48fecacbd6d7436bb4ec7360a3f59dfc"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "C1_BASELINE",
+      "mode_id": "B_MLFLOW_QUERY",
+      "pipeline_id": "ext1-sklearn-column-transformer",
+      "run_id": "16e37296d65543c7a1e628fbba38f1b7"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "C1_BASELINE",
+      "mode_id": "B_GREEDY_CROSS_STAGE",
+      "pipeline_id": "ext1-sklearn-column-transformer",
+      "run_id": "9b529b9d38a5499cbb8601677cd63044"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "C1_BASELINE",
+      "mode_id": "O_FUZZYXAI",
+      "pipeline_id": "ext1-sklearn-column-transformer",
+      "run_id": "e475658afb6347ad8f99b6344992d663"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "C2_CONSISTENT_RETRAIN",
+      "mode_id": "B_LOCAL_STRONG",
+      "pipeline_id": "ext1-sklearn-column-transformer",
+      "run_id": "74ed75466617495fbe992b164b4d368e"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "C2_CONSISTENT_RETRAIN",
+      "mode_id": "B_PAIRWISE_RULES",
+      "pipeline_id": "ext1-sklearn-column-transformer",
+      "run_id": "50ebd009717e45eca7391dd2b8b1c25a"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "C2_CONSISTENT_RETRAIN",
+      "mode_id": "B_MLFLOW_QUERY",
+      "pipeline_id": "ext1-sklearn-column-transformer",
+      "run_id": "5a0cdc64c50145f98b15a2f4ae799421"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "C2_CONSISTENT_RETRAIN",
+      "mode_id": "B_GREEDY_CROSS_STAGE",
+      "pipeline_id": "ext1-sklearn-column-transformer",
+      "run_id": "8689f11a29aa493ea394300fcb748fc4"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "C2_CONSISTENT_RETRAIN",
+      "mode_id": "O_FUZZYXAI",
+      "pipeline_id": "ext1-sklearn-column-transformer",
+      "run_id": "07c74ee5f4c84f28b4296d744f17ec45"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E1_TARGET_LEAKAGE",
+      "mode_id": "B_LOCAL_STRONG",
+      "pipeline_id": "ext1-sklearn-column-transformer",
+      "run_id": "f5a11d87c4fc4f61932445f4f55dcbf5"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E1_TARGET_LEAKAGE",
+      "mode_id": "B_PAIRWISE_RULES",
+      "pipeline_id": "ext1-sklearn-column-transformer",
+      "run_id": "00d770c9c37a4773a9c4968ceeaca1e1"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E1_TARGET_LEAKAGE",
+      "mode_id": "B_MLFLOW_QUERY",
+      "pipeline_id": "ext1-sklearn-column-transformer",
+      "run_id": "a97dd03a70854e18a0d5d61557c0b593"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E1_TARGET_LEAKAGE",
+      "mode_id": "B_GREEDY_CROSS_STAGE",
+      "pipeline_id": "ext1-sklearn-column-transformer",
+      "run_id": "317ad4a0959a479991d2303e5f155a67"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E1_TARGET_LEAKAGE",
+      "mode_id": "O_FUZZYXAI",
+      "pipeline_id": "ext1-sklearn-column-transformer",
+      "run_id": "127930db6a904650b868671b35e331a5"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E2_TRAIN_TEST_OVERLAP",
+      "mode_id": "B_LOCAL_STRONG",
+      "pipeline_id": "ext1-sklearn-column-transformer",
+      "run_id": "faa01dae75a84e629d750be443ae425c"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E2_TRAIN_TEST_OVERLAP",
+      "mode_id": "B_PAIRWISE_RULES",
+      "pipeline_id": "ext1-sklearn-column-transformer",
+      "run_id": "a1bbeb2e6d8545afb31155a39ff58f00"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E2_TRAIN_TEST_OVERLAP",
+      "mode_id": "B_MLFLOW_QUERY",
+      "pipeline_id": "ext1-sklearn-column-transformer",
+      "run_id": "12e606e34a4a4071ad53b007df1b181d"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E2_TRAIN_TEST_OVERLAP",
+      "mode_id": "B_GREEDY_CROSS_STAGE",
+      "pipeline_id": "ext1-sklearn-column-transformer",
+      "run_id": "539f1336dc534b3796f70a87468f810c"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E2_TRAIN_TEST_OVERLAP",
+      "mode_id": "O_FUZZYXAI",
+      "pipeline_id": "ext1-sklearn-column-transformer",
+      "run_id": "d7b48448a3874f369c0cc60684780e47"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E3_PREPROCESSOR_FIT_SCOPE",
+      "mode_id": "B_LOCAL_STRONG",
+      "pipeline_id": "ext1-sklearn-column-transformer",
+      "run_id": "d4383801f9454f7495b4cada7a5c57cd"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E3_PREPROCESSOR_FIT_SCOPE",
+      "mode_id": "B_PAIRWISE_RULES",
+      "pipeline_id": "ext1-sklearn-column-transformer",
+      "run_id": "8e574bfee9f341c7ba14f21c6d2d7809"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E3_PREPROCESSOR_FIT_SCOPE",
+      "mode_id": "B_MLFLOW_QUERY",
+      "pipeline_id": "ext1-sklearn-column-transformer",
+      "run_id": "04a3b22aa1f54de2a7f8c7bc3b8fb170"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E3_PREPROCESSOR_FIT_SCOPE",
+      "mode_id": "B_GREEDY_CROSS_STAGE",
+      "pipeline_id": "ext1-sklearn-column-transformer",
+      "run_id": "fa1cee16b0ee42a596c36c8270b10beb"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E3_PREPROCESSOR_FIT_SCOPE",
+      "mode_id": "O_FUZZYXAI",
+      "pipeline_id": "ext1-sklearn-column-transformer",
+      "run_id": "9c9e67b1e410474598a4af64ddc02185"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E4_FEATURE_SCHEMA_OR_ORDER",
+      "mode_id": "B_LOCAL_STRONG",
+      "pipeline_id": "ext1-sklearn-column-transformer",
+      "run_id": "6d5d3ca8650b4f4a9e23a1fe3815d19b"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E4_FEATURE_SCHEMA_OR_ORDER",
+      "mode_id": "B_PAIRWISE_RULES",
+      "pipeline_id": "ext1-sklearn-column-transformer",
+      "run_id": "62bc03b3788e4dd18b957373b55c38a4"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E4_FEATURE_SCHEMA_OR_ORDER",
+      "mode_id": "B_MLFLOW_QUERY",
+      "pipeline_id": "ext1-sklearn-column-transformer",
+      "run_id": "a310271acafa40b0b48b4b50474b68d7"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E4_FEATURE_SCHEMA_OR_ORDER",
+      "mode_id": "B_GREEDY_CROSS_STAGE",
+      "pipeline_id": "ext1-sklearn-column-transformer",
+      "run_id": "d8d4447d61184f46a412a5d3131954cc"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E4_FEATURE_SCHEMA_OR_ORDER",
+      "mode_id": "O_FUZZYXAI",
+      "pipeline_id": "ext1-sklearn-column-transformer",
+      "run_id": "513ca17a004341c9b3eb658549689bb1"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E5_MODEL_ARTIFACT_MISMATCH",
+      "mode_id": "B_LOCAL_STRONG",
+      "pipeline_id": "ext1-sklearn-column-transformer",
+      "run_id": "13396a8201e84aab8a6d7d0bb27b73ae"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E5_MODEL_ARTIFACT_MISMATCH",
+      "mode_id": "B_PAIRWISE_RULES",
+      "pipeline_id": "ext1-sklearn-column-transformer",
+      "run_id": "24c0b53e9a6b46c7b4a8859b6002f6b2"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E5_MODEL_ARTIFACT_MISMATCH",
+      "mode_id": "B_MLFLOW_QUERY",
+      "pipeline_id": "ext1-sklearn-column-transformer",
+      "run_id": "4c58ea91754f4ef78d401760eb059ef1"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E5_MODEL_ARTIFACT_MISMATCH",
+      "mode_id": "B_GREEDY_CROSS_STAGE",
+      "pipeline_id": "ext1-sklearn-column-transformer",
+      "run_id": "bbfe5a5853434a6fb05a3ebb5e20cd8f"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E5_MODEL_ARTIFACT_MISMATCH",
+      "mode_id": "O_FUZZYXAI",
+      "pipeline_id": "ext1-sklearn-column-transformer",
+      "run_id": "a4e3b71997214875a90f895c9f542819"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E6_MODEL_EXPLAINER_VERSION",
+      "mode_id": "B_LOCAL_STRONG",
+      "pipeline_id": "ext1-sklearn-column-transformer",
+      "run_id": "78fc370852af4734a8239bb7a487ecdc"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E6_MODEL_EXPLAINER_VERSION",
+      "mode_id": "B_PAIRWISE_RULES",
+      "pipeline_id": "ext1-sklearn-column-transformer",
+      "run_id": "7a61852fa8f0427b8b6020407744bd0c"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E6_MODEL_EXPLAINER_VERSION",
+      "mode_id": "B_MLFLOW_QUERY",
+      "pipeline_id": "ext1-sklearn-column-transformer",
+      "run_id": "041b597496b94de4b18faf7843cd6f58"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E6_MODEL_EXPLAINER_VERSION",
+      "mode_id": "B_GREEDY_CROSS_STAGE",
+      "pipeline_id": "ext1-sklearn-column-transformer",
+      "run_id": "d2e205a868aa487aa8d082b1339d39bf"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E6_MODEL_EXPLAINER_VERSION",
+      "mode_id": "O_FUZZYXAI",
+      "pipeline_id": "ext1-sklearn-column-transformer",
+      "run_id": "ae56c376569d456ca8a3c8289e4e2209"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E7_PREDICTION_EXPLANATION_BINDING",
+      "mode_id": "B_LOCAL_STRONG",
+      "pipeline_id": "ext1-sklearn-column-transformer",
+      "run_id": "d471f1337e4349aa82212fe31c0491f7"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E7_PREDICTION_EXPLANATION_BINDING",
+      "mode_id": "B_PAIRWISE_RULES",
+      "pipeline_id": "ext1-sklearn-column-transformer",
+      "run_id": "def9cf7e15414bde925c27364f0fa06a"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E7_PREDICTION_EXPLANATION_BINDING",
+      "mode_id": "B_MLFLOW_QUERY",
+      "pipeline_id": "ext1-sklearn-column-transformer",
+      "run_id": "2ad9f00036c8455ea8fc115c32db0199"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E7_PREDICTION_EXPLANATION_BINDING",
+      "mode_id": "B_GREEDY_CROSS_STAGE",
+      "pipeline_id": "ext1-sklearn-column-transformer",
+      "run_id": "49fcb4139c5a4ca2acdbae696011563f"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E7_PREDICTION_EXPLANATION_BINDING",
+      "mode_id": "O_FUZZYXAI",
+      "pipeline_id": "ext1-sklearn-column-transformer",
+      "run_id": "85d7763b61344deb950151ed1d575e3f"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E8_EXPLANATION_PROVENANCE",
+      "mode_id": "B_LOCAL_STRONG",
+      "pipeline_id": "ext1-sklearn-column-transformer",
+      "run_id": "7d7616222a7e424b852f96bca1c704b5"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E8_EXPLANATION_PROVENANCE",
+      "mode_id": "B_PAIRWISE_RULES",
+      "pipeline_id": "ext1-sklearn-column-transformer",
+      "run_id": "63b4cd7a4bec4a4f8703630b66038302"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E8_EXPLANATION_PROVENANCE",
+      "mode_id": "B_MLFLOW_QUERY",
+      "pipeline_id": "ext1-sklearn-column-transformer",
+      "run_id": "b1f6cfb1e0ee4d3fb02d88b66ec48048"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E8_EXPLANATION_PROVENANCE",
+      "mode_id": "B_GREEDY_CROSS_STAGE",
+      "pipeline_id": "ext1-sklearn-column-transformer",
+      "run_id": "ef8e8f5564f74050a1e635c10b383648"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E8_EXPLANATION_PROVENANCE",
+      "mode_id": "O_FUZZYXAI",
+      "pipeline_id": "ext1-sklearn-column-transformer",
+      "run_id": "43a31c6cd94f49c39e23063215a98403"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "C1_BASELINE",
+      "mode_id": "B_LOCAL_STRONG",
+      "pipeline_id": "ext2-shap-tree-explainer",
+      "run_id": "c176c6b08c614e79beebe51cc6c73a74"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "C1_BASELINE",
+      "mode_id": "B_PAIRWISE_RULES",
+      "pipeline_id": "ext2-shap-tree-explainer",
+      "run_id": "f28241cf3d2b45c294198ef9a4010403"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "C1_BASELINE",
+      "mode_id": "B_MLFLOW_QUERY",
+      "pipeline_id": "ext2-shap-tree-explainer",
+      "run_id": "d0c58724f10f462a9596b59749f2fbe3"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "C1_BASELINE",
+      "mode_id": "B_GREEDY_CROSS_STAGE",
+      "pipeline_id": "ext2-shap-tree-explainer",
+      "run_id": "ae56d501f02941e8a4e2a6677a95321d"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "C1_BASELINE",
+      "mode_id": "O_FUZZYXAI",
+      "pipeline_id": "ext2-shap-tree-explainer",
+      "run_id": "7ec17cfb441545b7b4bf02ebe6a68979"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "C2_CONSISTENT_RETRAIN",
+      "mode_id": "B_LOCAL_STRONG",
+      "pipeline_id": "ext2-shap-tree-explainer",
+      "run_id": "a86dfadc462a4465aba029941d0b721b"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "C2_CONSISTENT_RETRAIN",
+      "mode_id": "B_PAIRWISE_RULES",
+      "pipeline_id": "ext2-shap-tree-explainer",
+      "run_id": "cd9a062b566240568373c1d253e2edc5"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "C2_CONSISTENT_RETRAIN",
+      "mode_id": "B_MLFLOW_QUERY",
+      "pipeline_id": "ext2-shap-tree-explainer",
+      "run_id": "9585f65712164664adceed786f0536ad"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "C2_CONSISTENT_RETRAIN",
+      "mode_id": "B_GREEDY_CROSS_STAGE",
+      "pipeline_id": "ext2-shap-tree-explainer",
+      "run_id": "135639289de54ab89fa6cb6b64bd6a29"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "C2_CONSISTENT_RETRAIN",
+      "mode_id": "O_FUZZYXAI",
+      "pipeline_id": "ext2-shap-tree-explainer",
+      "run_id": "a89f8e58f71946c29f3f45ccc0296ecd"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E1_TARGET_LEAKAGE",
+      "mode_id": "B_LOCAL_STRONG",
+      "pipeline_id": "ext2-shap-tree-explainer",
+      "run_id": "17740e2b4e7241d79f2f84381fa12c17"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E1_TARGET_LEAKAGE",
+      "mode_id": "B_PAIRWISE_RULES",
+      "pipeline_id": "ext2-shap-tree-explainer",
+      "run_id": "3fc15d83f49440949007b2add788e522"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E1_TARGET_LEAKAGE",
+      "mode_id": "B_MLFLOW_QUERY",
+      "pipeline_id": "ext2-shap-tree-explainer",
+      "run_id": "d503f7d4d96d447fb3d586f6bea242ae"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E1_TARGET_LEAKAGE",
+      "mode_id": "B_GREEDY_CROSS_STAGE",
+      "pipeline_id": "ext2-shap-tree-explainer",
+      "run_id": "74d9c0c867dc4ef9a18b001524ae3c9a"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E1_TARGET_LEAKAGE",
+      "mode_id": "O_FUZZYXAI",
+      "pipeline_id": "ext2-shap-tree-explainer",
+      "run_id": "43fb09efd9514e26a156abd90b1ce154"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E2_TRAIN_TEST_OVERLAP",
+      "mode_id": "B_LOCAL_STRONG",
+      "pipeline_id": "ext2-shap-tree-explainer",
+      "run_id": "d9c5d7883919431b9db57a28e9119974"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E2_TRAIN_TEST_OVERLAP",
+      "mode_id": "B_PAIRWISE_RULES",
+      "pipeline_id": "ext2-shap-tree-explainer",
+      "run_id": "1e123fbf950042e89eaea50a1dc593ff"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E2_TRAIN_TEST_OVERLAP",
+      "mode_id": "B_MLFLOW_QUERY",
+      "pipeline_id": "ext2-shap-tree-explainer",
+      "run_id": "dfcc4acc41364f6eb8b048288da18696"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E2_TRAIN_TEST_OVERLAP",
+      "mode_id": "B_GREEDY_CROSS_STAGE",
+      "pipeline_id": "ext2-shap-tree-explainer",
+      "run_id": "4063f05108f446a78e98bb6a6c1389a9"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E2_TRAIN_TEST_OVERLAP",
+      "mode_id": "O_FUZZYXAI",
+      "pipeline_id": "ext2-shap-tree-explainer",
+      "run_id": "8c78822ee3814538a4c86a889de03d6f"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E3_PREPROCESSOR_FIT_SCOPE",
+      "mode_id": "B_LOCAL_STRONG",
+      "pipeline_id": "ext2-shap-tree-explainer",
+      "run_id": "a1b84b399d554c9fb868f4e46c929d43"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E3_PREPROCESSOR_FIT_SCOPE",
+      "mode_id": "B_PAIRWISE_RULES",
+      "pipeline_id": "ext2-shap-tree-explainer",
+      "run_id": "40ad8c7de9de417cbd3e3b1e981fdb2e"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E3_PREPROCESSOR_FIT_SCOPE",
+      "mode_id": "B_MLFLOW_QUERY",
+      "pipeline_id": "ext2-shap-tree-explainer",
+      "run_id": "7fd1480040b4432594d5bc7a1bef9671"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E3_PREPROCESSOR_FIT_SCOPE",
+      "mode_id": "B_GREEDY_CROSS_STAGE",
+      "pipeline_id": "ext2-shap-tree-explainer",
+      "run_id": "8634273c56774d12809403daaabd8c0e"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E3_PREPROCESSOR_FIT_SCOPE",
+      "mode_id": "O_FUZZYXAI",
+      "pipeline_id": "ext2-shap-tree-explainer",
+      "run_id": "bb0519ea92b24620903ad38042ae8228"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E4_FEATURE_SCHEMA_OR_ORDER",
+      "mode_id": "B_LOCAL_STRONG",
+      "pipeline_id": "ext2-shap-tree-explainer",
+      "run_id": "573f4d9b9735406caf367727967b1284"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E4_FEATURE_SCHEMA_OR_ORDER",
+      "mode_id": "B_PAIRWISE_RULES",
+      "pipeline_id": "ext2-shap-tree-explainer",
+      "run_id": "62e4270611a24d3ab5b153cc5136b2d8"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E4_FEATURE_SCHEMA_OR_ORDER",
+      "mode_id": "B_MLFLOW_QUERY",
+      "pipeline_id": "ext2-shap-tree-explainer",
+      "run_id": "8b29daea28734c76a3d14b79332249ce"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E4_FEATURE_SCHEMA_OR_ORDER",
+      "mode_id": "B_GREEDY_CROSS_STAGE",
+      "pipeline_id": "ext2-shap-tree-explainer",
+      "run_id": "408a5e56f15c46a2a78572d8d24b4942"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E4_FEATURE_SCHEMA_OR_ORDER",
+      "mode_id": "O_FUZZYXAI",
+      "pipeline_id": "ext2-shap-tree-explainer",
+      "run_id": "9613b2c26e2b409282dedaf29ce08703"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E5_MODEL_ARTIFACT_MISMATCH",
+      "mode_id": "B_LOCAL_STRONG",
+      "pipeline_id": "ext2-shap-tree-explainer",
+      "run_id": "5998a1602f6740ff91c402cb2c5bb881"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E5_MODEL_ARTIFACT_MISMATCH",
+      "mode_id": "B_PAIRWISE_RULES",
+      "pipeline_id": "ext2-shap-tree-explainer",
+      "run_id": "4a751a5895e642df95ca4f3fe7b4f172"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E5_MODEL_ARTIFACT_MISMATCH",
+      "mode_id": "B_MLFLOW_QUERY",
+      "pipeline_id": "ext2-shap-tree-explainer",
+      "run_id": "82fcd9aa5d084a05a034a41cca6334ae"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E5_MODEL_ARTIFACT_MISMATCH",
+      "mode_id": "B_GREEDY_CROSS_STAGE",
+      "pipeline_id": "ext2-shap-tree-explainer",
+      "run_id": "524ed69729a043619d540ad8aafe1122"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E5_MODEL_ARTIFACT_MISMATCH",
+      "mode_id": "O_FUZZYXAI",
+      "pipeline_id": "ext2-shap-tree-explainer",
+      "run_id": "7486de34635f46cabcd6aca228ab95db"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E6_MODEL_EXPLAINER_VERSION",
+      "mode_id": "B_LOCAL_STRONG",
+      "pipeline_id": "ext2-shap-tree-explainer",
+      "run_id": "fdef685a4e4f41df8d87ac9f63bfa323"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E6_MODEL_EXPLAINER_VERSION",
+      "mode_id": "B_PAIRWISE_RULES",
+      "pipeline_id": "ext2-shap-tree-explainer",
+      "run_id": "202a7d5fea1342f99b87fa48877a74e8"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E6_MODEL_EXPLAINER_VERSION",
+      "mode_id": "B_MLFLOW_QUERY",
+      "pipeline_id": "ext2-shap-tree-explainer",
+      "run_id": "ea95fdd5213d4e03b496a4e3e744c092"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E6_MODEL_EXPLAINER_VERSION",
+      "mode_id": "B_GREEDY_CROSS_STAGE",
+      "pipeline_id": "ext2-shap-tree-explainer",
+      "run_id": "f2e236342a484e00a8be0fe7ee90a385"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E6_MODEL_EXPLAINER_VERSION",
+      "mode_id": "O_FUZZYXAI",
+      "pipeline_id": "ext2-shap-tree-explainer",
+      "run_id": "1b83e9f3a07f42a9a2bc263f24c807f5"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E7_PREDICTION_EXPLANATION_BINDING",
+      "mode_id": "B_LOCAL_STRONG",
+      "pipeline_id": "ext2-shap-tree-explainer",
+      "run_id": "a764f30606294cd3b874c1e51e228fa8"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E7_PREDICTION_EXPLANATION_BINDING",
+      "mode_id": "B_PAIRWISE_RULES",
+      "pipeline_id": "ext2-shap-tree-explainer",
+      "run_id": "df87ccc3605b4baa9fdcb0d21cfc01e3"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E7_PREDICTION_EXPLANATION_BINDING",
+      "mode_id": "B_MLFLOW_QUERY",
+      "pipeline_id": "ext2-shap-tree-explainer",
+      "run_id": "964ad7467bfd48e0824c7f5e06622647"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E7_PREDICTION_EXPLANATION_BINDING",
+      "mode_id": "B_GREEDY_CROSS_STAGE",
+      "pipeline_id": "ext2-shap-tree-explainer",
+      "run_id": "0fc50307689142dfae0094ba7516dd7c"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E7_PREDICTION_EXPLANATION_BINDING",
+      "mode_id": "O_FUZZYXAI",
+      "pipeline_id": "ext2-shap-tree-explainer",
+      "run_id": "95b98f2edf614ad3bafd15b93f3ec9a3"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E8_EXPLANATION_PROVENANCE",
+      "mode_id": "B_LOCAL_STRONG",
+      "pipeline_id": "ext2-shap-tree-explainer",
+      "run_id": "229cef3d5c57403498b5ce993539e36a"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E8_EXPLANATION_PROVENANCE",
+      "mode_id": "B_PAIRWISE_RULES",
+      "pipeline_id": "ext2-shap-tree-explainer",
+      "run_id": "23e6668632e147579f9ce2eb3079132b"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E8_EXPLANATION_PROVENANCE",
+      "mode_id": "B_MLFLOW_QUERY",
+      "pipeline_id": "ext2-shap-tree-explainer",
+      "run_id": "87dbf57bc4d7400dada2c13d4ff15e85"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E8_EXPLANATION_PROVENANCE",
+      "mode_id": "B_GREEDY_CROSS_STAGE",
+      "pipeline_id": "ext2-shap-tree-explainer",
+      "run_id": "14c91d53a24f4878b167e65c40b2453c"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E8_EXPLANATION_PROVENANCE",
+      "mode_id": "O_FUZZYXAI",
+      "pipeline_id": "ext2-shap-tree-explainer",
+      "run_id": "5196a3f0e5af4d51b52909fc467ad87c"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "C1_BASELINE",
+      "mode_id": "B_LOCAL_STRONG",
+      "pipeline_id": "ext3-mlflow-elasticnet",
+      "run_id": "d02407b9134f41029b5b1ec5d40e5c57"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "C1_BASELINE",
+      "mode_id": "B_PAIRWISE_RULES",
+      "pipeline_id": "ext3-mlflow-elasticnet",
+      "run_id": "3c4d020459e4447d8ab14d97b2013e1e"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "C1_BASELINE",
+      "mode_id": "B_MLFLOW_QUERY",
+      "pipeline_id": "ext3-mlflow-elasticnet",
+      "run_id": "c1ecc0905d3346deb4ce5846633c525a"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "C1_BASELINE",
+      "mode_id": "B_GREEDY_CROSS_STAGE",
+      "pipeline_id": "ext3-mlflow-elasticnet",
+      "run_id": "80ee55c7f374427c9fb4fb5a8c6d82c2"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "C1_BASELINE",
+      "mode_id": "O_FUZZYXAI",
+      "pipeline_id": "ext3-mlflow-elasticnet",
+      "run_id": "1a0557ce9f1e44ef8b38f2a166d7b674"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "C2_CONSISTENT_RETRAIN",
+      "mode_id": "B_LOCAL_STRONG",
+      "pipeline_id": "ext3-mlflow-elasticnet",
+      "run_id": "ff1fe2da60814fbeae96f1ef92630457"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "C2_CONSISTENT_RETRAIN",
+      "mode_id": "B_PAIRWISE_RULES",
+      "pipeline_id": "ext3-mlflow-elasticnet",
+      "run_id": "2e2c6d8b3bcf49a5a53e89bad242efe9"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "C2_CONSISTENT_RETRAIN",
+      "mode_id": "B_MLFLOW_QUERY",
+      "pipeline_id": "ext3-mlflow-elasticnet",
+      "run_id": "1d2f5b1a59c74ae0a26eff27b952ee86"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "C2_CONSISTENT_RETRAIN",
+      "mode_id": "B_GREEDY_CROSS_STAGE",
+      "pipeline_id": "ext3-mlflow-elasticnet",
+      "run_id": "9b6e68d88b6d4e2eb04a8bfce519ec27"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "C2_CONSISTENT_RETRAIN",
+      "mode_id": "O_FUZZYXAI",
+      "pipeline_id": "ext3-mlflow-elasticnet",
+      "run_id": "f9932ad31f0c4590af9982dc82d748d4"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E1_TARGET_LEAKAGE",
+      "mode_id": "B_LOCAL_STRONG",
+      "pipeline_id": "ext3-mlflow-elasticnet",
+      "run_id": "e2f2bd463ccc49e4b0b18347aa18a0be"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E1_TARGET_LEAKAGE",
+      "mode_id": "B_PAIRWISE_RULES",
+      "pipeline_id": "ext3-mlflow-elasticnet",
+      "run_id": "63ab354fb12e4eb78aded68dabf58c2a"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E1_TARGET_LEAKAGE",
+      "mode_id": "B_MLFLOW_QUERY",
+      "pipeline_id": "ext3-mlflow-elasticnet",
+      "run_id": "b69fbb07f74c4a75be260486c8ae63b9"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E1_TARGET_LEAKAGE",
+      "mode_id": "B_GREEDY_CROSS_STAGE",
+      "pipeline_id": "ext3-mlflow-elasticnet",
+      "run_id": "0373d991812c4ade82d94dce2e0e6249"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E1_TARGET_LEAKAGE",
+      "mode_id": "O_FUZZYXAI",
+      "pipeline_id": "ext3-mlflow-elasticnet",
+      "run_id": "5cb8fdf13df4414b87e3c674abe87a63"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E2_TRAIN_TEST_OVERLAP",
+      "mode_id": "B_LOCAL_STRONG",
+      "pipeline_id": "ext3-mlflow-elasticnet",
+      "run_id": "4c48b79eae0048979b2706860a044077"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E2_TRAIN_TEST_OVERLAP",
+      "mode_id": "B_PAIRWISE_RULES",
+      "pipeline_id": "ext3-mlflow-elasticnet",
+      "run_id": "3beb6cd82725434699b96ef6ccfc6410"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E2_TRAIN_TEST_OVERLAP",
+      "mode_id": "B_MLFLOW_QUERY",
+      "pipeline_id": "ext3-mlflow-elasticnet",
+      "run_id": "f47778176ed24b53bd0acb7a5bc39b44"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E2_TRAIN_TEST_OVERLAP",
+      "mode_id": "B_GREEDY_CROSS_STAGE",
+      "pipeline_id": "ext3-mlflow-elasticnet",
+      "run_id": "c1a8f37520da419b8fa96cf46e2878be"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E2_TRAIN_TEST_OVERLAP",
+      "mode_id": "O_FUZZYXAI",
+      "pipeline_id": "ext3-mlflow-elasticnet",
+      "run_id": "75f22afcf84140cab7766eb2aa926f82"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E3_PREPROCESSOR_FIT_SCOPE",
+      "mode_id": "B_LOCAL_STRONG",
+      "pipeline_id": "ext3-mlflow-elasticnet",
+      "run_id": "2aa979bccc954bf993630464fe6ae72b"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E3_PREPROCESSOR_FIT_SCOPE",
+      "mode_id": "B_PAIRWISE_RULES",
+      "pipeline_id": "ext3-mlflow-elasticnet",
+      "run_id": "609791dcf68046969b1cb9f9c0b7c6e2"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E3_PREPROCESSOR_FIT_SCOPE",
+      "mode_id": "B_MLFLOW_QUERY",
+      "pipeline_id": "ext3-mlflow-elasticnet",
+      "run_id": "d09e5ad03d3847c6a3633c731a7cf480"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E3_PREPROCESSOR_FIT_SCOPE",
+      "mode_id": "B_GREEDY_CROSS_STAGE",
+      "pipeline_id": "ext3-mlflow-elasticnet",
+      "run_id": "6774908fc08647889effa71cece8cf05"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E3_PREPROCESSOR_FIT_SCOPE",
+      "mode_id": "O_FUZZYXAI",
+      "pipeline_id": "ext3-mlflow-elasticnet",
+      "run_id": "185278ff1717466fbf8f747c511f7c14"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E4_FEATURE_SCHEMA_OR_ORDER",
+      "mode_id": "B_LOCAL_STRONG",
+      "pipeline_id": "ext3-mlflow-elasticnet",
+      "run_id": "23a346f18a5743f095432098ff024f4b"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E4_FEATURE_SCHEMA_OR_ORDER",
+      "mode_id": "B_PAIRWISE_RULES",
+      "pipeline_id": "ext3-mlflow-elasticnet",
+      "run_id": "8c25a3f365b14e87973e9a4fa6c50dfd"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E4_FEATURE_SCHEMA_OR_ORDER",
+      "mode_id": "B_MLFLOW_QUERY",
+      "pipeline_id": "ext3-mlflow-elasticnet",
+      "run_id": "8a9c685e9fb743f39d3c7177023231be"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E4_FEATURE_SCHEMA_OR_ORDER",
+      "mode_id": "B_GREEDY_CROSS_STAGE",
+      "pipeline_id": "ext3-mlflow-elasticnet",
+      "run_id": "1cc23fa86c6e409db5eb9f9a91ccbc2f"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E4_FEATURE_SCHEMA_OR_ORDER",
+      "mode_id": "O_FUZZYXAI",
+      "pipeline_id": "ext3-mlflow-elasticnet",
+      "run_id": "a4557cdf588745abb79eb1c6e9c2e7be"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E5_MODEL_ARTIFACT_MISMATCH",
+      "mode_id": "B_LOCAL_STRONG",
+      "pipeline_id": "ext3-mlflow-elasticnet",
+      "run_id": "0f519e8360be42f094a326e577a7cc43"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E5_MODEL_ARTIFACT_MISMATCH",
+      "mode_id": "B_PAIRWISE_RULES",
+      "pipeline_id": "ext3-mlflow-elasticnet",
+      "run_id": "2e8ac3fcfc224ff5b1d9fd526cd9ae0c"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E5_MODEL_ARTIFACT_MISMATCH",
+      "mode_id": "B_MLFLOW_QUERY",
+      "pipeline_id": "ext3-mlflow-elasticnet",
+      "run_id": "74b073a8d17b472fa0fbcabcb92cba30"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E5_MODEL_ARTIFACT_MISMATCH",
+      "mode_id": "B_GREEDY_CROSS_STAGE",
+      "pipeline_id": "ext3-mlflow-elasticnet",
+      "run_id": "c4a2c8a26b3e4a8882f77c39faf7327b"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E5_MODEL_ARTIFACT_MISMATCH",
+      "mode_id": "O_FUZZYXAI",
+      "pipeline_id": "ext3-mlflow-elasticnet",
+      "run_id": "a2d677ea97fc484790d387c2dc2f19d2"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E6_MODEL_EXPLAINER_VERSION",
+      "mode_id": "B_LOCAL_STRONG",
+      "pipeline_id": "ext3-mlflow-elasticnet",
+      "run_id": "4e1a1a5222174d14b0cb30b6dc4e9c03"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E6_MODEL_EXPLAINER_VERSION",
+      "mode_id": "B_PAIRWISE_RULES",
+      "pipeline_id": "ext3-mlflow-elasticnet",
+      "run_id": "e96df68c3ca34c1080d4453c6cf5ebb1"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E6_MODEL_EXPLAINER_VERSION",
+      "mode_id": "B_MLFLOW_QUERY",
+      "pipeline_id": "ext3-mlflow-elasticnet",
+      "run_id": "03d381e3e9d84b31b3bec8dd575a84e8"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E6_MODEL_EXPLAINER_VERSION",
+      "mode_id": "B_GREEDY_CROSS_STAGE",
+      "pipeline_id": "ext3-mlflow-elasticnet",
+      "run_id": "c9f87f21e80f451dbf376be6d7ab2eb1"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E6_MODEL_EXPLAINER_VERSION",
+      "mode_id": "O_FUZZYXAI",
+      "pipeline_id": "ext3-mlflow-elasticnet",
+      "run_id": "943bb943130748849270fd5722e1cc25"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E7_PREDICTION_EXPLANATION_BINDING",
+      "mode_id": "B_LOCAL_STRONG",
+      "pipeline_id": "ext3-mlflow-elasticnet",
+      "run_id": "ee7bd01b040346409ed523d50835d3c9"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E7_PREDICTION_EXPLANATION_BINDING",
+      "mode_id": "B_PAIRWISE_RULES",
+      "pipeline_id": "ext3-mlflow-elasticnet",
+      "run_id": "d28fe8e7d3e74cb4a9797d8462bc6fd6"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E7_PREDICTION_EXPLANATION_BINDING",
+      "mode_id": "B_MLFLOW_QUERY",
+      "pipeline_id": "ext3-mlflow-elasticnet",
+      "run_id": "7d7423bfd83d4d97a8e1726db5e6c021"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E7_PREDICTION_EXPLANATION_BINDING",
+      "mode_id": "B_GREEDY_CROSS_STAGE",
+      "pipeline_id": "ext3-mlflow-elasticnet",
+      "run_id": "67bac6941ac24664ae7d654f40f335f4"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E7_PREDICTION_EXPLANATION_BINDING",
+      "mode_id": "O_FUZZYXAI",
+      "pipeline_id": "ext3-mlflow-elasticnet",
+      "run_id": "f42c307781c94803b6161a065ed46f53"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E8_EXPLANATION_PROVENANCE",
+      "mode_id": "B_LOCAL_STRONG",
+      "pipeline_id": "ext3-mlflow-elasticnet",
+      "run_id": "7cdd4eedd9ef4b6abc8f6868992e4896"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E8_EXPLANATION_PROVENANCE",
+      "mode_id": "B_PAIRWISE_RULES",
+      "pipeline_id": "ext3-mlflow-elasticnet",
+      "run_id": "d121cd830ff444ee960b6563b61914d0"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E8_EXPLANATION_PROVENANCE",
+      "mode_id": "B_MLFLOW_QUERY",
+      "pipeline_id": "ext3-mlflow-elasticnet",
+      "run_id": "3529bcc75dc64e57801528179410221a"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E8_EXPLANATION_PROVENANCE",
+      "mode_id": "B_GREEDY_CROSS_STAGE",
+      "pipeline_id": "ext3-mlflow-elasticnet",
+      "run_id": "f05b6aade7d54d16bd4ebadfc3444bfe"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E8_EXPLANATION_PROVENANCE",
+      "mode_id": "O_FUZZYXAI",
+      "pipeline_id": "ext3-mlflow-elasticnet",
+      "run_id": "a4eba24ff8ec46a0a775d6f7bb9df03c"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "C1_BASELINE",
+      "mode_id": "B_LOCAL_STRONG",
+      "pipeline_id": "ext4-lime-tabular",
+      "run_id": "c6a02524698f4165a24d5d0b80fa4bde"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "C1_BASELINE",
+      "mode_id": "B_PAIRWISE_RULES",
+      "pipeline_id": "ext4-lime-tabular",
+      "run_id": "ddbec2538f9c47cc85bb58876075d73f"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "C1_BASELINE",
+      "mode_id": "B_MLFLOW_QUERY",
+      "pipeline_id": "ext4-lime-tabular",
+      "run_id": "3f5fe9762f824bf59dfca03709178361"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "C1_BASELINE",
+      "mode_id": "B_GREEDY_CROSS_STAGE",
+      "pipeline_id": "ext4-lime-tabular",
+      "run_id": "6070b5fe961946789d9076a0277d34c1"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "C1_BASELINE",
+      "mode_id": "O_FUZZYXAI",
+      "pipeline_id": "ext4-lime-tabular",
+      "run_id": "19787ed5749d44ec8d1901bb6c4c8763"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "C2_CONSISTENT_RETRAIN",
+      "mode_id": "B_LOCAL_STRONG",
+      "pipeline_id": "ext4-lime-tabular",
+      "run_id": "eee44fc06a5c46c780ce8f35f8dec4be"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "C2_CONSISTENT_RETRAIN",
+      "mode_id": "B_PAIRWISE_RULES",
+      "pipeline_id": "ext4-lime-tabular",
+      "run_id": "18d514bf41014dbcb0f42cccbb063025"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "C2_CONSISTENT_RETRAIN",
+      "mode_id": "B_MLFLOW_QUERY",
+      "pipeline_id": "ext4-lime-tabular",
+      "run_id": "a9c679136a5c41898097b3fbcb48943b"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "C2_CONSISTENT_RETRAIN",
+      "mode_id": "B_GREEDY_CROSS_STAGE",
+      "pipeline_id": "ext4-lime-tabular",
+      "run_id": "dd64d7a6e73640da94a4b10db3e29f9a"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "C2_CONSISTENT_RETRAIN",
+      "mode_id": "O_FUZZYXAI",
+      "pipeline_id": "ext4-lime-tabular",
+      "run_id": "efc353db5e9f4229ab613b5ebf8dad14"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E1_TARGET_LEAKAGE",
+      "mode_id": "B_LOCAL_STRONG",
+      "pipeline_id": "ext4-lime-tabular",
+      "run_id": "20d25561489646468028b4f544e4bb66"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E1_TARGET_LEAKAGE",
+      "mode_id": "B_PAIRWISE_RULES",
+      "pipeline_id": "ext4-lime-tabular",
+      "run_id": "4937c471c4864baf9da0b9b2ece38e84"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E1_TARGET_LEAKAGE",
+      "mode_id": "B_MLFLOW_QUERY",
+      "pipeline_id": "ext4-lime-tabular",
+      "run_id": "229e7f738be34d96ae858f840d5fb5cb"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E1_TARGET_LEAKAGE",
+      "mode_id": "B_GREEDY_CROSS_STAGE",
+      "pipeline_id": "ext4-lime-tabular",
+      "run_id": "4b5b41e252a845f58e023cd0b6767c1b"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E1_TARGET_LEAKAGE",
+      "mode_id": "O_FUZZYXAI",
+      "pipeline_id": "ext4-lime-tabular",
+      "run_id": "5ff5feace9ea4a7e9d3ea08e785d3957"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E2_TRAIN_TEST_OVERLAP",
+      "mode_id": "B_LOCAL_STRONG",
+      "pipeline_id": "ext4-lime-tabular",
+      "run_id": "b321b9cfaaaa4b3c8824afaae965b7f7"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E2_TRAIN_TEST_OVERLAP",
+      "mode_id": "B_PAIRWISE_RULES",
+      "pipeline_id": "ext4-lime-tabular",
+      "run_id": "7a1aa1fc685342ba929a417ac32db1b6"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E2_TRAIN_TEST_OVERLAP",
+      "mode_id": "B_MLFLOW_QUERY",
+      "pipeline_id": "ext4-lime-tabular",
+      "run_id": "ea3910a5a1074085894a79ec67970f61"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E2_TRAIN_TEST_OVERLAP",
+      "mode_id": "B_GREEDY_CROSS_STAGE",
+      "pipeline_id": "ext4-lime-tabular",
+      "run_id": "2e35664c139047da98b28ded2aeefe49"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E2_TRAIN_TEST_OVERLAP",
+      "mode_id": "O_FUZZYXAI",
+      "pipeline_id": "ext4-lime-tabular",
+      "run_id": "04c408a024854900a53770a161588278"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E3_PREPROCESSOR_FIT_SCOPE",
+      "mode_id": "B_LOCAL_STRONG",
+      "pipeline_id": "ext4-lime-tabular",
+      "run_id": "9b54dacfc67a4aa58833dfef2315585c"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E3_PREPROCESSOR_FIT_SCOPE",
+      "mode_id": "B_PAIRWISE_RULES",
+      "pipeline_id": "ext4-lime-tabular",
+      "run_id": "652ff33984f2475c87632a311b82c59e"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E3_PREPROCESSOR_FIT_SCOPE",
+      "mode_id": "B_MLFLOW_QUERY",
+      "pipeline_id": "ext4-lime-tabular",
+      "run_id": "bd3d740cbc7446b9af26b94ba27d0f18"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E3_PREPROCESSOR_FIT_SCOPE",
+      "mode_id": "B_GREEDY_CROSS_STAGE",
+      "pipeline_id": "ext4-lime-tabular",
+      "run_id": "16eca8d60fec49f1a6cfeea5cc178543"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E3_PREPROCESSOR_FIT_SCOPE",
+      "mode_id": "O_FUZZYXAI",
+      "pipeline_id": "ext4-lime-tabular",
+      "run_id": "262408937e0c4d57afe3e717699a8523"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E4_FEATURE_SCHEMA_OR_ORDER",
+      "mode_id": "B_LOCAL_STRONG",
+      "pipeline_id": "ext4-lime-tabular",
+      "run_id": "cfe7b8241b1e49fc94d9dc5d6a0b722f"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E4_FEATURE_SCHEMA_OR_ORDER",
+      "mode_id": "B_PAIRWISE_RULES",
+      "pipeline_id": "ext4-lime-tabular",
+      "run_id": "ea085b2aa73e4394844632dad427f613"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E4_FEATURE_SCHEMA_OR_ORDER",
+      "mode_id": "B_MLFLOW_QUERY",
+      "pipeline_id": "ext4-lime-tabular",
+      "run_id": "d794e2a646ec41a6af5697100c5b6085"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E4_FEATURE_SCHEMA_OR_ORDER",
+      "mode_id": "B_GREEDY_CROSS_STAGE",
+      "pipeline_id": "ext4-lime-tabular",
+      "run_id": "08534bed045d419abeeafa417a68fac5"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E4_FEATURE_SCHEMA_OR_ORDER",
+      "mode_id": "O_FUZZYXAI",
+      "pipeline_id": "ext4-lime-tabular",
+      "run_id": "fcf91cc4b5164031827c081c632dcce0"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E5_MODEL_ARTIFACT_MISMATCH",
+      "mode_id": "B_LOCAL_STRONG",
+      "pipeline_id": "ext4-lime-tabular",
+      "run_id": "7ff046c280c14565aa34f26df3b44728"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E5_MODEL_ARTIFACT_MISMATCH",
+      "mode_id": "B_PAIRWISE_RULES",
+      "pipeline_id": "ext4-lime-tabular",
+      "run_id": "01c9e6f959694ae9ac1770e9f522036a"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E5_MODEL_ARTIFACT_MISMATCH",
+      "mode_id": "B_MLFLOW_QUERY",
+      "pipeline_id": "ext4-lime-tabular",
+      "run_id": "d8262e9e1c2849378eb442421eafd15a"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E5_MODEL_ARTIFACT_MISMATCH",
+      "mode_id": "B_GREEDY_CROSS_STAGE",
+      "pipeline_id": "ext4-lime-tabular",
+      "run_id": "d2472ad398204406a53c14bc9ff892a5"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E5_MODEL_ARTIFACT_MISMATCH",
+      "mode_id": "O_FUZZYXAI",
+      "pipeline_id": "ext4-lime-tabular",
+      "run_id": "41798417064045029cdfe656f47d35d7"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E6_MODEL_EXPLAINER_VERSION",
+      "mode_id": "B_LOCAL_STRONG",
+      "pipeline_id": "ext4-lime-tabular",
+      "run_id": "84b9b3fbfdbe427d90412bb0d8f42527"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E6_MODEL_EXPLAINER_VERSION",
+      "mode_id": "B_PAIRWISE_RULES",
+      "pipeline_id": "ext4-lime-tabular",
+      "run_id": "54bb699009ab4892a916b81d13b38402"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E6_MODEL_EXPLAINER_VERSION",
+      "mode_id": "B_MLFLOW_QUERY",
+      "pipeline_id": "ext4-lime-tabular",
+      "run_id": "ca82f3b24d1040318b2fa3cccbe91868"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E6_MODEL_EXPLAINER_VERSION",
+      "mode_id": "B_GREEDY_CROSS_STAGE",
+      "pipeline_id": "ext4-lime-tabular",
+      "run_id": "e9cea8afcb51401ea3fb9076c96c1d71"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E6_MODEL_EXPLAINER_VERSION",
+      "mode_id": "O_FUZZYXAI",
+      "pipeline_id": "ext4-lime-tabular",
+      "run_id": "3f3d5478959c4ab097ec8815f72b86e5"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E7_PREDICTION_EXPLANATION_BINDING",
+      "mode_id": "B_LOCAL_STRONG",
+      "pipeline_id": "ext4-lime-tabular",
+      "run_id": "659d366d017c4e4ea52bf8cede7ec9c5"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E7_PREDICTION_EXPLANATION_BINDING",
+      "mode_id": "B_PAIRWISE_RULES",
+      "pipeline_id": "ext4-lime-tabular",
+      "run_id": "c1f359b7331e4cebbfd943735fa83497"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E7_PREDICTION_EXPLANATION_BINDING",
+      "mode_id": "B_MLFLOW_QUERY",
+      "pipeline_id": "ext4-lime-tabular",
+      "run_id": "d58127f7702e4bf496ee474114ed2089"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E7_PREDICTION_EXPLANATION_BINDING",
+      "mode_id": "B_GREEDY_CROSS_STAGE",
+      "pipeline_id": "ext4-lime-tabular",
+      "run_id": "47b7e8337e3c4f759ab3d6e9297427f6"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E7_PREDICTION_EXPLANATION_BINDING",
+      "mode_id": "O_FUZZYXAI",
+      "pipeline_id": "ext4-lime-tabular",
+      "run_id": "f305c287839246dd9d1d11d58f0722fb"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E8_EXPLANATION_PROVENANCE",
+      "mode_id": "B_LOCAL_STRONG",
+      "pipeline_id": "ext4-lime-tabular",
+      "run_id": "eb1d6f225c8440328b4860da23c557bb"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E8_EXPLANATION_PROVENANCE",
+      "mode_id": "B_PAIRWISE_RULES",
+      "pipeline_id": "ext4-lime-tabular",
+      "run_id": "6de806fdb6264e969de410c833cc8422"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E8_EXPLANATION_PROVENANCE",
+      "mode_id": "B_MLFLOW_QUERY",
+      "pipeline_id": "ext4-lime-tabular",
+      "run_id": "2ee68c416450449d836042654bbbf0e8"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E8_EXPLANATION_PROVENANCE",
+      "mode_id": "B_GREEDY_CROSS_STAGE",
+      "pipeline_id": "ext4-lime-tabular",
+      "run_id": "661d849a7dcb43268a0693eb18265541"
+    },
+    {
+      "artifact_count": 12,
+      "case_id": "E8_EXPLANATION_PROVENANCE",
+      "mode_id": "O_FUZZYXAI",
+      "pipeline_id": "ext4-lime-tabular",
+      "run_id": "2ac49136391242e2b63603eff957ebea"
+    }
+  ]
+}

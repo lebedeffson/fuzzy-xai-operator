@@ -1,0 +1,74 @@
+{
+  "action": "BLOCK",
+  "action_correct": true,
+  "artifact_bytes": 9869,
+  "canonical_sha256": "81cc05ad9ad44ecd1da17f14d03c64f81bc20977f79991f7acb0aee702784d31",
+  "case_id": "E3_PREPROCESSOR_FIT_SCOPE",
+  "component_correct": true,
+  "component_id": "external.preprocessing.preprocessor_fit_scope",
+  "contract_correct": true,
+  "contract_id": "PREPROCESSOR_FIT_SCOPE",
+  "contracts_checked": 28,
+  "dependent_violations": [],
+  "detected": true,
+  "detected_correct": true,
+  "diagnostic_cut": {
+    "atoms": [
+      "node:cause:preprocessor_fit_scope/field:_/violation:source_component"
+    ],
+    "optimal": true,
+    "size": 1,
+    "solver": "exact_branch_and_bound"
+  },
+  "evidence_completeness": 1.0,
+  "evidence_refs": [
+    "preprocessor_manifest.json"
+  ],
+  "expected_action": "BLOCK",
+  "expected_contract": "PREPROCESSOR_FIT_SCOPE",
+  "expected_invalid": true,
+  "expected_root_cause": "PREPROCESSOR_FIT_SCOPE",
+  "expected_stage": "PREPROCESSING",
+  "false_blocking": false,
+  "false_certification": false,
+  "fault_category": "CROSS_STAGE",
+  "mode_id": "O_FUZZYXAI",
+  "new_critical_violations": 0,
+  "peak_rss_kb": 393892,
+  "pipeline_id": "ext3-mlflow-elasticnet",
+  "pipeline_status": "INVALID",
+  "proposed_repair_count": 1,
+  "recertified": true,
+  "redundant_repair_count": 0,
+  "repair_executed": true,
+  "repair_plan": {
+    "fully_executable": false,
+    "operations": [
+      "restore_split_manifest"
+    ],
+    "rollback": [
+      "restore_previous_artifact_snapshot"
+    ],
+    "step_ids": [
+      "step:issue:PREPROCESSOR_FIT_SCOPE:1"
+    ]
+  },
+  "repairable": true,
+  "reported_symptom_count": 1,
+  "repository_commit": "6e168e696062942ee34410048ce17cf24b5118bc",
+  "rollback_verified": true,
+  "root_cause": "PREPROCESSOR_FIT_SCOPE",
+  "root_cause_correct": true,
+  "run_id": "external:b3c8207637418f3cf1ed",
+  "runtime_breakdown_ms": {
+    "audit": 0.6730830000378774,
+    "diagnostic_cut": 0.10938099967461312,
+    "graph_build": 0.40571299996372545,
+    "recertification": 2.488978999281244,
+    "repair_planning": 0.04597400038619526,
+    "total": 3.723129999343655
+  },
+  "stage": "PREPROCESSING",
+  "stage_correct": true,
+  "target_contract_repaired": true
+}

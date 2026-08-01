@@ -1,0 +1,60 @@
+{
+  "action": "BLOCK",
+  "action_correct": true,
+  "artifact_bytes": 9869,
+  "canonical_sha256": "ef478e667b91bb2ac50f9a735c9fe3f5d66857e448343bdd48272a39a951adbd",
+  "case_id": "E5_MODEL_ARTIFACT_MISMATCH",
+  "component_correct": true,
+  "component_id": "external.model_artifact.model_artifact_hash",
+  "contract_correct": true,
+  "contract_id": "MODEL_ARTIFACT_HASH",
+  "contracts_checked": 0,
+  "dependent_violations": [],
+  "detected": true,
+  "detected_correct": true,
+  "diagnostic_cut": null,
+  "evidence_completeness": 1.0,
+  "evidence_refs": [
+    "model_manifest.json"
+  ],
+  "expected_action": "BLOCK",
+  "expected_contract": "MODEL_ARTIFACT_HASH",
+  "expected_invalid": true,
+  "expected_root_cause": "MODEL_ARTIFACT_HASH",
+  "expected_stage": "MODEL_ARTIFACT",
+  "false_blocking": false,
+  "false_certification": false,
+  "fault_category": "LOCAL",
+  "mode_id": "B_PAIRWISE_RULES",
+  "new_critical_violations": 0,
+  "peak_rss_kb": 393892,
+  "pipeline_id": "ext3-mlflow-elasticnet",
+  "pipeline_status": "INVALID",
+  "proposed_repair_count": 1,
+  "recertified": false,
+  "redundant_repair_count": 0,
+  "repair_executed": false,
+  "repair_plan": {
+    "operations": [
+      "restore_registered_model"
+    ]
+  },
+  "repairable": true,
+  "reported_symptom_count": 1,
+  "repository_commit": "6e168e696062942ee34410048ce17cf24b5118bc",
+  "rollback_verified": false,
+  "root_cause": null,
+  "root_cause_correct": false,
+  "run_id": "external:1702434305fea2cac5e1",
+  "runtime_breakdown_ms": {
+    "audit": 0.6692059996566968,
+    "diagnostic_cut": 0.0,
+    "graph_build": 0.4107119993932429,
+    "recertification": 0.0,
+    "repair_planning": 0.0,
+    "total": 1.0799179990499397
+  },
+  "stage": "MODEL_ARTIFACT",
+  "stage_correct": true,
+  "target_contract_repaired": false
+}

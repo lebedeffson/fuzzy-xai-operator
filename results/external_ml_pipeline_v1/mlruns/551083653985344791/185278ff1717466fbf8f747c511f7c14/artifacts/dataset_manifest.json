@@ -1,0 +1,20 @@
+{
+  "column_count": 10,
+  "dataset_sha256": "68d0812986f85cf105f43052513ecc6deeb12f2da208072e2283e13876fc7a65",
+  "dataset_source": "sklearn.datasets.load_diabetes",
+  "feature_names": [
+    "age",
+    "sex",
+    "bmi",
+    "bp",
+    "s1",
+    "s2",
+    "s3",
+    "s4",
+    "s5",
+    "s6"
+  ],
+  "row_count": 442,
+  "target_in_features": false,
+  "target_name": "target"
+}

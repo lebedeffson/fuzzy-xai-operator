@@ -1,0 +1,9 @@
+{
+  "contract_id": "TARGET_NOT_IN_FEATURES",
+  "dependent_violations": [],
+  "evidence_refs": [
+    "dataset_manifest.json"
+  ],
+  "root_cause": null,
+  "stage": "DATA_PREPARATION"
+}

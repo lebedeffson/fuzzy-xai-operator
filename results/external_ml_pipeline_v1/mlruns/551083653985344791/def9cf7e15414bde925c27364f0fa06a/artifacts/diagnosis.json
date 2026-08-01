@@ -1,0 +1,9 @@
+{
+  "contract_id": "PREDICTION_OBJECT_BINDING",
+  "dependent_violations": [],
+  "evidence_refs": [
+    "prediction_manifest.json"
+  ],
+  "root_cause": null,
+  "stage": "INFERENCE"
+}

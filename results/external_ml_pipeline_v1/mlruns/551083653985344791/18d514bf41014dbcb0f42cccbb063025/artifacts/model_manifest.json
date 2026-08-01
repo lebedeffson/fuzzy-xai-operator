@@ -1,0 +1,23 @@
+{
+  "artifact_path": "model.pkl",
+  "artifact_sha256": "cdc9c653b95bc739a608bdbe6a4c39fe25a0faab02d0053de9cf03ecb78e3bc9",
+  "feature_count": 13,
+  "feature_names": [
+    "alcohol",
+    "malic_acid",
+    "ash",
+    "alcalinity_of_ash",
+    "magnesium",
+    "total_phenols",
+    "flavanoids",
+    "nonflavanoid_phenols",
+    "proanthocyanins",
+    "color_intensity",
+    "hue",
+    "od280/od315_of_diluted_wines",
+    "proline"
+  ],
+  "model_class": "RandomForestClassifier",
+  "model_version": "retrained",
+  "registered_artifact_sha256": "cdc9c653b95bc739a608bdbe6a4c39fe25a0faab02d0053de9cf03ecb78e3bc9"
+}

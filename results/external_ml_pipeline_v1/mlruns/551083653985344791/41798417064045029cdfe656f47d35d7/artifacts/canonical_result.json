@@ -1,0 +1,74 @@
+{
+  "action": "BLOCK",
+  "action_correct": true,
+  "artifact_bytes": 58571,
+  "canonical_sha256": "dc57cdc0999beccf3d34eec64c0d7db4c04fa2d89fd2a269a988c00dc966b785",
+  "case_id": "E5_MODEL_ARTIFACT_MISMATCH",
+  "component_correct": true,
+  "component_id": "external.model_artifact.model_artifact_hash",
+  "contract_correct": true,
+  "contract_id": "MODEL_ARTIFACT_HASH",
+  "contracts_checked": 28,
+  "dependent_violations": [],
+  "detected": true,
+  "detected_correct": true,
+  "diagnostic_cut": {
+    "atoms": [
+      "node:cause:model_artifact_hash/field:_/violation:source_component"
+    ],
+    "optimal": true,
+    "size": 1,
+    "solver": "exact_branch_and_bound"
+  },
+  "evidence_completeness": 1.0,
+  "evidence_refs": [
+    "model_manifest.json"
+  ],
+  "expected_action": "BLOCK",
+  "expected_contract": "MODEL_ARTIFACT_HASH",
+  "expected_invalid": true,
+  "expected_root_cause": "MODEL_ARTIFACT_HASH",
+  "expected_stage": "MODEL_ARTIFACT",
+  "false_blocking": false,
+  "false_certification": false,
+  "fault_category": "LOCAL",
+  "mode_id": "O_FUZZYXAI",
+  "new_critical_violations": 0,
+  "peak_rss_kb": 394020,
+  "pipeline_id": "ext4-lime-tabular",
+  "pipeline_status": "INVALID",
+  "proposed_repair_count": 1,
+  "recertified": true,
+  "redundant_repair_count": 0,
+  "repair_executed": true,
+  "repair_plan": {
+    "fully_executable": false,
+    "operations": [
+      "restore_registered_model"
+    ],
+    "rollback": [
+      "restore_previous_artifact_snapshot"
+    ],
+    "step_ids": [
+      "step:issue:MODEL_ARTIFACT_HASH:1"
+    ]
+  },
+  "repairable": true,
+  "reported_symptom_count": 1,
+  "repository_commit": "fd7eb2e6f760619c29fca0187c07b82157601b32",
+  "rollback_verified": true,
+  "root_cause": "MODEL_ARTIFACT_HASH",
+  "root_cause_correct": true,
+  "run_id": "external:fdcf4d89d233b41ab1cd",
+  "runtime_breakdown_ms": {
+    "audit": 0.6691660000797128,
+    "diagnostic_cut": 0.11093300054199062,
+    "graph_build": 0.4761220006912481,
+    "recertification": 2.5016919998961384,
+    "repair_planning": 0.05127399981574854,
+    "total": 3.8091870010248385
+  },
+  "stage": "MODEL_ARTIFACT",
+  "stage_correct": true,
+  "target_contract_repaired": true
+}

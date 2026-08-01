@@ -1,0 +1,36 @@
+{
+  "artifact_sha256": "8aa1083da382e012d9a4849759aab53db3985fc04691664d247bfd7afb8ddf5e",
+  "attributions": [
+    -0.08585213449207588,
+    -10.136197175068801,
+    -1.1704905714530158,
+    -2.7064832995233004,
+    1.968056448698641,
+    0.06380755609696952,
+    -1.9323515611209077,
+    0.6567607755896264,
+    -1.534205300261894,
+    -6.074175866808686
+  ],
+  "base_value": 145.91885188442367,
+  "explainer_id": "shap.LinearExplainer",
+  "explainer_version": "0.51.0",
+  "feature_names": [
+    "age",
+    "sex",
+    "bmi",
+    "bp",
+    "s1",
+    "s2",
+    "s3",
+    "s4",
+    "s5",
+    "s6"
+  ],
+  "model_sha256": "252bbdab43b5e90275eef589b5191d086bea3299730f5f5b3865f01ca5959f9d",
+  "model_version": "retrained",
+  "object_id": "ext3-mlflow-elasticnet:row:98",
+  "run_id": "external:ext3-mlflow-elasticnet:retrained",
+  "selected_output": null,
+  "source_uri": "https://github.com/mlflow/mlflow/blob/6e168e696062942ee34410048ce17cf24b5118bc/examples/sklearn_elasticnet_wine/train.py"
+}

@@ -1,0 +1,5 @@
+pipeline_id,applicable_contracts,reused_contracts,new_contracts,not_applicable_contracts,missing_evidence_contracts,contract_reuse_rate,evidence_coverage,adapter_loc,adapter_files,core_files_changed,auditor_pipeline_specific_conditions
+ext1-sklearn-column-transformer,28,28,0,0,0,1.0,1.0,58,1,0,0
+ext2-shap-tree-explainer,28,28,0,0,0,1.0,1.0,58,1,0,0
+ext3-mlflow-elasticnet,28,28,0,0,0,1.0,1.0,58,1,0,0
+ext4-lime-tabular,28,28,0,0,0,1.0,1.0,58,1,0,0

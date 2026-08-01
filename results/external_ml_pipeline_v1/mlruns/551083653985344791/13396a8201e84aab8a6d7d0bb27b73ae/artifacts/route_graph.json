@@ -1,0 +1,1160 @@
+{
+  "contracts": [
+    {
+      "category": "preprocessing",
+      "contract_id": "DATASET_IDENTITY",
+      "evidence_refs": [
+        "dataset_manifest.json"
+      ],
+      "expected": "94f7203d94ac7a122641f440fde719b20f135e5a678d126c0689c7880e5368b5",
+      "field": "value",
+      "kind": "equals",
+      "mandatory": true,
+      "parameters": {},
+      "repairable": false,
+      "severity": "error",
+      "source_nodes": [
+        "contract:dataset_identity"
+      ],
+      "subject_id": "contract:dataset_identity"
+    },
+    {
+      "category": "preprocessing",
+      "contract_id": "DATASET_SCHEMA",
+      "evidence_refs": [
+        "dataset_manifest.json"
+      ],
+      "expected": "fcf2ad651b2442f703587e2d05760623fff8a2594f7064bdec50f1d0ed8c3975",
+      "field": "value",
+      "kind": "equals",
+      "mandatory": true,
+      "parameters": {},
+      "repairable": false,
+      "severity": "error",
+      "source_nodes": [
+        "contract:dataset_schema"
+      ],
+      "subject_id": "contract:dataset_schema"
+    },
+    {
+      "category": "preprocessing",
+      "contract_id": "TARGET_NOT_IN_FEATURES",
+      "evidence_refs": [
+        "dataset_manifest.json"
+      ],
+      "expected": false,
+      "field": "value",
+      "kind": "equals",
+      "mandatory": true,
+      "parameters": {},
+      "repairable": false,
+      "severity": "error",
+      "source_nodes": [
+        "contract:target_not_in_features"
+      ],
+      "subject_id": "contract:target_not_in_features"
+    },
+    {
+      "category": "preprocessing",
+      "contract_id": "CLASS_MAPPING",
+      "evidence_refs": [
+        "dataset_manifest.json"
+      ],
+      "expected": "registered",
+      "field": "value",
+      "kind": "equals",
+      "mandatory": true,
+      "parameters": {},
+      "repairable": false,
+      "severity": "error",
+      "source_nodes": [
+        "contract:class_mapping"
+      ],
+      "subject_id": "contract:class_mapping"
+    },
+    {
+      "category": "preprocessing",
+      "contract_id": "TRAIN_VALIDATION_TEST_DISJOINTNESS",
+      "evidence_refs": [
+        "split_manifest.json"
+      ],
+      "expected": 0,
+      "field": "value",
+      "kind": "equals",
+      "mandatory": true,
+      "parameters": {},
+      "repairable": true,
+      "severity": "error",
+      "source_nodes": [
+        "contract:train_validation_test_disjointness"
+      ],
+      "subject_id": "contract:train_validation_test_disjointness"
+    },
+    {
+      "category": "preprocessing",
+      "contract_id": "SPLIT_REPRODUCIBILITY",
+      "evidence_refs": [
+        "split_manifest.json"
+      ],
+      "expected": "bc6c12b07a3bd61882e0649602978f012568a6f39cd542ce3cd720d9fd0373de",
+      "field": "value",
+      "kind": "equals",
+      "mandatory": true,
+      "parameters": {},
+      "repairable": false,
+      "severity": "error",
+      "source_nodes": [
+        "contract:split_reproducibility"
+      ],
+      "subject_id": "contract:split_reproducibility"
+    },
+    {
+      "category": "preprocessing",
+      "contract_id": "PREPROCESSOR_VERSION",
+      "evidence_refs": [
+        "preprocessor_manifest.json"
+      ],
+      "expected": "53caf1c19172f5757b2ab7ccbbb940552561174ce67228bb4c3f20465a607740",
+      "field": "value",
+      "kind": "equals",
+      "mandatory": true,
+      "parameters": {},
+      "repairable": false,
+      "severity": "error",
+      "source_nodes": [
+        "contract:preprocessor_version"
+      ],
+      "subject_id": "contract:preprocessor_version"
+    },
+    {
+      "category": "preprocessing",
+      "contract_id": "PREPROCESSOR_FIT_SCOPE",
+      "evidence_refs": [
+        "preprocessor_manifest.json"
+      ],
+      "expected": "79312546599ade7955b093c699ee672a4706063070d6e7082b98635db0db5f1f",
+      "field": "value",
+      "kind": "equals",
+      "mandatory": true,
+      "parameters": {},
+      "repairable": true,
+      "severity": "error",
+      "source_nodes": [
+        "contract:preprocessor_fit_scope"
+      ],
+      "subject_id": "contract:preprocessor_fit_scope"
+    },
+    {
+      "category": "preprocessing",
+      "contract_id": "FEATURE_ORDER",
+      "evidence_refs": [
+        "preprocessor_manifest.json"
+      ],
+      "expected": "f83856c704d27048dc96c0b493e26edd0c766fac833165a183528a9211c2a29f",
+      "field": "value",
+      "kind": "equals",
+      "mandatory": true,
+      "parameters": {},
+      "repairable": true,
+      "severity": "error",
+      "source_nodes": [
+        "contract:feature_order"
+      ],
+      "subject_id": "contract:feature_order"
+    },
+    {
+      "category": "preprocessing",
+      "contract_id": "FEATURE_COUNT",
+      "evidence_refs": [
+        "preprocessor_manifest.json"
+      ],
+      "expected": 15,
+      "field": "value",
+      "kind": "equals",
+      "mandatory": true,
+      "parameters": {},
+      "repairable": false,
+      "severity": "error",
+      "source_nodes": [
+        "contract:feature_count"
+      ],
+      "subject_id": "contract:feature_count"
+    },
+    {
+      "category": "preprocessing",
+      "contract_id": "TRANSFORM_OUTPUT_SCHEMA",
+      "evidence_refs": [
+        "preprocessor_manifest.json"
+      ],
+      "expected": "f83856c704d27048dc96c0b493e26edd0c766fac833165a183528a9211c2a29f",
+      "field": "value",
+      "kind": "equals",
+      "mandatory": true,
+      "parameters": {},
+      "repairable": false,
+      "severity": "error",
+      "source_nodes": [
+        "contract:transform_output_schema"
+      ],
+      "subject_id": "contract:transform_output_schema"
+    },
+    {
+      "category": "preprocessing",
+      "contract_id": "FINITE_TRANSFORMED_VALUES",
+      "evidence_refs": [
+        "preprocessor_manifest.json"
+      ],
+      "expected": true,
+      "field": "value",
+      "kind": "equals",
+      "mandatory": true,
+      "parameters": {},
+      "repairable": false,
+      "severity": "error",
+      "source_nodes": [
+        "contract:finite_transformed_values"
+      ],
+      "subject_id": "contract:finite_transformed_values"
+    },
+    {
+      "category": "preprocessing",
+      "contract_id": "TRAINING_CONFIGURATION",
+      "evidence_refs": [
+        "model_manifest.json"
+      ],
+      "expected": "LogisticRegression",
+      "field": "value",
+      "kind": "equals",
+      "mandatory": true,
+      "parameters": {},
+      "repairable": false,
+      "severity": "error",
+      "source_nodes": [
+        "contract:training_configuration"
+      ],
+      "subject_id": "contract:training_configuration"
+    },
+    {
+      "category": "preprocessing",
+      "contract_id": "MODEL_CONVERGENCE",
+      "evidence_refs": [
+        "model_manifest.json"
+      ],
+      "expected": true,
+      "field": "value",
+      "kind": "equals",
+      "mandatory": true,
+      "parameters": {},
+      "repairable": false,
+      "severity": "error",
+      "source_nodes": [
+        "contract:model_convergence"
+      ],
+      "subject_id": "contract:model_convergence"
+    },
+    {
+      "category": "preprocessing",
+      "contract_id": "MODEL_FEATURE_SCHEMA",
+      "evidence_refs": [
+        "model_manifest.json"
+      ],
+      "expected": "f83856c704d27048dc96c0b493e26edd0c766fac833165a183528a9211c2a29f",
+      "field": "value",
+      "kind": "equals",
+      "mandatory": true,
+      "parameters": {},
+      "repairable": false,
+      "severity": "error",
+      "source_nodes": [
+        "contract:model_feature_schema"
+      ],
+      "subject_id": "contract:model_feature_schema"
+    },
+    {
+      "category": "preprocessing",
+      "contract_id": "TRAINING_DATA_HASH",
+      "evidence_refs": [
+        "model_manifest.json"
+      ],
+      "expected": "bc6c12b07a3bd61882e0649602978f012568a6f39cd542ce3cd720d9fd0373de",
+      "field": "value",
+      "kind": "equals",
+      "mandatory": true,
+      "parameters": {},
+      "repairable": false,
+      "severity": "error",
+      "source_nodes": [
+        "contract:training_data_hash"
+      ],
+      "subject_id": "contract:training_data_hash"
+    },
+    {
+      "category": "serialization",
+      "contract_id": "MODEL_ARTIFACT_HASH",
+      "evidence_refs": [
+        "model_manifest.json"
+      ],
+      "expected": "76606520b405a4de488fe8097622d48bc2441f17f2be4efff9250c910474874f",
+      "field": "value",
+      "kind": "checksum",
+      "mandatory": true,
+      "parameters": {},
+      "repairable": true,
+      "severity": "error",
+      "source_nodes": [
+        "cause:model_artifact_hash"
+      ],
+      "subject_id": "contract:model_artifact_hash"
+    },
+    {
+      "category": "preprocessing",
+      "contract_id": "METRIC_SANITY",
+      "evidence_refs": [
+        "model_manifest.json"
+      ],
+      "expected": true,
+      "field": "value",
+      "kind": "equals",
+      "mandatory": true,
+      "parameters": {},
+      "repairable": false,
+      "severity": "error",
+      "source_nodes": [
+        "contract:metric_sanity"
+      ],
+      "subject_id": "contract:metric_sanity"
+    },
+    {
+      "category": "preprocessing",
+      "contract_id": "MODEL_INPUT_SCHEMA",
+      "evidence_refs": [
+        "prediction_manifest.json"
+      ],
+      "expected": "f83856c704d27048dc96c0b493e26edd0c766fac833165a183528a9211c2a29f",
+      "field": "value",
+      "kind": "equals",
+      "mandatory": true,
+      "parameters": {},
+      "repairable": false,
+      "severity": "error",
+      "source_nodes": [
+        "contract:model_input_schema"
+      ],
+      "subject_id": "contract:model_input_schema"
+    },
+    {
+      "category": "explainer",
+      "contract_id": "PREDICTION_OBJECT_BINDING",
+      "evidence_refs": [
+        "prediction_manifest.json"
+      ],
+      "expected": "ext1-sklearn-column-transformer:row:506",
+      "field": "value",
+      "kind": "equals",
+      "mandatory": true,
+      "parameters": {},
+      "repairable": true,
+      "severity": "error",
+      "source_nodes": [
+        "contract:prediction_object_binding"
+      ],
+      "subject_id": "contract:prediction_object_binding"
+    },
+    {
+      "category": "preprocessing",
+      "contract_id": "PREDICTION_OUTPUT_SANITY",
+      "evidence_refs": [
+        "prediction_manifest.json"
+      ],
+      "expected": true,
+      "field": "value",
+      "kind": "equals",
+      "mandatory": true,
+      "parameters": {},
+      "repairable": false,
+      "severity": "error",
+      "source_nodes": [
+        "contract:prediction_output_sanity"
+      ],
+      "subject_id": "contract:prediction_output_sanity"
+    },
+    {
+      "category": "explainer",
+      "contract_id": "MODEL_EXPLAINER_VERSION",
+      "evidence_refs": [
+        "explanation_manifest.json"
+      ],
+      "expected": "baseline",
+      "field": "value",
+      "kind": "equals",
+      "mandatory": true,
+      "parameters": {},
+      "repairable": true,
+      "severity": "error",
+      "source_nodes": [
+        "contract:model_explainer_version"
+      ],
+      "subject_id": "contract:model_explainer_version"
+    },
+    {
+      "category": "preprocessing",
+      "contract_id": "EXPLANATION_OBJECT_ID",
+      "evidence_refs": [
+        "explanation_manifest.json"
+      ],
+      "expected": "ext1-sklearn-column-transformer:row:506",
+      "field": "value",
+      "kind": "equals",
+      "mandatory": true,
+      "parameters": {},
+      "repairable": false,
+      "severity": "error",
+      "source_nodes": [
+        "contract:explanation_object_id"
+      ],
+      "subject_id": "contract:explanation_object_id"
+    },
+    {
+      "category": "preprocessing",
+      "contract_id": "EXPLANATION_OUTPUT_CONSISTENCY",
+      "evidence_refs": [
+        "explanation_manifest.json"
+      ],
+      "expected": true,
+      "field": "value",
+      "kind": "equals",
+      "mandatory": true,
+      "parameters": {},
+      "repairable": false,
+      "severity": "error",
+      "source_nodes": [
+        "contract:explanation_output_consistency"
+      ],
+      "subject_id": "contract:explanation_output_consistency"
+    },
+    {
+      "category": "preprocessing",
+      "contract_id": "EXPLANATION_FEATURE_SCHEMA",
+      "evidence_refs": [
+        "explanation_manifest.json"
+      ],
+      "expected": "f83856c704d27048dc96c0b493e26edd0c766fac833165a183528a9211c2a29f",
+      "field": "value",
+      "kind": "equals",
+      "mandatory": true,
+      "parameters": {},
+      "repairable": false,
+      "severity": "error",
+      "source_nodes": [
+        "contract:explanation_feature_schema"
+      ],
+      "subject_id": "contract:explanation_feature_schema"
+    },
+    {
+      "category": "provenance",
+      "contract_id": "REQUIRED_PROVENANCE",
+      "evidence_refs": [
+        "explanation_manifest.json"
+      ],
+      "expected": "https://github.com/scikit-learn/scikit-learn/blob/5799d3eac08bda44fbce3309e641cbf98c5d312a/examples/compose/plot_column_transformer_mixed_types.py",
+      "field": "value",
+      "kind": "equals",
+      "mandatory": true,
+      "parameters": {},
+      "repairable": true,
+      "severity": "error",
+      "source_nodes": [
+        "contract:required_provenance"
+      ],
+      "subject_id": "contract:required_provenance"
+    },
+    {
+      "category": "preprocessing",
+      "contract_id": "REDUCTION_LOSS_LIMIT",
+      "evidence_refs": [
+        "explanation_manifest.json"
+      ],
+      "expected": true,
+      "field": "value",
+      "kind": "equals",
+      "mandatory": true,
+      "parameters": {},
+      "repairable": false,
+      "severity": "error",
+      "source_nodes": [
+        "contract:reduction_loss_limit"
+      ],
+      "subject_id": "contract:reduction_loss_limit"
+    },
+    {
+      "category": "preprocessing",
+      "contract_id": "USER_CLAIM_EVIDENCE_BINDING",
+      "evidence_refs": [
+        "explanation_manifest.json"
+      ],
+      "expected": "89af62816742adbaea61f6f2751b7dc42e94d7b862c600c96addf18f1852ca4c",
+      "field": "value",
+      "kind": "equals",
+      "mandatory": true,
+      "parameters": {},
+      "repairable": false,
+      "severity": "error",
+      "source_nodes": [
+        "contract:user_claim_evidence_binding"
+      ],
+      "subject_id": "contract:user_claim_evidence_binding"
+    }
+  ],
+  "edges": [
+    {
+      "edge_id": "edge:DATA_PREPARATION:DATA_SPLIT",
+      "evidence_refs": [
+        "pipeline_manifest.json"
+      ],
+      "mandatory": true,
+      "observed_contract": {
+        "relation": "derived_from"
+      },
+      "registered_contract": {
+        "relation": "derived_from"
+      },
+      "relation": "derived_from",
+      "relation_status": "known_valid",
+      "repairable": true,
+      "source": "contract:dataset_identity",
+      "target": "contract:train_validation_test_disjointness"
+    },
+    {
+      "edge_id": "edge:DATA_SPLIT:PREPROCESSING",
+      "evidence_refs": [
+        "pipeline_manifest.json"
+      ],
+      "mandatory": true,
+      "observed_contract": {
+        "relation": "derived_from"
+      },
+      "registered_contract": {
+        "relation": "derived_from"
+      },
+      "relation": "derived_from",
+      "relation_status": "known_valid",
+      "repairable": true,
+      "source": "contract:train_validation_test_disjointness",
+      "target": "contract:preprocessor_version"
+    },
+    {
+      "edge_id": "edge:PREPROCESSING:TRAINING",
+      "evidence_refs": [
+        "pipeline_manifest.json"
+      ],
+      "mandatory": true,
+      "observed_contract": {
+        "relation": "derived_from"
+      },
+      "registered_contract": {
+        "relation": "derived_from"
+      },
+      "relation": "derived_from",
+      "relation_status": "known_valid",
+      "repairable": true,
+      "source": "contract:preprocessor_version",
+      "target": "contract:training_configuration"
+    },
+    {
+      "edge_id": "edge:TRAINING:MODEL_ARTIFACT",
+      "evidence_refs": [
+        "pipeline_manifest.json"
+      ],
+      "mandatory": true,
+      "observed_contract": {
+        "relation": "derived_from"
+      },
+      "registered_contract": {
+        "relation": "derived_from"
+      },
+      "relation": "derived_from",
+      "relation_status": "known_valid",
+      "repairable": true,
+      "source": "contract:training_configuration",
+      "target": "contract:model_artifact_hash"
+    },
+    {
+      "edge_id": "edge:MODEL_ARTIFACT:INFERENCE",
+      "evidence_refs": [
+        "pipeline_manifest.json"
+      ],
+      "mandatory": true,
+      "observed_contract": {
+        "relation": "derived_from"
+      },
+      "registered_contract": {
+        "relation": "derived_from"
+      },
+      "relation": "derived_from",
+      "relation_status": "known_valid",
+      "repairable": true,
+      "source": "contract:model_artifact_hash",
+      "target": "contract:model_input_schema"
+    },
+    {
+      "edge_id": "edge:INFERENCE:POST_HOC_EXPLANATION",
+      "evidence_refs": [
+        "pipeline_manifest.json"
+      ],
+      "mandatory": true,
+      "observed_contract": {
+        "relation": "derived_from"
+      },
+      "registered_contract": {
+        "relation": "derived_from"
+      },
+      "relation": "derived_from",
+      "relation_status": "known_valid",
+      "repairable": true,
+      "source": "contract:model_input_schema",
+      "target": "contract:model_explainer_version"
+    },
+    {
+      "edge_id": "edge:POST_HOC_EXPLANATION:REDUCTION",
+      "evidence_refs": [
+        "pipeline_manifest.json"
+      ],
+      "mandatory": true,
+      "observed_contract": {
+        "relation": "derived_from"
+      },
+      "registered_contract": {
+        "relation": "derived_from"
+      },
+      "relation": "derived_from",
+      "relation_status": "known_valid",
+      "repairable": true,
+      "source": "contract:model_explainer_version",
+      "target": "contract:reduction_loss_limit"
+    },
+    {
+      "edge_id": "edge:REDUCTION:PRESENTATION",
+      "evidence_refs": [
+        "pipeline_manifest.json"
+      ],
+      "mandatory": true,
+      "observed_contract": {
+        "relation": "derived_from"
+      },
+      "registered_contract": {
+        "relation": "derived_from"
+      },
+      "relation": "derived_from",
+      "relation_status": "known_valid",
+      "repairable": true,
+      "source": "contract:reduction_loss_limit",
+      "target": "contract:user_claim_evidence_binding"
+    }
+  ],
+  "metadata": {
+    "applicable_contracts": 28,
+    "case_id": "E5_MODEL_ARTIFACT_MISMATCH",
+    "pipeline_id": "ext1-sklearn-column-transformer",
+    "repair_costs": {
+      "node:cause:model_artifact_hash": 0.1
+    },
+    "repository_commit": "5799d3eac08bda44fbce3309e641cbf98c5d312a"
+  },
+  "nodes": [
+    {
+      "component_id": "external.data_preparation.dataset_identity",
+      "component_version": "external-adapter-v1",
+      "evidence_refs": [
+        "dataset_manifest.json"
+      ],
+      "mandatory": true,
+      "node_id": "contract:dataset_identity",
+      "node_type": "data_preparation",
+      "observed_attributes": {
+        "value": "94f7203d94ac7a122641f440fde719b20f135e5a678d126c0689c7880e5368b5"
+      },
+      "registered_attributes": {
+        "value": "94f7203d94ac7a122641f440fde719b20f135e5a678d126c0689c7880e5368b5"
+      },
+      "repairable": false
+    },
+    {
+      "component_id": "external.data_preparation.dataset_schema",
+      "component_version": "external-adapter-v1",
+      "evidence_refs": [
+        "dataset_manifest.json"
+      ],
+      "mandatory": true,
+      "node_id": "contract:dataset_schema",
+      "node_type": "data_preparation",
+      "observed_attributes": {
+        "value": "fcf2ad651b2442f703587e2d05760623fff8a2594f7064bdec50f1d0ed8c3975"
+      },
+      "registered_attributes": {
+        "value": "fcf2ad651b2442f703587e2d05760623fff8a2594f7064bdec50f1d0ed8c3975"
+      },
+      "repairable": false
+    },
+    {
+      "component_id": "external.data_preparation.target_not_in_features",
+      "component_version": "external-adapter-v1",
+      "evidence_refs": [
+        "dataset_manifest.json"
+      ],
+      "mandatory": true,
+      "node_id": "contract:target_not_in_features",
+      "node_type": "data_preparation",
+      "observed_attributes": {
+        "value": false
+      },
+      "registered_attributes": {
+        "value": false
+      },
+      "repairable": false
+    },
+    {
+      "component_id": "external.data_preparation.class_mapping",
+      "component_version": "external-adapter-v1",
+      "evidence_refs": [
+        "dataset_manifest.json"
+      ],
+      "mandatory": true,
+      "node_id": "contract:class_mapping",
+      "node_type": "data_preparation",
+      "observed_attributes": {
+        "value": "registered"
+      },
+      "registered_attributes": {
+        "value": "registered"
+      },
+      "repairable": false
+    },
+    {
+      "component_id": "external.data_split.train_validation_test_disjointness",
+      "component_version": "external-adapter-v1",
+      "evidence_refs": [
+        "split_manifest.json"
+      ],
+      "mandatory": true,
+      "node_id": "contract:train_validation_test_disjointness",
+      "node_type": "data_split",
+      "observed_attributes": {
+        "value": 0
+      },
+      "registered_attributes": {
+        "value": 0
+      },
+      "repairable": true
+    },
+    {
+      "component_id": "external.data_split.split_reproducibility",
+      "component_version": "external-adapter-v1",
+      "evidence_refs": [
+        "split_manifest.json"
+      ],
+      "mandatory": true,
+      "node_id": "contract:split_reproducibility",
+      "node_type": "data_split",
+      "observed_attributes": {
+        "value": "bc6c12b07a3bd61882e0649602978f012568a6f39cd542ce3cd720d9fd0373de"
+      },
+      "registered_attributes": {
+        "value": "bc6c12b07a3bd61882e0649602978f012568a6f39cd542ce3cd720d9fd0373de"
+      },
+      "repairable": false
+    },
+    {
+      "component_id": "external.preprocessing.preprocessor_version",
+      "component_version": "external-adapter-v1",
+      "evidence_refs": [
+        "preprocessor_manifest.json"
+      ],
+      "mandatory": true,
+      "node_id": "contract:preprocessor_version",
+      "node_type": "preprocessing",
+      "observed_attributes": {
+        "value": "53caf1c19172f5757b2ab7ccbbb940552561174ce67228bb4c3f20465a607740"
+      },
+      "registered_attributes": {
+        "value": "53caf1c19172f5757b2ab7ccbbb940552561174ce67228bb4c3f20465a607740"
+      },
+      "repairable": false
+    },
+    {
+      "component_id": "external.preprocessing.preprocessor_fit_scope",
+      "component_version": "external-adapter-v1",
+      "evidence_refs": [
+        "preprocessor_manifest.json"
+      ],
+      "mandatory": true,
+      "node_id": "contract:preprocessor_fit_scope",
+      "node_type": "preprocessing",
+      "observed_attributes": {
+        "value": "79312546599ade7955b093c699ee672a4706063070d6e7082b98635db0db5f1f"
+      },
+      "registered_attributes": {
+        "value": "79312546599ade7955b093c699ee672a4706063070d6e7082b98635db0db5f1f"
+      },
+      "repairable": true
+    },
+    {
+      "component_id": "external.preprocessing.feature_order",
+      "component_version": "external-adapter-v1",
+      "evidence_refs": [
+        "preprocessor_manifest.json"
+      ],
+      "mandatory": true,
+      "node_id": "contract:feature_order",
+      "node_type": "preprocessing",
+      "observed_attributes": {
+        "value": "f83856c704d27048dc96c0b493e26edd0c766fac833165a183528a9211c2a29f"
+      },
+      "registered_attributes": {
+        "value": "f83856c704d27048dc96c0b493e26edd0c766fac833165a183528a9211c2a29f"
+      },
+      "repairable": true
+    },
+    {
+      "component_id": "external.preprocessing.feature_count",
+      "component_version": "external-adapter-v1",
+      "evidence_refs": [
+        "preprocessor_manifest.json"
+      ],
+      "mandatory": true,
+      "node_id": "contract:feature_count",
+      "node_type": "preprocessing",
+      "observed_attributes": {
+        "value": 15
+      },
+      "registered_attributes": {
+        "value": 15
+      },
+      "repairable": false
+    },
+    {
+      "component_id": "external.preprocessing.transform_output_schema",
+      "component_version": "external-adapter-v1",
+      "evidence_refs": [
+        "preprocessor_manifest.json"
+      ],
+      "mandatory": true,
+      "node_id": "contract:transform_output_schema",
+      "node_type": "preprocessing",
+      "observed_attributes": {
+        "value": "f83856c704d27048dc96c0b493e26edd0c766fac833165a183528a9211c2a29f"
+      },
+      "registered_attributes": {
+        "value": "f83856c704d27048dc96c0b493e26edd0c766fac833165a183528a9211c2a29f"
+      },
+      "repairable": false
+    },
+    {
+      "component_id": "external.preprocessing.finite_transformed_values",
+      "component_version": "external-adapter-v1",
+      "evidence_refs": [
+        "preprocessor_manifest.json"
+      ],
+      "mandatory": true,
+      "node_id": "contract:finite_transformed_values",
+      "node_type": "preprocessing",
+      "observed_attributes": {
+        "value": true
+      },
+      "registered_attributes": {
+        "value": true
+      },
+      "repairable": false
+    },
+    {
+      "component_id": "external.training.training_configuration",
+      "component_version": "external-adapter-v1",
+      "evidence_refs": [
+        "model_manifest.json"
+      ],
+      "mandatory": true,
+      "node_id": "contract:training_configuration",
+      "node_type": "training",
+      "observed_attributes": {
+        "value": "LogisticRegression"
+      },
+      "registered_attributes": {
+        "value": "LogisticRegression"
+      },
+      "repairable": false
+    },
+    {
+      "component_id": "external.training.model_convergence",
+      "component_version": "external-adapter-v1",
+      "evidence_refs": [
+        "model_manifest.json"
+      ],
+      "mandatory": true,
+      "node_id": "contract:model_convergence",
+      "node_type": "training",
+      "observed_attributes": {
+        "value": true
+      },
+      "registered_attributes": {
+        "value": true
+      },
+      "repairable": false
+    },
+    {
+      "component_id": "external.training.model_feature_schema",
+      "component_version": "external-adapter-v1",
+      "evidence_refs": [
+        "model_manifest.json"
+      ],
+      "mandatory": true,
+      "node_id": "contract:model_feature_schema",
+      "node_type": "training",
+      "observed_attributes": {
+        "value": "f83856c704d27048dc96c0b493e26edd0c766fac833165a183528a9211c2a29f"
+      },
+      "registered_attributes": {
+        "value": "f83856c704d27048dc96c0b493e26edd0c766fac833165a183528a9211c2a29f"
+      },
+      "repairable": false
+    },
+    {
+      "component_id": "external.training.training_data_hash",
+      "component_version": "external-adapter-v1",
+      "evidence_refs": [
+        "model_manifest.json"
+      ],
+      "mandatory": true,
+      "node_id": "contract:training_data_hash",
+      "node_type": "training",
+      "observed_attributes": {
+        "value": "bc6c12b07a3bd61882e0649602978f012568a6f39cd542ce3cd720d9fd0373de"
+      },
+      "registered_attributes": {
+        "value": "bc6c12b07a3bd61882e0649602978f012568a6f39cd542ce3cd720d9fd0373de"
+      },
+      "repairable": false
+    },
+    {
+      "component_id": "external.model_artifact.model_artifact_hash",
+      "component_version": "external-adapter-v1",
+      "evidence_refs": [
+        "model_manifest.json"
+      ],
+      "mandatory": true,
+      "node_id": "contract:model_artifact_hash",
+      "node_type": "model_artifact",
+      "observed_attributes": {
+        "value": "mismatch:76606520b405a4de488fe809"
+      },
+      "registered_attributes": {
+        "value": "76606520b405a4de488fe8097622d48bc2441f17f2be4efff9250c910474874f"
+      },
+      "repairable": true
+    },
+    {
+      "component_id": "external.training.metric_sanity",
+      "component_version": "external-adapter-v1",
+      "evidence_refs": [
+        "model_manifest.json"
+      ],
+      "mandatory": true,
+      "node_id": "contract:metric_sanity",
+      "node_type": "training",
+      "observed_attributes": {
+        "value": true
+      },
+      "registered_attributes": {
+        "value": true
+      },
+      "repairable": false
+    },
+    {
+      "component_id": "external.inference.model_input_schema",
+      "component_version": "external-adapter-v1",
+      "evidence_refs": [
+        "prediction_manifest.json"
+      ],
+      "mandatory": true,
+      "node_id": "contract:model_input_schema",
+      "node_type": "inference",
+      "observed_attributes": {
+        "value": "f83856c704d27048dc96c0b493e26edd0c766fac833165a183528a9211c2a29f"
+      },
+      "registered_attributes": {
+        "value": "f83856c704d27048dc96c0b493e26edd0c766fac833165a183528a9211c2a29f"
+      },
+      "repairable": false
+    },
+    {
+      "component_id": "external.inference.prediction_object_binding",
+      "component_version": "external-adapter-v1",
+      "evidence_refs": [
+        "prediction_manifest.json"
+      ],
+      "mandatory": true,
+      "node_id": "contract:prediction_object_binding",
+      "node_type": "inference",
+      "observed_attributes": {
+        "value": "ext1-sklearn-column-transformer:row:506"
+      },
+      "registered_attributes": {
+        "value": "ext1-sklearn-column-transformer:row:506"
+      },
+      "repairable": true
+    },
+    {
+      "component_id": "external.inference.prediction_output_sanity",
+      "component_version": "external-adapter-v1",
+      "evidence_refs": [
+        "prediction_manifest.json"
+      ],
+      "mandatory": true,
+      "node_id": "contract:prediction_output_sanity",
+      "node_type": "inference",
+      "observed_attributes": {
+        "value": true
+      },
+      "registered_attributes": {
+        "value": true
+      },
+      "repairable": false
+    },
+    {
+      "component_id": "external.post_hoc_explanation.model_explainer_version",
+      "component_version": "external-adapter-v1",
+      "evidence_refs": [
+        "explanation_manifest.json"
+      ],
+      "mandatory": true,
+      "node_id": "contract:model_explainer_version",
+      "node_type": "post_hoc_explanation",
+      "observed_attributes": {
+        "value": "baseline"
+      },
+      "registered_attributes": {
+        "value": "baseline"
+      },
+      "repairable": true
+    },
+    {
+      "component_id": "external.post_hoc_explanation.explanation_object_id",
+      "component_version": "external-adapter-v1",
+      "evidence_refs": [
+        "explanation_manifest.json"
+      ],
+      "mandatory": true,
+      "node_id": "contract:explanation_object_id",
+      "node_type": "post_hoc_explanation",
+      "observed_attributes": {
+        "value": "ext1-sklearn-column-transformer:row:506"
+      },
+      "registered_attributes": {
+        "value": "ext1-sklearn-column-transformer:row:506"
+      },
+      "repairable": false
+    },
+    {
+      "component_id": "external.post_hoc_explanation.explanation_output_consistency",
+      "component_version": "external-adapter-v1",
+      "evidence_refs": [
+        "explanation_manifest.json"
+      ],
+      "mandatory": true,
+      "node_id": "contract:explanation_output_consistency",
+      "node_type": "post_hoc_explanation",
+      "observed_attributes": {
+        "value": true
+      },
+      "registered_attributes": {
+        "value": true
+      },
+      "repairable": false
+    },
+    {
+      "component_id": "external.post_hoc_explanation.explanation_feature_schema",
+      "component_version": "external-adapter-v1",
+      "evidence_refs": [
+        "explanation_manifest.json"
+      ],
+      "mandatory": true,
+      "node_id": "contract:explanation_feature_schema",
+      "node_type": "post_hoc_explanation",
+      "observed_attributes": {
+        "value": "f83856c704d27048dc96c0b493e26edd0c766fac833165a183528a9211c2a29f"
+      },
+      "registered_attributes": {
+        "value": "f83856c704d27048dc96c0b493e26edd0c766fac833165a183528a9211c2a29f"
+      },
+      "repairable": false
+    },
+    {
+      "component_id": "external.post_hoc_explanation.required_provenance",
+      "component_version": "external-adapter-v1",
+      "evidence_refs": [
+        "explanation_manifest.json"
+      ],
+      "mandatory": true,
+      "node_id": "contract:required_provenance",
+      "node_type": "post_hoc_explanation",
+      "observed_attributes": {
+        "value": "https://github.com/scikit-learn/scikit-learn/blob/5799d3eac08bda44fbce3309e641cbf98c5d312a/examples/compose/plot_column_transformer_mixed_types.py"
+      },
+      "registered_attributes": {
+        "value": "https://github.com/scikit-learn/scikit-learn/blob/5799d3eac08bda44fbce3309e641cbf98c5d312a/examples/compose/plot_column_transformer_mixed_types.py"
+      },
+      "repairable": true
+    },
+    {
+      "component_id": "external.reduction.reduction_loss_limit",
+      "component_version": "external-adapter-v1",
+      "evidence_refs": [
+        "explanation_manifest.json"
+      ],
+      "mandatory": true,
+      "node_id": "contract:reduction_loss_limit",
+      "node_type": "reduction",
+      "observed_attributes": {
+        "value": true
+      },
+      "registered_attributes": {
+        "value": true
+      },
+      "repairable": false
+    },
+    {
+      "component_id": "external.presentation.user_claim_evidence_binding",
+      "component_version": "external-adapter-v1",
+      "evidence_refs": [
+        "explanation_manifest.json"
+      ],
+      "mandatory": true,
+      "node_id": "contract:user_claim_evidence_binding",
+      "node_type": "presentation",
+      "observed_attributes": {
+        "value": "89af62816742adbaea61f6f2751b7dc42e94d7b862c600c96addf18f1852ca4c"
+      },
+      "registered_attributes": {
+        "value": "89af62816742adbaea61f6f2751b7dc42e94d7b862c600c96addf18f1852ca4c"
+      },
+      "repairable": false
+    },
+    {
+      "component_id": "external.source.e5_model_artifact_mismatch",
+      "component_version": "1",
+      "evidence_refs": [
+        "model_manifest.json"
+      ],
+      "mandatory": false,
+      "node_id": "cause:model_artifact_hash",
+      "node_type": "causal_source",
+      "observed_attributes": {
+        "state": "mutated"
+      },
+      "registered_attributes": {
+        "state": "registered"
+      },
+      "repairable": true
+    }
+  ],
+  "route_id": "external:ext1-sklearn-column-transformer:E5_MODEL_ARTIFACT_MISMATCH",
+  "schema_version": "1.0"
+}

@@ -1,0 +1,5 @@
+pipeline_id,cases,violation_recall,stage_accuracy,contract_accuracy,root_cause_accuracy,repair_success
+ext1-sklearn-column-transformer,10,1.0,1.0,1.0,1.0,1.0
+ext2-shap-tree-explainer,10,1.0,1.0,1.0,1.0,1.0
+ext3-mlflow-elasticnet,10,1.0,1.0,1.0,1.0,1.0
+ext4-lime-tabular,10,1.0,1.0,1.0,1.0,1.0

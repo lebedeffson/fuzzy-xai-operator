@@ -1,0 +1,15 @@
+artifact_uri: file:///home/lebedeffson/Code/fuzzy-xai-external-ml-pipeline-v1/results/external_ml_pipeline_v1/mlruns/551083653985344791/f05b6aade7d54d16bd4ebadfc3444bfe/artifacts
+end_time: 1785585508200
+entry_point_name: ''
+experiment_id: '551083653985344791'
+lifecycle_stage: active
+run_id: f05b6aade7d54d16bd4ebadfc3444bfe
+run_name: ext3-mlflow-elasticnet:E8_EXPLANATION_PROVENANCE:B_GREEDY_CROSS_STAGE
+run_uuid: f05b6aade7d54d16bd4ebadfc3444bfe
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1785585508193
+status: 3
+tags: []
+user_id: lebedeffson

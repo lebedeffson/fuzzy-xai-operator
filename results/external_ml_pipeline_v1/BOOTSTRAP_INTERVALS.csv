@@ -1,0 +1,7 @@
+comparison,metric,difference,ci95_lower,ci95_upper,seed,iterations
+O_vs_LOCAL,contract_correct,0.625,0.4375,0.78125,1729,10000
+O_vs_LOCAL,root_cause_correct,1.0,1.0,1.0,1729,10000
+O_vs_PAIRWISE,contract_correct,0.0,0.0,0.0,1729,10000
+O_vs_PAIRWISE,root_cause_correct,1.0,1.0,1.0,1729,10000
+O_vs_GREEDY,contract_correct,0.0,0.0,0.0,1729,10000
+O_vs_GREEDY,root_cause_correct,0.0,0.0,0.0,1729,10000

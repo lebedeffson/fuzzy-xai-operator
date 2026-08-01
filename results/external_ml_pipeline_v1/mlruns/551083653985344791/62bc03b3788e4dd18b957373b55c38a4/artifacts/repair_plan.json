@@ -1,0 +1,9 @@
+{
+  "operations": [
+    "restore_feature_schema",
+    "repair_model_input_schema",
+    "repair_prediction_output_sanity",
+    "repair_explanation_output_consistency",
+    "repair_user_claim_evidence_binding"
+  ]
+}

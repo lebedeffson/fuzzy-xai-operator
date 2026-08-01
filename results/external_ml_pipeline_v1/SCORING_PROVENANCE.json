@@ -1,0 +1,9 @@
+{
+  "command": "PYTHONPATH=framework/fuzzyxai:. python -m experiments.external_ml_pipeline_v1.run_evaluation",
+  "docx_pdf_modified": false,
+  "implementation_commit": "75859009ffb62b8510c3e4ee1ee2267cd86633b3",
+  "network_used_for_scoring": false,
+  "official_scoring_attempts": 1,
+  "protocol": "FUZZYXAI_EXTERNAL_ML_PIPELINE_VALIDATION_V1",
+  "protocol_commit": "3a2daddb35855c93d9859439cae91a3ba6d69d8b"
+}

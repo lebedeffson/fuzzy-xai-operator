@@ -1,0 +1,9 @@
+{
+  "contract_id": "PREPROCESSOR_FIT_SCOPE",
+  "dependent_violations": [],
+  "evidence_refs": [
+    "preprocessor_manifest.json"
+  ],
+  "root_cause": "PREPROCESSOR_FIT_SCOPE",
+  "stage": "PREPROCESSING"
+}

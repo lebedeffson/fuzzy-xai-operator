@@ -1,0 +1,12 @@
+{
+  "fully_executable": false,
+  "operations": [
+    "restore_split_manifest"
+  ],
+  "rollback": [
+    "restore_previous_artifact_snapshot"
+  ],
+  "step_ids": [
+    "step:issue:EXPLANATION_OUTPUT_CONSISTENCY:1"
+  ]
+}
