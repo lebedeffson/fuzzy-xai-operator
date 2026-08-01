@@ -66,6 +66,7 @@ ALLOWED_EXACT = {
     "RELEASE_NOTES.md",
     "RELEASE_STATUS.md",
     "TEST_REPORT.txt",
+    "site/README.md",
     "pyproject.toml",
     "requirements.txt",
     "requirements.lock",
