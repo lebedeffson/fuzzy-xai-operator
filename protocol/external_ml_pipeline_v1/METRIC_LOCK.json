@@ -1,0 +1,34 @@
+{
+  "causal": [
+    "root_cause_rank",
+    "dependent_symptom_count",
+    "diagnostic_cut_size",
+    "proposed_repair_count",
+    "redundant_repair_count"
+  ],
+  "diagnosis": [
+    "violation_recall",
+    "stage_accuracy",
+    "contract_accuracy",
+    "component_accuracy",
+    "root_cause_accuracy",
+    "action_accuracy",
+    "false_certification",
+    "false_blocking",
+    "evidence_completeness"
+  ],
+  "repair": [
+    "repair_success",
+    "full_recertification",
+    "new_critical_violations",
+    "rollback_success"
+  ],
+  "transfer": [
+    "contract_reuse_rate",
+    "evidence_extraction_coverage",
+    "adapter_loc",
+    "new_contract_count",
+    "core_changed_files"
+  ],
+  "unit": "external_repository x fault_family"
+}

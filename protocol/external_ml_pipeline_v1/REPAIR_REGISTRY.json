@@ -1,0 +1,12 @@
+{
+  "operation_count": 6,
+  "operations": {
+    "FEATURE_ORDER": "restore_feature_schema",
+    "MODEL_ARTIFACT_HASH": "restore_registered_model",
+    "MODEL_EXPLAINER_VERSION": "rebuild_explanation_for_registered_model",
+    "PREDICTION_OBJECT_BINDING": "rebuild_explanation_for_registered_model",
+    "PREPROCESSOR_FIT_SCOPE": "refit_preprocessor_on_train",
+    "REQUIRED_PROVENANCE": "restore_explanation_provenance",
+    "TRAIN_VALIDATION_TEST_DISJOINTNESS": "restore_split_manifest"
+  }
+}

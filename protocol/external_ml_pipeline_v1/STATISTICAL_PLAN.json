@@ -1,0 +1,10 @@
+{
+  "bootstrap": "hierarchical repository then fault family",
+  "bootstrap_iterations": 10000,
+  "bootstrap_seed": 1729,
+  "confidence": 0.95,
+  "multiple_testing": "Holm",
+  "p_value_release_gate": false,
+  "paired_test": "exact sign test",
+  "unit": "external_repository x fault_family"
+}

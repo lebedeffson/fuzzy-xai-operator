@@ -1,0 +1,28 @@
+{
+  "case_count": 40,
+  "decision_count": 200,
+  "gold_available_to_modes": false,
+  "implementation_commit": "75859009ffb62b8510c3e4ee1ee2267cd86633b3",
+  "implementation_sha256": {
+    "experiments/external_ml_pipeline_v1/benchmark.py": "44489e362abea0c4219c856f827db5b2f3617210005d8fd6493856c27d663069",
+    "experiments/external_ml_pipeline_v1/external_runners.py": "b23c8fd30443a88523c56124c4b4f0e1d2e305da112d5b729a1a554146208481",
+    "experiments/external_ml_pipeline_v1/run_evaluation.py": "afd1addc2733fa175d16a3b5e6b0e1dede65fb3d963418ae65d8cea8fdda03c6",
+    "framework/fuzzyxai/fuzzyxai/external_adapters/base.py": "275a3bac1e251df62b2b8f7655a31173facbde04d0d94d670cf737cf7c3d2548",
+    "framework/fuzzyxai/fuzzyxai/external_adapters/manifest.py": "cb2d2017971c981ca5c2c6b217efcf261aca8fa4f1c38563244d9743bb1ddde5"
+  },
+  "new_contracts": 0,
+  "protocol": "FUZZYXAI_EXTERNAL_ML_PIPELINE_VALIDATION_V1",
+  "protocol_sha256": {
+    "ACCEPTANCE_CRITERIA.json": "fb8df49197e7026e546876317910ae73e2d34bd22c3c4e852b7f97561058c3a8",
+    "ADAPTER_LOCK.json": "6d84733492e75926a1abb407a768005bbf335f5c55425e0a9294dc175675abf7",
+    "BASELINE_LOCK.json": "ccbb1b631a727fe0f60fd26648aaa46f2b9546b2ac910e352c4ea85d2333a215",
+    "FAULT_MATRIX.json": "f028dcfdd84b9e2a4305d68ba0249ee76b867d66508f66c7a8190467b7536fe4",
+    "METRIC_LOCK.json": "1359734ffaaead29f92a86865cfe3072b04d23cc42102fe7ea39fe4331438bb4",
+    "PARENT_FILES_SHA256.json": "14e8e698378c288f252f52c957aeb38e97b0a953cda6943cb2e364d64520b85a",
+    "PIPELINE_LOCK.json": "d649e4098570051478b97e7828a807243567c651e2016bf042eda168e02060ad",
+    "REPAIR_REGISTRY.json": "76661022f19e31d453346c3d9ae7b7e41420e6c1a10cf37d2ca5f373202fbc65",
+    "REPOSITORY_LOCK.json": "1fe9ec51539fc32f2b87db091d2b6bdf611ee1222da9179824707af97609a925",
+    "STATISTICAL_PLAN.json": "5d667abe0876a9242854f3f041c5fb0c57cbe09cbe2f73aa3020228d95cc87b9"
+  },
+  "status": "LOCKED_BEFORE_SCORING"
+}
