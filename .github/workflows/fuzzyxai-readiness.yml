@@ -44,7 +44,11 @@ jobs:
           set -euo pipefail
           while IFS= read -r test_file; do
             echo "RUN: ${test_file}"
-            if ! python -m pytest -q "${test_file}"; then
+            set +e
+            python -m pytest -q "${test_file}"
+            status=$?
+            set -e
+            if [ "${status}" -ne 0 ] && [ "${status}" -ne 5 ]; then
               echo "::error file=${test_file},line=1::Isolated regression file failed"
               exit 1
             fi

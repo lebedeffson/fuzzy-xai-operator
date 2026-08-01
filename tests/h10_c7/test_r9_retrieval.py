@@ -4,6 +4,8 @@ import hashlib
 import json
 from pathlib import Path
 
+import pytest
+
 from fuzzyxai.experiments.h10_c7 import GoldAtom, GoldLocalization
 from fuzzyxai.experiments.h10_c7a import BudgetCase
 from fuzzyxai.experiments.h10_c7r_r9 import (
@@ -262,6 +264,7 @@ def test_h10_c7r_v1_files_remain_hash_locked() -> None:
 
 
 def test_lambdamart_ranker_is_deterministic() -> None:
+    pytest.importorskip("lightgbm", reason="LambdaMART uses the optional lightgbm backend")
     compressor = R9CandidateCompressor()
     payloads = tuple(
         _feature_case(f"repo-{index}", legacy_support=index % 2 == 0)
