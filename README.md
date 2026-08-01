@@ -1,320 +1,399 @@
-# FuzzyXAI Research Framework
+<div align="center">
 
-FuzzyXAI is an evidence-first research framework for tracing a model decision from input data through training history, learned rules or concepts, local evidence, operator diagnostics, and the final action.
+# FuzzyXAI
 
-The framework implements the mathematical route from dissertation chapters 2-3:
+### Evidence-first control for ML and XAI pipelines
+
+**Observe the route. Verify the contracts. Explain the failure. Repair safely. Recertify everything.**
+
+[![Python](https://img.shields.io/badge/Python-3.10%2B-1f6f8b)](https://www.python.org/)
+[![License](https://img.shields.io/badge/License-MIT-c98b2e)](LICENSE)
+[![Package](https://img.shields.io/badge/version-1.4.0a2-315c4c)](pyproject.toml)
+[![Validation](https://img.shields.io/badge/external%20pipelines-4%20validated-315c4c)](results/external_ml_pipeline_v1/FINAL_STATUS.json)
+
+</div>
+
+FuzzyXAI is a research framework for building auditable explanations and
+controlling the integrity of an executable ML/XAI route. It connects data,
+splits, preprocessing, models, predictions, post-hoc explanations, fuzzy
+representations, decisions, repair, and recertification in one evidence graph.
+
+The framework is deliberately fail-closed: missing or contradictory evidence
+produces an explicit limitation, review request, or blocked route. It never
+invents a metric, provenance link, causal claim, or successful certification.
 
 ```text
-E -> T -> gamma -> Delta -> rDelta -> rho -> D -> chi -> action
+Dataset -> Split -> Preprocessor -> Model -> Prediction -> Explanation
+   |          |           |           |          |             |
+   +----------+-----------+-----------+----------+-------------+
+                              RouteGraph
+                                  |
+                         Contract validation
+                                  |
+                          Minimal diagnostic cut
+                                  |
+                    Registered repair + rollback
+                                  |
+                         Full route recertification
 ```
 
-It does not treat a model score as permission to act. Missing evidence produces `review` or `insufficient_evidence`, never invented `gamma`, `Delta`, `rho`, similarity, or rule importance.
+## Why FuzzyXAI
+
+Ordinary component checks can tell us that a shape is valid, a metric is
+finite, or an artifact exists. They often cannot prove that:
+
+- a preprocessor was fitted only on the registered training partition;
+- a model consumed the same feature schema the preprocessor produced;
+- a prediction and explanation belong to the same object and model version;
+- a stale artifact is the root cause of several downstream symptoms;
+- a repair did not create a new critical violation elsewhere in the route.
+
+FuzzyXAI makes those relationships explicit and machine-verifiable.
+
+## Core Capabilities
+
+| Capability | What the framework provides |
+| --- | --- |
+| Model wrapping | One public entry point: `FuzzyXAI.wrap(...).explain(...)` |
+| Evidence-first explanation | Typed claims remain linked to measured evidence and provenance |
+| Route modeling | Immutable nodes, edges, component versions, schemas, hashes, and evidence refs |
+| Contract auditing | Local and inter-stage consistency checks over the complete route |
+| Diagnosis | Violated stage, component, contract, observed value, expected value, and evidence |
+| Causal reduction | Minimal diagnostic cut separating a primary cause from dependent symptoms |
+| Safe repair | Registered operations with preconditions, rollback, and explicit state mutation |
+| Recertification | Rebuild changed artifacts and verify every applicable contract again |
+| Fuzzy representation | F0, interval, hesitant, neutrosophic, and multilevel representations |
+| Integration | Python API, REST surfaces, visualizations, MLflow evidence, and adapter SDK |
+| Reproducibility | Protocol locks, deterministic canonical JSON, SHA256 manifests, and source releases |
 
 ## Install
 
 ```bash
 python -m venv .venv
+.venv/bin/python -m pip install --upgrade pip
 .venv/bin/python -m pip install -e ".[dev]"
 ```
 
-## Empirical Validation
-
-Run the small one-thread protocol check locally:
+Optional integrations are installed explicitly:
 
 ```bash
-make empirical-smoke
+.venv/bin/python -m pip install -e ".[ml-vertical]"  # SHAP, REST, MLflow
+.venv/bin/python -m pip install -e ".[xgboost]"
+.venv/bin/python -m pip install -e ".[lightgbm]"
+.venv/bin/python -m pip install -e ".[catboost]"
 ```
 
-Run the full E1-E8 dissertation candidate in CI or an isolated container:
+Python 3.10 or newer is required. Locked research environments are recorded in
+`requirements.lock`, `uv.lock`, and the corresponding protocol directories.
 
-```bash
-make reproduce-dissertation
-docker compose run --rm reproduce
-```
+## Quick Start
 
-Controlled 10,000-object datasets validate protocol behavior, not external-domain
-generalization. External comprehension and domain reviews remain release blockers
-until independent responses are available.
-
-## Chapter 4 v13 practical evaluation
-
-The frozen v13 protocol adds a modern pretrained text contour without changing the
-negative v1.3.0 findings. It uses the pinned AG News dataset revision and a frozen
-DistilBERT model, produces real Integrated Gradients and token-masking explanations,
-compares policies at matched review budgets, evaluates registered/compositional/
-held-out route faults, and decomposes end-to-end runtime.
-
-Install the pinned research dependencies into an existing Python 3.12 environment:
-
-```bash
-python -m pip install -r config/chapter4_v13_requirements.txt
-python -m pip install -e .
-```
-
-Run the lightweight contract smoke used by CI:
-
-```bash
-make chapter4-v13-smoke
-```
-
-Run the complete local experiment once:
-
-```bash
-make reproduce-chapter4-v13 CHAPTER4_V13_PYTHON=/path/to/python3.12
-```
-
-The full command downloads data and model weights from their pinned upstream
-revisions. AG News is not redistributed because its upstream dataset card reports
-an unknown license. The pinned model card also does not state a license for the
-weights; see `THIRD_PARTY_NOTICES.md`. Raw data, sealed labels and model caches stay under ignored
-`artifacts/chapter4_v13/` subdirectories. Every released numeric table cell is
-mapped to raw evidence and SHA256 in `artifacts/chapter4_v13/evidence_map.json`.
-
-Known boundaries: the old H3, H5-P and H6-general claims remain unsupported; the
-5-million-object benchmark describes only the cached operator layer; the v13 user
-study package is a future protocol and contains no participant evidence.
-
-Public reviewer artifacts are committed under
-[`dissertation_artifacts/chapter4_v13/final`](dissertation_artifacts/chapter4_v13/final/).
-The directory contains the DOCX/PDF, the complete five-budget policy table, full
-runtime statistics and raw repetitions, the held-out-fault status, leakage audit,
-evidence map, validation report, checksums and the downloadable evidence ZIP.
-The code is distributed under the MIT license in [`LICENSE`](LICENSE); upstream
-dataset and model license boundaries are recorded in
-[`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md).
-
-## Explain a model
+### Explain a trained model
 
 ```python
-from fuzzyxai import ExplainPlan, FuzzyXAI
+from sklearn.datasets import load_breast_cancer
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.pipeline import make_pipeline
 
-plan = ExplainPlan.default()
-plan.domain_language = {
-    "features": {
-        "fracture_density": {
-            "label": "трещиноватость породы",
-            "high_text": "трещин больше, чем в большинстве исследованных участков",
-        }
-    },
-    "classes": {1: {"label": "повышенный риск"}},
-    "actions": {"review": {"label": "проверить специалистом"}},
-}
+from fuzzyxai import FuzzyXAI
 
-fx = FuzzyXAI.wrap(model, adapter="auto", task="auto", explain_plan=plan)
+X, y = load_breast_cancer(return_X_y=True)
+X_train, X_test, y_train, _ = train_test_split(
+    X, y, test_size=0.2, random_state=42, stratify=y
+)
+model = make_pipeline(
+    StandardScaler(),
+    LogisticRegression(max_iter=500, random_state=42),
+).fit(X_train, y_train)
+
+fx = FuzzyXAI.wrap(model, adapter="auto", task="classification")
 result = fx.explain_one(
     X_test[0],
-    object_id="case-202",
+    object_id="patient-0001",
     reference_data=X_train,
     reference_labels=y_train,
-    feature_names=feature_names,
-    include_similar_cases=True,
-    include_counterfactuals=True,
 )
-
-human = result.explain_for(audience="domain_user", language="ru")
-print(human.decision.explanation)
-print([reason.explanation for reason in human.main_reasons])
-print(human.reliability.explanation)
-print(human.recommended_action.explanation)
 
 print(result.summary(audience="domain_user", detail="short"))
-print(result.summary(audience="ml_engineer", detail="full"))
-print(result.explanation_level)
-print(result.overview())
-print(result.story())
-result.visualize(view="explanation_story", backend="matplotlib", output="explanation.png")
-result.visualize(view="decision_evidence", backend="plotly", output="decision.html")
-result.inspect("rule:R31").visualize(view="rule_ablation", output="rule_R31.png")
-result.export_json("explanation.json")
-result.export_html("explanation.html")
-```
-
-The selected family, native/derived/surrogate channels, missing evidence, and quality gates are inspectable:
-
-```python
-print(fx.capability_report())
 print(result.quality_report())
-print(result.why_not(target_class=0))
-
-batch = fx.explain_batch(X_test[:10])
-global_result = fx.explain_global(X_train, y_train)
-comparison = FuzzyXAI.compare_models(
-    {"linear": linear_model, "tree": tree_model},
-    item=X_test[0],
-    reference_data=X_train,
-    reference_labels=y_train,
-)
+print(fx.capability_report())
+result.export_json("explanation.json")
 ```
 
-## Observe training
+The prediction is available even when optional explanation channels are
+missing. Unsupported claims stay absent and are listed in the quality report.
+
+### Diagnose a pipeline route
 
 ```python
-training = fx.observe_training(history={
-    "objects": {"85": epoch_records},
-    "global_metric": global_accuracy,
-    "subgroup_metrics": {"rare_subtype": rare_recall},
-})
+from fuzzyxai.diagnostics import DiagnosticService
 
-training.find_forgotten_objects()
-training.find_averaged_subgroups()
-training.extract_model_rules()
-training.plot_object_trajectory("85", "object_85.png")
+route = {
+    "route_id": "training-run-42",
+    "nodes": [
+        {
+            "node_id": "preprocessor",
+            "node_type": "preprocessing",
+            "component_id": "standard_scaler",
+            "component_version": "1.0",
+            "registered_attributes": {"fit_scope": "train"},
+            "observed_attributes": {"fit_scope": "train_plus_test"},
+            "mandatory": True,
+            "repairable": True,
+            "evidence_refs": ["manifest:preprocessor.json"],
+        },
+        {
+            "node_id": "model",
+            "node_type": "model",
+            "component_id": "classifier",
+            "component_version": "1.0",
+            "registered_attributes": {"schema": "schema-v3"},
+            "observed_attributes": {"schema": "schema-v3"},
+            "mandatory": True,
+            "repairable": True,
+            "evidence_refs": ["manifest:model.json"],
+        },
+    ],
+    "edges": [
+        {
+            "edge_id": "preprocessor-to-model",
+            "source": "preprocessor",
+            "target": "model",
+            "relation": "transforms",
+            "registered_contract": {"compatible": True},
+            "observed_contract": {"compatible": True},
+            "mandatory": True,
+            "repairable": True,
+            "evidence_refs": ["manifest:route.json"],
+        }
+    ],
+}
+
+report = DiagnosticService().diagnose(route=route, repair_mode="plan")
+print(report.route_status)
+print(report.issues)
+print(report.minimal_cut)
+print(report.repair_plan)
 ```
 
-The executable controlled object-85 protocol is:
+Repair execution is never implicit. `repair_mode="execute"` requires an
+explicit `RepairExecutionContext`, registered operation, satisfied
+preconditions, preserved source artifact, and rollback path.
 
-```bash
-PYTHONPATH=framework/fuzzyxai python examples/object_85_training_trace.py \
-  --output-dir release_evidence/object_85
+## Framework Architecture
+
+```text
+fuzzyxai
++-- runtime.py                 Public FuzzyXAI facade
++-- adapters/                  Capability-based model adapters
++-- evidence/                  Claims, provenance, and human-facing views
++-- diagnostics/
+|   +-- route_graph.py         Canonical route construction
+|   +-- validator.py           Local and inter-stage contracts
+|   +-- minimal_cut.py         Exact and approximate diagnostic cuts
+|   +-- repair_planner.py      Registered repair planning
+|   +-- repair_executor.py     Preconditions, execution, rollback
+|   +-- recertification.py     Full-route verification after repair
++-- pipelines/                 Executable registered ML/XAI pipelines
++-- external_adapters/         Observation-only adapters for external projects
++-- visualization/             Canonical visual specification and renderers
++-- operators_manifest.yaml    Callable-to-test-to-schema traceability
 ```
 
-## Supported model level
+The canonical package lives under `framework/fuzzyxai/fuzzyxai`. The
+`fuzzyxai.visualization` namespace is authoritative; `visual` and `viz` exist
+only as compatibility shims.
 
-| Model family | Prediction | Local/model evidence | Rules |
-| --- | --- | --- | --- |
-| Python callable | verified | perturbation/reference channels when supplied | no default |
-| sklearn linear | verified | native coefficient terms and margin | no native rules |
-| sklearn tree | verified | exact local decision path | native paths |
-| sklearn ensembles | verified | votes/disagreement and model-specific paths | family dependent |
-| sklearn SVM/KNN/Naive Bayes | verified | family-specific evidence or measured surrogate | no invented rules |
-| sklearn Pipeline | verified | transformed and source-feature provenance | estimator dependent |
-| `predict_proba` compatible models | verified generic contract | capability dependent | capability dependent |
-| ANFIS/fuzzy model with `rules_` | verified contract | native activations/rules | native |
-| XGBoost/LightGBM/CatBoost | optional CI | native contribution APIs | native tree runtime |
-| PyTorch/TensorFlow | optional CI | native-gradient-derived channels | architecture dependent |
-| ONNX Runtime | optional CI | exported runtime outputs | missing unless exported |
+## Contract-Controlled Pipeline
 
-`verified` applies to the exact configurations in
-`release_evidence/model_universality/support_matrix.csv`. Optional code presence alone is not a support claim.
+The ML Pipeline v2 route covers:
 
-## Reproducible Chapter 4 candidate
+1. dataset identity and schema;
+2. target isolation and class mapping;
+3. train/validation/test disjointness and split reproducibility;
+4. preprocessor version, fit scope, feature order, and finite output;
+5. training configuration, convergence, and training-data identity;
+6. model schema and serialized artifact hash;
+7. prediction input, output sanity, and object binding;
+8. model/explainer compatibility and SHAP reconstruction consistency;
+9. explanation provenance, fuzzy representation, reduction, and presentation;
+10. registered repair, rollback, graph rebuild, and full recertification.
 
-Run the low-load stages separately:
+Contract definitions and acceptance gates are versioned under `protocol/`.
+They are not changed after official scoring.
+
+## Latest External Validation
+
+The current framework release was connected through observation-only adapters
+to four pinned public ML/XAI examples without changing the registered core:
+
+| Pipeline | Task | Model/explainer boundary |
+| --- | --- | --- |
+| scikit-learn ColumnTransformer | Binary classification | Mixed preprocessing + Linear SHAP |
+| SHAP TreeExplainer fixture | Multiclass classification | Random forest + TreeSHAP |
+| MLflow ElasticNet fixture | Regression | Registered artifact + Linear SHAP |
+| LIME tabular fixture | Multiclass classification | Independent local explainer |
+
+The locked evaluation contains 40 cases, 200 mode decisions, eight fault
+families, two valid controls per pipeline, and 200 MLflow runs. For the full
+FuzzyXAI mode, the registered results were:
+
+| Metric | Result |
+| --- | ---: |
+| Violation recall | 1.00 |
+| Cross-stage contract recall | 1.00 |
+| Stage / contract / root-cause accuracy | 1.00 / 1.00 / 1.00 |
+| Evidence completeness | 1.00 |
+| False certifications / false blocks | 0 / 0 |
+| Registered repair / full recertification | 1.00 / 1.00 |
+| New critical violations after repair | 0 |
+| Rollback success | 1.00 |
+
+Status: `FUZZYXAI_EXTERNAL_ML_PIPELINE_VALIDATION_V1_SUPPORTED`.
+
+This is evidence for the registered consistency faults and pinned external
+fixtures only. It is not evidence that FuzzyXAI detects arbitrary ML defects,
+proves model correctness, reduces engineer time, or replaces MLflow.
+
+Primary evidence:
+
+- [protocol lock](protocol/external_ml_pipeline_v1/)
+- [final status](results/external_ml_pipeline_v1/FINAL_STATUS.json)
+- [baseline comparison](results/external_ml_pipeline_v1/BASELINE_COMPARISON.csv)
+- [final report](reports/external_ml_pipeline_v1/FINAL_REPORT.md)
+- [threats to validity](reports/external_ml_pipeline_v1/THREATS_TO_VALIDITY.md)
+
+## Supported Model Surfaces
+
+| Surface | Status |
+| --- | --- |
+| Python callable and `predict_proba` models | Core contract |
+| scikit-learn linear, tree, ensemble, SVM, KNN, Naive Bayes, pipeline | Covered by adapters/tests |
+| XGBoost, LightGBM, CatBoost | Optional dependency and optional CI |
+| PyTorch, TensorFlow, ONNX Runtime | Optional adapters; support depends on exported evidence |
+| Native fuzzy/ANFIS rules | Native rule channel when exposed by the model |
+| SHAP and LIME artifacts | Versioned explanation/provenance contracts |
+
+A model being importable is not a support claim. Use
+`FuzzyXAI.wrap(model).capability_report()` to inspect the exact available
+channels.
+
+## REST, UI, and MLflow
+
+The ML vertical exposes canonical pipeline run, diagnosis, repair, and
+recertification operations through its REST application. The UI renders the
+same canonical result and does not compute a separate diagnosis. MLflow stores
+run parameters, metrics, hashes, and evidence artifacts; FuzzyXAI performs the
+contract reasoning over those observations.
 
 ```bash
-make model-universality
-make external-validation-gates
-make chapter4-final-candidate
+docker compose up --build
 ```
 
-The computed evidence can pass while the final release remains `BLOCKED`. A real six-person A/B pilot and an
-independent domain-language review cannot be generated by code and remain mandatory before a final `v1.2.0` tag.
-
-Torch, Keras, and ONNX adapters are not claimed in this release.
-
-## Validation
+For focused API and UI checks:
 
 ```bash
-python -m pytest
+PYTHONPATH=framework/fuzzyxai:. python -m pytest -q \
+  tests/ml_pipeline_v2 \
+  tests/integration \
+  tests/external_ml_pipeline_v1
+```
+
+## Development
+
+Run the smallest relevant checks first:
+
+```bash
+PYTHONPATH=framework/fuzzyxai:. python -m pytest -q tests/test_public_framework_api.py
+python -m ruff check framework/fuzzyxai/fuzzyxai
+python -m compileall -q framework/fuzzyxai/fuzzyxai
 make operator-manifest-check
-make doctorate-release-check
-python -m build
 ```
 
-The machine-verifiable implementation map is [framework/fuzzyxai/operators_manifest.yaml](framework/fuzzyxai/operators_manifest.yaml). The canonical transport object is `ExplanationViewModel` schema `2.0`, shared by Matplotlib, HTML, and MATLAB.
-
-The v1.2 explanation surface adds `HumanExplanation` above the claim graph. The first level answers decision, reasons, concerns, reliability, and action without exposing internal identifiers. Every card still links to claims and evidence for inspection. E0-E5 describes available evidence; `audience` controls how the same evidence is communicated. Run the controlled evidence gate with:
+Run the full regression before release:
 
 ```bash
-make explanation-experience-evidence
-pytest -q tests/test_explanation_experience.py
+PYTHONPATH=framework/fuzzyxai:. python -m pytest -q
 ```
 
-The available views are `explanation_story`, `data_profile`, `training_trace`, `knowledge_atlas`, `decision_evidence`, `similar_cases`, `counterfactual`, `rule_ablation`, `provenance`, and `audit`. Missing channels are disclosed through E0-E5 rather than replaced by an aggregate interpretability score.
+Build a clean source archive from committed files, never from a dirty worktree:
+
+```bash
+python scripts/build_framework_release.py
+```
+
+The release builder excludes generated ZIP/DOCX/PDF files, caches, private
+labels, downloaded model weights, and quarantined site content.
+
+## Repository Map
+
+| Path | Purpose |
+| --- | --- |
+| `framework/fuzzyxai/fuzzyxai/` | Installable framework |
+| `framework/fuzzyxai/operators_manifest.yaml` | Defended operator traceability |
+| `tests/` | Unit, integration, regression, and release tests |
+| `examples/` | Small executable integrations |
+| `apps/` | Canonical demonstration surfaces |
+| `protocol/` | Immutable experiment and method locks |
+| `results/` | Machine-readable registered outcomes |
+| `reports/` | Claim-scoped interpretation and limitations |
+| `experiments/` | Reproducible evaluation drivers and fixtures |
+| `scripts/` | Audit, validation, and source-release tooling |
+
+Historical studies remain under their protocol/result/report paths for
+traceability, but they are not part of the public runtime API. Generated
+archives and the removed pre-framework implementation are available from Git
+history rather than duplicated in the current tree.
+
+## Evidence and Claim Policy
+
+FuzzyXAI follows four release rules:
+
+1. observable evidence must exist before a claim is scored;
+2. held-out labels may be targets but never feature channels;
+3. missing evidence is reported as missing or insufficient;
+4. negative and blocked studies remain visible and are never rewritten as
+   positive results.
+
+See [PROJECT_MEMORY.md](PROJECT_MEMORY.md) for the release boundary and
+[RELEASE_STATUS.md](RELEASE_STATUS.md) for registered scientific statuses.
 
 ## Documentation
 
 - [Architecture](docs/architecture.md)
 - [Adapters](docs/adapters.md)
-- [Operators](docs/operators.md)
+- [Adapter SDK](framework/fuzzyxai/docs/ADAPTER_SDK.md)
 - [Explanation contract](docs/explanation_contract.md)
-- [Human Explanation Layer](docs/human_explanation_layer.md)
-- [Training observer](docs/training_observer.md)
+- [Human explanation layer](docs/human_explanation_layer.md)
 - [Visualization](docs/visualization.md)
-- [Comprehension study protocol](docs/explanation_comprehension_protocol.md)
 - [Traceability](docs/traceability.md)
 - [Reproducibility](docs/reproducibility.md)
 - [Research limitations](docs/research_limitations.md)
+- [Contributing](CONTRIBUTING.md)
 
-## Website status
+## Scope and Limitations
 
-The generated DubnaXAI website prototype is quarantined in the git branch `archive/site-prototype-cab4018`. It is intentionally excluded from the framework release until the API and explanation evidence are stable.
+FuzzyXAI controls registered evidence and route consistency. It does not:
 
-## Research scope
+- prove that a model prediction is true or clinically safe;
+- infer causality from feature importance or similarity;
+- diagnose arbitrary source-code bugs;
+- replace data/version orchestration systems;
+- establish human utility without an actual user study;
+- generalize a controlled benchmark beyond its locked scope.
 
-This software is a research framework. Medical examples are not clinical conclusions, surrogate rules are labelled as surrogate, similarity is not causality, and model quality must be established by a separate benchmark.
+Medical, industrial, and safety examples in this repository are research
+fixtures unless an associated protocol explicitly says otherwise.
 
-## Explanation Experience release boundary
+## Citation
 
-The ten focused Matplotlib and Plotly views consume `ExplanationVisualSpec` schema `1.1`. `result.inspect(...)` returns a typed `InspectionResult`; `result.explanation_graph.validate_reachability()` verifies the evidence-to-action route. Cross-model controlled evidence is generated under `release_evidence/explanation_experience/cross_model/`.
+Citation metadata is provided in [CITATION.cff](CITATION.cff).
 
-The comprehension study is still `planned_not_run`; the repository therefore claims a testable human-explanation interface, not demonstrated universal human comprehensibility. Release tag `v1.2.0` is blocked until the external pilot and green `main` CI are recorded.
+## License
 
-## Empirical validation gate
-
-The controlled object-85 story is now explicitly separated from the measured case `case_real_001`.
-Reproduce the 30-checkpoint training run, automatic forgetting selection, native tree-rule ablation,
-cross-model capability matrix, and Chapter 4 package with:
-
-```bash
-make empirical-validation-check
-```
-
-Measured artifacts are written under `release_evidence/empirical_experiments/` and
-`release_evidence/chapter4_empirical_validation/`. The benchmark uses the UCI Breast Cancer Wisconsin
-(Diagnostic) data only as a methodological research task; it is not clinical validation. The independent
-comprehension pilot and regulated-domain dictionary review remain incomplete, so `v1.2.0rc3` is an
-untagged computational candidate rather than a completed human-validation release.
-
-## H10 v19 audit integration
-
-The `feat/h10-audit-confirmatory-v19` branch integrates the supplied H10
-auditor and frozen one-opening outputs without opening the sealed vault again.
-The original handoff files are preserved under
-`artifacts/h10_v19/imported_handoff/`.
-
-Repository-level methodology review found that the oracle imports no evaluated
-H10 implementation, but source and repair truth are assigned through a static
-catalog that semantically duplicates the evaluated auditor taxonomy. The
-numerical source/repair differences can be reproduced, but H10-L and H10-R are
-therefore marked `invalid_methodology` for scientific release. H10-C remains a
-secondary descriptive cut result, H10-U remains descriptive, and H10-T is a
-deterministic trace result only.
-
-Use an existing Python environment; no additional virtual environment is
-created by these targets:
-
-```bash
-make h10-smoke H10_PYTHON=/path/to/python
-make reproduce-h10 H10_PYTHON=/path/to/python
-```
-
-## Diagnostic framework v21 alpha
-
-The branch `feat/diagnostic-framework-v21` exposes structural route diagnostics
-through the canonical `FuzzyXAI` facade:
-
-```python
-report = FuzzyXAI().diagnose(route=route, repair_mode="plan")
-print(report.summary("user"))
-```
-
-The implementation validates a full registered route graph, finds an exact or
-explicitly approximate minimal diagnostic cut, proposes provider-bound repair
-steps, and recertifies only after explicit external execution. Production code
-does not read Gold mutation logs and never copies `expected` values into
-`observed` values.
-
-```bash
-make diagnostic-v21-check DIAGNOSTIC_PYTHON=/home/lebedeffson/Code/venv/bin/python
-```
-
-This is an exploratory alpha implementation. The earlier H10-C result remains
-`BLOCKED_PRECONFIRMATORY`; the draft H10-C2 protocol cannot score sealed cases
-until power analysis and independent two-reviewer adjudication are complete.
-See `docs/DIAGNOSTIC_FRAMEWORK_RU.md`.
-
-`reproduce-h10` rebuilds statistics, replay summaries, tables, figures,
-evidence mapping, validation reports, and release archives from committed
-frozen outputs. It never calls the confirmatory scoring runner or opens a
-label vault.
+FuzzyXAI is released under the [MIT License](LICENSE). Third-party dataset,
+model, and external-project notices are recorded in
+[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) and the corresponding protocol
+locks.

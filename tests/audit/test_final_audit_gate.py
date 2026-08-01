@@ -40,11 +40,8 @@ def test_docx_render_gate_passes() -> None:
 
 def test_audit_package_is_clean() -> None:
     forbidden = ["__pycache__", ".pyc", ".pytest_cache", ".venv", "node_modules", ".DS_Store"]
-    # The doctoral runtime archive is a generated legacy deliverable and is not
-    # part of a clean source checkout. Validate release archives when present
-    # instead of making the test depend on a developer's working directory.
-    packages = [Path("fuzzyxai_final_audit_package.zip"), *Path("release_artifacts").glob("*.zip")]
-    assert packages
+    # Release archives are generated artifacts, not source-controlled inputs.
+    packages = list(Path("release_artifacts").glob("*.zip"))
     for package in packages:
         with zipfile.ZipFile(package) as zf:
             names = zf.namelist()

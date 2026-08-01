@@ -1,5 +1,26 @@
 # FuzzyXAI Framework Release Status
 
+## Current Framework Boundary
+
+- Package version: `1.4.0a2`
+- Canonical runtime: `framework/fuzzyxai/fuzzyxai`
+- Public entry point: `FuzzyXAI.wrap(...).explain(...)`
+- Latest validation: `FUZZYXAI_EXTERNAL_ML_PIPELINE_VALIDATION_V1_SUPPORTED`
+- External pipelines / cases / decisions: `4 / 40 / 200`
+- Generated root archives: excluded from source control
+- Pre-framework duplicate implementation: removed from the current tree
+
+The current framework release controls registered ML/XAI route consistency
+from data and split manifests through preprocessing, model artifacts,
+predictions, explanations, repair, rollback, and full recertification. The
+latest external adapter validation changed no registered core files and
+recorded no pipeline-specific branches in the auditor. Its scope is limited to
+the locked external fixtures and registered fault families.
+
+Historical positive, negative, blocked, and not-evaluated studies below remain
+part of the evidence record. They are not current runtime versions and are not
+silently promoted by this consolidation.
+
 ## H10-C7 Prospective Implementation
 
 - Protocol: `H10-C7-v1`, `LOCKED_BEFORE_DEVELOPMENT`

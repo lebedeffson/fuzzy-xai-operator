@@ -1,5 +1,38 @@
 # Project Memory
 
+## FUZZYXAI-EXTERNAL-ML-PIPELINE-VALIDATION-V1
+
+- Date: 2026-08-01
+- Source branch: `feat/fuzzyxai-external-ml-pipeline-validation-v1`
+- Validation commit: `d6e1ad862cfa5df06b92d8584e1fc1a0ce9b20ec`
+- Status: `FUZZYXAI_EXTERNAL_ML_PIPELINE_VALIDATION_V1_SUPPORTED`
+- External pipelines: `4`
+- Cases / decisions / MLflow runs: `40 / 200 / 200`
+- Core files changed by adapters: `0`
+- DOCX/PDF modified: `false`
+
+Four pinned public ML/XAI examples were connected through observation-only
+adapters: a scikit-learn mixed-feature pipeline, SHAP TreeExplainer, an MLflow
+ElasticNet pipeline, and LIME tabular explanation. The locked full FuzzyXAI
+mode reached violation and cross-stage contract recall, stage, contract, and
+root-cause accuracy, evidence completeness, registered repair success, full
+recertification, and rollback success of `1.0`. It produced zero false
+certifications, zero false blocks, and zero new critical violations.
+
+The graph advantage was established for the registered cascade cases through
+a smaller diagnostic cut and fewer redundant repairs than pairwise rules.
+This result concerns controlled consistency faults in pinned external fixtures.
+It does not establish arbitrary ML defect detection, model correctness,
+natural source-code bug localization, human-time savings, or replacement of
+MLflow and orchestration systems.
+
+The 2026-08-01 main consolidation removed the duplicate pre-framework source
+tree and generated root archives from the current source surface. Historical
+protocols, machine-readable results, reports, and Git history remain available
+for reproducibility. The canonical runtime remains
+`framework/fuzzyxai/fuzzyxai`, with `FuzzyXAI.wrap(...).explain(...)` as its
+public entry point.
+
 ## FUZZYXAI-CROSS-PIPELINE-PRACTICAL-V1
 
 - Date: 2026-07-31
