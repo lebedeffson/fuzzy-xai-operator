@@ -1,0 +1,9 @@
+{
+  "container_runtime": "Docker 29.6.2",
+  "cpu": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics",
+  "kernel": "Linux 7.1.4-arch1-1 x86_64",
+  "memory_gib": 14.8,
+  "network_during_runtime_execution": "none",
+  "python": "3.14.6",
+  "runner_scope": "registered_local_self_hosted_runner"
+}

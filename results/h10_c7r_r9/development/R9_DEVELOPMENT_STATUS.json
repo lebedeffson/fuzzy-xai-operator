@@ -1,0 +1,39 @@
+{
+  "container_execution": false,
+  "gate_passed": false,
+  "gates": {
+    "contract_does_not_reorder": true,
+    "exact_candidates_at_most_500": true,
+    "recall_at_20_at_least_0_82": false,
+    "repository_lower_quartile_at_least_0_75": false,
+    "schema_gap_zero": true
+  },
+  "h10_c7r_v1_status_preserved": "H10_C7R_NOT_SUPPORTED",
+  "loro": {
+    "contract_reordering_count": 0,
+    "incident_count": 40,
+    "maximum_exact_candidates": 500,
+    "recall_at_20": 0.4,
+    "repository_count": 30,
+    "repository_recall_lower_quartile": 0.0,
+    "schema_gap_count": 0,
+    "selected_variants": {
+      "R9A": 14,
+      "R9B": 26
+    }
+  },
+  "neural_models_executed": false,
+  "new_held_out_created": false,
+  "new_held_out_scored": false,
+  "protocol_id": "H10-C7R-R9-development-v1",
+  "published_v1_recalculated": false,
+  "published_v1_rows_read": 40,
+  "ranker": "lightgbm_lambdamart",
+  "ranker_training_scope": "leave_one_repository_out",
+  "ranker_version": "4.6.0",
+  "ready_for_new_held_out": false,
+  "runtime_recollection": false,
+  "scientific_result": "NOT_EVALUATED",
+  "status": "H10_C7R_R9_DEVELOPMENT_NO_GO",
+  "test_repository_used_for_training": false
+}

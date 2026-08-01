@@ -1,0 +1,974 @@
+[
+  {
+    "scenario_id": "S1_NORMAL",
+    "mode_id": "B0",
+    "run_id": "09e69d8e0d4e4a469495e34379470e88",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/09e69d8e0d4e4a469495e34379470e88/artifacts"
+  },
+  {
+    "scenario_id": "S1_NORMAL",
+    "mode_id": "B1",
+    "run_id": "072fb622a94e44018b1e534c3b43288d",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/072fb622a94e44018b1e534c3b43288d/artifacts"
+  },
+  {
+    "scenario_id": "S1_NORMAL",
+    "mode_id": "B2",
+    "run_id": "2debc23dea524194bed76b58b96e7cfa",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/2debc23dea524194bed76b58b96e7cfa/artifacts"
+  },
+  {
+    "scenario_id": "S1_NORMAL",
+    "mode_id": "B3",
+    "run_id": "a78d22f4ba46496fbb1fbd65be80ef37",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/a78d22f4ba46496fbb1fbd65be80ef37/artifacts"
+  },
+  {
+    "scenario_id": "S1_NORMAL",
+    "mode_id": "A0",
+    "run_id": "edb792e062e24af7b511ed29bbbefcda",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/edb792e062e24af7b511ed29bbbefcda/artifacts"
+  },
+  {
+    "scenario_id": "S1_NORMAL",
+    "mode_id": "A1",
+    "run_id": "0e7862ec21a94853906c9f64ab5d6fc2",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/0e7862ec21a94853906c9f64ab5d6fc2/artifacts"
+  },
+  {
+    "scenario_id": "S1_NORMAL",
+    "mode_id": "A2",
+    "run_id": "dd91595adf5948f0922a7a7a11ac36db",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/dd91595adf5948f0922a7a7a11ac36db/artifacts"
+  },
+  {
+    "scenario_id": "S1_NORMAL",
+    "mode_id": "A3",
+    "run_id": "790ba991b4dc4ff283d0ea2bf13c3ae6",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/790ba991b4dc4ff283d0ea2bf13c3ae6/artifacts"
+  },
+  {
+    "scenario_id": "S1_NORMAL",
+    "mode_id": "A4",
+    "run_id": "3f33d39d8ae245f18861a2ffbda2eb2b",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/3f33d39d8ae245f18861a2ffbda2eb2b/artifacts"
+  },
+  {
+    "scenario_id": "S2_EXPLAINER_VERSION_MISMATCH",
+    "mode_id": "B0",
+    "run_id": "92f85dae087e44cfa8e0b42bbf5a8f73",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/92f85dae087e44cfa8e0b42bbf5a8f73/artifacts"
+  },
+  {
+    "scenario_id": "S2_EXPLAINER_VERSION_MISMATCH",
+    "mode_id": "B1",
+    "run_id": "8198be2dee4f4d5f91a27e6bb12dd899",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/8198be2dee4f4d5f91a27e6bb12dd899/artifacts"
+  },
+  {
+    "scenario_id": "S2_EXPLAINER_VERSION_MISMATCH",
+    "mode_id": "B2",
+    "run_id": "8cfbb0bba0e743f1a2e296a13221316f",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/8cfbb0bba0e743f1a2e296a13221316f/artifacts"
+  },
+  {
+    "scenario_id": "S2_EXPLAINER_VERSION_MISMATCH",
+    "mode_id": "B3",
+    "run_id": "0e1f4983a2bf48c4b263cd0e32cc6d7d",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/0e1f4983a2bf48c4b263cd0e32cc6d7d/artifacts"
+  },
+  {
+    "scenario_id": "S2_EXPLAINER_VERSION_MISMATCH",
+    "mode_id": "A0",
+    "run_id": "47dd1722410c4574b82d10e72b23d6a9",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/47dd1722410c4574b82d10e72b23d6a9/artifacts"
+  },
+  {
+    "scenario_id": "S2_EXPLAINER_VERSION_MISMATCH",
+    "mode_id": "A1",
+    "run_id": "35f39609cd8241768c0336da02cee113",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/35f39609cd8241768c0336da02cee113/artifacts"
+  },
+  {
+    "scenario_id": "S2_EXPLAINER_VERSION_MISMATCH",
+    "mode_id": "A2",
+    "run_id": "e3100927681e407da9dbb1806f68a57b",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/e3100927681e407da9dbb1806f68a57b/artifacts"
+  },
+  {
+    "scenario_id": "S2_EXPLAINER_VERSION_MISMATCH",
+    "mode_id": "A3",
+    "run_id": "78680200375a4cb9aa113744527b10ee",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/78680200375a4cb9aa113744527b10ee/artifacts"
+  },
+  {
+    "scenario_id": "S2_EXPLAINER_VERSION_MISMATCH",
+    "mode_id": "A4",
+    "run_id": "9299b0b49c9949dfb108c84cba507197",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/9299b0b49c9949dfb108c84cba507197/artifacts"
+  },
+  {
+    "scenario_id": "S3_MISSING_REQUIRED_FEATURE",
+    "mode_id": "B0",
+    "run_id": "5a2880af8347491fb27fa0e5e5174002",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/5a2880af8347491fb27fa0e5e5174002/artifacts"
+  },
+  {
+    "scenario_id": "S3_MISSING_REQUIRED_FEATURE",
+    "mode_id": "B1",
+    "run_id": "256b183864bd49ff91b18249691d0f91",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/256b183864bd49ff91b18249691d0f91/artifacts"
+  },
+  {
+    "scenario_id": "S3_MISSING_REQUIRED_FEATURE",
+    "mode_id": "B2",
+    "run_id": "b5b641a37c5e4b90a923338f4fdb9495",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/b5b641a37c5e4b90a923338f4fdb9495/artifacts"
+  },
+  {
+    "scenario_id": "S3_MISSING_REQUIRED_FEATURE",
+    "mode_id": "B3",
+    "run_id": "d1752f61759f4e39bf6dd173b0b75330",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/d1752f61759f4e39bf6dd173b0b75330/artifacts"
+  },
+  {
+    "scenario_id": "S3_MISSING_REQUIRED_FEATURE",
+    "mode_id": "A0",
+    "run_id": "9c8a1be66e574a1dac3bc5a0e4d69f3d",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/9c8a1be66e574a1dac3bc5a0e4d69f3d/artifacts"
+  },
+  {
+    "scenario_id": "S3_MISSING_REQUIRED_FEATURE",
+    "mode_id": "A1",
+    "run_id": "0da1d2ad0a4446f197a570fd9da85f9e",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/0da1d2ad0a4446f197a570fd9da85f9e/artifacts"
+  },
+  {
+    "scenario_id": "S3_MISSING_REQUIRED_FEATURE",
+    "mode_id": "A2",
+    "run_id": "dd5f2d76a77c425a835993134fa01709",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/dd5f2d76a77c425a835993134fa01709/artifacts"
+  },
+  {
+    "scenario_id": "S3_MISSING_REQUIRED_FEATURE",
+    "mode_id": "A3",
+    "run_id": "cdc69f9872d44d1b8f77ac542fa76bf1",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/cdc69f9872d44d1b8f77ac542fa76bf1/artifacts"
+  },
+  {
+    "scenario_id": "S3_MISSING_REQUIRED_FEATURE",
+    "mode_id": "A4",
+    "run_id": "23e05c31add8488e92d922a980815de6",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/23e05c31add8488e92d922a980815de6/artifacts"
+  },
+  {
+    "scenario_id": "S4_MODEL_RULE_CONFLICT",
+    "mode_id": "B0",
+    "run_id": "b42f31793d5c4134a16f4977949a4db2",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/b42f31793d5c4134a16f4977949a4db2/artifacts"
+  },
+  {
+    "scenario_id": "S4_MODEL_RULE_CONFLICT",
+    "mode_id": "B1",
+    "run_id": "4e95e1af1b0941c68b5e4cd5858c6e82",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/4e95e1af1b0941c68b5e4cd5858c6e82/artifacts"
+  },
+  {
+    "scenario_id": "S4_MODEL_RULE_CONFLICT",
+    "mode_id": "B2",
+    "run_id": "5155911f78484654a2e19eb902aba43c",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/5155911f78484654a2e19eb902aba43c/artifacts"
+  },
+  {
+    "scenario_id": "S4_MODEL_RULE_CONFLICT",
+    "mode_id": "B3",
+    "run_id": "eca93b589aaf46ba802e5c44f4fbb0bf",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/eca93b589aaf46ba802e5c44f4fbb0bf/artifacts"
+  },
+  {
+    "scenario_id": "S4_MODEL_RULE_CONFLICT",
+    "mode_id": "A0",
+    "run_id": "1383a28d86bf486da82b08c93ac1e8cd",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/1383a28d86bf486da82b08c93ac1e8cd/artifacts"
+  },
+  {
+    "scenario_id": "S4_MODEL_RULE_CONFLICT",
+    "mode_id": "A1",
+    "run_id": "12c7c289698f450aac65f9847eff6f8c",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/12c7c289698f450aac65f9847eff6f8c/artifacts"
+  },
+  {
+    "scenario_id": "S4_MODEL_RULE_CONFLICT",
+    "mode_id": "A2",
+    "run_id": "f1dc83fbe55849b0896a0575c72ce80b",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/f1dc83fbe55849b0896a0575c72ce80b/artifacts"
+  },
+  {
+    "scenario_id": "S4_MODEL_RULE_CONFLICT",
+    "mode_id": "A3",
+    "run_id": "b59a66248cc749feb598465b1b198f74",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/b59a66248cc749feb598465b1b198f74/artifacts"
+  },
+  {
+    "scenario_id": "S4_MODEL_RULE_CONFLICT",
+    "mode_id": "A4",
+    "run_id": "0ce4eff6726d49a0944ffe036d53319b",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/0ce4eff6726d49a0944ffe036d53319b/artifacts"
+  },
+  {
+    "scenario_id": "S5_INTERVAL_UNCERTAINTY",
+    "mode_id": "B0",
+    "run_id": "ead8c3c6cbed4dbe8ede29591db8b630",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/ead8c3c6cbed4dbe8ede29591db8b630/artifacts"
+  },
+  {
+    "scenario_id": "S5_INTERVAL_UNCERTAINTY",
+    "mode_id": "B1",
+    "run_id": "fd1a0202c0d449509a80fd20a4305a0d",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/fd1a0202c0d449509a80fd20a4305a0d/artifacts"
+  },
+  {
+    "scenario_id": "S5_INTERVAL_UNCERTAINTY",
+    "mode_id": "B2",
+    "run_id": "c68b4d204ddd4210a02374f95fa9b7c3",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/c68b4d204ddd4210a02374f95fa9b7c3/artifacts"
+  },
+  {
+    "scenario_id": "S5_INTERVAL_UNCERTAINTY",
+    "mode_id": "B3",
+    "run_id": "d96de1b8ce07466c818f4743f2213884",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/d96de1b8ce07466c818f4743f2213884/artifacts"
+  },
+  {
+    "scenario_id": "S5_INTERVAL_UNCERTAINTY",
+    "mode_id": "A0",
+    "run_id": "e3a6939a8f734d9880f2515183f82668",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/e3a6939a8f734d9880f2515183f82668/artifacts"
+  },
+  {
+    "scenario_id": "S5_INTERVAL_UNCERTAINTY",
+    "mode_id": "A1",
+    "run_id": "c915dc54cb6d4e8a8f490b56180627db",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/c915dc54cb6d4e8a8f490b56180627db/artifacts"
+  },
+  {
+    "scenario_id": "S5_INTERVAL_UNCERTAINTY",
+    "mode_id": "A2",
+    "run_id": "dbf143a1b4e3411da787cbb29c173ceb",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/dbf143a1b4e3411da787cbb29c173ceb/artifacts"
+  },
+  {
+    "scenario_id": "S5_INTERVAL_UNCERTAINTY",
+    "mode_id": "A3",
+    "run_id": "6d7fa69756d847498f5b43d5cfec6a3d",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/6d7fa69756d847498f5b43d5cfec6a3d/artifacts"
+  },
+  {
+    "scenario_id": "S5_INTERVAL_UNCERTAINTY",
+    "mode_id": "A4",
+    "run_id": "23bb7e281df741e98e7fd4399d6fb9c2",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/23bb7e281df741e98e7fd4399d6fb9c2/artifacts"
+  },
+  {
+    "scenario_id": "S6_MULTILEVEL_UNCERTAINTY",
+    "mode_id": "B0",
+    "run_id": "6b917c5d9c0a4aaf86f23aac8ca85a24",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/6b917c5d9c0a4aaf86f23aac8ca85a24/artifacts"
+  },
+  {
+    "scenario_id": "S6_MULTILEVEL_UNCERTAINTY",
+    "mode_id": "B1",
+    "run_id": "209d0bfd8ce34839bf39610f02da294d",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/209d0bfd8ce34839bf39610f02da294d/artifacts"
+  },
+  {
+    "scenario_id": "S6_MULTILEVEL_UNCERTAINTY",
+    "mode_id": "B2",
+    "run_id": "23c939c4929f4c96be7b38bc2f62f6af",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/23c939c4929f4c96be7b38bc2f62f6af/artifacts"
+  },
+  {
+    "scenario_id": "S6_MULTILEVEL_UNCERTAINTY",
+    "mode_id": "B3",
+    "run_id": "d73863f13ead4d0f8e9c823740c7acac",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/d73863f13ead4d0f8e9c823740c7acac/artifacts"
+  },
+  {
+    "scenario_id": "S6_MULTILEVEL_UNCERTAINTY",
+    "mode_id": "A0",
+    "run_id": "27b4b9eb8ad04a0492fb875cfbefeda4",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/27b4b9eb8ad04a0492fb875cfbefeda4/artifacts"
+  },
+  {
+    "scenario_id": "S6_MULTILEVEL_UNCERTAINTY",
+    "mode_id": "A1",
+    "run_id": "f9e0d4d043fc458ea0946bd30bf46216",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/f9e0d4d043fc458ea0946bd30bf46216/artifacts"
+  },
+  {
+    "scenario_id": "S6_MULTILEVEL_UNCERTAINTY",
+    "mode_id": "A2",
+    "run_id": "c33acbeb61814cbcab2651b593bdec22",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/c33acbeb61814cbcab2651b593bdec22/artifacts"
+  },
+  {
+    "scenario_id": "S6_MULTILEVEL_UNCERTAINTY",
+    "mode_id": "A3",
+    "run_id": "447360b3347f4091bf38b769f4575e07",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/447360b3347f4091bf38b769f4575e07/artifacts"
+  },
+  {
+    "scenario_id": "S6_MULTILEVEL_UNCERTAINTY",
+    "mode_id": "A4",
+    "run_id": "2231b0d872474f7ea75370b2e9238d28",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/2231b0d872474f7ea75370b2e9238d28/artifacts"
+  },
+  {
+    "scenario_id": "S7_REDUCTION_LOSS_EXCEEDED",
+    "mode_id": "B0",
+    "run_id": "27d5a592bd94424494ddab9be4dbdb13",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/27d5a592bd94424494ddab9be4dbdb13/artifacts"
+  },
+  {
+    "scenario_id": "S7_REDUCTION_LOSS_EXCEEDED",
+    "mode_id": "B1",
+    "run_id": "0ec8760e25804019ae5ff4758105f58f",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/0ec8760e25804019ae5ff4758105f58f/artifacts"
+  },
+  {
+    "scenario_id": "S7_REDUCTION_LOSS_EXCEEDED",
+    "mode_id": "B2",
+    "run_id": "5d54b9f77c9d4f41afdeba583f8d65b3",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/5d54b9f77c9d4f41afdeba583f8d65b3/artifacts"
+  },
+  {
+    "scenario_id": "S7_REDUCTION_LOSS_EXCEEDED",
+    "mode_id": "B3",
+    "run_id": "58ed102c2b2b459ebaa2073bb95cb43c",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/58ed102c2b2b459ebaa2073bb95cb43c/artifacts"
+  },
+  {
+    "scenario_id": "S7_REDUCTION_LOSS_EXCEEDED",
+    "mode_id": "A0",
+    "run_id": "113609615a294b08a3f2f5ce93b04a81",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/113609615a294b08a3f2f5ce93b04a81/artifacts"
+  },
+  {
+    "scenario_id": "S7_REDUCTION_LOSS_EXCEEDED",
+    "mode_id": "A1",
+    "run_id": "b92b9cce5de54776a533e656f18f92f4",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/b92b9cce5de54776a533e656f18f92f4/artifacts"
+  },
+  {
+    "scenario_id": "S7_REDUCTION_LOSS_EXCEEDED",
+    "mode_id": "A2",
+    "run_id": "82cbc53c3bc944bf80a5c5c7c6470b76",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/82cbc53c3bc944bf80a5c5c7c6470b76/artifacts"
+  },
+  {
+    "scenario_id": "S7_REDUCTION_LOSS_EXCEEDED",
+    "mode_id": "A3",
+    "run_id": "6e9022ebd5514fc1808157eb715ac635",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/6e9022ebd5514fc1808157eb715ac635/artifacts"
+  },
+  {
+    "scenario_id": "S7_REDUCTION_LOSS_EXCEEDED",
+    "mode_id": "A4",
+    "run_id": "4992534259514a138cfcba6bc03fc0fc",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/4992534259514a138cfcba6bc03fc0fc/artifacts"
+  },
+  {
+    "scenario_id": "S8_INCOMPLETE_PROVENANCE",
+    "mode_id": "B0",
+    "run_id": "347938703f434aef9bdaf2caeb0131a9",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/347938703f434aef9bdaf2caeb0131a9/artifacts"
+  },
+  {
+    "scenario_id": "S8_INCOMPLETE_PROVENANCE",
+    "mode_id": "B1",
+    "run_id": "c7a47a450d43477193d53ba585d67c87",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/c7a47a450d43477193d53ba585d67c87/artifacts"
+  },
+  {
+    "scenario_id": "S8_INCOMPLETE_PROVENANCE",
+    "mode_id": "B2",
+    "run_id": "b783cf13536245f58b4dd0f0f3bec825",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/b783cf13536245f58b4dd0f0f3bec825/artifacts"
+  },
+  {
+    "scenario_id": "S8_INCOMPLETE_PROVENANCE",
+    "mode_id": "B3",
+    "run_id": "9b413057220f4bc28b54bab78f216157",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/9b413057220f4bc28b54bab78f216157/artifacts"
+  },
+  {
+    "scenario_id": "S8_INCOMPLETE_PROVENANCE",
+    "mode_id": "A0",
+    "run_id": "6c4089cc504748e581e1feaf9a1f4e4c",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/6c4089cc504748e581e1feaf9a1f4e4c/artifacts"
+  },
+  {
+    "scenario_id": "S8_INCOMPLETE_PROVENANCE",
+    "mode_id": "A1",
+    "run_id": "c70cae517a3244909ccbd891a78f8a97",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/c70cae517a3244909ccbd891a78f8a97/artifacts"
+  },
+  {
+    "scenario_id": "S8_INCOMPLETE_PROVENANCE",
+    "mode_id": "A2",
+    "run_id": "9971f22e58f2476a99986cc51dd17a74",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/9971f22e58f2476a99986cc51dd17a74/artifacts"
+  },
+  {
+    "scenario_id": "S8_INCOMPLETE_PROVENANCE",
+    "mode_id": "A3",
+    "run_id": "132eb0a365cf4d8699563282bf97a285",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/132eb0a365cf4d8699563282bf97a285/artifacts"
+  },
+  {
+    "scenario_id": "S8_INCOMPLETE_PROVENANCE",
+    "mode_id": "A4",
+    "run_id": "0dfb3ccbfde44dafb8235861d86f5e9b",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/0dfb3ccbfde44dafb8235861d86f5e9b/artifacts"
+  },
+  {
+    "scenario_id": "S9_REGISTERED_REPAIR",
+    "mode_id": "B0",
+    "run_id": "a913dbb9ebdb4faf991c92fe4f9ada2d",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/a913dbb9ebdb4faf991c92fe4f9ada2d/artifacts"
+  },
+  {
+    "scenario_id": "S9_REGISTERED_REPAIR",
+    "mode_id": "B1",
+    "run_id": "4fa4f931ef7348d2990aaa00bae162bc",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/4fa4f931ef7348d2990aaa00bae162bc/artifacts"
+  },
+  {
+    "scenario_id": "S9_REGISTERED_REPAIR",
+    "mode_id": "B2",
+    "run_id": "e7b1edaf1e7549a29dec132e4ae06b2d",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/e7b1edaf1e7549a29dec132e4ae06b2d/artifacts"
+  },
+  {
+    "scenario_id": "S9_REGISTERED_REPAIR",
+    "mode_id": "B3",
+    "run_id": "0508950e456b473a920cc5e1e28081b0",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/0508950e456b473a920cc5e1e28081b0/artifacts"
+  },
+  {
+    "scenario_id": "S9_REGISTERED_REPAIR",
+    "mode_id": "A0",
+    "run_id": "b7b60d159ce84e1d912fba88c993467a",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/b7b60d159ce84e1d912fba88c993467a/artifacts"
+  },
+  {
+    "scenario_id": "S9_REGISTERED_REPAIR",
+    "mode_id": "A1",
+    "run_id": "78937d99651e470aadcf9e9a2a17c807",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/78937d99651e470aadcf9e9a2a17c807/artifacts"
+  },
+  {
+    "scenario_id": "S9_REGISTERED_REPAIR",
+    "mode_id": "A2",
+    "run_id": "f2655bbdae624cc292d9ab859818b338",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/f2655bbdae624cc292d9ab859818b338/artifacts"
+  },
+  {
+    "scenario_id": "S9_REGISTERED_REPAIR",
+    "mode_id": "A3",
+    "run_id": "510b48963c4b40bda10db0ae2b429596",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/510b48963c4b40bda10db0ae2b429596/artifacts"
+  },
+  {
+    "scenario_id": "S9_REGISTERED_REPAIR",
+    "mode_id": "A4",
+    "run_id": "17dcab5130b2436190c4c5279dad223d",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/17dcab5130b2436190c4c5279dad223d/artifacts"
+  },
+  {
+    "scenario_id": "S10_DETERMINISM",
+    "mode_id": "B0",
+    "run_id": "88ef3635150e4e2a8b011f9ec2c484b1",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/88ef3635150e4e2a8b011f9ec2c484b1/artifacts"
+  },
+  {
+    "scenario_id": "S10_DETERMINISM",
+    "mode_id": "B1",
+    "run_id": "dc27c97d26f14ff09650d7e9543ba3a8",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/dc27c97d26f14ff09650d7e9543ba3a8/artifacts"
+  },
+  {
+    "scenario_id": "S10_DETERMINISM",
+    "mode_id": "B2",
+    "run_id": "8b88193ca8e54c3b9a66a0dfb1e07de9",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/8b88193ca8e54c3b9a66a0dfb1e07de9/artifacts"
+  },
+  {
+    "scenario_id": "S10_DETERMINISM",
+    "mode_id": "B3",
+    "run_id": "19e2f022cce44bc88a139d0d3886730f",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/19e2f022cce44bc88a139d0d3886730f/artifacts"
+  },
+  {
+    "scenario_id": "S10_DETERMINISM",
+    "mode_id": "A0",
+    "run_id": "ce0d88323cc24817a290e90a80b79a7e",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/ce0d88323cc24817a290e90a80b79a7e/artifacts"
+  },
+  {
+    "scenario_id": "S10_DETERMINISM",
+    "mode_id": "A1",
+    "run_id": "8ae9df17b6154131bbafbe0ad3e19807",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/8ae9df17b6154131bbafbe0ad3e19807/artifacts"
+  },
+  {
+    "scenario_id": "S10_DETERMINISM",
+    "mode_id": "A2",
+    "run_id": "6d6bbe1bbaaf488c9aa4ac0994a95bbd",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/6d6bbe1bbaaf488c9aa4ac0994a95bbd/artifacts"
+  },
+  {
+    "scenario_id": "S10_DETERMINISM",
+    "mode_id": "A3",
+    "run_id": "0e9af11832864e719e177ab4f92c348d",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/0e9af11832864e719e177ab4f92c348d/artifacts"
+  },
+  {
+    "scenario_id": "S10_DETERMINISM",
+    "mode_id": "A4",
+    "run_id": "3ec2d54cf9b448b79e5d413f252240d9",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/3ec2d54cf9b448b79e5d413f252240d9/artifacts"
+  },
+  {
+    "scenario_id": "S11_TARGET_LEAKAGE",
+    "mode_id": "B0",
+    "run_id": "0ac2a284406441029e49a375c263df2a",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/0ac2a284406441029e49a375c263df2a/artifacts"
+  },
+  {
+    "scenario_id": "S11_TARGET_LEAKAGE",
+    "mode_id": "B1",
+    "run_id": "1875f7880732456591d4e09821a07da9",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/1875f7880732456591d4e09821a07da9/artifacts"
+  },
+  {
+    "scenario_id": "S11_TARGET_LEAKAGE",
+    "mode_id": "B2",
+    "run_id": "e14e773d051542869fc217a9ff3f72d2",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/e14e773d051542869fc217a9ff3f72d2/artifacts"
+  },
+  {
+    "scenario_id": "S11_TARGET_LEAKAGE",
+    "mode_id": "B3",
+    "run_id": "5ebe05f8de5e4e54a0165d75acfdca6d",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/5ebe05f8de5e4e54a0165d75acfdca6d/artifacts"
+  },
+  {
+    "scenario_id": "S11_TARGET_LEAKAGE",
+    "mode_id": "A0",
+    "run_id": "d452b907e8ae46e08869833255bfcdaa",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/d452b907e8ae46e08869833255bfcdaa/artifacts"
+  },
+  {
+    "scenario_id": "S11_TARGET_LEAKAGE",
+    "mode_id": "A1",
+    "run_id": "2b834d3f85ba4ba9b55a880700a19113",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/2b834d3f85ba4ba9b55a880700a19113/artifacts"
+  },
+  {
+    "scenario_id": "S11_TARGET_LEAKAGE",
+    "mode_id": "A2",
+    "run_id": "3aaf2101d745469990ff4ee908641618",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/3aaf2101d745469990ff4ee908641618/artifacts"
+  },
+  {
+    "scenario_id": "S11_TARGET_LEAKAGE",
+    "mode_id": "A3",
+    "run_id": "3291c0f9ee7c432582ec69f35ff8dbc1",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/3291c0f9ee7c432582ec69f35ff8dbc1/artifacts"
+  },
+  {
+    "scenario_id": "S11_TARGET_LEAKAGE",
+    "mode_id": "A4",
+    "run_id": "a4a6315f06f140cf8d897055bdb4fc90",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/a4a6315f06f140cf8d897055bdb4fc90/artifacts"
+  },
+  {
+    "scenario_id": "S12_SPLIT_OVERLAP",
+    "mode_id": "B0",
+    "run_id": "35a68f1f5bca47b2aafa2f03780a2d48",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/35a68f1f5bca47b2aafa2f03780a2d48/artifacts"
+  },
+  {
+    "scenario_id": "S12_SPLIT_OVERLAP",
+    "mode_id": "B1",
+    "run_id": "32a32fe8acf04209b0c61def34f550e2",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/32a32fe8acf04209b0c61def34f550e2/artifacts"
+  },
+  {
+    "scenario_id": "S12_SPLIT_OVERLAP",
+    "mode_id": "B2",
+    "run_id": "6dccfba9af904d05a2cebab47043b3a6",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/6dccfba9af904d05a2cebab47043b3a6/artifacts"
+  },
+  {
+    "scenario_id": "S12_SPLIT_OVERLAP",
+    "mode_id": "B3",
+    "run_id": "62b29b5e23ab4362bdb8a8e9141ba6ba",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/62b29b5e23ab4362bdb8a8e9141ba6ba/artifacts"
+  },
+  {
+    "scenario_id": "S12_SPLIT_OVERLAP",
+    "mode_id": "A0",
+    "run_id": "03cffa9ba5d74bd6a60fc73b10427e66",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/03cffa9ba5d74bd6a60fc73b10427e66/artifacts"
+  },
+  {
+    "scenario_id": "S12_SPLIT_OVERLAP",
+    "mode_id": "A1",
+    "run_id": "dbcce9fa067d4e148187f5e21168eca7",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/dbcce9fa067d4e148187f5e21168eca7/artifacts"
+  },
+  {
+    "scenario_id": "S12_SPLIT_OVERLAP",
+    "mode_id": "A2",
+    "run_id": "f7488a77b2704533bf316626bb80af77",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/f7488a77b2704533bf316626bb80af77/artifacts"
+  },
+  {
+    "scenario_id": "S12_SPLIT_OVERLAP",
+    "mode_id": "A3",
+    "run_id": "a71faac6c8dc4fd8844c4dda1be07b5f",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/a71faac6c8dc4fd8844c4dda1be07b5f/artifacts"
+  },
+  {
+    "scenario_id": "S12_SPLIT_OVERLAP",
+    "mode_id": "A4",
+    "run_id": "f47320ea3fc74a92b83e9b26827dfabf",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/f47320ea3fc74a92b83e9b26827dfabf/artifacts"
+  },
+  {
+    "scenario_id": "S13_PREPROCESSOR_FULL_FIT",
+    "mode_id": "B0",
+    "run_id": "61528a01e95944fcaf55b26a02cda681",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/61528a01e95944fcaf55b26a02cda681/artifacts"
+  },
+  {
+    "scenario_id": "S13_PREPROCESSOR_FULL_FIT",
+    "mode_id": "B1",
+    "run_id": "7a352bc60d0b4dc8b83aa7d676e49960",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/7a352bc60d0b4dc8b83aa7d676e49960/artifacts"
+  },
+  {
+    "scenario_id": "S13_PREPROCESSOR_FULL_FIT",
+    "mode_id": "B2",
+    "run_id": "6b5d5821d01c47ca82f4374b1ded3f7d",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/6b5d5821d01c47ca82f4374b1ded3f7d/artifacts"
+  },
+  {
+    "scenario_id": "S13_PREPROCESSOR_FULL_FIT",
+    "mode_id": "B3",
+    "run_id": "f92d5f38fa1d45cebcff497392fd3ec1",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/f92d5f38fa1d45cebcff497392fd3ec1/artifacts"
+  },
+  {
+    "scenario_id": "S13_PREPROCESSOR_FULL_FIT",
+    "mode_id": "A0",
+    "run_id": "e0b6cbe4b0ea4e229fed1c35484b7977",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/e0b6cbe4b0ea4e229fed1c35484b7977/artifacts"
+  },
+  {
+    "scenario_id": "S13_PREPROCESSOR_FULL_FIT",
+    "mode_id": "A1",
+    "run_id": "c8da3f2fce81448983cc7d24b0ab7b42",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/c8da3f2fce81448983cc7d24b0ab7b42/artifacts"
+  },
+  {
+    "scenario_id": "S13_PREPROCESSOR_FULL_FIT",
+    "mode_id": "A2",
+    "run_id": "10b1d8288c8c49ff8a1adc3dc19aa3cb",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/10b1d8288c8c49ff8a1adc3dc19aa3cb/artifacts"
+  },
+  {
+    "scenario_id": "S13_PREPROCESSOR_FULL_FIT",
+    "mode_id": "A3",
+    "run_id": "a625abd3e4ff40c086d03728ee9f2423",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/a625abd3e4ff40c086d03728ee9f2423/artifacts"
+  },
+  {
+    "scenario_id": "S13_PREPROCESSOR_FULL_FIT",
+    "mode_id": "A4",
+    "run_id": "6e6219cb6feb4e3e99dbd4d088563a2e",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/6e6219cb6feb4e3e99dbd4d088563a2e/artifacts"
+  },
+  {
+    "scenario_id": "S14_FEATURE_ORDER",
+    "mode_id": "B0",
+    "run_id": "bab8da1612fa4feea2ae380be7acb418",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/bab8da1612fa4feea2ae380be7acb418/artifacts"
+  },
+  {
+    "scenario_id": "S14_FEATURE_ORDER",
+    "mode_id": "B1",
+    "run_id": "f803282ece134b5f976dda6a71a6c934",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/f803282ece134b5f976dda6a71a6c934/artifacts"
+  },
+  {
+    "scenario_id": "S14_FEATURE_ORDER",
+    "mode_id": "B2",
+    "run_id": "b4bcb671647e409ebf72b55b6240e3df",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/b4bcb671647e409ebf72b55b6240e3df/artifacts"
+  },
+  {
+    "scenario_id": "S14_FEATURE_ORDER",
+    "mode_id": "B3",
+    "run_id": "4fc1861b748a46b492a0cf7525107c40",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/4fc1861b748a46b492a0cf7525107c40/artifacts"
+  },
+  {
+    "scenario_id": "S14_FEATURE_ORDER",
+    "mode_id": "A0",
+    "run_id": "d988515d49c14a6fa7055a95ecd8d750",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/d988515d49c14a6fa7055a95ecd8d750/artifacts"
+  },
+  {
+    "scenario_id": "S14_FEATURE_ORDER",
+    "mode_id": "A1",
+    "run_id": "d0b41aa9e0b54e78a13fdfba3848bf93",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/d0b41aa9e0b54e78a13fdfba3848bf93/artifacts"
+  },
+  {
+    "scenario_id": "S14_FEATURE_ORDER",
+    "mode_id": "A2",
+    "run_id": "31bccf122eb44d9aba2116eb58c771c1",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/31bccf122eb44d9aba2116eb58c771c1/artifacts"
+  },
+  {
+    "scenario_id": "S14_FEATURE_ORDER",
+    "mode_id": "A3",
+    "run_id": "0bc354c3cfa84081ba15535bf53df98c",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/0bc354c3cfa84081ba15535bf53df98c/artifacts"
+  },
+  {
+    "scenario_id": "S14_FEATURE_ORDER",
+    "mode_id": "A4",
+    "run_id": "4f1ac71ff4784ad18a790fb72aa29b45",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/4f1ac71ff4784ad18a790fb72aa29b45/artifacts"
+  },
+  {
+    "scenario_id": "S15_MODEL_NON_CONVERGENCE",
+    "mode_id": "B0",
+    "run_id": "41b9dd981413495a97afe823b64fb372",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/41b9dd981413495a97afe823b64fb372/artifacts"
+  },
+  {
+    "scenario_id": "S15_MODEL_NON_CONVERGENCE",
+    "mode_id": "B1",
+    "run_id": "ba38c301f81b443083bbdbfeda35a56e",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/ba38c301f81b443083bbdbfeda35a56e/artifacts"
+  },
+  {
+    "scenario_id": "S15_MODEL_NON_CONVERGENCE",
+    "mode_id": "B2",
+    "run_id": "1861c620da094ca983bbe2c811e08bf0",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/1861c620da094ca983bbe2c811e08bf0/artifacts"
+  },
+  {
+    "scenario_id": "S15_MODEL_NON_CONVERGENCE",
+    "mode_id": "B3",
+    "run_id": "3be23be5dade4fc09202de5d29d53f44",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/3be23be5dade4fc09202de5d29d53f44/artifacts"
+  },
+  {
+    "scenario_id": "S15_MODEL_NON_CONVERGENCE",
+    "mode_id": "A0",
+    "run_id": "ac5af74a56dd47219e17139e67e176d5",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/ac5af74a56dd47219e17139e67e176d5/artifacts"
+  },
+  {
+    "scenario_id": "S15_MODEL_NON_CONVERGENCE",
+    "mode_id": "A1",
+    "run_id": "ee076aae1c6b404f81b914c891677c6b",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/ee076aae1c6b404f81b914c891677c6b/artifacts"
+  },
+  {
+    "scenario_id": "S15_MODEL_NON_CONVERGENCE",
+    "mode_id": "A2",
+    "run_id": "7833f946973b47efaaa068d9bb4c7dbd",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/7833f946973b47efaaa068d9bb4c7dbd/artifacts"
+  },
+  {
+    "scenario_id": "S15_MODEL_NON_CONVERGENCE",
+    "mode_id": "A3",
+    "run_id": "bf1fab31acc4418abb712fd1329838e9",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/bf1fab31acc4418abb712fd1329838e9/artifacts"
+  },
+  {
+    "scenario_id": "S15_MODEL_NON_CONVERGENCE",
+    "mode_id": "A4",
+    "run_id": "b734fef348974f8397b92167d6387edc",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/b734fef348974f8397b92167d6387edc/artifacts"
+  },
+  {
+    "scenario_id": "S16_MODEL_ARTIFACT_TAMPER",
+    "mode_id": "B0",
+    "run_id": "889bebf53d82433193c5fdc232d6b137",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/889bebf53d82433193c5fdc232d6b137/artifacts"
+  },
+  {
+    "scenario_id": "S16_MODEL_ARTIFACT_TAMPER",
+    "mode_id": "B1",
+    "run_id": "9bb4968e9aec47f2af539f627c006118",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/9bb4968e9aec47f2af539f627c006118/artifacts"
+  },
+  {
+    "scenario_id": "S16_MODEL_ARTIFACT_TAMPER",
+    "mode_id": "B2",
+    "run_id": "1e9c8ab19e12451b8ef6832ff8861674",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/1e9c8ab19e12451b8ef6832ff8861674/artifacts"
+  },
+  {
+    "scenario_id": "S16_MODEL_ARTIFACT_TAMPER",
+    "mode_id": "B3",
+    "run_id": "4505f2d7e4c94527bd87d73121feed36",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/4505f2d7e4c94527bd87d73121feed36/artifacts"
+  },
+  {
+    "scenario_id": "S16_MODEL_ARTIFACT_TAMPER",
+    "mode_id": "A0",
+    "run_id": "38f73a38688548a6bf067aa955708fd5",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/38f73a38688548a6bf067aa955708fd5/artifacts"
+  },
+  {
+    "scenario_id": "S16_MODEL_ARTIFACT_TAMPER",
+    "mode_id": "A1",
+    "run_id": "767df36b49074e15b56ce6938a308200",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/767df36b49074e15b56ce6938a308200/artifacts"
+  },
+  {
+    "scenario_id": "S16_MODEL_ARTIFACT_TAMPER",
+    "mode_id": "A2",
+    "run_id": "adfcddf813fd4b6ca7e3621e31da5566",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/adfcddf813fd4b6ca7e3621e31da5566/artifacts"
+  },
+  {
+    "scenario_id": "S16_MODEL_ARTIFACT_TAMPER",
+    "mode_id": "A3",
+    "run_id": "4a555a71a21446f8ab1e8cb58787bcc8",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/4a555a71a21446f8ab1e8cb58787bcc8/artifacts"
+  },
+  {
+    "scenario_id": "S16_MODEL_ARTIFACT_TAMPER",
+    "mode_id": "A4",
+    "run_id": "13bbe134520542009ef979f297a65a11",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/13bbe134520542009ef979f297a65a11/artifacts"
+  },
+  {
+    "scenario_id": "S17_SHAP_INCONSISTENCY",
+    "mode_id": "B0",
+    "run_id": "db62e94ba2354498b7edbc7ec5460c1d",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/db62e94ba2354498b7edbc7ec5460c1d/artifacts"
+  },
+  {
+    "scenario_id": "S17_SHAP_INCONSISTENCY",
+    "mode_id": "B1",
+    "run_id": "1f5cc6658ac840469fb8d853b5416c23",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/1f5cc6658ac840469fb8d853b5416c23/artifacts"
+  },
+  {
+    "scenario_id": "S17_SHAP_INCONSISTENCY",
+    "mode_id": "B2",
+    "run_id": "32a5160d284d4267baad0ad8d2580d90",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/32a5160d284d4267baad0ad8d2580d90/artifacts"
+  },
+  {
+    "scenario_id": "S17_SHAP_INCONSISTENCY",
+    "mode_id": "B3",
+    "run_id": "b73ef520456b41e1a6cefdfa1ce18a6e",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/b73ef520456b41e1a6cefdfa1ce18a6e/artifacts"
+  },
+  {
+    "scenario_id": "S17_SHAP_INCONSISTENCY",
+    "mode_id": "A0",
+    "run_id": "883b44394f0d46889ed9e20daba3ad61",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/883b44394f0d46889ed9e20daba3ad61/artifacts"
+  },
+  {
+    "scenario_id": "S17_SHAP_INCONSISTENCY",
+    "mode_id": "A1",
+    "run_id": "893ccc14b2584ae89ff35bb4c0e6b3b5",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/893ccc14b2584ae89ff35bb4c0e6b3b5/artifacts"
+  },
+  {
+    "scenario_id": "S17_SHAP_INCONSISTENCY",
+    "mode_id": "A2",
+    "run_id": "3fbc1e0ea5e74be2b7855f6d79f1b197",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/3fbc1e0ea5e74be2b7855f6d79f1b197/artifacts"
+  },
+  {
+    "scenario_id": "S17_SHAP_INCONSISTENCY",
+    "mode_id": "A3",
+    "run_id": "bec9776c98134345a1b3cd7be988831b",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/bec9776c98134345a1b3cd7be988831b/artifacts"
+  },
+  {
+    "scenario_id": "S17_SHAP_INCONSISTENCY",
+    "mode_id": "A4",
+    "run_id": "0adb0dea30464d98bec4df38f6a1628e",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/0adb0dea30464d98bec4df38f6a1628e/artifacts"
+  },
+  {
+    "scenario_id": "S18_MISSING_EXPLANATION_PROVENANCE",
+    "mode_id": "B0",
+    "run_id": "f9cc43412295492ea625d0ff507d2a28",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/f9cc43412295492ea625d0ff507d2a28/artifacts"
+  },
+  {
+    "scenario_id": "S18_MISSING_EXPLANATION_PROVENANCE",
+    "mode_id": "B1",
+    "run_id": "472a19c0431849df853128bf1ddfba94",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/472a19c0431849df853128bf1ddfba94/artifacts"
+  },
+  {
+    "scenario_id": "S18_MISSING_EXPLANATION_PROVENANCE",
+    "mode_id": "B2",
+    "run_id": "55abdfc5b76a4b65af804d24db0ae0dd",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/55abdfc5b76a4b65af804d24db0ae0dd/artifacts"
+  },
+  {
+    "scenario_id": "S18_MISSING_EXPLANATION_PROVENANCE",
+    "mode_id": "B3",
+    "run_id": "762e21d4ad614cefa24f9c0bc62f645a",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/762e21d4ad614cefa24f9c0bc62f645a/artifacts"
+  },
+  {
+    "scenario_id": "S18_MISSING_EXPLANATION_PROVENANCE",
+    "mode_id": "A0",
+    "run_id": "78501d0dfc2941acb4df1dbf980553ec",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/78501d0dfc2941acb4df1dbf980553ec/artifacts"
+  },
+  {
+    "scenario_id": "S18_MISSING_EXPLANATION_PROVENANCE",
+    "mode_id": "A1",
+    "run_id": "a49c0bcfaabb41a7a5e1b884f7de1870",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/a49c0bcfaabb41a7a5e1b884f7de1870/artifacts"
+  },
+  {
+    "scenario_id": "S18_MISSING_EXPLANATION_PROVENANCE",
+    "mode_id": "A2",
+    "run_id": "07257b03ecbf450ca7448147bf081408",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/07257b03ecbf450ca7448147bf081408/artifacts"
+  },
+  {
+    "scenario_id": "S18_MISSING_EXPLANATION_PROVENANCE",
+    "mode_id": "A3",
+    "run_id": "0917a08c38fa4bde9fbd5a94d3667d35",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/0917a08c38fa4bde9fbd5a94d3667d35/artifacts"
+  },
+  {
+    "scenario_id": "S18_MISSING_EXPLANATION_PROVENANCE",
+    "mode_id": "A4",
+    "run_id": "50b0e8380ba54b4e900cc256c742d2f3",
+    "artifact_uri": "file:///tmp/fuzzyxai-ml-pipeline-v2-comparative-official-1a9d6f9/783736507178257031/50b0e8380ba54b4e900cc256c742d2f3/artifacts"
+  }
+]

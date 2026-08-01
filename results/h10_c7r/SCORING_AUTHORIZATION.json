@@ -1,0 +1,11 @@
+{
+  "authorization_status": "H10_C7R_SCORING_AUTHORIZED_ONCE",
+  "gold_sha256": "3bf81a63b1bfaad84162744b73b3126e841ce7233f51328b8127061a1046a83e",
+  "held_out_incidents": 40,
+  "held_out_manifest_sha256": "67925f6a974abbf9ee6fb575619e79a315b42f7398a19a263bd584d52dbec2b4",
+  "held_out_repositories": 30,
+  "lock_manifest_sha256": "d20e4aeba7918e3e465cf4fc0711cf9c27c8d313761d8a11968d998045ffb284",
+  "opening_count_before_scoring": 0,
+  "protocol_id": "H10-C7R-v1",
+  "single_official_scoring": true
+}

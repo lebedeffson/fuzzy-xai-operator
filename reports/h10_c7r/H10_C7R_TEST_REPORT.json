@@ -1,0 +1,26 @@
+{
+  "claim_lint": {
+    "files_checked": 36,
+    "status": "PASS",
+    "violations": 0
+  },
+  "compileall": "PASS",
+  "focused_tests": {
+    "passed": 14,
+    "status": "PASS"
+  },
+  "full_regression": {
+    "commit": "0988eba0f98fb96a9f5e6991b1b50f60a16f327c",
+    "passed": 791,
+    "seconds": 238.77,
+    "skipped": 6,
+    "status": "PASS"
+  },
+  "operator_manifest": {
+    "operator_count": 41,
+    "status": "PASS"
+  },
+  "ruff": "PASS",
+  "subsequent_diff_classification": "REPORT_ONLY",
+  "scoring_repeated_by_tests": false
+}

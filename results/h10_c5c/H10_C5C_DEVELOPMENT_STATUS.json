@@ -1,0 +1,196 @@
+{
+  "abstention_threshold": 0.7814702970330418,
+  "abstention_threshold_selected_on_development": true,
+  "checks": {
+    "candidate_recall_at_10_at_least_0_75": false,
+    "contract_accuracy_at_least_0_60": false,
+    "coverage_at_least_0_70": true,
+    "development_calibration_satisfies_coverage": true,
+    "false_localization_not_worse": false,
+    "gold_leakage_zero": true,
+    "minimum_development_incidents": true,
+    "minimum_development_repositories": true,
+    "o_route_hit_at_3_strictly_greater": false,
+    "top_k_lists_structurally_distinct": true
+  },
+  "coverage_risk_curve": [
+    {
+      "calibration_error": 0.8352501623520898,
+      "coverage": 0.8,
+      "false_localization": 0.8,
+      "hit_at_3": 0.0,
+      "threshold": 0.0
+    },
+    {
+      "calibration_error": 0.8352501623520898,
+      "coverage": 0.8,
+      "false_localization": 0.8,
+      "hit_at_3": 0.0,
+      "threshold": 0.7471604041952535
+    },
+    {
+      "calibration_error": 0.8390801518371697,
+      "coverage": 0.7666666666666667,
+      "false_localization": 0.7666666666666667,
+      "hit_at_3": 0.0,
+      "threshold": 0.7768698398515701
+    },
+    {
+      "calibration_error": 0.8450049434548458,
+      "coverage": 0.7,
+      "false_localization": 0.7,
+      "hit_at_3": 0.0,
+      "threshold": 0.7814702970330418
+    },
+    {
+      "calibration_error": 0.8555940511918132,
+      "coverage": 0.6,
+      "false_localization": 0.6,
+      "hit_at_3": 0.0,
+      "threshold": 0.7989429673546451
+    },
+    {
+      "calibration_error": 0.8626754366714592,
+      "coverage": 0.5333333333333333,
+      "false_localization": 0.5333333333333333,
+      "hit_at_3": 0.0,
+      "threshold": 0.8030883247958059
+    },
+    {
+      "calibration_error": 0.8764263086427638,
+      "coverage": 0.43333333333333335,
+      "false_localization": 0.43333333333333335,
+      "hit_at_3": 0.0,
+      "threshold": 0.8071482140089278
+    },
+    {
+      "calibration_error": 0.8890223258489158,
+      "coverage": 0.36666666666666664,
+      "false_localization": 0.36666666666666664,
+      "hit_at_3": 0.0,
+      "threshold": 0.8111243971624381
+    },
+    {
+      "calibration_error": 0.8968121187175635,
+      "coverage": 0.3333333333333333,
+      "false_localization": 0.3333333333333333,
+      "hit_at_3": 0.0,
+      "threshold": 0.8150186000926957
+    },
+    {
+      "calibration_error": 0.9059002874536601,
+      "coverage": 0.3,
+      "false_localization": 0.3,
+      "hit_at_3": 0.0,
+      "threshold": 0.8539214971626882
+    },
+    {
+      "calibration_error": 0.9123976362400315,
+      "coverage": 0.26666666666666666,
+      "false_localization": 0.26666666666666666,
+      "hit_at_3": 0.0,
+      "threshold": 0.8719783073451471
+    },
+    {
+      "calibration_error": 0.9181718260821577,
+      "coverage": 0.23333333333333334,
+      "false_localization": 0.23333333333333334,
+      "hit_at_3": 0.0,
+      "threshold": 0.8780527453497484
+    },
+    {
+      "calibration_error": 0.9248583395375594,
+      "coverage": 0.2,
+      "false_localization": 0.2,
+      "hit_at_3": 0.0,
+      "threshold": 0.9030280321355949
+    },
+    {
+      "calibration_error": 0.9292244010179523,
+      "coverage": 0.16666666666666666,
+      "false_localization": 0.16666666666666666,
+      "hit_at_3": 0.0,
+      "threshold": 0.9069855107893365
+    },
+    {
+      "calibration_error": 0.9347841235751062,
+      "coverage": 0.13333333333333333,
+      "false_localization": 0.13333333333333333,
+      "hit_at_3": 0.0,
+      "threshold": 0.9120120631856466
+    },
+    {
+      "calibration_error": 0.9423748103715927,
+      "coverage": 0.1,
+      "false_localization": 0.1,
+      "hit_at_3": 0.0,
+      "threshold": 0.9190471901791964
+    },
+    {
+      "calibration_error": 0.9540386204677909,
+      "coverage": 0.06666666666666667,
+      "false_localization": 0.06666666666666667,
+      "hit_at_3": 0.0,
+      "threshold": 0.9347263382719373
+    },
+    {
+      "calibration_error": 0.9733509026636445,
+      "coverage": 0.03333333333333333,
+      "false_localization": 0.03333333333333333,
+      "hit_at_3": 0.0,
+      "threshold": 0.9733509026636445
+    },
+    {
+      "calibration_error": 0.0,
+      "coverage": 0.0,
+      "false_localization": 0.0,
+      "hit_at_3": 0.0,
+      "threshold": 1.0
+    }
+  ],
+  "development_incidents": 30,
+  "development_repositories": 8,
+  "gold_leakage_audit": "PASS",
+  "held_out_created": false,
+  "held_out_scored": false,
+  "input_manifest_sha256": "2db9ab1402fad106201329f091d2d355d5a539b49ec0033f204f04af7bc40824",
+  "metrics": {
+    "B_GREEDY": {
+      "candidate_recall_at_10": 0.5666666666666667,
+      "candidate_recall_at_20": 0.5666666666666667,
+      "candidate_recall_at_5": 0.4666666666666667,
+      "contract_accuracy": 0.16666666666666666,
+      "coverage": 0.8,
+      "false_localization": 0.7,
+      "incident_count": 30,
+      "joint_hit_at_3": 0.06666666666666667,
+      "mean_evidence_requests": 0.23333333333333334,
+      "repository_count": 8
+    },
+    "O_ROUTE": {
+      "candidate_recall_at_10": 0.5666666666666667,
+      "candidate_recall_at_20": 0.5666666666666667,
+      "candidate_recall_at_5": 0.4666666666666667,
+      "contract_accuracy": 0.13333333333333333,
+      "coverage": 0.8,
+      "false_localization": 0.7666666666666667,
+      "incident_count": 30,
+      "joint_hit_at_3": 0.0,
+      "mean_evidence_requests": 0.23333333333333334,
+      "repository_count": 8
+    }
+  },
+  "protocol_amendment": "h10-c5c-evidence-retrieval-v1-amendment-001",
+  "protocol_id": "h10-c5c-evidence-retrieval-v1",
+  "readiness_report_sha256": "60c7c8cba808aa8468a038f3768bf8e7bcb5b9280de5112f727c3b2023ca4433",
+  "scientific_result": "NOT_EVALUATED",
+  "selected_coverage_risk_point": {
+    "calibration_error": 0.8450049434548458,
+    "coverage": 0.7,
+    "false_localization": 0.7,
+    "hit_at_3": 0.0,
+    "threshold": 0.7814702970330418
+  },
+  "status": "H10_C5C_DEVELOPMENT_GATE_FAIL",
+  "top_k_identical_incidents": 8
+}

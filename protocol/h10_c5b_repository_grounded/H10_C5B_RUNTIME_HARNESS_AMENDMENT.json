@@ -1,0 +1,27 @@
+{
+  "amendment_id": "h10-c5b-runtime-harness-amendment-v1",
+  "amendment_scope": "swebench_test_harness_materialization_only",
+  "created_after_failed_preflight": true,
+  "development_scoring_before_amendment": false,
+  "endpoint_changed": false,
+  "gates_changed": false,
+  "gold_fix_patch_exposed_to_method": false,
+  "held_out_scoring_enabled": false,
+  "method_code_status": "FROZEN_FOR_RUNTIME_COLLECTION",
+  "method_commit": "7aa72a19a70bdb5eedea520742f269bc6c26aeea",
+  "parent_protocol": "h10-c5b-repository-grounded-v1",
+  "preflight_failure": {
+    "incident_id": "marshmallow-code__marshmallow-1343",
+    "status": "PYTEST_TARGET_NOT_MATERIALIZED",
+    "trace_complete_count": 0
+  },
+  "runtime_harness_policy": {
+    "container_python": "/opt/miniconda3/envs/testbed/bin/python",
+    "public_test_patch_applied_to_disposable_sandbox": true,
+    "public_test_patch_sha256_required": true,
+    "public_test_patch_visible_to_route_auditor": false,
+    "public_test_patch_visible_to_scoring_features": false,
+    "gold_fix_patch_applied": false
+  },
+  "status": "LOCKED_BEFORE_COMPLETE_RUNTIME_EVIDENCE"
+}

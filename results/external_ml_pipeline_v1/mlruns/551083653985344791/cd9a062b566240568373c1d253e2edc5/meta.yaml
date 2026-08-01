@@ -1,0 +1,15 @@
+artifact_uri: file:///home/lebedeffson/Code/fuzzy-xai-external-ml-pipeline-v1/results/external_ml_pipeline_v1/mlruns/551083653985344791/cd9a062b566240568373c1d253e2edc5/artifacts
+end_time: 1785585507237
+entry_point_name: ''
+experiment_id: '551083653985344791'
+lifecycle_stage: active
+run_id: cd9a062b566240568373c1d253e2edc5
+run_name: ext2-shap-tree-explainer:C2_CONSISTENT_RETRAIN:B_PAIRWISE_RULES
+run_uuid: cd9a062b566240568373c1d253e2edc5
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1785585507231
+status: 3
+tags: []
+user_id: lebedeffson

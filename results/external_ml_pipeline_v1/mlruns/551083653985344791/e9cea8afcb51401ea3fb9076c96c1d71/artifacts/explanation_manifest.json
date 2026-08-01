@@ -1,0 +1,69 @@
+{
+  "artifact_sha256": "68cd56865a289ab84c0ceef01e53ed3cd776d5a5725ce1e342fcb4c19bb47fcf",
+  "attributions": [
+    [
+      "alcohol <= -0.77",
+      0.17636234650585988
+    ],
+    [
+      "color_intensity <= -0.85",
+      0.1492702208225475
+    ],
+    [
+      "flavanoids <= -0.92",
+      -0.13938007457873572
+    ],
+    [
+      "-0.76 < proline <= -0.27",
+      0.12319618453065223
+    ],
+    [
+      "-0.41 < malic_acid <= 0.66",
+      -0.028529965702548045
+    ],
+    [
+      "ash > 0.77",
+      -0.023446094648013772
+    ],
+    [
+      "-0.98 < od280/od315_of_diluted_wines <= 0.28",
+      0.021413620994185298
+    ],
+    [
+      "magnesium > 0.52",
+      -0.018836985467386762
+    ],
+    [
+      "nonflavanoid_phenols <= -0.77",
+      -0.012296774468789715
+    ],
+    [
+      "-0.01 < alcalinity_of_ash <= 0.65",
+      -0.008492864412662527
+    ]
+  ],
+  "base_value": 0.4531428047270841,
+  "explainer_id": "lime.LimeTabularExplainer",
+  "explainer_version": "0.2.0.1",
+  "feature_names": [
+    "alcohol",
+    "malic_acid",
+    "ash",
+    "alcalinity_of_ash",
+    "magnesium",
+    "total_phenols",
+    "flavanoids",
+    "nonflavanoid_phenols",
+    "proanthocyanins",
+    "color_intensity",
+    "hue",
+    "od280/od315_of_diluted_wines",
+    "proline"
+  ],
+  "model_sha256": "e846982b6a9ffec5e89c8379aa253b25ca7c8f816da0928e3fb7bedc3619f2d6",
+  "model_version": "baseline",
+  "object_id": "ext4-lime-tabular:row:96",
+  "run_id": "external:ext4-lime-tabular:baseline",
+  "selected_output": 1,
+  "source_uri": "https://github.com/marcotcr/lime/blob/fd7eb2e6f760619c29fca0187c07b82157601b32/lime/lime_tabular.py"
+}

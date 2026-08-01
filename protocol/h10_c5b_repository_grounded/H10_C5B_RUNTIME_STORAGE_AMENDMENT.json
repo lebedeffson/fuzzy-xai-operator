@@ -1,0 +1,23 @@
+{
+  "amendment_id": "h10-c5b-runtime-storage-amendment-v1",
+  "amendment_scope": "held_out_container_storage_only",
+  "created_after_development_runtime_lock": true,
+  "created_before_held_out_runtime_collection": true,
+  "development_results_changed": false,
+  "endpoint_changed": false,
+  "gates_changed": false,
+  "gold_or_method_predictions_viewed": false,
+  "held_out_scoring_enabled": false,
+  "method_code_status": "FROZEN_FOR_RUNTIME_COLLECTION",
+  "method_commit": "7aa72a19a70bdb5eedea520742f269bc6c26aeea",
+  "parent_protocol": "h10-c5b-repository-grounded-v1",
+  "storage_policy": {
+    "cleanup_scope": "exact held-out container image reference after evidence capture",
+    "container_network": "none",
+    "development_images_cleaned_automatically": false,
+    "evidence_retained_before_cleanup": true,
+    "image_manifest_digest_required": true,
+    "unrelated_images_or_containers_may_be_removed": false
+  },
+  "status": "LOCKED_BEFORE_HELD_OUT_RUNTIME_COLLECTION"
+}

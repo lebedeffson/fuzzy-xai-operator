@@ -1,0 +1,34 @@
+{
+  "artifact": {
+    "artifact_id": 8775914434,
+    "download_sha256": "a50001cd2c4ae964b4940a5e58f27f9734be35003b40b97e3e90654c92213bc6",
+    "name": "h10-c7r-r10-recollection-first-10",
+    "run_id": 30571013615,
+    "url": "https://github.com/lebedeffson/fuzzy-xai-operator/actions/runs/30571013615"
+  },
+  "collector_capability": "causal-chronology-tail-v5",
+  "complete_incidents": 8,
+  "complete_repositories": 8,
+  "development_scored": false,
+  "failed_incidents": 2,
+  "failures": [
+    {
+      "classification": "PYTEST_NODE_FALLBACK_TOO_BROAD",
+      "evidence": "Malformed parametrized node ID produced pytest exit 4; fallback ran the complete tests/ tree to 99% before rc=124.",
+      "incident_id": "Textualize__textual-5829"
+    },
+    {
+      "classification": "UNBOUNDED_PREFIX_AGGREGATE_CARDINALITY",
+      "evidence": "Including volatile value detail in the prefix key produced 587904 rows; pytest stopped after the registered failure but atexit flush exceeded the container timeout.",
+      "incident_id": "python__mypy-19290"
+    }
+  ],
+  "gold_leakage": 0,
+  "held_out_created": false,
+  "held_out_scored": false,
+  "run_commit": "67a6d9180384de87eb04439809c4b3726d9d2aa6",
+  "scientific_result": "NOT_EVALUATED",
+  "selection_lock_unchanged": true,
+  "status": "H10_C7R_R10_CAUSAL_DEVELOPMENT_RECOLLECTION_IN_PROGRESS",
+  "technical_barrier_passed": false
+}

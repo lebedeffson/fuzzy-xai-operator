@@ -1,0 +1,27 @@
+{
+  "H10_C5B": {
+    "b_greedy": 0.041666666666666664,
+    "bootstrap_p_two_sided": 1.0,
+    "ci_95": [
+      0.0,
+      0.0
+    ],
+    "difference": 0.0,
+    "minimum_coverage": 0.7,
+    "natural_recovery_claim_enabled": false,
+    "o_route": 0.041666666666666664,
+    "o_route_coverage": 0.20833333333333334,
+    "primary_endpoint": "joint_file_symbol_contract_hit_at_3",
+    "scope": "repository_grounded_natural_incident_localization",
+    "status": "H10_C5B_NOT_SUPPORTED"
+  },
+  "H9_E2E_V2": {
+    "scope": "registered_local_microbenchmark_pipelines",
+    "status": "H9_E2E_V2_TARGET_MET",
+    "worst_applicable_relative_median_overhead_percent": 6.65,
+    "worst_applicable_relative_p95_overhead_percent": 7.09,
+    "worst_online_median_ms_per_object": 0.05821,
+    "worst_online_p95_ms_per_object": 0.107473
+  },
+  "chapter_modified": false
+}

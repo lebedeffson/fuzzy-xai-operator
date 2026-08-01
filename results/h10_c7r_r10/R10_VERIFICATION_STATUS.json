@@ -1,0 +1,67 @@
+{
+  "implementation_ci": {
+    "conclusion": "success",
+    "full_regression": {
+      "passed": 819,
+      "skipped": 6,
+      "status": "PASS",
+      "warnings": 84
+    },
+    "head_sha": "e74570a9272527bde92e7a089d1d27a722c3e378",
+    "run_id": 30563208205,
+    "url": "https://github.com/lebedeffson/fuzzy-xai-operator/actions/runs/30563208205"
+  },
+  "implementation_commit": "e74570a9272527bde92e7a089d1d27a722c3e378",
+  "claim_lint": "PASS",
+  "compileall": "PASS",
+  "focused_ci_tests": {
+    "passed": 54,
+    "status": "PASS"
+  },
+  "focused_local_compatibility": {
+    "passed": 176,
+    "status": "PASS"
+  },
+  "h10_c7r_v1_status": "H10_C7R_NOT_SUPPORTED",
+  "neural_models_executed": false,
+  "new_held_out_created": false,
+  "new_held_out_scored": false,
+  "operator_manifest": {
+    "sha256": "479fa55460426a1726f57a5ed5f745b0ad2e872eeefb21470dd2e3e865133949",
+    "status": "PASS"
+  },
+  "parent_immutability": "PASS",
+  "release_ci": {
+    "conclusion": "success",
+    "focused": {
+      "passed": 54,
+      "status": "PASS"
+    },
+    "full_regression": {
+      "passed": 819,
+      "skipped": 6,
+      "status": "PASS",
+      "warnings": 84
+    },
+    "head_sha": "4642278de6a8d60aa6bb3d8b301e48398737020f",
+    "run_id": 30563604221,
+    "url": "https://github.com/lebedeffson/fuzzy-xai-operator/actions/runs/30563604221"
+  },
+  "release_commit": "4642278de6a8d60aa6bb3d8b301e48398737020f",
+  "release_diff_classification": "REPORTS_AND_RELEASE_METADATA_ONLY",
+  "r9_status": "H10_C7R_R9_DEVELOPMENT_NO_GO",
+  "ruff": "PASS",
+  "runtime_collection": {
+    "artifact_sha256": "85c90808750c713a25e36a8b203d532e80835abcb030f4a0c6dd7d184e5538f9",
+    "collector_capability": "causal-chronology-tail-v6",
+    "collector_errors": 0,
+    "ready_incidents": 10,
+    "run_id": 30585822320,
+    "status": "H10_C7R_RUNTIME_EVIDENCE_COMPLETE",
+    "target_incidents": 10,
+    "technical_barrier_passed": true
+  },
+  "runtime_collection_executed": true,
+  "scientific_result": "NOT_EVALUATED",
+  "status": "H10_C7R_R10_CAUSAL_DEVELOPMENT_RECOLLECTION_IN_PROGRESS"
+}

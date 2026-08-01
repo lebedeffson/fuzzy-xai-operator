@@ -2,6 +2,7 @@ from .medical_image_to_explanation import MedicalImageToExplanationAdapter
 from .tabular_to_explanation import TabularToExplanationAdapter
 from .text_to_explanation import TextToExplanationAdapter
 from .tabular_classification import TabularClassificationAdapter
+from .mlflow_tabular import MlflowTabularAdapter
 
 from .base import BaseAdapter, ValidationResult
 from .model import (
@@ -66,6 +67,7 @@ __all__ = [
     "TabularToExplanationAdapter",
     "TextToExplanationAdapter",
     "TabularClassificationAdapter",
+    "MlflowTabularAdapter",
     "get_adapter",
     "list_adapters",
     "TaskType",

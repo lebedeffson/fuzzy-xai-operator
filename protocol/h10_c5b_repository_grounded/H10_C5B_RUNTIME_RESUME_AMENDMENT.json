@@ -1,0 +1,31 @@
+{
+  "amendment_id": "h10-c5b-runtime-resume-amendment-v1",
+  "amendment_scope": "container_runtime_evidence_reuse_only",
+  "created_after_incomplete_image_workdir_collection": true,
+  "created_before_complete_held_out_runtime_evidence": true,
+  "development_results_changed": false,
+  "endpoint_changed": false,
+  "gates_changed": false,
+  "gold_or_method_predictions_viewed": false,
+  "held_out_scoring_enabled": false,
+  "incomplete_collection": {
+    "incident_count": 24,
+    "runtime_infrastructure_error_count": 8,
+    "scientific_method_executed": false,
+    "trace_complete_count": 16
+  },
+  "method_code_status": "FROZEN_FOR_RUNTIME_COLLECTION",
+  "method_commit": "7aa72a19a70bdb5eedea520742f269bc6c26aeea",
+  "parent_amendment": "h10-c5b-runtime-image-workdir-amendment-v1",
+  "parent_protocol": "h10-c5b-repository-grounded-v1",
+  "resume_policy": {
+    "allowed_status": "BUG_REPRODUCED_WITH_TRACE",
+    "command_registry_sha256_must_match": true,
+    "failed_evidence_reused": false,
+    "input_manifest_sha256_must_match": true,
+    "raw_stderr_sha256_must_match": true,
+    "raw_stdout_sha256_must_match": true,
+    "runtime_trace_must_remain_parseable": true
+  },
+  "status": "LOCKED_BEFORE_HELD_OUT_RUNTIME_RESUME"
+}

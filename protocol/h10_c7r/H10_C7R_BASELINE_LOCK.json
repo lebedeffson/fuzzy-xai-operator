@@ -1,0 +1,9 @@
+{
+  "baseline": "B_BM25",
+  "baseline_budget": 160,
+  "baseline_selection_changed_after_development": false,
+  "development_budget_curves_sha256": "3c72cb3e351d86a2b02ff055d23c5faba60d6f6a3069576f08b35e133ab9ae7f",
+  "development_recall": 0.875,
+  "selection_reason": "strongest_available_baseline_reaching_recall_0_80",
+  "status": "LOCKED_BEFORE_HELD_OUT"
+}

@@ -1,0 +1,30 @@
+{
+  "plan_id": "repair:mlp2:ed78f41c2dae7a96acf7",
+  "operation": {
+    "operation_id": "refit_preprocessor_on_registered_train_split",
+    "supported_contracts": [
+      "PREPROCESSOR_FIT_SCOPE"
+    ],
+    "target_component_type": "preprocessor",
+    "preconditions": [
+      "registered_train_split_available",
+      "original_preprocessor_snapshot_available"
+    ],
+    "postconditions": [
+      "fit_scope_is_train_only",
+      "all_contracts_rechecked"
+    ],
+    "rollback_operation": "restore_original_preprocessor_snapshot",
+    "maximum_cost": 1.0,
+    "mutates_state": true
+  },
+  "target_contracts": [
+    "PREPROCESSOR_FIT_SCOPE"
+  ],
+  "preconditions": {
+    "registered_train_split_available": true,
+    "original_preprocessor_snapshot_available": true
+  },
+  "executable": true,
+  "network_required": false
+}

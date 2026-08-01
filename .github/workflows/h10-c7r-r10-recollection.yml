@@ -1,0 +1,77 @@
+name: H10-C7R R10 causal recollection
+
+on:
+  push:
+    branches:
+      - feat/h10-c7r-r10-causal-retrieval
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: h10-c7r-r10-recollection
+  cancel-in-progress: false
+
+jobs:
+  recollect-first-10:
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      contains(github.event.head_commit.message, '[collect-r10-10]')
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    env:
+      PYTHONPATH: "experiments/h10_c3/src:framework/fuzzyxai:."
+      R10_INPUT: protocol/h10_c7r_r10/recollection
+      R10_OUTPUT: operation/h10_c7r_r10/recollection_first_10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Install controller
+        run: python -m pip install -e ".[dev,evidence]"
+      - name: Verify isolated Docker capacity
+        run: |
+          docker version
+          docker system df
+          df -h .
+      - name: Audit locked observable inputs
+        run: |
+          python scripts/ch4_revision/audit_h10_c7r_r10_recollection_inputs.py \
+            --lock "$R10_INPUT/R10_TECHNICAL_BARRIER_LOCK.json" \
+            --selection "$R10_INPUT/R10_TECHNICAL_BARRIER_SELECTION.jsonl" \
+            --runtime-registry \
+              "$R10_INPUT/R10_TECHNICAL_BARRIER_RUNTIME_REGISTRY.jsonl" \
+            --image-lock \
+              "$R10_INPUT/R10_TECHNICAL_BARRIER_IMAGE_LOCK.json" \
+            --output "$R10_OUTPUT/R10_RECOLLECTION_INPUT_AUDIT.json"
+      - name: Collect causal runtime for technical barrier
+        run: |
+          python scripts/ch4_revision/collect_h10_c7r_runtime.py \
+            --selection \
+              "$R10_INPUT/R10_TECHNICAL_BARRIER_SELECTION.jsonl" \
+            --runtime-registry \
+              "$R10_INPUT/R10_TECHNICAL_BARRIER_RUNTIME_REGISTRY.jsonl" \
+            --image-availability-lock \
+              "$R10_INPUT/R10_TECHNICAL_BARRIER_IMAGE_LOCK.json" \
+            --output "$R10_OUTPUT" \
+            --target-incidents 10 \
+            --minimum-repositories 8 \
+            --prune-images
+      - name: Audit causal runtime readiness
+        run: |
+          python scripts/ch4_revision/audit_h10_c7r_r10_runtime.py \
+            --manifest "$R10_OUTPUT/HELD_OUT_MANIFEST.jsonl" \
+            --output "$R10_OUTPUT/R10_RUNTIME_READINESS.json"
+      - name: Upload technical barrier evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: h10-c7r-r10-recollection-first-10
+          path: operation/h10_c7r_r10/recollection_first_10
+          if-no-files-found: error
+          retention-days: 30

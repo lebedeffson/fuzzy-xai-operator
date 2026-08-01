@@ -1,0 +1,29 @@
+{
+  "bundle_sha256s_sha256": "db3e86ef73f05789e5e1491193f72368e0877c75339abe750b70c6c03cc8f3df",
+  "confirmatory_excluded_repositories": [
+    "cool-RR/PySnooper",
+    "django/django",
+    "jakubroztocil/httpie",
+    "matplotlib/matplotlib",
+    "mwaskom/seaborn",
+    "nvbn/thefuck",
+    "pallets/flask",
+    "pandas-dev/pandas",
+    "psf/black",
+    "pydata/xarray",
+    "pytest-dev/pytest",
+    "scikit-learn/scikit-learn",
+    "sympy/sympy",
+    "tiangolo/fastapi",
+    "tornadoweb/tornado",
+    "ytdl-org/youtube-dl"
+  ],
+  "development_gold_sha256": "4ea8a7c142cffbf50f8434ab5ee7a511ea9f45536e0ab300310cfa263baa6fc6",
+  "development_manifest_sha256": "014eed00f397496740dda96e4f632f3d740f20628bfc84a341bfc6215076a501",
+  "gold_channel_separate": true,
+  "incident_count": 40,
+  "project_dependencies_reinstalled": false,
+  "repository_count": 16,
+  "runtime_reexecuted": false,
+  "status": "H10_C7A_INPUTS_FROZEN_FOR_DEVELOPMENT_SCORING"
+}

@@ -1,0 +1,16 @@
+{
+  "bug_reproduced": 0,
+  "fail_to_pass_passed": 0,
+  "gold_accessed_before_execution": false,
+  "official_h10_c5_or_h10_c5b_rescored": false,
+  "pilot_id": "h10-c5-pilot-executable-recovery-v1",
+  "plans_executed": 0,
+  "reason": "Published parent evidence contains no incident with all preregistered executable-command, operation-argument, and digest-pinned-container fields.",
+  "recertification_passed": 0,
+  "regression_passed": 0,
+  "restoration_confirmed": 0,
+  "selected_incidents": 0,
+  "selection_sha256": "5b29e6f55e9fa1046f5936c981ffe7301070784a808be8f543bb7018bfa6149e",
+  "status": "H10_C5_PILOT_BLOCKED_NO_ELIGIBLE_INCIDENTS",
+  "universal_practical_claim_permitted": false
+}

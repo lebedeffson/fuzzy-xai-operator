@@ -1,0 +1,13 @@
+{
+  "protocol_id": "FUZZYXAI_ML_PIPELINE_V2_COMPARATIVE_V1",
+  "comparisons": [
+    {"comparison_id": "O_vs_B2", "left": "A4", "right": "B2", "purpose": "cross-stage and global analysis beyond strong local checks"},
+    {"comparison_id": "A2_vs_A1", "left": "A2", "right": "A1", "purpose": "cross-stage contract contribution"},
+    {"comparison_id": "A3_vs_A2", "left": "A3", "right": "A2", "purpose": "diagnostic cut contribution"},
+    {"comparison_id": "A4_vs_A3", "left": "A4", "right": "A3", "purpose": "repair and full recertification contribution"},
+    {"comparison_id": "O_vs_B1", "left": "A4", "right": "B1", "purpose": "diagnostic use of registered run information; not a claim that FuzzyXAI replaces MLflow"}
+  ],
+  "binary_metrics": ["detected_correct", "stage_correct", "contract_correct", "action_correct"],
+  "multiple_testing_correction": "Holm",
+  "primary_interpretation": "descriptive paired scenario results; p-values are secondary"
+}

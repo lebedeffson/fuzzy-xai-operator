@@ -1,5 +1,69 @@
 schema_version: "1.0"
 operators:
+  - id: h10_c5b.repository_grounded_route_audit
+    dissertation_ref: "H10-C5b prospective repository-grounded transfer"
+    callable: fuzzyxai.experiments.h10_c5b:run
+    input_schema: BuggyRepositoryGraphAndRuntimeEvidenceWithoutFuturePatch
+    output_schema: RepositoryGroundedTopKLocalizationEvidence
+    tests: [tests/h10_c5b/test_structural_distinction.py, tests/h10_c5b/test_experiment_runner.py]
+    artifacts: [protocol/h10_c5b_repository_grounded/H10_C5B_PROTOCOL_LOCK.json]
+    visualization: []
+  - id: h9_e2e_v2.optimized_evidence_path
+    dissertation_ref: "H9-E2E-v2 optimized online evidence path"
+    callable: fuzzyxai.evidence_path:audit_batch
+    input_schema: BatchPredictionsExplanationsAndStaticManifest
+    output_schema: MerkleBatchAuditReport
+    tests: [tests/h9_e2e_v2/test_evidence_path.py]
+    artifacts: [protocol/h9_e2e_v2/H9_E2E_V2_PROTOCOL_LOCK.json]
+    visualization: []
+  - id: h10_c5.natural_incident_route_audit
+    dissertation_ref: "H10-C5 prospective natural-incident external validation"
+    callable: fuzzyxai.experiments.h10_c5:run
+    input_schema: PublicBuggyRepositoryIncidentWithoutGoldPatch
+    output_schema: NaturalIncidentRouteAuditEvidence
+    tests: [tests/h10_c5/test_natural_incidents.py]
+    artifacts: [results/h10_c5/H10_C5_FINAL_STATUS.json, reports/h10_c5/NATURAL_INCIDENT_TRANSFER.md]
+    visualization: []
+  - id: h10_c6.cut_robustness
+    dissertation_ref: "H10-C6 prospective cut robustness study"
+    callable: fuzzyxai.robustness:run_cut_robustness
+    input_schema: TruthPreservingRoutePerturbationMatrix
+    output_schema: H10C6CutStabilityEvidence
+    tests: [tests/h10_c6/test_cut_robustness.py]
+    artifacts: [results/h10_c6/H10_C6_FINAL_STATUS.json, reports/h10_c6/CUT_ROBUSTNESS.md]
+    visualization: []
+  - id: multimodal.interpretable_route_validation
+    dissertation_ref: "four-modality frozen-extractor route validation"
+    callable: fuzzyxai.multimodal:run_validation
+    input_schema: RawInputFrozenExtractorInterpretableHeadRoute
+    output_schema: MultimodalRouteValidationEvidence
+    tests: [tests/multimodal/test_interpretable_routes.py]
+    artifacts: [results/multimodal_routes/FINAL_STATUS.json]
+    visualization: [operator_route]
+  - id: h9.end_to_end_latency
+    dissertation_ref: "H9 end-to-end model-explainer-framework latency"
+    callable: fuzzyxai.experiments.h9_e2e_latency:run
+    input_schema: RegisteredLatencyProtocol
+    output_schema: EndToEndLatencyEvidence
+    tests: [tests/chapter_revision/test_h9_latency.py]
+    artifacts: [results/h9_e2e/H9_E2E_FINAL_STATUS.json]
+    visualization: []
+  - id: h10_c4.contract_composition
+    dissertation_ref: "H10-C4 prospective controlled-mutation experiment"
+    callable: fuzzyxai.operators:ComposedDiagnosticOperator
+    input_schema: RouteStateAndCompatibleOperatorContracts
+    output_schema: RouteState
+    tests: [tests/operators/test_operator_composition.py, tests/operators/test_contract_compatibility.py, tests/operators/test_shap_lime_route_composition.py]
+    artifacts: [reports/h10_c4/OPERATOR_COMPOSITION_TRACE.md]
+    visualization: [operator_route]
+  - id: h10_c4.operational_utility
+    dissertation_ref: "H10-C4 prospective controlled-mutation experiment"
+    callable: fuzzyxai.experiments.h10_c4:run_experiment
+    input_schema: ControlledStructuralMutationMatrix
+    output_schema: H10C4OperationalUtilityEvidence
+    tests: [tests/h10_c4/test_global_cut_execution.py, tests/h10_c4/test_full_recertification.py, tests/h10_c4/test_cost_sensitivity.py]
+    artifacts: [results/h10_c4/H10_C4_FINAL_STATUS.json, reports/h10_c4/OPERATIONAL_UTILITY_REPORT.md]
+    visualization: []
   - id: framework.diagnostic_service
     dissertation_ref: "diagnostic framework v21 exploratory implementation"
     callable: fuzzyxai.diagnostics:DiagnosticService

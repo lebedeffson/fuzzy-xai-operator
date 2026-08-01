@@ -1,0 +1,137 @@
+name: bcw-logreg-shap-vertical
+version: 1.0.0
+plan_id: bcw-logreg-shap-v1
+plan_version: 1.0.0
+
+model:
+  expected_id: bcw-logistic-regression
+  expected_version: 1.0.0
+  feature_schema_hash: 5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba
+
+explainer:
+  type: shap.LinearExplainer
+  expected_version: 0.51.0
+  expected_model_version: 1.0.0
+  consistency_tolerance: 1.0e-8
+  required_fields: [base_value, feature_values, shap_values]
+
+terms:
+  risk:
+    L: [low, medium, high]
+    membership:
+      type: triangular
+      nodes:
+        low: [0.0, 0.0, 0.5]
+        medium: [0.25, 0.5, 0.75]
+        high: [0.5, 1.0, 1.0]
+
+operators:
+  t_norm: product
+  fallback_t_norm: minimum
+  s_norm: probabilistic_sum
+  fallback_s_norm: maximum
+
+rules:
+  - id: high_model_risk
+    if: probability_high
+    then: high_risk
+  - id: feature_pattern_support
+    if: worst_radius_high AND worst_concave_points_high
+    then: high_risk
+  - id: registered_counter_evidence
+    if: external_rule_counter_evidence
+    then: review
+
+uncertainty:
+  weights:
+    model: 0.40
+    rules: 0.25
+    explanation: 0.20
+    trace: 0.15
+  required_types: [u_num, u_rule, u_trace]
+  representation_policy: adaptive
+  stability_noise_sigma: 0.01
+
+representation_candidates:
+  F0:
+    coverage: [u_num, u_ling]
+    cognitive_complexity: 1.0
+    computational_complexity: 1.0
+  F_int:
+    coverage: [u_num, u_ling, u_int]
+    cognitive_complexity: 2.0
+    computational_complexity: 2.0
+  NAS:
+    coverage: [u_num, u_ling, u_conf, u_rule]
+    cognitive_complexity: 3.0
+    computational_complexity: 2.0
+  F_ML:
+    coverage: [u_num, u_ling, u_int, u_conf, u_rule, u_trace, u_shift, u_multi]
+    cognitive_complexity: 5.0
+    computational_complexity: 4.0
+
+reduction:
+  maximum_loss: 0.25
+  user_target: F0
+  engineer_target: preserve
+  auditor_target: preserve
+
+contracts:
+  - INPUT_FEATURE_SCHEMA
+  - INPUT_VALUE_DOMAIN
+  - MODEL_VERSION
+  - MODEL_FEATURE_SCHEMA
+  - MODEL_EXPLAINER_VERSION
+  - EXPLANATION_OBJECT_ID
+  - EXPLANATION_OUTPUT_CONSISTENCY
+  - RULE_SOURCE_VERSION
+  - REQUIRED_PROVENANCE
+  - UNCERTAINTY_REPRESENTATION_COVERAGE
+  - REDUCTION_LOSS_LIMIT
+  - USER_CLAIM_EVIDENCE_BINDING
+  - AUDIT_ARTIFACT_HASH
+
+actions:
+  critical_conflict: BLOCK
+  missing_required_feature: REQUEST_DATA
+  noncritical_conflict: REVIEW
+  reduction_loss_exceeded: WARN
+  noncritical_uncertainty: WARN
+  complete_route: ACCEPT
+
+trace_required: [id, version, time, params, source, hash]
+
+composition:
+  beta:
+    representation: 0.30
+    rules: 0.20
+    activations: 0.15
+    uncertainty: 0.20
+    trace: 0.15
+
+risk_observer:
+  weights:
+    prediction: 0.25
+    uncertainty: 0.25
+    interpretability_gap: 0.20
+    reduction_loss: 0.15
+    diagnostic: 0.15
+  thresholds: [0.35, 0.60, 0.75, 0.85]
+
+domain_language:
+  features:
+    worst radius: maximum measured radius
+    worst concave points: maximum concavity-point measure
+  classes:
+    high_risk: elevated model score
+    low_risk: lower model score
+  actions:
+    ACCEPT: result available within the registered software scenario
+    WARN: result includes a registered limitation
+    REQUEST_DATA: required input is missing
+    REVIEW: evidence sources disagree
+    BLOCK: route is not valid for automatic use
+
+scenario_controls:
+  allowed: [explainer_version, missing_feature, rule_counter_evidence, feature_interval, omit_provenance, reduction_stress]
+  forbidden: [gold_label, target, fix_commit, gold_patch, changed_files, changed_symbols]

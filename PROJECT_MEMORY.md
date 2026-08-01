@@ -1,5 +1,462 @@
 # Project Memory
 
+## FUZZYXAI-CROSS-PIPELINE-PRACTICAL-V1
+
+- Date: 2026-07-31
+- Branch: `feat/fuzzyxai-cross-pipeline-practical-v1`
+- Protocol: `FUZZYXAI_CROSS_PIPELINE_PRACTICAL_V1`
+- Implementation commit: `9036be2d767951bc989b4e6e52f170b81e0ac9cd`
+- Protocol commit: `90b0cc1d29647457639703febabefff2a0df29f5`
+- Status: `FUZZYXAI_CROSS_PIPELINE_PRACTICAL_V1_SUPPORTED`
+- DOCX/PDF modified: `false`
+
+Five packaged, deterministic ML/XAI pipelines execute real preprocessing,
+model fitting, prediction and SHAP explanation: binary and multiclass linear
+classification, linear regression, multiclass random forest with TreeSHAP,
+and a mixed-feature `ColumnTransformer` pipeline. The preregistered matrix has
+eight mutation families at five levels, producing 200 controlled cases and
+1,000 mode decisions. These are controlled mutations, not natural incidents.
+
+Full FuzzyXAI reached cross-stage contract recall, stage/contract/root-cause
+accuracy, evidence completeness, registered repair success and full
+recertification of `1.0`, with zero false certifications and zero new critical
+violations. Strong pairwise rules retained contract recall `1.0`; the graph
+advantage is specifically root-cause attribution and removal of redundant
+repairs, not superior pairwise detection. The local baseline cross-stage
+contract recall was `0.375`; the hierarchical bootstrap interval for the
+contract-accuracy difference was `[0.33125, 0.60625]`.
+
+Exactly 1,000 MLflow runs completed with all required metrics and 12 artifacts
+per run. Focused plus parent ML tests passed `114`; full regression passed
+`943` with five skips. Parent immutability passed for 2,164 files. This result
+does not establish arbitrary ML error detection, transfer to natural software
+incidents, human-time benefit, clinical suitability, or replacement of MLflow
+or orchestration systems.
+
+## FUZZYXAI-ML-PIPELINE-V2-COMPARATIVE
+
+- Date: 2026-07-31
+- Branch: `feat/fuzzyxai-ml-pipeline-v2-comparative`
+- Protocol: `FUZZYXAI_ML_PIPELINE_V2_COMPARATIVE_V1`
+- Implementation commit: `641f2abb7167549748643c65e50bf5dc97f97a58`
+- Protocol lock/scoring commit: `1a9d6f91001433b0bdd2a41ede122913e0f07d9d`
+- Status: `FUZZYXAI_ML_PIPELINE_V2_COMPARATIVE_SUPPORTED`
+- DOCX/PDF modified: `false`
+
+The unchanged S1-S18 registry was evaluated through nine preregistered modes:
+standard logs, stock MLflow observation, strong local checks, greedy local
+diagnosis, and four incremental RouteGraph/contract/cut/recertification
+ablations. All 162 scenario-mode decisions were produced before scoring Gold,
+and each pair was logged as a distinct MLflow run.
+
+Strong local checks B2 reached `0.6667` detection, stage, contract, component
+and action accuracy and falsely certified six cross-stage violations. Full
+FuzzyXAI A4/O reached `1.0` on those metrics, zero false certifications,
+complete evidence, and five of five repairs with all 28 contracts rechecked.
+It added three preregistered cross-stage diagnoses beyond B2. The paired
+bootstrap interval for the O-B2 difference was `[0.1111, 0.5556]`, while the
+Holm-adjusted McNemar result was not significant (`p=0.5`), so interpretation
+remains descriptive for the fixed scenario registry.
+
+Focused validation passed 66 tests and full regression passed 895 tests with
+five skips. Ruff, compileall, claim lint, operator manifest, protocol SHA256,
+and 2142-file parent immutability passed. This does not establish arbitrary ML
+error detection, replacement of MLflow, human-time benefit, user utility, or
+transfer to natural software incidents.
+
+## FUZZYXAI-ML-PIPELINE-V2
+
+- Date: 2026-07-31
+- Branch: `feat/fuzzyxai-ml-pipeline-v2`
+- Protocol: `FUZZYXAI_ML_PIPELINE_V2`
+- Protocol commit: `59f3d2e3f46f80e5356f180a61dd6b78dfc9c709`
+- Implementation commit: `1733833`
+- Status: `FUZZYXAI_ML_PIPELINE_V2_IMPLEMENTED`
+- Result type: `ENGINEERING_IMPLEMENTATION`
+- DOCX/PDF modified: `false`
+
+The existing ML Vertical v1 was extended without changing S1-S10. The V2
+pipeline executes real deterministic dataset preparation, split,
+`StandardScaler`, `LogisticRegression`, model serialization, inference, SHAP,
+FuzzyXAI diagnosis, registered repair and full-route recertification. S11-S18
+cover target leakage, split overlap, preprocessor fit scope, feature order,
+model convergence, artifact integrity, SHAP consistency and explanation
+provenance.
+
+Acceptance passed all `18/18` scenarios with zero false certifications and
+stage-localization, violated-contract, representation and observer-action
+accuracy of `1.0`. All five registered repair scenarios completed full
+recertification with rollback verification and zero new critical violations.
+Exactly 18 MLflow runs were recorded, each with all 14 required artifacts.
+REST, UI and Docker smoke checks passed. Parent immutability verified 1322
+files, and V1 semantic immutability was `1.0`.
+
+Focused validation passed `48` tests. The final detached-worktree regression
+passed `874` tests with `8` skips. This result demonstrates engineering
+execution and contract control only; it is not a clinical evaluation, user
+study, or evidence of reduced human time.
+
+## FXAI-H10-C7R-R10M-FINAL-DEVELOPMENT
+
+- Date: 2026-07-31
+- Branch: `feat/h10-c7r-r10-causal-retrieval`
+- Protocol: `H10-C7R-R10M-v1`
+- Implementation/scoring commit: `045cecaccd49f09001eb4c31436bb9d490480083`
+- Status: `H10_C7R_R10M_DEVELOPMENT_NOT_SUPPORTED`
+- Scientific result: `NOT_EVALUATED`
+- Development: `40 incidents / 31 repositories`, all `R10_RUNTIME_READY`
+- Held-out created/scored: `false/false`
+- Chapter DOCX/PDF modified: `false`
+
+The final registered R10M contour used frozen GraphCodeBERT and BGE reranker
+snapshots with local-only inference, deterministic file-first retrieval,
+causal runtime evidence, a 200-symbol pool and fixed RRF fusion. The model
+weights were not fine-tuned on the 40 disclosed development incidents. Gold
+remained physically separate and the observable leakage audit passed with
+zero violations.
+
+The single development scoring produced coverage `1.0`, file Recall@10
+`0.95`, file Recall@20 `0.95`, symbol-pool Recall@200 `0.875`, symbol
+Recall@20 `0.525`, MRR `0.1329`, false localization `0.475`, and repository
+lower-quartile recall `0.0`. R10M did not exceed frozen R9 symbol Recall@20
+`0.55`, did not exceed B_BM25 MRR `0.1411`, and did not pass the registered
+development gate. No threshold, model, channel, budget, incident, or protocol
+criterion was changed after scoring. Per protocol, no confirmatory held-out
+was created and no further R10/R11/R12 variant is opened.
+
+Acceptance completed with `115` focused tests and a full regression of `828
+passed, 6 skipped`. Changed-scope Ruff, compileall, claim lint, operator
+manifest validation, and all `114` parent-result SHA256 checks passed. The
+repository-wide Ruff baseline still contains historical findings outside the
+R10M change scope and is preserved in the verification evidence rather than
+silently rewritten.
+
+## FXAI-H10-C7R-PROSPECTIVE-RETRIEVAL-LOCK
+
+- Protocol: `H10-C7R-v1`
+- Status: `H10_C7R_LOCKED_AWAITING_HELD_OUT`
+- Scientific result: `NOT_EVALUATED`
+- Method commit: `358ed40a0fb7f5adc1291695ff15affa39cae485`
+- Method/budget: `R5`, 20 candidates
+- Baseline/budget: `B_BM25`, 160 candidates
+- Held-out created/scored: `false/false`
+
+H10-C7R isolates the preregistered candidate-space-reduction endpoint from
+contract classification. Contract metrics remain descriptive and cannot
+change the H10-C7R status. The frozen 40-incident development replay produced
+the expected R5 top-20 signature
+`f3ad88d430e922ba6ecfeff0de2e32031675610f800c539b0cfa3d33625623e1`.
+All 20 repositories used in earlier cycles are locked out of the new
+confirmatory set.
+
+The prospective implementation requires at least 40 incidents from at least
+12 repository-disjoint repositories, complete failing-test reproduction and
+project-grounded tracebacks, physically separate Gold, and one scoring
+opening. The focused suite passed with 70 tests across H10-C7 and H10-C7R;
+the canonical full regression passed with `783 passed, 6 skipped`. Ruff,
+compileall, claim lint, operator-addendum validation, and all 114 registered
+parent-result hashes passed.
+
+## FXAI-H10-C7A-MATCHED-RECALL-DEVELOPMENT
+
+- Protocol: `H10-C7A`
+- Status: `H10_C7A_BLOCKED_DEVELOPMENT_GATE`
+- Scientific result: `NOT_EVALUATED`
+- Development: `40 incidents / 16 repositories`
+- Held-out created/scored: `false/false`
+- Retrieval modified: `false`
+
+The original primary endpoint remains
+`search_space_reduction_at_recall_20_ge_0_80`; confirmation coverage is not
+an H10-C7A gate. The first ten disclosed H10-C5b incidents by their already
+registered `selection_rank_sha256` extended the autonomous H10-C5c replay
+without rerunning tests or reinstalling project dependencies. Observable and
+Gold manifests remain physically separate, all 40 incidents retain
+project-grounded traceback evidence, and every used repository is excluded
+from future confirmatory selection.
+
+The frozen R5 top-10/top-20 prefixes and all five 30-incident replay metrics
+reproduced exactly. On the 40-incident development set, R5 reached Recall
+`0.90` at `k*=20`; the strongest available matched-recall baseline B_BM25
+reached Recall `0.875` at `k*=160`. Mean symbol-space reduction was `0.9680`
+for R5 and `0.8089` for B_BM25.
+
+The preregistered development gate did not pass because contract macro-F1 was
+`0.5360`, below the locked `0.55` minimum. No method, budget, or baseline lock
+was created and no held-out set was opened. Focused H10-C7 acceptance passed
+with `64 passed`; the final full regression passed with `777 passed, 6
+skipped`. Ruff, compileall, claim lint, Gold-leakage audit, frozen-prefix
+audit, and development-bundle SHA256 verification passed.
+
+## FXAI-H10-C7-R5V-PAIR-VERIFICATION-AUDIT
+
+- Protocol: `H10-C7-R5V`
+- Status: `H10_C7_R5V_BLOCKED_AUDIT`
+- Scientific result: `NOT_EVALUATED`
+- Retrieval modified: `false`
+- V0/V1 executed: `false/false`
+- Held-out created/scored: `false/false`
+
+The strict target-alignment audit counts a correct pair only when file,
+symbol, and evaluation contract family match the same Gold atom. The frozen
+R5 replay produced 10 correct top-1 pairs, 12 correct pairs in top-3, and four
+old labels that do not match the strict top-1 pair target. These values differ
+from the preregistered controls 11, 14, and 3, so pair-model execution stopped
+before fitting or threshold selection.
+
+The 30-incident replay contains 12,724 call events, 12,768 coverage events,
+and 104 traceback frames. It contains no argument values, return values,
+assertion operands, last-writer events, or value-flow events; candidate-bound
+value provenance is therefore available for 0/90 top-3 pairs. Incident-level
+assertion and exception text must not be counted as evidence for every
+candidate. A future verifier replay requires a one-time candidate-specific
+trace collection plus an explicit protocol amendment resolving the incorrect
+expected alignment counts without weakening the strict pair target.
+
+Acceptance completed with 59 focused H10-C7 tests and a full regression of
+772 passed, 6 skipped. Ruff, compileall, claim lint, operator-addendum binding,
+and all 114 parent-result SHA256 checks passed.
+
+## FXAI-H10-C7-R5C-CALIBRATED-CONFIRMATION
+
+- Date: 2026-07-29
+- Branch: `feat/h10-c7-calibrated-confirmation`
+- Baseline commit:
+  `cf1c1dbb04004b2b423fc96d79eca3913e9a7f6d`
+- Protocol: `H10-C7-R5C`
+- Status: `H10_C7_OPEN_REPLAY_NO_GO`
+- Scientific result: `NOT_EVALUATED`
+- Ready for official development extension: no
+- Held-out created/scored: no/no
+- Chapter document modified: no
+
+R5 retrieval was preserved byte-for-byte at the recorded metric and top-k
+boundary. Recall@10 remained `0.8666666667`, Recall@20 `0.9333333333`, MRR
+`0.5298015873`, contract macro-F1 `0.6238521169`, and joint Hit@3
+`0.4666666667`.
+
+The confirmation-only extension groups independent observable evidence,
+measures candidate/contract margins, estimates leave-channel-out stability,
+and compares a deterministic C0 rule with a fixed-seed logistic C1 model.
+Every reported decision is leave-one-repository-out; repository identity,
+incident identity and Gold fields are excluded from the model feature schema.
+
+The locked open-replay gate did not pass. C0 failed closed with zero
+confirmations. C1 produced seven out-of-fold confirmations, all false, so it
+was rejected by the registered lexicographic rule. The selected C0 therefore
+had confirmation coverage `0.0`, below the locked `0.40` minimum. No threshold
+was weakened, no repository-specific exception was added, and no new data,
+project environment, failing test, neural model or held-out set was opened.
+
+The full regression completed with `767 passed, 6 skipped`; focused H10-C7
+tests completed with `54 passed`. Parent immutability verified all 114
+registered files.
+
+## FXAI-H10-C7-GUIDED-NATURAL-DIAGNOSIS
+
+- Date: 2026-07-29
+- Branch: `feat/h10-c7-guided-natural-diagnosis`
+- Parent release commit:
+  `1fed9ac074295bc4b6cad33841b73a4022bcafcd`
+- Protocol: `H10-C7-v1`, locked before development
+- Implementation status: `OPEN_REPLAY_REFACTORED_NO_GO`
+- Scientific result: `NOT_EVALUATED`
+- Open development replay: `30 incidents / 8 repositories`
+- Held-out created/scored: no/no
+- Chapter document modified: no
+
+H10-C7 is a new prospective cycle and does not rescore or replace H10-C5b or
+H10-C5c. Their result files and the canonical operator manifest retain their
+published SHA256. All 20 repositories used by those cycles are excluded from
+future H10-C7 confirmatory selection, although disclosed incidents may be used
+as open development/error-analysis data.
+
+The implementation separates observable incident evidence from a development
+Gold file and recursively rejects patch, fixed-state, changed-file and
+changed-symbol channels from method input. It implements deterministic BM25,
+local-only pinned dense-encoder interfaces, reciprocal-rank fusion, a
+personalized repository graph, structural reranking, hierarchical contract
+inference with `UNKNOWN_CONTRACT`, bounded read-only evidence requests, an
+incident router and a twelve-action repository explorer. R0-R8 and the
+registered B_TRACE, B_BM25, B_DENSE, B_RRF, B_GREEDY, B_REPOGRAPH,
+B_AGENTLESS_LOC and O_ROUTE baselines are scored in one repository-folded
+development matrix.
+
+The development runner writes a method lock only when every registered gate
+passes. Held-out validation requires that lock, at least 40 incidents from 12
+new repositories, complete `BUG_REPRODUCED_WITH_TRACE` evidence and zero
+overlap with H10-C5b/H10-C5c repositories. The two code encoders and the
+cross-encoder are pinned by repository revision and are local-only; their
+weight SHA256 values must be recorded before real development execution.
+Smoke hashing encoders are test-only and cannot support a scientific result.
+
+The disclosed H10-C5c runtime evidence was subsequently repackaged as an
+offline open replay and used to correct implementation defects before opening
+new data. The refactor removes collector noise, splits code identifiers,
+preserves single-channel candidates in a 150-300 item reservoir, combines the
+legacy R0 channel with runtime and graph evidence, retains directed runtime
+features, ranks candidate-contract pairs before final top-20 truncation, and
+applies saved traceback observations in R6. No project environment or neural
+model was executed.
+
+On the 30 disclosed incidents, R5 reached Recall@10 `0.8666666667`,
+Recall@20 `0.9333333333`, MRR `0.5298015873`, contract macro-F1
+`0.6238521169`, and joint Hit@3 `0.4666666667`. It improved Recall@10 in six
+of eight repositories, preserved PySnooper at `1.0`, and raised FastAPI to
+`1.0`. Confirmation now requires two independent direct contract
+observations. Selective precision rose to `0.8571428571`, but confirmation
+coverage was only `0.2333333333` against the locked `0.40` minimum.
+Therefore the open replay remains `H10_C7_OPEN_REPLAY_NO_GO`; no new
+development incidents, neural tournament, method lock, or held-out set may be
+opened. These values are engineering development diagnostics, not a scientific
+H10-C7 result.
+
+## FXAI-H10-C5C-EVIDENCE-RETRIEVAL
+
+- Date: 2026-07-27
+- Branch: `feat/h10-c5c-evidence-retrieval`
+- Protocol lock commit: `b82a614`
+- Parent H10-C5b status: `H10_C5B_NOT_SUPPORTED`
+- Current status: `H10_C5C_DEVELOPMENT_GATE_FAIL`
+- Development scored: yes, development-only
+- Held-out created/scored: no/no
+- Chapter document modified: no
+
+GitHub Actions run `30252520510` collected complete typed runtime evidence for
+30 BugsInPy incidents from eight repositories. All 30 incidents reached
+`BUG_REPRODUCED_WITH_TRACE`, all 23 readiness checks passed, the exact Python
+runtimes were used, and the Gold leakage audit passed. The readiness-bound
+manifest SHA256 is
+`2db9ab1402fad106201329f091d2d355d5a539b49ec0033f204f04af7bc40824`.
+
+Development-only scoring then completed on commit
+`8be65ed2338325a02ddda5b4d2bb361dcc9b2fa1`. The locked technical gate failed:
+candidate Recall@10 was `0.5666666667` against `0.75`; O_ROUTE contract
+accuracy was `0.1333333333` against `0.60`; coverage was `0.80`; and joint
+Hit@3 was `0` for O_ROUTE versus `0.0666666667` for B_GREEDY. O_ROUTE false
+localization was also worse (`0.7666666667` versus `0.70`). Consequently no
+H10-C5c held-out set was created or scored, and no scientific H10-C5c result
+exists. The development status SHA256 is
+`60810d8ee58b20c6d9b1a5e4800c23fc678ce9e698ad70d339e91d37a7f69ba1`.
+
+H10-C5c is a separate prospective cycle. It does not rescore the 24 official
+H10-C5b held-out incidents; those incidents are restricted to post-hoc error
+analysis. The new implementation separates evidence-grounded candidate
+retrieval, contract inference, strategy-specific ranking, global set-cover and
+development-only abstention calibration. Per-test runtime events prevent one
+combined traceback from being broadcast to every diagnostic obligation.
+For medium-confidence cases it emits a bounded read-only evidence request.
+Registered repairs execute only inside a temporary sandbox and require
+FAIL_TO_PASS, regression and recertification success.
+
+The development runner requires at least 30 incidents from at least eight
+repositories, complete `BUG_REPRODUCED_WITH_TRACE` evidence and typed runtime
+event streams. It rejects repositories from the official H10-C5b held-out
+split. If no abstention threshold satisfies coverage `>= 0.70`, the
+development gate fails closed. No H10-C5c scientific effect exists until new
+development data pass all locked technical gates and a disjoint held-out
+protocol is created.
+
+The development collection now fails closed on Python-runtime identity. Each
+instrumented command must run under the BugsInPy-registered major.minor
+interpreter; silent fallback to the controller Python is forbidden. A manual
+GitHub Actions collection operation records the BugsInPy commit, provisions
+the exact Python versions required by the locked selection, runs materialization,
+bounded parallel runtime collection, readiness and development-only scoring, and
+uploads evidence even when readiness fails. This is operational infrastructure
+only: development data and scientific scoring remain absent in the repository.
+
+A prospective BugsInPy development-data lock and materialization pipeline are
+now included. The preparer deterministically selects 30 Python-3 incidents
+from at least eight repositories outside the H10-C5b held-out repository set,
+records benchmark and upstream commit identities, and emits an uncollected
+manifest. A sandboxed runtime collector records per-test coverage, project
+calls and traceback frames. A separate fail-closed readiness verifier binds the
+enriched manifest to the source and command registries, validates locked sample
+composition, per-test runtime evidence, source hashes and the Gold boundary,
+and must pass before development scoring. The development scorer only creates
+repair plans; it explicitly records repair execution, regression and
+recertification as not evaluated. These additions do not change the current
+status: development data have not been collected or scored, and the scientific
+result remains `NOT_EVALUATED`.
+
+## FXAI-H10-C5B-REPOSITORY-GROUNDED
+
+- Date: 2026-07-26
+- Operational branch: `ops/h10-c5b-runtime-collection`
+- Protocol lock commit: `2e55d4c`
+- Frozen scientific method:
+  `7aa72a19a70bdb5eedea520742f269bc6c26aeea`
+- Pre-score lock commit:
+  `361f350c4ac36f73e199ff7e91dd07f8f52dade3`
+- Official opening count: `1`
+- Official status: `H10_C5B_NOT_SUPPORTED`
+- Chapter document modified: no
+
+The frozen repository-grounded method was scored exactly once after complete
+runtime collection. All 24 held-out incidents from 12 repositories had
+`BUG_REPRODUCED_WITH_TRACE`; the independent Gold leakage audit passed.
+O_ROUTE and B_GREEDY both recorded joint file+symbol+contract Hit@3 of
+`0.041666666666666664`. The repository-cluster difference was `0.0`, 95% CI
+`[0.0; 0.0]`, with two-sided bootstrap p `1.0`. O_ROUTE coverage was
+`0.20833333333333334`, below the frozen minimum `0.70`; B_GREEDY coverage was
+`0.6666666666666666`. Therefore H10-C5b is not supported.
+
+The pre-runtime `H10_C5B_BLOCKED_REPOSITORY_DATA` files remain under
+`results/h10_c5b/formative_pre_runtime/` and
+`reports/h10_c5b/formative_pre_runtime/`. They are historical blocked
+evidence, not an effect estimate. Natural recovery remains disabled.
+
+H9-E2E-v2 replaces tensor `round/tolist` JSON hashing with binary tensor
+digests, Merkle aggregation, a static-artifact cache, batch-native records,
+and separate online/full modes. On 540 registered local microbenchmark
+measurements it is `H9_E2E_V2_TARGET_MET`; worst online median and p95 were
+0.05821 and 0.107473 ms/object, and both relative gates passed. This does not
+modify or erase the original `H9_E2E_TARGET_NOT_MET` result.
+
+The parent H10-C5 and H9-E2E evidence remain unchanged. One-time scoring was
+bound to lock SHA256
+`40d838b611b8d9f6353f537ea48d56b89cc2137135805ab5aa861c583764d570`;
+the final status SHA256 is
+`a1ac841880e9acac2c09eac79d18721d17f83da5e8cec19a7057fa8cb453fc6d`.
+The opening record was written before method execution and official reuse is
+blocked.
+
+## FXAI-CH4-Q1-EVIDENCE-EXPANSION
+
+- Date: 2026-07-26
+- Branch: `feat/ch4-q1-evidence-expansion`
+- Frozen protocol commit: `989502f`
+- Scientific implementation commit: `91eae88`
+- Telemetry-only follow-up: `2e1e2ea`
+- Chapter document modified: no
+
+H10-C3 and H10-C4 evidence remained byte-identical across 86 registered files
+(aggregate SHA256
+`6410afa5261e86748267bdb55f512658a16faccbe1363b9e982f669c88009b9c`).
+The H10-C3 hierarchy is now explicit: H10-C3a is primary, cost regret is its
+key secondary endpoint, and H10-C3b is a linked secondary endpoint rather than
+an independent replication.
+
+Prospective outcomes must be reported without upgrading claims:
+
+- H10-C5 screened 300 SWE-bench Lite incidents and selected 26 incidents from
+  10 repositories and six contract families. O_ROUTE did not outperform the
+  strongest greedy baseline on held-out repositories (`difference = 0`), so
+  natural-incident transfer is `H10_C5_NOT_SUPPORTED`. Local project execution
+  was not completed; natural recovery claims remain disabled.
+- H10-C6 evaluated 1,000 route instances under registered truth-preserving
+  perturbations and is `H10_C6_SUPPORTED`.
+- Four-modality frozen-extractor/interpretable-head route validation covered
+  600 routes and passed. Interpretability is limited to extracted-feature
+  space; predictor superiority is not claimed.
+- H9 end-to-end timing recorded 1,080 measurements. The frozen overhead target
+  was not met (`H9_E2E_TARGET_NOT_MET`); this is machine time, not engineer
+  time.
+
+Claim lint prohibits the historical object-level `p = 0.0234`, independent
+replication wording for H10-C3a/C3b, and human/industrial utility claims.
+
 ## FXAI-H10-C3-R4-SECURE-PREOPEN
 
 - Date: 2026-07-24
@@ -737,3 +1194,284 @@ design. It does not establish human comprehension, expert usefulness,
 production or clinical safety, natural-fault generalization, or organizational
 effectiveness. Historical negative H3, H5-P, H6-general, H10-L, and H10-R
 results remain unchanged.
+
+## FXAI-H10-C4-OPERATIONAL-UTILITY
+
+- Date: 2026-07-25
+- Branch: `feat/h10-c4-operational-utility`
+- Parent result: H10-C3 R4 postopen commit
+  `5da8d1beec7681f6b18794cf4001decf4ceb3ea2`
+- Protocol lock commits: `5770fad`, `e1365e8`
+- Final implementation commit before valid execution: `dbc7e84`
+- Scenarios: 120 held-out controlled structural mutations, six pipeline
+  families, 480 actually executed strategy plans
+- Status: `H10_C4_SUPPORTED`
+
+The global minimum-cut strategy completed full recertification in all 120
+scenarios and created no new critical violations. Its mean normalized
+executable cost was `0.5168489529790097`, compared with `1.0` for `B_ALL` and
+`B_FIRST` and `0.594047367361634` for `B_GREEDY`. Registered paired
+O_GLOBAL-minus-baseline differences were:
+
+- versus `B_ALL`: `-0.4831510470209903`, 95% CI
+  `[-0.5192865706633796; -0.44541653003910625]`, Holm p
+  `0.0005999400059994001`;
+- versus `B_FIRST`: the same registered effect and interval;
+- versus `B_GREEDY`: `-0.07719841438262429`, 95% CI
+  `[-0.09403145075160929; -0.06120465594003043]`, Holm p
+  `0.0005999400059994001`.
+
+The mean action count, touched-component count, and recertification-check count
+fell from `3.1`, `3.1`, and `14.3` under `B_ALL` to `1.0`, `1.0`, and `8.0`
+under `O_GLOBAL`. Of 120 scenarios, 108 met the registered 80% selection
+stability threshold over 48 hybrid-cost configurations. The remaining 12 are
+reported as cost-sensitive, not excluded.
+
+Run attempt 1 is retained as `INVALIDATED_IMPLEMENTATION_MISMATCH` because it
+used different deterministic bootstrap seed offsets for the three contrasts.
+The final run uses one shared index stream with SHA256
+`613432617404501e483c793f94a4ada3bac15273e1d47cdb84687646db6b0e06`.
+All 54 parent H10-C3 artifact hashes remain unchanged.
+
+Claim boundary: H10-C4 supports algorithmic operational savings on controlled
+structural mutations only. It does not establish natural-incident
+generalization, engineer-time savings, human utility, organizational cost
+reduction, or production safety.
+
+## FXAI-H10-C5B-RUNTIME-COLLECTION (HISTORICAL PRE-SCORING STATE)
+
+- Date: 2026-07-26
+- Scientific method commit:
+  `7aa72a19a70bdb5eedea520742f269bc6c26aeea`
+- Operational branch: `ops/h10-c5b-runtime-collection`
+- Method status: `FROZEN_FOR_RUNTIME_COLLECTION`
+- H10-C5b status at that checkpoint: `H10_C5B_BLOCKED_REPOSITORY_DATA`
+- H9-E2E-v2 status: `H9_E2E_V2_TARGET_MET`
+
+H9-E2E-v2 met its registered absolute and relative gates only within
+`registered_local_microbenchmark_pipelines`. The original negative H9-E2E
+result remains unchanged.
+
+This section records the state before runtime collection and is superseded by
+the official one-time result at the top of this file. Its zero bootstrap row
+was a blocked report placeholder, not a comparison result.
+
+Runtime collection subsequently completed for development and held-out
+incidents using digest-pinned images and fail-closed evidence checks. The
+official held-out controller was added as an operational-only amendment and
+did not change the frozen scientific method, endpoint, or gates.
+
+## FXAI-H10-C5C-DEVELOPMENT-COLLECTION-READINESS
+
+- Date: 2026-07-26
+- Local branch: `local/h10-c5c-development-data-readiness`
+- Scientific status: `NOT_EVALUATED`
+- Operational status: development collection pipeline implemented; real BugsInPy
+  development data not collected in the source-release sandbox.
+
+The prospective collection pipeline now materializes the benchmark exposing tests
+from fixed revisions onto commit-pinned buggy snapshots, enforces the exact
+registered Python major.minor, optionally builds one isolated virtual environment
+per incident, installs registered requirements, runs the registered setup script,
+and fails closed on any environment error. Runtime reports are bound to the exact
+enriched manifest and command registry, and readiness checks one-to-one incident
+identity plus exposing-test and patch hashes.
+
+A manual GitHub Actions collection operation can clone a pinned BugsInPy revision,
+materialize the locked 30-incident development selection, provision only the Python
+versions required by that selection using provided paths or isolated Conda prefixes,
+collect typed runtime evidence, retain failed-readiness evidence, and run
+development-only scoring only after readiness PASS. It cannot create or score a
+held-out H10-C5c set. H10-C5b remains immutable.
+
+The source release reported as `1b5682c459e361a8c8d9dca8651bbb889d7e705a`
+was recovered byte-for-byte from its SHA-verified archive because that commit
+object was unavailable. Recovery commit `b9b1b4f93646184cf620ce15886d3703d5dbab07`
+preserves the supplied implementation; pre-collection hardening commit
+`f9162347f3582ed1ac106c4619e1c1f652c37b6a` pins BugsInPy at
+`11c5f1eea954a42132cfd06bf257766a7963e0fd`, rejects dirty benchmark trees,
+and removes local checkout paths from registries. GitHub Actions run
+`30219406865` passed on Python 3.11 and 3.12. The local full regression passed
+with 692 tests and 5 skips. Real development runtime collection remains
+unexecuted, so the scientific status remains `NOT_EVALUATED`.
+
+## FXAI-CH4-FINAL-PRACTICAL-CLOSURE
+
+- Date: 2026-07-27
+- Branch: `feat/ch4-final-practical-closure`
+- Evidence implementation commit: `acc95bd`
+- Final practical CI: `30264795977`
+- Full regression: `712 passed, 7 skipped`
+- Chapter/DOCX modified: no
+
+H10-C6-N used the locked UCI Bank Marketing dataset archive, a deterministic
+train/test split, 1,000 test object IDs chosen before scoring, train-only
+feature scales, and fixed noise levels 0.01, 0.05, and 0.10. All 3,000
+perturbed routes completed. At sigma 0.05 the median cut Jaccard,
+obligation-coverage stability, and full-recertification rate were each `1.0`;
+new critical violations were `0`. The status is `H10_C6_N_SUPPORTED` within
+the registered fixed-structural-defect feature-noise scope only.
+
+The MLflow engineering example uses an isolated local file-backed MLflow
+2.22.5 tracking store and Model Registry. It records a real run, parameters,
+tags, registered model version, model artifact, and run-to-model-to-explanation
+provenance edge. Route verification passed. This demonstrates reproducible
+metadata integration and does not compare FuzzyXAI with MLflow as products.
+
+H10-C5-PILOT was selected without Gold from the published H10-C5/H10-C5b
+operational fields. Zero incidents had all strict execution prerequisites, so
+the final status is `H10_C5_PILOT_BLOCKED_NO_ELIGIBLE_INCIDENTS`. No test,
+repair, or recertification result was fabricated.
+
+H10-C5c remains a development-gate stop with scientific result
+`NOT_EVALUATED`. A locked post-hoc oracle decomposition used disclosed
+development Gold and produced diagnostic upper bounds: Candidate-only joint
+Hit@3 `0.1333`, Contract-only `0.1000`, and Candidate+Contract `0.1667`.
+The interpretation is `RETRIEVAL_CONTRACT_INTERACTION`; no held-out data were
+created or scored and these numbers are not method performance.
+
+The H9-E2E-v2 scope patch preserves the original H9-E2E negative result and
+the prospective H9-E2E-v2 positive microbenchmark result. It forbids
+generalization to industrial latency, arbitrary hardware, external-explainer
+time, or human work time.
+
+Parent immutability verified 114 published files across H10-C3, H10-C4,
+H10-C5, H10-C5b, H10-C5c, H10-C6, H9-E2E, H9-E2E-v2 and multimodal routes.
+The main operator manifest retained SHA256
+`479fa55460426a1726f57a5ed5f745b0ad2e872eeefb21470dd2e3e865133949`;
+the three new traceability entries are isolated in a hash-bound addendum.
+
+## FXAI-H10-C7-OPEN-REPLAY
+
+- Date: 2026-07-29
+- Source runtime artifact SHA256:
+  `7b7bd0bba2eb9eef3955d2b5e313ecf4bccd02703427117f741c382e7658db09`
+- Open development incidents: 30 from 8 repositories
+- Structural variants: R0, R1, R3, R5, R6
+- Best structural variant: R3
+- Status: `H10_C7_OPEN_REPLAY_NO_GO`
+- Scientific result: `NOT_EVALUATED`
+
+The autonomous replay bundle reproduces the published H10-C5c baseline without
+network access, project setup, dependency installation, or failing-test
+execution. R3 improved Recall@10 from `0.5667` to `0.7000`, Recall@20 to
+`0.8333`, and the development contract score to macro-F1 `0.4070`. Coverage
+was `1.0`, false localization was `0.2333`, and joint Hit@3 was `0.1667`.
+
+The internal go/no-go did not pass because Recall@10 improved in only four of
+eight repositories instead of the registered minimum of six. Neural variants
+were not executed, new development data were not collected, no method lock was
+created, and held-out data remain unopened.
+
+## FXAI-H10-C7R-PROSPECTIVE-CLOSURE
+
+- Date: 2026-07-30
+- Protocol: `H10-C7R-v1`
+- Frozen method commit: `358ed40a0fb7f5adc1291695ff15affa39cae485`
+- R5 candidate budget: 20
+- Frozen baseline: `B_BM25`, budget 160
+- Official scoring openings: 1
+- Held-out: 40 incidents from 30 repository-disjoint repositories
+- Official status: `H10_C7R_NOT_SUPPORTED`
+- Scientific result: `NOT_SUPPORTED`
+
+The one-time held-out scoring produced R5 Recall@20 `0.55`, B_BM25
+Recall@160 `0.775`, and R5 coverage `1.0`. Mean candidate-space reduction was
+`0.990383` for R5 and `0.923068` for B_BM25. The repository-cluster bootstrap
+difference was `0.069949`, with 95% CI `[0.047706, 0.096248]`.
+
+The reduction interval was positive, but the registered R5 Recall@20 minimum
+of `0.80` and the recall noninferiority condition both failed. The result is
+therefore not supported. It cannot be described as practical search-space
+reduction at the registered recall level. Contract inference remained
+descriptive, and automatic root-cause confirmation, repair, and developer-time
+reduction were not evaluated.
+
+## FXAI-H10-C7R-R9-DEVELOPMENT
+
+- Date: 2026-07-30
+- Base result: H10-C7R-v1, preserved as `H10_C7R_NOT_SUPPORTED`
+- Development data: 40 disclosed incidents from 30 repositories
+- Variants: R9-A structural compressor; R9-B LORO LambdaMART
+- Status: `H10_C7R_R9_DEVELOPMENT_NO_GO`
+- Scientific result: `NOT_EVALUATED`
+
+R9 expanded the retrievable schema, removed early 50/100 channel limits,
+separated contract inference from localization, tightened identifier matching,
+reduced the runtime frequency bias, and added channel quotas plus file-to-symbol
+ranking. The broad structural union contained a registered diagnostic Gold atom
+in 39 of 40 incidents.
+
+Repository-held-out compression did not transfer. Fixed R9-A reached Recall@20
+`0.50`; R9-B reached `0.375`; the training-fold-selected result was `0.40`.
+The registered `0.82` Recall@20 and `0.75` repository lower-quartile gates
+failed. No containers, runtime recollection, neural models, new held-out data,
+or official scoring were used. A new held-out must not be created from this
+state.
+
+## FXAI-H10-C7R-R10-CAUSAL-RETRIEVAL
+
+- Date: 2026-07-30
+- Base: preserved H10-C7R-v1 and R9 results
+- Protocol: `H10-C7R-R10-development-v1`
+- Implementation commit: `e74570a9272527bde92e7a089d1d27a722c3e378`
+- Release commit: `4642278de6a8d60aa6bb3d8b301e48398737020f`
+- Status: `H10_C7R_R10_CAUSAL_DEVELOPMENT_RECOLLECTION_IN_PROGRESS`
+- Scientific result: `NOT_EVALUATED`
+
+R10 corrects the runtime event representation by preserving monotonic
+sequence, timestamp, thread, call depth, occurrence count, and a bounded full
+tail. It records safe argument, return, exception, assertion, last-writer, and
+value-flow observations. A raw-file readiness audit rejects old traces whose
+physical order was reconstructed after collection.
+
+Retrieval is now file-first: at most 20 files, up to 10 symbols per file, a
+200-symbol pool, source-aware reranking, candidate-specific causal bonuses,
+and a final top-20. Contract inference does not reorder localization.
+Source-aware neural variants fail closed until model weights are independently
+locked, and targeted probes are bounded to two read-only requests.
+
+The first locked technical-barrier run recollected the same ten disclosed
+development incidents on an isolated runner. Five passed fail-closed runtime
+readiness and five exposed general collector defects in safe value inspection,
+synthetic event timestamps, and copied environment traversal. Collector v5
+raised readiness to eight of ten. Its two remaining failures were a broad
+pytest fallback after an unresolved parametrized node ID and an unbounded
+prefix-aggregate key containing volatile value details. Collector v6 applies
+the single final permitted technical correction: file-scoped fallback and
+structural prefix aggregation with a detailed 20,000-event tail.
+
+No retrieval metric was calculated. The incident order, event schema,
+candidate budgets, timeouts, gates, and protocol lock remain unchanged.
+
+The final technical-barrier run `30585822320` passed readiness for all ten
+locked incidents with zero collector errors. Its artifact SHA256 is
+`85c90808750c713a25e36a8b203d532e80835abcb030f4a0c6dd7d184e5538f9`.
+Continuation to 40 uses the same collector v6 and the original disclosed
+49-entry order filtered only by the pre-existing image availability lock:
+43 digest-pinned candidates from 32 repositories, stopping after the first
+40 runtime-ready incidents.
+
+No neural model was executed and no new held-out was created or scored.
+Development scoring is prohibited until all 40 disclosed incidents pass the
+new causal-runtime readiness audit.
+
+## FuzzyXAI ML Vertical v1
+
+- Protocol: `FuzzyXAI-ML-Vertical-v1`
+- Dataset: deterministic Breast Cancer Wisconsin software demonstration
+- Model: sklearn `LogisticRegression`, version `1.0.0`
+- Explainer: real `shap.LinearExplainer`, SHAP `0.51.0`
+- Status: `FUZZYXAI_ML_VERTICAL_V1_IMPLEMENTED`
+- Registered acceptance scenarios: `10/10 PASS`
+
+The vertical implements one evidence-first route from a real tabular model and
+local SHAP explanation through fuzzy representation selection, RouteGraph
+contracts, safe observer actions, registered repair, recertification, audience
+views, REST, NiceGUI, MLflow, and Docker Compose. Critical-issue false
+certification is `0`; representation and observer action accuracy are `1.0` on
+the ten locked software acceptance scenarios.
+
+This is an engineering implementation result, not a new scientific hypothesis.
+The dataset is not used for clinical validation, no human-time or user-benefit
+claim is allowed, and prior Chapter 4 results remain unchanged.

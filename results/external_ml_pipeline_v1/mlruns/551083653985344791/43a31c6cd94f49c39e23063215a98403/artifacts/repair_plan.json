@@ -1,0 +1,12 @@
+{
+  "fully_executable": false,
+  "operations": [
+    "restore_explanation_provenance"
+  ],
+  "rollback": [
+    "restore_previous_artifact_snapshot"
+  ],
+  "step_ids": [
+    "step:issue:REQUIRED_PROVENANCE:1"
+  ]
+}

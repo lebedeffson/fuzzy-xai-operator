@@ -1,0 +1,21 @@
+{
+  "independent_replication_claim": false,
+  "key_secondary_effect": 0.24417529978965805,
+  "key_secondary_endpoint": "cost_regret",
+  "key_secondary_status": "SUPPORTED",
+  "linked_secondary_effect": 0.3333333333333333,
+  "linked_secondary_endpoint": "H10-C3b",
+  "linked_secondary_status": "SUPPORTED",
+  "policy_advantage_supported": false,
+  "policy_hierarchical_interval": [
+    -0.0051,
+    0.0073
+  ],
+  "primary_effect": 0.5274261603375527,
+  "primary_endpoint": "H10-C3a",
+  "primary_status": "SUPPORTED",
+  "removed_object_test_value": "historical_archive_only",
+  "scope": "pre-generated controlled structural mutations",
+  "source": "artifacts/h10_c3_r4/results/sealed_statistics.json",
+  "source_values_recalculated": false
+}

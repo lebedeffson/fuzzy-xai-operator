@@ -1,0 +1,104 @@
+name: FuzzyXAI ML Pipeline V2
+
+on:
+  push:
+    branches:
+      - feat/fuzzyxai-ml-pipeline-v2
+  pull_request:
+    paths:
+      - "framework/fuzzyxai/fuzzyxai/ml_vertical/**"
+      - "apps/layered_demo.py"
+      - "protocol/ml_pipeline_v2/**"
+      - "scripts/ml_pipeline_v2/**"
+      - "tests/ml_pipeline_v2/**"
+      - "tests/ml_vertical_v1/**"
+      - "Dockerfile.ml-vertical"
+      - "docker-compose.yml"
+      - ".github/workflows/ml-pipeline-v2.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  OMP_NUM_THREADS: "1"
+  OPENBLAS_NUM_THREADS: "1"
+  MKL_NUM_THREADS: "1"
+  NUMEXPR_NUM_THREADS: "1"
+  PYTHONPATH: "experiments/h10_c3/src:framework/fuzzyxai:."
+  FUZZYXAI_GIT_COMMIT: ${{ github.sha }}
+
+jobs:
+  acceptance:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Install frozen runtime and test dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install --index-url https://download.pytorch.org/whl/cpu torch
+          python -m pip install -e ".[dev,ml-vertical,lightgbm]"
+      - name: Focused tests
+        run: make ml-pipeline-v2-test PYTHON=python
+      - name: Static checks
+        run: |
+          python -m ruff check framework/fuzzyxai/fuzzyxai/ml_vertical tests/ml_pipeline_v2 scripts/ml_pipeline_v2
+          python -m ruff check --ignore BLE001,SIM117,UP017 apps/layered_demo.py
+          python -m compileall -q framework/fuzzyxai/fuzzyxai/ml_vertical scripts/ml_pipeline_v2 apps/layered_demo.py
+      - name: Engineering acceptance and evidence audits
+        run: |
+          python scripts/ml_pipeline_v2/run_acceptance.py --tracking-uri file:///tmp/ml-pipeline-v2-ci-mlruns
+          python scripts/ml_pipeline_v2/verify_mlflow_artifacts.py
+          python scripts/ml_pipeline_v2/verify_parent_immutability.py
+          python scripts/manuscript_claim_lint.py reports/ml_pipeline_v2/*.md
+          python -m fuzzyxai.audit.operators_manifest --output /tmp/operators-manifest.json
+          (cd protocol/ml_pipeline_v2 && sha256sum -c SHA256SUMS)
+      - name: Full regression
+        run: python -m pytest -q
+      - name: Docker Compose smoke
+        env:
+          FUZZYXAI_API_PORT: "18000"
+          FUZZYXAI_UI_PORT: "18092"
+          MLFLOW_PORT: "15001"
+        run: |
+          docker compose up -d --build api mlflow ui
+          trap 'docker compose down' EXIT
+          for attempt in $(seq 1 30); do
+            curl --fail --silent http://127.0.0.1:18000/ready >/dev/null \
+              && curl --fail --silent http://127.0.0.1:18092/ >/dev/null \
+              && curl --fail --silent http://127.0.0.1:15001/health >/dev/null \
+              && break
+            test "$attempt" -lt 30
+            sleep 2
+          done
+          python - <<'PY'
+          import json
+          import urllib.request
+
+          request = urllib.request.Request(
+              "http://127.0.0.1:18000/api/v1/pipeline/scenario/S13_PREPROCESSOR_FULL_FIT",
+              data=json.dumps({"scenario_id": "S13_PREPROCESSOR_FULL_FIT", "log_to_mlflow": True}).encode(),
+              headers={"Content-Type": "application/json"},
+              method="POST",
+          )
+          with urllib.request.urlopen(request, timeout=120) as response:
+              payload = json.loads(response.read())
+          assert payload["diagnosis"]["violated_contract"] == "PREPROCESSOR_FIT_SCOPE"
+          assert payload["mlflow"]["status"] == "PIPELINE_MLFLOW_INTEGRATION_PASS"
+          PY
+      - name: Upload V2 evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: fuzzyxai-ml-pipeline-v2-${{ github.sha }}
+          path: |
+            protocol/ml_pipeline_v2
+            results/ml_pipeline_v2
+            reports/ml_pipeline_v2
+          if-no-files-found: error

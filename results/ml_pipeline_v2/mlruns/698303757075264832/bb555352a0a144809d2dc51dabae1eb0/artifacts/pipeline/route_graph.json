@@ -1,0 +1,950 @@
+{
+  "schema_version": "2.0",
+  "route_id": "route:mlp2:545c145bbc0d2ffa19e9",
+  "nodes": [
+    {
+      "node_id": "dataset",
+      "node_type": "dataset",
+      "stage": "DATA_PREPARATION",
+      "component_id": "dataset",
+      "component_type": "dataset",
+      "version": "2.0.0",
+      "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "configuration": {},
+      "artifact_sha256": "47e9aa4e33b5350407b6d31fa140e2b1767a038c37796e0990eb99ad2bc7ba12",
+      "evidence_refs": [
+        "obs:0e07dabc5f7fc5ee91ce",
+        "obs:cf4ee1fa7e4f5045a2cc",
+        "obs:38ac1ee616840f933081",
+        "obs:329eb33f39c463c6091c"
+      ],
+      "execution_status": "PASS"
+    },
+    {
+      "node_id": "split_manifest",
+      "node_type": "split_manifest",
+      "stage": "DATA_SPLIT",
+      "component_id": "split_manifest",
+      "component_type": "split_manifest",
+      "version": "2.0.0",
+      "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "configuration": {
+        "random_state": 1729,
+        "stratified": true
+      },
+      "artifact_sha256": "5cb8248a79fe2464c45575cdb50c2dd1ba887c819311031b970fa10adb6afc8e",
+      "evidence_refs": [
+        "obs:294fb7a0a26d1454c3c8",
+        "obs:e6c74d8b620f026e9812"
+      ],
+      "execution_status": "PASS"
+    },
+    {
+      "node_id": "train_partition",
+      "node_type": "partition",
+      "stage": "DATA_SPLIT",
+      "component_id": "train_partition",
+      "component_type": "partition",
+      "version": "2.0.0",
+      "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "configuration": {},
+      "artifact_sha256": null,
+      "evidence_refs": [
+        "obs:294fb7a0a26d1454c3c8",
+        "obs:e6c74d8b620f026e9812"
+      ],
+      "execution_status": "PASS"
+    },
+    {
+      "node_id": "validation_partition",
+      "node_type": "partition",
+      "stage": "DATA_SPLIT",
+      "component_id": "validation_partition",
+      "component_type": "partition",
+      "version": "2.0.0",
+      "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "configuration": {},
+      "artifact_sha256": null,
+      "evidence_refs": [
+        "obs:294fb7a0a26d1454c3c8",
+        "obs:e6c74d8b620f026e9812"
+      ],
+      "execution_status": "PASS"
+    },
+    {
+      "node_id": "test_partition",
+      "node_type": "partition",
+      "stage": "DATA_SPLIT",
+      "component_id": "test_partition",
+      "component_type": "partition",
+      "version": "2.0.0",
+      "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "configuration": {},
+      "artifact_sha256": null,
+      "evidence_refs": [
+        "obs:294fb7a0a26d1454c3c8",
+        "obs:e6c74d8b620f026e9812"
+      ],
+      "execution_status": "PASS"
+    },
+    {
+      "node_id": "preprocessor",
+      "node_type": "preprocessor",
+      "stage": "PREPROCESSING",
+      "component_id": "preprocessor",
+      "component_type": "preprocessor",
+      "version": "2.0.0",
+      "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "configuration": {
+        "class": "StandardScaler"
+      },
+      "artifact_sha256": "3496f956bcee015f773859d8e072ab6ff637663c57e470ebee3f823c3146ed24",
+      "evidence_refs": [
+        "obs:96e81b425d3a5c96b1ea",
+        "obs:8f25dfad40b563291905",
+        "obs:36aa86b05fb1bccdf512",
+        "obs:c3159888c0319ec578e9",
+        "obs:cf07fc9d4342e4025d0d",
+        "obs:7108db6b98640a53dd8b"
+      ],
+      "execution_status": "PASS"
+    },
+    {
+      "node_id": "transformed_train",
+      "node_type": "dataset",
+      "stage": "PREPROCESSING",
+      "component_id": "transformed_train",
+      "component_type": "dataset",
+      "version": "2.0.0",
+      "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "configuration": {},
+      "artifact_sha256": null,
+      "evidence_refs": [
+        "obs:96e81b425d3a5c96b1ea",
+        "obs:8f25dfad40b563291905",
+        "obs:36aa86b05fb1bccdf512",
+        "obs:c3159888c0319ec578e9",
+        "obs:cf07fc9d4342e4025d0d",
+        "obs:7108db6b98640a53dd8b"
+      ],
+      "execution_status": "PASS"
+    },
+    {
+      "node_id": "training_configuration",
+      "node_type": "configuration",
+      "stage": "TRAINING",
+      "component_id": "training_configuration",
+      "component_type": "configuration",
+      "version": "2.0.0",
+      "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "configuration": {},
+      "artifact_sha256": null,
+      "evidence_refs": [
+        "obs:a50462ff65353916410e",
+        "obs:293cfb4945291a6c43dd",
+        "obs:73d278bd51f5235f0633",
+        "obs:0c0f029f56f5122a2438",
+        "obs:b9380f986384566713fa"
+      ],
+      "execution_status": "PASS"
+    },
+    {
+      "node_id": "trained_model",
+      "node_type": "model",
+      "stage": "TRAINING",
+      "component_id": "trained_model",
+      "component_type": "model",
+      "version": "2.0.0",
+      "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "configuration": {
+        "model_id": "bcw-logistic-regression",
+        "model_version": "1.0.0"
+      },
+      "artifact_sha256": "5de1ed8251b147befef90e6bfee3f5bcda23056d5bb66212153ce1104668ca8c",
+      "evidence_refs": [
+        "obs:a50462ff65353916410e",
+        "obs:293cfb4945291a6c43dd",
+        "obs:73d278bd51f5235f0633",
+        "obs:0c0f029f56f5122a2438",
+        "obs:b9380f986384566713fa"
+      ],
+      "execution_status": "PASS"
+    },
+    {
+      "node_id": "model_artifact",
+      "node_type": "artifact",
+      "stage": "MODEL_ARTIFACT",
+      "component_id": "model_artifact",
+      "component_type": "artifact",
+      "version": "2.0.0",
+      "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "configuration": {
+        "model_id": "bcw-logistic-regression",
+        "model_version": "1.0.0"
+      },
+      "artifact_sha256": "5de1ed8251b147befef90e6bfee3f5bcda23056d5bb66212153ce1104668ca8c",
+      "evidence_refs": [
+        "obs:f1aeba0b2c2fa7b0a4ce"
+      ],
+      "execution_status": "PASS"
+    },
+    {
+      "node_id": "inference_object",
+      "node_type": "input",
+      "stage": "INFERENCE",
+      "component_id": "inference_object",
+      "component_type": "input",
+      "version": "2.0.0",
+      "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "configuration": {},
+      "artifact_sha256": null,
+      "evidence_refs": [
+        "obs:54b97e8d97dbcdd3fd50",
+        "obs:699d1103bfbf1e9741a6",
+        "obs:eeb0e4e556275afcf81e"
+      ],
+      "execution_status": "PASS"
+    },
+    {
+      "node_id": "prediction",
+      "node_type": "prediction",
+      "stage": "INFERENCE",
+      "component_id": "prediction",
+      "component_type": "prediction",
+      "version": "2.0.0",
+      "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "configuration": {},
+      "artifact_sha256": null,
+      "evidence_refs": [
+        "obs:54b97e8d97dbcdd3fd50",
+        "obs:699d1103bfbf1e9741a6",
+        "obs:eeb0e4e556275afcf81e"
+      ],
+      "execution_status": "PASS"
+    },
+    {
+      "node_id": "shap_explainer",
+      "node_type": "explainer",
+      "stage": "POST_HOC_EXPLANATION",
+      "component_id": "shap_explainer",
+      "component_type": "explainer",
+      "version": "2.0.0",
+      "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "configuration": {},
+      "artifact_sha256": null,
+      "evidence_refs": [
+        "obs:4a0c9e32a1b69a7b86e3",
+        "obs:584e973849123273dea3",
+        "obs:e5e99a12ffb5eec42cc2",
+        "obs:a5e33006640908765250",
+        "obs:b00813d1f1076e77154f",
+        "obs:7c6e1a4bc668d57431e8"
+      ],
+      "execution_status": "FAIL"
+    },
+    {
+      "node_id": "shap_values",
+      "node_type": "explanation",
+      "stage": "POST_HOC_EXPLANATION",
+      "component_id": "shap_values",
+      "component_type": "explanation",
+      "version": "2.0.0",
+      "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "configuration": {},
+      "artifact_sha256": null,
+      "evidence_refs": [
+        "obs:4a0c9e32a1b69a7b86e3",
+        "obs:584e973849123273dea3",
+        "obs:e5e99a12ffb5eec42cc2",
+        "obs:a5e33006640908765250",
+        "obs:b00813d1f1076e77154f",
+        "obs:7c6e1a4bc668d57431e8"
+      ],
+      "execution_status": "FAIL"
+    },
+    {
+      "node_id": "fuzzy_representation",
+      "node_type": "representation",
+      "stage": "FUZZY_REPRESENTATION",
+      "component_id": "fuzzy_representation",
+      "component_type": "representation",
+      "version": "2.0.0",
+      "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "configuration": {},
+      "artifact_sha256": null,
+      "evidence_refs": [],
+      "execution_status": "PASS"
+    },
+    {
+      "node_id": "reduced_explanation",
+      "node_type": "reduction",
+      "stage": "REDUCTION",
+      "component_id": "reduced_explanation",
+      "component_type": "reduction",
+      "version": "2.0.0",
+      "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "configuration": {},
+      "artifact_sha256": null,
+      "evidence_refs": [
+        "obs:c74146975a936946b731"
+      ],
+      "execution_status": "PASS"
+    },
+    {
+      "node_id": "user_view",
+      "node_type": "presentation",
+      "stage": "PRESENTATION",
+      "component_id": "user_view",
+      "component_type": "presentation",
+      "version": "2.0.0",
+      "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "configuration": {},
+      "artifact_sha256": null,
+      "evidence_refs": [
+        "obs:522c1c161b7a7862c47d"
+      ],
+      "execution_status": "PASS"
+    },
+    {
+      "node_id": "engineering_view",
+      "node_type": "presentation",
+      "stage": "PRESENTATION",
+      "component_id": "engineering_view",
+      "component_type": "presentation",
+      "version": "2.0.0",
+      "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "configuration": {},
+      "artifact_sha256": null,
+      "evidence_refs": [
+        "obs:522c1c161b7a7862c47d"
+      ],
+      "execution_status": "PASS"
+    },
+    {
+      "node_id": "audit_view",
+      "node_type": "presentation",
+      "stage": "PRESENTATION",
+      "component_id": "audit_view",
+      "component_type": "presentation",
+      "version": "2.0.0",
+      "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "configuration": {},
+      "artifact_sha256": null,
+      "evidence_refs": [
+        "obs:522c1c161b7a7862c47d"
+      ],
+      "execution_status": "PASS"
+    },
+    {
+      "node_id": "repair_plan",
+      "node_type": "repair",
+      "stage": "REPAIR",
+      "component_id": "repair_plan",
+      "component_type": "repair",
+      "version": "2.0.0",
+      "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "configuration": {},
+      "artifact_sha256": null,
+      "evidence_refs": [],
+      "execution_status": "NOT_RUN"
+    },
+    {
+      "node_id": "recertification_result",
+      "node_type": "recertification",
+      "stage": "RECERTIFICATION",
+      "component_id": "recertification_result",
+      "component_type": "recertification",
+      "version": "2.0.0",
+      "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "configuration": {},
+      "artifact_sha256": null,
+      "evidence_refs": [],
+      "execution_status": "NOT_RUN"
+    }
+  ],
+  "edges": [
+    {
+      "source": "dataset",
+      "target": "split_manifest",
+      "relation": "derived_from"
+    },
+    {
+      "source": "train_partition",
+      "target": "preprocessor",
+      "relation": "fitted_on"
+    },
+    {
+      "source": "train_partition",
+      "target": "transformed_train",
+      "relation": "transformed_by"
+    },
+    {
+      "source": "transformed_train",
+      "target": "trained_model",
+      "relation": "trained_on"
+    },
+    {
+      "source": "training_configuration",
+      "target": "trained_model",
+      "relation": "configured_by"
+    },
+    {
+      "source": "trained_model",
+      "target": "model_artifact",
+      "relation": "produced_by"
+    },
+    {
+      "source": "inference_object",
+      "target": "prediction",
+      "relation": "produced_by"
+    },
+    {
+      "source": "trained_model",
+      "target": "shap_explainer",
+      "relation": "explained_by"
+    },
+    {
+      "source": "prediction",
+      "target": "shap_values",
+      "relation": "explained_by"
+    },
+    {
+      "source": "shap_values",
+      "target": "fuzzy_representation",
+      "relation": "represented_by"
+    },
+    {
+      "source": "fuzzy_representation",
+      "target": "reduced_explanation",
+      "relation": "reduced_to"
+    },
+    {
+      "source": "reduced_explanation",
+      "target": "user_view",
+      "relation": "displayed_as"
+    },
+    {
+      "source": "reduced_explanation",
+      "target": "engineering_view",
+      "relation": "displayed_as"
+    },
+    {
+      "source": "reduced_explanation",
+      "target": "audit_view",
+      "relation": "displayed_as"
+    },
+    {
+      "source": "repair_plan",
+      "target": "recertification_result",
+      "relation": "recertified_as"
+    }
+  ],
+  "contracts": [
+    {
+      "contract_id": "DATASET_IDENTITY",
+      "stage": "DATA_PREPARATION",
+      "component_id": "breast_cancer_dataset",
+      "passed": true,
+      "severity": "NONE",
+      "action": "NONE",
+      "observed_value": "47e9aa4e33b5350407b6d31fa140e2b1767a038c37796e0990eb99ad2bc7ba12",
+      "expected_value": "47e9aa4e33b5350407b6d31fa140e2b1767a038c37796e0990eb99ad2bc7ba12",
+      "evidence_refs": [
+        "obs:0e07dabc5f7fc5ee91ce"
+      ]
+    },
+    {
+      "contract_id": "DATASET_SCHEMA",
+      "stage": "DATA_PREPARATION",
+      "component_id": "breast_cancer_dataset",
+      "passed": true,
+      "severity": "NONE",
+      "action": "NONE",
+      "observed_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "expected_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "evidence_refs": [
+        "obs:cf4ee1fa7e4f5045a2cc"
+      ]
+    },
+    {
+      "contract_id": "TARGET_NOT_IN_FEATURES",
+      "stage": "DATA_PREPARATION",
+      "component_id": "breast_cancer_dataset",
+      "passed": true,
+      "severity": "NONE",
+      "action": "NONE",
+      "observed_value": true,
+      "expected_value": true,
+      "evidence_refs": [
+        "obs:38ac1ee616840f933081"
+      ]
+    },
+    {
+      "contract_id": "CLASS_MAPPING",
+      "stage": "DATA_PREPARATION",
+      "component_id": "breast_cancer_dataset",
+      "passed": true,
+      "severity": "NONE",
+      "action": "NONE",
+      "observed_value": {
+        "source": [
+          0,
+          1
+        ],
+        "encoded": [
+          1,
+          0
+        ],
+        "model_classes": [
+          0,
+          1
+        ]
+      },
+      "expected_value": {
+        "source": [
+          0,
+          1
+        ],
+        "encoded": [
+          1,
+          0
+        ],
+        "model_classes": [
+          0,
+          1
+        ]
+      },
+      "evidence_refs": [
+        "obs:329eb33f39c463c6091c"
+      ]
+    },
+    {
+      "contract_id": "TRAIN_VALIDATION_TEST_DISJOINTNESS",
+      "stage": "DATA_SPLIT",
+      "component_id": "deterministic_splitter",
+      "passed": true,
+      "severity": "NONE",
+      "action": "NONE",
+      "observed_value": {
+        "train_validation": 0,
+        "train_test": 0,
+        "validation_test": 0
+      },
+      "expected_value": {
+        "train_validation": 0,
+        "train_test": 0,
+        "validation_test": 0
+      },
+      "evidence_refs": [
+        "obs:294fb7a0a26d1454c3c8"
+      ]
+    },
+    {
+      "contract_id": "SPLIT_REPRODUCIBILITY",
+      "stage": "DATA_SPLIT",
+      "component_id": "deterministic_splitter",
+      "passed": true,
+      "severity": "NONE",
+      "action": "NONE",
+      "observed_value": "5cb8248a79fe2464c45575cdb50c2dd1ba887c819311031b970fa10adb6afc8e",
+      "expected_value": "5cb8248a79fe2464c45575cdb50c2dd1ba887c819311031b970fa10adb6afc8e",
+      "evidence_refs": [
+        "obs:e6c74d8b620f026e9812"
+      ]
+    },
+    {
+      "contract_id": "PREPROCESSOR_VERSION",
+      "stage": "PREPROCESSING",
+      "component_id": "standard_scaler",
+      "passed": true,
+      "severity": "NONE",
+      "action": "NONE",
+      "observed_value": "sklearn.StandardScaler/1.9.0",
+      "expected_value": "sklearn.StandardScaler/1.9.0",
+      "evidence_refs": [
+        "obs:96e81b425d3a5c96b1ea"
+      ]
+    },
+    {
+      "contract_id": "PREPROCESSOR_FIT_SCOPE",
+      "stage": "PREPROCESSING",
+      "component_id": "standard_scaler",
+      "passed": true,
+      "severity": "NONE",
+      "action": "NONE",
+      "observed_value": "d96d63ac85a124109a38337843ea08b792d579afb5e10d85d232020ce67fb3bb",
+      "expected_value": "d96d63ac85a124109a38337843ea08b792d579afb5e10d85d232020ce67fb3bb",
+      "evidence_refs": [
+        "obs:8f25dfad40b563291905"
+      ]
+    },
+    {
+      "contract_id": "FEATURE_ORDER",
+      "stage": "PREPROCESSING",
+      "component_id": "standard_scaler",
+      "passed": true,
+      "severity": "NONE",
+      "action": "NONE",
+      "observed_value": [
+        "mean radius",
+        "mean texture",
+        "mean perimeter",
+        "mean area",
+        "mean smoothness",
+        "mean compactness",
+        "mean concavity",
+        "mean concave points",
+        "mean symmetry",
+        "mean fractal dimension",
+        "radius error",
+        "texture error",
+        "perimeter error",
+        "area error",
+        "smoothness error",
+        "compactness error",
+        "concavity error",
+        "concave points error",
+        "symmetry error",
+        "fractal dimension error",
+        "worst radius",
+        "worst texture",
+        "worst perimeter",
+        "worst area",
+        "worst smoothness",
+        "worst compactness",
+        "worst concavity",
+        "worst concave points",
+        "worst symmetry",
+        "worst fractal dimension"
+      ],
+      "expected_value": [
+        "mean radius",
+        "mean texture",
+        "mean perimeter",
+        "mean area",
+        "mean smoothness",
+        "mean compactness",
+        "mean concavity",
+        "mean concave points",
+        "mean symmetry",
+        "mean fractal dimension",
+        "radius error",
+        "texture error",
+        "perimeter error",
+        "area error",
+        "smoothness error",
+        "compactness error",
+        "concavity error",
+        "concave points error",
+        "symmetry error",
+        "fractal dimension error",
+        "worst radius",
+        "worst texture",
+        "worst perimeter",
+        "worst area",
+        "worst smoothness",
+        "worst compactness",
+        "worst concavity",
+        "worst concave points",
+        "worst symmetry",
+        "worst fractal dimension"
+      ],
+      "evidence_refs": [
+        "obs:36aa86b05fb1bccdf512"
+      ]
+    },
+    {
+      "contract_id": "FEATURE_COUNT",
+      "stage": "PREPROCESSING",
+      "component_id": "standard_scaler",
+      "passed": true,
+      "severity": "NONE",
+      "action": "NONE",
+      "observed_value": 30,
+      "expected_value": 30,
+      "evidence_refs": [
+        "obs:c3159888c0319ec578e9"
+      ]
+    },
+    {
+      "contract_id": "TRANSFORM_OUTPUT_SCHEMA",
+      "stage": "PREPROCESSING",
+      "component_id": "standard_scaler",
+      "passed": true,
+      "severity": "NONE",
+      "action": "NONE",
+      "observed_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "expected_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "evidence_refs": [
+        "obs:cf07fc9d4342e4025d0d"
+      ]
+    },
+    {
+      "contract_id": "FINITE_TRANSFORMED_VALUES",
+      "stage": "PREPROCESSING",
+      "component_id": "standard_scaler",
+      "passed": true,
+      "severity": "NONE",
+      "action": "NONE",
+      "observed_value": true,
+      "expected_value": true,
+      "evidence_refs": [
+        "obs:7108db6b98640a53dd8b"
+      ]
+    },
+    {
+      "contract_id": "TRAINING_CONFIGURATION",
+      "stage": "TRAINING",
+      "component_id": "logistic_regression",
+      "passed": true,
+      "severity": "NONE",
+      "action": "NONE",
+      "observed_value": "f72bbde93f0b50126b8592d4993f21b174e7eb6a237dc5c29a4f405f78ae8a31",
+      "expected_value": "f72bbde93f0b50126b8592d4993f21b174e7eb6a237dc5c29a4f405f78ae8a31",
+      "evidence_refs": [
+        "obs:a50462ff65353916410e"
+      ]
+    },
+    {
+      "contract_id": "MODEL_CONVERGENCE",
+      "stage": "TRAINING",
+      "component_id": "logistic_regression",
+      "passed": true,
+      "severity": "NONE",
+      "action": "NONE",
+      "observed_value": true,
+      "expected_value": true,
+      "evidence_refs": [
+        "obs:293cfb4945291a6c43dd"
+      ]
+    },
+    {
+      "contract_id": "MODEL_FEATURE_SCHEMA",
+      "stage": "TRAINING",
+      "component_id": "logistic_regression",
+      "passed": true,
+      "severity": "NONE",
+      "action": "NONE",
+      "observed_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "expected_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "evidence_refs": [
+        "obs:73d278bd51f5235f0633"
+      ]
+    },
+    {
+      "contract_id": "TRAINING_DATA_HASH",
+      "stage": "TRAINING",
+      "component_id": "logistic_regression",
+      "passed": true,
+      "severity": "NONE",
+      "action": "NONE",
+      "observed_value": {
+        "dataset": "47e9aa4e33b5350407b6d31fa140e2b1767a038c37796e0990eb99ad2bc7ba12",
+        "train": "d96d63ac85a124109a38337843ea08b792d579afb5e10d85d232020ce67fb3bb",
+        "target": "be56573cf0b8dafd36c7e0caeb2e3906dd345494e709f9226b1535e643da2ef5"
+      },
+      "expected_value": {
+        "dataset": "47e9aa4e33b5350407b6d31fa140e2b1767a038c37796e0990eb99ad2bc7ba12",
+        "train": "d96d63ac85a124109a38337843ea08b792d579afb5e10d85d232020ce67fb3bb",
+        "target": "be56573cf0b8dafd36c7e0caeb2e3906dd345494e709f9226b1535e643da2ef5"
+      },
+      "evidence_refs": [
+        "obs:0c0f029f56f5122a2438"
+      ]
+    },
+    {
+      "contract_id": "MODEL_ARTIFACT_HASH",
+      "stage": "MODEL_ARTIFACT",
+      "component_id": "serialized_model",
+      "passed": true,
+      "severity": "NONE",
+      "action": "NONE",
+      "observed_value": "5de1ed8251b147befef90e6bfee3f5bcda23056d5bb66212153ce1104668ca8c",
+      "expected_value": "5de1ed8251b147befef90e6bfee3f5bcda23056d5bb66212153ce1104668ca8c",
+      "evidence_refs": [
+        "obs:f1aeba0b2c2fa7b0a4ce"
+      ]
+    },
+    {
+      "contract_id": "METRIC_SANITY",
+      "stage": "TRAINING",
+      "component_id": "logistic_regression",
+      "passed": true,
+      "severity": "NONE",
+      "action": "NONE",
+      "observed_value": true,
+      "expected_value": true,
+      "evidence_refs": [
+        "obs:b9380f986384566713fa"
+      ]
+    },
+    {
+      "contract_id": "MODEL_INPUT_SCHEMA",
+      "stage": "INFERENCE",
+      "component_id": "logistic_regression",
+      "passed": true,
+      "severity": "NONE",
+      "action": "NONE",
+      "observed_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "expected_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "evidence_refs": [
+        "obs:54b97e8d97dbcdd3fd50"
+      ]
+    },
+    {
+      "contract_id": "PREDICTION_OBJECT_BINDING",
+      "stage": "INFERENCE",
+      "component_id": "prediction",
+      "passed": true,
+      "severity": "NONE",
+      "action": "NONE",
+      "observed_value": true,
+      "expected_value": true,
+      "evidence_refs": [
+        "obs:699d1103bfbf1e9741a6"
+      ]
+    },
+    {
+      "contract_id": "PREDICTION_OUTPUT_SANITY",
+      "stage": "INFERENCE",
+      "component_id": "prediction",
+      "passed": true,
+      "severity": "NONE",
+      "action": "NONE",
+      "observed_value": true,
+      "expected_value": true,
+      "evidence_refs": [
+        "obs:eeb0e4e556275afcf81e"
+      ]
+    },
+    {
+      "contract_id": "MODEL_EXPLAINER_VERSION",
+      "stage": "POST_HOC_EXPLANATION",
+      "component_id": "logistic_regression",
+      "passed": true,
+      "severity": "NONE",
+      "action": "NONE",
+      "observed_value": "1.0.0",
+      "expected_value": "1.0.0",
+      "evidence_refs": [
+        "obs:4a0c9e32a1b69a7b86e3"
+      ]
+    },
+    {
+      "contract_id": "EXPLANATION_OBJECT_ID",
+      "stage": "POST_HOC_EXPLANATION",
+      "component_id": "shap_linear_explainer",
+      "passed": true,
+      "severity": "NONE",
+      "action": "NONE",
+      "observed_value": "bcw:pipeline-default",
+      "expected_value": "bcw:pipeline-default",
+      "evidence_refs": [
+        "obs:584e973849123273dea3"
+      ]
+    },
+    {
+      "contract_id": "EXPLANATION_OUTPUT_CONSISTENCY",
+      "stage": "POST_HOC_EXPLANATION",
+      "component_id": "shap_linear_explainer",
+      "passed": true,
+      "severity": "NONE",
+      "action": "NONE",
+      "observed_value": 0.0,
+      "expected_value": 1e-08,
+      "evidence_refs": [
+        "obs:e5e99a12ffb5eec42cc2"
+      ]
+    },
+    {
+      "contract_id": "EXPLANATION_FEATURE_SCHEMA",
+      "stage": "POST_HOC_EXPLANATION",
+      "component_id": "shap_linear_explainer",
+      "passed": true,
+      "severity": "NONE",
+      "action": "NONE",
+      "observed_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "expected_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "evidence_refs": [
+        "obs:a5e33006640908765250"
+      ]
+    },
+    {
+      "contract_id": "REQUIRED_PROVENANCE",
+      "stage": "POST_HOC_EXPLANATION",
+      "component_id": "shap_linear_explainer",
+      "passed": true,
+      "severity": "NONE",
+      "action": "NONE",
+      "observed_value": true,
+      "expected_value": true,
+      "evidence_refs": [
+        "obs:b00813d1f1076e77154f"
+      ]
+    },
+    {
+      "contract_id": "REDUCTION_LOSS_LIMIT",
+      "stage": "REDUCTION",
+      "component_id": "fuzzyxai_presenter",
+      "passed": true,
+      "severity": "NONE",
+      "action": "NONE",
+      "observed_value": 0.0,
+      "expected_value": 0.25,
+      "evidence_refs": [
+        "obs:c74146975a936946b731"
+      ]
+    },
+    {
+      "contract_id": "USER_CLAIM_EVIDENCE_BINDING",
+      "stage": "PRESENTATION",
+      "component_id": "fuzzyxai_presenter",
+      "passed": true,
+      "severity": "NONE",
+      "action": "NONE",
+      "observed_value": true,
+      "expected_value": true,
+      "evidence_refs": [
+        "obs:522c1c161b7a7862c47d"
+      ]
+    },
+    {
+      "contract_id": "REQUIRED_PROVENANCE",
+      "stage": "POST_HOC_EXPLANATION",
+      "component_id": "shap_linear_explainer",
+      "passed": false,
+      "severity": "HIGH",
+      "action": "BLOCK",
+      "observed_value": "legacy_vertical_violation",
+      "expected_value": "registered_contract_satisfied",
+      "evidence_refs": [
+        "obs:7c6e1a4bc668d57431e8"
+      ]
+    }
+  ],
+  "metadata": {
+    "pipeline_version": "2.0.0"
+  },
+  "trace_sha256": "ef87dc77c208b349634b5775992a6dbd935261f20caec4d3f4c51627a0419dd3"
+}

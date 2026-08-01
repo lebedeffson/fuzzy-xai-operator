@@ -1,0 +1,11 @@
+{
+  "contract_id": "FEATURE_ORDER",
+  "dependent_violations": [],
+  "evidence_refs": [
+    "preprocessor_manifest.json",
+    "prediction_manifest.json",
+    "explanation_manifest.json"
+  ],
+  "root_cause": "FEATURE_ORDER",
+  "stage": "PREPROCESSING"
+}

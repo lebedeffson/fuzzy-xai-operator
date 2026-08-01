@@ -1,0 +1,44 @@
+{
+  "diagnosis_id": "diagnosis:mlp2:33ab600ddce002440653",
+  "pipeline_status": "INVALID",
+  "failed_stage": "REDUCTION",
+  "source_component": "fuzzyxai_presenter",
+  "violated_contract": "REDUCTION_LOSS_LIMIT",
+  "violated_contracts": [
+    {
+      "contract_id": "REDUCTION_LOSS_LIMIT",
+      "stage": "REDUCTION",
+      "component_id": "fuzzyxai_presenter",
+      "passed": false,
+      "severity": "MEDIUM",
+      "action": "WARN",
+      "observed_value": "legacy_vertical_violation",
+      "expected_value": "registered_contract_satisfied",
+      "evidence_refs": [
+        "obs:2c66b6521f9c23a04a25"
+      ]
+    }
+  ],
+  "affected_field": "reduction_loss_limit",
+  "observed_value": "legacy_vertical_violation",
+  "expected_value": "registered_contract_satisfied",
+  "severity": "MEDIUM",
+  "recommended_action": "WARN",
+  "evidence_refs": [
+    "obs:2c66b6521f9c23a04a25"
+  ],
+  "nearest_confirmed_cause": {
+    "component": "fuzzyxai_presenter",
+    "mutation": {}
+  },
+  "diagnostic_cut": {
+    "contracts": [
+      "REDUCTION_LOSS_LIMIT"
+    ],
+    "evidence_refs": [
+      "obs:2c66b6521f9c23a04a25"
+    ]
+  },
+  "confidence": 1.0,
+  "observation_count": 29
+}

@@ -1,0 +1,17 @@
+{
+  "protocol_id": "FUZZYXAI_ML_PIPELINE_V2",
+  "source_commit": "283a76efa3a84d3f784cf93a4299d062b7a3c215",
+  "v1_scenarios_frozen": ["S1_NORMAL", "S2_EXPLAINER_VERSION_MISMATCH", "S3_MISSING_REQUIRED_FEATURE", "S4_MODEL_RULE_CONFLICT", "S5_INTERVAL_UNCERTAINTY", "S6_MULTILEVEL_UNCERTAINTY", "S7_REDUCTION_LOSS_EXCEEDED", "S8_INCOMPLETE_PROVENANCE", "S9_REGISTERED_REPAIR", "S10_DETERMINISM"],
+  "v2_scenarios": {
+    "S11_TARGET_LEAKAGE": {"stage": "DATA_PREPARATION", "contract": "TARGET_NOT_IN_FEATURES", "action": "BLOCK"},
+    "S12_SPLIT_OVERLAP": {"stage": "DATA_SPLIT", "contract": "TRAIN_VALIDATION_TEST_DISJOINTNESS", "action": "BLOCK"},
+    "S13_PREPROCESSOR_FULL_FIT": {"stage": "PREPROCESSING", "contract": "PREPROCESSOR_FIT_SCOPE", "action": "BLOCK", "repair": "refit_preprocessor_on_registered_train_split"},
+    "S14_FEATURE_ORDER": {"stage": "PREPROCESSING", "contract": "FEATURE_ORDER", "action": "REQUEST_DATA", "repair": "restore_registered_feature_order"},
+    "S15_MODEL_NON_CONVERGENCE": {"stage": "TRAINING", "contract": "MODEL_CONVERGENCE", "action": "REVIEW"},
+    "S16_MODEL_ARTIFACT_TAMPER": {"stage": "MODEL_ARTIFACT", "contract": "MODEL_ARTIFACT_HASH", "action": "BLOCK", "repair": "restore_registered_model_artifact"},
+    "S17_SHAP_INCONSISTENCY": {"stage": "POST_HOC_EXPLANATION", "contract": "EXPLANATION_OUTPUT_CONSISTENCY", "action": "BLOCK"},
+    "S18_MISSING_EXPLANATION_PROVENANCE": {"stage": "POST_HOC_EXPLANATION", "contract": "REQUIRED_PROVENANCE", "action": "BLOCK", "repair": "rerun_explainer_with_registered_components"}
+  },
+  "mutation_selection_locked": true,
+  "gold_feature_channels_forbidden": true
+}

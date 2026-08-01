@@ -1,0 +1,48 @@
+{
+  "diagnosis_id": "diagnosis:mlp2:ed78f41c2dae7a96acf7",
+  "pipeline_status": "INVALID",
+  "failed_stage": "PREPROCESSING",
+  "source_component": "standard_scaler",
+  "violated_contract": "PREPROCESSOR_FIT_SCOPE",
+  "violated_contracts": [
+    {
+      "contract_id": "PREPROCESSOR_FIT_SCOPE",
+      "stage": "PREPROCESSING",
+      "component_id": "standard_scaler",
+      "passed": false,
+      "severity": "HIGH",
+      "action": "BLOCK",
+      "observed_value": "e7941c7b3c59c1dacc2bebcb510062545c175b0e256e0a9be521423377d83aca",
+      "expected_value": "d96d63ac85a124109a38337843ea08b792d579afb5e10d85d232020ce67fb3bb",
+      "evidence_refs": [
+        "obs:3255403257e0dc30c9f9"
+      ]
+    }
+  ],
+  "affected_field": "preprocessor_fit_scope",
+  "observed_value": "e7941c7b3c59c1dacc2bebcb510062545c175b0e256e0a9be521423377d83aca",
+  "expected_value": "d96d63ac85a124109a38337843ea08b792d579afb5e10d85d232020ce67fb3bb",
+  "severity": "HIGH",
+  "recommended_action": "BLOCK",
+  "evidence_refs": [
+    "obs:3255403257e0dc30c9f9"
+  ],
+  "nearest_confirmed_cause": {
+    "component": "standard_scaler",
+    "mutation": {
+      "fit_row_count": 569,
+      "train_row_count": 364,
+      "mutated_preprocessor_sha256": "100cf5f95b3b2fe62572d18eb7cd956a3cbf986aa66c362940ea858a58aa7447"
+    }
+  },
+  "diagnostic_cut": {
+    "contracts": [
+      "PREPROCESSOR_FIT_SCOPE"
+    ],
+    "evidence_refs": [
+      "obs:3255403257e0dc30c9f9"
+    ]
+  },
+  "confidence": 1.0,
+  "observation_count": 28
+}

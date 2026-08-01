@@ -1,0 +1,18 @@
+{
+  "R0_to_R1": {
+    "changed_top_10_incidents": 30,
+    "identical_on_all_incidents": false
+  },
+  "R1_to_R3": {
+    "changed_top_10_incidents": 30,
+    "identical_on_all_incidents": false
+  },
+  "R3_to_R5": {
+    "changed_top_10_incidents": 23,
+    "identical_on_all_incidents": false
+  },
+  "R5_to_R6": {
+    "changed_top_10_incidents": 8,
+    "identical_on_all_incidents": false
+  }
+}

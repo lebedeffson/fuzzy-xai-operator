@@ -1,0 +1,27 @@
+{
+  "protocol_id": "FUZZYXAI_ML_PIPELINE_V2_COMPARATIVE_V1",
+  "success_status": "FUZZYXAI_ML_PIPELINE_V2_COMPARATIVE_SUPPORTED",
+  "failure_status": "COMPARATIVE_ADVANTAGE_NOT_ESTABLISHED",
+  "required": {
+    "fuzzyxai_false_certification_count": 0,
+    "fuzzyxai_stage_localization_accuracy": 1.0,
+    "fuzzyxai_contract_identification_accuracy": 1.0,
+    "fuzzyxai_action_accuracy": 1.0,
+    "fuzzyxai_repair_success": "5/5",
+    "fuzzyxai_full_recertification_success": "5/5",
+    "fuzzyxai_evidence_completeness": 1.0,
+    "cross_stage_advantage_over_b2": "at least two preregistered cross-stage cases",
+    "a2_contract_accuracy_strictly_greater_than_a1": true,
+    "a4_full_recertification_strictly_greater_than_a3": true,
+    "a4_rechecks_all_contracts_after_each_repair": 28
+  },
+  "forbidden_claims": [
+    "detects arbitrary ML errors",
+    "replaces MLflow or Kubeflow",
+    "reduces engineer time",
+    "reduces cognitive load",
+    "establishes user utility",
+    "transfers to natural software incidents"
+  ],
+  "docx_pdf_modification_allowed": false
+}

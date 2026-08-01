@@ -1,0 +1,4 @@
+noise_level,N,median_jaccard,mean_coverage_stability,recertification_success,new_critical_violations,prediction_unchanged,representation_class_unchanged,diagnostic_status_unchanged
+0.01,1000,1.0,1.0,1.0,0,1.0,1.0,1.0
+0.05,1000,1.0,1.0,1.0,0,0.995,1.0,1.0
+0.1,1000,1.0,1.0,1.0,0,0.986,1.0,1.0

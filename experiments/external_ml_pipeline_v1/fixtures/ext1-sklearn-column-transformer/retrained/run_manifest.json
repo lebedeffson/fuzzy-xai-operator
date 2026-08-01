@@ -1,0 +1,10 @@
+{
+  "mlflow_version": "2.22.5",
+  "model_sha256": "60da6cbb9bf1c89cacd51697518cfb8f4f2345c313fd40bd2b177ec0a6faa9fa",
+  "python_version": "3.11.15",
+  "registered_model_version": "retrained",
+  "run_id": "external:ext1-sklearn-column-transformer:retrained",
+  "shap_version": "0.51.0",
+  "sklearn_version": "1.9.0",
+  "variant": "retrained"
+}

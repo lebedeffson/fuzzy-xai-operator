@@ -1,0 +1,37 @@
+{
+  "artifact_sha256": "53caf1c19172f5757b2ab7ccbbb940552561174ce67228bb4c3f20465a607740",
+  "class_name": "ColumnTransformer",
+  "expected_train_row_ids_sha256": "79312546599ade7955b093c699ee672a4706063070d6e7082b98635db0db5f1f",
+  "feature_names_in": [
+    "mean radius",
+    "mean texture",
+    "mean perimeter",
+    "mean area",
+    "mean smoothness",
+    "mean compactness",
+    "mean concavity",
+    "mean concave points",
+    "radius_band",
+    "texture_band"
+  ],
+  "feature_names_out": [
+    "numeric__mean radius",
+    "numeric__mean texture",
+    "numeric__mean perimeter",
+    "numeric__mean area",
+    "numeric__mean smoothness",
+    "numeric__mean compactness",
+    "numeric__mean concavity",
+    "numeric__mean concave points",
+    "categorical__radius_band_q1",
+    "categorical__radius_band_q2",
+    "categorical__radius_band_q3",
+    "categorical__radius_band_q4",
+    "categorical__texture_band_high",
+    "categorical__texture_band_low",
+    "categorical__texture_band_mid"
+  ],
+  "fit_row_count": 426,
+  "fit_row_ids_sha256": "79312546599ade7955b093c699ee672a4706063070d6e7082b98635db0db5f1f",
+  "output_feature_count": 15
+}

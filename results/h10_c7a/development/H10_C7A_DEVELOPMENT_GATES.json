@@ -1,0 +1,59 @@
+{
+  "base_commit": "896c6cf2821c38e24890c18d7e9ac50da5f1aabe",
+  "budget_selection": {
+    "dominance_endpoint": false,
+    "method_budgets": {
+      "B_BM25": {
+        "k_star": 160,
+        "mean_search_space_reduction": 0.808865533190423,
+        "recall": 0.875
+      },
+      "R5": {
+        "k_star": 20,
+        "mean_search_space_reduction": 0.9680228741884853,
+        "recall": 0.9
+      }
+    },
+    "minimum_recall": 0.8,
+    "selected_baseline": "B_BM25",
+    "unavailable_optional_methods": [
+      "B_DENSE",
+      "B_RRF"
+    ]
+  },
+  "checks": {
+    "contract_macro_f1_at_least_0_55": false,
+    "coverage_at_least_0_80": true,
+    "false_localization_not_worse_than_b_greedy": true,
+    "frozen_r5_prefix_unchanged": true,
+    "gold_leakage_zero": true,
+    "matched_recall_endpoint_passed": true,
+    "median_candidate_symbols_at_most_20": true,
+    "minimum_10_repositories": true,
+    "minimum_40_incidents": true,
+    "open_r5_metrics_reproduced": true,
+    "recall_at_10_at_least_0_75": true,
+    "recall_at_20_at_least_0_85": true,
+    "top_k_structurally_distinct": true
+  },
+  "confirmation_coverage_is_gate": false,
+  "development_incidents": 40,
+  "development_repositories": 16,
+  "development_scored": true,
+  "gate_passed": false,
+  "held_out_created": false,
+  "held_out_scored": false,
+  "protocol_id": "H10-C7A",
+  "r5_metrics": {
+    "contract_macro_f1": 0.536045197740113,
+    "coverage": 1.0,
+    "false_localization": 0.025,
+    "joint_hit_at_3": 0.4,
+    "mrr_at_20": 0.44473688226977703,
+    "recall_at_10": 0.775,
+    "recall_at_20": 0.9
+  },
+  "r5_retrieval_modified": false,
+  "scientific_result": "NOT_EVALUATED",
+  "status": "H10_C7A_BLOCKED_DEVELOPMENT_GATE"
+}

@@ -1,0 +1,18 @@
+{
+  "adapter_files": 1,
+  "adapter_sha256": "cb2d2017971c981ca5c2c6b217efcf261aca8fa4f1c38563244d9743bb1ddde5",
+  "core_files_changed": 0,
+  "core_sha256": {
+    "framework/fuzzyxai/fuzzyxai/diagnostics/contracts.py": "6c25de0ffacd090318f93b36d5d942264574c484170222291817483ec2ce0364",
+    "framework/fuzzyxai/fuzzyxai/diagnostics/minimal_cut.py": "78a37873a90270c7a311010367f298743f495afa7dde93eec97d6969d3379a5d",
+    "framework/fuzzyxai/fuzzyxai/diagnostics/recertification.py": "707dae96ca2e2566f3c54ec8801c0a5c1b05350110ddcb8c41fb389a7ea3b4c5",
+    "framework/fuzzyxai/fuzzyxai/diagnostics/repair_executor.py": "733258257849f9768867df2ff06f9cbe1f88f66a6da731bd18b4827df51f627c",
+    "framework/fuzzyxai/fuzzyxai/diagnostics/repair_planner.py": "97049773e9becd9e96e7b8a2d27ba808fdba03545e57b76877aaf09c3c669616",
+    "framework/fuzzyxai/fuzzyxai/diagnostics/service.py": "d921ee25ea35893efba3722097270ad76b538d65ccfc55df623ed5f8a98b5910",
+    "framework/fuzzyxai/fuzzyxai/diagnostics/validator.py": "c2a973da18bc4bb6b10738cebc6a32bccfed207773f9c1394d55bced9d649782",
+    "framework/fuzzyxai/fuzzyxai/pipelines/practical.py": "080a4e37e196a1af1720ecb27042914f342261ec87def447ebfea9fccfb40d8f"
+  },
+  "diagnostic_logic_in_adapter": false,
+  "pipeline_specific_auditor_conditions": 0,
+  "shared_adapter_loc": 58
+}

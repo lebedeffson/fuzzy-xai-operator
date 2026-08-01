@@ -1,0 +1,76 @@
+{
+  "run_id": "mlp2:afe0ed2097e1912a72a2",
+  "scenario_id": "S12_SPLIT_OVERLAP",
+  "action": "BLOCK",
+  "pipeline_status": "INVALID",
+  "canonical_source": "MLPipelineService",
+  "diagnosis": {
+    "diagnosis_id": "diagnosis:mlp2:afe0ed2097e1912a72a2",
+    "pipeline_status": "INVALID",
+    "failed_stage": "DATA_SPLIT",
+    "source_component": "deterministic_splitter",
+    "violated_contract": "TRAIN_VALIDATION_TEST_DISJOINTNESS",
+    "violated_contracts": [
+      {
+        "contract_id": "TRAIN_VALIDATION_TEST_DISJOINTNESS",
+        "stage": "DATA_SPLIT",
+        "component_id": "deterministic_splitter",
+        "passed": false,
+        "severity": "HIGH",
+        "action": "BLOCK",
+        "observed_value": {
+          "train_validation": 0,
+          "train_test": 1,
+          "validation_test": 0
+        },
+        "expected_value": {
+          "train_validation": 0,
+          "train_test": 0,
+          "validation_test": 0
+        },
+        "evidence_refs": [
+          "obs:bd8ead9cb56c4eb77b99"
+        ]
+      }
+    ],
+    "affected_field": "train_validation_test_disjointness",
+    "observed_value": {
+      "train_validation": 0,
+      "train_test": 1,
+      "validation_test": 0
+    },
+    "expected_value": {
+      "train_validation": 0,
+      "train_test": 0,
+      "validation_test": 0
+    },
+    "severity": "HIGH",
+    "recommended_action": "BLOCK",
+    "evidence_refs": [
+      "obs:bd8ead9cb56c4eb77b99"
+    ],
+    "nearest_confirmed_cause": {
+      "component": "deterministic_splitter",
+      "mutation": {
+        "overlapping_row_id": "bcw:382",
+        "mutated_test_ids_sha256": "817c84c716e88a28b6bed29ccf101e36386f701f4dc87f84cb8aa23057e5225a"
+      }
+    },
+    "diagnostic_cut": {
+      "contracts": [
+        "TRAIN_VALIDATION_TEST_DISJOINTNESS"
+      ],
+      "evidence_refs": [
+        "obs:bd8ead9cb56c4eb77b99"
+      ]
+    },
+    "confidence": 1.0,
+    "observation_count": 28
+  },
+  "representation": {
+    "representation_id": "F0",
+    "selection_reason": "complete deterministic pipeline evidence"
+  },
+  "repair_plan": null,
+  "recertification": null
+}

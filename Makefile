@@ -5,7 +5,7 @@ PORT ?= 8085
 DATASET ?= breast_cancer
 BASELINE_ACCESS ?= native
 
-.PHONY: install test risk-test category-hott-test studio-engine-test studio-hybrid-batch studio-export-tables category-hott-test chapter2-breast-cancer-demo chapter2-real-operator-case reproduce-chapter2 calibrate-chapter2 benchmark-equal-raw-structure chapter2-3-final-evidence chapter3-artifacts reproduce-critical-ruptures chapter3-audit chapter3-real-conflicts chapter3-f0-vs-nas chapter3-calibrate-observer chapter3-tables chapter3-validate chapter3-final-evidence chapter3-practice-natural chapter3-practice-conflict chapter3-practice-bootstrap chapter3-practice-baselines chapter3-practice-calibrate chapter3-practice-ablation chapter3-practice-sensitivity chapter3-practice-stats chapter3-practice-validate chapter3-practice-all figures-chapter2 chapter2-figures chapter2-patch chapter2-validate chapter2-package2 ecosystem-evidence doctoral-final-evidence validate-ecosystem-sdk dissertation-artifacts chapter5-experiments chapter5-demo chapter5-latex web-demo unified-demo layered-demo layered-demo-legacy defense-demo defense-demo-legacy studio ui-health-check ui-health-check-all browser-visual-check unified-demo-cli full-pipeline figures full-experiments demo dashboard proof formal-proof thesis full-demo full-observer dataset-observer dataset-modes-check baseline-check real-data-validation benchmark benchmark-dataset baseline-comparison calibrate-observer ablation-benchmark defense-cases real-reduction-example dissertation-demo-summary dissertation-component-tables dissertation-check dataset-cards thesis-practice-tables structure-aware-benchmark reproducibility-artifacts operator-benchmark risk-benchmark lofo-f1-demo reproduce-dissertation empirical-smoke empirical-full-check clean
+.PHONY: install test risk-test category-hott-test studio-engine-test studio-hybrid-batch studio-export-tables category-hott-test chapter2-breast-cancer-demo chapter2-real-operator-case reproduce-chapter2 calibrate-chapter2 benchmark-equal-raw-structure chapter2-3-final-evidence chapter3-artifacts reproduce-critical-ruptures chapter3-audit chapter3-real-conflicts chapter3-f0-vs-nas chapter3-calibrate-observer chapter3-tables chapter3-validate chapter3-final-evidence chapter3-practice-natural chapter3-practice-conflict chapter3-practice-bootstrap chapter3-practice-baselines chapter3-practice-calibrate chapter3-practice-ablation chapter3-practice-sensitivity chapter3-practice-stats chapter3-practice-validate chapter3-practice-all figures-chapter2 chapter2-figures chapter2-patch chapter2-validate chapter2-package2 ecosystem-evidence doctoral-final-evidence validate-ecosystem-sdk dissertation-artifacts chapter5-experiments chapter5-demo chapter5-latex web-demo unified-demo layered-demo layered-demo-legacy defense-demo defense-demo-legacy studio ui-health-check ui-health-check-all browser-visual-check unified-demo-cli full-pipeline figures full-experiments demo dashboard proof formal-proof thesis full-demo full-observer dataset-observer dataset-modes-check baseline-check real-data-validation benchmark benchmark-dataset baseline-comparison calibrate-observer ablation-benchmark defense-cases real-reduction-example dissertation-demo-summary dissertation-component-tables dissertation-check dataset-cards thesis-practice-tables structure-aware-benchmark reproducibility-artifacts operator-benchmark risk-benchmark lofo-f1-demo reproduce-dissertation empirical-smoke empirical-full-check ml-vertical-api ml-vertical-acceptance ml-vertical-test clean
 
 install:
 	$(PYTHON) -m pip install -r requirements.txt
@@ -416,6 +416,45 @@ layered-demo:
 layered-demo-legacy:
 	@echo "[legacy] use 'make demo PORT=$(PORT)' for presentation"
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) apps/layered_demo.py --port $(PORT)
+
+ml-vertical-api:
+	PYTHONPATH=framework/fuzzyxai:. $(PYTHON) -m uvicorn fuzzyxai.ml_vertical.api:app --host 0.0.0.0 --port $(PORT)
+
+ml-vertical-test:
+	PYTHONPATH=framework/fuzzyxai:. $(PYTHON) -m pytest tests/ml_vertical_v1 -q
+
+ml-vertical-acceptance:
+	PYTHONPATH=framework/fuzzyxai:. $(PYTHON) scripts/ml_vertical_v1/run_acceptance.py
+
+.PHONY: ml-pipeline-v2-test ml-pipeline-v2-acceptance
+
+ml-pipeline-v2-test:
+	PYTHONPATH=framework/fuzzyxai:. $(PYTHON) -m pytest tests/ml_pipeline_v2 tests/ml_vertical_v1 -q
+
+ml-pipeline-v2-acceptance:
+	PYTHONPATH=framework/fuzzyxai:. $(PYTHON) scripts/ml_pipeline_v2/run_acceptance.py
+
+.PHONY: ml-pipeline-v2-comparative-test ml-pipeline-v2-comparative-evaluation
+
+ml-pipeline-v2-comparative-test:
+	PYTHONPATH=framework/fuzzyxai:. $(PYTHON) -m pytest tests/ml_pipeline_v2_comparative tests/ml_pipeline_v2 tests/ml_vertical_v1 -q
+
+ml-pipeline-v2-comparative-evaluation:
+	PYTHONPATH=framework/fuzzyxai:. $(PYTHON) scripts/ml_pipeline_v2_comparative/run_evaluation.py
+
+.PHONY: cross-pipeline-v1-test cross-pipeline-v1-lock cross-pipeline-v1-evaluation cross-pipeline-v1-api
+
+cross-pipeline-v1-test:
+	PYTHONPATH=framework/fuzzyxai:. $(PYTHON) -m pytest tests/cross_pipeline_v1 tests/ml_pipeline_v2_comparative tests/ml_pipeline_v2 tests/ml_vertical_v1 -q
+
+cross-pipeline-v1-lock:
+	PYTHONPATH=framework/fuzzyxai:. $(PYTHON) scripts/cross_pipeline_v1/build_protocol.py
+
+cross-pipeline-v1-evaluation:
+	PYTHONPATH=framework/fuzzyxai:. $(PYTHON) scripts/cross_pipeline_v1/run_evaluation.py --log-mlflow
+
+cross-pipeline-v1-api:
+	PYTHONPATH=framework/fuzzyxai:. $(PYTHON) -m uvicorn fuzzyxai.pipelines.practical_api:app --host 0.0.0.0 --port $(PORT)
 
 studio:
 	PYTHONPATH=$(PYTHONPATH) $(PYTHON) apps/fuzzyxai_studio.py --port $(PORT)
@@ -1221,3 +1260,333 @@ h10-c3-r4-score-sealed:
 
 h10-c3-r4-package:
 	$(H10_C3_R4_ENV) $(H10_C3_PYTHON) scripts/build_h10_c3_r4_handoff.py
+
+H10_C4_ENV = PYTHONPATH=framework/fuzzyxai:.
+H10_C5B_POSTOPEN_EVIDENCE ?= release_artifacts/fuzzyxai-h10-c5b-postopen-evidence-57d0cc9b3e73.zip
+
+.PHONY: h10-c4-test h10-c4-run h10-c4-verify h10-c4-chapter h10-c4-package
+
+h10-c4-test:
+	$(H10_C4_ENV) $(H10_C3_PYTHON) -m ruff check framework/fuzzyxai/fuzzyxai/operators/base.py framework/fuzzyxai/fuzzyxai/operators/composition.py framework/fuzzyxai/fuzzyxai/repair framework/fuzzyxai/fuzzyxai/experiments/h10_c4.py scripts/run_h10_c4.py scripts/build_h10_c4_chapter4.py scripts/build_h10_c4_release.py scripts/manuscript_claim_lint.py tests/operators tests/h10_c4
+	$(H10_C4_ENV) $(H10_C3_PYTHON) -m pytest -q tests/operators tests/h10_c4
+
+h10-c4-run:
+	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/run_h10_c4.py run
+
+h10-c4-verify:
+	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/run_h10_c4.py verify
+
+h10-c4-chapter:
+	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/build_h10_c4_chapter4.py
+	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/manuscript_claim_lint.py docs/chapters/glava_4_FuzzyXAI_h10_c4_revision.docx
+
+h10-c4-package:
+	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/build_h10_c4_release.py
+
+.PHONY: ch4-q1-test h10-c5-source-audit h10-c5-run h10-c5b-test h10-c5b-ops-test h10-c5b-prepare h10-c5b-prepare-runtime-inputs h10-c5b-collect-runtime h10-c5b-merge-runtime h10-c5b-runtime-readiness h10-c5b-freeze-development h10-c5b-freeze-held-out-scoring h10-c5b-plan-replacements h10-c5b-run h10-c5b-score-held-out h10-c5b-verify-method-lock h10-c5b-parent-immutability h10-c5c-test h10-c5c-posthoc h10-c5c-posthoc-detailed h10-c5c-posthoc-oracles h10-c5c-prepare-bugsinpy h10-c5c-collect-runtime h10-c5c-development-readiness h10-c5c-run-development h10-c7-test h10-c7-build-open-replay h10-c7-open-replay h10-c7-confirmation h10-c7-r5v-audit h10-c7-prepare-development h10-c7-run-development h10-c7a-prepare-development h10-c7a-run-development h10-c7r-test h10-c7r-lock h10-c7r-prepare-held-out h10-c7r-lock-images h10-c7r-collect-runtime h10-c7r-build-gold h10-c7r-authorize h10-c7r-score h10-c7r-r9-test h10-c7r-r9-development h10-c7r-r10-test h10-c7r-r10-provenance h10-c7r-r10-recollection-input-audit h10-c7r-r10-runtime-audit h10-c7r-r10-development h10-c5-pilot-test h10-c5-pilot-run h10-c6-run h10-c6-n-test h10-c6-n-prepare h10-c6-n-run mlflow-integration-test mlflow-integration-run final-practical-parent-immutability final-practical-package multimodal-route-validation h9-e2e-latency h9-e2e-v2 ch4-q1-claim-lint ch4-q1-evidence
+
+ch4-q1-test:
+	$(H10_C4_ENV) $(H10_C3_PYTHON) -m pytest -q tests/h10_c5 tests/h10_c6 tests/multimodal tests/roles tests/chapter_revision
+
+h10-c5-source-audit:
+	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/prepare_h10_c5_sources.py --root .
+
+h10-c5-run:
+	test -n "$(H10_C5_SOURCE)"
+	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/run_h10_c5.py --source "$(H10_C5_SOURCE)" --root .
+
+h10-c5b-test:
+	$(H10_C4_ENV) $(H10_C3_PYTHON) -m ruff check framework/fuzzyxai/fuzzyxai/repository_diagnostics framework/fuzzyxai/fuzzyxai/gold_repository framework/fuzzyxai/fuzzyxai/evidence_path framework/fuzzyxai/fuzzyxai/experiments/h10_c5b.py framework/fuzzyxai/fuzzyxai/experiments/h9_e2e_v2.py scripts/ch4_revision/collect_h10_c5b_runtime.py scripts/ch4_revision/h10_c5b_runtime_ops.py scripts/ch4_revision/prepare_h10_c5b_sources.py scripts/ch4_revision/run_h10_c5b.py scripts/ch4_revision/run_h9_e2e_v2.py scripts/ch4_revision/score_h10_c5b_held_out.py scripts/ch4_revision/verify_parent_result_immutability.py tests/h10_c5b tests/h9_e2e_v2
+	$(H10_C4_ENV) $(H10_C3_PYTHON) -m pytest -q tests/h10_c5b tests/h9_e2e_v2
+
+h10-c5b-ops-test:
+	$(H10_C4_ENV) $(H10_C3_PYTHON) -m ruff check scripts/ch4_revision/h10_c5b_runtime_ops.py scripts/ch4_revision/score_h10_c5b_held_out.py tests/h10_c5b/test_held_out_scoring_controller.py tests/h10_c5b/test_runtime_operations.py
+	$(H10_C4_ENV) $(H10_C3_PYTHON) -m pytest -q tests/h10_c5b/test_held_out_scoring_controller.py tests/h10_c5b/test_runtime_operations.py
+
+h10-c5c-test:
+	$(H10_C4_ENV) $(H10_C3_PYTHON) -m ruff check framework/fuzzyxai/fuzzyxai/repository_diagnostics/retrieval.py framework/fuzzyxai/fuzzyxai/repository_diagnostics/runtime_events.py framework/fuzzyxai/fuzzyxai/repository_diagnostics/executed_slice.py framework/fuzzyxai/fuzzyxai/repository_diagnostics/contract_inference.py framework/fuzzyxai/fuzzyxai/repository_diagnostics/importer_v2.py framework/fuzzyxai/fuzzyxai/repository_diagnostics/auditor_v2.py framework/fuzzyxai/fuzzyxai/repository_diagnostics/evidence_requests.py framework/fuzzyxai/fuzzyxai/repository_diagnostics/practical_recovery.py framework/fuzzyxai/fuzzyxai/repository_diagnostics/reporting.py framework/fuzzyxai/fuzzyxai/experiments/h10_c5c.py framework/fuzzyxai/fuzzyxai/experiments/h10_c5c_data.py framework/fuzzyxai/fuzzyxai/experiments/h10_c5c_runtime.py framework/fuzzyxai/fuzzyxai/experiments/h10_c5c_readiness.py framework/fuzzyxai/fuzzyxai/experiments/h10_c5c_posthoc.py scripts/ch4_revision/analyze_h10_c5b_errors.py scripts/ch4_revision/prepare_h10_c5c_bugsinpy.py scripts/ch4_revision/collect_h10_c5c_runtime.py scripts/ch4_revision/verify_h10_c5c_development_readiness.py scripts/ch4_revision/run_h10_c5c_development.py scripts/ch4_revision/run_h10_c5c_posthoc_oracles.py tests/h10_c5c
+	$(H10_C4_ENV) $(H10_C3_PYTHON) -m pytest -q tests/h10_c5c
+	printf '%s  %s\n' 479fa55460426a1726f57a5ed5f745b0ad2e872eeefb21470dd2e3e865133949 framework/fuzzyxai/operators_manifest.yaml | sha256sum -c -
+
+h10-c5c-posthoc:
+	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/analyze_h10_c5b_errors.py --source results/h10_c5b/PER_INCIDENT_RESULTS.csv --output reports/h10_c5c/H10_C5B_POSTHOC_ERROR_ANALYSIS.json
+
+h10-c5c-posthoc-detailed:
+	test -f "$(H10_C5B_POSTOPEN_EVIDENCE)"
+	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/analyze_h10_c5b_errors.py --source results/h10_c5b/PER_INCIDENT_RESULTS.csv --output reports/h10_c5c/H10_C5B_POSTHOC_ERROR_ANALYSIS.json --evidence-archive "$(H10_C5B_POSTOPEN_EVIDENCE)" --table-output reports/h10_c5c/H10_C5B_INCIDENT_ERROR_CLASSIFICATION.csv
+
+h10-c5c-posthoc-oracles:
+	test -n "$(H10_C5C_DEVELOPMENT_MANIFEST)"
+	test -n "$(H10_C5C_POSTHOC_OUTPUT)"
+	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/run_h10_c5c_posthoc_oracles.py --manifest "$(H10_C5C_DEVELOPMENT_MANIFEST)" --development-status results/h10_c5c/H10_C5C_DEVELOPMENT_STATUS.json --baseline-results results/h10_c5c/DEVELOPMENT_PER_INCIDENT.csv --output "$(H10_C5C_POSTHOC_OUTPUT)" --root .
+
+h10-c5c-prepare-bugsinpy:
+	test -n "$(H10_C5C_BUGSINPY_ROOT)"
+	test -n "$(H10_C5C_SOURCE_DIR)"
+	test -n "$(H10_C5C_REPOSITORY_CACHE)"
+	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/prepare_h10_c5c_bugsinpy.py --bugsinpy-root "$(H10_C5C_BUGSINPY_ROOT)" --output "$(H10_C5C_SOURCE_DIR)" --cache "$(H10_C5C_REPOSITORY_CACHE)" --root . $(if $(H10_C5C_ALLOW_NETWORK),--allow-network)
+
+h10-c5c-collect-runtime:
+	test -n "$(H10_C5C_UNCOLLECTED_MANIFEST)"
+	test -n "$(H10_C5C_COMMAND_REGISTRY)"
+	test -n "$(H10_C5C_RUNTIME_DIR)"
+	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/collect_h10_c5c_runtime.py --manifest "$(H10_C5C_UNCOLLECTED_MANIFEST)" --command-registry "$(H10_C5C_COMMAND_REGISTRY)" --output "$(H10_C5C_RUNTIME_DIR)" $(if $(H10_C5C_TIMEOUT_SECONDS),--timeout-seconds "$(H10_C5C_TIMEOUT_SECONDS)") $(if $(H10_C5C_ALLOW_SETUP),--allow-setup) $(if $(H10_C5C_INTERPRETER_MAP),--interpreter-map "$(H10_C5C_INTERPRETER_MAP)") $(if $(H10_C5C_WORKERS),--workers "$(H10_C5C_WORKERS)")
+
+h10-c5c-development-readiness:
+	test -n "$(H10_C5C_DEVELOPMENT_MANIFEST)"
+	test -n "$(H10_C5C_COMMAND_REGISTRY)"
+	test -n "$(H10_C5C_SOURCE_REGISTRY)"
+	test -n "$(H10_C5C_RUNTIME_REPORT)"
+	test -n "$(H10_C5C_READINESS_REPORT)"
+	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/verify_h10_c5c_development_readiness.py --manifest "$(H10_C5C_DEVELOPMENT_MANIFEST)" --command-registry "$(H10_C5C_COMMAND_REGISTRY)" --source-registry "$(H10_C5C_SOURCE_REGISTRY)" --runtime-report "$(H10_C5C_RUNTIME_REPORT)" --output "$(H10_C5C_READINESS_REPORT)" --root .
+
+
+h10-c5c-run-development:
+	test -n "$(H10_C5C_DEVELOPMENT_MANIFEST)"
+	test -n "$(H10_C5C_READINESS_REPORT)"
+	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/run_h10_c5c_development.py --manifest "$(H10_C5C_DEVELOPMENT_MANIFEST)" --readiness-report "$(H10_C5C_READINESS_REPORT)" --root .
+
+h10-c7-test:
+	$(H10_C4_ENV) $(H10_C3_PYTHON) -m ruff check framework/fuzzyxai/fuzzyxai/repository_diagnostics/guided_retrieval.py framework/fuzzyxai/fuzzyxai/repository_diagnostics/guided_diagnosis.py framework/fuzzyxai/fuzzyxai/repository_diagnostics/contract_inference_v2.py framework/fuzzyxai/fuzzyxai/repository_diagnostics/active_evidence.py framework/fuzzyxai/fuzzyxai/repository_diagnostics/incident_router.py framework/fuzzyxai/fuzzyxai/repository_diagnostics/repair_validation.py framework/fuzzyxai/fuzzyxai/experiments/h10_c7.py framework/fuzzyxai/fuzzyxai/experiments/h10_c7a.py framework/fuzzyxai/fuzzyxai/experiments/h10_c7_model_lock.py framework/fuzzyxai/fuzzyxai/experiments/h10_c7_replay.py scripts/ch4_revision/prepare_h10_c7_development.py scripts/ch4_revision/prepare_h10_c7a_development.py scripts/ch4_revision/run_h10_c7_development.py scripts/ch4_revision/run_h10_c7a_development.py scripts/ch4_revision/lock_h10_c7_model_weights.py scripts/ch4_revision/build_h10_c7_open_replay_bundle.py scripts/ch4_revision/run_h10_c7_open_replay.py tests/h10_c7
+	$(H10_C4_ENV) $(H10_C3_PYTHON) -m pytest -q tests/h10_c7
+
+h10-c7-build-open-replay:
+	test -n "$(H10_C7_SOURCE_ARTIFACT)"
+	test -n "$(H10_C7_PAYLOAD_ROOT)"
+	test -n "$(H10_C7_PREPARED_MANIFEST)"
+	test -n "$(H10_C7_PREPARED_GOLD)"
+	test -n "$(H10_C7_REPLAY_BUNDLE)"
+	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/build_h10_c7_open_replay_bundle.py --source-artifact "$(H10_C7_SOURCE_ARTIFACT)" --payload-root "$(H10_C7_PAYLOAD_ROOT)" --prepared-manifest "$(H10_C7_PREPARED_MANIFEST)" --prepared-gold "$(H10_C7_PREPARED_GOLD)" --repository-root . --output "$(H10_C7_REPLAY_BUNDLE)"
+
+h10-c7-open-replay:
+	test -n "$(H10_C7_REPLAY_BUNDLE)"
+	test -n "$(H10_C7_REPLAY_OUTPUT)"
+	HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 $(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/run_h10_c7_open_replay.py --bundle "$(H10_C7_REPLAY_BUNDLE)" --output "$(H10_C7_REPLAY_OUTPUT)"
+
+h10-c7-confirmation:
+	test -n "$(H10_C7_REPLAY_BUNDLE)"
+	test -n "$(H10_C7_CONFIRMATION_OUTPUT)"
+	HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 $(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/run_h10_c7_confirmation.py --bundle "$(H10_C7_REPLAY_BUNDLE)" --output "$(H10_C7_CONFIRMATION_OUTPUT)" --reports reports/h10_c7
+
+h10-c7-r5v-audit:
+	test -n "$(H10_C7_REPLAY_BUNDLE)"
+	test -n "$(H10_C7_VERIFICATION_OUTPUT)"
+	HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 $(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/audit_h10_c7_pair_verification.py --bundle "$(H10_C7_REPLAY_BUNDLE)" --output "$(H10_C7_VERIFICATION_OUTPUT)"
+
+h10-c7-prepare-development:
+	test -n "$(H10_C7_SOURCE_MANIFESTS)"
+	test -n "$(H10_C7_DEVELOPMENT_MANIFEST)"
+	test -n "$(H10_C7_DEVELOPMENT_GOLD)"
+	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/prepare_h10_c7_development.py $(foreach manifest,$(H10_C7_SOURCE_MANIFESTS),--source-manifest "$(manifest)") --observable-output "$(H10_C7_DEVELOPMENT_MANIFEST)" --gold-output "$(H10_C7_DEVELOPMENT_GOLD)"
+
+h10-c7-run-development:
+	test -n "$(H10_C7_DEVELOPMENT_MANIFEST)"
+	test -n "$(H10_C7_DEVELOPMENT_GOLD)"
+	test -n "$(H10_C7_OUTPUT)"
+	HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 $(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/run_h10_c7_development.py --manifest "$(H10_C7_DEVELOPMENT_MANIFEST)" --gold "$(H10_C7_DEVELOPMENT_GOLD)" --model-registry protocol/h10_c7/MODEL_REGISTRY.json --model-weight-lock protocol/h10_c7/H10_C7_MODEL_WEIGHT_LOCK.json --output "$(H10_C7_OUTPUT)" --root .
+
+h10-c7a-prepare-development:
+	test -n "$(H10_C7_REPLAY_BUNDLE)"
+	test -n "$(H10_C7A_H10_C5B_MANIFEST)"
+	test -n "$(H10_C7A_DEVELOPMENT_BUNDLE)"
+	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/prepare_h10_c7a_development.py --base-bundle "$(H10_C7_REPLAY_BUNDLE)" --h10-c5b-manifest "$(H10_C7A_H10_C5B_MANIFEST)" --additional-incidents 10 --output "$(H10_C7A_DEVELOPMENT_BUNDLE)"
+
+h10-c7a-run-development:
+	test -n "$(H10_C7A_DEVELOPMENT_BUNDLE)"
+	test -n "$(H10_C7A_OUTPUT)"
+	HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 $(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/run_h10_c7a_development.py --manifest "$(H10_C7A_DEVELOPMENT_BUNDLE)/DEVELOPMENT_MANIFEST.jsonl" --gold "$(H10_C7A_DEVELOPMENT_BUNDLE)/DEVELOPMENT_GOLD.jsonl" --frozen-r5-reference results/h10_c7/confirmation/R5C_PER_INCIDENT.jsonl --output "$(H10_C7A_OUTPUT)"
+
+h10-c7r-test:
+	$(H10_C4_ENV) $(H10_C3_PYTHON) -m ruff check framework/fuzzyxai/fuzzyxai/experiments/h10_c7r.py scripts/ch4_revision/lock_h10_c7r.py scripts/ch4_revision/prepare_h10_c7r_held_out.py scripts/ch4_revision/collect_h10_c7r_runtime.py scripts/ch4_revision/build_h10_c7r_gold.py scripts/ch4_revision/authorize_h10_c7r_scoring.py scripts/ch4_revision/run_h10_c7r_scoring.py tests/h10_c7r
+	$(H10_C4_ENV) $(H10_C3_PYTHON) -m pytest -q tests/h10_c7r
+
+h10-c7r-lock:
+	test -n "$(H10_C7A_DEVELOPMENT_BUNDLE)"
+	test -n "$(H10_C7R_SOURCE_RELEASE)"
+	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/lock_h10_c7r.py --development-manifest "$(H10_C7A_DEVELOPMENT_BUNDLE)/DEVELOPMENT_MANIFEST.jsonl" --r5-reference results/h10_c7/confirmation/R5C_PER_INCIDENT.jsonl --source-release "$(H10_C7R_SOURCE_RELEASE)" --protocol-dir protocol/h10_c7r --output results/h10_c7r --root .
+
+h10-c7r-prepare-held-out:
+	test -n "$(H10_C7R_SOURCE_PARQUET)"
+	test -n "$(H10_C7R_OPERATION_ROOT)"
+	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/prepare_h10_c7r_held_out.py --source "$(H10_C7R_SOURCE_PARQUET)" --exclusion-lock protocol/h10_c7r/H10_C7R_EXCLUSION_LOCK.json --output "$(H10_C7R_OPERATION_ROOT)/selection"
+
+h10-c7r-lock-images:
+	test -n "$(H10_C7R_OPERATION_ROOT)"
+	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/lock_h10_c7r_image_availability.py --runtime-registry "$(H10_C7R_OPERATION_ROOT)/selection/RUNTIME_REGISTRY.jsonl" --output "$(H10_C7R_OPERATION_ROOT)/selection/H10_C7R_IMAGE_AVAILABILITY_LOCK.json"
+
+h10-c7r-collect-runtime:
+	test -n "$(H10_C7R_OPERATION_ROOT)"
+	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/collect_h10_c7r_runtime.py --selection "$(H10_C7R_OPERATION_ROOT)/selection/HELD_OUT_SELECTION.jsonl" --runtime-registry "$(H10_C7R_OPERATION_ROOT)/selection/RUNTIME_REGISTRY.jsonl" --image-availability-lock "$(H10_C7R_OPERATION_ROOT)/selection/H10_C7R_IMAGE_AVAILABILITY_LOCK.json" --output "$(H10_C7R_OPERATION_ROOT)/runtime" --prune-images
+
+h10-c7r-build-gold:
+	test -n "$(H10_C7R_OPERATION_ROOT)"
+	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/build_h10_c7r_gold.py --sealed-source "$(H10_C7R_OPERATION_ROOT)/selection/SEALED_GOLD_SOURCE.jsonl" --manifest "$(H10_C7R_OPERATION_ROOT)/runtime/HELD_OUT_MANIFEST.jsonl" --output "$(H10_C7R_OPERATION_ROOT)/sealed-gold/HELD_OUT_GOLD.jsonl"
+
+h10-c7r-authorize:
+	test -n "$(H10_C7R_HELD_OUT_MANIFEST)"
+	test -n "$(H10_C7R_HELD_OUT_GOLD)"
+	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/authorize_h10_c7r_scoring.py --manifest "$(H10_C7R_HELD_OUT_MANIFEST)" --gold "$(H10_C7R_HELD_OUT_GOLD)" --protocol-dir protocol/h10_c7r --authorization results/h10_c7r/SCORING_AUTHORIZATION.json --leakage-report reports/h10_c7r/H10_C7R_LEAKAGE_AUDIT.json
+
+h10-c7r-score:
+	test -n "$(H10_C7R_HELD_OUT_MANIFEST)"
+	test -n "$(H10_C7R_HELD_OUT_GOLD)"
+	HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 $(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/run_h10_c7r_scoring.py --manifest "$(H10_C7R_HELD_OUT_MANIFEST)" --gold "$(H10_C7R_HELD_OUT_GOLD)" --authorization results/h10_c7r/SCORING_AUTHORIZATION.json --protocol-dir protocol/h10_c7r --output results/h10_c7r --reports reports/h10_c7r --root .
+
+h10-c7r-r9-test:
+	$(H10_C4_ENV) $(H10_C3_PYTHON) -m ruff check framework/fuzzyxai/fuzzyxai/repository_diagnostics/guided_retrieval.py framework/fuzzyxai/fuzzyxai/repository_diagnostics/guided_diagnosis.py framework/fuzzyxai/fuzzyxai/experiments/h10_c7r_r9.py scripts/ch4_revision/run_h10_c7r_r9_development.py tests/h10_c7/test_r9_retrieval.py
+	$(H10_C4_ENV) $(H10_C3_PYTHON) -m pytest -q tests/h10_c7/test_guided_retrieval.py tests/h10_c7/test_r9_retrieval.py tests/h10_c7r
+
+h10-c7r-r9-development:
+	test -n "$(H10_C7R_OPERATION_ROOT)"
+	HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 $(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/run_h10_c7r_r9_development.py --manifest "$(H10_C7R_OPERATION_ROOT)/runtime/HELD_OUT_MANIFEST.jsonl" --gold "$(H10_C7R_OPERATION_ROOT)/sealed-gold/HELD_OUT_GOLD.jsonl" --exclusion-lock protocol/h10_c7r/H10_C7R_EXCLUSION_LOCK.json --v1-results results/h10_c7r/PER_INCIDENT_RESULTS.jsonl --output results/h10_c7r_r9/development --reports reports/h10_c7r_r9
+
+h10-c7r-r10-test:
+	$(H10_C4_ENV) $(H10_C3_PYTHON) -m ruff check framework/fuzzyxai/fuzzyxai/experiments/h10_c5c_runtime.py framework/fuzzyxai/fuzzyxai/experiments/h10_c7r_r10.py framework/fuzzyxai/fuzzyxai/repository_diagnostics/active_evidence.py framework/fuzzyxai/fuzzyxai/repository_diagnostics/guided_diagnosis.py framework/fuzzyxai/fuzzyxai/repository_diagnostics/guided_retrieval.py framework/fuzzyxai/fuzzyxai/repository_diagnostics/importer.py framework/fuzzyxai/fuzzyxai/repository_diagnostics/runtime_events.py scripts/ch4_revision/audit_h10_c7r_r10_recollection_inputs.py scripts/ch4_revision/audit_h10_c7r_r10_runtime.py scripts/ch4_revision/build_h10_c7r_r10_provenance_evidence.py scripts/ch4_revision/collect_h10_c7r_runtime.py scripts/ch4_revision/run_h10_c7r_r10_development.py scripts/ch4_revision/verify_h10_c7r_r10_provenance.py tests/h10_c7/test_r10_causal_retrieval.py
+	$(H10_C4_ENV) $(H10_C3_PYTHON) -m pytest -q tests/h10_c7/test_r10_causal_retrieval.py tests/h10_c7/test_guided_retrieval.py tests/h10_c7/test_r9_retrieval.py tests/h10_c7r
+
+h10-c7r-r10-provenance:
+	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/verify_h10_c7r_r10_provenance.py
+
+h10-c7r-r10-recollection-input-audit:
+	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/audit_h10_c7r_r10_recollection_inputs.py --lock protocol/h10_c7r_r10/recollection/R10_TECHNICAL_BARRIER_LOCK.json --selection protocol/h10_c7r_r10/recollection/R10_TECHNICAL_BARRIER_SELECTION.jsonl --runtime-registry protocol/h10_c7r_r10/recollection/R10_TECHNICAL_BARRIER_RUNTIME_REGISTRY.jsonl --image-lock protocol/h10_c7r_r10/recollection/R10_TECHNICAL_BARRIER_IMAGE_LOCK.json --output results/h10_c7r_r10/recollection/R10_RECOLLECTION_INPUT_AUDIT.json
+
+h10-c7r-r10-runtime-audit:
+	test -n "$(H10_C7R_R10_MANIFEST)"
+	test -n "$(H10_C7R_R10_READINESS)"
+	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/audit_h10_c7r_r10_runtime.py --manifest "$(H10_C7R_R10_MANIFEST)" --output "$(H10_C7R_R10_READINESS)"
+
+h10-c7r-r10-development:
+	test -n "$(H10_C7R_R10_MANIFEST)"
+	test -n "$(H10_C7R_R10_GOLD)"
+	test -n "$(H10_C7R_R10_READINESS)"
+	test -n "$(H10_C7R_R10_OUTPUT)"
+	HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 $(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/run_h10_c7r_r10_development.py --manifest "$(H10_C7R_R10_MANIFEST)" --gold "$(H10_C7R_R10_GOLD)" --exclusion-lock protocol/h10_c7r/H10_C7R_EXCLUSION_LOCK.json --readiness "$(H10_C7R_R10_READINESS)" --output "$(H10_C7R_R10_OUTPUT)"
+
+.PHONY: h10-c7r-r10m-test h10-c7r-r10m-prepare h10-c7r-r10m-development
+
+h10-c7r-r10m-test:
+	$(H10_C4_ENV) $(H10_C3_PYTHON) -m ruff check framework/fuzzyxai/fuzzyxai/experiments/h10_c7r_r10m.py scripts/ch4_revision/lock_h10_c7r_r10m.py scripts/ch4_revision/prepare_h10_c7r_r10m_development.py scripts/ch4_revision/run_h10_c7r_r10m_development.py tests/h10_c7/test_r10m_retrieval.py
+	$(H10_C4_ENV) $(H10_C3_PYTHON) -m pytest -q tests/h10_c7/test_r10m_retrieval.py tests/h10_c7/test_r10_causal_retrieval.py
+
+h10-c7r-r10m-prepare:
+	test -n "$(H10_C7R_R10_RECOLLECTION_ROOT)"
+	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/prepare_h10_c7r_r10m_development.py --recollection-root "$(H10_C7R_R10_RECOLLECTION_ROOT)" --v1-evidence release_artifacts/fuzzyxai-h10-c7r-evidence-e08dcfe465dd.zip --output results/h10_c7r_r10m/inputs
+
+h10-c7r-r10m-development:
+	test -n "$(H10_C7R_R10_RECOLLECTION_ROOT)"
+	test -n "$(H10_C7R_R10M_MODEL_CACHE)"
+	HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 $(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/run_h10_c7r_r10m_development.py --recollection-root "$(H10_C7R_R10_RECOLLECTION_ROOT)" --gold results/h10_c7r_r10m/inputs/DEVELOPMENT_GOLD.jsonl --exclusion-lock protocol/h10_c7r/H10_C7R_EXCLUSION_LOCK.json --model-lock protocol/h10_c7r_r10m/R10M_MODEL_LOCK.json --cache "$(H10_C7R_R10M_MODEL_CACHE)" --output results/h10_c7r_r10m/development
+
+h10-c5b-prepare:
+	test -n "$(H10_C5B_SOURCE_DIR)"
+	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/prepare_h10_c5b_sources.py --output "$(H10_C5B_SOURCE_DIR)"
+
+h10-c5b-prepare-runtime-inputs:
+	test -n "$(H10_C5B_MANIFEST)"
+	test -n "$(H10_C5B_RUNTIME_DIR)"
+	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/h10_c5b_runtime_ops.py prepare-runtime-inputs --manifest "$(H10_C5B_MANIFEST)" --output "$(H10_C5B_RUNTIME_DIR)" $(if $(H10_C5B_CONTAINER_IMAGES),--container-images "$(H10_C5B_CONTAINER_IMAGES)") $(if $(H10_C5B_RUNTIME_SOURCE_DATASET),--source-dataset "$(H10_C5B_RUNTIME_SOURCE_DATASET)")
+
+h10-c5b-collect-runtime:
+	test -n "$(H10_C5B_MANIFEST)"
+	test -n "$(H10_C5B_RUNTIME_COMMANDS)"
+	test -n "$(H10_C5B_RUNTIME_DIR)"
+	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/collect_h10_c5b_runtime.py --manifest "$(H10_C5B_MANIFEST)" --commands "$(H10_C5B_RUNTIME_COMMANDS)" --output "$(H10_C5B_RUNTIME_DIR)"
+
+h10-c5b-merge-runtime:
+	test -n "$(H10_C5B_MANIFEST)"
+	test -n "$(H10_C5B_RUNTIME_MANIFEST)"
+	test -n "$(H10_C5B_ENRICHED_MANIFEST)"
+	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/h10_c5b_runtime_ops.py merge-runtime --original-manifest "$(H10_C5B_MANIFEST)" --runtime-manifest "$(H10_C5B_RUNTIME_MANIFEST)" --output "$(H10_C5B_ENRICHED_MANIFEST)"
+
+h10-c5b-runtime-readiness:
+	test -n "$(H10_C5B_MANIFEST)"
+	test -n "$(H10_C5B_RUNTIME_REPORT)"
+	test -n "$(H10_C5B_SPLIT)"
+	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/h10_c5b_runtime_ops.py verify-runtime-readiness --manifest "$(H10_C5B_MANIFEST)" --runtime-report "$(H10_C5B_RUNTIME_REPORT)" --split "$(H10_C5B_SPLIT)" $(if $(H10_C5B_DEVELOPMENT_LOCK),--development-lock "$(H10_C5B_DEVELOPMENT_LOCK)")
+
+h10-c5b-freeze-development:
+	test -n "$(H10_C5B_MANIFEST)"
+	test -n "$(H10_C5B_RUNTIME_REPORT)"
+	test -n "$(H10_C5B_DEVELOPMENT_RESULTS)"
+	test -n "$(H10_C5B_DEVELOPMENT_LOCK)"
+	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/h10_c5b_runtime_ops.py freeze-development --manifest "$(H10_C5B_MANIFEST)" --runtime-report "$(H10_C5B_RUNTIME_REPORT)" --development-results "$(H10_C5B_DEVELOPMENT_RESULTS)" --method-lock protocol/h10_c5b_repository_grounded/METHOD_LOCK.json --output "$(H10_C5B_DEVELOPMENT_LOCK)" --root .
+
+h10-c5b-freeze-held-out-scoring:
+	test -n "$(H10_C5B_MANIFEST)"
+	test -n "$(H10_C5B_RUNTIME_REPORT)"
+	test -n "$(H10_C5B_ENRICHED_MANIFEST)"
+	test -n "$(H10_C5B_DEVELOPMENT_LOCK)"
+	test -n "$(H10_C5B_HELD_OUT_LOCK)"
+	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/h10_c5b_runtime_ops.py freeze-held-out-scoring --runtime-manifest "$(H10_C5B_MANIFEST)" --runtime-report "$(H10_C5B_RUNTIME_REPORT)" --enriched-manifest "$(H10_C5B_ENRICHED_MANIFEST)" --development-lock "$(H10_C5B_DEVELOPMENT_LOCK)" --method-lock protocol/h10_c5b_repository_grounded/METHOD_LOCK.json --controller scripts/ch4_revision/score_h10_c5b_held_out.py --output "$(H10_C5B_HELD_OUT_LOCK)" --root .
+
+h10-c5b-plan-replacements:
+	test -n "$(H10_C5B_CANDIDATES)"
+	test -n "$(H10_C5B_MANIFEST)"
+	test -n "$(H10_C5B_RUNTIME_REPORT)"
+	test -n "$(H10_C5B_REPLACEMENT_LOG)"
+	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/h10_c5b_runtime_ops.py plan-replacements --candidates "$(H10_C5B_CANDIDATES)" --manifest "$(H10_C5B_MANIFEST)" --runtime-report "$(H10_C5B_RUNTIME_REPORT)" --output "$(H10_C5B_REPLACEMENT_LOG)"
+
+h10-c5b-run:
+	test -n "$(H10_C5B_MANIFEST)"
+	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/run_h10_c5b.py --manifest "$(H10_C5B_MANIFEST)" --root "$(or $(H10_C5B_ROOT),.)"
+
+h10-c5b-score-held-out:
+	test -n "$(H10_C5B_HELD_OUT_LOCK)"
+	test -n "$(APPROVAL)"
+	test -n "$(H10_C5B_SCORING_STATUS)"
+	test -n "$(H10_C5B_OPENING_RECORD)"
+	test -n "$(H10_C5B_SCORING_ROOT)"
+	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/score_h10_c5b_held_out.py --lock "$(H10_C5B_HELD_OUT_LOCK)" --approval "$(APPROVAL)" --status "$(H10_C5B_SCORING_STATUS)" --opening-record "$(H10_C5B_OPENING_RECORD)" --output-root "$(H10_C5B_SCORING_ROOT)" --repository-root .
+
+h10-c5b-verify-method-lock:
+	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/h10_c5b_runtime_ops.py verify-method-lock --lock protocol/h10_c5b_repository_grounded/METHOD_LOCK.json --root .
+
+h10-c5b-parent-immutability:
+	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/verify_parent_result_immutability.py --root .
+
+h10-c6-run:
+	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/run_h10_c6.py --root .
+
+h10-c5-pilot-test:
+	$(H10_C4_ENV) $(H10_C3_PYTHON) -m ruff check framework/fuzzyxai/fuzzyxai/experiments/h10_c5_pilot.py scripts/ch4_revision/run_h10_c5_pilot.py tests/h10_c5_pilot
+	$(H10_C4_ENV) $(H10_C3_PYTHON) -m pytest -q tests/h10_c5_pilot
+
+h10-c5-pilot-run:
+	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/run_h10_c5_pilot.py
+
+h10-c6-n-test:
+	$(H10_C4_ENV) $(H10_C3_PYTHON) -m ruff check framework/fuzzyxai/fuzzyxai/experiments/h10_c6_noise.py scripts/ch4_revision/run_h10_c6_noise.py tests/h10_c6_noise
+	$(H10_C4_ENV) $(H10_C3_PYTHON) -m pytest -q tests/h10_c6_noise
+
+h10-c6-n-prepare:
+	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/run_h10_c6_noise.py prepare --root .
+
+h10-c6-n-run:
+	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/run_h10_c6_noise.py run --root .
+
+mlflow-integration-test:
+	$(H10_C4_ENV) $(H10_C3_PYTHON) -m ruff check framework/fuzzyxai/fuzzyxai/adapters/mlflow_tabular.py framework/fuzzyxai/fuzzyxai/core/mlflow_route.py examples/integrations/mlflow_fuzzyxai_example.py scripts/ch4_revision/run_mlflow_integration.py tests/integration/test_mlflow_adapter.py tests/integration/test_mlflow_integration.py
+	$(H10_C4_ENV) $(H10_C3_PYTHON) -m pytest -q tests/integration/test_mlflow_adapter.py tests/integration/test_mlflow_integration.py
+
+mlflow-integration-run:
+	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/run_mlflow_integration.py
+
+final-practical-parent-immutability:
+	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/verify_parent_result_immutability.py
+
+final-practical-package:
+	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/build_final_practical_evidence.py
+
+multimodal-route-validation:
+	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/run_multimodal_routes.py
+
+h9-e2e-latency:
+	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/run_h9_e2e.py
+
+h9-e2e-v2:
+	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/run_h9_e2e_v2.py
+
+ch4-q1-claim-lint:
+	$(H10_C4_ENV) $(H10_C3_PYTHON) scripts/ch4_revision/claim_lint.py --root .
+
+ch4-q1-evidence: h10-c5-source-audit h10-c6-run multimodal-route-validation h9-e2e-latency ch4-q1-claim-lint

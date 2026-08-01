@@ -1,0 +1,197 @@
+{
+  "attempts": [
+    {
+      "development_scored": false,
+      "failure": "The safe assignment parser rejected whitespace around '=' in a BugsInPy project.info file.",
+      "failure_stage": "MATERIALIZE_LOCKED_DEVELOPMENT_SELECTION",
+      "head_commit": "0af345f241f5030077a0b12142b2629ed6ca657a",
+      "held_out_created": false,
+      "held_out_scored": false,
+      "run_id": 30219587263,
+      "runtime_collection_started": false,
+      "scientific_result": "NOT_EVALUATED",
+      "status": "FAILED_BEFORE_RUNTIME_AND_SCORING"
+    },
+    {
+      "development_scored": false,
+      "failure": "Runtime sandbox copy followed internal dangling documentation symlinks instead of preserving them.",
+      "failure_stage": "COLLECT_TYPED_RUNTIME_EVIDENCE",
+      "head_commit": "3f88959d4969495994013d0691282e6aae401204",
+      "held_out_created": false,
+      "held_out_scored": false,
+      "run_id": 30219776277,
+      "runtime_collection_completed": false,
+      "scientific_result": "NOT_EVALUATED",
+      "status": "FAILED_DURING_RUNTIME_BEFORE_READINESS_AND_SCORING"
+    },
+    {
+      "complete_incidents": 10,
+      "development_scored": false,
+      "failure": "Readiness failed because 18 environments did not complete setup, one failure lacked a project traceback, and one lacked an executed project slice.",
+      "failure_stage": "DEVELOPMENT_READINESS",
+      "head_commit": "fa6f3e0a898f5350d5f8d08ae61cec3c68a7ec22",
+      "held_out_created": false,
+      "held_out_scored": false,
+      "readiness_checks_passed": 18,
+      "readiness_checks_total": 23,
+      "run_id": 30220132486,
+      "runtime_collection_completed": true,
+      "runtime_status_counts": {
+        "BUG_REPRODUCED_WITHOUT_EXECUTED_SLICE": 1,
+        "BUG_REPRODUCED_WITHOUT_PROJECT_TRACE": 1,
+        "BUG_REPRODUCED_WITH_TRACE": 10,
+        "ENVIRONMENT_SETUP_FAILED": 18
+      },
+      "scientific_result": "NOT_EVALUATED",
+      "status": "RUNTIME_INCOMPLETE_SCORING_BLOCKED"
+    },
+    {
+      "complete_incidents": 10,
+      "development_scored": false,
+      "failure": "Readiness remained blocked because historical dependency metadata was rejected by the default modern pip/setuptools toolchain; one reproduced failure lacked a project traceback and one lacked an executed project slice.",
+      "failure_stage": "DEVELOPMENT_READINESS",
+      "head_commit": "e8a32cfa1182537100e6df3839615a0d0f75a11a",
+      "held_out_created": false,
+      "held_out_scored": false,
+      "readiness_checks_passed": 18,
+      "readiness_checks_total": 23,
+      "run_id": 30220858259,
+      "runtime_collection_completed": true,
+      "runtime_status_counts": {
+        "BUG_REPRODUCED_WITHOUT_EXECUTED_SLICE": 1,
+        "BUG_REPRODUCED_WITHOUT_PROJECT_TRACE": 1,
+        "BUG_REPRODUCED_WITH_TRACE": 10,
+        "ENVIRONMENT_SETUP_FAILED": 18
+      },
+      "scientific_result": "NOT_EVALUATED",
+      "status": "RUNTIME_INCOMPLETE_SCORING_BLOCKED"
+    },
+    {
+      "complete_incidents": 14,
+      "development_scored": false,
+      "failure": "Readiness remained blocked because the collector used one fail-fast requirements transaction while the locked BugsInPy compiler installs requirements independently around the registered setup script. Fourteen incidents completed; fourteen stopped during dependency setup, one reproduced failure lacked an executed project slice, and one registered test did not fail.",
+      "failure_stage": "DEVELOPMENT_READINESS",
+      "head_commit": "904bf9ca60043c6793ad992bf91ceb7efeae824d",
+      "held_out_created": false,
+      "held_out_scored": false,
+      "readiness_checks_passed": 18,
+      "readiness_checks_total": 23,
+      "run_id": 30221595604,
+      "runtime_collection_completed": true,
+      "runtime_status_counts": {
+        "BUG_REPRODUCED_WITHOUT_EXECUTED_SLICE": 1,
+        "BUG_REPRODUCED_WITH_TRACE": 14,
+        "ENVIRONMENT_SETUP_FAILED": 14,
+        "TEST_DID_NOT_FAIL": 1
+      },
+      "scientific_result": "NOT_EVALUATED",
+      "status": "RUNTIME_INCOMPLETE_SCORING_BLOCKED"
+    },
+    {
+      "complete_incidents": 23,
+      "development_scored": false,
+      "failure": "The per-requirement continuation policy conflicted with the locked prohibition on executing tests after partially unsuccessful environment preparation. This run is excluded from readiness and method evaluation.",
+      "failure_stage": "PROTOCOL_CONFORMANCE_AUDIT",
+      "head_commit": "e1a8c2d1e8aca1153b2042b213d1c5b279a387e2",
+      "held_out_created": false,
+      "held_out_scored": false,
+      "readiness_checks_passed": 18,
+      "readiness_checks_total": 23,
+      "run_id": 30222700928,
+      "runtime_collection_completed": true,
+      "runtime_report_sha256": "cef09722a0d82a5a76332ef9f1c1b230bf2cb9662e0584dba2135878ce2567f3",
+      "runtime_status_counts": {
+        "BUG_REPRODUCED_WITHOUT_EXECUTED_SLICE": 2,
+        "BUG_REPRODUCED_WITH_TRACE": 23,
+        "ENVIRONMENT_SETUP_FAILED": 4,
+        "TEST_DID_NOT_FAIL": 1
+      },
+      "scientific_result": "NOT_EVALUATED",
+      "status": "INVALIDATED_RUNTIME_ATTEMPT_PROTOCOL_CONFLICT"
+    },
+    {
+      "complete_incidents": 17,
+      "development_scored": false,
+      "failure": "Thirteen deterministic same-repository replacements failed the locked fail-closed dependency setup. Each of seven repositories now had at least two distinct runtime-unavailable incidents, so repository-level availability handling was required before scoring.",
+      "failure_stage": "DEVELOPMENT_READINESS",
+      "head_commit": "19aec5ace04150c2c541dcaaea9f034cbe7720b2",
+      "held_out_created": false,
+      "held_out_scored": false,
+      "readiness_checks_passed": 18,
+      "readiness_checks_total": 23,
+      "run_id": 30225417941,
+      "runtime_collection_completed": true,
+      "runtime_report_sha256": "a0b9a76e5d48e52bf44b48c88ec277bfd9c879b7e46f87a8cf24410a1790fb4f",
+      "runtime_status_counts": {
+        "BUG_REPRODUCED_WITH_TRACE": 17,
+        "ENVIRONMENT_SETUP_FAILED": 13
+      },
+      "scientific_result": "NOT_EVALUATED",
+      "status": "RUNTIME_INCOMPLETE_SCORING_BLOCKED"
+    },
+    {
+      "complete_incidents": 29,
+      "development_scored": false,
+      "failure": "One automatically selected incident, bugsinpy-pandas-35, failed the locked fail-closed requirements stage. No method scoring occurred.",
+      "failure_stage": "DEVELOPMENT_READINESS",
+      "head_commit": "42dc7eb5ed1ccfcb3fcc69c083f26da8cbe10976",
+      "held_out_created": false,
+      "held_out_scored": false,
+      "readiness_checks_passed": 18,
+      "readiness_checks_total": 23,
+      "run_id": 30250367292,
+      "runtime_collection_completed": true,
+      "runtime_report_sha256": "f25ad0be882f3d0938ec8a5819dbfaf4873a4048259ba74d9c918119738cbd83",
+      "runtime_status_counts": {
+        "BUG_REPRODUCED_WITH_TRACE": 29,
+        "ENVIRONMENT_SETUP_FAILED": 1
+      },
+      "scientific_result": "NOT_EVALUATED",
+      "status": "RUNTIME_INCOMPLETE_SCORING_BLOCKED"
+    },
+    {
+      "complete_incidents": 30,
+      "development_scored": false,
+      "failure": "Runtime collection and all readiness checks passed. Development scoring stopped before metrics were emitted because the graph augmenter did not resolve a registered pytest node ID to its AST test node.",
+      "failure_stage": "DEVELOPMENT_SCORING_IMPORT",
+      "head_commit": "15884e216c4003fd8a2a988b5a801072a2f8be5a",
+      "held_out_created": false,
+      "held_out_scored": false,
+      "readiness_checks_passed": 23,
+      "readiness_checks_total": 23,
+      "readiness_report_sha256": "60c7c8cba808aa8468a038f3768bf8e7bcb5b9280de5112f727c3b2023ca4433",
+      "run_id": 30252520510,
+      "runtime_collection_completed": true,
+      "runtime_manifest_sha256": "2db9ab1402fad106201329f091d2d355d5a539b49ec0033f204f04af7bc40824",
+      "runtime_report_sha256": "53d7460ec6e00605ac4257abbda88bc3b8168a884e08831b29c1830361ed7435",
+      "runtime_status_counts": {
+        "BUG_REPRODUCED_WITH_TRACE": 30
+      },
+      "scientific_result": "NOT_EVALUATED",
+      "status": "DEVELOPMENT_READY_SCORING_INFRASTRUCTURE_FAILED"
+    },
+    {
+      "complete_incidents": 30,
+      "development_scored": true,
+      "development_status_sha256": "60810d8ee58b20c6d9b1a5e4800c23fc678ce9e698ad70d339e91d37a7f69ba1",
+      "execution_id": "development-score-8be65ed-2db9ab1402fa",
+      "failure": "The prospective development technical gate did not pass. Held-out creation and scoring remain prohibited.",
+      "failure_stage": "DEVELOPMENT_GATE",
+      "head_commit": "8be65ed2338325a02ddda5b4d2bb361dcc9b2fa1",
+      "held_out_created": false,
+      "held_out_scored": false,
+      "readiness_checks_passed": 23,
+      "readiness_checks_total": 23,
+      "readiness_report_sha256": "60c7c8cba808aa8468a038f3768bf8e7bcb5b9280de5112f727c3b2023ca4433",
+      "runtime_collection_completed": true,
+      "runtime_manifest_sha256": "2db9ab1402fad106201329f091d2d355d5a539b49ec0033f204f04af7bc40824",
+      "runtime_report_sha256": "53d7460ec6e00605ac4257abbda88bc3b8168a884e08831b29c1830361ed7435",
+      "runtime_status_counts": {
+        "BUG_REPRODUCED_WITH_TRACE": 30
+      },
+      "scientific_result": "NOT_EVALUATED",
+      "status": "H10_C5C_DEVELOPMENT_GATE_FAIL"
+    }
+  ],
+  "scientific_result": "NOT_EVALUATED"
+}

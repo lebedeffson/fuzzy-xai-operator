@@ -1,0 +1,32 @@
+{
+  "plan_id": "repair:mlp2:971665314b371a3fb1cf",
+  "operation": {
+    "operation_id": "rerun_explainer_with_registered_components",
+    "supported_contracts": [
+      "EXPLANATION_OUTPUT_CONSISTENCY",
+      "REQUIRED_PROVENANCE"
+    ],
+    "target_component_type": "explainer",
+    "preconditions": [
+      "registered_model_available",
+      "registered_explainer_available"
+    ],
+    "postconditions": [
+      "shap_consistency_within_tolerance",
+      "provenance_complete",
+      "all_contracts_rechecked"
+    ],
+    "rollback_operation": "restore_previous_explanation_artifact",
+    "maximum_cost": 0.5,
+    "mutates_state": true
+  },
+  "target_contracts": [
+    "REQUIRED_PROVENANCE"
+  ],
+  "preconditions": {
+    "registered_model_available": true,
+    "registered_explainer_available": true
+  },
+  "executable": true,
+  "network_required": false
+}

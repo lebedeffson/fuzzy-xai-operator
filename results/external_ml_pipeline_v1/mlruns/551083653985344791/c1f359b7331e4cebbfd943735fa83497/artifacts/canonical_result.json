@@ -1,0 +1,60 @@
+{
+  "action": "BLOCK",
+  "action_correct": true,
+  "artifact_bytes": 58571,
+  "canonical_sha256": "e3fbd3ab4b8de5531b103f0e39f5ad4266791e8f882e387470b2f62c85b2465e",
+  "case_id": "E7_PREDICTION_EXPLANATION_BINDING",
+  "component_correct": true,
+  "component_id": "external.inference.prediction_object_binding",
+  "contract_correct": true,
+  "contract_id": "PREDICTION_OBJECT_BINDING",
+  "contracts_checked": 0,
+  "dependent_violations": [],
+  "detected": true,
+  "detected_correct": true,
+  "diagnostic_cut": null,
+  "evidence_completeness": 1.0,
+  "evidence_refs": [
+    "prediction_manifest.json"
+  ],
+  "expected_action": "BLOCK",
+  "expected_contract": "PREDICTION_OBJECT_BINDING",
+  "expected_invalid": true,
+  "expected_root_cause": "PREDICTION_OBJECT_BINDING",
+  "expected_stage": "INFERENCE",
+  "false_blocking": false,
+  "false_certification": false,
+  "fault_category": "CROSS_STAGE",
+  "mode_id": "B_PAIRWISE_RULES",
+  "new_critical_violations": 0,
+  "peak_rss_kb": 394020,
+  "pipeline_id": "ext4-lime-tabular",
+  "pipeline_status": "INVALID",
+  "proposed_repair_count": 1,
+  "recertified": false,
+  "redundant_repair_count": 0,
+  "repair_executed": false,
+  "repair_plan": {
+    "operations": [
+      "rebuild_explanation_for_registered_model"
+    ]
+  },
+  "repairable": true,
+  "reported_symptom_count": 1,
+  "repository_commit": "fd7eb2e6f760619c29fca0187c07b82157601b32",
+  "rollback_verified": false,
+  "root_cause": null,
+  "root_cause_correct": false,
+  "run_id": "external:d131ffb7bbbb9f5243bc",
+  "runtime_breakdown_ms": {
+    "audit": 0.7087779995345045,
+    "diagnostic_cut": 0.0,
+    "graph_build": 0.4738569996334263,
+    "recertification": 0.0,
+    "repair_planning": 0.0,
+    "total": 1.1826349991679308
+  },
+  "stage": "INFERENCE",
+  "stage_correct": true,
+  "target_contract_repaired": false
+}

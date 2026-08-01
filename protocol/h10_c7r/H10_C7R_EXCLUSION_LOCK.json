@@ -1,0 +1,28 @@
+{
+  "excluded_repositories": [
+    "astropy/astropy",
+    "cool-RR/PySnooper",
+    "django/django",
+    "jakubroztocil/httpie",
+    "matplotlib/matplotlib",
+    "mwaskom/seaborn",
+    "nvbn/thefuck",
+    "pallets/flask",
+    "pandas-dev/pandas",
+    "psf/black",
+    "psf/requests",
+    "pydata/xarray",
+    "pylint-dev/pylint",
+    "pytest-dev/pytest",
+    "scikit-learn/scikit-learn",
+    "sphinx-doc/sphinx",
+    "sympy/sympy",
+    "tiangolo/fastapi",
+    "tornadoweb/tornado",
+    "ytdl-org/youtube-dl"
+  ],
+  "normalization": "case_sensitive_owner_slash_repository",
+  "source": "H10_C7_PROTOCOL_LOCK plus H10-C7A development inventory",
+  "status": "LOCKED_BEFORE_HELD_OUT",
+  "used_repository_count": 20
+}

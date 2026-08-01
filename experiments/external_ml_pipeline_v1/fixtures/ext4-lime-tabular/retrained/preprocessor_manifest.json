@@ -1,0 +1,38 @@
+{
+  "artifact_sha256": "d4d29ea7b2c78916e7643a55c9555b201ad72d9024ab7eff299dbebb0dd6aa2b",
+  "class_name": "StandardScaler",
+  "expected_train_row_ids_sha256": "6a8a95b646c923799d524ff01b9df54152c3e8de2b470fa27fba92395be2cf49",
+  "feature_names_in": [
+    "alcohol",
+    "malic_acid",
+    "ash",
+    "alcalinity_of_ash",
+    "magnesium",
+    "total_phenols",
+    "flavanoids",
+    "nonflavanoid_phenols",
+    "proanthocyanins",
+    "color_intensity",
+    "hue",
+    "od280/od315_of_diluted_wines",
+    "proline"
+  ],
+  "feature_names_out": [
+    "alcohol",
+    "malic_acid",
+    "ash",
+    "alcalinity_of_ash",
+    "magnesium",
+    "total_phenols",
+    "flavanoids",
+    "nonflavanoid_phenols",
+    "proanthocyanins",
+    "color_intensity",
+    "hue",
+    "od280/od315_of_diluted_wines",
+    "proline"
+  ],
+  "fit_row_count": 133,
+  "fit_row_ids_sha256": "6a8a95b646c923799d524ff01b9df54152c3e8de2b470fa27fba92395be2cf49",
+  "output_feature_count": 13
+}

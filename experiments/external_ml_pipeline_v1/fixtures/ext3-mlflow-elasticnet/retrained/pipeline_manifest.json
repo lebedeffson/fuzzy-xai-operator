@@ -1,0 +1,12 @@
+{
+  "dataset_source": "sklearn.datasets.load_diabetes",
+  "explainer": "shap.LinearExplainer",
+  "license": "Apache-2.0",
+  "pipeline_id": "ext3-mlflow-elasticnet",
+  "repository_commit": "6e168e696062942ee34410048ce17cf24b5118bc",
+  "repository_url": "https://github.com/mlflow/mlflow",
+  "source_files": [
+    "examples/sklearn_elasticnet_wine/train.py"
+  ],
+  "task_type": "REGRESSION"
+}

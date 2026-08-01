@@ -1,0 +1,14 @@
+aliases: []
+creation_timestamp: 1785154528275
+current_stage: None
+description: null
+last_updated_timestamp: 1785154528275
+name: fuzzyxai-demo
+run_id: 25f0c5a7436044ec9e7fcfcaf12252b4
+run_link: null
+source: file:///home/runner/work/fuzzy-xai-operator/fuzzy-xai-operator/results/integrations/mlflow_demo/mlruns/413852068116036394/25f0c5a7436044ec9e7fcfcaf12252b4/artifacts/model
+status: READY
+status_message: null
+storage_location: file:///home/runner/work/fuzzy-xai-operator/fuzzy-xai-operator/results/integrations/mlflow_demo/mlruns/413852068116036394/25f0c5a7436044ec9e7fcfcaf12252b4/artifacts/model
+user_id: null
+version: 1

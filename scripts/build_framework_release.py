@@ -9,11 +9,10 @@ import shutil
 import subprocess
 import tempfile
 import zipfile
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 import yaml
-
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT_DIR = ROOT / "release_artifacts"
@@ -26,8 +25,12 @@ FORBIDDEN_PARTS = {
     "site/dubnaxai",
 }
 FORBIDDEN_SUFFIXES = {".docx", ".pdf", ".pyc", ".pyo", ".zip"}
+ALLOWED_ARCHIVES = {
+    "data/h10_c6_noise/bank_marketing_uci_222.zip",
+}
 ALLOWED_ROOTS = {
     ".github",
+    "apps",
     "baselines",
     "config",
     "configs",
@@ -52,6 +55,7 @@ ALLOWED_EXACT = {
     "Dockerfile.q1",
     "Dockerfile.q1-final",
     "Dockerfile.practical",
+    "Dockerfile.ml-vertical",
     "LICENSE",
     "Makefile",
     "PROJECT_MEMORY.md",
@@ -69,6 +73,8 @@ ALLOWED_EXACT = {
 }
 ALLOWED_PREFIXES = (
     "data/confirmatory/",
+    "data/h10_c6_noise/",
+    "data/cross_pipeline_v1/",
     "experiments/real_training_experiment/",
     "release_evidence/explanation_experience/",
     "release_evidence/chapter4_explanation_experience/",
@@ -82,6 +88,55 @@ ALLOWED_PREFIXES = (
     "release_evidence/chapter4_final_candidate/",
     "release_evidence/final_confirmatory_closure/",
     "experiments/model_universality/",
+    "protocol/h10_c5b_repository_grounded/",
+    "protocol/h10_c5c_evidence_retrieval/",
+    "protocol/h10_c7/",
+    "protocol/h10_c7r/",
+    "protocol/h10_c7r_r9/",
+    "protocol/h10_c7r_r10/",
+    "protocol/h10_c7r_r10m/",
+    "protocol/ml_vertical_v1/",
+    "protocol/ml_pipeline_v2/",
+    "protocol/ml_pipeline_v2_comparative/",
+    "protocol/cross_pipeline_v1/",
+    "protocol/h9_e2e_v2/",
+    "reports/h10_c5b/",
+    "reports/h10_c5c/",
+    "reports/h10_c5c_posthoc/",
+    "reports/h10_c7/",
+    "reports/h10_c7r/",
+    "reports/h10_c7r_r9/",
+    "reports/h10_c7r_r10/",
+    "reports/h10_c7r_r10m/",
+    "reports/ml_vertical_v1/",
+    "reports/ml_pipeline_v2/",
+    "reports/ml_pipeline_v2_comparative/",
+    "reports/cross_pipeline_v1/",
+    "reports/h9_e2e_v2/",
+    "reports/h10_c6_noise/",
+    "reports/h10_c5_pilot/",
+    "reports/integrations/",
+    "reports/chapter_updates/",
+    "reports/final_practical/",
+    "results/h10_c5b/",
+    "results/h10_c5/",
+    "results/h10_c5c/",
+    "results/h9_e2e_v2/",
+    "results/h10_c6_noise/",
+    "results/h10_c5_pilot/",
+    "results/integrations/",
+    "results/final_practical/",
+    "results/h10_c5c_posthoc/",
+    "results/h10_c7/",
+    "results/h10_c7a/",
+    "results/h10_c7r/",
+    "results/h10_c7r_r9/",
+    "results/h10_c7r_r10/",
+    "results/h10_c7r_r10m/",
+    "results/ml_vertical_v1/",
+    "results/ml_pipeline_v2/",
+    "results/ml_pipeline_v2_comparative/",
+    "results/cross_pipeline_v1/",
     "reports/release/universal_model_integration_completion.md",
 )
 REQUIRED_PATHS = {
@@ -127,6 +182,13 @@ REQUIRED_PATHS = {
     "fuzzy-xai-operator/docs/DIAGNOSTIC_FRAMEWORK_RU.md",
     "fuzzy-xai-operator/docs/DIAGNOSTIC_LIMITATIONS_RU.md",
     "fuzzy-xai-operator/tests/diagnostics/test_diagnostic_invariants.py",
+    "fuzzy-xai-operator/protocol/h10_c7r/H10_C7R_BUDGET_LOCK.json",
+    "fuzzy-xai-operator/results/h10_c7a/development/H10_C7A_DEVELOPMENT_GATES.json",
+    "fuzzy-xai-operator/results/h10_c7r/H10_C7R_FINAL_STATUS.json",
+    "fuzzy-xai-operator/protocol/h10_c7r_r10m/R10M_METHOD_LOCK.json",
+    "fuzzy-xai-operator/protocol/h10_c7r_r10m/R10M_MODEL_LOCK.json",
+    "fuzzy-xai-operator/results/h10_c7r_r10m/FINAL_STATUS.json",
+    "fuzzy-xai-operator/reports/h10_c7r_r10m/FINAL_REPORT.md",
     "fuzzy-xai-operator/release_evidence/explanation_experience/object_85_human_explanation.json",
     "fuzzy-xai-operator/release_evidence/explanation_experience/medical_research_human_explanation.json",
     "fuzzy-xai-operator/release_evidence/explanation_experience/comprehension_pilot/response_template.csv",
@@ -262,20 +324,36 @@ def sha256(path: Path) -> str:
 def manifest_artifact_paths(export_root: Path) -> set[str]:
     """Return repository-relative evidence paths declared by the operator manifest."""
 
-    manifest_path = export_root / "framework/fuzzyxai/operators_manifest.yaml"
-    payload = yaml.safe_load(manifest_path.read_text(encoding="utf-8"))
-    rows = payload.get("operators", []) if isinstance(payload, dict) else []
     artifacts: set[str] = set()
-    for row in rows:
-        if not isinstance(row, dict):
+    manifest_paths = [
+        export_root / "framework/fuzzyxai/operators_manifest.yaml",
+        export_root
+        / "framework/fuzzyxai/operators_manifest_final_practical_addendum.yaml",
+    ]
+    for manifest_path in manifest_paths:
+        if not manifest_path.is_file():
             continue
-        for value in row.get("artifacts", []):
-            relative = Path(str(value))
-            if relative.is_absolute() or ".." in relative.parts:
-                raise RuntimeError(f"operator manifest contains unsafe artifact path: {value}")
-            if not (export_root / relative).is_file():
-                raise RuntimeError(f"operator manifest artifact is missing from HEAD: {value}")
-            artifacts.add(relative.as_posix())
+        payload = yaml.safe_load(manifest_path.read_text(encoding="utf-8"))
+        if "parent_manifest_sha256" in payload:
+            parent = export_root / str(payload["parent_manifest"])
+            if sha256(parent) != payload["parent_manifest_sha256"]:
+                raise RuntimeError("operator addendum parent hash mismatch")
+        rows = payload.get("operators", []) if isinstance(payload, dict) else []
+        for row in rows:
+            if not isinstance(row, dict):
+                continue
+            for value in row.get("artifacts", []):
+                relative = Path(str(value))
+                if relative.is_absolute() or ".." in relative.parts:
+                    raise RuntimeError(
+                        f"operator manifest contains unsafe artifact path: {value}"
+                    )
+                if not (export_root / relative).is_file():
+                    raise RuntimeError(
+                        "operator manifest artifact is missing from HEAD: "
+                        f"{value}"
+                    )
+                artifacts.add(relative.as_posix())
     if not artifacts:
         raise RuntimeError("operator manifest does not declare any evidence artifacts")
     return artifacts
@@ -285,6 +363,16 @@ def validate_archive(path: Path, manifest_artifacts: set[str]) -> tuple[int, lis
     with zipfile.ZipFile(path) as archive:
         names = archive.namelist()
         name_set = set(names)
+        checksum_name = "fuzzy-xai-operator/SHA256SUMS"
+        if checksum_name not in name_set:
+            raise RuntimeError("source archive has no internal SHA256SUMS")
+        for line in archive.read(checksum_name).decode("ascii").splitlines():
+            expected, name = line.split(maxsplit=1)
+            member = f"fuzzy-xai-operator/{name.lstrip('*')}"
+            if member not in name_set:
+                raise RuntimeError(f"source checksum member is missing: {member}")
+            if hashlib.sha256(archive.read(member)).hexdigest() != expected:
+                raise RuntimeError(f"source checksum mismatch: {member}")
         manifest_paths = {f"fuzzy-xai-operator/{item}" for item in manifest_artifacts}
         missing = sorted((REQUIRED_PATHS | manifest_paths) - name_set)
         if missing:
@@ -294,7 +382,11 @@ def validate_archive(path: Path, manifest_artifacts: set[str]) -> tuple[int, lis
             normalized = name.rstrip("/")
             if any(part in normalized for part in FORBIDDEN_PARTS):
                 forbidden.append(name)
-            if Path(normalized).suffix in FORBIDDEN_SUFFIXES:
+            repository_name = normalized.removeprefix("fuzzy-xai-operator/")
+            if (
+                Path(normalized).suffix in FORBIDDEN_SUFFIXES
+                and repository_name not in ALLOWED_ARCHIVES
+            ):
                 forbidden.append(name)
         if forbidden:
             raise RuntimeError(f"release archive contains generated or quarantined files: {sorted(set(forbidden))}")
@@ -308,7 +400,10 @@ def validate_archive(path: Path, manifest_artifacts: set[str]) -> tuple[int, lis
 
 def include_in_source_release(path: Path, manifest_artifacts: set[str]) -> bool:
     relative = path.as_posix()
-    if path.suffix.lower() in FORBIDDEN_SUFFIXES:
+    if (
+        path.suffix.lower() in FORBIDDEN_SUFFIXES
+        and relative not in ALLOWED_ARCHIVES
+    ):
         return False
     if relative in ALLOWED_EXACT:
         return True
@@ -347,10 +442,20 @@ def main() -> None:
             compression=zipfile.ZIP_DEFLATED,
             compresslevel=9,
         ) as archive:
-            for source in sorted(path for path in export_root.rglob("*") if path.is_file()):
-                if not include_in_source_release(source.relative_to(export_root), manifest_artifacts):
-                    continue
+            checksum_lines = []
+            sources = sorted(
+                path
+                for path in export_root.rglob("*")
+                if path.is_file()
+                and include_in_source_release(
+                    path.relative_to(export_root),
+                    manifest_artifacts,
+                )
+            )
+            for source in sources:
                 mode = 0o100755 if source.stat().st_mode & 0o111 else 0o100644
+                data = source.read_bytes()
+                relative = source.relative_to(export_root)
                 info = zipfile.ZipInfo(
                     source.relative_to(export_root.parent).as_posix(),
                     date_time=(1980, 1, 1, 0, 0, 0),
@@ -358,17 +463,31 @@ def main() -> None:
                 info.external_attr = mode << 16
                 archive.writestr(
                     info,
-                    source.read_bytes(),
+                    data,
                     compress_type=zipfile.ZIP_DEFLATED,
                     compresslevel=9,
                 )
+                checksum_lines.append(
+                    f"{hashlib.sha256(data).hexdigest()}  {relative.as_posix()}"
+                )
+            checksum_info = zipfile.ZipInfo(
+                "fuzzy-xai-operator/SHA256SUMS",
+                date_time=(1980, 1, 1, 0, 0, 0),
+            )
+            checksum_info.external_attr = 0o100644 << 16
+            archive.writestr(
+                checksum_info,
+                ("\n".join(checksum_lines) + "\n").encode("ascii"),
+                compress_type=zipfile.ZIP_DEFLATED,
+                compresslevel=9,
+            )
     file_count, _ = validate_archive(archive_path, manifest_artifacts)
     archive_hash = sha256(archive_path)
     checksum_path = archive_path.with_suffix(".zip.sha256")
     checksum_path.write_text(f"{archive_hash}  {archive_path.name}\n", encoding="ascii")
     manifest = {
         "schema_version": "1.0",
-        "created_at": datetime.now(timezone.utc).isoformat(),
+        "created_at": datetime.now(UTC).isoformat(),
         "commit": commit,
         "branch": run_git("branch", "--show-current"),
         "archive": archive_path.name,

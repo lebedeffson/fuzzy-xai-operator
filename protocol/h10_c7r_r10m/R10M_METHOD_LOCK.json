@@ -1,0 +1,63 @@
+{
+  "baselines": [
+    "B_TRACE",
+    "B_BM25",
+    "R9A",
+    "R10A"
+  ],
+  "endpoint_lock_sha256": "6267a6670407d3217d271dee6efbcd97f4fc32a170bd45f31108e513d383e27b",
+  "held_out_created": false,
+  "held_out_scored": false,
+  "input_hashes": {
+    "development_gold": "2f26307c38f1a5e5550e6eb125bf8040d444b7a5f24e225bc8356e9e4398466a",
+    "observable_manifest": "5f96dca0ceed7dc2395f414c339f631ab9b9b0b86505bf6604e44b5e8ffe4772",
+    "runtime_readiness": "e1c98b7715d6cb75e14b243582ba38e8de21a243964cdd65cfc62a25946f2e02",
+    "v1_evidence": "1016bbd2222ba2f93719f8b3df2d04f96ad7ed6aa422b86b8cfa97d167eb8f63"
+  },
+  "model_lock_sha256": "38a73831e236af5fa7c528747a3df343c7de650a9ee2403541e58b995edd2dff",
+  "protocol_id": "H10-C7R-R10M-v1",
+  "query_forbidden_fields": [
+    "gold_patch",
+    "fix_commit",
+    "changed_files",
+    "changed_symbols",
+    "diff"
+  ],
+  "retrieval": {
+    "bounded_probes_in_primary_result": false,
+    "contract_inference_changes_localization": false,
+    "file_channels": [
+      "causal_chronology",
+      "traceback_execution",
+      "bm25",
+      "graphcodebert"
+    ],
+    "file_limit": 25,
+    "final_channels": [
+      "causal",
+      "bm25",
+      "graphcodebert",
+      "bge_reranker"
+    ],
+    "final_limit": 20,
+    "learned_on_development": false,
+    "rrf_constant": 60,
+    "symbol_pool_channel_limits": {
+      "bm25": 40,
+      "graph": 10,
+      "graphcodebert": 50,
+      "runtime": 40,
+      "traceback": 30,
+      "value_flow": 30
+    },
+    "symbol_pool_limit": 200
+  },
+  "scientific_result": "NOT_EVALUATED",
+  "source_hashes": {
+    "framework/fuzzyxai/fuzzyxai/experiments/h10_c7r_r10m.py": "c72cc5c8d020c9b5ef5a7e22204c109ac61d30977b78e98f2f5a2db83ba96869",
+    "scripts/ch4_revision/lock_h10_c7r_r10m.py": "4a54f8c122109fc59dcea1b343998f24817ec3f1b533edc0bca8393d9cffefe3",
+    "scripts/ch4_revision/prepare_h10_c7r_r10m_development.py": "d2c4b88994eac9c529a0d768a83add4b4fec1cf8c1f091638c2a96aef7c7a72d",
+    "scripts/ch4_revision/run_h10_c7r_r10m_development.py": "f4d94e77dfb2aae5dc20c4123804af972383389a85ed93147c68bd65165ec615"
+  },
+  "status": "LOCKED_BEFORE_DEVELOPMENT_SCORING"
+}

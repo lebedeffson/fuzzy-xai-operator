@@ -1,0 +1,24 @@
+{
+  "protocol_id": "FUZZYXAI_ML_PIPELINE_V2_COMPARATIVE_V1",
+  "usage": "loaded by scorer only after all mode decisions are complete",
+  "targets": [
+    {"scenario_id": "S1_NORMAL", "stage": null, "contract_id": null, "component_id": null, "action": "ACCEPT", "repair_expected": false},
+    {"scenario_id": "S2_EXPLAINER_VERSION_MISMATCH", "stage": "POST_HOC_EXPLANATION", "contract_id": "MODEL_EXPLAINER_VERSION", "component_id": "logistic_regression", "action": "BLOCK", "repair_expected": false},
+    {"scenario_id": "S3_MISSING_REQUIRED_FEATURE", "stage": "INFERENCE", "contract_id": "INPUT_FEATURE_SCHEMA", "component_id": "fuzzyxai_presenter", "action": "REQUEST_DATA", "repair_expected": false},
+    {"scenario_id": "S4_MODEL_RULE_CONFLICT", "stage": "FUZZY_REPRESENTATION", "contract_id": "MODEL_RULE_CONFLICT", "component_id": "logistic_regression", "action": "REVIEW", "repair_expected": false},
+    {"scenario_id": "S5_INTERVAL_UNCERTAINTY", "stage": null, "contract_id": null, "component_id": null, "action": "WARN", "repair_expected": false},
+    {"scenario_id": "S6_MULTILEVEL_UNCERTAINTY", "stage": "FUZZY_REPRESENTATION", "contract_id": "MODEL_RULE_CONFLICT", "component_id": "logistic_regression", "action": "REVIEW", "repair_expected": false},
+    {"scenario_id": "S7_REDUCTION_LOSS_EXCEEDED", "stage": "REDUCTION", "contract_id": "REDUCTION_LOSS_LIMIT", "component_id": "fuzzyxai_presenter", "action": "WARN", "repair_expected": false},
+    {"scenario_id": "S8_INCOMPLETE_PROVENANCE", "stage": "POST_HOC_EXPLANATION", "contract_id": "REQUIRED_PROVENANCE", "component_id": "shap_linear_explainer", "action": "BLOCK", "repair_expected": false},
+    {"scenario_id": "S9_REGISTERED_REPAIR", "stage": "POST_HOC_EXPLANATION", "contract_id": "MODEL_EXPLAINER_VERSION", "component_id": "logistic_regression", "action": "ACCEPT", "repair_expected": true},
+    {"scenario_id": "S10_DETERMINISM", "stage": null, "contract_id": null, "component_id": null, "action": "ACCEPT", "repair_expected": false},
+    {"scenario_id": "S11_TARGET_LEAKAGE", "stage": "DATA_PREPARATION", "contract_id": "TARGET_NOT_IN_FEATURES", "component_id": "breast_cancer_dataset", "action": "BLOCK", "repair_expected": false},
+    {"scenario_id": "S12_SPLIT_OVERLAP", "stage": "DATA_SPLIT", "contract_id": "TRAIN_VALIDATION_TEST_DISJOINTNESS", "component_id": "deterministic_splitter", "action": "BLOCK", "repair_expected": false},
+    {"scenario_id": "S13_PREPROCESSOR_FULL_FIT", "stage": "PREPROCESSING", "contract_id": "PREPROCESSOR_FIT_SCOPE", "component_id": "standard_scaler", "action": "BLOCK", "repair_expected": true},
+    {"scenario_id": "S14_FEATURE_ORDER", "stage": "PREPROCESSING", "contract_id": "FEATURE_ORDER", "component_id": "standard_scaler", "action": "REQUEST_DATA", "repair_expected": true},
+    {"scenario_id": "S15_MODEL_NON_CONVERGENCE", "stage": "TRAINING", "contract_id": "MODEL_CONVERGENCE", "component_id": "logistic_regression", "action": "REVIEW", "repair_expected": false},
+    {"scenario_id": "S16_MODEL_ARTIFACT_TAMPER", "stage": "MODEL_ARTIFACT", "contract_id": "MODEL_ARTIFACT_HASH", "component_id": "serialized_model", "action": "BLOCK", "repair_expected": true},
+    {"scenario_id": "S17_SHAP_INCONSISTENCY", "stage": "POST_HOC_EXPLANATION", "contract_id": "EXPLANATION_OUTPUT_CONSISTENCY", "component_id": "shap_linear_explainer", "action": "BLOCK", "repair_expected": false},
+    {"scenario_id": "S18_MISSING_EXPLANATION_PROVENANCE", "stage": "POST_HOC_EXPLANATION", "contract_id": "REQUIRED_PROVENANCE", "component_id": "shap_linear_explainer", "action": "BLOCK", "repair_expected": true}
+  ]
+}

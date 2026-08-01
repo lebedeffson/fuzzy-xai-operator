@@ -1,0 +1,56 @@
+{
+  "amendment_id": "H10-C7A-primary-endpoint-amendment-v1",
+  "base_method_commit": "896c6cf2821c38e24890c18d7e9ac50da5f1aabe",
+  "budget_grid": [
+    5,
+    10,
+    20,
+    40,
+    80,
+    160
+  ],
+  "budget_selection": {
+    "held_out_reoptimization_forbidden": true,
+    "minimum_recall": 0.8,
+    "rule": "smallest_development_budget_reaching_minimum_recall"
+  },
+  "confirmation_coverage_is_primary_gate": false,
+  "created_utc": "2026-07-30T00:00:00Z",
+  "development_extension": {
+    "minimum_incidents": 40,
+    "minimum_repositories": 10,
+    "previously_disclosed_incidents_may_be_used": true,
+    "used_repositories_are_permanently_excluded_from_confirmatory_held_out": true
+  },
+  "effect": {
+    "context_reduction": "1 - candidate_context_lines / repository_source_lines",
+    "primary_reduction": "1 - candidate_symbols / repository_symbols"
+  },
+  "held_out_gold_may_select_budget_method_baseline_or_threshold": false,
+  "primary_endpoint": "search_space_reduction_at_recall_20_ge_0_80",
+  "primary_endpoint_changed": false,
+  "r5_frozen": {
+    "candidate_ranking": true,
+    "contract_inference": true,
+    "retrieval": true,
+    "top_20_prefix_must_match_base_commit": true
+  },
+  "r5c_role": "POSTHOC_ENGINEERING_AUDIT",
+  "r5v_role": "POSTHOC_ENGINEERING_AUDIT",
+  "r5v_status_preserved": "H10_C7_R5V_BLOCKED_AUDIT",
+  "registered_baselines": [
+    "B_TRACE",
+    "B_BM25",
+    "B_DENSE_IF_LOCAL_WEIGHTS_AVAILABLE",
+    "B_RRF_IF_LOCAL_WEIGHTS_AVAILABLE",
+    "B_GREEDY",
+    "B_REPOGRAPH",
+    "R0"
+  ],
+  "repository_cluster_bootstrap": {
+    "iterations": 20000,
+    "seed": 7102026
+  },
+  "scientific_result": "NOT_EVALUATED",
+  "status": "LOCKED_BEFORE_DEVELOPMENT_EXTENSION"
+}

@@ -1,0 +1,133 @@
+{
+  "run_id": "mlp2:ed78f41c2dae7a96acf7",
+  "scenario_id": "S13_PREPROCESSOR_FULL_FIT",
+  "action": "BLOCK",
+  "pipeline_status": "INVALID",
+  "canonical_source": "MLPipelineService",
+  "diagnosis": {
+    "diagnosis_id": "diagnosis:mlp2:ed78f41c2dae7a96acf7",
+    "pipeline_status": "INVALID",
+    "failed_stage": "PREPROCESSING",
+    "source_component": "standard_scaler",
+    "violated_contract": "PREPROCESSOR_FIT_SCOPE",
+    "violated_contracts": [
+      {
+        "contract_id": "PREPROCESSOR_FIT_SCOPE",
+        "stage": "PREPROCESSING",
+        "component_id": "standard_scaler",
+        "passed": false,
+        "severity": "HIGH",
+        "action": "BLOCK",
+        "observed_value": "e7941c7b3c59c1dacc2bebcb510062545c175b0e256e0a9be521423377d83aca",
+        "expected_value": "d96d63ac85a124109a38337843ea08b792d579afb5e10d85d232020ce67fb3bb",
+        "evidence_refs": [
+          "obs:3255403257e0dc30c9f9"
+        ]
+      }
+    ],
+    "affected_field": "preprocessor_fit_scope",
+    "observed_value": "e7941c7b3c59c1dacc2bebcb510062545c175b0e256e0a9be521423377d83aca",
+    "expected_value": "d96d63ac85a124109a38337843ea08b792d579afb5e10d85d232020ce67fb3bb",
+    "severity": "HIGH",
+    "recommended_action": "BLOCK",
+    "evidence_refs": [
+      "obs:3255403257e0dc30c9f9"
+    ],
+    "nearest_confirmed_cause": {
+      "component": "standard_scaler",
+      "mutation": {
+        "fit_row_count": 569,
+        "train_row_count": 364,
+        "mutated_preprocessor_sha256": "100cf5f95b3b2fe62572d18eb7cd956a3cbf986aa66c362940ea858a58aa7447"
+      }
+    },
+    "diagnostic_cut": {
+      "contracts": [
+        "PREPROCESSOR_FIT_SCOPE"
+      ],
+      "evidence_refs": [
+        "obs:3255403257e0dc30c9f9"
+      ]
+    },
+    "confidence": 1.0,
+    "observation_count": 28
+  },
+  "representation": {
+    "representation_id": "F0",
+    "selection_reason": "complete deterministic pipeline evidence"
+  },
+  "repair_plan": {
+    "plan_id": "repair:mlp2:ed78f41c2dae7a96acf7",
+    "operation": {
+      "operation_id": "refit_preprocessor_on_registered_train_split",
+      "supported_contracts": [
+        "PREPROCESSOR_FIT_SCOPE"
+      ],
+      "target_component_type": "preprocessor",
+      "preconditions": [
+        "registered_train_split_available",
+        "original_preprocessor_snapshot_available"
+      ],
+      "postconditions": [
+        "fit_scope_is_train_only",
+        "all_contracts_rechecked"
+      ],
+      "rollback_operation": "restore_original_preprocessor_snapshot",
+      "maximum_cost": 1.0,
+      "mutates_state": true
+    },
+    "target_contracts": [
+      "PREPROCESSOR_FIT_SCOPE"
+    ],
+    "preconditions": {
+      "registered_train_split_available": true,
+      "original_preprocessor_snapshot_available": true
+    },
+    "executable": true,
+    "network_required": false
+  },
+  "recertification": {
+    "repair_executed": true,
+    "target_contract_repaired": true,
+    "full_recertification": true,
+    "contracts_rechecked": [
+      "DATASET_IDENTITY",
+      "DATASET_SCHEMA",
+      "TARGET_NOT_IN_FEATURES",
+      "CLASS_MAPPING",
+      "TRAIN_VALIDATION_TEST_DISJOINTNESS",
+      "SPLIT_REPRODUCIBILITY",
+      "PREPROCESSOR_VERSION",
+      "PREPROCESSOR_FIT_SCOPE",
+      "FEATURE_ORDER",
+      "FEATURE_COUNT",
+      "TRANSFORM_OUTPUT_SCHEMA",
+      "FINITE_TRANSFORMED_VALUES",
+      "TRAINING_CONFIGURATION",
+      "MODEL_CONVERGENCE",
+      "MODEL_FEATURE_SCHEMA",
+      "TRAINING_DATA_HASH",
+      "MODEL_ARTIFACT_HASH",
+      "METRIC_SANITY",
+      "MODEL_INPUT_SCHEMA",
+      "PREDICTION_OBJECT_BINDING",
+      "PREDICTION_OUTPUT_SANITY",
+      "MODEL_EXPLAINER_VERSION",
+      "EXPLANATION_OBJECT_ID",
+      "EXPLANATION_OUTPUT_CONSISTENCY",
+      "EXPLANATION_FEATURE_SCHEMA",
+      "REQUIRED_PROVENANCE",
+      "REDUCTION_LOSS_LIMIT",
+      "USER_CLAIM_EVIDENCE_BINDING"
+    ],
+    "contracts_rechecked_count": 28,
+    "inference_rebuilt": true,
+    "shap_rebuilt": true,
+    "route_graph_rebuilt": true,
+    "views_rebuilt": true,
+    "new_critical_violations": 0,
+    "rollback_verified": true,
+    "post_repair_pipeline_status": "VALID",
+    "canonical_sha256": "291ae250c8efd94469cc0288729195a38243ae3ad89814a5b2a8392f247ee19b"
+  }
+}

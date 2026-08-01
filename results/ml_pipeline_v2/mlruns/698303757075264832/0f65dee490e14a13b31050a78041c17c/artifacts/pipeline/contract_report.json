@@ -1,0 +1,488 @@
+{
+  "status": "FAIL",
+  "results": [
+    {
+      "contract_id": "DATASET_IDENTITY",
+      "stage": "DATA_PREPARATION",
+      "component_id": "breast_cancer_dataset",
+      "passed": true,
+      "severity": "NONE",
+      "action": "NONE",
+      "observed_value": "47e9aa4e33b5350407b6d31fa140e2b1767a038c37796e0990eb99ad2bc7ba12",
+      "expected_value": "47e9aa4e33b5350407b6d31fa140e2b1767a038c37796e0990eb99ad2bc7ba12",
+      "evidence_refs": [
+        "obs:18d9d32ad13c8625458b"
+      ]
+    },
+    {
+      "contract_id": "DATASET_SCHEMA",
+      "stage": "DATA_PREPARATION",
+      "component_id": "breast_cancer_dataset",
+      "passed": true,
+      "severity": "NONE",
+      "action": "NONE",
+      "observed_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "expected_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "evidence_refs": [
+        "obs:ef99f5de3d294042cb5b"
+      ]
+    },
+    {
+      "contract_id": "TARGET_NOT_IN_FEATURES",
+      "stage": "DATA_PREPARATION",
+      "component_id": "breast_cancer_dataset",
+      "passed": true,
+      "severity": "NONE",
+      "action": "NONE",
+      "observed_value": true,
+      "expected_value": true,
+      "evidence_refs": [
+        "obs:6f83431faf263efe7b33"
+      ]
+    },
+    {
+      "contract_id": "CLASS_MAPPING",
+      "stage": "DATA_PREPARATION",
+      "component_id": "breast_cancer_dataset",
+      "passed": true,
+      "severity": "NONE",
+      "action": "NONE",
+      "observed_value": {
+        "source": [
+          0,
+          1
+        ],
+        "encoded": [
+          1,
+          0
+        ],
+        "model_classes": [
+          0,
+          1
+        ]
+      },
+      "expected_value": {
+        "source": [
+          0,
+          1
+        ],
+        "encoded": [
+          1,
+          0
+        ],
+        "model_classes": [
+          0,
+          1
+        ]
+      },
+      "evidence_refs": [
+        "obs:e8f74f9d4469549e4ad6"
+      ]
+    },
+    {
+      "contract_id": "TRAIN_VALIDATION_TEST_DISJOINTNESS",
+      "stage": "DATA_SPLIT",
+      "component_id": "deterministic_splitter",
+      "passed": true,
+      "severity": "NONE",
+      "action": "NONE",
+      "observed_value": {
+        "train_validation": 0,
+        "train_test": 0,
+        "validation_test": 0
+      },
+      "expected_value": {
+        "train_validation": 0,
+        "train_test": 0,
+        "validation_test": 0
+      },
+      "evidence_refs": [
+        "obs:95a660f404cf4cd8e67e"
+      ]
+    },
+    {
+      "contract_id": "SPLIT_REPRODUCIBILITY",
+      "stage": "DATA_SPLIT",
+      "component_id": "deterministic_splitter",
+      "passed": true,
+      "severity": "NONE",
+      "action": "NONE",
+      "observed_value": "5cb8248a79fe2464c45575cdb50c2dd1ba887c819311031b970fa10adb6afc8e",
+      "expected_value": "5cb8248a79fe2464c45575cdb50c2dd1ba887c819311031b970fa10adb6afc8e",
+      "evidence_refs": [
+        "obs:aeb87d33fdf164c14eb3"
+      ]
+    },
+    {
+      "contract_id": "PREPROCESSOR_VERSION",
+      "stage": "PREPROCESSING",
+      "component_id": "standard_scaler",
+      "passed": true,
+      "severity": "NONE",
+      "action": "NONE",
+      "observed_value": "sklearn.StandardScaler/1.9.0",
+      "expected_value": "sklearn.StandardScaler/1.9.0",
+      "evidence_refs": [
+        "obs:03c9186ca2d03833f529"
+      ]
+    },
+    {
+      "contract_id": "PREPROCESSOR_FIT_SCOPE",
+      "stage": "PREPROCESSING",
+      "component_id": "standard_scaler",
+      "passed": true,
+      "severity": "NONE",
+      "action": "NONE",
+      "observed_value": "d96d63ac85a124109a38337843ea08b792d579afb5e10d85d232020ce67fb3bb",
+      "expected_value": "d96d63ac85a124109a38337843ea08b792d579afb5e10d85d232020ce67fb3bb",
+      "evidence_refs": [
+        "obs:cfe42240c4cdb84fd694"
+      ]
+    },
+    {
+      "contract_id": "FEATURE_ORDER",
+      "stage": "PREPROCESSING",
+      "component_id": "standard_scaler",
+      "passed": true,
+      "severity": "NONE",
+      "action": "NONE",
+      "observed_value": [
+        "mean radius",
+        "mean texture",
+        "mean perimeter",
+        "mean area",
+        "mean smoothness",
+        "mean compactness",
+        "mean concavity",
+        "mean concave points",
+        "mean symmetry",
+        "mean fractal dimension",
+        "radius error",
+        "texture error",
+        "perimeter error",
+        "area error",
+        "smoothness error",
+        "compactness error",
+        "concavity error",
+        "concave points error",
+        "symmetry error",
+        "fractal dimension error",
+        "worst radius",
+        "worst texture",
+        "worst perimeter",
+        "worst area",
+        "worst smoothness",
+        "worst compactness",
+        "worst concavity",
+        "worst concave points",
+        "worst symmetry",
+        "worst fractal dimension"
+      ],
+      "expected_value": [
+        "mean radius",
+        "mean texture",
+        "mean perimeter",
+        "mean area",
+        "mean smoothness",
+        "mean compactness",
+        "mean concavity",
+        "mean concave points",
+        "mean symmetry",
+        "mean fractal dimension",
+        "radius error",
+        "texture error",
+        "perimeter error",
+        "area error",
+        "smoothness error",
+        "compactness error",
+        "concavity error",
+        "concave points error",
+        "symmetry error",
+        "fractal dimension error",
+        "worst radius",
+        "worst texture",
+        "worst perimeter",
+        "worst area",
+        "worst smoothness",
+        "worst compactness",
+        "worst concavity",
+        "worst concave points",
+        "worst symmetry",
+        "worst fractal dimension"
+      ],
+      "evidence_refs": [
+        "obs:d7ed01fb900ea5aacee5"
+      ]
+    },
+    {
+      "contract_id": "FEATURE_COUNT",
+      "stage": "PREPROCESSING",
+      "component_id": "standard_scaler",
+      "passed": true,
+      "severity": "NONE",
+      "action": "NONE",
+      "observed_value": 30,
+      "expected_value": 30,
+      "evidence_refs": [
+        "obs:ed47369776a0c704526c"
+      ]
+    },
+    {
+      "contract_id": "TRANSFORM_OUTPUT_SCHEMA",
+      "stage": "PREPROCESSING",
+      "component_id": "standard_scaler",
+      "passed": true,
+      "severity": "NONE",
+      "action": "NONE",
+      "observed_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "expected_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "evidence_refs": [
+        "obs:aa2bec1485936370d6bf"
+      ]
+    },
+    {
+      "contract_id": "FINITE_TRANSFORMED_VALUES",
+      "stage": "PREPROCESSING",
+      "component_id": "standard_scaler",
+      "passed": true,
+      "severity": "NONE",
+      "action": "NONE",
+      "observed_value": true,
+      "expected_value": true,
+      "evidence_refs": [
+        "obs:572a5fcb77800d370cd5"
+      ]
+    },
+    {
+      "contract_id": "TRAINING_CONFIGURATION",
+      "stage": "TRAINING",
+      "component_id": "logistic_regression",
+      "passed": true,
+      "severity": "NONE",
+      "action": "NONE",
+      "observed_value": "f72bbde93f0b50126b8592d4993f21b174e7eb6a237dc5c29a4f405f78ae8a31",
+      "expected_value": "f72bbde93f0b50126b8592d4993f21b174e7eb6a237dc5c29a4f405f78ae8a31",
+      "evidence_refs": [
+        "obs:d44b2b691a2fadc0c167"
+      ]
+    },
+    {
+      "contract_id": "MODEL_CONVERGENCE",
+      "stage": "TRAINING",
+      "component_id": "logistic_regression",
+      "passed": true,
+      "severity": "NONE",
+      "action": "NONE",
+      "observed_value": true,
+      "expected_value": true,
+      "evidence_refs": [
+        "obs:e8676d87d64986ebf8a0"
+      ]
+    },
+    {
+      "contract_id": "MODEL_FEATURE_SCHEMA",
+      "stage": "TRAINING",
+      "component_id": "logistic_regression",
+      "passed": true,
+      "severity": "NONE",
+      "action": "NONE",
+      "observed_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "expected_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "evidence_refs": [
+        "obs:500edb2bb7a762421553"
+      ]
+    },
+    {
+      "contract_id": "TRAINING_DATA_HASH",
+      "stage": "TRAINING",
+      "component_id": "logistic_regression",
+      "passed": true,
+      "severity": "NONE",
+      "action": "NONE",
+      "observed_value": {
+        "dataset": "47e9aa4e33b5350407b6d31fa140e2b1767a038c37796e0990eb99ad2bc7ba12",
+        "train": "d96d63ac85a124109a38337843ea08b792d579afb5e10d85d232020ce67fb3bb",
+        "target": "be56573cf0b8dafd36c7e0caeb2e3906dd345494e709f9226b1535e643da2ef5"
+      },
+      "expected_value": {
+        "dataset": "47e9aa4e33b5350407b6d31fa140e2b1767a038c37796e0990eb99ad2bc7ba12",
+        "train": "d96d63ac85a124109a38337843ea08b792d579afb5e10d85d232020ce67fb3bb",
+        "target": "be56573cf0b8dafd36c7e0caeb2e3906dd345494e709f9226b1535e643da2ef5"
+      },
+      "evidence_refs": [
+        "obs:e25259a7bf9a8b885493"
+      ]
+    },
+    {
+      "contract_id": "MODEL_ARTIFACT_HASH",
+      "stage": "MODEL_ARTIFACT",
+      "component_id": "serialized_model",
+      "passed": true,
+      "severity": "NONE",
+      "action": "NONE",
+      "observed_value": "5de1ed8251b147befef90e6bfee3f5bcda23056d5bb66212153ce1104668ca8c",
+      "expected_value": "5de1ed8251b147befef90e6bfee3f5bcda23056d5bb66212153ce1104668ca8c",
+      "evidence_refs": [
+        "obs:c7e196e16811821860c6"
+      ]
+    },
+    {
+      "contract_id": "METRIC_SANITY",
+      "stage": "TRAINING",
+      "component_id": "logistic_regression",
+      "passed": true,
+      "severity": "NONE",
+      "action": "NONE",
+      "observed_value": true,
+      "expected_value": true,
+      "evidence_refs": [
+        "obs:191274a31afed87859f8"
+      ]
+    },
+    {
+      "contract_id": "MODEL_INPUT_SCHEMA",
+      "stage": "INFERENCE",
+      "component_id": "logistic_regression",
+      "passed": true,
+      "severity": "NONE",
+      "action": "NONE",
+      "observed_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "expected_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "evidence_refs": [
+        "obs:ec793ce1f610812daff5"
+      ]
+    },
+    {
+      "contract_id": "PREDICTION_OBJECT_BINDING",
+      "stage": "INFERENCE",
+      "component_id": "prediction",
+      "passed": true,
+      "severity": "NONE",
+      "action": "NONE",
+      "observed_value": true,
+      "expected_value": true,
+      "evidence_refs": [
+        "obs:e74906bc2b941d601260"
+      ]
+    },
+    {
+      "contract_id": "PREDICTION_OUTPUT_SANITY",
+      "stage": "INFERENCE",
+      "component_id": "prediction",
+      "passed": true,
+      "severity": "NONE",
+      "action": "NONE",
+      "observed_value": true,
+      "expected_value": true,
+      "evidence_refs": [
+        "obs:aa886110c8d183fec445"
+      ]
+    },
+    {
+      "contract_id": "MODEL_EXPLAINER_VERSION",
+      "stage": "POST_HOC_EXPLANATION",
+      "component_id": "logistic_regression",
+      "passed": true,
+      "severity": "NONE",
+      "action": "NONE",
+      "observed_value": "1.0.0",
+      "expected_value": "1.0.0",
+      "evidence_refs": [
+        "obs:69b0c119e3f9a8960a8f"
+      ]
+    },
+    {
+      "contract_id": "EXPLANATION_OBJECT_ID",
+      "stage": "POST_HOC_EXPLANATION",
+      "component_id": "shap_linear_explainer",
+      "passed": true,
+      "severity": "NONE",
+      "action": "NONE",
+      "observed_value": "bcw:pipeline-default",
+      "expected_value": "bcw:pipeline-default",
+      "evidence_refs": [
+        "obs:1c187cd463e6c19ed4d5"
+      ]
+    },
+    {
+      "contract_id": "EXPLANATION_OUTPUT_CONSISTENCY",
+      "stage": "POST_HOC_EXPLANATION",
+      "component_id": "shap_linear_explainer",
+      "passed": true,
+      "severity": "NONE",
+      "action": "NONE",
+      "observed_value": 0.0,
+      "expected_value": 1e-08,
+      "evidence_refs": [
+        "obs:bcbae6a5b4906ace0bb1"
+      ]
+    },
+    {
+      "contract_id": "EXPLANATION_FEATURE_SCHEMA",
+      "stage": "POST_HOC_EXPLANATION",
+      "component_id": "shap_linear_explainer",
+      "passed": true,
+      "severity": "NONE",
+      "action": "NONE",
+      "observed_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "expected_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "evidence_refs": [
+        "obs:17f46e23142ef14bfc6b"
+      ]
+    },
+    {
+      "contract_id": "REQUIRED_PROVENANCE",
+      "stage": "POST_HOC_EXPLANATION",
+      "component_id": "shap_linear_explainer",
+      "passed": false,
+      "severity": "HIGH",
+      "action": "BLOCK",
+      "observed_value": false,
+      "expected_value": true,
+      "evidence_refs": [
+        "obs:3a2a299be2ca520a01c5"
+      ]
+    },
+    {
+      "contract_id": "REDUCTION_LOSS_LIMIT",
+      "stage": "REDUCTION",
+      "component_id": "fuzzyxai_presenter",
+      "passed": true,
+      "severity": "NONE",
+      "action": "NONE",
+      "observed_value": 0.0,
+      "expected_value": 0.25,
+      "evidence_refs": [
+        "obs:ebf7ae6f97b9638987ff"
+      ]
+    },
+    {
+      "contract_id": "USER_CLAIM_EVIDENCE_BINDING",
+      "stage": "PRESENTATION",
+      "component_id": "fuzzyxai_presenter",
+      "passed": true,
+      "severity": "NONE",
+      "action": "NONE",
+      "observed_value": true,
+      "expected_value": true,
+      "evidence_refs": [
+        "obs:ba314c8d702889e43066"
+      ]
+    }
+  ],
+  "violations": [
+    {
+      "contract_id": "REQUIRED_PROVENANCE",
+      "stage": "POST_HOC_EXPLANATION",
+      "component_id": "shap_linear_explainer",
+      "passed": false,
+      "severity": "HIGH",
+      "action": "BLOCK",
+      "observed_value": false,
+      "expected_value": true,
+      "evidence_refs": [
+        "obs:3a2a299be2ca520a01c5"
+      ]
+    }
+  ]
+}

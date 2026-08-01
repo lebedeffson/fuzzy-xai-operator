@@ -1,0 +1,27 @@
+{
+  "amendment_id": "h10-c5b-runtime-test-runner-amendment-v1",
+  "amendment_scope": "repository_native_test_runner_selection_only",
+  "created_after_cancelled_held_out_runtime_preflight": true,
+  "created_before_complete_held_out_runtime_evidence": true,
+  "development_results_changed": false,
+  "endpoint_changed": false,
+  "gates_changed": false,
+  "gold_or_method_predictions_viewed": false,
+  "held_out_scoring_enabled": false,
+  "method_code_status": "FROZEN_FOR_RUNTIME_COLLECTION",
+  "method_commit": "7aa72a19a70bdb5eedea520742f269bc6c26aeea",
+  "observed_failure": {
+    "incident_id": "django__django-11848",
+    "reason": "The official Django image intentionally uses tests/runtests.py and does not install pytest.",
+    "scientific_method_executed": false,
+    "workflow_conclusion": "cancelled"
+  },
+  "parent_protocol": "h10-c5b-repository-grounded-v1",
+  "runner_policy": {
+    "default": "pytest with registered FAIL_TO_PASS node IDs",
+    "django/django": "tests/runtests.py with normalized registered unittest labels",
+    "failing_test_selection_changed": false,
+    "sympy/sympy": "bin/test with registered test name and test file from the public test patch"
+  },
+  "status": "LOCKED_BEFORE_HELD_OUT_RUNTIME_RETRY"
+}

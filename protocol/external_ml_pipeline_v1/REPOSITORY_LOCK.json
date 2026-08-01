@@ -1,0 +1,70 @@
+{
+  "count": 4,
+  "network_required_after_lock": false,
+  "repositories": [
+    {
+      "dataset_source": "sklearn.datasets.load_breast_cancer",
+      "explainer": "shap.LinearExplainer",
+      "license": "BSD-3-Clause",
+      "pipeline_id": "ext1-sklearn-column-transformer",
+      "repository_commit": "5799d3eac08bda44fbce3309e641cbf98c5d312a",
+      "repository_url": "https://github.com/scikit-learn/scikit-learn",
+      "source_files": [
+        "examples/compose/plot_column_transformer_mixed_types.py"
+      ],
+      "task_type": "BINARY_CLASSIFICATION",
+      "upstream_snapshot_sha256": {
+        "experiments/external_ml_pipeline_v1/upstream/ext1_sklearn/LICENSE": "50d6a9d340f19ab355609917993114daf5f47e3161067bcf34955bbd05cd9cb0",
+        "experiments/external_ml_pipeline_v1/upstream/ext1_sklearn/plot_column_transformer_mixed_types.py": "ba94d6391e17872f48ee43459f95a09fa6ccbe6339ec9a55985363022481ca42"
+      }
+    },
+    {
+      "dataset_source": "sklearn.datasets.load_digits",
+      "explainer": "shap.TreeExplainer",
+      "license": "MIT",
+      "pipeline_id": "ext2-shap-tree-explainer",
+      "repository_commit": "7716688e0f314d73ed2f90474e911c85bc53c851",
+      "repository_url": "https://github.com/shap/shap",
+      "source_files": [
+        "tests/explainers/test_tree.py"
+      ],
+      "task_type": "MULTICLASS_CLASSIFICATION",
+      "upstream_snapshot_sha256": {
+        "experiments/external_ml_pipeline_v1/upstream/ext2_shap/LICENSE": "cf5c26305c632e5451b6eed7e0964a36c4cec1102f0c6467db063b3483a19127",
+        "experiments/external_ml_pipeline_v1/upstream/ext2_shap/test_tree.py": "1b5134403354f12c8903c19ca7e1e3212114d62318cda6b77157b61a02854501"
+      }
+    },
+    {
+      "dataset_source": "sklearn.datasets.load_diabetes",
+      "explainer": "shap.LinearExplainer",
+      "license": "Apache-2.0",
+      "pipeline_id": "ext3-mlflow-elasticnet",
+      "repository_commit": "6e168e696062942ee34410048ce17cf24b5118bc",
+      "repository_url": "https://github.com/mlflow/mlflow",
+      "source_files": [
+        "examples/sklearn_elasticnet_wine/train.py"
+      ],
+      "task_type": "REGRESSION",
+      "upstream_snapshot_sha256": {
+        "experiments/external_ml_pipeline_v1/upstream/ext3_mlflow/LICENSE": "6395355de6f391afff35996a30fb41b189b4991a4cb54993ace35ab69a0bfa28",
+        "experiments/external_ml_pipeline_v1/upstream/ext3_mlflow/train.py": "5c241ae72f9b705f57065932b3397f10faac530ac202377d1d9870fcc5721f26"
+      }
+    },
+    {
+      "dataset_source": "sklearn.datasets.load_wine",
+      "explainer": "lime.LimeTabularExplainer",
+      "license": "BSD-3-Clause",
+      "pipeline_id": "ext4-lime-tabular",
+      "repository_commit": "fd7eb2e6f760619c29fca0187c07b82157601b32",
+      "repository_url": "https://github.com/marcotcr/lime",
+      "source_files": [
+        "lime/lime_tabular.py"
+      ],
+      "task_type": "MULTICLASS_CLASSIFICATION",
+      "upstream_snapshot_sha256": {
+        "experiments/external_ml_pipeline_v1/upstream/ext4_lime/LICENSE": "0eaa645c1b70207584b5b2a6053211ca91bad16a64b638a3039d7059006cd1b3",
+        "experiments/external_ml_pipeline_v1/upstream/ext4_lime/lime_tabular.py": "60dc96c70fa448df9a38f0bb857b7f9624527474d05f16beefb56d35c605afa8"
+      }
+    }
+  ]
+}

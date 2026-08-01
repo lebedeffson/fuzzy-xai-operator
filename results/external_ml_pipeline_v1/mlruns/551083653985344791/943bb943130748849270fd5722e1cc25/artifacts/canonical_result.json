@@ -1,0 +1,74 @@
+{
+  "action": "BLOCK",
+  "action_correct": true,
+  "artifact_bytes": 9869,
+  "canonical_sha256": "368d13b138ea912f7e0cdc677566fae20852ac8e6d68b3df59bc79a56e428a39",
+  "case_id": "E6_MODEL_EXPLAINER_VERSION",
+  "component_correct": true,
+  "component_id": "external.post_hoc_explanation.model_explainer_version",
+  "contract_correct": true,
+  "contract_id": "MODEL_EXPLAINER_VERSION",
+  "contracts_checked": 28,
+  "dependent_violations": [],
+  "detected": true,
+  "detected_correct": true,
+  "diagnostic_cut": {
+    "atoms": [
+      "node:cause:model_explainer_version/field:_/violation:source_component"
+    ],
+    "optimal": true,
+    "size": 1,
+    "solver": "exact_branch_and_bound"
+  },
+  "evidence_completeness": 1.0,
+  "evidence_refs": [
+    "explanation_manifest.json"
+  ],
+  "expected_action": "BLOCK",
+  "expected_contract": "MODEL_EXPLAINER_VERSION",
+  "expected_invalid": true,
+  "expected_root_cause": "MODEL_EXPLAINER_VERSION",
+  "expected_stage": "POST_HOC_EXPLANATION",
+  "false_blocking": false,
+  "false_certification": false,
+  "fault_category": "CROSS_STAGE",
+  "mode_id": "O_FUZZYXAI",
+  "new_critical_violations": 0,
+  "peak_rss_kb": 393892,
+  "pipeline_id": "ext3-mlflow-elasticnet",
+  "pipeline_status": "INVALID",
+  "proposed_repair_count": 1,
+  "recertified": true,
+  "redundant_repair_count": 0,
+  "repair_executed": true,
+  "repair_plan": {
+    "fully_executable": false,
+    "operations": [
+      "rebuild_explanation_for_registered_model"
+    ],
+    "rollback": [
+      "restore_previous_artifact_snapshot"
+    ],
+    "step_ids": [
+      "step:issue:MODEL_EXPLAINER_VERSION:1"
+    ]
+  },
+  "repairable": true,
+  "reported_symptom_count": 1,
+  "repository_commit": "6e168e696062942ee34410048ce17cf24b5118bc",
+  "rollback_verified": true,
+  "root_cause": "MODEL_EXPLAINER_VERSION",
+  "root_cause_correct": true,
+  "run_id": "external:79ba3aec748e3df6baf9",
+  "runtime_breakdown_ms": {
+    "audit": 0.6591869996555033,
+    "diagnostic_cut": 0.12203299957036506,
+    "graph_build": 0.4151899993303232,
+    "recertification": 2.5259759995606146,
+    "repair_planning": 0.052706000133184716,
+    "total": 3.775091998249991
+  },
+  "stage": "POST_HOC_EXPLANATION",
+  "stage_correct": true,
+  "target_contract_repaired": true
+}

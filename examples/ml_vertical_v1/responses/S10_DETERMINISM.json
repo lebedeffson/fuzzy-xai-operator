@@ -1,0 +1,1316 @@
+{
+  "run_id": "mlv1:f35878540d9c3a903154",
+  "scenario_id": "S10_DETERMINISM",
+  "request": {
+    "scenario_id": "S10_DETERMINISM",
+    "object_id": "bcw:s10_determinism",
+    "features": {
+      "mean radius": 10.17,
+      "mean texture": 14.88,
+      "mean perimeter": 64.55,
+      "mean area": 311.9,
+      "mean smoothness": 0.1134,
+      "mean compactness": 0.08061,
+      "mean concavity": 0.01084,
+      "mean concave points": 0.0129,
+      "mean symmetry": 0.2743,
+      "mean fractal dimension": 0.0696,
+      "radius error": 0.5158,
+      "texture error": 1.441,
+      "perimeter error": 3.312,
+      "area error": 34.62,
+      "smoothness error": 0.007514,
+      "compactness error": 0.01099,
+      "concavity error": 0.007665,
+      "concave points error": 0.008193,
+      "symmetry error": 0.04183,
+      "fractal dimension error": 0.005953,
+      "worst radius": 11.02,
+      "worst texture": 17.45,
+      "worst perimeter": 69.86,
+      "worst area": 368.6,
+      "worst smoothness": 0.1275,
+      "worst compactness": 0.09866,
+      "worst concavity": 0.02168,
+      "worst concave points": 0.02579,
+      "worst symmetry": 0.3557,
+      "worst fractal dimension": 0.0802
+    },
+    "controls": {},
+    "requested_view": "user"
+  },
+  "prediction": {
+    "object_id": "bcw:s10_determinism",
+    "predicted_class": 0,
+    "probability": 0.00027695735150644503,
+    "raw_score": -8.191370033600295,
+    "model_id": "bcw-logistic-regression",
+    "model_version": "1.0.0",
+    "model_sha256": "c5b042bd9cd865ecc209de958a2cf64ab04b7d0dbba0a6d7d2865895aad7a8e7",
+    "feature_schema_sha256": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba"
+  },
+  "explanation": {
+    "object_id": "bcw:s10_determinism",
+    "explainer_id": "shap.LinearExplainer",
+    "explainer_version": "0.51.0",
+    "model_version": "1.0.0",
+    "base_value": -1.2264799258326975,
+    "shap_values": {
+      "mean radius": -0.19244878416558725,
+      "mean texture": -0.5911771035309462,
+      "mean perimeter": -0.18195722404349318,
+      "mean area": -0.2198343234510549,
+      "mean smoothness": 0.10582201610778671,
+      "mean compactness": 0.07671506417851988,
+      "mean concavity": -0.6297281886336548,
+      "mean concave points": -0.700739425513308,
+      "mean symmetry": 0.6356697979811631,
+      "mean fractal dimension": -0.412358594440218,
+      "radius error": 0.5806998603520946,
+      "texture error": -0.10287860105656914,
+      "perimeter error": 0.18880719910824606,
+      "area error": -0.037913384808470445,
+      "smoothness error": -0.059593037818181024,
+      "compactness error": 0.44905955345084314,
+      "concavity error": 0.15649623472206758,
+      "concave points error": -0.08636767912061792,
+      "symmetry error": 0.17914948862675287,
+      "fractal dimension error": -0.7151021564103659,
+      "worst radius": -0.906413636475313,
+      "worst texture": -1.4917113088679261,
+      "worst perimeter": -0.7661725162075523,
+      "worst area": -0.6460166794220196,
+      "worst smoothness": -0.026225073289457893,
+      "worst compactness": -0.21526927648231106,
+      "worst concavity": -0.8931696619551441,
+      "worst concave points": -1.1107887674753651,
+      "worst symmetry": 0.6512330735698741,
+      "worst fractal dimension": -0.0026769726973898227
+    },
+    "feature_values": {
+      "mean radius": 10.17,
+      "mean texture": 14.88,
+      "mean perimeter": 64.55,
+      "mean area": 311.9,
+      "mean smoothness": 0.1134,
+      "mean compactness": 0.08061,
+      "mean concavity": 0.01084,
+      "mean concave points": 0.0129,
+      "mean symmetry": 0.2743,
+      "mean fractal dimension": 0.0696,
+      "radius error": 0.5158,
+      "texture error": 1.441,
+      "perimeter error": 3.312,
+      "area error": 34.62,
+      "smoothness error": 0.007514,
+      "compactness error": 0.01099,
+      "concavity error": 0.007665,
+      "concave points error": 0.008193,
+      "symmetry error": 0.04183,
+      "fractal dimension error": 0.005953,
+      "worst radius": 11.02,
+      "worst texture": 17.45,
+      "worst perimeter": 69.86,
+      "worst area": 368.6,
+      "worst smoothness": 0.1275,
+      "worst compactness": 0.09866,
+      "worst concavity": 0.02168,
+      "worst concave points": 0.02579,
+      "worst symmetry": 0.3557,
+      "worst fractal dimension": 0.0802
+    },
+    "output_sum": -8.191370033600295,
+    "output_difference": 0.0,
+    "artifact_sha256": "470a1dd30b3c9e6a1b38803b7f32f6c2200f8fd15f984a54ccc3c29f3862be12"
+  },
+  "explainable_object": {
+    "object_id": "bcw:s10_determinism",
+    "evidence": [
+      {
+        "evidence_id": "evidence:prediction",
+        "type": "model_output",
+        "subject": "bcw:s10_determinism",
+        "value": 0.00027695735150644503,
+        "status": "observed",
+        "source_id": "bcw-logistic-regression",
+        "source_version": "1.0.0",
+        "object_id": "bcw:s10_determinism",
+        "created_at": "2000-01-01T00:00:00Z",
+        "artifact_hash": "c5b042bd9cd865ecc209de958a2cf64ab04b7d0dbba0a6d7d2865895aad7a8e7"
+      },
+      {
+        "evidence_id": "evidence:local_explanation",
+        "type": "local_explanation",
+        "subject": "bcw:s10_determinism",
+        "value": -8.191370033600295,
+        "status": "observed",
+        "source_id": "shap.LinearExplainer",
+        "source_version": "0.51.0",
+        "object_id": "bcw:s10_determinism",
+        "created_at": "2000-01-01T00:00:00Z",
+        "artifact_hash": "470a1dd30b3c9e6a1b38803b7f32f6c2200f8fd15f984a54ccc3c29f3862be12"
+      }
+    ],
+    "claims": [
+      {
+        "claim_id": "claim:prediction",
+        "text": "The registered model produced score 0.000277 for object bcw:s10_determinism.",
+        "evidence_refs": [
+          "evidence:prediction"
+        ],
+        "status": "observed",
+        "text_code": "registered_template",
+        "arguments": {},
+        "allowed_views": [
+          "user",
+          "engineer",
+          "auditor"
+        ],
+        "blocked": false
+      },
+      {
+        "claim_id": "claim:features",
+        "text": "Largest local SHAP contributions: worst texture, worst concave points, worst radius.",
+        "evidence_refs": [
+          "evidence:local_explanation"
+        ],
+        "status": "observed",
+        "text_code": "registered_template",
+        "arguments": {},
+        "allowed_views": [
+          "user",
+          "engineer",
+          "auditor"
+        ],
+        "blocked": false
+      },
+      {
+        "claim_id": "claim:action",
+        "text": "The route observer selected ACCEPT.",
+        "evidence_refs": [
+          "evidence:observer_action"
+        ],
+        "status": "observed",
+        "text_code": "registered_template",
+        "arguments": {},
+        "allowed_views": [
+          "user",
+          "engineer",
+          "auditor"
+        ],
+        "blocked": false
+      }
+    ],
+    "provenance_relations": [
+      {
+        "source_id": "evidence:prediction",
+        "target_id": "claim:prediction",
+        "relation": "supports"
+      },
+      {
+        "source_id": "evidence:local_explanation",
+        "target_id": "claim:features",
+        "relation": "supports"
+      }
+    ],
+    "uncertainty_profile": {
+      "present_types": [
+        "u_ling",
+        "u_num"
+      ],
+      "values": {
+        "u_num": 0.0005539147030129143,
+        "u_ling": 0.05
+      },
+      "aggregate": 0.010221565881205168,
+      "conflict": 0.0,
+      "trace_completeness": 1.0
+    },
+    "representation": {
+      "representation_id": "F0",
+      "membership": {
+        "low": 0.9994460852969871,
+        "medium": 0.0,
+        "high": 0.0
+      },
+      "covered_uncertainties": [
+        "u_ling",
+        "u_num"
+      ],
+      "cognitive_complexity": 1.0,
+      "computational_complexity": 1.0,
+      "selection_reason": "point evidence is complete and has no registered conflict"
+    },
+    "reduction": {
+      "source_representation": "F0",
+      "target_representation": "F0",
+      "reduced_membership": {
+        "low": 0.9994460852969871,
+        "medium": 0.0,
+        "high": 0.0
+      },
+      "loss": 0.0,
+      "accepted": true,
+      "maximum_loss": 0.25
+    },
+    "presentation_policy": "evidence_bound_registered_templates",
+    "explain_plan_id": "bcw-logreg-shap-v1/1.0.0",
+    "canonical_hash": "7a30051f723f312b5e9505c570bb9fcdbf0feeacf8c37d9f903bb3c421bc0042"
+  },
+  "uncertainty": {
+    "present_types": [
+      "u_ling",
+      "u_num"
+    ],
+    "values": {
+      "u_num": 0.0005539147030129143,
+      "u_ling": 0.05
+    },
+    "aggregate": 0.010221565881205168,
+    "conflict": 0.0,
+    "trace_completeness": 1.0
+  },
+  "representation": {
+    "representation_id": "F0",
+    "membership": {
+      "low": 0.9994460852969871,
+      "medium": 0.0,
+      "high": 0.0
+    },
+    "covered_uncertainties": [
+      "u_ling",
+      "u_num"
+    ],
+    "cognitive_complexity": 1.0,
+    "computational_complexity": 1.0,
+    "selection_reason": "point evidence is complete and has no registered conflict"
+  },
+  "reduction": {
+    "source_representation": "F0",
+    "target_representation": "F0",
+    "reduced_membership": {
+      "low": 0.9994460852969871,
+      "medium": 0.0,
+      "high": 0.0
+    },
+    "loss": 0.0,
+    "accepted": true,
+    "maximum_loss": 0.25
+  },
+  "route_graph": {
+    "route_id": "route:S10_DETERMINISM:bcw:s10_determinism",
+    "nodes": [
+      {
+        "node_id": "input",
+        "node_type": "input",
+        "component_id": "mlv1.input",
+        "component_version": "1.0.0",
+        "registered_attributes": {
+          "schema_complete": true,
+          "values_finite": true,
+          "object_id": "bcw:s10_determinism"
+        },
+        "observed_attributes": {
+          "schema_complete": true,
+          "values_finite": true,
+          "object_id": "bcw:s10_determinism"
+        },
+        "mandatory": true,
+        "repairable": false,
+        "evidence_refs": [
+          "evidence:input"
+        ]
+      },
+      {
+        "node_id": "feature_schema",
+        "node_type": "schema",
+        "component_id": "mlv1.feature_schema",
+        "component_version": "1.0.0",
+        "registered_attributes": {
+          "schema_sha256": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba"
+        },
+        "observed_attributes": {
+          "schema_sha256": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba"
+        },
+        "mandatory": true,
+        "repairable": false,
+        "evidence_refs": [
+          "evidence:feature_schema"
+        ]
+      },
+      {
+        "node_id": "preprocessor",
+        "node_type": "preprocessor",
+        "component_id": "mlv1.preprocessor",
+        "component_version": "1.0.0",
+        "registered_attributes": {
+          "version": "sklearn.StandardScaler/1"
+        },
+        "observed_attributes": {
+          "version": "sklearn.StandardScaler/1"
+        },
+        "mandatory": true,
+        "repairable": false,
+        "evidence_refs": [
+          "evidence:preprocessor"
+        ]
+      },
+      {
+        "node_id": "model",
+        "node_type": "model",
+        "component_id": "mlv1.model",
+        "component_version": "1.0.0",
+        "registered_attributes": {
+          "model_id": "bcw-logistic-regression",
+          "model_version": "1.0.0",
+          "feature_schema_sha256": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba"
+        },
+        "observed_attributes": {
+          "model_id": "bcw-logistic-regression",
+          "model_version": "1.0.0",
+          "feature_schema_sha256": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba"
+        },
+        "mandatory": true,
+        "repairable": false,
+        "evidence_refs": [
+          "evidence:model"
+        ]
+      },
+      {
+        "node_id": "prediction",
+        "node_type": "prediction",
+        "component_id": "mlv1.prediction",
+        "component_version": "1.0.0",
+        "registered_attributes": {
+          "object_id": "bcw:s10_determinism",
+          "probability": 0.00027695735150644503
+        },
+        "observed_attributes": {
+          "object_id": "bcw:s10_determinism",
+          "probability": 0.00027695735150644503
+        },
+        "mandatory": true,
+        "repairable": false,
+        "evidence_refs": [
+          "evidence:prediction"
+        ]
+      },
+      {
+        "node_id": "explainer",
+        "node_type": "explainer",
+        "component_id": "mlv1.explainer",
+        "component_version": "1.0.0",
+        "registered_attributes": {
+          "explainer_version": "0.51.0",
+          "model_version": "1.0.0"
+        },
+        "observed_attributes": {
+          "explainer_version": "0.51.0",
+          "model_version": "1.0.0"
+        },
+        "mandatory": true,
+        "repairable": true,
+        "evidence_refs": [
+          "evidence:explainer"
+        ]
+      },
+      {
+        "node_id": "local_explanation",
+        "node_type": "explanation",
+        "component_id": "mlv1.local_explanation",
+        "component_version": "1.0.0",
+        "registered_attributes": {
+          "object_id": "bcw:s10_determinism",
+          "output_difference": 0.0
+        },
+        "observed_attributes": {
+          "object_id": "bcw:s10_determinism",
+          "output_difference": 0.0
+        },
+        "mandatory": true,
+        "repairable": false,
+        "evidence_refs": [
+          "evidence:local_explanation"
+        ]
+      },
+      {
+        "node_id": "rule_source",
+        "node_type": "rule_source",
+        "component_id": "mlv1.rule_source",
+        "component_version": "1.0.0",
+        "registered_attributes": {
+          "version": "bcw-rules/1.0.0"
+        },
+        "observed_attributes": {
+          "version": "bcw-rules/1.0.0"
+        },
+        "mandatory": true,
+        "repairable": false,
+        "evidence_refs": [
+          "evidence:rule_source"
+        ]
+      },
+      {
+        "node_id": "uncertainty",
+        "node_type": "uncertainty",
+        "component_id": "mlv1.uncertainty",
+        "component_version": "1.0.0",
+        "registered_attributes": {
+          "coverage_complete": true
+        },
+        "observed_attributes": {
+          "coverage_complete": true
+        },
+        "mandatory": true,
+        "repairable": false,
+        "evidence_refs": [
+          "evidence:uncertainty"
+        ]
+      },
+      {
+        "node_id": "reduction",
+        "node_type": "reduction",
+        "component_id": "mlv1.reduction",
+        "component_version": "1.0.0",
+        "registered_attributes": {
+          "loss": 0.0
+        },
+        "observed_attributes": {
+          "loss": 0.0
+        },
+        "mandatory": true,
+        "repairable": true,
+        "evidence_refs": [
+          "evidence:reduction"
+        ]
+      },
+      {
+        "node_id": "observer_action",
+        "node_type": "observer",
+        "component_id": "mlv1.observer_action",
+        "component_version": "1.0.0",
+        "registered_attributes": {
+          "registered": true
+        },
+        "observed_attributes": {
+          "registered": true
+        },
+        "mandatory": true,
+        "repairable": false,
+        "evidence_refs": [
+          "evidence:observer_action"
+        ]
+      },
+      {
+        "node_id": "user_claim",
+        "node_type": "claim",
+        "component_id": "mlv1.user_claim",
+        "component_version": "1.0.0",
+        "registered_attributes": {
+          "evidence_bound": true
+        },
+        "observed_attributes": {
+          "evidence_bound": true
+        },
+        "mandatory": true,
+        "repairable": false,
+        "evidence_refs": [
+          "evidence:user_claim"
+        ]
+      },
+      {
+        "node_id": "audit_artifact",
+        "node_type": "audit",
+        "component_id": "mlv1.audit_artifact",
+        "component_version": "1.0.0",
+        "registered_attributes": {
+          "artifact_sha256": "470a1dd30b3c9e6a1b38803b7f32f6c2200f8fd15f984a54ccc3c29f3862be12",
+          "plan_sha256": "dc758d1762500f6b63775cc4211e182de71d401f69c1e9caa2f652ba93e16943"
+        },
+        "observed_attributes": {
+          "artifact_sha256": "470a1dd30b3c9e6a1b38803b7f32f6c2200f8fd15f984a54ccc3c29f3862be12",
+          "plan_sha256": "dc758d1762500f6b63775cc4211e182de71d401f69c1e9caa2f652ba93e16943"
+        },
+        "mandatory": true,
+        "repairable": true,
+        "evidence_refs": [
+          "evidence:audit_artifact"
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "edge_id": "edge:input:feature_schema",
+        "source": "input",
+        "target": "feature_schema",
+        "relation": "adapts",
+        "mandatory": true,
+        "registered_contract": {
+          "relation": "adapts"
+        },
+        "observed_contract": {
+          "relation": "adapts"
+        },
+        "repairable": false,
+        "evidence_refs": [],
+        "relation_status": "known_valid"
+      },
+      {
+        "edge_id": "edge:feature_schema:preprocessor",
+        "source": "feature_schema",
+        "target": "preprocessor",
+        "relation": "defines",
+        "mandatory": true,
+        "registered_contract": {
+          "relation": "defines"
+        },
+        "observed_contract": {
+          "relation": "defines"
+        },
+        "repairable": false,
+        "evidence_refs": [],
+        "relation_status": "known_valid"
+      },
+      {
+        "edge_id": "edge:preprocessor:model",
+        "source": "preprocessor",
+        "target": "model",
+        "relation": "transforms",
+        "mandatory": true,
+        "registered_contract": {
+          "relation": "transforms"
+        },
+        "observed_contract": {
+          "relation": "transforms"
+        },
+        "repairable": false,
+        "evidence_refs": [],
+        "relation_status": "known_valid"
+      },
+      {
+        "edge_id": "edge:model:prediction",
+        "source": "model",
+        "target": "prediction",
+        "relation": "predicts",
+        "mandatory": true,
+        "registered_contract": {
+          "relation": "predicts"
+        },
+        "observed_contract": {
+          "relation": "predicts"
+        },
+        "repairable": false,
+        "evidence_refs": [],
+        "relation_status": "known_valid"
+      },
+      {
+        "edge_id": "edge:prediction:explainer",
+        "source": "prediction",
+        "target": "explainer",
+        "relation": "explains",
+        "mandatory": true,
+        "registered_contract": {
+          "relation": "explains"
+        },
+        "observed_contract": {
+          "relation": "explains"
+        },
+        "repairable": false,
+        "evidence_refs": [],
+        "relation_status": "known_valid"
+      },
+      {
+        "edge_id": "edge:explainer:local_explanation",
+        "source": "explainer",
+        "target": "local_explanation",
+        "relation": "instantiates",
+        "mandatory": true,
+        "registered_contract": {
+          "relation": "instantiates"
+        },
+        "observed_contract": {
+          "relation": "instantiates"
+        },
+        "repairable": false,
+        "evidence_refs": [],
+        "relation_status": "known_valid"
+      },
+      {
+        "edge_id": "edge:local_explanation:rule_source",
+        "source": "local_explanation",
+        "target": "rule_source",
+        "relation": "constrains",
+        "mandatory": true,
+        "registered_contract": {
+          "relation": "constrains"
+        },
+        "observed_contract": {
+          "relation": "constrains"
+        },
+        "repairable": false,
+        "evidence_refs": [],
+        "relation_status": "known_valid"
+      },
+      {
+        "edge_id": "edge:rule_source:uncertainty",
+        "source": "rule_source",
+        "target": "uncertainty",
+        "relation": "profiles",
+        "mandatory": true,
+        "registered_contract": {
+          "relation": "profiles"
+        },
+        "observed_contract": {
+          "relation": "profiles"
+        },
+        "repairable": false,
+        "evidence_refs": [],
+        "relation_status": "known_valid"
+      },
+      {
+        "edge_id": "edge:uncertainty:reduction",
+        "source": "uncertainty",
+        "target": "reduction",
+        "relation": "reduces",
+        "mandatory": true,
+        "registered_contract": {
+          "relation": "reduces"
+        },
+        "observed_contract": {
+          "relation": "reduces"
+        },
+        "repairable": false,
+        "evidence_refs": [],
+        "relation_status": "known_valid"
+      },
+      {
+        "edge_id": "edge:reduction:observer_action",
+        "source": "reduction",
+        "target": "observer_action",
+        "relation": "observes",
+        "mandatory": true,
+        "registered_contract": {
+          "relation": "observes"
+        },
+        "observed_contract": {
+          "relation": "observes"
+        },
+        "repairable": false,
+        "evidence_refs": [],
+        "relation_status": "known_valid"
+      },
+      {
+        "edge_id": "edge:observer_action:user_claim",
+        "source": "observer_action",
+        "target": "user_claim",
+        "relation": "binds",
+        "mandatory": true,
+        "registered_contract": {
+          "relation": "binds"
+        },
+        "observed_contract": {
+          "relation": "binds"
+        },
+        "repairable": false,
+        "evidence_refs": [],
+        "relation_status": "known_valid"
+      },
+      {
+        "edge_id": "edge:user_claim:audit_artifact",
+        "source": "user_claim",
+        "target": "audit_artifact",
+        "relation": "records",
+        "mandatory": true,
+        "registered_contract": {
+          "relation": "records"
+        },
+        "observed_contract": {
+          "relation": "records"
+        },
+        "repairable": false,
+        "evidence_refs": [],
+        "relation_status": "known_valid"
+      }
+    ],
+    "contracts": [
+      {
+        "contract_id": "INPUT_FEATURE_SCHEMA",
+        "kind": "equals",
+        "subject_id": "input",
+        "field": "schema_complete",
+        "expected": true,
+        "severity": "error",
+        "category": "data",
+        "mandatory": true,
+        "repairable": false,
+        "evidence_refs": [],
+        "source_nodes": [],
+        "parameters": {}
+      },
+      {
+        "contract_id": "INPUT_VALUE_DOMAIN",
+        "kind": "equals",
+        "subject_id": "input",
+        "field": "values_finite",
+        "expected": true,
+        "severity": "error",
+        "category": "data",
+        "mandatory": true,
+        "repairable": false,
+        "evidence_refs": [],
+        "source_nodes": [],
+        "parameters": {}
+      },
+      {
+        "contract_id": "MODEL_VERSION",
+        "kind": "equals",
+        "subject_id": "model",
+        "field": "model_version",
+        "expected": "1.0.0",
+        "severity": "error",
+        "category": "model",
+        "mandatory": true,
+        "repairable": true,
+        "evidence_refs": [],
+        "source_nodes": [],
+        "parameters": {}
+      },
+      {
+        "contract_id": "MODEL_FEATURE_SCHEMA",
+        "kind": "equals",
+        "subject_id": "model",
+        "field": "feature_schema_sha256",
+        "expected": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "severity": "error",
+        "category": "model",
+        "mandatory": true,
+        "repairable": true,
+        "evidence_refs": [],
+        "source_nodes": [],
+        "parameters": {}
+      },
+      {
+        "contract_id": "MODEL_EXPLAINER_VERSION",
+        "kind": "equals",
+        "subject_id": "explainer",
+        "field": "model_version",
+        "expected": "1.0.0",
+        "severity": "error",
+        "category": "explainer",
+        "mandatory": true,
+        "repairable": true,
+        "evidence_refs": [],
+        "source_nodes": [
+          "explainer"
+        ],
+        "parameters": {}
+      },
+      {
+        "contract_id": "EXPLANATION_OBJECT_ID",
+        "kind": "equals",
+        "subject_id": "local_explanation",
+        "field": "object_id",
+        "expected": "bcw:s10_determinism",
+        "severity": "error",
+        "category": "explainer",
+        "mandatory": true,
+        "repairable": true,
+        "evidence_refs": [],
+        "source_nodes": [],
+        "parameters": {}
+      },
+      {
+        "contract_id": "EXPLANATION_OUTPUT_CONSISTENCY",
+        "kind": "max_value",
+        "subject_id": "local_explanation",
+        "field": "output_difference",
+        "expected": 1e-08,
+        "severity": "error",
+        "category": "explainer",
+        "mandatory": true,
+        "repairable": true,
+        "evidence_refs": [],
+        "source_nodes": [],
+        "parameters": {}
+      },
+      {
+        "contract_id": "RULE_SOURCE_VERSION",
+        "kind": "equals",
+        "subject_id": "rule_source",
+        "field": "version",
+        "expected": "bcw-rules/1.0.0",
+        "severity": "error",
+        "category": "representation",
+        "mandatory": true,
+        "repairable": true,
+        "evidence_refs": [],
+        "source_nodes": [],
+        "parameters": {}
+      },
+      {
+        "contract_id": "REQUIRED_PROVENANCE",
+        "kind": "required_attribute",
+        "subject_id": "audit_artifact",
+        "field": "plan_sha256",
+        "expected": null,
+        "severity": "error",
+        "category": "provenance",
+        "mandatory": true,
+        "repairable": true,
+        "evidence_refs": [],
+        "source_nodes": [],
+        "parameters": {}
+      },
+      {
+        "contract_id": "UNCERTAINTY_REPRESENTATION_COVERAGE",
+        "kind": "equals",
+        "subject_id": "uncertainty",
+        "field": "coverage_complete",
+        "expected": true,
+        "severity": "error",
+        "category": "representation",
+        "mandatory": true,
+        "repairable": true,
+        "evidence_refs": [],
+        "source_nodes": [],
+        "parameters": {}
+      },
+      {
+        "contract_id": "REDUCTION_LOSS_LIMIT",
+        "kind": "max_value",
+        "subject_id": "reduction",
+        "field": "loss",
+        "expected": 0.25,
+        "severity": "error",
+        "category": "reduction",
+        "mandatory": true,
+        "repairable": true,
+        "evidence_refs": [],
+        "source_nodes": [],
+        "parameters": {}
+      },
+      {
+        "contract_id": "USER_CLAIM_EVIDENCE_BINDING",
+        "kind": "equals",
+        "subject_id": "user_claim",
+        "field": "evidence_bound",
+        "expected": true,
+        "severity": "error",
+        "category": "provenance",
+        "mandatory": true,
+        "repairable": true,
+        "evidence_refs": [],
+        "source_nodes": [],
+        "parameters": {}
+      },
+      {
+        "contract_id": "AUDIT_ARTIFACT_HASH",
+        "kind": "required_attribute",
+        "subject_id": "audit_artifact",
+        "field": "artifact_sha256",
+        "expected": null,
+        "severity": "error",
+        "category": "provenance",
+        "mandatory": true,
+        "repairable": true,
+        "evidence_refs": [],
+        "source_nodes": [],
+        "parameters": {}
+      }
+    ],
+    "metadata": {
+      "explainable_object": "c3101d83463a82dd94ed5fe4e9616212490b8e0b374a1aaaa5f85681015c5ecd",
+      "repair_costs": {
+        "node:explainer": 0.1
+      }
+    },
+    "schema_version": "1.0"
+  },
+  "diagnosis": {
+    "report_id": "diagnostic:route:S10_DETERMINISM:bcw:s10_determinism:8aa6eed61977",
+    "route_id": "route:S10_DETERMINISM:bcw:s10_determinism",
+    "route_status": "valid",
+    "issues": [],
+    "minimal_cut": null,
+    "repair_plan": null,
+    "recertification": null,
+    "user_summary": "Обязательные контракты объяснительного маршрута подтверждены.  Перед повторным использованием требуется выполнить предложенный план и заново проверить маршрут.  Заключение относится к целостности маршрута и не означает, что прогноз модели обязательно ошибочен.",
+    "expert_summary": "Статус: valid. Проверено контрактов: 13.",
+    "audit_summary": "route_id=route:S10_DETERMINISM:bcw:s10_determinism; schema=1.0; nodes=13; edges=12; contracts=13; checked=13; issues=0; solver=none; plan=none; recertification=not_run; route_sha256=08373356eab071a2ff0a80733c8ee2f1ade411f688ac7d53a7017f4de7b76a20.",
+    "limitations": [
+      "Заключение относится к структурной целостности маршрута и не доказывает ошибочность прогноза.",
+      "Ближайшая причина не считается корневой причинно-следственной связью без независимого журнала изменений."
+    ],
+    "trace": "{\"issues\":[],\"limitations\":[\"Заключение относится к структурной целостности маршрута и не доказывает ошибочность прогноза.\",\"Ближайшая причина не считается корневой причинно-следственной связью без независимого журнала изменений.\"],\"minimal_cut\":null,\"recertification\":null,\"repair_plan\":null,\"route\":{\"contracts\":[{\"category\":\"data\",\"contract_id\":\"INPUT_FEATURE_SCHEMA\",\"evidence_refs\":[],\"expected\":true,\"field\":\"schema_complete\",\"kind\":\"equals\",\"mandatory\":true,\"parameters\":{},\"repairable\":false,\"severity\":\"error\",\"source_nodes\":[],\"subject_id\":\"input\"},{\"category\":\"data\",\"contract_id\":\"INPUT_VALUE_DOMAIN\",\"evidence_refs\":[],\"expected\":true,\"field\":\"values_finite\",\"kind\":\"equals\",\"mandatory\":true,\"parameters\":{},\"repairable\":false,\"severity\":\"error\",\"source_nodes\":[],\"subject_id\":\"input\"},{\"category\":\"model\",\"contract_id\":\"MODEL_VERSION\",\"evidence_refs\":[],\"expected\":\"1.0.0\",\"field\":\"model_version\",\"kind\":\"equals\",\"mandatory\":true,\"parameters\":{},\"repairable\":true,\"severity\":\"error\",\"source_nodes\":[],\"subject_id\":\"model\"},{\"category\":\"model\",\"contract_id\":\"MODEL_FEATURE_SCHEMA\",\"evidence_refs\":[],\"expected\":\"5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba\",\"field\":\"feature_schema_sha256\",\"kind\":\"equals\",\"mandatory\":true,\"parameters\":{},\"repairable\":true,\"severity\":\"error\",\"source_nodes\":[],\"subject_id\":\"model\"},{\"category\":\"explainer\",\"contract_id\":\"MODEL_EXPLAINER_VERSION\",\"evidence_refs\":[],\"expected\":\"1.0.0\",\"field\":\"model_version\",\"kind\":\"equals\",\"mandatory\":true,\"parameters\":{},\"repairable\":true,\"severity\":\"error\",\"source_nodes\":[\"explainer\"],\"subject_id\":\"explainer\"},{\"category\":\"explainer\",\"contract_id\":\"EXPLANATION_OBJECT_ID\",\"evidence_refs\":[],\"expected\":\"bcw:s10_determinism\",\"field\":\"object_id\",\"kind\":\"equals\",\"mandatory\":true,\"parameters\":{},\"repairable\":true,\"severity\":\"error\",\"source_nodes\":[],\"subject_id\":\"local_explanation\"},{\"category\":\"explainer\",\"contract_id\":\"EXPLANATION_OUTPUT_CONSISTENCY\",\"evidence_refs\":[],\"expected\":1e-08,\"field\":\"output_difference\",\"kind\":\"max_value\",\"mandatory\":true,\"parameters\":{},\"repairable\":true,\"severity\":\"error\",\"source_nodes\":[],\"subject_id\":\"local_explanation\"},{\"category\":\"representation\",\"contract_id\":\"RULE_SOURCE_VERSION\",\"evidence_refs\":[],\"expected\":\"bcw-rules/1.0.0\",\"field\":\"version\",\"kind\":\"equals\",\"mandatory\":true,\"parameters\":{},\"repairable\":true,\"severity\":\"error\",\"source_nodes\":[],\"subject_id\":\"rule_source\"},{\"category\":\"provenance\",\"contract_id\":\"REQUIRED_PROVENANCE\",\"evidence_refs\":[],\"expected\":null,\"field\":\"plan_sha256\",\"kind\":\"required_attribute\",\"mandatory\":true,\"parameters\":{},\"repairable\":true,\"severity\":\"error\",\"source_nodes\":[],\"subject_id\":\"audit_artifact\"},{\"category\":\"representation\",\"contract_id\":\"UNCERTAINTY_REPRESENTATION_COVERAGE\",\"evidence_refs\":[],\"expected\":true,\"field\":\"coverage_complete\",\"kind\":\"equals\",\"mandatory\":true,\"parameters\":{},\"repairable\":true,\"severity\":\"error\",\"source_nodes\":[],\"subject_id\":\"uncertainty\"},{\"category\":\"reduction\",\"contract_id\":\"REDUCTION_LOSS_LIMIT\",\"evidence_refs\":[],\"expected\":0.25,\"field\":\"loss\",\"kind\":\"max_value\",\"mandatory\":true,\"parameters\":{},\"repairable\":true,\"severity\":\"error\",\"source_nodes\":[],\"subject_id\":\"reduction\"},{\"category\":\"provenance\",\"contract_id\":\"USER_CLAIM_EVIDENCE_BINDING\",\"evidence_refs\":[],\"expected\":true,\"field\":\"evidence_bound\",\"kind\":\"equals\",\"mandatory\":true,\"parameters\":{},\"repairable\":true,\"severity\":\"error\",\"source_nodes\":[],\"subject_id\":\"user_claim\"},{\"category\":\"provenance\",\"contract_id\":\"AUDIT_ARTIFACT_HASH\",\"evidence_refs\":[],\"expected\":null,\"field\":\"artifact_sha256\",\"kind\":\"required_attribute\",\"mandatory\":true,\"parameters\":{},\"repairable\":true,\"severity\":\"error\",\"source_nodes\":[],\"subject_id\":\"audit_artifact\"}],\"edges\":[{\"edge_id\":\"edge:input:feature_schema\",\"evidence_refs\":[],\"mandatory\":true,\"observed_contract\":{\"relation\":\"adapts\"},\"registered_contract\":{\"relation\":\"adapts\"},\"relation\":\"adapts\",\"relation_status\":\"known_valid\",\"repairable\":false,\"source\":\"input\",\"target\":\"feature_schema\"},{\"edge_id\":\"edge:feature_schema:preprocessor\",\"evidence_refs\":[],\"mandatory\":true,\"observed_contract\":{\"relation\":\"defines\"},\"registered_contract\":{\"relation\":\"defines\"},\"relation\":\"defines\",\"relation_status\":\"known_valid\",\"repairable\":false,\"source\":\"feature_schema\",\"target\":\"preprocessor\"},{\"edge_id\":\"edge:preprocessor:model\",\"evidence_refs\":[],\"mandatory\":true,\"observed_contract\":{\"relation\":\"transforms\"},\"registered_contract\":{\"relation\":\"transforms\"},\"relation\":\"transforms\",\"relation_status\":\"known_valid\",\"repairable\":false,\"source\":\"preprocessor\",\"target\":\"model\"},{\"edge_id\":\"edge:model:prediction\",\"evidence_refs\":[],\"mandatory\":true,\"observed_contract\":{\"relation\":\"predicts\"},\"registered_contract\":{\"relation\":\"predicts\"},\"relation\":\"predicts\",\"relation_status\":\"known_valid\",\"repairable\":false,\"source\":\"model\",\"target\":\"prediction\"},{\"edge_id\":\"edge:prediction:explainer\",\"evidence_refs\":[],\"mandatory\":true,\"observed_contract\":{\"relation\":\"explains\"},\"registered_contract\":{\"relation\":\"explains\"},\"relation\":\"explains\",\"relation_status\":\"known_valid\",\"repairable\":false,\"source\":\"prediction\",\"target\":\"explainer\"},{\"edge_id\":\"edge:explainer:local_explanation\",\"evidence_refs\":[],\"mandatory\":true,\"observed_contract\":{\"relation\":\"instantiates\"},\"registered_contract\":{\"relation\":\"instantiates\"},\"relation\":\"instantiates\",\"relation_status\":\"known_valid\",\"repairable\":false,\"source\":\"explainer\",\"target\":\"local_explanation\"},{\"edge_id\":\"edge:local_explanation:rule_source\",\"evidence_refs\":[],\"mandatory\":true,\"observed_contract\":{\"relation\":\"constrains\"},\"registered_contract\":{\"relation\":\"constrains\"},\"relation\":\"constrains\",\"relation_status\":\"known_valid\",\"repairable\":false,\"source\":\"local_explanation\",\"target\":\"rule_source\"},{\"edge_id\":\"edge:rule_source:uncertainty\",\"evidence_refs\":[],\"mandatory\":true,\"observed_contract\":{\"relation\":\"profiles\"},\"registered_contract\":{\"relation\":\"profiles\"},\"relation\":\"profiles\",\"relation_status\":\"known_valid\",\"repairable\":false,\"source\":\"rule_source\",\"target\":\"uncertainty\"},{\"edge_id\":\"edge:uncertainty:reduction\",\"evidence_refs\":[],\"mandatory\":true,\"observed_contract\":{\"relation\":\"reduces\"},\"registered_contract\":{\"relation\":\"reduces\"},\"relation\":\"reduces\",\"relation_status\":\"known_valid\",\"repairable\":false,\"source\":\"uncertainty\",\"target\":\"reduction\"},{\"edge_id\":\"edge:reduction:observer_action\",\"evidence_refs\":[],\"mandatory\":true,\"observed_contract\":{\"relation\":\"observes\"},\"registered_contract\":{\"relation\":\"observes\"},\"relation\":\"observes\",\"relation_status\":\"known_valid\",\"repairable\":false,\"source\":\"reduction\",\"target\":\"observer_action\"},{\"edge_id\":\"edge:observer_action:user_claim\",\"evidence_refs\":[],\"mandatory\":true,\"observed_contract\":{\"relation\":\"binds\"},\"registered_contract\":{\"relation\":\"binds\"},\"relation\":\"binds\",\"relation_status\":\"known_valid\",\"repairable\":false,\"source\":\"observer_action\",\"target\":\"user_claim\"},{\"edge_id\":\"edge:user_claim:audit_artifact\",\"evidence_refs\":[],\"mandatory\":true,\"observed_contract\":{\"relation\":\"records\"},\"registered_contract\":{\"relation\":\"records\"},\"relation\":\"records\",\"relation_status\":\"known_valid\",\"repairable\":false,\"source\":\"user_claim\",\"target\":\"audit_artifact\"}],\"metadata\":{\"explainable_object\":\"c3101d83463a82dd94ed5fe4e9616212490b8e0b374a1aaaa5f85681015c5ecd\",\"repair_costs\":{\"node:explainer\":0.1}},\"nodes\":[{\"component_id\":\"mlv1.input\",\"component_version\":\"1.0.0\",\"evidence_refs\":[\"evidence:input\"],\"mandatory\":true,\"node_id\":\"input\",\"node_type\":\"input\",\"observed_attributes\":{\"object_id\":\"bcw:s10_determinism\",\"schema_complete\":true,\"values_finite\":true},\"registered_attributes\":{\"object_id\":\"bcw:s10_determinism\",\"schema_complete\":true,\"values_finite\":true},\"repairable\":false},{\"component_id\":\"mlv1.feature_schema\",\"component_version\":\"1.0.0\",\"evidence_refs\":[\"evidence:feature_schema\"],\"mandatory\":true,\"node_id\":\"feature_schema\",\"node_type\":\"schema\",\"observed_attributes\":{\"schema_sha256\":\"5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba\"},\"registered_attributes\":{\"schema_sha256\":\"5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba\"},\"repairable\":false},{\"component_id\":\"mlv1.preprocessor\",\"component_version\":\"1.0.0\",\"evidence_refs\":[\"evidence:preprocessor\"],\"mandatory\":true,\"node_id\":\"preprocessor\",\"node_type\":\"preprocessor\",\"observed_attributes\":{\"version\":\"sklearn.StandardScaler/1\"},\"registered_attributes\":{\"version\":\"sklearn.StandardScaler/1\"},\"repairable\":false},{\"component_id\":\"mlv1.model\",\"component_version\":\"1.0.0\",\"evidence_refs\":[\"evidence:model\"],\"mandatory\":true,\"node_id\":\"model\",\"node_type\":\"model\",\"observed_attributes\":{\"feature_schema_sha256\":\"5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba\",\"model_id\":\"bcw-logistic-regression\",\"model_version\":\"1.0.0\"},\"registered_attributes\":{\"feature_schema_sha256\":\"5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba\",\"model_id\":\"bcw-logistic-regression\",\"model_version\":\"1.0.0\"},\"repairable\":false},{\"component_id\":\"mlv1.prediction\",\"component_version\":\"1.0.0\",\"evidence_refs\":[\"evidence:prediction\"],\"mandatory\":true,\"node_id\":\"prediction\",\"node_type\":\"prediction\",\"observed_attributes\":{\"object_id\":\"bcw:s10_determinism\",\"probability\":0.00027695735150644503},\"registered_attributes\":{\"object_id\":\"bcw:s10_determinism\",\"probability\":0.00027695735150644503},\"repairable\":false},{\"component_id\":\"mlv1.explainer\",\"component_version\":\"1.0.0\",\"evidence_refs\":[\"evidence:explainer\"],\"mandatory\":true,\"node_id\":\"explainer\",\"node_type\":\"explainer\",\"observed_attributes\":{\"explainer_version\":\"0.51.0\",\"model_version\":\"1.0.0\"},\"registered_attributes\":{\"explainer_version\":\"0.51.0\",\"model_version\":\"1.0.0\"},\"repairable\":true},{\"component_id\":\"mlv1.local_explanation\",\"component_version\":\"1.0.0\",\"evidence_refs\":[\"evidence:local_explanation\"],\"mandatory\":true,\"node_id\":\"local_explanation\",\"node_type\":\"explanation\",\"observed_attributes\":{\"object_id\":\"bcw:s10_determinism\",\"output_difference\":0.0},\"registered_attributes\":{\"object_id\":\"bcw:s10_determinism\",\"output_difference\":0.0},\"repairable\":false},{\"component_id\":\"mlv1.rule_source\",\"component_version\":\"1.0.0\",\"evidence_refs\":[\"evidence:rule_source\"],\"mandatory\":true,\"node_id\":\"rule_source\",\"node_type\":\"rule_source\",\"observed_attributes\":{\"version\":\"bcw-rules/1.0.0\"},\"registered_attributes\":{\"version\":\"bcw-rules/1.0.0\"},\"repairable\":false},{\"component_id\":\"mlv1.uncertainty\",\"component_version\":\"1.0.0\",\"evidence_refs\":[\"evidence:uncertainty\"],\"mandatory\":true,\"node_id\":\"uncertainty\",\"node_type\":\"uncertainty\",\"observed_attributes\":{\"coverage_complete\":true},\"registered_attributes\":{\"coverage_complete\":true},\"repairable\":false},{\"component_id\":\"mlv1.reduction\",\"component_version\":\"1.0.0\",\"evidence_refs\":[\"evidence:reduction\"],\"mandatory\":true,\"node_id\":\"reduction\",\"node_type\":\"reduction\",\"observed_attributes\":{\"loss\":0.0},\"registered_attributes\":{\"loss\":0.0},\"repairable\":true},{\"component_id\":\"mlv1.observer_action\",\"component_version\":\"1.0.0\",\"evidence_refs\":[\"evidence:observer_action\"],\"mandatory\":true,\"node_id\":\"observer_action\",\"node_type\":\"observer\",\"observed_attributes\":{\"registered\":true},\"registered_attributes\":{\"registered\":true},\"repairable\":false},{\"component_id\":\"mlv1.user_claim\",\"component_version\":\"1.0.0\",\"evidence_refs\":[\"evidence:user_claim\"],\"mandatory\":true,\"node_id\":\"user_claim\",\"node_type\":\"claim\",\"observed_attributes\":{\"evidence_bound\":true},\"registered_attributes\":{\"evidence_bound\":true},\"repairable\":false},{\"component_id\":\"mlv1.audit_artifact\",\"component_version\":\"1.0.0\",\"evidence_refs\":[\"evidence:audit_artifact\"],\"mandatory\":true,\"node_id\":\"audit_artifact\",\"node_type\":\"audit\",\"observed_attributes\":{\"artifact_sha256\":\"470a1dd30b3c9e6a1b38803b7f32f6c2200f8fd15f984a54ccc3c29f3862be12\",\"plan_sha256\":\"dc758d1762500f6b63775cc4211e182de71d401f69c1e9caa2f652ba93e16943\"},\"registered_attributes\":{\"artifact_sha256\":\"470a1dd30b3c9e6a1b38803b7f32f6c2200f8fd15f984a54ccc3c29f3862be12\",\"plan_sha256\":\"dc758d1762500f6b63775cc4211e182de71d401f69c1e9caa2f652ba93e16943\"},\"repairable\":true}],\"route_id\":\"route:S10_DETERMINISM:bcw:s10_determinism\",\"schema_version\":\"1.0\"},\"schema_version\":\"1.0\",\"validation\":{\"checked_contracts\":[\"INPUT_FEATURE_SCHEMA\",\"INPUT_VALUE_DOMAIN\",\"MODEL_VERSION\",\"MODEL_FEATURE_SCHEMA\",\"MODEL_EXPLAINER_VERSION\",\"EXPLANATION_OBJECT_ID\",\"EXPLANATION_OUTPUT_CONSISTENCY\",\"RULE_SOURCE_VERSION\",\"REQUIRED_PROVENANCE\",\"UNCERTAINTY_REPRESENTATION_COVERAGE\",\"REDUCTION_LOSS_LIMIT\",\"USER_CLAIM_EVIDENCE_BINDING\",\"AUDIT_ARTIFACT_HASH\"],\"graph_trace_sha256\":\"08373356eab071a2ff0a80733c8ee2f1ade411f688ac7d53a7017f4de7b76a20\",\"issues\":[],\"obligations\":[],\"passed_contracts\":[\"AUDIT_ARTIFACT_HASH\",\"EXPLANATION_OBJECT_ID\",\"EXPLANATION_OUTPUT_CONSISTENCY\",\"INPUT_FEATURE_SCHEMA\",\"INPUT_VALUE_DOMAIN\",\"MODEL_EXPLAINER_VERSION\",\"MODEL_FEATURE_SCHEMA\",\"MODEL_VERSION\",\"REDUCTION_LOSS_LIMIT\",\"REQUIRED_PROVENANCE\",\"RULE_SOURCE_VERSION\",\"UNCERTAINTY_REPRESENTATION_COVERAGE\",\"USER_CLAIM_EVIDENCE_BINDING\"],\"status\":\"valid\"}}",
+    "trace_sha256": "8aa6eed61977c61ad905f91ff73ad09093fc5f259f37139e0d4738fdcf56cb09",
+    "schema_version": "1.0"
+  },
+  "observer": {
+    "action": "ACCEPT",
+    "risk": 0.010221565881205168,
+    "reasons": [
+      "all registered route contracts are satisfied"
+    ],
+    "critical_issues": []
+  },
+  "claims": [
+    {
+      "claim_id": "claim:prediction",
+      "text": "The registered model produced score 0.000277 for object bcw:s10_determinism.",
+      "evidence_refs": [
+        "evidence:prediction"
+      ],
+      "status": "observed",
+      "text_code": "registered_template",
+      "arguments": {},
+      "allowed_views": [
+        "user",
+        "engineer",
+        "auditor"
+      ],
+      "blocked": false
+    },
+    {
+      "claim_id": "claim:features",
+      "text": "Largest local SHAP contributions: worst texture, worst concave points, worst radius.",
+      "evidence_refs": [
+        "evidence:local_explanation"
+      ],
+      "status": "observed",
+      "text_code": "registered_template",
+      "arguments": {},
+      "allowed_views": [
+        "user",
+        "engineer",
+        "auditor"
+      ],
+      "blocked": false
+    },
+    {
+      "claim_id": "claim:action",
+      "text": "The route observer selected ACCEPT.",
+      "evidence_refs": [
+        "evidence:observer_action"
+      ],
+      "status": "observed",
+      "text_code": "registered_template",
+      "arguments": {},
+      "allowed_views": [
+        "user",
+        "engineer",
+        "auditor"
+      ],
+      "blocked": false
+    }
+  ],
+  "views": {
+    "user": {
+      "run_id": "mlv1:f35878540d9c3a903154",
+      "scenario_id": "S10_DETERMINISM",
+      "action": "ACCEPT",
+      "claims": [
+        {
+          "claim_id": "claim:prediction",
+          "text": "The registered model produced score 0.000277 for object bcw:s10_determinism.",
+          "evidence_refs": [
+            "evidence:prediction"
+          ],
+          "status": "observed",
+          "text_code": "registered_template",
+          "arguments": {},
+          "allowed_views": [
+            "user",
+            "engineer",
+            "auditor"
+          ],
+          "blocked": false
+        },
+        {
+          "claim_id": "claim:features",
+          "text": "Largest local SHAP contributions: worst texture, worst concave points, worst radius.",
+          "evidence_refs": [
+            "evidence:local_explanation"
+          ],
+          "status": "observed",
+          "text_code": "registered_template",
+          "arguments": {},
+          "allowed_views": [
+            "user",
+            "engineer",
+            "auditor"
+          ],
+          "blocked": false
+        },
+        {
+          "claim_id": "claim:action",
+          "text": "The route observer selected ACCEPT.",
+          "evidence_refs": [
+            "evidence:observer_action"
+          ],
+          "status": "observed",
+          "text_code": "registered_template",
+          "arguments": {},
+          "allowed_views": [
+            "user",
+            "engineer",
+            "auditor"
+          ],
+          "blocked": false
+        }
+      ],
+      "explainable_object_sha256": "c3101d83463a82dd94ed5fe4e9616212490b8e0b374a1aaaa5f85681015c5ecd",
+      "view": "user",
+      "prediction": {
+        "object_id": "bcw:s10_determinism",
+        "predicted_class": 0,
+        "probability": 0.00027695735150644503,
+        "raw_score": -8.191370033600295,
+        "model_id": "bcw-logistic-regression",
+        "model_version": "1.0.0",
+        "model_sha256": "c5b042bd9cd865ecc209de958a2cf64ab04b7d0dbba0a6d7d2865895aad7a8e7",
+        "feature_schema_sha256": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba"
+      },
+      "limitations": [
+        "Заключение относится к структурной целостности маршрута и не доказывает ошибочность прогноза.",
+        "Ближайшая причина не считается корневой причинно-следственной связью без независимого журнала изменений."
+      ]
+    },
+    "engineer": {
+      "run_id": "mlv1:f35878540d9c3a903154",
+      "scenario_id": "S10_DETERMINISM",
+      "action": "ACCEPT",
+      "claims": [
+        {
+          "claim_id": "claim:prediction",
+          "text": "The registered model produced score 0.000277 for object bcw:s10_determinism.",
+          "evidence_refs": [
+            "evidence:prediction"
+          ],
+          "status": "observed",
+          "text_code": "registered_template",
+          "arguments": {},
+          "allowed_views": [
+            "user",
+            "engineer",
+            "auditor"
+          ],
+          "blocked": false
+        },
+        {
+          "claim_id": "claim:features",
+          "text": "Largest local SHAP contributions: worst texture, worst concave points, worst radius.",
+          "evidence_refs": [
+            "evidence:local_explanation"
+          ],
+          "status": "observed",
+          "text_code": "registered_template",
+          "arguments": {},
+          "allowed_views": [
+            "user",
+            "engineer",
+            "auditor"
+          ],
+          "blocked": false
+        },
+        {
+          "claim_id": "claim:action",
+          "text": "The route observer selected ACCEPT.",
+          "evidence_refs": [
+            "evidence:observer_action"
+          ],
+          "status": "observed",
+          "text_code": "registered_template",
+          "arguments": {},
+          "allowed_views": [
+            "user",
+            "engineer",
+            "auditor"
+          ],
+          "blocked": false
+        }
+      ],
+      "explainable_object_sha256": "c3101d83463a82dd94ed5fe4e9616212490b8e0b374a1aaaa5f85681015c5ecd",
+      "view": "engineer",
+      "explanation": {
+        "object_id": "bcw:s10_determinism",
+        "explainer_id": "shap.LinearExplainer",
+        "explainer_version": "0.51.0",
+        "model_version": "1.0.0",
+        "base_value": -1.2264799258326975,
+        "shap_values": {
+          "mean radius": -0.19244878416558725,
+          "mean texture": -0.5911771035309462,
+          "mean perimeter": -0.18195722404349318,
+          "mean area": -0.2198343234510549,
+          "mean smoothness": 0.10582201610778671,
+          "mean compactness": 0.07671506417851988,
+          "mean concavity": -0.6297281886336548,
+          "mean concave points": -0.700739425513308,
+          "mean symmetry": 0.6356697979811631,
+          "mean fractal dimension": -0.412358594440218,
+          "radius error": 0.5806998603520946,
+          "texture error": -0.10287860105656914,
+          "perimeter error": 0.18880719910824606,
+          "area error": -0.037913384808470445,
+          "smoothness error": -0.059593037818181024,
+          "compactness error": 0.44905955345084314,
+          "concavity error": 0.15649623472206758,
+          "concave points error": -0.08636767912061792,
+          "symmetry error": 0.17914948862675287,
+          "fractal dimension error": -0.7151021564103659,
+          "worst radius": -0.906413636475313,
+          "worst texture": -1.4917113088679261,
+          "worst perimeter": -0.7661725162075523,
+          "worst area": -0.6460166794220196,
+          "worst smoothness": -0.026225073289457893,
+          "worst compactness": -0.21526927648231106,
+          "worst concavity": -0.8931696619551441,
+          "worst concave points": -1.1107887674753651,
+          "worst symmetry": 0.6512330735698741,
+          "worst fractal dimension": -0.0026769726973898227
+        },
+        "feature_values": {
+          "mean radius": 10.17,
+          "mean texture": 14.88,
+          "mean perimeter": 64.55,
+          "mean area": 311.9,
+          "mean smoothness": 0.1134,
+          "mean compactness": 0.08061,
+          "mean concavity": 0.01084,
+          "mean concave points": 0.0129,
+          "mean symmetry": 0.2743,
+          "mean fractal dimension": 0.0696,
+          "radius error": 0.5158,
+          "texture error": 1.441,
+          "perimeter error": 3.312,
+          "area error": 34.62,
+          "smoothness error": 0.007514,
+          "compactness error": 0.01099,
+          "concavity error": 0.007665,
+          "concave points error": 0.008193,
+          "symmetry error": 0.04183,
+          "fractal dimension error": 0.005953,
+          "worst radius": 11.02,
+          "worst texture": 17.45,
+          "worst perimeter": 69.86,
+          "worst area": 368.6,
+          "worst smoothness": 0.1275,
+          "worst compactness": 0.09866,
+          "worst concavity": 0.02168,
+          "worst concave points": 0.02579,
+          "worst symmetry": 0.3557,
+          "worst fractal dimension": 0.0802
+        },
+        "output_sum": -8.191370033600295,
+        "output_difference": 0.0,
+        "artifact_sha256": "470a1dd30b3c9e6a1b38803b7f32f6c2200f8fd15f984a54ccc3c29f3862be12"
+      },
+      "representation": {
+        "representation_id": "F0",
+        "membership": {
+          "low": 0.9994460852969871,
+          "medium": 0.0,
+          "high": 0.0
+        },
+        "covered_uncertainties": [
+          "u_ling",
+          "u_num"
+        ],
+        "cognitive_complexity": 1.0,
+        "computational_complexity": 1.0,
+        "selection_reason": "point evidence is complete and has no registered conflict"
+      },
+      "reduction": {
+        "source_representation": "F0",
+        "target_representation": "F0",
+        "reduced_membership": {
+          "low": 0.9994460852969871,
+          "medium": 0.0,
+          "high": 0.0
+        },
+        "loss": 0.0,
+        "accepted": true,
+        "maximum_loss": 0.25
+      },
+      "issues": []
+    },
+    "auditor": {
+      "run_id": "mlv1:f35878540d9c3a903154",
+      "scenario_id": "S10_DETERMINISM",
+      "action": "ACCEPT",
+      "claims": [
+        {
+          "claim_id": "claim:prediction",
+          "text": "The registered model produced score 0.000277 for object bcw:s10_determinism.",
+          "evidence_refs": [
+            "evidence:prediction"
+          ],
+          "status": "observed",
+          "text_code": "registered_template",
+          "arguments": {},
+          "allowed_views": [
+            "user",
+            "engineer",
+            "auditor"
+          ],
+          "blocked": false
+        },
+        {
+          "claim_id": "claim:features",
+          "text": "Largest local SHAP contributions: worst texture, worst concave points, worst radius.",
+          "evidence_refs": [
+            "evidence:local_explanation"
+          ],
+          "status": "observed",
+          "text_code": "registered_template",
+          "arguments": {},
+          "allowed_views": [
+            "user",
+            "engineer",
+            "auditor"
+          ],
+          "blocked": false
+        },
+        {
+          "claim_id": "claim:action",
+          "text": "The route observer selected ACCEPT.",
+          "evidence_refs": [
+            "evidence:observer_action"
+          ],
+          "status": "observed",
+          "text_code": "registered_template",
+          "arguments": {},
+          "allowed_views": [
+            "user",
+            "engineer",
+            "auditor"
+          ],
+          "blocked": false
+        }
+      ],
+      "explainable_object_sha256": "c3101d83463a82dd94ed5fe4e9616212490b8e0b374a1aaaa5f85681015c5ecd",
+      "view": "auditor",
+      "diagnostic_report": {
+        "report_id": "diagnostic:route:S10_DETERMINISM:bcw:s10_determinism:8aa6eed61977",
+        "route_id": "route:S10_DETERMINISM:bcw:s10_determinism",
+        "route_status": "valid",
+        "issues": [],
+        "minimal_cut": null,
+        "repair_plan": null,
+        "recertification": null,
+        "user_summary": "Обязательные контракты объяснительного маршрута подтверждены.  Перед повторным использованием требуется выполнить предложенный план и заново проверить маршрут.  Заключение относится к целостности маршрута и не означает, что прогноз модели обязательно ошибочен.",
+        "expert_summary": "Статус: valid. Проверено контрактов: 13.",
+        "audit_summary": "route_id=route:S10_DETERMINISM:bcw:s10_determinism; schema=1.0; nodes=13; edges=12; contracts=13; checked=13; issues=0; solver=none; plan=none; recertification=not_run; route_sha256=08373356eab071a2ff0a80733c8ee2f1ade411f688ac7d53a7017f4de7b76a20.",
+        "limitations": [
+          "Заключение относится к структурной целостности маршрута и не доказывает ошибочность прогноза.",
+          "Ближайшая причина не считается корневой причинно-следственной связью без независимого журнала изменений."
+        ],
+        "trace": "{\"issues\":[],\"limitations\":[\"Заключение относится к структурной целостности маршрута и не доказывает ошибочность прогноза.\",\"Ближайшая причина не считается корневой причинно-следственной связью без независимого журнала изменений.\"],\"minimal_cut\":null,\"recertification\":null,\"repair_plan\":null,\"route\":{\"contracts\":[{\"category\":\"data\",\"contract_id\":\"INPUT_FEATURE_SCHEMA\",\"evidence_refs\":[],\"expected\":true,\"field\":\"schema_complete\",\"kind\":\"equals\",\"mandatory\":true,\"parameters\":{},\"repairable\":false,\"severity\":\"error\",\"source_nodes\":[],\"subject_id\":\"input\"},{\"category\":\"data\",\"contract_id\":\"INPUT_VALUE_DOMAIN\",\"evidence_refs\":[],\"expected\":true,\"field\":\"values_finite\",\"kind\":\"equals\",\"mandatory\":true,\"parameters\":{},\"repairable\":false,\"severity\":\"error\",\"source_nodes\":[],\"subject_id\":\"input\"},{\"category\":\"model\",\"contract_id\":\"MODEL_VERSION\",\"evidence_refs\":[],\"expected\":\"1.0.0\",\"field\":\"model_version\",\"kind\":\"equals\",\"mandatory\":true,\"parameters\":{},\"repairable\":true,\"severity\":\"error\",\"source_nodes\":[],\"subject_id\":\"model\"},{\"category\":\"model\",\"contract_id\":\"MODEL_FEATURE_SCHEMA\",\"evidence_refs\":[],\"expected\":\"5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba\",\"field\":\"feature_schema_sha256\",\"kind\":\"equals\",\"mandatory\":true,\"parameters\":{},\"repairable\":true,\"severity\":\"error\",\"source_nodes\":[],\"subject_id\":\"model\"},{\"category\":\"explainer\",\"contract_id\":\"MODEL_EXPLAINER_VERSION\",\"evidence_refs\":[],\"expected\":\"1.0.0\",\"field\":\"model_version\",\"kind\":\"equals\",\"mandatory\":true,\"parameters\":{},\"repairable\":true,\"severity\":\"error\",\"source_nodes\":[\"explainer\"],\"subject_id\":\"explainer\"},{\"category\":\"explainer\",\"contract_id\":\"EXPLANATION_OBJECT_ID\",\"evidence_refs\":[],\"expected\":\"bcw:s10_determinism\",\"field\":\"object_id\",\"kind\":\"equals\",\"mandatory\":true,\"parameters\":{},\"repairable\":true,\"severity\":\"error\",\"source_nodes\":[],\"subject_id\":\"local_explanation\"},{\"category\":\"explainer\",\"contract_id\":\"EXPLANATION_OUTPUT_CONSISTENCY\",\"evidence_refs\":[],\"expected\":1e-08,\"field\":\"output_difference\",\"kind\":\"max_value\",\"mandatory\":true,\"parameters\":{},\"repairable\":true,\"severity\":\"error\",\"source_nodes\":[],\"subject_id\":\"local_explanation\"},{\"category\":\"representation\",\"contract_id\":\"RULE_SOURCE_VERSION\",\"evidence_refs\":[],\"expected\":\"bcw-rules/1.0.0\",\"field\":\"version\",\"kind\":\"equals\",\"mandatory\":true,\"parameters\":{},\"repairable\":true,\"severity\":\"error\",\"source_nodes\":[],\"subject_id\":\"rule_source\"},{\"category\":\"provenance\",\"contract_id\":\"REQUIRED_PROVENANCE\",\"evidence_refs\":[],\"expected\":null,\"field\":\"plan_sha256\",\"kind\":\"required_attribute\",\"mandatory\":true,\"parameters\":{},\"repairable\":true,\"severity\":\"error\",\"source_nodes\":[],\"subject_id\":\"audit_artifact\"},{\"category\":\"representation\",\"contract_id\":\"UNCERTAINTY_REPRESENTATION_COVERAGE\",\"evidence_refs\":[],\"expected\":true,\"field\":\"coverage_complete\",\"kind\":\"equals\",\"mandatory\":true,\"parameters\":{},\"repairable\":true,\"severity\":\"error\",\"source_nodes\":[],\"subject_id\":\"uncertainty\"},{\"category\":\"reduction\",\"contract_id\":\"REDUCTION_LOSS_LIMIT\",\"evidence_refs\":[],\"expected\":0.25,\"field\":\"loss\",\"kind\":\"max_value\",\"mandatory\":true,\"parameters\":{},\"repairable\":true,\"severity\":\"error\",\"source_nodes\":[],\"subject_id\":\"reduction\"},{\"category\":\"provenance\",\"contract_id\":\"USER_CLAIM_EVIDENCE_BINDING\",\"evidence_refs\":[],\"expected\":true,\"field\":\"evidence_bound\",\"kind\":\"equals\",\"mandatory\":true,\"parameters\":{},\"repairable\":true,\"severity\":\"error\",\"source_nodes\":[],\"subject_id\":\"user_claim\"},{\"category\":\"provenance\",\"contract_id\":\"AUDIT_ARTIFACT_HASH\",\"evidence_refs\":[],\"expected\":null,\"field\":\"artifact_sha256\",\"kind\":\"required_attribute\",\"mandatory\":true,\"parameters\":{},\"repairable\":true,\"severity\":\"error\",\"source_nodes\":[],\"subject_id\":\"audit_artifact\"}],\"edges\":[{\"edge_id\":\"edge:input:feature_schema\",\"evidence_refs\":[],\"mandatory\":true,\"observed_contract\":{\"relation\":\"adapts\"},\"registered_contract\":{\"relation\":\"adapts\"},\"relation\":\"adapts\",\"relation_status\":\"known_valid\",\"repairable\":false,\"source\":\"input\",\"target\":\"feature_schema\"},{\"edge_id\":\"edge:feature_schema:preprocessor\",\"evidence_refs\":[],\"mandatory\":true,\"observed_contract\":{\"relation\":\"defines\"},\"registered_contract\":{\"relation\":\"defines\"},\"relation\":\"defines\",\"relation_status\":\"known_valid\",\"repairable\":false,\"source\":\"feature_schema\",\"target\":\"preprocessor\"},{\"edge_id\":\"edge:preprocessor:model\",\"evidence_refs\":[],\"mandatory\":true,\"observed_contract\":{\"relation\":\"transforms\"},\"registered_contract\":{\"relation\":\"transforms\"},\"relation\":\"transforms\",\"relation_status\":\"known_valid\",\"repairable\":false,\"source\":\"preprocessor\",\"target\":\"model\"},{\"edge_id\":\"edge:model:prediction\",\"evidence_refs\":[],\"mandatory\":true,\"observed_contract\":{\"relation\":\"predicts\"},\"registered_contract\":{\"relation\":\"predicts\"},\"relation\":\"predicts\",\"relation_status\":\"known_valid\",\"repairable\":false,\"source\":\"model\",\"target\":\"prediction\"},{\"edge_id\":\"edge:prediction:explainer\",\"evidence_refs\":[],\"mandatory\":true,\"observed_contract\":{\"relation\":\"explains\"},\"registered_contract\":{\"relation\":\"explains\"},\"relation\":\"explains\",\"relation_status\":\"known_valid\",\"repairable\":false,\"source\":\"prediction\",\"target\":\"explainer\"},{\"edge_id\":\"edge:explainer:local_explanation\",\"evidence_refs\":[],\"mandatory\":true,\"observed_contract\":{\"relation\":\"instantiates\"},\"registered_contract\":{\"relation\":\"instantiates\"},\"relation\":\"instantiates\",\"relation_status\":\"known_valid\",\"repairable\":false,\"source\":\"explainer\",\"target\":\"local_explanation\"},{\"edge_id\":\"edge:local_explanation:rule_source\",\"evidence_refs\":[],\"mandatory\":true,\"observed_contract\":{\"relation\":\"constrains\"},\"registered_contract\":{\"relation\":\"constrains\"},\"relation\":\"constrains\",\"relation_status\":\"known_valid\",\"repairable\":false,\"source\":\"local_explanation\",\"target\":\"rule_source\"},{\"edge_id\":\"edge:rule_source:uncertainty\",\"evidence_refs\":[],\"mandatory\":true,\"observed_contract\":{\"relation\":\"profiles\"},\"registered_contract\":{\"relation\":\"profiles\"},\"relation\":\"profiles\",\"relation_status\":\"known_valid\",\"repairable\":false,\"source\":\"rule_source\",\"target\":\"uncertainty\"},{\"edge_id\":\"edge:uncertainty:reduction\",\"evidence_refs\":[],\"mandatory\":true,\"observed_contract\":{\"relation\":\"reduces\"},\"registered_contract\":{\"relation\":\"reduces\"},\"relation\":\"reduces\",\"relation_status\":\"known_valid\",\"repairable\":false,\"source\":\"uncertainty\",\"target\":\"reduction\"},{\"edge_id\":\"edge:reduction:observer_action\",\"evidence_refs\":[],\"mandatory\":true,\"observed_contract\":{\"relation\":\"observes\"},\"registered_contract\":{\"relation\":\"observes\"},\"relation\":\"observes\",\"relation_status\":\"known_valid\",\"repairable\":false,\"source\":\"reduction\",\"target\":\"observer_action\"},{\"edge_id\":\"edge:observer_action:user_claim\",\"evidence_refs\":[],\"mandatory\":true,\"observed_contract\":{\"relation\":\"binds\"},\"registered_contract\":{\"relation\":\"binds\"},\"relation\":\"binds\",\"relation_status\":\"known_valid\",\"repairable\":false,\"source\":\"observer_action\",\"target\":\"user_claim\"},{\"edge_id\":\"edge:user_claim:audit_artifact\",\"evidence_refs\":[],\"mandatory\":true,\"observed_contract\":{\"relation\":\"records\"},\"registered_contract\":{\"relation\":\"records\"},\"relation\":\"records\",\"relation_status\":\"known_valid\",\"repairable\":false,\"source\":\"user_claim\",\"target\":\"audit_artifact\"}],\"metadata\":{\"explainable_object\":\"c3101d83463a82dd94ed5fe4e9616212490b8e0b374a1aaaa5f85681015c5ecd\",\"repair_costs\":{\"node:explainer\":0.1}},\"nodes\":[{\"component_id\":\"mlv1.input\",\"component_version\":\"1.0.0\",\"evidence_refs\":[\"evidence:input\"],\"mandatory\":true,\"node_id\":\"input\",\"node_type\":\"input\",\"observed_attributes\":{\"object_id\":\"bcw:s10_determinism\",\"schema_complete\":true,\"values_finite\":true},\"registered_attributes\":{\"object_id\":\"bcw:s10_determinism\",\"schema_complete\":true,\"values_finite\":true},\"repairable\":false},{\"component_id\":\"mlv1.feature_schema\",\"component_version\":\"1.0.0\",\"evidence_refs\":[\"evidence:feature_schema\"],\"mandatory\":true,\"node_id\":\"feature_schema\",\"node_type\":\"schema\",\"observed_attributes\":{\"schema_sha256\":\"5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba\"},\"registered_attributes\":{\"schema_sha256\":\"5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba\"},\"repairable\":false},{\"component_id\":\"mlv1.preprocessor\",\"component_version\":\"1.0.0\",\"evidence_refs\":[\"evidence:preprocessor\"],\"mandatory\":true,\"node_id\":\"preprocessor\",\"node_type\":\"preprocessor\",\"observed_attributes\":{\"version\":\"sklearn.StandardScaler/1\"},\"registered_attributes\":{\"version\":\"sklearn.StandardScaler/1\"},\"repairable\":false},{\"component_id\":\"mlv1.model\",\"component_version\":\"1.0.0\",\"evidence_refs\":[\"evidence:model\"],\"mandatory\":true,\"node_id\":\"model\",\"node_type\":\"model\",\"observed_attributes\":{\"feature_schema_sha256\":\"5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba\",\"model_id\":\"bcw-logistic-regression\",\"model_version\":\"1.0.0\"},\"registered_attributes\":{\"feature_schema_sha256\":\"5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba\",\"model_id\":\"bcw-logistic-regression\",\"model_version\":\"1.0.0\"},\"repairable\":false},{\"component_id\":\"mlv1.prediction\",\"component_version\":\"1.0.0\",\"evidence_refs\":[\"evidence:prediction\"],\"mandatory\":true,\"node_id\":\"prediction\",\"node_type\":\"prediction\",\"observed_attributes\":{\"object_id\":\"bcw:s10_determinism\",\"probability\":0.00027695735150644503},\"registered_attributes\":{\"object_id\":\"bcw:s10_determinism\",\"probability\":0.00027695735150644503},\"repairable\":false},{\"component_id\":\"mlv1.explainer\",\"component_version\":\"1.0.0\",\"evidence_refs\":[\"evidence:explainer\"],\"mandatory\":true,\"node_id\":\"explainer\",\"node_type\":\"explainer\",\"observed_attributes\":{\"explainer_version\":\"0.51.0\",\"model_version\":\"1.0.0\"},\"registered_attributes\":{\"explainer_version\":\"0.51.0\",\"model_version\":\"1.0.0\"},\"repairable\":true},{\"component_id\":\"mlv1.local_explanation\",\"component_version\":\"1.0.0\",\"evidence_refs\":[\"evidence:local_explanation\"],\"mandatory\":true,\"node_id\":\"local_explanation\",\"node_type\":\"explanation\",\"observed_attributes\":{\"object_id\":\"bcw:s10_determinism\",\"output_difference\":0.0},\"registered_attributes\":{\"object_id\":\"bcw:s10_determinism\",\"output_difference\":0.0},\"repairable\":false},{\"component_id\":\"mlv1.rule_source\",\"component_version\":\"1.0.0\",\"evidence_refs\":[\"evidence:rule_source\"],\"mandatory\":true,\"node_id\":\"rule_source\",\"node_type\":\"rule_source\",\"observed_attributes\":{\"version\":\"bcw-rules/1.0.0\"},\"registered_attributes\":{\"version\":\"bcw-rules/1.0.0\"},\"repairable\":false},{\"component_id\":\"mlv1.uncertainty\",\"component_version\":\"1.0.0\",\"evidence_refs\":[\"evidence:uncertainty\"],\"mandatory\":true,\"node_id\":\"uncertainty\",\"node_type\":\"uncertainty\",\"observed_attributes\":{\"coverage_complete\":true},\"registered_attributes\":{\"coverage_complete\":true},\"repairable\":false},{\"component_id\":\"mlv1.reduction\",\"component_version\":\"1.0.0\",\"evidence_refs\":[\"evidence:reduction\"],\"mandatory\":true,\"node_id\":\"reduction\",\"node_type\":\"reduction\",\"observed_attributes\":{\"loss\":0.0},\"registered_attributes\":{\"loss\":0.0},\"repairable\":true},{\"component_id\":\"mlv1.observer_action\",\"component_version\":\"1.0.0\",\"evidence_refs\":[\"evidence:observer_action\"],\"mandatory\":true,\"node_id\":\"observer_action\",\"node_type\":\"observer\",\"observed_attributes\":{\"registered\":true},\"registered_attributes\":{\"registered\":true},\"repairable\":false},{\"component_id\":\"mlv1.user_claim\",\"component_version\":\"1.0.0\",\"evidence_refs\":[\"evidence:user_claim\"],\"mandatory\":true,\"node_id\":\"user_claim\",\"node_type\":\"claim\",\"observed_attributes\":{\"evidence_bound\":true},\"registered_attributes\":{\"evidence_bound\":true},\"repairable\":false},{\"component_id\":\"mlv1.audit_artifact\",\"component_version\":\"1.0.0\",\"evidence_refs\":[\"evidence:audit_artifact\"],\"mandatory\":true,\"node_id\":\"audit_artifact\",\"node_type\":\"audit\",\"observed_attributes\":{\"artifact_sha256\":\"470a1dd30b3c9e6a1b38803b7f32f6c2200f8fd15f984a54ccc3c29f3862be12\",\"plan_sha256\":\"dc758d1762500f6b63775cc4211e182de71d401f69c1e9caa2f652ba93e16943\"},\"registered_attributes\":{\"artifact_sha256\":\"470a1dd30b3c9e6a1b38803b7f32f6c2200f8fd15f984a54ccc3c29f3862be12\",\"plan_sha256\":\"dc758d1762500f6b63775cc4211e182de71d401f69c1e9caa2f652ba93e16943\"},\"repairable\":true}],\"route_id\":\"route:S10_DETERMINISM:bcw:s10_determinism\",\"schema_version\":\"1.0\"},\"schema_version\":\"1.0\",\"validation\":{\"checked_contracts\":[\"INPUT_FEATURE_SCHEMA\",\"INPUT_VALUE_DOMAIN\",\"MODEL_VERSION\",\"MODEL_FEATURE_SCHEMA\",\"MODEL_EXPLAINER_VERSION\",\"EXPLANATION_OBJECT_ID\",\"EXPLANATION_OUTPUT_CONSISTENCY\",\"RULE_SOURCE_VERSION\",\"REQUIRED_PROVENANCE\",\"UNCERTAINTY_REPRESENTATION_COVERAGE\",\"REDUCTION_LOSS_LIMIT\",\"USER_CLAIM_EVIDENCE_BINDING\",\"AUDIT_ARTIFACT_HASH\"],\"graph_trace_sha256\":\"08373356eab071a2ff0a80733c8ee2f1ade411f688ac7d53a7017f4de7b76a20\",\"issues\":[],\"obligations\":[],\"passed_contracts\":[\"AUDIT_ARTIFACT_HASH\",\"EXPLANATION_OBJECT_ID\",\"EXPLANATION_OUTPUT_CONSISTENCY\",\"INPUT_FEATURE_SCHEMA\",\"INPUT_VALUE_DOMAIN\",\"MODEL_EXPLAINER_VERSION\",\"MODEL_FEATURE_SCHEMA\",\"MODEL_VERSION\",\"REDUCTION_LOSS_LIMIT\",\"REQUIRED_PROVENANCE\",\"RULE_SOURCE_VERSION\",\"UNCERTAINTY_REPRESENTATION_COVERAGE\",\"USER_CLAIM_EVIDENCE_BINDING\"],\"status\":\"valid\"}}",
+        "trace_sha256": "8aa6eed61977c61ad905f91ff73ad09093fc5f259f37139e0d4738fdcf56cb09",
+        "schema_version": "1.0"
+      }
+    }
+  },
+  "repair": null,
+  "canonical_sha256": "7ab88144daf5583ca627d32e62b06bce09eedea2c4ca26fd4a5849f7fbc7cada"
+}

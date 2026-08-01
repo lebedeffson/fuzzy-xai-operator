@@ -1,0 +1,80 @@
+{
+  "diagnosis_id": "diagnosis:mlp2:483dcbc01a0764233476",
+  "pipeline_status": "INVALID",
+  "failed_stage": "DATA_PREPARATION",
+  "source_component": "breast_cancer_dataset",
+  "violated_contract": "TARGET_NOT_IN_FEATURES",
+  "violated_contracts": [
+    {
+      "contract_id": "TARGET_NOT_IN_FEATURES",
+      "stage": "DATA_PREPARATION",
+      "component_id": "breast_cancer_dataset",
+      "passed": false,
+      "severity": "HIGH",
+      "action": "BLOCK",
+      "observed_value": false,
+      "expected_value": true,
+      "evidence_refs": [
+        "obs:f566343400e953eb88e3"
+      ]
+    }
+  ],
+  "affected_field": "target_not_in_features",
+  "observed_value": false,
+  "expected_value": true,
+  "severity": "HIGH",
+  "recommended_action": "BLOCK",
+  "evidence_refs": [
+    "obs:f566343400e953eb88e3"
+  ],
+  "nearest_confirmed_cause": {
+    "component": "breast_cancer_dataset",
+    "mutation": {
+      "feature_names": [
+        "mean radius",
+        "mean texture",
+        "mean perimeter",
+        "mean area",
+        "mean smoothness",
+        "mean compactness",
+        "mean concavity",
+        "mean concave points",
+        "mean symmetry",
+        "mean fractal dimension",
+        "radius error",
+        "texture error",
+        "perimeter error",
+        "area error",
+        "smoothness error",
+        "compactness error",
+        "concavity error",
+        "concave points error",
+        "symmetry error",
+        "fractal dimension error",
+        "worst radius",
+        "worst texture",
+        "worst perimeter",
+        "worst area",
+        "worst smoothness",
+        "worst compactness",
+        "worst concavity",
+        "worst concave points",
+        "worst symmetry",
+        "worst fractal dimension",
+        "target"
+      ],
+      "leaked_feature_matrix_sha256": "dfa6a8bea3fdf418b950b93b6226193880e58460b714dad3b55dfebce11883b2",
+      "target_leakage": true
+    }
+  },
+  "diagnostic_cut": {
+    "contracts": [
+      "TARGET_NOT_IN_FEATURES"
+    ],
+    "evidence_refs": [
+      "obs:f566343400e953eb88e3"
+    ]
+  },
+  "confidence": 1.0,
+  "observation_count": 28
+}

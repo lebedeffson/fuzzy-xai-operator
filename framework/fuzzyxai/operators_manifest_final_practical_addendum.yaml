@@ -1,0 +1,29 @@
+schema_version: "1.0"
+parent_manifest: framework/fuzzyxai/operators_manifest.yaml
+parent_manifest_sha256: 479fa55460426a1726f57a5ed5f745b0ad2e872eeefb21470dd2e3e865133949
+reason: Parent manifest is protected by the official H10-C5b method lock.
+operators:
+  - id: h10_c6_n.feature_noise_robustness
+    dissertation_ref: "H10-C6-N prospective numeric feature-noise extension"
+    callable: fuzzyxai.experiments.h10_c6_noise:run_noise_experiment
+    input_schema: LockedBankMarketingObjectsAndTrainOnlyNoiseScales
+    output_schema: H10C6NFeatureNoiseCutStabilityEvidence
+    tests: [tests/h10_c6_noise/test_h10_c6_noise.py]
+    artifacts: [results/h10_c6_noise/H10_C6_N_PROTOCOL_LOCK.json, results/h10_c6_noise/H10_C6_N_FINAL_STATUS.json]
+    visualization: []
+  - id: integration.mlflow_provenance
+    dissertation_ref: "engineering MLflow provenance integration"
+    callable: fuzzyxai.core.mlflow_route:build_mlflow_tabular_route
+    input_schema: LocalMlflowRunAndRegisteredModelPayload
+    output_schema: MlflowProvenanceOperatorRoute
+    tests: [tests/integration/test_mlflow_adapter.py, tests/integration/test_mlflow_integration.py]
+    artifacts: [results/integrations/MLFLOW_INTEGRATION_STATUS.json]
+    visualization: [operator_route]
+  - id: h10_c5_pilot.executable_recovery_selection
+    dissertation_ref: "H10-C5-PILOT descriptive executable-recovery pilot"
+    callable: fuzzyxai.experiments.h10_c5_pilot:run_pilot_selection
+    input_schema: PublishedParentIncidentOperationalFieldsWithoutGold
+    output_schema: H10C5PilotSelectionAndExecutionStatus
+    tests: [tests/h10_c5_pilot/test_h10_c5_pilot.py]
+    artifacts: [results/h10_c5_pilot/H10_C5_PILOT_PROTOCOL_LOCK.json, results/h10_c5_pilot/H10_C5_PILOT_FINAL_STATUS.json]
+    visualization: []

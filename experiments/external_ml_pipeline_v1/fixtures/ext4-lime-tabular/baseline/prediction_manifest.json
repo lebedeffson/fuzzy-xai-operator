@@ -1,0 +1,9 @@
+{
+  "input_sha256": "2567521d668e454f2c8d9ddd7a3c3f5009bfbae5c04ac4d77c50b2738f507a33",
+  "model_output": 0.75,
+  "model_sha256": "e846982b6a9ffec5e89c8379aa253b25ca7c8f816da0928e3fb7bedc3619f2d6",
+  "object_id": "ext4-lime-tabular:row:96",
+  "prediction": 1,
+  "run_id": "external:ext4-lime-tabular:baseline",
+  "selected_output": 1
+}

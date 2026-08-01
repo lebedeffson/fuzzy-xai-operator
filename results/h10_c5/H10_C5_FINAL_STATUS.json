@@ -1,0 +1,28 @@
+{
+  "accepted_incidents": 26,
+  "claim_scope": "natural_incident_localization_from_swe_bench_verified_metadata",
+  "development_repositories": [
+    "django/django",
+    "matplotlib/matplotlib",
+    "mwaskom/seaborn"
+  ],
+  "gold_leakage_audit": "PASS",
+  "held_out_repositories": [
+    "pallets/flask",
+    "pydata/xarray",
+    "pylint-dev/pylint",
+    "pytest-dev/pytest",
+    "scikit-learn/scikit-learn",
+    "sphinx-doc/sphinx",
+    "sympy/sympy"
+  ],
+  "incident_family_count": 6,
+  "local_project_execution_completed": false,
+  "localization_claim_allowed": false,
+  "natural_incident_recovery_claim": false,
+  "primary_endpoint": "source_and_contract_localization_success",
+  "protocol_id": "h10-c5-natural-incidents-v1",
+  "repository_count": 10,
+  "screened_candidates": 300,
+  "status": "H10_C5_NOT_SUPPORTED"
+}

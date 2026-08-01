@@ -1,5 +1,113 @@
 # FuzzyXAI Framework Release Status
 
+## H10-C7 Prospective Implementation
+
+- Protocol: `H10-C7-v1`, `LOCKED_BEFORE_DEVELOPMENT`
+- Status: `H10_C7_OPEN_REPLAY_NO_GO`
+- Scientific result: `NOT_EVALUATED`
+- Parent results modified: no
+- Open replay/held-out scoring: development-only/no
+
+The guided diagnosis implementation and fail-closed development tournament are
+available on `feat/h10-c7-guided-natural-diagnosis`. The disclosed 30-incident
+H10-C5c runtime package was replayed offline without project setup, new data or
+neural models. R5 reached Recall@10 `0.8667`, Recall@20 `0.9333`, MRR `0.5298`,
+contract macro-F1 `0.6239`, joint Hit@3 `0.4667`, and improved six of eight
+repositories. Selective precision was `0.8571`, but confirmation coverage was
+only `0.2333` against the locked `0.40` gate. The result is therefore
+`H10_C7_OPEN_REPLAY_NO_GO`; new development data and neural variants remain
+blocked. No H10-C7 scientific performance claim is permitted.
+
+## Chapter 4 Final Practical Closure
+
+- Date: `2026-07-27`
+- Branch: `feat/ch4-final-practical-closure`
+- Evidence implementation commit: `acc95bd`
+- CI run: `30264795977`
+- Full regression: `712 passed, 7 skipped`
+- Parent-result immutability: `PASS`, 114 files
+- Claim lint: `PASS`
+- Chapter/DOCX modified: no
+
+H10-C6-N completed on 1,000 deterministically selected UCI Bank Marketing
+objects with 3,000 registered perturbation comparisons. The median diagnostic
+cut Jaccard at sigma 0.05 was `1.0`, obligation-coverage stability was `1.0`,
+full recertification was `1.0`, and no new critical violation was created.
+The status is `H10_C6_N_SUPPORTED` only for cut stability under registered
+numeric feature noise with one fixed structural defect. It is not a general
+predictor, industrial, or human-factor robustness claim.
+
+The isolated MLflow 2.22.5 demonstration registered and loaded a local
+scikit-learn model, transferred run ID, model version, parameters, tags and
+artifact URI, built run-to-model-to-explanation provenance, and passed route
+verification. Its status is `MLFLOW_INTEGRATION_PASS`; it is an engineering
+integration, not a product comparison.
+
+H10-C5-PILOT ended as
+`H10_C5_PILOT_BLOCKED_NO_ELIGIBLE_INCIDENTS`. No published H10-C5/H10-C5b
+incident contained all preregistered executable-command, operation-argument,
+and digest-pinned-container inputs. No manual replacement or Gold-assisted
+execution was performed.
+
+H10-C5c remains `H10_C5C_DEVELOPMENT_GATE_FAIL` with scientific result
+`NOT_EVALUATED`; no held-out set was created or scored. The locked post-hoc
+oracle decomposition on disclosed development Gold completed only as an error
+analysis and indicated `RETRIEVAL_CONTRACT_INTERACTION`. Its values are upper
+bounds, not method performance.
+
+H9-E2E-v2 was not recalculated. The chapter-ready scope patch limits it to the
+registered local microbenchmark pipelines and explicitly excludes industrial
+latency, arbitrary hardware, external-explainer time, and human work time.
+
+## H10-C5c Prospective Evidence Retrieval
+
+- Protocol: `h10-c5c-evidence-retrieval-v1`
+- Protocol lock commit: `b82a614`
+- Implementation status: `IMPLEMENTED_AWAITING_DEVELOPMENT_DATA`
+- Parent H10-C5b result modified: no
+- Development scored: no
+- Held-out created: no
+- Held-out scored: no
+- Scientific result: `NOT_EVALUATED`
+
+The implementation adds per-test runtime evidence, evidence-grounded candidate
+retrieval, independent contract inference, distinct greedy/global rankings,
+fail-closed parse states and development-only coverage-risk calibration. The
+official H10-C5b files remain immutable and its 24 held-out incidents are used
+only for post-hoc error counts. H10-C5c has no confirmatory or transfer claim.
+The practical path now includes per-test executed slices, read-only evidence
+requests, bounded repair plans, isolated execution, FAIL_TO_PASS, regression
+and route recertification. These are implementation capabilities, not measured
+operational effectiveness.
+
+## H10-C5b Official Repository-Grounded Held-Out Result
+
+- Date: `2026-07-26`
+- Frozen scientific method:
+  `7aa72a19a70bdb5eedea520742f269bc6c26aeea`
+- Pre-score lock commit:
+  `361f350c4ac36f73e199ff7e91dd07f8f52dade3`
+- Held-out evidence: `24` incidents, `12` repositories, `24/24` traceback
+- Opening count: `1`
+- Gold leakage audit: `PASS`
+- H10-C5b: `H10_C5B_NOT_SUPPORTED`
+- H9-E2E-v2: `H9_E2E_V2_TARGET_MET`
+- Chapter modified: no
+
+The one-time official result did not show a primary-endpoint advantage:
+O_ROUTE and B_GREEDY both achieved joint file+symbol+contract Hit@3 of
+`0.041666666666666664`. The repository-cluster difference was `0.0`, with
+95% CI `[0.0; 0.0]` and bootstrap p `1.0`. O_ROUTE coverage was
+`0.20833333333333334`, below the locked minimum `0.70`. Its lower false
+localization rate cannot support the hypothesis because it was obtained with
+substantially more abstention.
+
+The earlier `H10_C5B_BLOCKED_REPOSITORY_DATA` package is retained as formative
+pre-runtime evidence. It is superseded by, but not rewritten into, the official
+negative result. Natural recovery remains disabled. H9-E2E-v2 remains positive
+only for the registered local microbenchmark pipelines; the original negative
+H9-E2E result remains unchanged.
+
 ## Final One-Zip Practical Closure
 
 - Release target: `v1.3.0` technical stable
@@ -362,3 +470,71 @@ does not upgrade human-comprehension, expert-usefulness, production-safety,
 clinical-validity, natural-fault-generalization, or organizational-effectiveness
 claims. Earlier invalidated and negative study records remain part of the
 evidence history.
+
+## H10-C7 Open Replay
+
+- source H10-C5c runtime artifact: SHA256
+  `7b7bd0bba2eb9eef3955d2b5e313ecf4bccd02703427117f741c382e7658db09`;
+- baseline replay: PASS for 30 incidents and 8 repositories;
+- best structural variant: R3;
+- Recall@10: `0.7000`;
+- Recall@20: `0.8333`;
+- contract macro-F1: `0.4070`;
+- coverage: `1.0000`;
+- false localization: `0.2333`;
+- repository improvements: `4/8`;
+- status: `H10_C7_OPEN_REPLAY_NO_GO`;
+- scientific result: `NOT_EVALUATED`.
+
+No neural model was executed and no new development or held-out incident was
+opened. The six-of-eight repository transfer criterion remains unchanged and
+blocks promotion despite the aggregate development improvements.
+
+## H10-C4 Operational Utility
+
+- Branch: `feat/h10-c4-operational-utility`
+- Protocol: `h10-c4-operational-utility-v1`
+- Parent H10-C3 artifacts: `54/54 PASS`, unchanged
+- Held-out controlled mutations: `120`
+- Actually executed plans: `480`
+- Cost configurations: `48`
+- Global-cut full recertification: `120/120`
+- Global-cut new critical violations: `0`
+- Selection-stable scenarios at the registered 80% threshold: `108/120`
+- Status: `H10_C4_SUPPORTED`
+
+H10-C4 is a separate prospective controlled-mutation experiment. It does not
+modify or reclassify H10-C3 and does not support claims about real incidents,
+engineer labor, human comprehension, organizational cost, or production
+safety.
+# H10-C7-R5C calibrated confirmation
+
+- Status: `H10_C7_OPEN_REPLAY_NO_GO`
+- Scientific result: `NOT_EVALUATED`
+- R5 retrieval modified: no
+- Calibration: leave-one-repository-out
+- Selected confirmer: C0 fail-closed
+- Confirmation coverage: `0.0`
+- Selective precision: `1.0` with zero confirmed diagnoses
+- Ready for development extension: no
+- Held-out created/scored: no/no
+- Full regression: `767 passed, 6 skipped`
+
+The source and evidence releases preserve the negative engineering gate. They
+do not claim H10-C7 support or natural-incident repair.
+
+## FuzzyXAI ML Vertical v1
+
+- Status: `FUZZYXAI_ML_VERTICAL_V1_IMPLEMENTED`
+- Acceptance scenarios: `10/10 PASS`
+- False certification: `0`
+- Representation selection accuracy: `1.0`
+- Observer action accuracy: `1.0`
+- Repair and recertification success: `1.0`
+- MLflow integration: `10/10` runs with nine required artifacts each
+- Scientific result: `NOT_A_NEW_SCIENTIFIC_HYPOTHESIS`
+
+The release exposes the vertical through REST, the existing layered NiceGUI
+application, and Docker Compose with local MLflow storage. It is a reproducible
+software demonstration and does not support clinical, human-time, or universal
+practical-utility claims. DOCX and PDF were not modified.

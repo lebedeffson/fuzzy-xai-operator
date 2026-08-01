@@ -1,0 +1,12 @@
+{
+  "fully_executable": false,
+  "operations": [
+    "rebuild_explanation_for_registered_model"
+  ],
+  "rollback": [
+    "restore_previous_artifact_snapshot"
+  ],
+  "step_ids": [
+    "step:issue:PREDICTION_OBJECT_BINDING:1"
+  ]
+}

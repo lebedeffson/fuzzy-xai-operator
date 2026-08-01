@@ -1,0 +1,38 @@
+{
+  "diagnosis": [
+    "violation_recall",
+    "local_contract_recall",
+    "cross_stage_contract_recall",
+    "stage_accuracy",
+    "contract_accuracy",
+    "component_accuracy",
+    "root_cause_accuracy",
+    "action_accuracy",
+    "false_certification",
+    "evidence_completeness"
+  ],
+  "global_analysis": [
+    "diagnostic_cut_size",
+    "reported_symptoms",
+    "proposed_repairs",
+    "redundant_repairs",
+    "root_cause_rank"
+  ],
+  "performance": [
+    "runtime_ms",
+    "graph_build_ms",
+    "audit_ms",
+    "cut_ms",
+    "recertification_ms",
+    "peak_rss_kb",
+    "artifact_bytes"
+  ],
+  "repair": [
+    "repair_success",
+    "target_contract_repaired",
+    "full_recertification",
+    "new_critical_violations",
+    "rollback_success"
+  ],
+  "unit": "pipeline x mutation_family; mutation levels are repeated controlled measurements"
+}

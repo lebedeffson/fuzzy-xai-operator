@@ -1,0 +1,59 @@
+{
+  "acceptance_statuses": [
+    "FUZZYXAI_ML_VERTICAL_V1_IMPLEMENTED",
+    "FUZZYXAI_ML_VERTICAL_V1_ACCEPTANCE_FAILED"
+  ],
+  "clinical_claims_allowed": false,
+  "dataset": {
+    "id": "sklearn.datasets.load_breast_cancer",
+    "purpose": "reproducible software demonstration only",
+    "split": {
+      "random_seed": 1729,
+      "test_fraction": 0.2,
+      "validation_fraction_of_remaining": 0.2
+    }
+  },
+  "explain_plan": "protocol/ml_vertical_v1/EXPLAIN_PLAN.yaml",
+  "explainer": {
+    "id": "shap.LinearExplainer",
+    "version": "0.51.0"
+  },
+  "forbidden_feature_channels": [
+    "gold_label",
+    "target",
+    "fix_commit",
+    "gold_patch",
+    "changed_files",
+    "changed_symbols"
+  ],
+  "implementation_scope": "tabular binary classification vertical",
+  "locked_artifacts": {
+    "acceptance_criteria_sha256": "917306fd1f3259bfdb078f1821bd3a187ee70c9c144c97299edc509cdee1bd6e",
+    "explain_plan_canonical_sha256": "dc758d1762500f6b63775cc4211e182de71d401f69c1e9caa2f652ba93e16943",
+    "explain_plan_file_sha256": "1cc8a057271aea49237d92ff9167696132ad9056c5f8ac0dc119b504464100e5"
+  },
+  "model": {
+    "class": "sklearn.linear_model.LogisticRegression",
+    "id": "bcw-logistic-regression",
+    "max_iter": 2000,
+    "random_state": 1729,
+    "version": "1.0.0"
+  },
+  "protocol_id": "FuzzyXAI-ML-Vertical-v1",
+  "registered_scenarios": [
+    "S1_NORMAL",
+    "S2_EXPLAINER_VERSION_MISMATCH",
+    "S3_MISSING_REQUIRED_FEATURE",
+    "S4_MODEL_RULE_CONFLICT",
+    "S5_INTERVAL_UNCERTAINTY",
+    "S6_MULTILEVEL_UNCERTAINTY",
+    "S7_REDUCTION_LOSS_EXCEEDED",
+    "S8_INCOMPLETE_PROVENANCE",
+    "S9_REGISTERED_REPAIR",
+    "S10_DETERMINISM"
+  ],
+  "scientific_result": "NOT_A_NEW_SCIENTIFIC_HYPOTHESIS",
+  "source_base_commit": "192fab11eca2bb754f479e6fe0a82c99f200acd4",
+  "status": "LOCKED_BEFORE_IMPLEMENTATION",
+  "user_time_claims_allowed": false
+}

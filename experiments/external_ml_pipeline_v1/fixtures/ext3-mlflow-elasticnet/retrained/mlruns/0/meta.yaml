@@ -1,0 +1,6 @@
+artifact_location: file:///home/lebedeffson/Code/fuzzy-xai-external-ml-pipeline-v1/experiments/external_ml_pipeline_v1/fixtures/ext3-mlflow-elasticnet/retrained/mlruns/0
+creation_time: 1785584979407
+experiment_id: '0'
+last_update_time: 1785584979407
+lifecycle_stage: active
+name: Default

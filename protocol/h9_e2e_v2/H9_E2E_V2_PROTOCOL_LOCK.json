@@ -1,0 +1,54 @@
+{
+  "protocol_id": "h9-e2e-v2-optimized-evidence-path",
+  "parent_result": "h9-e2e-latency-v1",
+  "parent_result_modified": false,
+  "status": "LOCKED_BEFORE_IMPLEMENTATION",
+  "pipelines": [
+    "tabular_shap",
+    "image_gradcam",
+    "text_token_masking"
+  ],
+  "modes": [
+    "online",
+    "full"
+  ],
+  "warmup_runs": 20,
+  "measured_repetitions": 30,
+  "batch_sizes": [
+    1,
+    8,
+    32
+  ],
+  "online_targets_ms_per_object": {
+    "median": 0.10,
+    "p95": 0.50
+  },
+  "relative_targets": {
+    "apply_only_when_model_plus_explainer_median_ms_at_least": 1.0,
+    "median": 0.10,
+    "p95": 0.15
+  },
+  "required_stage_timers": [
+    "normalize_ms",
+    "prediction_digest_ms",
+    "explanation_digest_ms",
+    "contract_check_ms",
+    "route_build_ms",
+    "cut_search_ms",
+    "proof_trace_ms",
+    "serialization_ms"
+  ],
+  "required_implementations": [
+    "binary_tensor_digest",
+    "merkle_root",
+    "static_artifact_cache",
+    "batch_native_api",
+    "online_full_separation"
+  ],
+  "human_time_claim": false,
+  "allowed_final_statuses": [
+    "H9_E2E_V2_TARGET_MET",
+    "H9_E2E_V2_TARGET_NOT_MET",
+    "H9_E2E_V2_INCONCLUSIVE"
+  ]
+}

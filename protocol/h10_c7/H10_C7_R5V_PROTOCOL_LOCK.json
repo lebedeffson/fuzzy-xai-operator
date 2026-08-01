@@ -1,0 +1,25 @@
+{
+  "allowed_models": [
+    "V0_FORMAL_PAIR_VERIFIER",
+    "V1_COMPACT_PAIR_MODEL"
+  ],
+  "audit_first": true,
+  "expected_alignment": {
+    "correct_pairs_in_top_3": 14,
+    "correct_top_1_pairs": 11,
+    "misaligned_old_positive_labels": 3
+  },
+  "held_out_created": false,
+  "held_out_scored": false,
+  "method_parent": "H10-C7-R5",
+  "pair_target": "file_path + symbol + evaluation_contract_family",
+  "protocol_id": "H10-C7-R5V",
+  "retrieval_modified": false,
+  "scientific_result": "NOT_EVALUATED",
+  "status": "LOCKED_BEFORE_PAIR_MODEL_EXECUTION",
+  "stop_conditions": [
+    "target alignment audit differs from expected values",
+    "candidate-specific value provenance unavailable for the majority of pairs"
+  ],
+  "validation": "leave_one_repository_out"
+}

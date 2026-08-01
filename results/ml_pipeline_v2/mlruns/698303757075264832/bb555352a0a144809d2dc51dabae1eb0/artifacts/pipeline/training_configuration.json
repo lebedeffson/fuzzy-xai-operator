@@ -1,0 +1,11 @@
+{
+  "class": "LogisticRegression",
+  "solver": "lbfgs",
+  "penalty": "deprecated",
+  "C": 1.0,
+  "max_iter": 2000,
+  "random_state": 1729,
+  "class_weight": null,
+  "sklearn": "1.9.0",
+  "configuration_sha256": "f72bbde93f0b50126b8592d4993f21b174e7eb6a237dc5c29a4f405f78ae8a31"
+}

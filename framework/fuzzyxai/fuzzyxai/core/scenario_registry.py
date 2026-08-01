@@ -4,6 +4,7 @@ from typing import Callable
 
 from .types import AdaptedInput, OperatorNode, OperatorRoute
 from .external_tabular_route import build_external_wine_classification_route
+from .mlflow_route import build_mlflow_tabular_route
 from .git_info import get_source_commit
 
 
@@ -143,4 +144,5 @@ SCENARIO_BUILDERS: dict[str, Callable[[AdaptedInput], OperatorRoute]] = {
     "beacon_xai": build_beacon_xai_route,
     "gis_integro": build_gis_integro_route,
     "external_wine_classification": build_external_wine_classification_route,
+    "mlflow_tabular_classification": build_mlflow_tabular_route,
 }

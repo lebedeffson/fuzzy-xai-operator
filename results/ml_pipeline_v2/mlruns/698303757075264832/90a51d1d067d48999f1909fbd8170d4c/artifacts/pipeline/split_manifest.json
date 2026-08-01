@@ -1,0 +1,17 @@
+{
+  "random_state": 1729,
+  "strategy": "two-stage stratified",
+  "stratification": "encoded_target",
+  "train_size": 364,
+  "validation_size": 91,
+  "test_size": 114,
+  "train_ids_sha256": "d96d63ac85a124109a38337843ea08b792d579afb5e10d85d232020ce67fb3bb",
+  "validation_ids_sha256": "8b5b202513f59d09f2f3e9ca2a2ef9042a64e0568d4e04dd8b94adc7419ffbed",
+  "test_ids_sha256": "02c724240c434396ea6f9734d86e87eac81037149808c91b665af78291f7dcf9",
+  "intersection_counts": {
+    "train_validation": 0,
+    "train_test": 0,
+    "validation_test": 0
+  },
+  "split_sha256": "5cb8248a79fe2464c45575cdb50c2dd1ba887c819311031b970fa10adb6afc8e"
+}

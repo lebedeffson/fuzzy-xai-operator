@@ -1,0 +1,31 @@
+{
+  "status": "PASS",
+  "focused_tests": {
+    "passed": 66,
+    "failed": 0
+  },
+  "full_regression": {
+    "passed": 895,
+    "skipped": 5,
+    "failed": 0,
+    "runtime_seconds": 92.59
+  },
+  "ruff": "PASS",
+  "compileall": "PASS",
+  "claim_lint": "PASS",
+  "operator_manifest": {
+    "status": "PASS",
+    "operator_count": 41
+  },
+  "protocol_sha256_manifest": "PASS",
+  "parent_immutability": {
+    "status": "PASS",
+    "checked_files": 2142
+  },
+  "mlflow_runs": {
+    "expected": 162,
+    "observed": 162,
+    "unique_run_ids": 162
+  },
+  "docx_pdf_modified": false
+}

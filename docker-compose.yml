@@ -1,5 +1,70 @@
+x-ml-vertical: &ml-vertical
+  build:
+    context: .
+    dockerfile: Dockerfile.ml-vertical
+  image: fuzzyxai-ml-pipeline-v2:local
+  restart: unless-stopped
+
 services:
+  api:
+    <<: *ml-vertical
+    command: ["python", "-m", "uvicorn", "fuzzyxai.ml_vertical.api:app", "--host", "0.0.0.0", "--port", "8000"]
+    environment:
+      FUZZYXAI_RUN_DIR: /app/results/ml_vertical_v1/runtime
+      FUZZYXAI_PIPELINE_RUN_DIR: /app/results/ml_pipeline_v2/runtime
+      FUZZYXAI_GIT_COMMIT: ${FUZZYXAI_GIT_COMMIT:-unavailable}
+      MLFLOW_TRACKING_URI: http://mlflow:5000
+    ports:
+      - "${FUZZYXAI_API_PORT:-8000}:8000"
+    volumes:
+      - ml-results:/app/results/ml_vertical_v1/runtime
+      - ml-pipeline-results:/app/results/ml_pipeline_v2/runtime
+    depends_on:
+      mlflow:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/ready', timeout=5)"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+
+  ui:
+    <<: *ml-vertical
+    command: ["python", "-m", "apps.layered_demo", "--port", "8092", "--ml-vertical-only"]
+    environment:
+      FUZZYXAI_API_URL: http://api:8000
+    ports:
+      - "${FUZZYXAI_UI_PORT:-8092}:8092"
+    depends_on:
+      api:
+        condition: service_healthy
+
+  mlflow:
+    <<: *ml-vertical
+    command:
+      - mlflow
+      - server
+      - --host
+      - 0.0.0.0
+      - --port
+      - "5000"
+      - --backend-store-uri
+      - sqlite:////app/results/ml_pipeline_v2/mlflow.db
+      - --default-artifact-root
+      - /app/results/ml_pipeline_v2/mlruns
+    ports:
+      - "${MLFLOW_PORT:-5001}:5000"
+    volumes:
+      - ml-results:/app/results/ml_vertical_v1
+      - ml-pipeline-results:/app/results/ml_pipeline_v2
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:5000/health', timeout=5)"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+
   reproduce:
+    profiles: ["research"]
     build:
       context: .
       dockerfile: Dockerfile
@@ -17,3 +82,7 @@ services:
       - ./dissertation_artifacts:/app/dissertation_artifacts
       - ./reports/empirical_validation:/app/reports/empirical_validation
       - ./release_artifacts:/app/release_artifacts
+
+volumes:
+  ml-results:
+  ml-pipeline-results:

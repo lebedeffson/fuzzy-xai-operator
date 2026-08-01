@@ -1,0 +1,28 @@
+{
+  "checks": {
+    "gold_leakage_zero": true,
+    "hashes": true,
+    "image_digests_locked": true,
+    "image_tags_match": true,
+    "images_registered_available": true,
+    "incident_count": true,
+    "incident_order": true,
+    "selection_image_ids": true,
+    "selection_registry_ids": true,
+    "unique_incidents": true
+  },
+  "development_scored": false,
+  "forbidden_observable_paths": [],
+  "hash_checks": {
+    "image_lock": true,
+    "runtime_registry": true,
+    "selection": true,
+    "source_evidence": true
+  },
+  "held_out_created": false,
+  "held_out_scored": false,
+  "incident_count": 43,
+  "repository_count": 32,
+  "scientific_result": "NOT_EVALUATED",
+  "status": "R10_RECOLLECTION_INPUT_AUDIT_PASS"
+}

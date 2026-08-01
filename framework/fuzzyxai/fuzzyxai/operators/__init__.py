@@ -1,5 +1,19 @@
 from .actions import select_action
 from .alignment import compute_alignment
+from .base import (
+    DiagnosticOperator,
+    FunctionalDiagnosticOperator,
+    OperatorContract,
+    OperatorExecutionError,
+    RouteState,
+    VerificationResult,
+)
+from .composition import (
+    ComposedDiagnosticOperator,
+    ExplanationArtifact,
+    compose_operators,
+    route_explanation_artifacts,
+)
 from .contracts import (
     ActionResult,
     AlignmentInput,
@@ -30,4 +44,14 @@ __all__ = [
     "ActionResult",
     "get_operator",
     "list_operators",
+    "DiagnosticOperator",
+    "FunctionalDiagnosticOperator",
+    "OperatorContract",
+    "OperatorExecutionError",
+    "RouteState",
+    "VerificationResult",
+    "ComposedDiagnosticOperator",
+    "ExplanationArtifact",
+    "compose_operators",
+    "route_explanation_artifacts",
 ]

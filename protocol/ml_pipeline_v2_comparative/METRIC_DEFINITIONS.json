@@ -1,0 +1,23 @@
+{
+  "protocol_id": "FUZZYXAI_ML_PIPELINE_V2_COMPARATIVE_V1",
+  "metrics": {
+    "violation_detection_accuracy": "mean(detected equals expected_violation_present)",
+    "stage_localization_accuracy": "mean(stage equals expected_stage; null equals null for registered valid scenarios)",
+    "contract_identification_accuracy": "mean(contract_id equals expected_contract_id; null equals null for registered valid scenarios)",
+    "component_localization_accuracy": "mean(component_id equals expected_component_id; null equals null for registered valid scenarios)",
+    "action_accuracy": "mean(action equals expected_action)",
+    "false_certification_rate": "mean(expected violation and not recertified and (pipeline_status VALID or action ACCEPT))",
+    "abstention_rate": "mean(abstained)",
+    "evidence_completeness": "mean of seven-field completeness: observed, expected, source URI, stage, component, contract, observation SHA256; no-violation rows are not-applicable complete",
+    "repair_success": "among five registered repair scenarios, repair executed and target contract repaired",
+    "full_recertification_success": "among five registered repair scenarios, full recertification true",
+    "runtime_ms": "mode decision time only; excludes pipeline execution, Docker startup and MLflow UI"
+  },
+  "statistics": {
+    "paired_binary_test": "two-sided exact McNemar",
+    "paired_interval": "scenario paired bootstrap percentile 95% CI",
+    "bootstrap_seed": 1729,
+    "bootstrap_iterations": 10000,
+    "correction": "Holm across preregistered main comparison tests"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "mlflow_version": "2.22.5",
+  "model_sha256": "5aeca8a76da833f3e36730b97c91d178f15ef63eeeb5694bb453c1fa27d8f657",
+  "python_version": "3.11.15",
+  "registered_model_version": "baseline",
+  "run_id": "external:ext2-shap-tree-explainer:baseline",
+  "shap_version": "0.51.0",
+  "sklearn_version": "1.9.0",
+  "variant": "baseline"
+}

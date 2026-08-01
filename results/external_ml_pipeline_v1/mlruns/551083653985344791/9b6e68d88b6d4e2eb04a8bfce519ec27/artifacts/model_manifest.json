@@ -1,0 +1,20 @@
+{
+  "artifact_path": "model.pkl",
+  "artifact_sha256": "252bbdab43b5e90275eef589b5191d086bea3299730f5f5b3865f01ca5959f9d",
+  "feature_count": 10,
+  "feature_names": [
+    "age",
+    "sex",
+    "bmi",
+    "bp",
+    "s1",
+    "s2",
+    "s3",
+    "s4",
+    "s5",
+    "s6"
+  ],
+  "model_class": "ElasticNet",
+  "model_version": "retrained",
+  "registered_artifact_sha256": "252bbdab43b5e90275eef589b5191d086bea3299730f5f5b3865f01ca5959f9d"
+}

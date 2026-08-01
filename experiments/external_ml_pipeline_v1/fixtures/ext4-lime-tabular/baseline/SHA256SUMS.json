@@ -1,0 +1,11 @@
+{
+  "dataset_manifest.json": "c139b029e2f1c473fb789156cca66a944d5a9c8a4fc52898cbb5059bee4fa290",
+  "explanation_manifest.json": "c4e5e903ab1827b3a8981a5dc3eec5fb71f5cda9d1619b35a4f37a5e2ec52e89",
+  "model.pkl": "e846982b6a9ffec5e89c8379aa253b25ca7c8f816da0928e3fb7bedc3619f2d6",
+  "model_manifest.json": "b7251b963d5ed0264719ca029d071bf3e49a30a7a30ebcd380002e7b307071d2",
+  "pipeline_manifest.json": "0db7ffa62e455cd981e1c476519a91885a3da2d0f26237a4cc277b4bed830d5f",
+  "prediction_manifest.json": "6bb37093dc730d625a19ae742197834e609b60d5f9e601a0b99d6d9a66d86b5c",
+  "preprocessor_manifest.json": "9d4843db2e6b5ad2baed9c5aad34fc24b43f8b93b4940d542383bf863a80e417",
+  "run_manifest.json": "4f6e588b0dddc4050e688a91bfa440f3bf05c7f2ab6e9604c1c4d9a165e698fb",
+  "split_manifest.json": "18a45d54c20f3849dda3b2dc86475386b7d24b0f02186104b7ef1035905ce226"
+}

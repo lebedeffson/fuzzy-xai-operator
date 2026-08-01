@@ -1,0 +1,171 @@
+{
+  "run_id": "mlp2:82c5a89603ac891d35bf",
+  "scenario_id": "S9_REGISTERED_REPAIR",
+  "action": "ACCEPT",
+  "pipeline_status": "INVALID",
+  "canonical_source": "MLPipelineService",
+  "diagnosis": {
+    "diagnosis_id": "diagnosis:mlp2:82c5a89603ac891d35bf",
+    "pipeline_status": "INVALID",
+    "failed_stage": "POST_HOC_EXPLANATION",
+    "source_component": "logistic_regression",
+    "violated_contract": "MODEL_EXPLAINER_VERSION",
+    "violated_contracts": [
+      {
+        "contract_id": "MODEL_EXPLAINER_VERSION",
+        "stage": "POST_HOC_EXPLANATION",
+        "component_id": "logistic_regression",
+        "passed": false,
+        "severity": "MEDIUM",
+        "action": "ACCEPT",
+        "observed_value": "legacy_vertical_violation",
+        "expected_value": "registered_contract_satisfied",
+        "evidence_refs": [
+          "obs:e1a400f9fd5df6ab27ae"
+        ]
+      }
+    ],
+    "affected_field": "model_explainer_version",
+    "observed_value": "legacy_vertical_violation",
+    "expected_value": "registered_contract_satisfied",
+    "severity": "MEDIUM",
+    "recommended_action": "ACCEPT",
+    "evidence_refs": [
+      "obs:e1a400f9fd5df6ab27ae"
+    ],
+    "nearest_confirmed_cause": {
+      "component": "logistic_regression",
+      "mutation": {}
+    },
+    "diagnostic_cut": {
+      "contracts": [
+        "MODEL_EXPLAINER_VERSION"
+      ],
+      "evidence_refs": [
+        "obs:e1a400f9fd5df6ab27ae"
+      ]
+    },
+    "confidence": 1.0,
+    "observation_count": 29
+  },
+  "representation": {
+    "representation_id": "F0",
+    "membership": {
+      "low": 0.9994460852969871,
+      "medium": 0.0,
+      "high": 0.0
+    },
+    "covered_uncertainties": [
+      "u_ling",
+      "u_num"
+    ],
+    "cognitive_complexity": 1.0,
+    "computational_complexity": 1.0,
+    "selection_reason": "point evidence is complete and has no registered conflict"
+  },
+  "repair_plan": {
+    "plan_id": "repair:route:S9_REGISTERED_REPAIR:bcw:s9_registered_repair:81963065d947",
+    "cut": {
+      "defect_atoms": [
+        {
+          "subject_kind": "node",
+          "subject_id": "explainer",
+          "field": null,
+          "violation_code": "source_component",
+          "repairable": true,
+          "repair_cost": 0.1
+        }
+      ],
+      "affected_nodes": [
+        "explainer"
+      ],
+      "total_cost": 0.1,
+      "optimal": true,
+      "solver": "exact_branch_and_bound",
+      "covered_obligations": [
+        "MODEL_EXPLAINER_VERSION"
+      ],
+      "uncovered_obligations": [],
+      "equivalent_optimal_cuts": [
+        [
+          {
+            "subject_kind": "node",
+            "subject_id": "explainer",
+            "field": null,
+            "violation_code": "source_component",
+            "repairable": true,
+            "repair_cost": 0.1
+          }
+        ],
+        [
+          {
+            "subject_kind": "node",
+            "subject_id": "explainer",
+            "field": "model_version",
+            "violation_code": "contract_mismatch",
+            "repairable": true,
+            "repair_cost": 0.1
+          }
+        ]
+      ],
+      "runtime_ms": 0.0,
+      "enumeration_complete": true,
+      "truncated": false,
+      "lower_bound_count": 2,
+      "optimality_proven": true,
+      "lower_bound": 0.1,
+      "optimality_gap": 0.0
+    },
+    "steps": [
+      {
+        "step_id": "step:issue:MODEL_EXPLAINER_VERSION:1",
+        "title": "Повторно построить объяснительный артефакт",
+        "target": {
+          "subject_kind": "node",
+          "subject_id": "explainer",
+          "field": "model_version",
+          "violation_code": "contract_mismatch",
+          "repairable": true,
+          "repair_cost": 4.0
+        },
+        "provider_id": "explainer.rerun",
+        "operation": "rerun_explainer_with_registered_components",
+        "parameters": {
+          "issue_id": "issue:MODEL_EXPLAINER_VERSION",
+          "contract_id": "MODEL_EXPLAINER_VERSION",
+          "registered_source_ref": "registry://explainer"
+        },
+        "preconditions": [
+          "registered_source_available:explainer"
+        ],
+        "depends_on": [],
+        "expected_postconditions": [
+          "contract_satisfied:MODEL_EXPLAINER_VERSION"
+        ],
+        "verification_checks": [
+          "revalidate:MODEL_EXPLAINER_VERSION",
+          "rebuild_route",
+          "recertify_route"
+        ],
+        "fallback_step_ids": [],
+        "rollback_operation": "restore_previous_artifact_snapshot",
+        "estimated_cost": 4.0,
+        "requires_human_approval": true,
+        "executable": false
+      }
+    ],
+    "total_estimated_cost": 4.0,
+    "fully_executable": false,
+    "unresolved_issues": [],
+    "trace_sha256": "81963065d94726a799ccdf085806b1d1d193e8d1777992d13a7adb553d447279"
+  },
+  "recertification": {
+    "repair_executed": true,
+    "target_contract_repaired": true,
+    "full_recertification": true,
+    "contracts_rechecked_count": 28,
+    "new_critical_violations": 0,
+    "rollback_verified": true,
+    "post_repair_pipeline_status": "VALID"
+  }
+}

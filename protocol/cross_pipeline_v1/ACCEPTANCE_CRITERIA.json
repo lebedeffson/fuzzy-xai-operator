@@ -1,0 +1,15 @@
+{
+  "evidence_completeness": 1.0,
+  "maximum_false_certification": 0,
+  "maximum_new_critical_violations": 0,
+  "minimum_completed_cases": 160,
+  "minimum_contract_accuracy": 0.95,
+  "minimum_cross_stage_contract_recall": 0.95,
+  "minimum_full_recertification": 0.95,
+  "minimum_pipelines": 4,
+  "minimum_repair_success": 0.95,
+  "minimum_root_cause_accuracy": 0.9,
+  "minimum_stage_accuracy": 0.95,
+  "requires_graph_advantage": true,
+  "requires_local_advantage": true
+}

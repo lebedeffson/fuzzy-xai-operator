@@ -1,0 +1,1943 @@
+{
+  "ablation_requirement": "recompute candidate ordering from stored per-channel contributions; multiplying aggregate score is prohibited",
+  "frozen_channel_weights": {
+    "bm25": 1.0,
+    "exact_symbol": 1.5,
+    "executed_slice": 1.35,
+    "h10_c5c_retriever": 1.25,
+    "repograph": 0.9
+  },
+  "rows": [
+    {
+      "candidate_rank": 1,
+      "channel_consensus": 5,
+      "channel_contributions": {
+        "bm25": 0.4082482904638631,
+        "exact_symbol": 0.5669467095138409,
+        "executed_slice": 0.9545941546018392,
+        "h10_c5c_retriever": 0.33407655239053047,
+        "repograph": 0.14795908857482157
+      },
+      "channel_ranks": {
+        "bm25": 6,
+        "exact_symbol": 7,
+        "executed_slice": 2,
+        "h10_c5c_retriever": 14,
+        "repograph": 37
+      },
+      "file_path": "fastapi/routing.py",
+      "incident_id": "bugsinpy-fastapi-13",
+      "pair_target": 0,
+      "reservoir_contribution_sum": 2.411824795544895,
+      "stored_score": 5.262465186539749,
+      "symbol": "APIRouter.get"
+    },
+    {
+      "candidate_rank": 2,
+      "channel_consensus": 5,
+      "channel_contributions": {
+        "bm25": 0.19245008972987526,
+        "exact_symbol": 1.5,
+        "executed_slice": 0.3181980515339464,
+        "h10_c5c_retriever": 0.5590169943749475,
+        "repograph": 0.40249223594996214
+      },
+      "channel_ranks": {
+        "bm25": 27,
+        "exact_symbol": 1,
+        "executed_slice": 18,
+        "h10_c5c_retriever": 5,
+        "repograph": 5
+      },
+      "file_path": "fastapi/openapi/utils.py",
+      "incident_id": "bugsinpy-fastapi-13",
+      "pair_target": 0,
+      "reservoir_contribution_sum": 2.9721573715887315,
+      "stored_score": 4.87218962919428,
+      "symbol": "get_openapi_path"
+    },
+    {
+      "candidate_rank": 3,
+      "channel_consensus": 5,
+      "channel_contributions": {
+        "bm25": 0.1690308509457033,
+        "exact_symbol": 0.6123724356957946,
+        "executed_slice": 0.20352015758999045,
+        "h10_c5c_retriever": 1.25,
+        "repograph": 0.6363961030678927
+      },
+      "channel_ranks": {
+        "bm25": 35,
+        "exact_symbol": 6,
+        "executed_slice": 44,
+        "h10_c5c_retriever": 1,
+        "repograph": 2
+      },
+      "file_path": "fastapi/applications.py",
+      "incident_id": "bugsinpy-fastapi-13",
+      "pair_target": 0,
+      "reservoir_contribution_sum": 2.871319547299381,
+      "stored_score": 4.6873238109388105,
+      "symbol": "FastAPI"
+    },
+    {
+      "candidate_rank": 1,
+      "channel_consensus": 5,
+      "channel_contributions": {
+        "bm25": 0.7071067811865475,
+        "exact_symbol": 0.4008918628686366,
+        "executed_slice": 0.7794228634059949,
+        "h10_c5c_retriever": 0.3952847075210474,
+        "repograph": 0.2182820625326997
+      },
+      "channel_ranks": {
+        "bm25": 2,
+        "exact_symbol": 14,
+        "executed_slice": 3,
+        "h10_c5c_retriever": 10,
+        "repograph": 17
+      },
+      "file_path": "tornado/concurrent.py",
+      "incident_id": "bugsinpy-tornado-16",
+      "pair_target": 0,
+      "reservoir_contribution_sum": 2.500988277514926,
+      "stored_score": 5.614329035053172,
+      "symbol": "Future.result"
+    },
+    {
+      "candidate_rank": 2,
+      "channel_consensus": 4,
+      "channel_contributions": {
+        "bm25": 0.4472135954999579,
+        "exact_symbol": 0.5303300858899106,
+        "executed_slice": 0.9545941546018392,
+        "repograph": 0.3
+      },
+      "channel_ranks": {
+        "bm25": 5,
+        "exact_symbol": 8,
+        "executed_slice": 2,
+        "repograph": 9
+      },
+      "file_path": "tornado/ioloop.py",
+      "incident_id": "bugsinpy-tornado-16",
+      "pair_target": 0,
+      "reservoir_contribution_sum": 2.2321378359917077,
+      "stored_score": 5.377302791148911,
+      "symbol": "IOLoop.run_sync"
+    },
+    {
+      "candidate_rank": 3,
+      "channel_consensus": 4,
+      "channel_contributions": {
+        "bm25": 0.15617376188860607,
+        "exact_symbol": 0.3441236008058426,
+        "executed_slice": 1.35,
+        "repograph": 0.1341640786499874
+      },
+      "channel_ranks": {
+        "bm25": 41,
+        "exact_symbol": 19,
+        "executed_slice": 1,
+        "repograph": 45
+      },
+      "file_path": "tornado/gen.py",
+      "incident_id": "bugsinpy-tornado-16",
+      "pair_target": 0,
+      "reservoir_contribution_sum": 1.9844614413444361,
+      "stored_score": 5.280239407531335,
+      "symbol": "Runner.run"
+    },
+    {
+      "candidate_rank": 1,
+      "channel_consensus": 3,
+      "channel_contributions": {
+        "bm25": 0.2672612419124244,
+        "exact_symbol": 0.3441236008058426,
+        "executed_slice": 1.35
+      },
+      "channel_ranks": {
+        "bm25": 14,
+        "exact_symbol": 19,
+        "executed_slice": 1
+      },
+      "file_path": "black.py",
+      "incident_id": "bugsinpy-black-18",
+      "pair_target": 1,
+      "reservoir_contribution_sum": 1.961384842718267,
+      "stored_score": 4.743121724941192,
+      "symbol": "format_file_in_place"
+    },
+    {
+      "candidate_rank": 2,
+      "channel_consensus": 5,
+      "channel_contributions": {
+        "bm25": 0.14285714285714285,
+        "exact_symbol": 0.17556172079419585,
+        "executed_slice": 0.7794228634059949,
+        "h10_c5c_retriever": 0.33407655239053047,
+        "repograph": 0.5196152422706632
+      },
+      "channel_ranks": {
+        "bm25": 49,
+        "exact_symbol": 73,
+        "executed_slice": 3,
+        "h10_c5c_retriever": 14,
+        "repograph": 3
+      },
+      "file_path": "black.py",
+      "incident_id": "bugsinpy-black-18",
+      "pair_target": 0,
+      "reservoir_contribution_sum": 1.9515335217185272,
+      "stored_score": 4.688624944542666,
+      "symbol": "format_str"
+    },
+    {
+      "candidate_rank": 3,
+      "channel_consensus": 3,
+      "channel_contributions": {
+        "bm25": 0.1889822365046136,
+        "exact_symbol": 0.75,
+        "executed_slice": 0.9545941546018392
+      },
+      "channel_ranks": {
+        "bm25": 28,
+        "exact_symbol": 4,
+        "executed_slice": 2
+      },
+      "file_path": "black.py",
+      "incident_id": "bugsinpy-black-18",
+      "pair_target": 0,
+      "reservoir_contribution_sum": 1.8935763911064527,
+      "stored_score": 4.5721882733293775,
+      "symbol": "format_file_contents"
+    },
+    {
+      "candidate_rank": 1,
+      "channel_consensus": 4,
+      "channel_contributions": {
+        "bm25": 1.0,
+        "exact_symbol": 0.8660254037844387,
+        "executed_slice": 1.35,
+        "repograph": 0.9
+      },
+      "channel_ranks": {
+        "bm25": 1,
+        "exact_symbol": 3,
+        "executed_slice": 1,
+        "repograph": 1
+      },
+      "file_path": "tests/test_types.py",
+      "incident_id": "bugsinpy-thefuck-24",
+      "pair_target": 0,
+      "reservoir_contribution_sum": 4.116025403784439,
+      "stored_score": 7.500933948685231,
+      "symbol": "TestCorrectedCommand"
+    },
+    {
+      "candidate_rank": 2,
+      "channel_consensus": 5,
+      "channel_contributions": {
+        "bm25": 0.3333333333333333,
+        "exact_symbol": 1.0606601717798212,
+        "executed_slice": 0.675,
+        "h10_c5c_retriever": 0.8838834764831843,
+        "repograph": 0.2713602101199873
+      },
+      "channel_ranks": {
+        "bm25": 9,
+        "exact_symbol": 2,
+        "executed_slice": 4,
+        "h10_c5c_retriever": 2,
+        "repograph": 11
+      },
+      "file_path": "thefuck/types.py",
+      "incident_id": "bugsinpy-thefuck-24",
+      "pair_target": 0,
+      "reservoir_contribution_sum": 3.224237191716326,
+      "stored_score": 5.914530686249515,
+      "symbol": "SortedCorrectedCommandsSequence"
+    },
+    {
+      "candidate_rank": 3,
+      "channel_consensus": 4,
+      "channel_contributions": {
+        "exact_symbol": 0.11642257885594992,
+        "executed_slice": 0.6037383539249432,
+        "h10_c5c_retriever": 1.25,
+        "repograph": 0.31819805153394637
+      },
+      "channel_ranks": {
+        "exact_symbol": 166,
+        "executed_slice": 5,
+        "h10_c5c_retriever": 1,
+        "repograph": 8
+      },
+      "file_path": "thefuck/conf.py",
+      "incident_id": "bugsinpy-thefuck-24",
+      "pair_target": 0,
+      "reservoir_contribution_sum": 2.2883589843148395,
+      "stored_score": 4.797066778829257,
+      "symbol": "_DefaultRulesNames"
+    },
+    {
+      "candidate_rank": 1,
+      "channel_consensus": 2,
+      "channel_contributions": {
+        "exact_symbol": 0.8660254037844387,
+        "executed_slice": 1.35
+      },
+      "channel_ranks": {
+        "exact_symbol": 3,
+        "executed_slice": 1
+      },
+      "file_path": "youtube_dl/utils.py",
+      "incident_id": "bugsinpy-youtube-dl-13",
+      "pair_target": 1,
+      "reservoir_contribution_sum": 2.216025403784439,
+      "stored_score": 4.929114587078088,
+      "symbol": "urljoin"
+    },
+    {
+      "candidate_rank": 2,
+      "channel_consensus": 3,
+      "channel_contributions": {
+        "bm25": 0.35355339059327373,
+        "exact_symbol": 0.43301270189221935,
+        "h10_c5c_retriever": 0.7216878364870323
+      },
+      "channel_ranks": {
+        "bm25": 8,
+        "exact_symbol": 12,
+        "h10_c5c_retriever": 3
+      },
+      "file_path": "youtube_dl/downloader/rtmp.py",
+      "incident_id": "bugsinpy-youtube-dl-13",
+      "pair_target": 0,
+      "reservoir_contribution_sum": 1.5082539289725254,
+      "stored_score": 3.3051654493326432,
+      "symbol": "RtmpFD"
+    },
+    {
+      "candidate_rank": 3,
+      "channel_consensus": 3,
+      "channel_contributions": {
+        "exact_symbol": 0.09267030948228232,
+        "executed_slice": 0.9545941546018392,
+        "repograph": 0.18
+      },
+      "channel_ranks": {
+        "exact_symbol": 262,
+        "executed_slice": 2,
+        "repograph": 25
+      },
+      "file_path": "youtube_dl/utils.py",
+      "incident_id": "bugsinpy-youtube-dl-13",
+      "pair_target": 0,
+      "reservoir_contribution_sum": 1.2272644640841215,
+      "stored_score": 3.1507513027676737,
+      "symbol": "ContentTooShortError"
+    },
+    {
+      "candidate_rank": 1,
+      "channel_consensus": 3,
+      "channel_contributions": {
+        "executed_slice": 1.35,
+        "h10_c5c_retriever": 0.472455591261534,
+        "repograph": 0.5196152422706632
+      },
+      "channel_ranks": {
+        "executed_slice": 1,
+        "h10_c5c_retriever": 7,
+        "repograph": 3
+      },
+      "file_path": "pysnooper/variables.py",
+      "incident_id": "bugsinpy-PySnooper-2",
+      "pair_target": 0,
+      "reservoir_contribution_sum": 2.3420708335321976,
+      "stored_score": 4.546277640971722,
+      "symbol": "Attrs"
+    },
+    {
+      "candidate_rank": 2,
+      "channel_consensus": 4,
+      "channel_contributions": {
+        "exact_symbol": 0.21428571428571427,
+        "executed_slice": 0.9545941546018392,
+        "h10_c5c_retriever": 0.3952847075210474,
+        "repograph": 0.3
+      },
+      "channel_ranks": {
+        "exact_symbol": 49,
+        "executed_slice": 2,
+        "h10_c5c_retriever": 10,
+        "repograph": 9
+      },
+      "file_path": "pysnooper/variables.py",
+      "incident_id": "bugsinpy-PySnooper-2",
+      "pair_target": 0,
+      "reservoir_contribution_sum": 1.8641645764086008,
+      "stored_score": 3.343720226168716,
+      "symbol": "Exploding"
+    },
+    {
+      "candidate_rank": 3,
+      "channel_consensus": 4,
+      "channel_contributions": {
+        "exact_symbol": 0.3441236008058426,
+        "executed_slice": 0.4772970773009196,
+        "h10_c5c_retriever": 0.7216878364870323,
+        "repograph": 0.31819805153394637
+      },
+      "channel_ranks": {
+        "exact_symbol": 19,
+        "executed_slice": 8,
+        "h10_c5c_retriever": 3,
+        "repograph": 8
+      },
+      "file_path": "pysnooper/tracer.py",
+      "incident_id": "bugsinpy-PySnooper-2",
+      "pair_target": 0,
+      "reservoir_contribution_sum": 1.8613065661277408,
+      "stored_score": 3.229647323665985,
+      "symbol": "FileWriter"
+    },
+    {
+      "candidate_rank": 1,
+      "channel_consensus": 4,
+      "channel_contributions": {
+        "exact_symbol": 1.0606601717798212,
+        "executed_slice": 0.30971124072525835,
+        "h10_c5c_retriever": 1.25,
+        "repograph": 0.6363961030678927
+      },
+      "channel_ranks": {
+        "exact_symbol": 2,
+        "executed_slice": 19,
+        "h10_c5c_retriever": 1,
+        "repograph": 2
+      },
+      "file_path": "pandas/core/frame.py",
+      "incident_id": "bugsinpy-pandas-73",
+      "pair_target": 0,
+      "reservoir_contribution_sum": 3.2567675155729723,
+      "stored_score": 5.865600129160619,
+      "symbol": "DataFrame"
+    },
+    {
+      "candidate_rank": 2,
+      "channel_consensus": 4,
+      "channel_contributions": {
+        "bm25": 0.5,
+        "exact_symbol": 0.3441236008058426,
+        "executed_slice": 1.35,
+        "repograph": 0.18
+      },
+      "channel_ranks": {
+        "bm25": 4,
+        "exact_symbol": 19,
+        "executed_slice": 1,
+        "repograph": 25
+      },
+      "file_path": "pandas/tests/frame/test_arithmetic.py",
+      "incident_id": "bugsinpy-pandas-73",
+      "pair_target": 0,
+      "reservoir_contribution_sum": 2.374123600805843,
+      "stored_score": 5.416760945524903,
+      "symbol": "TestFrameArithmetic"
+    },
+    {
+      "candidate_rank": 3,
+      "channel_consensus": 3,
+      "channel_contributions": {
+        "bm25": 0.7071067811865475,
+        "exact_symbol": 1.5,
+        "executed_slice": 0.675
+      },
+      "channel_ranks": {
+        "bm25": 2,
+        "exact_symbol": 1,
+        "executed_slice": 4
+      },
+      "file_path": "pandas/tests/frame/test_arithmetic.py",
+      "incident_id": "bugsinpy-pandas-73",
+      "pair_target": 0,
+      "reservoir_contribution_sum": 2.8821067811865477,
+      "stored_score": 4.486381038116914,
+      "symbol": "TestFrameFlexArithmetic"
+    },
+    {
+      "candidate_rank": 1,
+      "channel_consensus": 5,
+      "channel_contributions": {
+        "bm25": 0.15811388300841897,
+        "exact_symbol": 1.0606601717798212,
+        "executed_slice": 1.35,
+        "h10_c5c_retriever": 1.25,
+        "repograph": 0.9
+      },
+      "channel_ranks": {
+        "bm25": 40,
+        "exact_symbol": 2,
+        "executed_slice": 1,
+        "h10_c5c_retriever": 1,
+        "repograph": 1
+      },
+      "file_path": "httpie/core.py",
+      "incident_id": "bugsinpy-httpie-3",
+      "pair_target": 0,
+      "reservoir_contribution_sum": 4.71877405478824,
+      "stored_score": 8.043970003385162,
+      "symbol": "main"
+    },
+    {
+      "candidate_rank": 2,
+      "channel_consensus": 4,
+      "channel_contributions": {
+        "bm25": 0.5773502691896258,
+        "exact_symbol": 1.5,
+        "executed_slice": 0.675,
+        "repograph": 0.40249223594996214
+      },
+      "channel_ranks": {
+        "bm25": 3,
+        "exact_symbol": 1,
+        "executed_slice": 4,
+        "repograph": 5
+      },
+      "file_path": "httpie/sessions.py",
+      "incident_id": "bugsinpy-httpie-3",
+      "pair_target": 0,
+      "reservoir_contribution_sum": 3.154842505139588,
+      "stored_score": 7.125620471326486,
+      "symbol": "get_response"
+    },
+    {
+      "candidate_rank": 3,
+      "channel_consensus": 4,
+      "channel_contributions": {
+        "bm25": 0.7071067811865475,
+        "exact_symbol": 0.8660254037844387,
+        "executed_slice": 0.6037383539249432,
+        "repograph": 0.16164477182409742
+      },
+      "channel_ranks": {
+        "bm25": 2,
+        "exact_symbol": 3,
+        "executed_slice": 5,
+        "repograph": 31
+      },
+      "file_path": "httpie/client.py",
+      "incident_id": "bugsinpy-httpie-3",
+      "pair_target": 0,
+      "reservoir_contribution_sum": 2.3385153107200267,
+      "stored_score": 6.301856068258272,
+      "symbol": "get_response"
+    },
+    {
+      "candidate_rank": 1,
+      "channel_consensus": 3,
+      "channel_contributions": {
+        "exact_symbol": 0.3127716210856122,
+        "executed_slice": 0.21899891852652945,
+        "h10_c5c_retriever": 1.25
+      },
+      "channel_ranks": {
+        "exact_symbol": 23,
+        "executed_slice": 38,
+        "h10_c5c_retriever": 1
+      },
+      "file_path": "fastapi/dependencies/utils.py",
+      "incident_id": "bugsinpy-fastapi-6",
+      "pair_target": 0,
+      "reservoir_contribution_sum": 1.7817705396121417,
+      "stored_score": 4.42738900371048,
+      "symbol": "request_params_to_args"
+    },
+    {
+      "candidate_rank": 2,
+      "channel_consensus": 3,
+      "channel_contributions": {
+        "exact_symbol": 0.3,
+        "executed_slice": 0.24246715773614616,
+        "h10_c5c_retriever": 0.8838834764831843
+      },
+      "channel_ranks": {
+        "exact_symbol": 25,
+        "executed_slice": 31,
+        "h10_c5c_retriever": 2
+      },
+      "file_path": "fastapi/dependencies/utils.py",
+      "incident_id": "bugsinpy-fastapi-6",
+      "pair_target": 0,
+      "reservoir_contribution_sum": 1.4263506342193304,
+      "stored_score": 4.113335219436632,
+      "symbol": "request_body_to_args"
+    },
+    {
+      "candidate_rank": 3,
+      "channel_consensus": 3,
+      "channel_contributions": {
+        "exact_symbol": 0.375,
+        "executed_slice": 0.4772970773009196,
+        "h10_c5c_retriever": 0.3125
+      },
+      "channel_ranks": {
+        "exact_symbol": 16,
+        "executed_slice": 8,
+        "h10_c5c_retriever": 16
+      },
+      "file_path": "fastapi/routing.py",
+      "incident_id": "bugsinpy-fastapi-6",
+      "pair_target": 0,
+      "reservoir_contribution_sum": 1.1647970773009195,
+      "stored_score": 4.088587218073777,
+      "symbol": "APIRouter.post"
+    },
+    {
+      "candidate_rank": 1,
+      "channel_consensus": 2,
+      "channel_contributions": {
+        "exact_symbol": 0.33541019662496846,
+        "executed_slice": 0.9545941546018392
+      },
+      "channel_ranks": {
+        "exact_symbol": 20,
+        "executed_slice": 2
+      },
+      "file_path": "tornado/testing.py",
+      "incident_id": "bugsinpy-tornado-15",
+      "pair_target": 0,
+      "reservoir_contribution_sum": 1.2900043512268076,
+      "stored_score": 5.270907900116399,
+      "symbol": "_TestMethodWrapper.__call__"
+    },
+    {
+      "candidate_rank": 2,
+      "channel_consensus": 2,
+      "channel_contributions": {
+        "exact_symbol": 0.10797236261230418,
+        "executed_slice": 1.35
+      },
+      "channel_ranks": {
+        "exact_symbol": 193,
+        "executed_slice": 1
+      },
+      "file_path": "tornado/testing.py",
+      "incident_id": "bugsinpy-tornado-15",
+      "pair_target": 0,
+      "reservoir_contribution_sum": 1.4579723626123042,
+      "stored_score": 4.688875911501896,
+      "symbol": "ExpectLog.__exit__"
+    },
+    {
+      "candidate_rank": 3,
+      "channel_consensus": 3,
+      "channel_contributions": {
+        "bm25": 0.2672612419124244,
+        "exact_symbol": 1.0606601717798212,
+        "executed_slice": 0.7794228634059949
+      },
+      "channel_ranks": {
+        "bm25": 14,
+        "exact_symbol": 2,
+        "executed_slice": 3
+      },
+      "file_path": "tornado/test/web_test.py",
+      "incident_id": "bugsinpy-tornado-15",
+      "pair_target": 0,
+      "reservoir_contribution_sum": 2.1073442770982407,
+      "stored_score": 3.448551003064055,
+      "symbol": "StaticFileTest.get_and_head"
+    },
+    {
+      "candidate_rank": 1,
+      "channel_consensus": 3,
+      "channel_contributions": {
+        "bm25": 0.7071067811865475,
+        "exact_symbol": 1.0606601717798212,
+        "executed_slice": 1.35
+      },
+      "channel_ranks": {
+        "bm25": 2,
+        "exact_symbol": 2,
+        "executed_slice": 1
+      },
+      "file_path": "tests/test_black.py",
+      "incident_id": "bugsinpy-black-5",
+      "pair_target": 0,
+      "reservoir_contribution_sum": 3.1177669529663685,
+      "stored_score": 4.798670501855959,
+      "symbol": "read_data"
+    },
+    {
+      "candidate_rank": 2,
+      "channel_consensus": 3,
+      "channel_contributions": {
+        "exact_symbol": 0.5303300858899106,
+        "executed_slice": 0.7794228634059949,
+        "repograph": 0.5196152422706632
+      },
+      "channel_ranks": {
+        "exact_symbol": 8,
+        "executed_slice": 3,
+        "repograph": 3
+      },
+      "file_path": "blib2to3/pytree.py",
+      "incident_id": "bugsinpy-black-5",
+      "pair_target": 0,
+      "reservoir_contribution_sum": 1.8293681915665687,
+      "stored_score": 3.211199813390439,
+      "symbol": "Base"
+    },
+    {
+      "candidate_rank": 3,
+      "channel_consensus": 3,
+      "channel_contributions": {
+        "executed_slice": 0.9545941546018392,
+        "h10_c5c_retriever": 0.30316953129541624,
+        "repograph": 0.9
+      },
+      "channel_ranks": {
+        "executed_slice": 2,
+        "h10_c5c_retriever": 17,
+        "repograph": 1
+      },
+      "file_path": "black.py",
+      "incident_id": "bugsinpy-black-5",
+      "pair_target": 0,
+      "reservoir_contribution_sum": 2.1577636858972555,
+      "stored_score": 3.013742734339834,
+      "symbol": "BracketTracker"
+    },
+    {
+      "candidate_rank": 1,
+      "channel_consensus": 5,
+      "channel_contributions": {
+        "bm25": 1.0,
+        "exact_symbol": 1.5,
+        "executed_slice": 0.675,
+        "h10_c5c_retriever": 0.8838834764831843,
+        "repograph": 0.1372487132993442
+      },
+      "channel_ranks": {
+        "bm25": 1,
+        "exact_symbol": 1,
+        "executed_slice": 4,
+        "h10_c5c_retriever": 2,
+        "repograph": 43
+      },
+      "file_path": "thefuck/rules/git_push.py",
+      "incident_id": "bugsinpy-thefuck-9",
+      "pair_target": 1,
+      "reservoir_contribution_sum": 4.196132189782529,
+      "stored_score": 7.005348932200222,
+      "symbol": "get_new_command"
+    },
+    {
+      "candidate_rank": 2,
+      "channel_consensus": 5,
+      "channel_contributions": {
+        "bm25": 0.15075567228888181,
+        "exact_symbol": 0.19205531989934396,
+        "executed_slice": 1.35,
+        "h10_c5c_retriever": 0.44194173824159216,
+        "repograph": 0.5196152422706632
+      },
+      "channel_ranks": {
+        "bm25": 44,
+        "exact_symbol": 61,
+        "executed_slice": 1,
+        "h10_c5c_retriever": 8,
+        "repograph": 3
+      },
+      "file_path": "thefuck/specific/git.py",
+      "incident_id": "bugsinpy-thefuck-9",
+      "pair_target": 0,
+      "reservoir_contribution_sum": 2.654367972700481,
+      "stored_score": 5.864375396905392,
+      "symbol": "git_support"
+    },
+    {
+      "candidate_rank": 3,
+      "channel_consensus": 4,
+      "channel_contributions": {
+        "exact_symbol": 0.14779939172464399,
+        "executed_slice": 0.36080267658177295,
+        "h10_c5c_retriever": 0.4166666666666667,
+        "repograph": 0.6363961030678927
+      },
+      "channel_ranks": {
+        "exact_symbol": 103,
+        "executed_slice": 14,
+        "h10_c5c_retriever": 9,
+        "repograph": 2
+      },
+      "file_path": "thefuck/types.py",
+      "incident_id": "bugsinpy-thefuck-9",
+      "pair_target": 0,
+      "reservoir_contribution_sum": 1.5616648380409763,
+      "stored_score": 3.849105081628045,
+      "symbol": "Command"
+    },
+    {
+      "candidate_rank": 1,
+      "channel_consensus": 3,
+      "channel_contributions": {
+        "bm25": 1.0,
+        "exact_symbol": 1.0606601717798212,
+        "executed_slice": 1.35
+      },
+      "channel_ranks": {
+        "bm25": 1,
+        "exact_symbol": 2,
+        "executed_slice": 1
+      },
+      "file_path": "youtube_dl/utils.py",
+      "incident_id": "bugsinpy-youtube-dl-37",
+      "pair_target": 1,
+      "reservoir_contribution_sum": 3.4106601717798215,
+      "stored_score": 7.391563720669411,
+      "symbol": "uppercase_escape"
+    },
+    {
+      "candidate_rank": 2,
+      "channel_consensus": 3,
+      "channel_contributions": {
+        "bm25": 0.3779644730092272,
+        "exact_symbol": 0.6123724356957946,
+        "h10_c5c_retriever": 1.25
+      },
+      "channel_ranks": {
+        "bm25": 7,
+        "exact_symbol": 6,
+        "h10_c5c_retriever": 1
+      },
+      "file_path": "youtube_dl/downloader/rtmp.py",
+      "incident_id": "bugsinpy-youtube-dl-37",
+      "pair_target": 0,
+      "reservoir_contribution_sum": 2.2403369087050216,
+      "stored_score": 3.952490457594613,
+      "symbol": "RtmpFD"
+    },
+    {
+      "candidate_rank": 3,
+      "channel_consensus": 4,
+      "channel_contributions": {
+        "bm25": 0.2773500981126146,
+        "exact_symbol": 0.8660254037844387,
+        "h10_c5c_retriever": 0.472455591261534,
+        "repograph": 0.17650452162436564
+      },
+      "channel_ranks": {
+        "bm25": 13,
+        "exact_symbol": 3,
+        "h10_c5c_retriever": 7,
+        "repograph": 26
+      },
+      "file_path": "youtube_dl/downloader/common.py",
+      "incident_id": "bugsinpy-youtube-dl-37",
+      "pair_target": 0,
+      "reservoir_contribution_sum": 1.792335614782953,
+      "stored_score": 3.504657603388856,
+      "symbol": "FileDownloader"
+    },
+    {
+      "candidate_rank": 1,
+      "channel_consensus": 5,
+      "channel_contributions": {
+        "bm25": 0.25,
+        "exact_symbol": 0.6123724356957946,
+        "executed_slice": 1.35,
+        "h10_c5c_retriever": 0.7216878364870323,
+        "repograph": 0.6363961030678927
+      },
+      "channel_ranks": {
+        "bm25": 16,
+        "exact_symbol": 6,
+        "executed_slice": 1,
+        "h10_c5c_retriever": 3,
+        "repograph": 2
+      },
+      "file_path": "pysnooper/pysnooper.py",
+      "incident_id": "bugsinpy-PySnooper-3",
+      "pair_target": 0,
+      "reservoir_contribution_sum": 3.5704563752507195,
+      "stored_score": 6.733797132788964,
+      "symbol": "snoop.decorate"
+    },
+    {
+      "candidate_rank": 2,
+      "channel_consensus": 4,
+      "channel_contributions": {
+        "bm25": 0.17149858514250882,
+        "exact_symbol": 1.0606601717798212,
+        "executed_slice": 0.675,
+        "repograph": 0.1876629726513673
+      },
+      "channel_ranks": {
+        "bm25": 34,
+        "exact_symbol": 2,
+        "executed_slice": 4,
+        "repograph": 23
+      },
+      "file_path": "pysnooper/tracer.py",
+      "incident_id": "bugsinpy-PySnooper-3",
+      "pair_target": 0,
+      "reservoir_contribution_sum": 2.0948217295736975,
+      "stored_score": 5.1702735040184935,
+      "symbol": "Tracer.trace"
+    },
+    {
+      "candidate_rank": 3,
+      "channel_consensus": 5,
+      "channel_contributions": {
+        "bm25": 0.4082482904638631,
+        "exact_symbol": 0.8660254037844387,
+        "executed_slice": 0.38971143170299744,
+        "h10_c5c_retriever": 1.25,
+        "repograph": 0.45
+      },
+      "channel_ranks": {
+        "bm25": 6,
+        "exact_symbol": 3,
+        "executed_slice": 12,
+        "h10_c5c_retriever": 1,
+        "repograph": 4
+      },
+      "file_path": "pysnooper/pysnooper.py",
+      "incident_id": "bugsinpy-PySnooper-3",
+      "pair_target": 0,
+      "reservoir_contribution_sum": 3.363985125951299,
+      "stored_score": 5.133222008174224,
+      "symbol": "snoop"
+    },
+    {
+      "candidate_rank": 1,
+      "channel_consensus": 3,
+      "channel_contributions": {
+        "bm25": 0.30151134457776363,
+        "exact_symbol": 0.17928429140015903,
+        "executed_slice": 1.35
+      },
+      "channel_ranks": {
+        "bm25": 11,
+        "exact_symbol": 70,
+        "executed_slice": 1
+      },
+      "file_path": "pandas/core/indexes/base.py",
+      "incident_id": "bugsinpy-pandas-7",
+      "pair_target": 0,
+      "reservoir_contribution_sum": 1.8307956359779227,
+      "stored_score": 5.185991584574847,
+      "symbol": "Index.get_indexer"
+    },
+    {
+      "candidate_rank": 2,
+      "channel_consensus": 3,
+      "channel_contributions": {
+        "exact_symbol": 0.5669467095138409,
+        "executed_slice": 0.7794228634059949,
+        "repograph": 0.5196152422706632
+      },
+      "channel_ranks": {
+        "exact_symbol": 7,
+        "executed_slice": 3,
+        "repograph": 3
+      },
+      "file_path": "pandas/core/indexes/base.py",
+      "incident_id": "bugsinpy-pandas-7",
+      "pair_target": 0,
+      "reservoir_contribution_sum": 1.865984815190499,
+      "stored_score": 5.123110680506874,
+      "symbol": "Index"
+    },
+    {
+      "candidate_rank": 3,
+      "channel_consensus": 3,
+      "channel_contributions": {
+        "bm25": 0.19611613513818404,
+        "exact_symbol": 0.1555427542095638,
+        "executed_slice": 0.9545941546018392
+      },
+      "channel_ranks": {
+        "bm25": 26,
+        "exact_symbol": 93,
+        "executed_slice": 2
+      },
+      "file_path": "pandas/core/indexes/base.py",
+      "incident_id": "bugsinpy-pandas-7",
+      "pair_target": 0,
+      "reservoir_contribution_sum": 1.306253043949587,
+      "stored_score": 4.5404598513891115,
+      "symbol": "Index.reindex"
+    },
+    {
+      "candidate_rank": 1,
+      "channel_consensus": 4,
+      "channel_contributions": {
+        "exact_symbol": 1.0606601717798212,
+        "executed_slice": 0.3375,
+        "h10_c5c_retriever": 1.25,
+        "repograph": 0.6363961030678927
+      },
+      "channel_ranks": {
+        "exact_symbol": 2,
+        "executed_slice": 16,
+        "h10_c5c_retriever": 1,
+        "repograph": 2
+      },
+      "file_path": "httpie/core.py",
+      "incident_id": "bugsinpy-httpie-4",
+      "pair_target": 0,
+      "reservoir_contribution_sum": 3.2845562748477137,
+      "stored_score": 5.114387896671584,
+      "symbol": "main"
+    },
+    {
+      "candidate_rank": 2,
+      "channel_consensus": 3,
+      "channel_contributions": {
+        "bm25": 0.15617376188860607,
+        "executed_slice": 1.35,
+        "repograph": 0.3401680257083045
+      },
+      "channel_ranks": {
+        "bm25": 41,
+        "executed_slice": 1,
+        "repograph": 7
+      },
+      "file_path": "httpie/input.py",
+      "incident_id": "bugsinpy-httpie-4",
+      "pair_target": 0,
+      "reservoir_contribution_sum": 1.8463417875969106,
+      "stored_score": 4.520134319579951,
+      "symbol": "AuthCredentials"
+    },
+    {
+      "candidate_rank": 3,
+      "channel_consensus": 2,
+      "channel_contributions": {
+        "exact_symbol": 0.16269784336399212,
+        "executed_slice": 0.7794228634059949
+      },
+      "channel_ranks": {
+        "exact_symbol": 85,
+        "executed_slice": 3
+      },
+      "file_path": "httpie/output/formatters/xml.py",
+      "incident_id": "bugsinpy-httpie-4",
+      "pair_target": 0,
+      "reservoir_contribution_sum": 0.942120706769987,
+      "stored_score": 4.510830973845433,
+      "symbol": "XMLFormatter"
+    },
+    {
+      "candidate_rank": 1,
+      "channel_consensus": 5,
+      "channel_contributions": {
+        "bm25": 1.0,
+        "exact_symbol": 1.5,
+        "executed_slice": 0.3744226324520297,
+        "h10_c5c_retriever": 1.25,
+        "repograph": 0.15
+      },
+      "channel_ranks": {
+        "bm25": 1,
+        "exact_symbol": 1,
+        "executed_slice": 13,
+        "h10_c5c_retriever": 1,
+        "repograph": 36
+      },
+      "file_path": "fastapi/encoders.py",
+      "incident_id": "bugsinpy-fastapi-16",
+      "pair_target": 1,
+      "reservoir_contribution_sum": 4.27442263245203,
+      "stored_score": 7.315677665446757,
+      "symbol": "jsonable_encoder"
+    },
+    {
+      "candidate_rank": 2,
+      "channel_consensus": 3,
+      "channel_contributions": {
+        "bm25": 0.23570226039551587,
+        "executed_slice": 1.35,
+        "repograph": 0.6363961030678927
+      },
+      "channel_ranks": {
+        "bm25": 18,
+        "executed_slice": 1,
+        "repograph": 2
+      },
+      "file_path": "tests/test_jsonable_encoder.py",
+      "incident_id": "bugsinpy-fastapi-16",
+      "pair_target": 0,
+      "reservoir_contribution_sum": 2.2220983634634086,
+      "stored_score": 4.86589089544645,
+      "symbol": "DictablePerson"
+    },
+    {
+      "candidate_rank": 3,
+      "channel_consensus": 4,
+      "channel_contributions": {
+        "exact_symbol": 1.0606601717798212,
+        "executed_slice": 0.25512601928122836,
+        "h10_c5c_retriever": 0.34668762264076824,
+        "repograph": 0.5196152422706632
+      },
+      "channel_ranks": {
+        "exact_symbol": 2,
+        "executed_slice": 28,
+        "h10_c5c_retriever": 13,
+        "repograph": 3
+      },
+      "file_path": "fastapi/applications.py",
+      "incident_id": "bugsinpy-fastapi-16",
+      "pair_target": 0,
+      "reservoir_contribution_sum": 2.1820890559724813,
+      "stored_score": 4.795695307564775,
+      "symbol": "FastAPI"
+    },
+    {
+      "candidate_rank": 1,
+      "channel_consensus": 5,
+      "channel_contributions": {
+        "bm25": 1.0,
+        "exact_symbol": 0.31980107453341566,
+        "executed_slice": 0.7794228634059949,
+        "h10_c5c_retriever": 0.36084391824351614,
+        "repograph": 0.1341640786499874
+      },
+      "channel_ranks": {
+        "bm25": 1,
+        "exact_symbol": 22,
+        "executed_slice": 3,
+        "h10_c5c_retriever": 12,
+        "repograph": 45
+      },
+      "file_path": "tornado/ioloop.py",
+      "incident_id": "bugsinpy-tornado-14",
+      "pair_target": 1,
+      "reservoir_contribution_sum": 2.594231934832914,
+      "stored_score": 6.629445310234265,
+      "symbol": "IOLoop.initialize"
+    },
+    {
+      "candidate_rank": 2,
+      "channel_consensus": 3,
+      "channel_contributions": {
+        "bm25": 0.5773502691896258,
+        "exact_symbol": 0.4743416490252569,
+        "executed_slice": 1.35
+      },
+      "channel_ranks": {
+        "bm25": 3,
+        "exact_symbol": 10,
+        "executed_slice": 1
+      },
+      "file_path": "tornado/platform/epoll.py",
+      "incident_id": "bugsinpy-tornado-14",
+      "pair_target": 0,
+      "reservoir_contribution_sum": 2.401691918214883,
+      "stored_score": 6.555652902406051,
+      "symbol": "EPollIOLoop.initialize"
+    },
+    {
+      "candidate_rank": 3,
+      "channel_consensus": 2,
+      "channel_contributions": {
+        "exact_symbol": 1.5,
+        "h10_c5c_retriever": 1.25
+      },
+      "channel_ranks": {
+        "exact_symbol": 1,
+        "h10_c5c_retriever": 1
+      },
+      "file_path": "tornado/ioloop.py",
+      "incident_id": "bugsinpy-tornado-14",
+      "pair_target": 0,
+      "reservoir_contribution_sum": 2.75,
+      "stored_score": 4.985121455377882,
+      "symbol": "PollIOLoop"
+    },
+    {
+      "candidate_rank": 1,
+      "channel_consensus": 3,
+      "channel_contributions": {
+        "bm25": 1.0,
+        "exact_symbol": 1.0606601717798212,
+        "executed_slice": 1.35
+      },
+      "channel_ranks": {
+        "bm25": 1,
+        "exact_symbol": 2,
+        "executed_slice": 1
+      },
+      "file_path": "black.py",
+      "incident_id": "bugsinpy-black-14",
+      "pair_target": 1,
+      "reservoir_contribution_sum": 3.4106601717798215,
+      "stored_score": 6.755849434955126,
+      "symbol": "get_future_imports"
+    },
+    {
+      "candidate_rank": 2,
+      "channel_consensus": 4,
+      "channel_contributions": {
+        "exact_symbol": 0.1646463899845355,
+        "executed_slice": 0.9545941546018392,
+        "h10_c5c_retriever": 0.5103103630798288,
+        "repograph": 0.3674234614174768
+      },
+      "channel_ranks": {
+        "exact_symbol": 83,
+        "executed_slice": 2,
+        "h10_c5c_retriever": 6,
+        "repograph": 6
+      },
+      "file_path": "black.py",
+      "incident_id": "bugsinpy-black-14",
+      "pair_target": 0,
+      "reservoir_contribution_sum": 1.9969743690836803,
+      "stored_score": 3.975142879231254,
+      "symbol": "lib2to3_parse"
+    },
+    {
+      "candidate_rank": 3,
+      "channel_consensus": 4,
+      "channel_contributions": {
+        "exact_symbol": 0.10527936095153946,
+        "executed_slice": 0.7794228634059949,
+        "h10_c5c_retriever": 0.8838834764831843,
+        "repograph": 0.2713602101199873
+      },
+      "channel_ranks": {
+        "exact_symbol": 203,
+        "executed_slice": 3,
+        "h10_c5c_retriever": 2,
+        "repograph": 11
+      },
+      "file_path": "blib2to3/pgen2/tokenize.py",
+      "incident_id": "bugsinpy-black-14",
+      "pair_target": 0,
+      "reservoir_contribution_sum": 2.039945910960706,
+      "stored_score": 3.9338819065941886,
+      "symbol": "generate_tokens"
+    },
+    {
+      "candidate_rank": 1,
+      "channel_consensus": 5,
+      "channel_contributions": {
+        "bm25": 0.35355339059327373,
+        "exact_symbol": 0.2785430072655778,
+        "executed_slice": 0.4269074841227312,
+        "h10_c5c_retriever": 0.7216878364870323,
+        "repograph": 0.14055638569974546
+      },
+      "channel_ranks": {
+        "bm25": 8,
+        "exact_symbol": 29,
+        "executed_slice": 10,
+        "h10_c5c_retriever": 3,
+        "repograph": 41
+      },
+      "file_path": "thefuck/rules/man.py",
+      "incident_id": "bugsinpy-thefuck-10",
+      "pair_target": 1,
+      "reservoir_contribution_sum": 1.9212481041683604,
+      "stored_score": 4.54857578981118,
+      "symbol": "get_new_command"
+    },
+    {
+      "candidate_rank": 2,
+      "channel_consensus": 5,
+      "channel_contributions": {
+        "bm25": 0.17677669529663687,
+        "exact_symbol": 0.15152288168283162,
+        "executed_slice": 0.38971143170299744,
+        "h10_c5c_retriever": 0.472455591261534,
+        "repograph": 0.6363961030678927
+      },
+      "channel_ranks": {
+        "bm25": 32,
+        "exact_symbol": 98,
+        "executed_slice": 12,
+        "h10_c5c_retriever": 7,
+        "repograph": 2
+      },
+      "file_path": "thefuck/types.py",
+      "incident_id": "bugsinpy-thefuck-10",
+      "pair_target": 0,
+      "reservoir_contribution_sum": 1.8268627030118927,
+      "stored_score": 4.434593260185838,
+      "symbol": "Command"
+    },
+    {
+      "candidate_rank": 3,
+      "channel_consensus": 4,
+      "channel_contributions": {
+        "exact_symbol": 0.6123724356957946,
+        "executed_slice": 0.2647567824365485,
+        "h10_c5c_retriever": 1.25,
+        "repograph": 0.18
+      },
+      "channel_ranks": {
+        "exact_symbol": 6,
+        "executed_slice": 26,
+        "h10_c5c_retriever": 1,
+        "repograph": 25
+      },
+      "file_path": "thefuck/types.py",
+      "incident_id": "bugsinpy-thefuck-10",
+      "pair_target": 0,
+      "reservoir_contribution_sum": 2.307129218132343,
+      "stored_score": 4.01029597900357,
+      "symbol": "Rule"
+    },
+    {
+      "candidate_rank": 1,
+      "channel_consensus": 4,
+      "channel_contributions": {
+        "bm25": 0.2672612419124244,
+        "exact_symbol": 0.375,
+        "executed_slice": 0.141518452957459,
+        "h10_c5c_retriever": 1.25
+      },
+      "channel_ranks": {
+        "bm25": 14,
+        "exact_symbol": 16,
+        "executed_slice": 91,
+        "h10_c5c_retriever": 1
+      },
+      "file_path": "youtube_dl/downloader/rtmp.py",
+      "incident_id": "bugsinpy-youtube-dl-36",
+      "pair_target": 0,
+      "reservoir_contribution_sum": 2.0337796948698834,
+      "stored_score": 3.340318164394395,
+      "symbol": "RtmpFD"
+    },
+    {
+      "candidate_rank": 2,
+      "channel_consensus": 3,
+      "channel_contributions": {
+        "exact_symbol": 0.11149412193707495,
+        "executed_slice": 1.35,
+        "repograph": 0.15909902576697318
+      },
+      "channel_ranks": {
+        "exact_symbol": 181,
+        "executed_slice": 1,
+        "repograph": 32
+      },
+      "file_path": "youtube_dl/extractor/common.py",
+      "incident_id": "bugsinpy-youtube-dl-36",
+      "pair_target": 0,
+      "reservoir_contribution_sum": 1.6205931477040483,
+      "stored_score": 3.0341357255687385,
+      "symbol": "InfoExtractor.suitable"
+    },
+    {
+      "candidate_rank": 3,
+      "channel_consensus": 3,
+      "channel_contributions": {
+        "bm25": 0.22360679774997896,
+        "exact_symbol": 1.0606601717798212,
+        "executed_slice": 0.18203396286507537
+      },
+      "channel_ranks": {
+        "bm25": 20,
+        "exact_symbol": 2,
+        "executed_slice": 55
+      },
+      "file_path": "youtube_dl/extractor/facebook.py",
+      "incident_id": "bugsinpy-youtube-dl-36",
+      "pair_target": 0,
+      "reservoir_contribution_sum": 1.4663009323948755,
+      "stored_score": 2.7811727352527207,
+      "symbol": "FacebookIE"
+    },
+    {
+      "candidate_rank": 1,
+      "channel_consensus": 4,
+      "channel_contributions": {
+        "bm25": 1.0,
+        "exact_symbol": 1.0606601717798212,
+        "executed_slice": 0.9545941546018392,
+        "h10_c5c_retriever": 1.25
+      },
+      "channel_ranks": {
+        "bm25": 1,
+        "exact_symbol": 2,
+        "executed_slice": 2,
+        "h10_c5c_retriever": 1
+      },
+      "file_path": "pandas/core/reshape/tile.py",
+      "incident_id": "bugsinpy-pandas-71",
+      "pair_target": 1,
+      "reservoir_contribution_sum": 4.26525432638166,
+      "stored_score": 7.5437526148721945,
+      "symbol": "cut"
+    },
+    {
+      "candidate_rank": 2,
+      "channel_consensus": 4,
+      "channel_contributions": {
+        "bm25": 0.7071067811865475,
+        "exact_symbol": 1.5,
+        "executed_slice": 1.35,
+        "h10_c5c_retriever": 0.625
+      },
+      "channel_ranks": {
+        "bm25": 2,
+        "exact_symbol": 1,
+        "executed_slice": 1,
+        "h10_c5c_retriever": 4
+      },
+      "file_path": "pandas/core/reshape/tile.py",
+      "incident_id": "bugsinpy-pandas-71",
+      "pair_target": 0,
+      "reservoir_contribution_sum": 4.1821067811865476,
+      "stored_score": 7.524446259777639,
+      "symbol": "_bins_to_cuts"
+    },
+    {
+      "candidate_rank": 3,
+      "channel_consensus": 2,
+      "channel_contributions": {
+        "exact_symbol": 0.16666666666666666,
+        "executed_slice": 0.7794228634059949
+      },
+      "channel_ranks": {
+        "exact_symbol": 81,
+        "executed_slice": 3
+      },
+      "file_path": "pandas/tests/arrays/test_integer.py",
+      "incident_id": "bugsinpy-pandas-71",
+      "pair_target": 0,
+      "reservoir_contribution_sum": 0.9460895300726615,
+      "stored_score": 4.346129670845519,
+      "symbol": "TestArithmeticOps"
+    },
+    {
+      "candidate_rank": 1,
+      "channel_consensus": 5,
+      "channel_contributions": {
+        "bm25": 0.30151134457776363,
+        "exact_symbol": 1.0606601717798212,
+        "executed_slice": 0.3375,
+        "h10_c5c_retriever": 1.25,
+        "repograph": 0.20124611797498107
+      },
+      "channel_ranks": {
+        "bm25": 11,
+        "exact_symbol": 2,
+        "executed_slice": 16,
+        "h10_c5c_retriever": 1,
+        "repograph": 20
+      },
+      "file_path": "httpie/cli.py",
+      "incident_id": "bugsinpy-httpie-5",
+      "pair_target": 0,
+      "reservoir_contribution_sum": 3.1509176343325658,
+      "stored_score": 4.847502269599928,
+      "symbol": "parse_items"
+    },
+    {
+      "candidate_rank": 2,
+      "channel_consensus": 3,
+      "channel_contributions": {
+        "bm25": 0.31622776601683794,
+        "executed_slice": 1.35,
+        "repograph": 0.9
+      },
+      "channel_ranks": {
+        "bm25": 10,
+        "executed_slice": 1,
+        "repograph": 1
+      },
+      "file_path": "tests/tests.py",
+      "incident_id": "bugsinpy-httpie-5",
+      "pair_target": 0,
+      "reservoir_contribution_sum": 2.566227766016838,
+      "stored_score": 4.320434573456363,
+      "symbol": "BaseTest"
+    },
+    {
+      "candidate_rank": 3,
+      "channel_consensus": 5,
+      "channel_contributions": {
+        "bm25": 0.20412414523193154,
+        "exact_symbol": 0.4008918628686366,
+        "executed_slice": 0.5102520385624567,
+        "h10_c5c_retriever": 0.5103103630798288,
+        "repograph": 0.6363961030678927
+      },
+      "channel_ranks": {
+        "bm25": 24,
+        "exact_symbol": 14,
+        "executed_slice": 7,
+        "h10_c5c_retriever": 6,
+        "repograph": 2
+      },
+      "file_path": "httpie/cli.py",
+      "incident_id": "bugsinpy-httpie-5",
+      "pair_target": 0,
+      "reservoir_contribution_sum": 2.2619745128107462,
+      "stored_score": 4.188329836145133,
+      "symbol": "HTTPieArgumentParser"
+    },
+    {
+      "candidate_rank": 1,
+      "channel_consensus": 4,
+      "channel_contributions": {
+        "bm25": 1.0,
+        "exact_symbol": 0.11404288819045583,
+        "executed_slice": 1.35,
+        "repograph": 0.3674234614174768
+      },
+      "channel_ranks": {
+        "bm25": 1,
+        "exact_symbol": 173,
+        "executed_slice": 1,
+        "repograph": 6
+      },
+      "file_path": "tests/test_filter_pydantic_sub_model.py",
+      "incident_id": "bugsinpy-fastapi-5",
+      "pair_target": 0,
+      "reservoir_contribution_sum": 2.8314663496079326,
+      "stored_score": 6.041685068205996,
+      "symbol": "ModelA"
+    },
+    {
+      "candidate_rank": 2,
+      "channel_consensus": 5,
+      "channel_contributions": {
+        "bm25": 0.14744195615489714,
+        "exact_symbol": 0.4008918628686366,
+        "executed_slice": 0.4772970773009196,
+        "h10_c5c_retriever": 0.8838834764831843,
+        "repograph": 0.2713602101199873
+      },
+      "channel_ranks": {
+        "bm25": 46,
+        "exact_symbol": 14,
+        "executed_slice": 8,
+        "h10_c5c_retriever": 2,
+        "repograph": 11
+      },
+      "file_path": "fastapi/routing.py",
+      "incident_id": "bugsinpy-fastapi-5",
+      "pair_target": 0,
+      "reservoir_contribution_sum": 2.180874582927625,
+      "stored_score": 4.183067705127657,
+      "symbol": "APIRoute.__init__"
+    },
+    {
+      "candidate_rank": 3,
+      "channel_consensus": 3,
+      "channel_contributions": {
+        "exact_symbol": 0.41602514716892186,
+        "executed_slice": 0.2108345785496182,
+        "h10_c5c_retriever": 1.25
+      },
+      "channel_ranks": {
+        "exact_symbol": 13,
+        "executed_slice": 41,
+        "h10_c5c_retriever": 1
+      },
+      "file_path": "fastapi/routing.py",
+      "incident_id": "bugsinpy-fastapi-5",
+      "pair_target": 0,
+      "reservoir_contribution_sum": 1.87685972571854,
+      "stored_score": 3.718383127509397,
+      "symbol": "APIRoute"
+    },
+    {
+      "candidate_rank": 1,
+      "channel_consensus": 3,
+      "channel_contributions": {
+        "bm25": 0.5,
+        "exact_symbol": 0.5303300858899106,
+        "executed_slice": 1.35
+      },
+      "channel_ranks": {
+        "bm25": 4,
+        "exact_symbol": 8,
+        "executed_slice": 1
+      },
+      "file_path": "tornado/web.py",
+      "incident_id": "bugsinpy-tornado-8",
+      "pair_target": 0,
+      "reservoir_contribution_sum": 2.3803300858899106,
+      "stored_score": 6.479085118884639,
+      "symbol": "RequestHandler._stack_context_handle_exception"
+    },
+    {
+      "candidate_rank": 2,
+      "channel_consensus": 3,
+      "channel_contributions": {
+        "bm25": 1.0,
+        "exact_symbol": 0.3872983346207417,
+        "executed_slice": 0.6037383539249432
+      },
+      "channel_ranks": {
+        "bm25": 1,
+        "exact_symbol": 15,
+        "executed_slice": 5
+      },
+      "file_path": "tornado/websocket.py",
+      "incident_id": "bugsinpy-tornado-8",
+      "pair_target": 1,
+      "reservoir_contribution_sum": 1.991036688545685,
+      "stored_score": 5.94437744608393,
+      "symbol": "WebSocketProtocol13.accept_connection"
+    },
+    {
+      "candidate_rank": 3,
+      "channel_consensus": 3,
+      "channel_contributions": {
+        "bm25": 0.19245008972987526,
+        "exact_symbol": 0.41602514716892186,
+        "executed_slice": 0.9545941546018392
+      },
+      "channel_ranks": {
+        "bm25": 27,
+        "exact_symbol": 13,
+        "executed_slice": 2
+      },
+      "file_path": "tornado/websocket.py",
+      "incident_id": "bugsinpy-tornado-8",
+      "pair_target": 0,
+      "reservoir_contribution_sum": 1.5630693915006364,
+      "stored_score": 5.555408870091728,
+      "symbol": "WebSocketHandler.get"
+    },
+    {
+      "candidate_rank": 1,
+      "channel_consensus": 3,
+      "channel_contributions": {
+        "bm25": 0.23570226039551587,
+        "exact_symbol": 1.0606601717798212,
+        "executed_slice": 1.35
+      },
+      "channel_ranks": {
+        "bm25": 18,
+        "exact_symbol": 2,
+        "executed_slice": 1
+      },
+      "file_path": "tests/test_black.py",
+      "incident_id": "bugsinpy-black-23",
+      "pair_target": 0,
+      "reservoir_contribution_sum": 2.646362432175337,
+      "stored_score": 5.659703189713581,
+      "symbol": "BlackTestCase.assertFormatEqual"
+    },
+    {
+      "candidate_rank": 2,
+      "channel_consensus": 5,
+      "channel_contributions": {
+        "bm25": 0.1796053020267749,
+        "exact_symbol": 0.15899968200095402,
+        "executed_slice": 0.9545941546018392,
+        "h10_c5c_retriever": 1.25,
+        "repograph": 0.2846049894151541
+      },
+      "channel_ranks": {
+        "bm25": 31,
+        "exact_symbol": 89,
+        "executed_slice": 2,
+        "h10_c5c_retriever": 1,
+        "repograph": 10
+      },
+      "file_path": "black.py",
+      "incident_id": "bugsinpy-black-23",
+      "pair_target": 0,
+      "reservoir_contribution_sum": 2.8278041280447224,
+      "stored_score": 4.836571505213074,
+      "symbol": "Visitor.visit"
+    },
+    {
+      "candidate_rank": 3,
+      "channel_consensus": 4,
+      "channel_contributions": {
+        "bm25": 1.0,
+        "exact_symbol": 0.8660254037844387,
+        "executed_slice": 0.22819164877669948,
+        "h10_c5c_retriever": 0.34668762264076824
+      },
+      "channel_ranks": {
+        "bm25": 1,
+        "exact_symbol": 3,
+        "executed_slice": 35,
+        "h10_c5c_retriever": 13
+      },
+      "file_path": "black.py",
+      "incident_id": "bugsinpy-black-23",
+      "pair_target": 0,
+      "reservoir_contribution_sum": 2.4409046752019066,
+      "stored_score": 4.242159708196635,
+      "symbol": "whitespace"
+    },
+    {
+      "candidate_rank": 1,
+      "channel_consensus": 5,
+      "channel_contributions": {
+        "bm25": 0.5,
+        "exact_symbol": 0.6708203932499369,
+        "executed_slice": 0.7794228634059949,
+        "h10_c5c_retriever": 1.25,
+        "repograph": 0.2182820625326997
+      },
+      "channel_ranks": {
+        "bm25": 4,
+        "exact_symbol": 5,
+        "executed_slice": 3,
+        "h10_c5c_retriever": 1,
+        "repograph": 17
+      },
+      "file_path": "thefuck/types.py",
+      "incident_id": "bugsinpy-thefuck-22",
+      "pair_target": 0,
+      "reservoir_contribution_sum": 3.4185253191886313,
+      "stored_score": 7.629780352183359,
+      "symbol": "SortedCorrectedCommandsSequence.__iter__"
+    },
+    {
+      "candidate_rank": 2,
+      "channel_consensus": 5,
+      "channel_contributions": {
+        "bm25": 0.5773502691896258,
+        "exact_symbol": 1.0606601717798212,
+        "executed_slice": 0.6037383539249432,
+        "h10_c5c_retriever": 0.7216878364870323,
+        "repograph": 0.6363961030678927
+      },
+      "channel_ranks": {
+        "bm25": 3,
+        "exact_symbol": 2,
+        "executed_slice": 5,
+        "h10_c5c_retriever": 3,
+        "repograph": 2
+      },
+      "file_path": "thefuck/types.py",
+      "incident_id": "bugsinpy-thefuck-22",
+      "pair_target": 1,
+      "reservoir_contribution_sum": 3.5998327344493153,
+      "stored_score": 6.344431935512819,
+      "symbol": "SortedCorrectedCommandsSequence._realise"
+    },
+    {
+      "candidate_rank": 3,
+      "channel_consensus": 5,
+      "channel_contributions": {
+        "bm25": 0.20851441405707477,
+        "exact_symbol": 0.43301270189221935,
+        "executed_slice": 0.9545941546018392,
+        "h10_c5c_retriever": 0.44194173824159216,
+        "repograph": 0.2713602101199873
+      },
+      "channel_ranks": {
+        "bm25": 23,
+        "exact_symbol": 12,
+        "executed_slice": 2,
+        "h10_c5c_retriever": 8,
+        "repograph": 11
+      },
+      "file_path": "thefuck/types.py",
+      "incident_id": "bugsinpy-thefuck-22",
+      "pair_target": 0,
+      "reservoir_contribution_sum": 2.3094232189127126,
+      "stored_score": 6.025310097264597,
+      "symbol": "CorrectedCommand"
+    },
+    {
+      "candidate_rank": 1,
+      "channel_consensus": 5,
+      "channel_contributions": {
+        "bm25": 0.4472135954999579,
+        "exact_symbol": 1.5,
+        "executed_slice": 0.7794228634059949,
+        "h10_c5c_retriever": 0.3952847075210474,
+        "repograph": 0.16164477182409742
+      },
+      "channel_ranks": {
+        "bm25": 5,
+        "exact_symbol": 1,
+        "executed_slice": 3,
+        "h10_c5c_retriever": 10,
+        "repograph": 31
+      },
+      "file_path": "youtube_dl/YoutubeDL.py",
+      "incident_id": "bugsinpy-youtube-dl-8",
+      "pair_target": 1,
+      "reservoir_contribution_sum": 3.2835659382510975,
+      "stored_score": 7.184761216961666,
+      "symbol": "YoutubeDL.build_format_selector"
+    },
+    {
+      "candidate_rank": 2,
+      "channel_consensus": 4,
+      "channel_contributions": {
+        "bm25": 1.0,
+        "exact_symbol": 0.8660254037844387,
+        "executed_slice": 0.675,
+        "h10_c5c_retriever": 0.3227486121839514
+      },
+      "channel_ranks": {
+        "bm25": 1,
+        "exact_symbol": 3,
+        "executed_slice": 4,
+        "h10_c5c_retriever": 15
+      },
+      "file_path": "youtube_dl/YoutubeDL.py",
+      "incident_id": "bugsinpy-youtube-dl-8",
+      "pair_target": 0,
+      "reservoir_contribution_sum": 2.86377401596839,
+      "stored_score": 6.78932867460568,
+      "symbol": "YoutubeDL.build_format_selector._build_selector_function"
+    },
+    {
+      "candidate_rank": 3,
+      "channel_consensus": 4,
+      "channel_contributions": {
+        "bm25": 0.3779644730092272,
+        "exact_symbol": 1.0606601717798212,
+        "executed_slice": 1.35,
+        "repograph": 0.24053511772118197
+      },
+      "channel_ranks": {
+        "bm25": 7,
+        "exact_symbol": 2,
+        "executed_slice": 1,
+        "repograph": 14
+      },
+      "file_path": "youtube_dl/YoutubeDL.py",
+      "incident_id": "bugsinpy-youtube-dl-8",
+      "pair_target": 0,
+      "reservoir_contribution_sum": 3.0291597625102304,
+      "stored_score": 6.333366569949754,
+      "symbol": "YoutubeDL.process_video_result"
+    },
+    {
+      "candidate_rank": 1,
+      "channel_consensus": 3,
+      "channel_contributions": {
+        "bm25": 0.7071067811865475,
+        "exact_symbol": 0.3273268353539886,
+        "executed_slice": 0.7794228634059949
+      },
+      "channel_ranks": {
+        "bm25": 2,
+        "exact_symbol": 21,
+        "executed_slice": 3
+      },
+      "file_path": "pandas/core/arrays/integer.py",
+      "incident_id": "bugsinpy-pandas-48",
+      "pair_target": 0,
+      "reservoir_contribution_sum": 1.8138564799465309,
+      "stored_score": 6.145149011929571,
+      "symbol": "coerce_to_array"
+    },
+    {
+      "candidate_rank": 2,
+      "channel_consensus": 1,
+      "channel_contributions": {
+        "executed_slice": 1.35
+      },
+      "channel_ranks": {
+        "executed_slice": 1
+      },
+      "file_path": "pandas/core/arrays/integer.py",
+      "incident_id": "bugsinpy-pandas-48",
+      "pair_target": 0,
+      "reservoir_contribution_sum": 1.35,
+      "stored_score": 6.004990400857832,
+      "symbol": "Int16Dtype"
+    },
+    {
+      "candidate_rank": 3,
+      "channel_consensus": 3,
+      "channel_contributions": {
+        "bm25": 0.5773502691896258,
+        "exact_symbol": 0.125,
+        "executed_slice": 0.4772970773009196
+      },
+      "channel_ranks": {
+        "bm25": 3,
+        "exact_symbol": 144,
+        "executed_slice": 8
+      },
+      "file_path": "pandas/core/arrays/integer.py",
+      "incident_id": "bugsinpy-pandas-48",
+      "pair_target": 0,
+      "reservoir_contribution_sum": 1.1796473464905455,
+      "stored_score": 5.390042380637193,
+      "symbol": "integer_array"
+    },
+    {
+      "candidate_rank": 1,
+      "channel_consensus": 5,
+      "channel_contributions": {
+        "bm25": 0.5,
+        "exact_symbol": 1.5,
+        "executed_slice": 0.32742309379904955,
+        "h10_c5c_retriever": 1.25,
+        "repograph": 0.6363961030678927
+      },
+      "channel_ranks": {
+        "bm25": 4,
+        "exact_symbol": 1,
+        "executed_slice": 17,
+        "h10_c5c_retriever": 1,
+        "repograph": 2
+      },
+      "file_path": "httpie/core.py",
+      "incident_id": "bugsinpy-httpie-2",
+      "pair_target": 0,
+      "reservoir_contribution_sum": 4.213819196866942,
+      "stored_score": 6.368567485357477,
+      "symbol": "main"
+    },
+    {
+      "candidate_rank": 2,
+      "channel_consensus": 3,
+      "channel_contributions": {
+        "exact_symbol": 0.1555427542095638,
+        "executed_slice": 1.35,
+        "repograph": 0.45
+      },
+      "channel_ranks": {
+        "exact_symbol": 93,
+        "executed_slice": 1,
+        "repograph": 4
+      },
+      "file_path": "httpie/input.py",
+      "incident_id": "bugsinpy-httpie-2",
+      "pair_target": 0,
+      "reservoir_contribution_sum": 1.9555427542095638,
+      "stored_score": 5.305417340578785,
+      "symbol": "AuthCredentials"
+    },
+    {
+      "candidate_rank": 3,
+      "channel_consensus": 3,
+      "channel_contributions": {
+        "exact_symbol": 0.12456821978060995,
+        "executed_slice": 0.9545941546018392,
+        "repograph": 0.15434872662825794
+      },
+      "channel_ranks": {
+        "exact_symbol": 145,
+        "executed_slice": 2,
+        "repograph": 34
+      },
+      "file_path": "httpie/downloads.py",
+      "incident_id": "bugsinpy-httpie-2",
+      "pair_target": 0,
+      "reservoir_contribution_sum": 1.233511101010707,
+      "stored_score": 4.438616424345095,
+      "symbol": "ContentRangeError"
+    }
+  ],
+  "status": "H10_C7_R5V_CHANNEL_CONTRIBUTION_AUDIT_COMPLETE"
+}

@@ -133,7 +133,13 @@ def test_structural_failure_cannot_be_hidden_by_low_risk() -> None:
 def test_operator_manifest_is_complete_and_resolvable() -> None:
     report = validate_manifest()
     assert report["status"] == "PASS", report["errors"]
-    assert report["operator_count"] == 33
+    assert report["operator_count"] == 41
+    assert {
+        "h10_c5.natural_incident_route_audit",
+        "h10_c6.cut_robustness",
+        "multimodal.interpretable_route_validation",
+        "h9.end_to_end_latency",
+    }.issubset(report["operator_ids"])
 
 
 def test_public_exports_are_not_overwritten() -> None:

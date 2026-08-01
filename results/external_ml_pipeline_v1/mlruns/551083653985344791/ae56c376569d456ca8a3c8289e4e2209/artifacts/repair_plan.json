@@ -1,0 +1,12 @@
+{
+  "fully_executable": false,
+  "operations": [
+    "rebuild_explanation_for_registered_model"
+  ],
+  "rollback": [
+    "restore_previous_artifact_snapshot"
+  ],
+  "step_ids": [
+    "step:issue:MODEL_EXPLAINER_VERSION:1"
+  ]
+}

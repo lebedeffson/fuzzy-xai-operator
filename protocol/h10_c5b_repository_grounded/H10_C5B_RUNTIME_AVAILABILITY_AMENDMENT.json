@@ -1,0 +1,48 @@
+{
+  "amendment_id": "h10-c5b-runtime-availability-amendment-v1",
+  "amendment_scope": "runtime_evidence_availability_only",
+  "created_before_runtime_collection": true,
+  "development_calibration_rules_changed": false,
+  "endpoint_changed": false,
+  "gates_changed": false,
+  "gold_may_be_viewed_during_replacement": false,
+  "held_out_scoring_enabled": false,
+  "method_commit": "7aa72a19a70bdb5eedea520742f269bc6c26aeea",
+  "method_code_status": "FROZEN_FOR_RUNTIME_COLLECTION",
+  "parent_protocol": "h10-c5b-repository-grounded-v1",
+  "replacement_rule": {
+    "eligible_statuses": [
+      "BUG_NOT_REPRODUCED",
+      "BUG_REPRODUCED_WITHOUT_TRACE",
+      "RUNTIME_COMMAND_NOT_REGISTERED",
+      "RUNTIME_EXECUTION_ERROR",
+      "RUNTIME_INFRASTRUCTURE_ERROR",
+      "RUNTIME_TIMEOUT",
+      "UNEXPECTED_FAILURE_RETURNCODE"
+    ],
+    "gold_fields_forbidden": [
+      "patch",
+      "fix_commit",
+      "changed_files",
+      "changed_symbols",
+      "gold_contracts",
+      "gold_repair_atoms"
+    ],
+    "ordering": "ascending SHA256(parent_protocol + NUL + instance_id), then instance_id",
+    "replacement_pool": "same split and same repository",
+    "selection": "next unused candidate",
+    "view_method_predictions_before_replacement": false
+  },
+  "required_replacement_log_fields": [
+    "candidate_incident",
+    "repository",
+    "selection_rank",
+    "runtime_command_sha256",
+    "return_code",
+    "reproduction_status",
+    "replacement_reason",
+    "replacement_incident",
+    "replacement_selection_rank"
+  ],
+  "status": "LOCKED_BEFORE_RUNTIME_COLLECTION"
+}

@@ -1,0 +1,131 @@
+{
+  "run_id": "mlp2:05c4cf24fee49c98ad37",
+  "scenario_id": "S16_MODEL_ARTIFACT_TAMPER",
+  "action": "BLOCK",
+  "pipeline_status": "INVALID",
+  "canonical_source": "MLPipelineService",
+  "diagnosis": {
+    "diagnosis_id": "diagnosis:mlp2:05c4cf24fee49c98ad37",
+    "pipeline_status": "INVALID",
+    "failed_stage": "MODEL_ARTIFACT",
+    "source_component": "serialized_model",
+    "violated_contract": "MODEL_ARTIFACT_HASH",
+    "violated_contracts": [
+      {
+        "contract_id": "MODEL_ARTIFACT_HASH",
+        "stage": "MODEL_ARTIFACT",
+        "component_id": "serialized_model",
+        "passed": false,
+        "severity": "HIGH",
+        "action": "BLOCK",
+        "observed_value": "5e1768fd210e535f0c3782f4226cfc9b0c23b78362c4ffefa3f90560b4ea0672",
+        "expected_value": "5de1ed8251b147befef90e6bfee3f5bcda23056d5bb66212153ce1104668ca8c",
+        "evidence_refs": [
+          "obs:3d4391fa1a45143ddfb2"
+        ]
+      }
+    ],
+    "affected_field": "model_artifact_hash",
+    "observed_value": "5e1768fd210e535f0c3782f4226cfc9b0c23b78362c4ffefa3f90560b4ea0672",
+    "expected_value": "5de1ed8251b147befef90e6bfee3f5bcda23056d5bb66212153ce1104668ca8c",
+    "severity": "HIGH",
+    "recommended_action": "BLOCK",
+    "evidence_refs": [
+      "obs:3d4391fa1a45143ddfb2"
+    ],
+    "nearest_confirmed_cause": {
+      "component": "serialized_model",
+      "mutation": {
+        "tampered_artifact_sha256": "5e1768fd210e535f0c3782f4226cfc9b0c23b78362c4ffefa3f90560b4ea0672",
+        "registered_artifact_sha256": "5de1ed8251b147befef90e6bfee3f5bcda23056d5bb66212153ce1104668ca8c"
+      }
+    },
+    "diagnostic_cut": {
+      "contracts": [
+        "MODEL_ARTIFACT_HASH"
+      ],
+      "evidence_refs": [
+        "obs:3d4391fa1a45143ddfb2"
+      ]
+    },
+    "confidence": 1.0,
+    "observation_count": 28
+  },
+  "representation": {
+    "representation_id": "F0",
+    "selection_reason": "complete deterministic pipeline evidence"
+  },
+  "repair_plan": {
+    "plan_id": "repair:mlp2:05c4cf24fee49c98ad37",
+    "operation": {
+      "operation_id": "restore_registered_model_artifact",
+      "supported_contracts": [
+        "MODEL_ARTIFACT_HASH"
+      ],
+      "target_component_type": "model_artifact",
+      "preconditions": [
+        "registered_model_snapshot_available"
+      ],
+      "postconditions": [
+        "model_hash_matches",
+        "prediction_and_shap_rebuilt",
+        "all_contracts_rechecked"
+      ],
+      "rollback_operation": "restore_tampered_artifact_snapshot",
+      "maximum_cost": 0.5,
+      "mutates_state": true
+    },
+    "target_contracts": [
+      "MODEL_ARTIFACT_HASH"
+    ],
+    "preconditions": {
+      "registered_model_snapshot_available": true
+    },
+    "executable": true,
+    "network_required": false
+  },
+  "recertification": {
+    "repair_executed": true,
+    "target_contract_repaired": true,
+    "full_recertification": true,
+    "contracts_rechecked": [
+      "DATASET_IDENTITY",
+      "DATASET_SCHEMA",
+      "TARGET_NOT_IN_FEATURES",
+      "CLASS_MAPPING",
+      "TRAIN_VALIDATION_TEST_DISJOINTNESS",
+      "SPLIT_REPRODUCIBILITY",
+      "PREPROCESSOR_VERSION",
+      "PREPROCESSOR_FIT_SCOPE",
+      "FEATURE_ORDER",
+      "FEATURE_COUNT",
+      "TRANSFORM_OUTPUT_SCHEMA",
+      "FINITE_TRANSFORMED_VALUES",
+      "TRAINING_CONFIGURATION",
+      "MODEL_CONVERGENCE",
+      "MODEL_FEATURE_SCHEMA",
+      "TRAINING_DATA_HASH",
+      "MODEL_ARTIFACT_HASH",
+      "METRIC_SANITY",
+      "MODEL_INPUT_SCHEMA",
+      "PREDICTION_OBJECT_BINDING",
+      "PREDICTION_OUTPUT_SANITY",
+      "MODEL_EXPLAINER_VERSION",
+      "EXPLANATION_OBJECT_ID",
+      "EXPLANATION_OUTPUT_CONSISTENCY",
+      "EXPLANATION_FEATURE_SCHEMA",
+      "REQUIRED_PROVENANCE",
+      "REDUCTION_LOSS_LIMIT",
+      "USER_CLAIM_EVIDENCE_BINDING"
+    ],
+    "contracts_rechecked_count": 28,
+    "inference_rebuilt": true,
+    "shap_rebuilt": true,
+    "route_graph_rebuilt": true,
+    "views_rebuilt": true,
+    "new_critical_violations": 0,
+    "rollback_verified": true,
+    "post_repair_pipeline_status": "VALID",
+    "canonical_sha256": "fa7a35f185fe653d17605422926fe5671cabdcf01ac1472fc213607a51219340"
+  }
+}

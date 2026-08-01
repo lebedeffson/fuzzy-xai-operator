@@ -1,0 +1,129 @@
+{
+  "libraries": {
+    "lime": "0.2.0.1",
+    "mlflow": "2.22.5",
+    "numpy": "2.4.6",
+    "pandas": "2.3.3",
+    "python": "3.11.15",
+    "scikit_learn": "1.9.0",
+    "shap": "0.51.0"
+  },
+  "pipelines": [
+    {
+      "pipeline_id": "ext1-sklearn-column-transformer",
+      "split_seed": 1729,
+      "task_type": "BINARY_CLASSIFICATION",
+      "variants": {
+        "baseline": {
+          "dataset_manifest.json": "9f301b26b155cc0c12d3e00c51ac19fa6d951909318002417069789114f8f390",
+          "explanation_manifest.json": "78052f32d637e7d0efe37048fada60688caac4cdfb7df55dcbed10dd5645b8df",
+          "model.pkl": "76606520b405a4de488fe8097622d48bc2441f17f2be4efff9250c910474874f",
+          "model_manifest.json": "2fac3fc267e8358e2dfd1a0df5b9baf9ae1eca0510d8efc5d29bc8e4d9e6e333",
+          "pipeline_manifest.json": "c35e8b07e9837ace25eb8498021340c0b3df5fd4f9690e42f32582ba70bc6c11",
+          "prediction_manifest.json": "fd8cd1ae9d37b07515d39321acb745624b2cb605dc49e996230e50fd4a6b2d2d",
+          "preprocessor_manifest.json": "35c250e035a8260e136f6594714c1b1087daabc1f6f34fd1984cb117a1510baf",
+          "run_manifest.json": "5e44215a5bd4ad68b5378800f19b3062db85d271b03a84057e286be1c4d074bb",
+          "split_manifest.json": "3480cda28b9b751ae5ed77dfcbf337faa242e534de5832cd9095998ea245e6a3"
+        },
+        "retrained": {
+          "dataset_manifest.json": "9f301b26b155cc0c12d3e00c51ac19fa6d951909318002417069789114f8f390",
+          "explanation_manifest.json": "f300cd1feed9b40370ddaf4698e15f7f68c9b03fdca1559fb9ece3136ee1694d",
+          "model.pkl": "60da6cbb9bf1c89cacd51697518cfb8f4f2345c313fd40bd2b177ec0a6faa9fa",
+          "model_manifest.json": "d9741acb2353a2b0cfe160dddd7690bb8e4029ff305bca77d5000fd6f4d4e643",
+          "pipeline_manifest.json": "c35e8b07e9837ace25eb8498021340c0b3df5fd4f9690e42f32582ba70bc6c11",
+          "prediction_manifest.json": "3c19edf8ad1c65a359ab768d9134291672f70c9ff0df4a648db6eff2a757f498",
+          "preprocessor_manifest.json": "35c250e035a8260e136f6594714c1b1087daabc1f6f34fd1984cb117a1510baf",
+          "run_manifest.json": "8cd5f7cc0638de83896ac2acea89a1c3c27660ff580be3c22dc5c6152d57dd13",
+          "split_manifest.json": "3480cda28b9b751ae5ed77dfcbf337faa242e534de5832cd9095998ea245e6a3"
+        }
+      }
+    },
+    {
+      "pipeline_id": "ext2-shap-tree-explainer",
+      "split_seed": 1729,
+      "task_type": "MULTICLASS_CLASSIFICATION",
+      "variants": {
+        "baseline": {
+          "dataset_manifest.json": "da4807c94cbe65c823797e641a92c0498cb87dbeba26e9deb6fe87277f4b97b4",
+          "explanation_manifest.json": "9f275bdc017e51727ae7b36502374fdfa5513e7ce72fcd0bd9effc90c88803fc",
+          "model.pkl": "5aeca8a76da833f3e36730b97c91d178f15ef63eeeb5694bb453c1fa27d8f657",
+          "model_manifest.json": "f209047afc0a4e7e5b6899263e6a7e5436c8b7d2e7000c9f0e1a6ea3805a3b56",
+          "pipeline_manifest.json": "683c7610e79a93772fe10d37e43871e34bfa17223d0eddd44f6a361687e5bea8",
+          "prediction_manifest.json": "38c62feaf1998e28af103036f65a3692e80e30ac6ad8219504efcafe761b1ba9",
+          "preprocessor_manifest.json": "5bb095af42f23a91d1568e563d86cac643f5912122c19adac3d1ca144f7d5ad4",
+          "run_manifest.json": "30575d65c7e9bcdbf1dd746a1e83657d5d393ec86231fa3ca4ec17cca2d49ccc",
+          "split_manifest.json": "49213de5fe02c51c282820789d74157e5c1af6bfd3b6973bb4b411ee20380035"
+        },
+        "retrained": {
+          "dataset_manifest.json": "da4807c94cbe65c823797e641a92c0498cb87dbeba26e9deb6fe87277f4b97b4",
+          "explanation_manifest.json": "6268e0c1f22ff4d59edf3a2ce2f80c01f17bae4b440581cb942e758afd52dcac",
+          "model.pkl": "ec339fd45ce3cd4a39540194c4e8aaf34d902bb4a54c22f2f6de9cf6cfc0e9be",
+          "model_manifest.json": "50ecf03b3bdf05d9f0b24a054a108b4ae52c45e4d4ab250de7d2fb704185cae1",
+          "pipeline_manifest.json": "683c7610e79a93772fe10d37e43871e34bfa17223d0eddd44f6a361687e5bea8",
+          "prediction_manifest.json": "c1834b0bae1b49bba32ce3f4282c11bf0a865d3becba22fc37ac1c632832ba37",
+          "preprocessor_manifest.json": "5bb095af42f23a91d1568e563d86cac643f5912122c19adac3d1ca144f7d5ad4",
+          "run_manifest.json": "07bfe87f8eaa579ed8153b844021b7a076f6334725988a94b8529bf4e67f7db4",
+          "split_manifest.json": "49213de5fe02c51c282820789d74157e5c1af6bfd3b6973bb4b411ee20380035"
+        }
+      }
+    },
+    {
+      "pipeline_id": "ext3-mlflow-elasticnet",
+      "split_seed": 1729,
+      "task_type": "REGRESSION",
+      "variants": {
+        "baseline": {
+          "dataset_manifest.json": "71b9be926cde3d1d6eeaf4be1dd82a7ccddb911f2bed683dc6369d9c39e370a5",
+          "explanation_manifest.json": "ebfc8e51a007365ae455b904ba5e8379cd7bc7be4f5fd5c64f6fe944a12199de",
+          "model.pkl": "1417dc5086b5be10f24439eb2179be93e04366a4ba59433b2d13f4f804e3a72e",
+          "model_manifest.json": "0a07e15e58c23246d22ce2c193688af4933778b2fcd48bb869e4ae2e62776d3c",
+          "pipeline_manifest.json": "202d4935c01ef845b5a1ea0b57af40f6471fa2c843ddd49c898f4b4e6aef2b86",
+          "prediction_manifest.json": "d4c807939009a5ae629714316c31a59c89d964a973303525b058cc57002805a0",
+          "preprocessor_manifest.json": "2cc0dc3d16cd0bb9a5e8348c60175b576aeafd72dce3e1a41a34f050b9b3664e",
+          "run_manifest.json": "cb3a443512514aefac1c50f7a52ef0028fdf8fbe7c25724e8dc9d8cced6b5681",
+          "split_manifest.json": "e7a134c37f465d06c5ef421d50f1f73b27d2d9faba758ce54b6a026f4b77ca9c"
+        },
+        "retrained": {
+          "dataset_manifest.json": "71b9be926cde3d1d6eeaf4be1dd82a7ccddb911f2bed683dc6369d9c39e370a5",
+          "explanation_manifest.json": "7e865d4180e90d178b8d2494d51e0244e5576521b119cc01bea9a303a6c8867a",
+          "model.pkl": "252bbdab43b5e90275eef589b5191d086bea3299730f5f5b3865f01ca5959f9d",
+          "model_manifest.json": "6845b570b43003306380e6881c5d46fb62ed3ada1c5780a029c451833eca100c",
+          "pipeline_manifest.json": "202d4935c01ef845b5a1ea0b57af40f6471fa2c843ddd49c898f4b4e6aef2b86",
+          "prediction_manifest.json": "14b291faa392cd5866d96bea1b3019571560611e18c52569cde9fa22fb10d2f0",
+          "preprocessor_manifest.json": "2cc0dc3d16cd0bb9a5e8348c60175b576aeafd72dce3e1a41a34f050b9b3664e",
+          "run_manifest.json": "9e92c0031a2a773eb073e881a06c0550795fc57650baa6dac20d815c3040968c",
+          "split_manifest.json": "e7a134c37f465d06c5ef421d50f1f73b27d2d9faba758ce54b6a026f4b77ca9c"
+        }
+      }
+    },
+    {
+      "pipeline_id": "ext4-lime-tabular",
+      "split_seed": 1729,
+      "task_type": "MULTICLASS_CLASSIFICATION",
+      "variants": {
+        "baseline": {
+          "dataset_manifest.json": "c139b029e2f1c473fb789156cca66a944d5a9c8a4fc52898cbb5059bee4fa290",
+          "explanation_manifest.json": "c4e5e903ab1827b3a8981a5dc3eec5fb71f5cda9d1619b35a4f37a5e2ec52e89",
+          "model.pkl": "e846982b6a9ffec5e89c8379aa253b25ca7c8f816da0928e3fb7bedc3619f2d6",
+          "model_manifest.json": "b7251b963d5ed0264719ca029d071bf3e49a30a7a30ebcd380002e7b307071d2",
+          "pipeline_manifest.json": "0db7ffa62e455cd981e1c476519a91885a3da2d0f26237a4cc277b4bed830d5f",
+          "prediction_manifest.json": "6bb37093dc730d625a19ae742197834e609b60d5f9e601a0b99d6d9a66d86b5c",
+          "preprocessor_manifest.json": "9d4843db2e6b5ad2baed9c5aad34fc24b43f8b93b4940d542383bf863a80e417",
+          "run_manifest.json": "4f6e588b0dddc4050e688a91bfa440f3bf05c7f2ab6e9604c1c4d9a165e698fb",
+          "split_manifest.json": "18a45d54c20f3849dda3b2dc86475386b7d24b0f02186104b7ef1035905ce226"
+        },
+        "retrained": {
+          "dataset_manifest.json": "c139b029e2f1c473fb789156cca66a944d5a9c8a4fc52898cbb5059bee4fa290",
+          "explanation_manifest.json": "679fb21765e5d33f540063f9efa0ee9162b7d939c3b36df6858177531c7f5466",
+          "model.pkl": "cdc9c653b95bc739a608bdbe6a4c39fe25a0faab02d0053de9cf03ecb78e3bc9",
+          "model_manifest.json": "e3fb1d57ee464bbe6c8792d8b6184a5e26d4cb3e45182c4b677c695f671b694d",
+          "pipeline_manifest.json": "0db7ffa62e455cd981e1c476519a91885a3da2d0f26237a4cc277b4bed830d5f",
+          "prediction_manifest.json": "c51c9f321c655c11e0e4f063022e9a7a1bdffe184a81d95a3f048349c43fd066",
+          "preprocessor_manifest.json": "9d4843db2e6b5ad2baed9c5aad34fc24b43f8b93b4940d542383bf863a80e417",
+          "run_manifest.json": "364b4e0c831ea05a8acd7e8036f3adf08449e3bc61e181ab4e216f6fcf7d39da",
+          "split_manifest.json": "18a45d54c20f3849dda3b2dc86475386b7d24b0f02186104b7ef1035905ce226"
+        }
+      }
+    }
+  ]
+}

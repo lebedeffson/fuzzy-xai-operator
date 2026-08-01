@@ -1,0 +1,20 @@
+{
+  "baseline": {
+    "budget": 160,
+    "method": "B_BM25"
+  },
+  "budget_grid_reoptimization_forbidden": true,
+  "development_evidence": {
+    "b_bm25_recall": 0.875,
+    "b_bm25_search_space_reduction": 0.808865533190423,
+    "r5_recall": 0.9,
+    "r5_search_space_reduction": 0.9680228741884853
+  },
+  "held_out_budget_reoptimization_forbidden": true,
+  "minimum_recall": 0.8,
+  "primary": {
+    "budget": 20,
+    "method": "R5"
+  },
+  "status": "LOCKED_BEFORE_HELD_OUT"
+}

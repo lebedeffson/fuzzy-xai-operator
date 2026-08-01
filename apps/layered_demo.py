@@ -8,7 +8,6 @@ from pathlib import Path
 from typing import Any
 
 import numpy as np
-
 from fuzzyxai.datasets import list_dataset_modes, load_dataset_mode
 from fuzzyxai.pipelines import DatasetObserverPipeline
 
@@ -350,6 +349,63 @@ def _explain_block(
             ui.markdown(f'**Вывод:** {conclusion}')
 
 
+def _render_ml_pipeline_panel(ui: Any, pipeline_service: Any, scenario_ids: tuple[str, ...]) -> None:
+    """Render canonical pipeline diagnostics without deriving UI-side conclusions."""
+    with ui.column().classes('panel ml-panel w-full gap-3'):
+        ui.label('FuzzyXAI ML Pipeline v2').classes('text-2xl font-semibold')
+        ui.markdown(
+            'Полный контроль: **данные → split → StandardScaler → LogisticRegression → artifact → '
+            'inference → SHAP → fuzzy representation → diagnosis → repair → recertification**.'
+        )
+        scenario = ui.select(
+            {key: key for key in scenario_ids}, value='S11_TARGET_LEAKAGE', label='Pipeline scenario'
+        ).classes('w-full')
+        status = ui.markdown('Выберите S1–S18 и выполните канонический pipeline route.')
+        stages = ui.table(
+            columns=[
+                {'name': 'stage', 'label': 'Стадия', 'field': 'stage'},
+                {'name': 'status', 'label': 'Статус', 'field': 'status'},
+            ],
+            rows=[],
+        ).classes('w-full')
+        violations = ui.table(
+            columns=[
+                {'name': 'stage', 'label': 'Стадия', 'field': 'stage'},
+                {'name': 'component_id', 'label': 'Компонент', 'field': 'component_id'},
+                {'name': 'contract_id', 'label': 'Контракт', 'field': 'contract_id'},
+                {'name': 'observed_value', 'label': 'Фактически', 'field': 'observed_value'},
+                {'name': 'expected_value', 'label': 'Требуется', 'field': 'expected_value'},
+                {'name': 'action', 'label': 'Действие', 'field': 'action'},
+                {'name': 'evidence_refs', 'label': 'Evidence', 'field': 'evidence_refs'},
+            ],
+            rows=[],
+        ).classes('w-full')
+        repair = ui.code('{}').classes('w-full')
+
+        def execute_pipeline() -> None:
+            result = pipeline_service.execute_scenario(str(scenario.value))
+            diagnosis = result.diagnosis
+            status.content = (
+                f"**Pipeline:** `{result.pipeline_status}`  \n"
+                f"**Stage:** `{diagnosis['failed_stage'] or 'NONE'}`  \n"
+                f"**Contract:** `{diagnosis['violated_contract'] or 'NONE'}`  \n"
+                f"**Action:** `{diagnosis['recommended_action']}`  \n"
+                f"**Canonical SHA256:** `{result.canonical_sha256}`"
+            )
+            stages.rows = [{'stage': stage, 'status': value} for stage, value in result.stage_statuses.items()]
+            stages.update()
+            violations.rows = list(result.contract_report['violations'])
+            violations.update()
+            repair.content = json.dumps(
+                {'repair_plan': result.repair_plan, 'recertification': result.recertification},
+                ensure_ascii=False,
+                indent=2,
+                default=str,
+            )
+
+        ui.button('Run full pipeline', on_click=execute_pipeline).classes('bg-emerald-700 text-white')
+
+
 def run_ui(port: int = 8096) -> None:  # pragma: no cover
     from nicegui import ui
 
@@ -393,6 +449,7 @@ def run_ui(port: int = 8096) -> None:  # pragma: no cover
             t_fuzzy = ui.tab('Иерархия неопределённости')
             t_cat = ui.tab('Категория / HoTT / топос')
             t_risk = ui.tab('Риск-наблюдатель')
+            t_ml = ui.tab('ML vertical v1')
             t_exp = ui.tab('Эксперименты')
             t_art = ui.tab('Артефакты')
 
@@ -782,7 +839,7 @@ def run_ui(port: int = 8096) -> None:  # pragma: no cover
                         ],
                         rows=[],
                     ).classes('w-full')
-                    glossary_table = ui.table(
+                    _glossary_table = ui.table(
                         columns=[
                             {'name': 'class', 'label': 'Класс', 'field': 'class'},
                             {'name': 'plain', 'label': 'Простое объяснение', 'field': 'plain'},
@@ -953,7 +1010,6 @@ def run_ui(port: int = 8096) -> None:  # pragma: no cover
                         table.update()
                         thresholds = state['risk']['thresholds']
                         rho_val = float(state['risk']['rho'])
-                        rupture = bool(state['risk']['rupture'])
                         policy_table.rows = _policy_rows(
                             rho_val,
                             tuple(thresholds),
@@ -971,6 +1027,73 @@ def run_ui(port: int = 8096) -> None:  # pragma: no cover
 
                     ui.button('Refresh from current case', on_click=refresh_risk)
                     refresh_risk()
+
+            with ui.tab_panel(t_ml):
+                from fuzzyxai.ml_vertical.pipeline import ALL_SCENARIOS, MLPipelineService
+                from fuzzyxai.ml_vertical.service import SCENARIOS, MLVerticalService
+
+                ml_service = MLVerticalService()
+                pipeline_service = MLPipelineService()
+                with ui.column().classes('panel w-full gap-3'):
+                    ui.label('FuzzyXAI ML Vertical v1').classes('text-2xl font-semibold')
+                    ui.markdown(
+                        'Один проверяемый маршрут: **Breast Cancer Wisconsin → LogisticRegression → SHAP → '
+                        'fuzzy representation → contracts → observer → repair/recertification**. '
+                        'Контур является воспроизводимой программной демонстрацией, а не клинической системой.'
+                    )
+                    ml_scenario = ui.select(
+                        {key: key for key in SCENARIOS}, value='S1_NORMAL', label='Registered scenario'
+                    ).classes('w-full')
+                    ml_status = ui.markdown('Выберите сценарий и запустите маршрут.')
+                    ml_claims = ui.table(
+                        columns=[
+                            {'name': 'claim_id', 'label': 'Claim', 'field': 'claim_id'},
+                            {'name': 'text', 'label': 'Evidence-bound statement', 'field': 'text'},
+                            {'name': 'status', 'label': 'Status', 'field': 'status'},
+                        ],
+                        rows=[],
+                    ).classes('w-full')
+                    ml_issues = ui.table(
+                        columns=[
+                            {'name': 'violated_contract', 'label': 'Contract', 'field': 'violated_contract'},
+                            {'name': 'severity', 'label': 'Severity', 'field': 'severity'},
+                            {'name': 'symptom', 'label': 'Observed issue', 'field': 'symptom'},
+                        ],
+                        rows=[],
+                    ).classes('w-full')
+                    ml_views = ui.tabs().classes('w-full')
+                    with ml_views:
+                        ml_user_tab = ui.tab('User')
+                        ml_engineer_tab = ui.tab('Engineer')
+                        ml_auditor_tab = ui.tab('Auditor')
+                    with ui.tab_panels(ml_views, value=ml_user_tab).classes('w-full'):
+                        with ui.tab_panel(ml_user_tab):
+                            ml_user = ui.code('{}').classes('w-full')
+                        with ui.tab_panel(ml_engineer_tab):
+                            ml_engineer = ui.code('{}').classes('w-full')
+                        with ui.tab_panel(ml_auditor_tab):
+                            ml_auditor = ui.code('{}').classes('w-full')
+
+                    def run_ml_vertical() -> None:
+                        import json as _json
+
+                        result = ml_service.execute(ml_service.scenario_request(str(ml_scenario.value)))
+                        ml_status.content = (
+                            f"**Action:** `{result.observer['action']}`  \n"
+                            f"**Representation:** `{result.representation['representation_id']}`  \n"
+                            f"**Route:** `{result.diagnosis['route_status']}`  \n"
+                            f"**Canonical SHA256:** `{result.canonical_sha256}`"
+                        )
+                        ml_claims.rows = list(result.claims)
+                        ml_claims.update()
+                        ml_issues.rows = list(result.diagnosis['issues'])
+                        ml_issues.update()
+                        ml_user.content = _json.dumps(result.views['user'], ensure_ascii=False, indent=2, default=str)
+                        ml_engineer.content = _json.dumps(result.views['engineer'], ensure_ascii=False, indent=2, default=str)
+                        ml_auditor.content = _json.dumps(result.views['auditor'], ensure_ascii=False, indent=2, default=str)
+
+                    ui.button('Run registered route', on_click=run_ml_vertical).classes('bg-blue-700 text-white')
+                    _render_ml_pipeline_panel(ui, pipeline_service, tuple(ALL_SCENARIOS))
 
             with ui.tab_panel(t_exp):
                 with ui.column().classes('panel w-full gap-2'):
@@ -1107,6 +1230,91 @@ def run_ui(port: int = 8096) -> None:  # pragma: no cover
     ui.run(port=port, title='FuzzyXAI Layered Demo')
 
 
+def run_ml_vertical_ui(port: int = 8092) -> None:  # pragma: no cover
+    """Run the integrated ML vertical without optional historical reports."""
+    from fuzzyxai.ml_vertical.pipeline import ALL_SCENARIOS, MLPipelineService
+    from fuzzyxai.ml_vertical.service import SCENARIOS, MLVerticalService
+    from nicegui import ui
+
+    service = MLVerticalService()
+    pipeline_service = MLPipelineService()
+    ui.add_head_html(
+        """
+        <style>
+        body { background: linear-gradient(145deg,#eef6ff,#f8fbff 45%,#edf9f1); }
+        .ml-shell { max-width: 1320px; margin: 0 auto; padding: 18px; }
+        .ml-hero { background: linear-gradient(125deg,#10243e,#0b5d66,#16846f); color:#fff; border-radius:20px; padding:22px; }
+        .ml-panel { background:#fff; border:1px solid #d8e4e8; border-radius:16px; padding:18px; box-shadow:0 10px 30px rgba(15,35,60,.08); }
+        </style>
+        """
+    )
+
+    with ui.column().classes('ml-shell w-full gap-4'):
+        with ui.column().classes('ml-hero w-full gap-1'):
+            ui.label('FuzzyXAI ML Vertical v1 + Pipeline v2').classes('text-3xl font-semibold')
+            ui.markdown(
+                'Проверяемый маршрут: **Breast Cancer Wisconsin → LogisticRegression → SHAP → '
+                'fuzzy representation → contracts → observer → repair/recertification**.'
+            )
+            ui.label('Воспроизводимая программная демонстрация, не клиническая система.').classes('text-sm opacity-80')
+
+        with ui.column().classes('ml-panel w-full gap-3'):
+            scenario = ui.select(
+                {key: key for key in SCENARIOS}, value='S1_NORMAL', label='Registered scenario'
+            ).classes('w-full')
+            status = ui.markdown('Выберите сценарий и запустите маршрут.')
+            claims = ui.table(
+                columns=[
+                    {'name': 'claim_id', 'label': 'Claim', 'field': 'claim_id'},
+                    {'name': 'text', 'label': 'Evidence-bound statement', 'field': 'text'},
+                    {'name': 'status', 'label': 'Status', 'field': 'status'},
+                ],
+                rows=[],
+            ).classes('w-full')
+            issues = ui.table(
+                columns=[
+                    {'name': 'violated_contract', 'label': 'Contract', 'field': 'violated_contract'},
+                    {'name': 'severity', 'label': 'Severity', 'field': 'severity'},
+                    {'name': 'symptom', 'label': 'Observed issue', 'field': 'symptom'},
+                ],
+                rows=[],
+            ).classes('w-full')
+            views = ui.tabs().classes('w-full')
+            with views:
+                user_tab = ui.tab('User')
+                engineer_tab = ui.tab('Engineer')
+                auditor_tab = ui.tab('Auditor')
+            with ui.tab_panels(views, value=user_tab).classes('w-full'):
+                with ui.tab_panel(user_tab):
+                    user_view = ui.code('{}').classes('w-full')
+                with ui.tab_panel(engineer_tab):
+                    engineer_view = ui.code('{}').classes('w-full')
+                with ui.tab_panel(auditor_tab):
+                    auditor_view = ui.code('{}').classes('w-full')
+
+            def execute() -> None:
+                result = service.execute(service.scenario_request(str(scenario.value)))
+                status.content = (
+                    f"**Action:** `{result.observer['action']}`  \n"
+                    f"**Representation:** `{result.representation['representation_id']}`  \n"
+                    f"**Route:** `{result.diagnosis['route_status']}`  \n"
+                    f"**Canonical SHA256:** `{result.canonical_sha256}`"
+                )
+                claims.rows = list(result.claims)
+                claims.update()
+                issues.rows = list(result.diagnosis['issues'])
+                issues.update()
+                user_view.content = json.dumps(result.views['user'], ensure_ascii=False, indent=2, default=str)
+                engineer_view.content = json.dumps(result.views['engineer'], ensure_ascii=False, indent=2, default=str)
+                auditor_view.content = json.dumps(result.views['auditor'], ensure_ascii=False, indent=2, default=str)
+
+            ui.button('Run registered route', on_click=execute).classes('bg-teal-700 text-white')
+
+        _render_ml_pipeline_panel(ui, pipeline_service, tuple(ALL_SCENARIOS))
+
+    ui.run(port=port, title='FuzzyXAI ML Pipeline v2')
+
+
 def _route_statuses(state: dict[str, Any]) -> list[str]:
     return [str(v) for v in state.get('route_header', {}).values()]
 
@@ -1114,8 +1322,12 @@ def _route_statuses(state: dict[str, Any]) -> list[str]:
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument('--port', type=int, default=8096)
+    parser.add_argument('--ml-vertical-only', action='store_true')
     args = parser.parse_args()
-    run_ui(port=args.port)
+    if args.ml_vertical_only:
+        run_ml_vertical_ui(port=args.port)
+    else:
+        run_ui(port=args.port)
 
 
 if __name__ in {'__main__', '__mp_main__'}:

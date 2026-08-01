@@ -1,0 +1,23 @@
+{
+  "column_count": 13,
+  "dataset_sha256": "fd8fbd27bf0f878ebabe536c0ea92252de07e67c050e11ce6c799fbfbe112a24",
+  "dataset_source": "sklearn.datasets.load_wine",
+  "feature_names": [
+    "alcohol",
+    "malic_acid",
+    "ash",
+    "alcalinity_of_ash",
+    "magnesium",
+    "total_phenols",
+    "flavanoids",
+    "nonflavanoid_phenols",
+    "proanthocyanins",
+    "color_intensity",
+    "hue",
+    "od280/od315_of_diluted_wines",
+    "proline"
+  ],
+  "row_count": 178,
+  "target_in_features": false,
+  "target_name": "target"
+}

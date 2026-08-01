@@ -1,0 +1,33 @@
+{
+  "run_id": "mlv1:8874582d5c2dc9db4da5",
+  "scenario_id": "S3_MISSING_REQUIRED_FEATURE",
+  "action": "REQUEST_DATA",
+  "claims": [
+    {
+      "claim_id": "claim:missing",
+      "text": "A prediction was not produced because required input is missing.",
+      "evidence_refs": [
+        "evidence:input"
+      ],
+      "status": "limited",
+      "text_code": "registered_template",
+      "arguments": {},
+      "allowed_views": [
+        "user",
+        "engineer",
+        "auditor"
+      ],
+      "blocked": false
+    }
+  ],
+  "explainable_object_sha256": "a08a35b0bdc5d45d02e94f992747ab6a32c2e417f164b60c91d8be8c7527fb74",
+  "view": "user",
+  "prediction": null,
+  "limitations": [
+    "Заключение относится к структурной целостности маршрута и не доказывает ошибочность прогноза.",
+    "Ближайшая причина не считается корневой причинно-следственной связью без независимого журнала изменений.",
+    "Часть обязательных сведений отсутствует; точная диагностика ограничена.",
+    "Оптимальность диагностического разреза не доказана.",
+    "План содержит рекомендации или шаги, требующие внешнего исполнения."
+  ]
+}

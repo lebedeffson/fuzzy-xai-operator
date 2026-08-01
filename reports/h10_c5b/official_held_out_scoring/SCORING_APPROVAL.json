@@ -1,0 +1,10 @@
+{
+  "protocol_id": "h10-c5b-repository-grounded-v1",
+  "method_commit": "7aa72a19a70bdb5eedea520742f269bc6c26aeea",
+  "held_out_scoring_lock_sha256": "40d838b611b8d9f6353f537ea48d56b89cc2137135805ab5aa861c583764d570",
+  "enriched_manifest_sha256": "a22a62380249e7744f7387ec0d65b91d6717889b56de8af8e7dcc034a6e59f46",
+  "authorization": "AUTHORIZE_ONE_TIME_H10_C5B_HELD_OUT_SCORING",
+  "authorized_by": "lebedeffson (repository owner)",
+  "authorized_at_utc": "2026-07-26T17:15:13Z",
+  "authorization_source": "interactive owner instruction: vse mozhno delay"
+}

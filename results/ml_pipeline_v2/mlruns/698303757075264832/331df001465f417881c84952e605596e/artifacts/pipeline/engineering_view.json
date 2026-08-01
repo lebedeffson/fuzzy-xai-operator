@@ -1,0 +1,255 @@
+{
+  "run_id": "mlp2:466b99d7c277f668a6bb",
+  "scenario_id": "S14_FEATURE_ORDER",
+  "action": "REQUEST_DATA",
+  "pipeline_status": "INVALID",
+  "canonical_source": "MLPipelineService",
+  "diagnosis": {
+    "diagnosis_id": "diagnosis:mlp2:466b99d7c277f668a6bb",
+    "pipeline_status": "INVALID",
+    "failed_stage": "PREPROCESSING",
+    "source_component": "standard_scaler",
+    "violated_contract": "FEATURE_ORDER",
+    "violated_contracts": [
+      {
+        "contract_id": "FEATURE_ORDER",
+        "stage": "PREPROCESSING",
+        "component_id": "standard_scaler",
+        "passed": false,
+        "severity": "MEDIUM",
+        "action": "REQUEST_DATA",
+        "observed_value": [
+          "worst fractal dimension",
+          "worst symmetry",
+          "worst concave points",
+          "worst concavity",
+          "worst compactness",
+          "worst smoothness",
+          "worst area",
+          "worst perimeter",
+          "worst texture",
+          "worst radius",
+          "fractal dimension error",
+          "symmetry error",
+          "concave points error",
+          "concavity error",
+          "compactness error",
+          "smoothness error",
+          "area error",
+          "perimeter error",
+          "texture error",
+          "radius error",
+          "mean fractal dimension",
+          "mean symmetry",
+          "mean concave points",
+          "mean concavity",
+          "mean compactness",
+          "mean smoothness",
+          "mean area",
+          "mean perimeter",
+          "mean texture",
+          "mean radius"
+        ],
+        "expected_value": [
+          "mean radius",
+          "mean texture",
+          "mean perimeter",
+          "mean area",
+          "mean smoothness",
+          "mean compactness",
+          "mean concavity",
+          "mean concave points",
+          "mean symmetry",
+          "mean fractal dimension",
+          "radius error",
+          "texture error",
+          "perimeter error",
+          "area error",
+          "smoothness error",
+          "compactness error",
+          "concavity error",
+          "concave points error",
+          "symmetry error",
+          "fractal dimension error",
+          "worst radius",
+          "worst texture",
+          "worst perimeter",
+          "worst area",
+          "worst smoothness",
+          "worst compactness",
+          "worst concavity",
+          "worst concave points",
+          "worst symmetry",
+          "worst fractal dimension"
+        ],
+        "evidence_refs": [
+          "obs:6041e8bd2eea9954a577"
+        ]
+      }
+    ],
+    "affected_field": "feature_order",
+    "observed_value": [
+      "worst fractal dimension",
+      "worst symmetry",
+      "worst concave points",
+      "worst concavity",
+      "worst compactness",
+      "worst smoothness",
+      "worst area",
+      "worst perimeter",
+      "worst texture",
+      "worst radius",
+      "fractal dimension error",
+      "symmetry error",
+      "concave points error",
+      "concavity error",
+      "compactness error",
+      "smoothness error",
+      "area error",
+      "perimeter error",
+      "texture error",
+      "radius error",
+      "mean fractal dimension",
+      "mean symmetry",
+      "mean concave points",
+      "mean concavity",
+      "mean compactness",
+      "mean smoothness",
+      "mean area",
+      "mean perimeter",
+      "mean texture",
+      "mean radius"
+    ],
+    "expected_value": [
+      "mean radius",
+      "mean texture",
+      "mean perimeter",
+      "mean area",
+      "mean smoothness",
+      "mean compactness",
+      "mean concavity",
+      "mean concave points",
+      "mean symmetry",
+      "mean fractal dimension",
+      "radius error",
+      "texture error",
+      "perimeter error",
+      "area error",
+      "smoothness error",
+      "compactness error",
+      "concavity error",
+      "concave points error",
+      "symmetry error",
+      "fractal dimension error",
+      "worst radius",
+      "worst texture",
+      "worst perimeter",
+      "worst area",
+      "worst smoothness",
+      "worst compactness",
+      "worst concavity",
+      "worst concave points",
+      "worst symmetry",
+      "worst fractal dimension"
+    ],
+    "severity": "MEDIUM",
+    "recommended_action": "REQUEST_DATA",
+    "evidence_refs": [
+      "obs:6041e8bd2eea9954a577"
+    ],
+    "nearest_confirmed_cause": {
+      "component": "standard_scaler",
+      "mutation": {
+        "registered_first": "mean radius",
+        "observed_first": "worst fractal dimension",
+        "reordered_input_sha256": "9c06776a183faa2b1fafdd829785115d178f738b045dbb4208336c8cfb70e34e"
+      }
+    },
+    "diagnostic_cut": {
+      "contracts": [
+        "FEATURE_ORDER"
+      ],
+      "evidence_refs": [
+        "obs:6041e8bd2eea9954a577"
+      ]
+    },
+    "confidence": 1.0,
+    "observation_count": 28
+  },
+  "representation": {
+    "representation_id": "F0",
+    "selection_reason": "complete deterministic pipeline evidence"
+  },
+  "repair_plan": {
+    "plan_id": "repair:mlp2:466b99d7c277f668a6bb",
+    "operation": {
+      "operation_id": "restore_registered_feature_order",
+      "supported_contracts": [
+        "FEATURE_ORDER"
+      ],
+      "target_component_type": "schema",
+      "preconditions": [
+        "registered_feature_schema_available"
+      ],
+      "postconditions": [
+        "feature_order_matches",
+        "all_contracts_rechecked"
+      ],
+      "rollback_operation": "restore_previous_feature_order",
+      "maximum_cost": 0.2,
+      "mutates_state": true
+    },
+    "target_contracts": [
+      "FEATURE_ORDER"
+    ],
+    "preconditions": {
+      "registered_feature_schema_available": true
+    },
+    "executable": true,
+    "network_required": false
+  },
+  "recertification": {
+    "repair_executed": true,
+    "target_contract_repaired": true,
+    "full_recertification": true,
+    "contracts_rechecked": [
+      "DATASET_IDENTITY",
+      "DATASET_SCHEMA",
+      "TARGET_NOT_IN_FEATURES",
+      "CLASS_MAPPING",
+      "TRAIN_VALIDATION_TEST_DISJOINTNESS",
+      "SPLIT_REPRODUCIBILITY",
+      "PREPROCESSOR_VERSION",
+      "PREPROCESSOR_FIT_SCOPE",
+      "FEATURE_ORDER",
+      "FEATURE_COUNT",
+      "TRANSFORM_OUTPUT_SCHEMA",
+      "FINITE_TRANSFORMED_VALUES",
+      "TRAINING_CONFIGURATION",
+      "MODEL_CONVERGENCE",
+      "MODEL_FEATURE_SCHEMA",
+      "TRAINING_DATA_HASH",
+      "MODEL_ARTIFACT_HASH",
+      "METRIC_SANITY",
+      "MODEL_INPUT_SCHEMA",
+      "PREDICTION_OBJECT_BINDING",
+      "PREDICTION_OUTPUT_SANITY",
+      "MODEL_EXPLAINER_VERSION",
+      "EXPLANATION_OBJECT_ID",
+      "EXPLANATION_OUTPUT_CONSISTENCY",
+      "EXPLANATION_FEATURE_SCHEMA",
+      "REQUIRED_PROVENANCE",
+      "REDUCTION_LOSS_LIMIT",
+      "USER_CLAIM_EVIDENCE_BINDING"
+    ],
+    "contracts_rechecked_count": 28,
+    "inference_rebuilt": true,
+    "shap_rebuilt": true,
+    "route_graph_rebuilt": true,
+    "views_rebuilt": true,
+    "new_critical_violations": 0,
+    "rollback_verified": true,
+    "post_repair_pipeline_status": "VALID",
+    "canonical_sha256": "5f29c6a9a27eccf93c799a6fce80d0a15a81506df4dfa2b48d76e2ff9c55c8c6"
+  }
+}

@@ -1,0 +1,4163 @@
+{
+  "run_id": "mlp2:05c4cf24fee49c98ad37",
+  "scenario_id": "S16_MODEL_ARTIFACT_TAMPER",
+  "pipeline_version": "2.0.0",
+  "pipeline_status": "INVALID",
+  "stage_statuses": {
+    "DATA_PREPARATION": "PASS",
+    "DATA_SPLIT": "PASS",
+    "PREPROCESSING": "PASS",
+    "TRAINING": "PASS",
+    "MODEL_ARTIFACT": "REPAIRED",
+    "INFERENCE": "PASS",
+    "POST_HOC_EXPLANATION": "PASS",
+    "FUZZY_REPRESENTATION": "PASS",
+    "REDUCTION": "PASS",
+    "PRESENTATION": "PASS",
+    "REPAIR": "PASS",
+    "RECERTIFICATION": "PASS"
+  },
+  "observations": [
+    {
+      "observation_id": "obs:57a26f9a6f1a14044c48",
+      "run_id": "mlp2:05c4cf24fee49c98ad37",
+      "stage": "DATA_PREPARATION",
+      "component_id": "breast_cancer_dataset",
+      "field_name": "dataset_identity",
+      "observed_value": "47e9aa4e33b5350407b6d31fa140e2b1767a038c37796e0990eb99ad2bc7ba12",
+      "expected_value": "47e9aa4e33b5350407b6d31fa140e2b1767a038c37796e0990eb99ad2bc7ba12",
+      "evidence_type": "measured_contract_value",
+      "source_uri": "sklearn://datasets/load_breast_cancer",
+      "sha256": "57a26f9a6f1a14044c486e01f0735c0c1c5ad28379434e92b7e1faf5c7e55121",
+      "timestamp_utc": "2000-01-01T00:00:00Z"
+    },
+    {
+      "observation_id": "obs:d527b6e8b5989b4d7ed7",
+      "run_id": "mlp2:05c4cf24fee49c98ad37",
+      "stage": "DATA_PREPARATION",
+      "component_id": "breast_cancer_dataset",
+      "field_name": "dataset_schema",
+      "observed_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "expected_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "evidence_type": "measured_contract_value",
+      "source_uri": "sklearn://datasets/load_breast_cancer",
+      "sha256": "d527b6e8b5989b4d7ed71c8b1346617e0c1bf607f125b62c1c4aef973de520c1",
+      "timestamp_utc": "2000-01-01T00:00:00Z"
+    },
+    {
+      "observation_id": "obs:a00b789301c8c9e79868",
+      "run_id": "mlp2:05c4cf24fee49c98ad37",
+      "stage": "DATA_PREPARATION",
+      "component_id": "breast_cancer_dataset",
+      "field_name": "target_not_in_features",
+      "observed_value": true,
+      "expected_value": true,
+      "evidence_type": "measured_contract_value",
+      "source_uri": "sklearn://datasets/load_breast_cancer",
+      "sha256": "a00b789301c8c9e79868a3186298e9347cc1e04bf406bb27ea24318a512b7310",
+      "timestamp_utc": "2000-01-01T00:00:00Z"
+    },
+    {
+      "observation_id": "obs:cf2ec00586da34995693",
+      "run_id": "mlp2:05c4cf24fee49c98ad37",
+      "stage": "DATA_PREPARATION",
+      "component_id": "breast_cancer_dataset",
+      "field_name": "class_mapping",
+      "observed_value": {
+        "source": [
+          0,
+          1
+        ],
+        "encoded": [
+          1,
+          0
+        ],
+        "model_classes": [
+          0,
+          1
+        ]
+      },
+      "expected_value": {
+        "source": [
+          0,
+          1
+        ],
+        "encoded": [
+          1,
+          0
+        ],
+        "model_classes": [
+          0,
+          1
+        ]
+      },
+      "evidence_type": "measured_contract_value",
+      "source_uri": "sklearn://datasets/load_breast_cancer",
+      "sha256": "cf2ec00586da349956938dc2c27d26c5edbb801d6bf991cb0e3bdd9f08ae0cbd",
+      "timestamp_utc": "2000-01-01T00:00:00Z"
+    },
+    {
+      "observation_id": "obs:584e1f79ebc8e47d3473",
+      "run_id": "mlp2:05c4cf24fee49c98ad37",
+      "stage": "DATA_SPLIT",
+      "component_id": "deterministic_splitter",
+      "field_name": "train_validation_test_disjointness",
+      "observed_value": {
+        "train_validation": 0,
+        "train_test": 0,
+        "validation_test": 0
+      },
+      "expected_value": {
+        "train_validation": 0,
+        "train_test": 0,
+        "validation_test": 0
+      },
+      "evidence_type": "measured_contract_value",
+      "source_uri": "memory://split-manifest",
+      "sha256": "584e1f79ebc8e47d3473f384a289f3d81b136be8175ae4dccd3a035994936d3a",
+      "timestamp_utc": "2000-01-01T00:00:00Z"
+    },
+    {
+      "observation_id": "obs:7020f9ae6f0908503885",
+      "run_id": "mlp2:05c4cf24fee49c98ad37",
+      "stage": "DATA_SPLIT",
+      "component_id": "deterministic_splitter",
+      "field_name": "split_reproducibility",
+      "observed_value": "5cb8248a79fe2464c45575cdb50c2dd1ba887c819311031b970fa10adb6afc8e",
+      "expected_value": "5cb8248a79fe2464c45575cdb50c2dd1ba887c819311031b970fa10adb6afc8e",
+      "evidence_type": "measured_contract_value",
+      "source_uri": "memory://split-manifest",
+      "sha256": "7020f9ae6f0908503885f518f4a529a837f48fdec3a28b20aeb3c6fa6ff037a4",
+      "timestamp_utc": "2000-01-01T00:00:00Z"
+    },
+    {
+      "observation_id": "obs:32d0da17783b13c79b6b",
+      "run_id": "mlp2:05c4cf24fee49c98ad37",
+      "stage": "PREPROCESSING",
+      "component_id": "standard_scaler",
+      "field_name": "preprocessor_version",
+      "observed_value": "sklearn.StandardScaler/1.9.0",
+      "expected_value": "sklearn.StandardScaler/1.9.0",
+      "evidence_type": "measured_contract_value",
+      "source_uri": "memory://standard-scaler",
+      "sha256": "32d0da17783b13c79b6bbe871970538d39e17ed21ae2e6ed2bd8674f14ae155f",
+      "timestamp_utc": "2000-01-01T00:00:00Z"
+    },
+    {
+      "observation_id": "obs:b8682a4609d2dbeb9f17",
+      "run_id": "mlp2:05c4cf24fee49c98ad37",
+      "stage": "PREPROCESSING",
+      "component_id": "standard_scaler",
+      "field_name": "preprocessor_fit_scope",
+      "observed_value": "d96d63ac85a124109a38337843ea08b792d579afb5e10d85d232020ce67fb3bb",
+      "expected_value": "d96d63ac85a124109a38337843ea08b792d579afb5e10d85d232020ce67fb3bb",
+      "evidence_type": "measured_contract_value",
+      "source_uri": "memory://standard-scaler",
+      "sha256": "b8682a4609d2dbeb9f17c6ffd14cfd63113279b146f4f3d2befad0e719da1fdf",
+      "timestamp_utc": "2000-01-01T00:00:00Z"
+    },
+    {
+      "observation_id": "obs:dff8a9a02067d9499e78",
+      "run_id": "mlp2:05c4cf24fee49c98ad37",
+      "stage": "PREPROCESSING",
+      "component_id": "standard_scaler",
+      "field_name": "feature_order",
+      "observed_value": [
+        "mean radius",
+        "mean texture",
+        "mean perimeter",
+        "mean area",
+        "mean smoothness",
+        "mean compactness",
+        "mean concavity",
+        "mean concave points",
+        "mean symmetry",
+        "mean fractal dimension",
+        "radius error",
+        "texture error",
+        "perimeter error",
+        "area error",
+        "smoothness error",
+        "compactness error",
+        "concavity error",
+        "concave points error",
+        "symmetry error",
+        "fractal dimension error",
+        "worst radius",
+        "worst texture",
+        "worst perimeter",
+        "worst area",
+        "worst smoothness",
+        "worst compactness",
+        "worst concavity",
+        "worst concave points",
+        "worst symmetry",
+        "worst fractal dimension"
+      ],
+      "expected_value": [
+        "mean radius",
+        "mean texture",
+        "mean perimeter",
+        "mean area",
+        "mean smoothness",
+        "mean compactness",
+        "mean concavity",
+        "mean concave points",
+        "mean symmetry",
+        "mean fractal dimension",
+        "radius error",
+        "texture error",
+        "perimeter error",
+        "area error",
+        "smoothness error",
+        "compactness error",
+        "concavity error",
+        "concave points error",
+        "symmetry error",
+        "fractal dimension error",
+        "worst radius",
+        "worst texture",
+        "worst perimeter",
+        "worst area",
+        "worst smoothness",
+        "worst compactness",
+        "worst concavity",
+        "worst concave points",
+        "worst symmetry",
+        "worst fractal dimension"
+      ],
+      "evidence_type": "measured_contract_value",
+      "source_uri": "memory://standard-scaler",
+      "sha256": "dff8a9a02067d9499e78883c7b6af4974680dfaf23251fe7b605b10d42214298",
+      "timestamp_utc": "2000-01-01T00:00:00Z"
+    },
+    {
+      "observation_id": "obs:523099f70ef8689f0958",
+      "run_id": "mlp2:05c4cf24fee49c98ad37",
+      "stage": "PREPROCESSING",
+      "component_id": "standard_scaler",
+      "field_name": "feature_count",
+      "observed_value": 30,
+      "expected_value": 30,
+      "evidence_type": "measured_contract_value",
+      "source_uri": "memory://standard-scaler",
+      "sha256": "523099f70ef8689f09583db324700c0433ec5e2846c0ba660e36ee40c42cc3b2",
+      "timestamp_utc": "2000-01-01T00:00:00Z"
+    },
+    {
+      "observation_id": "obs:50e71ff33d0b1aef48b4",
+      "run_id": "mlp2:05c4cf24fee49c98ad37",
+      "stage": "PREPROCESSING",
+      "component_id": "standard_scaler",
+      "field_name": "transform_output_schema",
+      "observed_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "expected_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "evidence_type": "measured_contract_value",
+      "source_uri": "memory://standard-scaler",
+      "sha256": "50e71ff33d0b1aef48b43643e958ce9608354df3f9085557e9dc5404e93d2a2e",
+      "timestamp_utc": "2000-01-01T00:00:00Z"
+    },
+    {
+      "observation_id": "obs:115299fc970a1016cf1d",
+      "run_id": "mlp2:05c4cf24fee49c98ad37",
+      "stage": "PREPROCESSING",
+      "component_id": "standard_scaler",
+      "field_name": "finite_transformed_values",
+      "observed_value": true,
+      "expected_value": true,
+      "evidence_type": "measured_contract_value",
+      "source_uri": "memory://standard-scaler",
+      "sha256": "115299fc970a1016cf1daeda39c160c3c81d51f3ebad06a5400f5716a1afc142",
+      "timestamp_utc": "2000-01-01T00:00:00Z"
+    },
+    {
+      "observation_id": "obs:de2b8a6e1c15396f2aa3",
+      "run_id": "mlp2:05c4cf24fee49c98ad37",
+      "stage": "TRAINING",
+      "component_id": "logistic_regression",
+      "field_name": "training_configuration",
+      "observed_value": "f72bbde93f0b50126b8592d4993f21b174e7eb6a237dc5c29a4f405f78ae8a31",
+      "expected_value": "f72bbde93f0b50126b8592d4993f21b174e7eb6a237dc5c29a4f405f78ae8a31",
+      "evidence_type": "measured_contract_value",
+      "source_uri": "memory://logistic-regression",
+      "sha256": "de2b8a6e1c15396f2aa38faec4731b5b1c644e93b8d52d21097fc70fbaadf6d2",
+      "timestamp_utc": "2000-01-01T00:00:00Z"
+    },
+    {
+      "observation_id": "obs:159aa8319c7a1e5ccb09",
+      "run_id": "mlp2:05c4cf24fee49c98ad37",
+      "stage": "TRAINING",
+      "component_id": "logistic_regression",
+      "field_name": "model_convergence",
+      "observed_value": true,
+      "expected_value": true,
+      "evidence_type": "measured_contract_value",
+      "source_uri": "memory://logistic-regression",
+      "sha256": "159aa8319c7a1e5ccb09923158b9d7ff2fecebd3ccd45040750628c629446c80",
+      "timestamp_utc": "2000-01-01T00:00:00Z"
+    },
+    {
+      "observation_id": "obs:adec3e7ad96e077d897e",
+      "run_id": "mlp2:05c4cf24fee49c98ad37",
+      "stage": "TRAINING",
+      "component_id": "logistic_regression",
+      "field_name": "model_feature_schema",
+      "observed_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "expected_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "evidence_type": "measured_contract_value",
+      "source_uri": "memory://logistic-regression",
+      "sha256": "adec3e7ad96e077d897e98d37d7461d1574f1dec73e36a102ccae7f21475893a",
+      "timestamp_utc": "2000-01-01T00:00:00Z"
+    },
+    {
+      "observation_id": "obs:d819b3b5156e91cfcebe",
+      "run_id": "mlp2:05c4cf24fee49c98ad37",
+      "stage": "TRAINING",
+      "component_id": "logistic_regression",
+      "field_name": "training_data_hash",
+      "observed_value": {
+        "dataset": "47e9aa4e33b5350407b6d31fa140e2b1767a038c37796e0990eb99ad2bc7ba12",
+        "train": "d96d63ac85a124109a38337843ea08b792d579afb5e10d85d232020ce67fb3bb",
+        "target": "be56573cf0b8dafd36c7e0caeb2e3906dd345494e709f9226b1535e643da2ef5"
+      },
+      "expected_value": {
+        "dataset": "47e9aa4e33b5350407b6d31fa140e2b1767a038c37796e0990eb99ad2bc7ba12",
+        "train": "d96d63ac85a124109a38337843ea08b792d579afb5e10d85d232020ce67fb3bb",
+        "target": "be56573cf0b8dafd36c7e0caeb2e3906dd345494e709f9226b1535e643da2ef5"
+      },
+      "evidence_type": "measured_contract_value",
+      "source_uri": "memory://logistic-regression",
+      "sha256": "d819b3b5156e91cfcebef1c1460e3900d091637fd12e6f3663eee64fe8979cb6",
+      "timestamp_utc": "2000-01-01T00:00:00Z"
+    },
+    {
+      "observation_id": "obs:3d4391fa1a45143ddfb2",
+      "run_id": "mlp2:05c4cf24fee49c98ad37",
+      "stage": "MODEL_ARTIFACT",
+      "component_id": "serialized_model",
+      "field_name": "model_artifact_hash",
+      "observed_value": "5e1768fd210e535f0c3782f4226cfc9b0c23b78362c4ffefa3f90560b4ea0672",
+      "expected_value": "5de1ed8251b147befef90e6bfee3f5bcda23056d5bb66212153ce1104668ca8c",
+      "evidence_type": "measured_contract_value",
+      "source_uri": "memory://serialized-model",
+      "sha256": "3d4391fa1a45143ddfb2ae36c520ad9e038a1d31e789ff8f93753b5b8436ee54",
+      "timestamp_utc": "2000-01-01T00:00:00Z"
+    },
+    {
+      "observation_id": "obs:84cf0376ee8a59993c71",
+      "run_id": "mlp2:05c4cf24fee49c98ad37",
+      "stage": "TRAINING",
+      "component_id": "logistic_regression",
+      "field_name": "metric_sanity",
+      "observed_value": true,
+      "expected_value": true,
+      "evidence_type": "measured_contract_value",
+      "source_uri": "memory://logistic-regression",
+      "sha256": "84cf0376ee8a59993c711457812b7acc7e2ce843196b5655b44bf2b5f92d9616",
+      "timestamp_utc": "2000-01-01T00:00:00Z"
+    },
+    {
+      "observation_id": "obs:beed7f7df3ad8f897d1b",
+      "run_id": "mlp2:05c4cf24fee49c98ad37",
+      "stage": "INFERENCE",
+      "component_id": "logistic_regression",
+      "field_name": "model_input_schema",
+      "observed_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "expected_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "evidence_type": "measured_contract_value",
+      "source_uri": "memory://prediction",
+      "sha256": "beed7f7df3ad8f897d1b3f169c0be0ce9aa8138dd99658a6cc6b42df01efd0e6",
+      "timestamp_utc": "2000-01-01T00:00:00Z"
+    },
+    {
+      "observation_id": "obs:6413413d8a8943ad9b15",
+      "run_id": "mlp2:05c4cf24fee49c98ad37",
+      "stage": "INFERENCE",
+      "component_id": "prediction",
+      "field_name": "prediction_object_binding",
+      "observed_value": true,
+      "expected_value": true,
+      "evidence_type": "measured_contract_value",
+      "source_uri": "memory://prediction",
+      "sha256": "6413413d8a8943ad9b1562d8bc953cc83a31df7349d2d8ba94f4a262f63f0a1a",
+      "timestamp_utc": "2000-01-01T00:00:00Z"
+    },
+    {
+      "observation_id": "obs:29ecea04335766489dcf",
+      "run_id": "mlp2:05c4cf24fee49c98ad37",
+      "stage": "INFERENCE",
+      "component_id": "prediction",
+      "field_name": "prediction_output_sanity",
+      "observed_value": true,
+      "expected_value": true,
+      "evidence_type": "measured_contract_value",
+      "source_uri": "memory://prediction",
+      "sha256": "29ecea04335766489dcf3c16766502552e0c228435ac8ae199048a0570b2fc9e",
+      "timestamp_utc": "2000-01-01T00:00:00Z"
+    },
+    {
+      "observation_id": "obs:8899007a6b76bc763f23",
+      "run_id": "mlp2:05c4cf24fee49c98ad37",
+      "stage": "POST_HOC_EXPLANATION",
+      "component_id": "logistic_regression",
+      "field_name": "model_explainer_version",
+      "observed_value": "1.0.0",
+      "expected_value": "1.0.0",
+      "evidence_type": "measured_contract_value",
+      "source_uri": "memory://shap-linear-explainer",
+      "sha256": "8899007a6b76bc763f2395f58262c8d36d973261ca710e3da79fe46ae5b4c399",
+      "timestamp_utc": "2000-01-01T00:00:00Z"
+    },
+    {
+      "observation_id": "obs:b09e0b7b37d277e364cc",
+      "run_id": "mlp2:05c4cf24fee49c98ad37",
+      "stage": "POST_HOC_EXPLANATION",
+      "component_id": "shap_linear_explainer",
+      "field_name": "explanation_object_id",
+      "observed_value": "bcw:pipeline-default",
+      "expected_value": "bcw:pipeline-default",
+      "evidence_type": "measured_contract_value",
+      "source_uri": "memory://shap-linear-explainer",
+      "sha256": "b09e0b7b37d277e364cc52da6d7939f38c74505faedcd2600eb9ac80229cc406",
+      "timestamp_utc": "2000-01-01T00:00:00Z"
+    },
+    {
+      "observation_id": "obs:30d559d2dc830917f88f",
+      "run_id": "mlp2:05c4cf24fee49c98ad37",
+      "stage": "POST_HOC_EXPLANATION",
+      "component_id": "shap_linear_explainer",
+      "field_name": "explanation_output_consistency",
+      "observed_value": 0.0,
+      "expected_value": 1e-08,
+      "evidence_type": "measured_contract_value",
+      "source_uri": "memory://shap-linear-explainer",
+      "sha256": "30d559d2dc830917f88fccc3dc7bfb30ce54a397f86c2bd07f0d7987f5240b3f",
+      "timestamp_utc": "2000-01-01T00:00:00Z"
+    },
+    {
+      "observation_id": "obs:5e4c7ed175d50cac8b52",
+      "run_id": "mlp2:05c4cf24fee49c98ad37",
+      "stage": "POST_HOC_EXPLANATION",
+      "component_id": "shap_linear_explainer",
+      "field_name": "explanation_feature_schema",
+      "observed_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "expected_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "evidence_type": "measured_contract_value",
+      "source_uri": "memory://shap-linear-explainer",
+      "sha256": "5e4c7ed175d50cac8b52c8980bc15a4b2d5ef1718e4064061e73396a2c25472e",
+      "timestamp_utc": "2000-01-01T00:00:00Z"
+    },
+    {
+      "observation_id": "obs:8b53f9117ce91cef61b4",
+      "run_id": "mlp2:05c4cf24fee49c98ad37",
+      "stage": "POST_HOC_EXPLANATION",
+      "component_id": "shap_linear_explainer",
+      "field_name": "required_provenance",
+      "observed_value": true,
+      "expected_value": true,
+      "evidence_type": "measured_contract_value",
+      "source_uri": "memory://shap-linear-explainer",
+      "sha256": "8b53f9117ce91cef61b41cda939f3ffb9b47aa3f0904f41d6216f36c69c45291",
+      "timestamp_utc": "2000-01-01T00:00:00Z"
+    },
+    {
+      "observation_id": "obs:bdec8fca576657cb0edc",
+      "run_id": "mlp2:05c4cf24fee49c98ad37",
+      "stage": "REDUCTION",
+      "component_id": "fuzzyxai_presenter",
+      "field_name": "reduction_loss_limit",
+      "observed_value": 0.0,
+      "expected_value": 0.25,
+      "evidence_type": "measured_contract_value",
+      "source_uri": "memory://fuzzyxai-route",
+      "sha256": "bdec8fca576657cb0edcdfe675baa3599383c4e0233ac324b8fed774ed853bba",
+      "timestamp_utc": "2000-01-01T00:00:00Z"
+    },
+    {
+      "observation_id": "obs:7369805425a4eb23c06c",
+      "run_id": "mlp2:05c4cf24fee49c98ad37",
+      "stage": "PRESENTATION",
+      "component_id": "fuzzyxai_presenter",
+      "field_name": "user_claim_evidence_binding",
+      "observed_value": true,
+      "expected_value": true,
+      "evidence_type": "measured_contract_value",
+      "source_uri": "memory://fuzzyxai-route",
+      "sha256": "7369805425a4eb23c06c6bff0cc95758a2ba6134be16a1c23ea94c808cdfdf1f",
+      "timestamp_utc": "2000-01-01T00:00:00Z"
+    }
+  ],
+  "contract_report": {
+    "status": "FAIL",
+    "results": [
+      {
+        "contract_id": "DATASET_IDENTITY",
+        "stage": "DATA_PREPARATION",
+        "component_id": "breast_cancer_dataset",
+        "passed": true,
+        "severity": "NONE",
+        "action": "NONE",
+        "observed_value": "47e9aa4e33b5350407b6d31fa140e2b1767a038c37796e0990eb99ad2bc7ba12",
+        "expected_value": "47e9aa4e33b5350407b6d31fa140e2b1767a038c37796e0990eb99ad2bc7ba12",
+        "evidence_refs": [
+          "obs:57a26f9a6f1a14044c48"
+        ]
+      },
+      {
+        "contract_id": "DATASET_SCHEMA",
+        "stage": "DATA_PREPARATION",
+        "component_id": "breast_cancer_dataset",
+        "passed": true,
+        "severity": "NONE",
+        "action": "NONE",
+        "observed_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "expected_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "evidence_refs": [
+          "obs:d527b6e8b5989b4d7ed7"
+        ]
+      },
+      {
+        "contract_id": "TARGET_NOT_IN_FEATURES",
+        "stage": "DATA_PREPARATION",
+        "component_id": "breast_cancer_dataset",
+        "passed": true,
+        "severity": "NONE",
+        "action": "NONE",
+        "observed_value": true,
+        "expected_value": true,
+        "evidence_refs": [
+          "obs:a00b789301c8c9e79868"
+        ]
+      },
+      {
+        "contract_id": "CLASS_MAPPING",
+        "stage": "DATA_PREPARATION",
+        "component_id": "breast_cancer_dataset",
+        "passed": true,
+        "severity": "NONE",
+        "action": "NONE",
+        "observed_value": {
+          "source": [
+            0,
+            1
+          ],
+          "encoded": [
+            1,
+            0
+          ],
+          "model_classes": [
+            0,
+            1
+          ]
+        },
+        "expected_value": {
+          "source": [
+            0,
+            1
+          ],
+          "encoded": [
+            1,
+            0
+          ],
+          "model_classes": [
+            0,
+            1
+          ]
+        },
+        "evidence_refs": [
+          "obs:cf2ec00586da34995693"
+        ]
+      },
+      {
+        "contract_id": "TRAIN_VALIDATION_TEST_DISJOINTNESS",
+        "stage": "DATA_SPLIT",
+        "component_id": "deterministic_splitter",
+        "passed": true,
+        "severity": "NONE",
+        "action": "NONE",
+        "observed_value": {
+          "train_validation": 0,
+          "train_test": 0,
+          "validation_test": 0
+        },
+        "expected_value": {
+          "train_validation": 0,
+          "train_test": 0,
+          "validation_test": 0
+        },
+        "evidence_refs": [
+          "obs:584e1f79ebc8e47d3473"
+        ]
+      },
+      {
+        "contract_id": "SPLIT_REPRODUCIBILITY",
+        "stage": "DATA_SPLIT",
+        "component_id": "deterministic_splitter",
+        "passed": true,
+        "severity": "NONE",
+        "action": "NONE",
+        "observed_value": "5cb8248a79fe2464c45575cdb50c2dd1ba887c819311031b970fa10adb6afc8e",
+        "expected_value": "5cb8248a79fe2464c45575cdb50c2dd1ba887c819311031b970fa10adb6afc8e",
+        "evidence_refs": [
+          "obs:7020f9ae6f0908503885"
+        ]
+      },
+      {
+        "contract_id": "PREPROCESSOR_VERSION",
+        "stage": "PREPROCESSING",
+        "component_id": "standard_scaler",
+        "passed": true,
+        "severity": "NONE",
+        "action": "NONE",
+        "observed_value": "sklearn.StandardScaler/1.9.0",
+        "expected_value": "sklearn.StandardScaler/1.9.0",
+        "evidence_refs": [
+          "obs:32d0da17783b13c79b6b"
+        ]
+      },
+      {
+        "contract_id": "PREPROCESSOR_FIT_SCOPE",
+        "stage": "PREPROCESSING",
+        "component_id": "standard_scaler",
+        "passed": true,
+        "severity": "NONE",
+        "action": "NONE",
+        "observed_value": "d96d63ac85a124109a38337843ea08b792d579afb5e10d85d232020ce67fb3bb",
+        "expected_value": "d96d63ac85a124109a38337843ea08b792d579afb5e10d85d232020ce67fb3bb",
+        "evidence_refs": [
+          "obs:b8682a4609d2dbeb9f17"
+        ]
+      },
+      {
+        "contract_id": "FEATURE_ORDER",
+        "stage": "PREPROCESSING",
+        "component_id": "standard_scaler",
+        "passed": true,
+        "severity": "NONE",
+        "action": "NONE",
+        "observed_value": [
+          "mean radius",
+          "mean texture",
+          "mean perimeter",
+          "mean area",
+          "mean smoothness",
+          "mean compactness",
+          "mean concavity",
+          "mean concave points",
+          "mean symmetry",
+          "mean fractal dimension",
+          "radius error",
+          "texture error",
+          "perimeter error",
+          "area error",
+          "smoothness error",
+          "compactness error",
+          "concavity error",
+          "concave points error",
+          "symmetry error",
+          "fractal dimension error",
+          "worst radius",
+          "worst texture",
+          "worst perimeter",
+          "worst area",
+          "worst smoothness",
+          "worst compactness",
+          "worst concavity",
+          "worst concave points",
+          "worst symmetry",
+          "worst fractal dimension"
+        ],
+        "expected_value": [
+          "mean radius",
+          "mean texture",
+          "mean perimeter",
+          "mean area",
+          "mean smoothness",
+          "mean compactness",
+          "mean concavity",
+          "mean concave points",
+          "mean symmetry",
+          "mean fractal dimension",
+          "radius error",
+          "texture error",
+          "perimeter error",
+          "area error",
+          "smoothness error",
+          "compactness error",
+          "concavity error",
+          "concave points error",
+          "symmetry error",
+          "fractal dimension error",
+          "worst radius",
+          "worst texture",
+          "worst perimeter",
+          "worst area",
+          "worst smoothness",
+          "worst compactness",
+          "worst concavity",
+          "worst concave points",
+          "worst symmetry",
+          "worst fractal dimension"
+        ],
+        "evidence_refs": [
+          "obs:dff8a9a02067d9499e78"
+        ]
+      },
+      {
+        "contract_id": "FEATURE_COUNT",
+        "stage": "PREPROCESSING",
+        "component_id": "standard_scaler",
+        "passed": true,
+        "severity": "NONE",
+        "action": "NONE",
+        "observed_value": 30,
+        "expected_value": 30,
+        "evidence_refs": [
+          "obs:523099f70ef8689f0958"
+        ]
+      },
+      {
+        "contract_id": "TRANSFORM_OUTPUT_SCHEMA",
+        "stage": "PREPROCESSING",
+        "component_id": "standard_scaler",
+        "passed": true,
+        "severity": "NONE",
+        "action": "NONE",
+        "observed_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "expected_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "evidence_refs": [
+          "obs:50e71ff33d0b1aef48b4"
+        ]
+      },
+      {
+        "contract_id": "FINITE_TRANSFORMED_VALUES",
+        "stage": "PREPROCESSING",
+        "component_id": "standard_scaler",
+        "passed": true,
+        "severity": "NONE",
+        "action": "NONE",
+        "observed_value": true,
+        "expected_value": true,
+        "evidence_refs": [
+          "obs:115299fc970a1016cf1d"
+        ]
+      },
+      {
+        "contract_id": "TRAINING_CONFIGURATION",
+        "stage": "TRAINING",
+        "component_id": "logistic_regression",
+        "passed": true,
+        "severity": "NONE",
+        "action": "NONE",
+        "observed_value": "f72bbde93f0b50126b8592d4993f21b174e7eb6a237dc5c29a4f405f78ae8a31",
+        "expected_value": "f72bbde93f0b50126b8592d4993f21b174e7eb6a237dc5c29a4f405f78ae8a31",
+        "evidence_refs": [
+          "obs:de2b8a6e1c15396f2aa3"
+        ]
+      },
+      {
+        "contract_id": "MODEL_CONVERGENCE",
+        "stage": "TRAINING",
+        "component_id": "logistic_regression",
+        "passed": true,
+        "severity": "NONE",
+        "action": "NONE",
+        "observed_value": true,
+        "expected_value": true,
+        "evidence_refs": [
+          "obs:159aa8319c7a1e5ccb09"
+        ]
+      },
+      {
+        "contract_id": "MODEL_FEATURE_SCHEMA",
+        "stage": "TRAINING",
+        "component_id": "logistic_regression",
+        "passed": true,
+        "severity": "NONE",
+        "action": "NONE",
+        "observed_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "expected_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "evidence_refs": [
+          "obs:adec3e7ad96e077d897e"
+        ]
+      },
+      {
+        "contract_id": "TRAINING_DATA_HASH",
+        "stage": "TRAINING",
+        "component_id": "logistic_regression",
+        "passed": true,
+        "severity": "NONE",
+        "action": "NONE",
+        "observed_value": {
+          "dataset": "47e9aa4e33b5350407b6d31fa140e2b1767a038c37796e0990eb99ad2bc7ba12",
+          "train": "d96d63ac85a124109a38337843ea08b792d579afb5e10d85d232020ce67fb3bb",
+          "target": "be56573cf0b8dafd36c7e0caeb2e3906dd345494e709f9226b1535e643da2ef5"
+        },
+        "expected_value": {
+          "dataset": "47e9aa4e33b5350407b6d31fa140e2b1767a038c37796e0990eb99ad2bc7ba12",
+          "train": "d96d63ac85a124109a38337843ea08b792d579afb5e10d85d232020ce67fb3bb",
+          "target": "be56573cf0b8dafd36c7e0caeb2e3906dd345494e709f9226b1535e643da2ef5"
+        },
+        "evidence_refs": [
+          "obs:d819b3b5156e91cfcebe"
+        ]
+      },
+      {
+        "contract_id": "MODEL_ARTIFACT_HASH",
+        "stage": "MODEL_ARTIFACT",
+        "component_id": "serialized_model",
+        "passed": false,
+        "severity": "HIGH",
+        "action": "BLOCK",
+        "observed_value": "5e1768fd210e535f0c3782f4226cfc9b0c23b78362c4ffefa3f90560b4ea0672",
+        "expected_value": "5de1ed8251b147befef90e6bfee3f5bcda23056d5bb66212153ce1104668ca8c",
+        "evidence_refs": [
+          "obs:3d4391fa1a45143ddfb2"
+        ]
+      },
+      {
+        "contract_id": "METRIC_SANITY",
+        "stage": "TRAINING",
+        "component_id": "logistic_regression",
+        "passed": true,
+        "severity": "NONE",
+        "action": "NONE",
+        "observed_value": true,
+        "expected_value": true,
+        "evidence_refs": [
+          "obs:84cf0376ee8a59993c71"
+        ]
+      },
+      {
+        "contract_id": "MODEL_INPUT_SCHEMA",
+        "stage": "INFERENCE",
+        "component_id": "logistic_regression",
+        "passed": true,
+        "severity": "NONE",
+        "action": "NONE",
+        "observed_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "expected_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "evidence_refs": [
+          "obs:beed7f7df3ad8f897d1b"
+        ]
+      },
+      {
+        "contract_id": "PREDICTION_OBJECT_BINDING",
+        "stage": "INFERENCE",
+        "component_id": "prediction",
+        "passed": true,
+        "severity": "NONE",
+        "action": "NONE",
+        "observed_value": true,
+        "expected_value": true,
+        "evidence_refs": [
+          "obs:6413413d8a8943ad9b15"
+        ]
+      },
+      {
+        "contract_id": "PREDICTION_OUTPUT_SANITY",
+        "stage": "INFERENCE",
+        "component_id": "prediction",
+        "passed": true,
+        "severity": "NONE",
+        "action": "NONE",
+        "observed_value": true,
+        "expected_value": true,
+        "evidence_refs": [
+          "obs:29ecea04335766489dcf"
+        ]
+      },
+      {
+        "contract_id": "MODEL_EXPLAINER_VERSION",
+        "stage": "POST_HOC_EXPLANATION",
+        "component_id": "logistic_regression",
+        "passed": true,
+        "severity": "NONE",
+        "action": "NONE",
+        "observed_value": "1.0.0",
+        "expected_value": "1.0.0",
+        "evidence_refs": [
+          "obs:8899007a6b76bc763f23"
+        ]
+      },
+      {
+        "contract_id": "EXPLANATION_OBJECT_ID",
+        "stage": "POST_HOC_EXPLANATION",
+        "component_id": "shap_linear_explainer",
+        "passed": true,
+        "severity": "NONE",
+        "action": "NONE",
+        "observed_value": "bcw:pipeline-default",
+        "expected_value": "bcw:pipeline-default",
+        "evidence_refs": [
+          "obs:b09e0b7b37d277e364cc"
+        ]
+      },
+      {
+        "contract_id": "EXPLANATION_OUTPUT_CONSISTENCY",
+        "stage": "POST_HOC_EXPLANATION",
+        "component_id": "shap_linear_explainer",
+        "passed": true,
+        "severity": "NONE",
+        "action": "NONE",
+        "observed_value": 0.0,
+        "expected_value": 1e-08,
+        "evidence_refs": [
+          "obs:30d559d2dc830917f88f"
+        ]
+      },
+      {
+        "contract_id": "EXPLANATION_FEATURE_SCHEMA",
+        "stage": "POST_HOC_EXPLANATION",
+        "component_id": "shap_linear_explainer",
+        "passed": true,
+        "severity": "NONE",
+        "action": "NONE",
+        "observed_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "expected_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "evidence_refs": [
+          "obs:5e4c7ed175d50cac8b52"
+        ]
+      },
+      {
+        "contract_id": "REQUIRED_PROVENANCE",
+        "stage": "POST_HOC_EXPLANATION",
+        "component_id": "shap_linear_explainer",
+        "passed": true,
+        "severity": "NONE",
+        "action": "NONE",
+        "observed_value": true,
+        "expected_value": true,
+        "evidence_refs": [
+          "obs:8b53f9117ce91cef61b4"
+        ]
+      },
+      {
+        "contract_id": "REDUCTION_LOSS_LIMIT",
+        "stage": "REDUCTION",
+        "component_id": "fuzzyxai_presenter",
+        "passed": true,
+        "severity": "NONE",
+        "action": "NONE",
+        "observed_value": 0.0,
+        "expected_value": 0.25,
+        "evidence_refs": [
+          "obs:bdec8fca576657cb0edc"
+        ]
+      },
+      {
+        "contract_id": "USER_CLAIM_EVIDENCE_BINDING",
+        "stage": "PRESENTATION",
+        "component_id": "fuzzyxai_presenter",
+        "passed": true,
+        "severity": "NONE",
+        "action": "NONE",
+        "observed_value": true,
+        "expected_value": true,
+        "evidence_refs": [
+          "obs:7369805425a4eb23c06c"
+        ]
+      }
+    ],
+    "violations": [
+      {
+        "contract_id": "MODEL_ARTIFACT_HASH",
+        "stage": "MODEL_ARTIFACT",
+        "component_id": "serialized_model",
+        "passed": false,
+        "severity": "HIGH",
+        "action": "BLOCK",
+        "observed_value": "5e1768fd210e535f0c3782f4226cfc9b0c23b78362c4ffefa3f90560b4ea0672",
+        "expected_value": "5de1ed8251b147befef90e6bfee3f5bcda23056d5bb66212153ce1104668ca8c",
+        "evidence_refs": [
+          "obs:3d4391fa1a45143ddfb2"
+        ]
+      }
+    ]
+  },
+  "route_graph": {
+    "schema_version": "2.0",
+    "route_id": "route:mlp2:05c4cf24fee49c98ad37",
+    "nodes": [
+      {
+        "node_id": "dataset",
+        "node_type": "dataset",
+        "stage": "DATA_PREPARATION",
+        "component_id": "dataset",
+        "component_type": "dataset",
+        "version": "2.0.0",
+        "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "configuration": {},
+        "artifact_sha256": "47e9aa4e33b5350407b6d31fa140e2b1767a038c37796e0990eb99ad2bc7ba12",
+        "evidence_refs": [
+          "obs:57a26f9a6f1a14044c48",
+          "obs:d527b6e8b5989b4d7ed7",
+          "obs:a00b789301c8c9e79868",
+          "obs:cf2ec00586da34995693"
+        ],
+        "execution_status": "PASS"
+      },
+      {
+        "node_id": "split_manifest",
+        "node_type": "split_manifest",
+        "stage": "DATA_SPLIT",
+        "component_id": "split_manifest",
+        "component_type": "split_manifest",
+        "version": "2.0.0",
+        "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "configuration": {
+          "random_state": 1729,
+          "stratified": true
+        },
+        "artifact_sha256": "5cb8248a79fe2464c45575cdb50c2dd1ba887c819311031b970fa10adb6afc8e",
+        "evidence_refs": [
+          "obs:584e1f79ebc8e47d3473",
+          "obs:7020f9ae6f0908503885"
+        ],
+        "execution_status": "PASS"
+      },
+      {
+        "node_id": "train_partition",
+        "node_type": "partition",
+        "stage": "DATA_SPLIT",
+        "component_id": "train_partition",
+        "component_type": "partition",
+        "version": "2.0.0",
+        "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "configuration": {},
+        "artifact_sha256": null,
+        "evidence_refs": [
+          "obs:584e1f79ebc8e47d3473",
+          "obs:7020f9ae6f0908503885"
+        ],
+        "execution_status": "PASS"
+      },
+      {
+        "node_id": "validation_partition",
+        "node_type": "partition",
+        "stage": "DATA_SPLIT",
+        "component_id": "validation_partition",
+        "component_type": "partition",
+        "version": "2.0.0",
+        "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "configuration": {},
+        "artifact_sha256": null,
+        "evidence_refs": [
+          "obs:584e1f79ebc8e47d3473",
+          "obs:7020f9ae6f0908503885"
+        ],
+        "execution_status": "PASS"
+      },
+      {
+        "node_id": "test_partition",
+        "node_type": "partition",
+        "stage": "DATA_SPLIT",
+        "component_id": "test_partition",
+        "component_type": "partition",
+        "version": "2.0.0",
+        "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "configuration": {},
+        "artifact_sha256": null,
+        "evidence_refs": [
+          "obs:584e1f79ebc8e47d3473",
+          "obs:7020f9ae6f0908503885"
+        ],
+        "execution_status": "PASS"
+      },
+      {
+        "node_id": "preprocessor",
+        "node_type": "preprocessor",
+        "stage": "PREPROCESSING",
+        "component_id": "preprocessor",
+        "component_type": "preprocessor",
+        "version": "2.0.0",
+        "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "configuration": {
+          "class": "StandardScaler"
+        },
+        "artifact_sha256": "3496f956bcee015f773859d8e072ab6ff637663c57e470ebee3f823c3146ed24",
+        "evidence_refs": [
+          "obs:32d0da17783b13c79b6b",
+          "obs:b8682a4609d2dbeb9f17",
+          "obs:dff8a9a02067d9499e78",
+          "obs:523099f70ef8689f0958",
+          "obs:50e71ff33d0b1aef48b4",
+          "obs:115299fc970a1016cf1d"
+        ],
+        "execution_status": "PASS"
+      },
+      {
+        "node_id": "transformed_train",
+        "node_type": "dataset",
+        "stage": "PREPROCESSING",
+        "component_id": "transformed_train",
+        "component_type": "dataset",
+        "version": "2.0.0",
+        "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "configuration": {},
+        "artifact_sha256": null,
+        "evidence_refs": [
+          "obs:32d0da17783b13c79b6b",
+          "obs:b8682a4609d2dbeb9f17",
+          "obs:dff8a9a02067d9499e78",
+          "obs:523099f70ef8689f0958",
+          "obs:50e71ff33d0b1aef48b4",
+          "obs:115299fc970a1016cf1d"
+        ],
+        "execution_status": "PASS"
+      },
+      {
+        "node_id": "training_configuration",
+        "node_type": "configuration",
+        "stage": "TRAINING",
+        "component_id": "training_configuration",
+        "component_type": "configuration",
+        "version": "2.0.0",
+        "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "configuration": {},
+        "artifact_sha256": null,
+        "evidence_refs": [
+          "obs:de2b8a6e1c15396f2aa3",
+          "obs:159aa8319c7a1e5ccb09",
+          "obs:adec3e7ad96e077d897e",
+          "obs:d819b3b5156e91cfcebe",
+          "obs:84cf0376ee8a59993c71"
+        ],
+        "execution_status": "PASS"
+      },
+      {
+        "node_id": "trained_model",
+        "node_type": "model",
+        "stage": "TRAINING",
+        "component_id": "trained_model",
+        "component_type": "model",
+        "version": "2.0.0",
+        "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "configuration": {
+          "model_id": "bcw-logistic-regression",
+          "model_version": "1.0.0"
+        },
+        "artifact_sha256": "5de1ed8251b147befef90e6bfee3f5bcda23056d5bb66212153ce1104668ca8c",
+        "evidence_refs": [
+          "obs:de2b8a6e1c15396f2aa3",
+          "obs:159aa8319c7a1e5ccb09",
+          "obs:adec3e7ad96e077d897e",
+          "obs:d819b3b5156e91cfcebe",
+          "obs:84cf0376ee8a59993c71"
+        ],
+        "execution_status": "PASS"
+      },
+      {
+        "node_id": "model_artifact",
+        "node_type": "artifact",
+        "stage": "MODEL_ARTIFACT",
+        "component_id": "model_artifact",
+        "component_type": "artifact",
+        "version": "2.0.0",
+        "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "configuration": {
+          "model_id": "bcw-logistic-regression",
+          "model_version": "1.0.0"
+        },
+        "artifact_sha256": "5de1ed8251b147befef90e6bfee3f5bcda23056d5bb66212153ce1104668ca8c",
+        "evidence_refs": [
+          "obs:3d4391fa1a45143ddfb2"
+        ],
+        "execution_status": "REPAIRED"
+      },
+      {
+        "node_id": "inference_object",
+        "node_type": "input",
+        "stage": "INFERENCE",
+        "component_id": "inference_object",
+        "component_type": "input",
+        "version": "2.0.0",
+        "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "configuration": {},
+        "artifact_sha256": null,
+        "evidence_refs": [
+          "obs:beed7f7df3ad8f897d1b",
+          "obs:6413413d8a8943ad9b15",
+          "obs:29ecea04335766489dcf"
+        ],
+        "execution_status": "PASS"
+      },
+      {
+        "node_id": "prediction",
+        "node_type": "prediction",
+        "stage": "INFERENCE",
+        "component_id": "prediction",
+        "component_type": "prediction",
+        "version": "2.0.0",
+        "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "configuration": {},
+        "artifact_sha256": null,
+        "evidence_refs": [
+          "obs:beed7f7df3ad8f897d1b",
+          "obs:6413413d8a8943ad9b15",
+          "obs:29ecea04335766489dcf"
+        ],
+        "execution_status": "PASS"
+      },
+      {
+        "node_id": "shap_explainer",
+        "node_type": "explainer",
+        "stage": "POST_HOC_EXPLANATION",
+        "component_id": "shap_explainer",
+        "component_type": "explainer",
+        "version": "2.0.0",
+        "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "configuration": {},
+        "artifact_sha256": null,
+        "evidence_refs": [
+          "obs:8899007a6b76bc763f23",
+          "obs:b09e0b7b37d277e364cc",
+          "obs:30d559d2dc830917f88f",
+          "obs:5e4c7ed175d50cac8b52",
+          "obs:8b53f9117ce91cef61b4"
+        ],
+        "execution_status": "PASS"
+      },
+      {
+        "node_id": "shap_values",
+        "node_type": "explanation",
+        "stage": "POST_HOC_EXPLANATION",
+        "component_id": "shap_values",
+        "component_type": "explanation",
+        "version": "2.0.0",
+        "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "configuration": {},
+        "artifact_sha256": null,
+        "evidence_refs": [
+          "obs:8899007a6b76bc763f23",
+          "obs:b09e0b7b37d277e364cc",
+          "obs:30d559d2dc830917f88f",
+          "obs:5e4c7ed175d50cac8b52",
+          "obs:8b53f9117ce91cef61b4"
+        ],
+        "execution_status": "PASS"
+      },
+      {
+        "node_id": "fuzzy_representation",
+        "node_type": "representation",
+        "stage": "FUZZY_REPRESENTATION",
+        "component_id": "fuzzy_representation",
+        "component_type": "representation",
+        "version": "2.0.0",
+        "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "configuration": {},
+        "artifact_sha256": null,
+        "evidence_refs": [],
+        "execution_status": "PASS"
+      },
+      {
+        "node_id": "reduced_explanation",
+        "node_type": "reduction",
+        "stage": "REDUCTION",
+        "component_id": "reduced_explanation",
+        "component_type": "reduction",
+        "version": "2.0.0",
+        "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "configuration": {},
+        "artifact_sha256": null,
+        "evidence_refs": [
+          "obs:bdec8fca576657cb0edc"
+        ],
+        "execution_status": "PASS"
+      },
+      {
+        "node_id": "user_view",
+        "node_type": "presentation",
+        "stage": "PRESENTATION",
+        "component_id": "user_view",
+        "component_type": "presentation",
+        "version": "2.0.0",
+        "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "configuration": {},
+        "artifact_sha256": null,
+        "evidence_refs": [
+          "obs:7369805425a4eb23c06c"
+        ],
+        "execution_status": "PASS"
+      },
+      {
+        "node_id": "engineering_view",
+        "node_type": "presentation",
+        "stage": "PRESENTATION",
+        "component_id": "engineering_view",
+        "component_type": "presentation",
+        "version": "2.0.0",
+        "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "configuration": {},
+        "artifact_sha256": null,
+        "evidence_refs": [
+          "obs:7369805425a4eb23c06c"
+        ],
+        "execution_status": "PASS"
+      },
+      {
+        "node_id": "audit_view",
+        "node_type": "presentation",
+        "stage": "PRESENTATION",
+        "component_id": "audit_view",
+        "component_type": "presentation",
+        "version": "2.0.0",
+        "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "configuration": {},
+        "artifact_sha256": null,
+        "evidence_refs": [
+          "obs:7369805425a4eb23c06c"
+        ],
+        "execution_status": "PASS"
+      },
+      {
+        "node_id": "repair_plan",
+        "node_type": "repair",
+        "stage": "REPAIR",
+        "component_id": "repair_plan",
+        "component_type": "repair",
+        "version": "2.0.0",
+        "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "configuration": {},
+        "artifact_sha256": null,
+        "evidence_refs": [],
+        "execution_status": "PASS"
+      },
+      {
+        "node_id": "recertification_result",
+        "node_type": "recertification",
+        "stage": "RECERTIFICATION",
+        "component_id": "recertification_result",
+        "component_type": "recertification",
+        "version": "2.0.0",
+        "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "configuration": {},
+        "artifact_sha256": null,
+        "evidence_refs": [],
+        "execution_status": "PASS"
+      }
+    ],
+    "edges": [
+      {
+        "source": "dataset",
+        "target": "split_manifest",
+        "relation": "derived_from"
+      },
+      {
+        "source": "train_partition",
+        "target": "preprocessor",
+        "relation": "fitted_on"
+      },
+      {
+        "source": "train_partition",
+        "target": "transformed_train",
+        "relation": "transformed_by"
+      },
+      {
+        "source": "transformed_train",
+        "target": "trained_model",
+        "relation": "trained_on"
+      },
+      {
+        "source": "training_configuration",
+        "target": "trained_model",
+        "relation": "configured_by"
+      },
+      {
+        "source": "trained_model",
+        "target": "model_artifact",
+        "relation": "produced_by"
+      },
+      {
+        "source": "inference_object",
+        "target": "prediction",
+        "relation": "produced_by"
+      },
+      {
+        "source": "trained_model",
+        "target": "shap_explainer",
+        "relation": "explained_by"
+      },
+      {
+        "source": "prediction",
+        "target": "shap_values",
+        "relation": "explained_by"
+      },
+      {
+        "source": "shap_values",
+        "target": "fuzzy_representation",
+        "relation": "represented_by"
+      },
+      {
+        "source": "fuzzy_representation",
+        "target": "reduced_explanation",
+        "relation": "reduced_to"
+      },
+      {
+        "source": "reduced_explanation",
+        "target": "user_view",
+        "relation": "displayed_as"
+      },
+      {
+        "source": "reduced_explanation",
+        "target": "engineering_view",
+        "relation": "displayed_as"
+      },
+      {
+        "source": "reduced_explanation",
+        "target": "audit_view",
+        "relation": "displayed_as"
+      },
+      {
+        "source": "repair_plan",
+        "target": "recertification_result",
+        "relation": "recertified_as"
+      }
+    ],
+    "contracts": [
+      {
+        "contract_id": "DATASET_IDENTITY",
+        "stage": "DATA_PREPARATION",
+        "component_id": "breast_cancer_dataset",
+        "passed": true,
+        "severity": "NONE",
+        "action": "NONE",
+        "observed_value": "47e9aa4e33b5350407b6d31fa140e2b1767a038c37796e0990eb99ad2bc7ba12",
+        "expected_value": "47e9aa4e33b5350407b6d31fa140e2b1767a038c37796e0990eb99ad2bc7ba12",
+        "evidence_refs": [
+          "obs:57a26f9a6f1a14044c48"
+        ]
+      },
+      {
+        "contract_id": "DATASET_SCHEMA",
+        "stage": "DATA_PREPARATION",
+        "component_id": "breast_cancer_dataset",
+        "passed": true,
+        "severity": "NONE",
+        "action": "NONE",
+        "observed_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "expected_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "evidence_refs": [
+          "obs:d527b6e8b5989b4d7ed7"
+        ]
+      },
+      {
+        "contract_id": "TARGET_NOT_IN_FEATURES",
+        "stage": "DATA_PREPARATION",
+        "component_id": "breast_cancer_dataset",
+        "passed": true,
+        "severity": "NONE",
+        "action": "NONE",
+        "observed_value": true,
+        "expected_value": true,
+        "evidence_refs": [
+          "obs:a00b789301c8c9e79868"
+        ]
+      },
+      {
+        "contract_id": "CLASS_MAPPING",
+        "stage": "DATA_PREPARATION",
+        "component_id": "breast_cancer_dataset",
+        "passed": true,
+        "severity": "NONE",
+        "action": "NONE",
+        "observed_value": {
+          "source": [
+            0,
+            1
+          ],
+          "encoded": [
+            1,
+            0
+          ],
+          "model_classes": [
+            0,
+            1
+          ]
+        },
+        "expected_value": {
+          "source": [
+            0,
+            1
+          ],
+          "encoded": [
+            1,
+            0
+          ],
+          "model_classes": [
+            0,
+            1
+          ]
+        },
+        "evidence_refs": [
+          "obs:cf2ec00586da34995693"
+        ]
+      },
+      {
+        "contract_id": "TRAIN_VALIDATION_TEST_DISJOINTNESS",
+        "stage": "DATA_SPLIT",
+        "component_id": "deterministic_splitter",
+        "passed": true,
+        "severity": "NONE",
+        "action": "NONE",
+        "observed_value": {
+          "train_validation": 0,
+          "train_test": 0,
+          "validation_test": 0
+        },
+        "expected_value": {
+          "train_validation": 0,
+          "train_test": 0,
+          "validation_test": 0
+        },
+        "evidence_refs": [
+          "obs:584e1f79ebc8e47d3473"
+        ]
+      },
+      {
+        "contract_id": "SPLIT_REPRODUCIBILITY",
+        "stage": "DATA_SPLIT",
+        "component_id": "deterministic_splitter",
+        "passed": true,
+        "severity": "NONE",
+        "action": "NONE",
+        "observed_value": "5cb8248a79fe2464c45575cdb50c2dd1ba887c819311031b970fa10adb6afc8e",
+        "expected_value": "5cb8248a79fe2464c45575cdb50c2dd1ba887c819311031b970fa10adb6afc8e",
+        "evidence_refs": [
+          "obs:7020f9ae6f0908503885"
+        ]
+      },
+      {
+        "contract_id": "PREPROCESSOR_VERSION",
+        "stage": "PREPROCESSING",
+        "component_id": "standard_scaler",
+        "passed": true,
+        "severity": "NONE",
+        "action": "NONE",
+        "observed_value": "sklearn.StandardScaler/1.9.0",
+        "expected_value": "sklearn.StandardScaler/1.9.0",
+        "evidence_refs": [
+          "obs:32d0da17783b13c79b6b"
+        ]
+      },
+      {
+        "contract_id": "PREPROCESSOR_FIT_SCOPE",
+        "stage": "PREPROCESSING",
+        "component_id": "standard_scaler",
+        "passed": true,
+        "severity": "NONE",
+        "action": "NONE",
+        "observed_value": "d96d63ac85a124109a38337843ea08b792d579afb5e10d85d232020ce67fb3bb",
+        "expected_value": "d96d63ac85a124109a38337843ea08b792d579afb5e10d85d232020ce67fb3bb",
+        "evidence_refs": [
+          "obs:b8682a4609d2dbeb9f17"
+        ]
+      },
+      {
+        "contract_id": "FEATURE_ORDER",
+        "stage": "PREPROCESSING",
+        "component_id": "standard_scaler",
+        "passed": true,
+        "severity": "NONE",
+        "action": "NONE",
+        "observed_value": [
+          "mean radius",
+          "mean texture",
+          "mean perimeter",
+          "mean area",
+          "mean smoothness",
+          "mean compactness",
+          "mean concavity",
+          "mean concave points",
+          "mean symmetry",
+          "mean fractal dimension",
+          "radius error",
+          "texture error",
+          "perimeter error",
+          "area error",
+          "smoothness error",
+          "compactness error",
+          "concavity error",
+          "concave points error",
+          "symmetry error",
+          "fractal dimension error",
+          "worst radius",
+          "worst texture",
+          "worst perimeter",
+          "worst area",
+          "worst smoothness",
+          "worst compactness",
+          "worst concavity",
+          "worst concave points",
+          "worst symmetry",
+          "worst fractal dimension"
+        ],
+        "expected_value": [
+          "mean radius",
+          "mean texture",
+          "mean perimeter",
+          "mean area",
+          "mean smoothness",
+          "mean compactness",
+          "mean concavity",
+          "mean concave points",
+          "mean symmetry",
+          "mean fractal dimension",
+          "radius error",
+          "texture error",
+          "perimeter error",
+          "area error",
+          "smoothness error",
+          "compactness error",
+          "concavity error",
+          "concave points error",
+          "symmetry error",
+          "fractal dimension error",
+          "worst radius",
+          "worst texture",
+          "worst perimeter",
+          "worst area",
+          "worst smoothness",
+          "worst compactness",
+          "worst concavity",
+          "worst concave points",
+          "worst symmetry",
+          "worst fractal dimension"
+        ],
+        "evidence_refs": [
+          "obs:dff8a9a02067d9499e78"
+        ]
+      },
+      {
+        "contract_id": "FEATURE_COUNT",
+        "stage": "PREPROCESSING",
+        "component_id": "standard_scaler",
+        "passed": true,
+        "severity": "NONE",
+        "action": "NONE",
+        "observed_value": 30,
+        "expected_value": 30,
+        "evidence_refs": [
+          "obs:523099f70ef8689f0958"
+        ]
+      },
+      {
+        "contract_id": "TRANSFORM_OUTPUT_SCHEMA",
+        "stage": "PREPROCESSING",
+        "component_id": "standard_scaler",
+        "passed": true,
+        "severity": "NONE",
+        "action": "NONE",
+        "observed_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "expected_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "evidence_refs": [
+          "obs:50e71ff33d0b1aef48b4"
+        ]
+      },
+      {
+        "contract_id": "FINITE_TRANSFORMED_VALUES",
+        "stage": "PREPROCESSING",
+        "component_id": "standard_scaler",
+        "passed": true,
+        "severity": "NONE",
+        "action": "NONE",
+        "observed_value": true,
+        "expected_value": true,
+        "evidence_refs": [
+          "obs:115299fc970a1016cf1d"
+        ]
+      },
+      {
+        "contract_id": "TRAINING_CONFIGURATION",
+        "stage": "TRAINING",
+        "component_id": "logistic_regression",
+        "passed": true,
+        "severity": "NONE",
+        "action": "NONE",
+        "observed_value": "f72bbde93f0b50126b8592d4993f21b174e7eb6a237dc5c29a4f405f78ae8a31",
+        "expected_value": "f72bbde93f0b50126b8592d4993f21b174e7eb6a237dc5c29a4f405f78ae8a31",
+        "evidence_refs": [
+          "obs:de2b8a6e1c15396f2aa3"
+        ]
+      },
+      {
+        "contract_id": "MODEL_CONVERGENCE",
+        "stage": "TRAINING",
+        "component_id": "logistic_regression",
+        "passed": true,
+        "severity": "NONE",
+        "action": "NONE",
+        "observed_value": true,
+        "expected_value": true,
+        "evidence_refs": [
+          "obs:159aa8319c7a1e5ccb09"
+        ]
+      },
+      {
+        "contract_id": "MODEL_FEATURE_SCHEMA",
+        "stage": "TRAINING",
+        "component_id": "logistic_regression",
+        "passed": true,
+        "severity": "NONE",
+        "action": "NONE",
+        "observed_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "expected_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "evidence_refs": [
+          "obs:adec3e7ad96e077d897e"
+        ]
+      },
+      {
+        "contract_id": "TRAINING_DATA_HASH",
+        "stage": "TRAINING",
+        "component_id": "logistic_regression",
+        "passed": true,
+        "severity": "NONE",
+        "action": "NONE",
+        "observed_value": {
+          "dataset": "47e9aa4e33b5350407b6d31fa140e2b1767a038c37796e0990eb99ad2bc7ba12",
+          "train": "d96d63ac85a124109a38337843ea08b792d579afb5e10d85d232020ce67fb3bb",
+          "target": "be56573cf0b8dafd36c7e0caeb2e3906dd345494e709f9226b1535e643da2ef5"
+        },
+        "expected_value": {
+          "dataset": "47e9aa4e33b5350407b6d31fa140e2b1767a038c37796e0990eb99ad2bc7ba12",
+          "train": "d96d63ac85a124109a38337843ea08b792d579afb5e10d85d232020ce67fb3bb",
+          "target": "be56573cf0b8dafd36c7e0caeb2e3906dd345494e709f9226b1535e643da2ef5"
+        },
+        "evidence_refs": [
+          "obs:d819b3b5156e91cfcebe"
+        ]
+      },
+      {
+        "contract_id": "MODEL_ARTIFACT_HASH",
+        "stage": "MODEL_ARTIFACT",
+        "component_id": "serialized_model",
+        "passed": false,
+        "severity": "HIGH",
+        "action": "BLOCK",
+        "observed_value": "5e1768fd210e535f0c3782f4226cfc9b0c23b78362c4ffefa3f90560b4ea0672",
+        "expected_value": "5de1ed8251b147befef90e6bfee3f5bcda23056d5bb66212153ce1104668ca8c",
+        "evidence_refs": [
+          "obs:3d4391fa1a45143ddfb2"
+        ]
+      },
+      {
+        "contract_id": "METRIC_SANITY",
+        "stage": "TRAINING",
+        "component_id": "logistic_regression",
+        "passed": true,
+        "severity": "NONE",
+        "action": "NONE",
+        "observed_value": true,
+        "expected_value": true,
+        "evidence_refs": [
+          "obs:84cf0376ee8a59993c71"
+        ]
+      },
+      {
+        "contract_id": "MODEL_INPUT_SCHEMA",
+        "stage": "INFERENCE",
+        "component_id": "logistic_regression",
+        "passed": true,
+        "severity": "NONE",
+        "action": "NONE",
+        "observed_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "expected_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "evidence_refs": [
+          "obs:beed7f7df3ad8f897d1b"
+        ]
+      },
+      {
+        "contract_id": "PREDICTION_OBJECT_BINDING",
+        "stage": "INFERENCE",
+        "component_id": "prediction",
+        "passed": true,
+        "severity": "NONE",
+        "action": "NONE",
+        "observed_value": true,
+        "expected_value": true,
+        "evidence_refs": [
+          "obs:6413413d8a8943ad9b15"
+        ]
+      },
+      {
+        "contract_id": "PREDICTION_OUTPUT_SANITY",
+        "stage": "INFERENCE",
+        "component_id": "prediction",
+        "passed": true,
+        "severity": "NONE",
+        "action": "NONE",
+        "observed_value": true,
+        "expected_value": true,
+        "evidence_refs": [
+          "obs:29ecea04335766489dcf"
+        ]
+      },
+      {
+        "contract_id": "MODEL_EXPLAINER_VERSION",
+        "stage": "POST_HOC_EXPLANATION",
+        "component_id": "logistic_regression",
+        "passed": true,
+        "severity": "NONE",
+        "action": "NONE",
+        "observed_value": "1.0.0",
+        "expected_value": "1.0.0",
+        "evidence_refs": [
+          "obs:8899007a6b76bc763f23"
+        ]
+      },
+      {
+        "contract_id": "EXPLANATION_OBJECT_ID",
+        "stage": "POST_HOC_EXPLANATION",
+        "component_id": "shap_linear_explainer",
+        "passed": true,
+        "severity": "NONE",
+        "action": "NONE",
+        "observed_value": "bcw:pipeline-default",
+        "expected_value": "bcw:pipeline-default",
+        "evidence_refs": [
+          "obs:b09e0b7b37d277e364cc"
+        ]
+      },
+      {
+        "contract_id": "EXPLANATION_OUTPUT_CONSISTENCY",
+        "stage": "POST_HOC_EXPLANATION",
+        "component_id": "shap_linear_explainer",
+        "passed": true,
+        "severity": "NONE",
+        "action": "NONE",
+        "observed_value": 0.0,
+        "expected_value": 1e-08,
+        "evidence_refs": [
+          "obs:30d559d2dc830917f88f"
+        ]
+      },
+      {
+        "contract_id": "EXPLANATION_FEATURE_SCHEMA",
+        "stage": "POST_HOC_EXPLANATION",
+        "component_id": "shap_linear_explainer",
+        "passed": true,
+        "severity": "NONE",
+        "action": "NONE",
+        "observed_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "expected_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+        "evidence_refs": [
+          "obs:5e4c7ed175d50cac8b52"
+        ]
+      },
+      {
+        "contract_id": "REQUIRED_PROVENANCE",
+        "stage": "POST_HOC_EXPLANATION",
+        "component_id": "shap_linear_explainer",
+        "passed": true,
+        "severity": "NONE",
+        "action": "NONE",
+        "observed_value": true,
+        "expected_value": true,
+        "evidence_refs": [
+          "obs:8b53f9117ce91cef61b4"
+        ]
+      },
+      {
+        "contract_id": "REDUCTION_LOSS_LIMIT",
+        "stage": "REDUCTION",
+        "component_id": "fuzzyxai_presenter",
+        "passed": true,
+        "severity": "NONE",
+        "action": "NONE",
+        "observed_value": 0.0,
+        "expected_value": 0.25,
+        "evidence_refs": [
+          "obs:bdec8fca576657cb0edc"
+        ]
+      },
+      {
+        "contract_id": "USER_CLAIM_EVIDENCE_BINDING",
+        "stage": "PRESENTATION",
+        "component_id": "fuzzyxai_presenter",
+        "passed": true,
+        "severity": "NONE",
+        "action": "NONE",
+        "observed_value": true,
+        "expected_value": true,
+        "evidence_refs": [
+          "obs:7369805425a4eb23c06c"
+        ]
+      }
+    ],
+    "metadata": {
+      "pipeline_version": "2.0.0"
+    },
+    "trace_sha256": "002ff04bca39794dcc995115154cc6ac9a0c2404632e2be18cd134e0267badd7"
+  },
+  "diagnosis": {
+    "diagnosis_id": "diagnosis:mlp2:05c4cf24fee49c98ad37",
+    "pipeline_status": "INVALID",
+    "failed_stage": "MODEL_ARTIFACT",
+    "source_component": "serialized_model",
+    "violated_contract": "MODEL_ARTIFACT_HASH",
+    "violated_contracts": [
+      {
+        "contract_id": "MODEL_ARTIFACT_HASH",
+        "stage": "MODEL_ARTIFACT",
+        "component_id": "serialized_model",
+        "passed": false,
+        "severity": "HIGH",
+        "action": "BLOCK",
+        "observed_value": "5e1768fd210e535f0c3782f4226cfc9b0c23b78362c4ffefa3f90560b4ea0672",
+        "expected_value": "5de1ed8251b147befef90e6bfee3f5bcda23056d5bb66212153ce1104668ca8c",
+        "evidence_refs": [
+          "obs:3d4391fa1a45143ddfb2"
+        ]
+      }
+    ],
+    "affected_field": "model_artifact_hash",
+    "observed_value": "5e1768fd210e535f0c3782f4226cfc9b0c23b78362c4ffefa3f90560b4ea0672",
+    "expected_value": "5de1ed8251b147befef90e6bfee3f5bcda23056d5bb66212153ce1104668ca8c",
+    "severity": "HIGH",
+    "recommended_action": "BLOCK",
+    "evidence_refs": [
+      "obs:3d4391fa1a45143ddfb2"
+    ],
+    "nearest_confirmed_cause": {
+      "component": "serialized_model",
+      "mutation": {
+        "tampered_artifact_sha256": "5e1768fd210e535f0c3782f4226cfc9b0c23b78362c4ffefa3f90560b4ea0672",
+        "registered_artifact_sha256": "5de1ed8251b147befef90e6bfee3f5bcda23056d5bb66212153ce1104668ca8c"
+      }
+    },
+    "diagnostic_cut": {
+      "contracts": [
+        "MODEL_ARTIFACT_HASH"
+      ],
+      "evidence_refs": [
+        "obs:3d4391fa1a45143ddfb2"
+      ]
+    },
+    "confidence": 1.0,
+    "observation_count": 28
+  },
+  "repair_plan": {
+    "plan_id": "repair:mlp2:05c4cf24fee49c98ad37",
+    "operation": {
+      "operation_id": "restore_registered_model_artifact",
+      "supported_contracts": [
+        "MODEL_ARTIFACT_HASH"
+      ],
+      "target_component_type": "model_artifact",
+      "preconditions": [
+        "registered_model_snapshot_available"
+      ],
+      "postconditions": [
+        "model_hash_matches",
+        "prediction_and_shap_rebuilt",
+        "all_contracts_rechecked"
+      ],
+      "rollback_operation": "restore_tampered_artifact_snapshot",
+      "maximum_cost": 0.5,
+      "mutates_state": true
+    },
+    "target_contracts": [
+      "MODEL_ARTIFACT_HASH"
+    ],
+    "preconditions": {
+      "registered_model_snapshot_available": true
+    },
+    "executable": true,
+    "network_required": false
+  },
+  "recertification": {
+    "repair_executed": true,
+    "target_contract_repaired": true,
+    "full_recertification": true,
+    "contracts_rechecked": [
+      "DATASET_IDENTITY",
+      "DATASET_SCHEMA",
+      "TARGET_NOT_IN_FEATURES",
+      "CLASS_MAPPING",
+      "TRAIN_VALIDATION_TEST_DISJOINTNESS",
+      "SPLIT_REPRODUCIBILITY",
+      "PREPROCESSOR_VERSION",
+      "PREPROCESSOR_FIT_SCOPE",
+      "FEATURE_ORDER",
+      "FEATURE_COUNT",
+      "TRANSFORM_OUTPUT_SCHEMA",
+      "FINITE_TRANSFORMED_VALUES",
+      "TRAINING_CONFIGURATION",
+      "MODEL_CONVERGENCE",
+      "MODEL_FEATURE_SCHEMA",
+      "TRAINING_DATA_HASH",
+      "MODEL_ARTIFACT_HASH",
+      "METRIC_SANITY",
+      "MODEL_INPUT_SCHEMA",
+      "PREDICTION_OBJECT_BINDING",
+      "PREDICTION_OUTPUT_SANITY",
+      "MODEL_EXPLAINER_VERSION",
+      "EXPLANATION_OBJECT_ID",
+      "EXPLANATION_OUTPUT_CONSISTENCY",
+      "EXPLANATION_FEATURE_SCHEMA",
+      "REQUIRED_PROVENANCE",
+      "REDUCTION_LOSS_LIMIT",
+      "USER_CLAIM_EVIDENCE_BINDING"
+    ],
+    "contracts_rechecked_count": 28,
+    "inference_rebuilt": true,
+    "shap_rebuilt": true,
+    "route_graph_rebuilt": true,
+    "views_rebuilt": true,
+    "new_critical_violations": 0,
+    "rollback_verified": true,
+    "post_repair_pipeline_status": "VALID",
+    "canonical_sha256": "fa7a35f185fe653d17605422926fe5671cabdcf01ac1472fc213607a51219340"
+  },
+  "prediction": {
+    "object_id": "bcw:pipeline-default",
+    "predicted_class": 0,
+    "probability": 0.00027695735150644503,
+    "raw_score": -8.191370033600295,
+    "model_id": "bcw-logistic-regression",
+    "model_version": "1.0.0",
+    "model_sha256": "c5b042bd9cd865ecc209de958a2cf64ab04b7d0dbba0a6d7d2865895aad7a8e7",
+    "feature_schema_sha256": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba"
+  },
+  "explanation": {
+    "object_id": "bcw:pipeline-default",
+    "explainer_id": "shap.LinearExplainer",
+    "explainer_version": "0.51.0",
+    "model_version": "1.0.0",
+    "base_value": -1.2264799258326975,
+    "shap_values": {
+      "mean radius": -0.19244878416558725,
+      "mean texture": -0.5911771035309462,
+      "mean perimeter": -0.18195722404349318,
+      "mean area": -0.2198343234510549,
+      "mean smoothness": 0.10582201610778671,
+      "mean compactness": 0.07671506417851988,
+      "mean concavity": -0.6297281886336548,
+      "mean concave points": -0.700739425513308,
+      "mean symmetry": 0.6356697979811631,
+      "mean fractal dimension": -0.412358594440218,
+      "radius error": 0.5806998603520946,
+      "texture error": -0.10287860105656914,
+      "perimeter error": 0.18880719910824606,
+      "area error": -0.037913384808470445,
+      "smoothness error": -0.059593037818181024,
+      "compactness error": 0.44905955345084314,
+      "concavity error": 0.15649623472206758,
+      "concave points error": -0.08636767912061792,
+      "symmetry error": 0.17914948862675287,
+      "fractal dimension error": -0.7151021564103659,
+      "worst radius": -0.906413636475313,
+      "worst texture": -1.4917113088679261,
+      "worst perimeter": -0.7661725162075523,
+      "worst area": -0.6460166794220196,
+      "worst smoothness": -0.026225073289457893,
+      "worst compactness": -0.21526927648231106,
+      "worst concavity": -0.8931696619551441,
+      "worst concave points": -1.1107887674753651,
+      "worst symmetry": 0.6512330735698741,
+      "worst fractal dimension": -0.0026769726973898227
+    },
+    "feature_values": {
+      "mean radius": 10.17,
+      "mean texture": 14.88,
+      "mean perimeter": 64.55,
+      "mean area": 311.9,
+      "mean smoothness": 0.1134,
+      "mean compactness": 0.08061,
+      "mean concavity": 0.01084,
+      "mean concave points": 0.0129,
+      "mean symmetry": 0.2743,
+      "mean fractal dimension": 0.0696,
+      "radius error": 0.5158,
+      "texture error": 1.441,
+      "perimeter error": 3.312,
+      "area error": 34.62,
+      "smoothness error": 0.007514,
+      "compactness error": 0.01099,
+      "concavity error": 0.007665,
+      "concave points error": 0.008193,
+      "symmetry error": 0.04183,
+      "fractal dimension error": 0.005953,
+      "worst radius": 11.02,
+      "worst texture": 17.45,
+      "worst perimeter": 69.86,
+      "worst area": 368.6,
+      "worst smoothness": 0.1275,
+      "worst compactness": 0.09866,
+      "worst concavity": 0.02168,
+      "worst concave points": 0.02579,
+      "worst symmetry": 0.3557,
+      "worst fractal dimension": 0.0802
+    },
+    "output_sum": -8.191370033600295,
+    "output_difference": 0.0,
+    "artifact_sha256": "9bae1b379735fae001ed1edfcb565143357e3b7bc5d42b89db7d57ce4693d3a6"
+  },
+  "representation": {
+    "representation_id": "F0",
+    "selection_reason": "complete deterministic pipeline evidence"
+  },
+  "manifests": {
+    "dataset_manifest": {
+      "dataset_id": "sklearn.datasets.load_breast_cancer",
+      "dataset_version": "1.9.0",
+      "dataset_sha256": "47e9aa4e33b5350407b6d31fa140e2b1767a038c37796e0990eb99ad2bc7ba12",
+      "row_count": 569,
+      "column_count": 30,
+      "column_names": [
+        "mean radius",
+        "mean texture",
+        "mean perimeter",
+        "mean area",
+        "mean smoothness",
+        "mean compactness",
+        "mean concavity",
+        "mean concave points",
+        "mean symmetry",
+        "mean fractal dimension",
+        "radius error",
+        "texture error",
+        "perimeter error",
+        "area error",
+        "smoothness error",
+        "compactness error",
+        "concavity error",
+        "concave points error",
+        "symmetry error",
+        "fractal dimension error",
+        "worst radius",
+        "worst texture",
+        "worst perimeter",
+        "worst area",
+        "worst smoothness",
+        "worst compactness",
+        "worst concavity",
+        "worst concave points",
+        "worst symmetry",
+        "worst fractal dimension"
+      ],
+      "column_order": [
+        "mean radius",
+        "mean texture",
+        "mean perimeter",
+        "mean area",
+        "mean smoothness",
+        "mean compactness",
+        "mean concavity",
+        "mean concave points",
+        "mean symmetry",
+        "mean fractal dimension",
+        "radius error",
+        "texture error",
+        "perimeter error",
+        "area error",
+        "smoothness error",
+        "compactness error",
+        "concavity error",
+        "concave points error",
+        "symmetry error",
+        "fractal dimension error",
+        "worst radius",
+        "worst texture",
+        "worst perimeter",
+        "worst area",
+        "worst smoothness",
+        "worst compactness",
+        "worst concavity",
+        "worst concave points",
+        "worst symmetry",
+        "worst fractal dimension"
+      ],
+      "column_dtypes": {
+        "mean radius": "float64",
+        "mean texture": "float64",
+        "mean perimeter": "float64",
+        "mean area": "float64",
+        "mean smoothness": "float64",
+        "mean compactness": "float64",
+        "mean concavity": "float64",
+        "mean concave points": "float64",
+        "mean symmetry": "float64",
+        "mean fractal dimension": "float64",
+        "radius error": "float64",
+        "texture error": "float64",
+        "perimeter error": "float64",
+        "area error": "float64",
+        "smoothness error": "float64",
+        "compactness error": "float64",
+        "concavity error": "float64",
+        "concave points error": "float64",
+        "symmetry error": "float64",
+        "fractal dimension error": "float64",
+        "worst radius": "float64",
+        "worst texture": "float64",
+        "worst perimeter": "float64",
+        "worst area": "float64",
+        "worst smoothness": "float64",
+        "worst compactness": "float64",
+        "worst concavity": "float64",
+        "worst concave points": "float64",
+        "worst symmetry": "float64",
+        "worst fractal dimension": "float64"
+      },
+      "target_column": "target",
+      "required_feature_set": [
+        "mean radius",
+        "mean texture",
+        "mean perimeter",
+        "mean area",
+        "mean smoothness",
+        "mean compactness",
+        "mean concavity",
+        "mean concave points",
+        "mean symmetry",
+        "mean fractal dimension",
+        "radius error",
+        "texture error",
+        "perimeter error",
+        "area error",
+        "smoothness error",
+        "compactness error",
+        "concavity error",
+        "concave points error",
+        "symmetry error",
+        "fractal dimension error",
+        "worst radius",
+        "worst texture",
+        "worst perimeter",
+        "worst area",
+        "worst smoothness",
+        "worst compactness",
+        "worst concavity",
+        "worst concave points",
+        "worst symmetry",
+        "worst fractal dimension"
+      ]
+    },
+    "split_manifest": {
+      "random_state": 1729,
+      "strategy": "two-stage stratified",
+      "stratification": "encoded_target",
+      "train_size": 364,
+      "validation_size": 91,
+      "test_size": 114,
+      "train_ids_sha256": "d96d63ac85a124109a38337843ea08b792d579afb5e10d85d232020ce67fb3bb",
+      "validation_ids_sha256": "8b5b202513f59d09f2f3e9ca2a2ef9042a64e0568d4e04dd8b94adc7419ffbed",
+      "test_ids_sha256": "02c724240c434396ea6f9734d86e87eac81037149808c91b665af78291f7dcf9",
+      "intersection_counts": {
+        "train_validation": 0,
+        "train_test": 0,
+        "validation_test": 0
+      },
+      "split_sha256": "5cb8248a79fe2464c45575cdb50c2dd1ba887c819311031b970fa10adb6afc8e"
+    },
+    "preprocessor_manifest": {
+      "class": "StandardScaler",
+      "library_version": "1.9.0",
+      "registered_version": "standard-scaler-v1",
+      "artifact_sha256": "3496f956bcee015f773859d8e072ab6ff637663c57e470ebee3f823c3146ed24",
+      "fit_row_ids_sha256": "d96d63ac85a124109a38337843ea08b792d579afb5e10d85d232020ce67fb3bb",
+      "expected_train_row_ids_sha256": "d96d63ac85a124109a38337843ea08b792d579afb5e10d85d232020ce67fb3bb",
+      "fit_row_count": 364,
+      "train_row_count": 364,
+      "input_feature_order": [
+        "mean radius",
+        "mean texture",
+        "mean perimeter",
+        "mean area",
+        "mean smoothness",
+        "mean compactness",
+        "mean concavity",
+        "mean concave points",
+        "mean symmetry",
+        "mean fractal dimension",
+        "radius error",
+        "texture error",
+        "perimeter error",
+        "area error",
+        "smoothness error",
+        "compactness error",
+        "concavity error",
+        "concave points error",
+        "symmetry error",
+        "fractal dimension error",
+        "worst radius",
+        "worst texture",
+        "worst perimeter",
+        "worst area",
+        "worst smoothness",
+        "worst compactness",
+        "worst concavity",
+        "worst concave points",
+        "worst symmetry",
+        "worst fractal dimension"
+      ],
+      "output_schema_sha256": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba"
+    },
+    "training_configuration": {
+      "class": "LogisticRegression",
+      "solver": "lbfgs",
+      "penalty": "deprecated",
+      "C": 1.0,
+      "max_iter": 2000,
+      "random_state": 1729,
+      "class_weight": null,
+      "sklearn": "1.9.0",
+      "configuration_sha256": "f72bbde93f0b50126b8592d4993f21b174e7eb6a237dc5c29a4f405f78ae8a31"
+    },
+    "model_manifest": {
+      "model_id": "bcw-logistic-regression",
+      "model_version": "1.0.0",
+      "library_version": "1.9.0",
+      "model_sha256": "c5b042bd9cd865ecc209de958a2cf64ab04b7d0dbba0a6d7d2865895aad7a8e7",
+      "model_artifact_sha256": "5de1ed8251b147befef90e6bfee3f5bcda23056d5bb66212153ce1104668ca8c",
+      "feature_schema_sha256": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+      "n_features_in": 30,
+      "feature_names_in": [
+        "mean radius",
+        "mean texture",
+        "mean perimeter",
+        "mean area",
+        "mean smoothness",
+        "mean compactness",
+        "mean concavity",
+        "mean concave points",
+        "mean symmetry",
+        "mean fractal dimension",
+        "radius error",
+        "texture error",
+        "perimeter error",
+        "area error",
+        "smoothness error",
+        "compactness error",
+        "concavity error",
+        "concave points error",
+        "symmetry error",
+        "fractal dimension error",
+        "worst radius",
+        "worst texture",
+        "worst perimeter",
+        "worst area",
+        "worst smoothness",
+        "worst compactness",
+        "worst concavity",
+        "worst concave points",
+        "worst symmetry",
+        "worst fractal dimension"
+      ],
+      "classes": [
+        0,
+        1
+      ],
+      "training_data_hash": {
+        "dataset": "47e9aa4e33b5350407b6d31fa140e2b1767a038c37796e0990eb99ad2bc7ba12",
+        "train": "d96d63ac85a124109a38337843ea08b792d579afb5e10d85d232020ce67fb3bb",
+        "target": "be56573cf0b8dafd36c7e0caeb2e3906dd345494e709f9226b1535e643da2ef5"
+      },
+      "metrics": {
+        "accuracy": 0.989010989010989,
+        "precision": 1.0,
+        "recall": 0.9705882352941176,
+        "f1": 0.9850746268656716,
+        "log_loss": 0.0631161320381037,
+        "roc_auc": 0.9979360165118679,
+        "sample_count": 91.0
+      }
+    },
+    "explainer_manifest": {
+      "class": "shap.LinearExplainer",
+      "version": "0.51.0",
+      "model_version": "1.0.0",
+      "tolerance": 1e-08
+    },
+    "scenario_mutation": {
+      "scenario_id": "S16_MODEL_ARTIFACT_TAMPER",
+      "tampered_artifact_sha256": "5e1768fd210e535f0c3782f4226cfc9b0c23b78362c4ffefa3f90560b4ea0672",
+      "registered_artifact_sha256": "5de1ed8251b147befef90e6bfee3f5bcda23056d5bb66212153ce1104668ca8c"
+    }
+  },
+  "views": {
+    "user": {
+      "run_id": "mlp2:05c4cf24fee49c98ad37",
+      "scenario_id": "S16_MODEL_ARTIFACT_TAMPER",
+      "action": "BLOCK",
+      "pipeline_status": "INVALID",
+      "canonical_source": "MLPipelineService",
+      "prediction": {
+        "object_id": "bcw:pipeline-default",
+        "predicted_class": 0,
+        "probability": 0.00027695735150644503,
+        "raw_score": -8.191370033600295,
+        "model_id": "bcw-logistic-regression",
+        "model_version": "1.0.0",
+        "model_sha256": "c5b042bd9cd865ecc209de958a2cf64ab04b7d0dbba0a6d7d2865895aad7a8e7",
+        "feature_schema_sha256": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba"
+      },
+      "message_code": "PIPELINE_REQUIRES_REVIEW",
+      "limitations": [
+        "software demonstration; not clinical advice"
+      ]
+    },
+    "engineering": {
+      "run_id": "mlp2:05c4cf24fee49c98ad37",
+      "scenario_id": "S16_MODEL_ARTIFACT_TAMPER",
+      "action": "BLOCK",
+      "pipeline_status": "INVALID",
+      "canonical_source": "MLPipelineService",
+      "diagnosis": {
+        "diagnosis_id": "diagnosis:mlp2:05c4cf24fee49c98ad37",
+        "pipeline_status": "INVALID",
+        "failed_stage": "MODEL_ARTIFACT",
+        "source_component": "serialized_model",
+        "violated_contract": "MODEL_ARTIFACT_HASH",
+        "violated_contracts": [
+          {
+            "contract_id": "MODEL_ARTIFACT_HASH",
+            "stage": "MODEL_ARTIFACT",
+            "component_id": "serialized_model",
+            "passed": false,
+            "severity": "HIGH",
+            "action": "BLOCK",
+            "observed_value": "5e1768fd210e535f0c3782f4226cfc9b0c23b78362c4ffefa3f90560b4ea0672",
+            "expected_value": "5de1ed8251b147befef90e6bfee3f5bcda23056d5bb66212153ce1104668ca8c",
+            "evidence_refs": [
+              "obs:3d4391fa1a45143ddfb2"
+            ]
+          }
+        ],
+        "affected_field": "model_artifact_hash",
+        "observed_value": "5e1768fd210e535f0c3782f4226cfc9b0c23b78362c4ffefa3f90560b4ea0672",
+        "expected_value": "5de1ed8251b147befef90e6bfee3f5bcda23056d5bb66212153ce1104668ca8c",
+        "severity": "HIGH",
+        "recommended_action": "BLOCK",
+        "evidence_refs": [
+          "obs:3d4391fa1a45143ddfb2"
+        ],
+        "nearest_confirmed_cause": {
+          "component": "serialized_model",
+          "mutation": {
+            "tampered_artifact_sha256": "5e1768fd210e535f0c3782f4226cfc9b0c23b78362c4ffefa3f90560b4ea0672",
+            "registered_artifact_sha256": "5de1ed8251b147befef90e6bfee3f5bcda23056d5bb66212153ce1104668ca8c"
+          }
+        },
+        "diagnostic_cut": {
+          "contracts": [
+            "MODEL_ARTIFACT_HASH"
+          ],
+          "evidence_refs": [
+            "obs:3d4391fa1a45143ddfb2"
+          ]
+        },
+        "confidence": 1.0,
+        "observation_count": 28
+      },
+      "representation": {
+        "representation_id": "F0",
+        "selection_reason": "complete deterministic pipeline evidence"
+      },
+      "repair_plan": {
+        "plan_id": "repair:mlp2:05c4cf24fee49c98ad37",
+        "operation": {
+          "operation_id": "restore_registered_model_artifact",
+          "supported_contracts": [
+            "MODEL_ARTIFACT_HASH"
+          ],
+          "target_component_type": "model_artifact",
+          "preconditions": [
+            "registered_model_snapshot_available"
+          ],
+          "postconditions": [
+            "model_hash_matches",
+            "prediction_and_shap_rebuilt",
+            "all_contracts_rechecked"
+          ],
+          "rollback_operation": "restore_tampered_artifact_snapshot",
+          "maximum_cost": 0.5,
+          "mutates_state": true
+        },
+        "target_contracts": [
+          "MODEL_ARTIFACT_HASH"
+        ],
+        "preconditions": {
+          "registered_model_snapshot_available": true
+        },
+        "executable": true,
+        "network_required": false
+      },
+      "recertification": {
+        "repair_executed": true,
+        "target_contract_repaired": true,
+        "full_recertification": true,
+        "contracts_rechecked": [
+          "DATASET_IDENTITY",
+          "DATASET_SCHEMA",
+          "TARGET_NOT_IN_FEATURES",
+          "CLASS_MAPPING",
+          "TRAIN_VALIDATION_TEST_DISJOINTNESS",
+          "SPLIT_REPRODUCIBILITY",
+          "PREPROCESSOR_VERSION",
+          "PREPROCESSOR_FIT_SCOPE",
+          "FEATURE_ORDER",
+          "FEATURE_COUNT",
+          "TRANSFORM_OUTPUT_SCHEMA",
+          "FINITE_TRANSFORMED_VALUES",
+          "TRAINING_CONFIGURATION",
+          "MODEL_CONVERGENCE",
+          "MODEL_FEATURE_SCHEMA",
+          "TRAINING_DATA_HASH",
+          "MODEL_ARTIFACT_HASH",
+          "METRIC_SANITY",
+          "MODEL_INPUT_SCHEMA",
+          "PREDICTION_OBJECT_BINDING",
+          "PREDICTION_OUTPUT_SANITY",
+          "MODEL_EXPLAINER_VERSION",
+          "EXPLANATION_OBJECT_ID",
+          "EXPLANATION_OUTPUT_CONSISTENCY",
+          "EXPLANATION_FEATURE_SCHEMA",
+          "REQUIRED_PROVENANCE",
+          "REDUCTION_LOSS_LIMIT",
+          "USER_CLAIM_EVIDENCE_BINDING"
+        ],
+        "contracts_rechecked_count": 28,
+        "inference_rebuilt": true,
+        "shap_rebuilt": true,
+        "route_graph_rebuilt": true,
+        "views_rebuilt": true,
+        "new_critical_violations": 0,
+        "rollback_verified": true,
+        "post_repair_pipeline_status": "VALID",
+        "canonical_sha256": "fa7a35f185fe653d17605422926fe5671cabdcf01ac1472fc213607a51219340"
+      }
+    },
+    "audit": {
+      "run_id": "mlp2:05c4cf24fee49c98ad37",
+      "scenario_id": "S16_MODEL_ARTIFACT_TAMPER",
+      "action": "BLOCK",
+      "pipeline_status": "INVALID",
+      "canonical_source": "MLPipelineService",
+      "diagnosis": {
+        "diagnosis_id": "diagnosis:mlp2:05c4cf24fee49c98ad37",
+        "pipeline_status": "INVALID",
+        "failed_stage": "MODEL_ARTIFACT",
+        "source_component": "serialized_model",
+        "violated_contract": "MODEL_ARTIFACT_HASH",
+        "violated_contracts": [
+          {
+            "contract_id": "MODEL_ARTIFACT_HASH",
+            "stage": "MODEL_ARTIFACT",
+            "component_id": "serialized_model",
+            "passed": false,
+            "severity": "HIGH",
+            "action": "BLOCK",
+            "observed_value": "5e1768fd210e535f0c3782f4226cfc9b0c23b78362c4ffefa3f90560b4ea0672",
+            "expected_value": "5de1ed8251b147befef90e6bfee3f5bcda23056d5bb66212153ce1104668ca8c",
+            "evidence_refs": [
+              "obs:3d4391fa1a45143ddfb2"
+            ]
+          }
+        ],
+        "affected_field": "model_artifact_hash",
+        "observed_value": "5e1768fd210e535f0c3782f4226cfc9b0c23b78362c4ffefa3f90560b4ea0672",
+        "expected_value": "5de1ed8251b147befef90e6bfee3f5bcda23056d5bb66212153ce1104668ca8c",
+        "severity": "HIGH",
+        "recommended_action": "BLOCK",
+        "evidence_refs": [
+          "obs:3d4391fa1a45143ddfb2"
+        ],
+        "nearest_confirmed_cause": {
+          "component": "serialized_model",
+          "mutation": {
+            "tampered_artifact_sha256": "5e1768fd210e535f0c3782f4226cfc9b0c23b78362c4ffefa3f90560b4ea0672",
+            "registered_artifact_sha256": "5de1ed8251b147befef90e6bfee3f5bcda23056d5bb66212153ce1104668ca8c"
+          }
+        },
+        "diagnostic_cut": {
+          "contracts": [
+            "MODEL_ARTIFACT_HASH"
+          ],
+          "evidence_refs": [
+            "obs:3d4391fa1a45143ddfb2"
+          ]
+        },
+        "confidence": 1.0,
+        "observation_count": 28
+      },
+      "route_graph": {
+        "schema_version": "2.0",
+        "route_id": "route:mlp2:05c4cf24fee49c98ad37",
+        "nodes": [
+          {
+            "node_id": "dataset",
+            "node_type": "dataset",
+            "stage": "DATA_PREPARATION",
+            "component_id": "dataset",
+            "component_type": "dataset",
+            "version": "2.0.0",
+            "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+            "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+            "configuration": {},
+            "artifact_sha256": "47e9aa4e33b5350407b6d31fa140e2b1767a038c37796e0990eb99ad2bc7ba12",
+            "evidence_refs": [
+              "obs:57a26f9a6f1a14044c48",
+              "obs:d527b6e8b5989b4d7ed7",
+              "obs:a00b789301c8c9e79868",
+              "obs:cf2ec00586da34995693"
+            ],
+            "execution_status": "PASS"
+          },
+          {
+            "node_id": "split_manifest",
+            "node_type": "split_manifest",
+            "stage": "DATA_SPLIT",
+            "component_id": "split_manifest",
+            "component_type": "split_manifest",
+            "version": "2.0.0",
+            "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+            "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+            "configuration": {
+              "random_state": 1729,
+              "stratified": true
+            },
+            "artifact_sha256": "5cb8248a79fe2464c45575cdb50c2dd1ba887c819311031b970fa10adb6afc8e",
+            "evidence_refs": [
+              "obs:584e1f79ebc8e47d3473",
+              "obs:7020f9ae6f0908503885"
+            ],
+            "execution_status": "PASS"
+          },
+          {
+            "node_id": "train_partition",
+            "node_type": "partition",
+            "stage": "DATA_SPLIT",
+            "component_id": "train_partition",
+            "component_type": "partition",
+            "version": "2.0.0",
+            "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+            "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+            "configuration": {},
+            "artifact_sha256": null,
+            "evidence_refs": [
+              "obs:584e1f79ebc8e47d3473",
+              "obs:7020f9ae6f0908503885"
+            ],
+            "execution_status": "PASS"
+          },
+          {
+            "node_id": "validation_partition",
+            "node_type": "partition",
+            "stage": "DATA_SPLIT",
+            "component_id": "validation_partition",
+            "component_type": "partition",
+            "version": "2.0.0",
+            "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+            "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+            "configuration": {},
+            "artifact_sha256": null,
+            "evidence_refs": [
+              "obs:584e1f79ebc8e47d3473",
+              "obs:7020f9ae6f0908503885"
+            ],
+            "execution_status": "PASS"
+          },
+          {
+            "node_id": "test_partition",
+            "node_type": "partition",
+            "stage": "DATA_SPLIT",
+            "component_id": "test_partition",
+            "component_type": "partition",
+            "version": "2.0.0",
+            "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+            "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+            "configuration": {},
+            "artifact_sha256": null,
+            "evidence_refs": [
+              "obs:584e1f79ebc8e47d3473",
+              "obs:7020f9ae6f0908503885"
+            ],
+            "execution_status": "PASS"
+          },
+          {
+            "node_id": "preprocessor",
+            "node_type": "preprocessor",
+            "stage": "PREPROCESSING",
+            "component_id": "preprocessor",
+            "component_type": "preprocessor",
+            "version": "2.0.0",
+            "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+            "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+            "configuration": {
+              "class": "StandardScaler"
+            },
+            "artifact_sha256": "3496f956bcee015f773859d8e072ab6ff637663c57e470ebee3f823c3146ed24",
+            "evidence_refs": [
+              "obs:32d0da17783b13c79b6b",
+              "obs:b8682a4609d2dbeb9f17",
+              "obs:dff8a9a02067d9499e78",
+              "obs:523099f70ef8689f0958",
+              "obs:50e71ff33d0b1aef48b4",
+              "obs:115299fc970a1016cf1d"
+            ],
+            "execution_status": "PASS"
+          },
+          {
+            "node_id": "transformed_train",
+            "node_type": "dataset",
+            "stage": "PREPROCESSING",
+            "component_id": "transformed_train",
+            "component_type": "dataset",
+            "version": "2.0.0",
+            "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+            "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+            "configuration": {},
+            "artifact_sha256": null,
+            "evidence_refs": [
+              "obs:32d0da17783b13c79b6b",
+              "obs:b8682a4609d2dbeb9f17",
+              "obs:dff8a9a02067d9499e78",
+              "obs:523099f70ef8689f0958",
+              "obs:50e71ff33d0b1aef48b4",
+              "obs:115299fc970a1016cf1d"
+            ],
+            "execution_status": "PASS"
+          },
+          {
+            "node_id": "training_configuration",
+            "node_type": "configuration",
+            "stage": "TRAINING",
+            "component_id": "training_configuration",
+            "component_type": "configuration",
+            "version": "2.0.0",
+            "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+            "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+            "configuration": {},
+            "artifact_sha256": null,
+            "evidence_refs": [
+              "obs:de2b8a6e1c15396f2aa3",
+              "obs:159aa8319c7a1e5ccb09",
+              "obs:adec3e7ad96e077d897e",
+              "obs:d819b3b5156e91cfcebe",
+              "obs:84cf0376ee8a59993c71"
+            ],
+            "execution_status": "PASS"
+          },
+          {
+            "node_id": "trained_model",
+            "node_type": "model",
+            "stage": "TRAINING",
+            "component_id": "trained_model",
+            "component_type": "model",
+            "version": "2.0.0",
+            "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+            "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+            "configuration": {
+              "model_id": "bcw-logistic-regression",
+              "model_version": "1.0.0"
+            },
+            "artifact_sha256": "5de1ed8251b147befef90e6bfee3f5bcda23056d5bb66212153ce1104668ca8c",
+            "evidence_refs": [
+              "obs:de2b8a6e1c15396f2aa3",
+              "obs:159aa8319c7a1e5ccb09",
+              "obs:adec3e7ad96e077d897e",
+              "obs:d819b3b5156e91cfcebe",
+              "obs:84cf0376ee8a59993c71"
+            ],
+            "execution_status": "PASS"
+          },
+          {
+            "node_id": "model_artifact",
+            "node_type": "artifact",
+            "stage": "MODEL_ARTIFACT",
+            "component_id": "model_artifact",
+            "component_type": "artifact",
+            "version": "2.0.0",
+            "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+            "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+            "configuration": {
+              "model_id": "bcw-logistic-regression",
+              "model_version": "1.0.0"
+            },
+            "artifact_sha256": "5de1ed8251b147befef90e6bfee3f5bcda23056d5bb66212153ce1104668ca8c",
+            "evidence_refs": [
+              "obs:3d4391fa1a45143ddfb2"
+            ],
+            "execution_status": "REPAIRED"
+          },
+          {
+            "node_id": "inference_object",
+            "node_type": "input",
+            "stage": "INFERENCE",
+            "component_id": "inference_object",
+            "component_type": "input",
+            "version": "2.0.0",
+            "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+            "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+            "configuration": {},
+            "artifact_sha256": null,
+            "evidence_refs": [
+              "obs:beed7f7df3ad8f897d1b",
+              "obs:6413413d8a8943ad9b15",
+              "obs:29ecea04335766489dcf"
+            ],
+            "execution_status": "PASS"
+          },
+          {
+            "node_id": "prediction",
+            "node_type": "prediction",
+            "stage": "INFERENCE",
+            "component_id": "prediction",
+            "component_type": "prediction",
+            "version": "2.0.0",
+            "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+            "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+            "configuration": {},
+            "artifact_sha256": null,
+            "evidence_refs": [
+              "obs:beed7f7df3ad8f897d1b",
+              "obs:6413413d8a8943ad9b15",
+              "obs:29ecea04335766489dcf"
+            ],
+            "execution_status": "PASS"
+          },
+          {
+            "node_id": "shap_explainer",
+            "node_type": "explainer",
+            "stage": "POST_HOC_EXPLANATION",
+            "component_id": "shap_explainer",
+            "component_type": "explainer",
+            "version": "2.0.0",
+            "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+            "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+            "configuration": {},
+            "artifact_sha256": null,
+            "evidence_refs": [
+              "obs:8899007a6b76bc763f23",
+              "obs:b09e0b7b37d277e364cc",
+              "obs:30d559d2dc830917f88f",
+              "obs:5e4c7ed175d50cac8b52",
+              "obs:8b53f9117ce91cef61b4"
+            ],
+            "execution_status": "PASS"
+          },
+          {
+            "node_id": "shap_values",
+            "node_type": "explanation",
+            "stage": "POST_HOC_EXPLANATION",
+            "component_id": "shap_values",
+            "component_type": "explanation",
+            "version": "2.0.0",
+            "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+            "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+            "configuration": {},
+            "artifact_sha256": null,
+            "evidence_refs": [
+              "obs:8899007a6b76bc763f23",
+              "obs:b09e0b7b37d277e364cc",
+              "obs:30d559d2dc830917f88f",
+              "obs:5e4c7ed175d50cac8b52",
+              "obs:8b53f9117ce91cef61b4"
+            ],
+            "execution_status": "PASS"
+          },
+          {
+            "node_id": "fuzzy_representation",
+            "node_type": "representation",
+            "stage": "FUZZY_REPRESENTATION",
+            "component_id": "fuzzy_representation",
+            "component_type": "representation",
+            "version": "2.0.0",
+            "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+            "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+            "configuration": {},
+            "artifact_sha256": null,
+            "evidence_refs": [],
+            "execution_status": "PASS"
+          },
+          {
+            "node_id": "reduced_explanation",
+            "node_type": "reduction",
+            "stage": "REDUCTION",
+            "component_id": "reduced_explanation",
+            "component_type": "reduction",
+            "version": "2.0.0",
+            "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+            "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+            "configuration": {},
+            "artifact_sha256": null,
+            "evidence_refs": [
+              "obs:bdec8fca576657cb0edc"
+            ],
+            "execution_status": "PASS"
+          },
+          {
+            "node_id": "user_view",
+            "node_type": "presentation",
+            "stage": "PRESENTATION",
+            "component_id": "user_view",
+            "component_type": "presentation",
+            "version": "2.0.0",
+            "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+            "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+            "configuration": {},
+            "artifact_sha256": null,
+            "evidence_refs": [
+              "obs:7369805425a4eb23c06c"
+            ],
+            "execution_status": "PASS"
+          },
+          {
+            "node_id": "engineering_view",
+            "node_type": "presentation",
+            "stage": "PRESENTATION",
+            "component_id": "engineering_view",
+            "component_type": "presentation",
+            "version": "2.0.0",
+            "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+            "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+            "configuration": {},
+            "artifact_sha256": null,
+            "evidence_refs": [
+              "obs:7369805425a4eb23c06c"
+            ],
+            "execution_status": "PASS"
+          },
+          {
+            "node_id": "audit_view",
+            "node_type": "presentation",
+            "stage": "PRESENTATION",
+            "component_id": "audit_view",
+            "component_type": "presentation",
+            "version": "2.0.0",
+            "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+            "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+            "configuration": {},
+            "artifact_sha256": null,
+            "evidence_refs": [
+              "obs:7369805425a4eb23c06c"
+            ],
+            "execution_status": "PASS"
+          },
+          {
+            "node_id": "repair_plan",
+            "node_type": "repair",
+            "stage": "REPAIR",
+            "component_id": "repair_plan",
+            "component_type": "repair",
+            "version": "2.0.0",
+            "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+            "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+            "configuration": {},
+            "artifact_sha256": null,
+            "evidence_refs": [],
+            "execution_status": "PASS"
+          },
+          {
+            "node_id": "recertification_result",
+            "node_type": "recertification",
+            "stage": "RECERTIFICATION",
+            "component_id": "recertification_result",
+            "component_type": "recertification",
+            "version": "2.0.0",
+            "input_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+            "output_schema": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+            "configuration": {},
+            "artifact_sha256": null,
+            "evidence_refs": [],
+            "execution_status": "PASS"
+          }
+        ],
+        "edges": [
+          {
+            "source": "dataset",
+            "target": "split_manifest",
+            "relation": "derived_from"
+          },
+          {
+            "source": "train_partition",
+            "target": "preprocessor",
+            "relation": "fitted_on"
+          },
+          {
+            "source": "train_partition",
+            "target": "transformed_train",
+            "relation": "transformed_by"
+          },
+          {
+            "source": "transformed_train",
+            "target": "trained_model",
+            "relation": "trained_on"
+          },
+          {
+            "source": "training_configuration",
+            "target": "trained_model",
+            "relation": "configured_by"
+          },
+          {
+            "source": "trained_model",
+            "target": "model_artifact",
+            "relation": "produced_by"
+          },
+          {
+            "source": "inference_object",
+            "target": "prediction",
+            "relation": "produced_by"
+          },
+          {
+            "source": "trained_model",
+            "target": "shap_explainer",
+            "relation": "explained_by"
+          },
+          {
+            "source": "prediction",
+            "target": "shap_values",
+            "relation": "explained_by"
+          },
+          {
+            "source": "shap_values",
+            "target": "fuzzy_representation",
+            "relation": "represented_by"
+          },
+          {
+            "source": "fuzzy_representation",
+            "target": "reduced_explanation",
+            "relation": "reduced_to"
+          },
+          {
+            "source": "reduced_explanation",
+            "target": "user_view",
+            "relation": "displayed_as"
+          },
+          {
+            "source": "reduced_explanation",
+            "target": "engineering_view",
+            "relation": "displayed_as"
+          },
+          {
+            "source": "reduced_explanation",
+            "target": "audit_view",
+            "relation": "displayed_as"
+          },
+          {
+            "source": "repair_plan",
+            "target": "recertification_result",
+            "relation": "recertified_as"
+          }
+        ],
+        "contracts": [
+          {
+            "contract_id": "DATASET_IDENTITY",
+            "stage": "DATA_PREPARATION",
+            "component_id": "breast_cancer_dataset",
+            "passed": true,
+            "severity": "NONE",
+            "action": "NONE",
+            "observed_value": "47e9aa4e33b5350407b6d31fa140e2b1767a038c37796e0990eb99ad2bc7ba12",
+            "expected_value": "47e9aa4e33b5350407b6d31fa140e2b1767a038c37796e0990eb99ad2bc7ba12",
+            "evidence_refs": [
+              "obs:57a26f9a6f1a14044c48"
+            ]
+          },
+          {
+            "contract_id": "DATASET_SCHEMA",
+            "stage": "DATA_PREPARATION",
+            "component_id": "breast_cancer_dataset",
+            "passed": true,
+            "severity": "NONE",
+            "action": "NONE",
+            "observed_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+            "expected_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+            "evidence_refs": [
+              "obs:d527b6e8b5989b4d7ed7"
+            ]
+          },
+          {
+            "contract_id": "TARGET_NOT_IN_FEATURES",
+            "stage": "DATA_PREPARATION",
+            "component_id": "breast_cancer_dataset",
+            "passed": true,
+            "severity": "NONE",
+            "action": "NONE",
+            "observed_value": true,
+            "expected_value": true,
+            "evidence_refs": [
+              "obs:a00b789301c8c9e79868"
+            ]
+          },
+          {
+            "contract_id": "CLASS_MAPPING",
+            "stage": "DATA_PREPARATION",
+            "component_id": "breast_cancer_dataset",
+            "passed": true,
+            "severity": "NONE",
+            "action": "NONE",
+            "observed_value": {
+              "source": [
+                0,
+                1
+              ],
+              "encoded": [
+                1,
+                0
+              ],
+              "model_classes": [
+                0,
+                1
+              ]
+            },
+            "expected_value": {
+              "source": [
+                0,
+                1
+              ],
+              "encoded": [
+                1,
+                0
+              ],
+              "model_classes": [
+                0,
+                1
+              ]
+            },
+            "evidence_refs": [
+              "obs:cf2ec00586da34995693"
+            ]
+          },
+          {
+            "contract_id": "TRAIN_VALIDATION_TEST_DISJOINTNESS",
+            "stage": "DATA_SPLIT",
+            "component_id": "deterministic_splitter",
+            "passed": true,
+            "severity": "NONE",
+            "action": "NONE",
+            "observed_value": {
+              "train_validation": 0,
+              "train_test": 0,
+              "validation_test": 0
+            },
+            "expected_value": {
+              "train_validation": 0,
+              "train_test": 0,
+              "validation_test": 0
+            },
+            "evidence_refs": [
+              "obs:584e1f79ebc8e47d3473"
+            ]
+          },
+          {
+            "contract_id": "SPLIT_REPRODUCIBILITY",
+            "stage": "DATA_SPLIT",
+            "component_id": "deterministic_splitter",
+            "passed": true,
+            "severity": "NONE",
+            "action": "NONE",
+            "observed_value": "5cb8248a79fe2464c45575cdb50c2dd1ba887c819311031b970fa10adb6afc8e",
+            "expected_value": "5cb8248a79fe2464c45575cdb50c2dd1ba887c819311031b970fa10adb6afc8e",
+            "evidence_refs": [
+              "obs:7020f9ae6f0908503885"
+            ]
+          },
+          {
+            "contract_id": "PREPROCESSOR_VERSION",
+            "stage": "PREPROCESSING",
+            "component_id": "standard_scaler",
+            "passed": true,
+            "severity": "NONE",
+            "action": "NONE",
+            "observed_value": "sklearn.StandardScaler/1.9.0",
+            "expected_value": "sklearn.StandardScaler/1.9.0",
+            "evidence_refs": [
+              "obs:32d0da17783b13c79b6b"
+            ]
+          },
+          {
+            "contract_id": "PREPROCESSOR_FIT_SCOPE",
+            "stage": "PREPROCESSING",
+            "component_id": "standard_scaler",
+            "passed": true,
+            "severity": "NONE",
+            "action": "NONE",
+            "observed_value": "d96d63ac85a124109a38337843ea08b792d579afb5e10d85d232020ce67fb3bb",
+            "expected_value": "d96d63ac85a124109a38337843ea08b792d579afb5e10d85d232020ce67fb3bb",
+            "evidence_refs": [
+              "obs:b8682a4609d2dbeb9f17"
+            ]
+          },
+          {
+            "contract_id": "FEATURE_ORDER",
+            "stage": "PREPROCESSING",
+            "component_id": "standard_scaler",
+            "passed": true,
+            "severity": "NONE",
+            "action": "NONE",
+            "observed_value": [
+              "mean radius",
+              "mean texture",
+              "mean perimeter",
+              "mean area",
+              "mean smoothness",
+              "mean compactness",
+              "mean concavity",
+              "mean concave points",
+              "mean symmetry",
+              "mean fractal dimension",
+              "radius error",
+              "texture error",
+              "perimeter error",
+              "area error",
+              "smoothness error",
+              "compactness error",
+              "concavity error",
+              "concave points error",
+              "symmetry error",
+              "fractal dimension error",
+              "worst radius",
+              "worst texture",
+              "worst perimeter",
+              "worst area",
+              "worst smoothness",
+              "worst compactness",
+              "worst concavity",
+              "worst concave points",
+              "worst symmetry",
+              "worst fractal dimension"
+            ],
+            "expected_value": [
+              "mean radius",
+              "mean texture",
+              "mean perimeter",
+              "mean area",
+              "mean smoothness",
+              "mean compactness",
+              "mean concavity",
+              "mean concave points",
+              "mean symmetry",
+              "mean fractal dimension",
+              "radius error",
+              "texture error",
+              "perimeter error",
+              "area error",
+              "smoothness error",
+              "compactness error",
+              "concavity error",
+              "concave points error",
+              "symmetry error",
+              "fractal dimension error",
+              "worst radius",
+              "worst texture",
+              "worst perimeter",
+              "worst area",
+              "worst smoothness",
+              "worst compactness",
+              "worst concavity",
+              "worst concave points",
+              "worst symmetry",
+              "worst fractal dimension"
+            ],
+            "evidence_refs": [
+              "obs:dff8a9a02067d9499e78"
+            ]
+          },
+          {
+            "contract_id": "FEATURE_COUNT",
+            "stage": "PREPROCESSING",
+            "component_id": "standard_scaler",
+            "passed": true,
+            "severity": "NONE",
+            "action": "NONE",
+            "observed_value": 30,
+            "expected_value": 30,
+            "evidence_refs": [
+              "obs:523099f70ef8689f0958"
+            ]
+          },
+          {
+            "contract_id": "TRANSFORM_OUTPUT_SCHEMA",
+            "stage": "PREPROCESSING",
+            "component_id": "standard_scaler",
+            "passed": true,
+            "severity": "NONE",
+            "action": "NONE",
+            "observed_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+            "expected_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+            "evidence_refs": [
+              "obs:50e71ff33d0b1aef48b4"
+            ]
+          },
+          {
+            "contract_id": "FINITE_TRANSFORMED_VALUES",
+            "stage": "PREPROCESSING",
+            "component_id": "standard_scaler",
+            "passed": true,
+            "severity": "NONE",
+            "action": "NONE",
+            "observed_value": true,
+            "expected_value": true,
+            "evidence_refs": [
+              "obs:115299fc970a1016cf1d"
+            ]
+          },
+          {
+            "contract_id": "TRAINING_CONFIGURATION",
+            "stage": "TRAINING",
+            "component_id": "logistic_regression",
+            "passed": true,
+            "severity": "NONE",
+            "action": "NONE",
+            "observed_value": "f72bbde93f0b50126b8592d4993f21b174e7eb6a237dc5c29a4f405f78ae8a31",
+            "expected_value": "f72bbde93f0b50126b8592d4993f21b174e7eb6a237dc5c29a4f405f78ae8a31",
+            "evidence_refs": [
+              "obs:de2b8a6e1c15396f2aa3"
+            ]
+          },
+          {
+            "contract_id": "MODEL_CONVERGENCE",
+            "stage": "TRAINING",
+            "component_id": "logistic_regression",
+            "passed": true,
+            "severity": "NONE",
+            "action": "NONE",
+            "observed_value": true,
+            "expected_value": true,
+            "evidence_refs": [
+              "obs:159aa8319c7a1e5ccb09"
+            ]
+          },
+          {
+            "contract_id": "MODEL_FEATURE_SCHEMA",
+            "stage": "TRAINING",
+            "component_id": "logistic_regression",
+            "passed": true,
+            "severity": "NONE",
+            "action": "NONE",
+            "observed_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+            "expected_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+            "evidence_refs": [
+              "obs:adec3e7ad96e077d897e"
+            ]
+          },
+          {
+            "contract_id": "TRAINING_DATA_HASH",
+            "stage": "TRAINING",
+            "component_id": "logistic_regression",
+            "passed": true,
+            "severity": "NONE",
+            "action": "NONE",
+            "observed_value": {
+              "dataset": "47e9aa4e33b5350407b6d31fa140e2b1767a038c37796e0990eb99ad2bc7ba12",
+              "train": "d96d63ac85a124109a38337843ea08b792d579afb5e10d85d232020ce67fb3bb",
+              "target": "be56573cf0b8dafd36c7e0caeb2e3906dd345494e709f9226b1535e643da2ef5"
+            },
+            "expected_value": {
+              "dataset": "47e9aa4e33b5350407b6d31fa140e2b1767a038c37796e0990eb99ad2bc7ba12",
+              "train": "d96d63ac85a124109a38337843ea08b792d579afb5e10d85d232020ce67fb3bb",
+              "target": "be56573cf0b8dafd36c7e0caeb2e3906dd345494e709f9226b1535e643da2ef5"
+            },
+            "evidence_refs": [
+              "obs:d819b3b5156e91cfcebe"
+            ]
+          },
+          {
+            "contract_id": "MODEL_ARTIFACT_HASH",
+            "stage": "MODEL_ARTIFACT",
+            "component_id": "serialized_model",
+            "passed": false,
+            "severity": "HIGH",
+            "action": "BLOCK",
+            "observed_value": "5e1768fd210e535f0c3782f4226cfc9b0c23b78362c4ffefa3f90560b4ea0672",
+            "expected_value": "5de1ed8251b147befef90e6bfee3f5bcda23056d5bb66212153ce1104668ca8c",
+            "evidence_refs": [
+              "obs:3d4391fa1a45143ddfb2"
+            ]
+          },
+          {
+            "contract_id": "METRIC_SANITY",
+            "stage": "TRAINING",
+            "component_id": "logistic_regression",
+            "passed": true,
+            "severity": "NONE",
+            "action": "NONE",
+            "observed_value": true,
+            "expected_value": true,
+            "evidence_refs": [
+              "obs:84cf0376ee8a59993c71"
+            ]
+          },
+          {
+            "contract_id": "MODEL_INPUT_SCHEMA",
+            "stage": "INFERENCE",
+            "component_id": "logistic_regression",
+            "passed": true,
+            "severity": "NONE",
+            "action": "NONE",
+            "observed_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+            "expected_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+            "evidence_refs": [
+              "obs:beed7f7df3ad8f897d1b"
+            ]
+          },
+          {
+            "contract_id": "PREDICTION_OBJECT_BINDING",
+            "stage": "INFERENCE",
+            "component_id": "prediction",
+            "passed": true,
+            "severity": "NONE",
+            "action": "NONE",
+            "observed_value": true,
+            "expected_value": true,
+            "evidence_refs": [
+              "obs:6413413d8a8943ad9b15"
+            ]
+          },
+          {
+            "contract_id": "PREDICTION_OUTPUT_SANITY",
+            "stage": "INFERENCE",
+            "component_id": "prediction",
+            "passed": true,
+            "severity": "NONE",
+            "action": "NONE",
+            "observed_value": true,
+            "expected_value": true,
+            "evidence_refs": [
+              "obs:29ecea04335766489dcf"
+            ]
+          },
+          {
+            "contract_id": "MODEL_EXPLAINER_VERSION",
+            "stage": "POST_HOC_EXPLANATION",
+            "component_id": "logistic_regression",
+            "passed": true,
+            "severity": "NONE",
+            "action": "NONE",
+            "observed_value": "1.0.0",
+            "expected_value": "1.0.0",
+            "evidence_refs": [
+              "obs:8899007a6b76bc763f23"
+            ]
+          },
+          {
+            "contract_id": "EXPLANATION_OBJECT_ID",
+            "stage": "POST_HOC_EXPLANATION",
+            "component_id": "shap_linear_explainer",
+            "passed": true,
+            "severity": "NONE",
+            "action": "NONE",
+            "observed_value": "bcw:pipeline-default",
+            "expected_value": "bcw:pipeline-default",
+            "evidence_refs": [
+              "obs:b09e0b7b37d277e364cc"
+            ]
+          },
+          {
+            "contract_id": "EXPLANATION_OUTPUT_CONSISTENCY",
+            "stage": "POST_HOC_EXPLANATION",
+            "component_id": "shap_linear_explainer",
+            "passed": true,
+            "severity": "NONE",
+            "action": "NONE",
+            "observed_value": 0.0,
+            "expected_value": 1e-08,
+            "evidence_refs": [
+              "obs:30d559d2dc830917f88f"
+            ]
+          },
+          {
+            "contract_id": "EXPLANATION_FEATURE_SCHEMA",
+            "stage": "POST_HOC_EXPLANATION",
+            "component_id": "shap_linear_explainer",
+            "passed": true,
+            "severity": "NONE",
+            "action": "NONE",
+            "observed_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+            "expected_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+            "evidence_refs": [
+              "obs:5e4c7ed175d50cac8b52"
+            ]
+          },
+          {
+            "contract_id": "REQUIRED_PROVENANCE",
+            "stage": "POST_HOC_EXPLANATION",
+            "component_id": "shap_linear_explainer",
+            "passed": true,
+            "severity": "NONE",
+            "action": "NONE",
+            "observed_value": true,
+            "expected_value": true,
+            "evidence_refs": [
+              "obs:8b53f9117ce91cef61b4"
+            ]
+          },
+          {
+            "contract_id": "REDUCTION_LOSS_LIMIT",
+            "stage": "REDUCTION",
+            "component_id": "fuzzyxai_presenter",
+            "passed": true,
+            "severity": "NONE",
+            "action": "NONE",
+            "observed_value": 0.0,
+            "expected_value": 0.25,
+            "evidence_refs": [
+              "obs:bdec8fca576657cb0edc"
+            ]
+          },
+          {
+            "contract_id": "USER_CLAIM_EVIDENCE_BINDING",
+            "stage": "PRESENTATION",
+            "component_id": "fuzzyxai_presenter",
+            "passed": true,
+            "severity": "NONE",
+            "action": "NONE",
+            "observed_value": true,
+            "expected_value": true,
+            "evidence_refs": [
+              "obs:7369805425a4eb23c06c"
+            ]
+          }
+        ],
+        "metadata": {
+          "pipeline_version": "2.0.0"
+        },
+        "trace_sha256": "002ff04bca39794dcc995115154cc6ac9a0c2404632e2be18cd134e0267badd7"
+      },
+      "observations": [
+        {
+          "observation_id": "obs:57a26f9a6f1a14044c48",
+          "run_id": "mlp2:05c4cf24fee49c98ad37",
+          "stage": "DATA_PREPARATION",
+          "component_id": "breast_cancer_dataset",
+          "field_name": "dataset_identity",
+          "observed_value": "47e9aa4e33b5350407b6d31fa140e2b1767a038c37796e0990eb99ad2bc7ba12",
+          "expected_value": "47e9aa4e33b5350407b6d31fa140e2b1767a038c37796e0990eb99ad2bc7ba12",
+          "evidence_type": "measured_contract_value",
+          "source_uri": "sklearn://datasets/load_breast_cancer",
+          "sha256": "57a26f9a6f1a14044c486e01f0735c0c1c5ad28379434e92b7e1faf5c7e55121",
+          "timestamp_utc": "2000-01-01T00:00:00Z"
+        },
+        {
+          "observation_id": "obs:d527b6e8b5989b4d7ed7",
+          "run_id": "mlp2:05c4cf24fee49c98ad37",
+          "stage": "DATA_PREPARATION",
+          "component_id": "breast_cancer_dataset",
+          "field_name": "dataset_schema",
+          "observed_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+          "expected_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+          "evidence_type": "measured_contract_value",
+          "source_uri": "sklearn://datasets/load_breast_cancer",
+          "sha256": "d527b6e8b5989b4d7ed71c8b1346617e0c1bf607f125b62c1c4aef973de520c1",
+          "timestamp_utc": "2000-01-01T00:00:00Z"
+        },
+        {
+          "observation_id": "obs:a00b789301c8c9e79868",
+          "run_id": "mlp2:05c4cf24fee49c98ad37",
+          "stage": "DATA_PREPARATION",
+          "component_id": "breast_cancer_dataset",
+          "field_name": "target_not_in_features",
+          "observed_value": true,
+          "expected_value": true,
+          "evidence_type": "measured_contract_value",
+          "source_uri": "sklearn://datasets/load_breast_cancer",
+          "sha256": "a00b789301c8c9e79868a3186298e9347cc1e04bf406bb27ea24318a512b7310",
+          "timestamp_utc": "2000-01-01T00:00:00Z"
+        },
+        {
+          "observation_id": "obs:cf2ec00586da34995693",
+          "run_id": "mlp2:05c4cf24fee49c98ad37",
+          "stage": "DATA_PREPARATION",
+          "component_id": "breast_cancer_dataset",
+          "field_name": "class_mapping",
+          "observed_value": {
+            "source": [
+              0,
+              1
+            ],
+            "encoded": [
+              1,
+              0
+            ],
+            "model_classes": [
+              0,
+              1
+            ]
+          },
+          "expected_value": {
+            "source": [
+              0,
+              1
+            ],
+            "encoded": [
+              1,
+              0
+            ],
+            "model_classes": [
+              0,
+              1
+            ]
+          },
+          "evidence_type": "measured_contract_value",
+          "source_uri": "sklearn://datasets/load_breast_cancer",
+          "sha256": "cf2ec00586da349956938dc2c27d26c5edbb801d6bf991cb0e3bdd9f08ae0cbd",
+          "timestamp_utc": "2000-01-01T00:00:00Z"
+        },
+        {
+          "observation_id": "obs:584e1f79ebc8e47d3473",
+          "run_id": "mlp2:05c4cf24fee49c98ad37",
+          "stage": "DATA_SPLIT",
+          "component_id": "deterministic_splitter",
+          "field_name": "train_validation_test_disjointness",
+          "observed_value": {
+            "train_validation": 0,
+            "train_test": 0,
+            "validation_test": 0
+          },
+          "expected_value": {
+            "train_validation": 0,
+            "train_test": 0,
+            "validation_test": 0
+          },
+          "evidence_type": "measured_contract_value",
+          "source_uri": "memory://split-manifest",
+          "sha256": "584e1f79ebc8e47d3473f384a289f3d81b136be8175ae4dccd3a035994936d3a",
+          "timestamp_utc": "2000-01-01T00:00:00Z"
+        },
+        {
+          "observation_id": "obs:7020f9ae6f0908503885",
+          "run_id": "mlp2:05c4cf24fee49c98ad37",
+          "stage": "DATA_SPLIT",
+          "component_id": "deterministic_splitter",
+          "field_name": "split_reproducibility",
+          "observed_value": "5cb8248a79fe2464c45575cdb50c2dd1ba887c819311031b970fa10adb6afc8e",
+          "expected_value": "5cb8248a79fe2464c45575cdb50c2dd1ba887c819311031b970fa10adb6afc8e",
+          "evidence_type": "measured_contract_value",
+          "source_uri": "memory://split-manifest",
+          "sha256": "7020f9ae6f0908503885f518f4a529a837f48fdec3a28b20aeb3c6fa6ff037a4",
+          "timestamp_utc": "2000-01-01T00:00:00Z"
+        },
+        {
+          "observation_id": "obs:32d0da17783b13c79b6b",
+          "run_id": "mlp2:05c4cf24fee49c98ad37",
+          "stage": "PREPROCESSING",
+          "component_id": "standard_scaler",
+          "field_name": "preprocessor_version",
+          "observed_value": "sklearn.StandardScaler/1.9.0",
+          "expected_value": "sklearn.StandardScaler/1.9.0",
+          "evidence_type": "measured_contract_value",
+          "source_uri": "memory://standard-scaler",
+          "sha256": "32d0da17783b13c79b6bbe871970538d39e17ed21ae2e6ed2bd8674f14ae155f",
+          "timestamp_utc": "2000-01-01T00:00:00Z"
+        },
+        {
+          "observation_id": "obs:b8682a4609d2dbeb9f17",
+          "run_id": "mlp2:05c4cf24fee49c98ad37",
+          "stage": "PREPROCESSING",
+          "component_id": "standard_scaler",
+          "field_name": "preprocessor_fit_scope",
+          "observed_value": "d96d63ac85a124109a38337843ea08b792d579afb5e10d85d232020ce67fb3bb",
+          "expected_value": "d96d63ac85a124109a38337843ea08b792d579afb5e10d85d232020ce67fb3bb",
+          "evidence_type": "measured_contract_value",
+          "source_uri": "memory://standard-scaler",
+          "sha256": "b8682a4609d2dbeb9f17c6ffd14cfd63113279b146f4f3d2befad0e719da1fdf",
+          "timestamp_utc": "2000-01-01T00:00:00Z"
+        },
+        {
+          "observation_id": "obs:dff8a9a02067d9499e78",
+          "run_id": "mlp2:05c4cf24fee49c98ad37",
+          "stage": "PREPROCESSING",
+          "component_id": "standard_scaler",
+          "field_name": "feature_order",
+          "observed_value": [
+            "mean radius",
+            "mean texture",
+            "mean perimeter",
+            "mean area",
+            "mean smoothness",
+            "mean compactness",
+            "mean concavity",
+            "mean concave points",
+            "mean symmetry",
+            "mean fractal dimension",
+            "radius error",
+            "texture error",
+            "perimeter error",
+            "area error",
+            "smoothness error",
+            "compactness error",
+            "concavity error",
+            "concave points error",
+            "symmetry error",
+            "fractal dimension error",
+            "worst radius",
+            "worst texture",
+            "worst perimeter",
+            "worst area",
+            "worst smoothness",
+            "worst compactness",
+            "worst concavity",
+            "worst concave points",
+            "worst symmetry",
+            "worst fractal dimension"
+          ],
+          "expected_value": [
+            "mean radius",
+            "mean texture",
+            "mean perimeter",
+            "mean area",
+            "mean smoothness",
+            "mean compactness",
+            "mean concavity",
+            "mean concave points",
+            "mean symmetry",
+            "mean fractal dimension",
+            "radius error",
+            "texture error",
+            "perimeter error",
+            "area error",
+            "smoothness error",
+            "compactness error",
+            "concavity error",
+            "concave points error",
+            "symmetry error",
+            "fractal dimension error",
+            "worst radius",
+            "worst texture",
+            "worst perimeter",
+            "worst area",
+            "worst smoothness",
+            "worst compactness",
+            "worst concavity",
+            "worst concave points",
+            "worst symmetry",
+            "worst fractal dimension"
+          ],
+          "evidence_type": "measured_contract_value",
+          "source_uri": "memory://standard-scaler",
+          "sha256": "dff8a9a02067d9499e78883c7b6af4974680dfaf23251fe7b605b10d42214298",
+          "timestamp_utc": "2000-01-01T00:00:00Z"
+        },
+        {
+          "observation_id": "obs:523099f70ef8689f0958",
+          "run_id": "mlp2:05c4cf24fee49c98ad37",
+          "stage": "PREPROCESSING",
+          "component_id": "standard_scaler",
+          "field_name": "feature_count",
+          "observed_value": 30,
+          "expected_value": 30,
+          "evidence_type": "measured_contract_value",
+          "source_uri": "memory://standard-scaler",
+          "sha256": "523099f70ef8689f09583db324700c0433ec5e2846c0ba660e36ee40c42cc3b2",
+          "timestamp_utc": "2000-01-01T00:00:00Z"
+        },
+        {
+          "observation_id": "obs:50e71ff33d0b1aef48b4",
+          "run_id": "mlp2:05c4cf24fee49c98ad37",
+          "stage": "PREPROCESSING",
+          "component_id": "standard_scaler",
+          "field_name": "transform_output_schema",
+          "observed_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+          "expected_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+          "evidence_type": "measured_contract_value",
+          "source_uri": "memory://standard-scaler",
+          "sha256": "50e71ff33d0b1aef48b43643e958ce9608354df3f9085557e9dc5404e93d2a2e",
+          "timestamp_utc": "2000-01-01T00:00:00Z"
+        },
+        {
+          "observation_id": "obs:115299fc970a1016cf1d",
+          "run_id": "mlp2:05c4cf24fee49c98ad37",
+          "stage": "PREPROCESSING",
+          "component_id": "standard_scaler",
+          "field_name": "finite_transformed_values",
+          "observed_value": true,
+          "expected_value": true,
+          "evidence_type": "measured_contract_value",
+          "source_uri": "memory://standard-scaler",
+          "sha256": "115299fc970a1016cf1daeda39c160c3c81d51f3ebad06a5400f5716a1afc142",
+          "timestamp_utc": "2000-01-01T00:00:00Z"
+        },
+        {
+          "observation_id": "obs:de2b8a6e1c15396f2aa3",
+          "run_id": "mlp2:05c4cf24fee49c98ad37",
+          "stage": "TRAINING",
+          "component_id": "logistic_regression",
+          "field_name": "training_configuration",
+          "observed_value": "f72bbde93f0b50126b8592d4993f21b174e7eb6a237dc5c29a4f405f78ae8a31",
+          "expected_value": "f72bbde93f0b50126b8592d4993f21b174e7eb6a237dc5c29a4f405f78ae8a31",
+          "evidence_type": "measured_contract_value",
+          "source_uri": "memory://logistic-regression",
+          "sha256": "de2b8a6e1c15396f2aa38faec4731b5b1c644e93b8d52d21097fc70fbaadf6d2",
+          "timestamp_utc": "2000-01-01T00:00:00Z"
+        },
+        {
+          "observation_id": "obs:159aa8319c7a1e5ccb09",
+          "run_id": "mlp2:05c4cf24fee49c98ad37",
+          "stage": "TRAINING",
+          "component_id": "logistic_regression",
+          "field_name": "model_convergence",
+          "observed_value": true,
+          "expected_value": true,
+          "evidence_type": "measured_contract_value",
+          "source_uri": "memory://logistic-regression",
+          "sha256": "159aa8319c7a1e5ccb09923158b9d7ff2fecebd3ccd45040750628c629446c80",
+          "timestamp_utc": "2000-01-01T00:00:00Z"
+        },
+        {
+          "observation_id": "obs:adec3e7ad96e077d897e",
+          "run_id": "mlp2:05c4cf24fee49c98ad37",
+          "stage": "TRAINING",
+          "component_id": "logistic_regression",
+          "field_name": "model_feature_schema",
+          "observed_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+          "expected_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+          "evidence_type": "measured_contract_value",
+          "source_uri": "memory://logistic-regression",
+          "sha256": "adec3e7ad96e077d897e98d37d7461d1574f1dec73e36a102ccae7f21475893a",
+          "timestamp_utc": "2000-01-01T00:00:00Z"
+        },
+        {
+          "observation_id": "obs:d819b3b5156e91cfcebe",
+          "run_id": "mlp2:05c4cf24fee49c98ad37",
+          "stage": "TRAINING",
+          "component_id": "logistic_regression",
+          "field_name": "training_data_hash",
+          "observed_value": {
+            "dataset": "47e9aa4e33b5350407b6d31fa140e2b1767a038c37796e0990eb99ad2bc7ba12",
+            "train": "d96d63ac85a124109a38337843ea08b792d579afb5e10d85d232020ce67fb3bb",
+            "target": "be56573cf0b8dafd36c7e0caeb2e3906dd345494e709f9226b1535e643da2ef5"
+          },
+          "expected_value": {
+            "dataset": "47e9aa4e33b5350407b6d31fa140e2b1767a038c37796e0990eb99ad2bc7ba12",
+            "train": "d96d63ac85a124109a38337843ea08b792d579afb5e10d85d232020ce67fb3bb",
+            "target": "be56573cf0b8dafd36c7e0caeb2e3906dd345494e709f9226b1535e643da2ef5"
+          },
+          "evidence_type": "measured_contract_value",
+          "source_uri": "memory://logistic-regression",
+          "sha256": "d819b3b5156e91cfcebef1c1460e3900d091637fd12e6f3663eee64fe8979cb6",
+          "timestamp_utc": "2000-01-01T00:00:00Z"
+        },
+        {
+          "observation_id": "obs:3d4391fa1a45143ddfb2",
+          "run_id": "mlp2:05c4cf24fee49c98ad37",
+          "stage": "MODEL_ARTIFACT",
+          "component_id": "serialized_model",
+          "field_name": "model_artifact_hash",
+          "observed_value": "5e1768fd210e535f0c3782f4226cfc9b0c23b78362c4ffefa3f90560b4ea0672",
+          "expected_value": "5de1ed8251b147befef90e6bfee3f5bcda23056d5bb66212153ce1104668ca8c",
+          "evidence_type": "measured_contract_value",
+          "source_uri": "memory://serialized-model",
+          "sha256": "3d4391fa1a45143ddfb2ae36c520ad9e038a1d31e789ff8f93753b5b8436ee54",
+          "timestamp_utc": "2000-01-01T00:00:00Z"
+        },
+        {
+          "observation_id": "obs:84cf0376ee8a59993c71",
+          "run_id": "mlp2:05c4cf24fee49c98ad37",
+          "stage": "TRAINING",
+          "component_id": "logistic_regression",
+          "field_name": "metric_sanity",
+          "observed_value": true,
+          "expected_value": true,
+          "evidence_type": "measured_contract_value",
+          "source_uri": "memory://logistic-regression",
+          "sha256": "84cf0376ee8a59993c711457812b7acc7e2ce843196b5655b44bf2b5f92d9616",
+          "timestamp_utc": "2000-01-01T00:00:00Z"
+        },
+        {
+          "observation_id": "obs:beed7f7df3ad8f897d1b",
+          "run_id": "mlp2:05c4cf24fee49c98ad37",
+          "stage": "INFERENCE",
+          "component_id": "logistic_regression",
+          "field_name": "model_input_schema",
+          "observed_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+          "expected_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+          "evidence_type": "measured_contract_value",
+          "source_uri": "memory://prediction",
+          "sha256": "beed7f7df3ad8f897d1b3f169c0be0ce9aa8138dd99658a6cc6b42df01efd0e6",
+          "timestamp_utc": "2000-01-01T00:00:00Z"
+        },
+        {
+          "observation_id": "obs:6413413d8a8943ad9b15",
+          "run_id": "mlp2:05c4cf24fee49c98ad37",
+          "stage": "INFERENCE",
+          "component_id": "prediction",
+          "field_name": "prediction_object_binding",
+          "observed_value": true,
+          "expected_value": true,
+          "evidence_type": "measured_contract_value",
+          "source_uri": "memory://prediction",
+          "sha256": "6413413d8a8943ad9b1562d8bc953cc83a31df7349d2d8ba94f4a262f63f0a1a",
+          "timestamp_utc": "2000-01-01T00:00:00Z"
+        },
+        {
+          "observation_id": "obs:29ecea04335766489dcf",
+          "run_id": "mlp2:05c4cf24fee49c98ad37",
+          "stage": "INFERENCE",
+          "component_id": "prediction",
+          "field_name": "prediction_output_sanity",
+          "observed_value": true,
+          "expected_value": true,
+          "evidence_type": "measured_contract_value",
+          "source_uri": "memory://prediction",
+          "sha256": "29ecea04335766489dcf3c16766502552e0c228435ac8ae199048a0570b2fc9e",
+          "timestamp_utc": "2000-01-01T00:00:00Z"
+        },
+        {
+          "observation_id": "obs:8899007a6b76bc763f23",
+          "run_id": "mlp2:05c4cf24fee49c98ad37",
+          "stage": "POST_HOC_EXPLANATION",
+          "component_id": "logistic_regression",
+          "field_name": "model_explainer_version",
+          "observed_value": "1.0.0",
+          "expected_value": "1.0.0",
+          "evidence_type": "measured_contract_value",
+          "source_uri": "memory://shap-linear-explainer",
+          "sha256": "8899007a6b76bc763f2395f58262c8d36d973261ca710e3da79fe46ae5b4c399",
+          "timestamp_utc": "2000-01-01T00:00:00Z"
+        },
+        {
+          "observation_id": "obs:b09e0b7b37d277e364cc",
+          "run_id": "mlp2:05c4cf24fee49c98ad37",
+          "stage": "POST_HOC_EXPLANATION",
+          "component_id": "shap_linear_explainer",
+          "field_name": "explanation_object_id",
+          "observed_value": "bcw:pipeline-default",
+          "expected_value": "bcw:pipeline-default",
+          "evidence_type": "measured_contract_value",
+          "source_uri": "memory://shap-linear-explainer",
+          "sha256": "b09e0b7b37d277e364cc52da6d7939f38c74505faedcd2600eb9ac80229cc406",
+          "timestamp_utc": "2000-01-01T00:00:00Z"
+        },
+        {
+          "observation_id": "obs:30d559d2dc830917f88f",
+          "run_id": "mlp2:05c4cf24fee49c98ad37",
+          "stage": "POST_HOC_EXPLANATION",
+          "component_id": "shap_linear_explainer",
+          "field_name": "explanation_output_consistency",
+          "observed_value": 0.0,
+          "expected_value": 1e-08,
+          "evidence_type": "measured_contract_value",
+          "source_uri": "memory://shap-linear-explainer",
+          "sha256": "30d559d2dc830917f88fccc3dc7bfb30ce54a397f86c2bd07f0d7987f5240b3f",
+          "timestamp_utc": "2000-01-01T00:00:00Z"
+        },
+        {
+          "observation_id": "obs:5e4c7ed175d50cac8b52",
+          "run_id": "mlp2:05c4cf24fee49c98ad37",
+          "stage": "POST_HOC_EXPLANATION",
+          "component_id": "shap_linear_explainer",
+          "field_name": "explanation_feature_schema",
+          "observed_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+          "expected_value": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba",
+          "evidence_type": "measured_contract_value",
+          "source_uri": "memory://shap-linear-explainer",
+          "sha256": "5e4c7ed175d50cac8b52c8980bc15a4b2d5ef1718e4064061e73396a2c25472e",
+          "timestamp_utc": "2000-01-01T00:00:00Z"
+        },
+        {
+          "observation_id": "obs:8b53f9117ce91cef61b4",
+          "run_id": "mlp2:05c4cf24fee49c98ad37",
+          "stage": "POST_HOC_EXPLANATION",
+          "component_id": "shap_linear_explainer",
+          "field_name": "required_provenance",
+          "observed_value": true,
+          "expected_value": true,
+          "evidence_type": "measured_contract_value",
+          "source_uri": "memory://shap-linear-explainer",
+          "sha256": "8b53f9117ce91cef61b41cda939f3ffb9b47aa3f0904f41d6216f36c69c45291",
+          "timestamp_utc": "2000-01-01T00:00:00Z"
+        },
+        {
+          "observation_id": "obs:bdec8fca576657cb0edc",
+          "run_id": "mlp2:05c4cf24fee49c98ad37",
+          "stage": "REDUCTION",
+          "component_id": "fuzzyxai_presenter",
+          "field_name": "reduction_loss_limit",
+          "observed_value": 0.0,
+          "expected_value": 0.25,
+          "evidence_type": "measured_contract_value",
+          "source_uri": "memory://fuzzyxai-route",
+          "sha256": "bdec8fca576657cb0edcdfe675baa3599383c4e0233ac324b8fed774ed853bba",
+          "timestamp_utc": "2000-01-01T00:00:00Z"
+        },
+        {
+          "observation_id": "obs:7369805425a4eb23c06c",
+          "run_id": "mlp2:05c4cf24fee49c98ad37",
+          "stage": "PRESENTATION",
+          "component_id": "fuzzyxai_presenter",
+          "field_name": "user_claim_evidence_binding",
+          "observed_value": true,
+          "expected_value": true,
+          "evidence_type": "measured_contract_value",
+          "source_uri": "memory://fuzzyxai-route",
+          "sha256": "7369805425a4eb23c06c6bff0cc95758a2ba6134be16a1c23ea94c808cdfdf1f",
+          "timestamp_utc": "2000-01-01T00:00:00Z"
+        }
+      ],
+      "explanation": {
+        "object_id": "bcw:pipeline-default",
+        "explainer_id": "shap.LinearExplainer",
+        "explainer_version": "0.51.0",
+        "model_version": "1.0.0",
+        "base_value": -1.2264799258326975,
+        "shap_values": {
+          "mean radius": -0.19244878416558725,
+          "mean texture": -0.5911771035309462,
+          "mean perimeter": -0.18195722404349318,
+          "mean area": -0.2198343234510549,
+          "mean smoothness": 0.10582201610778671,
+          "mean compactness": 0.07671506417851988,
+          "mean concavity": -0.6297281886336548,
+          "mean concave points": -0.700739425513308,
+          "mean symmetry": 0.6356697979811631,
+          "mean fractal dimension": -0.412358594440218,
+          "radius error": 0.5806998603520946,
+          "texture error": -0.10287860105656914,
+          "perimeter error": 0.18880719910824606,
+          "area error": -0.037913384808470445,
+          "smoothness error": -0.059593037818181024,
+          "compactness error": 0.44905955345084314,
+          "concavity error": 0.15649623472206758,
+          "concave points error": -0.08636767912061792,
+          "symmetry error": 0.17914948862675287,
+          "fractal dimension error": -0.7151021564103659,
+          "worst radius": -0.906413636475313,
+          "worst texture": -1.4917113088679261,
+          "worst perimeter": -0.7661725162075523,
+          "worst area": -0.6460166794220196,
+          "worst smoothness": -0.026225073289457893,
+          "worst compactness": -0.21526927648231106,
+          "worst concavity": -0.8931696619551441,
+          "worst concave points": -1.1107887674753651,
+          "worst symmetry": 0.6512330735698741,
+          "worst fractal dimension": -0.0026769726973898227
+        },
+        "feature_values": {
+          "mean radius": 10.17,
+          "mean texture": 14.88,
+          "mean perimeter": 64.55,
+          "mean area": 311.9,
+          "mean smoothness": 0.1134,
+          "mean compactness": 0.08061,
+          "mean concavity": 0.01084,
+          "mean concave points": 0.0129,
+          "mean symmetry": 0.2743,
+          "mean fractal dimension": 0.0696,
+          "radius error": 0.5158,
+          "texture error": 1.441,
+          "perimeter error": 3.312,
+          "area error": 34.62,
+          "smoothness error": 0.007514,
+          "compactness error": 0.01099,
+          "concavity error": 0.007665,
+          "concave points error": 0.008193,
+          "symmetry error": 0.04183,
+          "fractal dimension error": 0.005953,
+          "worst radius": 11.02,
+          "worst texture": 17.45,
+          "worst perimeter": 69.86,
+          "worst area": 368.6,
+          "worst smoothness": 0.1275,
+          "worst compactness": 0.09866,
+          "worst concavity": 0.02168,
+          "worst concave points": 0.02579,
+          "worst symmetry": 0.3557,
+          "worst fractal dimension": 0.0802
+        },
+        "output_sum": -8.191370033600295,
+        "output_difference": 0.0,
+        "artifact_sha256": "9bae1b379735fae001ed1edfcb565143357e3b7bc5d42b89db7d57ce4693d3a6"
+      },
+      "repair_plan": {
+        "plan_id": "repair:mlp2:05c4cf24fee49c98ad37",
+        "operation": {
+          "operation_id": "restore_registered_model_artifact",
+          "supported_contracts": [
+            "MODEL_ARTIFACT_HASH"
+          ],
+          "target_component_type": "model_artifact",
+          "preconditions": [
+            "registered_model_snapshot_available"
+          ],
+          "postconditions": [
+            "model_hash_matches",
+            "prediction_and_shap_rebuilt",
+            "all_contracts_rechecked"
+          ],
+          "rollback_operation": "restore_tampered_artifact_snapshot",
+          "maximum_cost": 0.5,
+          "mutates_state": true
+        },
+        "target_contracts": [
+          "MODEL_ARTIFACT_HASH"
+        ],
+        "preconditions": {
+          "registered_model_snapshot_available": true
+        },
+        "executable": true,
+        "network_required": false
+      },
+      "recertification": {
+        "repair_executed": true,
+        "target_contract_repaired": true,
+        "full_recertification": true,
+        "contracts_rechecked": [
+          "DATASET_IDENTITY",
+          "DATASET_SCHEMA",
+          "TARGET_NOT_IN_FEATURES",
+          "CLASS_MAPPING",
+          "TRAIN_VALIDATION_TEST_DISJOINTNESS",
+          "SPLIT_REPRODUCIBILITY",
+          "PREPROCESSOR_VERSION",
+          "PREPROCESSOR_FIT_SCOPE",
+          "FEATURE_ORDER",
+          "FEATURE_COUNT",
+          "TRANSFORM_OUTPUT_SCHEMA",
+          "FINITE_TRANSFORMED_VALUES",
+          "TRAINING_CONFIGURATION",
+          "MODEL_CONVERGENCE",
+          "MODEL_FEATURE_SCHEMA",
+          "TRAINING_DATA_HASH",
+          "MODEL_ARTIFACT_HASH",
+          "METRIC_SANITY",
+          "MODEL_INPUT_SCHEMA",
+          "PREDICTION_OBJECT_BINDING",
+          "PREDICTION_OUTPUT_SANITY",
+          "MODEL_EXPLAINER_VERSION",
+          "EXPLANATION_OBJECT_ID",
+          "EXPLANATION_OUTPUT_CONSISTENCY",
+          "EXPLANATION_FEATURE_SCHEMA",
+          "REQUIRED_PROVENANCE",
+          "REDUCTION_LOSS_LIMIT",
+          "USER_CLAIM_EVIDENCE_BINDING"
+        ],
+        "contracts_rechecked_count": 28,
+        "inference_rebuilt": true,
+        "shap_rebuilt": true,
+        "route_graph_rebuilt": true,
+        "views_rebuilt": true,
+        "new_critical_violations": 0,
+        "rollback_verified": true,
+        "post_repair_pipeline_status": "VALID",
+        "canonical_sha256": "fa7a35f185fe653d17605422926fe5671cabdcf01ac1472fc213607a51219340"
+      }
+    }
+  },
+  "legacy_vertical": null,
+  "runtime_ms": 1.517400998636731,
+  "canonical_sha256": "10f07a95c79abc2d9e2502a7edb86ae7cf783dc2cd1c961e13556a95421430ae"
+}

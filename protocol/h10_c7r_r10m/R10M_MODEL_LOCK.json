@@ -1,0 +1,125 @@
+{
+  "models": [
+    {
+      "batch_size": 24,
+      "config_sha256": "9db18719a4fa71bde36793df49c00b03642b57d0bd4cbd513fbd0a548eda3933",
+      "files": [
+        {
+          "path": "config.json",
+          "sha256": "9db18719a4fa71bde36793df49c00b03642b57d0bd4cbd513fbd0a548eda3933",
+          "size": 539
+        },
+        {
+          "path": "merges.txt",
+          "sha256": "1ce1664773c50f3e0cc8842619a93edc4624525b728b188a9e0be33b7726adc5",
+          "size": 456318
+        },
+        {
+          "path": "pytorch_model.bin",
+          "sha256": "fc542850abf74be2df516bcdedfc2dcdb9bd02c8098a6d5f4d63da73cbcb9e71",
+          "size": 498845934
+        },
+        {
+          "path": "special_tokens_map.json",
+          "sha256": "c611b1f7d416eb001ee4f293d903ea8c88e703463f1d403f1866a0352743fd00",
+          "size": 772
+        },
+        {
+          "path": "tokenizer_config.json",
+          "sha256": "994f46754c5bf4014f1aa92d34b1374319c3a6b3f702105cd5b742beaecd18ce",
+          "size": 25
+        },
+        {
+          "path": "vocab.json",
+          "sha256": "06b4d46c8e752d410213d9548eb27a54db70fda0319b6271fb8d59dead5e1cab",
+          "size": 898822
+        }
+      ],
+      "local_path": "/home/lebedeffson/.cache/fuzzyxai/h10-c7r-r10m/models/graphcodebert",
+      "maximum_input_length": 256,
+      "model_id": "microsoft/graphcodebert-base",
+      "portable_mount_path": "/models/h10-c7r-r10m/graphcodebert",
+      "precision": "float16",
+      "revision": "2b0488a7bb0eefc7041f1bb2cad1ab26b0da269d",
+      "role": "dense_retrieval",
+      "snapshot_sha256": "22713ebac7355505dc28acf6992d6092ecd31b6f9bfb87b967d53453400d9eea",
+      "tokenizer_files": [
+        "merges.txt",
+        "special_tokens_map.json",
+        "tokenizer_config.json",
+        "vocab.json"
+      ],
+      "tokenizer_sha256": "2ef5f65e52060ec0ee484e46f8b7d77a95f2a55c374d43dd09be1a7245095b83",
+      "weight_files": [
+        "pytorch_model.bin"
+      ],
+      "weights_sha256": "fc542850abf74be2df516bcdedfc2dcdb9bd02c8098a6d5f4d63da73cbcb9e71"
+    },
+    {
+      "batch_size": 8,
+      "config_sha256": "13dcd6c31d9fec9d1d8e158702072f62d7fa7d312a64b9fe057bec9a08cfe41a",
+      "files": [
+        {
+          "path": "config.json",
+          "sha256": "13dcd6c31d9fec9d1d8e158702072f62d7fa7d312a64b9fe057bec9a08cfe41a",
+          "size": 795
+        },
+        {
+          "path": "model.safetensors",
+          "sha256": "d9e3e081faff1eefb84019509b2f5558fd74c1a05a2c7db22f74174fcedb5286",
+          "size": 2271071852
+        },
+        {
+          "path": "sentencepiece.bpe.model",
+          "sha256": "cfc8146abe2a0488e9e2a0c56de7952f7c11ab059eca145a0a727afce0db2865",
+          "size": 5069051
+        },
+        {
+          "path": "special_tokens_map.json",
+          "sha256": "8c785abebea9ae3257b61681b4e6fd8365ceafde980c21970d001e834cf10835",
+          "size": 964
+        },
+        {
+          "path": "tokenizer.json",
+          "sha256": "69564b696052886ed0ac63fa393e928384e0f8caada38c1f4864a9bfbf379c15",
+          "size": 17098273
+        },
+        {
+          "path": "tokenizer_config.json",
+          "sha256": "7e4c1cc848840aeccdd763458c18dd525eb0f795c992e00ebe9c28554e7db2d4",
+          "size": 1173
+        }
+      ],
+      "local_path": "/home/lebedeffson/.cache/fuzzyxai/h10-c7r-r10m/models/bge-reranker-v2-m3",
+      "maximum_input_length": 512,
+      "model_id": "BAAI/bge-reranker-v2-m3",
+      "portable_mount_path": "/models/h10-c7r-r10m/bge-reranker-v2-m3",
+      "precision": "float16",
+      "revision": "953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e",
+      "role": "pair_reranking",
+      "snapshot_sha256": "505e20b19c5937824d54b3b91e2b64f3f023413d183e8d18ccdbd0f51f74197a",
+      "tokenizer_files": [
+        "sentencepiece.bpe.model",
+        "special_tokens_map.json",
+        "tokenizer.json",
+        "tokenizer_config.json"
+      ],
+      "tokenizer_sha256": "108feaf054b8cfc73a0a422c29dfab7a573093838d20851ee5c25820250ff806",
+      "weight_files": [
+        "model.safetensors"
+      ],
+      "weights_sha256": "d9e3e081faff1eefb84019509b2f5558fd74c1a05a2c7db22f74174fcedb5286"
+    }
+  ],
+  "network_allowed_during_scoring": false,
+  "protocol_id": "H10-C7R-R10M-v1",
+  "runtime": {
+    "device": "NVIDIA GeForce RTX 4060 Laptop GPU",
+    "huggingface_hub": "1.18.0",
+    "python": "3.14.6",
+    "sentence_transformers": "NOT_INSTALLED_NOT_USED",
+    "torch": "2.11.0+cu128",
+    "transformers": "5.10.2"
+  },
+  "status": "LOCKED_BEFORE_DEVELOPMENT_SCORING"
+}

@@ -1,0 +1,53 @@
+{
+  "added_incident_count": 10,
+  "added_incidents": [
+    "sympy__sympy-13647",
+    "django__django-11848",
+    "scikit-learn__scikit-learn-13496",
+    "sympy__sympy-15346",
+    "django__django-16229",
+    "pydata__xarray-3364",
+    "pallets__flask-4992",
+    "matplotlib__matplotlib-23913",
+    "pytest-dev__pytest-5221",
+    "mwaskom__seaborn-3190"
+  ],
+  "added_repositories": [
+    "django/django",
+    "matplotlib/matplotlib",
+    "mwaskom/seaborn",
+    "pallets/flask",
+    "pydata/xarray",
+    "pytest-dev/pytest",
+    "scikit-learn/scikit-learn",
+    "sympy/sympy"
+  ],
+  "base_incident_count": 30,
+  "confirmatory_excluded_repositories": [
+    "cool-RR/PySnooper",
+    "django/django",
+    "jakubroztocil/httpie",
+    "matplotlib/matplotlib",
+    "mwaskom/seaborn",
+    "nvbn/thefuck",
+    "pallets/flask",
+    "pandas-dev/pandas",
+    "psf/black",
+    "pydata/xarray",
+    "pytest-dev/pytest",
+    "scikit-learn/scikit-learn",
+    "sympy/sympy",
+    "tiangolo/fastapi",
+    "tornadoweb/tornado",
+    "ytdl-org/youtube-dl"
+  ],
+  "gold_channel_separate": true,
+  "h10_c5b_reclassified_as_open_development": true,
+  "incident_count": 40,
+  "project_dependencies_reinstalled": false,
+  "repository_count": 16,
+  "runtime_reexecuted": false,
+  "selection_rule": "first_by_registered_selection_rank_sha256",
+  "sha256_file_count": 83,
+  "status": "H10_C7A_DEVELOPMENT_EXTENSION_READY"
+}

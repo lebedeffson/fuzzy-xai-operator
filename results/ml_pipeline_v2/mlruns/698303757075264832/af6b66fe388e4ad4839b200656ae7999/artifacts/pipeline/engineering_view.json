@@ -1,0 +1,76 @@
+{
+  "run_id": "mlp2:443738f7bb24172eafcc",
+  "scenario_id": "S6_MULTILEVEL_UNCERTAINTY",
+  "action": "REVIEW",
+  "pipeline_status": "INVALID",
+  "canonical_source": "MLPipelineService",
+  "diagnosis": {
+    "diagnosis_id": "diagnosis:mlp2:443738f7bb24172eafcc",
+    "pipeline_status": "INVALID",
+    "failed_stage": "FUZZY_REPRESENTATION",
+    "source_component": "logistic_regression",
+    "violated_contract": "MODEL_RULE_CONFLICT",
+    "violated_contracts": [
+      {
+        "contract_id": "MODEL_RULE_CONFLICT",
+        "stage": "FUZZY_REPRESENTATION",
+        "component_id": "logistic_regression",
+        "passed": false,
+        "severity": "MEDIUM",
+        "action": "REVIEW",
+        "observed_value": "legacy_vertical_violation",
+        "expected_value": "registered_contract_satisfied",
+        "evidence_refs": [
+          "obs:a29411aa67ea936a2ad7"
+        ]
+      }
+    ],
+    "affected_field": "model_rule_conflict",
+    "observed_value": "legacy_vertical_violation",
+    "expected_value": "registered_contract_satisfied",
+    "severity": "MEDIUM",
+    "recommended_action": "REVIEW",
+    "evidence_refs": [
+      "obs:a29411aa67ea936a2ad7"
+    ],
+    "nearest_confirmed_cause": {
+      "component": "logistic_regression",
+      "mutation": {}
+    },
+    "diagnostic_cut": {
+      "contracts": [
+        "MODEL_RULE_CONFLICT"
+      ],
+      "evidence_refs": [
+        "obs:a29411aa67ea936a2ad7"
+      ]
+    },
+    "confidence": 1.0,
+    "observation_count": 29
+  },
+  "representation": {
+    "representation_id": "F_ML",
+    "membership": {
+      "level_0": {
+        "low": 0.9994460852969871,
+        "medium": 0.0,
+        "high": 0.0
+      },
+      "interval_width": 0.12,
+      "conflict": 0.65
+    },
+    "covered_uncertainties": [
+      "u_conf",
+      "u_int",
+      "u_ling",
+      "u_num",
+      "u_rule",
+      "u_trace"
+    ],
+    "cognitive_complexity": 5.0,
+    "computational_complexity": 4.0,
+    "selection_reason": "interval, conflict, and trace uncertainty require a multilevel representation"
+  },
+  "repair_plan": null,
+  "recertification": null
+}

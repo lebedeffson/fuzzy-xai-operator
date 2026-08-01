@@ -1,0 +1,48 @@
+{
+  "diagnosis_id": "diagnosis:mlp2:971665314b371a3fb1cf",
+  "pipeline_status": "INVALID",
+  "failed_stage": "POST_HOC_EXPLANATION",
+  "source_component": "shap_linear_explainer",
+  "violated_contract": "REQUIRED_PROVENANCE",
+  "violated_contracts": [
+    {
+      "contract_id": "REQUIRED_PROVENANCE",
+      "stage": "POST_HOC_EXPLANATION",
+      "component_id": "shap_linear_explainer",
+      "passed": false,
+      "severity": "HIGH",
+      "action": "BLOCK",
+      "observed_value": false,
+      "expected_value": true,
+      "evidence_refs": [
+        "obs:3a2a299be2ca520a01c5"
+      ]
+    }
+  ],
+  "affected_field": "required_provenance",
+  "observed_value": false,
+  "expected_value": true,
+  "severity": "HIGH",
+  "recommended_action": "BLOCK",
+  "evidence_refs": [
+    "obs:3a2a299be2ca520a01c5"
+  ],
+  "nearest_confirmed_cause": {
+    "component": "shap_linear_explainer",
+    "mutation": {
+      "missing_fields": [
+        "explainer_version"
+      ]
+    }
+  },
+  "diagnostic_cut": {
+    "contracts": [
+      "REQUIRED_PROVENANCE"
+    ],
+    "evidence_refs": [
+      "obs:3a2a299be2ca520a01c5"
+    ]
+  },
+  "confidence": 1.0,
+  "observation_count": 28
+}

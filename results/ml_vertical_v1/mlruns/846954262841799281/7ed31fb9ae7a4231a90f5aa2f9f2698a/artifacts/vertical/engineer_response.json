@@ -1,0 +1,227 @@
+{
+  "run_id": "mlv1:a905b7ffef3bf5e8e7dc",
+  "scenario_id": "S2_EXPLAINER_VERSION_MISMATCH",
+  "action": "BLOCK",
+  "claims": [
+    {
+      "claim_id": "claim:prediction",
+      "text": "The registered model produced score 0.000277 for object bcw:s2_explainer_version_mismatch.",
+      "evidence_refs": [
+        "evidence:prediction"
+      ],
+      "status": "observed",
+      "text_code": "registered_template",
+      "arguments": {},
+      "allowed_views": [
+        "user",
+        "engineer",
+        "auditor"
+      ],
+      "blocked": false
+    },
+    {
+      "claim_id": "claim:features",
+      "text": "Largest local SHAP contributions: worst texture, worst concave points, worst radius.",
+      "evidence_refs": [
+        "evidence:local_explanation"
+      ],
+      "status": "observed",
+      "text_code": "registered_template",
+      "arguments": {},
+      "allowed_views": [
+        "user",
+        "engineer",
+        "auditor"
+      ],
+      "blocked": false
+    },
+    {
+      "claim_id": "claim:action",
+      "text": "The route observer selected BLOCK.",
+      "evidence_refs": [
+        "evidence:observer_action"
+      ],
+      "status": "observed",
+      "text_code": "registered_template",
+      "arguments": {},
+      "allowed_views": [
+        "user",
+        "engineer",
+        "auditor"
+      ],
+      "blocked": false
+    }
+  ],
+  "explainable_object_sha256": "e53421de55e5257000688ea53a054d0e75c09370d4e24b2f15bd28ee20253fdf",
+  "view": "engineer",
+  "explanation": {
+    "object_id": "bcw:s2_explainer_version_mismatch",
+    "explainer_id": "shap.LinearExplainer",
+    "explainer_version": "0.51.0",
+    "model_version": "0.0.0",
+    "base_value": -1.2264799258326975,
+    "shap_values": {
+      "mean radius": -0.19244878416558725,
+      "mean texture": -0.5911771035309462,
+      "mean perimeter": -0.18195722404349318,
+      "mean area": -0.2198343234510549,
+      "mean smoothness": 0.10582201610778671,
+      "mean compactness": 0.07671506417851988,
+      "mean concavity": -0.6297281886336548,
+      "mean concave points": -0.700739425513308,
+      "mean symmetry": 0.6356697979811631,
+      "mean fractal dimension": -0.412358594440218,
+      "radius error": 0.5806998603520946,
+      "texture error": -0.10287860105656914,
+      "perimeter error": 0.18880719910824606,
+      "area error": -0.037913384808470445,
+      "smoothness error": -0.059593037818181024,
+      "compactness error": 0.44905955345084314,
+      "concavity error": 0.15649623472206758,
+      "concave points error": -0.08636767912061792,
+      "symmetry error": 0.17914948862675287,
+      "fractal dimension error": -0.7151021564103659,
+      "worst radius": -0.906413636475313,
+      "worst texture": -1.4917113088679261,
+      "worst perimeter": -0.7661725162075523,
+      "worst area": -0.6460166794220196,
+      "worst smoothness": -0.026225073289457893,
+      "worst compactness": -0.21526927648231106,
+      "worst concavity": -0.8931696619551441,
+      "worst concave points": -1.1107887674753651,
+      "worst symmetry": 0.6512330735698741,
+      "worst fractal dimension": -0.0026769726973898227
+    },
+    "feature_values": {
+      "mean radius": 10.17,
+      "mean texture": 14.88,
+      "mean perimeter": 64.55,
+      "mean area": 311.9,
+      "mean smoothness": 0.1134,
+      "mean compactness": 0.08061,
+      "mean concavity": 0.01084,
+      "mean concave points": 0.0129,
+      "mean symmetry": 0.2743,
+      "mean fractal dimension": 0.0696,
+      "radius error": 0.5158,
+      "texture error": 1.441,
+      "perimeter error": 3.312,
+      "area error": 34.62,
+      "smoothness error": 0.007514,
+      "compactness error": 0.01099,
+      "concavity error": 0.007665,
+      "concave points error": 0.008193,
+      "symmetry error": 0.04183,
+      "fractal dimension error": 0.005953,
+      "worst radius": 11.02,
+      "worst texture": 17.45,
+      "worst perimeter": 69.86,
+      "worst area": 368.6,
+      "worst smoothness": 0.1275,
+      "worst compactness": 0.09866,
+      "worst concavity": 0.02168,
+      "worst concave points": 0.02579,
+      "worst symmetry": 0.3557,
+      "worst fractal dimension": 0.0802
+    },
+    "output_sum": -8.191370033600295,
+    "output_difference": 0.0,
+    "artifact_sha256": "5e9a0094de3da43aa030ddeba1e3830635361076ec8a2009416b2ef17d49ade8"
+  },
+  "representation": {
+    "representation_id": "F0",
+    "membership": {
+      "low": 0.9994460852969871,
+      "medium": 0.0,
+      "high": 0.0
+    },
+    "covered_uncertainties": [
+      "u_ling",
+      "u_num"
+    ],
+    "cognitive_complexity": 1.0,
+    "computational_complexity": 1.0,
+    "selection_reason": "point evidence is complete and has no registered conflict"
+  },
+  "reduction": {
+    "source_representation": "F0",
+    "target_representation": "F0",
+    "reduced_membership": {
+      "low": 0.9994460852969871,
+      "medium": 0.0,
+      "high": 0.0
+    },
+    "loss": 0.0,
+    "accepted": true,
+    "maximum_loss": 0.25
+  },
+  "issues": [
+    {
+      "issue_id": "issue:MODEL_EXPLAINER_VERSION",
+      "category": "explainer",
+      "code": "contract_mismatch",
+      "severity": "error",
+      "symptom": "Для explainer.model_version получено '0.0.0', требуется '1.0.0'.",
+      "violated_contract": "MODEL_EXPLAINER_VERSION",
+      "affected_nodes": [
+        "explainer"
+      ],
+      "affected_edges": [],
+      "affected_fields": [
+        "model_version"
+      ],
+      "source_nodes": [
+        "explainer"
+      ],
+      "cause_candidates": [
+        {
+          "cause_id": "issue:MODEL_EXPLAINER_VERSION:symptom",
+          "level": "symptom",
+          "statement": "Для explainer.model_version получено '0.0.0', требуется '1.0.0'.",
+          "supporting_evidence": [
+            "evidence:explainer"
+          ],
+          "confidence": 1.0,
+          "status": "observed"
+        },
+        {
+          "cause_id": "issue:MODEL_EXPLAINER_VERSION:contract",
+          "level": "contract_violation",
+          "statement": "Не выполнен контракт MODEL_EXPLAINER_VERSION.",
+          "supporting_evidence": [
+            "evidence:explainer"
+          ],
+          "confidence": 1.0,
+          "status": "verified"
+        },
+        {
+          "cause_id": "issue:MODEL_EXPLAINER_VERSION:proximate",
+          "level": "proximate_cause",
+          "statement": "Ближайшее установленное нарушение связано с explainer.",
+          "supporting_evidence": [
+            "evidence:explainer"
+          ],
+          "confidence": 1.0,
+          "status": "evidence_supported"
+        },
+        {
+          "cause_id": "issue:MODEL_EXPLAINER_VERSION:source",
+          "level": "source_component",
+          "statement": "Компонент-источник: explainer.",
+          "supporting_evidence": [
+            "evidence:explainer"
+          ],
+          "confidence": 1.0,
+          "status": "localized"
+        }
+      ],
+      "evidence_refs": [
+        "evidence:explainer"
+      ],
+      "confidence": 1.0,
+      "repairable": true,
+      "insufficient_evidence": false,
+      "unknown": false
+    }
+  ]
+}

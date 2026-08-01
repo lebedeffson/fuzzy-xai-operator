@@ -1,0 +1,16 @@
+{
+  "operations_by_contract": {
+    "CLASS_MAPPING": "restore_output_semantics",
+    "EXPLANATION_FEATURE_SCHEMA": "rerun_registered_explainer",
+    "EXPLANATION_OBJECT_ID": "rerun_registered_explainer",
+    "EXPLANATION_OUTPUT_CONSISTENCY": "rerun_registered_explainer",
+    "FEATURE_COUNT": "restore_feature_order",
+    "FEATURE_ORDER": "restore_feature_order",
+    "FINITE_TRANSFORMED_VALUES": "restore_clean_transform",
+    "MODEL_ARTIFACT_HASH": "restore_registered_model",
+    "MODEL_EXPLAINER_VERSION": "rerun_registered_explainer",
+    "PREDICTION_OUTPUT_SANITY": "restore_output_semantics",
+    "PREPROCESSOR_FIT_SCOPE": "refit_preprocessor_on_train",
+    "TRAIN_VALIDATION_TEST_DISJOINTNESS": "restore_split_manifest"
+  }
+}

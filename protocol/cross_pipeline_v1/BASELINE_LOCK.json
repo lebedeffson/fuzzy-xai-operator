@@ -1,0 +1,16 @@
+{
+  "definitions": {
+    "B_GREEDY_CROSS_STAGE": "first violation by stage and contract order",
+    "B_LOCAL_STRONG": "local component checks only",
+    "B_MLFLOW_QUERY": "deterministic query of already registered MLflow fields",
+    "B_PAIRWISE_RULES": "all registered pairwise checks without graph cut or recertification",
+    "O_FUZZYXAI": "RouteGraph, causal cut, registered repair, rollback and full recertification"
+  },
+  "modes": [
+    "B_LOCAL_STRONG",
+    "B_PAIRWISE_RULES",
+    "B_MLFLOW_QUERY",
+    "B_GREEDY_CROSS_STAGE",
+    "O_FUZZYXAI"
+  ]
+}

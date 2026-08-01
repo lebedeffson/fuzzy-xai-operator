@@ -1,0 +1,69 @@
+{
+  "run_id": "mlp2:545c145bbc0d2ffa19e9",
+  "scenario_id": "S8_INCOMPLETE_PROVENANCE",
+  "action": "BLOCK",
+  "pipeline_status": "INVALID",
+  "canonical_source": "MLPipelineService",
+  "diagnosis": {
+    "diagnosis_id": "diagnosis:mlp2:545c145bbc0d2ffa19e9",
+    "pipeline_status": "INVALID",
+    "failed_stage": "POST_HOC_EXPLANATION",
+    "source_component": "shap_linear_explainer",
+    "violated_contract": "REQUIRED_PROVENANCE",
+    "violated_contracts": [
+      {
+        "contract_id": "REQUIRED_PROVENANCE",
+        "stage": "POST_HOC_EXPLANATION",
+        "component_id": "shap_linear_explainer",
+        "passed": false,
+        "severity": "HIGH",
+        "action": "BLOCK",
+        "observed_value": "legacy_vertical_violation",
+        "expected_value": "registered_contract_satisfied",
+        "evidence_refs": [
+          "obs:7c6e1a4bc668d57431e8"
+        ]
+      }
+    ],
+    "affected_field": "required_provenance",
+    "observed_value": "legacy_vertical_violation",
+    "expected_value": "registered_contract_satisfied",
+    "severity": "HIGH",
+    "recommended_action": "BLOCK",
+    "evidence_refs": [
+      "obs:7c6e1a4bc668d57431e8"
+    ],
+    "nearest_confirmed_cause": {
+      "component": "shap_linear_explainer",
+      "mutation": {}
+    },
+    "diagnostic_cut": {
+      "contracts": [
+        "REQUIRED_PROVENANCE"
+      ],
+      "evidence_refs": [
+        "obs:7c6e1a4bc668d57431e8"
+      ]
+    },
+    "confidence": 1.0,
+    "observation_count": 29
+  },
+  "representation": {
+    "representation_id": "F0",
+    "membership": {
+      "low": 0.9994460852969871,
+      "medium": 0.0,
+      "high": 0.0
+    },
+    "covered_uncertainties": [
+      "u_ling",
+      "u_num",
+      "u_trace"
+    ],
+    "cognitive_complexity": 1.0,
+    "computational_complexity": 1.0,
+    "selection_reason": "point evidence is complete and has no registered conflict"
+  },
+  "repair_plan": null,
+  "recertification": null
+}

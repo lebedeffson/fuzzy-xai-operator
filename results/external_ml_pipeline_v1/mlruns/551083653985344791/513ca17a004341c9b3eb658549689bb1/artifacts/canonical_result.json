@@ -1,0 +1,81 @@
+{
+  "action": "BLOCK",
+  "action_correct": true,
+  "artifact_bytes": 13965,
+  "canonical_sha256": "8e67f6627fe1c12cd586cf9c141f2f2b831075705fb4833894d378ff9b5ded14",
+  "case_id": "E4_FEATURE_SCHEMA_OR_ORDER",
+  "component_correct": true,
+  "component_id": "external.preprocessing.feature_order",
+  "contract_correct": true,
+  "contract_id": "FEATURE_ORDER",
+  "contracts_checked": 28,
+  "dependent_violations": [
+    "MODEL_INPUT_SCHEMA",
+    "PREDICTION_OUTPUT_SANITY",
+    "EXPLANATION_OUTPUT_CONSISTENCY",
+    "USER_CLAIM_EVIDENCE_BINDING"
+  ],
+  "detected": true,
+  "detected_correct": true,
+  "diagnostic_cut": {
+    "atoms": [
+      "node:cause:feature_order/field:_/violation:source_component"
+    ],
+    "optimal": false,
+    "size": 1,
+    "solver": "exact_branch_and_bound"
+  },
+  "evidence_completeness": 1.0,
+  "evidence_refs": [
+    "preprocessor_manifest.json",
+    "prediction_manifest.json",
+    "explanation_manifest.json"
+  ],
+  "expected_action": "BLOCK",
+  "expected_contract": "FEATURE_ORDER",
+  "expected_invalid": true,
+  "expected_root_cause": "FEATURE_ORDER",
+  "expected_stage": "PREPROCESSING",
+  "false_blocking": false,
+  "false_certification": false,
+  "fault_category": "GLOBAL",
+  "mode_id": "O_FUZZYXAI",
+  "new_critical_violations": 0,
+  "peak_rss_kb": 393636,
+  "pipeline_id": "ext1-sklearn-column-transformer",
+  "pipeline_status": "INVALID",
+  "proposed_repair_count": 1,
+  "recertified": true,
+  "redundant_repair_count": 0,
+  "repair_executed": true,
+  "repair_plan": {
+    "fully_executable": false,
+    "operations": [
+      "restore_split_manifest"
+    ],
+    "rollback": [
+      "restore_previous_artifact_snapshot"
+    ],
+    "step_ids": [
+      "step:issue:EXPLANATION_OUTPUT_CONSISTENCY:1"
+    ]
+  },
+  "repairable": true,
+  "reported_symptom_count": 5,
+  "repository_commit": "5799d3eac08bda44fbce3309e641cbf98c5d312a",
+  "rollback_verified": true,
+  "root_cause": "FEATURE_ORDER",
+  "root_cause_correct": true,
+  "run_id": "external:d6f39a2e4e260b0be5c8",
+  "runtime_breakdown_ms": {
+    "audit": 0.7055220003167051,
+    "diagnostic_cut": 0.12756399974023225,
+    "graph_build": 0.5547760001718416,
+    "recertification": 2.694214000257489,
+    "repair_planning": 0.11470999925222714,
+    "total": 4.196785999738495
+  },
+  "stage": "PREPROCESSING",
+  "stage_correct": true,
+  "target_contract_repaired": true
+}

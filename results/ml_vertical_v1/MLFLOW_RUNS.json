@@ -1,0 +1,172 @@
+[
+  {
+    "status": "MLFLOW_INTEGRATION_PASS",
+    "run_id": "7d1545f8fc8b41eba5c134a7d4aac90c",
+    "artifact_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-vertical-v1-release/results/ml_vertical_v1/mlruns/846954262841799281/7d1545f8fc8b41eba5c134a7d4aac90c/artifacts",
+    "tracking_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-vertical-v1-release/results/ml_vertical_v1/mlruns",
+    "artifacts": [
+      "request.json",
+      "prediction.json",
+      "local_explanation.json",
+      "explainable_object.json",
+      "route_graph.json",
+      "diagnostic_report.json",
+      "user_response.json",
+      "engineer_response.json",
+      "auditor_response.json"
+    ]
+  },
+  {
+    "status": "MLFLOW_INTEGRATION_PASS",
+    "run_id": "7ed31fb9ae7a4231a90f5aa2f9f2698a",
+    "artifact_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-vertical-v1-release/results/ml_vertical_v1/mlruns/846954262841799281/7ed31fb9ae7a4231a90f5aa2f9f2698a/artifacts",
+    "tracking_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-vertical-v1-release/results/ml_vertical_v1/mlruns",
+    "artifacts": [
+      "request.json",
+      "prediction.json",
+      "local_explanation.json",
+      "explainable_object.json",
+      "route_graph.json",
+      "diagnostic_report.json",
+      "user_response.json",
+      "engineer_response.json",
+      "auditor_response.json"
+    ]
+  },
+  {
+    "status": "MLFLOW_INTEGRATION_PASS",
+    "run_id": "b13eea404f50474da1155285549c2523",
+    "artifact_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-vertical-v1-release/results/ml_vertical_v1/mlruns/846954262841799281/b13eea404f50474da1155285549c2523/artifacts",
+    "tracking_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-vertical-v1-release/results/ml_vertical_v1/mlruns",
+    "artifacts": [
+      "request.json",
+      "prediction.json",
+      "local_explanation.json",
+      "explainable_object.json",
+      "route_graph.json",
+      "diagnostic_report.json",
+      "user_response.json",
+      "engineer_response.json",
+      "auditor_response.json"
+    ]
+  },
+  {
+    "status": "MLFLOW_INTEGRATION_PASS",
+    "run_id": "667c353260054c4b9630597e0ecf2e70",
+    "artifact_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-vertical-v1-release/results/ml_vertical_v1/mlruns/846954262841799281/667c353260054c4b9630597e0ecf2e70/artifacts",
+    "tracking_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-vertical-v1-release/results/ml_vertical_v1/mlruns",
+    "artifacts": [
+      "request.json",
+      "prediction.json",
+      "local_explanation.json",
+      "explainable_object.json",
+      "route_graph.json",
+      "diagnostic_report.json",
+      "user_response.json",
+      "engineer_response.json",
+      "auditor_response.json"
+    ]
+  },
+  {
+    "status": "MLFLOW_INTEGRATION_PASS",
+    "run_id": "f4c1f76e27a84e5e8c313a45b359730e",
+    "artifact_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-vertical-v1-release/results/ml_vertical_v1/mlruns/846954262841799281/f4c1f76e27a84e5e8c313a45b359730e/artifacts",
+    "tracking_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-vertical-v1-release/results/ml_vertical_v1/mlruns",
+    "artifacts": [
+      "request.json",
+      "prediction.json",
+      "local_explanation.json",
+      "explainable_object.json",
+      "route_graph.json",
+      "diagnostic_report.json",
+      "user_response.json",
+      "engineer_response.json",
+      "auditor_response.json"
+    ]
+  },
+  {
+    "status": "MLFLOW_INTEGRATION_PASS",
+    "run_id": "0ecc3418e4fb4e6ea9c073e90553e50e",
+    "artifact_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-vertical-v1-release/results/ml_vertical_v1/mlruns/846954262841799281/0ecc3418e4fb4e6ea9c073e90553e50e/artifacts",
+    "tracking_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-vertical-v1-release/results/ml_vertical_v1/mlruns",
+    "artifacts": [
+      "request.json",
+      "prediction.json",
+      "local_explanation.json",
+      "explainable_object.json",
+      "route_graph.json",
+      "diagnostic_report.json",
+      "user_response.json",
+      "engineer_response.json",
+      "auditor_response.json"
+    ]
+  },
+  {
+    "status": "MLFLOW_INTEGRATION_PASS",
+    "run_id": "89fb3dfc16b64c58a9505890afcd9846",
+    "artifact_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-vertical-v1-release/results/ml_vertical_v1/mlruns/846954262841799281/89fb3dfc16b64c58a9505890afcd9846/artifacts",
+    "tracking_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-vertical-v1-release/results/ml_vertical_v1/mlruns",
+    "artifacts": [
+      "request.json",
+      "prediction.json",
+      "local_explanation.json",
+      "explainable_object.json",
+      "route_graph.json",
+      "diagnostic_report.json",
+      "user_response.json",
+      "engineer_response.json",
+      "auditor_response.json"
+    ]
+  },
+  {
+    "status": "MLFLOW_INTEGRATION_PASS",
+    "run_id": "7ff7741b075941bdb793e945ae940d1d",
+    "artifact_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-vertical-v1-release/results/ml_vertical_v1/mlruns/846954262841799281/7ff7741b075941bdb793e945ae940d1d/artifacts",
+    "tracking_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-vertical-v1-release/results/ml_vertical_v1/mlruns",
+    "artifacts": [
+      "request.json",
+      "prediction.json",
+      "local_explanation.json",
+      "explainable_object.json",
+      "route_graph.json",
+      "diagnostic_report.json",
+      "user_response.json",
+      "engineer_response.json",
+      "auditor_response.json"
+    ]
+  },
+  {
+    "status": "MLFLOW_INTEGRATION_PASS",
+    "run_id": "c219b475ceaa46c6b22b7185c645adb9",
+    "artifact_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-vertical-v1-release/results/ml_vertical_v1/mlruns/846954262841799281/c219b475ceaa46c6b22b7185c645adb9/artifacts",
+    "tracking_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-vertical-v1-release/results/ml_vertical_v1/mlruns",
+    "artifacts": [
+      "request.json",
+      "prediction.json",
+      "local_explanation.json",
+      "explainable_object.json",
+      "route_graph.json",
+      "diagnostic_report.json",
+      "user_response.json",
+      "engineer_response.json",
+      "auditor_response.json"
+    ]
+  },
+  {
+    "status": "MLFLOW_INTEGRATION_PASS",
+    "run_id": "bebb04985e7345249223e968ef4fa91a",
+    "artifact_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-vertical-v1-release/results/ml_vertical_v1/mlruns/846954262841799281/bebb04985e7345249223e968ef4fa91a/artifacts",
+    "tracking_uri": "file:///home/lebedeffson/Code/fuzzy-xai-ml-vertical-v1-release/results/ml_vertical_v1/mlruns",
+    "artifacts": [
+      "request.json",
+      "prediction.json",
+      "local_explanation.json",
+      "explainable_object.json",
+      "route_graph.json",
+      "diagnostic_report.json",
+      "user_response.json",
+      "engineer_response.json",
+      "auditor_response.json"
+    ]
+  }
+]

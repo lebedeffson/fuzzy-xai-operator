@@ -1,0 +1,9 @@
+{
+  "contract_id": "REQUIRED_PROVENANCE",
+  "dependent_violations": [],
+  "evidence_refs": [
+    "explanation_manifest.json"
+  ],
+  "root_cause": null,
+  "stage": "POST_HOC_EXPLANATION"
+}

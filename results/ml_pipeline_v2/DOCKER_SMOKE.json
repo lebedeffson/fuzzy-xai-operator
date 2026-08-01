@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "image": "fuzzyxai-ml-pipeline-v2:local",
+  "image_id": "sha256:f7b5cb37209db5c3c08151f71049d0616c4448a40c12d22fe373fa7cea9bbb5c",
+  "image_size_bytes": 496691148,
+  "dependency_layer_cache_reused": true,
+  "api_health": {
+    "status": "ok"
+  },
+  "api_ready": "ready",
+  "mlflow_health": "OK",
+  "networked_services": [
+    "api",
+    "ui",
+    "mlflow"
+  ]
+}

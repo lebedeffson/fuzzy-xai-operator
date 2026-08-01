@@ -1,0 +1,15 @@
+artifact_uri: file:///home/lebedeffson/Code/fuzzy-xai-external-ml-pipeline-v1/results/external_ml_pipeline_v1/mlruns/551083653985344791/87dbf57bc4d7400dada2c13d4ff15e85/artifacts
+end_time: 1785585507663
+entry_point_name: ''
+experiment_id: '551083653985344791'
+lifecycle_stage: active
+run_id: 87dbf57bc4d7400dada2c13d4ff15e85
+run_name: ext2-shap-tree-explainer:E8_EXPLANATION_PROVENANCE:B_MLFLOW_QUERY
+run_uuid: 87dbf57bc4d7400dada2c13d4ff15e85
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1785585507655
+status: 3
+tags: []
+user_id: lebedeffson

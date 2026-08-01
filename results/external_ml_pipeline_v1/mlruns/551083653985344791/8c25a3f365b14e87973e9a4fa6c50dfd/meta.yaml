@@ -1,0 +1,15 @@
+artifact_uri: file:///home/lebedeffson/Code/fuzzy-xai-external-ml-pipeline-v1/results/external_ml_pipeline_v1/mlruns/551083653985344791/8c25a3f365b14e87973e9a4fa6c50dfd/artifacts
+end_time: 1785585507969
+entry_point_name: ''
+experiment_id: '551083653985344791'
+lifecycle_stage: active
+run_id: 8c25a3f365b14e87973e9a4fa6c50dfd
+run_name: ext3-mlflow-elasticnet:E4_FEATURE_SCHEMA_OR_ORDER:B_PAIRWISE_RULES
+run_uuid: 8c25a3f365b14e87973e9a4fa6c50dfd
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1785585507962
+status: 3
+tags: []
+user_id: lebedeffson

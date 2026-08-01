@@ -1,0 +1,71 @@
+{
+  "method_commit": "2c88ace6ea1835b35d0ee6ab01b3dbb1ab7f8af2",
+  "network_allowed_during_scoring": false,
+  "local_files_only": true,
+  "model_count": 3,
+  "models": [
+    {
+      "name": "microsoft/graphcodebert-base",
+      "revision": "2b0488a7bb0eefc7041f1bb2cad1ab26b0da269d",
+      "repository_revision": "2b0488a7bb0eefc7041f1bb2cad1ab26b0da269d",
+      "local_path": "/home/lebedeffson/.local/share/fuzzyxai/h10-c7/huggingface/hub/models--microsoft--graphcodebert-base/snapshots/2b0488a7bb0eefc7041f1bb2cad1ab26b0da269d",
+      "snapshot_hash_algorithm": "sha256_tree_v1",
+      "snapshot_sha256": "5df4096c626fd14bc58277cd5f2261f5cccaa5fa1cf6b32229c4f7d5f25646a9",
+      "tokenizer_sha256": "a5e58d71eeb322ac29ce5f4760fcd796d5472033a54cdbf7ca08752cfaa5247f",
+      "config_sha256": "9db18719a4fa71bde36793df49c00b03642b57d0bd4cbd513fbd0a548eda3933",
+      "weights_file": "pytorch_model.bin",
+      "weights_sha256": "fc542850abf74be2df516bcdedfc2dcdb9bd02c8098a6d5f4d63da73cbcb9e71",
+      "file_count": 6,
+      "files": {
+        "config.json": "9db18719a4fa71bde36793df49c00b03642b57d0bd4cbd513fbd0a548eda3933",
+        "merges.txt": "1ce1664773c50f3e0cc8842619a93edc4624525b728b188a9e0be33b7726adc5",
+        "pytorch_model.bin": "fc542850abf74be2df516bcdedfc2dcdb9bd02c8098a6d5f4d63da73cbcb9e71",
+        "special_tokens_map.json": "c611b1f7d416eb001ee4f293d903ea8c88e703463f1d403f1866a0352743fd00",
+        "tokenizer_config.json": "994f46754c5bf4014f1aa92d34b1374319c3a6b3f702105cd5b742beaecd18ce",
+        "vocab.json": "06b4d46c8e752d410213d9548eb27a54db70fda0319b6271fb8d59dead5e1cab"
+      }
+    },
+    {
+      "name": "microsoft/unixcoder-base",
+      "revision": "5604afdc964f6c53782a6813140ade5216b99006",
+      "repository_revision": "5604afdc964f6c53782a6813140ade5216b99006",
+      "local_path": "/home/lebedeffson/.local/share/fuzzyxai/h10-c7/huggingface/hub/models--microsoft--unixcoder-base/snapshots/5604afdc964f6c53782a6813140ade5216b99006",
+      "snapshot_hash_algorithm": "sha256_tree_v1",
+      "snapshot_sha256": "68f17515f2bf855cbb7a2736df743dccf6e5c06c887381555b66ddf25a793bfe",
+      "tokenizer_sha256": "ecd9845c2f13d23a0138542b2fcf80bdc981f8376a8d62cdc6dfc5d2fa0d1e4d",
+      "config_sha256": "a7c07558348da020fb6055541fd593f21a6f0142a398da17bc452d50d3aef927",
+      "weights_file": "pytorch_model.bin",
+      "weights_sha256": "6732b60037b086557e4c731c3748c99b4fec735d9ffe3c4c70061fd142e6b9d9",
+      "file_count": 6,
+      "files": {
+        "config.json": "a7c07558348da020fb6055541fd593f21a6f0142a398da17bc452d50d3aef927",
+        "merges.txt": "3b84414c9f8804a621da0fd4bfe77104ef536c350baaaf3c99003356b0cc85f4",
+        "pytorch_model.bin": "6732b60037b086557e4c731c3748c99b4fec735d9ffe3c4c70061fd142e6b9d9",
+        "special_tokens_map.json": "c611b1f7d416eb001ee4f293d903ea8c88e703463f1d403f1866a0352743fd00",
+        "tokenizer_config.json": "44b6e7a4fd703a619b6f8c297a8799f71ac14fdcb7f2d1ad8d8211649abed5e4",
+        "vocab.json": "81c76e8f61bb1df102044d9b3d72070e3b2ac4d484b087ecb23b8633d6874f4b"
+      }
+    },
+    {
+      "name": "cross-encoder/ms-marco-MiniLM-L-6-v2",
+      "revision": "c5ee24cb16019beea0893ab7796b1df96625c6b8",
+      "repository_revision": "c5ee24cb16019beea0893ab7796b1df96625c6b8",
+      "local_path": "/home/lebedeffson/.local/share/fuzzyxai/h10-c7/huggingface/hub/models--cross-encoder--ms-marco-MiniLM-L-6-v2/snapshots/c5ee24cb16019beea0893ab7796b1df96625c6b8",
+      "snapshot_hash_algorithm": "sha256_tree_v1",
+      "snapshot_sha256": "2dc7bfd8bc221c23d4197c0731c865869baac2e34e7c939bdc148217dae5fdd0",
+      "tokenizer_sha256": "34ae5a03fc090ac8bc6c5f032c003eb8bf432574127a88500a49c03c25a652f6",
+      "config_sha256": "380e02c93f431831be65d99a4e7e5f67c133985bf2e77d9d4eba46847190bacc",
+      "weights_file": "model.safetensors",
+      "weights_sha256": "821d1aa69520101d6e0737f78a042ae25b19e5cb9160701909d10434f4aeb0ae",
+      "file_count": 6,
+      "files": {
+        "config.json": "380e02c93f431831be65d99a4e7e5f67c133985bf2e77d9d4eba46847190bacc",
+        "model.safetensors": "821d1aa69520101d6e0737f78a042ae25b19e5cb9160701909d10434f4aeb0ae",
+        "special_tokens_map.json": "3c3507f36dff57bce437223db3b3081d1e2b52ec3e56ee55438193ecb2c94dd6",
+        "tokenizer.json": "d241a60d5e8f04cc1b2b3e9ef7a4921b27bf526d9f6050ab90f9267a1f9e5c66",
+        "tokenizer_config.json": "a5c2e5a7b1a29a0702cd28c08a399b5ecc110c263009d17f7e3b415f25905fd8",
+        "vocab.txt": "07eced375cec144d27c900241f3e339478dec958f92fddbc551f295c992038a3"
+      }
+    }
+  ]
+}

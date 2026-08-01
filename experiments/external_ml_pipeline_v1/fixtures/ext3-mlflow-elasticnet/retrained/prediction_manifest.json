@@ -1,0 +1,9 @@
+{
+  "input_sha256": "6b66728c0175e3c884d298ef4a531e9691ffaff8413bf1ab1f645a2f8bbabd99",
+  "model_output": 124.96772075608021,
+  "model_sha256": "252bbdab43b5e90275eef589b5191d086bea3299730f5f5b3865f01ca5959f9d",
+  "object_id": "ext3-mlflow-elasticnet:row:98",
+  "prediction": 124.96772075608021,
+  "run_id": "external:ext3-mlflow-elasticnet:retrained",
+  "selected_output": null
+}

@@ -1,0 +1,12 @@
+{
+  "failing_tests_reexecuted": false,
+  "held_out_created": false,
+  "held_out_scored": false,
+  "incident_count": 30,
+  "network_required": false,
+  "project_setup_required": false,
+  "repository_count": 8,
+  "scientific_result": "NOT_EVALUATED",
+  "source_artifact_sha256": "7b7bd0bba2eb9eef3955d2b5e313ecf4bccd02703427117f741c382e7658db09",
+  "status": "H10_C7_OPEN_REPLAY_BUNDLE_READY"
+}

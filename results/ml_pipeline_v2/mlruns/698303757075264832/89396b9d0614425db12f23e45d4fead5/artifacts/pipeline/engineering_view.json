@@ -1,0 +1,63 @@
+{
+  "run_id": "mlp2:94ba060d0e1c9f6d7e75",
+  "scenario_id": "S15_MODEL_NON_CONVERGENCE",
+  "action": "REVIEW",
+  "pipeline_status": "INVALID",
+  "canonical_source": "MLPipelineService",
+  "diagnosis": {
+    "diagnosis_id": "diagnosis:mlp2:94ba060d0e1c9f6d7e75",
+    "pipeline_status": "INVALID",
+    "failed_stage": "TRAINING",
+    "source_component": "logistic_regression",
+    "violated_contract": "MODEL_CONVERGENCE",
+    "violated_contracts": [
+      {
+        "contract_id": "MODEL_CONVERGENCE",
+        "stage": "TRAINING",
+        "component_id": "logistic_regression",
+        "passed": false,
+        "severity": "MEDIUM",
+        "action": "REVIEW",
+        "observed_value": false,
+        "expected_value": true,
+        "evidence_refs": [
+          "obs:d80dbdd255f7830c2ca0"
+        ]
+      }
+    ],
+    "affected_field": "model_convergence",
+    "observed_value": false,
+    "expected_value": true,
+    "severity": "MEDIUM",
+    "recommended_action": "REVIEW",
+    "evidence_refs": [
+      "obs:d80dbdd255f7830c2ca0"
+    ],
+    "nearest_confirmed_cause": {
+      "component": "logistic_regression",
+      "mutation": {
+        "max_iter": 1,
+        "n_iter": [
+          1
+        ],
+        "convergence_warning": true
+      }
+    },
+    "diagnostic_cut": {
+      "contracts": [
+        "MODEL_CONVERGENCE"
+      ],
+      "evidence_refs": [
+        "obs:d80dbdd255f7830c2ca0"
+      ]
+    },
+    "confidence": 1.0,
+    "observation_count": 28
+  },
+  "representation": {
+    "representation_id": "F0",
+    "selection_reason": "complete deterministic pipeline evidence"
+  },
+  "repair_plan": null,
+  "recertification": null
+}

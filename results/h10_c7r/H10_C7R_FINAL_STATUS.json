@@ -1,0 +1,35 @@
+{
+  "baseline_recall_at_160": 0.775,
+  "bootstrap": {
+    "ci_lower": 0.04770617670937727,
+    "ci_upper": 0.09624791003629068,
+    "iterations": 20000,
+    "mean_difference": 0.06994910563758615,
+    "repository_count": 30,
+    "seed": 7102026
+  },
+  "checks": {
+    "frozen_budget_signature_pass": true,
+    "frozen_method_signature_pass": true,
+    "gold_leakage_zero": true,
+    "minimum_12_repositories": true,
+    "minimum_40_incidents": true,
+    "r5_coverage_at_least_0_80": true,
+    "r5_recall_at_20_at_least_0_80": false,
+    "r5_recall_not_worse_than_baseline_by_more_than_0_05": false,
+    "repository_cluster_ci_delta_reduction_lower_positive": true,
+    "single_official_scoring": true
+  },
+  "contract_macro_f1_is_gate": false,
+  "held_out_scored": true,
+  "incident_count": 40,
+  "mean_baseline_search_space_reduction": 0.9230679938081165,
+  "mean_r5_search_space_reduction": 0.9903834992260145,
+  "opening_count": 1,
+  "protocol_id": "H10-C7R-v1",
+  "r5_coverage": 1.0,
+  "r5_recall_at_20": 0.55,
+  "repository_count": 30,
+  "scientific_result": "NOT_SUPPORTED",
+  "status": "H10_C7R_NOT_SUPPORTED"
+}

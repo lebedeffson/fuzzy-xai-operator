@@ -1,0 +1,25 @@
+{
+  "blocked_reasons": [
+    "TARGET_ALIGNMENT_AUDIT_FAILED",
+    "VALUE_PROVENANCE_UNAVAILABLE"
+  ],
+  "held_out_created": false,
+  "held_out_scored": false,
+  "model_threshold_selected": false,
+  "protocol_id": "H10-C7-R5V",
+  "retrieval_modified": false,
+  "scientific_result": "NOT_EVALUATED",
+  "status": "H10_C7_R5V_BLOCKED_AUDIT",
+  "target_alignment": {
+    "correct_pairs_in_top_3": 12,
+    "correct_top_1_pairs": 10,
+    "misaligned_old_positive_labels": 4
+  },
+  "target_alignment_expected": {
+    "correct_pairs_in_top_3": 14,
+    "correct_top_1_pairs": 11,
+    "misaligned_old_positive_labels": 3
+  },
+  "v0_executed": false,
+  "v1_executed": false
+}

@@ -1,0 +1,47 @@
+{
+  "claim_scope": "controlled_structural_mutations_only",
+  "cost_weight_configurations": 48,
+  "new_critical_violations_global_cut": 0,
+  "overlap_audit": {
+    "case_id_intersection": [],
+    "h10_c3_case_id_count": 1560,
+    "h10_c3_serialized_state_hash_count": 6746,
+    "h10_c4_case_id_count": 120,
+    "h10_c4_serialized_state_hash_count": 240,
+    "seed_namespaces": {
+      "h10_c3": "H10-C3-R4 registered split namespaces",
+      "h10_c4": "H10-C4-HELDOUT-20260725"
+    },
+    "seed_token_intersection": [],
+    "serialized_state_hash_intersection": [],
+    "status": "PASS"
+  },
+  "primary_comparisons_pass": true,
+  "protocol_id": "h10-c4-operational-utility-v1",
+  "repair_success_baselines": {
+    "B_ALL": 1.0,
+    "B_FIRST": 1.0,
+    "B_GREEDY": 0.8
+  },
+  "repair_success_global_cut": 1.0,
+  "runtime_calibration": {
+    "fitted_split": "development",
+    "runtime_ms_by_kind": {
+      "direct_restore": 0.044845,
+      "quick_patch": 0.022493,
+      "source_restore": 0.090351
+    },
+    "runtime_scale_ms": 0.044845
+  },
+  "scenario_count": 120,
+  "secondary_improvements": {
+    "execution_time_ms": true,
+    "recertification_check_count": true,
+    "repair_action_count": true,
+    "unique_touched_components": true
+  },
+  "selection_stability_rate": 0.9,
+  "status": "H10_C4_SUPPORTED",
+  "strategy_rows": 480,
+  "strongest_successful_baseline": "B_ALL"
+}

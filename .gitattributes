@@ -9,3 +9,4 @@ figures/ export-ignore
 .vscode/ export-ignore
 *.zip export-ignore
 *.docx export-ignore
+results/h10_c5b/*.csv -whitespace

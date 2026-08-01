@@ -1,0 +1,24 @@
+{
+  "protocol_id": "FUZZYXAI_ML_PIPELINE_V2",
+  "initial_status": "FUZZYXAI_ML_PIPELINE_V2_IMPLEMENTATION_IN_PROGRESS",
+  "success_status": "FUZZYXAI_ML_PIPELINE_V2_IMPLEMENTED",
+  "required": {
+    "scenario_pass_rate": 1.0,
+    "false_certification": 0,
+    "stage_localization_accuracy": 1.0,
+    "violated_contract_accuracy": 1.0,
+    "representation_accuracy": 1.0,
+    "observer_action_accuracy": 1.0,
+    "registered_repair_success": 1.0,
+    "full_recertification_success": 1.0,
+    "new_critical_violations_after_repair": 0,
+    "canonical_output_determinism": 1.0,
+    "mlflow_runs": 18,
+    "rest_smoke": "PASS",
+    "ui_smoke": "PASS",
+    "docker_smoke": "PASS",
+    "parent_immutability": "PASS"
+  },
+  "required_real_components": ["sklearn.linear_model.LogisticRegression", "sklearn.preprocessing.StandardScaler", "shap.LinearExplainer"],
+  "docx_pdf_modification_allowed": false
+}

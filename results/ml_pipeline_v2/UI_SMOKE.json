@@ -1,0 +1,8 @@
+{
+  "status": "PASS",
+  "url": "http://127.0.0.1:18092/",
+  "http_status": 200,
+  "http_bytes": 26949,
+  "nicegui_bootstrap_present": true,
+  "canonical_ui_source": "apps/layered_demo.py"
+}

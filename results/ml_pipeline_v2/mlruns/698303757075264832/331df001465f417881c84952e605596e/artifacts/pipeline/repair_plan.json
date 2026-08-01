@@ -1,0 +1,28 @@
+{
+  "plan_id": "repair:mlp2:466b99d7c277f668a6bb",
+  "operation": {
+    "operation_id": "restore_registered_feature_order",
+    "supported_contracts": [
+      "FEATURE_ORDER"
+    ],
+    "target_component_type": "schema",
+    "preconditions": [
+      "registered_feature_schema_available"
+    ],
+    "postconditions": [
+      "feature_order_matches",
+      "all_contracts_rechecked"
+    ],
+    "rollback_operation": "restore_previous_feature_order",
+    "maximum_cost": 0.2,
+    "mutates_state": true
+  },
+  "target_contracts": [
+    "FEATURE_ORDER"
+  ],
+  "preconditions": {
+    "registered_feature_schema_available": true
+  },
+  "executable": true,
+  "network_required": false
+}

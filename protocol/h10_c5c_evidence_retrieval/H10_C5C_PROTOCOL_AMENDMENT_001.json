@@ -1,0 +1,34 @@
+{
+  "amendment_id": "h10-c5c-evidence-retrieval-v1-amendment-001",
+  "applies_to": "h10-c5c-evidence-retrieval-v1",
+  "created_before_development_data_collection": true,
+  "created_before_development_scoring": true,
+  "created_before_held_out_creation": true,
+  "development_design": {
+    "minimum_incidents": 30,
+    "minimum_repositories": 8
+  },
+  "development_gates": {
+    "candidate_recall_at_10_minimum": 0.75,
+    "contract_accuracy_minimum": 0.6,
+    "coverage_minimum": 0.7,
+    "false_localization_not_worse_than_b_greedy": true,
+    "gold_leakage": 0,
+    "o_route_hit_at_3_strictly_greater_than_b_greedy": true,
+    "top_k_lists_structurally_distinct": true
+  },
+  "output_states": [
+    "DIAGNOSIS_CONFIRMED",
+    "DIAGNOSIS_CANDIDATES",
+    "INSUFFICIENT_EVIDENCE"
+  ],
+  "retrieval_depths": [
+    5,
+    10,
+    20
+  ],
+  "runtime_input": "per_test_executed_slice",
+  "reason": "The scope was expanded from set-cover validation to candidate recall, per-test executed slices, contract inference, active evidence requests and executable recovery before any H10-C5c data were collected.",
+  "scientific_result_at_amendment": "NOT_EVALUATED",
+  "status": "LOCKED_PROSPECTIVE_AMENDMENT"
+}

@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": {
+    "additionalProperties": false,
+    "properties": {
+      "command": {
+        "items": {
+          "type": "string"
+        },
+        "minItems": 5,
+        "type": "array"
+      },
+      "container_image": {
+        "pattern": "^[A-Za-z0-9._/:@-]+@sha256:[0-9a-f]{64}$",
+        "type": "string"
+      },
+      "execution_backend": {
+        "enum": [
+          "container"
+        ],
+        "type": "string"
+      },
+      "remove_container_image_after_run": {
+        "type": "boolean"
+      },
+      "expected_failure_returncodes": {
+        "items": {
+          "type": "integer"
+        },
+        "minItems": 1,
+        "type": "array",
+        "uniqueItems": true
+      },
+      "runtime_test_patch_path": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "runtime_test_patch_sha256": {
+        "pattern": "^[0-9a-f]{64}$",
+        "type": "string"
+      },
+      "timeout_seconds": {
+        "maximum": 3600,
+        "minimum": 1,
+        "type": "integer"
+      }
+    },
+    "required": [
+      "command",
+      "container_image",
+      "execution_backend",
+      "expected_failure_returncodes",
+      "runtime_test_patch_path",
+      "runtime_test_patch_sha256",
+      "timeout_seconds"
+    ],
+    "type": "object"
+  },
+  "description": "Incident IDs map to argv arrays. Shell strings and credentials are forbidden.",
+  "propertyNames": {
+    "pattern": "^[A-Za-z0-9_.-]+$"
+  },
+  "type": "object"
+}

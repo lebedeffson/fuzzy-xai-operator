@@ -1,0 +1,895 @@
+{
+  "run_id": "mlv1:8874582d5c2dc9db4da5",
+  "scenario_id": "S3_MISSING_REQUIRED_FEATURE",
+  "action": "REQUEST_DATA",
+  "claims": [
+    {
+      "claim_id": "claim:missing",
+      "text": "A prediction was not produced because required input is missing.",
+      "evidence_refs": [
+        "evidence:input"
+      ],
+      "status": "limited",
+      "text_code": "registered_template",
+      "arguments": {},
+      "allowed_views": [
+        "user",
+        "engineer",
+        "auditor"
+      ],
+      "blocked": false
+    }
+  ],
+  "explainable_object_sha256": "a08a35b0bdc5d45d02e94f992747ab6a32c2e417f164b60c91d8be8c7527fb74",
+  "view": "auditor",
+  "diagnostic_report": {
+    "report_id": "diagnostic:route:S3_MISSING_REQUIRED_FEATURE:bcw:s3_missing_required_feature:48fe396cc27d",
+    "route_id": "route:S3_MISSING_REQUIRED_FEATURE:bcw:s3_missing_required_feature",
+    "route_status": "partially_valid",
+    "issues": [
+      {
+        "issue_id": "issue:AUDIT_ARTIFACT_HASH",
+        "category": "provenance",
+        "code": "insufficient_evidence",
+        "severity": "error",
+        "symptom": "Контракт AUDIT_ARTIFACT_HASH не может быть проверен: обязательное значение доступно.",
+        "violated_contract": "AUDIT_ARTIFACT_HASH",
+        "affected_nodes": [
+          "audit_artifact"
+        ],
+        "affected_edges": [],
+        "affected_fields": [
+          "artifact_sha256"
+        ],
+        "source_nodes": [
+          "audit_artifact"
+        ],
+        "cause_candidates": [
+          {
+            "cause_id": "issue:AUDIT_ARTIFACT_HASH:symptom",
+            "level": "symptom",
+            "statement": "Контракт AUDIT_ARTIFACT_HASH не может быть проверен: обязательное значение доступно.",
+            "supporting_evidence": [
+              "evidence:audit_artifact"
+            ],
+            "confidence": null,
+            "status": "observed"
+          },
+          {
+            "cause_id": "issue:AUDIT_ARTIFACT_HASH:contract",
+            "level": "contract_violation",
+            "statement": "Не выполнен контракт AUDIT_ARTIFACT_HASH.",
+            "supporting_evidence": [
+              "evidence:audit_artifact"
+            ],
+            "confidence": 1.0,
+            "status": "verified"
+          },
+          {
+            "cause_id": "issue:AUDIT_ARTIFACT_HASH:proximate",
+            "level": "proximate_cause",
+            "statement": "Ближайшее установленное нарушение связано с audit_artifact.",
+            "supporting_evidence": [
+              "evidence:audit_artifact"
+            ],
+            "confidence": null,
+            "status": "evidence_supported"
+          },
+          {
+            "cause_id": "issue:AUDIT_ARTIFACT_HASH:source",
+            "level": "source_component",
+            "statement": "Компонент-источник: audit_artifact.",
+            "supporting_evidence": [
+              "evidence:audit_artifact"
+            ],
+            "confidence": null,
+            "status": "localized"
+          }
+        ],
+        "evidence_refs": [
+          "evidence:audit_artifact"
+        ],
+        "confidence": null,
+        "repairable": true,
+        "insufficient_evidence": true,
+        "unknown": false
+      },
+      {
+        "issue_id": "issue:EXPLANATION_OBJECT_ID",
+        "category": "explainer",
+        "code": "insufficient_evidence",
+        "severity": "error",
+        "symptom": "Контракт EXPLANATION_OBJECT_ID не может быть проверен: наблюдаемое значение отсутствует.",
+        "violated_contract": "EXPLANATION_OBJECT_ID",
+        "affected_nodes": [
+          "local_explanation"
+        ],
+        "affected_edges": [],
+        "affected_fields": [
+          "object_id"
+        ],
+        "source_nodes": [
+          "local_explanation"
+        ],
+        "cause_candidates": [
+          {
+            "cause_id": "issue:EXPLANATION_OBJECT_ID:symptom",
+            "level": "symptom",
+            "statement": "Контракт EXPLANATION_OBJECT_ID не может быть проверен: наблюдаемое значение отсутствует.",
+            "supporting_evidence": [
+              "evidence:local_explanation"
+            ],
+            "confidence": null,
+            "status": "observed"
+          },
+          {
+            "cause_id": "issue:EXPLANATION_OBJECT_ID:contract",
+            "level": "contract_violation",
+            "statement": "Не выполнен контракт EXPLANATION_OBJECT_ID.",
+            "supporting_evidence": [
+              "evidence:local_explanation"
+            ],
+            "confidence": 1.0,
+            "status": "verified"
+          },
+          {
+            "cause_id": "issue:EXPLANATION_OBJECT_ID:proximate",
+            "level": "proximate_cause",
+            "statement": "Ближайшее установленное нарушение связано с local_explanation.",
+            "supporting_evidence": [
+              "evidence:local_explanation"
+            ],
+            "confidence": null,
+            "status": "evidence_supported"
+          },
+          {
+            "cause_id": "issue:EXPLANATION_OBJECT_ID:source",
+            "level": "source_component",
+            "statement": "Компонент-источник: local_explanation.",
+            "supporting_evidence": [
+              "evidence:local_explanation"
+            ],
+            "confidence": null,
+            "status": "localized"
+          }
+        ],
+        "evidence_refs": [
+          "evidence:local_explanation"
+        ],
+        "confidence": null,
+        "repairable": true,
+        "insufficient_evidence": true,
+        "unknown": false
+      },
+      {
+        "issue_id": "issue:EXPLANATION_OUTPUT_CONSISTENCY",
+        "category": "explainer",
+        "code": "insufficient_evidence",
+        "severity": "error",
+        "symptom": "Контракт EXPLANATION_OUTPUT_CONSISTENCY не может быть проверен: наблюдаемое значение отсутствует.",
+        "violated_contract": "EXPLANATION_OUTPUT_CONSISTENCY",
+        "affected_nodes": [
+          "local_explanation"
+        ],
+        "affected_edges": [],
+        "affected_fields": [
+          "output_difference"
+        ],
+        "source_nodes": [
+          "local_explanation"
+        ],
+        "cause_candidates": [
+          {
+            "cause_id": "issue:EXPLANATION_OUTPUT_CONSISTENCY:symptom",
+            "level": "symptom",
+            "statement": "Контракт EXPLANATION_OUTPUT_CONSISTENCY не может быть проверен: наблюдаемое значение отсутствует.",
+            "supporting_evidence": [
+              "evidence:local_explanation"
+            ],
+            "confidence": null,
+            "status": "observed"
+          },
+          {
+            "cause_id": "issue:EXPLANATION_OUTPUT_CONSISTENCY:contract",
+            "level": "contract_violation",
+            "statement": "Не выполнен контракт EXPLANATION_OUTPUT_CONSISTENCY.",
+            "supporting_evidence": [
+              "evidence:local_explanation"
+            ],
+            "confidence": 1.0,
+            "status": "verified"
+          },
+          {
+            "cause_id": "issue:EXPLANATION_OUTPUT_CONSISTENCY:proximate",
+            "level": "proximate_cause",
+            "statement": "Ближайшее установленное нарушение связано с local_explanation.",
+            "supporting_evidence": [
+              "evidence:local_explanation"
+            ],
+            "confidence": null,
+            "status": "evidence_supported"
+          },
+          {
+            "cause_id": "issue:EXPLANATION_OUTPUT_CONSISTENCY:source",
+            "level": "source_component",
+            "statement": "Компонент-источник: local_explanation.",
+            "supporting_evidence": [
+              "evidence:local_explanation"
+            ],
+            "confidence": null,
+            "status": "localized"
+          }
+        ],
+        "evidence_refs": [
+          "evidence:local_explanation"
+        ],
+        "confidence": null,
+        "repairable": true,
+        "insufficient_evidence": true,
+        "unknown": false
+      },
+      {
+        "issue_id": "issue:INPUT_FEATURE_SCHEMA",
+        "category": "data",
+        "code": "contract_mismatch",
+        "severity": "error",
+        "symptom": "Для input.schema_complete получено False, требуется True.",
+        "violated_contract": "INPUT_FEATURE_SCHEMA",
+        "affected_nodes": [
+          "input"
+        ],
+        "affected_edges": [],
+        "affected_fields": [
+          "schema_complete"
+        ],
+        "source_nodes": [
+          "input"
+        ],
+        "cause_candidates": [
+          {
+            "cause_id": "issue:INPUT_FEATURE_SCHEMA:symptom",
+            "level": "symptom",
+            "statement": "Для input.schema_complete получено False, требуется True.",
+            "supporting_evidence": [
+              "evidence:input"
+            ],
+            "confidence": 1.0,
+            "status": "observed"
+          },
+          {
+            "cause_id": "issue:INPUT_FEATURE_SCHEMA:contract",
+            "level": "contract_violation",
+            "statement": "Не выполнен контракт INPUT_FEATURE_SCHEMA.",
+            "supporting_evidence": [
+              "evidence:input"
+            ],
+            "confidence": 1.0,
+            "status": "verified"
+          },
+          {
+            "cause_id": "issue:INPUT_FEATURE_SCHEMA:proximate",
+            "level": "proximate_cause",
+            "statement": "Ближайшее установленное нарушение связано с input.",
+            "supporting_evidence": [
+              "evidence:input"
+            ],
+            "confidence": 1.0,
+            "status": "evidence_supported"
+          },
+          {
+            "cause_id": "issue:INPUT_FEATURE_SCHEMA:source",
+            "level": "source_component",
+            "statement": "Компонент-источник: input.",
+            "supporting_evidence": [
+              "evidence:input"
+            ],
+            "confidence": 1.0,
+            "status": "localized"
+          }
+        ],
+        "evidence_refs": [
+          "evidence:input"
+        ],
+        "confidence": 1.0,
+        "repairable": false,
+        "insufficient_evidence": false,
+        "unknown": false
+      },
+      {
+        "issue_id": "issue:MODEL_EXPLAINER_VERSION",
+        "category": "explainer",
+        "code": "insufficient_evidence",
+        "severity": "error",
+        "symptom": "Контракт MODEL_EXPLAINER_VERSION не может быть проверен: наблюдаемое значение отсутствует.",
+        "violated_contract": "MODEL_EXPLAINER_VERSION",
+        "affected_nodes": [
+          "explainer"
+        ],
+        "affected_edges": [],
+        "affected_fields": [
+          "model_version"
+        ],
+        "source_nodes": [
+          "explainer"
+        ],
+        "cause_candidates": [
+          {
+            "cause_id": "issue:MODEL_EXPLAINER_VERSION:symptom",
+            "level": "symptom",
+            "statement": "Контракт MODEL_EXPLAINER_VERSION не может быть проверен: наблюдаемое значение отсутствует.",
+            "supporting_evidence": [
+              "evidence:explainer"
+            ],
+            "confidence": null,
+            "status": "observed"
+          },
+          {
+            "cause_id": "issue:MODEL_EXPLAINER_VERSION:contract",
+            "level": "contract_violation",
+            "statement": "Не выполнен контракт MODEL_EXPLAINER_VERSION.",
+            "supporting_evidence": [
+              "evidence:explainer"
+            ],
+            "confidence": 1.0,
+            "status": "verified"
+          },
+          {
+            "cause_id": "issue:MODEL_EXPLAINER_VERSION:proximate",
+            "level": "proximate_cause",
+            "statement": "Ближайшее установленное нарушение связано с explainer.",
+            "supporting_evidence": [
+              "evidence:explainer"
+            ],
+            "confidence": null,
+            "status": "evidence_supported"
+          },
+          {
+            "cause_id": "issue:MODEL_EXPLAINER_VERSION:source",
+            "level": "source_component",
+            "statement": "Компонент-источник: explainer.",
+            "supporting_evidence": [
+              "evidence:explainer"
+            ],
+            "confidence": null,
+            "status": "localized"
+          }
+        ],
+        "evidence_refs": [
+          "evidence:explainer"
+        ],
+        "confidence": null,
+        "repairable": true,
+        "insufficient_evidence": true,
+        "unknown": false
+      }
+    ],
+    "minimal_cut": {
+      "defect_atoms": [
+        {
+          "subject_kind": "contract",
+          "subject_id": "AUDIT_ARTIFACT_HASH",
+          "field": "artifact_sha256",
+          "violation_code": "insufficient_evidence",
+          "repairable": true,
+          "repair_cost": 1.0
+        },
+        {
+          "subject_kind": "node",
+          "subject_id": "explainer",
+          "field": null,
+          "violation_code": "source_component",
+          "repairable": true,
+          "repair_cost": 0.1
+        },
+        {
+          "subject_kind": "node",
+          "subject_id": "local_explanation",
+          "field": null,
+          "violation_code": "source_component",
+          "repairable": true,
+          "repair_cost": 1.0
+        }
+      ],
+      "affected_nodes": [
+        "explainer",
+        "local_explanation"
+      ],
+      "total_cost": 2.1,
+      "optimal": false,
+      "solver": "exact_branch_and_bound",
+      "covered_obligations": [
+        "AUDIT_ARTIFACT_HASH",
+        "EXPLANATION_OBJECT_ID",
+        "EXPLANATION_OUTPUT_CONSISTENCY",
+        "MODEL_EXPLAINER_VERSION"
+      ],
+      "uncovered_obligations": [
+        "INPUT_FEATURE_SCHEMA"
+      ],
+      "equivalent_optimal_cuts": [
+        [
+          {
+            "subject_kind": "contract",
+            "subject_id": "AUDIT_ARTIFACT_HASH",
+            "field": "artifact_sha256",
+            "violation_code": "insufficient_evidence",
+            "repairable": true,
+            "repair_cost": 1.0
+          },
+          {
+            "subject_kind": "node",
+            "subject_id": "explainer",
+            "field": null,
+            "violation_code": "source_component",
+            "repairable": true,
+            "repair_cost": 0.1
+          },
+          {
+            "subject_kind": "node",
+            "subject_id": "local_explanation",
+            "field": null,
+            "violation_code": "source_component",
+            "repairable": true,
+            "repair_cost": 1.0
+          }
+        ],
+        [
+          {
+            "subject_kind": "contract",
+            "subject_id": "AUDIT_ARTIFACT_HASH",
+            "field": "artifact_sha256",
+            "violation_code": "insufficient_evidence",
+            "repairable": true,
+            "repair_cost": 1.0
+          },
+          {
+            "subject_kind": "node",
+            "subject_id": "explainer",
+            "field": "model_version",
+            "violation_code": "insufficient_evidence",
+            "repairable": true,
+            "repair_cost": 0.1
+          },
+          {
+            "subject_kind": "node",
+            "subject_id": "local_explanation",
+            "field": null,
+            "violation_code": "source_component",
+            "repairable": true,
+            "repair_cost": 1.0
+          }
+        ],
+        [
+          {
+            "subject_kind": "node",
+            "subject_id": "audit_artifact",
+            "field": null,
+            "violation_code": "source_component",
+            "repairable": true,
+            "repair_cost": 1.0
+          },
+          {
+            "subject_kind": "node",
+            "subject_id": "explainer",
+            "field": null,
+            "violation_code": "source_component",
+            "repairable": true,
+            "repair_cost": 0.1
+          },
+          {
+            "subject_kind": "node",
+            "subject_id": "local_explanation",
+            "field": null,
+            "violation_code": "source_component",
+            "repairable": true,
+            "repair_cost": 1.0
+          }
+        ],
+        [
+          {
+            "subject_kind": "node",
+            "subject_id": "audit_artifact",
+            "field": null,
+            "violation_code": "source_component",
+            "repairable": true,
+            "repair_cost": 1.0
+          },
+          {
+            "subject_kind": "node",
+            "subject_id": "explainer",
+            "field": "model_version",
+            "violation_code": "insufficient_evidence",
+            "repairable": true,
+            "repair_cost": 0.1
+          },
+          {
+            "subject_kind": "node",
+            "subject_id": "local_explanation",
+            "field": null,
+            "violation_code": "source_component",
+            "repairable": true,
+            "repair_cost": 1.0
+          }
+        ],
+        [
+          {
+            "subject_kind": "node",
+            "subject_id": "audit_artifact",
+            "field": "artifact_sha256",
+            "violation_code": "insufficient_evidence",
+            "repairable": true,
+            "repair_cost": 1.0
+          },
+          {
+            "subject_kind": "node",
+            "subject_id": "explainer",
+            "field": null,
+            "violation_code": "source_component",
+            "repairable": true,
+            "repair_cost": 0.1
+          },
+          {
+            "subject_kind": "node",
+            "subject_id": "local_explanation",
+            "field": null,
+            "violation_code": "source_component",
+            "repairable": true,
+            "repair_cost": 1.0
+          }
+        ],
+        [
+          {
+            "subject_kind": "node",
+            "subject_id": "audit_artifact",
+            "field": "artifact_sha256",
+            "violation_code": "insufficient_evidence",
+            "repairable": true,
+            "repair_cost": 1.0
+          },
+          {
+            "subject_kind": "node",
+            "subject_id": "explainer",
+            "field": "model_version",
+            "violation_code": "insufficient_evidence",
+            "repairable": true,
+            "repair_cost": 0.1
+          },
+          {
+            "subject_kind": "node",
+            "subject_id": "local_explanation",
+            "field": null,
+            "violation_code": "source_component",
+            "repairable": true,
+            "repair_cost": 1.0
+          }
+        ]
+      ],
+      "runtime_ms": 0.0,
+      "enumeration_complete": true,
+      "truncated": false,
+      "lower_bound_count": 6,
+      "optimality_proven": true,
+      "lower_bound": 2.1,
+      "optimality_gap": 0.0
+    },
+    "repair_plan": {
+      "plan_id": "repair:route:S3_MISSING_REQUIRED_FEATURE:bcw:s3_missing_required_feature:a13c4545dfce",
+      "cut": {
+        "defect_atoms": [
+          {
+            "subject_kind": "contract",
+            "subject_id": "AUDIT_ARTIFACT_HASH",
+            "field": "artifact_sha256",
+            "violation_code": "insufficient_evidence",
+            "repairable": true,
+            "repair_cost": 1.0
+          },
+          {
+            "subject_kind": "node",
+            "subject_id": "explainer",
+            "field": null,
+            "violation_code": "source_component",
+            "repairable": true,
+            "repair_cost": 0.1
+          },
+          {
+            "subject_kind": "node",
+            "subject_id": "local_explanation",
+            "field": null,
+            "violation_code": "source_component",
+            "repairable": true,
+            "repair_cost": 1.0
+          }
+        ],
+        "affected_nodes": [
+          "explainer",
+          "local_explanation"
+        ],
+        "total_cost": 2.1,
+        "optimal": false,
+        "solver": "exact_branch_and_bound",
+        "covered_obligations": [
+          "AUDIT_ARTIFACT_HASH",
+          "EXPLANATION_OBJECT_ID",
+          "EXPLANATION_OUTPUT_CONSISTENCY",
+          "MODEL_EXPLAINER_VERSION"
+        ],
+        "uncovered_obligations": [
+          "INPUT_FEATURE_SCHEMA"
+        ],
+        "equivalent_optimal_cuts": [
+          [
+            {
+              "subject_kind": "contract",
+              "subject_id": "AUDIT_ARTIFACT_HASH",
+              "field": "artifact_sha256",
+              "violation_code": "insufficient_evidence",
+              "repairable": true,
+              "repair_cost": 1.0
+            },
+            {
+              "subject_kind": "node",
+              "subject_id": "explainer",
+              "field": null,
+              "violation_code": "source_component",
+              "repairable": true,
+              "repair_cost": 0.1
+            },
+            {
+              "subject_kind": "node",
+              "subject_id": "local_explanation",
+              "field": null,
+              "violation_code": "source_component",
+              "repairable": true,
+              "repair_cost": 1.0
+            }
+          ],
+          [
+            {
+              "subject_kind": "contract",
+              "subject_id": "AUDIT_ARTIFACT_HASH",
+              "field": "artifact_sha256",
+              "violation_code": "insufficient_evidence",
+              "repairable": true,
+              "repair_cost": 1.0
+            },
+            {
+              "subject_kind": "node",
+              "subject_id": "explainer",
+              "field": "model_version",
+              "violation_code": "insufficient_evidence",
+              "repairable": true,
+              "repair_cost": 0.1
+            },
+            {
+              "subject_kind": "node",
+              "subject_id": "local_explanation",
+              "field": null,
+              "violation_code": "source_component",
+              "repairable": true,
+              "repair_cost": 1.0
+            }
+          ],
+          [
+            {
+              "subject_kind": "node",
+              "subject_id": "audit_artifact",
+              "field": null,
+              "violation_code": "source_component",
+              "repairable": true,
+              "repair_cost": 1.0
+            },
+            {
+              "subject_kind": "node",
+              "subject_id": "explainer",
+              "field": null,
+              "violation_code": "source_component",
+              "repairable": true,
+              "repair_cost": 0.1
+            },
+            {
+              "subject_kind": "node",
+              "subject_id": "local_explanation",
+              "field": null,
+              "violation_code": "source_component",
+              "repairable": true,
+              "repair_cost": 1.0
+            }
+          ],
+          [
+            {
+              "subject_kind": "node",
+              "subject_id": "audit_artifact",
+              "field": null,
+              "violation_code": "source_component",
+              "repairable": true,
+              "repair_cost": 1.0
+            },
+            {
+              "subject_kind": "node",
+              "subject_id": "explainer",
+              "field": "model_version",
+              "violation_code": "insufficient_evidence",
+              "repairable": true,
+              "repair_cost": 0.1
+            },
+            {
+              "subject_kind": "node",
+              "subject_id": "local_explanation",
+              "field": null,
+              "violation_code": "source_component",
+              "repairable": true,
+              "repair_cost": 1.0
+            }
+          ],
+          [
+            {
+              "subject_kind": "node",
+              "subject_id": "audit_artifact",
+              "field": "artifact_sha256",
+              "violation_code": "insufficient_evidence",
+              "repairable": true,
+              "repair_cost": 1.0
+            },
+            {
+              "subject_kind": "node",
+              "subject_id": "explainer",
+              "field": null,
+              "violation_code": "source_component",
+              "repairable": true,
+              "repair_cost": 0.1
+            },
+            {
+              "subject_kind": "node",
+              "subject_id": "local_explanation",
+              "field": null,
+              "violation_code": "source_component",
+              "repairable": true,
+              "repair_cost": 1.0
+            }
+          ],
+          [
+            {
+              "subject_kind": "node",
+              "subject_id": "audit_artifact",
+              "field": "artifact_sha256",
+              "violation_code": "insufficient_evidence",
+              "repairable": true,
+              "repair_cost": 1.0
+            },
+            {
+              "subject_kind": "node",
+              "subject_id": "explainer",
+              "field": "model_version",
+              "violation_code": "insufficient_evidence",
+              "repairable": true,
+              "repair_cost": 0.1
+            },
+            {
+              "subject_kind": "node",
+              "subject_id": "local_explanation",
+              "field": null,
+              "violation_code": "source_component",
+              "repairable": true,
+              "repair_cost": 1.0
+            }
+          ]
+        ],
+        "runtime_ms": 0.0,
+        "enumeration_complete": true,
+        "truncated": false,
+        "lower_bound_count": 6,
+        "optimality_proven": true,
+        "lower_bound": 2.1,
+        "optimality_gap": 0.0
+      },
+      "steps": [
+        {
+          "step_id": "step:issue:MODEL_EXPLAINER_VERSION:1",
+          "title": "Повторно построить объяснительный артефакт",
+          "target": {
+            "subject_kind": "node",
+            "subject_id": "explainer",
+            "field": "model_version",
+            "violation_code": "insufficient_evidence",
+            "repairable": true,
+            "repair_cost": 4.0
+          },
+          "provider_id": "explainer.rerun",
+          "operation": "rerun_explainer_with_registered_components",
+          "parameters": {
+            "issue_id": "issue:MODEL_EXPLAINER_VERSION",
+            "contract_id": "MODEL_EXPLAINER_VERSION",
+            "registered_source_ref": "registry://explainer"
+          },
+          "preconditions": [
+            "registered_source_available:explainer"
+          ],
+          "depends_on": [],
+          "expected_postconditions": [
+            "contract_satisfied:MODEL_EXPLAINER_VERSION"
+          ],
+          "verification_checks": [
+            "revalidate:MODEL_EXPLAINER_VERSION",
+            "rebuild_route",
+            "recertify_route"
+          ],
+          "fallback_step_ids": [],
+          "rollback_operation": "restore_previous_artifact_snapshot",
+          "estimated_cost": 4.0,
+          "requires_human_approval": true,
+          "executable": false
+        },
+        {
+          "step_id": "step:issue:EXPLANATION_OBJECT_ID:1",
+          "title": "Повторно построить объяснительный артефакт",
+          "target": {
+            "subject_kind": "node",
+            "subject_id": "local_explanation",
+            "field": "object_id",
+            "violation_code": "insufficient_evidence",
+            "repairable": true,
+            "repair_cost": 4.0
+          },
+          "provider_id": "explainer.rerun",
+          "operation": "rerun_explainer_with_registered_components",
+          "parameters": {
+            "issue_id": "issue:EXPLANATION_OBJECT_ID",
+            "contract_id": "EXPLANATION_OBJECT_ID",
+            "registered_source_ref": "registry://local_explanation",
+            "issue_ids": [
+              "issue:EXPLANATION_OBJECT_ID",
+              "issue:EXPLANATION_OUTPUT_CONSISTENCY"
+            ],
+            "contract_ids": [
+              "EXPLANATION_OBJECT_ID",
+              "EXPLANATION_OUTPUT_CONSISTENCY"
+            ]
+          },
+          "preconditions": [
+            "registered_source_available:local_explanation"
+          ],
+          "depends_on": [
+            "step:issue:MODEL_EXPLAINER_VERSION:1"
+          ],
+          "expected_postconditions": [
+            "contract_satisfied:EXPLANATION_OBJECT_ID",
+            "contract_satisfied:EXPLANATION_OUTPUT_CONSISTENCY"
+          ],
+          "verification_checks": [
+            "revalidate:EXPLANATION_OBJECT_ID",
+            "rebuild_route",
+            "recertify_route",
+            "revalidate:EXPLANATION_OUTPUT_CONSISTENCY"
+          ],
+          "fallback_step_ids": [],
+          "rollback_operation": "restore_previous_artifact_snapshot",
+          "estimated_cost": 4.0,
+          "requires_human_approval": true,
+          "executable": false
+        }
+      ],
+      "total_estimated_cost": 8.0,
+      "fully_executable": false,
+      "unresolved_issues": [
+        "INPUT_FEATURE_SCHEMA",
+        "issue:AUDIT_ARTIFACT_HASH"
+      ],
+      "trace_sha256": "a13c4545dfce2adf65ad59dcccd697fca22b6ab6f64dfac503cfce5c02e10f10"
+    },
+    "recertification": null,
+    "user_summary": "Объяснительный маршрут не подтверждён; обнаружено нарушений: 5. Контракт AUDIT_ARTIFACT_HASH не может быть проверен: обязательное значение доступно. Контракт EXPLANATION_OBJECT_ID не может быть проверен: наблюдаемое значение отсутствует. Контракт EXPLANATION_OUTPUT_CONSISTENCY не может быть проверен: наблюдаемое значение отсутствует.  Перед повторным использованием требуется выполнить предложенный план и заново проверить маршрут.  Заключение относится к целостности маршрута и не означает, что прогноз модели обязательно ошибочен.",
+    "expert_summary": "Статус: partially_valid. Проверено контрактов: 13.\ninsufficient_evidence: AUDIT_ARTIFACT_HASH; источник: audit_artifact.\ninsufficient_evidence: EXPLANATION_OBJECT_ID; источник: local_explanation.\ninsufficient_evidence: EXPLANATION_OUTPUT_CONSISTENCY; источник: local_explanation.\ncontract_mismatch: INPUT_FEATURE_SCHEMA; источник: input.\ninsufficient_evidence: MODEL_EXPLAINER_VERSION; источник: explainer.\nДиагностический разрез: contract:AUDIT_ARTIFACT_HASH/field:artifact_sha256/violation:insufficient_evidence, node:explainer/field:_/violation:source_component, node:local_explanation/field:_/violation:source_component; стоимость 2.1; optimal=False.\nПлан repair:route:S3_MISSING_REQUIRED_FEATURE:bcw:s3_missing_required_feature:a13c4545dfce: шагов 2; полностью исполним=False.",
+    "audit_summary": "route_id=route:S3_MISSING_REQUIRED_FEATURE:bcw:s3_missing_required_feature; schema=1.0; nodes=13; edges=12; contracts=13; checked=13; issues=5; solver=exact_branch_and_bound; plan=repair:route:S3_MISSING_REQUIRED_FEATURE:bcw:s3_missing_required_feature:a13c4545dfce; recertification=not_run; route_sha256=d82d8f442a68bddcca699c0b943e9d9592d469101e4741fbebee44039f42b053.",
+    "limitations": [
+      "Заключение относится к структурной целостности маршрута и не доказывает ошибочность прогноза.",
+      "Ближайшая причина не считается корневой причинно-следственной связью без независимого журнала изменений.",
+      "Часть обязательных сведений отсутствует; точная диагностика ограничена.",
+      "Оптимальность диагностического разреза не доказана.",
+      "План содержит рекомендации или шаги, требующие внешнего исполнения."
+    ],
+    "trace": "{\"issues\":[{\"affected_edges\":[],\"affected_fields\":[\"artifact_sha256\"],\"affected_nodes\":[\"audit_artifact\"],\"category\":\"provenance\",\"cause_candidates\":[{\"cause_id\":\"issue:AUDIT_ARTIFACT_HASH:symptom\",\"confidence\":null,\"level\":\"symptom\",\"statement\":\"Контракт AUDIT_ARTIFACT_HASH не может быть проверен: обязательное значение доступно.\",\"status\":\"observed\",\"supporting_evidence\":[\"evidence:audit_artifact\"]},{\"cause_id\":\"issue:AUDIT_ARTIFACT_HASH:contract\",\"confidence\":1.0,\"level\":\"contract_violation\",\"statement\":\"Не выполнен контракт AUDIT_ARTIFACT_HASH.\",\"status\":\"verified\",\"supporting_evidence\":[\"evidence:audit_artifact\"]},{\"cause_id\":\"issue:AUDIT_ARTIFACT_HASH:proximate\",\"confidence\":null,\"level\":\"proximate_cause\",\"statement\":\"Ближайшее установленное нарушение связано с audit_artifact.\",\"status\":\"evidence_supported\",\"supporting_evidence\":[\"evidence:audit_artifact\"]},{\"cause_id\":\"issue:AUDIT_ARTIFACT_HASH:source\",\"confidence\":null,\"level\":\"source_component\",\"statement\":\"Компонент-источник: audit_artifact.\",\"status\":\"localized\",\"supporting_evidence\":[\"evidence:audit_artifact\"]}],\"code\":\"insufficient_evidence\",\"confidence\":null,\"evidence_refs\":[\"evidence:audit_artifact\"],\"insufficient_evidence\":true,\"issue_id\":\"issue:AUDIT_ARTIFACT_HASH\",\"repairable\":true,\"severity\":\"error\",\"source_nodes\":[\"audit_artifact\"],\"symptom\":\"Контракт AUDIT_ARTIFACT_HASH не может быть проверен: обязательное значение доступно.\",\"unknown\":false,\"violated_contract\":\"AUDIT_ARTIFACT_HASH\"},{\"affected_edges\":[],\"affected_fields\":[\"object_id\"],\"affected_nodes\":[\"local_explanation\"],\"category\":\"explainer\",\"cause_candidates\":[{\"cause_id\":\"issue:EXPLANATION_OBJECT_ID:symptom\",\"confidence\":null,\"level\":\"symptom\",\"statement\":\"Контракт EXPLANATION_OBJECT_ID не может быть проверен: наблюдаемое значение отсутствует.\",\"status\":\"observed\",\"supporting_evidence\":[\"evidence:local_explanation\"]},{\"cause_id\":\"issue:EXPLANATION_OBJECT_ID:contract\",\"confidence\":1.0,\"level\":\"contract_violation\",\"statement\":\"Не выполнен контракт EXPLANATION_OBJECT_ID.\",\"status\":\"verified\",\"supporting_evidence\":[\"evidence:local_explanation\"]},{\"cause_id\":\"issue:EXPLANATION_OBJECT_ID:proximate\",\"confidence\":null,\"level\":\"proximate_cause\",\"statement\":\"Ближайшее установленное нарушение связано с local_explanation.\",\"status\":\"evidence_supported\",\"supporting_evidence\":[\"evidence:local_explanation\"]},{\"cause_id\":\"issue:EXPLANATION_OBJECT_ID:source\",\"confidence\":null,\"level\":\"source_component\",\"statement\":\"Компонент-источник: local_explanation.\",\"status\":\"localized\",\"supporting_evidence\":[\"evidence:local_explanation\"]}],\"code\":\"insufficient_evidence\",\"confidence\":null,\"evidence_refs\":[\"evidence:local_explanation\"],\"insufficient_evidence\":true,\"issue_id\":\"issue:EXPLANATION_OBJECT_ID\",\"repairable\":true,\"severity\":\"error\",\"source_nodes\":[\"local_explanation\"],\"symptom\":\"Контракт EXPLANATION_OBJECT_ID не может быть проверен: наблюдаемое значение отсутствует.\",\"unknown\":false,\"violated_contract\":\"EXPLANATION_OBJECT_ID\"},{\"affected_edges\":[],\"affected_fields\":[\"output_difference\"],\"affected_nodes\":[\"local_explanation\"],\"category\":\"explainer\",\"cause_candidates\":[{\"cause_id\":\"issue:EXPLANATION_OUTPUT_CONSISTENCY:symptom\",\"confidence\":null,\"level\":\"symptom\",\"statement\":\"Контракт EXPLANATION_OUTPUT_CONSISTENCY не может быть проверен: наблюдаемое значение отсутствует.\",\"status\":\"observed\",\"supporting_evidence\":[\"evidence:local_explanation\"]},{\"cause_id\":\"issue:EXPLANATION_OUTPUT_CONSISTENCY:contract\",\"confidence\":1.0,\"level\":\"contract_violation\",\"statement\":\"Не выполнен контракт EXPLANATION_OUTPUT_CONSISTENCY.\",\"status\":\"verified\",\"supporting_evidence\":[\"evidence:local_explanation\"]},{\"cause_id\":\"issue:EXPLANATION_OUTPUT_CONSISTENCY:proximate\",\"confidence\":null,\"level\":\"proximate_cause\",\"statement\":\"Ближайшее установленное нарушение связано с local_explanation.\",\"status\":\"evidence_supported\",\"supporting_evidence\":[\"evidence:local_explanation\"]},{\"cause_id\":\"issue:EXPLANATION_OUTPUT_CONSISTENCY:source\",\"confidence\":null,\"level\":\"source_component\",\"statement\":\"Компонент-источник: local_explanation.\",\"status\":\"localized\",\"supporting_evidence\":[\"evidence:local_explanation\"]}],\"code\":\"insufficient_evidence\",\"confidence\":null,\"evidence_refs\":[\"evidence:local_explanation\"],\"insufficient_evidence\":true,\"issue_id\":\"issue:EXPLANATION_OUTPUT_CONSISTENCY\",\"repairable\":true,\"severity\":\"error\",\"source_nodes\":[\"local_explanation\"],\"symptom\":\"Контракт EXPLANATION_OUTPUT_CONSISTENCY не может быть проверен: наблюдаемое значение отсутствует.\",\"unknown\":false,\"violated_contract\":\"EXPLANATION_OUTPUT_CONSISTENCY\"},{\"affected_edges\":[],\"affected_fields\":[\"schema_complete\"],\"affected_nodes\":[\"input\"],\"category\":\"data\",\"cause_candidates\":[{\"cause_id\":\"issue:INPUT_FEATURE_SCHEMA:symptom\",\"confidence\":1.0,\"level\":\"symptom\",\"statement\":\"Для input.schema_complete получено False, требуется True.\",\"status\":\"observed\",\"supporting_evidence\":[\"evidence:input\"]},{\"cause_id\":\"issue:INPUT_FEATURE_SCHEMA:contract\",\"confidence\":1.0,\"level\":\"contract_violation\",\"statement\":\"Не выполнен контракт INPUT_FEATURE_SCHEMA.\",\"status\":\"verified\",\"supporting_evidence\":[\"evidence:input\"]},{\"cause_id\":\"issue:INPUT_FEATURE_SCHEMA:proximate\",\"confidence\":1.0,\"level\":\"proximate_cause\",\"statement\":\"Ближайшее установленное нарушение связано с input.\",\"status\":\"evidence_supported\",\"supporting_evidence\":[\"evidence:input\"]},{\"cause_id\":\"issue:INPUT_FEATURE_SCHEMA:source\",\"confidence\":1.0,\"level\":\"source_component\",\"statement\":\"Компонент-источник: input.\",\"status\":\"localized\",\"supporting_evidence\":[\"evidence:input\"]}],\"code\":\"contract_mismatch\",\"confidence\":1.0,\"evidence_refs\":[\"evidence:input\"],\"insufficient_evidence\":false,\"issue_id\":\"issue:INPUT_FEATURE_SCHEMA\",\"repairable\":false,\"severity\":\"error\",\"source_nodes\":[\"input\"],\"symptom\":\"Для input.schema_complete получено False, требуется True.\",\"unknown\":false,\"violated_contract\":\"INPUT_FEATURE_SCHEMA\"},{\"affected_edges\":[],\"affected_fields\":[\"model_version\"],\"affected_nodes\":[\"explainer\"],\"category\":\"explainer\",\"cause_candidates\":[{\"cause_id\":\"issue:MODEL_EXPLAINER_VERSION:symptom\",\"confidence\":null,\"level\":\"symptom\",\"statement\":\"Контракт MODEL_EXPLAINER_VERSION не может быть проверен: наблюдаемое значение отсутствует.\",\"status\":\"observed\",\"supporting_evidence\":[\"evidence:explainer\"]},{\"cause_id\":\"issue:MODEL_EXPLAINER_VERSION:contract\",\"confidence\":1.0,\"level\":\"contract_violation\",\"statement\":\"Не выполнен контракт MODEL_EXPLAINER_VERSION.\",\"status\":\"verified\",\"supporting_evidence\":[\"evidence:explainer\"]},{\"cause_id\":\"issue:MODEL_EXPLAINER_VERSION:proximate\",\"confidence\":null,\"level\":\"proximate_cause\",\"statement\":\"Ближайшее установленное нарушение связано с explainer.\",\"status\":\"evidence_supported\",\"supporting_evidence\":[\"evidence:explainer\"]},{\"cause_id\":\"issue:MODEL_EXPLAINER_VERSION:source\",\"confidence\":null,\"level\":\"source_component\",\"statement\":\"Компонент-источник: explainer.\",\"status\":\"localized\",\"supporting_evidence\":[\"evidence:explainer\"]}],\"code\":\"insufficient_evidence\",\"confidence\":null,\"evidence_refs\":[\"evidence:explainer\"],\"insufficient_evidence\":true,\"issue_id\":\"issue:MODEL_EXPLAINER_VERSION\",\"repairable\":true,\"severity\":\"error\",\"source_nodes\":[\"explainer\"],\"symptom\":\"Контракт MODEL_EXPLAINER_VERSION не может быть проверен: наблюдаемое значение отсутствует.\",\"unknown\":false,\"violated_contract\":\"MODEL_EXPLAINER_VERSION\"}],\"limitations\":[\"Заключение относится к структурной целостности маршрута и не доказывает ошибочность прогноза.\",\"Ближайшая причина не считается корневой причинно-следственной связью без независимого журнала изменений.\",\"Часть обязательных сведений отсутствует; точная диагностика ограничена.\",\"Оптимальность диагностического разреза не доказана.\",\"План содержит рекомендации или шаги, требующие внешнего исполнения.\"],\"minimal_cut\":{\"affected_nodes\":[\"explainer\",\"local_explanation\"],\"covered_obligations\":[\"AUDIT_ARTIFACT_HASH\",\"EXPLANATION_OBJECT_ID\",\"EXPLANATION_OUTPUT_CONSISTENCY\",\"MODEL_EXPLAINER_VERSION\"],\"defect_atoms\":[{\"field\":\"artifact_sha256\",\"repair_cost\":1.0,\"repairable\":true,\"subject_id\":\"AUDIT_ARTIFACT_HASH\",\"subject_kind\":\"contract\",\"violation_code\":\"insufficient_evidence\"},{\"field\":null,\"repair_cost\":0.1,\"repairable\":true,\"subject_id\":\"explainer\",\"subject_kind\":\"node\",\"violation_code\":\"source_component\"},{\"field\":null,\"repair_cost\":1.0,\"repairable\":true,\"subject_id\":\"local_explanation\",\"subject_kind\":\"node\",\"violation_code\":\"source_component\"}],\"enumeration_complete\":true,\"equivalent_optimal_cuts\":[[{\"field\":\"artifact_sha256\",\"repair_cost\":1.0,\"repairable\":true,\"subject_id\":\"AUDIT_ARTIFACT_HASH\",\"subject_kind\":\"contract\",\"violation_code\":\"insufficient_evidence\"},{\"field\":null,\"repair_cost\":0.1,\"repairable\":true,\"subject_id\":\"explainer\",\"subject_kind\":\"node\",\"violation_code\":\"source_component\"},{\"field\":null,\"repair_cost\":1.0,\"repairable\":true,\"subject_id\":\"local_explanation\",\"subject_kind\":\"node\",\"violation_code\":\"source_component\"}],[{\"field\":\"artifact_sha256\",\"repair_cost\":1.0,\"repairable\":true,\"subject_id\":\"AUDIT_ARTIFACT_HASH\",\"subject_kind\":\"contract\",\"violation_code\":\"insufficient_evidence\"},{\"field\":\"model_version\",\"repair_cost\":0.1,\"repairable\":true,\"subject_id\":\"explainer\",\"subject_kind\":\"node\",\"violation_code\":\"insufficient_evidence\"},{\"field\":null,\"repair_cost\":1.0,\"repairable\":true,\"subject_id\":\"local_explanation\",\"subject_kind\":\"node\",\"violation_code\":\"source_component\"}],[{\"field\":null,\"repair_cost\":1.0,\"repairable\":true,\"subject_id\":\"audit_artifact\",\"subject_kind\":\"node\",\"violation_code\":\"source_component\"},{\"field\":null,\"repair_cost\":0.1,\"repairable\":true,\"subject_id\":\"explainer\",\"subject_kind\":\"node\",\"violation_code\":\"source_component\"},{\"field\":null,\"repair_cost\":1.0,\"repairable\":true,\"subject_id\":\"local_explanation\",\"subject_kind\":\"node\",\"violation_code\":\"source_component\"}],[{\"field\":null,\"repair_cost\":1.0,\"repairable\":true,\"subject_id\":\"audit_artifact\",\"subject_kind\":\"node\",\"violation_code\":\"source_component\"},{\"field\":\"model_version\",\"repair_cost\":0.1,\"repairable\":true,\"subject_id\":\"explainer\",\"subject_kind\":\"node\",\"violation_code\":\"insufficient_evidence\"},{\"field\":null,\"repair_cost\":1.0,\"repairable\":true,\"subject_id\":\"local_explanation\",\"subject_kind\":\"node\",\"violation_code\":\"source_component\"}],[{\"field\":\"artifact_sha256\",\"repair_cost\":1.0,\"repairable\":true,\"subject_id\":\"audit_artifact\",\"subject_kind\":\"node\",\"violation_code\":\"insufficient_evidence\"},{\"field\":null,\"repair_cost\":0.1,\"repairable\":true,\"subject_id\":\"explainer\",\"subject_kind\":\"node\",\"violation_code\":\"source_component\"},{\"field\":null,\"repair_cost\":1.0,\"repairable\":true,\"subject_id\":\"local_explanation\",\"subject_kind\":\"node\",\"violation_code\":\"source_component\"}],[{\"field\":\"artifact_sha256\",\"repair_cost\":1.0,\"repairable\":true,\"subject_id\":\"audit_artifact\",\"subject_kind\":\"node\",\"violation_code\":\"insufficient_evidence\"},{\"field\":\"model_version\",\"repair_cost\":0.1,\"repairable\":true,\"subject_id\":\"explainer\",\"subject_kind\":\"node\",\"violation_code\":\"insufficient_evidence\"},{\"field\":null,\"repair_cost\":1.0,\"repairable\":true,\"subject_id\":\"local_explanation\",\"subject_kind\":\"node\",\"violation_code\":\"source_component\"}]],\"lower_bound\":2.1,\"lower_bound_count\":6,\"optimal\":false,\"optimality_gap\":0.0,\"optimality_proven\":true,\"runtime_ms\":0.0,\"solver\":\"exact_branch_and_bound\",\"total_cost\":2.1,\"truncated\":false,\"uncovered_obligations\":[\"INPUT_FEATURE_SCHEMA\"]},\"recertification\":null,\"repair_plan\":{\"cut\":{\"affected_nodes\":[\"explainer\",\"local_explanation\"],\"covered_obligations\":[\"AUDIT_ARTIFACT_HASH\",\"EXPLANATION_OBJECT_ID\",\"EXPLANATION_OUTPUT_CONSISTENCY\",\"MODEL_EXPLAINER_VERSION\"],\"defect_atoms\":[{\"field\":\"artifact_sha256\",\"repair_cost\":1.0,\"repairable\":true,\"subject_id\":\"AUDIT_ARTIFACT_HASH\",\"subject_kind\":\"contract\",\"violation_code\":\"insufficient_evidence\"},{\"field\":null,\"repair_cost\":0.1,\"repairable\":true,\"subject_id\":\"explainer\",\"subject_kind\":\"node\",\"violation_code\":\"source_component\"},{\"field\":null,\"repair_cost\":1.0,\"repairable\":true,\"subject_id\":\"local_explanation\",\"subject_kind\":\"node\",\"violation_code\":\"source_component\"}],\"enumeration_complete\":true,\"equivalent_optimal_cuts\":[[{\"field\":\"artifact_sha256\",\"repair_cost\":1.0,\"repairable\":true,\"subject_id\":\"AUDIT_ARTIFACT_HASH\",\"subject_kind\":\"contract\",\"violation_code\":\"insufficient_evidence\"},{\"field\":null,\"repair_cost\":0.1,\"repairable\":true,\"subject_id\":\"explainer\",\"subject_kind\":\"node\",\"violation_code\":\"source_component\"},{\"field\":null,\"repair_cost\":1.0,\"repairable\":true,\"subject_id\":\"local_explanation\",\"subject_kind\":\"node\",\"violation_code\":\"source_component\"}],[{\"field\":\"artifact_sha256\",\"repair_cost\":1.0,\"repairable\":true,\"subject_id\":\"AUDIT_ARTIFACT_HASH\",\"subject_kind\":\"contract\",\"violation_code\":\"insufficient_evidence\"},{\"field\":\"model_version\",\"repair_cost\":0.1,\"repairable\":true,\"subject_id\":\"explainer\",\"subject_kind\":\"node\",\"violation_code\":\"insufficient_evidence\"},{\"field\":null,\"repair_cost\":1.0,\"repairable\":true,\"subject_id\":\"local_explanation\",\"subject_kind\":\"node\",\"violation_code\":\"source_component\"}],[{\"field\":null,\"repair_cost\":1.0,\"repairable\":true,\"subject_id\":\"audit_artifact\",\"subject_kind\":\"node\",\"violation_code\":\"source_component\"},{\"field\":null,\"repair_cost\":0.1,\"repairable\":true,\"subject_id\":\"explainer\",\"subject_kind\":\"node\",\"violation_code\":\"source_component\"},{\"field\":null,\"repair_cost\":1.0,\"repairable\":true,\"subject_id\":\"local_explanation\",\"subject_kind\":\"node\",\"violation_code\":\"source_component\"}],[{\"field\":null,\"repair_cost\":1.0,\"repairable\":true,\"subject_id\":\"audit_artifact\",\"subject_kind\":\"node\",\"violation_code\":\"source_component\"},{\"field\":\"model_version\",\"repair_cost\":0.1,\"repairable\":true,\"subject_id\":\"explainer\",\"subject_kind\":\"node\",\"violation_code\":\"insufficient_evidence\"},{\"field\":null,\"repair_cost\":1.0,\"repairable\":true,\"subject_id\":\"local_explanation\",\"subject_kind\":\"node\",\"violation_code\":\"source_component\"}],[{\"field\":\"artifact_sha256\",\"repair_cost\":1.0,\"repairable\":true,\"subject_id\":\"audit_artifact\",\"subject_kind\":\"node\",\"violation_code\":\"insufficient_evidence\"},{\"field\":null,\"repair_cost\":0.1,\"repairable\":true,\"subject_id\":\"explainer\",\"subject_kind\":\"node\",\"violation_code\":\"source_component\"},{\"field\":null,\"repair_cost\":1.0,\"repairable\":true,\"subject_id\":\"local_explanation\",\"subject_kind\":\"node\",\"violation_code\":\"source_component\"}],[{\"field\":\"artifact_sha256\",\"repair_cost\":1.0,\"repairable\":true,\"subject_id\":\"audit_artifact\",\"subject_kind\":\"node\",\"violation_code\":\"insufficient_evidence\"},{\"field\":\"model_version\",\"repair_cost\":0.1,\"repairable\":true,\"subject_id\":\"explainer\",\"subject_kind\":\"node\",\"violation_code\":\"insufficient_evidence\"},{\"field\":null,\"repair_cost\":1.0,\"repairable\":true,\"subject_id\":\"local_explanation\",\"subject_kind\":\"node\",\"violation_code\":\"source_component\"}]],\"lower_bound\":2.1,\"lower_bound_count\":6,\"optimal\":false,\"optimality_gap\":0.0,\"optimality_proven\":true,\"runtime_ms\":0.0,\"solver\":\"exact_branch_and_bound\",\"total_cost\":2.1,\"truncated\":false,\"uncovered_obligations\":[\"INPUT_FEATURE_SCHEMA\"]},\"fully_executable\":false,\"plan_id\":\"repair:route:S3_MISSING_REQUIRED_FEATURE:bcw:s3_missing_required_feature:a13c4545dfce\",\"steps\":[{\"depends_on\":[],\"estimated_cost\":4.0,\"executable\":false,\"expected_postconditions\":[\"contract_satisfied:MODEL_EXPLAINER_VERSION\"],\"fallback_step_ids\":[],\"operation\":\"rerun_explainer_with_registered_components\",\"parameters\":{\"contract_id\":\"MODEL_EXPLAINER_VERSION\",\"issue_id\":\"issue:MODEL_EXPLAINER_VERSION\",\"registered_source_ref\":\"registry://explainer\"},\"preconditions\":[\"registered_source_available:explainer\"],\"provider_id\":\"explainer.rerun\",\"requires_human_approval\":true,\"rollback_operation\":\"restore_previous_artifact_snapshot\",\"step_id\":\"step:issue:MODEL_EXPLAINER_VERSION:1\",\"target\":{\"field\":\"model_version\",\"repair_cost\":4.0,\"repairable\":true,\"subject_id\":\"explainer\",\"subject_kind\":\"node\",\"violation_code\":\"insufficient_evidence\"},\"title\":\"Повторно построить объяснительный артефакт\",\"verification_checks\":[\"revalidate:MODEL_EXPLAINER_VERSION\",\"rebuild_route\",\"recertify_route\"]},{\"depends_on\":[\"step:issue:MODEL_EXPLAINER_VERSION:1\"],\"estimated_cost\":4.0,\"executable\":false,\"expected_postconditions\":[\"contract_satisfied:EXPLANATION_OBJECT_ID\",\"contract_satisfied:EXPLANATION_OUTPUT_CONSISTENCY\"],\"fallback_step_ids\":[],\"operation\":\"rerun_explainer_with_registered_components\",\"parameters\":{\"contract_id\":\"EXPLANATION_OBJECT_ID\",\"contract_ids\":[\"EXPLANATION_OBJECT_ID\",\"EXPLANATION_OUTPUT_CONSISTENCY\"],\"issue_id\":\"issue:EXPLANATION_OBJECT_ID\",\"issue_ids\":[\"issue:EXPLANATION_OBJECT_ID\",\"issue:EXPLANATION_OUTPUT_CONSISTENCY\"],\"registered_source_ref\":\"registry://local_explanation\"},\"preconditions\":[\"registered_source_available:local_explanation\"],\"provider_id\":\"explainer.rerun\",\"requires_human_approval\":true,\"rollback_operation\":\"restore_previous_artifact_snapshot\",\"step_id\":\"step:issue:EXPLANATION_OBJECT_ID:1\",\"target\":{\"field\":\"object_id\",\"repair_cost\":4.0,\"repairable\":true,\"subject_id\":\"local_explanation\",\"subject_kind\":\"node\",\"violation_code\":\"insufficient_evidence\"},\"title\":\"Повторно построить объяснительный артефакт\",\"verification_checks\":[\"revalidate:EXPLANATION_OBJECT_ID\",\"rebuild_route\",\"recertify_route\",\"revalidate:EXPLANATION_OUTPUT_CONSISTENCY\"]}],\"total_estimated_cost\":8.0,\"trace_sha256\":\"a13c4545dfce2adf65ad59dcccd697fca22b6ab6f64dfac503cfce5c02e10f10\",\"unresolved_issues\":[\"INPUT_FEATURE_SCHEMA\",\"issue:AUDIT_ARTIFACT_HASH\"]},\"route\":{\"contracts\":[{\"category\":\"data\",\"contract_id\":\"INPUT_FEATURE_SCHEMA\",\"evidence_refs\":[],\"expected\":true,\"field\":\"schema_complete\",\"kind\":\"equals\",\"mandatory\":true,\"parameters\":{},\"repairable\":false,\"severity\":\"error\",\"source_nodes\":[],\"subject_id\":\"input\"},{\"category\":\"data\",\"contract_id\":\"INPUT_VALUE_DOMAIN\",\"evidence_refs\":[],\"expected\":true,\"field\":\"values_finite\",\"kind\":\"equals\",\"mandatory\":true,\"parameters\":{},\"repairable\":false,\"severity\":\"error\",\"source_nodes\":[],\"subject_id\":\"input\"},{\"category\":\"model\",\"contract_id\":\"MODEL_VERSION\",\"evidence_refs\":[],\"expected\":\"1.0.0\",\"field\":\"model_version\",\"kind\":\"equals\",\"mandatory\":true,\"parameters\":{},\"repairable\":true,\"severity\":\"error\",\"source_nodes\":[],\"subject_id\":\"model\"},{\"category\":\"model\",\"contract_id\":\"MODEL_FEATURE_SCHEMA\",\"evidence_refs\":[],\"expected\":\"5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba\",\"field\":\"feature_schema_sha256\",\"kind\":\"equals\",\"mandatory\":true,\"parameters\":{},\"repairable\":true,\"severity\":\"error\",\"source_nodes\":[],\"subject_id\":\"model\"},{\"category\":\"explainer\",\"contract_id\":\"MODEL_EXPLAINER_VERSION\",\"evidence_refs\":[],\"expected\":\"1.0.0\",\"field\":\"model_version\",\"kind\":\"equals\",\"mandatory\":true,\"parameters\":{},\"repairable\":true,\"severity\":\"error\",\"source_nodes\":[\"explainer\"],\"subject_id\":\"explainer\"},{\"category\":\"explainer\",\"contract_id\":\"EXPLANATION_OBJECT_ID\",\"evidence_refs\":[],\"expected\":\"bcw:s3_missing_required_feature\",\"field\":\"object_id\",\"kind\":\"equals\",\"mandatory\":true,\"parameters\":{},\"repairable\":true,\"severity\":\"error\",\"source_nodes\":[],\"subject_id\":\"local_explanation\"},{\"category\":\"explainer\",\"contract_id\":\"EXPLANATION_OUTPUT_CONSISTENCY\",\"evidence_refs\":[],\"expected\":1e-08,\"field\":\"output_difference\",\"kind\":\"max_value\",\"mandatory\":true,\"parameters\":{},\"repairable\":true,\"severity\":\"error\",\"source_nodes\":[],\"subject_id\":\"local_explanation\"},{\"category\":\"representation\",\"contract_id\":\"RULE_SOURCE_VERSION\",\"evidence_refs\":[],\"expected\":\"bcw-rules/1.0.0\",\"field\":\"version\",\"kind\":\"equals\",\"mandatory\":true,\"parameters\":{},\"repairable\":true,\"severity\":\"error\",\"source_nodes\":[],\"subject_id\":\"rule_source\"},{\"category\":\"provenance\",\"contract_id\":\"REQUIRED_PROVENANCE\",\"evidence_refs\":[],\"expected\":null,\"field\":\"plan_sha256\",\"kind\":\"required_attribute\",\"mandatory\":true,\"parameters\":{},\"repairable\":true,\"severity\":\"error\",\"source_nodes\":[],\"subject_id\":\"audit_artifact\"},{\"category\":\"representation\",\"contract_id\":\"UNCERTAINTY_REPRESENTATION_COVERAGE\",\"evidence_refs\":[],\"expected\":true,\"field\":\"coverage_complete\",\"kind\":\"equals\",\"mandatory\":true,\"parameters\":{},\"repairable\":true,\"severity\":\"error\",\"source_nodes\":[],\"subject_id\":\"uncertainty\"},{\"category\":\"reduction\",\"contract_id\":\"REDUCTION_LOSS_LIMIT\",\"evidence_refs\":[],\"expected\":0.25,\"field\":\"loss\",\"kind\":\"max_value\",\"mandatory\":true,\"parameters\":{},\"repairable\":true,\"severity\":\"error\",\"source_nodes\":[],\"subject_id\":\"reduction\"},{\"category\":\"provenance\",\"contract_id\":\"USER_CLAIM_EVIDENCE_BINDING\",\"evidence_refs\":[],\"expected\":true,\"field\":\"evidence_bound\",\"kind\":\"equals\",\"mandatory\":true,\"parameters\":{},\"repairable\":true,\"severity\":\"error\",\"source_nodes\":[],\"subject_id\":\"user_claim\"},{\"category\":\"provenance\",\"contract_id\":\"AUDIT_ARTIFACT_HASH\",\"evidence_refs\":[],\"expected\":null,\"field\":\"artifact_sha256\",\"kind\":\"required_attribute\",\"mandatory\":true,\"parameters\":{},\"repairable\":true,\"severity\":\"error\",\"source_nodes\":[],\"subject_id\":\"audit_artifact\"}],\"edges\":[{\"edge_id\":\"edge:input:feature_schema\",\"evidence_refs\":[],\"mandatory\":true,\"observed_contract\":{\"relation\":\"adapts\"},\"registered_contract\":{\"relation\":\"adapts\"},\"relation\":\"adapts\",\"relation_status\":\"known_valid\",\"repairable\":false,\"source\":\"input\",\"target\":\"feature_schema\"},{\"edge_id\":\"edge:feature_schema:preprocessor\",\"evidence_refs\":[],\"mandatory\":true,\"observed_contract\":{\"relation\":\"defines\"},\"registered_contract\":{\"relation\":\"defines\"},\"relation\":\"defines\",\"relation_status\":\"known_valid\",\"repairable\":false,\"source\":\"feature_schema\",\"target\":\"preprocessor\"},{\"edge_id\":\"edge:preprocessor:model\",\"evidence_refs\":[],\"mandatory\":true,\"observed_contract\":{\"relation\":\"transforms\"},\"registered_contract\":{\"relation\":\"transforms\"},\"relation\":\"transforms\",\"relation_status\":\"known_valid\",\"repairable\":false,\"source\":\"preprocessor\",\"target\":\"model\"},{\"edge_id\":\"edge:model:prediction\",\"evidence_refs\":[],\"mandatory\":true,\"observed_contract\":{\"relation\":\"predicts\"},\"registered_contract\":{\"relation\":\"predicts\"},\"relation\":\"predicts\",\"relation_status\":\"known_valid\",\"repairable\":false,\"source\":\"model\",\"target\":\"prediction\"},{\"edge_id\":\"edge:prediction:explainer\",\"evidence_refs\":[],\"mandatory\":true,\"observed_contract\":{\"relation\":\"explains\"},\"registered_contract\":{\"relation\":\"explains\"},\"relation\":\"explains\",\"relation_status\":\"known_valid\",\"repairable\":false,\"source\":\"prediction\",\"target\":\"explainer\"},{\"edge_id\":\"edge:explainer:local_explanation\",\"evidence_refs\":[],\"mandatory\":true,\"observed_contract\":{\"relation\":\"instantiates\"},\"registered_contract\":{\"relation\":\"instantiates\"},\"relation\":\"instantiates\",\"relation_status\":\"known_valid\",\"repairable\":false,\"source\":\"explainer\",\"target\":\"local_explanation\"},{\"edge_id\":\"edge:local_explanation:rule_source\",\"evidence_refs\":[],\"mandatory\":true,\"observed_contract\":{\"relation\":\"constrains\"},\"registered_contract\":{\"relation\":\"constrains\"},\"relation\":\"constrains\",\"relation_status\":\"known_valid\",\"repairable\":false,\"source\":\"local_explanation\",\"target\":\"rule_source\"},{\"edge_id\":\"edge:rule_source:uncertainty\",\"evidence_refs\":[],\"mandatory\":true,\"observed_contract\":{\"relation\":\"profiles\"},\"registered_contract\":{\"relation\":\"profiles\"},\"relation\":\"profiles\",\"relation_status\":\"known_valid\",\"repairable\":false,\"source\":\"rule_source\",\"target\":\"uncertainty\"},{\"edge_id\":\"edge:uncertainty:reduction\",\"evidence_refs\":[],\"mandatory\":true,\"observed_contract\":{\"relation\":\"reduces\"},\"registered_contract\":{\"relation\":\"reduces\"},\"relation\":\"reduces\",\"relation_status\":\"known_valid\",\"repairable\":false,\"source\":\"uncertainty\",\"target\":\"reduction\"},{\"edge_id\":\"edge:reduction:observer_action\",\"evidence_refs\":[],\"mandatory\":true,\"observed_contract\":{\"relation\":\"observes\"},\"registered_contract\":{\"relation\":\"observes\"},\"relation\":\"observes\",\"relation_status\":\"known_valid\",\"repairable\":false,\"source\":\"reduction\",\"target\":\"observer_action\"},{\"edge_id\":\"edge:observer_action:user_claim\",\"evidence_refs\":[],\"mandatory\":true,\"observed_contract\":{\"relation\":\"binds\"},\"registered_contract\":{\"relation\":\"binds\"},\"relation\":\"binds\",\"relation_status\":\"known_valid\",\"repairable\":false,\"source\":\"observer_action\",\"target\":\"user_claim\"},{\"edge_id\":\"edge:user_claim:audit_artifact\",\"evidence_refs\":[],\"mandatory\":true,\"observed_contract\":{\"relation\":\"records\"},\"registered_contract\":{\"relation\":\"records\"},\"relation\":\"records\",\"relation_status\":\"known_valid\",\"repairable\":false,\"source\":\"user_claim\",\"target\":\"audit_artifact\"}],\"metadata\":{\"explainable_object\":\"a08a35b0bdc5d45d02e94f992747ab6a32c2e417f164b60c91d8be8c7527fb74\",\"repair_costs\":{\"node:explainer\":0.1}},\"nodes\":[{\"component_id\":\"mlv1.input\",\"component_version\":\"1.0.0\",\"evidence_refs\":[\"evidence:input\"],\"mandatory\":true,\"node_id\":\"input\",\"node_type\":\"input\",\"observed_attributes\":{\"object_id\":\"bcw:s3_missing_required_feature\",\"schema_complete\":false,\"values_finite\":true},\"registered_attributes\":{\"object_id\":\"bcw:s3_missing_required_feature\",\"schema_complete\":false,\"values_finite\":true},\"repairable\":false},{\"component_id\":\"mlv1.feature_schema\",\"component_version\":\"1.0.0\",\"evidence_refs\":[\"evidence:feature_schema\"],\"mandatory\":true,\"node_id\":\"feature_schema\",\"node_type\":\"schema\",\"observed_attributes\":{\"schema_sha256\":\"5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba\"},\"registered_attributes\":{\"schema_sha256\":\"5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba\"},\"repairable\":false},{\"component_id\":\"mlv1.preprocessor\",\"component_version\":\"1.0.0\",\"evidence_refs\":[\"evidence:preprocessor\"],\"mandatory\":true,\"node_id\":\"preprocessor\",\"node_type\":\"preprocessor\",\"observed_attributes\":{\"version\":\"sklearn.StandardScaler/1\"},\"registered_attributes\":{\"version\":\"sklearn.StandardScaler/1\"},\"repairable\":false},{\"component_id\":\"mlv1.model\",\"component_version\":\"1.0.0\",\"evidence_refs\":[\"evidence:model\"],\"mandatory\":true,\"node_id\":\"model\",\"node_type\":\"model\",\"observed_attributes\":{\"feature_schema_sha256\":\"5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba\",\"model_id\":\"bcw-logistic-regression\",\"model_version\":\"1.0.0\"},\"registered_attributes\":{\"feature_schema_sha256\":\"5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba\",\"model_id\":\"bcw-logistic-regression\",\"model_version\":\"1.0.0\"},\"repairable\":false},{\"component_id\":\"mlv1.prediction\",\"component_version\":\"1.0.0\",\"evidence_refs\":[\"evidence:prediction\"],\"mandatory\":true,\"node_id\":\"prediction\",\"node_type\":\"prediction\",\"observed_attributes\":{\"object_id\":\"bcw:s3_missing_required_feature\",\"probability\":null},\"registered_attributes\":{\"object_id\":\"bcw:s3_missing_required_feature\",\"probability\":null},\"repairable\":false},{\"component_id\":\"mlv1.explainer\",\"component_version\":\"1.0.0\",\"evidence_refs\":[\"evidence:explainer\"],\"mandatory\":true,\"node_id\":\"explainer\",\"node_type\":\"explainer\",\"observed_attributes\":{\"explainer_version\":null,\"model_version\":null},\"registered_attributes\":{\"explainer_version\":null,\"model_version\":null},\"repairable\":true},{\"component_id\":\"mlv1.local_explanation\",\"component_version\":\"1.0.0\",\"evidence_refs\":[\"evidence:local_explanation\"],\"mandatory\":true,\"node_id\":\"local_explanation\",\"node_type\":\"explanation\",\"observed_attributes\":{\"object_id\":null,\"output_difference\":null},\"registered_attributes\":{\"object_id\":null,\"output_difference\":null},\"repairable\":false},{\"component_id\":\"mlv1.rule_source\",\"component_version\":\"1.0.0\",\"evidence_refs\":[\"evidence:rule_source\"],\"mandatory\":true,\"node_id\":\"rule_source\",\"node_type\":\"rule_source\",\"observed_attributes\":{\"version\":\"bcw-rules/1.0.0\"},\"registered_attributes\":{\"version\":\"bcw-rules/1.0.0\"},\"repairable\":false},{\"component_id\":\"mlv1.uncertainty\",\"component_version\":\"1.0.0\",\"evidence_refs\":[\"evidence:uncertainty\"],\"mandatory\":true,\"node_id\":\"uncertainty\",\"node_type\":\"uncertainty\",\"observed_attributes\":{\"coverage_complete\":true},\"registered_attributes\":{\"coverage_complete\":true},\"repairable\":false},{\"component_id\":\"mlv1.reduction\",\"component_version\":\"1.0.0\",\"evidence_refs\":[\"evidence:reduction\"],\"mandatory\":true,\"node_id\":\"reduction\",\"node_type\":\"reduction\",\"observed_attributes\":{\"loss\":0.0},\"registered_attributes\":{\"loss\":0.0},\"repairable\":true},{\"component_id\":\"mlv1.observer_action\",\"component_version\":\"1.0.0\",\"evidence_refs\":[\"evidence:observer_action\"],\"mandatory\":true,\"node_id\":\"observer_action\",\"node_type\":\"observer\",\"observed_attributes\":{\"registered\":true},\"registered_attributes\":{\"registered\":true},\"repairable\":false},{\"component_id\":\"mlv1.user_claim\",\"component_version\":\"1.0.0\",\"evidence_refs\":[\"evidence:user_claim\"],\"mandatory\":true,\"node_id\":\"user_claim\",\"node_type\":\"claim\",\"observed_attributes\":{\"evidence_bound\":true},\"registered_attributes\":{\"evidence_bound\":true},\"repairable\":false},{\"component_id\":\"mlv1.audit_artifact\",\"component_version\":\"1.0.0\",\"evidence_refs\":[\"evidence:audit_artifact\"],\"mandatory\":true,\"node_id\":\"audit_artifact\",\"node_type\":\"audit\",\"observed_attributes\":{\"artifact_sha256\":null,\"plan_sha256\":\"dc758d1762500f6b63775cc4211e182de71d401f69c1e9caa2f652ba93e16943\"},\"registered_attributes\":{\"artifact_sha256\":null,\"plan_sha256\":\"dc758d1762500f6b63775cc4211e182de71d401f69c1e9caa2f652ba93e16943\"},\"repairable\":true}],\"route_id\":\"route:S3_MISSING_REQUIRED_FEATURE:bcw:s3_missing_required_feature\",\"schema_version\":\"1.0\"},\"schema_version\":\"1.0\",\"validation\":{\"checked_contracts\":[\"INPUT_FEATURE_SCHEMA\",\"INPUT_VALUE_DOMAIN\",\"MODEL_VERSION\",\"MODEL_FEATURE_SCHEMA\",\"MODEL_EXPLAINER_VERSION\",\"EXPLANATION_OBJECT_ID\",\"EXPLANATION_OUTPUT_CONSISTENCY\",\"RULE_SOURCE_VERSION\",\"REQUIRED_PROVENANCE\",\"UNCERTAINTY_REPRESENTATION_COVERAGE\",\"REDUCTION_LOSS_LIMIT\",\"USER_CLAIM_EVIDENCE_BINDING\",\"AUDIT_ARTIFACT_HASH\"],\"graph_trace_sha256\":\"d82d8f442a68bddcca699c0b943e9d9592d469101e4741fbebee44039f42b053\",\"issues\":[{\"affected_edges\":[],\"affected_fields\":[\"artifact_sha256\"],\"affected_nodes\":[\"audit_artifact\"],\"category\":\"provenance\",\"cause_candidates\":[{\"cause_id\":\"issue:AUDIT_ARTIFACT_HASH:symptom\",\"confidence\":null,\"level\":\"symptom\",\"statement\":\"Контракт AUDIT_ARTIFACT_HASH не может быть проверен: обязательное значение доступно.\",\"status\":\"observed\",\"supporting_evidence\":[\"evidence:audit_artifact\"]},{\"cause_id\":\"issue:AUDIT_ARTIFACT_HASH:contract\",\"confidence\":1.0,\"level\":\"contract_violation\",\"statement\":\"Не выполнен контракт AUDIT_ARTIFACT_HASH.\",\"status\":\"verified\",\"supporting_evidence\":[\"evidence:audit_artifact\"]},{\"cause_id\":\"issue:AUDIT_ARTIFACT_HASH:proximate\",\"confidence\":null,\"level\":\"proximate_cause\",\"statement\":\"Ближайшее установленное нарушение связано с audit_artifact.\",\"status\":\"evidence_supported\",\"supporting_evidence\":[\"evidence:audit_artifact\"]},{\"cause_id\":\"issue:AUDIT_ARTIFACT_HASH:source\",\"confidence\":null,\"level\":\"source_component\",\"statement\":\"Компонент-источник: audit_artifact.\",\"status\":\"localized\",\"supporting_evidence\":[\"evidence:audit_artifact\"]}],\"code\":\"insufficient_evidence\",\"confidence\":null,\"evidence_refs\":[\"evidence:audit_artifact\"],\"insufficient_evidence\":true,\"issue_id\":\"issue:AUDIT_ARTIFACT_HASH\",\"repairable\":true,\"severity\":\"error\",\"source_nodes\":[\"audit_artifact\"],\"symptom\":\"Контракт AUDIT_ARTIFACT_HASH не может быть проверен: обязательное значение доступно.\",\"unknown\":false,\"violated_contract\":\"AUDIT_ARTIFACT_HASH\"},{\"affected_edges\":[],\"affected_fields\":[\"object_id\"],\"affected_nodes\":[\"local_explanation\"],\"category\":\"explainer\",\"cause_candidates\":[{\"cause_id\":\"issue:EXPLANATION_OBJECT_ID:symptom\",\"confidence\":null,\"level\":\"symptom\",\"statement\":\"Контракт EXPLANATION_OBJECT_ID не может быть проверен: наблюдаемое значение отсутствует.\",\"status\":\"observed\",\"supporting_evidence\":[\"evidence:local_explanation\"]},{\"cause_id\":\"issue:EXPLANATION_OBJECT_ID:contract\",\"confidence\":1.0,\"level\":\"contract_violation\",\"statement\":\"Не выполнен контракт EXPLANATION_OBJECT_ID.\",\"status\":\"verified\",\"supporting_evidence\":[\"evidence:local_explanation\"]},{\"cause_id\":\"issue:EXPLANATION_OBJECT_ID:proximate\",\"confidence\":null,\"level\":\"proximate_cause\",\"statement\":\"Ближайшее установленное нарушение связано с local_explanation.\",\"status\":\"evidence_supported\",\"supporting_evidence\":[\"evidence:local_explanation\"]},{\"cause_id\":\"issue:EXPLANATION_OBJECT_ID:source\",\"confidence\":null,\"level\":\"source_component\",\"statement\":\"Компонент-источник: local_explanation.\",\"status\":\"localized\",\"supporting_evidence\":[\"evidence:local_explanation\"]}],\"code\":\"insufficient_evidence\",\"confidence\":null,\"evidence_refs\":[\"evidence:local_explanation\"],\"insufficient_evidence\":true,\"issue_id\":\"issue:EXPLANATION_OBJECT_ID\",\"repairable\":true,\"severity\":\"error\",\"source_nodes\":[\"local_explanation\"],\"symptom\":\"Контракт EXPLANATION_OBJECT_ID не может быть проверен: наблюдаемое значение отсутствует.\",\"unknown\":false,\"violated_contract\":\"EXPLANATION_OBJECT_ID\"},{\"affected_edges\":[],\"affected_fields\":[\"output_difference\"],\"affected_nodes\":[\"local_explanation\"],\"category\":\"explainer\",\"cause_candidates\":[{\"cause_id\":\"issue:EXPLANATION_OUTPUT_CONSISTENCY:symptom\",\"confidence\":null,\"level\":\"symptom\",\"statement\":\"Контракт EXPLANATION_OUTPUT_CONSISTENCY не может быть проверен: наблюдаемое значение отсутствует.\",\"status\":\"observed\",\"supporting_evidence\":[\"evidence:local_explanation\"]},{\"cause_id\":\"issue:EXPLANATION_OUTPUT_CONSISTENCY:contract\",\"confidence\":1.0,\"level\":\"contract_violation\",\"statement\":\"Не выполнен контракт EXPLANATION_OUTPUT_CONSISTENCY.\",\"status\":\"verified\",\"supporting_evidence\":[\"evidence:local_explanation\"]},{\"cause_id\":\"issue:EXPLANATION_OUTPUT_CONSISTENCY:proximate\",\"confidence\":null,\"level\":\"proximate_cause\",\"statement\":\"Ближайшее установленное нарушение связано с local_explanation.\",\"status\":\"evidence_supported\",\"supporting_evidence\":[\"evidence:local_explanation\"]},{\"cause_id\":\"issue:EXPLANATION_OUTPUT_CONSISTENCY:source\",\"confidence\":null,\"level\":\"source_component\",\"statement\":\"Компонент-источник: local_explanation.\",\"status\":\"localized\",\"supporting_evidence\":[\"evidence:local_explanation\"]}],\"code\":\"insufficient_evidence\",\"confidence\":null,\"evidence_refs\":[\"evidence:local_explanation\"],\"insufficient_evidence\":true,\"issue_id\":\"issue:EXPLANATION_OUTPUT_CONSISTENCY\",\"repairable\":true,\"severity\":\"error\",\"source_nodes\":[\"local_explanation\"],\"symptom\":\"Контракт EXPLANATION_OUTPUT_CONSISTENCY не может быть проверен: наблюдаемое значение отсутствует.\",\"unknown\":false,\"violated_contract\":\"EXPLANATION_OUTPUT_CONSISTENCY\"},{\"affected_edges\":[],\"affected_fields\":[\"schema_complete\"],\"affected_nodes\":[\"input\"],\"category\":\"data\",\"cause_candidates\":[{\"cause_id\":\"issue:INPUT_FEATURE_SCHEMA:symptom\",\"confidence\":1.0,\"level\":\"symptom\",\"statement\":\"Для input.schema_complete получено False, требуется True.\",\"status\":\"observed\",\"supporting_evidence\":[\"evidence:input\"]},{\"cause_id\":\"issue:INPUT_FEATURE_SCHEMA:contract\",\"confidence\":1.0,\"level\":\"contract_violation\",\"statement\":\"Не выполнен контракт INPUT_FEATURE_SCHEMA.\",\"status\":\"verified\",\"supporting_evidence\":[\"evidence:input\"]},{\"cause_id\":\"issue:INPUT_FEATURE_SCHEMA:proximate\",\"confidence\":1.0,\"level\":\"proximate_cause\",\"statement\":\"Ближайшее установленное нарушение связано с input.\",\"status\":\"evidence_supported\",\"supporting_evidence\":[\"evidence:input\"]},{\"cause_id\":\"issue:INPUT_FEATURE_SCHEMA:source\",\"confidence\":1.0,\"level\":\"source_component\",\"statement\":\"Компонент-источник: input.\",\"status\":\"localized\",\"supporting_evidence\":[\"evidence:input\"]}],\"code\":\"contract_mismatch\",\"confidence\":1.0,\"evidence_refs\":[\"evidence:input\"],\"insufficient_evidence\":false,\"issue_id\":\"issue:INPUT_FEATURE_SCHEMA\",\"repairable\":false,\"severity\":\"error\",\"source_nodes\":[\"input\"],\"symptom\":\"Для input.schema_complete получено False, требуется True.\",\"unknown\":false,\"violated_contract\":\"INPUT_FEATURE_SCHEMA\"},{\"affected_edges\":[],\"affected_fields\":[\"model_version\"],\"affected_nodes\":[\"explainer\"],\"category\":\"explainer\",\"cause_candidates\":[{\"cause_id\":\"issue:MODEL_EXPLAINER_VERSION:symptom\",\"confidence\":null,\"level\":\"symptom\",\"statement\":\"Контракт MODEL_EXPLAINER_VERSION не может быть проверен: наблюдаемое значение отсутствует.\",\"status\":\"observed\",\"supporting_evidence\":[\"evidence:explainer\"]},{\"cause_id\":\"issue:MODEL_EXPLAINER_VERSION:contract\",\"confidence\":1.0,\"level\":\"contract_violation\",\"statement\":\"Не выполнен контракт MODEL_EXPLAINER_VERSION.\",\"status\":\"verified\",\"supporting_evidence\":[\"evidence:explainer\"]},{\"cause_id\":\"issue:MODEL_EXPLAINER_VERSION:proximate\",\"confidence\":null,\"level\":\"proximate_cause\",\"statement\":\"Ближайшее установленное нарушение связано с explainer.\",\"status\":\"evidence_supported\",\"supporting_evidence\":[\"evidence:explainer\"]},{\"cause_id\":\"issue:MODEL_EXPLAINER_VERSION:source\",\"confidence\":null,\"level\":\"source_component\",\"statement\":\"Компонент-источник: explainer.\",\"status\":\"localized\",\"supporting_evidence\":[\"evidence:explainer\"]}],\"code\":\"insufficient_evidence\",\"confidence\":null,\"evidence_refs\":[\"evidence:explainer\"],\"insufficient_evidence\":true,\"issue_id\":\"issue:MODEL_EXPLAINER_VERSION\",\"repairable\":true,\"severity\":\"error\",\"source_nodes\":[\"explainer\"],\"symptom\":\"Контракт MODEL_EXPLAINER_VERSION не может быть проверен: наблюдаемое значение отсутствует.\",\"unknown\":false,\"violated_contract\":\"MODEL_EXPLAINER_VERSION\"}],\"obligations\":[{\"candidate_atoms\":[{\"field\":\"artifact_sha256\",\"repair_cost\":1.0,\"repairable\":true,\"subject_id\":\"audit_artifact\",\"subject_kind\":\"node\",\"violation_code\":\"insufficient_evidence\"},{\"field\":\"artifact_sha256\",\"repair_cost\":1.0,\"repairable\":true,\"subject_id\":\"AUDIT_ARTIFACT_HASH\",\"subject_kind\":\"contract\",\"violation_code\":\"insufficient_evidence\"},{\"field\":null,\"repair_cost\":1.0,\"repairable\":true,\"subject_id\":\"audit_artifact\",\"subject_kind\":\"node\",\"violation_code\":\"source_component\"}],\"issue_id\":\"issue:AUDIT_ARTIFACT_HASH\",\"obligation_id\":\"AUDIT_ARTIFACT_HASH\",\"repairable\":true},{\"candidate_atoms\":[{\"field\":\"object_id\",\"repair_cost\":1.0,\"repairable\":true,\"subject_id\":\"local_explanation\",\"subject_kind\":\"node\",\"violation_code\":\"insufficient_evidence\"},{\"field\":\"object_id\",\"repair_cost\":1.0,\"repairable\":true,\"subject_id\":\"EXPLANATION_OBJECT_ID\",\"subject_kind\":\"contract\",\"violation_code\":\"insufficient_evidence\"},{\"field\":null,\"repair_cost\":1.0,\"repairable\":true,\"subject_id\":\"local_explanation\",\"subject_kind\":\"node\",\"violation_code\":\"source_component\"}],\"issue_id\":\"issue:EXPLANATION_OBJECT_ID\",\"obligation_id\":\"EXPLANATION_OBJECT_ID\",\"repairable\":true},{\"candidate_atoms\":[{\"field\":\"output_difference\",\"repair_cost\":1.0,\"repairable\":true,\"subject_id\":\"local_explanation\",\"subject_kind\":\"node\",\"violation_code\":\"insufficient_evidence\"},{\"field\":\"output_difference\",\"repair_cost\":1.0,\"repairable\":true,\"subject_id\":\"EXPLANATION_OUTPUT_CONSISTENCY\",\"subject_kind\":\"contract\",\"violation_code\":\"insufficient_evidence\"},{\"field\":null,\"repair_cost\":1.0,\"repairable\":true,\"subject_id\":\"local_explanation\",\"subject_kind\":\"node\",\"violation_code\":\"source_component\"}],\"issue_id\":\"issue:EXPLANATION_OUTPUT_CONSISTENCY\",\"obligation_id\":\"EXPLANATION_OUTPUT_CONSISTENCY\",\"repairable\":true},{\"candidate_atoms\":[],\"issue_id\":\"issue:INPUT_FEATURE_SCHEMA\",\"obligation_id\":\"INPUT_FEATURE_SCHEMA\",\"repairable\":false},{\"candidate_atoms\":[{\"field\":\"model_version\",\"repair_cost\":0.1,\"repairable\":true,\"subject_id\":\"explainer\",\"subject_kind\":\"node\",\"violation_code\":\"insufficient_evidence\"},{\"field\":\"model_version\",\"repair_cost\":1.0,\"repairable\":true,\"subject_id\":\"MODEL_EXPLAINER_VERSION\",\"subject_kind\":\"contract\",\"violation_code\":\"insufficient_evidence\"},{\"field\":null,\"repair_cost\":0.1,\"repairable\":true,\"subject_id\":\"explainer\",\"subject_kind\":\"node\",\"violation_code\":\"source_component\"}],\"issue_id\":\"issue:MODEL_EXPLAINER_VERSION\",\"obligation_id\":\"MODEL_EXPLAINER_VERSION\",\"repairable\":true}],\"passed_contracts\":[\"INPUT_VALUE_DOMAIN\",\"MODEL_FEATURE_SCHEMA\",\"MODEL_VERSION\",\"REDUCTION_LOSS_LIMIT\",\"REQUIRED_PROVENANCE\",\"RULE_SOURCE_VERSION\",\"UNCERTAINTY_REPRESENTATION_COVERAGE\",\"USER_CLAIM_EVIDENCE_BINDING\"],\"status\":\"partially_valid\"}}",
+    "trace_sha256": "48fe396cc27d382474ccaaaf8626772680938da76809e05c7c28276a4a2bc2fe",
+    "schema_version": "1.0"
+  }
+}

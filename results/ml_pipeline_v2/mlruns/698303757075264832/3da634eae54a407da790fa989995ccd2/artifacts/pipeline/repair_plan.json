@@ -1,0 +1,96 @@
+{
+  "plan_id": "repair:route:S9_REGISTERED_REPAIR:bcw:s9_registered_repair:81963065d947",
+  "cut": {
+    "defect_atoms": [
+      {
+        "subject_kind": "node",
+        "subject_id": "explainer",
+        "field": null,
+        "violation_code": "source_component",
+        "repairable": true,
+        "repair_cost": 0.1
+      }
+    ],
+    "affected_nodes": [
+      "explainer"
+    ],
+    "total_cost": 0.1,
+    "optimal": true,
+    "solver": "exact_branch_and_bound",
+    "covered_obligations": [
+      "MODEL_EXPLAINER_VERSION"
+    ],
+    "uncovered_obligations": [],
+    "equivalent_optimal_cuts": [
+      [
+        {
+          "subject_kind": "node",
+          "subject_id": "explainer",
+          "field": null,
+          "violation_code": "source_component",
+          "repairable": true,
+          "repair_cost": 0.1
+        }
+      ],
+      [
+        {
+          "subject_kind": "node",
+          "subject_id": "explainer",
+          "field": "model_version",
+          "violation_code": "contract_mismatch",
+          "repairable": true,
+          "repair_cost": 0.1
+        }
+      ]
+    ],
+    "runtime_ms": 0.0,
+    "enumeration_complete": true,
+    "truncated": false,
+    "lower_bound_count": 2,
+    "optimality_proven": true,
+    "lower_bound": 0.1,
+    "optimality_gap": 0.0
+  },
+  "steps": [
+    {
+      "step_id": "step:issue:MODEL_EXPLAINER_VERSION:1",
+      "title": "Повторно построить объяснительный артефакт",
+      "target": {
+        "subject_kind": "node",
+        "subject_id": "explainer",
+        "field": "model_version",
+        "violation_code": "contract_mismatch",
+        "repairable": true,
+        "repair_cost": 4.0
+      },
+      "provider_id": "explainer.rerun",
+      "operation": "rerun_explainer_with_registered_components",
+      "parameters": {
+        "issue_id": "issue:MODEL_EXPLAINER_VERSION",
+        "contract_id": "MODEL_EXPLAINER_VERSION",
+        "registered_source_ref": "registry://explainer"
+      },
+      "preconditions": [
+        "registered_source_available:explainer"
+      ],
+      "depends_on": [],
+      "expected_postconditions": [
+        "contract_satisfied:MODEL_EXPLAINER_VERSION"
+      ],
+      "verification_checks": [
+        "revalidate:MODEL_EXPLAINER_VERSION",
+        "rebuild_route",
+        "recertify_route"
+      ],
+      "fallback_step_ids": [],
+      "rollback_operation": "restore_previous_artifact_snapshot",
+      "estimated_cost": 4.0,
+      "requires_human_approval": true,
+      "executable": false
+    }
+  ],
+  "total_estimated_cost": 4.0,
+  "fully_executable": false,
+  "unresolved_issues": [],
+  "trace_sha256": "81963065d94726a799ccdf085806b1d1d193e8d1777992d13a7adb553d447279"
+}

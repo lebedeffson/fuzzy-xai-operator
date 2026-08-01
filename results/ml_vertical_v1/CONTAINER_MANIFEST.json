@@ -1,0 +1,13 @@
+{
+  "api_ready": true,
+  "api_smoke_action": "ACCEPT",
+  "api_smoke_representation": "F0",
+  "api_smoke_route_status": "valid",
+  "artifact_count": 9,
+  "container_image_id": "sha256:8d17b573beec919496fb4a07e2845d74e9af9d955057db09a30e246ef5275301",
+  "docker_compose_services": ["api", "ui", "mlflow"],
+  "mlflow_health": "OK",
+  "mlflow_integration_status": "MLFLOW_INTEGRATION_PASS",
+  "smoke_host_ports": {"api": 18000, "ui": 18092, "mlflow": 15001},
+  "ui_title": "FuzzyXAI ML Vertical v1"
+}

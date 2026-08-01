@@ -1,0 +1,36 @@
+{
+  "schema_version": "1.0",
+  "method_commit": "7aa72a19a70bdb5eedea520742f269bc6c26aeea",
+  "method_code_status": "FROZEN_FOR_RUNTIME_COLLECTION",
+  "method_code_sha256": "5e14cbcd583aeb447b70be022147633588f6ee9ae95dcfb637be2e399e47c9ec",
+  "protocol_lock_sha256": "6b22c2a02cf639a00196715a91b2078bfebc9f90c77aee5ea3d4b4aa4b0f2caf",
+  "protected_files": {
+    "framework/fuzzyxai/fuzzyxai/experiments/h10_c5b.py": "7236ab7560ed0edf706845889eeafee9a40912993500c88745234cc2f1b147cb",
+    "framework/fuzzyxai/fuzzyxai/gold_repository/__init__.py": "0ca66f5e199a48304cf94757d90dc9d3d03d666a0f9e689846336301c8c8ae14",
+    "framework/fuzzyxai/fuzzyxai/gold_repository/scorer.py": "cbe881cc831b8d839c67adb1bd15e1d798c0d8496bd37147aacb742bc6c4e1c5",
+    "framework/fuzzyxai/fuzzyxai/repository_diagnostics/__init__.py": "f1144f2a66da60da8f6cabe541ae1f57691aae290d570a8f486e26c7ea080680",
+    "framework/fuzzyxai/fuzzyxai/repository_diagnostics/auditor.py": "140fd4a46dfe1d879348a8bf5a1f96099b77d0b679e8b5a39912a5f01a69ee12",
+    "framework/fuzzyxai/fuzzyxai/repository_diagnostics/graph.py": "06f5c314c38ff3cec82dcda03aea51be987e1654902f787340131f0bed3b7723",
+    "framework/fuzzyxai/fuzzyxai/repository_diagnostics/importer.py": "0dc9ca14369dd897d3ded867bf5977339ea7b203d041d926ead140713fa9b9b5",
+    "framework/fuzzyxai/fuzzyxai/repository_diagnostics/recovery.py": "85f5692f76ff9e61cd315bf6a38720225cbe5e4e57d7e37f87739f5b7be2b104",
+    "framework/fuzzyxai/operators_manifest.yaml": "479fa55460426a1726f57a5ed5f745b0ad2e872eeefb21470dd2e3e865133949",
+    "scripts/ch4_revision/prepare_h10_c5b_sources.py": "9579987f064af1395dec9c95cc150d49a86cc33893ed5e353cf6177c7ed8ea2c",
+    "scripts/ch4_revision/run_h10_c5b.py": "4ca187aecc800441ab77887237bb507c1dc68712b6d2a122a4f495f6e5eb3c22"
+  },
+  "allowed_post_freeze_changes": [
+    "runtime collection infrastructure",
+    "CI wiring",
+    "runtime availability logs",
+    "packaging and reports"
+  ],
+  "forbidden_post_freeze_changes": [
+    "repository graph construction",
+    "top-k ranking",
+    "global set cover",
+    "weights",
+    "abstention",
+    "evidence fusion",
+    "primary endpoint",
+    "success gates"
+  ]
+}

@@ -1,0 +1,113 @@
+name: H10-C7 prospective development
+
+on:
+  workflow_dispatch:
+    inputs:
+      operation:
+        description: Validation or open development tournament
+        type: choice
+        options:
+          - validate
+          - run-development
+        default: validate
+        required: true
+      source_manifests:
+        description: Space-separated enriched open-development manifests
+        type: string
+        default: /work/h10-c7/source-manifests/*.jsonl
+        required: false
+      work_dir:
+        description: Persistent H10-C7 development directory
+        type: string
+        default: /work/h10-c7
+        required: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: h10-c7-development-${{ github.ref }}-${{ inputs.operation }}
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12"]
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+      - name: Install test dependencies
+        run: python -m pip install -e ".[dev]"
+      - name: Validate H10-C7
+        run: make h10-c7-test H10_C3_PYTHON=python
+      - name: Verify protected parent results
+        run: |
+          printf '%s  %s\n' \
+            60810d8ee58b20c6d9b1a5e4800c23fc678ce9e698ad70d339e91d37a7f69ba1 \
+            results/h10_c5c/H10_C5C_DEVELOPMENT_STATUS.json | sha256sum -c -
+          printf '%s  %s\n' \
+            a1ac841880e9acac2c09eac79d18721d17f83da5e8cec19a7057fa8cb453fc6d \
+            results/h10_c5b/H10_C5B_FINAL_STATUS.json | sha256sum -c -
+          printf '%s  %s\n' \
+            479fa55460426a1726f57a5ed5f745b0ad2e872eeefb21470dd2e3e865133949 \
+            framework/fuzzyxai/operators_manifest.yaml | sha256sum -c -
+
+  run-development:
+    if: inputs.operation == 'run-development'
+    needs: validate
+    runs-on: [self-hosted, linux, h10-c7-runtime]
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install controller
+        run: python3.11 -m pip install -e ".[dev]" transformers
+      - name: Prepare separate observable and Gold channels
+        env:
+          SOURCE_MANIFESTS: ${{ inputs.source_manifests }}
+          WORK_DIR: ${{ inputs.work_dir }}
+        run: |
+          mkdir -p "$WORK_DIR"
+          python3.11 scripts/ch4_revision/prepare_h10_c7_development.py \
+            $(for item in $SOURCE_MANIFESTS; do printf -- '--source-manifest %q ' "$item"; done) \
+            --observable-output "$WORK_DIR/DEVELOPMENT_MANIFEST.jsonl" \
+            --gold-output "$WORK_DIR/DEVELOPMENT_GOLD.jsonl"
+      - name: Run development-only tournament
+        env:
+          WORK_DIR: ${{ inputs.work_dir }}
+        run: |
+          make h10-c7-run-development \
+            H10_C3_PYTHON=python3.11 \
+            H10_C7_DEVELOPMENT_MANIFEST="$WORK_DIR/DEVELOPMENT_MANIFEST.jsonl" \
+            H10_C7_DEVELOPMENT_GOLD="$WORK_DIR/DEVELOPMENT_GOLD.jsonl" \
+            H10_C7_OUTPUT="$WORK_DIR/results"
+      - name: Confirm no held-out output
+        env:
+          WORK_DIR: ${{ inputs.work_dir }}
+        run: |
+          test ! -e "$WORK_DIR/results/HELD_OUT_MANIFEST.jsonl"
+          python3.11 - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          result = json.loads(
+              (Path(os.environ["WORK_DIR"]) / "results/DEVELOPMENT_GATES.json").read_text()
+          )
+          assert result["scientific_result"] == "NOT_EVALUATED"
+          assert result["held_out_created"] is False
+          assert result["held_out_scored"] is False
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: h10-c7-development-${{ github.run_id }}
+          path: ${{ inputs.work_dir }}/results
+          if-no-files-found: warn
+          retention-days: 30

@@ -1,0 +1,21 @@
+{
+  "run_id": "mlp2:cfd91f0223ceaaa12811",
+  "scenario_id": "S2_EXPLAINER_VERSION_MISMATCH",
+  "action": "BLOCK",
+  "pipeline_status": "INVALID",
+  "canonical_source": "MLPipelineService",
+  "prediction": {
+    "object_id": "bcw:pipeline-default",
+    "predicted_class": 0,
+    "probability": 0.00027695735150644503,
+    "raw_score": -8.191370033600295,
+    "model_id": "bcw-logistic-regression",
+    "model_version": "1.0.0",
+    "model_sha256": "c5b042bd9cd865ecc209de958a2cf64ab04b7d0dbba0a6d7d2865895aad7a8e7",
+    "feature_schema_sha256": "5feb56528d0e0bc2070783a206139d9900013b692d15ffdf8c3c0a4127e48aba"
+  },
+  "message_code": "PIPELINE_REQUIRES_REVIEW",
+  "limitations": [
+    "software demonstration; not clinical advice"
+  ]
+}

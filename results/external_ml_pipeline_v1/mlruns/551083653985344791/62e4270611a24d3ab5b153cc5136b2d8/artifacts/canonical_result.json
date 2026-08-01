@@ -1,0 +1,71 @@
+{
+  "action": "BLOCK",
+  "action_correct": true,
+  "artifact_bytes": 439715,
+  "canonical_sha256": "429c402e2f63a43b1e5a96cec3aa50c9531b61e245d6603c3c638f175c20b143",
+  "case_id": "E4_FEATURE_SCHEMA_OR_ORDER",
+  "component_correct": true,
+  "component_id": "external.preprocessing.feature_order",
+  "contract_correct": true,
+  "contract_id": "FEATURE_ORDER",
+  "contracts_checked": 0,
+  "dependent_violations": [
+    "MODEL_INPUT_SCHEMA",
+    "PREDICTION_OUTPUT_SANITY",
+    "EXPLANATION_OUTPUT_CONSISTENCY",
+    "USER_CLAIM_EVIDENCE_BINDING"
+  ],
+  "detected": true,
+  "detected_correct": true,
+  "diagnostic_cut": null,
+  "evidence_completeness": 1.0,
+  "evidence_refs": [
+    "preprocessor_manifest.json",
+    "prediction_manifest.json",
+    "explanation_manifest.json"
+  ],
+  "expected_action": "BLOCK",
+  "expected_contract": "FEATURE_ORDER",
+  "expected_invalid": true,
+  "expected_root_cause": "FEATURE_ORDER",
+  "expected_stage": "PREPROCESSING",
+  "false_blocking": false,
+  "false_certification": false,
+  "fault_category": "GLOBAL",
+  "mode_id": "B_PAIRWISE_RULES",
+  "new_critical_violations": 0,
+  "peak_rss_kb": 393892,
+  "pipeline_id": "ext2-shap-tree-explainer",
+  "pipeline_status": "INVALID",
+  "proposed_repair_count": 5,
+  "recertified": false,
+  "redundant_repair_count": 4,
+  "repair_executed": false,
+  "repair_plan": {
+    "operations": [
+      "restore_feature_schema",
+      "repair_model_input_schema",
+      "repair_prediction_output_sanity",
+      "repair_explanation_output_consistency",
+      "repair_user_claim_evidence_binding"
+    ]
+  },
+  "repairable": true,
+  "reported_symptom_count": 5,
+  "repository_commit": "7716688e0f314d73ed2f90474e911c85bc53c851",
+  "rollback_verified": false,
+  "root_cause": null,
+  "root_cause_correct": false,
+  "run_id": "external:3781780fac02718421ce",
+  "runtime_breakdown_ms": {
+    "audit": 0.6901540000399109,
+    "diagnostic_cut": 0.0,
+    "graph_build": 0.8958509997682995,
+    "recertification": 0.0,
+    "repair_planning": 0.0,
+    "total": 1.5860049998082104
+  },
+  "stage": "PREPROCESSING",
+  "stage_correct": true,
+  "target_contract_repaired": false
+}

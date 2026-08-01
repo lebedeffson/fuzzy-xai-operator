@@ -1,0 +1,47 @@
+{
+  "diagnosis_id": "diagnosis:mlp2:a4810237c2380b747279",
+  "pipeline_status": "INVALID",
+  "failed_stage": "POST_HOC_EXPLANATION",
+  "source_component": "shap_linear_explainer",
+  "violated_contract": "EXPLANATION_OUTPUT_CONSISTENCY",
+  "violated_contracts": [
+    {
+      "contract_id": "EXPLANATION_OUTPUT_CONSISTENCY",
+      "stage": "POST_HOC_EXPLANATION",
+      "component_id": "shap_linear_explainer",
+      "passed": false,
+      "severity": "HIGH",
+      "action": "BLOCK",
+      "observed_value": 0.1,
+      "expected_value": 1e-08,
+      "evidence_refs": [
+        "obs:12838c2d2a2ea255f510"
+      ]
+    }
+  ],
+  "affected_field": "explanation_output_consistency",
+  "observed_value": 0.1,
+  "expected_value": 1e-08,
+  "severity": "HIGH",
+  "recommended_action": "BLOCK",
+  "evidence_refs": [
+    "obs:12838c2d2a2ea255f510"
+  ],
+  "nearest_confirmed_cause": {
+    "component": "shap_linear_explainer",
+    "mutation": {
+      "base_value_delta": 0.1,
+      "absolute_error": 0.1
+    }
+  },
+  "diagnostic_cut": {
+    "contracts": [
+      "EXPLANATION_OUTPUT_CONSISTENCY"
+    ],
+    "evidence_refs": [
+      "obs:12838c2d2a2ea255f510"
+    ]
+  },
+  "confidence": 1.0,
+  "observation_count": 28
+}

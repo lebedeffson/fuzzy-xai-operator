@@ -1,0 +1,101 @@
+{
+  "candidate_schema": [
+    "class",
+    "configuration_key",
+    "dependency",
+    "file",
+    "function",
+    "method",
+    "module",
+    "runtime_symbol",
+    "serialized_artifact"
+  ],
+  "channel_limits": {
+    "bm25": 300,
+    "dense": 300,
+    "graph": 300,
+    "legacy": 50,
+    "runtime": 300,
+    "strict_identifier": 500
+  },
+  "channel_quotas": {
+    "bm25": 5,
+    "global_fill": 5,
+    "graph": 3,
+    "runtime": 4,
+    "strict_identifier": 3
+  },
+  "development_data": {
+    "incidents": 40,
+    "repository_count": 30,
+    "source": "disclosed H10-C7R-v1 held-out",
+    "use": "development_only"
+  },
+  "development_gates": {
+    "contract_reorders_localization": false,
+    "incidents_without_retrievable_gold_atom": 0,
+    "maximum_exact_candidates": 500,
+    "recall_at_20": 0.82,
+    "repository_recall_lower_quartile": 0.75
+  },
+  "gold_schema_rule": {
+    "auxiliary_changed_files": "reported_descriptively",
+    "unit": "incident_has_at_least_one_retrievable_diagnostic_atom"
+  },
+  "hierarchy": {
+    "files": 15,
+    "final_candidates": 20,
+    "pre_rerank_candidates": 40,
+    "symbols_per_file": 3
+  },
+  "new_held_out_created": false,
+  "new_held_out_scored": false,
+  "protocol_id": "H10-C7R-R9-development-v1",
+  "runtime_scoring": {
+    "execution_frequency_weight": -0.03,
+    "failing_test_frequency_weight": 0.6,
+    "last_touch_weight": 0.9
+  },
+  "r9b_ranker": {
+    "backend": "lightgbm_lambdamart",
+    "backend_version": "4.6.0",
+    "candidate_features": [
+      "best_rank_signal",
+      "callee",
+      "caller",
+      "channel_consensus",
+      "dynamic",
+      "executed",
+      "failing_test_frequency",
+      "frequency",
+      "last_touch",
+      "rank_bm25",
+      "rank_cross",
+      "rank_dense",
+      "rank_legacy",
+      "rank_repograph",
+      "rank_runtime",
+      "rank_strict_identifier",
+      "traceback"
+    ],
+    "deterministic": true,
+    "eval_at": 20,
+    "force_col_wise": true,
+    "learning_rate": 0.04,
+    "max_candidates_per_incident": 500,
+    "max_depth": 4,
+    "min_child_samples": 5,
+    "n_estimators": 120,
+    "n_jobs": 1,
+    "num_leaves": 15,
+    "random_state": 1729,
+    "reg_lambda": 0.25,
+    "training_split": "leave_one_repository_out"
+  },
+  "scientific_result": "NOT_EVALUATED",
+  "variants": {
+    "R9A": "wide structural pool plus channel quotas",
+    "R9B": "R9A plus file-to-symbol hierarchy and LORO LambdaMART over normalized ranks",
+    "R9C": "R9B plus locked dense retrieval and top-40 cross-encoder"
+  }
+}

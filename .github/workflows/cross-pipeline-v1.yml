@@ -1,0 +1,67 @@
+name: FuzzyXAI Cross-Pipeline Practical V1
+
+on:
+  push:
+    branches:
+      - feat/fuzzyxai-cross-pipeline-practical-v1
+  pull_request:
+    paths:
+      - "framework/fuzzyxai/fuzzyxai/pipelines/**"
+      - "data/cross_pipeline_v1/**"
+      - "protocol/cross_pipeline_v1/**"
+      - "results/cross_pipeline_v1/**"
+      - "reports/cross_pipeline_v1/**"
+      - "scripts/cross_pipeline_v1/**"
+      - "tests/cross_pipeline_v1/**"
+      - "apps/cross_pipeline_practical.py"
+      - ".github/workflows/cross-pipeline-v1.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  OMP_NUM_THREADS: "1"
+  OPENBLAS_NUM_THREADS: "1"
+  MKL_NUM_THREADS: "1"
+  NUMEXPR_NUM_THREADS: "1"
+  PYTHONPATH: "experiments/h10_c3/src:framework/fuzzyxai:."
+
+jobs:
+  practical:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Install locked dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install --index-url https://download.pytorch.org/whl/cpu torch
+          python -m pip install -e ".[dev,ml-vertical,lightgbm]"
+      - name: Focused tests and static checks
+        run: |
+          make cross-pipeline-v1-test PYTHON=python
+          python -m ruff check framework/fuzzyxai/fuzzyxai/pipelines tests/cross_pipeline_v1 scripts/cross_pipeline_v1 apps/cross_pipeline_practical.py
+          python -m compileall -q framework/fuzzyxai/fuzzyxai/pipelines scripts/cross_pipeline_v1 apps/cross_pipeline_practical.py
+      - name: Verify locked practical evaluation
+        run: |
+          python scripts/cross_pipeline_v1/verify_release.py --skip-mlflow-store
+          python scripts/manuscript_claim_lint.py reports/cross_pipeline_v1/*.md
+          python -m fuzzyxai.audit.operators_manifest --output /tmp/operators-manifest.json
+      - name: Full regression
+        run: python -m pytest -q
+      - name: Upload evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: fuzzyxai-cross-pipeline-v1-${{ github.sha }}
+          path: |
+            protocol/cross_pipeline_v1
+            results/cross_pipeline_v1
+            reports/cross_pipeline_v1
+          if-no-files-found: error

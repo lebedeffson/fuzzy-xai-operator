@@ -1,0 +1,7 @@
+comparison,metric,wins,losses,ties,p_value,holm_p_value
+O_vs_LOCAL,contract_correct,20,0,12,1.9073486328125e-06,7.62939453125e-06
+O_vs_LOCAL,root_cause_correct,32,0,0,4.656612873077393e-10,2.7939677238464355e-09
+O_vs_PAIRWISE,contract_correct,0,0,32,1.0,1.0
+O_vs_PAIRWISE,root_cause_correct,32,0,0,4.656612873077393e-10,2.7939677238464355e-09
+O_vs_GREEDY,contract_correct,0,0,32,1.0,1.0
+O_vs_GREEDY,root_cause_correct,0,0,32,1.0,1.0

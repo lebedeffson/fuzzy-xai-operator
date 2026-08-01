@@ -1,0 +1,102 @@
+{
+  "object_id": "bcw:s3_missing_required_feature",
+  "evidence": [
+    {
+      "evidence_id": "evidence:prediction",
+      "type": "model_output",
+      "subject": "bcw:s3_missing_required_feature",
+      "value": null,
+      "status": "missing",
+      "source_id": "bcw-logistic-regression",
+      "source_version": "1.0.0",
+      "object_id": "bcw:s3_missing_required_feature",
+      "created_at": "2000-01-01T00:00:00Z",
+      "artifact_hash": ""
+    },
+    {
+      "evidence_id": "evidence:local_explanation",
+      "type": "local_explanation",
+      "subject": "bcw:s3_missing_required_feature",
+      "value": null,
+      "status": "missing",
+      "source_id": "shap.LinearExplainer",
+      "source_version": "missing",
+      "object_id": "bcw:s3_missing_required_feature",
+      "created_at": "2000-01-01T00:00:00Z",
+      "artifact_hash": ""
+    }
+  ],
+  "claims": [
+    {
+      "claim_id": "claim:missing",
+      "text": "A prediction was not produced because required input is missing.",
+      "evidence_refs": [
+        "evidence:input"
+      ],
+      "status": "limited",
+      "text_code": "registered_template",
+      "arguments": {},
+      "allowed_views": [
+        "user",
+        "engineer",
+        "auditor"
+      ],
+      "blocked": false
+    }
+  ],
+  "provenance_relations": [
+    {
+      "source_id": "evidence:prediction",
+      "target_id": "claim:prediction",
+      "relation": "supports"
+    },
+    {
+      "source_id": "evidence:local_explanation",
+      "target_id": "claim:features",
+      "relation": "supports"
+    }
+  ],
+  "uncertainty_profile": {
+    "present_types": [
+      "u_ling",
+      "u_num"
+    ],
+    "values": {
+      "u_num": 1.0,
+      "u_ling": 0.05
+    },
+    "aggregate": 0.41000000000000003,
+    "conflict": 0.0,
+    "trace_completeness": 1.0
+  },
+  "representation": {
+    "representation_id": "F0",
+    "membership": {
+      "low": 0.0,
+      "medium": 1.0,
+      "high": 0.0
+    },
+    "covered_uncertainties": [
+      "u_ling",
+      "u_num"
+    ],
+    "cognitive_complexity": 1.0,
+    "computational_complexity": 1.0,
+    "selection_reason": "point evidence is complete and has no registered conflict"
+  },
+  "reduction": {
+    "source_representation": "F0",
+    "target_representation": "F0",
+    "reduced_membership": {
+      "low": 0.0,
+      "medium": 1.0,
+      "high": 0.0
+    },
+    "loss": 0.0,
+    "accepted": true,
+    "maximum_loss": 0.25
+  },
+  "presentation_policy": "evidence_bound_registered_templates",
+  "explain_plan_id": "bcw-logreg-shap-v1/1.0.0",
+  "canonical_hash": "d40f923c210de42d7064601da92a300327575d04c61701f96a622c5908b4c104"
+}

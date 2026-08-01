@@ -1,0 +1,22 @@
+[
+  {
+    "contract_reordering_count": 0,
+    "incident_count": 40,
+    "maximum_exact_candidates": 500,
+    "recall_at_20": 0.5,
+    "repository_count": 30,
+    "repository_recall_lower_quartile": 0.0,
+    "schema_gap_count": 0,
+    "variant": "R9A"
+  },
+  {
+    "contract_reordering_count": 0,
+    "incident_count": 40,
+    "maximum_exact_candidates": 500,
+    "recall_at_20": 0.375,
+    "repository_count": 30,
+    "repository_recall_lower_quartile": 0.0,
+    "schema_gap_count": 0,
+    "variant": "R9B"
+  }
+]

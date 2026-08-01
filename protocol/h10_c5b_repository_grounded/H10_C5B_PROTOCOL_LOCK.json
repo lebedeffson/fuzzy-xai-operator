@@ -1,0 +1,52 @@
+{
+  "protocol_id": "h10-c5b-repository-grounded-v1",
+  "parent_result": "H10-C5",
+  "parent_result_modified": false,
+  "status": "LOCKED_BEFORE_IMPLEMENTATION",
+  "candidate_sources": [
+    {
+      "id": "SWE-bench_Lite_test",
+      "sha256": "7a21f37b8bc179c7db5beeb14e88ac538ba283455c776e6b2535bbfb6e3551b4"
+    },
+    {
+      "id": "SWE-bench_Lite_dev",
+      "sha256": "8312f321838051849d2fa7c6ca071244733a3e90bb517ff6ca8186f722199b5c"
+    }
+  ],
+  "primary_endpoint": "joint_file_symbol_contract_hit_at_3",
+  "primary_comparison": "O_ROUTE_vs_B_GREEDY",
+  "secondary_endpoints": [
+    "hit_at_1",
+    "mean_reciprocal_rank",
+    "contract_accuracy",
+    "repair_set_f1",
+    "fail_to_pass_success_expressible",
+    "recertification_success_expressible"
+  ],
+  "analysis_unit": "repository",
+  "bootstrap_iterations": 10000,
+  "development_repository_fraction": 0.30,
+  "held_out_repositories_min": 8,
+  "held_out_incidents_min": 24,
+  "coverage_min": 0.70,
+  "false_localization_must_not_exceed": "B_GREEDY",
+  "ci_lower_must_exceed": 0.0,
+  "gold_leakage_required": 0,
+  "method_inputs_forbidden": [
+    "patch",
+    "fix_commit",
+    "changed_files",
+    "changed_symbols",
+    "gold_contracts",
+    "gold_repair_atoms"
+  ],
+  "gold_implementation": "independent_before_after_ast_and_patch_scorer",
+  "natural_recovery_scope": "expressible_repairs_only",
+  "sealed_scoring_enabled": false,
+  "allowed_final_statuses": [
+    "H10_C5B_DEVELOPMENT_READY",
+    "H10_C5B_BLOCKED_REPOSITORY_DATA",
+    "H10_C5B_NOT_SUPPORTED",
+    "H10_C5B_SUPPORTED"
+  ]
+}

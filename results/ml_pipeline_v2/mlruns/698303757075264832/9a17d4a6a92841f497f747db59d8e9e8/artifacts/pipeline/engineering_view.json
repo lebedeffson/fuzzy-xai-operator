@@ -1,0 +1,68 @@
+{
+  "run_id": "mlp2:357c6ef91242cf10056a",
+  "scenario_id": "S3_MISSING_REQUIRED_FEATURE",
+  "action": "REQUEST_DATA",
+  "pipeline_status": "INVALID",
+  "canonical_source": "MLPipelineService",
+  "diagnosis": {
+    "diagnosis_id": "diagnosis:mlp2:357c6ef91242cf10056a",
+    "pipeline_status": "INVALID",
+    "failed_stage": "INFERENCE",
+    "source_component": "fuzzyxai_presenter",
+    "violated_contract": "INPUT_FEATURE_SCHEMA",
+    "violated_contracts": [
+      {
+        "contract_id": "INPUT_FEATURE_SCHEMA",
+        "stage": "INFERENCE",
+        "component_id": "fuzzyxai_presenter",
+        "passed": false,
+        "severity": "MEDIUM",
+        "action": "REQUEST_DATA",
+        "observed_value": "legacy_vertical_violation",
+        "expected_value": "registered_contract_satisfied",
+        "evidence_refs": [
+          "obs:c2a3537ec4bad9aea658"
+        ]
+      }
+    ],
+    "affected_field": "input_feature_schema",
+    "observed_value": "legacy_vertical_violation",
+    "expected_value": "registered_contract_satisfied",
+    "severity": "MEDIUM",
+    "recommended_action": "REQUEST_DATA",
+    "evidence_refs": [
+      "obs:c2a3537ec4bad9aea658"
+    ],
+    "nearest_confirmed_cause": {
+      "component": "fuzzyxai_presenter",
+      "mutation": {}
+    },
+    "diagnostic_cut": {
+      "contracts": [
+        "INPUT_FEATURE_SCHEMA"
+      ],
+      "evidence_refs": [
+        "obs:c2a3537ec4bad9aea658"
+      ]
+    },
+    "confidence": 1.0,
+    "observation_count": 29
+  },
+  "representation": {
+    "representation_id": "F0",
+    "membership": {
+      "low": 0.0,
+      "medium": 1.0,
+      "high": 0.0
+    },
+    "covered_uncertainties": [
+      "u_ling",
+      "u_num"
+    ],
+    "cognitive_complexity": 1.0,
+    "computational_complexity": 1.0,
+    "selection_reason": "point evidence is complete and has no registered conflict"
+  },
+  "repair_plan": null,
+  "recertification": null
+}

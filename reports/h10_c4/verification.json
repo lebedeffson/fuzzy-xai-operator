@@ -1,0 +1,22 @@
+{
+  "h10_c3_immutability": {
+    "checked_files": 54,
+    "returncode": 0,
+    "status": "PASS",
+    "stderr": ""
+  },
+  "h10_c4_outputs": {
+    "checks": {
+      "controlled_labels_only": true,
+      "held_out_scenario_count": true,
+      "pipeline_family_count": true,
+      "required_outputs": true,
+      "strategies_per_scenario": true,
+      "ten_mutation_families": true,
+      "twenty_scenarios_per_family": true
+    },
+    "missing": [],
+    "status": "PASS"
+  },
+  "status": "PASS"
+}

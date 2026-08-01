@@ -1,0 +1,146 @@
+{
+  "object_id": "bcw:s7_reduction_loss_exceeded",
+  "evidence": [
+    {
+      "evidence_id": "evidence:prediction",
+      "type": "model_output",
+      "subject": "bcw:s7_reduction_loss_exceeded",
+      "value": 0.00027695735150644503,
+      "status": "observed",
+      "source_id": "bcw-logistic-regression",
+      "source_version": "1.0.0",
+      "object_id": "bcw:s7_reduction_loss_exceeded",
+      "created_at": "2000-01-01T00:00:00Z",
+      "artifact_hash": "c5b042bd9cd865ecc209de958a2cf64ab04b7d0dbba0a6d7d2865895aad7a8e7"
+    },
+    {
+      "evidence_id": "evidence:local_explanation",
+      "type": "local_explanation",
+      "subject": "bcw:s7_reduction_loss_exceeded",
+      "value": -8.191370033600295,
+      "status": "observed",
+      "source_id": "shap.LinearExplainer",
+      "source_version": "0.51.0",
+      "object_id": "bcw:s7_reduction_loss_exceeded",
+      "created_at": "2000-01-01T00:00:00Z",
+      "artifact_hash": "def39c958275ddfd73fef3c3342950672da23f39f1dc0a30aa692adcc512bc23"
+    }
+  ],
+  "claims": [
+    {
+      "claim_id": "claim:prediction",
+      "text": "The registered model produced score 0.000277 for object bcw:s7_reduction_loss_exceeded.",
+      "evidence_refs": [
+        "evidence:prediction"
+      ],
+      "status": "observed",
+      "text_code": "registered_template",
+      "arguments": {},
+      "allowed_views": [
+        "user",
+        "engineer",
+        "auditor"
+      ],
+      "blocked": false
+    },
+    {
+      "claim_id": "claim:features",
+      "text": "Largest local SHAP contributions: worst texture, worst concave points, worst radius.",
+      "evidence_refs": [
+        "evidence:local_explanation"
+      ],
+      "status": "observed",
+      "text_code": "registered_template",
+      "arguments": {},
+      "allowed_views": [
+        "user",
+        "engineer",
+        "auditor"
+      ],
+      "blocked": false
+    },
+    {
+      "claim_id": "claim:action",
+      "text": "The route observer selected WARN.",
+      "evidence_refs": [
+        "evidence:observer_action"
+      ],
+      "status": "observed",
+      "text_code": "registered_template",
+      "arguments": {},
+      "allowed_views": [
+        "user",
+        "engineer",
+        "auditor"
+      ],
+      "blocked": false
+    }
+  ],
+  "provenance_relations": [
+    {
+      "source_id": "evidence:prediction",
+      "target_id": "claim:prediction",
+      "relation": "supports"
+    },
+    {
+      "source_id": "evidence:local_explanation",
+      "target_id": "claim:features",
+      "relation": "supports"
+    }
+  ],
+  "uncertainty_profile": {
+    "present_types": [
+      "u_int",
+      "u_ling",
+      "u_num"
+    ],
+    "values": {
+      "u_num": 0.0005539147030129143,
+      "u_ling": 0.05,
+      "u_int": 0.12
+    },
+    "aggregate": 0.010221565881205168,
+    "conflict": 0.0,
+    "trace_completeness": 1.0
+  },
+  "representation": {
+    "representation_id": "F_int",
+    "membership": {
+      "low": [
+        0.8794460852969871,
+        1.0
+      ],
+      "medium": [
+        0.0,
+        0.12
+      ],
+      "high": [
+        0.0,
+        0.12
+      ]
+    },
+    "covered_uncertainties": [
+      "u_int",
+      "u_ling",
+      "u_num"
+    ],
+    "cognitive_complexity": 2.0,
+    "computational_complexity": 2.0,
+    "selection_reason": "registered feature intervals require interval membership"
+  },
+  "reduction": {
+    "source_representation": "F_int",
+    "target_representation": "F0",
+    "reduced_membership": {
+      "low": 0.9397230426484935,
+      "medium": 0.06,
+      "high": 0.06
+    },
+    "loss": 0.4,
+    "accepted": false,
+    "maximum_loss": 0.25
+  },
+  "presentation_policy": "evidence_bound_registered_templates",
+  "explain_plan_id": "bcw-logreg-shap-v1/1.0.0",
+  "canonical_hash": "4526df513f5fd04a43e18546c0cd8a54bed6e10b3ca38bac2db8de7e84f1be4a"
+}

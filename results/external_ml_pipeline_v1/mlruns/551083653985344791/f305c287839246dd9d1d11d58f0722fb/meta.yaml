@@ -1,0 +1,15 @@
+artifact_uri: file:///home/lebedeffson/Code/fuzzy-xai-external-ml-pipeline-v1/results/external_ml_pipeline_v1/mlruns/551083653985344791/f305c287839246dd9d1d11d58f0722fb/artifacts
+end_time: 1785585508672
+entry_point_name: ''
+experiment_id: '551083653985344791'
+lifecycle_stage: active
+run_id: f305c287839246dd9d1d11d58f0722fb
+run_name: ext4-lime-tabular:E7_PREDICTION_EXPLANATION_BINDING:O_FUZZYXAI
+run_uuid: f305c287839246dd9d1d11d58f0722fb
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1785585508666
+status: 3
+tags: []
+user_id: lebedeffson

@@ -1,0 +1,9 @@
+{
+  "input_sha256": "5da2c4b767dbeb7fe4ae0a304588c4aea3e00c68e9f71fd06ad383fd6bd8d0a3",
+  "model_output": 0.42300982843746,
+  "model_sha256": "ec339fd45ce3cd4a39540194c4e8aaf34d902bb4a54c22f2f6de9cf6cfc0e9be",
+  "object_id": "ext2-shap-tree-explainer:row:527",
+  "prediction": 1,
+  "run_id": "external:ext2-shap-tree-explainer:retrained",
+  "selected_output": 1
+}

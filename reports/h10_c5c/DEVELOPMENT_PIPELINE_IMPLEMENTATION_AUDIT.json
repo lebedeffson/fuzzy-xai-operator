@@ -1,0 +1,65 @@
+{
+  "audit_id": "h10-c5c-development-pipeline-implementation-audit-20260726",
+  "development_data_collected": false,
+  "development_scored": false,
+  "external_blocker": {
+    "network_available_in_sandbox": true,
+    "required_next_input": "Run the manual collect-development workflow against the locked BugsInPy commit and retain its evidence artifact",
+    "status": "REAL_DEVELOPMENT_COLLECTION_NOT_YET_EXECUTED"
+  },
+  "held_out_created": false,
+  "held_out_scored": false,
+  "implemented": {
+    "bounded_parallel_incident_collection": true,
+    "bugsinpy_commit_and_clean_tree_enforced": true,
+    "deterministic_balanced_materialization": true,
+    "development_runner_bound_to_readiness_hash": true,
+    "exact_registered_python_minor_enforcement": true,
+    "fail_closed_development_readiness_gate": true,
+    "fixed_revision_exposing_test_overlay": true,
+    "isolated_virtual_environment_per_incident": true,
+    "manual_remote_collection_workflow": true,
+    "prospective_bugsinpy_collection_lock": true,
+    "registered_requirements_installation": true,
+    "portable_source_and_selection_registries": true,
+    "repair_execution_status_explicit": true,
+    "runtime_manifest_and_registry_hash_binding": true,
+    "selection_driven_exact_runtime_provisioning": true,
+    "typed_per_test_runtime_collection": true
+  },
+  "scientific_result": "NOT_EVALUATED",
+  "status": "IMPLEMENTED_AWAITING_EXTERNAL_DEVELOPMENT_DATA",
+  "verification": {
+    "full_repository_pytest": {
+      "passed": 692,
+      "skipped": 5,
+      "status": "PASS"
+    },
+    "github_actions_focused_contracts": {
+      "python_3_11": "PASS",
+      "python_3_12": "PASS",
+      "run_id": 30219406865
+    },
+    "h10_c5b_h9_non_optional_regression": {
+      "passed": 74,
+      "status": "PASS"
+    },
+    "h10_c5c_tests": {
+      "passed": 41,
+      "status": "PASS"
+    },
+    "python_compileall": "PASS",
+    "ruff": "PASS",
+    "synthetic_30_incident_end_to_end": {
+      "incidents": 30,
+      "readiness_checks_passed": 23,
+      "readiness_checks_total": 23,
+      "readiness_status": "H10_C5C_DEVELOPMENT_READINESS_PASS",
+      "repositories": 8,
+      "runtime_complete": 30,
+      "scientific_result": "NOT_EVALUATED",
+      "status": "PASS"
+    },
+    "workflow_yaml_parse": "PASS"
+  }
+}

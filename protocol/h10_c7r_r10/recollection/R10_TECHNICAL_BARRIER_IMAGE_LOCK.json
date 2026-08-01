@@ -1,0 +1,97 @@
+{
+  "artifact": "H10_C7R_IMAGE_AVAILABILITY_LOCK",
+  "created_at": "2026-07-30T10:24:13.259064+00:00",
+  "created_before_gold_opening": true,
+  "entries": [
+    {
+      "availability_status": "AVAILABLE_WITHIN_RUNNER_IMAGE_BUDGET",
+      "compressed_bytes": 693254849,
+      "container_image_tag": "starryzhang/sweb.eval.x86_64.flexget_1776_flexget-4441:latest",
+      "incident_id": "Flexget__Flexget-4441",
+      "manifest_digest": "sha256:a073cb6da84a772ad96770cd200f88abe82fc9ebd418d9c82b6b1bc93060363f",
+      "max_layer_bytes": 318958584
+    },
+    {
+      "availability_status": "AVAILABLE_WITHIN_RUNNER_IMAGE_BUDGET",
+      "compressed_bytes": 1104750098,
+      "container_image_tag": "starryzhang/sweb.eval.x86_64.textualize_1776_textual-5829:latest",
+      "incident_id": "Textualize__textual-5829",
+      "manifest_digest": "sha256:8b41f072fe0e7f9d57eea38fe976e859980a5b524c7e91342a74ba2166006779",
+      "max_layer_bytes": 730453833
+    },
+    {
+      "availability_status": "AVAILABLE_WITHIN_RUNNER_IMAGE_BUDGET",
+      "compressed_bytes": 734873686,
+      "container_image_tag": "starryzhang/sweb.eval.x86_64.aws-cloudformation_1776_cfn-lint-4162:latest",
+      "incident_id": "aws-cloudformation__cfn-lint-4162",
+      "manifest_digest": "sha256:e33c4f2f03121b04722957e26cd39330068d1a400220bec2adbb048586a1552f",
+      "max_layer_bytes": 360577421
+    },
+    {
+      "availability_status": "AVAILABLE_WITHIN_RUNNER_IMAGE_BUDGET",
+      "compressed_bytes": 493295011,
+      "container_image_tag": "starryzhang/sweb.eval.x86_64.gitpython-developers_1776_gitpython-2035:latest",
+      "incident_id": "gitpython-developers__GitPython-2035",
+      "manifest_digest": "sha256:c245357561f1e52c718da494ca8170f703c28bd034abff44d4831b35ac3b563f",
+      "max_layer_bytes": 211039785
+    },
+    {
+      "availability_status": "AVAILABLE_WITHIN_RUNNER_IMAGE_BUDGET",
+      "compressed_bytes": 720922707,
+      "container_image_tag": "starryzhang/sweb.eval.x86_64.networkx_1776_networkx-8105:latest",
+      "incident_id": "networkx__networkx-8105",
+      "manifest_digest": "sha256:bc9cd810b358f20274fe76a70083448564a1a1537dab814fd37a88f6e623cb73",
+      "max_layer_bytes": 342166724
+    },
+    {
+      "availability_status": "AVAILABLE_WITHIN_RUNNER_IMAGE_BUDGET",
+      "compressed_bytes": 756204773,
+      "container_image_tag": "starryzhang/sweb.eval.x86_64.python_1776_mypy-19249:latest",
+      "incident_id": "python__mypy-19249",
+      "manifest_digest": "sha256:dbefc0eb6e3bfb61cda15657f93b5a120fbfd25b7149f455ce9432a14c996d89",
+      "max_layer_bytes": 381908508
+    },
+    {
+      "availability_status": "AVAILABLE_WITHIN_RUNNER_IMAGE_BUDGET",
+      "compressed_bytes": 751549609,
+      "container_image_tag": "starryzhang/sweb.eval.x86_64.python_1776_mypy-19290:latest",
+      "incident_id": "python__mypy-19290",
+      "manifest_digest": "sha256:de9d75fc8694d9929deeddf3390836783e6e83b78aada9fb7b445d9aa1542064",
+      "max_layer_bytes": 377253344
+    },
+    {
+      "availability_status": "AVAILABLE_WITHIN_RUNNER_IMAGE_BUDGET",
+      "compressed_bytes": 804496122,
+      "container_image_tag": "starryzhang/sweb.eval.x86_64.stanfordnlp_1776_dspy-8360:latest",
+      "incident_id": "stanfordnlp__dspy-8360",
+      "manifest_digest": "sha256:3bd0c2e764710bdf4043542fe885ebd81dbfa6a110e20501f905020c560786a2",
+      "max_layer_bytes": 425740139
+    },
+    {
+      "availability_status": "AVAILABLE_WITHIN_RUNNER_IMAGE_BUDGET",
+      "compressed_bytes": 493647645,
+      "container_image_tag": "starryzhang/sweb.eval.x86_64.tox-dev_1776_tox-3540:latest",
+      "incident_id": "tox-dev__tox-3540",
+      "manifest_digest": "sha256:f393183881ccaaa4acf878035c678470eb3adc34fb0c910eb8ffac66915a1085",
+      "max_layer_bytes": 211370316
+    },
+    {
+      "availability_status": "AVAILABLE_WITHIN_RUNNER_IMAGE_BUDGET",
+      "compressed_bytes": 628877513,
+      "container_image_tag": "starryzhang/sweb.eval.x86_64.traceloop_1776_openllmetry-2979:latest",
+      "incident_id": "traceloop__openllmetry-2979",
+      "manifest_digest": "sha256:c070465f984b2e54a3987c2132b12f1c0308a147de9bfb96a416c1a577991a77",
+      "max_layer_bytes": 250121530
+    }
+  ],
+  "gold_used": false,
+  "max_compressed_bytes": 2147483648,
+  "max_layer_bytes": 2147483648,
+  "pull_timeout_seconds": 1800,
+  "registry_path": "/home/lebedeffson/.local/share/fuzzyxai/h10-c7r/selection/RUNTIME_REGISTRY.jsonl",
+  "registry_sha256": "9394c0f50399b29da8854cc5792a8b08b6b2570040c514e63444e8a8acbbd95e",
+  "rule": "A digest-pinned image is runtime-available only when both its total compressed size and largest compressed layer do not exceed the fixed runner budget.",
+  "scientific_scoring_started": false,
+  "incident_count": 10,
+  "purpose": "R10_CAUSAL_DEVELOPMENT_TECHNICAL_BARRIER"
+}

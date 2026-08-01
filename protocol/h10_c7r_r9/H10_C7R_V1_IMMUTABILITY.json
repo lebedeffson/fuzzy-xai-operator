@@ -1,0 +1,15 @@
+{
+  "official_status": "H10_C7R_NOT_SUPPORTED",
+  "opening_count": 1,
+  "parent_commit": "e08dcfe465dd3dffba62a08bb91247b83f207be4",
+  "protected_sha256": {
+    "protocol/h10_c7r/H10_C7R_METHOD_LOCK.json": "0dbb6fc479911ece95391fbffc04c1dacc4baf25ff394df7469b453ac86016fd",
+    "protocol/h10_c7r/H10_C7R_PROTOCOL_LOCK.json": "ae6320c4f4e500a5769c2526ad0cc382e81301a498574f5460a5f1df97caf3ac",
+    "results/h10_c7r/H10_C7R_FINAL_STATUS.json": "ff74593c0cad7b19d4ccd4bcfa94af10467a118f093387b88c41013d70e17aab",
+    "results/h10_c7r/PER_INCIDENT_RESULTS.jsonl": "ac4021e4bd6104c62b275dc486a403a6a3e4c7616c06cdf2824105ec5807dbbc",
+    "results/h10_c7r/SCORING_OPENING_LEDGER.json": "54052b51a7869d7c804734fc1bd2cfd261f0d8bb9b3793305e560df305ff157b",
+    "scripts/ch4_revision/run_h10_c7r_scoring.py": "af522354a86541827ec5bb1a859bc7886f85588c1064c6812d8ba17f7032e1f2"
+  },
+  "recalculation_allowed": false,
+  "use_of_disclosed_incidents": "R9_DEVELOPMENT_ONLY"
+}

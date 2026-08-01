@@ -1,0 +1,67 @@
+schema_version: "1.0"
+parent_manifest: framework/fuzzyxai/operators_manifest.yaml
+parent_manifest_sha256: 479fa55460426a1726f57a5ed5f745b0ad2e872eeefb21470dd2e3e865133949
+status: prospective_not_evaluated
+operators:
+  - id: h10_c7.guided_natural_diagnosis
+    dissertation_ref: "H10-C7 prospective guided natural diagnosis"
+    callable: fuzzyxai.experiments.h10_c7:run_development_tournament
+    input_schema: ObservableIncidentRepositoryGraphAndSeparateDevelopmentGold
+    output_schema: H10C7DevelopmentTournamentAndFailClosedGate
+    tests:
+      - tests/h10_c7/test_guided_retrieval.py
+      - tests/h10_c7/test_contract_active_repair.py
+      - tests/h10_c7/test_tournament_boundary.py
+    artifacts:
+      - protocol/h10_c7/H10_C7_PROTOCOL_LOCK.json
+      - reports/h10_c7/IMPLEMENTATION_STATUS.json
+    visualization: []
+  - id: h10_c7.calibrated_diagnosis_confirmation
+    dissertation_ref: "H10-C7-R5C open-development confirmation calibration"
+    callable: fuzzyxai.experiments.h10_c7_confirmation:run_r5c_confirmation
+    input_schema: UnchangedR5RankingAndObservableReplayEvidence
+    output_schema: LeaveOneRepositoryOutConfirmationDecision
+    tests:
+      - tests/h10_c7/test_calibrated_confirmation.py
+    artifacts:
+      - protocol/h10_c7/H10_C7_R5C_PROTOCOL_LOCK.json
+      - results/h10_c7/confirmation/R5C_STATUS.json
+      - reports/h10_c7/R5C_CONFIRMATION_REPORT.md
+    visualization: []
+  - id: h10_c7.candidate_contract_pair_verification
+    dissertation_ref: "H10-C7-R5V candidate-contract pair verification"
+    callable: fuzzyxai.experiments.h10_c7_pair_verification:run_pair_verification_audits
+    input_schema: FrozenR5TopThreePairsObservableRuntimeAndSeparateDevelopmentGold
+    output_schema: TargetAlignmentSpecificityContributionAuditsAndFailClosedStatus
+    tests:
+      - tests/h10_c7/test_pair_verification_audit.py
+    artifacts:
+      - protocol/h10_c7/H10_C7_R5V_PROTOCOL_LOCK.json
+      - results/h10_c7/verification/R5V_STATUS.json
+      - reports/h10_c7/R5V_AUDIT_REPORT.md
+    visualization: []
+  - id: h10_c7a.matched_recall_budget_scoring
+    dissertation_ref: "H10-C7A prospective search-space reduction"
+    callable: fuzzyxai.experiments.h10_c7a:budget_rows
+    input_schema: FrozenR5ObservableDevelopmentGraphRuntimeAndSeparateGold
+    output_schema: MatchedRecallBudgetCurvesAndFailClosedDevelopmentGate
+    tests:
+      - tests/h10_c7/test_h10_c7a_budget.py
+    artifacts:
+      - protocol/h10_c7/H10_C7_PROTOCOL_LOCK.json
+      - protocol/h10_c7/H10_C7A_PRIMARY_ENDPOINT_AMENDMENT.json
+    visualization: []
+  - id: h10_c7r.prospective_candidate_space_reduction
+    dissertation_ref: "H10-C7R prospective matched-recall candidate-space reduction"
+    callable: fuzzyxai.experiments.h10_c7r:score_incidents
+    input_schema: SealedRepositoryDisjointObservableHeldOutAndSeparateGold
+    output_schema: CandidateSpaceReductionRepositoryClusterBootstrapAndFinalStatus
+    tests:
+      - tests/h10_c7r/test_h10_c7r_protocol.py
+    artifacts:
+      - protocol/h10_c7r/H10_C7R_PROTOCOL_LOCK.json
+      - protocol/h10_c7r/H10_C7R_METHOD_LOCK.json
+      - protocol/h10_c7r/H10_C7R_BUDGET_LOCK.json
+      - protocol/h10_c7r/H10_C7R_BASELINE_LOCK.json
+      - protocol/h10_c7r/H10_C7R_EXCLUSION_LOCK.json
+    visualization: []

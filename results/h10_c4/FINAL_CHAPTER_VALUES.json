@@ -1,0 +1,77 @@
+{
+  "bootstrap_index_stream_sha256": "613432617404501e483c793f94a4ada3bac15273e1d47cdb84687646db6b0e06",
+  "bootstrap_iterations": 10000,
+  "cost_weight_configurations": 48,
+  "mean_normalized_executable_cost": {
+    "B_ALL": 1.0,
+    "B_FIRST": 1.0,
+    "B_GREEDY": 0.594047367361634,
+    "O_GLOBAL": 0.5168489529790097
+  },
+  "mean_operational_metrics": {
+    "B_ALL": {
+      "execution_time_ms": 14.350979066390815,
+      "recertification_check_count": 14.3,
+      "repair_action_count": 3.1,
+      "unique_touched_components": 3.1
+    },
+    "B_FIRST": {
+      "execution_time_ms": 14.2499312255192,
+      "recertification_check_count": 14.3,
+      "repair_action_count": 3.1,
+      "unique_touched_components": 3.1
+    },
+    "B_GREEDY": {
+      "execution_time_ms": 7.967451541723373,
+      "recertification_check_count": 10.1,
+      "repair_action_count": 1.7,
+      "unique_touched_components": 1.4
+    },
+    "O_GLOBAL": {
+      "execution_time_ms": 4.703691332664069,
+      "recertification_check_count": 8.0,
+      "repair_action_count": 1.0,
+      "unique_touched_components": 1.0
+    }
+  },
+  "new_critical_violations_global_cut": 0,
+  "pipeline_family_count": 6,
+  "primary_comparisons": {
+    "O_GLOBAL_vs_B_ALL": {
+      "ci_95": [
+        -0.5192865706633796,
+        -0.44541653003910625
+      ],
+      "holm_p": 0.0005999400059994001,
+      "mean_difference": -0.4831510470209903
+    },
+    "O_GLOBAL_vs_B_FIRST": {
+      "ci_95": [
+        -0.5192865706633796,
+        -0.44541653003910625
+      ],
+      "holm_p": 0.0005999400059994001,
+      "mean_difference": -0.4831510470209903
+    },
+    "O_GLOBAL_vs_B_GREEDY": {
+      "ci_95": [
+        -0.09403145075160929,
+        -0.06120465594003043
+      ],
+      "holm_p": 0.0005999400059994001,
+      "mean_difference": -0.07719841438262429
+    }
+  },
+  "protocol_id": "h10-c4-operational-utility-v1",
+  "repair_success": {
+    "B_ALL": 1.0,
+    "B_FIRST": 1.0,
+    "B_GREEDY": 0.8,
+    "O_GLOBAL": 1.0
+  },
+  "scenario_count": 120,
+  "scenario_stability_fraction": 0.9,
+  "scenarios_meeting_80pct_stability": 108,
+  "scope": "controlled_structural_mutations_only",
+  "strategy_row_count": 480
+}

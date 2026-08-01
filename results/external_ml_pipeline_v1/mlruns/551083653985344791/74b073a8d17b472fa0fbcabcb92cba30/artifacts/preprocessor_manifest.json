@@ -1,0 +1,32 @@
+{
+  "artifact_sha256": "4a36ebdef3efe1fe8458b8bf83963f54a4f268c304654e7cd673ef747b290e8b",
+  "class_name": "StandardScaler",
+  "expected_train_row_ids_sha256": "4095995cb08114d82c0d38fd5de44aecaf9ab042542575da80a680a6a06d776f",
+  "feature_names_in": [
+    "age",
+    "sex",
+    "bmi",
+    "bp",
+    "s1",
+    "s2",
+    "s3",
+    "s4",
+    "s5",
+    "s6"
+  ],
+  "feature_names_out": [
+    "age",
+    "sex",
+    "bmi",
+    "bp",
+    "s1",
+    "s2",
+    "s3",
+    "s4",
+    "s5",
+    "s6"
+  ],
+  "fit_row_count": 331,
+  "fit_row_ids_sha256": "4095995cb08114d82c0d38fd5de44aecaf9ab042542575da80a680a6a06d776f",
+  "output_feature_count": 10
+}

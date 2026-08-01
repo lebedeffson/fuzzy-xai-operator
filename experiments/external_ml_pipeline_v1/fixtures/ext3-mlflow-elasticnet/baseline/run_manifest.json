@@ -1,0 +1,11 @@
+{
+  "mlflow_run_id": "7f528740150d470ead44141c934ee08a",
+  "mlflow_version": "2.22.5",
+  "model_sha256": "1417dc5086b5be10f24439eb2179be93e04366a4ba59433b2d13f4f804e3a72e",
+  "python_version": "3.11.15",
+  "registered_model_version": "baseline",
+  "run_id": "external:ext3-mlflow-elasticnet:baseline",
+  "shap_version": "0.51.0",
+  "sklearn_version": "1.9.0",
+  "variant": "baseline"
+}

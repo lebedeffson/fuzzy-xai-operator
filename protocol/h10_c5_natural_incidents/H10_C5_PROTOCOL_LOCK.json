@@ -1,0 +1,61 @@
+{
+  "protocol_id": "h10-c5-natural-incidents-v1",
+  "status": "LOCKED_BEFORE_EXECUTION",
+  "parent_results_modified": false,
+  "scientific_question": "Can RouteAuditor localize the source component and violated contract family of natural route-relevant software incidents without access to the gold patch?",
+  "sources": [
+    {
+      "id": "swe-bench-lite",
+      "revision": "6ec7bb89b9342f664a54a6e0a6ea6501d3437cc2",
+      "test_parquet_sha256": "7a21f37b8bc179c7db5beeb14e88ac538ba283455c776e6b2535bbfb6e3551b4",
+      "dev_parquet_sha256": "8312f321838051849d2fa7c6ca071244733a3e90bb517ff6ca8186f722199b5c",
+      "url": "https://huggingface.co/datasets/princeton-nlp/SWE-bench_Lite"
+    },
+    {
+      "id": "bugsinpy",
+      "revision": "11c5f1eea954a42132cfd06bf257766a7963e0fd",
+      "url": "https://github.com/soarsmu/BugsInPy"
+    },
+    {
+      "id": "defect4ml-metadata-only",
+      "record_id": "8376824",
+      "archive_size": 2939196386,
+      "archive_md5": "369726af86ef206b701cce3af6ab88ed",
+      "downloaded": false,
+      "reason": "The 2.94 GB archive is registered but excluded from this workstation run."
+    }
+  ],
+  "screened_candidate_minimum": 100,
+  "accepted_target": [24, 30],
+  "minimum_repositories": 6,
+  "minimum_incident_families": 4,
+  "split_unit": "repository_id",
+  "development_repository_fraction": 0.3,
+  "held_out_repository_fraction": 0.7,
+  "primary_endpoint": "source_and_contract_localization_success",
+  "methods": ["B_TRACE", "B_RULE", "B_GREEDY", "O_ROUTE"],
+  "bootstrap_unit": "repository_id",
+  "bootstrap_iterations": 10000,
+  "confidence_level": 0.95,
+  "multiple_comparison_correction": "Holm",
+  "gold_fields_forbidden_to_methods": [
+    "patch",
+    "fix_commit",
+    "changed_files",
+    "maintainer_post_fix_explanation"
+  ],
+  "positive_rule": {
+    "primary_metric_favors_o_route": true,
+    "repository_cluster_ci_excludes_zero": true,
+    "false_localization_does_not_increase": true,
+    "new_critical_violations": 0
+  },
+  "allowed_final_statuses": [
+    "H10_C5_SUPPORTED",
+    "H10_C5_NOT_SUPPORTED",
+    "H10_C5_INCONCLUSIVE",
+    "H10_C5_BLOCKED_DATA"
+  ],
+  "human_evaluation": false,
+  "real_incidents": true
+}
