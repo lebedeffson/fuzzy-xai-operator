@@ -11,8 +11,6 @@ from dataclasses import dataclass
 from pathlib import Path
 
 import numpy as np
-import shap
-import torch
 from sklearn.datasets import load_diabetes
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.linear_model import LinearRegression, LogisticRegression
@@ -33,19 +31,21 @@ class Pipeline:
     explain: object
 
 
-class TinyImageModel(torch.nn.Module):
-    def __init__(self) -> None:
-        super().__init__()
-        torch.manual_seed(9102)
-        self.conv = torch.nn.Conv2d(3, 4, 3, padding=1)
-        self.pool = torch.nn.AdaptiveAvgPool2d(1)
-        self.head = torch.nn.Linear(4, 2)
-
-    def forward(self, values: torch.Tensor) -> torch.Tensor:
-        return self.head(self.pool(torch.relu(self.conv(values))).flatten(1))
-
-
 def _pipelines() -> tuple[Pipeline, ...]:
+    import shap
+    import torch
+
+    class TinyImageModel(torch.nn.Module):
+        def __init__(self) -> None:
+            super().__init__()
+            torch.manual_seed(9102)
+            self.conv = torch.nn.Conv2d(3, 4, 3, padding=1)
+            self.pool = torch.nn.AdaptiveAvgPool2d(1)
+            self.head = torch.nn.Linear(4, 2)
+
+        def forward(self, values: torch.Tensor) -> torch.Tensor:
+            return self.head(self.pool(torch.relu(self.conv(values))).flatten(1))
+
     diabetes = load_diabetes()
     tabular_model = LinearRegression().fit(diabetes.data, diabetes.target)
     tabular_explainer = shap.LinearExplainer(tabular_model, diabetes.data[:64])
@@ -114,6 +114,8 @@ def _slice(values: object, size: int) -> object:
 
 
 def _measure(pipeline: Pipeline, batch_size: int, serialization: bool) -> dict[str, float]:
+    import torch
+
     values = _slice(pipeline.inputs, batch_size)
     start = time.perf_counter_ns()
     predictions = pipeline.predict(values)
@@ -161,6 +163,8 @@ def _write_csv(path: Path, rows: list[dict[str, object]]) -> None:
 
 
 def run(root: Path) -> dict[str, object]:
+    import torch
+
     rows: list[dict[str, object]] = []
     for pipeline in _pipelines():
         for batch_size in BATCH_SIZES:

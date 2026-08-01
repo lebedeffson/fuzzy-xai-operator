@@ -1,6 +1,11 @@
 from __future__ import annotations
 
 import numpy as np
+import pytest
+
+pytest.importorskip("shap")
+pytest.importorskip("torch")
+
 from fuzzyxai.experiments.h9_e2e_latency import _measure, _pipelines
 
 
