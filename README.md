@@ -22,6 +22,14 @@ The framework is deliberately fail-closed: missing or contradictory evidence
 produces an explicit limitation, review request, or blocked route. It never
 invents a metric, provenance link, causal claim, or successful certification.
 
+## Project Support
+
+The research was carried out under the state assignment of the Ministry of
+Science and Higher Education of the Russian Federation, theme No.
+124112200072-2.
+
+See [FUNDING.md](FUNDING.md) for the acknowledgment text and project scope.
+
 ```text
 Dataset -> Split -> Preprocessor -> Model -> Prediction -> Explanation
    |          |           |           |          |             |
@@ -357,8 +365,10 @@ FuzzyXAI follows four release rules:
 4. negative and blocked studies remain visible and are never rewritten as
    positive results.
 
-See [PROJECT_MEMORY.md](PROJECT_MEMORY.md) for the release boundary and
-[RELEASE_STATUS.md](RELEASE_STATUS.md) for registered scientific statuses.
+The current software boundary is summarized in
+[RELEASE_STATUS.md](RELEASE_STATUS.md). Detailed machine-readable outcomes and
+their limitations remain colocated with the corresponding files under
+`results/`, `reports/`, and `protocol/`.
 
 ## Documentation
 
@@ -371,6 +381,7 @@ See [PROJECT_MEMORY.md](PROJECT_MEMORY.md) for the release boundary and
 - [Traceability](docs/traceability.md)
 - [Reproducibility](docs/reproducibility.md)
 - [Research limitations](docs/research_limitations.md)
+- [Funding and acknowledgment](FUNDING.md)
 - [Contributing](CONTRIBUTING.md)
 
 ## Scope and Limitations
