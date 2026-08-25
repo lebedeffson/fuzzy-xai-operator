@@ -7,7 +7,7 @@
     "scenario_id": "external_wine_classification",
     "scenario_title_ru": "Research validation: tabular_classification",
     "title": "External Research Validation FuzzyXAI OperatorRoute",
-    "created_at": "2026-07-01T16:45:49.456976+00:00",
+    "created_at": "2026-08-25T16:21:58.467367+00:00",
     "nodes": [
       {
         "node_id": "input_artifact",
@@ -136,7 +136,7 @@
         "next_node_ids": [
           "explanation_object"
         ],
-        "source_commit": "11955855fb111912239f83500af5349fba895ee5",
+        "source_commit": "3aa10fe778108a32f87829feacb56bb2f9c2e13a",
         "details": {
           "applications_used": false
         }
@@ -216,7 +216,7 @@
         "next_node_ids": [
           "representation"
         ],
-        "source_commit": "11955855fb111912239f83500af5349fba895ee5",
+        "source_commit": "3aa10fe778108a32f87829feacb56bb2f9c2e13a",
         "details": {}
       },
       {
@@ -281,7 +281,7 @@
           "alignment",
           "reduction"
         ],
-        "source_commit": "11955855fb111912239f83500af5349fba895ee5",
+        "source_commit": "3aa10fe778108a32f87829feacb56bb2f9c2e13a",
         "details": {}
       },
       {
@@ -340,7 +340,7 @@
         "next_node_ids": [
           "risk"
         ],
-        "source_commit": "11955855fb111912239f83500af5349fba895ee5",
+        "source_commit": "3aa10fe778108a32f87829feacb56bb2f9c2e13a",
         "details": {}
       },
       {
@@ -411,7 +411,7 @@
         "next_node_ids": [
           "risk"
         ],
-        "source_commit": "11955855fb111912239f83500af5349fba895ee5",
+        "source_commit": "3aa10fe778108a32f87829feacb56bb2f9c2e13a",
         "details": {}
       },
       {
@@ -471,7 +471,7 @@
         "next_node_ids": [
           "diagnostics"
         ],
-        "source_commit": "11955855fb111912239f83500af5349fba895ee5",
+        "source_commit": "3aa10fe778108a32f87829feacb56bb2f9c2e13a",
         "details": {}
       },
       {
@@ -539,7 +539,7 @@
         "next_node_ids": [
           "action"
         ],
-        "source_commit": "11955855fb111912239f83500af5349fba895ee5",
+        "source_commit": "3aa10fe778108a32f87829feacb56bb2f9c2e13a",
         "details": {}
       },
       {
@@ -596,7 +596,7 @@
         "next_node_ids": [
           "proof"
         ],
-        "source_commit": "11955855fb111912239f83500af5349fba895ee5",
+        "source_commit": "3aa10fe778108a32f87829feacb56bb2f9c2e13a",
         "details": {}
       },
       {
@@ -657,20 +657,20 @@
         },
         "output_values": {
           "verification_status": "PASS",
-          "source_commit": "11955855fb111912239f83500af5349fba895ee5"
+          "source_commit": "3aa10fe778108a32f87829feacb56bb2f9c2e13a"
         },
         "formula_id": "proof-trace",
         "formula_text": "proof_trace = hashable route + computed_result + diagnostics + action + source_commit",
         "formula_latex": null,
         "components": {
           "scenario_id": "external_wine_classification",
-          "source_commit": "11955855fb111912239f83500af5349fba895ee5"
+          "source_commit": "3aa10fe778108a32f87829feacb56bb2f9c2e13a"
         },
         "thresholds": {},
         "status_reason_ru": "Proof trace содержит значения маршрута и source_commit.",
         "interpretation_ru": "Доказательный след связывает route, значения операторов, диагностику и действие.",
         "next_node_ids": [],
-        "source_commit": "11955855fb111912239f83500af5349fba895ee5",
+        "source_commit": "3aa10fe778108a32f87829feacb56bb2f9c2e13a",
         "details": {}
       }
     ],
@@ -850,7 +850,7 @@
     "final_action_id": "lower_confidence",
     "final_diagnostic_id": "D_external_tabular_uncertainty",
     "verifier_status": "PASS",
-    "source_commit": "11955855fb111912239f83500af5349fba895ee5",
+    "source_commit": "3aa10fe778108a32f87829feacb56bb2f9c2e13a",
     "proof_ref": "proof_trace.json",
     "dashboard_ref": "operator_dashboard_v2.png",
     "verification_summary": {
@@ -892,5 +892,5 @@
   ],
   "final_action": "lower_confidence",
   "verifier_status": "PASS",
-  "source_commit": "11955855fb111912239f83500af5349fba895ee5"
+  "source_commit": "3aa10fe778108a32f87829feacb56bb2f9c2e13a"
 }

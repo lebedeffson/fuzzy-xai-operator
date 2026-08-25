@@ -1,9 +1,10 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
+from collections.abc import Callable, Mapping
 from dataclasses import asdict, dataclass, field, replace
 from hashlib import sha256
-from typing import Any, Callable, Mapping, cast
+from typing import Any, cast
 
 
 def _serializable(value: Any) -> Any:
@@ -165,6 +166,14 @@ class SklearnAdapter(PredictProbaAdapter):
         if coefficients is not None:
             coefficient_rows = _serializable(coefficients)
             row = coefficient_rows[0] if coefficient_rows and isinstance(coefficient_rows[0], list) else coefficient_rows
+            # KNOWN LIMITATION (legacy adapter, not the canonical `adapter="auto"`
+            # resolution path — see adapters/sklearn_v2.py::SklearnLinearAdapter
+            # for the fixed version): for a binary classifier, sklearn's single
+            # stored coefficient row is relative to classes_[1], not to whichever
+            # class was actually predicted, and this method has no access to the
+            # prediction to correct for that (its signature only takes `inputs`).
+            # A positive contribution here does not reliably mean "supports the
+            # predicted class" when the predicted class is classes_[0].
             return {
                 "contributions": {name: float(value) * float(weight) for name, value, weight in zip(names, first, row)},
                 "contribution_method": "native_linear_term_x_coefficient",

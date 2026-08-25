@@ -34,10 +34,30 @@ def find_similar_tabular_cases(
     distances = np.sqrt(np.nanmean(deltas**2, axis=1))
     similarity = np.exp(-distances)
     results: list[SimilarCaseEvidence] = []
-    selected = [index for index in np.argsort(distances) if str(ids[index]) != str(query_object_id)][:limit]
-    for index in selected:
-        matched = [name for name, delta in zip(names, deltas[index]) if np.isfinite(delta) and delta <= 0.5]
-        different = [name for name, delta in zip(names, deltas[index]) if not np.isfinite(delta) or delta > 0.5]
+    # Full distance-sorted order (excluding the query itself), so each
+    # returned case can report its true rank among *all* candidates, not
+    # just its position within the top-`limit` slice.
+    order = [index for index in np.argsort(distances) if str(ids[index]) != str(query_object_id)]
+    reference_count = len(order)
+    for rank, index in enumerate(order[:limit], start=1):
+        # Sorted so "matched" leads with the closest features and
+        # "different" leads with the most divergent ones — a top-K slice of
+        # either list is then meaningful, not an arbitrary feature-order
+        # prefix.
+        matched = [
+            name
+            for name, delta in sorted(
+                ((name, delta) for name, delta in zip(names, deltas[index]) if np.isfinite(delta) and delta <= 0.5),
+                key=lambda item: item[1],
+            )
+        ]
+        different = [
+            name
+            for name, delta in sorted(
+                ((name, delta) for name, delta in zip(names, deltas[index]) if not np.isfinite(delta) or delta > 0.5),
+                key=lambda item: (-item[1] if np.isfinite(item[1]) else float("-inf")),
+            )
+        ]
         results.append(
             SimilarCaseEvidence(
                 query_object_id=str(query_object_id),
@@ -54,6 +74,8 @@ def find_similar_tabular_cases(
                 reference_outcome=_at(reference_outcomes, index),
                 limitations=["feature distance does not establish causal or clinical similarity"],
                 trace={"reference_index": int(index), "scale": "median absolute deviation"},
+                reference_rank=rank,
+                reference_count=reference_count,
             )
         )
     return results

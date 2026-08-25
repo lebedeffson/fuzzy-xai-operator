@@ -3,61 +3,69 @@ from __future__ import annotations
 import json
 import shutil
 import zipfile
+from collections.abc import Mapping, Sequence
 from dataclasses import asdict, dataclass
-from datetime import datetime, timezone
-from html import escape
+from datetime import UTC, datetime
 from hashlib import sha256
+from html import escape
 from pathlib import Path
-from typing import Any, Mapping
+from typing import TYPE_CHECKING, Any, cast
+
+if TYPE_CHECKING:
+    from fuzzyxai.verbalization import VerbalizationBackend, VerbalizationResult
 
 from fuzzyxai.adapters.base import BaseAdapter
-from fuzzyxai.adapters.model import ModelAdapter, ModelPrediction
 from fuzzyxai.adapters.contracts_v2 import AdapterResolutionReport, ExplanationContext, ModelCapabilities, TaskType
+from fuzzyxai.adapters.model import ModelAdapter, ModelPrediction
 from fuzzyxai.adapters.model_registry import MODEL_ADAPTER_REGISTRY, resolve_model_adapter_v2
 from fuzzyxai.adapters.model_v2 import ModelAdapterV2
 from fuzzyxai.core.explain_plan import ExplainPlan
-from fuzzyxai.core.types import AdaptedInput, OperatorRoute
-from fuzzyxai.operators import AlignmentInput, ReductionInput, RiskInput
-from fuzzyxai.operators import compute_alignment as compute_operator_alignment
-from fuzzyxai.operators import compute_reduction as compute_operator_reduction
-from fuzzyxai.operators import observe_risk as observe_operator_risk
-from fuzzyxai.proof.trace import build_proof_trace
-from fuzzyxai.proof.verifier import VerificationResult, verify_proof_trace
-from fuzzyxai.visualization.operator_dashboard import render_dashboard
-from fuzzyxai.visualization.route_artifacts import save_proof_trace_json, save_route_json
-from fuzzyxai.visualization.traceability import write_traceability_artifacts
 from fuzzyxai.core.route import build_route
-from fuzzyxai.evidence import (
-    ExplanationClaim,
-    ExplanationEdge,
-    ExplanationEvidence,
-    ExplanationGraph,
-    HumanExplanation,
-    ExplanationNode,
-    TrainingRunAnalysis,
-    build_class_concepts,
-    build_explanation_graph,
-    build_explanation_claims,
-    build_object_trace,
-    collect_data_evidence,
-    compose_human_explanation,
-    detect_subgroup_averaging,
-    determine_explanation_level,
-    explanation_to_text,
-    evaluate_explanation_quality,
-    extract_rules,
-    find_similar_tabular_cases,
-    find_tabular_counterfactuals,
-)
-from fuzzyxai.visualization.spec import build_visual_spec
-from fuzzyxai.visualization.view_model import ExplanationViewModel
-from fuzzyxai.explanation_quality import ExplanationQualityReport, build_quality_report
-from fuzzyxai.planner import ExplanationPlanner
+from fuzzyxai.core.types import AdaptedInput, OperatorRoute
 from fuzzyxai.diagnostics.contracts import (
     BatchDiagnosticReport,
     DiagnosticReport,
     RepairExecutionContext,
 )
+from fuzzyxai.evidence import (
+    ExplanationClaim,
+    ExplanationEdge,
+    ExplanationEvidence,
+    ExplanationGraph,
+    ExplanationNode,
+    HumanExplanation,
+    TrainingRunAnalysis,
+    build_class_concepts,
+    build_explanation_claims,
+    build_explanation_graph,
+    build_object_trace,
+    collect_data_evidence,
+    collect_fuzzy_rule_activations,
+    compose_human_explanation,
+    detect_subgroup_averaging,
+    determine_explanation_level,
+    evaluate_explanation_quality,
+    explanation_to_text,
+    extract_rules,
+    find_image_regions,
+    find_similar_tabular_cases,
+    find_tabular_counterfactuals,
+    find_text_highlight_spans,
+    is_image_like,
+)
+from fuzzyxai.explanation_quality import ExplanationQualityReport, build_quality_report
+from fuzzyxai.operators import AlignmentInput, ReductionInput, RiskInput
+from fuzzyxai.operators import compute_alignment as compute_operator_alignment
+from fuzzyxai.operators import compute_reduction as compute_operator_reduction
+from fuzzyxai.operators import observe_risk as observe_operator_risk
+from fuzzyxai.planner import ExplanationPlanner
+from fuzzyxai.proof.trace import build_proof_trace
+from fuzzyxai.proof.verifier import VerificationResult, verify_proof_trace
+from fuzzyxai.visualization.operator_dashboard import render_dashboard
+from fuzzyxai.visualization.route_artifacts import save_proof_trace_json, save_route_json
+from fuzzyxai.visualization.spec import build_visual_spec
+from fuzzyxai.visualization.traceability import write_traceability_artifacts
+from fuzzyxai.visualization.view_model import _RAW_IMAGE_REDACTED, _RAW_TEXT_REDACTED, ExplanationViewModel
 
 
 def _as_rows(values: Any) -> list[list[Any]]:
@@ -196,7 +204,7 @@ class GlobalExplanationResult:
 
 @dataclass(frozen=True)
 class ModelComparisonResult:
-    model_results: Mapping[str, "ModelExplanationResult"]
+    model_results: Mapping[str, ModelExplanationResult]
     prediction_agreement: bool
     reason_overlap: float | None
     disagreements: tuple[str, ...]
@@ -260,11 +268,156 @@ class ModelExplanationResult:
     def surrogate_channels(self) -> tuple[str, ...]:
         return tuple(self.view_model.explanation_level.get("surrogate_channels", ()))
 
-    def to_dict(self) -> dict[str, Any]:
-        return self.view_model.to_dict()
+    @property
+    def object_representation(self) -> Mapping[str, Any] | None:
+        """The raw explained object rendered back with its evidence overlaid.
 
-    def export_json(self, path: str | Path) -> Path:
-        return self.view_model.export_json(path)
+        ``None`` when no representation could be built (no raw object and no
+        data evidence at all); otherwise a mapping with ``modality`` ("text"
+        or "tabular") discriminating which fields are populated. See
+        ``visualization.spec.ObjectRepresentationSpec``.
+        """
+
+        return cast("Mapping[str, Any] | None", self.view_model.visual_spec.get("object_representation"))
+
+    @property
+    def similar_cases(self) -> tuple[Mapping[str, Any], ...]:
+        """Reference-corpus objects most similar to the explained one, if any were measured.
+
+        Empty when no reference corpus was registered (``FuzzyXAI.wrap(...,
+        reference_data=...)`` or ``explain_one(..., reference_data=...)``) —
+        never fabricated. Similarity is supporting/additional evidence, not
+        a causal explanation of the prediction, unless the model adapter
+        itself is prototype/exemplar-based (see ``evidence/human.py``'s
+        ``_similar_statement``, which phrases it accordingly either way).
+        """
+
+        return tuple(cast("Sequence[Mapping[str, Any]]", self.view_model.visual_spec.get("similar_cases", ())))
+
+    def to_dict(self, *, include_raw: bool = False, detail: str = "audit", audience: str = "domain_user") -> dict[str, Any]:
+        """Serialize this result as one of three projections of the *same* canonical data.
+
+        ``detail="audit"`` (the default, unchanged for backward compatibility)
+        returns exactly what this method always returned: the full canonical
+        payload (all claims, the explanation graph, every audience's
+        ``HumanExplanation``, diagnostics, quality metrics, the full visual
+        spec, trace/provenance).
+
+        ``detail="standard"`` is the developer-facing projection: prediction,
+        all claims, one audience's ``HumanExplanation``, similar cases,
+        object representation, uncertainty (quality metrics), limitations,
+        and the key provenance identifiers (not the full graph/trace).
+
+        ``detail="compact"`` is the minimal projection for an application
+        that just needs the answer: prediction, top supporting/contradicting
+        evidence, similar cases, object representation, uncertainty,
+        limitations, action, and minimal provenance refs.
+
+        All three are read *only* from the already-computed
+        ``self.view_model`` — none of them re-runs ``explain()``, so
+        prediction/claims/similar-cases/action are guaranteed identical
+        across tiers by construction, not by convention.
+
+        ``include_raw=False`` (the default) strips the raw object text
+        (``raw_object``/``raw_objects``) from every tier. This is *not* a
+        general PII anonymizer — it only removes the one payload field that
+        carries the complete original text; structured evidence derived from
+        it (spans, offsets, tabular rows, feature values) is untouched.
+        """
+
+        if detail == "audit":
+            return cast("dict[str, Any]", self.view_model.to_dict(include_raw=include_raw))
+        if detail == "standard":
+            return self._standard_dict(include_raw=include_raw, audience=audience)
+        if detail == "compact":
+            return self._compact_dict(include_raw=include_raw)
+        raise ValueError(f"unsupported export detail level: {detail!r} (expected 'compact', 'standard', or 'audit')")
+
+    def export_json(
+        self,
+        path: str | Path,
+        *,
+        include_raw: bool = False,
+        detail: str = "audit",
+        audience: str = "domain_user",
+    ) -> Path:
+        """Export this result as JSON. See ``to_dict`` for the ``detail``/``include_raw`` contract."""
+
+        output = Path(path)
+        output.parent.mkdir(parents=True, exist_ok=True)
+        output.write_text(
+            json.dumps(self.to_dict(include_raw=include_raw, detail=detail, audience=audience), ensure_ascii=False, indent=2) + "\n",
+            encoding="utf-8",
+        )
+        return output
+
+    def _redacted_object_representation(self, *, include_raw: bool) -> Mapping[str, Any] | None:
+        representation = self.object_representation
+        if representation is None or include_raw:
+            return representation
+        if representation.get("modality") == "text":
+            return {**representation, "raw_excerpt": _RAW_TEXT_REDACTED, "highlighted_html": _RAW_TEXT_REDACTED}
+        if representation.get("modality") == "image":
+            return {**representation, "image_png_base64": _RAW_IMAGE_REDACTED}
+        return representation
+
+    def _provenance_summary(self) -> dict[str, Any]:
+        trace = self.view_model.trace
+        return {
+            "adapter_id": trace.get("adapter_id"),
+            "model_type": trace.get("model_type"),
+            "model_fingerprint": trace.get("model_fingerprint"),
+            "object_ids": trace.get("object_ids"),
+            "dataset_version": trace.get("dataset_version"),
+            "generated_at": trace.get("generated_at"),
+            "input_sha256": trace.get("input_sha256"),
+        }
+
+    def _compact_dict(self, *, include_raw: bool) -> dict[str, Any]:
+        decision_evidence = self.view_model.visual_spec.get("decision_evidence", {})
+        supports = decision_evidence.get("supports", ()) if isinstance(decision_evidence, Mapping) else ()
+        contradicts = decision_evidence.get("contradicts", ()) if isinstance(decision_evidence, Mapping) else ()
+        limitations = decision_evidence.get("limitations", ()) if isinstance(decision_evidence, Mapping) else ()
+        return {
+            "detail": "compact",
+            "prediction": {
+                "value": self.prediction.predictions,
+                "score": self.view_model.model.get("score"),
+                "probabilities": self.prediction.probabilities,
+            },
+            "action": self.action,
+            "supporting_evidence": list(supports)[:5],
+            "contradicting_evidence": list(contradicts)[:5],
+            "similar_cases": list(self.similar_cases),
+            "object_representation": self._redacted_object_representation(include_raw=include_raw),
+            "uncertainty": dict(self.view_model.quality_metrics),
+            "limitations": list(limitations),
+            "provenance": self._provenance_summary(),
+        }
+
+    def _standard_dict(self, *, include_raw: bool, audience: str) -> dict[str, Any]:
+        decision_evidence = self.view_model.visual_spec.get("decision_evidence", {})
+        limitations = decision_evidence.get("limitations", ()) if isinstance(decision_evidence, Mapping) else ()
+        return {
+            "detail": "standard",
+            "prediction": {
+                "value": self.prediction.predictions,
+                "score": self.view_model.model.get("score"),
+                "probabilities": self.prediction.probabilities,
+            },
+            "action": self.action,
+            "claims": [claim.to_dict() for claim in self.claims],
+            "human_explanation": {"audience": audience, **self.explain_for(audience).to_dict(include_technical_trace=False)},
+            "similar_cases": list(self.similar_cases),
+            "object_representation": self._redacted_object_representation(include_raw=include_raw),
+            "uncertainty": dict(self.view_model.quality_metrics),
+            "limitations": list(limitations),
+            "provenance": self._provenance_summary(),
+            "visual_metadata": {
+                "schema_version": self.view_model.visual_spec.get("schema_version"),
+                "overview": self.view_model.visual_spec.get("overview"),
+            },
+        }
 
     @property
     def explanation_graph(self) -> ExplanationGraph:
@@ -296,12 +449,86 @@ class ModelExplanationResult:
     ) -> str:
         """Render audience-specific text; technical details require ``detail='full'``."""
 
-        return explanation_to_text(self.explain_for(level or audience), detail=detail)
+        text = explanation_to_text(self.explain_for(level or audience), detail=detail)
+        if detail == "short":
+            # detail="full" already lists every similar case individually
+            # (via HumanExplanation.details.similar_cases); this compact
+            # digest of just the closest exemplar is what the short summary
+            # is otherwise missing.
+            digest = self._similar_cases_digest()
+            if digest:
+                text = text.rstrip() + "\n\n" + digest + "\n"
+        return text
+
+    def _similar_cases_digest(self) -> str:
+        cases = self.similar_cases
+        if not cases:
+            return ""
+        closest = cases[0]
+        lines = ["## Похожие примеры", ""]
+        reference_id = closest.get("reference_object_id", "?")
+        lines.append(f"Наиболее близкий эталонный объект: {reference_id}.")
+        score = closest.get("score")
+        if isinstance(score, (int, float)):
+            lines.append(f"Мера сходства: {float(score):.3f}.")
+        rank, count = closest.get("reference_rank"), closest.get("reference_count")
+        if isinstance(rank, int) and isinstance(count, int) and count > 0:
+            lines.append(f"Место по близости: {rank} из {count} эталонных объектов.")
+        matched = [str(item) for item in closest.get("matched_features", ())][:5]
+        if matched:
+            lines.append("")
+            lines.append("Наиболее близкие характеристики:")
+            lines.extend(f"- {name}" for name in matched)
+        different = [str(item) for item in closest.get("different_features", ())][:5]
+        if different:
+            lines.append("")
+            lines.append("Наиболее заметные различия:")
+            lines.extend(f"- {name}" for name in different)
+        lines.append("")
+        lines.append(
+            "Сходство является дополнительным сравнительным свидетельством "
+            "и само по себе не устанавливает причину прогноза модели."
+        )
+        return "\n".join(lines)
 
     def overview(self) -> str:
         """Answer the five operational questions using claim-grounded text."""
 
         return self.summary(audience="domain_user", detail="short")
+
+    def verbalize(
+        self,
+        *,
+        backend: VerbalizationBackend | None = None,
+        audience: str = "domain_user",
+        detail: str = "short",
+    ) -> str:
+        """Rephrase the audience-appropriate summary through an optional SLM backend.
+
+        With no backend (the default), returns the same text as ``summary()``
+        — no new dependency or external service is ever required. Pass a
+        backend such as ``fuzzyxai.verbalization.backends.OllamaBackend()`` to
+        get a natural-language rephrasing; if the backend is unreachable or
+        its output isn't grounded in the already-verified explanation, this
+        silently falls back to ``summary()`` rather than raising or emitting
+        unverified text. Use ``verbalize_detailed`` to see which path was
+        taken.
+        """
+
+        return cast(str, self.verbalize_detailed(backend=backend, audience=audience, detail=detail).text)
+
+    def verbalize_detailed(
+        self,
+        *,
+        backend: VerbalizationBackend | None = None,
+        audience: str = "domain_user",
+        detail: str = "short",
+    ) -> VerbalizationResult:
+        from fuzzyxai.verbalization import SLMVerbalizer
+
+        explanation = self.explain_for(audience)
+        template_text = self.summary(audience=audience, detail=detail)
+        return SLMVerbalizer(backend).run(explanation, template_text=template_text)
 
     def story(self) -> str:
         """Render the evidence route as data, training, knowledge, decision, action."""
@@ -566,10 +793,21 @@ class FuzzyXAI:
         plan: ExplainPlan | None = None,
         model_adapter: ModelAdapter | None = None,
         resolution_report: AdapterResolutionReport | None = None,
+        *,
+        reference_data: Any | None = None,
+        reference_labels: Any | None = None,
+        reference_ids: list[str] | None = None,
     ):
         self.plan = plan or ExplainPlan.default()
         self._model_adapter = model_adapter
         self._resolution_report = resolution_report
+        # A reference corpus registered once at wrap() time, used by default
+        # for similar-case evidence on every explain_one() call so the
+        # caller doesn't have to repeat reference_data/reference_labels on
+        # every call. Still overridable per-call.
+        self._reference_data = reference_data
+        self._reference_labels = reference_labels
+        self._reference_ids = reference_ids
 
     @property
     def model_adapter(self) -> ModelAdapter:
@@ -586,8 +824,17 @@ class FuzzyXAI:
         explain_plan: ExplainPlan | None = None,
         task: str | TaskType = "auto",
         output_decoder: Any = None,
-    ) -> "FuzzyXAI":
-        """Wrap a supported model using capability-based adapter resolution."""
+        reference_data: Any | None = None,
+        reference_labels: Any | None = None,
+        reference_ids: list[str] | None = None,
+    ) -> FuzzyXAI:
+        """Wrap a supported model using capability-based adapter resolution.
+
+        ``reference_data``/``reference_labels``/``reference_ids`` register a
+        reference corpus once, here, instead of on every ``explain_one()``
+        call — when present, similar-case evidence is produced by default
+        (see ``explain()``'s ``include_similar_cases``).
+        """
 
         resolved, report = resolve_model_adapter_v2(
             model,
@@ -595,7 +842,14 @@ class FuzzyXAI:
             adapter=adapter,
             output_decoder=output_decoder,
         )
-        return cls(plan=explain_plan, model_adapter=resolved, resolution_report=report)
+        return cls(
+            plan=explain_plan,
+            model_adapter=resolved,
+            resolution_report=report,
+            reference_data=reference_data,
+            reference_labels=reference_labels,
+            reference_ids=reference_ids,
+        )
 
     @classmethod
     def register_adapter(
@@ -665,29 +919,71 @@ class FuzzyXAI:
         reference_ids: list[str] | None = None,
         reference_labels: list[Any] | None = None,
         training_run: TrainingRunAnalysis | None = None,
-        include_similar_cases: bool = False,
+        include_similar_cases: bool | None = None,
         include_counterfactuals: bool = False,
         include_training_trace: bool = False,
         include_model_knowledge: bool = True,
         additional_evidence: ExplanationEvidence | None = None,
         dataset_version: str = "unversioned",
         run_parameters: Mapping[str, Any] | None = None,
+        raw_objects: Sequence[Any] | None = None,
+        region_masks: Mapping[str, Sequence[Sequence[bool]]] | None = None,
     ) -> ModelExplanationResult:
         """Explain a prediction using only supplied, auditable operator evidence.
 
         A prediction can always be returned. Gamma, Delta, and rho are computed
         only when their typed evidence sections are present; otherwise the
         result is marked for review instead of receiving synthetic values.
+
+        ``raw_objects`` optionally carries the original, unvectorized objects
+        alongside their numeric feature rows, so the explanation package can
+        show evidence overlaid on the object itself rather than only on
+        abstract feature names. When supplied, its length must equal the
+        number of rows/object_ids (a mismatch raises ``ValueError``). Only
+        the first object is used for highlighting, matching the existing
+        single-object scope of ``include_similar_cases``/
+        ``include_counterfactuals``. A ``str`` triggers text highlighting;
+        a 2D/3D array-like object (numpy array or anything PIL-like) is
+        treated as an image and triggers image representation instead; any
+        other type is disclosed as unsupported rather than guessed at, and
+        the presentation layer falls back to a tabular feature/value/
+        contribution view built from already-collected data evidence.
+        Absent by default: no raw object means no highlighting/image
+        evidence, never a fabricated one.
+
+        ``region_masks`` optionally names boolean pixel masks (each matching
+        the image's own height/width) for the first object, when it is an
+        image — e.g. from a segmentation model or manual annotation.
+        FuzzyXAI has no built-in per-pixel attribution method, so without
+        this the image representation still shows the image itself but with
+        no regions, honestly disclosed as a limitation rather than a
+        fabricated heatmap.
         """
 
         if self._model_adapter is None:
             raise RuntimeError("FuzzyXAI.explain requires FuzzyXAI.wrap(model, ...)")
+        # A reference corpus registered on FuzzyXAI.wrap(...) applies by
+        # default; an explicit per-call value still wins.
+        if reference_data is None:
+            reference_data = self._reference_data
+        if reference_labels is None:
+            reference_labels = self._reference_labels
+        if reference_ids is None:
+            reference_ids = self._reference_ids
         evidence = dict(evidence or {})
         prediction = self._model_adapter.predict(inputs)
         score = prediction.primary_score()
         diagnostics: list[dict[str, Any]] = []
         rows = _as_rows(inputs)
         reference_rows = _as_rows(reference_data) if reference_data is not None else None
+        if include_similar_cases is None:
+            # Similar-case evidence is produced by default whenever a
+            # reference corpus is actually available (from wrap() or this
+            # call) — the user should not have to separately remember to
+            # pass include_similar_cases=True on top of reference_data.
+            # Absent a reference corpus, this correctly resolves to False:
+            # no fabricated similarity evidence.
+            include_similar_cases = reference_rows is not None
         names = list(feature_names or self._model_adapter.feature_names() or _default_feature_names(rows))
         ids = list(object_ids or [f"object_{index}" for index in range(len(rows))])
         internal_evidence = _with_feature_names(self._model_adapter.extract_internal_evidence(inputs), names)
@@ -839,8 +1135,6 @@ class FuzzyXAI:
                 feature_names=names,
                 model_version=self._model_adapter.model_fingerprint()[:12],
             )
-            if not rules:
-                missing.append("model_rules_or_concepts")
             if reference_rows is not None and reference_labels is not None:
                 concepts = build_class_concepts(
                     reference_rows,
@@ -849,6 +1143,39 @@ class FuzzyXAI:
                     object_ids=reference_ids,
                     rules=rules,
                 )
+        contributions = dict(evidence.get("contributions", internal_evidence.get("contributions", {})))
+        contribution_method = evidence.get("contribution_method", internal_evidence.get("contribution_method"))
+        raw_activated_rules = evidence.get("activated_rules", internal_evidence.get("activated_rules"))
+        fuzzy_rule_activations = (
+            collect_fuzzy_rule_activations(raw_activated_rules, object_id=ids[0])
+            if isinstance(raw_activated_rules, Sequence) and raw_activated_rules
+            else []
+        )
+        if include_model_knowledge and not rules and not fuzzy_rule_activations:
+            # Rule-based knowledge is genuinely absent only when neither
+            # channel produced anything — a fuzzy/rule model that supplies
+            # activated_rules must not also be told "model rules are
+            # missing" in the same result.
+            missing.append("model_rules_or_concepts")
+        text_highlights = []
+        image_representations = []
+        if raw_objects is not None:
+            if len(raw_objects) != len(rows):
+                raise ValueError(f"raw_objects has {len(raw_objects)} entries but {len(rows)} objects were supplied to explain(); they must match one-to-one")
+            raw_object = raw_objects[0]
+            if isinstance(raw_object, str):
+                if not contributions:
+                    missing.append("text_highlight_contributions")
+                else:
+                    text_highlights = [find_text_highlight_spans(raw_object, contributions, object_id=ids[0])]
+            elif is_image_like(raw_object):
+                image_representations = [find_image_regions(raw_object, contributions, object_id=ids[0], region_masks=region_masks)]
+            else:
+                # Neither a string nor image-shaped — disclosed as unused
+                # rather than guessed at; build_visual_spec's tabular
+                # fallback still gives an honest representation from the
+                # already-collected data evidence.
+                missing.append("text_highlight_unsupported_raw_object_type")
         similar_cases = []
         if include_similar_cases:
             if reference_rows is None:
@@ -890,10 +1217,11 @@ class FuzzyXAI:
             concepts=[*concepts, *additional.concepts],
             similar_cases=[*similar_cases, *additional.similar_cases],
             counterfactuals=[*counterfactuals, *additional.counterfactuals],
+            text_highlights=[*text_highlights, *additional.text_highlights],
+            image_representations=[*image_representations, *additional.image_representations],
+            fuzzy_rule_activations=[*fuzzy_rule_activations, *additional.fuzzy_rule_activations],
             missing=list(dict.fromkeys([*missing, *additional.missing])),
         )
-        contributions = dict(evidence.get("contributions", internal_evidence.get("contributions", {})))
-        contribution_method = evidence.get("contribution_method", internal_evidence.get("contribution_method"))
         prediction_payload = {
             **prediction.to_dict(),
             "score": score,
@@ -930,6 +1258,7 @@ class FuzzyXAI:
                 audience=audience,
                 evidence=explanation_evidence,
                 domain_language=self.plan.domain_language,
+                task_type=str(prediction.metadata.get("task_type", "")) or None,
             ).to_dict(include_technical_trace=False)
             for audience in ("domain_user", "ml_engineer", "researcher", "auditor")
         }
@@ -943,7 +1272,7 @@ class FuzzyXAI:
         quality_metrics = evaluate_explanation_quality(
             explanation_evidence,
             graph,
-            contributions=dict(evidence.get("contributions", internal_evidence.get("contributions", {}))),
+            contributions=contributions,
             supplied_metrics={
                 **dict(evidence.get("quality_metrics", {})),
                 **({"fidelity": float(surrogate_fidelity)} if surrogate_fidelity is not None else {}),
@@ -999,7 +1328,7 @@ class FuzzyXAI:
                 "object_ids": ids,
                 "dataset_version": dataset_version,
                 "input_sha256": _payload_sha256(rows),
-                "generated_at": datetime.now(timezone.utc).isoformat(),
+                "generated_at": datetime.now(UTC).isoformat(),
                 "run_parameters": dict(run_parameters or {}),
                 "missing_evidence": missing,
                 "explain_plan_sha256": sha256(plan_json.encode("utf-8")).hexdigest(),
@@ -1018,12 +1347,21 @@ class FuzzyXAI:
         input_object: Any,
         *,
         object_id: str = "object_0",
-        include_similar_cases: bool = False,
+        include_similar_cases: bool | None = None,
         include_counterfactuals: bool = False,
         include_training_trace: bool = False,
+        raw_object: Any | None = None,
         **kwargs: Any,
     ) -> ModelExplanationResult:
-        """Explain one object while preserving its identifier in every layer."""
+        """Explain one object while preserving its identifier in every layer.
+
+        ``raw_object`` optionally carries the original, unvectorized object
+        (a raw text string, or a 2D/3D image array) so the explanation
+        package can show evidence overlaid on the object itself. See
+        ``explain()`` for the full contract (including ``region_masks`` for
+        images); here it is a single value, not a sequence, since this
+        method always explains exactly one object.
+        """
 
         return self.explain(
             _as_rows(input_object),
@@ -1031,6 +1369,7 @@ class FuzzyXAI:
             include_similar_cases=include_similar_cases,
             include_counterfactuals=include_counterfactuals,
             include_training_trace=include_training_trace,
+            raw_objects=None if raw_object is None else [raw_object],
             **kwargs,
         )
 
@@ -1039,11 +1378,12 @@ class FuzzyXAI:
         inputs: Any,
         *,
         object_ids: list[str] | None = None,
+        raw_objects: Sequence[Any] | None = None,
         **kwargs: Any,
     ) -> ModelExplanationResult:
         rows = _as_rows(inputs)
         ids = object_ids or [f"object_{index}" for index in range(len(rows))]
-        return self.explain(rows, object_ids=ids, **kwargs)
+        return self.explain(rows, object_ids=ids, raw_objects=raw_objects, **kwargs)
 
     def explain_global(
         self,

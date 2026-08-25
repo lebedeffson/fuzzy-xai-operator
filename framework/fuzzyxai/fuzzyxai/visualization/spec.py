@@ -1,10 +1,12 @@
 from __future__ import annotations
 
 import json
+from collections.abc import Mapping, Sequence
 from dataclasses import asdict, dataclass
-from typing import Any, Mapping, Sequence
+from typing import Any
 
 from fuzzyxai.evidence.contracts import ExplanationClaim, ExplanationEvidence, ExplanationGraph
+from fuzzyxai.visualization.text_highlight import render_text_highlight_html
 
 
 @dataclass(frozen=True)
@@ -188,6 +190,8 @@ class SimilarCaseSpec:
     media_artifacts: tuple[tuple[str, str], ...]
     limitations: tuple[str, ...]
     claim_refs: tuple[str, ...]
+    reference_rank: int | None = None
+    reference_count: int | None = None
 
 
 @dataclass(frozen=True)
@@ -237,6 +241,62 @@ class ProvenanceEdgeSpec:
 
 
 @dataclass(frozen=True)
+class TextSpanSpec:
+    start: int
+    end: int
+    feature_name: str
+    direction: str
+    weight: float
+
+
+@dataclass(frozen=True)
+class TabularRowSpec:
+    feature: str
+    raw_value: str
+    contribution: float | None
+    direction: str  # "supports" | "contradicts" | "unknown"
+
+
+@dataclass(frozen=True)
+class ImageRegionSpec:
+    name: str
+    pixel_count: int
+    bounding_box: tuple[int, int, int, int]  # (row_min, row_max, col_min, col_max)
+    direction: str  # "supports" | "contradicts" | "unknown"
+    contribution: float | None
+    claim_refs: tuple[str, ...] = ()
+
+
+@dataclass(frozen=True)
+class ObjectRepresentationSpec:
+    """The raw explained object rendered back with its evidence overlaid.
+
+    ``modality`` discriminates which of the payloads below is populated:
+    ``"text"`` uses ``raw_excerpt``/``spans``/``highlighted_html``;
+    ``"tabular"`` uses ``tabular_rows``/``tabular_rows_original_order``;
+    ``"image"`` uses ``image_width``/``image_height``/``image_channels``/
+    ``image_png_base64``/``image_regions``.
+    """
+
+    object_id: str
+    modality: str
+    raw_excerpt: str
+    spans: tuple[TextSpanSpec, ...]
+    unmapped_features: tuple[str, ...]
+    suppressed_matches: tuple[str, ...]
+    highlighted_html: str
+    tabular_rows: tuple[TabularRowSpec, ...]
+    tabular_rows_original_order: tuple[TabularRowSpec, ...]
+    limitations: tuple[str, ...]
+    image_width: int | None = None
+    image_height: int | None = None
+    image_channels: int | None = None
+    image_artifact_sha256: str = ""
+    image_png_base64: str = ""
+    image_regions: tuple[ImageRegionSpec, ...] = ()
+
+
+@dataclass(frozen=True)
 class AuditSpec:
     graph_valid: bool
     graph_errors: tuple[str, ...]
@@ -262,13 +322,14 @@ class ExplanationVisualSpec:
     provenance_nodes: tuple[ProvenanceNodeSpec, ...]
     provenance_edges: tuple[ProvenanceEdgeSpec, ...]
     audit: AuditSpec
+    object_representation: ObjectRepresentationSpec | None = None
     schema_version: str = "1.1"
 
     def to_dict(self) -> dict[str, object]:
         return asdict(self)
 
     @classmethod
-    def from_dict(cls, payload: Mapping[str, Any]) -> "ExplanationVisualSpec":
+    def from_dict(cls, payload: Mapping[str, Any]) -> ExplanationVisualSpec:
         return visual_spec_from_dict(payload)
 
 
@@ -387,6 +448,51 @@ def visual_spec_from_dict(payload: Mapping[str, Any]) -> ExplanationVisualSpec:
     ) for item in atlas.get("concepts", ()))
     decision = dict(data.get("decision_evidence", {}))
     audit = dict(data.get("audit", {}))
+    object_representation_payload = data.get("object_representation")
+
+    def tabular_row(item: Mapping[str, Any]) -> TabularRowSpec:
+        return TabularRowSpec(
+            feature=str(item["feature"]),
+            raw_value=str(item.get("raw_value", "")),
+            contribution=_number(item.get("contribution")),
+            direction=str(item.get("direction", "unknown")),
+        )
+
+    object_representation = (
+        ObjectRepresentationSpec(
+            object_id=str(object_representation_payload.get("object_id", "")),
+            modality=str(object_representation_payload.get("modality", "unknown")),
+            raw_excerpt=str(object_representation_payload.get("raw_excerpt", "")),
+            spans=tuple(
+                TextSpanSpec(int(span["start"]), int(span["end"]), str(span["feature_name"]), str(span["direction"]), float(span["weight"]))
+                for span in object_representation_payload.get("spans", ())
+            ),
+            unmapped_features=tuple(str(item) for item in object_representation_payload.get("unmapped_features", ())),
+            suppressed_matches=tuple(str(item) for item in object_representation_payload.get("suppressed_matches", ())),
+            highlighted_html=str(object_representation_payload.get("highlighted_html", "")),
+            tabular_rows=tuple(tabular_row(item) for item in object_representation_payload.get("tabular_rows", ())),
+            tabular_rows_original_order=tuple(tabular_row(item) for item in object_representation_payload.get("tabular_rows_original_order", ())),
+            limitations=tuple(str(item) for item in object_representation_payload.get("limitations", ())),
+            image_width=None if object_representation_payload.get("image_width") is None else int(object_representation_payload["image_width"]),
+            image_height=None if object_representation_payload.get("image_height") is None else int(object_representation_payload["image_height"]),
+            image_channels=None if object_representation_payload.get("image_channels") is None else int(object_representation_payload["image_channels"]),
+            image_artifact_sha256=str(object_representation_payload.get("image_artifact_sha256", "")),
+            image_png_base64=str(object_representation_payload.get("image_png_base64", "")),
+            image_regions=tuple(
+                ImageRegionSpec(
+                    str(region["name"]),
+                    int(region["pixel_count"]),
+                    tuple(int(value) for value in region["bounding_box"]),  # type: ignore[arg-type]
+                    str(region.get("direction", "unknown")),
+                    _number(region.get("contribution")),
+                    tuple(str(value) for value in region.get("claim_refs", ())),
+                )
+                for region in object_representation_payload.get("image_regions", ())
+            ),
+        )
+        if isinstance(object_representation_payload, Mapping)
+        else None
+    )
     return ExplanationVisualSpec(
         overview=OverviewSpec(
             prediction=PredictionVisualSpec(str(prediction.get("prediction", "")), _number(prediction.get("score")), str(prediction.get("model_type", "unknown")), str(prediction.get("adapter_id", "unknown"))),
@@ -400,12 +506,13 @@ def visual_spec_from_dict(payload: Mapping[str, Any]) -> ExplanationVisualSpec:
         training_timeline=tuple(TrainingTimelineSpec(str(item["object_id"]), tuple(TrainingPointSpec(int(point["epoch"]), point.get("correct"), _number(point.get("confidence")), _number(point.get("loss")), _number(point.get("margin")), _number(point.get("prototype_distance")), _number(point.get("global_metric")), _number(point.get("subgroup_metric")), tuple(RuleActivationSpec(str(value["rule_id"]), float(value["activation"])) for value in point.get("rule_activations", ())), bool(point.get("forgetting"))) for point in item.get("points", ())), tuple(item.get("annotations", ())), tuple(item.get("claim_refs", ()))) for item in data.get("training_timeline", ())),
         knowledge_atlas=KnowledgeAtlasSpec(tuple(rules), concepts, int(atlas.get("source_rule_count", len(rules))), int(atlas.get("displayed_rule_count", len(rules))), int(atlas.get("primary_rule_count", 0))),
         decision_evidence=DecisionEvidenceSpec(tuple(claim_item(item) for item in decision.get("supports", ())), tuple(claim_item(item) for item in decision.get("contradicts", ())), tuple(claim_item(item) for item in decision.get("limitations", ()))),
-        similar_cases=tuple(SimilarCaseSpec(str(item.get("query_object_id", "unknown")), str(item["reference_object_id"]), float(item["score"]), str(item["method"]), str(item["representation"]), tuple(item.get("matched_features", ())), tuple(item.get("different_features", ())), tuple(item.get("matched_regions", ())), _number(item.get("coverage_score")), str(item.get("reference_label", "")), str(item.get("reference_prediction", "")), bool(item.get("is_counterexample", False)), tuple((str(pair[0]), str(pair[1])) for pair in item.get("media_artifacts", ())), tuple(item.get("limitations", ())), tuple(item.get("claim_refs", ()))) for item in data.get("similar_cases", ())),
+        similar_cases=tuple(SimilarCaseSpec(str(item.get("query_object_id", "unknown")), str(item["reference_object_id"]), float(item["score"]), str(item["method"]), str(item["representation"]), tuple(item.get("matched_features", ())), tuple(item.get("different_features", ())), tuple(item.get("matched_regions", ())), _number(item.get("coverage_score")), str(item.get("reference_label", "")), str(item.get("reference_prediction", "")), bool(item.get("is_counterexample", False)), tuple((str(pair[0]), str(pair[1])) for pair in item.get("media_artifacts", ())), tuple(item.get("limitations", ())), tuple(item.get("claim_refs", ())), None if item.get("reference_rank") is None else int(item["reference_rank"]), None if item.get("reference_count") is None else int(item["reference_count"])) for item in data.get("similar_cases", ())),
         counterfactuals=tuple(CounterfactualSpec(str(item.get("source_prediction", "")), str(item.get("target_prediction", "")), tuple(FeatureChangeSpec(str(value["feature"]), None if value.get("source_value") is None else str(value["source_value"]), str(value["target_value"])) for value in item.get("changed_features", ())), tuple(item.get("changed_rules", ())), _number(item.get("minimality")), _number(item.get("plausibility")), _number(item.get("expected_effect")), _number(item.get("observed_effect")), str(item.get("actionability", "unknown")), tuple(item.get("limitations", ())), tuple(item.get("claim_refs", ()))) for item in data.get("counterfactuals", ())),
         rule_ablations=tuple(RuleAblationMetricSpec(str(item["rule_id"]), str(item["metric"]), float(item["with_rule"]), float(item["without_rule"]), float(item["difference"]), str(item["scope"])) for item in data.get("rule_ablations", ())),
         provenance_nodes=tuple(ProvenanceNodeSpec(str(item["node_id"]), str(item["node_type"]), str(item["label"])) for item in data.get("provenance_nodes", ())),
         provenance_edges=tuple(ProvenanceEdgeSpec(str(item["source"]), str(item["target"]), str(item["relation"])) for item in data.get("provenance_edges", ())),
         audit=AuditSpec(bool(audit.get("graph_valid")), tuple(audit.get("graph_errors", ())), int(audit.get("node_count", 0)), int(audit.get("edge_count", 0)), int(audit.get("claim_count", 0)), tuple(audit.get("missing_evidence", ()))),
+        object_representation=object_representation,
         schema_version="1.1",
     )
 
@@ -436,6 +543,17 @@ def _claim_item(claim: ExplanationClaim) -> ClaimVisualSpec:
 def _text(value: object) -> str:
     if isinstance(value, str):
         return value
+    if not isinstance(value, (list, tuple, dict, set)) and hasattr(value, "item"):
+        # Unwrap numpy scalar types (np.int64, np.float64, np.bool_, ...)
+        # first — json.dumps's C encoder doesn't recognize them as numbers,
+        # so without this it falls through to default=str and produces a
+        # double-quoted string like '"0"' instead of '0'. Reference labels
+        # and predictions from raw numpy arrays hit this on every real
+        # sklearn/numpy pipeline, not just an edge case.
+        try:
+            value = value.item()
+        except (ValueError, TypeError):
+            pass
     return json.dumps(value, ensure_ascii=False, sort_keys=True, default=str)
 
 
@@ -486,7 +604,7 @@ def build_visual_spec(
     story = (
         stage("data", "Данные", {"data_quality", "data_deviation", "data_error_status"}),
         stage("training", "Обучение", {"first_learned", "forgetting", "subgroup_averaging", "lost_rules"}),
-        stage("knowledge", "Знания модели", {"model_rule", "class_concept"}),
+        stage("knowledge", "Знания модели", {"model_rule", "class_concept", "fuzzy_rule"}),
         stage("decision", "Решение", {"prediction", "similar_case", "counterfactual", "diagnostic"}),
         stage("action", "Действие", {"recommended_action"}),
     )
@@ -582,10 +700,33 @@ def build_visual_spec(
         )
         for concept in evidence.concepts
     )
-    support_types = {"prediction", "model_rule", "class_concept", "similar_case"}
+    # feature_contribution/image_region/fuzzy_rule are "directional" evidence
+    # types — HumanExplanation already splits each one on claim.effect
+    # (favorable -> a reason, adverse -> a concern); decision_evidence (which
+    # backs the compact/standard export's supporting/contradicting_evidence)
+    # must classify them the same way, or summary() and export_json(detail=
+    # "compact") can disagree about which evidence supports vs contradicts
+    # the same prediction.
+    support_types = {"prediction", "model_rule", "class_concept", "similar_case", "image_region", "fuzzy_rule", "feature_contribution"}
     contradict_types = {"data_deviation", "forgetting", "subgroup_averaging", "lost_rules", "diagnostic"}
-    supports = tuple(_claim_item(claim) for claim in claims if claim.claim_type in support_types and claim.evidence_status == "supported" and claim.effect != "adverse")
-    contradicts = tuple(_claim_item(claim) for claim in claims if claim.claim_type in contradict_types and claim.evidence_status != "insufficient_evidence")
+    directional_types = {"feature_contribution", "image_region", "fuzzy_rule"}
+    supports = tuple(
+        sorted(
+            (_claim_item(claim) for claim in claims if claim.claim_type in support_types and claim.evidence_status == "supported" and claim.effect != "adverse"),
+            key=lambda item: -(item.strength or 0.0),
+        )
+    )
+    contradicts = tuple(
+        sorted(
+            (
+                _claim_item(claim)
+                for claim in claims
+                if (claim.claim_type in contradict_types and claim.evidence_status != "insufficient_evidence")
+                or (claim.claim_type in directional_types and claim.effect == "adverse")
+            ),
+            key=lambda item: -(item.strength or 0.0),
+        )
+    )
     limitations = tuple(_claim_item(claim) for claim in claims if claim.evidence_status in {"contested", "insufficient_evidence"})
 
     similar_specs = tuple(
@@ -604,7 +745,19 @@ def build_visual_spec(
             is_counterexample=item.is_counterexample,
             media_artifacts=tuple(sorted((str(name), str(path)) for name, path in item.media_artifacts.items())),
             limitations=tuple(item.limitations),
-            claim_refs=_claim_refs(claims, "similar_case", item.query_object_id),
+            # Each exemplar must reference only its own claim, not every
+            # similar_case claim for the query object — matching on the
+            # claim's specific evidence_ref (which encodes both the query
+            # and this exact reference object) instead of just claim_type +
+            # subject_id (which is the same query_object_id for every case).
+            claim_refs=tuple(
+                claim.claim_id
+                for claim in claims
+                if claim.claim_type == "similar_case"
+                and f"similar:{item.query_object_id}:{item.reference_object_id}" in claim.evidence_refs
+            ),
+            reference_rank=item.reference_rank,
+            reference_count=item.reference_count,
         )
         for item in evidence.similar_cases
     )
@@ -637,6 +790,90 @@ def build_visual_spec(
         for name, value in sorted(rule.ablation_baseline.items())
         if name in rule.ablation_without_rule
     )
+    object_representation: ObjectRepresentationSpec | None = None
+    if evidence.text_highlights:
+        highlight = evidence.text_highlights[0]
+        object_representation = ObjectRepresentationSpec(
+            object_id=highlight.object_id,
+            modality="text",
+            raw_excerpt=highlight.raw_text,
+            spans=tuple(
+                TextSpanSpec(span.start, span.end, span.feature_name, span.direction, span.weight)
+                for span in highlight.spans
+            ),
+            unmapped_features=tuple(highlight.unmapped_features),
+            suppressed_matches=tuple(highlight.suppressed_matches),
+            highlighted_html=render_text_highlight_html(highlight),
+            tabular_rows=(),
+            tabular_rows_original_order=(),
+            limitations=tuple(highlight.limitations),
+        )
+    elif evidence.image_representations:
+        image = evidence.image_representations[0]
+        object_representation = ObjectRepresentationSpec(
+            object_id=image.object_id,
+            modality="image",
+            raw_excerpt="",
+            spans=(),
+            unmapped_features=(),
+            suppressed_matches=(),
+            highlighted_html="",
+            tabular_rows=(),
+            tabular_rows_original_order=(),
+            limitations=tuple(image.limitations),
+            image_width=image.width,
+            image_height=image.height,
+            image_channels=image.channels,
+            image_artifact_sha256=image.artifact_sha256,
+            image_png_base64=image.image_png_base64,
+            image_regions=tuple(
+                ImageRegionSpec(
+                    region.name,
+                    region.pixel_count,
+                    region.bounding_box,
+                    region.direction,
+                    region.contribution,
+                    tuple(
+                        claim.claim_id
+                        for claim in claims
+                        if claim.claim_type == "image_region" and f"image_region:{image.object_id}:{region.name}" in claim.evidence_refs
+                    ),
+                )
+                for region in image.regions
+            ),
+        )
+    elif evidence.data:
+        # No raw text was supplied (or it wasn't a supported type) — fall
+        # back to a tabular feature/value/contribution view built from
+        # already-collected data evidence, so a tabular input still gets an
+        # honest object representation instead of none at all. Contribution
+        # and direction are None/"unknown" per row when no contribution was
+        # measured for that feature — never invented.
+        item = evidence.data[0]
+        raw_by_feature = dict(zip(item.feature_names, item.raw_values))
+        rows_original = tuple(
+            TabularRowSpec(
+                feature=name,
+                raw_value=_text(raw_by_feature.get(name)),
+                contribution=_number(contributions.get(name)),
+                direction="unknown" if contributions.get(name) is None else ("supports" if contributions[name] >= 0 else "contradicts"),
+            )
+            for name in item.feature_names
+        )
+        rows_by_contribution = tuple(sorted(rows_original, key=lambda row: -(abs(row.contribution) if row.contribution is not None else -1)))
+        object_representation = ObjectRepresentationSpec(
+            object_id=item.object_id,
+            modality="tabular",
+            raw_excerpt="",
+            spans=(),
+            unmapped_features=(),
+            suppressed_matches=(),
+            highlighted_html="",
+            tabular_rows=rows_by_contribution,
+            tabular_rows_original_order=rows_original,
+            limitations=(() if contributions else ("no local contributions were measured for this prediction; raw values are shown without a contribution column",)),
+        )
+
     graph_errors = graph.validate_reachability()
     prediction_spec = PredictionVisualSpec(
         prediction=_text(prediction.get("predictions")),
@@ -677,4 +914,5 @@ def build_visual_spec(
         provenance_nodes=tuple(ProvenanceNodeSpec(node.node_id, node.node_type, node.label) for node in graph.nodes),
         provenance_edges=tuple(ProvenanceEdgeSpec(edge.source, edge.target, edge.relation) for edge in graph.edges),
         audit=AuditSpec(not graph_errors, graph_errors, len(graph.nodes), len(graph.edges), len(claims), tuple(graph.missing_evidence)),
+        object_representation=object_representation,
     )

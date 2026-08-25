@@ -2,7 +2,8 @@ from __future__ import annotations
 
 import ast
 import re
-from typing import Any, Mapping, Sequence, cast
+from collections.abc import Mapping, Sequence
+from typing import Any, cast
 
 from .contracts import (
     ActionStatement,
@@ -17,12 +18,11 @@ from .contracts import (
     ExplanationGraph,
     HumanExplanation,
     HumanStatement,
-    ReasonStatement,
     ReasonEffectDirection,
+    ReasonStatement,
     ReliabilityStatement,
 )
 from .validation import comparison_from_percentile
-
 
 AUDIENCE_PROFILES: dict[AudienceName, AudienceProfile] = {
     "domain_user": AudienceProfile("domain_user", 3, 2, 1, False, False),
@@ -50,6 +50,8 @@ _TYPE_WEIGHT = {
     "data_deviation": 0.88,
     "model_rule": 0.90,
     "class_concept": 0.82,
+    "fuzzy_rule": 0.95,
+    "image_region": 0.90,
     "similar_case": 0.62,
     "data_quality": 0.45,
     "prediction": 1.00,
@@ -101,7 +103,7 @@ def rank_human_claims(
     domain = dict(domain_language or {})
     domain_features = domain.get("features", {}) if isinstance(domain.get("features", {}), Mapping) else {}
 
-    def score(claim: ExplanationClaim) -> tuple[float, str]:
+    def sort_key(claim: ExplanationClaim) -> tuple[float, str]:
         importance = _TYPE_WEIGHT.get(claim.claim_type, 0.50)
         if claim.claim_type == "model_rule":
             importance *= 1.0 if claim.native else 0.58
@@ -110,9 +112,16 @@ def rank_human_claims(
         domain_significance = 1.0 if claim.subject_id in domain_features or claim.severity == "critical" else 0.82
         action_influence = 1.0 if claim.claim_type in {"recommended_action", "counterfactual", "diagnostic", "forgetting", "lost_rules"} else 0.78
         measured = 0.75 + 0.25 * (claim.strength if claim.strength is not None else 0.5)
-        return importance * understandable * confirmation * domain_significance * action_influence * measured, claim.claim_id
+        score = importance * understandable * confirmation * domain_significance * action_influence * measured
+        # Negate the score (instead of sorting ascending then reversing the
+        # whole list) so the tie-break stays claim_id-ascending even when
+        # scores tie — `sorted(..., reverse=True)` on a (score, claim_id)
+        # tuple used to reverse the tie-break too, so claims with an
+        # identical score (e.g. same type, same status, same strength) sorted
+        # by *descending* claim_id instead of a stable, predictable order.
+        return -score, claim.claim_id
 
-    return sorted(claims, key=score, reverse=True)
+    return sorted(claims, key=sort_key)
 
 
 def _refs(claims: Sequence[ExplanationClaim]) -> tuple[tuple[str, ...], tuple[str, ...]]:
@@ -170,8 +179,17 @@ def _technical_class_label(class_id: str, entry: Mapping[str, Any]) -> bool:
     )
 
 
-def _decision_statement(claim: ExplanationClaim, domain: Mapping[str, Any], technical: bool) -> DecisionStatement:
+def _decision_statement(claim: ExplanationClaim, domain: Mapping[str, Any], technical: bool, *, is_regression: bool = False) -> DecisionStatement:
     class_id = _prediction_value(claim.subject_id)
+    if is_regression:
+        # A regression target is a numeric prediction, never a "class" —
+        # there is no discrete label to look up in domain_language.classes.
+        label = f"Прогноз: {class_id}"
+        text = f"Модель спрогнозировала значение: {class_id}."
+        if claim.metric_value is not None:
+            text += f" Модельная оценка (score): {claim.metric_value:.3f}."
+        claim_refs, evidence_refs = _refs((claim,))
+        return DecisionStatement(label, text, claim_refs, evidence_refs, "available")
     class_entry = _domain_entry(_domain_section(domain, "classes"), class_id)
     raw_label = str(class_entry.get("label", "")).strip()
     language_available = not _technical_class_label(class_id, class_entry)
@@ -189,10 +207,18 @@ def _decision_statement(claim: ExplanationClaim, domain: Mapping[str, Any], tech
             "поэтому результат нельзя трактовать как диагноз."
         )
     else:
-        label = "Предметное значение класса не задано"
-        text = (
-            "Модель сформировала результат, но человеко-понятное название класса в плане объяснения не задано. "
-            "До заполнения предметного словаря этот результат нельзя использовать как предметное заключение."
+        # No domain_language entry for this class — that forbids a *domain*
+        # interpretation, but it must not hide the model's actual technical
+        # output from the reader (including domain_user): a developer still
+        # needs to know what the model predicted, just not be told it means
+        # something predetermined about the domain.
+        label = f"Технический результат: {class_id}"
+        text = f"Технический результат модели: {class_id}."
+        if claim.metric_value is not None:
+            text += f" Модельная оценка: {claim.metric_value:.3f}."
+        text += (
+            f" Предметное значение класса «{class_id}» не задано в плане объяснения (ExplainPlan.domain_language), "
+            f"поэтому FuzzyXAI не интерпретирует «{class_id}» как предметное заключение."
         )
     if technical and claim.metric_value is not None:
         text += f" Модельный балл: {claim.metric_value:.3f}."
@@ -223,6 +249,8 @@ def _feature_reason(
     evidence: ExplanationEvidence,
     domain: Mapping[str, Any],
     technical: bool,
+    *,
+    is_regression: bool = False,
 ) -> ReasonStatement:
     entry = _domain_entry(_domain_section(domain, "features"), claim.subject_id)
     label = str(entry.get("label", claim.subject_id.replace("_", " ")))
@@ -230,15 +258,28 @@ def _feature_reason(
     percentile = profile.get("percentile")
     median = profile.get("median")
     sample_size = profile.get("sample_size")
+    comparison_result = None
+    computed_domain_text = ""
     if isinstance(percentile, (int, float)) and isinstance(sample_size, (int, float)) and value is not None:
-        comparison = comparison_from_percentile(
+        comparison_result = comparison_from_percentile(
             int(sample_size),
             float(percentile),
             reference_label="обучающая выборка",
             representation="исходные признаки",
-        ).text
-        domain_text = str(entry.get("high_text" if percentile >= 50 else "low_text", ""))
+        )
+        computed_domain_text = str(entry.get("high_text" if percentile >= 50 else "low_text", ""))
+    if comparison_result is not None and comparison_result.wording_policy != "insufficient_evidence":
+        # A real comparison against >=2 reference objects exists — use it.
+        comparison = comparison_result.text
+        domain_text = computed_domain_text
     else:
+        # No usable reference set (absent, or too small for a comparison to
+        # carry information — see evidence/validation.py's size<2 guard).
+        # Do not phrase this as "one similar case was found and compared" —
+        # that reads as similarity evidence that was never actually
+        # produced (similar_cases stays empty; this is a different, unrelated
+        # per-feature reference-profile calculation). Fall back to the same
+        # generic, honest statement used when no profile exists at all.
         comparison = "Признак входит в число наиболее важных для текущего решения."
         domain_text = ""
     if value is not None and subgroup:
@@ -254,15 +295,23 @@ def _feature_reason(
         ):
             comparison = "Значение необычно для всей выборки, но типично для редкой группы, к которой относится объект."
     effect_direction: ReasonEffectDirection = "supports" if claim.effect == "favorable" else "opposes"
-    default_effect = (
-        "Поэтому этот показатель поддерживает прогноз."
-        if effect_direction == "supports"
-        else "Поэтому этот показатель противоречит прогнозу."
-    )
+    if is_regression:
+        default_effect = (
+            "Поэтому этот показатель повышает прогноз." if effect_direction == "supports" else "Поэтому этот показатель понижает прогноз."
+        )
+    else:
+        default_effect = (
+            "Поэтому этот показатель поддерживает прогноз."
+            if effect_direction == "supports"
+            else "Поэтому этот показатель противоречит прогнозу."
+        )
     effect_text = str(entry.get("effect_text", default_effect))
     technical_statement = claim.statement.lower()
     if "linear_term" in technical_statement or "coefficient" in technical_statement:
-        source_text = "Модель использует для этого показателя измеренный линейный коэффициент."
+        # Precise about what was actually computed: value * coefficient (a
+        # term), not just "the coefficient" — the coefficient alone doesn't
+        # depend on this object, the term does.
+        source_text = "Вклад рассчитан как произведение значения этого показателя на измеренный коэффициент модели."
     elif "tree_path" in technical_statement:
         source_text = "Объект прошёл по ветви дерева, где этот показатель сравнивался с обученным порогом."
     elif "gaussian_log_likelihood" in technical_statement:
@@ -366,6 +415,110 @@ def _concept_reason(
     )
 
 
+def _image_region_reason(claim: ExplanationClaim, technical: bool) -> ReasonStatement:
+    """Human statement for one caller-supplied image region — never a fabricated heatmap.
+
+    Mirrors ``_feature_reason``'s honesty pattern for the image modality:
+    when the region's contribution wasn't measured (``claim.metric_value``
+    absent), the statement says so plainly rather than inventing a
+    direction or magnitude.
+    """
+
+    region_name = claim.subject_id
+    # metric_name distinguishes a genuinely measured contribution
+    # ("region_contribution") from the pixel-count fallback claims.py emits
+    # when no contribution was found for this region's name — metric_value
+    # alone can't tell them apart, since the fallback still sets it (to the
+    # pixel count) so the claim isn't left without any evidence_refs/metric.
+    if claim.metric_name != "region_contribution" or claim.metric_value is None:
+        explanation = f"Область изображения «{region_name}» была выделена, но её вклад в прогноз не измерен."
+        direction: ReasonEffectDirection = "mixed"
+        comparison = "вклад для этой области не измерялся"
+    else:
+        direction = "supports" if claim.effect == "favorable" else "opposes"
+        explanation = (
+            f"Область изображения «{region_name}» "
+            + (f"поддерживает прогноз с вкладом {claim.metric_value:+.3f}." if claim.effect == "favorable" else f"противоречит прогнозу с вкладом {claim.metric_value:+.3f}.")
+        )
+        comparison = f"вклад области относительно нулевого вклада: {claim.metric_value:+.3f}"
+    if technical:
+        explanation += f" ({claim.short_statement})"
+    claim_refs, evidence_refs = _refs((claim,))
+    return ReasonStatement(f"Область {region_name}", explanation, claim_refs, evidence_refs, str(region_name), direction, comparison)
+
+
+def _fuzzy_rule_reason(
+    claim: ExplanationClaim,
+    evidence: ExplanationEvidence,
+    domain: Mapping[str, Any],
+    technical: bool,
+    *,
+    predicted_value: str,
+) -> ReasonStatement:
+    """Human statement for one fuzzy/ANFIS-like rule activation.
+
+    Renders real membership degrees and activation strength, never a
+    re-labeled linear contribution — a fuzzy rule is a different evidence
+    shape (antecedent terms + activation strength + conclusion), not a
+    single scalar to squeeze into feature_contribution's template.
+    """
+
+    refs = set(claim.evidence_refs)
+    activation = next(
+        (item for item in evidence.fuzzy_rule_activations if f"fuzzy_rule:{item.object_id}:{item.rule_id}" in refs),
+        None,
+    )
+    direction: ReasonEffectDirection = "supports" if claim.effect == "favorable" else "opposes"
+    if activation is None:
+        claim_refs, evidence_refs = _refs((claim,))
+        return ReasonStatement(
+            "Активированное правило",
+            _clean_internal_identifiers(claim.statement),
+            claim_refs,
+            evidence_refs,
+            "правило",
+            direction,
+            "степень активации правила измерена моделью",
+        )
+    term_parts = []
+    for term in activation.terms:
+        feature_entry = _domain_entry(_domain_section(domain, "features"), term.feature)
+        feature_label = str(feature_entry.get("label", term.feature.replace("_", " ")))
+        term_parts.append(f"{feature_label} соответствует терму «{term.term}» (степень {term.membership_degree:.2f})")
+    terms_text = ", ".join(term_parts)
+    class_entry = _domain_entry(_domain_section(domain, "classes"), str(activation.conclusion))
+    class_label = str(class_entry.get("label", f"класс {activation.conclusion}"))
+    # The bare rule_id (e.g. "R7") is a technical identifier — like tree rule
+    # ids, it is not shown to domain_user (see _rule_reason's own precedent
+    # and TECHNICAL_TERMS' \bR\d+\b guard); the description is built purely
+    # from the rule's own antecedent terms instead, which are always
+    # meaningful on their own.
+    if claim.effect == "favorable":
+        # The rule's own conclusion is what was predicted — a direct match.
+        conclusion_text = f"поддерживает результат «{class_label}»"
+    else:
+        # The rule concludes a DIFFERENT class than what the model actually
+        # predicted — the contradiction is between the rule's conclusion and
+        # the overall prediction, never the rule contradicting itself.
+        predicted_entry = _domain_entry(_domain_section(domain, "classes"), predicted_value)
+        predicted_label = str(predicted_entry.get("label", f"класс {predicted_value}"))
+        conclusion_text = f"— «{class_label}», что противоречит текущему прогнозу «{predicted_label}»"
+    explanation = (
+        f"Правило активировано со степенью {activation.activation_strength:.2f}: {terms_text}. "
+        f"Заключение правила {conclusion_text}."
+    )
+    title = f"Активированное правило: {term_parts[0].split(' (')[0]}" if term_parts else "Активированное правило"
+    if technical:
+        explanation += f" (rule_id={activation.rule_id}, activation={activation.activation_strength:.3f})"
+        title += f" [{activation.rule_id}]"
+    claim_refs, evidence_refs = _refs((claim,))
+    comparison = f"степень активации правила: {activation.activation_strength:.2f}"
+    # subject_label feeds into domain_user-facing "Решение поддерживают: ..."
+    # text elsewhere — it must not carry the bare rule_id either.
+    subject_label = f"активированное правило ({activation.terms[0].feature})" if activation.terms else "активированное правило"
+    return ReasonStatement(title, explanation, claim_refs, evidence_refs, subject_label, direction, comparison)
+
+
 def _similar_statement(
     claim: ExplanationClaim,
     evidence: ExplanationEvidence,
@@ -417,27 +570,47 @@ def _similar_statement(
                 _REPRESENTATION_TEXT.get(case.compared_representation.lower(), "указанные предметные показатели"),
             )
         )
+        # The reference object's own identifier (something the caller
+        # supplied via reference_ids, not an internal claim/rule ID) is
+        # shown to every audience, not gated behind `technical` — this is
+        # exactly the "similar to training object #45" scenario a reader
+        # needs to be able to name, and it also keeps several similar-case
+        # statements from reading as identical duplicates of each other.
+        reference_label = str(case.reference_object_id)
         if case.is_counterexample or claim.effect == "adverse":
             explanation = (
-                f"Найден близкий пример с другим результатом. Объекты сравнивались по характеристикам: {representation_text}. "
+                f"Найден близкий пример ({reference_label}) с другим результатом. Объекты сравнивались по характеристикам: {representation_text}. "
                 "Это показывает, что отдельное сходство встречается у разных результатов и ограничивает доверие."
             )
-            title = "Похожий контрпример"
+            title = f"Похожий контрпример {reference_label}"
             comparison = f"с примером другого результата по характеристикам: {representation_text}"
         else:
             if case.compared_representation.lower() == "model embedding vector" and case.media_artifacts:
                 explanation = (
-                    f"Модель также считает изображения похожими по форме и структуре выделенной области; "
+                    f"Модель также считает изображения похожими по форме и структуре выделенной области ({reference_label}); "
                     f"измеренное сходство составляет {case.similarity_score * 100:.0f}%. "
                     "Этот показатель описывает техническое сходство изображений, а не вероятность одинакового заболевания."
                 )
             else:
                 explanation = (
-                    f"Дополнительным подтверждением служит обучающий объект с похожими характеристиками: {representation_text}. "
+                    f"Дополнительным подтверждением служит обучающий объект {reference_label} с похожими характеристиками: {representation_text}. "
                     "Сходство является вспомогательным основанием и не определяет результат самостоятельно."
                 )
-            title = "Похожий обучающий случай"
+            title = f"Похожий обучающий случай {reference_label}"
             comparison = f"с обучающими объектами по характеристикам: {representation_text}"
+        extra_parts: list[str] = []
+        if case.reference_rank is not None and case.reference_count:
+            extra_parts.append(f"Место по близости: {case.reference_rank} из {case.reference_count}.")
+        matched_top = list(case.matched_features)[:3]
+        different_top = list(case.different_features)[:3]
+        if matched_top:
+            extra_parts.append(f"Наиболее близкие характеристики: {', '.join(matched_top)}.")
+        if different_top:
+            extra_parts.append(f"Наиболее заметные различия: {', '.join(different_top)}.")
+        if case.reference_label is not None and str(case.reference_label).strip():
+            extra_parts.append(f"Эталонный объект {reference_label} имеет метку класса {case.reference_label}.")
+        if extra_parts:
+            explanation = explanation.rstrip() + " " + " ".join(extra_parts)
     if technical:
         explanation += f" Метод: {case.similarity_method}; значение: {case.similarity_score:.3f}; объект: {case.reference_object_id}."
     claim_refs, evidence_refs = _refs((claim,))
@@ -625,27 +798,38 @@ def compose_human_explanation(
     evidence: ExplanationEvidence | None = None,
     domain_language: Mapping[str, Any] | None = None,
     level: str | None = None,
+    task_type: str | None = None,
 ) -> HumanExplanation:
-    """Answer operational user questions without exposing the claim machinery."""
+    """Answer operational user questions without exposing the claim machinery.
+
+    ``task_type`` (e.g. ``"regression"``) is optional and defaults to
+    classification-style wording when absent — fully backward compatible.
+    When it is ``"regression"``, feature-contribution wording switches from
+    "supports/contradicts the prediction" (a discrete-class framing) to
+    "increases/decreases the predicted value" — a regression target is a
+    magnitude, not a class, and claiming a feature "supports" it reads as a
+    category judgment that was never measured.
+    """
 
     profile = audience_profile(level or audience)
     domain = dict(domain_language or {})
     evidence = evidence or ExplanationEvidence()
     ranked = rank_human_claims(claims, domain_language=domain)
     technical = profile.show_technical_identifiers
+    is_regression = task_type == "regression"
 
     prediction = next((claim for claim in claims if claim.claim_type == "prediction"), None)
     action_claim = next((claim for claim in claims if claim.claim_type == "recommended_action"), None)
     if prediction is None or action_claim is None:
         raise ValueError("human explanation requires prediction and recommended-action claims")
-    decision = _decision_statement(prediction, domain, technical)
+    decision = _decision_statement(prediction, domain, technical, is_regression=is_regression)
 
     supports: list[ReasonStatement] = []
     contradicts: list[ConcernStatement] = []
     similar_details: list[HumanStatement] = []
     for claim in ranked:
         if claim.claim_type == "feature_contribution":
-            reason = _feature_reason(claim, evidence, domain, technical)
+            reason = _feature_reason(claim, evidence, domain, technical, is_regression=is_regression)
             if claim.effect == "favorable":
                 supports.append(reason)
             else:
@@ -656,6 +840,20 @@ def compose_human_explanation(
                 supports.append(rule_reason)
         elif claim.claim_type == "class_concept":
             supports.append(_concept_reason(claim, evidence, domain, technical))
+        elif claim.claim_type == "image_region":
+            region_reason = _image_region_reason(claim, technical)
+            if claim.effect == "favorable":
+                supports.append(region_reason)
+            elif claim.effect == "adverse":
+                contradicts.append(ConcernStatement(region_reason.title, region_reason.explanation, region_reason.claim_refs, region_reason.evidence_refs))
+            else:
+                supports.append(region_reason)
+        elif claim.claim_type == "fuzzy_rule":
+            rule_reason_stmt = _fuzzy_rule_reason(claim, evidence, domain, technical, predicted_value=_prediction_value(prediction.subject_id))
+            if claim.effect == "favorable":
+                supports.append(rule_reason_stmt)
+            else:
+                contradicts.append(ConcernStatement(rule_reason_stmt.title, rule_reason_stmt.explanation, rule_reason_stmt.claim_refs, rule_reason_stmt.evidence_refs))
         elif claim.claim_type == "similar_case":
             similar = _similar_statement(claim, evidence, domain, technical)
             similar_details.append(similar)

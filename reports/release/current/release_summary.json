@@ -1,6 +1,6 @@
 {
   "branch": "main",
-  "commit": "1195585",
+  "commit": "3aa10fe",
   "tag": null,
   "sprint_report_status": "PASS",
   "framework_check": "UNKNOWN",
@@ -31,6 +31,11 @@
     "package_path": "research_validation/reports/fuzzyxai_research_validation_package.zip",
     "errors": []
   },
+  "research_analysis": {
+    "status": "PASS",
+    "files_total": 3,
+    "files_present": 3
+  },
   "dashboard_v2_available": true,
   "operator_cards_available": true,
   "operator_edges_available": true,
@@ -41,14 +46,15 @@
   "proofs_total": 5,
   "dashboards_total": 5,
   "site_payloads_total": 5,
-  "site_routes_total": 5,
-  "site_figures_total": 5,
+  "site_routes_total": 0,
+  "site_figures_total": 0,
   "site_computes_fuzzyxai": false,
+  "site_quarantined": true,
   "applications_choose_actions_directly": false,
   "dirty_worktree": true,
   "dirty_source_files": true,
   "warnings": [
-    "dirty source files: Makefile, applications/scenarios/beacon_xai/figures/operator_dashboard.png, applications/scenarios/beacon_xai/proof/proof_trace.json, applications/scenarios/beacon_xai/route/route.json, applications/scenarios/beacon_xai/site_payload/scenario.json, applications/scenarios/gd_anfis_shap/figures/operator_dashboard.png, applications/scenarios/gd_anfis_shap/proof/proof_trace.json, applications/scenarios/gd_anfis_shap/route/route.json, applications/scenarios/gd_anfis_shap/site_payload/scenario.json, applications/scenarios/gis_integro/figures/operator_dashboard.png"
+    "dirty source files: framework/fuzzyxai/fuzzyxai/adapters/model.py, framework/fuzzyxai/fuzzyxai/adapters/sklearn_v2.py, framework/fuzzyxai/fuzzyxai/evidence/__init__.py, framework/fuzzyxai/fuzzyxai/evidence/claims.py, framework/fuzzyxai/fuzzyxai/evidence/contracts.py, framework/fuzzyxai/fuzzyxai/evidence/graph.py, framework/fuzzyxai/fuzzyxai/evidence/human.py, framework/fuzzyxai/fuzzyxai/evidence/similarity.py, framework/fuzzyxai/fuzzyxai/evidence/validation.py, framework/fuzzyxai/fuzzyxai/runtime.py"
   ],
   "errors": [],
   "next_step": "external payload schemas and adapter contracts"

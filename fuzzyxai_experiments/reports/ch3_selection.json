@@ -1,9 +1,9 @@
 {
   "experiment": "ch3_selection",
-  "generated_at": "2026-06-11T06:59:59.261004+00:00",
-  "runtime_seconds": 0.000348,
+  "generated_at": "2026-08-25T16:22:01.084889+00:00",
+  "runtime_seconds": 0.000376,
   "explain_plan": {
-    "path": "configs/explain_plan_chapter2.yaml",
+    "path": "/home/lebedeffson/Code/fuzzy-xai-operator/configs/explain_plan_chapter2.yaml",
     "sha256": "4469dad3fbeeb4f53ad953c24bd4e29a8de0d17d6465fb2c71b2b15a954cacfc"
   },
   "status": "ok",
@@ -22,35 +22,35 @@
       "C_cog": 1,
       "Delta_hat": 0.25,
       "covers_profile": false,
-      "C_comp_ms_per_1000": 0.070663
+      "C_comp_ms_per_1000": 0.071834
     },
     {
       "class": "F_int",
       "C_cog": 2,
       "Delta_hat": 0.12,
       "covers_profile": false,
-      "C_comp_ms_per_1000": 0.061385
+      "C_comp_ms_per_1000": 0.069029
     },
     {
       "class": "F_H",
       "C_cog": 3,
       "Delta_hat": 0.1,
       "covers_profile": false,
-      "C_comp_ms_per_1000": 0.061045
+      "C_comp_ms_per_1000": 0.068107
     },
     {
       "class": "F_N_src",
       "C_cog": 4,
       "Delta_hat": 0.08,
       "covers_profile": false,
-      "C_comp_ms_per_1000": 0.071365
+      "C_comp_ms_per_1000": 0.073748
     },
     {
       "class": "F_ML",
       "C_cog": 5,
       "Delta_hat": 0.05,
       "covers_profile": true,
-      "C_comp_ms_per_1000": 0.060764
+      "C_comp_ms_per_1000": 0.067476
     }
   ],
   "selected_class": "F_ML",

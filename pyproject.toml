@@ -16,7 +16,6 @@ dependencies = [
   "scikit-learn>=1.2",
   "plotly>=5.0",
   "matplotlib>=3.7",
-  "nicegui>=1.4",
   "PyYAML>=6.0",
 ]
 
@@ -33,6 +32,11 @@ tensorflow = ["tensorflow>=2.14"]
 onnx = ["onnx>=1.15", "onnxruntime>=1.16"]
 images = ["pillow>=10.0"]
 evidence = ["pyarrow>=16.0"]
+# Not imported anywhere under fuzzyxai/ (the installable package) — only by
+# the standalone apps/*.py dashboards at the repo root, which are not
+# shipped in the wheel. Kept as an extra so a plain `pip install
+# fuzzyxai-operator` doesn't pull in a UI framework nothing in the package uses.
+ui = ["nicegui>=1.4"]
 mlflow = ["mlflow==2.22.5"]
 ml-vertical = [
     "shap==0.51.0",
@@ -96,6 +100,58 @@ package-dir = {"" = "framework/fuzzyxai"}
 [tool.setuptools.packages.find]
 where = ["framework/fuzzyxai"]
 include = ["fuzzyxai*"]
+# P13 packaging audit: each excluded subpackage was verified, not guessed —
+# via `python -c "import fuzzyxai; ...; sys.modules"` after exercising the
+# full canonical surface (wrap/explain_one/explain/diagnose/why_not/audit/
+# quality_report/capability_report/export_html/explain_global/
+# observe_training/compare_models/verbalize/visualize), cross-checked
+# against exact absolute-import greps (not name-based guessing — several
+# candidates that *looked* research-only, e.g. fuzzyxai.data and
+# fuzzyxai.audit_h10, turned out to be hard transitive dependencies of
+# fuzzyxai/__init__.py and were kept). Every name below was confirmed to
+# have zero real importers anywhere in the kept runtime surface.
+# fuzzyxai.experiments / fuzzyxai.q1_validation are dissertation-study code
+# (h10_c*, chapter2/3 calibration scripts, Q1 validation protocols).
+# The rest are dissertation-chapter-specific research/formal-methods
+# packages (ai_pre_review*: blind AI review study; audit: release-readiness
+# CI checks, distinct from the kept fuzzyxai.audit_h10; calibration/
+# category/hott: chapter-specific formal frameworks; ecosystem/evaluate/
+# evidence_path/final_closure/gold_repository/incidents/multimodal/
+# q1_final/repository_diagnostics/robustness/strong_confirmatory: H9/H10/Q1
+# study evidence generators; config: unused defaults registry; practice/
+# realdata/repair/reporting/roles/studio/train/viz: doctoral-demo and
+# defense-case tooling) — none referenced by fuzzyxai/__init__.py or any of
+# its transitive imports.
+exclude = [
+    "fuzzyxai.experiments", "fuzzyxai.experiments.*",
+    "fuzzyxai.q1_validation", "fuzzyxai.q1_validation.*",
+    "fuzzyxai.ai_pre_review", "fuzzyxai.ai_pre_review.*",
+    "fuzzyxai.ai_pre_review_final", "fuzzyxai.ai_pre_review_final.*",
+    "fuzzyxai.audit", "fuzzyxai.audit.*",
+    "fuzzyxai.calibration", "fuzzyxai.calibration.*",
+    "fuzzyxai.category", "fuzzyxai.category.*",
+    "fuzzyxai.config", "fuzzyxai.config.*",
+    "fuzzyxai.ecosystem", "fuzzyxai.ecosystem.*",
+    "fuzzyxai.evaluate", "fuzzyxai.evaluate.*",
+    "fuzzyxai.evidence_path", "fuzzyxai.evidence_path.*",
+    "fuzzyxai.final_closure", "fuzzyxai.final_closure.*",
+    "fuzzyxai.gold_repository", "fuzzyxai.gold_repository.*",
+    "fuzzyxai.hott", "fuzzyxai.hott.*",
+    "fuzzyxai.incidents", "fuzzyxai.incidents.*",
+    "fuzzyxai.multimodal", "fuzzyxai.multimodal.*",
+    "fuzzyxai.practice", "fuzzyxai.practice.*",
+    "fuzzyxai.q1_final", "fuzzyxai.q1_final.*",
+    "fuzzyxai.realdata", "fuzzyxai.realdata.*",
+    "fuzzyxai.repair", "fuzzyxai.repair.*",
+    "fuzzyxai.reporting", "fuzzyxai.reporting.*",
+    "fuzzyxai.repository_diagnostics", "fuzzyxai.repository_diagnostics.*",
+    "fuzzyxai.robustness", "fuzzyxai.robustness.*",
+    "fuzzyxai.roles", "fuzzyxai.roles.*",
+    "fuzzyxai.strong_confirmatory", "fuzzyxai.strong_confirmatory.*",
+    "fuzzyxai.studio", "fuzzyxai.studio.*",
+    "fuzzyxai.train", "fuzzyxai.train.*",
+    "fuzzyxai.viz", "fuzzyxai.viz.*",
+]
 
 [tool.setuptools.package-data]
 fuzzyxai = ["schemas/*.json"]

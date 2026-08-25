@@ -21,7 +21,7 @@
     "uncertainty": 0.320881,
     "uncertainty_component": 0.320881
   },
-  "created_at": "2026-07-01T16:45:50.836704+00:00",
+  "created_at": "2026-08-25T16:21:59.341072+00:00",
   "edges": [
     {
       "edge_id": "edge_input_explanation",
@@ -268,7 +268,7 @@
         "source_type": "tabular",
         "top_k_importance": 2
       },
-      "source_commit": "11955855fb111912239f83500af5349fba895ee5",
+      "source_commit": "3aa10fe778108a32f87829feacb56bb2f9c2e13a",
       "status": "passed",
       "status_reason_ru": "Внешний payload успешно приведён к AdaptedInput.",
       "threshold": "",
@@ -334,7 +334,7 @@
       "raw": {
         "value_source": "computed"
       },
-      "source_commit": "11955855fb111912239f83500af5349fba895ee5",
+      "source_commit": "3aa10fe778108a32f87829feacb56bb2f9c2e13a",
       "status": "passed",
       "status_reason_ru": "Объект объяснения содержит вероятность, признаки и атрибуции.",
       "threshold": "",
@@ -399,7 +399,7 @@
       "raw": {
         "value_source": "computed"
       },
-      "source_commit": "11955855fb111912239f83500af5349fba895ee5",
+      "source_commit": "3aa10fe778108a32f87829feacb56bb2f9c2e13a",
       "status": "passed",
       "status_reason_ru": "Выбран класс F0.",
       "threshold": "",
@@ -456,7 +456,7 @@
         "uncertainty": 0.320881,
         "value_source": "computed"
       },
-      "source_commit": "11955855fb111912239f83500af5349fba895ee5",
+      "source_commit": "3aa10fe778108a32f87829feacb56bb2f9c2e13a",
       "status": "passed",
       "status_reason_ru": "Рассогласование ненулевое, потому что вероятность класса меньше 1.",
       "threshold": "",
@@ -518,7 +518,7 @@
         "importance_sum": 0.570156,
         "value_source": "computed"
       },
-      "source_commit": "11955855fb111912239f83500af5349fba895ee5",
+      "source_commit": "3aa10fe778108a32f87829feacb56bb2f9c2e13a",
       "status": "warning",
       "status_reason_ru": "Часть объяснения потеряна при top-k редукции.",
       "threshold": "",
@@ -577,7 +577,7 @@
         "theta_warning": 0.6,
         "value_source": "computed"
       },
-      "source_commit": "11955855fb111912239f83500af5349fba895ee5",
+      "source_commit": "3aa10fe778108a32f87829feacb56bb2f9c2e13a",
       "status": "warning",
       "status_reason_ru": "rho попал в зону lower_confidence.",
       "threshold": "",
@@ -648,7 +648,7 @@
         ],
         "value_source": "computed"
       },
-      "source_commit": "11955855fb111912239f83500af5349fba895ee5",
+      "source_commit": "3aa10fe778108a32f87829feacb56bb2f9c2e13a",
       "status": "warning",
       "status_reason_ru": "ограниченная уверенность внешней табличной модели",
       "threshold": "",
@@ -702,7 +702,7 @@
         "action": "lower_confidence",
         "value_source": "computed"
       },
-      "source_commit": "11955855fb111912239f83500af5349fba895ee5",
+      "source_commit": "3aa10fe778108a32f87829feacb56bb2f9c2e13a",
       "status": "warning",
       "status_reason_ru": "Риск ненулевой, но не критический.",
       "threshold": "",
@@ -719,7 +719,7 @@
     {
       "components": {
         "scenario_id": "external_wine_classification",
-        "source_commit": "11955855fb111912239f83500af5349fba895ee5"
+        "source_commit": "3aa10fe778108a32f87829feacb56bb2f9c2e13a"
       },
       "details": {},
       "explanation": "Маршрут сохраняется как проверяемый доказательный след.",
@@ -773,13 +773,13 @@
       "output_refs": [],
       "output_summary": "выход оператора",
       "output_values": {
-        "source_commit": "11955855fb111912239f83500af5349fba895ee5",
+        "source_commit": "3aa10fe778108a32f87829feacb56bb2f9c2e13a",
         "verification_status": "PASS"
       },
       "raw": {
         "value_source": "computed"
       },
-      "source_commit": "11955855fb111912239f83500af5349fba895ee5",
+      "source_commit": "3aa10fe778108a32f87829feacb56bb2f9c2e13a",
       "status": "passed",
       "status_reason_ru": "Proof trace содержит значения маршрута и source_commit.",
       "threshold": "",
@@ -794,7 +794,7 @@
   "route_id": "external_wine_classification:sklearn_wine:GradientBoostingClassifier:external_payload",
   "scenario_id": "external_wine_classification",
   "scenario_title_ru": "Research validation: tabular_classification",
-  "source_commit": "11955855fb111912239f83500af5349fba895ee5",
+  "source_commit": "3aa10fe778108a32f87829feacb56bb2f9c2e13a",
   "verification_summary": {
     "checks": [
       {

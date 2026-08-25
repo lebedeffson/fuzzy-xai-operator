@@ -79,6 +79,29 @@ def build_explanation_graph(
         node_id = f"counterfactual:{index}"
         add_node(node_id, "counterfactual", f"Change toward {counterfactual.target_prediction}", counterfactual.to_dict(), counterfactual.evidence_refs)
 
+    for activation in evidence.fuzzy_rule_activations:
+        # node_id must match claims.py's `ref = f"fuzzy_rule:{object_id}:{rule_id}"`
+        # exactly — that's what a fuzzy_rule claim's evidence_refs point to.
+        node_id = f"fuzzy_rule:{activation.object_id}:{activation.rule_id}"
+        add_node(node_id, "fuzzy_rule", f"Rule {activation.rule_id} (activation {activation.activation_strength:.2f})", activation.to_dict())
+        data_id = f"data:{activation.object_id}"
+        if any(node.node_id == data_id for node in nodes):
+            edges.append(ExplanationEdge(data_id, node_id, "derived_from"))
+
+    for image in evidence.image_representations:
+        for region in image.regions:
+            # node_id must match claims.py's `ref = f"image_region:{object_id}:{region.name}"`.
+            node_id = f"image_region:{image.object_id}:{region.name}"
+            add_node(
+                node_id,
+                "image_region",
+                f"Region {region.name} ({region.pixel_count} px)",
+                {"name": region.name, "pixel_count": region.pixel_count, "bounding_box": list(region.bounding_box), "direction": region.direction, "contribution": region.contribution},
+            )
+            data_id = f"data:{image.object_id}"
+            if any(node.node_id == data_id for node in nodes):
+                edges.append(ExplanationEdge(data_id, node_id, "derived_from"))
+
     contributions = prediction.get("contributions", {})
     if isinstance(contributions, Mapping):
         for feature, value in contributions.items():
@@ -91,7 +114,7 @@ def build_explanation_graph(
 
     add_node("prediction", "prediction", "Model prediction", prediction)
     for node in list(nodes):
-        if node.node_type in {"data", "contribution", "rule", "concept", "similar_case", "counterfactual"}:
+        if node.node_type in {"data", "contribution", "rule", "concept", "similar_case", "counterfactual", "fuzzy_rule", "image_region"}:
             relation = "changed_by" if node.node_type == "counterfactual" else "derived_from"
             edges.append(ExplanationEdge(node.node_id, "prediction", relation, node.evidence_refs))
 

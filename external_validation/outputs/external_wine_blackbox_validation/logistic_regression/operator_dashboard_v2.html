@@ -2,7 +2,7 @@
 <html lang="ru"><meta charset="utf-8"><title>FuzzyXAI Operator Dashboard v2</title>
 <style>body{font-family:Arial,sans-serif;margin:24px;color:#17202a}table{border-collapse:collapse;width:100%}td,th{border:1px solid #ccc;padding:8px;vertical-align:top}pre{white-space:pre-wrap;margin:0}.meta{background:#f3f5f7;padding:12px}</style>
 <h1>Research validation: tabular_classification</h1>
-<div class="meta">route_id: external_wine_classification:sklearn_wine:LogisticRegression:external_payload<br>source_commit: 11955855fb111912239f83500af5349fba895ee5<br>verifier: passed</div>
+<div class="meta">route_id: external_wine_classification:sklearn_wine:LogisticRegression:external_payload<br>source_commit: 3aa10fe778108a32f87829feacb56bb2f9c2e13a<br>verifier: passed</div>
 <h2>Key Values</h2><pre>{
   &quot;action&quot;: &quot;lower_confidence&quot;,
   &quot;action_id&quot;: &quot;lower_confidence&quot;,
@@ -88,7 +88,7 @@
   &quot;action_title_ru&quot;: &quot;понизить доверие&quot;
 }</pre></td><td>Результат не блокируется, но автоматическое доверие понижается из-за ненулевого риска.</td></tr>
 <tr><td>proof</td><td>proof_trace = hashable route + computed_result + diagnostics + action + source_commit</td><td><pre>{
-  &quot;source_commit&quot;: &quot;11955855fb111912239f83500af5349fba895ee5&quot;,
+  &quot;source_commit&quot;: &quot;3aa10fe778108a32f87829feacb56bb2f9c2e13a&quot;,
   &quot;verification_status&quot;: &quot;PASS&quot;
 }</pre></td><td>Доказательный след связывает route, значения операторов, диагностику и действие.</td></tr></table>
 <h2>Embedded Data</h2><script type="application/json" id="dashboard-data">{
@@ -376,7 +376,7 @@
         &quot;source_type&quot;: &quot;tabular&quot;,
         &quot;top_k_importance&quot;: 5
       },
-      &quot;source_commit&quot;: &quot;11955855fb111912239f83500af5349fba895ee5&quot;,
+      &quot;source_commit&quot;: &quot;3aa10fe778108a32f87829feacb56bb2f9c2e13a&quot;,
       &quot;status&quot;: &quot;passed&quot;,
       &quot;status_reason_ru&quot;: &quot;Внешний payload успешно приведён к AdaptedInput.&quot;,
       &quot;threshold&quot;: &quot;&quot;,
@@ -454,7 +454,7 @@
       &quot;raw&quot;: {
         &quot;value_source&quot;: &quot;computed&quot;
       },
-      &quot;source_commit&quot;: &quot;11955855fb111912239f83500af5349fba895ee5&quot;,
+      &quot;source_commit&quot;: &quot;3aa10fe778108a32f87829feacb56bb2f9c2e13a&quot;,
       &quot;status&quot;: &quot;passed&quot;,
       &quot;status_reason_ru&quot;: &quot;Объект объяснения содержит вероятность, признаки и атрибуции.&quot;,
       &quot;threshold&quot;: &quot;&quot;,
@@ -519,7 +519,7 @@
       &quot;raw&quot;: {
         &quot;value_source&quot;: &quot;computed&quot;
       },
-      &quot;source_commit&quot;: &quot;11955855fb111912239f83500af5349fba895ee5&quot;,
+      &quot;source_commit&quot;: &quot;3aa10fe778108a32f87829feacb56bb2f9c2e13a&quot;,
       &quot;status&quot;: &quot;passed&quot;,
       &quot;status_reason_ru&quot;: &quot;Выбран класс F0.&quot;,
       &quot;threshold&quot;: &quot;&quot;,
@@ -576,7 +576,7 @@
         &quot;uncertainty&quot;: 0.310276,
         &quot;value_source&quot;: &quot;computed&quot;
       },
-      &quot;source_commit&quot;: &quot;11955855fb111912239f83500af5349fba895ee5&quot;,
+      &quot;source_commit&quot;: &quot;3aa10fe778108a32f87829feacb56bb2f9c2e13a&quot;,
       &quot;status&quot;: &quot;passed&quot;,
       &quot;status_reason_ru&quot;: &quot;Рассогласование ненулевое, потому что вероятность класса меньше 1.&quot;,
       &quot;threshold&quot;: &quot;&quot;,
@@ -647,7 +647,7 @@
         &quot;importance_sum&quot;: 0.626872,
         &quot;value_source&quot;: &quot;computed&quot;
       },
-      &quot;source_commit&quot;: &quot;11955855fb111912239f83500af5349fba895ee5&quot;,
+      &quot;source_commit&quot;: &quot;3aa10fe778108a32f87829feacb56bb2f9c2e13a&quot;,
       &quot;status&quot;: &quot;warning&quot;,
       &quot;status_reason_ru&quot;: &quot;Часть объяснения потеряна при top-k редукции.&quot;,
       &quot;threshold&quot;: &quot;&quot;,
@@ -706,7 +706,7 @@
         &quot;theta_warning&quot;: 0.6,
         &quot;value_source&quot;: &quot;computed&quot;
       },
-      &quot;source_commit&quot;: &quot;11955855fb111912239f83500af5349fba895ee5&quot;,
+      &quot;source_commit&quot;: &quot;3aa10fe778108a32f87829feacb56bb2f9c2e13a&quot;,
       &quot;status&quot;: &quot;warning&quot;,
       &quot;status_reason_ru&quot;: &quot;rho попал в зону lower_confidence.&quot;,
       &quot;threshold&quot;: &quot;&quot;,
@@ -777,7 +777,7 @@
         ],
         &quot;value_source&quot;: &quot;computed&quot;
       },
-      &quot;source_commit&quot;: &quot;11955855fb111912239f83500af5349fba895ee5&quot;,
+      &quot;source_commit&quot;: &quot;3aa10fe778108a32f87829feacb56bb2f9c2e13a&quot;,
       &quot;status&quot;: &quot;warning&quot;,
       &quot;status_reason_ru&quot;: &quot;ограниченная уверенность внешней табличной модели&quot;,
       &quot;threshold&quot;: &quot;&quot;,
@@ -831,7 +831,7 @@
         &quot;action&quot;: &quot;lower_confidence&quot;,
         &quot;value_source&quot;: &quot;computed&quot;
       },
-      &quot;source_commit&quot;: &quot;11955855fb111912239f83500af5349fba895ee5&quot;,
+      &quot;source_commit&quot;: &quot;3aa10fe778108a32f87829feacb56bb2f9c2e13a&quot;,
       &quot;status&quot;: &quot;warning&quot;,
       &quot;status_reason_ru&quot;: &quot;Риск ненулевой, но не критический.&quot;,
       &quot;threshold&quot;: &quot;&quot;,
@@ -848,7 +848,7 @@
     {
       &quot;components&quot;: {
         &quot;scenario_id&quot;: &quot;external_wine_classification&quot;,
-        &quot;source_commit&quot;: &quot;11955855fb111912239f83500af5349fba895ee5&quot;
+        &quot;source_commit&quot;: &quot;3aa10fe778108a32f87829feacb56bb2f9c2e13a&quot;
       },
       &quot;details&quot;: {},
       &quot;explanation&quot;: &quot;Маршрут сохраняется как проверяемый доказательный след.&quot;,
@@ -902,13 +902,13 @@
       &quot;output_refs&quot;: [],
       &quot;output_summary&quot;: &quot;выход оператора&quot;,
       &quot;output_values&quot;: {
-        &quot;source_commit&quot;: &quot;11955855fb111912239f83500af5349fba895ee5&quot;,
+        &quot;source_commit&quot;: &quot;3aa10fe778108a32f87829feacb56bb2f9c2e13a&quot;,
         &quot;verification_status&quot;: &quot;PASS&quot;
       },
       &quot;raw&quot;: {
         &quot;value_source&quot;: &quot;computed&quot;
       },
-      &quot;source_commit&quot;: &quot;11955855fb111912239f83500af5349fba895ee5&quot;,
+      &quot;source_commit&quot;: &quot;3aa10fe778108a32f87829feacb56bb2f9c2e13a&quot;,
       &quot;status&quot;: &quot;passed&quot;,
       &quot;status_reason_ru&quot;: &quot;Proof trace содержит значения маршрута и source_commit.&quot;,
       &quot;threshold&quot;: &quot;&quot;,
@@ -920,12 +920,12 @@
       &quot;value_source&quot;: &quot;computed&quot;
     }
   ],
-  &quot;proof_hash&quot;: &quot;0b793ffd11855c1b037f97c1f6be73046b34b8414f8d0c57a2d78c25afcc5c3c&quot;,
-  &quot;route_hash&quot;: &quot;910affc6046607e3cc9916010efdd840c4495a0328442adac3fcc24ff5e4f508&quot;,
+  &quot;proof_hash&quot;: &quot;55cdddf8caf27fae93c4f6113ca8703f1495133ecbaa18f71ac38f9838964596&quot;,
+  &quot;route_hash&quot;: &quot;8a35370753a3e611c12b3fc1fc51a986abe65a58166d85b2e5829e2b392183a0&quot;,
   &quot;route_id&quot;: &quot;external_wine_classification:sklearn_wine:LogisticRegression:external_payload&quot;,
   &quot;scenario_id&quot;: &quot;external_wine_classification&quot;,
   &quot;scenario_title_ru&quot;: &quot;Research validation: tabular_classification&quot;,
-  &quot;source_commit&quot;: &quot;11955855fb111912239f83500af5349fba895ee5&quot;,
+  &quot;source_commit&quot;: &quot;3aa10fe778108a32f87829feacb56bb2f9c2e13a&quot;,
   &quot;title&quot;: &quot;External Research Validation FuzzyXAI OperatorRoute&quot;,
   &quot;verifier_report&quot;: {
     &quot;checks&quot;: [

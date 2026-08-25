@@ -8,8 +8,7 @@
 
 ## Technical TODO
 
-- Add external payload schemas.
-- Add adapter contract tests.
+- Add live external repository adapter contract tests.
 - Add repository-to-model/method/scenario links.
 
 ## Dissertation TODO

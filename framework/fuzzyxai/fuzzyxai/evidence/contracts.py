@@ -1,8 +1,9 @@
 from __future__ import annotations
 
+import math
+from collections.abc import Mapping, Sequence
 from dataclasses import asdict, dataclass, field
-from typing import Any, Literal, Mapping, Sequence, cast
-
+from typing import Any, Literal, cast
 
 EvidenceStatus = Literal["supported", "contested", "insufficient_evidence", "not_applicable"]
 EffectDirection = Literal["favorable", "adverse", "neutral", "mixed", "unknown"]
@@ -183,6 +184,8 @@ class SimilarCaseEvidence(EvidenceContract):
     trace: Mapping[str, Any]
     is_counterexample: bool = False
     media_artifacts: Mapping[str, str] = field(default_factory=dict)
+    reference_rank: int | None = None
+    reference_count: int | None = None
 
 
 @dataclass(frozen=True)
@@ -210,6 +213,170 @@ class CounterfactualEvidence(EvidenceContract):
             raise ValueError("actionable_counterfactual requires actionable=True")
         if self.mode == "actionable_counterfactual" and (self.minimality is None or self.plausibility is None):
             raise ValueError("actionable_counterfactual requires minimality and plausibility")
+
+
+@dataclass(frozen=True)
+class TextSpan(EvidenceContract):
+    """One character range in raw text tied to a specific measured feature."""
+
+    start: int
+    end: int
+    feature_name: str
+    direction: Literal["supports", "contradicts"]
+    weight: float
+
+    def __post_init__(self) -> None:
+        if self.start < 0 or self.end <= self.start:
+            raise ValueError("text span requires 0 <= start < end")
+        if self.direction not in {"supports", "contradicts"}:
+            raise ValueError(f"unsupported text span direction: {self.direction}")
+        if not math.isfinite(self.weight):
+            raise ValueError("text span weight must be a finite number")
+
+
+@dataclass(frozen=True)
+class TextHighlightEvidence(EvidenceContract):
+    """Raw text with feature-contribution spans located lexically, never inferred."""
+
+    object_id: str
+    raw_text: str
+    spans: Sequence[TextSpan]
+    unmapped_features: Sequence[str] = field(default_factory=tuple)
+    suppressed_matches: Sequence[str] = field(default_factory=tuple)
+    limitations: Sequence[str] = field(
+        default_factory=lambda: ("span location is lexical substring matching, not semantic attribution",)
+    )
+
+    def __post_init__(self) -> None:
+        length = len(self.raw_text)
+        previous_end = -1
+        for span in self.spans:
+            if span.end > length:
+                raise ValueError(f"span end {span.end} exceeds raw_text length {length}")
+            if span.start < previous_end:
+                raise ValueError("spans must be sorted by start offset and must not overlap")
+            previous_end = span.end
+
+
+@dataclass(frozen=True)
+class ImageRegion(EvidenceContract):
+    """One named region of an explained image, from a caller-supplied boolean mask.
+
+    Region geometry (``bounding_box``, ``pixel_count``) is measured directly
+    from the mask — never inferred, never a fabricated heatmap. ``direction``
+    and ``contribution`` are only populated when the caller's contribution
+    mapping has a matching entry for ``name``; otherwise "unknown"/``None``.
+    """
+
+    name: str
+    pixel_count: int
+    bounding_box: tuple[int, int, int, int]  # (row_min, row_max, col_min, col_max), inclusive
+    direction: Literal["supports", "contradicts", "unknown"]
+    contribution: float | None
+
+    def __post_init__(self) -> None:
+        if self.pixel_count <= 0:
+            raise ValueError("image region requires at least one pixel")
+        if self.direction not in {"supports", "contradicts", "unknown"}:
+            raise ValueError(f"unsupported image region direction: {self.direction}")
+
+
+@dataclass(frozen=True)
+class ImageRepresentationEvidence(EvidenceContract):
+    """Raw image dimensions/artifact plus explicitly-supplied region masks.
+
+    ``image_png_base64`` carries the actual image content, analogous to
+    ``TextHighlightEvidence.raw_text`` — kept in-memory for rendering, and
+    redacted (like raw text) from JSON exports by default (``include_raw``).
+    ``artifact_sha256`` is retained even when the image content is redacted,
+    as an integrity reference without the content itself.
+    """
+
+    object_id: str
+    width: int
+    height: int
+    channels: int
+    artifact_sha256: str
+    image_png_base64: str
+    regions: Sequence[ImageRegion] = field(default_factory=tuple)
+    limitations: Sequence[str] = field(default_factory=tuple)
+
+    def __post_init__(self) -> None:
+        if self.width <= 0 or self.height <= 0:
+            raise ValueError("image representation requires positive width and height")
+        if self.channels <= 0:
+            raise ValueError("image representation requires at least one channel")
+
+
+@dataclass(frozen=True)
+class FuzzyTermMembership(EvidenceContract):
+    """One antecedent term's measured membership degree for this object.
+
+    ``membership_degree`` is a real [0, 1] value the rule/fuzzy model itself
+    computed (e.g. a Gaussian/triangular membership function evaluated at
+    the object's feature value) — never inferred or guessed by FuzzyXAI.
+    """
+
+    feature: str
+    term: str
+    membership_degree: float
+    feature_value: float | None = None
+
+    def __post_init__(self) -> None:
+        if not self.feature.strip() or not self.term.strip():
+            raise ValueError("fuzzy term requires a feature name and a term label")
+        if not 0.0 <= self.membership_degree <= 1.0:
+            raise ValueError("membership degree must be between 0 and 1")
+
+
+@dataclass(frozen=True)
+class FuzzyRuleActivation(EvidenceContract):
+    """One rule's real activation for this object — not a re-labeled linear contribution.
+
+    Any rule/fuzzy model can supply this evidence through the generic
+    ``activated_rules`` channel on ``extract_local_evidence`` (a plain list
+    of dicts with this shape) — the contract is not tied to any specific
+    ANFIS library. ``activation_strength`` is typically the T-norm
+    (e.g. product or min) of the rule's own term memberships, computed by
+    the model, not derived here.
+    """
+
+    object_id: str
+    rule_id: str
+    terms: Sequence[FuzzyTermMembership]
+    activation_strength: float
+    conclusion: str
+    limitations: Sequence[str] = field(default_factory=tuple)
+
+    def __post_init__(self) -> None:
+        if not self.rule_id.strip():
+            raise ValueError("fuzzy rule activation requires a rule_id")
+        if not self.terms:
+            raise ValueError("fuzzy rule activation requires at least one antecedent term")
+        if not 0.0 <= self.activation_strength <= 1.0:
+            raise ValueError("activation strength must be between 0 and 1")
+        if not str(self.conclusion).strip():
+            raise ValueError("fuzzy rule activation requires a conclusion")
+
+
+@dataclass(frozen=True)
+class AtomicClaim(EvidenceContract):
+    """One verbalizer-facing statement extracted from an already-verified HumanExplanation.
+
+    This is the *only* thing a verbalization backend ever sees — never the raw
+    prediction, evidence graph, or ExplanationClaim internals. ``allowed_numbers``
+    and ``allowed_entities`` are the grounding guard's source of truth: any
+    number or name a backend introduces that isn't in this closure is rejected.
+    """
+
+    claim_id: str
+    kind: Literal["decision", "reason", "concern", "reliability", "action"]
+    subject: str
+    canonical_text: str
+    allowed_numbers: Sequence[str] = field(default_factory=tuple)
+    allowed_entities: Sequence[str] = field(default_factory=tuple)
+    direction: str = "neutral"
+    source_claim_ids: Sequence[str] = field(default_factory=tuple)
 
 
 @dataclass(frozen=True)
@@ -329,7 +496,7 @@ class ExplanationNode(EvidenceContract):
     evidence_refs: Sequence[str] = field(default_factory=tuple)
 
     @classmethod
-    def from_dict(cls, payload: Mapping[str, Any]) -> "ExplanationNode":
+    def from_dict(cls, payload: Mapping[str, Any]) -> ExplanationNode:
         return cls(
             node_id=str(payload["node_id"]),
             node_type=str(payload["node_type"]),
@@ -347,7 +514,7 @@ class ExplanationEdge(EvidenceContract):
     evidence_refs: Sequence[str] = field(default_factory=tuple)
 
     @classmethod
-    def from_dict(cls, payload: Mapping[str, Any]) -> "ExplanationEdge":
+    def from_dict(cls, payload: Mapping[str, Any]) -> ExplanationEdge:
         return cls(
             source=str(payload["source"]),
             target=str(payload["target"]),
@@ -420,7 +587,7 @@ class ExplanationClaim(EvidenceContract):
             raise ValueError("medical claims require applicability='research_only'")
 
     @classmethod
-    def from_dict(cls, payload: Mapping[str, Any]) -> "ExplanationClaim":
+    def from_dict(cls, payload: Mapping[str, Any]) -> ExplanationClaim:
         interval = payload.get("confidence_interval")
         return cls(
             claim_id=str(payload["claim_id"]),
@@ -472,7 +639,7 @@ class ExplanationGraph(EvidenceContract):
     schema_version: str = "2.0"
 
     @classmethod
-    def from_dict(cls, payload: Mapping[str, Any]) -> "ExplanationGraph":
+    def from_dict(cls, payload: Mapping[str, Any]) -> ExplanationGraph:
         return cls(
             nodes=tuple(ExplanationNode.from_dict(item) for item in payload.get("nodes", ())),
             edges=tuple(ExplanationEdge.from_dict(item) for item in payload.get("edges", ())),
@@ -484,14 +651,14 @@ class ExplanationGraph(EvidenceContract):
     def _node_map(self) -> dict[str, ExplanationNode]:
         return {node.node_id: node for node in self.nodes}
 
-    def trace_claim(self, claim_id: str) -> "ExplanationGraph":
+    def trace_claim(self, claim_id: str) -> ExplanationGraph:
         normalized = claim_id if claim_id.startswith("C-") else claim_id.replace("C", "C-", 1)
         return self._reachable_subgraph({f"claim:{normalized}"}, reverse=True)
 
-    def trace_action(self) -> "ExplanationGraph":
+    def trace_action(self) -> ExplanationGraph:
         return self._reachable_subgraph({"action"}, reverse=True)
 
-    def subgraph(self, *, subject_id: str) -> "ExplanationGraph":
+    def subgraph(self, *, subject_id: str) -> ExplanationGraph:
         seeds = {
             node.node_id
             for node in self.nodes
@@ -500,7 +667,7 @@ class ExplanationGraph(EvidenceContract):
         }
         return self._reachable_subgraph(seeds, reverse=False)
 
-    def _reachable_subgraph(self, seeds: set[str], *, reverse: bool) -> "ExplanationGraph":
+    def _reachable_subgraph(self, seeds: set[str], *, reverse: bool) -> ExplanationGraph:
         selected = set(seeds)
         changed = True
         while changed:
@@ -691,7 +858,14 @@ class HumanExplanation(EvidenceContract):
             if not statements:
                 continue
             lines.append(f"## {heading}")
-            lines.extend(statement.explanation for statement in statements)
+            # Prefix with the statement's own (already human-readable, not a
+            # technical identifier) title when a section holds more than one
+            # item — otherwise several distinct reasons whose explanation
+            # text happens to share the same template read as duplicates.
+            if len(statements) > 1:
+                lines.extend(f"**{statement.title}.** {statement.explanation}" for statement in statements)
+            else:
+                lines.extend(statement.explanation for statement in statements)
             lines.append("")
         return "\n".join(lines).strip() + "\n"
 
@@ -724,7 +898,7 @@ class HumanExplanation(EvidenceContract):
         return payload
 
     @classmethod
-    def from_dict(cls, payload: Mapping[str, Any], *, graph: ExplanationGraph | None = None) -> "HumanExplanation":
+    def from_dict(cls, payload: Mapping[str, Any], *, graph: ExplanationGraph | None = None) -> HumanExplanation:
         def statement(kind: type[HumanStatement], value: Mapping[str, Any]) -> HumanStatement:
             title = str(value["title"])
             explanation = str(value["explanation"])
@@ -812,4 +986,7 @@ class ExplanationEvidence(EvidenceContract):
     concepts: Sequence[ClassConcept] = field(default_factory=tuple)
     similar_cases: Sequence[SimilarCaseEvidence] = field(default_factory=tuple)
     counterfactuals: Sequence[CounterfactualEvidence] = field(default_factory=tuple)
+    text_highlights: Sequence[TextHighlightEvidence] = field(default_factory=tuple)
+    image_representations: Sequence[ImageRepresentationEvidence] = field(default_factory=tuple)
+    fuzzy_rule_activations: Sequence[FuzzyRuleActivation] = field(default_factory=tuple)
     missing: Sequence[str] = field(default_factory=tuple)

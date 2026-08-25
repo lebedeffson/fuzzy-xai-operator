@@ -2,7 +2,7 @@
 
 - task: `sklearn_wine_classification`
 - scenario_id: `external_wine_classification`
-- source_commit: `11955855fb111912239f83500af5349fba895ee5`
+- source_commit: `3aa10fe778108a32f87829feacb56bb2f9c2e13a`
 - verifier: `passed`
 - package: `external_wine_blackbox_validation.zip`
 

@@ -265,7 +265,7 @@
         "source_type": "tabular",
         "top_k_importance": 2
       },
-      "source_commit": "11955855fb111912239f83500af5349fba895ee5",
+      "source_commit": "3aa10fe778108a32f87829feacb56bb2f9c2e13a",
       "status": "passed",
       "status_reason_ru": "Внешний payload успешно приведён к AdaptedInput.",
       "threshold": "",
@@ -331,7 +331,7 @@
       "raw": {
         "value_source": "computed"
       },
-      "source_commit": "11955855fb111912239f83500af5349fba895ee5",
+      "source_commit": "3aa10fe778108a32f87829feacb56bb2f9c2e13a",
       "status": "passed",
       "status_reason_ru": "Объект объяснения содержит вероятность, признаки и атрибуции.",
       "threshold": "",
@@ -396,7 +396,7 @@
       "raw": {
         "value_source": "computed"
       },
-      "source_commit": "11955855fb111912239f83500af5349fba895ee5",
+      "source_commit": "3aa10fe778108a32f87829feacb56bb2f9c2e13a",
       "status": "passed",
       "status_reason_ru": "Выбран класс F0.",
       "threshold": "",
@@ -453,7 +453,7 @@
         "uncertainty": 0.320881,
         "value_source": "computed"
       },
-      "source_commit": "11955855fb111912239f83500af5349fba895ee5",
+      "source_commit": "3aa10fe778108a32f87829feacb56bb2f9c2e13a",
       "status": "passed",
       "status_reason_ru": "Рассогласование ненулевое, потому что вероятность класса меньше 1.",
       "threshold": "",
@@ -515,7 +515,7 @@
         "importance_sum": 0.570156,
         "value_source": "computed"
       },
-      "source_commit": "11955855fb111912239f83500af5349fba895ee5",
+      "source_commit": "3aa10fe778108a32f87829feacb56bb2f9c2e13a",
       "status": "warning",
       "status_reason_ru": "Часть объяснения потеряна при top-k редукции.",
       "threshold": "",
@@ -574,7 +574,7 @@
         "theta_warning": 0.6,
         "value_source": "computed"
       },
-      "source_commit": "11955855fb111912239f83500af5349fba895ee5",
+      "source_commit": "3aa10fe778108a32f87829feacb56bb2f9c2e13a",
       "status": "warning",
       "status_reason_ru": "rho попал в зону lower_confidence.",
       "threshold": "",
@@ -645,7 +645,7 @@
         ],
         "value_source": "computed"
       },
-      "source_commit": "11955855fb111912239f83500af5349fba895ee5",
+      "source_commit": "3aa10fe778108a32f87829feacb56bb2f9c2e13a",
       "status": "warning",
       "status_reason_ru": "ограниченная уверенность внешней табличной модели",
       "threshold": "",
@@ -699,7 +699,7 @@
         "action": "lower_confidence",
         "value_source": "computed"
       },
-      "source_commit": "11955855fb111912239f83500af5349fba895ee5",
+      "source_commit": "3aa10fe778108a32f87829feacb56bb2f9c2e13a",
       "status": "warning",
       "status_reason_ru": "Риск ненулевой, но не критический.",
       "threshold": "",
@@ -716,7 +716,7 @@
     {
       "components": {
         "scenario_id": "external_wine_classification",
-        "source_commit": "11955855fb111912239f83500af5349fba895ee5"
+        "source_commit": "3aa10fe778108a32f87829feacb56bb2f9c2e13a"
       },
       "details": {},
       "explanation": "Маршрут сохраняется как проверяемый доказательный след.",
@@ -770,13 +770,13 @@
       "output_refs": [],
       "output_summary": "выход оператора",
       "output_values": {
-        "source_commit": "11955855fb111912239f83500af5349fba895ee5",
+        "source_commit": "3aa10fe778108a32f87829feacb56bb2f9c2e13a",
         "verification_status": "PASS"
       },
       "raw": {
         "value_source": "computed"
       },
-      "source_commit": "11955855fb111912239f83500af5349fba895ee5",
+      "source_commit": "3aa10fe778108a32f87829feacb56bb2f9c2e13a",
       "status": "passed",
       "status_reason_ru": "Proof trace содержит значения маршрута и source_commit.",
       "threshold": "",
@@ -788,12 +788,12 @@
       "value_source": "computed"
     }
   ],
-  "proof_hash": "ebb945671bb8ba3b830eeca9fb991fd7baafd9e76d0a19aebc84d217a39ef49d",
-  "route_hash": "ddd84eca849a6d5c9b35f3076530f255d7b27fae48cadbcee07313050ae1c8ca",
+  "proof_hash": "5ac5e545453a871a8b54c0e12f5b3bfe944ddd9c6554773289790bc39cdb7561",
+  "route_hash": "66545fd26a989f6346a943de51573e58db214bea228715afe8a5a839fd961313",
   "route_id": "external_wine_classification:sklearn_wine:GradientBoostingClassifier:external_payload",
   "scenario_id": "external_wine_classification",
   "scenario_title_ru": "Research validation: tabular_classification",
-  "source_commit": "11955855fb111912239f83500af5349fba895ee5",
+  "source_commit": "3aa10fe778108a32f87829feacb56bb2f9c2e13a",
   "title": "External Research Validation FuzzyXAI OperatorRoute",
   "verifier_report": {
     "checks": [

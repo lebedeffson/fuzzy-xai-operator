@@ -1,9 +1,9 @@
 from __future__ import annotations
 
+from collections.abc import Mapping
 from pathlib import Path
 from textwrap import shorten, wrap
-from typing import Any, Mapping
-
+from typing import Any
 
 _COLORS = {
     "supported": "#2f6b4f",
@@ -279,6 +279,157 @@ def _audit(spec: Mapping[str, Any]):
     return figure
 
 
+_OBJECT_REPRESENTATION_MAX_CHARS = 900
+
+
+def _object_representation_text(payload: Mapping[str, Any]) -> Any:
+    import matplotlib.pyplot as plt
+
+    text = str(payload.get("raw_excerpt", ""))
+    spans = sorted(payload.get("spans", []), key=lambda span: span.get("start", 0))
+    truncated = len(text) > _OBJECT_REPRESENTATION_MAX_CHARS
+    if truncated:
+        text = text[:_OBJECT_REPRESENTATION_MAX_CHARS]
+        spans = [span for span in spans if int(span.get("end", 0)) <= len(text)]
+
+    figure, axis = plt.subplots(figsize=(16, 9))
+    axis.set_xlim(0, 1)
+    axis.set_ylim(0, 1)
+    axis.axis("off")
+    axis.set_title("Исходный текст с подсветкой измеренных признаков", loc="left", fontsize=20, fontweight="bold")
+
+    if not spans:
+        axis.text(0.03, 0.88, "\n".join(wrap(text, 95)[:20]) or "(пустой текст)", fontsize=12, va="top", family="monospace")
+        axis.text(0.03, 0.06, "Вклад признаков не удалось сопоставить с исходным текстом.", fontsize=11, color="#7b8790")
+        return figure
+
+    char_width, line_height = 0.0105, 0.06
+    x, y, cursor = 0.03, 0.90, 0
+    segments: list[tuple[str, str | None, str]] = []
+    for span in spans:
+        start, end = int(span.get("start", 0)), int(span.get("end", 0))
+        if start < cursor or start >= len(text):
+            continue
+        if start > cursor:
+            segments.append((text[cursor:start], None, ""))
+        direction = str(span.get("direction"))
+        color = _COLORS["supported"] if direction == "supports" else _COLORS["conflict"]
+        icon = "▲" if direction == "supports" else "▼"
+        segments.append((text[start:end], color, icon))
+        cursor = end
+    segments.append((text[cursor:], None, ""))
+
+    for chunk, mark_color, icon in segments:
+        words = chunk.split(" ")
+        for index, word in enumerate(words):
+            token = word + (" " if index < len(words) - 1 else "")
+            if not token:
+                continue
+            if x + len(token) * char_width > 0.95:
+                x, y = 0.03, y - line_height
+            style: dict[str, Any] = {"fontsize": 12.5, "va": "top", "family": "monospace"}
+            if mark_color:
+                style["bbox"] = {"boxstyle": "square,pad=0.15", "facecolor": "#c9ecd8" if icon == "▲" else "#f6cccc", "edgecolor": mark_color, "linewidth": 1.2}
+                token = f"{token.strip()}{icon} "
+            axis.text(x, y, token, **style)
+            x += len(token) * char_width
+    footer_y = max(y - 0.10, 0.10)
+    axis.text(0.03, footer_y, "▲ поддерживает   ▼ противоречит", fontsize=10, color="#355b72")
+    unmapped = payload.get("unmapped_features", [])
+    if unmapped:
+        axis.text(0.03, max(footer_y - 0.05, 0.02), f"Не найдено в тексте буквально: {', '.join(unmapped)}", fontsize=9.5, color="#7b8790")
+    if truncated:
+        axis.text(0.03, 0.965, "Показан фрагмент текста (полный текст — в структурированном результате).", fontsize=9.5, color="#7b8790")
+    return figure
+
+
+def _object_representation_tabular(payload: Mapping[str, Any]) -> Any:
+    rows = list(payload.get("tabular_rows", []))
+    title = "Исходный объект: значения признаков и вклад"
+    if not rows:
+        return _empty(title, "Признаки объекта недоступны.")
+    columns = ["Признак", "Значение", "Вклад", "Направление"]
+    table_rows = [
+        [
+            item.get("feature"),
+            item.get("raw_value"),
+            "—" if item.get("contribution") is None else f"{item.get('contribution'):+.4f}",
+            {"supports": "поддерживает", "contradicts": "противоречит", "unknown": "не измерено"}.get(item.get("direction"), item.get("direction")),
+        ]
+        for item in rows[:25]
+    ]
+    import matplotlib.pyplot as plt
+
+    figure, axis = plt.subplots(figsize=(16, 9))
+    axis.axis("off")
+    axis.set_title(title, loc="left", fontsize=20, fontweight="bold")
+    limitations = payload.get("limitations", [])
+    if limitations:
+        axis.text(0.0, 0.92, "; ".join(limitations), fontsize=10, color="#7b8790")
+    table = axis.table(cellText=table_rows, colLabels=columns, loc="upper left", cellLoc="left", colLoc="left", bbox=[0, 0.05, 1, 0.82])
+    table.auto_set_font_size(False)
+    table.set_fontsize(9.5)
+    table.scale(1, 1.4)
+    return figure
+
+
+def _object_representation_image(payload: Mapping[str, Any]) -> Any:
+    import base64
+    import io
+
+    import matplotlib.pyplot as plt
+    from matplotlib import patches
+
+    title = "Исходное изображение с разметкой evidence"
+    encoded = str(payload.get("image_png_base64", ""))
+    figure, axis = plt.subplots(figsize=(10, 8))
+    axis.set_title(title, loc="left", fontsize=18, fontweight="bold")
+    if not encoded or encoded.startswith("["):
+        # Redacted (include_raw=False) or never captured — still show
+        # dimensions/regions honestly rather than a misleading blank canvas.
+        axis.axis("off")
+        axis.text(0.02, 0.5, "Изображение недоступно для отображения (include_raw=False или отсутствует).", fontsize=11, color="#7b8790")
+    else:
+        image_array = plt.imread(io.BytesIO(base64.b64decode(encoded)), format="png")
+        axis.imshow(image_array)
+        axis.axis("off")
+    colors = {"supports": "#2e7d32", "contradicts": "#c62828", "unknown": "#78909c"}
+    legend_labels = {"supports": "поддерживает", "contradicts": "противоречит", "unknown": "не измерено"}
+    seen_directions: set[str] = set()
+    for region in payload.get("image_regions", []):
+        row_min, row_max, col_min, col_max = region["bounding_box"]
+        direction = str(region.get("direction", "unknown"))
+        color = colors.get(direction, "#78909c")
+        rectangle = patches.Rectangle(
+            (col_min, row_min), col_max - col_min + 1, row_max - row_min + 1,
+            linewidth=2, edgecolor=color, facecolor="none",
+        )
+        axis.add_patch(rectangle)
+        axis.text(col_min, max(row_min - 3, 0), str(region.get("name", "")), fontsize=9, color=color, fontweight="bold")
+        seen_directions.add(direction)
+    if seen_directions:
+        handles = [patches.Patch(edgecolor=colors[d], facecolor="none", label=legend_labels[d]) for d in sorted(seen_directions)]
+        axis.legend(handles=handles, loc="upper right", fontsize=9)
+    limitations = payload.get("limitations", [])
+    if limitations:
+        figure.text(0.02, 0.02, "; ".join(limitations), fontsize=9, color="#7b8790")
+    return figure
+
+
+def _object_representation(spec: Mapping[str, Any]) -> Any:
+    payload = spec.get("object_representation")
+    if not payload:
+        return _empty("Исходный объект с разметкой evidence", "Сырой объект не был передан в explain_one(..., raw_object=...); представление недоступно.")
+    modality = str(payload.get("modality", "unknown"))
+    if modality == "text":
+        return _object_representation_text(payload)
+    if modality == "tabular":
+        return _object_representation_tabular(payload)
+    if modality == "image":
+        return _object_representation_image(payload)
+    return _empty("Исходный объект с разметкой evidence", f"Визуализация модальности '{modality}' пока не реализована.")
+
+
 def render_visual_spec(spec: Mapping[str, Any], *, view: str, output_path: str | Path | None = None):
     """Render one focused view from the canonical visual specification."""
 
@@ -295,6 +446,7 @@ def render_visual_spec(spec: Mapping[str, Any], *, view: str, output_path: str |
         "rule_ablation": lambda payload: _table_view(payload, "rule_ablation"),
         "provenance": _provenance,
         "audit": _audit,
+        "object_representation": _object_representation,
     }
     if view not in renderers:
         raise ValueError(f"unsupported visualization view: {view}")

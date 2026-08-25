@@ -1,0 +1,17 @@
+{
+  "status": "ok",
+  "command": "make reproduce-critical-ruptures",
+  "seed": 314159,
+  "n_objects": 1000,
+  "input_checksum_sha256": "b781681c74978f566a252e993d728d28455138c25b53821c03a833c24f5f4a9a",
+  "results_checksum_sha256": "494c6cac3a3a94c1b91db074e4d3e4106df9aad7f1bc15f8cf18a7c51ffcac0e",
+  "files": {
+    "reports/chapter3/synthetic_ruptures_summary.json": "a066122cb2c64cd200b93e65a0e277ea4156fa0f585f8c382da39497f48ce614",
+    "reports/chapter3/synthetic_ruptures_results.csv": "494c6cac3a3a94c1b91db074e4d3e4106df9aad7f1bc15f8cf18a7c51ffcac0e",
+    "figures/chapter3/critical_ruptures_comparison.png": "26e714505887a5bf55a7edd30914bf1f3e593582151b8e9d87fe2f0ccb9d9a9f"
+  },
+  "explain_plan_version": {
+    "path": "not_found",
+    "sha256": ""
+  }
+}

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
-from typing import Any, Mapping, Sequence
+from collections.abc import Mapping, Sequence
+from typing import Any
 
 from .contracts import EffectDirection, ExplanationClaim, ExplanationEvidence, ExplanationLevel, Severity
 
@@ -82,10 +83,28 @@ def build_explanation_claims(
 
     contribution_method = str(prediction.get("contribution_method", "unknown"))
     contributions = prediction.get("contributions", {})
+    # Names already covered by a typed image_region claim are excluded here
+    # — otherwise the same measured value (e.g. a region's aggregated
+    # contribution passed in under its region name) would surface twice,
+    # once as a generic feature_contribution and once as its proper
+    # image_region claim, reading as two separate pieces of evidence.
+    image_region_names = {region.name for image in evidence.image_representations for region in image.regions}
     if isinstance(contributions, Mapping):
         is_surrogate = "surrogate" in contribution_method.lower()
+        # `strength` must be a comparable [0, 1] importance signal, not the
+        # raw contribution clamped at 1.0 — raw linear-term contributions
+        # routinely exceed 1.0 in magnitude (they're coefficient * feature
+        # value, unbounded), so `min(1.0, abs(value))` was clamping nearly
+        # every feature to the same strength=1.0 and made downstream ranking
+        # (rank_human_claims) unable to tell strong and weak features apart.
+        # Normalize relative to the strongest contribution for this object
+        # instead: the top feature gets strength=1.0, others scale down.
+        max_abs_contribution = max((abs(float(v)) for k, v in contributions.items() if str(k) not in image_region_names), default=0.0)
         for feature, raw_value in sorted(contributions.items(), key=lambda item: abs(float(item[1])), reverse=True):
+            if str(feature) in image_region_names:
+                continue
             value = float(raw_value)
+            relative_strength = abs(value) / max_abs_contribution if max_abs_contribution > 0 else 0.0
             limitations = (
                 "Surrogate contribution fidelity is limited to the measured local approximation.",
             ) if is_surrogate else ()
@@ -96,7 +115,7 @@ def build_explanation_claims(
                 f"Локальный вклад признака {feature} равен {value:+.3f} по методу {contribution_method}.",
                 f"Вклад {feature}: {value:+.3f}",
                 [f"contribution:{feature}"],
-                strength=min(1.0, abs(value)),
+                strength=relative_strength,
                 limitations=limitations,
                 metric_name="local_contribution",
                 metric_value=value,
@@ -272,6 +291,55 @@ def build_explanation_claims(
             ),
         )
 
+    for image in evidence.image_representations:
+        measured_regions = [region for region in image.regions if region.contribution is not None]
+        max_abs_region_contribution = max((abs(float(region.contribution)) for region in measured_regions), default=0.0)  # type: ignore[arg-type]
+        for region in image.regions:
+            ref = f"image_region:{image.object_id}:{region.name}"
+            if region.contribution is None:
+                add(
+                    "image_region",
+                    "object",
+                    region.name,
+                    f"Область «{region.name}» на изображении {image.object_id} содержит {region.pixel_count} пикселей; вклад в прогноз не измерен для этой области.",
+                    f"Область {region.name}: не измерено",
+                    [ref],
+                    effect="neutral",
+                    metric_name="region_pixel_count",
+                    metric_value=float(region.pixel_count),
+                )
+                continue
+            relative_strength = abs(float(region.contribution)) / max_abs_region_contribution if max_abs_region_contribution > 0 else 0.0
+            add(
+                "image_region",
+                "object",
+                region.name,
+                f"Область «{region.name}» на изображении {image.object_id} ({region.pixel_count} пикселей) имеет вклад {region.contribution:+.3f} в прогноз.",
+                f"Область {region.name}: {region.contribution:+.3f}",
+                [ref],
+                strength=relative_strength,
+                metric_name="region_contribution",
+                metric_value=float(region.contribution),
+                effect="favorable" if region.contribution >= 0 else "adverse",
+            )
+
+    for activation in evidence.fuzzy_rule_activations:
+        ref = f"fuzzy_rule:{activation.object_id}:{activation.rule_id}"
+        terms_text = "; ".join(f"{term.feature} соответствует терму «{term.term}» (степень {term.membership_degree:.2f})" for term in activation.terms)
+        add(
+            "fuzzy_rule",
+            "object",
+            activation.rule_id,
+            f"Правило {activation.rule_id} активировано со степенью {activation.activation_strength:.2f}: {terms_text}. Заключение правила: класс {activation.conclusion}.",
+            f"Правило {activation.rule_id}: степень {activation.activation_strength:.2f}",
+            [ref],
+            strength=activation.activation_strength,
+            limitations=activation.limitations,
+            metric_name="activation_strength",
+            metric_value=activation.activation_strength,
+            effect="favorable" if str(activation.conclusion) == str(predicted_value) else "adverse",
+        )
+
     for index, counterfactual in enumerate(evidence.counterfactuals):
         ref = f"counterfactual:{index}"
         changed = dict(counterfactual.changed_features) or {"rules": list(counterfactual.changed_rules)}
@@ -365,6 +433,12 @@ def determine_explanation_level(
     if evidence.concepts:
         available.append("class_concepts")
         native.append("class_concepts")
+    if evidence.fuzzy_rule_activations:
+        available.append("fuzzy_rule_activations")
+        native.append("fuzzy_rule_activations")
+    if evidence.image_representations:
+        available.append("image_representation")
+        native.append("image_representation")
     if evidence.similar_cases:
         available.append("similar_cases")
         native.append("similar_cases")
@@ -382,7 +456,7 @@ def determine_explanation_level(
     level = "E0"
     if "data_profile" in available:
         level = "E1"
-    if any(channel in available for channel in ("local_contributions", "rules")):
+    if any(channel in available for channel in ("local_contributions", "rules", "fuzzy_rule_activations")):
         level = "E2"
     if any(channel in available for channel in ("class_concepts", "similar_cases")):
         level = "E3"

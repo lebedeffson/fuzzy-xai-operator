@@ -82,8 +82,8 @@
     },
     {
       "path": "reports/chapter4/ch4_integration.json",
-      "sha256": "53157b96263b6ba69716dfd05c04168619e6fe997555643c41bc43dd72f102fa",
-      "bytes": 1912
+      "sha256": "c57b8a048439502f8369336b5b5493ed88f050dfa12c3391ecfed41ddc0372e1",
+      "bytes": 1914
     },
     {
       "path": "reports/chapter5/beacon_xai_adapter_failures.csv",
@@ -97,32 +97,32 @@
     },
     {
       "path": "reports/chapter5/beacon_xai_summary.json",
-      "sha256": "c4b8088bf14a5965e7d89dd280902bd6af2efa9cc4c654a45283ad5bf2f3868e",
+      "sha256": "250888544b3f70ed817d01f86b5258d7808b07287dba24c111f82a79bab0b9b3",
       "bytes": 903
     },
     {
       "path": "reports/chapter5/ch5_beacon.json",
-      "sha256": "65fde1d37a12eb8d808475a419d8ac445bfafd033a5b770f7ad269784c5bef31",
+      "sha256": "9a6d48edb8ef46cb6760a4a306ad5b805e2a7af036cdc32205b82a00795218ec",
       "bytes": 1216
     },
     {
       "path": "reports/chapter5/ch5_gd_anfis_shap.json",
-      "sha256": "cfbab40e82c94729aaa6e029986c433852792d83c6722c39a2ef8f15c4cb9d2e",
+      "sha256": "3973632756a10c4fb9c4927c99497248b08d925209db1eede37d20542917e8d7",
       "bytes": 1124
     },
     {
       "path": "reports/chapter5/ch5_gis.json",
-      "sha256": "85ce98152a09f1942a03cc3fa58f40a7bd8218a48f65f5f057d04e3dcf78a8df",
+      "sha256": "bf15832e5723bc414673061825ba783ae002723903b24a6a032e51d084ba3e0b",
       "bytes": 1153
     },
     {
       "path": "reports/chapter5/ch5_hybrid.json",
-      "sha256": "59eaf7e3bc2a9d74cb076921ef796c13b13e697cf392d665afea04a1faf1cb7f",
+      "sha256": "ef607335acd3650be0fd249ae592cfbec068b8a42b556a2725383ce1b57641c8",
       "bytes": 1335
     },
     {
       "path": "reports/chapter5/ch5_scenario_runs.json",
-      "sha256": "22db445d120955f9afd29fc7036f0893438b2fa9084506c121903ca0b48ce74b",
+      "sha256": "dab86f182c1071297e11c141e69026f717c08345a1b84c2d2a107cba4ff492b5",
       "bytes": 4034
     },
     {
@@ -162,7 +162,7 @@
     },
     {
       "path": "reports/chapter5/hybrid_xiris_summary.json",
-      "sha256": "6766122c81c8cd0d1453ca03a1b994cc320e6eb638a15d4aaa24ad1439c6382c",
+      "sha256": "3c736fd7325e85f1c34b58d1980948ad94ef7e7ab34d02777ea1228f4ba8b60f",
       "bytes": 1022
     },
     {
@@ -177,48 +177,48 @@
     },
     {
       "path": "reports/gui_screenshots/01_home_dashboard.png",
-      "sha256": "40109715dadf9c3afb000562a7c1c5edba55d642e554c2df6aa55100f8ae3531",
-      "bytes": 105657
+      "sha256": "3bcb09821784f52d144172e412289c11cad9bcbcc867c582c42257e7ef87f674",
+      "bytes": 101411
     },
     {
       "path": "reports/gui_screenshots/02_hybrid_xiris_route.png",
-      "sha256": "e21d66a4fcf90c38d6ba7e51ab3417f448fec4bf401e289446853fa0186b018a",
-      "bytes": 124220
+      "sha256": "1a98ec9fe334ae8ba35688244e8cd8bc20d159cc27683695946048dc3ed2f858",
+      "bytes": 122891
     },
     {
       "path": "reports/gui_screenshots/03_hybrid_xiris_result.png",
-      "sha256": "8ecf299f6a50153e459b91ede0307acf875490b71b2be57514041fab39f06510",
-      "bytes": 108527
+      "sha256": "352031ba0e1b23c7e446b39bd6cd896d2f908d409bc3ca3a1940622912b12f5e",
+      "bytes": 101685
     },
     {
       "path": "reports/gui_screenshots/04_beacon_audit_route.png",
-      "sha256": "7acbb2b9e6aa1ce244b67198850165cc2cbc8252199b5d6b07ca00aa1ded6c6e",
-      "bytes": 119582
+      "sha256": "256128eff97bc2dbf5a17d89f5c7d5df7aba7ce23a40e69913e4ab9049ff8c99",
+      "bytes": 114238
     },
     {
       "path": "reports/gui_screenshots/05_beacon_audit_result.png",
-      "sha256": "603634d584c5ba57f98bcc25ccd20ae7b0add078077aa09a3f66705299909a49",
-      "bytes": 80605
+      "sha256": "ade89209e9707012a95a3b61ec9c7b38d3b90ab1abedb7fc40a813875e4feb31",
+      "bytes": 73177
     },
     {
       "path": "reports/gui_screenshots/06_gis_integro_route_report.png",
-      "sha256": "64863d35f8c5c7f528d28b88dbaf7b53ab26159f515c692268ddc8db8744c814",
-      "bytes": 124686
+      "sha256": "1a7d104d8ead06c53375a543fcfb84fedf7660ae01c3027c4c0fe2df3105923d",
+      "bytes": 118026
     },
     {
       "path": "reports/gui_screenshots/07_gd_anfis_shap_route_report.png",
-      "sha256": "dcad303866f0ba3f4803f1dea48efdb19cf34a07a868da3f400fca8ae5047849",
-      "bytes": 120150
+      "sha256": "893c945e9aa6c10e3ce438161d2665e1988a6468c5a103ce1a28e44690ab9fb8",
+      "bytes": 116186
     },
     {
       "path": "reports/gui_screenshots/08_evidence_center.png",
-      "sha256": "124d6484c0c4733b1db049e352485fccf15bacb4e72f7251e19a3cadda288f17",
-      "bytes": 75605
+      "sha256": "841c5b5917233cef34c6dfed4bcc2b2411269339aee2e36234b7db54441a483a",
+      "bytes": 70762
     },
     {
       "path": "reports/gui_screenshots/09_developer_details.png",
-      "sha256": "a4e332713326b1aa9b63ebfe8b7b2ac5a98e72e3845e2ad2ba48e42facbdc080",
-      "bytes": 101326
+      "sha256": "c4d22667d10135745c59a68a721d7c46d0b3004be578f456812f6c1be58e217b",
+      "bytes": 93181
     },
     {
       "path": "reports/gui_screenshots/fuzzyxai_studio_scenarios.html",

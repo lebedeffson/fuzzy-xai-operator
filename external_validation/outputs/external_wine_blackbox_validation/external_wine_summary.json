@@ -38,7 +38,7 @@
         "action": "lower_confidence"
       },
       "verifier": "passed",
-      "source_commit": "11955855fb111912239f83500af5349fba895ee5",
+      "source_commit": "3aa10fe778108a32f87829feacb56bb2f9c2e13a",
       "route": "logistic_regression/route.json",
       "proof_trace": "logistic_regression/proof_trace.json",
       "dashboard": "logistic_regression/operator_dashboard.png",
@@ -81,7 +81,7 @@
         "action": "lower_confidence"
       },
       "verifier": "passed",
-      "source_commit": "11955855fb111912239f83500af5349fba895ee5",
+      "source_commit": "3aa10fe778108a32f87829feacb56bb2f9c2e13a",
       "route": "gradient_boosting/route.json",
       "proof_trace": "gradient_boosting/proof_trace.json",
       "dashboard": "gradient_boosting/operator_dashboard.png",
@@ -95,5 +95,5 @@
     }
   ],
   "verifier": "passed",
-  "source_commit": "11955855fb111912239f83500af5349fba895ee5"
+  "source_commit": "3aa10fe778108a32f87829feacb56bb2f9c2e13a"
 }

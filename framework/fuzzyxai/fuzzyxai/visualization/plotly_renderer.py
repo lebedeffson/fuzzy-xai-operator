@@ -1,8 +1,8 @@
 from __future__ import annotations
 
+from collections.abc import Mapping
 from pathlib import Path
-from typing import Any, Mapping
-
+from typing import Any
 
 _EFFECT_COLORS = {
     "favorable": "#2f6b4f",
@@ -183,6 +183,127 @@ def _audit(go: Any, spec: Mapping[str, Any]):
     return figure
 
 
+_OBJECT_REPRESENTATION_MAX_CHARS = 900
+
+
+def _object_representation_text(go: Any, payload: Mapping[str, Any]) -> Any:
+    from html import escape as _escape
+
+    text = str(payload.get("raw_excerpt", ""))
+    spans = sorted(payload.get("spans", []), key=lambda span: span.get("start", 0))
+    truncated = len(text) > _OBJECT_REPRESENTATION_MAX_CHARS
+    if truncated:
+        text = text[:_OBJECT_REPRESENTATION_MAX_CHARS]
+        spans = [span for span in spans if int(span.get("end", 0)) <= len(text)]
+
+    pieces: list[str] = []
+    cursor = 0
+    for span in spans:
+        start, end = int(span.get("start", 0)), int(span.get("end", 0))
+        if start < cursor:
+            continue
+        pieces.append(_escape(text[cursor:start]))
+        supports = span.get("direction") == "supports"
+        color = _EFFECT_COLORS["favorable"] if supports else _EFFECT_COLORS["adverse"]
+        icon = "▲" if supports else "▼"
+        pieces.append(f'<span style="background-color:{"#c9ecd8" if supports else "#f6cccc"};color:{color}"><b>{_escape(text[start:end])}{icon}</b></span>')
+        cursor = end
+    pieces.append(_escape(text[cursor:]))
+    body = "".join(pieces).replace("\n", "<br>")
+    if not spans:
+        body = _escape(text).replace("\n", "<br>") or "(пустой текст)"
+
+    figure = go.Figure()
+    figure.add_annotation(
+        x=0, y=1, xref="paper", yref="paper", showarrow=False, align="left", xanchor="left", yanchor="top",
+        text=body, font={"size": 15}, bordercolor="#c8d3d8", borderwidth=1, borderpad=10, bgcolor="#fbfcfc",
+    )
+    unmapped = payload.get("unmapped_features", [])
+    legend = "<b>▲ поддерживает</b> &nbsp; <b>▼ противоречит</b>"
+    if unmapped:
+        legend += f" &nbsp;·&nbsp; не найдено буквально: {_escape(', '.join(unmapped))}"
+    if not spans:
+        legend = "Вклад признаков не удалось сопоставить с исходным текстом."
+    figure.add_annotation(x=0, y=0, xref="paper", yref="paper", showarrow=False, align="left", xanchor="left", yanchor="bottom", text=legend, font={"size": 11, "color": "#58656e"})
+    figure.update_xaxes(visible=False)
+    figure.update_yaxes(visible=False)
+    title = f"Исходный текст объекта {payload.get('object_id', '')} с evidence-разметкой"
+    if truncated:
+        title += " (показан фрагмент)"
+    figure.update_layout(title=title)
+    return figure
+
+
+def _object_representation_tabular(go: Any, payload: Mapping[str, Any]) -> Any:
+    rows = list(payload.get("tabular_rows", []))[:25]
+    if not rows:
+        figure = go.Figure()
+        figure.update_layout(title="Признаки объекта недоступны.")
+        return figure
+    labels = {"supports": "поддерживает", "contradicts": "противоречит", "unknown": "не измерено"}
+    header = ["Признак", "Значение", "Вклад", "Направление"]
+    cells = [
+        [item.get("feature") for item in rows],
+        [item.get("raw_value") for item in rows],
+        ["—" if item.get("contribution") is None else f"{item.get('contribution'):+.4f}" for item in rows],
+        [labels.get(item.get("direction"), item.get("direction")) for item in rows],
+    ]
+    figure = go.Figure(go.Table(header={"values": header, "fill_color": "#dce7ec", "align": "left"}, cells={"values": cells, "align": "left", "height": 34}))
+    limitations = payload.get("limitations", [])
+    subtitle = f" · {'; '.join(limitations)}" if limitations else ""
+    figure.update_layout(title=f"Исходный объект {payload.get('object_id', '')}: значения признаков и вклад{subtitle}")
+    return figure
+
+
+def _object_representation_image(go: Any, payload: Mapping[str, Any]) -> Any:
+    encoded = str(payload.get("image_png_base64", ""))
+    figure = go.Figure()
+    labels = {"supports": "поддерживает", "contradicts": "противоречит", "unknown": "не измерено"}
+    colors = {"supports": "#2e7d32", "contradicts": "#c62828", "unknown": "#78909c"}
+    if not encoded or encoded.startswith("["):
+        figure.update_layout(title="Изображение недоступно для отображения (include_raw=False или отсутствует).")
+        return figure
+    width, height = payload.get("image_width"), payload.get("image_height")
+    figure.add_layout_image(
+        source=f"data:image/png;base64,{encoded}",
+        xref="x", yref="y", x=0, y=0, sizex=width, sizey=height, sizing="stretch", layer="below",
+    )
+    seen_directions: set[str] = set()
+    for region in payload.get("image_regions", []):
+        row_min, row_max, col_min, col_max = region["bounding_box"]
+        direction = str(region.get("direction", "unknown"))
+        color = colors.get(direction, "#78909c")
+        figure.add_shape(type="rect", x0=col_min, x1=col_max + 1, y0=row_min, y1=row_max + 1, line={"color": color, "width": 2})
+        figure.add_annotation(x=col_min, y=max(row_min - 3, 0), text=str(region.get("name", "")), showarrow=False, font={"color": color, "size": 10})
+        seen_directions.add(direction)
+    for direction in sorted(seen_directions):
+        figure.add_trace(go.Scatter(x=[None], y=[None], mode="markers", marker={"color": colors[direction]}, name=labels[direction]))
+    figure.update_xaxes(visible=False, range=[0, width])
+    figure.update_yaxes(visible=False, range=[height, 0])
+    limitations = payload.get("limitations", [])
+    subtitle = f" · {'; '.join(limitations)}" if limitations else ""
+    figure.update_layout(title=f"Исходное изображение {payload.get('object_id', '')} с разметкой evidence{subtitle}")
+    return figure
+
+
+def _object_representation(go: Any, spec: Mapping[str, Any]) -> Any:
+    payload = dict(spec.get("object_representation") or {})
+    if not payload:
+        figure = go.Figure()
+        figure.update_layout(title="Сырой объект не был передан в explain_one(..., raw_object=...); представление недоступно.")
+        return figure
+    modality = str(payload.get("modality", "unknown"))
+    if modality == "text":
+        return _object_representation_text(go, payload)
+    if modality == "tabular":
+        return _object_representation_tabular(go, payload)
+    if modality == "image":
+        return _object_representation_image(go, payload)
+    figure = go.Figure()
+    figure.update_layout(title=f"Визуализация модальности '{modality}' пока не реализована.")
+    return figure
+
+
 def render_visual_spec(spec: Mapping[str, Any], *, view: str, output_path: str | Path | None = None):
     """Render one real interactive view from the canonical VisualSpec."""
 
@@ -201,6 +322,7 @@ def render_visual_spec(spec: Mapping[str, Any], *, view: str, output_path: str |
         "rule_ablation": _rule_ablation,
         "provenance": _provenance,
         "audit": _audit,
+        "object_representation": _object_representation,
     }
     if selected not in renderers:
         raise ValueError(f"unsupported visualization view: {selected}")

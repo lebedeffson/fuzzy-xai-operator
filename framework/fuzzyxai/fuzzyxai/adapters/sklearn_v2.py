@@ -8,11 +8,11 @@ from numpy.typing import NDArray
 
 from .contracts_v2 import (
     EvidenceChannelDescriptor,
+    EvidenceOrigin,
     ExplanationContext,
     LocalModelEvidence,
     ModelCapabilities,
     ModelInputSchema,
-    EvidenceOrigin,
     TaskType,
 )
 from .model import ModelPrediction, _serializable
@@ -105,13 +105,24 @@ class SklearnLinearAdapter(SklearnModelAdapterV2):
     def extract_local_evidence(self, inputs: Any, prediction: ModelPrediction, context: ExplanationContext) -> LocalModelEvidence:
         values: NDArray[np.float64] = _rows(inputs)[0].astype(float)
         coefficients = np.asarray(self.model.coef_, dtype=float)
+        predicted = prediction.predictions[0] if isinstance(prediction.predictions, list) else prediction.predictions
+        classes = list(getattr(self.model, "classes_", ()))
+        # sklearn stores exactly one coefficient row for a binary classifier
+        # (coef_.shape == (1, n_features), or already 1-D for some linear
+        # models), and that row is relative to classes_[1] by convention —
+        # not to whichever class the model actually predicted. Every
+        # downstream consumer of `contributions` (claim building, human
+        # text, text highlighting, tabular view, why_not()) assumes
+        # `contribution >= 0` means "pushed the model toward the predicted
+        # class". Flip the sign here, once, when classes_[0] was predicted,
+        # so that invariant actually holds instead of being silently wrong
+        # for exactly the negative-class predictions.
+        binary_negative_class_predicted = len(classes) == 2 and predicted == classes[0]
         if coefficients.ndim == 1:
-            row = coefficients
+            row = coefficients if not binary_negative_class_predicted else -coefficients
         elif coefficients.shape[0] == 1:
-            row = coefficients[0]
+            row = coefficients[0] if not binary_negative_class_predicted else -coefficients[0]
         else:
-            predicted = prediction.predictions[0] if isinstance(prediction.predictions, list) else prediction.predictions
-            classes = list(getattr(self.model, "classes_", range(coefficients.shape[0])))
             row = coefficients[classes.index(predicted)] if predicted in classes else coefficients[0]
         names = list(context.feature_names) or _feature_names(self.model, len(values))
         contributions = {name: float(value * weight) for name, value, weight in zip(names, values, row)}
@@ -126,7 +137,10 @@ class SklearnLinearAdapter(SklearnModelAdapterV2):
                 EvidenceChannelDescriptor("coefficients", True, "native", "model.coef_"),
                 EvidenceChannelDescriptor("local_contributions", True, "derived_from_native", "x_i * coefficient_i"),
             ),
-            limitations=("Linear terms describe model behavior and are not domain causality.",),
+            limitations=(
+                "Linear terms describe model behavior and are not domain causality.",
+                "Sign is relative to the predicted class: a positive contribution means the term pushed the decision toward the class the model actually predicted, not toward a fixed reference class.",
+            ),
         )
 
 

@@ -27,7 +27,7 @@
     "status": "PASS",
     "errors": [],
     "warnings": [
-      "dirty source files: Makefile, applications/scenarios/beacon_xai/figures/operator_dashboard.png, applications/scenarios/beacon_xai/proof/proof_trace.json, applications/scenarios/beacon_xai/route/route.json, applications/scenarios/beacon_xai/site_payload/scenario.json, applications/scenarios/gd_anfis_shap/figures/operator_dashboard.png, applications/scenarios/gd_anfis_shap/proof/proof_trace.json, applications/scenarios/gd_anfis_shap/route/route.json, applications/scenarios/gd_anfis_shap/site_payload/scenario.json, applications/scenarios/gis_integro/figures/operator_dashboard.png"
+      "dirty source files: framework/fuzzyxai/fuzzyxai/adapters/model.py, framework/fuzzyxai/fuzzyxai/adapters/sklearn_v2.py, framework/fuzzyxai/fuzzyxai/evidence/__init__.py, framework/fuzzyxai/fuzzyxai/evidence/claims.py, framework/fuzzyxai/fuzzyxai/evidence/contracts.py, framework/fuzzyxai/fuzzyxai/evidence/graph.py, framework/fuzzyxai/fuzzyxai/evidence/human.py, framework/fuzzyxai/fuzzyxai/evidence/similarity.py, framework/fuzzyxai/fuzzyxai/evidence/validation.py, framework/fuzzyxai/fuzzyxai/runtime.py"
     ]
   }
 }

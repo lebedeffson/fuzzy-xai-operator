@@ -1,0 +1,6 @@
+policy,n_objects,critical_objects,missed_critical_ruptures,critical_rupture_recall,false_block_rate,agreement_reference,mean_processing_time_ms
+probability_threshold,1000,250,250,0.0,0.0013333333333333333,0.557,0.0001
+shap_rule,1000,250,206,0.176,0.0,0.602,0.0001
+lime_rule,1000,250,196,0.216,0.0,0.612,0.0001
+anchors_rule,1000,250,234,0.064,0.0,0.574,0.0001
+fuzzyxai_full_contour,1000,250,0,1.0,0.0,1.0,0.0001

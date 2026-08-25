@@ -1,34 +1,10 @@
-M Makefile
- M applications/scenarios/beacon_xai/figures/operator_dashboard.png
- M applications/scenarios/beacon_xai/proof/proof_trace.json
- M applications/scenarios/beacon_xai/route/route.json
- M applications/scenarios/beacon_xai/site_payload/scenario.json
- M applications/scenarios/gd_anfis_shap/figures/operator_dashboard.png
- M applications/scenarios/gd_anfis_shap/proof/proof_trace.json
- M applications/scenarios/gd_anfis_shap/route/route.json
- M applications/scenarios/gd_anfis_shap/site_payload/scenario.json
- M applications/scenarios/gis_integro/figures/operator_dashboard.png
- M applications/scenarios/gis_integro/proof/proof_trace.json
- M applications/scenarios/gis_integro/route/route.json
- M applications/scenarios/gis_integro/site_payload/scenario.json
- M applications/scenarios/hybrid_xiris/figures/operator_dashboard.png
- M applications/scenarios/hybrid_xiris/proof/proof_trace.json
- M applications/scenarios/hybrid_xiris/route/route.json
- M applications/scenarios/hybrid_xiris/site_payload/scenario.json
- M applications/scenarios/medical_ecg_signal/figures/operator_dashboard.png
- M applications/scenarios/medical_ecg_signal/proof/proof_trace.json
- M applications/scenarios/medical_ecg_signal/route/route.json
- M applications/scenarios/medical_ecg_signal/site_payload/scenario.json
+M AGENTS.md
+ M README.md
  M external_validation/outputs/external_wine_blackbox_validation.zip
  M external_validation/outputs/external_wine_blackbox_validation/external_validation_report.md
  M external_validation/outputs/external_wine_blackbox_validation/external_wine_summary.json
  M external_validation/outputs/external_wine_blackbox_validation/gradient_boosting/dashboard_data.json
- M external_validation/outputs/external_wine_blackbox_validation/gradient_boosting/operator_cards/alignment.md
- M external_validation/outputs/external_wine_blackbox_validation/gradient_boosting/operator_cards/diagnostics.md
- M external_validation/outputs/external_wine_blackbox_validation/gradient_boosting/operator_cards/input_artifact.md
  M external_validation/outputs/external_wine_blackbox_validation/gradient_boosting/operator_cards/proof.md
- M external_validation/outputs/external_wine_blackbox_validation/gradient_boosting/operator_cards/representation.md
- M external_validation/outputs/external_wine_blackbox_validation/gradient_boosting/operator_cards/risk.md
  M external_validation/outputs/external_wine_blackbox_validation/gradient_boosting/operator_dashboard.png
  M external_validation/outputs/external_wine_blackbox_validation/gradient_boosting/operator_dashboard_v2.html
  M external_validation/outputs/external_wine_blackbox_validation/gradient_boosting/operator_dashboard_v2.png
@@ -39,12 +15,7 @@ M Makefile
  M external_validation/outputs/external_wine_blackbox_validation/gradient_boosting/summary.json
  M external_validation/outputs/external_wine_blackbox_validation/import_provenance.json
  M external_validation/outputs/external_wine_blackbox_validation/logistic_regression/dashboard_data.json
- M external_validation/outputs/external_wine_blackbox_validation/logistic_regression/operator_cards/alignment.md
- M external_validation/outputs/external_wine_blackbox_validation/logistic_regression/operator_cards/diagnostics.md
- M external_validation/outputs/external_wine_blackbox_validation/logistic_regression/operator_cards/input_artifact.md
  M external_validation/outputs/external_wine_blackbox_validation/logistic_regression/operator_cards/proof.md
- M external_validation/outputs/external_wine_blackbox_validation/logistic_regression/operator_cards/representation.md
- M external_validation/outputs/external_wine_blackbox_validation/logistic_regression/operator_cards/risk.md
  M external_validation/outputs/external_wine_blackbox_validation/logistic_regression/operator_dashboard.png
  M external_validation/outputs/external_wine_blackbox_validation/logistic_regression/operator_dashboard_v2.html
  M external_validation/outputs/external_wine_blackbox_validation/logistic_regression/operator_dashboard_v2.png
@@ -63,62 +34,106 @@ M Makefile
  M external_validation/outputs/external_wine_logistic_regression_route.json
  M external_validation/outputs/external_wine_logistic_regression_summary.json
  M external_validation/outputs/external_wine_summary.json
- M framework/fuzzyxai/fuzzyxai/adapters/tabular_classification.py
- M framework/fuzzyxai/fuzzyxai/core/external_tabular_route.py
- M framework/fuzzyxai/fuzzyxai/viz/traceability.py
- M fuzzyxai_final_audit_package.zip
- M reports/audit/artifact_inventory.csv
- M reports/audit/docx_format_report.md
- M reports/audit/docx_render/glava_4_FuzzyXAI_corrected_final.pdf
- M reports/audit/docx_render/glava_5_FuzzyXAI_corrected_final.pdf
- M reports/audit/docx_render_report.md
- M reports/audit/fuzzyxai_final_audit.json
- M reports/audit/fuzzyxai_final_audit.md
- M reports/audit/stale_terms_report.md
- M reports/figures/beacon_xai_operator_dashboard.png
- M reports/figures/gd_anfis_shap_operator_dashboard.png
- M reports/figures/gis_integro_operator_dashboard.png
- M reports/figures/hybrid_xiris_operator_dashboard.png
- M reports/figures/medical_ecg_signal_operator_dashboard.png
- M reports/framework/hybrid_xiris_proof_trace.json
- M reports/framework/hybrid_xiris_route.json
+ M framework/fuzzyxai/fuzzyxai/adapters/model.py
+ M framework/fuzzyxai/fuzzyxai/adapters/sklearn_v2.py
+ M framework/fuzzyxai/fuzzyxai/evidence/__init__.py
+ M framework/fuzzyxai/fuzzyxai/evidence/claims.py
+ M framework/fuzzyxai/fuzzyxai/evidence/contracts.py
+ M framework/fuzzyxai/fuzzyxai/evidence/graph.py
+ M framework/fuzzyxai/fuzzyxai/evidence/human.py
+ M framework/fuzzyxai/fuzzyxai/evidence/similarity.py
+ M framework/fuzzyxai/fuzzyxai/evidence/validation.py
+ M framework/fuzzyxai/fuzzyxai/runtime.py
+ M framework/fuzzyxai/fuzzyxai/visualization/matplotlib_renderer.py
+ M framework/fuzzyxai/fuzzyxai/visualization/plotly_renderer.py
+ M framework/fuzzyxai/fuzzyxai/visualization/spec.py
+ M framework/fuzzyxai/fuzzyxai/visualization/view_model.py
+ M fuzzyxai_experiments/checksums.sha256
+ M fuzzyxai_experiments/manifest_sha256.json
+ M fuzzyxai_experiments/reports/ch2_bc_results.json
+ M fuzzyxai_experiments/reports/ch2_critical_ruptures.json
+ M fuzzyxai_experiments/reports/ch2_synthesis.json
+ M fuzzyxai_experiments/reports/ch3_diagnostic_stand.json
+ M fuzzyxai_experiments/reports/ch3_reduction.json
+ M fuzzyxai_experiments/reports/ch3_selection.json
+ M fuzzyxai_experiments/reports/ch4_integration.json
+ M fuzzyxai_experiments/reports/ch5_beacon.json
+ M fuzzyxai_experiments/reports/ch5_gd_anfis_shap.json
+ M fuzzyxai_experiments/reports/ch5_gis.json
+ M fuzzyxai_experiments/reports/ch5_hybrid.json
+ M fuzzyxai_experiments/reports/ch5_scenario_runs.json
+ M fuzzyxai_experiments/reports/chapter4/ch4_integration.json
+ M fuzzyxai_experiments/reports/chapter5/beacon_xai_summary.json
+ M fuzzyxai_experiments/reports/chapter5/ch5_beacon.json
+ M fuzzyxai_experiments/reports/chapter5/ch5_gd_anfis_shap.json
+ M fuzzyxai_experiments/reports/chapter5/ch5_gis.json
+ M fuzzyxai_experiments/reports/chapter5/ch5_hybrid.json
+ M fuzzyxai_experiments/reports/chapter5/ch5_scenario_runs.json
+ M fuzzyxai_experiments/reports/chapter5/hybrid_xiris_summary.json
+ M fuzzyxai_experiments/reports/gui_screenshots/01_home_dashboard.png
+ M fuzzyxai_experiments/reports/gui_screenshots/02_hybrid_xiris_route.png
+ M fuzzyxai_experiments/reports/gui_screenshots/03_hybrid_xiris_result.png
+ M fuzzyxai_experiments/reports/gui_screenshots/04_beacon_audit_route.png
+ M fuzzyxai_experiments/reports/gui_screenshots/05_beacon_audit_result.png
+ M fuzzyxai_experiments/reports/gui_screenshots/06_gis_integro_route_report.png
+ M fuzzyxai_experiments/reports/gui_screenshots/07_gd_anfis_shap_route_report.png
+ M fuzzyxai_experiments/reports/gui_screenshots/08_evidence_center.png
+ M fuzzyxai_experiments/reports/gui_screenshots/09_developer_details.png
+ M fuzzyxai_experiments/tables/beacon_xai_summary.json
+ M fuzzyxai_experiments/tables/ch4_integration.json
+ M fuzzyxai_experiments/tables/ch5_beacon.json
+ M fuzzyxai_experiments/tables/ch5_gd_anfis_shap.json
+ M fuzzyxai_experiments/tables/ch5_gis.json
+ M fuzzyxai_experiments/tables/ch5_hybrid.json
+ M fuzzyxai_experiments/tables/ch5_scenario_runs.json
+ M fuzzyxai_experiments/tables/hybrid_xiris_summary.json
+ M pyproject.toml
+ M reports/full_demo/01_memberships.html
+ M reports/full_demo/02_feature_contributions.html
+ M reports/full_demo/03_representation.html
+ M reports/full_demo/04_composition_graph.html
  M reports/release/current/SPRINT_STATUS.md
  M reports/release/current/artifact_manifest.json
  M reports/release/current/check_results.json
  M reports/release/current/git_diff_summary.txt
  M reports/release/current/git_status.txt
  M reports/release/current/release_summary.json
- M reports/routes/beacon_xai_route.json
- M reports/routes/gd_anfis_shap_route.json
- M reports/routes/gis_integro_route.json
- M reports/routes/hybrid_xiris_route.json
- M reports/routes/medical_ecg_signal_route.json
- M reports/studio_batch/hybrid_xiris_proof_package.json
- M reports/validation/repository_inventory/repository_excluded.json
- M reports/validation/repository_inventory/repository_inventory.json
- M reports/validation/repository_inventory/repository_inventory.md
- M scripts/build_sprint_report.py
- M site/dubnaxai/public/figures/beacon_xai_operator_dashboard.png
- M site/dubnaxai/public/figures/gd_anfis_shap_operator_dashboard.png
- M site/dubnaxai/public/figures/gis_integro_operator_dashboard.png
- M site/dubnaxai/public/figures/hybrid_xiris_operator_dashboard.png
- M site/dubnaxai/public/figures/medical_ecg_signal_operator_dashboard.png
- M site/dubnaxai/public/routes/beacon_xai_route.json
- M site/dubnaxai/public/routes/gd_anfis_shap_route.json
- M site/dubnaxai/public/routes/gis_integro_route.json
- M site/dubnaxai/public/routes/hybrid_xiris_route.json
- M site/dubnaxai/public/routes/medical_ecg_signal_route.json
- M visual_artifacts_latest.zip
-?? FuzzyXAI_FINAL_DELIVERY_REPORT.md
-?? FuzzyXAI_full_delivery_package.zip
-?? data/real_public/
-?? models/
-?? reports/chapter4/chapter4_framework_traceability_insert.md
-?? reports/dataset_audit/
-?? reports/evaluation/
-?? reports/framework_audit/
-?? reports/practice_demo/
-?? reports/real_validation/
-?? reports/release/FuzzyXAI_framework_audit_package.zip
-?? reports/training/
-?? research_validation/
+ M reports/release/current/risks_and_todos.md
+ M reports/release/current/scenario_matrix.json
+ M study/strong_confirmatory/manifest.json
+?? CLAUDE.md
+?? context/
+?? examples/01_tabular_sklearn.py
+?? examples/02_tabular_similarity.py
+?? examples/03_text_explanation.py
+?? examples/04_image_explanation.py
+?? examples/05_strict_verbalizer.py
+?? examples/06_custom_model_adapter.py
+?? examples/07_rule_based_model.py
+?? examples/text_explanation_with_verbalizer.py
+?? framework/fuzzyxai/configs/
+?? framework/fuzzyxai/evidence/
+?? framework/fuzzyxai/figures/
+?? framework/fuzzyxai/fuzzyxai/evidence/fuzzy_rules.py
+?? framework/fuzzyxai/fuzzyxai/evidence/image_representation.py
+?? framework/fuzzyxai/fuzzyxai/evidence/text_highlighting.py
+?? framework/fuzzyxai/fuzzyxai/verbalization/
+?? framework/fuzzyxai/fuzzyxai/visualization/text_highlight.py
+?? framework/fuzzyxai/reports/
+?? tests/test_atomic_claim_provenance.py
+?? tests/test_contribution_sign_semantics.py
+?? tests/test_cross_model_semantic_validation.py
+?? tests/test_explanation_output_layer_smoke.py
+?? tests/test_export_detail_levels.py
+?? tests/test_fuzzy_rule_evidence.py
+?? tests/test_human_explanation_quality.py
+?? tests/test_image_object_representation.py
+?? tests/test_integration_consistency_p14.py
+?? tests/test_object_representation_export.py
+?? tests/test_ollama_backend_transport.py
+?? tests/test_realistic_image_case.py
+?? tests/test_similarity_reference_corpus.py
+?? tests/test_slm_verbalizer.py
+?? tests/test_text_highlight_evidence.py
+?? tests/test_text_highlight_rendering.py
+?? tests/test_verbalization_doctor_cli.py

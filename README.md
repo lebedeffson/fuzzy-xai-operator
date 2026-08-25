@@ -89,10 +89,17 @@ Optional integrations are installed explicitly:
 .venv/bin/python -m pip install -e ".[xgboost]"
 .venv/bin/python -m pip install -e ".[lightgbm]"
 .venv/bin/python -m pip install -e ".[catboost]"
+.venv/bin/python -m pip install -e ".[torch]"
+.venv/bin/python -m pip install -e ".[images]"        # Pillow, for image object_representation
 ```
 
 Python 3.10 or newer is required. Locked research environments are recorded in
 `requirements.lock`, `uv.lock`, and the corresponding protocol directories.
+
+Local verbalization via Ollama needs no Python dependency at all — the
+backend talks HTTP directly (stdlib `urllib`), so there is no `ollama`
+package to install; only the base install above is required for the whole
+library to work, verbalization included (deterministically, offline).
 
 ## Quick Start
 
@@ -116,22 +123,140 @@ model = make_pipeline(
     LogisticRegression(max_iter=500, random_state=42),
 ).fit(X_train, y_train)
 
-fx = FuzzyXAI.wrap(model, adapter="auto", task="classification")
-result = fx.explain_one(
-    X_test[0],
-    object_id="patient-0001",
+fx = FuzzyXAI.wrap(
+    model,
     reference_data=X_train,
     reference_labels=y_train,
 )
+result = fx.explain_one(X_test[0], object_id="patient-0001")
 
-print(result.summary(audience="domain_user", detail="short"))
-print(result.quality_report())
-print(fx.capability_report())
-result.export_json("explanation.json")
+print(result.summary())
+print(result.similar_cases)       # reference-corpus objects most like this one
+result.visualize()
+
+compact = result.export_json("explanation_compact.json", detail="compact")
+audit = result.export_json("explanation_audit.json", detail="audit")
 ```
 
 The prediction is available even when optional explanation channels are
 missing. Unsupported claims stay absent and are listed in the quality report.
+
+### API surface
+
+| Call | Role |
+| --- | --- |
+| `result.summary()` | Deterministic short text — offline, no network, always available. |
+| `result.story()` | Deterministic narrative across the evidence route (data -> training -> knowledge -> decision -> action). |
+| `result.verbalize()` / `.verbalize_detailed()` | Optional natural-language *presentation* of the already-built explanation — see below; no backend means byte-identical to `summary()`. |
+| `result.visualize(view=..., backend=...)` | Renders one view (`explanation_story`, `object_representation`, `similar_cases`, ...) via matplotlib or plotly. |
+| `result.object_representation` | The raw explained object (text/tabular/image) with evidence overlaid — `None` if no raw object and no data evidence exist. |
+| `result.similar_cases` | Reference-corpus objects most similar to this one; empty unless a reference corpus was registered. |
+| `result.export_json(path, detail=..., include_raw=...)` | Serializes one of three projections (`"compact"`, `"standard"`, `"audit"` — default) of the *same* canonical result; see below. |
+
+**SLM does not independently infer why a model made a prediction. It only
+verbalizes an explanation that has already been constructed from typed
+evidence** — the prediction, evidence extraction, and diagnosis never depend
+on whether a verbalizer backend is configured.
+
+**Similarity evidence is comparative evidence and is not causal** unless the
+model adapter explicitly establishes prototype/example-based inference — "a
+similar training example was found" is never phrased as "the model chose
+this because it resembles that example."
+
+**`include_raw=False` (the default on every export) removes the raw object
+payload from the JSON** — it is not a general PII anonymizer; structured
+evidence derived from the raw object (spans, offsets, tabular rows, feature
+values, region masks) is left untouched.
+
+### Compact / standard / audit exports (P2)
+
+`export_json`/`to_dict` accept `detail=` — three read-only projections of
+the same already-computed result; none of them re-runs `explain()`, so
+prediction/claims/similar_cases/action are identical across all three:
+
+```python
+result.export_json("out.json", detail="compact")   # prediction, top evidence, similar cases, uncertainty, action
+result.export_json("out.json", detail="standard")   # + all claims, one audience's HumanExplanation, visual metadata
+result.export_json("out.json", detail="audit")      # the full canonical payload (default, unchanged since before P2)
+```
+
+`compact` is roughly two orders of magnitude smaller than `audit` for a
+typical tabular object — see [examples/01_tabular_sklearn.py](examples/01_tabular_sklearn.py).
+
+### Raw-object representation and optional local verbalization
+
+`explain_one` accepts an optional `raw_object` (a text string, or a 2D/3D
+image array) so the explanation package can show evidence overlaid on the
+object itself, safely HTML-escaped for text, rather than only on abstract
+feature names. Tabular inputs get an honest feature/value/contribution table
+by default even without a raw object:
+
+```python
+result = fx.explain_one(x, object_id="doc-1", raw_object=raw_text)
+
+result.object_representation["modality"]           # "text", "tabular", or "image"
+result.object_representation["highlighted_html"]    # safe to embed, spans HTML-escaped first
+result.visualize(view="object_representation", backend="matplotlib")
+```
+
+For images, `region_masks={"name": boolean_mask, ...}` reports each named
+region's real geometry (measured from the mask, never a fabricated heatmap —
+FuzzyXAI has no built-in per-pixel attribution method) and, when your
+contribution mapping has a matching entry, its measured contribution — see
+[examples/04_image_explanation.py](examples/04_image_explanation.py).
+
+`result.summary()` and `result.verbalize()` are deterministic by default —
+**no network call, no LLM, no new dependency** is ever required to use
+FuzzyXAI. `verbalize()` becomes a local-LLM rephrasing only when you pass an
+explicit backend:
+
+```python
+# 1. No backend — deterministic, works everywhere, offline
+text = result.verbalize()
+
+# 2. Local Ollama backend — you install and run it yourself; the
+#    library never downloads a model or starts a server for you
+from fuzzyxai.verbalization.backends import OllamaBackend
+
+backend = OllamaBackend(model="qwen3:1.7b")  # or FUZZYXAI_OLLAMA_MODEL env var
+details = result.verbalize_detailed(backend=backend)
+print(details.text, details.status)  # status: deterministic | generated | fallback | rejected
+
+# 3. Your own backend — anything implementing VerbalizationBackend.generate()
+class MyBackend:
+    model = "my-model"
+    def generate(self, prompt: str, *, response_schema=None) -> str: ...
+
+result.verbalize_detailed(backend=MyBackend())
+```
+
+Not sure whether a local Ollama is reachable and the model is pulled?
+
+```bash
+python -m fuzzyxai.verbalization doctor
+```
+
+Two verbalization modes are available (`SLMVerbalizer(backend, mode=...)`,
+default `"strict"`):
+
+- **`strict`** — the backend only picks an *order* over already-verified
+  claim IDs and a connector style; the final text is assembled by a
+  deterministic renderer purely from vetted claim text. No token the backend
+  writes can reach the output — a structural guarantee.
+- **`rewrite`** (opt-in) — the backend writes free text with per-sentence
+  claim attribution, checked afterward by surface guards (no new number, no
+  new feature/class name, no unlicensed causal/certainty language). These
+  are **surface checks, not proof of semantic entailment** — `rewrite`
+  output is not "grounded", it has "passed surface grounding checks."
+
+Install steps for Ollama differ by OS — see
+[docs.ollama.com/linux](https://docs.ollama.com/linux),
+[docs.ollama.com/macos](https://docs.ollama.com/macos), or
+[ollama.com](https://ollama.com) for Windows; there is no single command
+that works identically everywhere. `qwen3:1.7b` is the recommended default
+(small, multilingual); `qwen3:0.6b` is a lighter but weaker alternative. See
+[examples/text_explanation_with_verbalizer.py](examples/text_explanation_with_verbalizer.py)
+for a runnable version of all three scenarios above.
 
 ### Diagnose a pipeline route
 
@@ -384,6 +509,15 @@ their limitations remain colocated with the corresponding files under
 - [Funding and acknowledgment](FUNDING.md)
 - [Contributing](CONTRIBUTING.md)
 
+Runnable examples, each self-contained and using only the canonical API:
+[01 tabular](examples/01_tabular_sklearn.py) ·
+[02 similarity](examples/02_tabular_similarity.py) ·
+[03 text](examples/03_text_explanation.py) ·
+[04 image](examples/04_image_explanation.py) ·
+[05 strict verbalizer](examples/05_strict_verbalizer.py) ·
+[06 custom adapter](examples/06_custom_model_adapter.py) ·
+[07 rule-based model](examples/07_rule_based_model.py)
+
 ## Scope and Limitations
 
 FuzzyXAI controls registered evidence and route consistency. It does not:
@@ -397,6 +531,14 @@ FuzzyXAI controls registered evidence and route consistency. It does not:
 
 Medical, industrial, and safety examples in this repository are research
 fixtures unless an associated protocol explicitly says otherwise.
+
+Fuzzy/rule-based models are supported through a generic contract: any
+adapter can supply an `activated_rules` channel (rule id, antecedent terms
+with real `[0, 1]` membership degrees, activation strength, conclusion) —
+not tied to any specific ANFIS library. See
+[examples/07_rule_based_model.py](examples/07_rule_based_model.py) for a
+self-contained Gaussian-membership example (real membership functions, real
+product T-norm rule firing, real weighted-average defuzzification).
 
 ## Citation
 

@@ -2,7 +2,8 @@ from __future__ import annotations
 
 import hashlib
 import json
-from typing import Any, Mapping, Sequence, cast
+from collections.abc import Mapping, Sequence
+from typing import Any, cast
 
 from .contracts import ComparisonStatement, DomainFeatureLanguage, DomainLanguageValidation
 
@@ -102,16 +103,20 @@ def comparison_statement(
 
     finite = sorted(float(value) for value in values if value is not None)
     size = len(finite)
-    if not size:
+    if size < 2:
+        # A "rank" or "percentile" claim over 0 or 1 reference objects is
+        # vacuous — e.g. "maximum among 1 reference object" is trivially
+        # true and carries zero comparative information, but reads as if a
+        # real comparison happened. Report the gap honestly instead.
         return ComparisonStatement(
-            0,
+            size,
             reference_label,
             representation,
             None,
             None,
             "insufficient_evidence",
-            "Недостаточно данных для сравнения.",
-            ("reference sample is empty",),
+            "Недостаточно данных для сравнения." if size == 0 else "Для сравнения известен только один похожий случай, поэтому сравнение не выполнено.",
+            ("reference sample is empty" if size == 0 else "reference sample has only one object; a rank/percentile claim would be vacuous",),
         )
     rank = sum(value <= object_value for value in finite)
     percentile = 100.0 * rank / size
@@ -153,8 +158,12 @@ def comparison_from_percentile(
 ) -> ComparisonStatement:
     """Apply the wording policy when only an audited percentile summary is retained."""
 
-    if sample_size <= 0:
-        return comparison_statement((), 0.0, reference_label=reference_label, representation=representation)
+    if sample_size < 2:
+        # Same vacuous-comparison guard as comparison_statement(): mirror it
+        # here so an audited percentile-only summary can't bypass the check
+        # just because the raw per-object values were never retained.
+        placeholder = () if sample_size <= 0 else (0.0,)
+        return comparison_statement(placeholder, 0.0, reference_label=reference_label, representation=representation)
     rank = max(1, min(sample_size, round(percentile * sample_size / 100.0)))
     if sample_size < 20:
         text = (
