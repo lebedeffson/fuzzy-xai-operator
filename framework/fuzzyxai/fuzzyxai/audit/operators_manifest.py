@@ -3,15 +3,17 @@ from __future__ import annotations
 import argparse
 import importlib
 import json
+import sysconfig
 from pathlib import Path
 from typing import Any
 
 import yaml
 
 FRAMEWORK_ROOT = Path(__file__).resolve().parents[2]
-SOURCE_REPOSITORY = Path.cwd() if (Path.cwd() / "framework/fuzzyxai/operators_manifest.yaml").exists() else FRAMEWORK_ROOT.parents[1]
-REPOSITORY_ROOT = SOURCE_REPOSITORY
-DEFAULT_MANIFEST = SOURCE_REPOSITORY / "framework/fuzzyxai/operators_manifest.yaml"
+_SOURCE_MANIFEST = Path.cwd() / "framework/fuzzyxai/operators_manifest.yaml"
+_INSTALLED_MANIFEST = Path(sysconfig.get_path("data") or "") / "share" / "fuzzyxai" / "operators_manifest.yaml"
+DEFAULT_MANIFEST = _SOURCE_MANIFEST if _SOURCE_MANIFEST.exists() else _INSTALLED_MANIFEST
+REPOSITORY_ROOT = Path.cwd() if _SOURCE_MANIFEST.exists() else None
 
 
 def _resolve_callable(reference: str) -> Any:
@@ -56,9 +58,10 @@ def validate_manifest(path: str | Path = DEFAULT_MANIFEST) -> dict[str, Any]:
             if not isinstance(values, list) or not values:
                 errors.append(f"{operator_id}:{field}:empty")
                 continue
-            for value in values:
-                if not (REPOSITORY_ROOT / str(value)).exists():
-                    errors.append(f"{operator_id}:{field}:missing:{value}")
+            if REPOSITORY_ROOT is not None:
+                for value in values:
+                    if not (REPOSITORY_ROOT / str(value)).exists():
+                        errors.append(f"{operator_id}:{field}:missing:{value}")
     return {
         "schema_version": payload.get("schema_version") if isinstance(payload, dict) else None,
         "manifest": str(manifest_path),
@@ -66,6 +69,7 @@ def validate_manifest(path: str | Path = DEFAULT_MANIFEST) -> dict[str, Any]:
         "operator_ids": sorted(ids),
         "status": "PASS" if rows and not errors else "FAIL",
         "errors": errors,
+        "reference_files_verified": REPOSITORY_ROOT is not None,
     }
 
 

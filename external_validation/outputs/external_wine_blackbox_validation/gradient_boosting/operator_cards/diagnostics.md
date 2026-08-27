@@ -1,18 +1,18 @@
 # Диагностика D
 
 ## Input
-- `rho` = `0.429844`
+- `legacy_route_score` = `0.429844`
 - `risk_zone` = `"lower_confidence"`
-- `gamma` = `0.320881`
-- `delta` = `0.429844`
+- `legacy_route_gap` = `0.320881`
+- `presentation_omission_loss` = `0.429844`
 - `task_type` = `"tabular_classification"`
-- `dominant_component` = `"delta"`
+- `dominant_component` = `"presentation_omission"`
 
 ## Formula
 diagnostic_id выбирается по task_type, risk_zone и доминирующему компоненту риска
 
 ## Components
-- `reason_components` = `{"gamma": 0.320881, "delta": 0.429844, "rho": 0.429844, "dominant_component": "delta", "task_type": "tabular_classification"}`
+- `reason_components` = `{"legacy_route_gap": 0.320881, "presentation_omission_loss": 0.429844, "legacy_route_score": 0.429844, "dominant_component": "presentation_omission", "task_type": "tabular_classification"}`
 
 ## Output
 - `diagnostic_id` = `"D_external_tabular_uncertainty"`

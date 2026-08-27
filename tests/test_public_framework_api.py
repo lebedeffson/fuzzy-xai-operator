@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 
 import fuzzyxai
+import pytest
 from fuzzyxai.audit.operators_manifest import validate_manifest
 from fuzzyxai.operators import (
     AlignmentInput,
@@ -42,8 +43,20 @@ def test_public_operators_delegate_to_typed_core() -> None:
     )
     risk = observe_risk(
         RiskInput(
-            components={"uncertainty": 0.2},
-            weights={"uncertainty": 1.0},
+            components={
+                "rho_p": 0.1,
+                "u_M": 0.2,
+                "one_minus_I_pre": 0.1,
+                "Delta": 0.0,
+                "chi_R": 0.0,
+            },
+            weights={
+                "rho_p": 0.3,
+                "u_M": 0.25,
+                "one_minus_I_pre": 0.2,
+                "Delta": 0.15,
+                "chi_R": 0.1,
+            },
             thresholds={"theta_1": 0.1, "theta_2": 0.3, "theta_3": 0.6, "theta_4": 0.8},
         )
     )
@@ -52,27 +65,48 @@ def test_public_operators_delegate_to_typed_core() -> None:
     assert alignment.certified is True
     assert reduction.delta == 0.1
     assert reduction.r_delta == 0.2
-    assert risk.rho == 0.2
+    assert risk.rho == pytest.approx(0.1)
     assert risk.action == "lower_confidence"
 
 
 def test_model_independent_wrap_is_honest_without_operator_evidence(tmp_path) -> None:
+    """Without manual `evidence={"alignment"/"reduction"/"risk": ...}`, the
+    automatic Γ/Δ/ρ layer (P16/P17) still only uses *real* available
+    signal — a real predict_proba score gives a real predicted_risk
+    component of ρ (predicted_risk=1-score=0.12, diagnostic=0, since no
+    rupture was detected), but there is no local-contribution channel for
+    this bare predict_proba model, so I_pre stays unmeasured. Per P18, a
+    default ExplainPlan never declares alignment/reduction applicable for a
+    single-channel model, so those are honestly not_applicable (not
+    "missing") — but interpretability_gap IS always an expected component of
+    the canonical 5-term formula, and it has no source here, so the risk
+    interface is incomplete and disclosed as such rather than silently
+    renormalized into a confident "accept"."""
+
     result = fuzzyxai.FuzzyXAI.wrap(ProbabilityModel()).explain([[1.0, 2.0]])
 
     assert result.prediction.primary_score() == 0.88
-    assert result.action == "review"
+    assert result.action == "insufficient_evidence"
     assert {item["code"] for item in result.view_model.diagnostics} == {
-        "D_k_alignment_missing",
-        "D_k_reduction_missing",
-        "D_k_risk_missing",
+        "D_k_alignment_not_applicable",
+        "D_k_reduction_not_applicable",
+        "D_risk_incomplete_interface",
     }
     output = result.export_json(tmp_path / "explanation.json")
     payload = json.loads(output.read_text(encoding="utf-8"))
     assert payload["trace"]["adapter_id"] == "predict_proba"
+    assert payload["risk"]["components"] == {"predicted_risk": pytest.approx(0.12), "diagnostic": pytest.approx(0.0)}
+    assert payload["risk"]["status"] == "incomplete"
+    # P18 item 2: an incomplete interface never reports its renormalized
+    # weighted average as the real, complete rho.
     assert payload["risk"]["rho"] is None
+    # partial_risk_score = (0.30*0.12 + 0.10*0.0) / (0.30+0.10) under DEFAULT_RISK_WEIGHTS, renormalized over the two available components.
+    assert payload["risk"]["partial_risk_score"] == pytest.approx(0.09)
+    assert payload["disagreement"]["gamma"] is None  # no second explanatory channel for this bare model
+    assert payload["disagreement"]["pre_interpretability"] is None  # no local-contribution channel to build an explanatory object from
 
 
-def test_model_independent_wrap_computes_supplied_operator_evidence(tmp_path) -> None:
+def test_model_independent_wrap_rejects_untransformed_gamma_evidence(tmp_path) -> None:
     result = fuzzyxai.FuzzyXAI.wrap(ProbabilityModel(), adapter="sklearn").explain(
         [[1.0, 2.0]],
         evidence={
@@ -96,15 +130,16 @@ def test_model_independent_wrap_computes_supplied_operator_evidence(tmp_path) ->
         },
     )
 
-    assert result.view_model.disagreement["gamma"] == 0.3
+    assert result.view_model.disagreement["gamma"] is None
+    assert result.view_model.disagreement["alignment_status"] == "missing"
     assert result.view_model.disagreement["delta"] == 0.1
     assert result.view_model.risk["rho"] == 0.2
-    assert result.action == "lower_confidence"
+    assert result.action == "insufficient_evidence"
     dashboard = result.plot(tmp_path / "dashboard.png")
     assert dashboard.exists() and dashboard.stat().st_size > 0
 
 
-def test_structural_failure_cannot_be_hidden_by_low_risk() -> None:
+def test_untransformed_structural_evidence_is_insufficient_not_a_fake_gamma() -> None:
     result = fuzzyxai.FuzzyXAI.wrap(ProbabilityModel()).explain(
         [[1.0, 2.0]],
         evidence={
@@ -126,8 +161,8 @@ def test_structural_failure_cannot_be_hidden_by_low_risk() -> None:
         },
     )
 
-    assert result.action == "review"
-    assert {item["code"] for item in result.view_model.diagnostics} == {"D_ij_alignment", "D_reduction"}
+    assert result.action == "insufficient_evidence"
+    assert {item["code"] for item in result.view_model.diagnostics} == {"D_k_alignment_missing", "D_reduction"}
 
 
 def test_operator_manifest_is_complete_and_resolvable() -> None:
@@ -143,8 +178,7 @@ def test_operator_manifest_is_complete_and_resolvable() -> None:
 
 
 def test_public_exports_are_not_overwritten() -> None:
-    import fuzzyxai.adapters as adapters
-    import fuzzyxai.operators as operators
+    from fuzzyxai import adapters, operators
 
     assert {"compute_alignment", "compute_reduction", "observe_risk", "list_operators"} <= set(operators.__all__)
     assert {"MedicalImageToExplanationAdapter", "ModelAdapter", "SklearnAdapter", "list_adapters"} <= set(adapters.__all__)

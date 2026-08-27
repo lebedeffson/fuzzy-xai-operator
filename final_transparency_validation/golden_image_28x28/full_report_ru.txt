@@ -1,0 +1,65 @@
+## 1. Что анализировалось
+- Объект: fashion_p0
+- Версия данных: fashion_mnist_footwear_vs_other_v1
+- Входной hash: df20b1e2c2dd0f6fc902199c60012b2f750aa8623993657e5131787043456c28
+
+## 2. Какая модель использовалась
+- Модель: FashionCNN (адаптер torch_v2)
+- Отпечаток модели (fingerprint): e58585cdced1d9cecb4157c1037891cb167f37872e512c2f9e2b81ed6f39a90f
+
+## 3. Какой прогноз получен
+- Модель определила: не обувь.
+- Модельный балл: 1.0
+
+## 4. Как именно эта архитектура сформировала данный прогноз
+- Карта атрибуции (integrated_gradients): диапазон [-0.13394051790237427, 0.3186054825782776].
+- IG completeness: target class=0; baseline=all-zero input tensor; output space=logit; absolute residual=0.0015958547592163086; relative residual=0.00016060051130874372. Меньший residual означает более точное выполнение completeness identity в указанном output space.
+
+## 5. Какие вычисленные сведения поддерживают результат
+- **Область attribution_region_1:** Область изображения «attribution_region_1» поддерживает прогноз с вкладом +7.911.
+- **Область attribution_region_2:** Область изображения «attribution_region_2» поддерживает прогноз с вкладом +0.634.
+
+## 6. Какие вычисленные сведения ему противоречат
+- **Область attribution_region_9:** Область изображения «attribution_region_9» противоречит прогнозу с вкладом -0.567.
+- **Область attribution_region_8:** Область изображения «attribution_region_8» противоречит прогнозу с вкладом -0.497.
+
+## 11. Какие источники объяснения согласованы или конфликтуют (Γ)
+- Γ не измерено: для этого объекта доступен только один канал локального объяснения — сравнивать не с чем.
+
+## 12. Выполнялось ли упрощение представления и какая потеря Δ возникла
+- Упрощение не выполнялось: нет операции редукции для этого типа модели.
+
+## 13. Из каких компонент получено ρ
+- ρ НЕ вычислено как полное значение: интерфейс риска неполон (не хватает: reduction_loss, uncertainty).
+- Частичный (неполный) риск-score = 0.0305, из слагаемых: {predicted_risk = 0.0000; interpretability_gap = 0.0914; diagnostic = 0.0000} — это НЕ официальное ρ, только для справки.
+
+## 14. Какое действие разрешено
+- **Собрать недостающие данные:** Доступных сведений недостаточно для автоматического решения.
+
+## 15. Откуда происходит каждое существенное утверждение
+- Область attribution_region_1: claims C-003; evidence image_region:fashion_p0:attribution_region_1
+- Область attribution_region_2: claims C-004; evidence image_region:fashion_p0:attribution_region_2
+- Не все проверки подтверждены: claims C-008; evidence diagnostic:0
+- Область attribution_region_9: claims C-006; evidence image_region:fashion_p0:attribution_region_9
+
+## 17. Какие каналы неприменимы к данной архитектуре
+- rules
+- alignment
+- reduction
+
+## 18. Какие ограничения имеет объяснение
+- Не все проверки подтверждены: Для части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено.
+- Дополнительная проверка не выполнена — faithfulness: no perturbation-based faithfulness check was supplied
+- Дополнительная проверка не выполнена — fidelity: no surrogate fidelity measurement was supplied
+- Дополнительная проверка не выполнена — stability: no repeated-perturbation stability check was supplied
+- Дополнительная проверка не выполнена — coverage: no class concept exposed a measured primary_rule_coverage
+- Дополнительная проверка не выполнена — consistency: no cross-explainer consistency check was supplied
+- Дополнительная проверка не выполнена — calibration: calibration requires a separate held-out calibration/validation set, which was not supplied
+- Дополнительная проверка не выполнена — rule_complexity: no rules were extracted for this model
+- Дополнительная проверка не выполнена — counterfactual_validity: no counterfactuals were generated
+- Дополнительная проверка не выполнена — prototype_representativeness: no class concept exposed a measured intra_class_variability
+- Дополнительная проверка не выполнена — reconstruction_error: no model family with a computable reconstruction chain (e.g. linear) was present, and none was supplied
+- Необязательный канал не предоставлен: class_concepts.
+- Необязательный канал не предоставлен: counterfactuals.
+- Необязательный канал не предоставлен: similar_cases.
+- Необязательный канал не предоставлен: training_history.

@@ -228,30 +228,211 @@ def _table_view(spec: Mapping[str, Any], view: str):
     return figure
 
 
-def _provenance(spec: Mapping[str, Any]):
+_NODE_TYPE_LABELS_RU = {
+    "dataset": "датасет",
+    "preprocessor": "предобработка",
+    "model_artifact": "модель",
+    "data": "данные объекта",
+    "anomaly": "отклонение",
+    "training_event": "обучение",
+    "rule": "правило",
+    "concept": "концепт класса",
+    "similar_case": "похожий случай",
+    "counterfactual": "контрфакт",
+    "model_internals": "внутреннее устройство модели",
+    "attribution_map": "карта атрибуции",
+    "contribution": "вклад признака",
+    "prediction": "прогноз",
+    "claim": "утверждение",
+    "diagnostic": "диагностика",
+    "trace": "след",
+    "action": "действие",
+}
+
+
+def _focused_provenance_chain(nodes: list[Mapping[str, Any]], edges: list[Mapping[str, Any]], selector: str) -> tuple[list[Mapping[str, Any]], list[Mapping[str, Any]], dict[str, int]]:
+    """P18 item 10: the anchor's real directed ANCESTRY only — a backward
+    walk that follows edge.source from edge.target == current frontier,
+    transitively. This is a genuine provenance question ("where did this
+    come from") and it is directional by construction: it never crosses
+    into a shared ancestor's OTHER descendants (e.g. sibling similar-case
+    nodes reached only via a common `data:*` node), which the previous
+    bidirectional (both-direction) BFS did — for a `claim` selector it used
+    to pull in every neighbor of any node along the chain, including
+    unrelated training objects that merely share a data node with the
+    claim. A pure backward walk cannot do that: once it reaches a root node
+    with no incoming edges (e.g. the dataset), it simply has nowhere left
+    to go, instead of fanning back out along that root's outgoing edges.
+    Returns (nodes, edges, depth-from-anchor per node_id) for a left-to-
+    right layout by real ancestry depth."""
+
+    node_by_id = {str(node.get("node_id")): node for node in nodes}
+    anchor_ids = {selector} if selector in node_by_id else {str(node.get("node_id")) for node in nodes if str(node.get("node_type")) == selector}
+    if not anchor_ids:
+        anchor_ids = {"action"} if "action" in node_by_id else set()
+    depth = {anchor: 0 for anchor in anchor_ids}
+    frontier = set(anchor_ids)
+    while frontier:
+        next_frontier: set[str] = set()
+        for edge in edges:
+            source, target = str(edge.get("source")), str(edge.get("target"))
+            if target in frontier and source not in depth:
+                depth[source] = depth[target] + 1
+                next_frontier.add(source)
+        frontier = next_frontier
+    related_nodes = [node_by_id[node_id] for node_id in depth if node_id in node_by_id]
+    related_edges = [edge for edge in edges if str(edge.get("source")) in depth and str(edge.get("target")) in depth]
+    return related_nodes, related_edges, depth
+
+
+def _provenance(spec: Mapping[str, Any], *, selector: str | None = None):
+    """P17: the default view is a FOCUSED subgraph (5-10 nodes) around one
+    claim or the final action — not an arbitrary sample of the full
+    80+-node graph, which answers no specific question. The complete graph
+    is still available in full via result.audit()/to_dict(detail="audit").
+    """
+
     import matplotlib.pyplot as plt
 
     nodes = list(spec.get("provenance_nodes", []))
     edges = list(spec.get("provenance_edges", []))
-    figure, axis = plt.subplots(figsize=(16, 9))
+    anchor = selector or "action"
+    # P19 system actions have a canonical operator ancestry.  Render that
+    # real graph subroute in semantic rows rather than allowing generic claim
+    # ancestors to consume the focused-action budget.
+    if anchor == "action" and any(str(node.get("node_id")) == "system:E_model" for node in nodes):
+        ids = {
+            "dataset:root", "model_artifact:root", "prediction", "system:E_model", "system:T_ij",
+            "system:aligned_E_model", "system:E_target", "system:Gamma", "system:U_model",
+            "system:U_rules", "system:U_trace", "system:u_M", "system:representation",
+            "system:reduction", "system:Delta", "system:E_pre", "system:I_pre", "system:rho",
+            "system:rho_p", "system:one_minus_I_pre", "system:chi_R", "system:threshold_policy",
+            "system:candidate_action", "system:critical_override", "system:policy_resolution", "system:critical", "action",
+        }
+        selected = [node for node in nodes if str(node.get("node_id")) in ids]
+        allowed = {
+            ("dataset:root", "prediction"), ("model_artifact:root", "prediction"), ("prediction", "system:E_model"),
+            ("system:E_model", "system:T_ij"), ("system:T_ij", "system:aligned_E_model"),
+            ("system:aligned_E_model", "system:Gamma"), ("system:E_target", "system:Gamma"),
+            ("system:U_model", "system:u_M"), ("system:U_rules", "system:u_M"), ("system:U_trace", "system:u_M"),
+            ("system:u_M", "system:representation"), ("system:representation", "system:reduction"),
+            ("system:reduction", "system:Delta"), ("system:Delta", "system:E_pre"),
+            ("system:aligned_E_model", "system:E_pre"), ("system:E_target", "system:E_pre"), ("system:u_M", "system:E_pre"),
+            ("system:E_pre", "system:I_pre"), ("prediction", "system:rho_p"),
+            ("system:I_pre", "system:one_minus_I_pre"), ("system:Gamma", "system:chi_R"), ("system:U_trace", "system:chi_R"),
+            ("system:rho_p", "system:rho"), ("system:u_M", "system:rho"), ("system:one_minus_I_pre", "system:rho"),
+            ("system:Delta", "system:rho"), ("system:chi_R", "system:rho"),
+            ("system:rho", "system:threshold_policy"), ("system:threshold_policy", "system:candidate_action"),
+            ("system:chi_R", "system:critical_override"), ("system:critical", "system:chi_R"),
+            ("system:critical", "system:critical_override"), ("system:candidate_action", "system:policy_resolution"),
+            ("system:critical_override", "system:policy_resolution"), ("system:policy_resolution", "action"),
+        }
+        selected_edges = [edge for edge in edges if (str(edge.get("source")), str(edge.get("target"))) in allowed]
+        positions = {
+            "dataset:root": (.05, .88), "model_artifact:root": (.18, .88), "prediction": (.32, .88),
+            "system:E_model": (.46, .88), "system:T_ij": (.60, .88), "system:aligned_E_model": (.74, .88), "system:E_target": (.89, .88),
+            "system:Gamma": (.88, .72), "system:chi_R": (.94, .57),
+            "system:U_model": (.10, .65), "system:U_rules": (.10, .55), "system:U_trace": (.10, .45),
+            "system:u_M": (.25, .55), "system:representation": (.38, .55), "system:reduction": (.51, .55), "system:Delta": (.64, .55),
+            "system:E_pre": (.32, .32), "system:I_pre": (.46, .32), "system:one_minus_I_pre": (.60, .32),
+            "system:rho_p": (.60, .43), "system:rho": (.76, .39),
+            "system:threshold_policy": (.76, .22), "system:candidate_action": (.88, .22),
+            "system:critical": (.46, .09), "system:critical_override": (.61, .09),
+            "system:policy_resolution": (.82, .09), "action": (.96, .09),
+        }
+        figure, axis = plt.subplots(figsize=(20, 11))
+        axis.axis("off")
+        axis.set_title("Системный маршрут действия", loc="left", fontsize=18, fontweight="bold")
+        for edge in selected_edges:
+            source, target = positions.get(str(edge.get("source"))), positions.get(str(edge.get("target")))
+            if source and target:
+                axis.annotate("", xy=target, xytext=source, arrowprops={"arrowstyle": "->", "color": "#55798a", "lw": 1.3})
+        for node in selected:
+            node_id = str(node.get("node_id"))
+            if node_id not in positions:
+                continue
+            label = str(node.get("label"))
+            axis.text(*positions[node_id], "\n".join(wrap(label, width=16)[:2]), ha="center", va="center", fontsize=9,
+                      bbox={"boxstyle": "round,pad=.42", "facecolor": "#e8f3fa" if node_id.startswith("system:") else "#f6f8f9", "edgecolor": "#355b72"})
+        axis.text(.02, .02, "Маршрут построен из направленных узлов ExplanationGraph; боковые claims намеренно не заменяют операторную родословную.", fontsize=9, color="#58656e")
+        return figure
+    selected, selected_edges, depth = _focused_provenance_chain(nodes, edges, anchor)
+    if len(selected) > 12:
+        # Still too large for a focused picture (an unusually connected
+        # anchor) — keep only the nodes closest to the anchor.
+        keep_ids = {node_id for node_id, _ in sorted(depth.items(), key=lambda item: item[1])[:12]}
+        selected = [node for node in selected if str(node.get("node_id")) in keep_ids]
+        selected_edges = [edge for edge in selected_edges if str(edge.get("source")) in keep_ids and str(edge.get("target")) in keep_ids]
+
+    # P18 item 10: an anchor with many same-depth ancestors (e.g. many rule
+    # claims all directly preceding a prediction) used to stack all of them
+    # into one column, overlapping into an unreadable smear. Capping each
+    # column to 4 and naming the rest keeps every box readable without
+    # dropping the fact that more ancestors exist at that depth.
+    truncated_counts: dict[int, int] = {}
+    by_depth_pre: dict[int, list[Mapping[str, Any]]] = {}
+    for node in selected:
+        by_depth_pre.setdefault(depth.get(str(node.get("node_id")), 0), []).append(node)
+    kept_ids: set[str] = set()
+    for level, level_nodes in by_depth_pre.items():
+        kept = level_nodes[:4]
+        kept_ids.update(str(node.get("node_id")) for node in kept)
+        if len(level_nodes) > 4:
+            truncated_counts[level] = len(level_nodes) - 4
+    selected = [node for node in selected if str(node.get("node_id")) in kept_ids]
+    selected_edges = [edge for edge in selected_edges if str(edge.get("source")) in kept_ids and str(edge.get("target")) in kept_ids]
+
+    figure, axis = plt.subplots(figsize=(12, 6))
     axis.axis("off")
-    axis.set_title("Трассируемость: evidence → claim → diagnostic → action", loc="left", fontsize=20, fontweight="bold")
-    by_type: dict[str, list[Mapping[str, Any]]] = {}
-    for node in nodes:
-        by_type.setdefault(str(node.get("node_type")), []).append(node)
-    order = ["data", "anomaly", "training_event", "rule", "concept", "similar_case", "counterfactual", "prediction", "claim", "diagnostic", "action"]
-    selected = [node for kind in order for node in by_type.get(kind, [])[:4]]
+    # P18 item 10: never show the raw selector string in the title — a
+    # node_id resolves to its own (already Russian) label, a bare
+    # node_type resolves through _NODE_TYPE_LABELS_RU.
+    anchor_node = next((node for node in selected if str(node.get("node_id")) == anchor), None)
+    anchor_display = str(anchor_node.get("label")) if anchor_node is not None else _NODE_TYPE_LABELS_RU.get(anchor, anchor)
+    axis.set_title(f"Происхождение: {anchor_display}", loc="left", fontsize=16, fontweight="bold")
+    by_depth: dict[int, list[Mapping[str, Any]]] = {}
+    for node in selected:
+        by_depth.setdefault(depth.get(str(node.get("node_id")), 0), []).append(node)
+    max_depth = max(by_depth) if by_depth else 0
     positions = {}
-    for index, node in enumerate(selected):
-        x = 0.05 + 0.9 * index / max(len(selected) - 1, 1)
-        y = 0.63 if index % 2 == 0 else 0.38
-        positions[node.get("node_id")] = (x, y)
-        axis.text(x, y, f"{node.get('node_type')}\n{shorten(str(node.get('label')), 28)}", ha="center", va="center", fontsize=8.5, bbox={"boxstyle": "round,pad=.35", "facecolor": "#f6f8f9", "edgecolor": "#355b72"})
-    for edge in edges:
-        source, target = positions.get(edge.get("source")), positions.get(edge.get("target"))
+    for level, level_nodes in by_depth.items():
+        x = 0.06 + 0.88 * (max_depth - level) / max(max_depth, 1)  # anchor (depth 0) on the right, sources on the left
+        for row, node in enumerate(level_nodes):
+            y = 0.5 if len(level_nodes) == 1 else 0.22 + 0.63 * row / max(len(level_nodes) - 1, 1)
+            positions[str(node.get("node_id"))] = (x, y)
+            node_type = str(node.get("node_type"))
+            type_label = _NODE_TYPE_LABELS_RU.get(node_type, node_type)
+            # P18 item 10: a directed-ancestry chain is typically short (a
+            # handful of nodes), so there is real room to show the full
+            # label wrapped across lines instead of truncating it with
+            # "[...]" -- only a genuinely long label past 3 wrapped lines
+            # still gets an explicit ellipsis (never a silent cut).
+            wrapped_lines = wrap(str(node.get("label")), width=24)[:3]
+            if len(wrap(str(node.get("label")), width=24)) > 3:
+                wrapped_lines[-1] = wrapped_lines[-1].rstrip() + "…"
+            body = "\n".join(wrapped_lines)
+            axis.text(
+                x,
+                y,
+                f"{type_label}\n{body}",
+                ha="center",
+                va="center",
+                fontsize=8.5,
+                bbox={"boxstyle": "round,pad=.35", "facecolor": "#eef6fb" if node.get("node_id") == anchor else "#f6f8f9", "edgecolor": "#355b72"},
+            )
+        if level in truncated_counts:
+            axis.text(x, 0.09, f"(+{truncated_counts[level]} ещё\nна этой глубине)", ha="center", va="center", fontsize=7.5, color="#7b8790")
+    for edge in selected_edges:
+        source, target = positions.get(str(edge.get("source"))), positions.get(str(edge.get("target")))
         if source and target:
-            axis.annotate("", xy=target, xytext=source, arrowprops={"arrowstyle": "->", "color": "#9aa8af", "lw": 0.8})
-    axis.text(0.03, 0.12, f"Показано {len(selected)} из {len(nodes)} узлов. Полный граф доступен через result.audit() и inspect(...).", fontsize=11, color="#58656e")
+            axis.annotate("", xy=target, xytext=source, arrowprops={"arrowstyle": "->", "color": "#5c7a8a", "lw": 1.0})
+    axis.text(
+        0.02,
+        0.02,
+        f"Показан фрагмент из {len(selected)} узлов вокруг «{anchor}» (всего в графе {len(nodes)} узлов; полный граф — result.audit() / inspect(...)).",
+        fontsize=9.5,
+        color="#58656e",
+    )
     return figure
 
 
@@ -344,32 +525,43 @@ def _object_representation_text(payload: Mapping[str, Any]) -> Any:
 
 
 def _object_representation_tabular(payload: Mapping[str, Any]) -> Any:
+    # P18 item 9: this picture is the reader-facing view — capped to the 6
+    # strongest supporting + 4 strongest contradicting features, in Russian
+    # where a domain_language label was registered. The full, unabridged
+    # table is never lost — it stays in the structured spec/audit() output
+    # (tabular_rows_original_order), only the rendered image is capped.
     rows = list(payload.get("tabular_rows", []))
     title = "Исходный объект: значения признаков и вклад"
     if not rows:
         return _empty(title, "Признаки объекта недоступны.")
+    supports = [item for item in rows if item.get("direction") == "supports"][:6]
+    contradicts = [item for item in rows if item.get("direction") == "contradicts"][:4]
+    shown = [*supports, *contradicts]
+    total_directional = sum(1 for item in rows if item.get("direction") in {"supports", "contradicts"})
     columns = ["Признак", "Значение", "Вклад", "Направление"]
     table_rows = [
         [
-            item.get("feature"),
+            item.get("feature_label") or item.get("feature"),
             item.get("raw_value"),
             "—" if item.get("contribution") is None else f"{item.get('contribution'):+.4f}",
             {"supports": "поддерживает", "contradicts": "противоречит", "unknown": "не измерено"}.get(item.get("direction"), item.get("direction")),
         ]
-        for item in rows[:25]
+        for item in shown
     ]
     import matplotlib.pyplot as plt
 
-    figure, axis = plt.subplots(figsize=(16, 9))
+    figure, axis = plt.subplots(figsize=(11, 6.5))
     axis.axis("off")
-    axis.set_title(title, loc="left", fontsize=20, fontweight="bold")
-    limitations = payload.get("limitations", [])
+    caption_parts = [f"показаны {len(shown)} из {total_directional} направленных признаков — полная таблица в audit()"] if len(shown) < total_directional else []
+    limitations = list(payload.get("limitations", []))
+    if caption_parts:
+        limitations = [*caption_parts, *limitations]
     if limitations:
-        axis.text(0.0, 0.92, "; ".join(limitations), fontsize=10, color="#7b8790")
-    table = axis.table(cellText=table_rows, colLabels=columns, loc="upper left", cellLoc="left", colLoc="left", bbox=[0, 0.05, 1, 0.82])
+        axis.text(0.0, 0.98, "; ".join(limitations), fontsize=9, color="#7b8790", va="top")
+    table = axis.table(cellText=table_rows, colLabels=columns, loc="upper left", cellLoc="left", colLoc="left", bbox=[0, 0.03, 1, 0.88], colWidths=[0.46, 0.18, 0.18, 0.18])
     table.auto_set_font_size(False)
-    table.set_fontsize(9.5)
-    table.scale(1, 1.4)
+    table.set_fontsize(10)
+    table.scale(1, 1.6)
     return figure
 
 
@@ -430,8 +622,13 @@ def _object_representation(spec: Mapping[str, Any]) -> Any:
     return _empty("Исходный объект с разметкой evidence", f"Визуализация модальности '{modality}' пока не реализована.")
 
 
-def render_visual_spec(spec: Mapping[str, Any], *, view: str, output_path: str | Path | None = None):
-    """Render one focused view from the canonical visual specification."""
+def render_visual_spec(spec: Mapping[str, Any], *, view: str, output_path: str | Path | None = None, selector: str | None = None):
+    """Render one focused view from the canonical visual specification.
+
+    ``selector`` only affects the ``provenance`` view — a claim_id
+    (``"C-002"``), a node_id (``"action"``), or a node_type (``"claim"``)
+    to focus the subgraph on; defaults to ``"action"``.
+    """
 
     aliases = {"dashboard": "explanation_story", "class_atlas": "knowledge_atlas", "counterfactual": "counterfactuals"}
     view = aliases.get(view, view)
@@ -444,7 +641,7 @@ def render_visual_spec(spec: Mapping[str, Any], *, view: str, output_path: str |
         "similar_cases": lambda payload: _table_view(payload, "similar_cases"),
         "counterfactuals": lambda payload: _table_view(payload, "counterfactuals"),
         "rule_ablation": lambda payload: _table_view(payload, "rule_ablation"),
-        "provenance": _provenance,
+        "provenance": lambda payload: _provenance(payload, selector=selector),
         "audit": _audit,
         "object_representation": _object_representation,
     }

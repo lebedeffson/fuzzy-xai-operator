@@ -1,0 +1,2 @@
+Controlled fault-injection scenario: ObservationContext intentionally contains an unavailable/unverifiable trace element to verify fail-closed behavior.
+All system quantities are exported from ModelExplanationResult.system; no generator-side scientific calculation occurs.

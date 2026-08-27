@@ -25,15 +25,15 @@
       "status": "passed"
     },
     {
-      "id": "gamma_matches_formula",
+      "id": "legacy_route_score_matches_declared_formula",
       "status": "passed"
     },
     {
-      "id": "rho_matches_formula",
+      "id": "legacy_action_matches_compatibility_zone",
       "status": "passed"
     },
     {
-      "id": "action_matches_risk_zone",
+      "id": "legacy_metrics_not_exported_as_p19",
       "status": "passed"
     }
   ],

@@ -6,7 +6,7 @@ from typing import Any
 from .alignment import compute_alignment, compute_gamma_route
 from .diagnostics import DiagnosticType
 from .reduction import compute_reduction
-from .risk_observer import observe_risk
+from .risk_observer import observe_legacy_normalized_risk
 
 
 @dataclass(frozen=True)
@@ -33,9 +33,15 @@ class HybridXirisPlan:
 
 @dataclass(frozen=True)
 class HybridXirisResult:
+    """Pre-P19 studio fixture result.
+
+    ``legacy_risk_score`` is a compatibility max/normalized score and must
+    never be serialized or presented as the canonical dissertation rho.
+    """
+
     gamma: float
     delta: float
-    rho: float
+    legacy_risk_score: float
     chi_r: int
     chi_r_crit: int
     action: str
@@ -44,6 +50,12 @@ class HybridXirisResult:
     legacy_diagnostic_id: str
     occurrences: list[str]
     operator_values: list[dict[str, Any]]
+
+    @property
+    def rho(self) -> float:
+        """Deprecated source-compatibility alias; not canonical P19 rho."""
+
+        return self.legacy_risk_score
 
 
 DEFAULT_HYBRID_PLAN = HybridXirisPlan(
@@ -71,7 +83,7 @@ def compute_hybrid_xiris(input_values: HybridXirisInput | None = None, plan: Hyb
     reduction = compute_reduction(plan.reduction_components, plan.reduction_weights, delta_max=plan.delta_max)
     chi_r = int(input_values.alpha_block > input_values.alpha_accept and input_values.segmentation_quality < 0.35)
     chi_r_crit = int(chi_r == 1 and input_values.model_match_signal >= 0.80)
-    risk = observe_risk(
+    risk = observe_legacy_normalized_risk(
         {
             "model_signal": input_values.model_match_signal,
             "block_rule": input_values.alpha_block,
@@ -87,13 +99,13 @@ def compute_hybrid_xiris(input_values: HybridXirisInput | None = None, plan: Hyb
     operator_values = [
         {"node_id": "alignment", "operator_id": "T_ij", "status": "warning", "computed": {"gamma_ij": alignment.gamma, "gamma_max": plan.gamma_max, "delta_T": alignment.delta_t}},
         {"node_id": "reduction", "operator_id": "Delta", "status": "passed" if reduction.allowed else "blocked", "computed": {"delta": reduction.delta, "delta_max": reduction.delta_max}},
-        {"node_id": "risk_observer", "operator_id": "risk_observer", "status": "blocked" if action == "block" else "passed", "computed": {"rho": risk.rho, "chi_R": chi_r, "chi_R_crit": chi_r_crit}},
+        {"node_id": "risk_observer", "operator_id": "legacy_risk_observer", "status": "blocked" if action == "block" else "passed", "computed": {"legacy_risk_score": risk.rho, "chi_R": chi_r, "chi_R_crit": chi_r_crit, "scientific_contract": "legacy_not_P19_rho"}},
         {"node_id": "action", "operator_id": "action_policy", "status": "blocked" if action == "block" else "passed", "computed": {"action": action}},
     ]
     return HybridXirisResult(
         gamma=alignment.gamma,
         delta=reduction.delta,
-        rho=risk.rho,
+        legacy_risk_score=risk.rho,
         chi_r=chi_r,
         chi_r_crit=chi_r_crit,
         action=action,

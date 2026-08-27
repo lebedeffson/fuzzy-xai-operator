@@ -5,23 +5,24 @@
     "class_probability": 0.679119,
     "conflict_component": 0.0,
     "dataset_name": "sklearn_wine",
-    "delta": 0.429844,
     "diagnostic_id": "D_external_tabular_uncertainty",
-    "gamma": 0.320881,
     "interval_component": 0.0,
+    "legacy_route_gap": 0.320881,
+    "legacy_route_score": 0.429844,
     "model_name": "GradientBoostingClassifier",
     "perturbation": "external_payload",
+    "presentation_omission_component": 0.429844,
+    "presentation_omission_loss": 0.429844,
     "quality_component": 0.0,
     "quality_penalty": 0.0,
-    "reduction_component": 0.429844,
     "representation_class": "F0",
-    "rho": 0.429844,
-    "risk_dominant_component": "delta",
+    "risk_dominant_component": "presentation_omission",
+    "scientific_contract": "legacy_external_route_metrics_not_P19_Gamma_Delta_rho",
     "task_type": "tabular_classification",
     "uncertainty": 0.320881,
     "uncertainty_component": 0.320881
   },
-  "created_at": "2026-08-25T16:21:59.341072+00:00",
+  "created_at": "2026-08-27T21:12:09.784003+00:00",
   "edges": [
     {
       "edge_id": "edge_input_explanation",
@@ -51,7 +52,7 @@
     },
     {
       "edge_id": "edge_representation_alignment",
-      "explanation_ru": "Вероятность, качество и контекст переданы в оператор согласования.",
+      "explanation_ru": "Входы переданы в legacy gap metric; T_ij не выполнялся.",
       "passed_values": {
         "class_probability": 0.679119,
         "context": {
@@ -68,11 +69,11 @@
         }
       },
       "source_node_id": "representation",
-      "target_node_id": "alignment"
+      "target_node_id": "legacy_route_gap"
     },
     {
       "edge_id": "edge_representation_reduction",
-      "explanation_ru": "Top-k атрибуции переданы в оператор редукции.",
+      "explanation_ru": "Top-k атрибуции переданы в presentation omission metric, не Delta.",
       "passed_values": {
         "feature_importance": {
           "color_intensity": 0.243624,
@@ -81,34 +82,34 @@
         "top_k": 2
       },
       "source_node_id": "representation",
-      "target_node_id": "reduction"
+      "target_node_id": "presentation_summary_loss"
     },
     {
       "edge_id": "edge_alignment_risk",
-      "explanation_ru": "Рассогласование передано в наблюдатель риска.",
+      "explanation_ru": "Legacy gap передан в compatibility score.",
       "passed_values": {
-        "gamma": 0.320881
+        "legacy_route_gap": 0.320881
       },
-      "source_node_id": "alignment",
-      "target_node_id": "risk"
+      "source_node_id": "legacy_route_gap",
+      "target_node_id": "legacy_route_score"
     },
     {
       "edge_id": "edge_reduction_risk",
-      "explanation_ru": "Потери редукции переданы в наблюдатель риска.",
+      "explanation_ru": "Presentation omission передан в compatibility score.",
       "passed_values": {
-        "delta": 0.429844
+        "presentation_omission_loss": 0.429844
       },
-      "source_node_id": "reduction",
-      "target_node_id": "risk"
+      "source_node_id": "presentation_summary_loss",
+      "target_node_id": "legacy_route_score"
     },
     {
       "edge_id": "edge_risk_diagnostics",
-      "explanation_ru": "Риск переведён в диагностическое состояние.",
+      "explanation_ru": "Legacy score переведён в диагностическое состояние.",
       "passed_values": {
-        "rho": 0.429844,
+        "legacy_route_score": 0.429844,
         "risk_zone": "lower_confidence"
       },
-      "source_node_id": "risk",
+      "source_node_id": "legacy_route_score",
       "target_node_id": "diagnostics"
     },
     {
@@ -132,18 +133,19 @@
           "class_probability": 0.679119,
           "conflict_component": 0.0,
           "dataset_name": "sklearn_wine",
-          "delta": 0.429844,
           "diagnostic_id": "D_external_tabular_uncertainty",
-          "gamma": 0.320881,
           "interval_component": 0.0,
+          "legacy_route_gap": 0.320881,
+          "legacy_route_score": 0.429844,
           "model_name": "GradientBoostingClassifier",
           "perturbation": "external_payload",
+          "presentation_omission_component": 0.429844,
+          "presentation_omission_loss": 0.429844,
           "quality_component": 0.0,
           "quality_penalty": 0.0,
-          "reduction_component": 0.429844,
           "representation_class": "F0",
-          "rho": 0.429844,
-          "risk_dominant_component": "delta",
+          "risk_dominant_component": "presentation_omission",
+          "scientific_contract": "legacy_external_route_metrics_not_P19_Gamma_Delta_rho",
           "task_type": "tabular_classification",
           "uncertainty": 0.320881,
           "uncertainty_component": 0.320881
@@ -268,7 +270,7 @@
         "source_type": "tabular",
         "top_k_importance": 2
       },
-      "source_commit": "3aa10fe778108a32f87829feacb56bb2f9c2e13a",
+      "source_commit": "97074b57a5522cb1cd7150f288a8b27bd915b357",
       "status": "passed",
       "status_reason_ru": "Внешний payload успешно приведён к AdaptedInput.",
       "threshold": "",
@@ -334,7 +336,7 @@
       "raw": {
         "value_source": "computed"
       },
-      "source_commit": "3aa10fe778108a32f87829feacb56bb2f9c2e13a",
+      "source_commit": "97074b57a5522cb1cd7150f288a8b27bd915b357",
       "status": "passed",
       "status_reason_ru": "Объект объяснения содержит вероятность, признаки и атрибуции.",
       "threshold": "",
@@ -381,14 +383,14 @@
       },
       "interpretation_ru": "Базовое представление достаточно для одной уверенности и top-k объяснения.",
       "next_node_ids": [
-        "alignment",
-        "reduction"
+        "legacy_route_gap",
+        "presentation_summary_loss"
       ],
       "node_id": "representation",
       "operator_type": "representation",
       "output_refs": [
-        "alignment",
-        "reduction"
+        "legacy_route_gap",
+        "presentation_summary_loss"
       ],
       "output_summary": "выход оператора",
       "output_values": {
@@ -399,7 +401,7 @@
       "raw": {
         "value_source": "computed"
       },
-      "source_commit": "3aa10fe778108a32f87829feacb56bb2f9c2e13a",
+      "source_commit": "97074b57a5522cb1cd7150f288a8b27bd915b357",
       "status": "passed",
       "status_reason_ru": "Выбран класс F0.",
       "threshold": "",
@@ -419,11 +421,11 @@
         "uncertainty": 0.320881
       },
       "details": {},
-      "explanation": "gamma=max(1-p, quality_penalty, conflict_component, interval_width).",
-      "formula_id": "external_tabular_gamma",
-      "formula_latex": "\\gamma=\\max(1-p,q,c,w)",
-      "formula_ref": "gamma",
-      "formula_text": "gamma = max(1 - class_probability, quality_penalty, conflict_component, interval_width)",
+      "explanation": "Legacy max-gap proxy; T_ij не выполнялся, поэтому это не Gamma.",
+      "formula_id": "legacy_external_tabular_route_gap",
+      "formula_latex": null,
+      "formula_ref": "legacy route gap",
+      "formula_text": "legacy_route_gap = max(1 - class_probability, quality_penalty, conflict_component, interval_width)",
       "input_refs": [
         "representation"
       ],
@@ -437,36 +439,36 @@
       },
       "interpretation_ru": "Уверенность модели неполная; это ограничивает автоматическое доверие.",
       "next_node_ids": [
-        "risk"
+        "legacy_route_score"
       ],
-      "node_id": "alignment",
-      "operator_type": "alignment",
+      "node_id": "legacy_route_gap",
+      "operator_type": "legacy_metric",
       "output_refs": [
-        "risk"
+        "legacy_route_score"
       ],
       "output_summary": "выход оператора",
       "output_values": {
-        "gamma": 0.320881
+        "legacy_route_gap": 0.320881
       },
       "raw": {
         "conflict_component": 0.0,
-        "gamma": 0.320881,
         "interval_width": 0.0,
+        "legacy_route_gap": 0.320881,
         "quality_penalty": 0.0,
         "uncertainty": 0.320881,
         "value_source": "computed"
       },
-      "source_commit": "3aa10fe778108a32f87829feacb56bb2f9c2e13a",
+      "source_commit": "97074b57a5522cb1cd7150f288a8b27bd915b357",
       "status": "passed",
       "status_reason_ru": "Рассогласование ненулевое, потому что вероятность класса меньше 1.",
       "threshold": "",
       "thresholds": {
         "gamma_warning": 0.35
       },
-      "title": "Согласование T_ij",
-      "title_ru": "Согласование T_ij",
-      "trace_ref": "alignment",
-      "value": "gamma=0.320881",
+      "title": "Legacy route gap (не Gamma)",
+      "title_ru": "Legacy route gap (не Gamma)",
+      "trace_ref": "legacy_route_gap",
+      "value": "legacy_route_gap=0.320881",
       "value_source": "computed"
     },
     {
@@ -479,11 +481,11 @@
         "top_k_importance_sum": 0.570156
       },
       "details": {},
-      "explanation": "Delta=1-sum(feature_importance) для переданного набора важностей.",
-      "formula_id": "external_tabular_delta",
-      "formula_latex": "\\Delta=1-\\sum importance_{top-k}",
-      "formula_ref": "Delta",
-      "formula_text": "delta = 1 - sum(top_k_feature_importance)",
+      "explanation": "Feature omission при top-k summary; это не dissertation Delta.",
+      "formula_id": "legacy_external_tabular_presentation_omission",
+      "formula_latex": null,
+      "formula_ref": "presentation omission",
+      "formula_text": "presentation_omission_loss = 1 - sum(top_k_feature_importance)",
       "input_refs": [
         "representation"
       ],
@@ -499,105 +501,105 @@
         ],
         "top_k": 2
       },
-      "interpretation_ru": "Delta показывает, какая доля атрибутивного объяснения не попала в сокращённый набор признаков.",
+      "interpretation_ru": "Метрика показывает долю атрибутивного summary вне top-k и не является потерей uncertainty representation.",
       "next_node_ids": [
-        "risk"
+        "legacy_route_score"
       ],
-      "node_id": "reduction",
-      "operator_type": "reduction",
+      "node_id": "presentation_summary_loss",
+      "operator_type": "legacy_presentation_metric",
       "output_refs": [
-        "risk"
+        "legacy_route_score"
       ],
       "output_summary": "выход оператора",
       "output_values": {
-        "delta": 0.429844,
+        "presentation_omission_loss": 0.429844,
         "top_k_importance_sum": 0.570156
       },
       "raw": {
-        "delta": 0.429844,
         "importance_sum": 0.570156,
+        "presentation_omission_loss": 0.429844,
         "value_source": "computed"
       },
-      "source_commit": "3aa10fe778108a32f87829feacb56bb2f9c2e13a",
+      "source_commit": "97074b57a5522cb1cd7150f288a8b27bd915b357",
       "status": "warning",
       "status_reason_ru": "Часть объяснения потеряна при top-k редукции.",
       "threshold": "",
       "thresholds": {
         "delta_warning": 0.35
       },
-      "title": "Потери представления",
-      "title_ru": "Потери представления",
-      "trace_ref": "reduction",
-      "value": "Delta=0.429844",
+      "title": "Потеря top-k представления (не Delta)",
+      "title_ru": "Потеря top-k представления (не Delta)",
+      "trace_ref": "presentation_summary_loss",
+      "value": "presentation_omission_loss=0.429844",
       "value_source": "computed"
     },
     {
       "components": {
         "calculation": "max(0.320881, 0.429844, 0.0, 0.0) = 0.429844",
         "conflict_component": 0.0,
-        "delta": 0.429844,
-        "gamma": 0.320881,
+        "legacy_route_gap": 0.320881,
+        "presentation_omission_loss": 0.429844,
         "quality_component": 0.0
       },
       "details": {},
-      "explanation": "rho=max(gamma, Delta, quality_component, conflict_component).",
-      "formula_id": "external_tabular_rho",
-      "formula_latex": "\\rho=\\max(\\gamma,\\Delta)",
-      "formula_ref": "rho",
-      "formula_text": "rho = max(gamma, delta, quality_component, conflict_component)",
+      "explanation": "Legacy max-score; не пятикомпонентная dissertation rho.",
+      "formula_id": "legacy_external_tabular_route_score",
+      "formula_latex": null,
+      "formula_ref": "legacy route score",
+      "formula_text": "legacy_route_score = max(route_gap, presentation_omission, quality, conflict)",
       "input_refs": [
-        "alignment",
-        "reduction"
+        "legacy_route_gap",
+        "presentation_summary_loss"
       ],
       "input_summary": "предыдущее состояние маршрута",
       "input_values": {
         "conflict_component": 0.0,
-        "delta": 0.429844,
-        "gamma": 0.320881,
+        "legacy_route_gap": 0.320881,
+        "presentation_omission_loss": 0.429844,
         "quality_component": 0.0
       },
-      "interpretation_ru": "Основной вклад в риск: delta.",
+      "interpretation_ru": "Основной вклад в legacy score: presentation_omission.",
       "next_node_ids": [
         "diagnostics"
       ],
-      "node_id": "risk",
-      "operator_type": "risk",
+      "node_id": "legacy_route_score",
+      "operator_type": "legacy_metric",
       "output_refs": [
         "diagnostics"
       ],
       "output_summary": "выход оператора",
       "output_values": {
-        "dominant_component": "delta",
-        "rho": 0.429844,
+        "dominant_component": "presentation_omission",
+        "legacy_route_score": 0.429844,
         "risk_zone": "lower_confidence"
       },
       "raw": {
-        "rho": 0.429844,
+        "legacy_route_score": 0.429844,
         "theta_accept": 0.35,
         "theta_warning": 0.6,
         "value_source": "computed"
       },
-      "source_commit": "3aa10fe778108a32f87829feacb56bb2f9c2e13a",
+      "source_commit": "97074b57a5522cb1cd7150f288a8b27bd915b357",
       "status": "warning",
-      "status_reason_ru": "rho попал в зону lower_confidence.",
+      "status_reason_ru": "Legacy route score попал в зону lower_confidence.",
       "threshold": "",
       "thresholds": {
         "theta_accept": 0.35,
         "theta_warning": 0.6
       },
-      "title": "Риск rho",
-      "title_ru": "Риск rho",
-      "trace_ref": "risk",
-      "value": "rho=0.429844",
+      "title": "Legacy route score (не rho)",
+      "title_ru": "Legacy route score (не rho)",
+      "trace_ref": "legacy_route_score",
+      "value": "legacy_route_score=0.429844",
       "value_source": "computed"
     },
     {
       "components": {
         "reason_components": {
-          "delta": 0.429844,
-          "dominant_component": "delta",
-          "gamma": 0.320881,
-          "rho": 0.429844,
+          "dominant_component": "presentation_omission",
+          "legacy_route_gap": 0.320881,
+          "legacy_route_score": 0.429844,
+          "presentation_omission_loss": 0.429844,
           "task_type": "tabular_classification"
         }
       },
@@ -608,14 +610,14 @@
       "formula_ref": "D",
       "formula_text": "diagnostic_id выбирается по task_type, risk_zone и доминирующему компоненту риска",
       "input_refs": [
-        "risk"
+        "legacy_route_score"
       ],
       "input_summary": "предыдущее состояние маршрута",
       "input_values": {
-        "delta": 0.429844,
-        "dominant_component": "delta",
-        "gamma": 0.320881,
-        "rho": 0.429844,
+        "dominant_component": "presentation_omission",
+        "legacy_route_gap": 0.320881,
+        "legacy_route_score": 0.429844,
+        "presentation_omission_loss": 0.429844,
         "risk_zone": "lower_confidence",
         "task_type": "tabular_classification"
       },
@@ -648,7 +650,7 @@
         ],
         "value_source": "computed"
       },
-      "source_commit": "3aa10fe778108a32f87829feacb56bb2f9c2e13a",
+      "source_commit": "97074b57a5522cb1cd7150f288a8b27bd915b357",
       "status": "warning",
       "status_reason_ru": "ограниченная уверенность внешней табличной модели",
       "threshold": "",
@@ -667,21 +669,21 @@
           "audit"
         ],
         "diagnostic_id": "D_external_tabular_uncertainty",
-        "rho": 0.429844
+        "legacy_route_score": 0.429844
       },
       "details": {},
       "explanation": "Действие выбрано политикой FuzzyXAI.",
       "formula_id": "action-policy",
       "formula_latex": null,
       "formula_ref": "action policy",
-      "formula_text": "if rho < 0.35: accept; elif rho < 0.60: lower_confidence; else: audit",
+      "formula_text": "legacy compatibility mapping; not canonical P19 action policy",
       "input_refs": [
         "diagnostics"
       ],
       "input_summary": "предыдущее состояние маршрута",
       "input_values": {
         "diagnostic_id": "D_external_tabular_uncertainty",
-        "rho": 0.429844,
+        "legacy_route_score": 0.429844,
         "risk_zone": "lower_confidence"
       },
       "interpretation_ru": "Результат не блокируется, но автоматическое доверие понижается из-за ненулевого риска.",
@@ -702,7 +704,7 @@
         "action": "lower_confidence",
         "value_source": "computed"
       },
-      "source_commit": "3aa10fe778108a32f87829feacb56bb2f9c2e13a",
+      "source_commit": "97074b57a5522cb1cd7150f288a8b27bd915b357",
       "status": "warning",
       "status_reason_ru": "Риск ненулевой, но не критический.",
       "threshold": "",
@@ -719,7 +721,7 @@
     {
       "components": {
         "scenario_id": "external_wine_classification",
-        "source_commit": "3aa10fe778108a32f87829feacb56bb2f9c2e13a"
+        "source_commit": "97074b57a5522cb1cd7150f288a8b27bd915b357"
       },
       "details": {},
       "explanation": "Маршрут сохраняется как проверяемый доказательный след.",
@@ -739,18 +741,19 @@
           "class_probability": 0.679119,
           "conflict_component": 0.0,
           "dataset_name": "sklearn_wine",
-          "delta": 0.429844,
           "diagnostic_id": "D_external_tabular_uncertainty",
-          "gamma": 0.320881,
           "interval_component": 0.0,
+          "legacy_route_gap": 0.320881,
+          "legacy_route_score": 0.429844,
           "model_name": "GradientBoostingClassifier",
           "perturbation": "external_payload",
+          "presentation_omission_component": 0.429844,
+          "presentation_omission_loss": 0.429844,
           "quality_component": 0.0,
           "quality_penalty": 0.0,
-          "reduction_component": 0.429844,
           "representation_class": "F0",
-          "rho": 0.429844,
-          "risk_dominant_component": "delta",
+          "risk_dominant_component": "presentation_omission",
+          "scientific_contract": "legacy_external_route_metrics_not_P19_Gamma_Delta_rho",
           "task_type": "tabular_classification",
           "uncertainty": 0.320881,
           "uncertainty_component": 0.320881
@@ -773,13 +776,13 @@
       "output_refs": [],
       "output_summary": "выход оператора",
       "output_values": {
-        "source_commit": "3aa10fe778108a32f87829feacb56bb2f9c2e13a",
+        "source_commit": "97074b57a5522cb1cd7150f288a8b27bd915b357",
         "verification_status": "PASS"
       },
       "raw": {
         "value_source": "computed"
       },
-      "source_commit": "3aa10fe778108a32f87829feacb56bb2f9c2e13a",
+      "source_commit": "97074b57a5522cb1cd7150f288a8b27bd915b357",
       "status": "passed",
       "status_reason_ru": "Proof trace содержит значения маршрута и source_commit.",
       "threshold": "",
@@ -794,7 +797,7 @@
   "route_id": "external_wine_classification:sklearn_wine:GradientBoostingClassifier:external_payload",
   "scenario_id": "external_wine_classification",
   "scenario_title_ru": "Research validation: tabular_classification",
-  "source_commit": "3aa10fe778108a32f87829feacb56bb2f9c2e13a",
+  "source_commit": "97074b57a5522cb1cd7150f288a8b27bd915b357",
   "verification_summary": {
     "checks": [
       {
@@ -822,15 +825,15 @@
         "status": "passed"
       },
       {
-        "id": "gamma_matches_formula",
+        "id": "legacy_route_score_matches_declared_formula",
         "status": "passed"
       },
       {
-        "id": "rho_matches_formula",
+        "id": "legacy_action_matches_compatibility_zone",
         "status": "passed"
       },
       {
-        "id": "action_matches_risk_zone",
+        "id": "legacy_metrics_not_exported_as_p19",
         "status": "passed"
       }
     ],

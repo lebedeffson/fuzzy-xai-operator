@@ -65,7 +65,7 @@ class TrainingObjectTrace(EvidenceContract):
     epoch_metrics: Sequence[Mapping[str, Any]]
     predicted_class_by_epoch: Sequence[Any]
     confidence_by_epoch: Sequence[float]
-    loss_by_epoch: Sequence[float]
+    loss_by_epoch: Sequence[float | None]
     embedding_by_epoch: Sequence[Sequence[float]]
     rule_activation_by_epoch: Sequence[Mapping[str, float]]
     forgetting_events: Sequence[int]
@@ -73,6 +73,13 @@ class TrainingObjectTrace(EvidenceContract):
     first_learned_epoch: int | None
     last_correct_epoch: int | None
     warnings: Sequence[str] = field(default_factory=tuple)
+    forgetting_details: Sequence[Mapping[str, Any]] = field(default_factory=tuple)
+    loss_status: str = "not_measured"
+    training_run_id: str | None = None
+    model_fingerprint: str | None = None
+    training_method: str | None = None
+    epoch_source: str | None = None
+    final_checkpoint_ref: str | None = None
 
 
 @dataclass(frozen=True)
@@ -164,6 +171,8 @@ class ClassConcept(EvidenceContract):
     primary_rule_coverage: float | None
     uncovered_fraction: float | None
     limitations: Sequence[str] = field(default_factory=tuple)
+    query_distance: float | None = None
+    query_similarity: float | None = None
 
 
 @dataclass(frozen=True)
@@ -186,6 +195,10 @@ class SimilarCaseEvidence(EvidenceContract):
     media_artifacts: Mapping[str, str] = field(default_factory=dict)
     reference_rank: int | None = None
     reference_count: int | None = None
+    query_values: Mapping[str, float] = field(default_factory=dict)
+    reference_values: Mapping[str, float] = field(default_factory=dict)
+    raw_deltas: Mapping[str, float] = field(default_factory=dict)
+    standardized_deltas: Mapping[str, float] = field(default_factory=dict)
 
 
 @dataclass(frozen=True)
@@ -309,6 +322,43 @@ class ImageRepresentationEvidence(EvidenceContract):
 
 
 @dataclass(frozen=True)
+class AttributionMapEvidence(EvidenceContract):
+    """P15.2: the full per-pixel attribution tensor an adapter already
+    computed (e.g. Integrated Gradients), preserved and rendered as a real
+    overlay heatmap — never collapsed into a handful of arbitrary quadrants.
+
+    ``attribution_array`` is the actual measured tensor, same spatial shape
+    as the input; ``attribution_png_base64`` is a rendered semi-transparent
+    overlay of it on the original image, with a legend and numeric scale.
+    ``completeness_error`` is ``None`` unless the adapter itself reported a
+    measured integration residual — never approximated here.
+    """
+
+    object_id: str
+    method: str
+    target: str | None
+    baseline: str
+    shape: Sequence[int]
+    channel_aggregation: str
+    min_value: float
+    max_value: float
+    positive_sum: float
+    negative_sum: float
+    attribution_array: Sequence[Any]
+    attribution_png_base64: str
+    completeness_error: float | None = None
+    completeness: Mapping[str, Any] = field(default_factory=dict)
+    source_refs: Sequence[str] = field(default_factory=tuple)
+    limitations: Sequence[str] = field(default_factory=tuple)
+
+    def __post_init__(self) -> None:
+        if not self.method.strip():
+            raise ValueError("attribution map requires a method name")
+        if not self.shape:
+            raise ValueError("attribution map requires a non-empty shape")
+
+
+@dataclass(frozen=True)
 class FuzzyTermMembership(EvidenceContract):
     """One antecedent term's measured membership degree for this object.
 
@@ -357,6 +407,36 @@ class FuzzyRuleActivation(EvidenceContract):
             raise ValueError("activation strength must be between 0 and 1")
         if not str(self.conclusion).strip():
             raise ValueError("fuzzy rule activation requires a conclusion")
+
+
+@dataclass(frozen=True)
+class ModelInternalsEvidence(EvidenceContract):
+    """The model-family-specific internal structure behind this object's
+    prediction — coefficients, decision path, ensemble votes, global
+    importance — that adapters already compute in ``extract_local_evidence``
+    but that were previously used only to derive the generic ``contributions``
+    map and then discarded (P15.1/P15.3). Every field stays ``None``/empty
+    when the model family genuinely has no such internal (a tree has no
+    coefficients, a linear model has no decision path) — never guessed or
+    defaulted.
+    """
+
+    object_id: str
+    model_family: str
+    coefficients: Mapping[str, float] | None = None
+    intercept: Any | None = None
+    linear_terms: Sequence[Mapping[str, Any]] | None = None
+    reconstructed_score: float | None = None
+    actual_score: float | None = None
+    reconstruction_error: float | None = None
+    pipeline_steps: Sequence[str] | None = None
+    decision_path: Sequence[Mapping[str, Any]] | None = None
+    leaf_id: int | None = None
+    leaf_samples: int | None = None
+    ensemble_votes: Sequence[Any] | None = None
+    ensemble_disagreement: float | None = None
+    global_importance: Mapping[str, float] | None = None
+    limitations: Sequence[str] = field(default_factory=tuple)
 
 
 @dataclass(frozen=True)
@@ -624,6 +704,10 @@ class ExplanationLevel(EvidenceContract):
     native_channels: Sequence[str]
     surrogate_channels: Sequence[str]
     rationale: str
+    not_applicable_channels: Sequence[str] = field(default_factory=tuple)
+    required_missing_channels: Sequence[str] = field(default_factory=tuple)
+    optional_missing_channels: Sequence[str] = field(default_factory=tuple)
+    channel_status: Mapping[str, str] = field(default_factory=dict)
 
     def __post_init__(self) -> None:
         if self.level not in {"E0", "E1", "E2", "E3", "E4", "E5"}:
@@ -988,5 +1072,7 @@ class ExplanationEvidence(EvidenceContract):
     counterfactuals: Sequence[CounterfactualEvidence] = field(default_factory=tuple)
     text_highlights: Sequence[TextHighlightEvidence] = field(default_factory=tuple)
     image_representations: Sequence[ImageRepresentationEvidence] = field(default_factory=tuple)
+    attribution_maps: Sequence[AttributionMapEvidence] = field(default_factory=tuple)
     fuzzy_rule_activations: Sequence[FuzzyRuleActivation] = field(default_factory=tuple)
+    model_internals: Sequence[ModelInternalsEvidence] = field(default_factory=tuple)
     missing: Sequence[str] = field(default_factory=tuple)

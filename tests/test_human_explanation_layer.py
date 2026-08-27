@@ -71,8 +71,13 @@ def test_domain_user_receives_small_grounded_cards_without_internal_terms() -> N
         [0.84, 0.72],
         object_id="85",
         feature_names=["fracture_density", "water_saturation"],
-        reference_data=[[0.10, 0.22], [0.25, 0.31], [0.55, 0.61], [0.70, 0.68]],
-        reference_labels=[0, 0, 1, 1],
+        # P17: two extra reference points close to the query were added so
+        # the predicted class's concept is genuinely close to its prototype
+        # (query_distance <= intra_class_variability) — class_concept no
+        # longer defaults to "favorable" for the predicted class without a
+        # real measured closeness (see evidence/concepts.py's query_row).
+        reference_data=[[0.10, 0.22], [0.25, 0.31], [0.55, 0.61], [0.70, 0.68], [0.83, 0.71], [0.85, 0.73]],
+        reference_labels=[0, 0, 1, 1, 1, 1],
         include_similar_cases=True,
         include_counterfactuals=True,
         evidence={

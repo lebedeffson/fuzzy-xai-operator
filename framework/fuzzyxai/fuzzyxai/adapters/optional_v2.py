@@ -145,6 +145,9 @@ class TorchAdapter(ModelAdapterV2):
         self.forward_fn = kwargs.get("forward_fn")
         self.input_transform = kwargs.get("input_transform")
         self.target_layer = kwargs.get("target_layer")
+        self.ig_steps = int(kwargs.get("ig_steps", 64))
+        if self.ig_steps < 1:
+            raise ValueError("ig_steps must be a positive number of integration intervals")
 
     def _tensor(self, inputs: Any, *, gradients: bool = False) -> Any:
         import torch
@@ -194,7 +197,7 @@ class TorchAdapter(ModelAdapterV2):
             channels=(
                 *base.channels,
                 EvidenceChannelDescriptor("gradients", True, "derived_from_native", "autograd"),
-                EvidenceChannelDescriptor("integrated_gradients", True, "derived_from_native", "32-step zero-baseline integration"),
+                EvidenceChannelDescriptor("integrated_gradients", True, "derived_from_native", f"{self.ig_steps}-interval trapezoidal zero-baseline integration"),
             ),
         )
 
@@ -206,21 +209,39 @@ class TorchAdapter(ModelAdapterV2):
         try:
             source = self._tensor(inputs)
             baseline = torch.zeros_like(source)
+            with torch.no_grad():
+                source_output = self._forward(source)
+                baseline_output = self._forward(baseline)
+                if source_output.ndim > 1 and source_output.shape[-1] > 1:
+                    # The explained output coordinate is fixed for the whole
+                    # path. Re-selecting argmax at every alpha integrates a
+                    # different piecewise function and invalidates IG
+                    # completeness when the winning class changes en route.
+                    target_index = int(context.target) if context.target is not None else int(torch.argmax(source_output[0]).item())
+                    f_source = float(source_output[0, target_index].item())
+                    f_baseline = float(baseline_output[0, target_index].item())
+                else:
+                    target_index = 0
+                    f_source = float(source_output.reshape(-1)[0].item())
+                    f_baseline = float(baseline_output.reshape(-1)[0].item())
             gradients = []
-            for alpha in torch.linspace(0.0, 1.0, 32, device=source.device):
+            for alpha in torch.linspace(0.0, 1.0, self.ig_steps + 1, device=source.device):
                 point = (baseline + alpha * (source - baseline)).detach().requires_grad_(True)
                 self.model.zero_grad(set_to_none=True)
                 output = self._forward(point)
-                target = context.target
                 if output.ndim > 1 and output.shape[-1] > 1:
-                    target_index = int(target) if target is not None else int(torch.argmax(output[0]).item())
                     scalar = output[:, target_index].sum()
                 else:
                     scalar = output.sum()
                 gradient = torch.autograd.grad(scalar, point, retain_graph=False, create_graph=False)[0]
                 gradients.append(gradient.detach())
-            integrated = (source - baseline) * torch.stack(gradients).mean(dim=0)
+            stacked = torch.stack(gradients)
+            average_gradient = (stacked[0] + stacked[-1] + 2.0 * stacked[1:-1].sum(dim=0)) / (2.0 * (len(gradients) - 1))
+            integrated = (source - baseline) * average_gradient
             vector = integrated.detach().cpu().numpy().reshape(-1)
+            attribution_sum = float(integrated.detach().sum().item())
+            output_delta = f_source - f_baseline
+            residual = abs(output_delta - attribution_sum)
             names = list(context.feature_names) or [f"feature_{index}" for index in range(len(vector))]
             return LocalModelEvidence(
                 channels={
@@ -228,6 +249,20 @@ class TorchAdapter(ModelAdapterV2):
                     "integrated_gradients": _serializable(integrated.detach().cpu().numpy()),
                     "contribution_method": "derived_native_integrated_gradients",
                     "gradient_sanity": bool(np.isfinite(vector).all()),
+                    "ig_completeness": {
+                        "status": "measured", "target_class": target_index,
+                        "baseline": "all-zero input tensor", "F_target_x": f_source,
+                        "F_target_baseline": f_baseline, "output_space": "logit",
+                        "input_output_delta": output_delta, "attribution_sum": attribution_sum,
+                        "completeness_residual": residual,
+                        "completeness_relative_error": residual / max(abs(output_delta), 1e-12),
+                        "n_steps": self.ig_steps,
+                        "integration_points": self.ig_steps + 1,
+                        "integration_method": "trapezoidal",
+                        "endpoint_handling": "both endpoints included with half weight",
+                        "formula": "abs((F_target(x)-F_target(baseline))-sum(attributions))",
+                    },
+                    "completeness_error": residual,
                 },
                 descriptors=(EvidenceChannelDescriptor("integrated_gradients", True, "derived_from_native", "autograd integrated gradients"),),
                 limitations=("Integrated gradients depend on the zero baseline and do not establish domain causality.",),

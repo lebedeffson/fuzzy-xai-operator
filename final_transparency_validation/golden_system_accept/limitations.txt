@@ -1,0 +1,2 @@
+Natural complete-trace acceptance scenario.
+All system quantities are exported from ModelExplanationResult.system; no generator-side scientific calculation occurs.

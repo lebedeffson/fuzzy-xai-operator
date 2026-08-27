@@ -19,14 +19,16 @@ def clip01(value: float) -> float:
 
 
 def normalize_risk_weights(weights: Mapping[str, float] | None = None) -> dict[str, float]:
-    """Return non-negative risk weights normalized to the simplex."""
+    """Validate five weights; implicit renormalization is forbidden in P19."""
     merged = dict(DEFAULT_RISK_WEIGHTS)
     if weights:
         merged.update({str(k): max(0.0, float(v)) for k, v in weights.items()})
+    if any(value < 0.0 for value in merged.values()):
+        raise ValueError("risk weights must be non-negative")
     total = sum(merged.values())
-    if total <= 0.0:
-        return dict(DEFAULT_RISK_WEIGHTS)
-    return {key: value / total for key, value in merged.items()}
+    if abs(total - 1.0) > 1e-9:
+        raise ValueError("risk weights must sum to one; implicit renormalization is forbidden")
+    return merged
 
 
 @dataclass(frozen=True)

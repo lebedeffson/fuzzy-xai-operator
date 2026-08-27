@@ -149,49 +149,6 @@ def _native_rules(adapter: ModelAdapter, model_version: str) -> list[LearnedRule
     return results
 
 
-def _linear_rules(adapter: ModelAdapter, feature_names: Sequence[str], model_version: str) -> list[LearnedRule]:
-    coefficients = np.asarray(getattr(adapter.model, "coef_", []), dtype=float)
-    if coefficients.ndim == 1:
-        coefficients = coefficients.reshape(1, -1)
-    classes = list(getattr(adapter.model, "classes_", range(coefficients.shape[0])))
-    results: list[LearnedRule] = []
-    for class_index, row in enumerate(coefficients):
-        consequent = str(classes[class_index] if class_index < len(classes) else class_index)
-        for feature_index in np.argsort(np.abs(row))[::-1]:
-            coefficient = float(row[feature_index])
-            if abs(coefficient) <= 1e-12:
-                continue
-            feature = feature_names[feature_index] if feature_index < len(feature_names) else f"feature_{feature_index}"
-            direction = "higher" if coefficient > 0 else "lower"
-            results.append(
-                LearnedRule(
-                    rule_id=f"linear_{class_index}_{feature_index}",
-                    model_version=model_version,
-                    antecedents=[f"{feature} is {direction}"],
-                    consequent=consequent,
-                    activation=None,
-                    coverage=None,
-                    precision=None,
-                    support=None,
-                    stability=None,
-                    importance=abs(coefficient),
-                    counterfactual_effect={},
-                    source_objects=[],
-                    class_distribution={},
-                    human_text=f"{feature} has a {direction} linear contribution to class {consequent}",
-                    complexity=1.0,
-                    is_primary=False,
-                    is_redundant=False,
-                    is_conflicting=False,
-                    native=False,
-                    surrogate=True,
-                    fidelity=1.0,
-                    evidence_refs=[f"model.coef_[{class_index},{feature_index}]"],
-                )
-            )
-    return results
-
-
 def extract_rules(
     adapter: ModelAdapter,
     *,
@@ -226,8 +183,17 @@ def extract_rules(
                     max_rules=remaining,
                 )
             )
-    elif hasattr(model, "coef_"):
-        rules.extend(_linear_rules(adapter, names, model_version))
+    # Linear coefficients are deliberately not turned into pseudo-rules
+    # (was `elif hasattr(model, "coef_"): rules.extend(_linear_rules(...))`)
+    # — a coefficient already has a first-class, correctly-signed home as a
+    # feature_contribution claim (via SklearnLinearAdapter.extract_local_evidence,
+    # which applies the prediction-relative sign correction for binary
+    # classifiers). _linear_rules used coef_'s row index directly as the
+    # consequent class without that correction, so for a binary classifier
+    # predicting classes_[0] its "rule" would name the wrong class — the
+    # same class of bug fixed for contributions, but never fixed here.
+    # Re-deriving a second, independently-signed "rule" from the same
+    # coefficients duplicated the evidence and risked disagreeing with it.
     return rank_rules(rules[:max_rules], primary_limit=primary_limit)
 
 

@@ -1,0 +1,20 @@
+explanation_level = E2
+missing_channels = ['class_concepts', 'counterfactuals', 'similar_cases', 'training_history']
+action = insufficient_evidence
+Модель распознала: не обувь; истинный класс Fashion-MNIST: свитер.
+dataset_version = fashion_mnist_footwear_vs_other_v1
+
+Метод: интегрированные градиенты (integrated_gradients), полный тензор атрибуции
+(та же форма, что и вход, 28x28 попиксельно) сохранён целиком в attribution_evidence.json.
+Найдено алгоритмических регионов (connected components, порог 80-й перцентиль): 4.
+Регионы НЕ являются фиксированной сеткой — их источник: пороговая обработка карты
+атрибуции + связные компоненты (4-связность), это раскрыто явно.
+IG completeness: n_steps=512, logit-space residual=0.0015958547592163086, relative=0.00016060051130874372.
+Convergence sweep 16/32/64/128/256/512 сохранён в ig_convergence.json.
+
+Это полноразмерный (28x28) кейс — golden_cnn/ (8x8, sklearn digits) остаётся
+техническим unit/integration-тестом конвейера, а не демонстрацией; это -- реальная
+демонстрация на общепринятом бенчмарке (Fashion-MNIST, уже используемом в
+q1_validation/real_benchmarks.py этого фреймворка).
+Обучение — на подвыборке (4000 train / 800 test) ради скорости прохода; это учебный,
+а не production-калиброванный классификатор.

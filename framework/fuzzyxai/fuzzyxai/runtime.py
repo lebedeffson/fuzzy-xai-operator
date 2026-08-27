@@ -1,10 +1,11 @@
 from __future__ import annotations
 
 import json
+import math
 import shutil
 import zipfile
 from collections.abc import Mapping, Sequence
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, field, replace
 from datetime import UTC, datetime
 from hashlib import sha256
 from html import escape
@@ -19,7 +20,9 @@ from fuzzyxai.adapters.contracts_v2 import AdapterResolutionReport, ExplanationC
 from fuzzyxai.adapters.model import ModelAdapter, ModelPrediction
 from fuzzyxai.adapters.model_registry import MODEL_ADAPTER_REGISTRY, resolve_model_adapter_v2
 from fuzzyxai.adapters.model_v2 import ModelAdapterV2
+from fuzzyxai.core.alignment import AlignmentResult
 from fuzzyxai.core.explain_plan import ExplainPlan
+from fuzzyxai.core.risk_observer import observe_legacy_normalized_risk
 from fuzzyxai.core.route import build_route
 from fuzzyxai.core.types import AdaptedInput, OperatorRoute
 from fuzzyxai.diagnostics.contracts import (
@@ -28,6 +31,7 @@ from fuzzyxai.diagnostics.contracts import (
     RepairExecutionContext,
 )
 from fuzzyxai.evidence import (
+    KNOWN_ATTRIBUTION_CHANNELS,
     ExplanationClaim,
     ExplanationEdge,
     ExplanationEvidence,
@@ -35,16 +39,19 @@ from fuzzyxai.evidence import (
     ExplanationNode,
     HumanExplanation,
     TrainingRunAnalysis,
+    build_attribution_map,
     build_class_concepts,
     build_explanation_claims,
     build_explanation_graph,
     build_object_trace,
     collect_data_evidence,
     collect_fuzzy_rule_activations,
+    collect_model_internals,
     compose_human_explanation,
     detect_subgroup_averaging,
     determine_explanation_level,
     evaluate_explanation_quality,
+    evaluate_explanation_quality_status,
     explanation_to_text,
     extract_rules,
     find_image_regions,
@@ -54,13 +61,21 @@ from fuzzyxai.evidence import (
     is_image_like,
 )
 from fuzzyxai.explanation_quality import ExplanationQualityReport, build_quality_report
-from fuzzyxai.operators import AlignmentInput, ReductionInput, RiskInput
-from fuzzyxai.operators import compute_alignment as compute_operator_alignment
+from fuzzyxai.operators import ReductionInput
 from fuzzyxai.operators import compute_reduction as compute_operator_reduction
-from fuzzyxai.operators import observe_risk as observe_operator_risk
 from fuzzyxai.planner import ExplanationPlanner
 from fuzzyxai.proof.trace import build_proof_trace
 from fuzzyxai.proof.verifier import VerificationResult, verify_proof_trace
+from fuzzyxai.risk.risk_function import DEFAULT_RISK_WEIGHTS as DEFAULT_APPLICATION_RISK_WEIGHTS
+from fuzzyxai.scientific_alignment import (
+    AlignmentTransform,
+    build_contribution_explanation_object,
+    build_native_explanation_object,
+    compute_real_alignment,
+    compute_real_pre_interpretability,
+)
+from fuzzyxai.adapters.system_source import derive_system_source_evidence
+from fuzzyxai.system_semantics import SystemEvidence, SystemObservation, build_system_evidence
 from fuzzyxai.visualization.operator_dashboard import render_dashboard
 from fuzzyxai.visualization.route_artifacts import save_proof_trace_json, save_route_json
 from fuzzyxai.visualization.spec import build_visual_spec
@@ -85,6 +100,55 @@ def _as_rows(values: Any) -> list[list[Any]]:
 
 def _default_feature_names(rows: list[list[Any]]) -> list[str]:
     return [f"feature_{index}" for index in range(len(rows[0]))]
+
+
+def _extract_probability_vector(probabilities: Any) -> list[float] | None:
+    """Pull out one object's real class-probability vector for an
+    UncertaintyPolicy of method 'entropy'/'margin'. Handles a flat
+    per-class vector (single object) or a batch (n_objects, n_classes),
+    in which case the first object's row is used -- consistent with the
+    rest of this Gamma/Delta/rho block's "first object" convention."""
+
+    if probabilities is None:
+        return None
+    values = probabilities.tolist() if hasattr(probabilities, "tolist") else probabilities
+    if not isinstance(values, (list, tuple)) or not values:
+        return None
+    first = values[0]
+    if isinstance(first, (list, tuple)):
+        values = first
+    if not values or not all(isinstance(item, (int, float)) for item in values):
+        return None
+    return [float(item) for item in values]
+
+
+def _normalized_entropy(probability_vector: list[float]) -> float | None:
+    """Shannon entropy of a real class-probability vector, normalized to
+    [0, 1] by the maximum possible entropy for that many classes."""
+
+    total = sum(probability_vector)
+    if total <= 0 or len(probability_vector) < 2:
+        return None
+    probabilities = [max(0.0, value) / total for value in probability_vector]
+    entropy = -sum(p * math.log(p) for p in probabilities if p > 0)
+    max_entropy = math.log(len(probability_vector))
+    if max_entropy <= 0:
+        return None
+    return max(0.0, min(1.0, entropy / max_entropy))
+
+
+def _predictive_margin_uncertainty(probability_vector: list[float]) -> float | None:
+    """1 - (top probability - second probability): a confident, well-
+    separated prediction has a wide margin and low uncertainty; a close
+    call between the top two classes has a narrow margin and high
+    uncertainty. Matches the margin computation already used by the
+    dissertation's own chapter 5 reference demo (apps/chapter5_web_demo.py)."""
+
+    if len(probability_vector) < 2:
+        return None
+    ranked = sorted(probability_vector, reverse=True)
+    margin = ranked[0] - ranked[1]
+    return max(0.0, min(1.0, 1.0 - margin))
 
 
 def _payload_sha256(value: Any) -> str:
@@ -168,7 +232,7 @@ class InspectionResult:
             from fuzzyxai.visualization.plotly_renderer import render_visual_spec
         else:
             raise ValueError(f"unsupported visualization backend: {backend}")
-        return render_visual_spec(self.visual_spec, view=selected_view, output_path=output)
+        return render_visual_spec(self.visual_spec, view=selected_view, output_path=output, selector=self.selector)
 
 
 ExplanationInspection = InspectionResult
@@ -226,6 +290,7 @@ class ModelExplanationResult:
 
     prediction: ModelPrediction
     view_model: ExplanationViewModel
+    system_evidence: SystemEvidence | None = None
 
     @property
     def adapter_id(self) -> str:
@@ -244,9 +309,15 @@ class ModelExplanationResult:
         return str(self.view_model.risk.get("action", "review"))
 
     @property
+    def system(self) -> SystemEvidence | None:
+        """Executed system-operator evidence, if this route declared one."""
+
+        return self.system_evidence
+
+    @property
     def claims(self) -> tuple[ExplanationClaim, ...]:
         values = self.view_model.claims
-        return tuple(ExplanationClaim.from_dict(item) for item in values) if isinstance(values, (list, tuple)) else tuple()
+        return tuple(ExplanationClaim.from_dict(item) for item in values) if isinstance(values, (list, tuple)) else ()
 
     @property
     def explanation_level(self) -> str:
@@ -259,6 +330,14 @@ class ModelExplanationResult:
     @property
     def missing_channels(self) -> tuple[str, ...]:
         return tuple(self.view_model.explanation_level.get("missing_channels", ()))
+
+    @property
+    def required_missing_channels(self) -> tuple[str, ...]:
+        return tuple(self.view_model.explanation_level.get("required_missing_channels", ()))
+
+    @property
+    def optional_missing_channels(self) -> tuple[str, ...]:
+        return tuple(self.view_model.explanation_level.get("optional_missing_channels", ()))
 
     @property
     def native_channels(self) -> tuple[str, ...]:
@@ -326,7 +405,10 @@ class ModelExplanationResult:
         """
 
         if detail == "audit":
-            return cast("dict[str, Any]", self.view_model.to_dict(include_raw=include_raw))
+            payload = cast("dict[str, Any]", self.view_model.to_dict(include_raw=include_raw))
+            if self.system_evidence is not None:
+                payload["system_evidence"] = self.system_evidence.audit_dict()
+            return payload
         if detail == "standard":
             return self._standard_dict(include_raw=include_raw, audience=audience)
         if detail == "compact":
@@ -437,7 +519,7 @@ class ModelExplanationResult:
             raise ValueError("only the verified Russian human-explanation templates are available")
         payload = self.view_model.human_explanations.get(normalized)
         if not isinstance(payload, Mapping):
-            raise ValueError(f"unknown or unavailable audience profile: {audience}")
+            raise TypeError(f"unknown or unavailable audience profile: {audience}")
         return HumanExplanation.from_dict(payload, graph=self.explanation_graph)
 
     def summary(
@@ -459,6 +541,251 @@ class ModelExplanationResult:
             if digest:
                 text = text.rstrip() + "\n\n" + digest + "\n"
         return text
+
+    def full_report(self, audience: str = "domain_user", *, level: str = "reader") -> str:
+        """P16 section 20 / P17: a deterministic, 18-point full explanation
+        report, in two levels.
+
+        1. what was analyzed; 2. which model was used; 3. what prediction
+        was obtained; 4. how this architecture actually reached it
+        (linear reconstruction / tree path / ensemble votes / attribution
+        map, whichever this model family produced); 5. supporting evidence;
+        6. contradicting evidence; 7. how typical the object is for the
+        data; 8. nearest examples and which are counterexamples; 9. what a
+        counterfactual analysis would need to change; 10. training-time
+        behavior; 11. agreement/conflict between explanation sources (Γ);
+        12. whether simplification was performed and the resulting loss
+        (Δ); 13. the five components ρ was built from; 14. the permitted
+        action; 15. where every material statement comes from; 16. which
+        required evidence is missing; 17. which channels do not apply to
+        this architecture; 18. the explanation's limitations. Not an SLM —
+        every line is built from evidence already collected during
+        ``explain()``; a section is omitted (never fabricated) when its
+        evidence is genuinely absent.
+
+        ``level="reader"`` (the default): sections 5/6 show only the
+        top-ranked 4-6 supporting / 3-4 contradicting factors (already
+        ranked by ``rank_human_claims`` — no new ranking logic), each with
+        its real computed chain (raw -> transformed -> coefficient ->
+        contribution for a linear model, node-by-node for a tree, etc.),
+        not a same-phrase list of every feature. ``level="audit"``: every
+        supporting/contradicting claim, unabridged — the same content as
+        before this parameter existed.
+        """
+
+        if level not in {"reader", "audit"}:
+            raise ValueError("level must be 'reader' or 'audit'")
+        he = self.explain_for(audience)
+        lines: list[str] = []
+
+        def section(number: int, title: str, body_lines: Sequence[str]) -> None:
+            if not body_lines:
+                return
+            lines.append(f"## {number}. {title}")
+            lines.extend(body_lines)
+            lines.append("")
+
+        trace = self.view_model.trace
+        section(
+            1,
+            "Что анализировалось",
+            [f"- Объект: {trace.get('object_ids', ['?'])[0] if trace.get('object_ids') else '?'}", f"- Версия данных: {trace.get('dataset_version', '?')}", f"- Входной hash: {trace.get('input_sha256', '?')}"],
+        )
+        section(
+            2,
+            "Какая модель использовалась",
+            [f"- Модель: {trace.get('model_type', '?')} (адаптер {trace.get('adapter_id', '?')})", f"- Отпечаток модели (fingerprint): {trace.get('model_fingerprint', '?')}"],
+        )
+
+        # P18 item 7: never print the raw prediction array/label — reuse the
+        # same domain-language decision text already built by
+        # compose_human_explanation (he.decision), so a classifier's
+        # prediction reads as its real class label, not "[1]"/"[0]".
+        prediction = self.view_model.model
+        prediction_lines = [f"- {he.decision.explanation}"]
+        if isinstance(prediction.get("score"), (int, float)):
+            prediction_lines.append(f"- Модельный балл: {round(float(prediction['score']), 4)}")
+        section(3, "Какой прогноз получен", prediction_lines)
+
+        mechanism_lines: list[str] = []
+        for internals in self.view_model.layers.get("model_internals", []):
+            if internals.get("linear_terms"):
+                mechanism_lines.append(f"- Линейное разложение: {len(internals['linear_terms'])} слагаемых, восстановленная оценка {internals.get('reconstructed_score')}.")
+            if internals.get("decision_path"):
+                mechanism_lines.append(f"- Путь по дереву решений: {len(internals['decision_path'])} узлов, лист {internals.get('leaf_id')}.")
+            if internals.get("ensemble_votes") is not None:
+                mechanism_lines.append(f"- Голосование ансамбля: {len(internals['ensemble_votes'])} моделей, расхождение {internals.get('ensemble_disagreement')}.")
+        for attribution in self.view_model.layers.get("attribution_maps", []):
+            mechanism_lines.append(f"- Карта атрибуции ({attribution.get('method')}): диапазон [{attribution.get('min_value')}, {attribution.get('max_value')}].")
+            completeness = attribution.get("completeness")
+            if isinstance(completeness, Mapping) and completeness:
+                if completeness.get("status") == "measured":
+                    mechanism_lines.append(
+                        "- IG completeness: "
+                        f"target class={completeness.get('target_class')}; "
+                        f"baseline={completeness.get('baseline')}; "
+                        f"output space={completeness.get('output_space')}; "
+                        f"absolute residual={completeness.get('completeness_residual')}; "
+                        f"relative residual={completeness.get('completeness_relative_error')}. "
+                        "Меньший residual означает более точное выполнение completeness identity в указанном output space."
+                    )
+                else:
+                    mechanism_lines.append(
+                        f"- IG completeness не оценена: {completeness.get('reason', 'причина не указана')}."
+                    )
+        if not mechanism_lines:
+            contribution_method = self.view_model.model.get("contribution_method")
+            mechanism_lines = [f"- Метод объяснения: {contribution_method}."] if contribution_method else []
+        section(4, "Как именно эта архитектура сформировала данный прогноз", mechanism_lines)
+
+        all_supports = list(he.details.supports)
+        all_contradicts = list(he.details.contradicts)
+        shown_supports = all_supports if level == "audit" else all_supports[:6]
+        shown_contradicts = all_contradicts if level == "audit" else all_contradicts[:4]
+        supports_lines = [f"- **{item.title}:** {item.explanation}" for item in shown_supports]
+        if level == "reader" and len(all_supports) > len(shown_supports):
+            supports_lines.append(f"- (показаны {len(shown_supports)} из {len(all_supports)}; полный список — full_report(level='audit'))")
+        contradicts_lines = [f"- **{item.title}:** {item.explanation}" for item in shown_contradicts]
+        if level == "reader" and len(all_contradicts) > len(shown_contradicts):
+            contradicts_lines.append(f"- (показаны {len(shown_contradicts)} из {len(all_contradicts)}; полный список — full_report(level='audit'))")
+        section(5, "Какие вычисленные сведения поддерживают результат", supports_lines)
+        section(6, "Какие вычисленные сведения ему противоречат", contradicts_lines)
+
+        data_lines: list[str] = []
+        for item in self.view_model.layers.get("data", []):
+            if item.get("anomaly_labels"):
+                data_lines.append(f"- Отклонения от эталона: {', '.join(item['anomaly_labels'])}.")
+            for warning in item.get("warnings", ()):
+                data_lines.append(f"- {warning}")
+        section(7, "Насколько объект похож на данные, использованные как эталон", data_lines)
+
+        similar_lines = [f"- **{item.title}:** {item.explanation}" for item in he.details.similar_cases]
+        counterexamples = [case for case in self.similar_cases if case.get("is_counterexample")]
+        if counterexamples:
+            similar_lines.append(f"- Из них контрпримеров (другой класс, чем прогноз): {len(counterexamples)} из {len(self.similar_cases)}.")
+        section(8, "Какие ближайшие примеры найдены и какие из них являются контрпримерами", similar_lines)
+
+        # P18 item 7: render the already domain-translated, fully Russian
+        # `.explanation` text (built by human.py's _change_statement) rather
+        # than re-deriving a raw summary line from `.direction`, which
+        # carries the internal English "increase"/"decrease" token.
+        section(
+            9,
+            "Что необходимо изменить для смены решения модели",
+            [f"- **{change.title}:** {change.explanation}" for change in he.what_would_change_result],
+        )
+        section(10, "Что известно о поведении объекта и модели во время обучения", [f"- **{item.title}:** {item.explanation}" for item in he.details.training])
+
+        disagreement = self.view_model.disagreement
+        if disagreement.get("gamma") is not None:
+            components_text = "; ".join(f"{name} = {value:.4f}" for name, value in disagreement.get("components", {}).items())
+            gamma_max = disagreement.get("gamma_max")
+            gamma_lines = [
+                f"- Γ = {disagreement['gamma']:.4f} — измеренное рассогласование двух объяснительных объектов по компонентам {{{components_text}}} (веса заданы в ExplainPlan.beta).",
+                *( [f"- d_L = {float(disagreement['components']['d_L']):.4f} измерено только как диагностическая компонента и не входит в aggregate Γ при текущем ExplainPlan.beta."] if "d_L" in disagreement.get("components", {}) else []),
+                f"- Сертифицировано (Γ ≤ gamma_max={gamma_max}): {'да' if gamma_max is not None and disagreement['gamma'] <= gamma_max else 'нет'}.",
+            ]
+        else:
+            gamma_lines = ["- Γ не измерено: для этого объекта доступен только один канал локального объяснения — сравнивать не с чем."]
+        section(11, "Какие источники объяснения согласованы или конфликтуют (Γ)", gamma_lines)
+
+        if disagreement.get("delta") is not None:
+            if self.system_evidence is not None and self.system_evidence.reduction is not None:
+                reduction = self.system_evidence.reduction
+                delta_lines = [
+                    f"- Δ = {reduction.delta:.6f} — измеренная D_F потеря представления в маршруте F_source → Pi → F_reduced → iota → reconstructed representation.",
+                    f"- Исходный интервал: {list(reduction.source_interval)}; reduced scalar: {reduction.reduced_scalar}; reconstructed interval: {list(reduction.reconstructed_interval)}; D_F terms: {reduction.distance_terms}.",
+                    *( ["- Редукция выполнена без измеренной потери для данного объекта."] if reduction.delta == 0 else []),
+                ]
+            else:
+                delta_lines = [f"- Δ = {disagreement['delta']:.6f} — измеренная D_F потеря представления при реальной операции Pi и обратном вложении iota. r_delta = {disagreement.get('r_delta')}."]
+        else:
+            delta_lines = [f"- Упрощение не выполнялось: {'нет операции редукции для этого типа модели' if disagreement.get('reduction_status') == 'not_applied' else 'редукция не измерена'}."]
+        section(12, "Выполнялось ли упрощение представления и какая потеря Δ возникла", delta_lines)
+
+        risk = self.view_model.risk
+        if risk.get("rho") is not None:
+            components_text = "; ".join(f"{name} = {value:.4f}" for name, value in risk.get("components", {}).items())
+            risk_lines = [f"- ρ = {risk['rho']:.4f}, из слагаемых: {{{components_text}}}."]
+        elif risk.get("partial_risk_score") is not None:
+            # P18 item 2: an incomplete interface still discloses the
+            # number it computed, but never under the name "ρ" — a partial
+            # weighted average over fewer terms than the schema expects is
+            # not the same quantity as the real, complete risk score.
+            components_text = "; ".join(f"{name} = {value:.4f}" for name, value in risk.get("partial_components", {}).items())
+            missing_text = ", ".join(risk.get("missing_required_components", ()))
+            risk_lines = [
+                f"- ρ НЕ вычислено как полное значение: интерфейс риска неполон (не хватает: {missing_text}).",
+                f"- Частичный (неполный) риск-score = {risk['partial_risk_score']:.4f}, из слагаемых: {{{components_text}}} — это НЕ официальное ρ, только для справки.",
+            ]
+        else:
+            risk_lines = ["- ρ не вычислено: нет ни одного измеримого слагаемого риска для этого объекта."]
+        section(13, "Из каких компонент получено ρ", risk_lines)
+
+        section(14, "Какое действие разрешено", [f"- **{he.recommended_action.title}:** {he.recommended_action.explanation}"])
+
+        provenance_lines = [f"- {item.title}: claims {', '.join(item.claim_refs)}; evidence {', '.join(item.evidence_refs)}" for item in (*he.main_reasons, *he.concerns)]
+        section(15, "Откуда происходит каждое существенное утверждение", provenance_lines)
+
+        # P17: missing_required (section 16), not_applicable (section 17),
+        # and quality-metric non-evaluation (folded into section 18's
+        # limitations, never labeled "required") are three distinct things
+        # and must not be merged into one undifferentiated list — a quality
+        # check nobody ran is a limitation of the explanation, not a
+        # required channel the explanation plan structurally needs.
+        explanation_level = self.view_model.explanation_level
+        missing_lines = [f"- {name}" for name in explanation_level.get("required_missing_channels", ())]
+        section(16, "Какие обязательные сведения отсутствуют", missing_lines)
+
+        section(17, "Какие каналы неприменимы к данной архитектуре", [f"- {name}" for name in explanation_level.get("not_applicable_channels", ())])
+
+        # `he.details.limitations` also carries every contradicting claim
+        # (compose_human_explanation folds contradicts into concerns) —
+        # already shown in section 6, so repeating them here (uncapped,
+        # even in reader mode) would defeat the whole point of capping
+        # section 6. Exclude anything already surfaced there.
+        contradict_titles = {item.title for item in all_contradicts}
+        genuine_limitations = [item for item in he.details.limitations if item.title not in contradict_titles]
+        shown_limitations = genuine_limitations if level == "audit" else genuine_limitations[:5]
+        limitation_lines = [f"- {item.title}: {item.explanation}" for item in shown_limitations]
+        if level == "reader" and len(genuine_limitations) > len(shown_limitations):
+            limitation_lines.append(f"- (показаны {len(shown_limitations)} из {len(genuine_limitations)}; полный список — full_report(level='audit'))")
+        limitation_lines.extend(
+            f"- Дополнительная проверка не выполнена — {name}: {status['reason']}"
+            for name, status in self.view_model.quality_status.items()
+            if status.get("status") == "not_evaluated"
+        )
+        limitation_lines.extend(
+            f"- Необязательный канал не предоставлен: {name}."
+            for name in explanation_level.get("optional_missing_channels", ())
+        )
+        section(18, "Какие ограничения имеет объяснение", limitation_lines)
+
+        if self.system_evidence is not None:
+            system = self.system_evidence
+            gamma = system.alignment
+            uncertainty = system.uncertainty
+            reduction = system.reduction
+            risk = system.risk
+            source_provider = str((system.source_evidence.metadata or {}).get("provider", "registered system source"))
+            section(19, "Системный операторный маршрут", [
+                f"- E_model построен из фактического source evidence ({source_provider}); T_ij={system.alignment_transform.transform_id} применён к этому объекту.",
+                f"- Γ = {float(gamma['gamma']):.6f}; компоненты: " + "; ".join(f"{name}={float(value):.6f}" for name, value in gamma['components'].items()),
+                *( [f"- d_L={float(gamma['components']['d_L']):.6f} — diagnostic-only и не входит в aggregate Γ при текущем ExplainPlan.beta."] if "d_L" in gamma.get("components", {}) else []),
+                f"- U_model={uncertainty.u_model}, U_rules={uncertainty.u_rules}, U_trace={uncertainty.u_trace}; u_M={uncertainty.u_m} ({uncertainty.status}).",
+                (
+                    f"- F_int → Pi → F0 → iota: source={list(reduction.source_interval)}, reduced={reduction.reduced_scalar}, reconstructed={list(reduction.reconstructed_interval)}, D_F/Δ={reduction.delta}; "
+                    + ("редукция выполнена без измеренной потери для данного объекта." if reduction.delta == 0 else "измерена положительная потеря uncertainty representation.")
+                    if reduction is not None
+                    else "- Редукция не применялась по ExplainPlan; Delta=0 по явно объявленной not_applied semantics."
+                ),
+                f"- I_pre(E_pre)={system.i_pre:.6f}; ρ={risk.rho}; status={risk.status}; candidate={risk.candidate_action}; action={risk.action}.",
+                f"- Причина кандидатного действия: {risk.candidate_action_reason}. Итоговая причина: {risk.final_action_reason}.",
+                *( ["- По зарегистрированной демонстрационной политике ExplainPlan числовой риск находится ниже theta_1, поэтому кандидатное действие — accept. Это заключение относится к внутренней политике маршрута и не является доказательством предметной корректности или безопасности."] if risk.candidate_action == "accept" else []),
+                *( [f"- Численная threshold policy дала candidate action={risk.candidate_action}, но critical_override=true имеет приоритет: final action=block."] if risk.critical_override else []),
+            ])
+
+        return "\n".join(lines).strip() + "\n"
 
     def _similar_cases_digest(self) -> str:
         cases = self.similar_cases
@@ -591,10 +918,22 @@ class ModelExplanationResult:
             anchors.add(node_id)
         if target is None:
             raise KeyError(f"unknown inspection target: {selector}")
-        related_edges = [edge for edge in edges if edge.source in anchors or edge.target in anchors]
+        # An action is a provenance question: follow directed ancestors only
+        # so independent nearby branches never masquerade as its cause. Other
+        # inspection selectors retain their existing connected explanation
+        # neighborhood for exploratory use.
         related_ids = set(anchors)
-        for edge in related_edges:
-            related_ids.update((edge.source, edge.target))
+        frontier = set(anchors)
+        while frontier:
+            next_frontier: set[str] = set()
+            for edge in edges:
+                if prefix != "action" and edge.source in frontier and edge.target not in related_ids:
+                    next_frontier.add(edge.target)
+                if edge.target in frontier and edge.source not in related_ids:
+                    next_frontier.add(edge.source)
+            related_ids.update(next_frontier)
+            frontier = next_frontier
+        related_edges = [edge for edge in edges if edge.source in related_ids and edge.target in related_ids]
         related_nodes = [node for node in nodes if node.node_id in related_ids]
         related_claims = [
             claim
@@ -607,7 +946,7 @@ class ModelExplanationResult:
     def audit(self) -> dict[str, Any]:
         """Return full provenance and channel disclosure without presentation text."""
 
-        return {
+        payload = {
             "explanation_level": dict(self.view_model.explanation_level),
             "claims": [claim.to_dict() for claim in self.claims],
             "graph": dict(self.view_model.explanation_graph),
@@ -616,6 +955,9 @@ class ModelExplanationResult:
             "trace": dict(self.view_model.trace),
             "quality_metrics": dict(self.view_model.quality_metrics),
         }
+        if self.system_evidence is not None:
+            payload["system_evidence"] = self.system_evidence.audit_dict()
+        return payload
 
     def diagnose(
         self,
@@ -749,7 +1091,13 @@ class ModelExplanationResult:
         backend: str = "matplotlib",
         output: str | Path | None = None,
         output_path: str | Path | None = None,
+        selector: str | None = None,
     ):
+        """``selector`` (provenance view only): a claim_id ("C-002"), a
+        node_id ("action"), or a node_type ("claim") to focus the rendered
+        subgraph on — defaults to "action". The full graph remains
+        available via ``result.audit()``/``to_dict(detail="audit")``."""
+
         selected_view = kind or view
         selected_output = output if output is not None else output_path
         if backend == "matplotlib":
@@ -758,7 +1106,7 @@ class ModelExplanationResult:
             from fuzzyxai.visualization.plotly_renderer import render_visual_spec
         else:
             raise ValueError(f"unsupported visualization backend: {backend}")
-        return render_visual_spec(self.view_model.visual_spec, view=selected_view, output_path=selected_output)
+        return render_visual_spec(self.view_model.visual_spec, view=selected_view, output_path=selected_output, selector=selector)
 
     def export_html(self, path: str | Path) -> Path:
         """Export a self-contained evidence report without recomputing metrics."""
@@ -785,6 +1133,37 @@ class ModelExplanationResult:
         return output
 
 
+@dataclass(frozen=True)
+class ObservationContext:
+    """Bundles dataset/reference/training observation, registered once on ``wrap()``.
+
+    P15.6: without this, a caller who wants a comprehensive result had to
+    separately call ``observe_training()``, remember to pass its result back
+    into ``explain_one(training_run=..., include_training_trace=True)``, and
+    repeat ``reference_data``/``reference_labels`` on every call — with no
+    single place that ties "the data", "the trained model", and "the final
+    explanation" together. Registering one ``ObservationContext`` here makes
+    every subsequent ``explain_one()``/``explain()`` call automatically pick
+    up the reference corpus and training history, while the model-only path
+    (``FuzzyXAI.wrap(model).explain_one(x)``, no context at all) is
+    unchanged. Explicit per-call arguments (``reference_data=``,
+    ``training_run=``, ...) still always win over what's registered here.
+
+    ``training_run`` is produced by a *separate* call to
+    ``FuzzyXAI.wrap(model).observe_training(history=...)`` — data observation
+    and model explanation remain two distinct steps, exactly as before; this
+    object is only the place their outputs are combined for reuse.
+    """
+
+    reference_data: Any | None = None
+    reference_labels: Any | None = None
+    reference_ids: list[str] | None = None
+    training_run: TrainingRunAnalysis | None = None
+    dataset_version: str | None = None
+    run_parameters: Mapping[str, Any] = field(default_factory=dict)
+    system_observation: SystemObservation | None = None
+
+
 class FuzzyXAI:
     """Runtime facade for using FuzzyXAI as an installable framework."""
 
@@ -797,17 +1176,21 @@ class FuzzyXAI:
         reference_data: Any | None = None,
         reference_labels: Any | None = None,
         reference_ids: list[str] | None = None,
+        observation_context: ObservationContext | None = None,
     ):
         self.plan = plan or ExplainPlan.default()
         self._model_adapter = model_adapter
         self._resolution_report = resolution_report
+        self._observation_context = observation_context
         # A reference corpus registered once at wrap() time, used by default
         # for similar-case evidence on every explain_one() call so the
         # caller doesn't have to repeat reference_data/reference_labels on
-        # every call. Still overridable per-call.
-        self._reference_data = reference_data
-        self._reference_labels = reference_labels
-        self._reference_ids = reference_ids
+        # every call. Still overridable per-call. Explicit kwargs here win
+        # over an ObservationContext's own reference_data, if both are given.
+        context = observation_context
+        self._reference_data = reference_data if reference_data is not None else (context.reference_data if context else None)
+        self._reference_labels = reference_labels if reference_labels is not None else (context.reference_labels if context else None)
+        self._reference_ids = reference_ids if reference_ids is not None else (context.reference_ids if context else None)
 
     @property
     def model_adapter(self) -> ModelAdapter:
@@ -827,6 +1210,7 @@ class FuzzyXAI:
         reference_data: Any | None = None,
         reference_labels: Any | None = None,
         reference_ids: list[str] | None = None,
+        observation_context: ObservationContext | None = None,
     ) -> FuzzyXAI:
         """Wrap a supported model using capability-based adapter resolution.
 
@@ -834,6 +1218,13 @@ class FuzzyXAI:
         reference corpus once, here, instead of on every ``explain_one()``
         call — when present, similar-case evidence is produced by default
         (see ``explain()``'s ``include_similar_cases``).
+
+        ``observation_context`` (P15.6) is the comprehensive alternative:
+        one ``ObservationContext`` bundling the reference corpus *and* a
+        prior ``observe_training()`` result *and* dataset/run metadata, all
+        auto-applied to every subsequent ``explain_one()``/``explain()``
+        call. Explicit ``reference_data=`` etc. passed directly here still
+        wins over the same field on ``observation_context``.
         """
 
         resolved, report = resolve_model_adapter_v2(
@@ -849,6 +1240,7 @@ class FuzzyXAI:
             reference_data=reference_data,
             reference_labels=reference_labels,
             reference_ids=reference_ids,
+            observation_context=observation_context,
         )
 
     @classmethod
@@ -921,10 +1313,10 @@ class FuzzyXAI:
         training_run: TrainingRunAnalysis | None = None,
         include_similar_cases: bool | None = None,
         include_counterfactuals: bool = False,
-        include_training_trace: bool = False,
+        include_training_trace: bool | None = None,
         include_model_knowledge: bool = True,
         additional_evidence: ExplanationEvidence | None = None,
-        dataset_version: str = "unversioned",
+        dataset_version: str | None = None,
         run_parameters: Mapping[str, Any] | None = None,
         raw_objects: Sequence[Any] | None = None,
         region_masks: Mapping[str, Sequence[Sequence[bool]]] | None = None,
@@ -970,6 +1362,23 @@ class FuzzyXAI:
             reference_labels = self._reference_labels
         if reference_ids is None:
             reference_ids = self._reference_ids
+        # P15.6: a registered ObservationContext auto-applies its training
+        # history / dataset metadata too, the same "explicit call wins"
+        # priority as the reference corpus above.
+        context = self._observation_context
+        if context is not None:
+            if training_run is None and context.training_run is not None:
+                training_run = context.training_run
+                if include_training_trace is None:
+                    include_training_trace = True
+            if dataset_version is None and context.dataset_version is not None:
+                dataset_version = context.dataset_version
+            if run_parameters is None and context.run_parameters:
+                run_parameters = context.run_parameters
+        if include_training_trace is None:
+            include_training_trace = False
+        if dataset_version is None:
+            dataset_version = "unversioned"
         evidence = dict(evidence or {})
         prediction = self._model_adapter.predict(inputs)
         score = prediction.primary_score()
@@ -1015,18 +1424,89 @@ class FuzzyXAI:
                 }
             )
 
+        # P16/P17: scientific Γ/Δ/ρ, replacing P15.7's heuristic proxies
+        # (percent-of-claims / surrogate-fidelity-gap) with the
+        # dissertation's real chapter-2/3 machinery: semantic_disagreement
+        # over genuine ExplanationObject pairs for Γ, and
+        # compute_interpretability_index (I_pre = exp(-L(E))) for the
+        # interpretability term — see fuzzyxai.scientific_alignment.
+        # Manual `evidence={"alignment"/"reduction"/"risk": ...}` still
+        # always wins. Most single-channel sklearn explanations genuinely
+        # have no second explanatory object to compare against, so Γ
+        # honestly stays unmeasured for them — only models that supply a
+        # real second channel (e.g. a fuzzy/ANFIS model's native rule
+        # activations alongside its numeric contributions) get an automatic
+        # Γ. This is intentionally more conservative than P15.7.
+        #
+        # P17: Δ is NOT derived automatically from `reconstruction_error`
+        # (that is a reconstruction-fidelity check on the linear formula —
+        # "does x.w+b match decision_function?" — not a measurement of
+        # information lost by a real representation-reduction operation Π).
+        # `reconstruction_error` stays a standalone quality metric
+        # (evidence/metrics.py); Δ/reduction here is populated ONLY from
+        # manually supplied `evidence={"reduction": ...}` — i.e. only when
+        # a real reduction actually happened and was measured by the
+        # caller. No automatic Π exists in this runtime for any sklearn
+        # model family, so Δ correctly stays `not_applied` automatically.
+        missing: list[str] = []
+        required_missing: list[str] = []
+        model_fingerprint = self._model_adapter.model_fingerprint()
+        contributions_for_operators = dict(evidence.get("contributions", internal_evidence.get("contributions", {})))
+        raw_activated_rules_for_operators = evidence.get("activated_rules", internal_evidence.get("activated_rules"))
+        operator_source = str(internal_evidence.get("contribution_method") or prediction.adapter_id)
+        native_explanation_object = (
+            build_native_explanation_object(
+                raw_activated_rules_for_operators,
+                object_id=ids[0],
+                model_fingerprint=model_fingerprint,
+                source=operator_source,
+            )
+            if isinstance(raw_activated_rules_for_operators, Sequence)
+            else None
+        )
+        derived_explanation_object = build_contribution_explanation_object(
+            contributions_for_operators,
+            object_id=ids[0],
+            model_fingerprint=model_fingerprint,
+            source=operator_source,
+            score=score,
+        )
+        best_explanation_object = derived_explanation_object or native_explanation_object
+        pre_interpretability = compute_real_pre_interpretability(best_explanation_object, plan=self.plan)
+
         alignment_data = evidence.get("alignment")
         alignment = None
-        if isinstance(alignment_data, Mapping):
-            alignment = compute_operator_alignment(
-                AlignmentInput(
-                    components=dict(alignment_data["components"]),
-                    weights=dict(alignment_data["weights"]),
-                    gamma_max=float(alignment_data.get("gamma_max", self.plan.gamma_critical)),
-                    delta_t=float(alignment_data.get("delta_t", 0.0)),
-                    delta_max=float(alignment_data.get("delta_max", self.plan.delta_critical)),
-                )
+        alignment_components_used: dict[str, float] = {}
+        raw_transform = (
+            alignment_data.get("transform") if isinstance(alignment_data, Mapping) else None
+        ) or self.plan.alignment_policy.transform
+        transform = None
+        if isinstance(raw_transform, Mapping):
+            try:
+                transform = AlignmentTransform.from_dict(raw_transform)
+            except (KeyError, TypeError, ValueError):
+                transform = None
+        real_alignment = compute_real_alignment(
+            native_explanation_object,
+            derived_explanation_object,
+            plan=self.plan,
+            transform=transform,
+        )
+        if real_alignment["gamma"] is not None:
+            alignment_components_used = dict(real_alignment["components"])
+            alignment = AlignmentResult(
+                gamma=real_alignment["gamma"], gamma_max=real_alignment["gamma_max"],
+                delta_t=0.0, certified=bool(real_alignment["certified"]),
             )
+        # P18 item 1: alignment is only ever "expected" for this object when
+        # the resolved ExplainPlan genuinely declares a second explanatory
+        # channel (AlignmentPolicy.applicable) or the caller manually
+        # measured one — never universally. An ordinary single-channel
+        # model (linear/tree/ensemble) is then honestly `not_applicable`,
+        # not `missing_required`, and is never penalized for lacking an
+        # operation its own plan never calls for.
+        alignment_expected = bool(self.plan.alignment_policy.applicable) or isinstance(alignment_data, Mapping)
+        if alignment is not None:
             if not alignment.certified:
                 diagnostics.append(
                     {
@@ -1035,8 +1515,23 @@ class FuzzyXAI:
                         "severity": "error",
                     }
                 )
+        elif alignment_expected:
+            diagnostics.append(
+                {
+                    "code": "D_k_alignment_missing",
+                    "reason": "ExplainPlan.alignment_policy declares alignment applicable but no second explanatory channel or manual evidence was available",
+                    "severity": "warning",
+                }
+            )
+            required_missing.append("alignment_required_channel")
         else:
-            diagnostics.append({"code": "D_k_alignment_missing", "reason": "alignment evidence was not supplied", "severity": "warning"})
+            diagnostics.append(
+                {
+                    "code": "D_k_alignment_not_applicable",
+                    "reason": "ExplainPlan.alignment_policy does not declare alignment applicable for this scenario (single explanatory channel)",
+                    "severity": "info",
+                }
+            )
 
         reduction_data = evidence.get("reduction")
         reduction = None
@@ -1049,6 +1544,14 @@ class FuzzyXAI:
                     kappa_delta=float(reduction_data.get("kappa_delta", 1.0)),
                 )
             )
+        # P18 item 1: same context-dependent requiredness for reduction
+        # (Delta) — required only when ExplainPlan.reduction_policy declares
+        # a real reduction operation (Pi) is part of this scenario, or the
+        # caller measured one manually. This runtime has no automatic Pi for
+        # any sklearn model family, so most scenarios correctly stay
+        # `not_applicable`, never `missing_required`.
+        reduction_expected = bool(self.plan.reduction_policy.applicable) or isinstance(reduction_data, Mapping)
+        if reduction is not None:
             if not reduction.allowed:
                 diagnostics.append(
                     {
@@ -1057,31 +1560,126 @@ class FuzzyXAI:
                         "severity": "error",
                     }
                 )
+        elif reduction_expected:
+            diagnostics.append(
+                {
+                    "code": "D_k_reduction_missing",
+                    "reason": "ExplainPlan.reduction_policy declares reduction applicable but no real reduction (Pi) was measured for this object",
+                    "severity": "warning",
+                }
+            )
+            required_missing.append("reduction_required_measurement")
         else:
-            diagnostics.append({"code": "D_k_reduction_missing", "reason": "reduction evidence was not supplied", "severity": "warning"})
+            diagnostics.append(
+                {
+                    "code": "D_k_reduction_not_applicable",
+                    "reason": "ExplainPlan.reduction_policy declares no reduction operation (Pi) for this scenario",
+                    "severity": "info",
+                }
+            )
+
+        structural_failure = (alignment is not None and not alignment.certified) or (reduction is not None and not reduction.allowed)
 
         risk_data = evidence.get("risk")
         risk = None
+        risk_components_used: dict[str, float] = {}
+        risk_thresholds = {
+            "theta_1": self.plan.rho_accept,
+            "theta_2": self.plan.rho_warning,
+            "theta_3": self.plan.rho_audit,
+            "theta_4": self.plan.rho_critical,
+        }
+        risk_status = "complete"
+        missing_required_risk_components: list[str] = []
+        risk_weights_base: dict[str, float] = {}
+        partial_risk_score: float | None = None
         if isinstance(risk_data, Mapping):
-            thresholds = dict(
-                risk_data.get(
-                    "thresholds",
-                    {
-                        "theta_1": self.plan.rho_accept,
-                        "theta_2": self.plan.rho_warning,
-                        "theta_3": self.plan.rho_audit,
-                        "theta_4": self.plan.rho_critical,
-                    },
-                )
+            risk_components_used = dict(risk_data.get("components", {}))
+            risk_weights_base = dict(risk_data["weights"])
+            thresholds = dict(risk_data.get("thresholds", risk_thresholds))
+            risk = observe_legacy_normalized_risk(
+                dict(risk_data["components"]),
+                dict(risk_data["weights"]),
+                thresholds,
+                int(risk_data.get("chi_r_crit", 0)),
             )
-            risk = observe_operator_risk(
-                RiskInput(
-                    components=dict(risk_data["components"]),
-                    weights=dict(risk_data["weights"]),
-                    thresholds=thresholds,
-                    chi_r_crit=int(risk_data.get("chi_r_crit", 0)),
+        else:
+            # Canonical 5-component chapter-3 risk formula:
+            # rho = w_p*predicted_risk + w_u*uncertainty
+            #     + w_I*interpretability_gap + w_Delta*reduction_loss
+            #     + w_R*diagnostic (see fuzzyxai.risk.risk_function
+            #     .DEFAULT_RISK_WEIGHTS, overridable via
+            #     ExplainPlan.metadata['risk_weights']).
+            #
+            # P18 items 1/3: which of the 5 keys are even *expected* for
+            # this object is itself context-dependent, not universal.
+            # "uncertainty" is expected only when ExplainPlan.uncertainty_policy
+            # declares a real source (never surrogate_fidelity_gap — that
+            # measures explanation fidelity, not predictive uncertainty);
+            # "reduction_loss" is expected only when reduction is genuinely
+            # part of this scenario (reduction_expected, computed above).
+            # A component that was never expected is not_applicable and
+            # simply excluded from the schema — never `missing_required`.
+            risk_weights_full = dict(self.plan.metadata.get("risk_weights", DEFAULT_APPLICATION_RISK_WEIGHTS))
+            uncertainty_policy = self.plan.uncertainty_policy
+            expected_component_names = {"predicted_risk", "interpretability_gap", "diagnostic"}
+            if uncertainty_policy.applicable:
+                expected_component_names.add("uncertainty")
+            if reduction_expected:
+                expected_component_names.add("reduction_loss")
+            risk_weights_base = {key: risk_weights_full[key] for key in expected_component_names if key in risk_weights_full}
+
+            candidate_risk_components: dict[str, float] = {}
+            if isinstance(score, (int, float)):
+                candidate_risk_components["predicted_risk"] = max(0.0, min(1.0, 1.0 - float(score)))
+            uncertainty_value: float | None = None
+            if uncertainty_policy.method == "ensemble_disagreement":
+                ensemble_disagreement_value = internal_evidence.get("ensemble_disagreement")
+                if isinstance(ensemble_disagreement_value, (int, float)):
+                    uncertainty_value = max(0.0, min(1.0, float(ensemble_disagreement_value)))
+            elif uncertainty_policy.method in {"entropy", "margin"}:
+                probability_vector = _extract_probability_vector(prediction.probabilities)
+                if probability_vector is not None:
+                    uncertainty_value = _normalized_entropy(probability_vector) if uncertainty_policy.method == "entropy" else _predictive_margin_uncertainty(probability_vector)
+            elif uncertainty_policy.method == "calibrated_interval":
+                interval_width = internal_evidence.get("calibrated_interval_width")
+                if isinstance(interval_width, (int, float)):
+                    uncertainty_value = max(0.0, min(1.0, float(interval_width)))
+            if uncertainty_value is not None:
+                candidate_risk_components["uncertainty"] = uncertainty_value
+            if pre_interpretability["i_pre"] is not None:
+                candidate_risk_components["interpretability_gap"] = max(0.0, min(1.0, 1.0 - float(pre_interpretability["i_pre"])))
+            if reduction is not None:
+                candidate_risk_components["reduction_loss"] = max(0.0, min(1.0, float(reduction.delta)))
+            substantive_components = {key: value for key, value in candidate_risk_components.items() if key != "diagnostic" and key in risk_weights_base}
+            if substantive_components:
+                candidate_risk_components["diagnostic"] = 1.0 if structural_failure else 0.0
+                risk_components = {key: value for key, value in candidate_risk_components.items() if key in risk_weights_base}
+                # P17/P18: components genuinely *expected* by this object's
+                # resolved schema but still lacking a real value are NOT
+                # silently dropped-and-renormalized-away — the interface is
+                # marked incomplete, disclosed, and prevented from reading
+                # as a plain "accept" below (see required_missing). A
+                # component that was never expected in the first place
+                # (excluded from risk_weights_base above) never reaches
+                # this check at all.
+                missing_required_risk_components = sorted(set(risk_weights_base) - set(risk_components))
+                if missing_required_risk_components:
+                    risk_status = "incomplete"
+                risk_components_used = risk_components
+                risk = observe_legacy_normalized_risk(
+                    risk_components,
+                    {key: risk_weights_base[key] for key in risk_components},
+                    risk_thresholds,
+                    1 if structural_failure else 0,
                 )
-            )
+        # A legacy subset is useful only as a partial score.  Its implicit
+        # normalization must never be exported under the dissertation name ρ.
+        if risk is not None and not isinstance(risk_data, Mapping) and abs(sum(risk_weights_base.values()) - 1.0) > 1e-9:
+            risk_status = "incomplete"
+            partial_risk_score = risk.rho
+            missing_required_risk_components = sorted(set(DEFAULT_APPLICATION_RISK_WEIGHTS) - set(risk_components_used))
+        if risk is not None:
             if risk.chi_r_crit:
                 diagnostics.append(
                     {
@@ -1090,19 +1688,86 @@ class FuzzyXAI:
                         "severity": "critical",
                     }
                 )
+            if risk_status == "incomplete":
+                diagnostics.append(
+                    {
+                        "code": "D_risk_incomplete_interface",
+                        "reason": f"risk components expected by this object's schema but not measured: {missing_required_risk_components}",
+                        "severity": "warning",
+                    }
+                )
+                required_missing.append("risk_required_components")
+                # P18 item 2: an incomplete interface never surfaces its
+                # renormalized weighted average as if it were the real,
+                # complete rho — that number is disclosed separately as
+                # partial_risk_score (see the risk dict below), never as
+                # `rho` itself.
+                partial_risk_score = risk.rho
         else:
             diagnostics.append({"code": "D_k_risk_missing", "reason": "risk evidence was not supplied", "severity": "warning"})
 
-        action = risk.action if risk is not None else "review"
-        structural_failure = (alignment is not None and not alignment.certified) or (reduction is not None and not reduction.allowed)
+        # P18 item 2: rho is a real, complete number only when every
+        # component this object's resolved schema expects is genuinely
+        # present. A critical structural rupture still forces "block"
+        # even under an incomplete interface (chi_r_crit is never partial).
+        if risk is not None and risk.chi_r_crit or risk is not None and risk_status == "complete":
+            action = risk.action
+        else:
+            action = "review"
         if structural_failure and action != "block":
             action = "review"
+        # P19: a declared system route is executed here, before graph/report
+        # projection.  It is never reconstructed by a renderer or exporter.
+        system_evidence: SystemEvidence | None = None
+        if context is not None and context.system_observation is not None:
+            try:
+                registered_transform = AlignmentTransform.from_dict(self.plan.alignment_policy.transform)
+                system_source = derive_system_source_evidence(
+                    object_id=ids[0], model_fingerprint=model_fingerprint,
+                    prediction=prediction, internal_evidence=internal_evidence,
+                    source_interface_id=registered_transform.source_interface,
+                    risk_class=context.system_observation.risk_class,
+                    trace=context.system_observation.trace,
+                    model_trace=context.system_observation.model_trace,
+                    source_refs=context.system_observation.source_refs,
+                )
+                system_evidence = build_system_evidence(
+                    object_id=ids[0], model_fingerprint=model_fingerprint, source=system_source, plan=self.plan,
+                    observation=context.system_observation,
+                )
+            except ValueError as exc:
+                diagnostics.append({"code": "D_system_route_incomplete", "reason": str(exc), "severity": "warning"})
+                required_missing.append("system_operator_route")
+            else:
+                diagnostics.extend(system_evidence.diagnostics)
+                action = system_evidence.risk.action
+                risk_status = system_evidence.risk.status
+                # The declared system route supplied the required T_ij and
+                # Π evidence; generic single-channel placeholders above no
+                # longer govern this result's action.
+                required_missing = [item for item in required_missing if item not in {
+                    "alignment_required_channel", "reduction_required_measurement", "risk_required_components",
+                }]
+                diagnostics = [item for item in diagnostics if item.get("code") not in {
+                    "D_k_alignment_not_applicable", "D_k_alignment_missing",
+                    "D_k_reduction_not_applicable", "D_k_reduction_missing",
+                    "D_risk_incomplete_interface", "D_k_risk_missing",
+                }]
+                risk_components_used = {
+                    key: float(value) for key, value in system_evidence.risk.components.items()
+                    if isinstance(value, (int, float))
+                }
+                risk_weights_base = dict(system_evidence.risk.weights)
+                risk_thresholds = dict(self.plan.metadata.get("system_risk_thresholds", {
+                    "theta_1": self.plan.rho_accept, "theta_2": self.plan.rho_warning,
+                    "theta_3": self.plan.rho_audit, "theta_4": self.plan.rho_critical,
+                }))
         route = [
             {"id": "model", "label": "Model", "status": "passed"},
             {"id": "adapter", "label": prediction.adapter_id, "status": "passed"},
-            {"id": "alignment", "label": "T_ij", "status": "passed" if alignment and alignment.certified else "warning"},
-            {"id": "reduction", "label": "Delta", "status": "passed" if reduction and reduction.allowed else "warning"},
-            {"id": "risk", "label": "Risk", "status": "blocked" if action == "block" else ("passed" if risk else "warning")},
+            {"id": "alignment", "label": "T_ij", "status": "passed" if system_evidence is not None else ("passed" if (alignment and alignment.certified) else ("warning" if alignment_expected else "not_applied"))},
+            {"id": "reduction", "label": "Delta", "status": (system_evidence.reduction_status if system_evidence is not None else ("passed" if (reduction and reduction.allowed) else ("warning" if reduction_expected else "not_applied")))},
+            {"id": "risk", "label": "Risk", "status": "blocked" if action == "block" else ("passed" if (system_evidence is not None or (risk and risk_status == "complete")) else "warning")},
             {"id": "action", "label": action, "status": "blocked" if action == "block" else "passed"},
         ]
         plan_json = json.dumps(self.plan.to_dict(), ensure_ascii=False, sort_keys=True, separators=(",", ":"))
@@ -1113,8 +1778,6 @@ class FuzzyXAI:
             reference_values=reference_rows,
             source_trace={"adapter_id": prediction.adapter_id, "model_fingerprint": self._model_adapter.model_fingerprint()},
         )
-        missing: list[str] = []
-        required_missing: list[str] = []
         training_evidence = []
         subgroup_evidence = []
         if include_training_trace:
@@ -1142,6 +1805,7 @@ class FuzzyXAI:
                     feature_names=names,
                     object_ids=reference_ids,
                     rules=rules,
+                    query_row=rows[0],
                 )
         contributions = dict(evidence.get("contributions", internal_evidence.get("contributions", {})))
         contribution_method = evidence.get("contribution_method", internal_evidence.get("contribution_method"))
@@ -1151,14 +1815,24 @@ class FuzzyXAI:
             if isinstance(raw_activated_rules, Sequence) and raw_activated_rules
             else []
         )
-        if include_model_knowledge and not rules and not fuzzy_rule_activations:
-            # Rule-based knowledge is genuinely absent only when neither
-            # channel produced anything — a fuzzy/rule model that supplies
-            # activated_rules must not also be told "model rules are
+        model_internals_evidence = collect_model_internals(
+            internal_evidence,
+            object_id=ids[0],
+            model_family=getattr(self._model_adapter, "model_family", type(self._model_adapter).__name__),
+        )
+        model_internals = [model_internals_evidence] if model_internals_evidence is not None else []
+        if not model_internals:
+            missing.append("model_internals")
+        if include_model_knowledge and not rules and not fuzzy_rule_activations and not concepts:
+            # P18 item 12: rule-based knowledge is genuinely absent only
+            # when none of the three channels that can supply it produced
+            # anything — a model with a real reference corpus (concepts
+            # built from it) must not also be told "model rules are
             # missing" in the same result.
             missing.append("model_rules_or_concepts")
         text_highlights = []
         image_representations = []
+        attribution_maps = []
         if raw_objects is not None:
             if len(raw_objects) != len(rows):
                 raise ValueError(f"raw_objects has {len(raw_objects)} entries but {len(rows)} objects were supplied to explain(); they must match one-to-one")
@@ -1170,6 +1844,23 @@ class FuzzyXAI:
                     text_highlights = [find_text_highlight_spans(raw_object, contributions, object_id=ids[0])]
             elif is_image_like(raw_object):
                 image_representations = [find_image_regions(raw_object, contributions, object_id=ids[0], region_masks=region_masks)]
+                attribution_channel = next((key for key in KNOWN_ATTRIBUTION_CHANNELS if internal_evidence.get(key) is not None), None)
+                if attribution_channel is not None:
+                    predicted_target = prediction.predictions[0] if isinstance(prediction.predictions, (list, tuple)) and prediction.predictions else prediction.predictions
+                    attribution_maps = [
+                        build_attribution_map(
+                            raw_object,
+                            internal_evidence[attribution_channel],
+                            object_id=ids[0],
+                            method=attribution_channel,
+                            target=str(predicted_target) if predicted_target is not None else None,
+                            baseline="zero baseline" if attribution_channel == "integrated_gradients" else "unspecified baseline",
+                            completeness_error=internal_evidence.get("completeness_error"),
+                            completeness=internal_evidence.get("ig_completeness"),
+                        )
+                    ]
+                else:
+                    missing.append("attribution_map")
             else:
                 # Neither a string nor image-shaped — disclosed as unused
                 # rather than guessed at; build_visual_spec's tabular
@@ -1190,6 +1881,19 @@ class FuzzyXAI:
                     feature_names=names,
                     reference_labels=reference_labels,
                 )
+                # find_similar_tabular_cases is a pure similarity search — it
+                # doesn't know this object's own prediction, so it can never
+                # set is_counterexample itself. Without this, a nearest
+                # neighbor with a *different* label was rendered as
+                # "additional confirmation" instead of a counterexample.
+                raw_predictions = prediction.predictions
+                predicted_for_similarity = raw_predictions[0] if isinstance(raw_predictions, (list, tuple)) and raw_predictions else raw_predictions
+                similar_cases = [
+                    replace(case, is_counterexample=True)
+                    if case.reference_label is not None and str(case.reference_label) != str(predicted_for_similarity)
+                    else case
+                    for case in similar_cases
+                ]
         counterfactuals = []
         if include_counterfactuals:
             if reference_rows is None:
@@ -1219,7 +1923,9 @@ class FuzzyXAI:
             counterfactuals=[*counterfactuals, *additional.counterfactuals],
             text_highlights=[*text_highlights, *additional.text_highlights],
             image_representations=[*image_representations, *additional.image_representations],
+            attribution_maps=[*attribution_maps, *additional.attribution_maps],
             fuzzy_rule_activations=[*fuzzy_rule_activations, *additional.fuzzy_rule_activations],
+            model_internals=[*model_internals, *additional.model_internals],
             missing=list(dict.fromkeys([*missing, *additional.missing])),
         )
         prediction_payload = {
@@ -1240,15 +1946,41 @@ class FuzzyXAI:
             diagnostics=diagnostics,
             action=action,
             claims=claims,
+            provenance={
+                "dataset_version": dataset_version,
+                "model_fingerprint": self._model_adapter.model_fingerprint(),
+                "model_type": prediction.model_type,
+                "adapter_id": prediction.adapter_id,
+                "training_run": dict(training_run.provenance) if training_run is not None else None,
+                "split": (run_parameters or {}).get("split"),
+            },
+            system_evidence=system_evidence.audit_dict() if system_evidence is not None else None,
         )
         explanation_level = determine_explanation_level(
             explanation_evidence,
-            contribution_method=str(contribution_method) if contribution_method else None,
+            contribution_method=str(contribution_method) if contribution_method and contributions else None,
             operator_channels={
-                "alignment": alignment is not None,
-                "reduction": reduction is not None,
-                "risk": risk is not None,
+                "alignment": system_evidence is not None or alignment is not None,
+                "reduction": (system_evidence is not None and system_evidence.reduction is not None) or reduction is not None,
+                "risk": system_evidence is not None or risk is not None,
             },
+            # default True (unchanged behavior) when the adapter doesn't
+            # declare the capability either way — only a model that
+            # explicitly says it has no native rules / no local
+            # contributions gets those channels reported as not_applicable
+            # rather than missing.
+            native_rules_supported=bool(adapter_capabilities.get("rules", True)),
+            local_contributions_supported=bool(adapter_capabilities.get("local_contributions", True)),
+            alignment_applicable=alignment_expected,
+            reduction_applicable=reduction_expected,
+            required_channels=tuple({
+                "prediction", "call_trace", "data_profile", "risk",
+                *({"training_history"} if include_training_trace else set()),
+                *({"similar_cases"} if include_similar_cases else set()),
+                *({"counterfactuals"} if include_counterfactuals else set()),
+                *({"alignment"} if alignment_expected else set()),
+                *({"reduction"} if reduction_expected else set()),
+            }),
         )
         human = {
             audience: compose_human_explanation(
@@ -1269,19 +2001,26 @@ class FuzzyXAI:
                 "audit": human["auditor"],
             }
         )
+        quality_supplied_metrics = {
+            **dict(evidence.get("quality_metrics", {})),
+            **({"fidelity": float(surrogate_fidelity)} if surrogate_fidelity is not None else {}),
+            **(
+                {"reconstruction_error": float(internal_evidence["reconstruction_error"])}
+                if internal_evidence.get("reconstruction_error") is not None
+                else {}
+            ),
+        }
         quality_metrics = evaluate_explanation_quality(
             explanation_evidence,
             graph,
             contributions=contributions,
-            supplied_metrics={
-                **dict(evidence.get("quality_metrics", {})),
-                **({"fidelity": float(surrogate_fidelity)} if surrogate_fidelity is not None else {}),
-                **(
-                    {"reconstruction_error": float(internal_evidence["reconstruction_error"])}
-                    if internal_evidence.get("reconstruction_error") is not None
-                    else {}
-                ),
-            },
+            supplied_metrics=quality_supplied_metrics,
+        )
+        quality_status = evaluate_explanation_quality_status(
+            explanation_evidence,
+            graph,
+            contributions=contributions,
+            supplied_metrics=quality_supplied_metrics,
         )
         visual_spec = build_visual_spec(
             explanation_evidence,
@@ -1291,6 +2030,7 @@ class FuzzyXAI:
             action=action,
             contributions=contributions,
             explanation_level=explanation_level.to_dict(),
+            domain_language=self.plan.domain_language,
         )
         view_model = ExplanationViewModel(
             model={
@@ -1300,20 +2040,69 @@ class FuzzyXAI:
                 "contribution_method": contribution_method,
                 "contribution_limitations": list(internal_evidence.get("limitations", [])),
             },
-            fuzzy={"memberships": dict(evidence.get("memberships", {}))},
+            fuzzy={
+                "memberships": dict(evidence.get("memberships", {})),
+                # P16 section 17: whatever membership-function policies are
+                # registered on this ExplainPlan — parameters, origin,
+                # version — are always disclosed alongside any membership
+                # evidence, so no membership function in the output is an
+                # "unexplained triangle". Empty when none are registered.
+                "membership_policies": {name: policy.to_dict() for name, policy in self.plan.membership_policies.items()},
+            },
             route=route,
             disagreement={
-                "components": dict(alignment_data.get("components", {})) if isinstance(alignment_data, Mapping) else {},
-                "gamma": alignment.gamma if alignment else None,
+                "components": dict(system_evidence.alignment["components"]) if system_evidence is not None else dict(alignment_components_used),
+                "gamma": system_evidence.alignment["gamma"] if system_evidence is not None else (alignment.gamma if alignment else None),
+                "gamma_max": system_evidence.alignment["gamma_max"] if system_evidence is not None else (alignment.gamma_max if alignment else None),
                 "delta_t": alignment.delta_t if alignment else None,
-                "delta": reduction.delta if reduction else None,
+                "alignment_status": "measured" if system_evidence is not None else ("measured" if alignment is not None else ("missing" if alignment_expected else "not_applied")),
+                "delta": system_evidence.reduction.delta if system_evidence is not None and system_evidence.reduction is not None else (reduction.delta if reduction else None),
                 "r_delta": reduction.r_delta if reduction else None,
+                "reduction_status": system_evidence.reduction_status if system_evidence is not None else ("measured" if reduction is not None else ("missing" if reduction_expected else "not_applied")),
+                "pre_interpretability": system_evidence.i_pre if system_evidence is not None else pre_interpretability["i_pre"],
+                "pre_interpretability_status": "measured" if system_evidence is not None else pre_interpretability["status"],
+                # P18 item 4: the weights/thresholds that would govern
+                # alignment/reduction under this ExplainPlan, disclosed
+                # even when neither operator was applicable for this object.
+                "beta": dict(self.plan.beta),
+                "gamma_critical": self.plan.gamma_critical,
+                "gamma_warning": self.plan.gamma_warning,
+                "delta_critical": self.plan.delta_critical,
+                "delta_warning": self.plan.delta_warning,
+                "alignment_policy": self.plan.alignment_policy.to_dict(),
+                "alignment_transform": system_evidence.alignment_transform.to_dict() if system_evidence is not None else (real_alignment.get("transform") if isinstance(real_alignment, Mapping) else None),
+                "reduction_policy": self.plan.reduction_policy.to_dict(),
             },
             risk={
-                "components": dict(risk_data.get("components", {})) if isinstance(risk_data, Mapping) else {},
-                "rho": risk.rho if risk else None,
-                "chi_r_crit": risk.chi_r_crit if risk else None,
+                "components": dict(system_evidence.risk.components) if system_evidence is not None else dict(risk_components_used),
+                # P18 item 2: rho is disclosed as a real, complete number
+                # only when risk_status == "complete" -- an incomplete
+                # interface never surfaces a renormalized average under the
+                # name "rho". The same number is still disclosed, honestly
+                # labeled, as partial_risk_score/partial_components.
+                "rho": system_evidence.risk.rho if system_evidence is not None else (risk.rho if (risk is not None and risk_status == "complete") else None),
+                "partial_risk_score": system_evidence.risk.partial_risk_score if system_evidence is not None else partial_risk_score,
+                "partial_components": dict(risk_components_used) if (risk is not None and risk_status == "incomplete") else {},
+                "chi_r_crit": int(system_evidence.risk.critical_override) if system_evidence is not None else (risk.chi_r_crit if risk else None),
+                "critical_override": bool(system_evidence is not None and system_evidence.risk.critical_override),
                 "action": action,
+                "status": system_evidence.risk.status if system_evidence is not None else (risk_status if risk is not None else "missing"),
+                "missing_required_components": (
+                    [
+                        key for key, value in system_evidence.risk.components.items()
+                        if value is None and system_evidence.risk.weights.get(key, 0.0) > 0.0
+                    ]
+                    if system_evidence is not None
+                    else list(missing_required_risk_components)
+                ),
+                # P18 item 4: the parameters that actually determined this
+                # result, serialized so the audit output is self-contained.
+                "risk_weights": dict(system_evidence.risk.weights) if system_evidence is not None else dict(risk_weights_base),
+                "risk_thresholds": dict(risk_thresholds),
+                "uncertainty_policy": self.plan.uncertainty_policy.to_dict(),
+                "reduction_policy": self.plan.reduction_policy.to_dict(),
+                "alignment_policy": self.plan.alignment_policy.to_dict(),
+                "alignment_transform": system_evidence.alignment_transform.to_dict() if system_evidence is not None else (real_alignment.get("transform") if isinstance(real_alignment, Mapping) else None),
             },
             diagnostics=diagnostics,
             claims=[claim.to_dict() for claim in claims],
@@ -1337,10 +2126,11 @@ class FuzzyXAI:
             explanation_graph=graph.to_dict(),
             human_explanations=human,
             quality_metrics=quality_metrics,
+            quality_status=quality_status,
             explanation_level=explanation_level.to_dict(),
             visual_spec=visual_spec.to_dict(),
         )
-        return ModelExplanationResult(prediction=prediction, view_model=view_model)
+        return ModelExplanationResult(prediction=prediction, view_model=view_model, system_evidence=system_evidence)
 
     def explain_one(
         self,
@@ -1349,7 +2139,7 @@ class FuzzyXAI:
         object_id: str = "object_0",
         include_similar_cases: bool | None = None,
         include_counterfactuals: bool = False,
-        include_training_trace: bool = False,
+        include_training_trace: bool | None = None,
         raw_object: Any | None = None,
         **kwargs: Any,
     ) -> ModelExplanationResult:
@@ -1469,12 +2259,34 @@ class FuzzyXAI:
         val_data: Any = None,
         history: Mapping[str, Any],
         checkpoints: Any = None,
+        training_run_id: str | None = None,
+        training_method: str | None = None,
+        epoch_source: str | None = None,
+        final_checkpoint_ref: str | None = None,
     ) -> TrainingRunAnalysis:
-        """Create auditable object trajectories and subgroup diagnostics."""
+        """Create auditable object trajectories and subgroup diagnostics.
 
-        del train_data, val_data, checkpoints
+        Only ``history`` (per-object per-epoch metrics, already computed by
+        the caller) is actually used. ``train_data``/``val_data``/
+        ``checkpoints`` are accepted but not processed — no raw dataset or
+        checkpoint inspection is performed here — this is disclosed via
+        ``TrainingRunAnalysis.limitations`` rather than silently ignored.
+        """
+
+        limitations: list[str] = []
+        if train_data is not None or val_data is not None:
+            limitations.append("train_data/val_data were supplied but are not inspected; only the precomputed history mapping is used.")
+        if checkpoints is not None:
+            limitations.append("checkpoints were supplied but are not inspected; only the precomputed history mapping is used.")
         object_history = history.get("objects", {})
-        traces = {str(object_id): build_object_trace(str(object_id), metrics) for object_id, metrics in object_history.items()}
+        fingerprint = self._model_adapter.model_fingerprint() if self._model_adapter is not None else None
+        provenance = {
+            "training_run_id": training_run_id, "model_fingerprint": fingerprint,
+            "final_model_fingerprint": fingerprint, "training_method": training_method,
+            "epoch_source": epoch_source, "final_checkpoint_ref": final_checkpoint_ref,
+            "number_of_epochs": max((len(values) for values in object_history.values()), default=0),
+        }
+        traces = {str(object_id): build_object_trace(str(object_id), metrics, provenance=provenance) for object_id, metrics in object_history.items()}
         subgroups = []
         if history.get("global_metric") and history.get("subgroup_metrics"):
             subgroups = detect_subgroup_averaging(
@@ -1489,7 +2301,7 @@ class FuzzyXAI:
             feature_names=self._model_adapter.feature_names(),
             model_version=self._model_adapter.model_fingerprint()[:12],
         ) if self._model_adapter is not None else []
-        return TrainingRunAnalysis(traces=traces, subgroups=subgroups, rules=rules)
+        return TrainingRunAnalysis(traces=traces, subgroups=subgroups, rules=rules, limitations=tuple(limitations), provenance=provenance)
 
     def run(self, adapted_input: AdaptedInput) -> OperatorRoute:
         return build_route(adapted_input)

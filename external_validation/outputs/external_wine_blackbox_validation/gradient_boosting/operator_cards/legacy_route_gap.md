@@ -1,4 +1,4 @@
-# Согласование T_ij
+# Legacy route gap (не Gamma)
 
 ## Input
 - `class_probability` = `0.679119`
@@ -8,7 +8,7 @@
 - `interval_width` = `0.0`
 
 ## Formula
-gamma = max(1 - class_probability, quality_penalty, conflict_component, interval_width)
+legacy_route_gap = max(1 - class_probability, quality_penalty, conflict_component, interval_width)
 
 ## Components
 - `uncertainty` = `0.320881`
@@ -18,7 +18,7 @@ gamma = max(1 - class_probability, quality_penalty, conflict_component, interval
 - `calculation` = `"max(0.320881, 0.0, 0.0, 0.0) = 0.320881"`
 
 ## Output
-- `gamma` = `0.320881`
+- `legacy_route_gap` = `0.320881`
 
 ## Thresholds
 - `gamma_warning` = `0.35`
@@ -30,4 +30,4 @@ passed: Рассогласование ненулевое, потому что �
 Уверенность модели неполная; это ограничивает автоматическое доверие.
 
 ## Next
-risk
+legacy_route_score

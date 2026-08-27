@@ -1,0 +1,816 @@
+{
+  "detail": "compact",
+  "prediction": {
+    "value": [
+      1
+    ],
+    "score": 0.9085576593696942,
+    "probabilities": [
+      [
+        0.09144234063030576,
+        0.9085576593696942
+      ]
+    ]
+  },
+  "action": "insufficient_evidence",
+  "supporting_evidence": [
+    {
+      "claim_id": "C-002",
+      "statement": "Вклад radius error: +0.802",
+      "evidence_status": "supported",
+      "effect": "favorable",
+      "severity": "info",
+      "strength": 1.0,
+      "evidence_refs": [
+        "contribution:radius error"
+      ],
+      "limitations": [],
+      "native": true,
+      "surrogate": false
+    },
+    {
+      "claim_id": "C-001",
+      "statement": "Прогноз: [1]",
+      "evidence_status": "supported",
+      "effect": "neutral",
+      "severity": "info",
+      "strength": 0.9085576593696942,
+      "evidence_refs": [
+        "prediction"
+      ],
+      "limitations": [],
+      "native": null,
+      "surrogate": null
+    },
+    {
+      "claim_id": "C-003",
+      "statement": "Вклад worst symmetry: +0.682",
+      "evidence_status": "supported",
+      "effect": "favorable",
+      "severity": "info",
+      "strength": 0.8498355709294094,
+      "evidence_refs": [
+        "contribution:worst symmetry"
+      ],
+      "limitations": [],
+      "native": true,
+      "surrogate": false
+    },
+    {
+      "claim_id": "C-004",
+      "statement": "Вклад worst fractal dimension: +0.616",
+      "evidence_status": "supported",
+      "effect": "favorable",
+      "severity": "info",
+      "strength": 0.7686508147140119,
+      "evidence_refs": [
+        "contribution:worst fractal dimension"
+      ],
+      "limitations": [],
+      "native": true,
+      "surrogate": false
+    },
+    {
+      "claim_id": "C-035",
+      "statement": "Похожий случай train_195: 0.675",
+      "evidence_status": "supported",
+      "effect": "favorable",
+      "severity": "info",
+      "strength": 0.675109,
+      "evidence_refs": [
+        "similar:p0:train_195"
+      ],
+      "limitations": [
+        "feature distance does not establish causal or clinical similarity"
+      ],
+      "native": null,
+      "surrogate": null
+    }
+  ],
+  "contradicting_evidence": [
+    {
+      "claim_id": "C-005",
+      "statement": "Вклад fractal dimension error: -0.532",
+      "evidence_status": "supported",
+      "effect": "adverse",
+      "severity": "info",
+      "strength": 0.6634192558018096,
+      "evidence_refs": [
+        "contribution:fractal dimension error"
+      ],
+      "limitations": [],
+      "native": true,
+      "surrogate": false
+    },
+    {
+      "claim_id": "C-006",
+      "statement": "Вклад worst texture: -0.452",
+      "evidence_status": "supported",
+      "effect": "adverse",
+      "severity": "info",
+      "strength": 0.5639684870759635,
+      "evidence_refs": [
+        "contribution:worst texture"
+      ],
+      "limitations": [],
+      "native": true,
+      "surrogate": false
+    },
+    {
+      "claim_id": "C-007",
+      "statement": "Вклад compactness error: -0.452",
+      "evidence_status": "supported",
+      "effect": "adverse",
+      "severity": "info",
+      "strength": 0.5631035401973132,
+      "evidence_refs": [
+        "contribution:compactness error"
+      ],
+      "limitations": [],
+      "native": true,
+      "surrogate": false
+    },
+    {
+      "claim_id": "C-012",
+      "statement": "Вклад mean fractal dimension: -0.324",
+      "evidence_status": "supported",
+      "effect": "adverse",
+      "severity": "info",
+      "strength": 0.4041222714329408,
+      "evidence_refs": [
+        "contribution:mean fractal dimension"
+      ],
+      "limitations": [],
+      "native": true,
+      "surrogate": false
+    },
+    {
+      "claim_id": "C-014",
+      "statement": "Вклад mean compactness: -0.178",
+      "evidence_status": "supported",
+      "effect": "adverse",
+      "severity": "info",
+      "strength": 0.22162072273317732,
+      "evidence_refs": [
+        "contribution:mean compactness"
+      ],
+      "limitations": [],
+      "native": true,
+      "surrogate": false
+    }
+  ],
+  "similar_cases": [
+    {
+      "query_object_id": "p0",
+      "reference_object_id": "train_195",
+      "score": 0.675109,
+      "method": "robust_standardized_euclidean",
+      "representation": "normalized tabular feature vector",
+      "matched_features": [
+        "worst fractal dimension",
+        "fractal dimension error",
+        "mean compactness",
+        "mean fractal dimension",
+        "compactness error",
+        "symmetry error",
+        "concavity error",
+        "worst concavity",
+        "smoothness error",
+        "area error",
+        "worst perimeter",
+        "worst radius",
+        "worst area",
+        "worst compactness",
+        "worst concave points",
+        "worst texture",
+        "radius error",
+        "mean smoothness",
+        "perimeter error",
+        "mean texture",
+        "concave points error",
+        "mean concavity",
+        "mean radius",
+        "mean perimeter"
+      ],
+      "different_features": [
+        "mean concave points",
+        "worst symmetry",
+        "mean symmetry",
+        "texture error",
+        "worst smoothness",
+        "mean area"
+      ],
+      "matched_regions": [],
+      "coverage_score": 0.8,
+      "reference_label": "1",
+      "reference_prediction": "null",
+      "is_counterexample": false,
+      "media_artifacts": [],
+      "limitations": [
+        "feature distance does not establish causal or clinical similarity"
+      ],
+      "claim_refs": [
+        "C-035"
+      ],
+      "reference_rank": 1,
+      "reference_count": 455
+    },
+    {
+      "query_object_id": "p0",
+      "reference_object_id": "train_58",
+      "score": 0.638891,
+      "method": "robust_standardized_euclidean",
+      "representation": "normalized tabular feature vector",
+      "matched_features": [
+        "worst concavity",
+        "mean compactness",
+        "mean symmetry",
+        "mean concave points",
+        "worst symmetry",
+        "mean smoothness",
+        "worst fractal dimension",
+        "fractal dimension error",
+        "worst concave points",
+        "mean concavity",
+        "concavity error",
+        "worst compactness",
+        "mean fractal dimension",
+        "concave points error",
+        "compactness error",
+        "texture error",
+        "mean texture",
+        "symmetry error",
+        "worst texture"
+      ],
+      "different_features": [
+        "smoothness error",
+        "area error",
+        "worst area",
+        "mean area",
+        "radius error",
+        "perimeter error",
+        "worst radius",
+        "mean radius",
+        "worst smoothness",
+        "mean perimeter",
+        "worst perimeter"
+      ],
+      "matched_regions": [],
+      "coverage_score": 0.6333333333333333,
+      "reference_label": "1",
+      "reference_prediction": "null",
+      "is_counterexample": false,
+      "media_artifacts": [],
+      "limitations": [
+        "feature distance does not establish causal or clinical similarity"
+      ],
+      "claim_refs": [
+        "C-036"
+      ],
+      "reference_rank": 2,
+      "reference_count": 455
+    },
+    {
+      "query_object_id": "p0",
+      "reference_object_id": "train_268",
+      "score": 0.63413,
+      "method": "robust_standardized_euclidean",
+      "representation": "normalized tabular feature vector",
+      "matched_features": [
+        "worst smoothness",
+        "concavity error",
+        "mean fractal dimension",
+        "worst texture",
+        "worst compactness",
+        "worst area",
+        "worst radius",
+        "smoothness error",
+        "symmetry error",
+        "mean smoothness",
+        "worst perimeter",
+        "worst fractal dimension",
+        "mean compactness",
+        "worst concavity",
+        "perimeter error",
+        "mean radius",
+        "worst concave points",
+        "mean area",
+        "mean perimeter",
+        "fractal dimension error"
+      ],
+      "different_features": [
+        "mean concave points",
+        "radius error",
+        "mean symmetry",
+        "mean texture",
+        "area error",
+        "texture error",
+        "mean concavity",
+        "worst symmetry",
+        "compactness error",
+        "concave points error"
+      ],
+      "matched_regions": [],
+      "coverage_score": 0.6666666666666666,
+      "reference_label": "1",
+      "reference_prediction": "null",
+      "is_counterexample": false,
+      "media_artifacts": [],
+      "limitations": [
+        "feature distance does not establish causal or clinical similarity"
+      ],
+      "claim_refs": [
+        "C-037"
+      ],
+      "reference_rank": 3,
+      "reference_count": 455
+    }
+  ],
+  "object_representation": {
+    "object_id": "p0",
+    "modality": "tabular",
+    "raw_excerpt": "",
+    "spans": [],
+    "unmapped_features": [],
+    "suppressed_matches": [],
+    "highlighted_html": "",
+    "tabular_rows": [
+      {
+        "feature": "radius error",
+        "raw_value": "0.2323",
+        "contribution": 0.8019388494946564,
+        "direction": "supports",
+        "feature_label": "стандартная ошибка радиуса"
+      },
+      {
+        "feature": "worst symmetry",
+        "raw_value": "0.2369",
+        "contribution": 0.6815161600107651,
+        "direction": "supports",
+        "feature_label": "худшая (максимальная) симметрия"
+      },
+      {
+        "feature": "worst fractal dimension",
+        "raw_value": "0.06599",
+        "contribution": 0.616410950014885,
+        "direction": "supports",
+        "feature_label": "худшая (максимальная) фрактальная размерность"
+      },
+      {
+        "feature": "fractal dimension error",
+        "raw_value": "0.001812",
+        "contribution": -0.5320216747303044,
+        "direction": "contradicts",
+        "feature_label": "стандартная ошибка фрактальной размерности"
+      },
+      {
+        "feature": "worst texture",
+        "raw_value": "28.48",
+        "contribution": -0.45226823967694013,
+        "direction": "contradicts",
+        "feature_label": "худшая (максимальная) текстура"
+      },
+      {
+        "feature": "compactness error",
+        "raw_value": "0.01371",
+        "contribution": -0.45157460517220144,
+        "direction": "contradicts",
+        "feature_label": "стандартная ошибка компактности"
+      },
+      {
+        "feature": "perimeter error",
+        "raw_value": "1.596",
+        "contribution": 0.3997868699520792,
+        "direction": "supports",
+        "feature_label": "стандартная ошибка периметра"
+      },
+      {
+        "feature": "worst concavity",
+        "raw_value": "0.17",
+        "contribution": 0.3749044130497863,
+        "direction": "supports",
+        "feature_label": "худшая (максимальная) вогнутость контура"
+      },
+      {
+        "feature": "worst smoothness",
+        "raw_value": "0.1216",
+        "contribution": 0.3516661243937307,
+        "direction": "supports",
+        "feature_label": "худшая (максимальная) гладкость контура"
+      },
+      {
+        "feature": "area error",
+        "raw_value": "21.84",
+        "contribution": 0.3318144980762215,
+        "direction": "supports",
+        "feature_label": "стандартная ошибка площади"
+      },
+      {
+        "feature": "mean fractal dimension",
+        "raw_value": "0.05748",
+        "contribution": -0.32408134940809985,
+        "direction": "contradicts",
+        "feature_label": "средняя фрактальная размерность"
+      },
+      {
+        "feature": "mean concavity",
+        "raw_value": "0.06824",
+        "contribution": 0.1887136455781393,
+        "direction": "supports",
+        "feature_label": "средняя вогнутость контура"
+      },
+      {
+        "feature": "mean compactness",
+        "raw_value": "0.08345",
+        "contribution": -0.17772626741281847,
+        "direction": "contradicts",
+        "feature_label": "средняя компактность"
+      },
+      {
+        "feature": "worst concave points",
+        "raw_value": "0.1017",
+        "contribution": 0.1712341480339268,
+        "direction": "supports",
+        "feature_label": "худшее (максимальное) число вогнутых точек контура"
+      },
+      {
+        "feature": "worst area",
+        "raw_value": "783.6",
+        "contribution": 0.1485917198444299,
+        "direction": "supports",
+        "feature_label": "худшая (максимальная) площадь"
+      },
+      {
+        "feature": "worst compactness",
+        "raw_value": "0.1388",
+        "contribution": 0.13266760892781604,
+        "direction": "supports",
+        "feature_label": "худшая (максимальная) компактность"
+      },
+      {
+        "feature": "mean symmetry",
+        "raw_value": "0.1487",
+        "contribution": -0.13035001099212318,
+        "direction": "contradicts",
+        "feature_label": "средняя симметрия"
+      },
+      {
+        "feature": "smoothness error",
+        "raw_value": "0.005415",
+        "contribution": 0.1109298143556529,
+        "direction": "supports",
+        "feature_label": "стандартная ошибка гладкости контура"
+      },
+      {
+        "feature": "mean radius",
+        "raw_value": "14.87",
+        "contribution": -0.10932918747611925,
+        "direction": "contradicts",
+        "feature_label": "средний радиус"
+      },
+      {
+        "feature": "mean texture",
+        "raw_value": "20.21",
+        "contribution": -0.09719614861394783,
+        "direction": "contradicts",
+        "feature_label": "средняя текстура"
+      },
+      {
+        "feature": "worst perimeter",
+        "raw_value": "103.9",
+        "contribution": 0.08091743267593886,
+        "direction": "supports",
+        "feature_label": "худший (максимальный) периметр"
+      },
+      {
+        "feature": "mean perimeter",
+        "raw_value": "96.12",
+        "contribution": -0.08029850405098445,
+        "direction": "contradicts",
+        "feature_label": "средний периметр"
+      },
+      {
+        "feature": "worst radius",
+        "raw_value": "16.01",
+        "contribution": 0.05356956398150983,
+        "direction": "supports",
+        "feature_label": "худший (максимальный) радиус"
+      },
+      {
+        "feature": "symmetry error",
+        "raw_value": "0.01959",
+        "contribution": -0.047612387872666286,
+        "direction": "contradicts",
+        "feature_label": "стандартная ошибка симметрии"
+      },
+      {
+        "feature": "mean area",
+        "raw_value": "680.9",
+        "contribution": -0.036672678417047286,
+        "direction": "contradicts",
+        "feature_label": "средняя площадь"
+      },
+      {
+        "feature": "concavity error",
+        "raw_value": "0.02153",
+        "contribution": -0.0277018637406601,
+        "direction": "contradicts",
+        "feature_label": "стандартная ошибка вогнутости контура"
+      },
+      {
+        "feature": "texture error",
+        "raw_value": "1.636",
+        "contribution": -0.01636960389106654,
+        "direction": "contradicts",
+        "feature_label": "стандартная ошибка текстуры"
+      },
+      {
+        "feature": "mean concave points",
+        "raw_value": "0.04951",
+        "contribution": -0.010087967859913597,
+        "direction": "contradicts",
+        "feature_label": "среднее число вогнутых точек контура"
+      },
+      {
+        "feature": "mean smoothness",
+        "raw_value": "0.09587",
+        "contribution": 0.005573173470544267,
+        "direction": "supports",
+        "feature_label": "средняя гладкость контура"
+      },
+      {
+        "feature": "concave points error",
+        "raw_value": "0.01183",
+        "contribution": -0.0019674683629498824,
+        "direction": "contradicts",
+        "feature_label": "стандартная ошибка числа вогнутых точек"
+      }
+    ],
+    "tabular_rows_original_order": [
+      {
+        "feature": "mean radius",
+        "raw_value": "14.87",
+        "contribution": -0.10932918747611925,
+        "direction": "contradicts",
+        "feature_label": "средний радиус"
+      },
+      {
+        "feature": "mean texture",
+        "raw_value": "20.21",
+        "contribution": -0.09719614861394783,
+        "direction": "contradicts",
+        "feature_label": "средняя текстура"
+      },
+      {
+        "feature": "mean perimeter",
+        "raw_value": "96.12",
+        "contribution": -0.08029850405098445,
+        "direction": "contradicts",
+        "feature_label": "средний периметр"
+      },
+      {
+        "feature": "mean area",
+        "raw_value": "680.9",
+        "contribution": -0.036672678417047286,
+        "direction": "contradicts",
+        "feature_label": "средняя площадь"
+      },
+      {
+        "feature": "mean smoothness",
+        "raw_value": "0.09587",
+        "contribution": 0.005573173470544267,
+        "direction": "supports",
+        "feature_label": "средняя гладкость контура"
+      },
+      {
+        "feature": "mean compactness",
+        "raw_value": "0.08345",
+        "contribution": -0.17772626741281847,
+        "direction": "contradicts",
+        "feature_label": "средняя компактность"
+      },
+      {
+        "feature": "mean concavity",
+        "raw_value": "0.06824",
+        "contribution": 0.1887136455781393,
+        "direction": "supports",
+        "feature_label": "средняя вогнутость контура"
+      },
+      {
+        "feature": "mean concave points",
+        "raw_value": "0.04951",
+        "contribution": -0.010087967859913597,
+        "direction": "contradicts",
+        "feature_label": "среднее число вогнутых точек контура"
+      },
+      {
+        "feature": "mean symmetry",
+        "raw_value": "0.1487",
+        "contribution": -0.13035001099212318,
+        "direction": "contradicts",
+        "feature_label": "средняя симметрия"
+      },
+      {
+        "feature": "mean fractal dimension",
+        "raw_value": "0.05748",
+        "contribution": -0.32408134940809985,
+        "direction": "contradicts",
+        "feature_label": "средняя фрактальная размерность"
+      },
+      {
+        "feature": "radius error",
+        "raw_value": "0.2323",
+        "contribution": 0.8019388494946564,
+        "direction": "supports",
+        "feature_label": "стандартная ошибка радиуса"
+      },
+      {
+        "feature": "texture error",
+        "raw_value": "1.636",
+        "contribution": -0.01636960389106654,
+        "direction": "contradicts",
+        "feature_label": "стандартная ошибка текстуры"
+      },
+      {
+        "feature": "perimeter error",
+        "raw_value": "1.596",
+        "contribution": 0.3997868699520792,
+        "direction": "supports",
+        "feature_label": "стандартная ошибка периметра"
+      },
+      {
+        "feature": "area error",
+        "raw_value": "21.84",
+        "contribution": 0.3318144980762215,
+        "direction": "supports",
+        "feature_label": "стандартная ошибка площади"
+      },
+      {
+        "feature": "smoothness error",
+        "raw_value": "0.005415",
+        "contribution": 0.1109298143556529,
+        "direction": "supports",
+        "feature_label": "стандартная ошибка гладкости контура"
+      },
+      {
+        "feature": "compactness error",
+        "raw_value": "0.01371",
+        "contribution": -0.45157460517220144,
+        "direction": "contradicts",
+        "feature_label": "стандартная ошибка компактности"
+      },
+      {
+        "feature": "concavity error",
+        "raw_value": "0.02153",
+        "contribution": -0.0277018637406601,
+        "direction": "contradicts",
+        "feature_label": "стандартная ошибка вогнутости контура"
+      },
+      {
+        "feature": "concave points error",
+        "raw_value": "0.01183",
+        "contribution": -0.0019674683629498824,
+        "direction": "contradicts",
+        "feature_label": "стандартная ошибка числа вогнутых точек"
+      },
+      {
+        "feature": "symmetry error",
+        "raw_value": "0.01959",
+        "contribution": -0.047612387872666286,
+        "direction": "contradicts",
+        "feature_label": "стандартная ошибка симметрии"
+      },
+      {
+        "feature": "fractal dimension error",
+        "raw_value": "0.001812",
+        "contribution": -0.5320216747303044,
+        "direction": "contradicts",
+        "feature_label": "стандартная ошибка фрактальной размерности"
+      },
+      {
+        "feature": "worst radius",
+        "raw_value": "16.01",
+        "contribution": 0.05356956398150983,
+        "direction": "supports",
+        "feature_label": "худший (максимальный) радиус"
+      },
+      {
+        "feature": "worst texture",
+        "raw_value": "28.48",
+        "contribution": -0.45226823967694013,
+        "direction": "contradicts",
+        "feature_label": "худшая (максимальная) текстура"
+      },
+      {
+        "feature": "worst perimeter",
+        "raw_value": "103.9",
+        "contribution": 0.08091743267593886,
+        "direction": "supports",
+        "feature_label": "худший (максимальный) периметр"
+      },
+      {
+        "feature": "worst area",
+        "raw_value": "783.6",
+        "contribution": 0.1485917198444299,
+        "direction": "supports",
+        "feature_label": "худшая (максимальная) площадь"
+      },
+      {
+        "feature": "worst smoothness",
+        "raw_value": "0.1216",
+        "contribution": 0.3516661243937307,
+        "direction": "supports",
+        "feature_label": "худшая (максимальная) гладкость контура"
+      },
+      {
+        "feature": "worst compactness",
+        "raw_value": "0.1388",
+        "contribution": 0.13266760892781604,
+        "direction": "supports",
+        "feature_label": "худшая (максимальная) компактность"
+      },
+      {
+        "feature": "worst concavity",
+        "raw_value": "0.17",
+        "contribution": 0.3749044130497863,
+        "direction": "supports",
+        "feature_label": "худшая (максимальная) вогнутость контура"
+      },
+      {
+        "feature": "worst concave points",
+        "raw_value": "0.1017",
+        "contribution": 0.1712341480339268,
+        "direction": "supports",
+        "feature_label": "худшее (максимальное) число вогнутых точек контура"
+      },
+      {
+        "feature": "worst symmetry",
+        "raw_value": "0.2369",
+        "contribution": 0.6815161600107651,
+        "direction": "supports",
+        "feature_label": "худшая (максимальная) симметрия"
+      },
+      {
+        "feature": "worst fractal dimension",
+        "raw_value": "0.06599",
+        "contribution": 0.616410950014885,
+        "direction": "supports",
+        "feature_label": "худшая (максимальная) фрактальная размерность"
+      }
+    ],
+    "limitations": [],
+    "image_width": null,
+    "image_height": null,
+    "image_channels": null,
+    "image_artifact_sha256": "",
+    "image_png_base64": "",
+    "image_regions": [],
+    "attribution_overlay_png_base64": "",
+    "attribution_method": null
+  },
+  "uncertainty": {
+    "faithfulness": null,
+    "fidelity": null,
+    "stability": null,
+    "coverage": null,
+    "consistency": null,
+    "calibration": null,
+    "sparsity": 0.03333333333333333,
+    "rule_complexity": null,
+    "counterfactual_validity": 1.0,
+    "prototype_representativeness": 0.484253918883698,
+    "trace_completeness": 0.5280898876404494,
+    "reconstruction_error": 0.0
+  },
+  "limitations": [
+    {
+      "claim_id": "C-043",
+      "statement": "Действие: insufficient_evidence",
+      "evidence_status": "insufficient_evidence",
+      "effect": "adverse",
+      "severity": "warning",
+      "strength": null,
+      "evidence_refs": [
+        "diagnostic:0",
+        "diagnostic:1",
+        "diagnostic:2"
+      ],
+      "limitations": [
+        "Действие ограничено доступными evidence-каналами."
+      ],
+      "native": null,
+      "surrogate": null
+    }
+  ],
+  "provenance": {
+    "adapter_id": "sklearn_pipeline_v2",
+    "model_type": "Pipeline",
+    "model_fingerprint": "d3a9d8c03dd124b2d5d525d767fd74a8a828432479e8fa43e3b1164d37f13b1d",
+    "object_ids": [
+      "p0"
+    ],
+    "dataset_version": "breast_cancer_wisconsin_sklearn_v1",
+    "generated_at": "2026-08-27T20:18:42.706438+00:00",
+    "input_sha256": "5c0a1a484972ea80391e71ee5a4d6f609e1106dec81aa6c776b064c4442f84d8"
+  }
+}

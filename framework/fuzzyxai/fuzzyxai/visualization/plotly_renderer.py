@@ -304,8 +304,14 @@ def _object_representation(go: Any, spec: Mapping[str, Any]) -> Any:
     return figure
 
 
-def render_visual_spec(spec: Mapping[str, Any], *, view: str, output_path: str | Path | None = None):
-    """Render one real interactive view from the canonical VisualSpec."""
+def render_visual_spec(spec: Mapping[str, Any], *, view: str, output_path: str | Path | None = None, selector: str | None = None):
+    """Render one real interactive view from the canonical VisualSpec.
+
+    ``selector`` is accepted for interface parity with the matplotlib
+    backend's focused ``provenance`` view; the plotly ``provenance``
+    renderer does not yet use it (still renders the sampled full-graph
+    view) — a known follow-up, not implemented in this pass.
+    """
 
     import plotly.graph_objects as go
 

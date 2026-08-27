@@ -76,6 +76,10 @@ def find_similar_tabular_cases(
                 trace={"reference_index": int(index), "scale": "median absolute deviation"},
                 reference_rank=rank,
                 reference_count=reference_count,
+                query_values={name: float(value) for name, value in zip(names, vector) if np.isfinite(value)},
+                reference_values={name: float(value) for name, value in zip(names, matrix[index]) if np.isfinite(value)},
+                raw_deltas={name: float(value) for name, value in zip(names, matrix[index] - vector) if np.isfinite(value)},
+                standardized_deltas={name: float(value) for name, value in zip(names, deltas[index]) if np.isfinite(value)},
             )
         )
     return results

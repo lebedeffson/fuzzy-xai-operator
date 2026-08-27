@@ -88,7 +88,7 @@ def export_hybrid_xiris_tables(out_dir: Path) -> list[Path]:
             {"metric": "fuzzyxai_critical_misses", "value": summary["fuzzyxai_critical_misses"]},
             {"metric": "gamma", "value": result.gamma},
             {"metric": "delta", "value": result.delta},
-            {"metric": "rho", "value": result.rho},
+            {"metric": "legacy_risk_score", "value": result.legacy_risk_score},
         ],
     )
     risk_components = {
@@ -106,7 +106,7 @@ def export_hybrid_xiris_tables(out_dir: Path) -> list[Path]:
         }
         for key, value in risk_components.items()
     ]
-    risk_rows.append({"component": "total", "value": "rho", "weight": "", "contribution": result.rho})
+    risk_rows.append({"component": "total", "value": "legacy_risk_score", "weight": "", "contribution": result.legacy_risk_score})
     _write_csv(paths[4], risk_rows)
     return paths
 

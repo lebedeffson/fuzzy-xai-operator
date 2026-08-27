@@ -1,9 +1,16 @@
 from __future__ import annotations
 
 from collections.abc import Mapping, Sequence
-from typing import Any
+from typing import Any, cast
 
-from .contracts import EffectDirection, ExplanationClaim, ExplanationEvidence, ExplanationLevel, Severity
+from .contracts import (
+    EffectDirection,
+    EvidenceStatus,
+    ExplanationClaim,
+    ExplanationEvidence,
+    ExplanationLevel,
+    Severity,
+)
 
 
 def build_explanation_claims(
@@ -47,7 +54,7 @@ def build_explanation_claims(
                 subject_id=subject_id,
                 statement=statement,
                 short_statement=short_statement,
-                evidence_status=status,
+                evidence_status=cast(EvidenceStatus, status),
                 effect=effect,
                 severity=severity,
                 strength=strength,
@@ -233,9 +240,9 @@ def build_explanation_claims(
     for rule in evidence.rules:
         ref = f"rule:{rule.rule_id}"
         provenance = "нативным" if rule.native else "суррогатным"
-        limitations = []
+        rule_limitations: list[str] = []
         if rule.surrogate:
-            limitations.append("Суррогатное правило описывает поведение модели только в пределах измеренной fidelity.")
+            rule_limitations.append("Суррогатное правило описывает поведение модели только в пределах измеренной fidelity.")
         add(
             "model_rule",
             "model",
@@ -244,7 +251,7 @@ def build_explanation_claims(
             f"{rule.rule_id}: {rule.human_text}",
             [ref],
             strength=rule.importance if rule.importance is not None and 0.0 <= rule.importance <= 1.0 else None,
-            limitations=limitations,
+            limitations=rule_limitations,
             metric_name="rule_importance" if rule.importance is not None else None,
             metric_value=rule.importance,
             effect="mixed" if rule.is_conflicting else "favorable",
@@ -255,17 +262,37 @@ def build_explanation_claims(
 
     for concept in evidence.concepts:
         ref = f"concept:{concept.class_id}"
+        # A class concept is built purely from reference/training data — it
+        # describes what that class typically looks like. The mere
+        # *existence* of a prototype for the predicted class is not
+        # evidence that THIS object resembles it — only a real measured
+        # distance/similarity between the query and that prototype
+        # (concept.query_distance/query_similarity, from build_class_concepts'
+        # optional query_row) licenses "favorable," and only when the
+        # object is at least as close to the prototype as a typical class
+        # member (query_distance <= intra_class_variability). Otherwise the
+        # concept stays neutral background knowledge — never "contradicts"
+        # either, since typicality alone doesn't establish opposition.
+        is_predicted_class = str(concept.class_id) == str(predicted_value)
+        genuinely_close = (
+            concept.query_distance is not None
+            and concept.intra_class_variability is not None
+            and concept.query_distance <= concept.intra_class_variability
+        )
+        statement = concept.human_description
+        if concept.query_distance is not None:
+            statement += f" Расстояние от объекта до прототипа класса: {concept.query_distance:.4f} (сходство {concept.query_similarity:.4f})."
         add(
             "class_concept",
             "class",
             concept.class_id,
-            concept.human_description,
+            statement,
             f"Концепт класса {concept.class_name}",
             [ref],
             limitations=concept.limitations,
-            metric_name="primary_rule_coverage" if concept.primary_rule_coverage is not None else None,
-            metric_value=concept.primary_rule_coverage,
-            effect="favorable",
+            metric_name="query_distance" if concept.query_distance is not None else ("primary_rule_coverage" if concept.primary_rule_coverage is not None else None),
+            metric_value=concept.query_distance if concept.query_distance is not None else concept.primary_rule_coverage,
+            effect="favorable" if is_predicted_class and genuinely_close else "neutral",
         )
 
     for case in evidence.similar_cases:
@@ -340,6 +367,87 @@ def build_explanation_claims(
             effect="favorable" if str(activation.conclusion) == str(predicted_value) else "adverse",
         )
 
+    for attribution in evidence.attribution_maps:
+        ref = f"attribution_map:{attribution.object_id}"
+        if attribution.completeness.get("status") == "measured":
+            error_text = (
+                f" Baseline: {attribution.completeness.get('baseline')}; target={attribution.completeness.get('target_class')}; "
+                f"проверка полноты в пространстве {attribution.completeness.get('output_space')}: "
+                f"остаток {float(attribution.completeness.get('completeness_residual', 0.0)):.6f}."
+            )
+        else:
+            error_text = f" Проверка полноты не выполнена: {attribution.completeness.get('reason', 'причина не указана')}."
+        add(
+            "attribution_map",
+            "object",
+            attribution.object_id,
+            f"Метод {attribution.method} вычислил полную карту атрибуции по пикселям (форма {tuple(attribution.shape)}). "
+            f"Сумма положительного вклада {attribution.positive_sum:+.4f}, отрицательного {attribution.negative_sum:+.4f}, диапазон [{attribution.min_value:.4f}, {attribution.max_value:.4f}]."
+            + error_text,
+            f"Карта атрибуции ({attribution.method}): сумма {attribution.positive_sum + attribution.negative_sum:+.4f}",
+            [ref],
+            limitations=attribution.limitations,
+            metric_name="completeness_error" if attribution.completeness_error is not None else None,
+            metric_value=attribution.completeness_error,
+            effect="favorable" if attribution.positive_sum + attribution.negative_sum >= 0 else "adverse",
+        )
+
+    for internals in evidence.model_internals:
+        if internals.linear_terms:
+            ref = f"model_internals:{internals.object_id}:linear_reconstruction"
+            terms_text = "; ".join(
+                (f"{term.get('feature')}: сырое значение {term['raw_value']:.4f} -> преобразованное {term.get('transformed_value', term['value']):.4f}" if term.get("raw_value") is not None else f"{term.get('feature')}: значение {term['value']:.4f}")
+                + f", коэффициент {term['coefficient']:.4f}, вклад {term['contribution']:+.4f}"
+                for term in internals.linear_terms
+            )
+            error_text = f" Ошибка восстановления {internals.reconstruction_error:.6f}." if internals.reconstruction_error is not None else ""
+            add(
+                "linear_reconstruction",
+                "object",
+                internals.object_id,
+                f"Раскладка линейной оценки объекта {internals.object_id}: {terms_text}. Восстановленная оценка {internals.reconstructed_score:.4f}"
+                + (f", фактическая оценка модели {internals.actual_score:.4f}." if internals.actual_score is not None else ".")
+                + error_text,
+                f"Линейная раскладка: {len(internals.linear_terms)} слагаемых, восстановлено {internals.reconstructed_score:.4f}",
+                [ref],
+                limitations=internals.limitations,
+                metric_name="reconstruction_error" if internals.reconstruction_error is not None else None,
+                metric_value=internals.reconstruction_error,
+                effect="neutral",
+            )
+        if internals.decision_path:
+            ref = f"model_internals:{internals.object_id}:decision_path"
+            steps_text = "; ".join(
+                f"{step.get('feature')} {step.get('operator')} {step.get('threshold'):.3f} (значение {step.get('value'):.3f})" for step in internals.decision_path
+            )
+            add(
+                "decision_path",
+                "object",
+                internals.object_id,
+                f"Объект {internals.object_id} прошёл по дереву решений через узлы: {steps_text}. Итоговый лист {internals.leaf_id} содержит {internals.leaf_samples} обучающих примеров.",
+                f"Путь по дереву: {len(internals.decision_path)} узлов, лист {internals.leaf_id}",
+                [ref],
+                limitations=internals.limitations,
+                metric_name="leaf_samples" if internals.leaf_samples is not None else None,
+                metric_value=float(internals.leaf_samples) if internals.leaf_samples is not None else None,
+                effect="neutral",
+            )
+        if internals.ensemble_votes is not None:
+            ref = f"model_internals:{internals.object_id}:ensemble_votes"
+            disagreement_text = f"; разброс голосов {internals.ensemble_disagreement:.3f}" if internals.ensemble_disagreement is not None else ""
+            add(
+                "ensemble_votes",
+                "object",
+                internals.object_id,
+                f"{len(internals.ensemble_votes)} базовых моделей ансамбля проголосовали для объекта {internals.object_id}{disagreement_text}.",
+                f"Голоса ансамбля: {len(internals.ensemble_votes)} моделей{disagreement_text}",
+                [ref],
+                limitations=internals.limitations,
+                metric_name="ensemble_disagreement" if internals.ensemble_disagreement is not None else None,
+                metric_value=internals.ensemble_disagreement,
+                effect="adverse" if (internals.ensemble_disagreement or 0.0) > 0.3 else "neutral",
+            )
+
     for index, counterfactual in enumerate(evidence.counterfactuals):
         ref = f"counterfactual:{index}"
         changed = dict(counterfactual.changed_features) or {"rules": list(counterfactual.changed_rules)}
@@ -412,8 +520,24 @@ def determine_explanation_level(
     *,
     contribution_method: str | None,
     operator_channels: Mapping[str, bool],
+    native_rules_supported: bool = True,
+    local_contributions_supported: bool = True,
+    alignment_applicable: bool = True,
+    reduction_applicable: bool = True,
+    required_channels: Sequence[str] = (),
 ) -> ExplanationLevel:
-    """Determine the highest fully evidenced level without promoting missing channels."""
+    """Determine the highest fully evidenced level without promoting missing channels.
+
+    ``native_rules_supported``/``local_contributions_supported`` default to
+    ``True`` (unchanged behavior for any caller that doesn't pass them).
+    When a model's own declared capabilities rule a channel out entirely
+    (e.g. a CNN/MLP has no native rules, an ensemble with no local-
+    contribution capability), that channel is reported as
+    ``not_applicable_channels`` rather than ``missing_channels`` — the two
+    mean different things: "missing" implies the channel could exist but
+    wasn't supplied; "not applicable" means this model family doesn't have
+    that kind of evidence at all.
+    """
 
     available = ["prediction", "call_trace"]
     native = ["prediction", "call_trace"]
@@ -480,7 +604,36 @@ def determine_explanation_level(
         "reduction",
         "risk",
     }
-    missing = sorted(expected - set(available))
+    not_applicable: list[str] = []
+    if "rules" not in available and not native_rules_supported and "fuzzy_rule_activations" not in available:
+        # A fuzzy/rule model still counts as having rule-like evidence even
+        # without native_rules_supported (its evidence just lives in a
+        # different channel) — only flag "rules" as not_applicable when
+        # neither channel produced anything.
+        not_applicable.append("rules")
+    if "local_contributions" not in available and not local_contributions_supported:
+        not_applicable.append("local_contributions")
+    if "alignment" not in available and not alignment_applicable:
+        # P18 item 1: alignment (Gamma) is a genuine system-level operator,
+        # not a per-model capability, but the same missing-vs-not_applicable
+        # distinction applies: a single-channel model whose ExplainPlan
+        # never declared a second explanatory channel is not "missing"
+        # alignment, it simply never had a scenario for it.
+        not_applicable.append("alignment")
+    if "reduction" not in available and not reduction_applicable:
+        not_applicable.append("reduction")
+    missing = sorted(expected - set(available) - set(not_applicable))
+    required_missing = sorted(set(missing) & set(required_channels))
+    optional_missing = sorted(set(missing) - set(required_missing))
+    channel_status = {
+        channel: (
+            "available" if channel in available
+            else "not_applicable" if channel in not_applicable
+            else "required_missing" if channel in required_missing
+            else "optional_missing"
+        )
+        for channel in sorted(expected)
+    }
     rationale = {
         "E0": "Доступны только прогноз и trace вызова.",
         "E1": "Доступны профиль входных данных и базовая локальная evidence.",
@@ -496,4 +649,8 @@ def determine_explanation_level(
         native_channels=tuple(dict.fromkeys(native)),
         surrogate_channels=tuple(dict.fromkeys(surrogate)),
         rationale=rationale,
+        not_applicable_channels=tuple(dict.fromkeys(not_applicable)),
+        required_missing_channels=tuple(required_missing),
+        optional_missing_channels=tuple(optional_missing),
+        channel_status=channel_status,
     )

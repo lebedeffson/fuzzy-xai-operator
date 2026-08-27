@@ -4,7 +4,7 @@ from .alignment import compute_alignment
 from .explanation import build_explainable_object
 from .git_info import get_source_commit
 from .reduction import compute_reduction
-from .risk_observer import observe_risk
+from .risk_observer import observe_legacy_normalized_risk
 from .scenario_engine import DEFAULT_HYBRID_PLAN
 from .thresholds import HYBRID_XIRIS_THRESHOLDS
 from .types import AdaptedInput, OperatorNode, OperatorRoute
@@ -84,9 +84,12 @@ def _hybrid_operator_values(values: dict) -> tuple[dict, dict, dict, list[dict],
         },
     )
     risk_weights = values.get("risk_weights", plan.risk_weights)
-    risk_result = observe_risk(risk_components, risk_weights, plan.thresholds, int(source_conflict))
+    risk_result = observe_legacy_normalized_risk(
+        risk_components, risk_weights, plan.thresholds, int(source_conflict)
+    )
     risk = {
-        "rho": round(risk_result.rho, 3),
+        "legacy_risk_score": round(risk_result.rho, 3),
+        "scientific_contract": "legacy_not_P19_rho",
         "chi_crit": risk_result.chi_r_crit,
         "risk_zone": "critical" if risk_result.chi_r_crit else "normal",
         "status": "blocked" if risk_result.chi_r_crit else "passed",
@@ -124,7 +127,8 @@ def build_hybrid_xiris_route(adapted: AdaptedInput) -> OperatorRoute:
         "gamma": alignment["gamma"],
         "delta": reduction["delta"],
         "r_delta": reduction["r_delta"],
-        "rho": risk["rho"],
+        "legacy_risk_score": risk["legacy_risk_score"],
+        "scientific_contract": "legacy_hybrid_route_not_P19_rho",
         "chi_crit": risk["chi_crit"],
         "selected_class": representation,
         "diagnostic_id": diagnostics[0]["diagnostic_id"] if diagnostics else "",
@@ -148,7 +152,7 @@ def build_hybrid_xiris_route(adapted: AdaptedInput) -> OperatorRoute:
         _node("alignment", "Согласование T_ij", f"gamma={alignment['gamma']}", alignment["status"], "Рассогласование качества источника и модельного сигнала.", alignment, "T_ij"),
         _node("representation", "Выбор класса F", representation, "warning", "Критический конфликт требует расширенного представления.", {"value_source": "computed"}, "F"),
         _node("reduction", "Потери представления", f"Delta={reduction['delta']}; r_Delta={reduction['r_delta']}", reduction["status"], "Потеря редукции сохраняется в маршруте.", reduction, "Delta"),
-        _node("risk", "Риск rho", f"rho={risk['rho']}; chi_crit={risk['chi_crit']}", risk["status"], risk["reason_ru"], risk, "rho, chi_crit"),
+        _node("risk", "Legacy compatibility score", f"legacy score={risk['legacy_risk_score']}; chi_crit={risk['chi_crit']}", risk["status"], risk["reason_ru"], risk, "legacy score, chi_crit"),
         _node("diagnostics", "Диагностика D", computed_result["diagnostic_id"], "blocked", "Диагностика объясняет запрет автоматического принятия.", {"diagnostics": diagnostics, "value_source": "computed"}, "D"),
         _node("action", "Действие", action["action"], action["status"], action["reason_ru"], action, "action policy"),
         _node("proof", "Доказательный след", "proof trace готов", "passed", "Маршрут сохраняется как проверяемый доказательный след.", {"value_source": "computed"}, "proof trace"),

@@ -1,0 +1,6 @@
+explanation_level: E2
+missing_channels: ('class_concepts', 'counterfactuals', 'similar_cases', 'training_history')
+action: insufficient_evidence
+regions found: 4
+predicted_is_footwear: False true_class: свитер
+attribution shape: [1, 1, 28, 28]

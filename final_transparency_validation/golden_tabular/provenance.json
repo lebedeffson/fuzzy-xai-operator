@@ -1,0 +1,5448 @@
+{
+  "nodes": [
+    {
+      "node_id": "dataset:root",
+      "node_type": "dataset",
+      "label": "Датасет breast_cancer_wisconsin_sklearn_v1",
+      "payload": {
+        "dataset_version": "breast_cancer_wisconsin_sklearn_v1"
+      },
+      "evidence_refs": []
+    },
+    {
+      "node_id": "model_artifact:root",
+      "node_type": "model_artifact",
+      "label": "Модель (Pipeline)",
+      "payload": {
+        "model_fingerprint": "d3a9d8c03dd124b2d5d525d767fd74a8a828432479e8fa43e3b1164d37f13b1d",
+        "model_type": "Pipeline",
+        "adapter_id": "sklearn_pipeline_v2"
+      },
+      "evidence_refs": []
+    },
+    {
+      "node_id": "data:p0",
+      "node_type": "data",
+      "label": "Данные объекта p0",
+      "payload": {
+        "object_id": "p0",
+        "feature_names": [
+          "mean radius",
+          "mean texture",
+          "mean perimeter",
+          "mean area",
+          "mean smoothness",
+          "mean compactness",
+          "mean concavity",
+          "mean concave points",
+          "mean symmetry",
+          "mean fractal dimension",
+          "radius error",
+          "texture error",
+          "perimeter error",
+          "area error",
+          "smoothness error",
+          "compactness error",
+          "concavity error",
+          "concave points error",
+          "symmetry error",
+          "fractal dimension error",
+          "worst radius",
+          "worst texture",
+          "worst perimeter",
+          "worst area",
+          "worst smoothness",
+          "worst compactness",
+          "worst concavity",
+          "worst concave points",
+          "worst symmetry",
+          "worst fractal dimension"
+        ],
+        "raw_values": [
+          14.87,
+          20.21,
+          96.12,
+          680.9,
+          0.09587,
+          0.08345,
+          0.06824,
+          0.04951,
+          0.1487,
+          0.05748,
+          0.2323,
+          1.636,
+          1.596,
+          21.84,
+          0.005415,
+          0.01371,
+          0.02153,
+          0.01183,
+          0.01959,
+          0.001812,
+          16.01,
+          28.48,
+          103.9,
+          783.6,
+          0.1216,
+          0.1388,
+          0.17,
+          0.1017,
+          0.2369,
+          0.06599
+        ],
+        "normalized_values": [
+          0.5528042822514364,
+          0.3384204507478391,
+          0.5285422180133444,
+          0.5800448027468162,
+          -0.004740396903952017,
+          -0.21263394370356395,
+          0.08076052433497906,
+          0.5250467211878369,
+          -1.2318543810800098,
+          -0.6221185357995884,
+          -0.5557244958022795,
+          1.216187041941229,
+          -0.6021616470262625,
+          -0.19575126142538418,
+          -0.43862875236176635,
+          -0.5184350553930225,
+          -0.24111970621416504,
+          0.15157095718575178,
+          0.14893577683874046,
+          -0.893331243759677,
+          0.2976497683520201,
+          0.49900108223720935,
+          0.24445931604235024,
+          0.30845424210489436,
+          -0.4375075196604953,
+          -0.593942405811718,
+          -0.3105045990508113,
+          0.029430677578414766,
+          -0.9418194141471973,
+          -0.9844302567334545
+        ],
+        "missingness": {
+          "mean radius": false,
+          "mean texture": false,
+          "mean perimeter": false,
+          "mean area": false,
+          "mean smoothness": false,
+          "mean compactness": false,
+          "mean concavity": false,
+          "mean concave points": false,
+          "mean symmetry": false,
+          "mean fractal dimension": false,
+          "radius error": false,
+          "texture error": false,
+          "perimeter error": false,
+          "area error": false,
+          "smoothness error": false,
+          "compactness error": false,
+          "concavity error": false,
+          "concave points error": false,
+          "symmetry error": false,
+          "fractal dimension error": false,
+          "worst radius": false,
+          "worst texture": false,
+          "worst perimeter": false,
+          "worst area": false,
+          "worst smoothness": false,
+          "worst compactness": false,
+          "worst concavity": false,
+          "worst concave points": false,
+          "worst symmetry": false,
+          "worst fractal dimension": false
+        },
+        "outlier_scores": {
+          "mean radius": 0.5528042822514364,
+          "mean texture": 0.3384204507478391,
+          "mean perimeter": 0.5285422180133444,
+          "mean area": 0.5800448027468162,
+          "mean smoothness": 0.004740396903952017,
+          "mean compactness": 0.21263394370356395,
+          "mean concavity": 0.08076052433497906,
+          "mean concave points": 0.5250467211878369,
+          "mean symmetry": 1.2318543810800098,
+          "mean fractal dimension": 0.6221185357995884,
+          "radius error": 0.5557244958022795,
+          "texture error": 1.216187041941229,
+          "perimeter error": 0.6021616470262625,
+          "area error": 0.19575126142538418,
+          "smoothness error": 0.43862875236176635,
+          "compactness error": 0.5184350553930225,
+          "concavity error": 0.24111970621416504,
+          "concave points error": 0.15157095718575178,
+          "symmetry error": 0.14893577683874046,
+          "fractal dimension error": 0.893331243759677,
+          "worst radius": 0.2976497683520201,
+          "worst texture": 0.49900108223720935,
+          "worst perimeter": 0.24445931604235024,
+          "worst area": 0.30845424210489436,
+          "worst smoothness": 0.4375075196604953,
+          "worst compactness": 0.593942405811718,
+          "worst concavity": 0.3105045990508113,
+          "worst concave points": 0.029430677578414766,
+          "worst symmetry": 0.9418194141471973,
+          "worst fractal dimension": 0.9844302567334545
+        },
+        "anomaly_labels": [],
+        "data_quality": 1.0,
+        "source_trace": {
+          "adapter_id": "sklearn_pipeline_v2",
+          "model_fingerprint": "d3a9d8c03dd124b2d5d525d767fd74a8a828432479e8fa43e3b1164d37f13b1d"
+        },
+        "warnings": [],
+        "evidence_refs": [
+          "robust_median_mad_profile"
+        ],
+        "reference_profiles": {
+          "mean radius": {
+            "q05": 9.5637,
+            "median": 13.28,
+            "q95": 20.593,
+            "percentile": 67.6923076923077,
+            "sample_size": 455.0
+          },
+          "mean texture": {
+            "q05": 13.054,
+            "median": 18.77,
+            "q95": 27.100999999999996,
+            "percentile": 63.07692307692307,
+            "sample_size": 455.0
+          },
+          "mean perimeter": {
+            "q05": 60.544,
+            "median": 85.98,
+            "q95": 137.37999999999997,
+            "percentile": 66.8131868131868,
+            "sample_size": 455.0
+          },
+          "mean area": {
+            "q05": 272.11,
+            "median": 546.4,
+            "q95": 1319.3,
+            "percentile": 67.6923076923077,
+            "sample_size": 455.0
+          },
+          "mean smoothness": {
+            "q05": 0.075096,
+            "median": 0.09594,
+            "q95": 0.11904999999999999,
+            "percentile": 49.67032967032967,
+            "sample_size": 455.0
+          },
+          "mean compactness": {
+            "q05": 0.040037,
+            "median": 0.09362,
+            "q95": 0.20692999999999992,
+            "percentile": 42.1978021978022,
+            "sample_size": 455.0
+          },
+          "mean concavity": {
+            "q05": 0.0049943,
+            "median": 0.06335,
+            "q95": 0.24148999999999998,
+            "percentile": 52.74725274725275,
+            "sample_size": 455.0
+          },
+          "mean concave points": {
+            "q05": 0.0057375,
+            "median": 0.0337,
+            "q95": 0.12607999999999997,
+            "percentile": 60.65934065934066,
+            "sample_size": 455.0
+          },
+          "mean symmetry": {
+            "q05": 0.14181,
+            "median": 0.1792,
+            "q95": 0.23050999999999996,
+            "percentile": 9.45054945054945,
+            "sample_size": 455.0
+          },
+          "mean fractal dimension": {
+            "q05": 0.053938,
+            "median": 0.0614,
+            "q95": 0.07619,
+            "percentile": 24.175824175824175,
+            "sample_size": 455.0
+          },
+          "radius error": {
+            "q05": 0.15618,
+            "median": 0.3198,
+            "q95": 0.9774499999999998,
+            "percentile": 25.494505494505493,
+            "sample_size": 455.0
+          },
+          "texture error": {
+            "q05": 0.53035,
+            "median": 1.081,
+            "q95": 2.245599999999999,
+            "percentile": 82.19780219780219,
+            "sample_size": 455.0
+          },
+          "perimeter error": {
+            "q05": 1.1132,
+            "median": 2.287,
+            "q95": 7.136999999999999,
+            "percentile": 24.615384615384617,
+            "sample_size": 455.0
+          },
+          "area error": {
+            "q05": 11.329,
+            "median": 24.6,
+            "q95": 117.11999999999989,
+            "percentile": 42.1978021978022,
+            "sample_size": 455.0
+          },
+          "smoothness error": {
+            "q05": 0.0036473,
+            "median": 0.006356,
+            "q95": 0.012883,
+            "percentile": 28.79120879120879,
+            "sample_size": 455.0
+          },
+          "compactness error": {
+            "q05": 0.0079156,
+            "median": 0.02062,
+            "q95": 0.058614999999999966,
+            "percentile": 25.71428571428571,
+            "sample_size": 455.0
+          },
+          "concavity error": {
+            "q05": 0.0032748000000000005,
+            "median": 0.02602,
+            "q95": 0.07703999999999997,
+            "percentile": 43.73626373626374,
+            "sample_size": 455.0
+          },
+          "concave points error": {
+            "q05": 0.0037158000000000004,
+            "median": 0.01103,
+            "q95": 0.022904999999999988,
+            "percentile": 56.043956043956044,
+            "sample_size": 455.0
+          },
+          "symmetry error": {
+            "q05": 0.011764,
+            "median": 0.01872,
+            "q95": 0.03554399999999992,
+            "percentile": 57.802197802197796,
+            "sample_size": 455.0
+          },
+          "fractal dimension error": {
+            "q05": 0.0015228,
+            "median": 0.003204,
+            "q95": 0.007620799999999998,
+            "percentile": 12.307692307692308,
+            "sample_size": 455.0
+          },
+          "worst radius": {
+            "q05": 10.525,
+            "median": 14.92,
+            "q95": 25.609999999999996,
+            "percentile": 60.21978021978022,
+            "sample_size": 455.0
+          },
+          "worst texture": {
+            "q05": 16.387999999999998,
+            "median": 25.21,
+            "q95": 36.285,
+            "percentile": 70.1098901098901,
+            "sample_size": 455.0
+          },
+          "worst perimeter": {
+            "q05": 67.61200000000001,
+            "median": 97.59,
+            "q95": 175.37999999999994,
+            "percentile": 58.02197802197803,
+            "sample_size": 455.0
+          },
+          "worst area": {
+            "q05": 329.92,
+            "median": 684.5,
+            "q95": 2012.6999999999996,
+            "percentile": 60.43956043956044,
+            "sample_size": 455.0
+          },
+          "worst smoothness": {
+            "q05": 0.096755,
+            "median": 0.1312,
+            "q95": 0.17050999999999997,
+            "percentile": 31.208791208791208,
+            "sample_size": 455.0
+          },
+          "worst compactness": {
+            "q05": 0.07059800000000001,
+            "median": 0.2118,
+            "q95": 0.5616499999999999,
+            "percentile": 22.41758241758242,
+            "sample_size": 455.0
+          },
+          "worst concavity": {
+            "q05": 0.01845,
+            "median": 0.2298,
+            "q95": 0.6653299999999992,
+            "percentile": 38.24175824175824,
+            "sample_size": 455.0
+          },
+          "worst concave points": {
+            "q05": 0.025,
+            "median": 0.09975,
+            "q95": 0.24040999999999985,
+            "percentile": 51.42857142857142,
+            "sample_size": 455.0
+          },
+          "worst symmetry": {
+            "q05": 0.21014,
+            "median": 0.2827,
+            "q95": 0.40512999999999993,
+            "percentile": 15.604395604395604,
+            "sample_size": 455.0
+          },
+          "worst fractal dimension": {
+            "q05": 0.062884,
+            "median": 0.07987,
+            "q95": 0.12011999999999998,
+            "percentile": 10.329670329670328,
+            "sample_size": 455.0
+          }
+        },
+        "subgroup_profiles": {}
+      },
+      "evidence_refs": [
+        "robust_median_mad_profile"
+      ]
+    },
+    {
+      "node_id": "concept:0",
+      "node_type": "concept",
+      "label": "Class 0: no supported primary rules; coverage unavailable.",
+      "payload": {
+        "class_id": "0",
+        "class_name": "0",
+        "prototype_features": {
+          "mean radius": 17.385,
+          "mean texture": 21.445,
+          "mean perimeter": 114.45,
+          "mean area": 940.45,
+          "mean smoothness": 0.10245,
+          "mean compactness": 0.13185,
+          "mean concavity": 0.15205000000000002,
+          "mean concave points": 0.08628,
+          "mean symmetry": 0.1882,
+          "mean fractal dimension": 0.061274999999999996,
+          "radius error": 0.5472,
+          "texture error": 1.0775000000000001,
+          "perimeter error": 3.7055,
+          "area error": 58.455,
+          "smoothness error": 0.006192,
+          "compactness error": 0.02893,
+          "concavity error": 0.037474999999999994,
+          "concave points error": 0.014335,
+          "symmetry error": 0.017750000000000002,
+          "fractal dimension error": 0.003741,
+          "worst radius": 20.445,
+          "worst texture": 29.060000000000002,
+          "worst perimeter": 138.55,
+          "worst area": 1300.5,
+          "worst smoothness": 0.1437,
+          "worst compactness": 0.35575,
+          "worst concavity": 0.4024,
+          "worst concave points": 0.18259999999999998,
+          "worst symmetry": 0.3077,
+          "worst fractal dimension": 0.08760000000000001
+        },
+        "prototype_embedding": [],
+        "primary_rules": [],
+        "representative_objects": [
+          "train_44",
+          "train_116",
+          "train_346"
+        ],
+        "boundary_objects": [
+          "train_325",
+          "train_266",
+          "train_188"
+        ],
+        "counterexamples": [
+          "train_407",
+          "train_58",
+          "train_356"
+        ],
+        "intra_class_variability": 1.3193366884695372,
+        "human_description": "Class 0: no supported primary rules; coverage unavailable.",
+        "primary_rule_coverage": null,
+        "uncovered_fraction": null,
+        "limitations": [
+          "primary-rule coverage is unavailable"
+        ],
+        "query_distance": 1.2597532575699364,
+        "query_similarity": 0.2837240246189641
+      },
+      "evidence_refs": []
+    },
+    {
+      "node_id": "concept:1",
+      "node_type": "concept",
+      "label": "Class 1: no supported primary rules; coverage unavailable.",
+      "payload": {
+        "class_id": "1",
+        "class_name": "1",
+        "prototype_features": {
+          "mean radius": 12.07,
+          "mean texture": 17.33,
+          "mean perimeter": 77.88,
+          "mean area": 449.9,
+          "mean smoothness": 0.09231,
+          "mean compactness": 0.0746,
+          "mean concavity": 0.03738,
+          "mean concave points": 0.02331,
+          "mean symmetry": 0.1718,
+          "mean fractal dimension": 0.06148,
+          "radius error": 0.2571,
+          "texture error": 1.083,
+          "perimeter error": 1.851,
+          "area error": 19.53,
+          "smoothness error": 0.006494,
+          "compactness error": 0.01661,
+          "concavity error": 0.0184,
+          "concave points error": 0.009064,
+          "symmetry error": 0.01906,
+          "fractal dimension error": 0.002821,
+          "worst radius": 13.35,
+          "worst texture": 22.8,
+          "worst perimeter": 86.6,
+          "worst area": 546.3,
+          "worst smoothness": 0.1256,
+          "worst compactness": 0.1726,
+          "worst concavity": 0.1423,
+          "worst concave points": 0.07431,
+          "worst symmetry": 0.2691,
+          "worst fractal dimension": 0.07712
+        },
+        "prototype_embedding": [],
+        "primary_rules": [],
+        "representative_objects": [
+          "train_154",
+          "train_418",
+          "train_277"
+        ],
+        "boundary_objects": [
+          "train_3",
+          "train_388",
+          "train_77"
+        ],
+        "counterexamples": [
+          "train_216",
+          "train_130",
+          "train_11"
+        ],
+        "intra_class_variability": 0.8107279780393052,
+        "human_description": "Class 1: no supported primary rules; coverage unavailable.",
+        "primary_rule_coverage": null,
+        "uncovered_fraction": null,
+        "limitations": [
+          "primary-rule coverage is unavailable"
+        ],
+        "query_distance": 0.6303619421734888,
+        "query_similarity": 0.532399068453982
+      },
+      "evidence_refs": []
+    },
+    {
+      "node_id": "similar:p0:train_195",
+      "node_type": "similar_case",
+      "label": "train_195: robust_standardized_euclidean",
+      "payload": {
+        "query_object_id": "p0",
+        "reference_object_id": "train_195",
+        "similarity_score": 0.675109,
+        "similarity_method": "robust_standardized_euclidean",
+        "compared_representation": "normalized tabular feature vector",
+        "matched_features": [
+          "worst fractal dimension",
+          "fractal dimension error",
+          "mean compactness",
+          "mean fractal dimension",
+          "compactness error",
+          "symmetry error",
+          "concavity error",
+          "worst concavity",
+          "smoothness error",
+          "area error",
+          "worst perimeter",
+          "worst radius",
+          "worst area",
+          "worst compactness",
+          "worst concave points",
+          "worst texture",
+          "radius error",
+          "mean smoothness",
+          "perimeter error",
+          "mean texture",
+          "concave points error",
+          "mean concavity",
+          "mean radius",
+          "mean perimeter"
+        ],
+        "different_features": [
+          "mean concave points",
+          "worst symmetry",
+          "mean symmetry",
+          "texture error",
+          "worst smoothness",
+          "mean area"
+        ],
+        "matched_regions": [],
+        "coverage_score": 0.8,
+        "reference_label": 1,
+        "reference_prediction": null,
+        "reference_outcome": null,
+        "limitations": [
+          "feature distance does not establish causal or clinical similarity"
+        ],
+        "trace": {
+          "reference_index": 195,
+          "scale": "median absolute deviation"
+        },
+        "is_counterexample": false,
+        "media_artifacts": {},
+        "reference_rank": 1,
+        "reference_count": 455,
+        "query_values": {
+          "mean radius": 14.87,
+          "mean texture": 20.21,
+          "mean perimeter": 96.12,
+          "mean area": 680.9,
+          "mean smoothness": 0.09587,
+          "mean compactness": 0.08345,
+          "mean concavity": 0.06824,
+          "mean concave points": 0.04951,
+          "mean symmetry": 0.1487,
+          "mean fractal dimension": 0.05748,
+          "radius error": 0.2323,
+          "texture error": 1.636,
+          "perimeter error": 1.596,
+          "area error": 21.84,
+          "smoothness error": 0.005415,
+          "compactness error": 0.01371,
+          "concavity error": 0.02153,
+          "concave points error": 0.01183,
+          "symmetry error": 0.01959,
+          "fractal dimension error": 0.001812,
+          "worst radius": 16.01,
+          "worst texture": 28.48,
+          "worst perimeter": 103.9,
+          "worst area": 783.6,
+          "worst smoothness": 0.1216,
+          "worst compactness": 0.1388,
+          "worst concavity": 0.17,
+          "worst concave points": 0.1017,
+          "worst symmetry": 0.2369,
+          "worst fractal dimension": 0.06599
+        },
+        "reference_values": {
+          "mean radius": 13.45,
+          "mean texture": 18.3,
+          "mean perimeter": 86.6,
+          "mean area": 555.1,
+          "mean smoothness": 0.1022,
+          "mean compactness": 0.08165,
+          "mean concavity": 0.03974,
+          "mean concave points": 0.0278,
+          "mean symmetry": 0.1638,
+          "mean fractal dimension": 0.0571,
+          "radius error": 0.295,
+          "texture error": 1.373,
+          "perimeter error": 2.099,
+          "area error": 25.22,
+          "smoothness error": 0.005884,
+          "compactness error": 0.01491,
+          "concavity error": 0.01872,
+          "concave points error": 0.009366,
+          "symmetry error": 0.01884,
+          "fractal dimension error": 0.001817,
+          "worst radius": 15.1,
+          "worst texture": 25.94,
+          "worst perimeter": 97.59,
+          "worst area": 699.4,
+          "worst smoothness": 0.1339,
+          "worst compactness": 0.1751,
+          "worst concavity": 0.1381,
+          "worst concave points": 0.07911,
+          "worst symmetry": 0.2678,
+          "worst fractal dimension": 0.06603
+        },
+        "raw_deltas": {
+          "mean radius": -1.42,
+          "mean texture": -1.9100000000000001,
+          "mean perimeter": -9.52000000000001,
+          "mean area": -125.79999999999995,
+          "mean smoothness": 0.006330000000000002,
+          "mean compactness": -0.001799999999999996,
+          "mean concavity": -0.028499999999999998,
+          "mean concave points": -0.02171,
+          "mean symmetry": 0.015100000000000002,
+          "mean fractal dimension": -0.00038000000000000533,
+          "radius error": 0.06269999999999998,
+          "texture error": -0.2629999999999999,
+          "perimeter error": 0.5030000000000001,
+          "area error": 3.379999999999999,
+          "smoothness error": 0.00046900000000000067,
+          "compactness error": 0.0011999999999999997,
+          "concavity error": -0.00281,
+          "concave points error": -0.002464000000000001,
+          "symmetry error": -0.0007500000000000007,
+          "fractal dimension error": 5.000000000000013e-06,
+          "worst radius": -0.9100000000000019,
+          "worst texture": -2.539999999999999,
+          "worst perimeter": -6.310000000000002,
+          "worst area": -84.20000000000005,
+          "worst smoothness": 0.012299999999999991,
+          "worst compactness": 0.0363,
+          "worst concavity": -0.03190000000000001,
+          "worst concave points": -0.02259,
+          "worst symmetry": 0.030899999999999983,
+          "worst fractal dimension": 4.000000000001225e-05
+        },
+        "standardized_deltas": {
+          "mean radius": 0.49369942188493066,
+          "mean texture": 0.4488771256447029,
+          "mean perimeter": 0.4962250409750537,
+          "mean area": 0.5425251761007395,
+          "mean smoothness": 0.42866732002880026,
+          "mean compactness": 0.03763432631921478,
+          "mean concavity": 0.47069017250448,
+          "mean concave points": 0.7209844602775421,
+          "mean symmetry": 0.6098688903051853,
+          "mean fractal dimension": 0.06030740908261401,
+          "radius error": 0.3982162958491762,
+          "texture error": 0.5763192649198976,
+          "perimeter error": 0.43833185015081066,
+          "area error": 0.23972437087601375,
+          "smoothness error": 0.2186151805076182,
+          "compactness error": 0.09003213697129187,
+          "concavity error": 0.1509011969848115,
+          "concave points error": 0.46683854813211545,
+          "symmetry error": 0.12839291106787995,
+          "fractal dimension error": 0.003208804754883906,
+          "worst radius": 0.2484965955966408,
+          "worst texture": 0.38760328712003406,
+          "worst perimeter": 0.24445931604235024,
+          "worst area": 0.2620771663494663,
+          "worst smoothness": 0.5605565095650086,
+          "worst compactness": 0.2953439634378817,
+          "worst concavity": 0.16563706872442951,
+          "worst concave points": 0.3409430802545599,
+          "worst symmetry": 0.6354196484093532,
+          "worst fractal dimension": 0.0028369748032673076
+        }
+      },
+      "evidence_refs": []
+    },
+    {
+      "node_id": "similar:p0:train_58",
+      "node_type": "similar_case",
+      "label": "train_58: robust_standardized_euclidean",
+      "payload": {
+        "query_object_id": "p0",
+        "reference_object_id": "train_58",
+        "similarity_score": 0.638891,
+        "similarity_method": "robust_standardized_euclidean",
+        "compared_representation": "normalized tabular feature vector",
+        "matched_features": [
+          "worst concavity",
+          "mean compactness",
+          "mean symmetry",
+          "mean concave points",
+          "worst symmetry",
+          "mean smoothness",
+          "worst fractal dimension",
+          "fractal dimension error",
+          "worst concave points",
+          "mean concavity",
+          "concavity error",
+          "worst compactness",
+          "mean fractal dimension",
+          "concave points error",
+          "compactness error",
+          "texture error",
+          "mean texture",
+          "symmetry error",
+          "worst texture"
+        ],
+        "different_features": [
+          "smoothness error",
+          "area error",
+          "worst area",
+          "mean area",
+          "radius error",
+          "perimeter error",
+          "worst radius",
+          "mean radius",
+          "worst smoothness",
+          "mean perimeter",
+          "worst perimeter"
+        ],
+        "matched_regions": [],
+        "coverage_score": 0.6333333333333333,
+        "reference_label": 1,
+        "reference_prediction": null,
+        "reference_outcome": null,
+        "limitations": [
+          "feature distance does not establish causal or clinical similarity"
+        ],
+        "trace": {
+          "reference_index": 58,
+          "scale": "median absolute deviation"
+        },
+        "is_counterexample": false,
+        "media_artifacts": {},
+        "reference_rank": 2,
+        "reference_count": 455,
+        "query_values": {
+          "mean radius": 14.87,
+          "mean texture": 20.21,
+          "mean perimeter": 96.12,
+          "mean area": 680.9,
+          "mean smoothness": 0.09587,
+          "mean compactness": 0.08345,
+          "mean concavity": 0.06824,
+          "mean concave points": 0.04951,
+          "mean symmetry": 0.1487,
+          "mean fractal dimension": 0.05748,
+          "radius error": 0.2323,
+          "texture error": 1.636,
+          "perimeter error": 1.596,
+          "area error": 21.84,
+          "smoothness error": 0.005415,
+          "compactness error": 0.01371,
+          "concavity error": 0.02153,
+          "concave points error": 0.01183,
+          "symmetry error": 0.01959,
+          "fractal dimension error": 0.001812,
+          "worst radius": 16.01,
+          "worst texture": 28.48,
+          "worst perimeter": 103.9,
+          "worst area": 783.6,
+          "worst smoothness": 0.1216,
+          "worst compactness": 0.1388,
+          "worst concavity": 0.17,
+          "worst concave points": 0.1017,
+          "worst symmetry": 0.2369,
+          "worst fractal dimension": 0.06599
+        },
+        "reference_values": {
+          "mean radius": 16.5,
+          "mean texture": 18.29,
+          "mean perimeter": 106.6,
+          "mean area": 838.1,
+          "mean smoothness": 0.09686,
+          "mean compactness": 0.08468,
+          "mean concavity": 0.05862,
+          "mean concave points": 0.04835,
+          "mean symmetry": 0.1495,
+          "mean fractal dimension": 0.05593,
+          "radius error": 0.3389,
+          "texture error": 1.439,
+          "perimeter error": 2.344,
+          "area error": 33.58,
+          "smoothness error": 0.007257,
+          "compactness error": 0.01805,
+          "concavity error": 0.01832,
+          "concave points error": 0.01033,
+          "symmetry error": 0.01694,
+          "fractal dimension error": 0.002001,
+          "worst radius": 18.13,
+          "worst texture": 25.45,
+          "worst perimeter": 117.2,
+          "worst area": 1009.0,
+          "worst smoothness": 0.1338,
+          "worst compactness": 0.1679,
+          "worst concavity": 0.1663,
+          "worst concave points": 0.09123,
+          "worst symmetry": 0.2394,
+          "worst fractal dimension": 0.06469
+        },
+        "raw_deltas": {
+          "mean radius": 1.6300000000000008,
+          "mean texture": -1.9200000000000017,
+          "mean perimeter": 10.47999999999999,
+          "mean area": 157.20000000000005,
+          "mean smoothness": 0.0009900000000000048,
+          "mean compactness": 0.0012300000000000089,
+          "mean concavity": -0.009619999999999997,
+          "mean concave points": -0.0011600000000000013,
+          "mean symmetry": 0.0007999999999999952,
+          "mean fractal dimension": -0.0015500000000000028,
+          "radius error": 0.10659999999999997,
+          "texture error": -0.19699999999999984,
+          "perimeter error": 0.7479999999999998,
+          "area error": 11.739999999999998,
+          "smoothness error": 0.0018420000000000008,
+          "compactness error": 0.00434,
+          "concavity error": -0.003210000000000001,
+          "concave points error": -0.0014999999999999996,
+          "symmetry error": -0.0026499999999999996,
+          "fractal dimension error": 0.00018900000000000015,
+          "worst radius": 2.1199999999999974,
+          "worst texture": -3.030000000000001,
+          "worst perimeter": 13.299999999999997,
+          "worst area": 225.39999999999998,
+          "worst smoothness": 0.012200000000000003,
+          "worst compactness": 0.029099999999999987,
+          "worst concavity": -0.003700000000000009,
+          "worst concave points": -0.010469999999999993,
+          "worst symmetry": 0.0025000000000000022,
+          "worst fractal dimension": -0.0012999999999999956
+        },
+        "standardized_deltas": {
+          "mean radius": 0.5667113082200264,
+          "mean texture": 0.45122726766378546,
+          "mean perimeter": 0.5462645409053101,
+          "mean area": 0.6779408400877289,
+          "mean smoothness": 0.06704275621303542,
+          "mean compactness": 0.025716789651463675,
+          "mean concavity": 0.15887857752607354,
+          "mean concave points": 0.03852335209221326,
+          "mean symmetry": 0.03231093458570498,
+          "mean fractal dimension": 0.2459907475738173,
+          "radius error": 0.6770312143145485,
+          "texture error": 0.4316916166890486,
+          "perimeter error": 0.6518334471427558,
+          "area error": 0.8326521047586988,
+          "smoothness error": 0.8586122867697917,
+          "compactness error": 0.325616228712839,
+          "concavity error": 0.1723817944203719,
+          "concave points error": 0.2841955447232844,
+          "symmetry error": 0.45365495243984194,
+          "fractal dimension error": 0.12129281973461142,
+          "worst radius": 0.5789151457855788,
+          "worst texture": 0.4623771495959465,
+          "worst perimeter": 0.5152629006914828,
+          "worst area": 0.7015699916290935,
+          "worst smoothness": 0.5559991395685455,
+          "worst compactness": 0.23676334259069848,
+          "worst concavity": 0.019211823018194057,
+          "worst concave points": 0.1580200996133351,
+          "worst symmetry": 0.05140935666742347,
+          "worst fractal dimension": 0.09220168110615895
+        }
+      },
+      "evidence_refs": []
+    },
+    {
+      "node_id": "similar:p0:train_268",
+      "node_type": "similar_case",
+      "label": "train_268: robust_standardized_euclidean",
+      "payload": {
+        "query_object_id": "p0",
+        "reference_object_id": "train_268",
+        "similarity_score": 0.63413,
+        "similarity_method": "robust_standardized_euclidean",
+        "compared_representation": "normalized tabular feature vector",
+        "matched_features": [
+          "worst smoothness",
+          "concavity error",
+          "mean fractal dimension",
+          "worst texture",
+          "worst compactness",
+          "worst area",
+          "worst radius",
+          "smoothness error",
+          "symmetry error",
+          "mean smoothness",
+          "worst perimeter",
+          "worst fractal dimension",
+          "mean compactness",
+          "worst concavity",
+          "perimeter error",
+          "mean radius",
+          "worst concave points",
+          "mean area",
+          "mean perimeter",
+          "fractal dimension error"
+        ],
+        "different_features": [
+          "mean concave points",
+          "radius error",
+          "mean symmetry",
+          "mean texture",
+          "area error",
+          "texture error",
+          "mean concavity",
+          "worst symmetry",
+          "compactness error",
+          "concave points error"
+        ],
+        "matched_regions": [],
+        "coverage_score": 0.6666666666666666,
+        "reference_label": 1,
+        "reference_prediction": null,
+        "reference_outcome": null,
+        "limitations": [
+          "feature distance does not establish causal or clinical similarity"
+        ],
+        "trace": {
+          "reference_index": 268,
+          "scale": "median absolute deviation"
+        },
+        "is_counterexample": false,
+        "media_artifacts": {},
+        "reference_rank": 3,
+        "reference_count": 455,
+        "query_values": {
+          "mean radius": 14.87,
+          "mean texture": 20.21,
+          "mean perimeter": 96.12,
+          "mean area": 680.9,
+          "mean smoothness": 0.09587,
+          "mean compactness": 0.08345,
+          "mean concavity": 0.06824,
+          "mean concave points": 0.04951,
+          "mean symmetry": 0.1487,
+          "mean fractal dimension": 0.05748,
+          "radius error": 0.2323,
+          "texture error": 1.636,
+          "perimeter error": 1.596,
+          "area error": 21.84,
+          "smoothness error": 0.005415,
+          "compactness error": 0.01371,
+          "concavity error": 0.02153,
+          "concave points error": 0.01183,
+          "symmetry error": 0.01959,
+          "fractal dimension error": 0.001812,
+          "worst radius": 16.01,
+          "worst texture": 28.48,
+          "worst perimeter": 103.9,
+          "worst area": 783.6,
+          "worst smoothness": 0.1216,
+          "worst compactness": 0.1388,
+          "worst concavity": 0.17,
+          "worst concave points": 0.1017,
+          "worst symmetry": 0.2369,
+          "worst fractal dimension": 0.06599
+        },
+        "reference_values": {
+          "mean radius": 13.62,
+          "mean texture": 23.23,
+          "mean perimeter": 87.19,
+          "mean area": 573.2,
+          "mean smoothness": 0.09246,
+          "mean compactness": 0.06747,
+          "mean concavity": 0.02974,
+          "mean concave points": 0.02443,
+          "mean symmetry": 0.1664,
+          "mean fractal dimension": 0.05801,
+          "radius error": 0.346,
+          "texture error": 1.336,
+          "perimeter error": 2.066,
+          "area error": 31.24,
+          "smoothness error": 0.005868,
+          "compactness error": 0.02099,
+          "concavity error": 0.02021,
+          "concave points error": 0.009064,
+          "symmetry error": 0.02087,
+          "fractal dimension error": 0.002583,
+          "worst radius": 15.35,
+          "worst texture": 29.09,
+          "worst perimeter": 97.58,
+          "worst area": 729.8,
+          "worst smoothness": 0.1216,
+          "worst compactness": 0.1517,
+          "worst concavity": 0.1049,
+          "worst concave points": 0.07174,
+          "worst symmetry": 0.2642,
+          "worst fractal dimension": 0.06953
+        },
+        "raw_deltas": {
+          "mean radius": -1.25,
+          "mean texture": 3.0199999999999996,
+          "mean perimeter": -8.930000000000007,
+          "mean area": -107.69999999999993,
+          "mean smoothness": -0.0034099999999999964,
+          "mean compactness": -0.015979999999999994,
+          "mean concavity": -0.03849999999999999,
+          "mean concave points": -0.025079999999999998,
+          "mean symmetry": 0.017699999999999994,
+          "mean fractal dimension": 0.0005299999999999958,
+          "radius error": 0.11369999999999997,
+          "texture error": -0.2999999999999998,
+          "perimeter error": 0.46999999999999975,
+          "area error": 9.399999999999999,
+          "smoothness error": 0.0004530000000000003,
+          "compactness error": 0.007280000000000002,
+          "concavity error": -0.0013200000000000017,
+          "concave points error": -0.002766000000000001,
+          "symmetry error": 0.0012799999999999999,
+          "fractal dimension error": 0.0007709999999999998,
+          "worst radius": -0.6600000000000019,
+          "worst texture": 0.6099999999999994,
+          "worst perimeter": -6.320000000000007,
+          "worst area": -53.80000000000007,
+          "worst smoothness": 0.0,
+          "worst compactness": 0.012899999999999995,
+          "worst concavity": -0.06510000000000002,
+          "worst concave points": -0.02996,
+          "worst symmetry": 0.02729999999999999,
+          "worst fractal dimension": 0.0035400000000000015
+        },
+        "standardized_deltas": {
+          "mean radius": 0.4345945615184249,
+          "mean texture": 0.7097428897628285,
+          "mean perimeter": 0.4654715983095828,
+          "mean area": 0.4644671022738444,
+          "mean smoothness": 0.23092504917823173,
+          "mean compactness": 0.3341091858783629,
+          "mean concavity": 0.6358446189972798,
+          "mean concave points": 0.8329014400626787,
+          "mean symmetry": 0.7148794277087267,
+          "mean fractal dimension": 0.08411296529943348,
+          "radius error": 0.7221242876882191,
+          "texture error": 0.6573984010493127,
+          "perimeter error": 0.4095744921886299,
+          "area error": 0.6666890787676123,
+          "smoothness error": 0.21115709332612145,
+          "compactness error": 0.5461949642925042,
+          "concavity error": 0.07088597153734925,
+          "concave points error": 0.5240565844697367,
+          "symmetry error": 0.2191239015558482,
+          "fractal dimension error": 0.49479769320309686,
+          "worst radius": 0.1802283001030583,
+          "worst texture": 0.09308582879654356,
+          "worst perimeter": 0.24484673175715607,
+          "worst area": 0.16745548158671375,
+          "worst smoothness": 0.0,
+          "worst compactness": 0.10495694568453645,
+          "worst concavity": 0.33802423742822446,
+          "worst concave points": 0.4521759488457997,
+          "worst symmetry": 0.5613901748082636,
+          "worst fractal dimension": 0.25107227008907995
+        }
+      },
+      "evidence_refs": []
+    },
+    {
+      "node_id": "counterfactual:0",
+      "node_type": "counterfactual",
+      "label": "Изменение в сторону «0»",
+      "payload": {
+        "source_prediction": 1,
+        "target_prediction": 0,
+        "changed_features": {
+          "radius error": {
+            "from": 0.2323,
+            "to": 0.7532800000000002
+          }
+        },
+        "changed_regions": [],
+        "changed_rules": [],
+        "minimality": 1.828021,
+        "plausibility": null,
+        "stability": null,
+        "expected_effect": null,
+        "observed_effect": -0.377261,
+        "actionability": "requires domain review",
+        "limitations": [
+          "quantile search tests association, not causal feasibility",
+          "observed_effect is the change in maximum predicted probability, not a causal effect"
+        ],
+        "evidence_refs": [
+          "model prediction before and after feature intervention"
+        ],
+        "mode": "sensitivity_analysis",
+        "actionable": null,
+        "probability_before": 0.9085576593696942,
+        "probability_after": 0.531296886202025
+      },
+      "evidence_refs": [
+        "model prediction before and after feature intervention"
+      ]
+    },
+    {
+      "node_id": "model_internals:p0:linear_reconstruction",
+      "node_type": "model_internals",
+      "label": "Линейное разложение (30 слагаемых)",
+      "payload": {
+        "object_id": "p0",
+        "model_family": "sklearn_pipeline",
+        "coefficients": {
+          "mean radius": -0.5392059779324722,
+          "mean texture": -0.4312104500647391,
+          "mean perimeter": -0.48894971555158884,
+          "mean area": -0.5723513617888338,
+          "mean smoothness": -0.1265125900339616,
+          "mean compactness": 0.4474511263316558,
+          "mean concavity": -0.7372793713584307,
+          "mean concave points": -0.9630984736266825,
+          "mean symmetry": 0.1089931768381342,
+          "mean fractal dimension": 0.4314710977019468,
+          "radius error": -1.3246571610063427,
+          "texture error": -0.021909333221283526,
+          "perimeter error": -0.6563959523219663,
+          "area error": -0.84014799603338,
+          "smoothness error": -0.20475766407324497,
+          "compactness error": 0.6666311911671609,
+          "concavity error": 0.07494070884730177,
+          "concave points error": -0.4407399049516992,
+          "symmetry error": 0.4149337976701823,
+          "fractal dimension error": 0.6265262653066852,
+          "worst radius": -0.9844510054731722,
+          "worst texture": -0.973369121259384,
+          "worst perimeter": -0.7983221676662805,
+          "worst area": -0.8674726985033863,
+          "worst smoothness": -0.7355940855906955,
+          "worst compactness": -0.17872565677770827,
+          "worst concavity": -0.763794383632876,
+          "worst concave points": -0.8618975117643893,
+          "worst symmetry": -0.7811930725643439,
+          "worst fractal dimension": -0.6077821970897669
+        },
+        "intercept": [
+          0.34117272159676154
+        ],
+        "linear_terms": [
+          {
+            "feature": "mean radius",
+            "value": 0.20275959828066142,
+            "coefficient": -0.5392059779324722,
+            "contribution": -0.10932918747611925,
+            "raw_value": 14.87,
+            "raw_feature": "mean radius",
+            "transformed_value": 0.20275959828066142,
+            "transformation": "scaler"
+          },
+          {
+            "feature": "mean texture",
+            "value": 0.2254030453096752,
+            "coefficient": -0.4312104500647391,
+            "contribution": -0.09719614861394783,
+            "raw_value": 20.21,
+            "raw_feature": "mean texture",
+            "transformed_value": 0.2254030453096752,
+            "transformation": "scaler"
+          },
+          {
+            "feature": "mean perimeter",
+            "value": 0.16422650734216898,
+            "coefficient": -0.48894971555158884,
+            "contribution": -0.08029850405098445,
+            "raw_value": 96.12,
+            "raw_feature": "mean perimeter",
+            "transformed_value": 0.16422650734216898,
+            "transformation": "scaler"
+          },
+          {
+            "feature": "mean area",
+            "value": 0.06407371566729579,
+            "coefficient": -0.5723513617888338,
+            "contribution": -0.036672678417047286,
+            "raw_value": 680.9,
+            "raw_feature": "mean area",
+            "transformed_value": 0.06407371566729579,
+            "transformation": "scaler"
+          },
+          {
+            "feature": "mean smoothness",
+            "value": -0.044052322927292685,
+            "coefficient": -0.1265125900339616,
+            "contribution": 0.005573173470544267,
+            "raw_value": 0.09587,
+            "raw_feature": "mean smoothness",
+            "transformed_value": -0.044052322927292685,
+            "transformation": "scaler"
+          },
+          {
+            "feature": "mean compactness",
+            "value": -0.3971970500328694,
+            "coefficient": 0.4474511263316558,
+            "contribution": -0.17772626741281847,
+            "raw_value": 0.08345,
+            "raw_feature": "mean compactness",
+            "transformed_value": -0.3971970500328694,
+            "transformation": "scaler"
+          },
+          {
+            "feature": "mean concavity",
+            "value": -0.2559594814519713,
+            "coefficient": -0.7372793713584307,
+            "contribution": 0.1887136455781393,
+            "raw_value": 0.06824,
+            "raw_feature": "mean concavity",
+            "transformed_value": -0.2559594814519713,
+            "transformation": "scaler"
+          },
+          {
+            "feature": "mean concave points",
+            "value": 0.010474492625791356,
+            "coefficient": -0.9630984736266825,
+            "contribution": -0.010087967859913597,
+            "raw_value": 0.04951,
+            "raw_feature": "mean concave points",
+            "transformed_value": 0.010474492625791356,
+            "transformation": "scaler"
+          },
+          {
+            "feature": "mean symmetry",
+            "value": -1.195946524117799,
+            "coefficient": 0.1089931768381342,
+            "contribution": -0.13035001099212318,
+            "raw_value": 0.1487,
+            "raw_feature": "mean symmetry",
+            "transformed_value": -1.195946524117799,
+            "transformation": "scaler"
+          },
+          {
+            "feature": "mean fractal dimension",
+            "value": -0.7511078983834276,
+            "coefficient": 0.4314710977019468,
+            "contribution": -0.32408134940809985,
+            "raw_value": 0.05748,
+            "raw_feature": "mean fractal dimension",
+            "transformed_value": -0.7511078983834276,
+            "transformation": "scaler"
+          },
+          {
+            "feature": "radius error",
+            "value": -0.6053935109409163,
+            "coefficient": -1.3246571610063427,
+            "contribution": 0.8019388494946564,
+            "raw_value": 0.2323,
+            "raw_feature": "radius error",
+            "transformed_value": -0.6053935109409163,
+            "transformation": "scaler"
+          },
+          {
+            "feature": "texture error",
+            "value": 0.7471520801538821,
+            "coefficient": -0.021909333221283526,
+            "contribution": -0.01636960389106654,
+            "raw_value": 1.636,
+            "raw_feature": "texture error",
+            "transformed_value": 0.7471520801538821,
+            "transformation": "scaler"
+          },
+          {
+            "feature": "perimeter error",
+            "value": -0.6090635820313243,
+            "coefficient": -0.6563959523219663,
+            "contribution": 0.3997868699520792,
+            "raw_value": 1.596,
+            "raw_feature": "perimeter error",
+            "transformed_value": -0.6090635820313243,
+            "transformation": "scaler"
+          },
+          {
+            "feature": "area error",
+            "value": -0.39494767546054843,
+            "coefficient": -0.84014799603338,
+            "contribution": 0.3318144980762215,
+            "raw_value": 21.84,
+            "raw_feature": "area error",
+            "transformed_value": -0.39494767546054843,
+            "transformation": "scaler"
+          },
+          {
+            "feature": "smoothness error",
+            "value": -0.5417614762198674,
+            "coefficient": -0.20475766407324497,
+            "contribution": 0.1109298143556529,
+            "raw_value": 0.005415,
+            "raw_feature": "smoothness error",
+            "transformed_value": -0.5417614762198674,
+            "transformation": "scaler"
+          },
+          {
+            "feature": "compactness error",
+            "value": -0.6773979543044919,
+            "coefficient": 0.6666311911671609,
+            "contribution": -0.45157460517220144,
+            "raw_value": 0.01371,
+            "raw_feature": "compactness error",
+            "transformed_value": -0.6773979543044919,
+            "transformation": "scaler"
+          },
+          {
+            "feature": "concavity error",
+            "value": -0.36965040986074826,
+            "coefficient": 0.07494070884730177,
+            "contribution": -0.0277018637406601,
+            "raw_value": 0.02153,
+            "raw_feature": "concavity error",
+            "transformed_value": -0.36965040986074826,
+            "transformation": "scaler"
+          },
+          {
+            "feature": "concave points error",
+            "value": 0.004464012313941707,
+            "coefficient": -0.4407399049516992,
+            "contribution": -0.0019674683629498824,
+            "raw_value": 0.01183,
+            "raw_feature": "concave points error",
+            "transformed_value": 0.004464012313941707,
+            "transformation": "scaler"
+          },
+          {
+            "feature": "symmetry error",
+            "value": -0.11474695033281396,
+            "coefficient": 0.4149337976701823,
+            "contribution": -0.047612387872666286,
+            "raw_value": 0.01959,
+            "raw_feature": "symmetry error",
+            "transformed_value": -0.11474695033281396,
+            "transformation": "scaler"
+          },
+          {
+            "feature": "fractal dimension error",
+            "value": -0.8491610075914044,
+            "coefficient": 0.6265262653066852,
+            "contribution": -0.5320216747303044,
+            "raw_value": 0.001812,
+            "raw_feature": "fractal dimension error",
+            "transformed_value": -0.8491610075914044,
+            "transformation": "scaler"
+          },
+          {
+            "feature": "worst radius",
+            "value": -0.05441567298289451,
+            "coefficient": -0.9844510054731722,
+            "contribution": 0.05356956398150983,
+            "raw_value": 16.01,
+            "raw_feature": "worst radius",
+            "transformed_value": -0.05441567298289451,
+            "transformation": "scaler"
+          },
+          {
+            "feature": "worst texture",
+            "value": 0.46464206619969345,
+            "coefficient": -0.973369121259384,
+            "contribution": -0.45226823967694013,
+            "raw_value": 28.48,
+            "raw_feature": "worst texture",
+            "transformed_value": 0.46464206619969345,
+            "transformation": "scaler"
+          },
+          {
+            "feature": "worst perimeter",
+            "value": -0.10135937088216301,
+            "coefficient": -0.7983221676662805,
+            "contribution": 0.08091743267593886,
+            "raw_value": 103.9,
+            "raw_feature": "worst perimeter",
+            "transformed_value": -0.10135937088216301,
+            "transformation": "scaler"
+          },
+          {
+            "feature": "worst area",
+            "value": -0.1712926759548616,
+            "coefficient": -0.8674726985033863,
+            "contribution": 0.1485917198444299,
+            "raw_value": 783.6,
+            "raw_feature": "worst area",
+            "transformed_value": -0.1712926759548616,
+            "transformation": "scaler"
+          },
+          {
+            "feature": "worst smoothness",
+            "value": -0.4780708970917518,
+            "coefficient": -0.7355940855906955,
+            "contribution": 0.3516661243937307,
+            "raw_value": 0.1216,
+            "raw_feature": "worst smoothness",
+            "transformed_value": -0.4780708970917518,
+            "transformation": "scaler"
+          },
+          {
+            "feature": "worst compactness",
+            "value": -0.7422975040053854,
+            "coefficient": -0.17872565677770827,
+            "contribution": 0.13266760892781604,
+            "raw_value": 0.1388,
+            "raw_feature": "worst compactness",
+            "transformed_value": -0.7422975040053854,
+            "transformation": "scaler"
+          },
+          {
+            "feature": "worst concavity",
+            "value": -0.4908446842285072,
+            "coefficient": -0.763794383632876,
+            "contribution": 0.3749044130497863,
+            "raw_value": 0.17,
+            "raw_feature": "worst concavity",
+            "transformed_value": -0.4908446842285072,
+            "transformation": "scaler"
+          },
+          {
+            "feature": "worst concave points",
+            "value": -0.19867112469485335,
+            "coefficient": -0.8618975117643893,
+            "contribution": 0.1712341480339268,
+            "raw_value": 0.1017,
+            "raw_feature": "worst concave points",
+            "transformed_value": -0.19867112469485335,
+            "transformation": "scaler"
+          },
+          {
+            "feature": "worst symmetry",
+            "value": -0.8724042543972139,
+            "coefficient": -0.7811930725643439,
+            "contribution": 0.6815161600107651,
+            "raw_value": 0.2369,
+            "raw_feature": "worst symmetry",
+            "transformed_value": -0.8724042543972139,
+            "transformation": "scaler"
+          },
+          {
+            "feature": "worst fractal dimension",
+            "value": -1.0141971136476768,
+            "coefficient": -0.6077821970897669,
+            "contribution": 0.616410950014885,
+            "raw_value": 0.06599,
+            "raw_feature": "worst fractal dimension",
+            "transformed_value": -1.0141971136476768,
+            "transformation": "scaler"
+          }
+        ],
+        "reconstructed_score": 2.296149735779001,
+        "actual_score": 2.296149735779001,
+        "reconstruction_error": 0.0,
+        "pipeline_steps": [
+          "scaler",
+          "clf"
+        ],
+        "decision_path": null,
+        "leaf_id": null,
+        "leaf_samples": null,
+        "ensemble_votes": null,
+        "ensemble_disagreement": null,
+        "global_importance": null,
+        "limitations": [
+          "Linear terms describe model behavior and are not domain causality.",
+          "Sign is relative to the predicted class: a positive contribution means the term pushed the decision toward the class the model actually predicted, not toward a fixed reference class."
+        ]
+      },
+      "evidence_refs": []
+    },
+    {
+      "node_id": "preprocessor:p0",
+      "node_type": "preprocessor",
+      "label": "Предобработка (scaler)",
+      "payload": {
+        "pipeline_steps": [
+          "scaler",
+          "clf"
+        ]
+      },
+      "evidence_refs": []
+    },
+    {
+      "node_id": "contribution:mean radius",
+      "node_type": "contribution",
+      "label": "Вклад признака mean radius",
+      "payload": {
+        "feature": "mean radius",
+        "value": -0.10932918747611925,
+        "method": "derived_native_linear_term_x_coefficient"
+      },
+      "evidence_refs": []
+    },
+    {
+      "node_id": "contribution:mean texture",
+      "node_type": "contribution",
+      "label": "Вклад признака mean texture",
+      "payload": {
+        "feature": "mean texture",
+        "value": -0.09719614861394783,
+        "method": "derived_native_linear_term_x_coefficient"
+      },
+      "evidence_refs": []
+    },
+    {
+      "node_id": "contribution:mean perimeter",
+      "node_type": "contribution",
+      "label": "Вклад признака mean perimeter",
+      "payload": {
+        "feature": "mean perimeter",
+        "value": -0.08029850405098445,
+        "method": "derived_native_linear_term_x_coefficient"
+      },
+      "evidence_refs": []
+    },
+    {
+      "node_id": "contribution:mean area",
+      "node_type": "contribution",
+      "label": "Вклад признака mean area",
+      "payload": {
+        "feature": "mean area",
+        "value": -0.036672678417047286,
+        "method": "derived_native_linear_term_x_coefficient"
+      },
+      "evidence_refs": []
+    },
+    {
+      "node_id": "contribution:mean smoothness",
+      "node_type": "contribution",
+      "label": "Вклад признака mean smoothness",
+      "payload": {
+        "feature": "mean smoothness",
+        "value": 0.005573173470544267,
+        "method": "derived_native_linear_term_x_coefficient"
+      },
+      "evidence_refs": []
+    },
+    {
+      "node_id": "contribution:mean compactness",
+      "node_type": "contribution",
+      "label": "Вклад признака mean compactness",
+      "payload": {
+        "feature": "mean compactness",
+        "value": -0.17772626741281847,
+        "method": "derived_native_linear_term_x_coefficient"
+      },
+      "evidence_refs": []
+    },
+    {
+      "node_id": "contribution:mean concavity",
+      "node_type": "contribution",
+      "label": "Вклад признака mean concavity",
+      "payload": {
+        "feature": "mean concavity",
+        "value": 0.1887136455781393,
+        "method": "derived_native_linear_term_x_coefficient"
+      },
+      "evidence_refs": []
+    },
+    {
+      "node_id": "contribution:mean concave points",
+      "node_type": "contribution",
+      "label": "Вклад признака mean concave points",
+      "payload": {
+        "feature": "mean concave points",
+        "value": -0.010087967859913597,
+        "method": "derived_native_linear_term_x_coefficient"
+      },
+      "evidence_refs": []
+    },
+    {
+      "node_id": "contribution:mean symmetry",
+      "node_type": "contribution",
+      "label": "Вклад признака mean symmetry",
+      "payload": {
+        "feature": "mean symmetry",
+        "value": -0.13035001099212318,
+        "method": "derived_native_linear_term_x_coefficient"
+      },
+      "evidence_refs": []
+    },
+    {
+      "node_id": "contribution:mean fractal dimension",
+      "node_type": "contribution",
+      "label": "Вклад признака mean fractal dimension",
+      "payload": {
+        "feature": "mean fractal dimension",
+        "value": -0.32408134940809985,
+        "method": "derived_native_linear_term_x_coefficient"
+      },
+      "evidence_refs": []
+    },
+    {
+      "node_id": "contribution:radius error",
+      "node_type": "contribution",
+      "label": "Вклад признака radius error",
+      "payload": {
+        "feature": "radius error",
+        "value": 0.8019388494946564,
+        "method": "derived_native_linear_term_x_coefficient"
+      },
+      "evidence_refs": []
+    },
+    {
+      "node_id": "contribution:texture error",
+      "node_type": "contribution",
+      "label": "Вклад признака texture error",
+      "payload": {
+        "feature": "texture error",
+        "value": -0.01636960389106654,
+        "method": "derived_native_linear_term_x_coefficient"
+      },
+      "evidence_refs": []
+    },
+    {
+      "node_id": "contribution:perimeter error",
+      "node_type": "contribution",
+      "label": "Вклад признака perimeter error",
+      "payload": {
+        "feature": "perimeter error",
+        "value": 0.3997868699520792,
+        "method": "derived_native_linear_term_x_coefficient"
+      },
+      "evidence_refs": []
+    },
+    {
+      "node_id": "contribution:area error",
+      "node_type": "contribution",
+      "label": "Вклад признака area error",
+      "payload": {
+        "feature": "area error",
+        "value": 0.3318144980762215,
+        "method": "derived_native_linear_term_x_coefficient"
+      },
+      "evidence_refs": []
+    },
+    {
+      "node_id": "contribution:smoothness error",
+      "node_type": "contribution",
+      "label": "Вклад признака smoothness error",
+      "payload": {
+        "feature": "smoothness error",
+        "value": 0.1109298143556529,
+        "method": "derived_native_linear_term_x_coefficient"
+      },
+      "evidence_refs": []
+    },
+    {
+      "node_id": "contribution:compactness error",
+      "node_type": "contribution",
+      "label": "Вклад признака compactness error",
+      "payload": {
+        "feature": "compactness error",
+        "value": -0.45157460517220144,
+        "method": "derived_native_linear_term_x_coefficient"
+      },
+      "evidence_refs": []
+    },
+    {
+      "node_id": "contribution:concavity error",
+      "node_type": "contribution",
+      "label": "Вклад признака concavity error",
+      "payload": {
+        "feature": "concavity error",
+        "value": -0.0277018637406601,
+        "method": "derived_native_linear_term_x_coefficient"
+      },
+      "evidence_refs": []
+    },
+    {
+      "node_id": "contribution:concave points error",
+      "node_type": "contribution",
+      "label": "Вклад признака concave points error",
+      "payload": {
+        "feature": "concave points error",
+        "value": -0.0019674683629498824,
+        "method": "derived_native_linear_term_x_coefficient"
+      },
+      "evidence_refs": []
+    },
+    {
+      "node_id": "contribution:symmetry error",
+      "node_type": "contribution",
+      "label": "Вклад признака symmetry error",
+      "payload": {
+        "feature": "symmetry error",
+        "value": -0.047612387872666286,
+        "method": "derived_native_linear_term_x_coefficient"
+      },
+      "evidence_refs": []
+    },
+    {
+      "node_id": "contribution:fractal dimension error",
+      "node_type": "contribution",
+      "label": "Вклад признака fractal dimension error",
+      "payload": {
+        "feature": "fractal dimension error",
+        "value": -0.5320216747303044,
+        "method": "derived_native_linear_term_x_coefficient"
+      },
+      "evidence_refs": []
+    },
+    {
+      "node_id": "contribution:worst radius",
+      "node_type": "contribution",
+      "label": "Вклад признака worst radius",
+      "payload": {
+        "feature": "worst radius",
+        "value": 0.05356956398150983,
+        "method": "derived_native_linear_term_x_coefficient"
+      },
+      "evidence_refs": []
+    },
+    {
+      "node_id": "contribution:worst texture",
+      "node_type": "contribution",
+      "label": "Вклад признака worst texture",
+      "payload": {
+        "feature": "worst texture",
+        "value": -0.45226823967694013,
+        "method": "derived_native_linear_term_x_coefficient"
+      },
+      "evidence_refs": []
+    },
+    {
+      "node_id": "contribution:worst perimeter",
+      "node_type": "contribution",
+      "label": "Вклад признака worst perimeter",
+      "payload": {
+        "feature": "worst perimeter",
+        "value": 0.08091743267593886,
+        "method": "derived_native_linear_term_x_coefficient"
+      },
+      "evidence_refs": []
+    },
+    {
+      "node_id": "contribution:worst area",
+      "node_type": "contribution",
+      "label": "Вклад признака worst area",
+      "payload": {
+        "feature": "worst area",
+        "value": 0.1485917198444299,
+        "method": "derived_native_linear_term_x_coefficient"
+      },
+      "evidence_refs": []
+    },
+    {
+      "node_id": "contribution:worst smoothness",
+      "node_type": "contribution",
+      "label": "Вклад признака worst smoothness",
+      "payload": {
+        "feature": "worst smoothness",
+        "value": 0.3516661243937307,
+        "method": "derived_native_linear_term_x_coefficient"
+      },
+      "evidence_refs": []
+    },
+    {
+      "node_id": "contribution:worst compactness",
+      "node_type": "contribution",
+      "label": "Вклад признака worst compactness",
+      "payload": {
+        "feature": "worst compactness",
+        "value": 0.13266760892781604,
+        "method": "derived_native_linear_term_x_coefficient"
+      },
+      "evidence_refs": []
+    },
+    {
+      "node_id": "contribution:worst concavity",
+      "node_type": "contribution",
+      "label": "Вклад признака worst concavity",
+      "payload": {
+        "feature": "worst concavity",
+        "value": 0.3749044130497863,
+        "method": "derived_native_linear_term_x_coefficient"
+      },
+      "evidence_refs": []
+    },
+    {
+      "node_id": "contribution:worst concave points",
+      "node_type": "contribution",
+      "label": "Вклад признака worst concave points",
+      "payload": {
+        "feature": "worst concave points",
+        "value": 0.1712341480339268,
+        "method": "derived_native_linear_term_x_coefficient"
+      },
+      "evidence_refs": []
+    },
+    {
+      "node_id": "contribution:worst symmetry",
+      "node_type": "contribution",
+      "label": "Вклад признака worst symmetry",
+      "payload": {
+        "feature": "worst symmetry",
+        "value": 0.6815161600107651,
+        "method": "derived_native_linear_term_x_coefficient"
+      },
+      "evidence_refs": []
+    },
+    {
+      "node_id": "contribution:worst fractal dimension",
+      "node_type": "contribution",
+      "label": "Вклад признака worst fractal dimension",
+      "payload": {
+        "feature": "worst fractal dimension",
+        "value": 0.616410950014885,
+        "method": "derived_native_linear_term_x_coefficient"
+      },
+      "evidence_refs": []
+    },
+    {
+      "node_id": "prediction",
+      "node_type": "prediction",
+      "label": "Прогноз модели",
+      "payload": {
+        "predictions": [
+          1
+        ],
+        "probabilities": [
+          [
+            0.09144234063030576,
+            0.9085576593696942
+          ]
+        ],
+        "model_type": "Pipeline",
+        "adapter_id": "sklearn_pipeline_v2",
+        "metadata": {
+          "classes": [
+            0,
+            1
+          ],
+          "decision_scores": [
+            2.296149735779001
+          ],
+          "task_type": "binary_classification",
+          "score_semantics": "probability",
+          "calibrated_probability": true
+        },
+        "score": 0.9085576593696942,
+        "contributions": {
+          "mean radius": -0.10932918747611925,
+          "mean texture": -0.09719614861394783,
+          "mean perimeter": -0.08029850405098445,
+          "mean area": -0.036672678417047286,
+          "mean smoothness": 0.005573173470544267,
+          "mean compactness": -0.17772626741281847,
+          "mean concavity": 0.1887136455781393,
+          "mean concave points": -0.010087967859913597,
+          "mean symmetry": -0.13035001099212318,
+          "mean fractal dimension": -0.32408134940809985,
+          "radius error": 0.8019388494946564,
+          "texture error": -0.01636960389106654,
+          "perimeter error": 0.3997868699520792,
+          "area error": 0.3318144980762215,
+          "smoothness error": 0.1109298143556529,
+          "compactness error": -0.45157460517220144,
+          "concavity error": -0.0277018637406601,
+          "concave points error": -0.0019674683629498824,
+          "symmetry error": -0.047612387872666286,
+          "fractal dimension error": -0.5320216747303044,
+          "worst radius": 0.05356956398150983,
+          "worst texture": -0.45226823967694013,
+          "worst perimeter": 0.08091743267593886,
+          "worst area": 0.1485917198444299,
+          "worst smoothness": 0.3516661243937307,
+          "worst compactness": 0.13266760892781604,
+          "worst concavity": 0.3749044130497863,
+          "worst concave points": 0.1712341480339268,
+          "worst symmetry": 0.6815161600107651,
+          "worst fractal dimension": 0.616410950014885
+        },
+        "contribution_method": "derived_native_linear_term_x_coefficient"
+      },
+      "evidence_refs": []
+    },
+    {
+      "node_id": "diagnostic:0",
+      "node_type": "diagnostic",
+      "label": "Согласование Γ не предусмотрено планом для этого случая",
+      "payload": {
+        "code": "D_k_alignment_not_applicable",
+        "reason": "ExplainPlan.alignment_policy does not declare alignment applicable for this scenario (single explanatory channel)",
+        "severity": "info"
+      },
+      "evidence_refs": []
+    },
+    {
+      "node_id": "diagnostic:1",
+      "node_type": "diagnostic",
+      "label": "Редукция Δ не предусмотрена планом для этого случая",
+      "payload": {
+        "code": "D_k_reduction_not_applicable",
+        "reason": "ExplainPlan.reduction_policy declares no reduction operation (Pi) for this scenario",
+        "severity": "info"
+      },
+      "evidence_refs": []
+    },
+    {
+      "node_id": "diagnostic:2",
+      "node_type": "diagnostic",
+      "label": "Интерфейс риска ρ неполон: часть ожидаемых слагаемых не измерена",
+      "payload": {
+        "code": "D_risk_incomplete_interface",
+        "reason": "risk components expected by this object's schema but not measured: ['reduction_loss', 'uncertainty']",
+        "severity": "warning"
+      },
+      "evidence_refs": []
+    },
+    {
+      "node_id": "action",
+      "node_type": "action",
+      "label": "собрать недостающие данные",
+      "payload": {
+        "action": "insufficient_evidence"
+      },
+      "evidence_refs": []
+    },
+    {
+      "node_id": "claim:C-001",
+      "node_type": "claim",
+      "label": "Прогноз: [1]",
+      "payload": {
+        "claim_id": "C-001",
+        "claim_type": "prediction",
+        "scope": "object",
+        "subject_id": "[1]",
+        "statement": "Модель сформировала прогноз [1] с максимальным модельным баллом 0.909.",
+        "short_statement": "Прогноз: [1]",
+        "evidence_status": "supported",
+        "effect": "neutral",
+        "severity": "info",
+        "strength": 0.9085576593696942,
+        "evidence_refs": [
+          "prediction"
+        ],
+        "confidence_interval": null,
+        "counter_evidence_refs": [],
+        "limitations": [],
+        "applicability": null,
+        "metric_name": "model_score",
+        "metric_value": 0.9085576593696942,
+        "metric_unit": null,
+        "comparison_baseline": null,
+        "native": null,
+        "surrogate": null,
+        "status": "supported"
+      },
+      "evidence_refs": [
+        "prediction"
+      ]
+    },
+    {
+      "node_id": "claim:C-002",
+      "node_type": "claim",
+      "label": "Вклад radius error: +0.802",
+      "payload": {
+        "claim_id": "C-002",
+        "claim_type": "feature_contribution",
+        "scope": "object",
+        "subject_id": "radius error",
+        "statement": "Локальный вклад признака radius error равен +0.802 по методу derived_native_linear_term_x_coefficient.",
+        "short_statement": "Вклад radius error: +0.802",
+        "evidence_status": "supported",
+        "effect": "favorable",
+        "severity": "info",
+        "strength": 1.0,
+        "evidence_refs": [
+          "contribution:radius error"
+        ],
+        "confidence_interval": null,
+        "counter_evidence_refs": [],
+        "limitations": [],
+        "applicability": null,
+        "metric_name": "local_contribution",
+        "metric_value": 0.8019388494946564,
+        "metric_unit": null,
+        "comparison_baseline": "zero local contribution",
+        "native": true,
+        "surrogate": false,
+        "status": "supported"
+      },
+      "evidence_refs": [
+        "contribution:radius error"
+      ]
+    },
+    {
+      "node_id": "claim:C-003",
+      "node_type": "claim",
+      "label": "Вклад worst symmetry: +0.682",
+      "payload": {
+        "claim_id": "C-003",
+        "claim_type": "feature_contribution",
+        "scope": "object",
+        "subject_id": "worst symmetry",
+        "statement": "Локальный вклад признака worst symmetry равен +0.682 по методу derived_native_linear_term_x_coefficient.",
+        "short_statement": "Вклад worst symmetry: +0.682",
+        "evidence_status": "supported",
+        "effect": "favorable",
+        "severity": "info",
+        "strength": 0.8498355709294094,
+        "evidence_refs": [
+          "contribution:worst symmetry"
+        ],
+        "confidence_interval": null,
+        "counter_evidence_refs": [],
+        "limitations": [],
+        "applicability": null,
+        "metric_name": "local_contribution",
+        "metric_value": 0.6815161600107651,
+        "metric_unit": null,
+        "comparison_baseline": "zero local contribution",
+        "native": true,
+        "surrogate": false,
+        "status": "supported"
+      },
+      "evidence_refs": [
+        "contribution:worst symmetry"
+      ]
+    },
+    {
+      "node_id": "claim:C-004",
+      "node_type": "claim",
+      "label": "Вклад worst fractal dimension: +0.616",
+      "payload": {
+        "claim_id": "C-004",
+        "claim_type": "feature_contribution",
+        "scope": "object",
+        "subject_id": "worst fractal dimension",
+        "statement": "Локальный вклад признака worst fractal dimension равен +0.616 по методу derived_native_linear_term_x_coefficient.",
+        "short_statement": "Вклад worst fractal dimension: +0.616",
+        "evidence_status": "supported",
+        "effect": "favorable",
+        "severity": "info",
+        "strength": 0.7686508147140119,
+        "evidence_refs": [
+          "contribution:worst fractal dimension"
+        ],
+        "confidence_interval": null,
+        "counter_evidence_refs": [],
+        "limitations": [],
+        "applicability": null,
+        "metric_name": "local_contribution",
+        "metric_value": 0.616410950014885,
+        "metric_unit": null,
+        "comparison_baseline": "zero local contribution",
+        "native": true,
+        "surrogate": false,
+        "status": "supported"
+      },
+      "evidence_refs": [
+        "contribution:worst fractal dimension"
+      ]
+    },
+    {
+      "node_id": "claim:C-005",
+      "node_type": "claim",
+      "label": "Вклад fractal dimension error: -0.532",
+      "payload": {
+        "claim_id": "C-005",
+        "claim_type": "feature_contribution",
+        "scope": "object",
+        "subject_id": "fractal dimension error",
+        "statement": "Локальный вклад признака fractal dimension error равен -0.532 по методу derived_native_linear_term_x_coefficient.",
+        "short_statement": "Вклад fractal dimension error: -0.532",
+        "evidence_status": "supported",
+        "effect": "adverse",
+        "severity": "info",
+        "strength": 0.6634192558018096,
+        "evidence_refs": [
+          "contribution:fractal dimension error"
+        ],
+        "confidence_interval": null,
+        "counter_evidence_refs": [],
+        "limitations": [],
+        "applicability": null,
+        "metric_name": "local_contribution",
+        "metric_value": -0.5320216747303044,
+        "metric_unit": null,
+        "comparison_baseline": "zero local contribution",
+        "native": true,
+        "surrogate": false,
+        "status": "supported"
+      },
+      "evidence_refs": [
+        "contribution:fractal dimension error"
+      ]
+    },
+    {
+      "node_id": "claim:C-006",
+      "node_type": "claim",
+      "label": "Вклад worst texture: -0.452",
+      "payload": {
+        "claim_id": "C-006",
+        "claim_type": "feature_contribution",
+        "scope": "object",
+        "subject_id": "worst texture",
+        "statement": "Локальный вклад признака worst texture равен -0.452 по методу derived_native_linear_term_x_coefficient.",
+        "short_statement": "Вклад worst texture: -0.452",
+        "evidence_status": "supported",
+        "effect": "adverse",
+        "severity": "info",
+        "strength": 0.5639684870759635,
+        "evidence_refs": [
+          "contribution:worst texture"
+        ],
+        "confidence_interval": null,
+        "counter_evidence_refs": [],
+        "limitations": [],
+        "applicability": null,
+        "metric_name": "local_contribution",
+        "metric_value": -0.45226823967694013,
+        "metric_unit": null,
+        "comparison_baseline": "zero local contribution",
+        "native": true,
+        "surrogate": false,
+        "status": "supported"
+      },
+      "evidence_refs": [
+        "contribution:worst texture"
+      ]
+    },
+    {
+      "node_id": "claim:C-007",
+      "node_type": "claim",
+      "label": "Вклад compactness error: -0.452",
+      "payload": {
+        "claim_id": "C-007",
+        "claim_type": "feature_contribution",
+        "scope": "object",
+        "subject_id": "compactness error",
+        "statement": "Локальный вклад признака compactness error равен -0.452 по методу derived_native_linear_term_x_coefficient.",
+        "short_statement": "Вклад compactness error: -0.452",
+        "evidence_status": "supported",
+        "effect": "adverse",
+        "severity": "info",
+        "strength": 0.5631035401973132,
+        "evidence_refs": [
+          "contribution:compactness error"
+        ],
+        "confidence_interval": null,
+        "counter_evidence_refs": [],
+        "limitations": [],
+        "applicability": null,
+        "metric_name": "local_contribution",
+        "metric_value": -0.45157460517220144,
+        "metric_unit": null,
+        "comparison_baseline": "zero local contribution",
+        "native": true,
+        "surrogate": false,
+        "status": "supported"
+      },
+      "evidence_refs": [
+        "contribution:compactness error"
+      ]
+    },
+    {
+      "node_id": "claim:C-008",
+      "node_type": "claim",
+      "label": "Вклад perimeter error: +0.400",
+      "payload": {
+        "claim_id": "C-008",
+        "claim_type": "feature_contribution",
+        "scope": "object",
+        "subject_id": "perimeter error",
+        "statement": "Локальный вклад признака perimeter error равен +0.400 по методу derived_native_linear_term_x_coefficient.",
+        "short_statement": "Вклад perimeter error: +0.400",
+        "evidence_status": "supported",
+        "effect": "favorable",
+        "severity": "info",
+        "strength": 0.498525380337922,
+        "evidence_refs": [
+          "contribution:perimeter error"
+        ],
+        "confidence_interval": null,
+        "counter_evidence_refs": [],
+        "limitations": [],
+        "applicability": null,
+        "metric_name": "local_contribution",
+        "metric_value": 0.3997868699520792,
+        "metric_unit": null,
+        "comparison_baseline": "zero local contribution",
+        "native": true,
+        "surrogate": false,
+        "status": "supported"
+      },
+      "evidence_refs": [
+        "contribution:perimeter error"
+      ]
+    },
+    {
+      "node_id": "claim:C-009",
+      "node_type": "claim",
+      "label": "Вклад worst concavity: +0.375",
+      "payload": {
+        "claim_id": "C-009",
+        "claim_type": "feature_contribution",
+        "scope": "object",
+        "subject_id": "worst concavity",
+        "statement": "Локальный вклад признака worst concavity равен +0.375 по методу derived_native_linear_term_x_coefficient.",
+        "short_statement": "Вклад worst concavity: +0.375",
+        "evidence_status": "supported",
+        "effect": "favorable",
+        "severity": "info",
+        "strength": 0.46749750718029576,
+        "evidence_refs": [
+          "contribution:worst concavity"
+        ],
+        "confidence_interval": null,
+        "counter_evidence_refs": [],
+        "limitations": [],
+        "applicability": null,
+        "metric_name": "local_contribution",
+        "metric_value": 0.3749044130497863,
+        "metric_unit": null,
+        "comparison_baseline": "zero local contribution",
+        "native": true,
+        "surrogate": false,
+        "status": "supported"
+      },
+      "evidence_refs": [
+        "contribution:worst concavity"
+      ]
+    },
+    {
+      "node_id": "claim:C-010",
+      "node_type": "claim",
+      "label": "Вклад worst smoothness: +0.352",
+      "payload": {
+        "claim_id": "C-010",
+        "claim_type": "feature_contribution",
+        "scope": "object",
+        "subject_id": "worst smoothness",
+        "statement": "Локальный вклад признака worst smoothness равен +0.352 по методу derived_native_linear_term_x_coefficient.",
+        "short_statement": "Вклад worst smoothness: +0.352",
+        "evidence_status": "supported",
+        "effect": "favorable",
+        "severity": "info",
+        "strength": 0.4385198754435377,
+        "evidence_refs": [
+          "contribution:worst smoothness"
+        ],
+        "confidence_interval": null,
+        "counter_evidence_refs": [],
+        "limitations": [],
+        "applicability": null,
+        "metric_name": "local_contribution",
+        "metric_value": 0.3516661243937307,
+        "metric_unit": null,
+        "comparison_baseline": "zero local contribution",
+        "native": true,
+        "surrogate": false,
+        "status": "supported"
+      },
+      "evidence_refs": [
+        "contribution:worst smoothness"
+      ]
+    },
+    {
+      "node_id": "claim:C-011",
+      "node_type": "claim",
+      "label": "Вклад area error: +0.332",
+      "payload": {
+        "claim_id": "C-011",
+        "claim_type": "feature_contribution",
+        "scope": "object",
+        "subject_id": "area error",
+        "statement": "Локальный вклад признака area error равен +0.332 по методу derived_native_linear_term_x_coefficient.",
+        "short_statement": "Вклад area error: +0.332",
+        "evidence_status": "supported",
+        "effect": "favorable",
+        "severity": "info",
+        "strength": 0.4137653367028111,
+        "evidence_refs": [
+          "contribution:area error"
+        ],
+        "confidence_interval": null,
+        "counter_evidence_refs": [],
+        "limitations": [],
+        "applicability": null,
+        "metric_name": "local_contribution",
+        "metric_value": 0.3318144980762215,
+        "metric_unit": null,
+        "comparison_baseline": "zero local contribution",
+        "native": true,
+        "surrogate": false,
+        "status": "supported"
+      },
+      "evidence_refs": [
+        "contribution:area error"
+      ]
+    },
+    {
+      "node_id": "claim:C-012",
+      "node_type": "claim",
+      "label": "Вклад mean fractal dimension: -0.324",
+      "payload": {
+        "claim_id": "C-012",
+        "claim_type": "feature_contribution",
+        "scope": "object",
+        "subject_id": "mean fractal dimension",
+        "statement": "Локальный вклад признака mean fractal dimension равен -0.324 по методу derived_native_linear_term_x_coefficient.",
+        "short_statement": "Вклад mean fractal dimension: -0.324",
+        "evidence_status": "supported",
+        "effect": "adverse",
+        "severity": "info",
+        "strength": 0.4041222714329408,
+        "evidence_refs": [
+          "contribution:mean fractal dimension"
+        ],
+        "confidence_interval": null,
+        "counter_evidence_refs": [],
+        "limitations": [],
+        "applicability": null,
+        "metric_name": "local_contribution",
+        "metric_value": -0.32408134940809985,
+        "metric_unit": null,
+        "comparison_baseline": "zero local contribution",
+        "native": true,
+        "surrogate": false,
+        "status": "supported"
+      },
+      "evidence_refs": [
+        "contribution:mean fractal dimension"
+      ]
+    },
+    {
+      "node_id": "claim:C-013",
+      "node_type": "claim",
+      "label": "Вклад mean concavity: +0.189",
+      "payload": {
+        "claim_id": "C-013",
+        "claim_type": "feature_contribution",
+        "scope": "object",
+        "subject_id": "mean concavity",
+        "statement": "Локальный вклад признака mean concavity равен +0.189 по методу derived_native_linear_term_x_coefficient.",
+        "short_statement": "Вклад mean concavity: +0.189",
+        "evidence_status": "supported",
+        "effect": "favorable",
+        "severity": "info",
+        "strength": 0.2353217401763958,
+        "evidence_refs": [
+          "contribution:mean concavity"
+        ],
+        "confidence_interval": null,
+        "counter_evidence_refs": [],
+        "limitations": [],
+        "applicability": null,
+        "metric_name": "local_contribution",
+        "metric_value": 0.1887136455781393,
+        "metric_unit": null,
+        "comparison_baseline": "zero local contribution",
+        "native": true,
+        "surrogate": false,
+        "status": "supported"
+      },
+      "evidence_refs": [
+        "contribution:mean concavity"
+      ]
+    },
+    {
+      "node_id": "claim:C-014",
+      "node_type": "claim",
+      "label": "Вклад mean compactness: -0.178",
+      "payload": {
+        "claim_id": "C-014",
+        "claim_type": "feature_contribution",
+        "scope": "object",
+        "subject_id": "mean compactness",
+        "statement": "Локальный вклад признака mean compactness равен -0.178 по методу derived_native_linear_term_x_coefficient.",
+        "short_statement": "Вклад mean compactness: -0.178",
+        "evidence_status": "supported",
+        "effect": "adverse",
+        "severity": "info",
+        "strength": 0.22162072273317732,
+        "evidence_refs": [
+          "contribution:mean compactness"
+        ],
+        "confidence_interval": null,
+        "counter_evidence_refs": [],
+        "limitations": [],
+        "applicability": null,
+        "metric_name": "local_contribution",
+        "metric_value": -0.17772626741281847,
+        "metric_unit": null,
+        "comparison_baseline": "zero local contribution",
+        "native": true,
+        "surrogate": false,
+        "status": "supported"
+      },
+      "evidence_refs": [
+        "contribution:mean compactness"
+      ]
+    },
+    {
+      "node_id": "claim:C-015",
+      "node_type": "claim",
+      "label": "Вклад worst concave points: +0.171",
+      "payload": {
+        "claim_id": "C-015",
+        "claim_type": "feature_contribution",
+        "scope": "object",
+        "subject_id": "worst concave points",
+        "statement": "Локальный вклад признака worst concave points равен +0.171 по методу derived_native_linear_term_x_coefficient.",
+        "short_statement": "Вклад worst concave points: +0.171",
+        "evidence_status": "supported",
+        "effect": "favorable",
+        "severity": "info",
+        "strength": 0.21352519352545446,
+        "evidence_refs": [
+          "contribution:worst concave points"
+        ],
+        "confidence_interval": null,
+        "counter_evidence_refs": [],
+        "limitations": [],
+        "applicability": null,
+        "metric_name": "local_contribution",
+        "metric_value": 0.1712341480339268,
+        "metric_unit": null,
+        "comparison_baseline": "zero local contribution",
+        "native": true,
+        "surrogate": false,
+        "status": "supported"
+      },
+      "evidence_refs": [
+        "contribution:worst concave points"
+      ]
+    },
+    {
+      "node_id": "claim:C-016",
+      "node_type": "claim",
+      "label": "Вклад worst area: +0.149",
+      "payload": {
+        "claim_id": "C-016",
+        "claim_type": "feature_contribution",
+        "scope": "object",
+        "subject_id": "worst area",
+        "statement": "Локальный вклад признака worst area равен +0.149 по методу derived_native_linear_term_x_coefficient.",
+        "short_statement": "Вклад worst area: +0.149",
+        "evidence_status": "supported",
+        "effect": "favorable",
+        "severity": "info",
+        "strength": 0.18529058660528205,
+        "evidence_refs": [
+          "contribution:worst area"
+        ],
+        "confidence_interval": null,
+        "counter_evidence_refs": [],
+        "limitations": [],
+        "applicability": null,
+        "metric_name": "local_contribution",
+        "metric_value": 0.1485917198444299,
+        "metric_unit": null,
+        "comparison_baseline": "zero local contribution",
+        "native": true,
+        "surrogate": false,
+        "status": "supported"
+      },
+      "evidence_refs": [
+        "contribution:worst area"
+      ]
+    },
+    {
+      "node_id": "claim:C-017",
+      "node_type": "claim",
+      "label": "Вклад worst compactness: +0.133",
+      "payload": {
+        "claim_id": "C-017",
+        "claim_type": "feature_contribution",
+        "scope": "object",
+        "subject_id": "worst compactness",
+        "statement": "Локальный вклад признака worst compactness равен +0.133 по методу derived_native_linear_term_x_coefficient.",
+        "short_statement": "Вклад worst compactness: +0.133",
+        "evidence_status": "supported",
+        "effect": "favorable",
+        "severity": "info",
+        "strength": 0.16543357266132802,
+        "evidence_refs": [
+          "contribution:worst compactness"
+        ],
+        "confidence_interval": null,
+        "counter_evidence_refs": [],
+        "limitations": [],
+        "applicability": null,
+        "metric_name": "local_contribution",
+        "metric_value": 0.13266760892781604,
+        "metric_unit": null,
+        "comparison_baseline": "zero local contribution",
+        "native": true,
+        "surrogate": false,
+        "status": "supported"
+      },
+      "evidence_refs": [
+        "contribution:worst compactness"
+      ]
+    },
+    {
+      "node_id": "claim:C-018",
+      "node_type": "claim",
+      "label": "Вклад mean symmetry: -0.130",
+      "payload": {
+        "claim_id": "C-018",
+        "claim_type": "feature_contribution",
+        "scope": "object",
+        "subject_id": "mean symmetry",
+        "statement": "Локальный вклад признака mean symmetry равен -0.130 по методу derived_native_linear_term_x_coefficient.",
+        "short_statement": "Вклад mean symmetry: -0.130",
+        "evidence_status": "supported",
+        "effect": "adverse",
+        "severity": "info",
+        "strength": 0.1625435793193752,
+        "evidence_refs": [
+          "contribution:mean symmetry"
+        ],
+        "confidence_interval": null,
+        "counter_evidence_refs": [],
+        "limitations": [],
+        "applicability": null,
+        "metric_name": "local_contribution",
+        "metric_value": -0.13035001099212318,
+        "metric_unit": null,
+        "comparison_baseline": "zero local contribution",
+        "native": true,
+        "surrogate": false,
+        "status": "supported"
+      },
+      "evidence_refs": [
+        "contribution:mean symmetry"
+      ]
+    },
+    {
+      "node_id": "claim:C-019",
+      "node_type": "claim",
+      "label": "Вклад smoothness error: +0.111",
+      "payload": {
+        "claim_id": "C-019",
+        "claim_type": "feature_contribution",
+        "scope": "object",
+        "subject_id": "smoothness error",
+        "statement": "Локальный вклад признака smoothness error равен +0.111 по методу derived_native_linear_term_x_coefficient.",
+        "short_statement": "Вклад smoothness error: +0.111",
+        "evidence_status": "supported",
+        "effect": "favorable",
+        "severity": "info",
+        "strength": 0.138327023844219,
+        "evidence_refs": [
+          "contribution:smoothness error"
+        ],
+        "confidence_interval": null,
+        "counter_evidence_refs": [],
+        "limitations": [],
+        "applicability": null,
+        "metric_name": "local_contribution",
+        "metric_value": 0.1109298143556529,
+        "metric_unit": null,
+        "comparison_baseline": "zero local contribution",
+        "native": true,
+        "surrogate": false,
+        "status": "supported"
+      },
+      "evidence_refs": [
+        "contribution:smoothness error"
+      ]
+    },
+    {
+      "node_id": "claim:C-020",
+      "node_type": "claim",
+      "label": "Вклад mean radius: -0.109",
+      "payload": {
+        "claim_id": "C-020",
+        "claim_type": "feature_contribution",
+        "scope": "object",
+        "subject_id": "mean radius",
+        "statement": "Локальный вклад признака mean radius равен -0.109 по методу derived_native_linear_term_x_coefficient.",
+        "short_statement": "Вклад mean radius: -0.109",
+        "evidence_status": "supported",
+        "effect": "adverse",
+        "severity": "info",
+        "strength": 0.13633107754414603,
+        "evidence_refs": [
+          "contribution:mean radius"
+        ],
+        "confidence_interval": null,
+        "counter_evidence_refs": [],
+        "limitations": [],
+        "applicability": null,
+        "metric_name": "local_contribution",
+        "metric_value": -0.10932918747611925,
+        "metric_unit": null,
+        "comparison_baseline": "zero local contribution",
+        "native": true,
+        "surrogate": false,
+        "status": "supported"
+      },
+      "evidence_refs": [
+        "contribution:mean radius"
+      ]
+    },
+    {
+      "node_id": "claim:C-021",
+      "node_type": "claim",
+      "label": "Вклад mean texture: -0.097",
+      "payload": {
+        "claim_id": "C-021",
+        "claim_type": "feature_contribution",
+        "scope": "object",
+        "subject_id": "mean texture",
+        "statement": "Локальный вклад признака mean texture равен -0.097 по методу derived_native_linear_term_x_coefficient.",
+        "short_statement": "Вклад mean texture: -0.097",
+        "evidence_status": "supported",
+        "effect": "adverse",
+        "severity": "info",
+        "strength": 0.12120144656315902,
+        "evidence_refs": [
+          "contribution:mean texture"
+        ],
+        "confidence_interval": null,
+        "counter_evidence_refs": [],
+        "limitations": [],
+        "applicability": null,
+        "metric_name": "local_contribution",
+        "metric_value": -0.09719614861394783,
+        "metric_unit": null,
+        "comparison_baseline": "zero local contribution",
+        "native": true,
+        "surrogate": false,
+        "status": "supported"
+      },
+      "evidence_refs": [
+        "contribution:mean texture"
+      ]
+    },
+    {
+      "node_id": "claim:C-022",
+      "node_type": "claim",
+      "label": "Вклад worst perimeter: +0.081",
+      "payload": {
+        "claim_id": "C-022",
+        "claim_type": "feature_contribution",
+        "scope": "object",
+        "subject_id": "worst perimeter",
+        "statement": "Локальный вклад признака worst perimeter равен +0.081 по методу derived_native_linear_term_x_coefficient.",
+        "short_statement": "Вклад worst perimeter: +0.081",
+        "evidence_status": "supported",
+        "effect": "favorable",
+        "severity": "info",
+        "strength": 0.1009022480042327,
+        "evidence_refs": [
+          "contribution:worst perimeter"
+        ],
+        "confidence_interval": null,
+        "counter_evidence_refs": [],
+        "limitations": [],
+        "applicability": null,
+        "metric_name": "local_contribution",
+        "metric_value": 0.08091743267593886,
+        "metric_unit": null,
+        "comparison_baseline": "zero local contribution",
+        "native": true,
+        "surrogate": false,
+        "status": "supported"
+      },
+      "evidence_refs": [
+        "contribution:worst perimeter"
+      ]
+    },
+    {
+      "node_id": "claim:C-023",
+      "node_type": "claim",
+      "label": "Вклад mean perimeter: -0.080",
+      "payload": {
+        "claim_id": "C-023",
+        "claim_type": "feature_contribution",
+        "scope": "object",
+        "subject_id": "mean perimeter",
+        "statement": "Локальный вклад признака mean perimeter равен -0.080 по методу derived_native_linear_term_x_coefficient.",
+        "short_statement": "Вклад mean perimeter: -0.080",
+        "evidence_status": "supported",
+        "effect": "adverse",
+        "severity": "info",
+        "strength": 0.10013045770458025,
+        "evidence_refs": [
+          "contribution:mean perimeter"
+        ],
+        "confidence_interval": null,
+        "counter_evidence_refs": [],
+        "limitations": [],
+        "applicability": null,
+        "metric_name": "local_contribution",
+        "metric_value": -0.08029850405098445,
+        "metric_unit": null,
+        "comparison_baseline": "zero local contribution",
+        "native": true,
+        "surrogate": false,
+        "status": "supported"
+      },
+      "evidence_refs": [
+        "contribution:mean perimeter"
+      ]
+    },
+    {
+      "node_id": "claim:C-024",
+      "node_type": "claim",
+      "label": "Вклад worst radius: +0.054",
+      "payload": {
+        "claim_id": "C-024",
+        "claim_type": "feature_contribution",
+        "scope": "object",
+        "subject_id": "worst radius",
+        "statement": "Локальный вклад признака worst radius равен +0.054 по методу derived_native_linear_term_x_coefficient.",
+        "short_statement": "Вклад worst radius: +0.054",
+        "evidence_status": "supported",
+        "effect": "favorable",
+        "severity": "info",
+        "strength": 0.06680006089649705,
+        "evidence_refs": [
+          "contribution:worst radius"
+        ],
+        "confidence_interval": null,
+        "counter_evidence_refs": [],
+        "limitations": [],
+        "applicability": null,
+        "metric_name": "local_contribution",
+        "metric_value": 0.05356956398150983,
+        "metric_unit": null,
+        "comparison_baseline": "zero local contribution",
+        "native": true,
+        "surrogate": false,
+        "status": "supported"
+      },
+      "evidence_refs": [
+        "contribution:worst radius"
+      ]
+    },
+    {
+      "node_id": "claim:C-025",
+      "node_type": "claim",
+      "label": "Вклад symmetry error: -0.048",
+      "payload": {
+        "claim_id": "C-025",
+        "claim_type": "feature_contribution",
+        "scope": "object",
+        "subject_id": "symmetry error",
+        "statement": "Локальный вклад признака symmetry error равен -0.048 по методу derived_native_linear_term_x_coefficient.",
+        "short_statement": "Вклад symmetry error: -0.048",
+        "evidence_status": "supported",
+        "effect": "adverse",
+        "severity": "info",
+        "strength": 0.05937159410928818,
+        "evidence_refs": [
+          "contribution:symmetry error"
+        ],
+        "confidence_interval": null,
+        "counter_evidence_refs": [],
+        "limitations": [],
+        "applicability": null,
+        "metric_name": "local_contribution",
+        "metric_value": -0.047612387872666286,
+        "metric_unit": null,
+        "comparison_baseline": "zero local contribution",
+        "native": true,
+        "surrogate": false,
+        "status": "supported"
+      },
+      "evidence_refs": [
+        "contribution:symmetry error"
+      ]
+    },
+    {
+      "node_id": "claim:C-026",
+      "node_type": "claim",
+      "label": "Вклад mean area: -0.037",
+      "payload": {
+        "claim_id": "C-026",
+        "claim_type": "feature_contribution",
+        "scope": "object",
+        "subject_id": "mean area",
+        "statement": "Локальный вклад признака mean area равен -0.037 по методу derived_native_linear_term_x_coefficient.",
+        "short_statement": "Вклад mean area: -0.037",
+        "evidence_status": "supported",
+        "effect": "adverse",
+        "severity": "info",
+        "strength": 0.045730018492253686,
+        "evidence_refs": [
+          "contribution:mean area"
+        ],
+        "confidence_interval": null,
+        "counter_evidence_refs": [],
+        "limitations": [],
+        "applicability": null,
+        "metric_name": "local_contribution",
+        "metric_value": -0.036672678417047286,
+        "metric_unit": null,
+        "comparison_baseline": "zero local contribution",
+        "native": true,
+        "surrogate": false,
+        "status": "supported"
+      },
+      "evidence_refs": [
+        "contribution:mean area"
+      ]
+    },
+    {
+      "node_id": "claim:C-027",
+      "node_type": "claim",
+      "label": "Вклад concavity error: -0.028",
+      "payload": {
+        "claim_id": "C-027",
+        "claim_type": "feature_contribution",
+        "scope": "object",
+        "subject_id": "concavity error",
+        "statement": "Локальный вклад признака concavity error равен -0.028 по методу derived_native_linear_term_x_coefficient.",
+        "short_statement": "Вклад concavity error: -0.028",
+        "evidence_status": "supported",
+        "effect": "adverse",
+        "severity": "info",
+        "strength": 0.034543611097175915,
+        "evidence_refs": [
+          "contribution:concavity error"
+        ],
+        "confidence_interval": null,
+        "counter_evidence_refs": [],
+        "limitations": [],
+        "applicability": null,
+        "metric_name": "local_contribution",
+        "metric_value": -0.0277018637406601,
+        "metric_unit": null,
+        "comparison_baseline": "zero local contribution",
+        "native": true,
+        "surrogate": false,
+        "status": "supported"
+      },
+      "evidence_refs": [
+        "contribution:concavity error"
+      ]
+    },
+    {
+      "node_id": "claim:C-028",
+      "node_type": "claim",
+      "label": "Вклад texture error: -0.016",
+      "payload": {
+        "claim_id": "C-028",
+        "claim_type": "feature_contribution",
+        "scope": "object",
+        "subject_id": "texture error",
+        "statement": "Локальный вклад признака texture error равен -0.016 по методу derived_native_linear_term_x_coefficient.",
+        "short_statement": "Вклад texture error: -0.016",
+        "evidence_status": "supported",
+        "effect": "adverse",
+        "severity": "info",
+        "strength": 0.02041253382521857,
+        "evidence_refs": [
+          "contribution:texture error"
+        ],
+        "confidence_interval": null,
+        "counter_evidence_refs": [],
+        "limitations": [],
+        "applicability": null,
+        "metric_name": "local_contribution",
+        "metric_value": -0.01636960389106654,
+        "metric_unit": null,
+        "comparison_baseline": "zero local contribution",
+        "native": true,
+        "surrogate": false,
+        "status": "supported"
+      },
+      "evidence_refs": [
+        "contribution:texture error"
+      ]
+    },
+    {
+      "node_id": "claim:C-029",
+      "node_type": "claim",
+      "label": "Вклад mean concave points: -0.010",
+      "payload": {
+        "claim_id": "C-029",
+        "claim_type": "feature_contribution",
+        "scope": "object",
+        "subject_id": "mean concave points",
+        "statement": "Локальный вклад признака mean concave points равен -0.010 по методу derived_native_linear_term_x_coefficient.",
+        "short_statement": "Вклад mean concave points: -0.010",
+        "evidence_status": "supported",
+        "effect": "adverse",
+        "severity": "info",
+        "strength": 0.012579472694545915,
+        "evidence_refs": [
+          "contribution:mean concave points"
+        ],
+        "confidence_interval": null,
+        "counter_evidence_refs": [],
+        "limitations": [],
+        "applicability": null,
+        "metric_name": "local_contribution",
+        "metric_value": -0.010087967859913597,
+        "metric_unit": null,
+        "comparison_baseline": "zero local contribution",
+        "native": true,
+        "surrogate": false,
+        "status": "supported"
+      },
+      "evidence_refs": [
+        "contribution:mean concave points"
+      ]
+    },
+    {
+      "node_id": "claim:C-030",
+      "node_type": "claim",
+      "label": "Вклад mean smoothness: +0.006",
+      "payload": {
+        "claim_id": "C-030",
+        "claim_type": "feature_contribution",
+        "scope": "object",
+        "subject_id": "mean smoothness",
+        "statement": "Локальный вклад признака mean smoothness равен +0.006 по методу derived_native_linear_term_x_coefficient.",
+        "short_statement": "Вклад mean smoothness: +0.006",
+        "evidence_status": "supported",
+        "effect": "favorable",
+        "severity": "info",
+        "strength": 0.006949623994468175,
+        "evidence_refs": [
+          "contribution:mean smoothness"
+        ],
+        "confidence_interval": null,
+        "counter_evidence_refs": [],
+        "limitations": [],
+        "applicability": null,
+        "metric_name": "local_contribution",
+        "metric_value": 0.005573173470544267,
+        "metric_unit": null,
+        "comparison_baseline": "zero local contribution",
+        "native": true,
+        "surrogate": false,
+        "status": "supported"
+      },
+      "evidence_refs": [
+        "contribution:mean smoothness"
+      ]
+    },
+    {
+      "node_id": "claim:C-031",
+      "node_type": "claim",
+      "label": "Вклад concave points error: -0.002",
+      "payload": {
+        "claim_id": "C-031",
+        "claim_type": "feature_contribution",
+        "scope": "object",
+        "subject_id": "concave points error",
+        "statement": "Локальный вклад признака concave points error равен -0.002 по методу derived_native_linear_term_x_coefficient.",
+        "short_statement": "Вклад concave points error: -0.002",
+        "evidence_status": "supported",
+        "effect": "adverse",
+        "severity": "info",
+        "strength": 0.0024533895124169217,
+        "evidence_refs": [
+          "contribution:concave points error"
+        ],
+        "confidence_interval": null,
+        "counter_evidence_refs": [],
+        "limitations": [],
+        "applicability": null,
+        "metric_name": "local_contribution",
+        "metric_value": -0.0019674683629498824,
+        "metric_unit": null,
+        "comparison_baseline": "zero local contribution",
+        "native": true,
+        "surrogate": false,
+        "status": "supported"
+      },
+      "evidence_refs": [
+        "contribution:concave points error"
+      ]
+    },
+    {
+      "node_id": "claim:C-032",
+      "node_type": "claim",
+      "label": "Качество данных: 1.000",
+      "payload": {
+        "claim_id": "C-032",
+        "claim_type": "data_quality",
+        "scope": "object",
+        "subject_id": "p0",
+        "statement": "Качество доступных входных данных объекта p0 равно 1.000.",
+        "short_statement": "Качество данных: 1.000",
+        "evidence_status": "supported",
+        "effect": "favorable",
+        "severity": "info",
+        "strength": 1.0,
+        "evidence_refs": [
+          "data:p0"
+        ],
+        "confidence_interval": null,
+        "counter_evidence_refs": [],
+        "limitations": [],
+        "applicability": null,
+        "metric_name": "data_quality",
+        "metric_value": 1.0,
+        "metric_unit": null,
+        "comparison_baseline": null,
+        "native": null,
+        "surrogate": null,
+        "status": "supported"
+      },
+      "evidence_refs": [
+        "data:p0"
+      ]
+    },
+    {
+      "node_id": "claim:C-033",
+      "node_type": "claim",
+      "label": "Концепт класса 0",
+      "payload": {
+        "claim_id": "C-033",
+        "claim_type": "class_concept",
+        "scope": "class",
+        "subject_id": "0",
+        "statement": "Class 0: no supported primary rules; coverage unavailable. Расстояние от объекта до прототипа класса: 1.2598 (сходство 0.2837).",
+        "short_statement": "Концепт класса 0",
+        "evidence_status": "supported",
+        "effect": "neutral",
+        "severity": "info",
+        "strength": null,
+        "evidence_refs": [
+          "concept:0"
+        ],
+        "confidence_interval": null,
+        "counter_evidence_refs": [],
+        "limitations": [
+          "primary-rule coverage is unavailable"
+        ],
+        "applicability": null,
+        "metric_name": "query_distance",
+        "metric_value": 1.2597532575699364,
+        "metric_unit": null,
+        "comparison_baseline": null,
+        "native": null,
+        "surrogate": null,
+        "status": "supported"
+      },
+      "evidence_refs": [
+        "concept:0"
+      ]
+    },
+    {
+      "node_id": "claim:C-034",
+      "node_type": "claim",
+      "label": "Концепт класса 1",
+      "payload": {
+        "claim_id": "C-034",
+        "claim_type": "class_concept",
+        "scope": "class",
+        "subject_id": "1",
+        "statement": "Class 1: no supported primary rules; coverage unavailable. Расстояние от объекта до прототипа класса: 0.6304 (сходство 0.5324).",
+        "short_statement": "Концепт класса 1",
+        "evidence_status": "supported",
+        "effect": "favorable",
+        "severity": "info",
+        "strength": null,
+        "evidence_refs": [
+          "concept:1"
+        ],
+        "confidence_interval": null,
+        "counter_evidence_refs": [],
+        "limitations": [
+          "primary-rule coverage is unavailable"
+        ],
+        "applicability": null,
+        "metric_name": "query_distance",
+        "metric_value": 0.6303619421734888,
+        "metric_unit": null,
+        "comparison_baseline": null,
+        "native": null,
+        "surrogate": null,
+        "status": "supported"
+      },
+      "evidence_refs": [
+        "concept:1"
+      ]
+    },
+    {
+      "node_id": "claim:C-035",
+      "node_type": "claim",
+      "label": "Похожий случай train_195: 0.675",
+      "payload": {
+        "claim_id": "C-035",
+        "claim_type": "similar_case",
+        "scope": "object",
+        "subject_id": "p0",
+        "statement": "Объект train_195 имеет сходство 0.675 с объектом p0; использован метод robust_standardized_euclidean для представления «normalized tabular feature vector».",
+        "short_statement": "Похожий случай train_195: 0.675",
+        "evidence_status": "supported",
+        "effect": "favorable",
+        "severity": "info",
+        "strength": 0.675109,
+        "evidence_refs": [
+          "similar:p0:train_195"
+        ],
+        "confidence_interval": null,
+        "counter_evidence_refs": [],
+        "limitations": [
+          "feature distance does not establish causal or clinical similarity"
+        ],
+        "applicability": null,
+        "metric_name": "similarity",
+        "metric_value": 0.675109,
+        "metric_unit": null,
+        "comparison_baseline": "normalized tabular feature vector",
+        "native": null,
+        "surrogate": null,
+        "status": "supported"
+      },
+      "evidence_refs": [
+        "similar:p0:train_195"
+      ]
+    },
+    {
+      "node_id": "claim:C-036",
+      "node_type": "claim",
+      "label": "Похожий случай train_58: 0.639",
+      "payload": {
+        "claim_id": "C-036",
+        "claim_type": "similar_case",
+        "scope": "object",
+        "subject_id": "p0",
+        "statement": "Объект train_58 имеет сходство 0.639 с объектом p0; использован метод robust_standardized_euclidean для представления «normalized tabular feature vector».",
+        "short_statement": "Похожий случай train_58: 0.639",
+        "evidence_status": "supported",
+        "effect": "favorable",
+        "severity": "info",
+        "strength": 0.638891,
+        "evidence_refs": [
+          "similar:p0:train_58"
+        ],
+        "confidence_interval": null,
+        "counter_evidence_refs": [],
+        "limitations": [
+          "feature distance does not establish causal or clinical similarity"
+        ],
+        "applicability": null,
+        "metric_name": "similarity",
+        "metric_value": 0.638891,
+        "metric_unit": null,
+        "comparison_baseline": "normalized tabular feature vector",
+        "native": null,
+        "surrogate": null,
+        "status": "supported"
+      },
+      "evidence_refs": [
+        "similar:p0:train_58"
+      ]
+    },
+    {
+      "node_id": "claim:C-037",
+      "node_type": "claim",
+      "label": "Похожий случай train_268: 0.634",
+      "payload": {
+        "claim_id": "C-037",
+        "claim_type": "similar_case",
+        "scope": "object",
+        "subject_id": "p0",
+        "statement": "Объект train_268 имеет сходство 0.634 с объектом p0; использован метод robust_standardized_euclidean для представления «normalized tabular feature vector».",
+        "short_statement": "Похожий случай train_268: 0.634",
+        "evidence_status": "supported",
+        "effect": "favorable",
+        "severity": "info",
+        "strength": 0.63413,
+        "evidence_refs": [
+          "similar:p0:train_268"
+        ],
+        "confidence_interval": null,
+        "counter_evidence_refs": [],
+        "limitations": [
+          "feature distance does not establish causal or clinical similarity"
+        ],
+        "applicability": null,
+        "metric_name": "similarity",
+        "metric_value": 0.63413,
+        "metric_unit": null,
+        "comparison_baseline": "normalized tabular feature vector",
+        "native": null,
+        "surrogate": null,
+        "status": "supported"
+      },
+      "evidence_refs": [
+        "similar:p0:train_268"
+      ]
+    },
+    {
+      "node_id": "claim:C-038",
+      "node_type": "claim",
+      "label": "Линейная раскладка: 30 слагаемых, восстановлено 2.2961",
+      "payload": {
+        "claim_id": "C-038",
+        "claim_type": "linear_reconstruction",
+        "scope": "object",
+        "subject_id": "p0",
+        "statement": "Раскладка линейной оценки объекта p0: mean radius: сырое значение 14.8700 -> преобразованное 0.2028, коэффициент -0.5392, вклад -0.1093; mean texture: сырое значение 20.2100 -> преобразованное 0.2254, коэффициент -0.4312, вклад -0.0972; mean perimeter: сырое значение 96.1200 -> преобразованное 0.1642, коэффициент -0.4889, вклад -0.0803; mean area: сырое значение 680.9000 -> преобразованное 0.0641, коэффициент -0.5724, вклад -0.0367; mean smoothness: сырое значение 0.0959 -> преобразованное -0.0441, коэффициент -0.1265, вклад +0.0056; mean compactness: сырое значение 0.0834 -> преобразованное -0.3972, коэффициент 0.4475, вклад -0.1777; mean concavity: сырое значение 0.0682 -> преобразованное -0.2560, коэффициент -0.7373, вклад +0.1887; mean concave points: сырое значение 0.0495 -> преобразованное 0.0105, коэффициент -0.9631, вклад -0.0101; mean symmetry: сырое значение 0.1487 -> преобразованное -1.1959, коэффициент 0.1090, вклад -0.1304; mean fractal dimension: сырое значение 0.0575 -> преобразованное -0.7511, коэффициент 0.4315, вклад -0.3241; radius error: сырое значение 0.2323 -> преобразованное -0.6054, коэффициент -1.3247, вклад +0.8019; texture error: сырое значение 1.6360 -> преобразованное 0.7472, коэффициент -0.0219, вклад -0.0164; perimeter error: сырое значение 1.5960 -> преобразованное -0.6091, коэффициент -0.6564, вклад +0.3998; area error: сырое значение 21.8400 -> преобразованное -0.3949, коэффициент -0.8401, вклад +0.3318; smoothness error: сырое значение 0.0054 -> преобразованное -0.5418, коэффициент -0.2048, вклад +0.1109; compactness error: сырое значение 0.0137 -> преобразованное -0.6774, коэффициент 0.6666, вклад -0.4516; concavity error: сырое значение 0.0215 -> преобразованное -0.3697, коэффициент 0.0749, вклад -0.0277; concave points error: сырое значение 0.0118 -> преобразованное 0.0045, коэффициент -0.4407, вклад -0.0020; symmetry error: сырое значение 0.0196 -> преобразованное -0.1147, коэффициент 0.4149, вклад -0.0476; fractal dimension error: сырое значение 0.0018 -> преобразованное -0.8492, коэффициент 0.6265, вклад -0.5320; worst radius: сырое значение 16.0100 -> преобразованное -0.0544, коэффициент -0.9845, вклад +0.0536; worst texture: сырое значение 28.4800 -> преобразованное 0.4646, коэффициент -0.9734, вклад -0.4523; worst perimeter: сырое значение 103.9000 -> преобразованное -0.1014, коэффициент -0.7983, вклад +0.0809; worst area: сырое значение 783.6000 -> преобразованное -0.1713, коэффициент -0.8675, вклад +0.1486; worst smoothness: сырое значение 0.1216 -> преобразованное -0.4781, коэффициент -0.7356, вклад +0.3517; worst compactness: сырое значение 0.1388 -> преобразованное -0.7423, коэффициент -0.1787, вклад +0.1327; worst concavity: сырое значение 0.1700 -> преобразованное -0.4908, коэффициент -0.7638, вклад +0.3749; worst concave points: сырое значение 0.1017 -> преобразованное -0.1987, коэффициент -0.8619, вклад +0.1712; worst symmetry: сырое значение 0.2369 -> преобразованное -0.8724, коэффициент -0.7812, вклад +0.6815; worst fractal dimension: сырое значение 0.0660 -> преобразованное -1.0142, коэффициент -0.6078, вклад +0.6164. Восстановленная оценка 2.2961, фактическая оценка модели 2.2961. Ошибка восстановления 0.000000.",
+        "short_statement": "Линейная раскладка: 30 слагаемых, восстановлено 2.2961",
+        "evidence_status": "supported",
+        "effect": "neutral",
+        "severity": "info",
+        "strength": null,
+        "evidence_refs": [
+          "model_internals:p0:linear_reconstruction"
+        ],
+        "confidence_interval": null,
+        "counter_evidence_refs": [],
+        "limitations": [
+          "Linear terms describe model behavior and are not domain causality.",
+          "Sign is relative to the predicted class: a positive contribution means the term pushed the decision toward the class the model actually predicted, not toward a fixed reference class."
+        ],
+        "applicability": null,
+        "metric_name": "reconstruction_error",
+        "metric_value": 0.0,
+        "metric_unit": null,
+        "comparison_baseline": null,
+        "native": null,
+        "surrogate": null,
+        "status": "supported"
+      },
+      "evidence_refs": [
+        "model_internals:p0:linear_reconstruction"
+      ]
+    },
+    {
+      "node_id": "claim:C-039",
+      "node_type": "claim",
+      "label": "Контрфакт: 1 → 0",
+      "payload": {
+        "claim_id": "C-039",
+        "claim_type": "counterfactual",
+        "scope": "object",
+        "subject_id": "1",
+        "statement": "Контрфактическое изменение {'radius error': {'from': 0.2323, 'to': 0.7532800000000002}} переводит прогноз из 1 в 0.",
+        "short_statement": "Контрфакт: 1 → 0",
+        "evidence_status": "supported",
+        "effect": "mixed",
+        "severity": "info",
+        "strength": null,
+        "evidence_refs": [
+          "counterfactual:0"
+        ],
+        "confidence_interval": null,
+        "counter_evidence_refs": [],
+        "limitations": [
+          "quantile search tests association, not causal feasibility",
+          "observed_effect is the change in maximum predicted probability, not a causal effect"
+        ],
+        "applicability": "requires domain review",
+        "metric_name": "observed_effect",
+        "metric_value": -0.377261,
+        "metric_unit": null,
+        "comparison_baseline": null,
+        "native": null,
+        "surrogate": null,
+        "status": "supported"
+      },
+      "evidence_refs": [
+        "counterfactual:0"
+      ]
+    },
+    {
+      "node_id": "claim:C-040",
+      "node_type": "claim",
+      "label": "ExplainPlan.alignment_policy does not declare alignment applicable for this scenario (single explanatory channel)",
+      "payload": {
+        "claim_id": "C-040",
+        "claim_type": "diagnostic",
+        "scope": "model",
+        "subject_id": "D_k_alignment_not_applicable",
+        "statement": "Диагностика: ExplainPlan.alignment_policy does not declare alignment applicable for this scenario (single explanatory channel).",
+        "short_statement": "ExplainPlan.alignment_policy does not declare alignment applicable for this scenario (single explanatory channel)",
+        "evidence_status": "supported",
+        "effect": "adverse",
+        "severity": "warning",
+        "strength": null,
+        "evidence_refs": [
+          "diagnostic:0"
+        ],
+        "confidence_interval": null,
+        "counter_evidence_refs": [],
+        "limitations": [
+          "Автоматическое принятие ограничено до устранения диагностики."
+        ],
+        "applicability": null,
+        "metric_name": null,
+        "metric_value": null,
+        "metric_unit": null,
+        "comparison_baseline": null,
+        "native": null,
+        "surrogate": null,
+        "status": "supported"
+      },
+      "evidence_refs": [
+        "diagnostic:0"
+      ]
+    },
+    {
+      "node_id": "claim:C-041",
+      "node_type": "claim",
+      "label": "ExplainPlan.reduction_policy declares no reduction operation (Pi) for this scenario",
+      "payload": {
+        "claim_id": "C-041",
+        "claim_type": "diagnostic",
+        "scope": "model",
+        "subject_id": "D_k_reduction_not_applicable",
+        "statement": "Диагностика: ExplainPlan.reduction_policy declares no reduction operation (Pi) for this scenario.",
+        "short_statement": "ExplainPlan.reduction_policy declares no reduction operation (Pi) for this scenario",
+        "evidence_status": "supported",
+        "effect": "adverse",
+        "severity": "warning",
+        "strength": null,
+        "evidence_refs": [
+          "diagnostic:1"
+        ],
+        "confidence_interval": null,
+        "counter_evidence_refs": [],
+        "limitations": [
+          "Автоматическое принятие ограничено до устранения диагностики."
+        ],
+        "applicability": null,
+        "metric_name": null,
+        "metric_value": null,
+        "metric_unit": null,
+        "comparison_baseline": null,
+        "native": null,
+        "surrogate": null,
+        "status": "supported"
+      },
+      "evidence_refs": [
+        "diagnostic:1"
+      ]
+    },
+    {
+      "node_id": "claim:C-042",
+      "node_type": "claim",
+      "label": "risk components expected by this object's schema but not measured: ['reduction_loss', 'uncertainty']",
+      "payload": {
+        "claim_id": "C-042",
+        "claim_type": "diagnostic",
+        "scope": "model",
+        "subject_id": "D_risk_incomplete_interface",
+        "statement": "Диагностика: risk components expected by this object's schema but not measured: ['reduction_loss', 'uncertainty'].",
+        "short_statement": "risk components expected by this object's schema but not measured: ['reduction_loss', 'uncertainty']",
+        "evidence_status": "supported",
+        "effect": "adverse",
+        "severity": "warning",
+        "strength": null,
+        "evidence_refs": [
+          "diagnostic:2"
+        ],
+        "confidence_interval": null,
+        "counter_evidence_refs": [],
+        "limitations": [
+          "Автоматическое принятие ограничено до устранения диагностики."
+        ],
+        "applicability": null,
+        "metric_name": null,
+        "metric_value": null,
+        "metric_unit": null,
+        "comparison_baseline": null,
+        "native": null,
+        "surrogate": null,
+        "status": "supported"
+      },
+      "evidence_refs": [
+        "diagnostic:2"
+      ]
+    },
+    {
+      "node_id": "claim:C-043",
+      "node_type": "claim",
+      "label": "Действие: insufficient_evidence",
+      "payload": {
+        "claim_id": "C-043",
+        "claim_type": "recommended_action",
+        "scope": "object",
+        "subject_id": "[1]",
+        "statement": "На основании доступных claims рекомендовано действие insufficient_evidence.",
+        "short_statement": "Действие: insufficient_evidence",
+        "evidence_status": "insufficient_evidence",
+        "effect": "adverse",
+        "severity": "warning",
+        "strength": null,
+        "evidence_refs": [
+          "diagnostic:0",
+          "diagnostic:1",
+          "diagnostic:2"
+        ],
+        "confidence_interval": null,
+        "counter_evidence_refs": [],
+        "limitations": [
+          "Действие ограничено доступными evidence-каналами."
+        ],
+        "applicability": "insufficient_evidence",
+        "metric_name": null,
+        "metric_value": null,
+        "metric_unit": null,
+        "comparison_baseline": null,
+        "native": null,
+        "surrogate": null,
+        "status": "insufficient_evidence"
+      },
+      "evidence_refs": [
+        "diagnostic:0",
+        "diagnostic:1",
+        "diagnostic:2"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "source": "dataset:root",
+      "target": "data:p0",
+      "relation": "derived_from",
+      "evidence_refs": []
+    },
+    {
+      "source": "data:p0",
+      "target": "similar:p0:train_195",
+      "relation": "derived_from",
+      "evidence_refs": []
+    },
+    {
+      "source": "data:p0",
+      "target": "similar:p0:train_58",
+      "relation": "derived_from",
+      "evidence_refs": []
+    },
+    {
+      "source": "data:p0",
+      "target": "similar:p0:train_268",
+      "relation": "derived_from",
+      "evidence_refs": []
+    },
+    {
+      "source": "data:p0",
+      "target": "preprocessor:p0",
+      "relation": "derived_from",
+      "evidence_refs": []
+    },
+    {
+      "source": "preprocessor:p0",
+      "target": "model_internals:p0:linear_reconstruction",
+      "relation": "derived_from",
+      "evidence_refs": []
+    },
+    {
+      "source": "data:p0",
+      "target": "contribution:mean radius",
+      "relation": "derived_from",
+      "evidence_refs": []
+    },
+    {
+      "source": "data:p0",
+      "target": "contribution:mean texture",
+      "relation": "derived_from",
+      "evidence_refs": []
+    },
+    {
+      "source": "data:p0",
+      "target": "contribution:mean perimeter",
+      "relation": "derived_from",
+      "evidence_refs": []
+    },
+    {
+      "source": "data:p0",
+      "target": "contribution:mean area",
+      "relation": "derived_from",
+      "evidence_refs": []
+    },
+    {
+      "source": "data:p0",
+      "target": "contribution:mean smoothness",
+      "relation": "derived_from",
+      "evidence_refs": []
+    },
+    {
+      "source": "data:p0",
+      "target": "contribution:mean compactness",
+      "relation": "derived_from",
+      "evidence_refs": []
+    },
+    {
+      "source": "data:p0",
+      "target": "contribution:mean concavity",
+      "relation": "derived_from",
+      "evidence_refs": []
+    },
+    {
+      "source": "data:p0",
+      "target": "contribution:mean concave points",
+      "relation": "derived_from",
+      "evidence_refs": []
+    },
+    {
+      "source": "data:p0",
+      "target": "contribution:mean symmetry",
+      "relation": "derived_from",
+      "evidence_refs": []
+    },
+    {
+      "source": "data:p0",
+      "target": "contribution:mean fractal dimension",
+      "relation": "derived_from",
+      "evidence_refs": []
+    },
+    {
+      "source": "data:p0",
+      "target": "contribution:radius error",
+      "relation": "derived_from",
+      "evidence_refs": []
+    },
+    {
+      "source": "data:p0",
+      "target": "contribution:texture error",
+      "relation": "derived_from",
+      "evidence_refs": []
+    },
+    {
+      "source": "data:p0",
+      "target": "contribution:perimeter error",
+      "relation": "derived_from",
+      "evidence_refs": []
+    },
+    {
+      "source": "data:p0",
+      "target": "contribution:area error",
+      "relation": "derived_from",
+      "evidence_refs": []
+    },
+    {
+      "source": "data:p0",
+      "target": "contribution:smoothness error",
+      "relation": "derived_from",
+      "evidence_refs": []
+    },
+    {
+      "source": "data:p0",
+      "target": "contribution:compactness error",
+      "relation": "derived_from",
+      "evidence_refs": []
+    },
+    {
+      "source": "data:p0",
+      "target": "contribution:concavity error",
+      "relation": "derived_from",
+      "evidence_refs": []
+    },
+    {
+      "source": "data:p0",
+      "target": "contribution:concave points error",
+      "relation": "derived_from",
+      "evidence_refs": []
+    },
+    {
+      "source": "data:p0",
+      "target": "contribution:symmetry error",
+      "relation": "derived_from",
+      "evidence_refs": []
+    },
+    {
+      "source": "data:p0",
+      "target": "contribution:fractal dimension error",
+      "relation": "derived_from",
+      "evidence_refs": []
+    },
+    {
+      "source": "data:p0",
+      "target": "contribution:worst radius",
+      "relation": "derived_from",
+      "evidence_refs": []
+    },
+    {
+      "source": "data:p0",
+      "target": "contribution:worst texture",
+      "relation": "derived_from",
+      "evidence_refs": []
+    },
+    {
+      "source": "data:p0",
+      "target": "contribution:worst perimeter",
+      "relation": "derived_from",
+      "evidence_refs": []
+    },
+    {
+      "source": "data:p0",
+      "target": "contribution:worst area",
+      "relation": "derived_from",
+      "evidence_refs": []
+    },
+    {
+      "source": "data:p0",
+      "target": "contribution:worst smoothness",
+      "relation": "derived_from",
+      "evidence_refs": []
+    },
+    {
+      "source": "data:p0",
+      "target": "contribution:worst compactness",
+      "relation": "derived_from",
+      "evidence_refs": []
+    },
+    {
+      "source": "data:p0",
+      "target": "contribution:worst concavity",
+      "relation": "derived_from",
+      "evidence_refs": []
+    },
+    {
+      "source": "data:p0",
+      "target": "contribution:worst concave points",
+      "relation": "derived_from",
+      "evidence_refs": []
+    },
+    {
+      "source": "data:p0",
+      "target": "contribution:worst symmetry",
+      "relation": "derived_from",
+      "evidence_refs": []
+    },
+    {
+      "source": "data:p0",
+      "target": "contribution:worst fractal dimension",
+      "relation": "derived_from",
+      "evidence_refs": []
+    },
+    {
+      "source": "model_artifact:root",
+      "target": "prediction",
+      "relation": "derived_from",
+      "evidence_refs": []
+    },
+    {
+      "source": "data:p0",
+      "target": "prediction",
+      "relation": "derived_from",
+      "evidence_refs": [
+        "robust_median_mad_profile"
+      ]
+    },
+    {
+      "source": "concept:0",
+      "target": "prediction",
+      "relation": "derived_from",
+      "evidence_refs": []
+    },
+    {
+      "source": "concept:1",
+      "target": "prediction",
+      "relation": "derived_from",
+      "evidence_refs": []
+    },
+    {
+      "source": "similar:p0:train_195",
+      "target": "prediction",
+      "relation": "derived_from",
+      "evidence_refs": []
+    },
+    {
+      "source": "similar:p0:train_58",
+      "target": "prediction",
+      "relation": "derived_from",
+      "evidence_refs": []
+    },
+    {
+      "source": "similar:p0:train_268",
+      "target": "prediction",
+      "relation": "derived_from",
+      "evidence_refs": []
+    },
+    {
+      "source": "counterfactual:0",
+      "target": "prediction",
+      "relation": "changed_by",
+      "evidence_refs": [
+        "model prediction before and after feature intervention"
+      ]
+    },
+    {
+      "source": "contribution:mean radius",
+      "target": "prediction",
+      "relation": "derived_from",
+      "evidence_refs": []
+    },
+    {
+      "source": "contribution:mean texture",
+      "target": "prediction",
+      "relation": "derived_from",
+      "evidence_refs": []
+    },
+    {
+      "source": "contribution:mean perimeter",
+      "target": "prediction",
+      "relation": "derived_from",
+      "evidence_refs": []
+    },
+    {
+      "source": "contribution:mean area",
+      "target": "prediction",
+      "relation": "derived_from",
+      "evidence_refs": []
+    },
+    {
+      "source": "contribution:mean smoothness",
+      "target": "prediction",
+      "relation": "derived_from",
+      "evidence_refs": []
+    },
+    {
+      "source": "contribution:mean compactness",
+      "target": "prediction",
+      "relation": "derived_from",
+      "evidence_refs": []
+    },
+    {
+      "source": "contribution:mean concavity",
+      "target": "prediction",
+      "relation": "derived_from",
+      "evidence_refs": []
+    },
+    {
+      "source": "contribution:mean concave points",
+      "target": "prediction",
+      "relation": "derived_from",
+      "evidence_refs": []
+    },
+    {
+      "source": "contribution:mean symmetry",
+      "target": "prediction",
+      "relation": "derived_from",
+      "evidence_refs": []
+    },
+    {
+      "source": "contribution:mean fractal dimension",
+      "target": "prediction",
+      "relation": "derived_from",
+      "evidence_refs": []
+    },
+    {
+      "source": "contribution:radius error",
+      "target": "prediction",
+      "relation": "derived_from",
+      "evidence_refs": []
+    },
+    {
+      "source": "contribution:texture error",
+      "target": "prediction",
+      "relation": "derived_from",
+      "evidence_refs": []
+    },
+    {
+      "source": "contribution:perimeter error",
+      "target": "prediction",
+      "relation": "derived_from",
+      "evidence_refs": []
+    },
+    {
+      "source": "contribution:area error",
+      "target": "prediction",
+      "relation": "derived_from",
+      "evidence_refs": []
+    },
+    {
+      "source": "contribution:smoothness error",
+      "target": "prediction",
+      "relation": "derived_from",
+      "evidence_refs": []
+    },
+    {
+      "source": "contribution:compactness error",
+      "target": "prediction",
+      "relation": "derived_from",
+      "evidence_refs": []
+    },
+    {
+      "source": "contribution:concavity error",
+      "target": "prediction",
+      "relation": "derived_from",
+      "evidence_refs": []
+    },
+    {
+      "source": "contribution:concave points error",
+      "target": "prediction",
+      "relation": "derived_from",
+      "evidence_refs": []
+    },
+    {
+      "source": "contribution:symmetry error",
+      "target": "prediction",
+      "relation": "derived_from",
+      "evidence_refs": []
+    },
+    {
+      "source": "contribution:fractal dimension error",
+      "target": "prediction",
+      "relation": "derived_from",
+      "evidence_refs": []
+    },
+    {
+      "source": "contribution:worst radius",
+      "target": "prediction",
+      "relation": "derived_from",
+      "evidence_refs": []
+    },
+    {
+      "source": "contribution:worst texture",
+      "target": "prediction",
+      "relation": "derived_from",
+      "evidence_refs": []
+    },
+    {
+      "source": "contribution:worst perimeter",
+      "target": "prediction",
+      "relation": "derived_from",
+      "evidence_refs": []
+    },
+    {
+      "source": "contribution:worst area",
+      "target": "prediction",
+      "relation": "derived_from",
+      "evidence_refs": []
+    },
+    {
+      "source": "contribution:worst smoothness",
+      "target": "prediction",
+      "relation": "derived_from",
+      "evidence_refs": []
+    },
+    {
+      "source": "contribution:worst compactness",
+      "target": "prediction",
+      "relation": "derived_from",
+      "evidence_refs": []
+    },
+    {
+      "source": "contribution:worst concavity",
+      "target": "prediction",
+      "relation": "derived_from",
+      "evidence_refs": []
+    },
+    {
+      "source": "contribution:worst concave points",
+      "target": "prediction",
+      "relation": "derived_from",
+      "evidence_refs": []
+    },
+    {
+      "source": "contribution:worst symmetry",
+      "target": "prediction",
+      "relation": "derived_from",
+      "evidence_refs": []
+    },
+    {
+      "source": "contribution:worst fractal dimension",
+      "target": "prediction",
+      "relation": "derived_from",
+      "evidence_refs": []
+    },
+    {
+      "source": "prediction",
+      "target": "diagnostic:0",
+      "relation": "checked_by",
+      "evidence_refs": []
+    },
+    {
+      "source": "prediction",
+      "target": "diagnostic:1",
+      "relation": "checked_by",
+      "evidence_refs": []
+    },
+    {
+      "source": "prediction",
+      "target": "diagnostic:2",
+      "relation": "checked_by",
+      "evidence_refs": []
+    },
+    {
+      "source": "prediction",
+      "target": "claim:C-001",
+      "relation": "supports_claim",
+      "evidence_refs": [
+        "prediction"
+      ]
+    },
+    {
+      "source": "contribution:radius error",
+      "target": "claim:C-002",
+      "relation": "supports_claim",
+      "evidence_refs": [
+        "contribution:radius error"
+      ]
+    },
+    {
+      "source": "contribution:worst symmetry",
+      "target": "claim:C-003",
+      "relation": "supports_claim",
+      "evidence_refs": [
+        "contribution:worst symmetry"
+      ]
+    },
+    {
+      "source": "contribution:worst fractal dimension",
+      "target": "claim:C-004",
+      "relation": "supports_claim",
+      "evidence_refs": [
+        "contribution:worst fractal dimension"
+      ]
+    },
+    {
+      "source": "contribution:fractal dimension error",
+      "target": "claim:C-005",
+      "relation": "supports_claim",
+      "evidence_refs": [
+        "contribution:fractal dimension error"
+      ]
+    },
+    {
+      "source": "contribution:worst texture",
+      "target": "claim:C-006",
+      "relation": "supports_claim",
+      "evidence_refs": [
+        "contribution:worst texture"
+      ]
+    },
+    {
+      "source": "contribution:compactness error",
+      "target": "claim:C-007",
+      "relation": "supports_claim",
+      "evidence_refs": [
+        "contribution:compactness error"
+      ]
+    },
+    {
+      "source": "contribution:perimeter error",
+      "target": "claim:C-008",
+      "relation": "supports_claim",
+      "evidence_refs": [
+        "contribution:perimeter error"
+      ]
+    },
+    {
+      "source": "contribution:worst concavity",
+      "target": "claim:C-009",
+      "relation": "supports_claim",
+      "evidence_refs": [
+        "contribution:worst concavity"
+      ]
+    },
+    {
+      "source": "contribution:worst smoothness",
+      "target": "claim:C-010",
+      "relation": "supports_claim",
+      "evidence_refs": [
+        "contribution:worst smoothness"
+      ]
+    },
+    {
+      "source": "contribution:area error",
+      "target": "claim:C-011",
+      "relation": "supports_claim",
+      "evidence_refs": [
+        "contribution:area error"
+      ]
+    },
+    {
+      "source": "contribution:mean fractal dimension",
+      "target": "claim:C-012",
+      "relation": "supports_claim",
+      "evidence_refs": [
+        "contribution:mean fractal dimension"
+      ]
+    },
+    {
+      "source": "contribution:mean concavity",
+      "target": "claim:C-013",
+      "relation": "supports_claim",
+      "evidence_refs": [
+        "contribution:mean concavity"
+      ]
+    },
+    {
+      "source": "contribution:mean compactness",
+      "target": "claim:C-014",
+      "relation": "supports_claim",
+      "evidence_refs": [
+        "contribution:mean compactness"
+      ]
+    },
+    {
+      "source": "contribution:worst concave points",
+      "target": "claim:C-015",
+      "relation": "supports_claim",
+      "evidence_refs": [
+        "contribution:worst concave points"
+      ]
+    },
+    {
+      "source": "contribution:worst area",
+      "target": "claim:C-016",
+      "relation": "supports_claim",
+      "evidence_refs": [
+        "contribution:worst area"
+      ]
+    },
+    {
+      "source": "contribution:worst compactness",
+      "target": "claim:C-017",
+      "relation": "supports_claim",
+      "evidence_refs": [
+        "contribution:worst compactness"
+      ]
+    },
+    {
+      "source": "contribution:mean symmetry",
+      "target": "claim:C-018",
+      "relation": "supports_claim",
+      "evidence_refs": [
+        "contribution:mean symmetry"
+      ]
+    },
+    {
+      "source": "contribution:smoothness error",
+      "target": "claim:C-019",
+      "relation": "supports_claim",
+      "evidence_refs": [
+        "contribution:smoothness error"
+      ]
+    },
+    {
+      "source": "contribution:mean radius",
+      "target": "claim:C-020",
+      "relation": "supports_claim",
+      "evidence_refs": [
+        "contribution:mean radius"
+      ]
+    },
+    {
+      "source": "contribution:mean texture",
+      "target": "claim:C-021",
+      "relation": "supports_claim",
+      "evidence_refs": [
+        "contribution:mean texture"
+      ]
+    },
+    {
+      "source": "contribution:worst perimeter",
+      "target": "claim:C-022",
+      "relation": "supports_claim",
+      "evidence_refs": [
+        "contribution:worst perimeter"
+      ]
+    },
+    {
+      "source": "contribution:mean perimeter",
+      "target": "claim:C-023",
+      "relation": "supports_claim",
+      "evidence_refs": [
+        "contribution:mean perimeter"
+      ]
+    },
+    {
+      "source": "contribution:worst radius",
+      "target": "claim:C-024",
+      "relation": "supports_claim",
+      "evidence_refs": [
+        "contribution:worst radius"
+      ]
+    },
+    {
+      "source": "contribution:symmetry error",
+      "target": "claim:C-025",
+      "relation": "supports_claim",
+      "evidence_refs": [
+        "contribution:symmetry error"
+      ]
+    },
+    {
+      "source": "contribution:mean area",
+      "target": "claim:C-026",
+      "relation": "supports_claim",
+      "evidence_refs": [
+        "contribution:mean area"
+      ]
+    },
+    {
+      "source": "contribution:concavity error",
+      "target": "claim:C-027",
+      "relation": "supports_claim",
+      "evidence_refs": [
+        "contribution:concavity error"
+      ]
+    },
+    {
+      "source": "contribution:texture error",
+      "target": "claim:C-028",
+      "relation": "supports_claim",
+      "evidence_refs": [
+        "contribution:texture error"
+      ]
+    },
+    {
+      "source": "contribution:mean concave points",
+      "target": "claim:C-029",
+      "relation": "supports_claim",
+      "evidence_refs": [
+        "contribution:mean concave points"
+      ]
+    },
+    {
+      "source": "contribution:mean smoothness",
+      "target": "claim:C-030",
+      "relation": "supports_claim",
+      "evidence_refs": [
+        "contribution:mean smoothness"
+      ]
+    },
+    {
+      "source": "contribution:concave points error",
+      "target": "claim:C-031",
+      "relation": "supports_claim",
+      "evidence_refs": [
+        "contribution:concave points error"
+      ]
+    },
+    {
+      "source": "data:p0",
+      "target": "claim:C-032",
+      "relation": "supports_claim",
+      "evidence_refs": [
+        "data:p0"
+      ]
+    },
+    {
+      "source": "concept:0",
+      "target": "claim:C-033",
+      "relation": "supports_claim",
+      "evidence_refs": [
+        "concept:0"
+      ]
+    },
+    {
+      "source": "concept:1",
+      "target": "claim:C-034",
+      "relation": "supports_claim",
+      "evidence_refs": [
+        "concept:1"
+      ]
+    },
+    {
+      "source": "similar:p0:train_195",
+      "target": "claim:C-035",
+      "relation": "supports_claim",
+      "evidence_refs": [
+        "similar:p0:train_195"
+      ]
+    },
+    {
+      "source": "similar:p0:train_58",
+      "target": "claim:C-036",
+      "relation": "supports_claim",
+      "evidence_refs": [
+        "similar:p0:train_58"
+      ]
+    },
+    {
+      "source": "similar:p0:train_268",
+      "target": "claim:C-037",
+      "relation": "supports_claim",
+      "evidence_refs": [
+        "similar:p0:train_268"
+      ]
+    },
+    {
+      "source": "model_internals:p0:linear_reconstruction",
+      "target": "claim:C-038",
+      "relation": "supports_claim",
+      "evidence_refs": [
+        "model_internals:p0:linear_reconstruction"
+      ]
+    },
+    {
+      "source": "counterfactual:0",
+      "target": "claim:C-039",
+      "relation": "supports_claim",
+      "evidence_refs": [
+        "counterfactual:0"
+      ]
+    },
+    {
+      "source": "diagnostic:0",
+      "target": "claim:C-040",
+      "relation": "supports_claim",
+      "evidence_refs": [
+        "diagnostic:0"
+      ]
+    },
+    {
+      "source": "claim:C-040",
+      "target": "action",
+      "relation": "constrains",
+      "evidence_refs": []
+    },
+    {
+      "source": "diagnostic:1",
+      "target": "claim:C-041",
+      "relation": "supports_claim",
+      "evidence_refs": [
+        "diagnostic:1"
+      ]
+    },
+    {
+      "source": "claim:C-041",
+      "target": "action",
+      "relation": "constrains",
+      "evidence_refs": []
+    },
+    {
+      "source": "diagnostic:2",
+      "target": "claim:C-042",
+      "relation": "supports_claim",
+      "evidence_refs": [
+        "diagnostic:2"
+      ]
+    },
+    {
+      "source": "claim:C-042",
+      "target": "action",
+      "relation": "constrains",
+      "evidence_refs": []
+    },
+    {
+      "source": "diagnostic:0",
+      "target": "claim:C-043",
+      "relation": "supports_claim",
+      "evidence_refs": [
+        "diagnostic:0"
+      ]
+    },
+    {
+      "source": "diagnostic:1",
+      "target": "claim:C-043",
+      "relation": "supports_claim",
+      "evidence_refs": [
+        "diagnostic:1"
+      ]
+    },
+    {
+      "source": "diagnostic:2",
+      "target": "claim:C-043",
+      "relation": "supports_claim",
+      "evidence_refs": [
+        "diagnostic:2"
+      ]
+    },
+    {
+      "source": "prediction",
+      "target": "action",
+      "relation": "recommends",
+      "evidence_refs": []
+    },
+    {
+      "source": "diagnostic:0",
+      "target": "action",
+      "relation": "constrains",
+      "evidence_refs": []
+    },
+    {
+      "source": "diagnostic:1",
+      "target": "action",
+      "relation": "constrains",
+      "evidence_refs": []
+    },
+    {
+      "source": "diagnostic:2",
+      "target": "action",
+      "relation": "constrains",
+      "evidence_refs": []
+    },
+    {
+      "source": "claim:C-043",
+      "target": "action",
+      "relation": "recommends",
+      "evidence_refs": []
+    }
+  ],
+  "claims": [
+    {
+      "claim_id": "C-001",
+      "claim_type": "prediction",
+      "scope": "object",
+      "subject_id": "[1]",
+      "statement": "Модель сформировала прогноз [1] с максимальным модельным баллом 0.909.",
+      "short_statement": "Прогноз: [1]",
+      "evidence_status": "supported",
+      "effect": "neutral",
+      "severity": "info",
+      "strength": 0.9085576593696942,
+      "evidence_refs": [
+        "prediction"
+      ],
+      "confidence_interval": null,
+      "counter_evidence_refs": [],
+      "limitations": [],
+      "applicability": null,
+      "metric_name": "model_score",
+      "metric_value": 0.9085576593696942,
+      "metric_unit": null,
+      "comparison_baseline": null,
+      "native": null,
+      "surrogate": null
+    },
+    {
+      "claim_id": "C-002",
+      "claim_type": "feature_contribution",
+      "scope": "object",
+      "subject_id": "radius error",
+      "statement": "Локальный вклад признака radius error равен +0.802 по методу derived_native_linear_term_x_coefficient.",
+      "short_statement": "Вклад radius error: +0.802",
+      "evidence_status": "supported",
+      "effect": "favorable",
+      "severity": "info",
+      "strength": 1.0,
+      "evidence_refs": [
+        "contribution:radius error"
+      ],
+      "confidence_interval": null,
+      "counter_evidence_refs": [],
+      "limitations": [],
+      "applicability": null,
+      "metric_name": "local_contribution",
+      "metric_value": 0.8019388494946564,
+      "metric_unit": null,
+      "comparison_baseline": "zero local contribution",
+      "native": true,
+      "surrogate": false
+    },
+    {
+      "claim_id": "C-003",
+      "claim_type": "feature_contribution",
+      "scope": "object",
+      "subject_id": "worst symmetry",
+      "statement": "Локальный вклад признака worst symmetry равен +0.682 по методу derived_native_linear_term_x_coefficient.",
+      "short_statement": "Вклад worst symmetry: +0.682",
+      "evidence_status": "supported",
+      "effect": "favorable",
+      "severity": "info",
+      "strength": 0.8498355709294094,
+      "evidence_refs": [
+        "contribution:worst symmetry"
+      ],
+      "confidence_interval": null,
+      "counter_evidence_refs": [],
+      "limitations": [],
+      "applicability": null,
+      "metric_name": "local_contribution",
+      "metric_value": 0.6815161600107651,
+      "metric_unit": null,
+      "comparison_baseline": "zero local contribution",
+      "native": true,
+      "surrogate": false
+    },
+    {
+      "claim_id": "C-004",
+      "claim_type": "feature_contribution",
+      "scope": "object",
+      "subject_id": "worst fractal dimension",
+      "statement": "Локальный вклад признака worst fractal dimension равен +0.616 по методу derived_native_linear_term_x_coefficient.",
+      "short_statement": "Вклад worst fractal dimension: +0.616",
+      "evidence_status": "supported",
+      "effect": "favorable",
+      "severity": "info",
+      "strength": 0.7686508147140119,
+      "evidence_refs": [
+        "contribution:worst fractal dimension"
+      ],
+      "confidence_interval": null,
+      "counter_evidence_refs": [],
+      "limitations": [],
+      "applicability": null,
+      "metric_name": "local_contribution",
+      "metric_value": 0.616410950014885,
+      "metric_unit": null,
+      "comparison_baseline": "zero local contribution",
+      "native": true,
+      "surrogate": false
+    },
+    {
+      "claim_id": "C-005",
+      "claim_type": "feature_contribution",
+      "scope": "object",
+      "subject_id": "fractal dimension error",
+      "statement": "Локальный вклад признака fractal dimension error равен -0.532 по методу derived_native_linear_term_x_coefficient.",
+      "short_statement": "Вклад fractal dimension error: -0.532",
+      "evidence_status": "supported",
+      "effect": "adverse",
+      "severity": "info",
+      "strength": 0.6634192558018096,
+      "evidence_refs": [
+        "contribution:fractal dimension error"
+      ],
+      "confidence_interval": null,
+      "counter_evidence_refs": [],
+      "limitations": [],
+      "applicability": null,
+      "metric_name": "local_contribution",
+      "metric_value": -0.5320216747303044,
+      "metric_unit": null,
+      "comparison_baseline": "zero local contribution",
+      "native": true,
+      "surrogate": false
+    },
+    {
+      "claim_id": "C-006",
+      "claim_type": "feature_contribution",
+      "scope": "object",
+      "subject_id": "worst texture",
+      "statement": "Локальный вклад признака worst texture равен -0.452 по методу derived_native_linear_term_x_coefficient.",
+      "short_statement": "Вклад worst texture: -0.452",
+      "evidence_status": "supported",
+      "effect": "adverse",
+      "severity": "info",
+      "strength": 0.5639684870759635,
+      "evidence_refs": [
+        "contribution:worst texture"
+      ],
+      "confidence_interval": null,
+      "counter_evidence_refs": [],
+      "limitations": [],
+      "applicability": null,
+      "metric_name": "local_contribution",
+      "metric_value": -0.45226823967694013,
+      "metric_unit": null,
+      "comparison_baseline": "zero local contribution",
+      "native": true,
+      "surrogate": false
+    },
+    {
+      "claim_id": "C-007",
+      "claim_type": "feature_contribution",
+      "scope": "object",
+      "subject_id": "compactness error",
+      "statement": "Локальный вклад признака compactness error равен -0.452 по методу derived_native_linear_term_x_coefficient.",
+      "short_statement": "Вклад compactness error: -0.452",
+      "evidence_status": "supported",
+      "effect": "adverse",
+      "severity": "info",
+      "strength": 0.5631035401973132,
+      "evidence_refs": [
+        "contribution:compactness error"
+      ],
+      "confidence_interval": null,
+      "counter_evidence_refs": [],
+      "limitations": [],
+      "applicability": null,
+      "metric_name": "local_contribution",
+      "metric_value": -0.45157460517220144,
+      "metric_unit": null,
+      "comparison_baseline": "zero local contribution",
+      "native": true,
+      "surrogate": false
+    },
+    {
+      "claim_id": "C-008",
+      "claim_type": "feature_contribution",
+      "scope": "object",
+      "subject_id": "perimeter error",
+      "statement": "Локальный вклад признака perimeter error равен +0.400 по методу derived_native_linear_term_x_coefficient.",
+      "short_statement": "Вклад perimeter error: +0.400",
+      "evidence_status": "supported",
+      "effect": "favorable",
+      "severity": "info",
+      "strength": 0.498525380337922,
+      "evidence_refs": [
+        "contribution:perimeter error"
+      ],
+      "confidence_interval": null,
+      "counter_evidence_refs": [],
+      "limitations": [],
+      "applicability": null,
+      "metric_name": "local_contribution",
+      "metric_value": 0.3997868699520792,
+      "metric_unit": null,
+      "comparison_baseline": "zero local contribution",
+      "native": true,
+      "surrogate": false
+    },
+    {
+      "claim_id": "C-009",
+      "claim_type": "feature_contribution",
+      "scope": "object",
+      "subject_id": "worst concavity",
+      "statement": "Локальный вклад признака worst concavity равен +0.375 по методу derived_native_linear_term_x_coefficient.",
+      "short_statement": "Вклад worst concavity: +0.375",
+      "evidence_status": "supported",
+      "effect": "favorable",
+      "severity": "info",
+      "strength": 0.46749750718029576,
+      "evidence_refs": [
+        "contribution:worst concavity"
+      ],
+      "confidence_interval": null,
+      "counter_evidence_refs": [],
+      "limitations": [],
+      "applicability": null,
+      "metric_name": "local_contribution",
+      "metric_value": 0.3749044130497863,
+      "metric_unit": null,
+      "comparison_baseline": "zero local contribution",
+      "native": true,
+      "surrogate": false
+    },
+    {
+      "claim_id": "C-010",
+      "claim_type": "feature_contribution",
+      "scope": "object",
+      "subject_id": "worst smoothness",
+      "statement": "Локальный вклад признака worst smoothness равен +0.352 по методу derived_native_linear_term_x_coefficient.",
+      "short_statement": "Вклад worst smoothness: +0.352",
+      "evidence_status": "supported",
+      "effect": "favorable",
+      "severity": "info",
+      "strength": 0.4385198754435377,
+      "evidence_refs": [
+        "contribution:worst smoothness"
+      ],
+      "confidence_interval": null,
+      "counter_evidence_refs": [],
+      "limitations": [],
+      "applicability": null,
+      "metric_name": "local_contribution",
+      "metric_value": 0.3516661243937307,
+      "metric_unit": null,
+      "comparison_baseline": "zero local contribution",
+      "native": true,
+      "surrogate": false
+    },
+    {
+      "claim_id": "C-011",
+      "claim_type": "feature_contribution",
+      "scope": "object",
+      "subject_id": "area error",
+      "statement": "Локальный вклад признака area error равен +0.332 по методу derived_native_linear_term_x_coefficient.",
+      "short_statement": "Вклад area error: +0.332",
+      "evidence_status": "supported",
+      "effect": "favorable",
+      "severity": "info",
+      "strength": 0.4137653367028111,
+      "evidence_refs": [
+        "contribution:area error"
+      ],
+      "confidence_interval": null,
+      "counter_evidence_refs": [],
+      "limitations": [],
+      "applicability": null,
+      "metric_name": "local_contribution",
+      "metric_value": 0.3318144980762215,
+      "metric_unit": null,
+      "comparison_baseline": "zero local contribution",
+      "native": true,
+      "surrogate": false
+    },
+    {
+      "claim_id": "C-012",
+      "claim_type": "feature_contribution",
+      "scope": "object",
+      "subject_id": "mean fractal dimension",
+      "statement": "Локальный вклад признака mean fractal dimension равен -0.324 по методу derived_native_linear_term_x_coefficient.",
+      "short_statement": "Вклад mean fractal dimension: -0.324",
+      "evidence_status": "supported",
+      "effect": "adverse",
+      "severity": "info",
+      "strength": 0.4041222714329408,
+      "evidence_refs": [
+        "contribution:mean fractal dimension"
+      ],
+      "confidence_interval": null,
+      "counter_evidence_refs": [],
+      "limitations": [],
+      "applicability": null,
+      "metric_name": "local_contribution",
+      "metric_value": -0.32408134940809985,
+      "metric_unit": null,
+      "comparison_baseline": "zero local contribution",
+      "native": true,
+      "surrogate": false
+    },
+    {
+      "claim_id": "C-013",
+      "claim_type": "feature_contribution",
+      "scope": "object",
+      "subject_id": "mean concavity",
+      "statement": "Локальный вклад признака mean concavity равен +0.189 по методу derived_native_linear_term_x_coefficient.",
+      "short_statement": "Вклад mean concavity: +0.189",
+      "evidence_status": "supported",
+      "effect": "favorable",
+      "severity": "info",
+      "strength": 0.2353217401763958,
+      "evidence_refs": [
+        "contribution:mean concavity"
+      ],
+      "confidence_interval": null,
+      "counter_evidence_refs": [],
+      "limitations": [],
+      "applicability": null,
+      "metric_name": "local_contribution",
+      "metric_value": 0.1887136455781393,
+      "metric_unit": null,
+      "comparison_baseline": "zero local contribution",
+      "native": true,
+      "surrogate": false
+    },
+    {
+      "claim_id": "C-014",
+      "claim_type": "feature_contribution",
+      "scope": "object",
+      "subject_id": "mean compactness",
+      "statement": "Локальный вклад признака mean compactness равен -0.178 по методу derived_native_linear_term_x_coefficient.",
+      "short_statement": "Вклад mean compactness: -0.178",
+      "evidence_status": "supported",
+      "effect": "adverse",
+      "severity": "info",
+      "strength": 0.22162072273317732,
+      "evidence_refs": [
+        "contribution:mean compactness"
+      ],
+      "confidence_interval": null,
+      "counter_evidence_refs": [],
+      "limitations": [],
+      "applicability": null,
+      "metric_name": "local_contribution",
+      "metric_value": -0.17772626741281847,
+      "metric_unit": null,
+      "comparison_baseline": "zero local contribution",
+      "native": true,
+      "surrogate": false
+    },
+    {
+      "claim_id": "C-015",
+      "claim_type": "feature_contribution",
+      "scope": "object",
+      "subject_id": "worst concave points",
+      "statement": "Локальный вклад признака worst concave points равен +0.171 по методу derived_native_linear_term_x_coefficient.",
+      "short_statement": "Вклад worst concave points: +0.171",
+      "evidence_status": "supported",
+      "effect": "favorable",
+      "severity": "info",
+      "strength": 0.21352519352545446,
+      "evidence_refs": [
+        "contribution:worst concave points"
+      ],
+      "confidence_interval": null,
+      "counter_evidence_refs": [],
+      "limitations": [],
+      "applicability": null,
+      "metric_name": "local_contribution",
+      "metric_value": 0.1712341480339268,
+      "metric_unit": null,
+      "comparison_baseline": "zero local contribution",
+      "native": true,
+      "surrogate": false
+    },
+    {
+      "claim_id": "C-016",
+      "claim_type": "feature_contribution",
+      "scope": "object",
+      "subject_id": "worst area",
+      "statement": "Локальный вклад признака worst area равен +0.149 по методу derived_native_linear_term_x_coefficient.",
+      "short_statement": "Вклад worst area: +0.149",
+      "evidence_status": "supported",
+      "effect": "favorable",
+      "severity": "info",
+      "strength": 0.18529058660528205,
+      "evidence_refs": [
+        "contribution:worst area"
+      ],
+      "confidence_interval": null,
+      "counter_evidence_refs": [],
+      "limitations": [],
+      "applicability": null,
+      "metric_name": "local_contribution",
+      "metric_value": 0.1485917198444299,
+      "metric_unit": null,
+      "comparison_baseline": "zero local contribution",
+      "native": true,
+      "surrogate": false
+    },
+    {
+      "claim_id": "C-017",
+      "claim_type": "feature_contribution",
+      "scope": "object",
+      "subject_id": "worst compactness",
+      "statement": "Локальный вклад признака worst compactness равен +0.133 по методу derived_native_linear_term_x_coefficient.",
+      "short_statement": "Вклад worst compactness: +0.133",
+      "evidence_status": "supported",
+      "effect": "favorable",
+      "severity": "info",
+      "strength": 0.16543357266132802,
+      "evidence_refs": [
+        "contribution:worst compactness"
+      ],
+      "confidence_interval": null,
+      "counter_evidence_refs": [],
+      "limitations": [],
+      "applicability": null,
+      "metric_name": "local_contribution",
+      "metric_value": 0.13266760892781604,
+      "metric_unit": null,
+      "comparison_baseline": "zero local contribution",
+      "native": true,
+      "surrogate": false
+    },
+    {
+      "claim_id": "C-018",
+      "claim_type": "feature_contribution",
+      "scope": "object",
+      "subject_id": "mean symmetry",
+      "statement": "Локальный вклад признака mean symmetry равен -0.130 по методу derived_native_linear_term_x_coefficient.",
+      "short_statement": "Вклад mean symmetry: -0.130",
+      "evidence_status": "supported",
+      "effect": "adverse",
+      "severity": "info",
+      "strength": 0.1625435793193752,
+      "evidence_refs": [
+        "contribution:mean symmetry"
+      ],
+      "confidence_interval": null,
+      "counter_evidence_refs": [],
+      "limitations": [],
+      "applicability": null,
+      "metric_name": "local_contribution",
+      "metric_value": -0.13035001099212318,
+      "metric_unit": null,
+      "comparison_baseline": "zero local contribution",
+      "native": true,
+      "surrogate": false
+    },
+    {
+      "claim_id": "C-019",
+      "claim_type": "feature_contribution",
+      "scope": "object",
+      "subject_id": "smoothness error",
+      "statement": "Локальный вклад признака smoothness error равен +0.111 по методу derived_native_linear_term_x_coefficient.",
+      "short_statement": "Вклад smoothness error: +0.111",
+      "evidence_status": "supported",
+      "effect": "favorable",
+      "severity": "info",
+      "strength": 0.138327023844219,
+      "evidence_refs": [
+        "contribution:smoothness error"
+      ],
+      "confidence_interval": null,
+      "counter_evidence_refs": [],
+      "limitations": [],
+      "applicability": null,
+      "metric_name": "local_contribution",
+      "metric_value": 0.1109298143556529,
+      "metric_unit": null,
+      "comparison_baseline": "zero local contribution",
+      "native": true,
+      "surrogate": false
+    },
+    {
+      "claim_id": "C-020",
+      "claim_type": "feature_contribution",
+      "scope": "object",
+      "subject_id": "mean radius",
+      "statement": "Локальный вклад признака mean radius равен -0.109 по методу derived_native_linear_term_x_coefficient.",
+      "short_statement": "Вклад mean radius: -0.109",
+      "evidence_status": "supported",
+      "effect": "adverse",
+      "severity": "info",
+      "strength": 0.13633107754414603,
+      "evidence_refs": [
+        "contribution:mean radius"
+      ],
+      "confidence_interval": null,
+      "counter_evidence_refs": [],
+      "limitations": [],
+      "applicability": null,
+      "metric_name": "local_contribution",
+      "metric_value": -0.10932918747611925,
+      "metric_unit": null,
+      "comparison_baseline": "zero local contribution",
+      "native": true,
+      "surrogate": false
+    },
+    {
+      "claim_id": "C-021",
+      "claim_type": "feature_contribution",
+      "scope": "object",
+      "subject_id": "mean texture",
+      "statement": "Локальный вклад признака mean texture равен -0.097 по методу derived_native_linear_term_x_coefficient.",
+      "short_statement": "Вклад mean texture: -0.097",
+      "evidence_status": "supported",
+      "effect": "adverse",
+      "severity": "info",
+      "strength": 0.12120144656315902,
+      "evidence_refs": [
+        "contribution:mean texture"
+      ],
+      "confidence_interval": null,
+      "counter_evidence_refs": [],
+      "limitations": [],
+      "applicability": null,
+      "metric_name": "local_contribution",
+      "metric_value": -0.09719614861394783,
+      "metric_unit": null,
+      "comparison_baseline": "zero local contribution",
+      "native": true,
+      "surrogate": false
+    },
+    {
+      "claim_id": "C-022",
+      "claim_type": "feature_contribution",
+      "scope": "object",
+      "subject_id": "worst perimeter",
+      "statement": "Локальный вклад признака worst perimeter равен +0.081 по методу derived_native_linear_term_x_coefficient.",
+      "short_statement": "Вклад worst perimeter: +0.081",
+      "evidence_status": "supported",
+      "effect": "favorable",
+      "severity": "info",
+      "strength": 0.1009022480042327,
+      "evidence_refs": [
+        "contribution:worst perimeter"
+      ],
+      "confidence_interval": null,
+      "counter_evidence_refs": [],
+      "limitations": [],
+      "applicability": null,
+      "metric_name": "local_contribution",
+      "metric_value": 0.08091743267593886,
+      "metric_unit": null,
+      "comparison_baseline": "zero local contribution",
+      "native": true,
+      "surrogate": false
+    },
+    {
+      "claim_id": "C-023",
+      "claim_type": "feature_contribution",
+      "scope": "object",
+      "subject_id": "mean perimeter",
+      "statement": "Локальный вклад признака mean perimeter равен -0.080 по методу derived_native_linear_term_x_coefficient.",
+      "short_statement": "Вклад mean perimeter: -0.080",
+      "evidence_status": "supported",
+      "effect": "adverse",
+      "severity": "info",
+      "strength": 0.10013045770458025,
+      "evidence_refs": [
+        "contribution:mean perimeter"
+      ],
+      "confidence_interval": null,
+      "counter_evidence_refs": [],
+      "limitations": [],
+      "applicability": null,
+      "metric_name": "local_contribution",
+      "metric_value": -0.08029850405098445,
+      "metric_unit": null,
+      "comparison_baseline": "zero local contribution",
+      "native": true,
+      "surrogate": false
+    },
+    {
+      "claim_id": "C-024",
+      "claim_type": "feature_contribution",
+      "scope": "object",
+      "subject_id": "worst radius",
+      "statement": "Локальный вклад признака worst radius равен +0.054 по методу derived_native_linear_term_x_coefficient.",
+      "short_statement": "Вклад worst radius: +0.054",
+      "evidence_status": "supported",
+      "effect": "favorable",
+      "severity": "info",
+      "strength": 0.06680006089649705,
+      "evidence_refs": [
+        "contribution:worst radius"
+      ],
+      "confidence_interval": null,
+      "counter_evidence_refs": [],
+      "limitations": [],
+      "applicability": null,
+      "metric_name": "local_contribution",
+      "metric_value": 0.05356956398150983,
+      "metric_unit": null,
+      "comparison_baseline": "zero local contribution",
+      "native": true,
+      "surrogate": false
+    },
+    {
+      "claim_id": "C-025",
+      "claim_type": "feature_contribution",
+      "scope": "object",
+      "subject_id": "symmetry error",
+      "statement": "Локальный вклад признака symmetry error равен -0.048 по методу derived_native_linear_term_x_coefficient.",
+      "short_statement": "Вклад symmetry error: -0.048",
+      "evidence_status": "supported",
+      "effect": "adverse",
+      "severity": "info",
+      "strength": 0.05937159410928818,
+      "evidence_refs": [
+        "contribution:symmetry error"
+      ],
+      "confidence_interval": null,
+      "counter_evidence_refs": [],
+      "limitations": [],
+      "applicability": null,
+      "metric_name": "local_contribution",
+      "metric_value": -0.047612387872666286,
+      "metric_unit": null,
+      "comparison_baseline": "zero local contribution",
+      "native": true,
+      "surrogate": false
+    },
+    {
+      "claim_id": "C-026",
+      "claim_type": "feature_contribution",
+      "scope": "object",
+      "subject_id": "mean area",
+      "statement": "Локальный вклад признака mean area равен -0.037 по методу derived_native_linear_term_x_coefficient.",
+      "short_statement": "Вклад mean area: -0.037",
+      "evidence_status": "supported",
+      "effect": "adverse",
+      "severity": "info",
+      "strength": 0.045730018492253686,
+      "evidence_refs": [
+        "contribution:mean area"
+      ],
+      "confidence_interval": null,
+      "counter_evidence_refs": [],
+      "limitations": [],
+      "applicability": null,
+      "metric_name": "local_contribution",
+      "metric_value": -0.036672678417047286,
+      "metric_unit": null,
+      "comparison_baseline": "zero local contribution",
+      "native": true,
+      "surrogate": false
+    },
+    {
+      "claim_id": "C-027",
+      "claim_type": "feature_contribution",
+      "scope": "object",
+      "subject_id": "concavity error",
+      "statement": "Локальный вклад признака concavity error равен -0.028 по методу derived_native_linear_term_x_coefficient.",
+      "short_statement": "Вклад concavity error: -0.028",
+      "evidence_status": "supported",
+      "effect": "adverse",
+      "severity": "info",
+      "strength": 0.034543611097175915,
+      "evidence_refs": [
+        "contribution:concavity error"
+      ],
+      "confidence_interval": null,
+      "counter_evidence_refs": [],
+      "limitations": [],
+      "applicability": null,
+      "metric_name": "local_contribution",
+      "metric_value": -0.0277018637406601,
+      "metric_unit": null,
+      "comparison_baseline": "zero local contribution",
+      "native": true,
+      "surrogate": false
+    },
+    {
+      "claim_id": "C-028",
+      "claim_type": "feature_contribution",
+      "scope": "object",
+      "subject_id": "texture error",
+      "statement": "Локальный вклад признака texture error равен -0.016 по методу derived_native_linear_term_x_coefficient.",
+      "short_statement": "Вклад texture error: -0.016",
+      "evidence_status": "supported",
+      "effect": "adverse",
+      "severity": "info",
+      "strength": 0.02041253382521857,
+      "evidence_refs": [
+        "contribution:texture error"
+      ],
+      "confidence_interval": null,
+      "counter_evidence_refs": [],
+      "limitations": [],
+      "applicability": null,
+      "metric_name": "local_contribution",
+      "metric_value": -0.01636960389106654,
+      "metric_unit": null,
+      "comparison_baseline": "zero local contribution",
+      "native": true,
+      "surrogate": false
+    },
+    {
+      "claim_id": "C-029",
+      "claim_type": "feature_contribution",
+      "scope": "object",
+      "subject_id": "mean concave points",
+      "statement": "Локальный вклад признака mean concave points равен -0.010 по методу derived_native_linear_term_x_coefficient.",
+      "short_statement": "Вклад mean concave points: -0.010",
+      "evidence_status": "supported",
+      "effect": "adverse",
+      "severity": "info",
+      "strength": 0.012579472694545915,
+      "evidence_refs": [
+        "contribution:mean concave points"
+      ],
+      "confidence_interval": null,
+      "counter_evidence_refs": [],
+      "limitations": [],
+      "applicability": null,
+      "metric_name": "local_contribution",
+      "metric_value": -0.010087967859913597,
+      "metric_unit": null,
+      "comparison_baseline": "zero local contribution",
+      "native": true,
+      "surrogate": false
+    },
+    {
+      "claim_id": "C-030",
+      "claim_type": "feature_contribution",
+      "scope": "object",
+      "subject_id": "mean smoothness",
+      "statement": "Локальный вклад признака mean smoothness равен +0.006 по методу derived_native_linear_term_x_coefficient.",
+      "short_statement": "Вклад mean smoothness: +0.006",
+      "evidence_status": "supported",
+      "effect": "favorable",
+      "severity": "info",
+      "strength": 0.006949623994468175,
+      "evidence_refs": [
+        "contribution:mean smoothness"
+      ],
+      "confidence_interval": null,
+      "counter_evidence_refs": [],
+      "limitations": [],
+      "applicability": null,
+      "metric_name": "local_contribution",
+      "metric_value": 0.005573173470544267,
+      "metric_unit": null,
+      "comparison_baseline": "zero local contribution",
+      "native": true,
+      "surrogate": false
+    },
+    {
+      "claim_id": "C-031",
+      "claim_type": "feature_contribution",
+      "scope": "object",
+      "subject_id": "concave points error",
+      "statement": "Локальный вклад признака concave points error равен -0.002 по методу derived_native_linear_term_x_coefficient.",
+      "short_statement": "Вклад concave points error: -0.002",
+      "evidence_status": "supported",
+      "effect": "adverse",
+      "severity": "info",
+      "strength": 0.0024533895124169217,
+      "evidence_refs": [
+        "contribution:concave points error"
+      ],
+      "confidence_interval": null,
+      "counter_evidence_refs": [],
+      "limitations": [],
+      "applicability": null,
+      "metric_name": "local_contribution",
+      "metric_value": -0.0019674683629498824,
+      "metric_unit": null,
+      "comparison_baseline": "zero local contribution",
+      "native": true,
+      "surrogate": false
+    },
+    {
+      "claim_id": "C-032",
+      "claim_type": "data_quality",
+      "scope": "object",
+      "subject_id": "p0",
+      "statement": "Качество доступных входных данных объекта p0 равно 1.000.",
+      "short_statement": "Качество данных: 1.000",
+      "evidence_status": "supported",
+      "effect": "favorable",
+      "severity": "info",
+      "strength": 1.0,
+      "evidence_refs": [
+        "data:p0"
+      ],
+      "confidence_interval": null,
+      "counter_evidence_refs": [],
+      "limitations": [],
+      "applicability": null,
+      "metric_name": "data_quality",
+      "metric_value": 1.0,
+      "metric_unit": null,
+      "comparison_baseline": null,
+      "native": null,
+      "surrogate": null
+    },
+    {
+      "claim_id": "C-033",
+      "claim_type": "class_concept",
+      "scope": "class",
+      "subject_id": "0",
+      "statement": "Class 0: no supported primary rules; coverage unavailable. Расстояние от объекта до прототипа класса: 1.2598 (сходство 0.2837).",
+      "short_statement": "Концепт класса 0",
+      "evidence_status": "supported",
+      "effect": "neutral",
+      "severity": "info",
+      "strength": null,
+      "evidence_refs": [
+        "concept:0"
+      ],
+      "confidence_interval": null,
+      "counter_evidence_refs": [],
+      "limitations": [
+        "primary-rule coverage is unavailable"
+      ],
+      "applicability": null,
+      "metric_name": "query_distance",
+      "metric_value": 1.2597532575699364,
+      "metric_unit": null,
+      "comparison_baseline": null,
+      "native": null,
+      "surrogate": null
+    },
+    {
+      "claim_id": "C-034",
+      "claim_type": "class_concept",
+      "scope": "class",
+      "subject_id": "1",
+      "statement": "Class 1: no supported primary rules; coverage unavailable. Расстояние от объекта до прототипа класса: 0.6304 (сходство 0.5324).",
+      "short_statement": "Концепт класса 1",
+      "evidence_status": "supported",
+      "effect": "favorable",
+      "severity": "info",
+      "strength": null,
+      "evidence_refs": [
+        "concept:1"
+      ],
+      "confidence_interval": null,
+      "counter_evidence_refs": [],
+      "limitations": [
+        "primary-rule coverage is unavailable"
+      ],
+      "applicability": null,
+      "metric_name": "query_distance",
+      "metric_value": 0.6303619421734888,
+      "metric_unit": null,
+      "comparison_baseline": null,
+      "native": null,
+      "surrogate": null
+    },
+    {
+      "claim_id": "C-035",
+      "claim_type": "similar_case",
+      "scope": "object",
+      "subject_id": "p0",
+      "statement": "Объект train_195 имеет сходство 0.675 с объектом p0; использован метод robust_standardized_euclidean для представления «normalized tabular feature vector».",
+      "short_statement": "Похожий случай train_195: 0.675",
+      "evidence_status": "supported",
+      "effect": "favorable",
+      "severity": "info",
+      "strength": 0.675109,
+      "evidence_refs": [
+        "similar:p0:train_195"
+      ],
+      "confidence_interval": null,
+      "counter_evidence_refs": [],
+      "limitations": [
+        "feature distance does not establish causal or clinical similarity"
+      ],
+      "applicability": null,
+      "metric_name": "similarity",
+      "metric_value": 0.675109,
+      "metric_unit": null,
+      "comparison_baseline": "normalized tabular feature vector",
+      "native": null,
+      "surrogate": null
+    },
+    {
+      "claim_id": "C-036",
+      "claim_type": "similar_case",
+      "scope": "object",
+      "subject_id": "p0",
+      "statement": "Объект train_58 имеет сходство 0.639 с объектом p0; использован метод robust_standardized_euclidean для представления «normalized tabular feature vector».",
+      "short_statement": "Похожий случай train_58: 0.639",
+      "evidence_status": "supported",
+      "effect": "favorable",
+      "severity": "info",
+      "strength": 0.638891,
+      "evidence_refs": [
+        "similar:p0:train_58"
+      ],
+      "confidence_interval": null,
+      "counter_evidence_refs": [],
+      "limitations": [
+        "feature distance does not establish causal or clinical similarity"
+      ],
+      "applicability": null,
+      "metric_name": "similarity",
+      "metric_value": 0.638891,
+      "metric_unit": null,
+      "comparison_baseline": "normalized tabular feature vector",
+      "native": null,
+      "surrogate": null
+    },
+    {
+      "claim_id": "C-037",
+      "claim_type": "similar_case",
+      "scope": "object",
+      "subject_id": "p0",
+      "statement": "Объект train_268 имеет сходство 0.634 с объектом p0; использован метод robust_standardized_euclidean для представления «normalized tabular feature vector».",
+      "short_statement": "Похожий случай train_268: 0.634",
+      "evidence_status": "supported",
+      "effect": "favorable",
+      "severity": "info",
+      "strength": 0.63413,
+      "evidence_refs": [
+        "similar:p0:train_268"
+      ],
+      "confidence_interval": null,
+      "counter_evidence_refs": [],
+      "limitations": [
+        "feature distance does not establish causal or clinical similarity"
+      ],
+      "applicability": null,
+      "metric_name": "similarity",
+      "metric_value": 0.63413,
+      "metric_unit": null,
+      "comparison_baseline": "normalized tabular feature vector",
+      "native": null,
+      "surrogate": null
+    },
+    {
+      "claim_id": "C-038",
+      "claim_type": "linear_reconstruction",
+      "scope": "object",
+      "subject_id": "p0",
+      "statement": "Раскладка линейной оценки объекта p0: mean radius: сырое значение 14.8700 -> преобразованное 0.2028, коэффициент -0.5392, вклад -0.1093; mean texture: сырое значение 20.2100 -> преобразованное 0.2254, коэффициент -0.4312, вклад -0.0972; mean perimeter: сырое значение 96.1200 -> преобразованное 0.1642, коэффициент -0.4889, вклад -0.0803; mean area: сырое значение 680.9000 -> преобразованное 0.0641, коэффициент -0.5724, вклад -0.0367; mean smoothness: сырое значение 0.0959 -> преобразованное -0.0441, коэффициент -0.1265, вклад +0.0056; mean compactness: сырое значение 0.0834 -> преобразованное -0.3972, коэффициент 0.4475, вклад -0.1777; mean concavity: сырое значение 0.0682 -> преобразованное -0.2560, коэффициент -0.7373, вклад +0.1887; mean concave points: сырое значение 0.0495 -> преобразованное 0.0105, коэффициент -0.9631, вклад -0.0101; mean symmetry: сырое значение 0.1487 -> преобразованное -1.1959, коэффициент 0.1090, вклад -0.1304; mean fractal dimension: сырое значение 0.0575 -> преобразованное -0.7511, коэффициент 0.4315, вклад -0.3241; radius error: сырое значение 0.2323 -> преобразованное -0.6054, коэффициент -1.3247, вклад +0.8019; texture error: сырое значение 1.6360 -> преобразованное 0.7472, коэффициент -0.0219, вклад -0.0164; perimeter error: сырое значение 1.5960 -> преобразованное -0.6091, коэффициент -0.6564, вклад +0.3998; area error: сырое значение 21.8400 -> преобразованное -0.3949, коэффициент -0.8401, вклад +0.3318; smoothness error: сырое значение 0.0054 -> преобразованное -0.5418, коэффициент -0.2048, вклад +0.1109; compactness error: сырое значение 0.0137 -> преобразованное -0.6774, коэффициент 0.6666, вклад -0.4516; concavity error: сырое значение 0.0215 -> преобразованное -0.3697, коэффициент 0.0749, вклад -0.0277; concave points error: сырое значение 0.0118 -> преобразованное 0.0045, коэффициент -0.4407, вклад -0.0020; symmetry error: сырое значение 0.0196 -> преобразованное -0.1147, коэффициент 0.4149, вклад -0.0476; fractal dimension error: сырое значение 0.0018 -> преобразованное -0.8492, коэффициент 0.6265, вклад -0.5320; worst radius: сырое значение 16.0100 -> преобразованное -0.0544, коэффициент -0.9845, вклад +0.0536; worst texture: сырое значение 28.4800 -> преобразованное 0.4646, коэффициент -0.9734, вклад -0.4523; worst perimeter: сырое значение 103.9000 -> преобразованное -0.1014, коэффициент -0.7983, вклад +0.0809; worst area: сырое значение 783.6000 -> преобразованное -0.1713, коэффициент -0.8675, вклад +0.1486; worst smoothness: сырое значение 0.1216 -> преобразованное -0.4781, коэффициент -0.7356, вклад +0.3517; worst compactness: сырое значение 0.1388 -> преобразованное -0.7423, коэффициент -0.1787, вклад +0.1327; worst concavity: сырое значение 0.1700 -> преобразованное -0.4908, коэффициент -0.7638, вклад +0.3749; worst concave points: сырое значение 0.1017 -> преобразованное -0.1987, коэффициент -0.8619, вклад +0.1712; worst symmetry: сырое значение 0.2369 -> преобразованное -0.8724, коэффициент -0.7812, вклад +0.6815; worst fractal dimension: сырое значение 0.0660 -> преобразованное -1.0142, коэффициент -0.6078, вклад +0.6164. Восстановленная оценка 2.2961, фактическая оценка модели 2.2961. Ошибка восстановления 0.000000.",
+      "short_statement": "Линейная раскладка: 30 слагаемых, восстановлено 2.2961",
+      "evidence_status": "supported",
+      "effect": "neutral",
+      "severity": "info",
+      "strength": null,
+      "evidence_refs": [
+        "model_internals:p0:linear_reconstruction"
+      ],
+      "confidence_interval": null,
+      "counter_evidence_refs": [],
+      "limitations": [
+        "Linear terms describe model behavior and are not domain causality.",
+        "Sign is relative to the predicted class: a positive contribution means the term pushed the decision toward the class the model actually predicted, not toward a fixed reference class."
+      ],
+      "applicability": null,
+      "metric_name": "reconstruction_error",
+      "metric_value": 0.0,
+      "metric_unit": null,
+      "comparison_baseline": null,
+      "native": null,
+      "surrogate": null
+    },
+    {
+      "claim_id": "C-039",
+      "claim_type": "counterfactual",
+      "scope": "object",
+      "subject_id": "1",
+      "statement": "Контрфактическое изменение {'radius error': {'from': 0.2323, 'to': 0.7532800000000002}} переводит прогноз из 1 в 0.",
+      "short_statement": "Контрфакт: 1 → 0",
+      "evidence_status": "supported",
+      "effect": "mixed",
+      "severity": "info",
+      "strength": null,
+      "evidence_refs": [
+        "counterfactual:0"
+      ],
+      "confidence_interval": null,
+      "counter_evidence_refs": [],
+      "limitations": [
+        "quantile search tests association, not causal feasibility",
+        "observed_effect is the change in maximum predicted probability, not a causal effect"
+      ],
+      "applicability": "requires domain review",
+      "metric_name": "observed_effect",
+      "metric_value": -0.377261,
+      "metric_unit": null,
+      "comparison_baseline": null,
+      "native": null,
+      "surrogate": null
+    },
+    {
+      "claim_id": "C-040",
+      "claim_type": "diagnostic",
+      "scope": "model",
+      "subject_id": "D_k_alignment_not_applicable",
+      "statement": "Диагностика: ExplainPlan.alignment_policy does not declare alignment applicable for this scenario (single explanatory channel).",
+      "short_statement": "ExplainPlan.alignment_policy does not declare alignment applicable for this scenario (single explanatory channel)",
+      "evidence_status": "supported",
+      "effect": "adverse",
+      "severity": "warning",
+      "strength": null,
+      "evidence_refs": [
+        "diagnostic:0"
+      ],
+      "confidence_interval": null,
+      "counter_evidence_refs": [],
+      "limitations": [
+        "Автоматическое принятие ограничено до устранения диагностики."
+      ],
+      "applicability": null,
+      "metric_name": null,
+      "metric_value": null,
+      "metric_unit": null,
+      "comparison_baseline": null,
+      "native": null,
+      "surrogate": null
+    },
+    {
+      "claim_id": "C-041",
+      "claim_type": "diagnostic",
+      "scope": "model",
+      "subject_id": "D_k_reduction_not_applicable",
+      "statement": "Диагностика: ExplainPlan.reduction_policy declares no reduction operation (Pi) for this scenario.",
+      "short_statement": "ExplainPlan.reduction_policy declares no reduction operation (Pi) for this scenario",
+      "evidence_status": "supported",
+      "effect": "adverse",
+      "severity": "warning",
+      "strength": null,
+      "evidence_refs": [
+        "diagnostic:1"
+      ],
+      "confidence_interval": null,
+      "counter_evidence_refs": [],
+      "limitations": [
+        "Автоматическое принятие ограничено до устранения диагностики."
+      ],
+      "applicability": null,
+      "metric_name": null,
+      "metric_value": null,
+      "metric_unit": null,
+      "comparison_baseline": null,
+      "native": null,
+      "surrogate": null
+    },
+    {
+      "claim_id": "C-042",
+      "claim_type": "diagnostic",
+      "scope": "model",
+      "subject_id": "D_risk_incomplete_interface",
+      "statement": "Диагностика: risk components expected by this object's schema but not measured: ['reduction_loss', 'uncertainty'].",
+      "short_statement": "risk components expected by this object's schema but not measured: ['reduction_loss', 'uncertainty']",
+      "evidence_status": "supported",
+      "effect": "adverse",
+      "severity": "warning",
+      "strength": null,
+      "evidence_refs": [
+        "diagnostic:2"
+      ],
+      "confidence_interval": null,
+      "counter_evidence_refs": [],
+      "limitations": [
+        "Автоматическое принятие ограничено до устранения диагностики."
+      ],
+      "applicability": null,
+      "metric_name": null,
+      "metric_value": null,
+      "metric_unit": null,
+      "comparison_baseline": null,
+      "native": null,
+      "surrogate": null
+    },
+    {
+      "claim_id": "C-043",
+      "claim_type": "recommended_action",
+      "scope": "object",
+      "subject_id": "[1]",
+      "statement": "На основании доступных claims рекомендовано действие insufficient_evidence.",
+      "short_statement": "Действие: insufficient_evidence",
+      "evidence_status": "insufficient_evidence",
+      "effect": "adverse",
+      "severity": "warning",
+      "strength": null,
+      "evidence_refs": [
+        "diagnostic:0",
+        "diagnostic:1",
+        "diagnostic:2"
+      ],
+      "confidence_interval": null,
+      "counter_evidence_refs": [],
+      "limitations": [
+        "Действие ограничено доступными evidence-каналами."
+      ],
+      "applicability": "insufficient_evidence",
+      "metric_name": null,
+      "metric_value": null,
+      "metric_unit": null,
+      "comparison_baseline": null,
+      "native": null,
+      "surrogate": null
+    }
+  ],
+  "missing_evidence": [],
+  "schema_version": "2.0"
+}

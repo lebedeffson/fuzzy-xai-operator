@@ -31,4 +31,4 @@ passed: Выбран класс F0.
 Базовое представление достаточно для одной уверенности и top-k объяснения.
 
 ## Next
-alignment, reduction
+legacy_route_gap, presentation_summary_loss

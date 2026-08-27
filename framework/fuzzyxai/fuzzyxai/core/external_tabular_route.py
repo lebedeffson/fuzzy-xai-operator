@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from datetime import UTC, datetime
+from typing import Any
 
 from fuzzyxai.core.git_info import get_source_commit
 from fuzzyxai.core.types import AdaptedInput, OperatorEdge, OperatorNode, OperatorRoute
@@ -12,23 +13,23 @@ def _node(
     value: str,
     status: str,
     explanation: str,
-    raw: dict,
+    raw: dict[str, Any],
     formula_ref: str = "",
     *,
     operator_type: str = "",
     input_refs: list[str] | None = None,
     output_refs: list[str] | None = None,
-    input_values: dict | None = None,
-    output_values: dict | None = None,
+    input_values: dict[str, Any] | None = None,
+    output_values: dict[str, Any] | None = None,
     formula_id: str | None = None,
     formula_text: str | None = None,
     formula_latex: str | None = None,
-    components: dict | None = None,
-    thresholds: dict | None = None,
+    components: dict[str, Any] | None = None,
+    thresholds: dict[str, Any] | None = None,
     status_reason_ru: str = "",
     interpretation_ru: str = "",
     next_node_ids: list[str] | None = None,
-    details: dict | None = None,
+    details: dict[str, Any] | None = None,
 ) -> OperatorNode:
     return OperatorNode(
         node_id=node_id,
@@ -79,8 +80,8 @@ def _representation_interpretation(class_id: str) -> str:
     }.get(class_id, "Класс представления выбран политикой FuzzyXAI.")
 
 
-def _select_diagnostic(task_type: str, rho: float, gamma: float, delta: float, quality: float, conflict: float, interval: float) -> tuple[str, str, str]:
-    if rho < 0.35:
+def _select_diagnostic(task_type: str, legacy_score: float, route_gap: float, presentation_loss: float, quality: float, conflict: float, interval: float) -> tuple[str, str, str]:
+    if legacy_score < 0.35:
         return "D_external_tabular_ok", "accept", "внешний результат допустим"
     if task_type == "signal_quality" and quality >= 0.55:
         return ("D_signal_missing_fragments" if quality >= 0.70 else "D_signal_noise_limit"), "defer_to_human", "ограничение качества сигнала"
@@ -89,16 +90,16 @@ def _select_diagnostic(task_type: str, rho: float, gamma: float, delta: float, q
     if conflict >= 0.55:
         return "D_rule_attribution_conflict", "audit", "конфликт объяснительного источника и модельного сигнала"
     if task_type == "tabular_regression":
-        diagnostic = "D_external_regression_uncertainty" if interval >= delta else "D_external_regression_explanation_loss"
-        return diagnostic, "lower_confidence" if rho < 0.60 else "audit", "ограниченная уверенность внешней регрессионной модели"
+        diagnostic = "D_external_regression_uncertainty" if interval >= presentation_loss else "D_external_regression_explanation_loss"
+        return diagnostic, "lower_confidence" if legacy_score < 0.60 else "audit", "ограниченная уверенность внешней регрессионной модели"
     if task_type == "image_like_classification":
-        diagnostic = "D_image_explanation_reduction" if delta >= gamma else "D_external_image_uncertainty"
-        return diagnostic, "lower_confidence" if rho < 0.60 else "audit", "ограничение image-like объяснения"
+        diagnostic = "D_image_explanation_reduction" if presentation_loss >= route_gap else "D_external_image_uncertainty"
+        return diagnostic, "lower_confidence" if legacy_score < 0.60 else "audit", "ограничение image-like объяснения"
     if quality >= 0.35:
-        return "D_external_tabular_quality_limit", "lower_confidence" if rho < 0.60 else "audit", "ограничение качества внешнего табличного входа"
-    if delta >= gamma and delta >= 0.45:
-        return "D_external_tabular_reduction_loss", "lower_confidence" if rho < 0.60 else "audit", "потери редуцированного табличного объяснения"
-    return "D_external_tabular_uncertainty", "lower_confidence" if rho < 0.60 else "audit", "ограниченная уверенность внешней табличной модели"
+        return "D_external_tabular_quality_limit", "lower_confidence" if legacy_score < 0.60 else "audit", "ограничение качества внешнего табличного входа"
+    if presentation_loss >= route_gap and presentation_loss >= 0.45:
+        return "D_external_tabular_reduction_loss", "lower_confidence" if legacy_score < 0.60 else "audit", "потери сокращённого табличного представления"
+    return "D_external_tabular_uncertainty", "lower_confidence" if legacy_score < 0.60 else "audit", "ограниченная уверенность внешней табличной модели"
 
 
 def build_external_wine_classification_route(adapted: AdaptedInput) -> OperatorRoute:
@@ -118,14 +119,14 @@ def build_external_wine_classification_route(adapted: AdaptedInput) -> OperatorR
     image_noise = round(float(context.get("occlusion_rate", 0.0)), 6)
     uncertainty = round(1.0 - probability, 6)
     quality_penalty = round(max(missing_rate, range_violation, signal_noise, image_noise), 6)
-    gamma = round(max(uncertainty, quality_penalty, conflict_component, interval_width), 6)
+    legacy_route_gap = round(max(uncertainty, quality_penalty, conflict_component, interval_width), 6)
     importance_sum = sum(float(v) for v in values["feature_importance"].values())
-    delta = round(max(0.0, 1.0 - min(1.0, importance_sum)), 6)
-    rho = round(max(gamma, delta, quality_penalty, conflict_component, interval_width), 6)
+    presentation_omission_loss = round(max(0.0, 1.0 - min(1.0, importance_sum)), 6)
+    legacy_route_score = round(max(legacy_route_gap, presentation_omission_loss, quality_penalty, conflict_component, interval_width), 6)
     dominant_component = max(
         {
-            "gamma": gamma,
-            "delta": delta,
+            "route_gap": legacy_route_gap,
+            "presentation_omission": presentation_omission_loss,
             "quality": quality_penalty,
             "conflict": conflict_component,
             "interval": interval_width,
@@ -141,7 +142,7 @@ def build_external_wine_classification_route(adapted: AdaptedInput) -> OperatorR
         elif task_type in {"signal_quality", "image_like_classification"}:
             representation_class = "F_ML"
 
-    diagnostic_id, action, message_ru = _select_diagnostic(task_type, rho, gamma, delta, quality_penalty, conflict_component, interval_width)
+    diagnostic_id, action, message_ru = _select_diagnostic(task_type, legacy_route_score, legacy_route_gap, presentation_omission_loss, quality_penalty, conflict_component, interval_width)
     risk_status = "passed" if action == "accept" else "warning"
     diagnostic = {
         "diagnostic_id": diagnostic_id,
@@ -163,12 +164,13 @@ def build_external_wine_classification_route(adapted: AdaptedInput) -> OperatorR
         "quality_penalty": quality_penalty,
         "uncertainty_component": uncertainty,
         "quality_component": quality_penalty,
-        "reduction_component": delta,
+        "presentation_omission_component": presentation_omission_loss,
         "conflict_component": conflict_component,
         "interval_component": interval_width,
-        "gamma": gamma,
-        "delta": delta,
-        "rho": rho,
+        "legacy_route_gap": legacy_route_gap,
+        "presentation_omission_loss": presentation_omission_loss,
+        "legacy_route_score": legacy_route_score,
+        "scientific_contract": "legacy_external_route_metrics_not_P19_Gamma_Delta_rho",
         "risk_dominant_component": dominant_component,
         "diagnostic_id": diagnostic["diagnostic_id"],
         "action_id": action,
@@ -177,7 +179,7 @@ def build_external_wine_classification_route(adapted: AdaptedInput) -> OperatorR
     feature_importance = dict(values["feature_importance"])
     top_k = int(values.get("top_k_importance", len(feature_importance)))
     selected_features = list(feature_importance.keys())
-    risk_zone = "accept" if rho < 0.35 else "lower_confidence" if rho < 0.60 else "audit"
+    risk_zone = "accept" if legacy_route_score < 0.35 else "lower_confidence" if legacy_route_score < 0.60 else "audit"
     nodes = [
         OperatorNode(
             node_id="input_artifact",
@@ -263,7 +265,7 @@ def build_external_wine_classification_route(adapted: AdaptedInput) -> OperatorR
             "F",
             operator_type="representation",
             input_refs=["explanation_object"],
-            output_refs=["alignment", "reduction"],
+            output_refs=["legacy_route_gap", "presentation_summary_loss"],
             input_values={"source_type": values.get("source_type"), "task_type": task_type, "has_single_probability": True, "has_top_k_importance": True, "context": context},
             output_values={"class_id": representation_class, "class_title_ru": _representation_title(representation_class), "output_representation": "confidence + top-k attribution + context metrics"},
             formula_id=f"{representation_class}-selection",
@@ -271,72 +273,69 @@ def build_external_wine_classification_route(adapted: AdaptedInput) -> OperatorR
             components={"input_conditions": [task_type, perturbation], "interval_width": interval_width, "quality_penalty": quality_penalty, "conflict_component": conflict_component},
             status_reason_ru=f"Выбран класс {representation_class}.",
             interpretation_ru=_representation_interpretation(representation_class),
-            next_node_ids=["alignment", "reduction"],
+            next_node_ids=["legacy_route_gap", "presentation_summary_loss"],
         ),
         _node(
-            "alignment",
-            "Согласование T_ij",
-            f"gamma={gamma}",
-            "passed" if gamma < 0.35 else "warning",
-            "gamma=max(1-p, quality_penalty, conflict_component, interval_width).",
-            {"uncertainty": uncertainty, "quality_penalty": quality_penalty, "conflict_component": conflict_component, "interval_width": interval_width, "gamma": gamma, "value_source": "computed"},
-            "gamma",
-            operator_type="alignment",
+            "legacy_route_gap",
+            "Legacy route gap (не Gamma)",
+            f"legacy_route_gap={legacy_route_gap}",
+            "passed" if legacy_route_gap < 0.35 else "warning",
+            "Legacy max-gap proxy; T_ij не выполнялся, поэтому это не Gamma.",
+            {"uncertainty": uncertainty, "quality_penalty": quality_penalty, "conflict_component": conflict_component, "interval_width": interval_width, "legacy_route_gap": legacy_route_gap, "value_source": "computed"},
+            "legacy route gap",
+            operator_type="legacy_metric",
             input_refs=["representation"],
-            output_refs=["risk"],
+            output_refs=["legacy_route_score"],
             input_values={"class_probability": probability, "missing_rate": missing_rate, "feature_range_violation": range_violation, "conflict_component": conflict_component, "interval_width": interval_width},
-            output_values={"gamma": gamma},
-            formula_id="external_tabular_gamma",
-            formula_text="gamma = max(1 - class_probability, quality_penalty, conflict_component, interval_width)",
-            formula_latex=r"\gamma=\max(1-p,q,c,w)",
-            components={"uncertainty": uncertainty, "quality_penalty": quality_penalty, "conflict_component": conflict_component, "interval_width": interval_width, "calculation": f"max({uncertainty}, {quality_penalty}, {conflict_component}, {interval_width}) = {gamma}"},
+            output_values={"legacy_route_gap": legacy_route_gap},
+            formula_id="legacy_external_tabular_route_gap",
+            formula_text="legacy_route_gap = max(1 - class_probability, quality_penalty, conflict_component, interval_width)",
+            components={"uncertainty": uncertainty, "quality_penalty": quality_penalty, "conflict_component": conflict_component, "interval_width": interval_width, "calculation": f"max({uncertainty}, {quality_penalty}, {conflict_component}, {interval_width}) = {legacy_route_gap}"},
             thresholds={"gamma_warning": 0.35},
             status_reason_ru="Рассогласование ненулевое, потому что вероятность класса меньше 1.",
             interpretation_ru="Уверенность модели неполная; это ограничивает автоматическое доверие.",
-            next_node_ids=["risk"],
+            next_node_ids=["legacy_route_score"],
         ),
         _node(
-            "reduction",
-            "Потери представления",
-            f"Delta={delta}",
-            "passed" if delta < 0.35 else "warning",
-            "Delta=1-sum(feature_importance) для переданного набора важностей.",
-            {"delta": delta, "importance_sum": importance_sum, "value_source": "computed"},
-            "Delta",
-            operator_type="reduction",
+            "presentation_summary_loss",
+            "Потеря top-k представления (не Delta)",
+            f"presentation_omission_loss={presentation_omission_loss}",
+            "passed" if presentation_omission_loss < 0.35 else "warning",
+            "Feature omission при top-k summary; это не dissertation Delta.",
+            {"presentation_omission_loss": presentation_omission_loss, "importance_sum": importance_sum, "value_source": "computed"},
+            "presentation omission",
+            operator_type="legacy_presentation_metric",
             input_refs=["representation"],
-            output_refs=["risk"],
+            output_refs=["legacy_route_score"],
             input_values={"selected_features": selected_features, "feature_importance": feature_importance, "top_k": top_k},
-            output_values={"delta": delta, "top_k_importance_sum": round(importance_sum, 6)},
-            formula_id="external_tabular_delta",
-            formula_text="delta = 1 - sum(top_k_feature_importance)",
-            formula_latex=r"\Delta=1-\sum importance_{top-k}",
-            components={"selected_features": selected_features, "top_k_importance_sum": round(importance_sum, 6), "calculation": f"1 - {round(importance_sum, 6)} = {delta}"},
+            output_values={"presentation_omission_loss": presentation_omission_loss, "top_k_importance_sum": round(importance_sum, 6)},
+            formula_id="legacy_external_tabular_presentation_omission",
+            formula_text="presentation_omission_loss = 1 - sum(top_k_feature_importance)",
+            components={"selected_features": selected_features, "top_k_importance_sum": round(importance_sum, 6), "calculation": f"1 - {round(importance_sum, 6)} = {presentation_omission_loss}"},
             thresholds={"delta_warning": 0.35},
             status_reason_ru="Часть объяснения потеряна при top-k редукции.",
-            interpretation_ru="Delta показывает, какая доля атрибутивного объяснения не попала в сокращённый набор признаков.",
-            next_node_ids=["risk"],
+            interpretation_ru="Метрика показывает долю атрибутивного summary вне top-k и не является потерей uncertainty representation.",
+            next_node_ids=["legacy_route_score"],
         ),
         _node(
-            "risk",
-            "Риск rho",
-            f"rho={rho}",
+            "legacy_route_score",
+            "Legacy route score (не rho)",
+            f"legacy_route_score={legacy_route_score}",
             risk_status,
-            "rho=max(gamma, Delta, quality_component, conflict_component).",
-            {"rho": rho, "theta_accept": 0.35, "theta_warning": 0.60, "value_source": "computed"},
-            "rho",
-            operator_type="risk",
-            input_refs=["alignment", "reduction"],
+            "Legacy max-score; не пятикомпонентная dissertation rho.",
+            {"legacy_route_score": legacy_route_score, "theta_accept": 0.35, "theta_warning": 0.60, "value_source": "computed"},
+            "legacy route score",
+            operator_type="legacy_metric",
+            input_refs=["legacy_route_gap", "presentation_summary_loss"],
             output_refs=["diagnostics"],
-            input_values={"gamma": gamma, "delta": delta, "quality_component": quality_penalty, "conflict_component": conflict_component},
-            output_values={"rho": rho, "risk_zone": risk_zone, "dominant_component": dominant_component},
-            formula_id="external_tabular_rho",
-            formula_text="rho = max(gamma, delta, quality_component, conflict_component)",
-            formula_latex=r"\rho=\max(\gamma,\Delta)",
-            components={"gamma": gamma, "delta": delta, "quality_component": quality_penalty, "conflict_component": conflict_component, "calculation": f"max({gamma}, {delta}, {quality_penalty}, {conflict_component}) = {rho}"},
+            input_values={"legacy_route_gap": legacy_route_gap, "presentation_omission_loss": presentation_omission_loss, "quality_component": quality_penalty, "conflict_component": conflict_component},
+            output_values={"legacy_route_score": legacy_route_score, "risk_zone": risk_zone, "dominant_component": dominant_component},
+            formula_id="legacy_external_tabular_route_score",
+            formula_text="legacy_route_score = max(route_gap, presentation_omission, quality, conflict)",
+            components={"legacy_route_gap": legacy_route_gap, "presentation_omission_loss": presentation_omission_loss, "quality_component": quality_penalty, "conflict_component": conflict_component, "calculation": f"max({legacy_route_gap}, {presentation_omission_loss}, {quality_penalty}, {conflict_component}) = {legacy_route_score}"},
             thresholds={"theta_accept": 0.35, "theta_warning": 0.60},
-            status_reason_ru=f"rho попал в зону {risk_zone}.",
-            interpretation_ru=f"Основной вклад в риск: {dominant_component}.",
+            status_reason_ru=f"Legacy route score попал в зону {risk_zone}.",
+            interpretation_ru=f"Основной вклад в legacy score: {dominant_component}.",
             next_node_ids=["diagnostics"],
         ),
         _node(
@@ -348,9 +347,9 @@ def build_external_wine_classification_route(adapted: AdaptedInput) -> OperatorR
             {"diagnostics": [diagnostic], "value_source": "computed"},
             "D",
             operator_type="diagnostics",
-            input_refs=["risk"],
+            input_refs=["legacy_route_score"],
             output_refs=["action"],
-            input_values={"rho": rho, "risk_zone": risk_zone, "gamma": gamma, "delta": delta, "task_type": task_type, "dominant_component": dominant_component},
+            input_values={"legacy_route_score": legacy_route_score, "risk_zone": risk_zone, "legacy_route_gap": legacy_route_gap, "presentation_omission_loss": presentation_omission_loss, "task_type": task_type, "dominant_component": dominant_component},
             output_values={
                 "diagnostic_id": diagnostic["diagnostic_id"],
                 "diagnostic_title_ru": diagnostic["message_ru"],
@@ -359,7 +358,7 @@ def build_external_wine_classification_route(adapted: AdaptedInput) -> OperatorR
             },
             formula_id="diagnostic-policy",
             formula_text="diagnostic_id выбирается по task_type, risk_zone и доминирующему компоненту риска",
-            components={"reason_components": {"gamma": gamma, "delta": delta, "rho": rho, "dominant_component": dominant_component, "task_type": task_type}},
+            components={"reason_components": {"legacy_route_gap": legacy_route_gap, "presentation_omission_loss": presentation_omission_loss, "legacy_route_score": legacy_route_score, "dominant_component": dominant_component, "task_type": task_type}},
             status_reason_ru=diagnostic["message_ru"],
             interpretation_ru="Диагностика означает ограничение доверия, а не запрет или утверждение о плохой модели.",
             next_node_ids=["action"],
@@ -375,11 +374,11 @@ def build_external_wine_classification_route(adapted: AdaptedInput) -> OperatorR
             operator_type="action",
             input_refs=["diagnostics"],
             output_refs=["proof"],
-            input_values={"rho": rho, "diagnostic_id": diagnostic["diagnostic_id"], "risk_zone": risk_zone},
+            input_values={"legacy_route_score": legacy_route_score, "diagnostic_id": diagnostic["diagnostic_id"], "risk_zone": risk_zone},
             output_values={"action_id": action, "action_title_ru": "понизить доверие" if action == "lower_confidence" else action},
             formula_id="action-policy",
-            formula_text="if rho < 0.35: accept; elif rho < 0.60: lower_confidence; else: audit",
-            components={"rho": rho, "diagnostic_id": diagnostic["diagnostic_id"], "alternative_actions": ["accept", "lower_confidence", "audit"]},
+            formula_text="legacy compatibility mapping; not canonical P19 action policy",
+            components={"legacy_route_score": legacy_route_score, "diagnostic_id": diagnostic["diagnostic_id"], "alternative_actions": ["accept", "lower_confidence", "audit"]},
             thresholds={"theta_accept": 0.35, "theta_warning": 0.60},
             status_reason_ru="Риск ненулевой, но не критический.",
             interpretation_ru="Результат не блокируется, но автоматическое доверие понижается из-за ненулевого риска.",
@@ -409,11 +408,11 @@ def build_external_wine_classification_route(adapted: AdaptedInput) -> OperatorR
     edges = [
         OperatorEdge("edge_input_explanation", "input_artifact", "explanation_object", {"class_probability": probability, "feature_importance": feature_importance}, "Адаптированный вход передан в объяснительный объект."),
         OperatorEdge("edge_explanation_representation", "explanation_object", "representation", {"terms": selected_features, "uncertainty": uncertainty}, "Объяснительный объект передан в выбор представления."),
-        OperatorEdge("edge_representation_alignment", "representation", "alignment", {"class_probability": probability, "quality_metrics": {"missing_rate": missing_rate, "feature_range_violation": range_violation}, "context": context}, "Вероятность, качество и контекст переданы в оператор согласования."),
-        OperatorEdge("edge_representation_reduction", "representation", "reduction", {"feature_importance": feature_importance, "top_k": top_k}, "Top-k атрибуции переданы в оператор редукции."),
-        OperatorEdge("edge_alignment_risk", "alignment", "risk", {"gamma": gamma}, "Рассогласование передано в наблюдатель риска."),
-        OperatorEdge("edge_reduction_risk", "reduction", "risk", {"delta": delta}, "Потери редукции переданы в наблюдатель риска."),
-        OperatorEdge("edge_risk_diagnostics", "risk", "diagnostics", {"rho": rho, "risk_zone": risk_zone}, "Риск переведён в диагностическое состояние."),
+        OperatorEdge("edge_representation_alignment", "representation", "legacy_route_gap", {"class_probability": probability, "quality_metrics": {"missing_rate": missing_rate, "feature_range_violation": range_violation}, "context": context}, "Входы переданы в legacy gap metric; T_ij не выполнялся."),
+        OperatorEdge("edge_representation_reduction", "representation", "presentation_summary_loss", {"feature_importance": feature_importance, "top_k": top_k}, "Top-k атрибуции переданы в presentation omission metric, не Delta."),
+        OperatorEdge("edge_alignment_risk", "legacy_route_gap", "legacy_route_score", {"legacy_route_gap": legacy_route_gap}, "Legacy gap передан в compatibility score."),
+        OperatorEdge("edge_reduction_risk", "presentation_summary_loss", "legacy_route_score", {"presentation_omission_loss": presentation_omission_loss}, "Presentation omission передан в compatibility score."),
+        OperatorEdge("edge_risk_diagnostics", "legacy_route_score", "diagnostics", {"legacy_route_score": legacy_route_score, "risk_zone": risk_zone}, "Legacy score переведён в диагностическое состояние."),
         OperatorEdge("edge_diagnostics_action", "diagnostics", "action", {"diagnostic_id": diagnostic["diagnostic_id"], "recommended_action": diagnostic["recommended_action"]}, "Диагностика передана в политику действия."),
         OperatorEdge("edge_action_proof", "action", "proof", {"action_id": action, "computed_result": computed}, "Итоговое действие сохранено в proof trace."),
     ]

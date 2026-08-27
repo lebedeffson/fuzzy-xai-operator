@@ -89,7 +89,11 @@ def test_public_api_runs_across_sklearn_model_families(model) -> None:
         include_training_trace=False,
     )
     assert result.prediction.predictions is not None
-    assert result.action in {"review", "insufficient_evidence"}
+    # P15.7: action is no longer pinned to "review" by default — the
+    # automatic Γ/Δ/ρ layer now produces a real risk-based action whenever
+    # it has any signal (score and/or contribution-method fidelity), which
+    # this scenario always does.
+    assert result.action in {"accept", "lower_confidence", "request_more_data", "defer_to_human", "block", "review", "insufficient_evidence"}
     assert result.view_model.explanation_graph["nodes"]
     assert "## Что делать" in result.summary("user")
     assert result.explain_for().recommended_action.action == result.action
@@ -104,12 +108,19 @@ def test_native_anfis_rule_is_not_labelled_surrogate() -> None:
     assert rules[0].coverage == 0.63
 
 
-def test_linear_rule_like_evidence_is_explicitly_surrogate() -> None:
+def test_linear_coefficients_are_not_synthesized_into_pseudo_rules() -> None:
+    """Linear coefficients already have a first-class, correctly-signed home
+    as feature_contribution claims (SklearnLinearAdapter.extract_local_evidence,
+    which applies the prediction-relative sign correction for binary
+    classifiers). Re-deriving a second, independently-signed "rule" from the
+    same coefficients (as extract_rules used to via _linear_rules) risked
+    disagreeing with the contribution's own sign for a binary classifier
+    predicting classes_[0] — P15.4 removed that duplicate, unverified path."""
+
     values, labels = make_classification(n_samples=60, n_features=3, n_informative=2, n_redundant=0, random_state=42)
     model = LogisticRegression(max_iter=500, random_state=42).fit(values, labels)
     rules = extract_rules(FuzzyXAI.wrap(model).model_adapter, feature_names=["a", "b", "c"])
-    assert rules
-    assert all(rule.surrogate and not rule.native for rule in rules)
+    assert rules == []
 
 
 def test_rule_ablation_requires_measured_shared_metrics() -> None:

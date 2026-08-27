@@ -1,7 +1,9 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
-from typing import Any, Mapping, Sequence
+from collections.abc import Mapping, Sequence
+from dataclasses import dataclass, field
+from itertools import pairwise
+from typing import Any
 
 from .contracts import SubgroupAveragingEvidence, TrainingObjectTrace
 
@@ -28,21 +30,35 @@ def build_object_trace(
     epoch_metrics: Sequence[Mapping[str, Any]],
     *,
     confidence_drop: float = 0.2,
+    provenance: Mapping[str, Any] | None = None,
 ) -> TrainingObjectTrace:
     """Build a per-object trajectory and locate learned-then-forgotten epochs."""
 
     metrics = [dict(item) for item in epoch_metrics]
     predicted = [item.get("predicted_class") for item in metrics]
     confidence = [float(item.get("confidence", 0.0)) for item in metrics]
-    losses = [float(item.get("loss", 0.0)) for item in metrics]
+    # An unavailable loss is not a measured zero.
+    losses = [None if item.get("loss") is None else float(item["loss"]) for item in metrics]
     embeddings = [list(item.get("embedding", [])) for item in metrics]
     activations = [dict(item.get("rule_activations", {})) for item in metrics]
     correct = [bool(item.get("correct", False)) for item in metrics]
     epochs = [int(item.get("epoch", index)) for index, item in enumerate(metrics)]
 
     forgetting = find_forgetting_events(metrics, confidence_drop=confidence_drop)
+    forgetting_details: list[dict[str, Any]] = []
+    by_epoch = {int(item.get("epoch", index)): item for index, item in enumerate(metrics)}
+    for event in forgetting:
+        position = epochs.index(event)
+        previous, current = metrics[position - 1], by_epoch[event]
+        correctness_transition = bool(previous.get("correct", False)) and not bool(current.get("correct", False))
+        forgetting_details.append({
+            "epoch": event,
+            "reason": "correctness_transition" if correctness_transition else "confidence_drop",
+            "previous_confidence": previous.get("confidence"), "current_confidence": current.get("confidence"),
+            "threshold": confidence_drop, "previous_correct": previous.get("correct"), "current_correct": current.get("correct"),
+        })
     correct_epochs = [epoch for epoch, flag in zip(epochs, correct) if flag]
-    transitions = sum(left != right for left, right in zip(correct, correct[1:]))
+    transitions = sum(left != right for left, right in pairwise(correct))
     stability = 1.0 if len(correct) <= 1 else max(0.0, 1.0 - transitions / (len(correct) - 1))
     warnings = [] if metrics else ["training history was not supplied"]
     return TrainingObjectTrace(
@@ -58,6 +74,13 @@ def build_object_trace(
         first_learned_epoch=correct_epochs[0] if correct_epochs else None,
         last_correct_epoch=correct_epochs[-1] if correct_epochs else None,
         warnings=warnings,
+        forgetting_details=forgetting_details,
+        loss_status="measured" if metrics and all(item.get("loss") is not None for item in metrics) else "not_measured",
+        training_run_id=(provenance or {}).get("training_run_id"),
+        model_fingerprint=(provenance or {}).get("model_fingerprint"),
+        training_method=(provenance or {}).get("training_method"),
+        epoch_source=(provenance or {}).get("epoch_source"),
+        final_checkpoint_ref=(provenance or {}).get("final_checkpoint_ref"),
     )
 
 
@@ -119,6 +142,8 @@ class TrainingRunAnalysis:
     traces: Mapping[str, TrainingObjectTrace]
     subgroups: Sequence[SubgroupAveragingEvidence]
     rules: Sequence[Any]
+    limitations: Sequence[str] = field(default_factory=tuple)
+    provenance: Mapping[str, Any] = field(default_factory=dict)
 
     def find_forgotten_objects(self) -> list[TrainingObjectTrace]:
         return [trace for trace in self.traces.values() if trace.forgetting_events]

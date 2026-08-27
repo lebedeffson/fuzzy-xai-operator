@@ -15,8 +15,18 @@ def build_class_concepts(
     object_ids: Sequence[str] | None = None,
     rules: Sequence[LearnedRule] = (),
     representative_limit: int = 3,
+    query_row: Sequence[float] | None = None,
 ) -> list[ClassConcept]:
-    """Describe each class through prototypes, representative objects and rules."""
+    """Describe each class through prototypes, representative objects and rules.
+
+    ``query_row`` is the *current explained object*'s own feature vector.
+    When supplied, each concept also reports how close that specific object
+    is to the class prototype (``query_distance``/``query_similarity``,
+    same standardized-Euclidean measure used elsewhere in this module) —
+    without it, "this object is close to the typical profile of class X" is
+    not a claim this function can support, and the concept must stay
+    neutral background knowledge (see claims.py).
+    """
 
     matrix = np.asarray(values, dtype=float)
     y = np.asarray(labels)
@@ -24,13 +34,30 @@ def build_class_concepts(
         raise ValueError("values must be 2D and aligned with labels")
     names = list(feature_names or [f"feature_{index}" for index in range(matrix.shape[1])])
     ids = list(object_ids or [f"object_{index}" for index in range(len(matrix))])
+    query_vector = np.asarray(query_row, dtype=float).reshape(-1) if query_row is not None else None
+    if query_vector is not None and query_vector.shape[0] != matrix.shape[1]:
+        raise ValueError("query_row must have the same number of features as values")
+    # Same robust standardization as evidence/similarity.py's
+    # find_similar_tabular_cases, computed once over the whole reference
+    # set — without it, raw multi-feature Euclidean distance is dominated
+    # by whichever feature happens to have the largest natural scale, and
+    # exp(-distance) similarity saturates to ~0 for any realistic tabular
+    # dataset, making the number meaningless.
+    overall_median = np.nanmedian(matrix, axis=0)
+    overall_mad = np.nanmedian(np.abs(matrix - overall_median), axis=0)
+    scale = np.where(overall_mad > 1e-12, 1.4826 * overall_mad, np.where(np.nanstd(matrix, axis=0) > 1e-12, np.nanstd(matrix, axis=0), 1.0))
     concepts: list[ClassConcept] = []
     for class_value in sorted(set(y.tolist()), key=str):
         class_indices = np.flatnonzero(y == class_value)
         other_indices = np.flatnonzero(y != class_value)
         class_values = matrix[class_indices]
         prototype = np.nanmedian(class_values, axis=0)
-        distances = np.linalg.norm(np.nan_to_num(class_values - prototype), axis=1)
+        distances = np.sqrt(np.nanmean((np.nan_to_num(class_values - prototype) / scale) ** 2, axis=1))
+        query_distance: float | None = None
+        query_similarity: float | None = None
+        if query_vector is not None:
+            query_distance = float(np.sqrt(np.nanmean((np.nan_to_num(query_vector - prototype) / scale) ** 2)))
+            query_similarity = float(np.exp(-query_distance))
         representatives = [ids[class_indices[index]] for index in np.argsort(distances)[:representative_limit]]
         boundary = [ids[class_indices[index]] for index in np.argsort(distances)[-representative_limit:]]
         counterexamples: list[str] = []
@@ -69,6 +96,8 @@ def build_class_concepts(
                 primary_rule_coverage=coverage,
                 uncovered_fraction=None if coverage is None else max(0.0, 1.0 - coverage),
                 limitations=limitations,
+                query_distance=query_distance,
+                query_similarity=query_similarity,
             )
         )
     return concepts

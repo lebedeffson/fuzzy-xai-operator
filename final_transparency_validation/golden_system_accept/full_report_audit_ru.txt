@@ -1,0 +1,74 @@
+## 1. Что анализировалось
+- Объект: p19-accept-object
+- Версия данных: Breast Cancer Wisconsin
+- Входной hash: 00ec56ff2b2e1536a3e96626d77e1d74ade34b71cce1255ee86a86be824e12a5
+
+## 2. Какая модель использовалась
+- Модель: RandomForestClassifier (адаптер sklearn_ensemble_v2)
+- Отпечаток модели (fingerprint): 396af7efdc6bb6c2a0bb91ea557d93bcfeecb239d5af82a2fea9091ac714ce84
+
+## 3. Какой прогноз получен
+- Модель определила: доброкачественное образование.
+- Модельный балл: 1.0
+
+## 4. Как именно эта архитектура сформировала данный прогноз
+- Голосование ансамбля: 200 моделей, расхождение 0.0.
+
+## 5. Какие вычисленные сведения поддерживают результат
+- **Типичный профиль группы доброкачественное образование:** По сравнению с референсной выборкой объект близок к типичному профилю группы «доброкачественное образование». Такое сходство поддерживает результат, но не заменяет проверку ограничений.
+- **Похожий обучающий случай reference_347:** Дополнительным подтверждением служит обучающий объект reference_347 с похожими характеристиками: значения исходных показателей. Сходство является вспомогательным основанием и не определяет результат самостоятельно. Место по близости: 1 из 455. Наиболее близкие характеристики: worst concave points, worst area, worst radius. Наиболее заметные различия: concavity error, worst concavity, mean concavity. Значения для сравнения — concavity error: наш объект 0.0133, reference_347 0.039; worst concavity: наш объект 0.0865, reference_347 0.244; mean concavity: наш объект 0.02, reference_347 0.0619; worst concave points: наш объект 0.065, reference_347 0.0649. Эталонный объект reference_347 имеет метку класса 1.
+- **Похожий обучающий случай reference_66:** Дополнительным подтверждением служит обучающий объект reference_66 с похожими характеристиками: значения исходных показателей. Сходство является вспомогательным основанием и не определяет результат самостоятельно. Место по близости: 2 из 455. Наиболее близкие характеристики: worst compactness, texture error, fractal dimension error. Наиболее заметные различия: smoothness error, mean texture, symmetry error. Значения для сравнения — smoothness error: наш объект 0.00884, reference_66 0.00577; mean texture: наш объект 29.4, reference_66 25.2; symmetry error: наш объект 0.019, reference_66 0.0135; worst compactness: наш объект 0.106, reference_66 0.106. Эталонный объект reference_66 имеет метку класса 1.
+- **Похожий обучающий случай reference_212:** Дополнительным подтверждением служит обучающий объект reference_212 с похожими характеристиками: значения исходных показателей. Сходство является вспомогательным основанием и не определяет результат самостоятельно. Место по близости: 3 из 455. Наиболее близкие характеристики: worst fractal dimension, concave points error, radius error. Наиболее заметные различия: smoothness error, worst smoothness, mean concave points. Значения для сравнения — smoothness error: наш объект 0.00884, reference_212 0.00497; worst smoothness: наш объект 0.123, reference_212 0.107; mean concave points: наш объект 0.015, reference_212 0.0328; worst fractal dimension: наш объект 0.0648, reference_212 0.0644. Эталонный объект reference_212 имеет метку класса 1.
+- **Голосование ансамбля:** 200 базовых моделей ансамбля проголосовали: 200 за класс 1.0. Расхождение голосов: 0.000.
+
+## 8. Какие ближайшие примеры найдены и какие из них являются контрпримерами
+- **Похожий обучающий случай reference_347:** Дополнительным подтверждением служит обучающий объект reference_347 с похожими характеристиками: значения исходных показателей. Сходство является вспомогательным основанием и не определяет результат самостоятельно. Место по близости: 1 из 455. Наиболее близкие характеристики: worst concave points, worst area, worst radius. Наиболее заметные различия: concavity error, worst concavity, mean concavity. Значения для сравнения — concavity error: наш объект 0.0133, reference_347 0.039; worst concavity: наш объект 0.0865, reference_347 0.244; mean concavity: наш объект 0.02, reference_347 0.0619; worst concave points: наш объект 0.065, reference_347 0.0649. Эталонный объект reference_347 имеет метку класса 1.
+- **Похожий обучающий случай reference_66:** Дополнительным подтверждением служит обучающий объект reference_66 с похожими характеристиками: значения исходных показателей. Сходство является вспомогательным основанием и не определяет результат самостоятельно. Место по близости: 2 из 455. Наиболее близкие характеристики: worst compactness, texture error, fractal dimension error. Наиболее заметные различия: smoothness error, mean texture, symmetry error. Значения для сравнения — smoothness error: наш объект 0.00884, reference_66 0.00577; mean texture: наш объект 29.4, reference_66 25.2; symmetry error: наш объект 0.019, reference_66 0.0135; worst compactness: наш объект 0.106, reference_66 0.106. Эталонный объект reference_66 имеет метку класса 1.
+- **Похожий обучающий случай reference_212:** Дополнительным подтверждением служит обучающий объект reference_212 с похожими характеристиками: значения исходных показателей. Сходство является вспомогательным основанием и не определяет результат самостоятельно. Место по близости: 3 из 455. Наиболее близкие характеристики: worst fractal dimension, concave points error, radius error. Наиболее заметные различия: smoothness error, worst smoothness, mean concave points. Значения для сравнения — smoothness error: наш объект 0.00884, reference_212 0.00497; worst smoothness: наш объект 0.123, reference_212 0.107; mean concave points: наш объект 0.015, reference_212 0.0328; worst fractal dimension: наш объект 0.0648, reference_212 0.0644. Эталонный объект reference_212 имеет метку класса 1.
+
+## 11. Какие источники объяснения согласованы или конфликтуют (Γ)
+- Γ = 0.0000 — измеренное рассогласование двух объяснительных объектов по компонентам {d_mu = 0.0000; d_R = 0.0000; d_alpha = 0.0000; d_u = 0.0000; d_tau = 0.0000; d_L = 0.3333} (веса заданы в ExplainPlan.beta).
+- d_L = 0.3333 измерено только как диагностическая компонента и не входит в aggregate Γ при текущем ExplainPlan.beta.
+- Сертифицировано (Γ ≤ gamma_max=0.6): да.
+
+## 12. Выполнялось ли упрощение представления и какая потеря Δ возникла
+- Δ = 0.000000 — измеренная D_F потеря представления в маршруте F_source → Pi → F_reduced → iota → reconstructed representation.
+- Исходный интервал: [0.0, 0.0]; reduced scalar: 0.0; reconstructed interval: [0.0, 0.0]; D_F terms: {'lower_abs': 0.0, 'upper_abs': 0.0, 'D_F': 0.0}.
+- Редукция выполнена без измеренной потери для данного объекта.
+
+## 13. Из каких компонент получено ρ
+- ρ = 0.0208, из слагаемых: {rho_p = 0.0000; u_M = 0.0000; one_minus_I_pre = 0.1038; Delta = 0.0000; chi_R = 0.0000}.
+
+## 14. Какое действие разрешено
+- **Кандидатное действие: принять:** Зарегистрированная политика маршрута разрешает кандидатное действие accept; это не является самостоятельным доказательством предметной корректности или безопасности.
+
+## 15. Откуда происходит каждое существенное утверждение
+- Типичный профиль группы доброкачественное образование: claims C-054; evidence concept:1
+- Похожий обучающий случай reference_347: claims C-055; evidence similar:p19-accept-object:reference_347
+- Похожий обучающий случай reference_66: claims C-056; evidence similar:p19-accept-object:reference_66
+
+## 17. Какие каналы неприменимы к данной архитектуре
+- local_contributions
+
+## 18. Какие ограничения имеет объяснение
+- Дополнительная проверка не выполнена — faithfulness: no perturbation-based faithfulness check was supplied
+- Дополнительная проверка не выполнена — fidelity: no surrogate fidelity measurement was supplied
+- Дополнительная проверка не выполнена — stability: no repeated-perturbation stability check was supplied
+- Дополнительная проверка не выполнена — coverage: no class concept exposed a measured primary_rule_coverage
+- Дополнительная проверка не выполнена — consistency: no cross-explainer consistency check was supplied
+- Дополнительная проверка не выполнена — calibration: calibration requires a separate held-out calibration/validation set, which was not supplied
+- Дополнительная проверка не выполнена — sparsity: no numeric local contributions were available
+- Дополнительная проверка не выполнена — counterfactual_validity: no counterfactuals were generated
+- Дополнительная проверка не выполнена — reconstruction_error: no model family with a computable reconstruction chain (e.g. linear) was present, and none was supplied
+- Необязательный канал не предоставлен: counterfactuals.
+- Необязательный канал не предоставлен: training_history.
+
+## 19. Системный операторный маршрут
+- E_model построен из фактического source evidence (native_ensemble_votes); T_ij=class-probability-to-risk-partition-v2 применён к этому объекту.
+- Γ = 0.000000; компоненты: d_mu=0.000000; d_R=0.000000; d_alpha=0.000000; d_u=0.000000; d_tau=0.000000; d_L=0.333333
+- d_L=0.333333 — diagnostic-only и не входит в aggregate Γ при текущем ExplainPlan.beta.
+- U_model=0.0, U_rules=0.0, U_trace=0.0; u_M=0.0 (measured).
+- F_int → Pi → F0 → iota: source=[0.0, 0.0], reduced=0.0, reconstructed=[0.0, 0.0], D_F/Δ=0.0; редукция выполнена без измеренной потери для данного объекта.
+- I_pre(E_pre)=0.896248; ρ=0.020750371538698076; status=complete; candidate=accept; action=accept.
+- Причина кандидатного действия: rho is below theta_1. Итоговая причина: rho is below theta_1.
+- По зарегистрированной демонстрационной политике ExplainPlan числовой риск находится ниже theta_1, поэтому кандидатное действие — accept. Это заключение относится к внутренней политике маршрута и не является доказательством предметной корректности или безопасности.

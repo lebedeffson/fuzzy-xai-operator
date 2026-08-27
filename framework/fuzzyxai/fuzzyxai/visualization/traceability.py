@@ -56,6 +56,24 @@ def build_verifier_report(route: OperatorRoute, trace: ProofTrace, verification:
                 {"id": "action_matches_risk_zone", "status": "passed" if _action_ok(computed["rho"], route.final_action) else "failed"},
             ]
         )
+    if {"legacy_route_gap", "presentation_omission_loss", "legacy_route_score"} <= set(computed):
+        legacy_expected = round(
+            max(
+                float(computed["legacy_route_gap"]),
+                float(computed["presentation_omission_loss"]),
+                float(computed.get("quality_component", 0.0)),
+                float(computed.get("conflict_component", 0.0)),
+                float(computed.get("interval_component", 0.0)),
+            ),
+            6,
+        )
+        checks.extend(
+            [
+                {"id": "legacy_route_score_matches_declared_formula", "status": "passed" if computed["legacy_route_score"] == legacy_expected else "failed"},
+                {"id": "legacy_action_matches_compatibility_zone", "status": "passed" if _action_ok(computed["legacy_route_score"], route.final_action) else "failed"},
+                {"id": "legacy_metrics_not_exported_as_p19", "status": "passed" if not ({"gamma", "delta", "rho"} & set(computed)) else "failed"},
+            ]
+        )
     checks.extend({"id": f"proof_verifier:{error}", "status": "failed"} for error in verification.errors)
     failed = [item for item in checks if item["status"] != "passed"]
     return {

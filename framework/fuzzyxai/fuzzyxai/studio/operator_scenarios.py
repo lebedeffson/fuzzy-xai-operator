@@ -241,13 +241,13 @@ def _base_pipeline(final_action: str, rupture: bool, values: dict[str, Any]) -> 
         ),
         _node(
             "risk_observer",
-            "Risk Observer",
+            "Legacy Risk Observer",
             "blocked" if final_action == "block" else ("warning" if final_action != "accept" else "passed"),
             "risk_observer",
             "Риск-ориентированный наблюдатель",
             "3",
-            r"\rho=w_p\rho_{pred}+w_u u_M+w_I(1-I_{pre})+w_\Delta\Delta_M+w_R\chi_R",
-            "Вычисляет риск, учитывает χ_R и χ_R^crit, выбирает допустимое действие.",
+            r"legacy\_score=\sum_k w_k c_k/\sum_k w_k",
+            "Вычисляет pre-P19 compatibility score; это не каноническая пятикомпонентная rho.",
             values.get("risk_inputs", {}),
             values.get("risk_computed", {}),
             {"final_action": final_action},
@@ -263,7 +263,7 @@ def _base_pipeline(final_action: str, rupture: bool, values: dict[str, Any]) -> 
             "3",
             r"\chi_R^{crit}=1\Rightarrow action=block",
             "Преобразует риск и диагностический статус в действие.",
-            {"rho": values.get("risk_computed", {}).get("rho", 0.0), "chi_R_crit": int(rupture)},
+            {"legacy_risk_score": values.get("risk_computed", {}).get("legacy_risk_score", 0.0), "chi_R_crit": int(rupture)},
             {"action": final_action},
             {"action": final_action, "reason": values.get("action_reason", "")},
             diag,
@@ -310,6 +310,19 @@ def _scenario(
     rupture: bool,
     charts: dict[str, Any],
 ) -> dict[str, Any]:
+    values = dict(values)
+    risk_computed = dict(values.get("risk_computed", {}))
+    if "rho" in risk_computed:
+        risk_computed["legacy_risk_score"] = risk_computed.pop("rho")
+    if risk_computed:
+        risk_computed["scientific_contract"] = "legacy_not_P19_rho"
+        values["risk_computed"] = risk_computed
+    expected_result = dict(values.get("expected_result", {}))
+    if "rho" in expected_result:
+        expected_result["legacy_risk_score"] = expected_result.pop("rho")
+    if expected_result:
+        expected_result["scientific_contract"] = "legacy_not_P19_rho"
+        values["expected_result"] = expected_result
     nodes, edges = _base_pipeline(final_action, rupture, {"data_type": data_type, **values})
     expected = values.get("expected_result", {})
     if expected:
@@ -319,11 +332,15 @@ def _scenario(
             elif node.get("node_id") == "reduction":
                 node["computed"]["delta"] = expected.get("delta", node["computed"].get("delta"))
             elif node.get("node_id") == "risk_observer":
-                node["computed"]["rho"] = expected.get("rho", node["computed"].get("rho"))
+                node["computed"]["legacy_risk_score"] = expected.get(
+                    "legacy_risk_score", node["computed"].get("legacy_risk_score")
+                )
                 node["computed"]["chi_R"] = expected.get("chi_R", node["computed"].get("chi_R"))
                 node["computed"]["chi_R_crit"] = expected.get("chi_R_crit", node["computed"].get("chi_R_crit"))
             elif node.get("node_id") == "action":
-                node["inputs"]["rho"] = expected.get("rho", node["inputs"].get("rho"))
+                node["inputs"]["legacy_risk_score"] = expected.get(
+                    "legacy_risk_score", node["inputs"].get("legacy_risk_score")
+                )
                 node["computed"]["action"] = expected.get("action", node["computed"].get("action"))
                 node["output"]["action"] = expected.get("action", node["output"].get("action"))
         for edge in edges:
@@ -332,7 +349,9 @@ def _scenario(
             elif edge.get("operator_id") == "Delta":
                 edge["computed"]["delta"] = expected.get("delta", edge.get("computed", {}).get("delta"))
             elif edge.get("operator_id") == "risk_observer":
-                edge["computed"]["rho"] = expected.get("rho", edge.get("computed", {}).get("rho"))
+                edge["computed"]["legacy_risk_score"] = expected.get(
+                    "legacy_risk_score", edge.get("computed", {}).get("legacy_risk_score")
+                )
     diagnostics = collect_unique_diagnostics(nodes)
     diagnostics_summary = summarize_diagnostic_occurrences(nodes)
     run_id = f"{scenario_id}_case_001"

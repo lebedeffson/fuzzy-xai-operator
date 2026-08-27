@@ -107,6 +107,8 @@ class SklearnLinearAdapter(SklearnModelAdapterV2):
         coefficients = np.asarray(self.model.coef_, dtype=float)
         predicted = prediction.predictions[0] if isinstance(prediction.predictions, list) else prediction.predictions
         classes = list(getattr(self.model, "classes_", ()))
+        class_index = classes.index(predicted) if predicted in classes else 0
+        intercepts = np.asarray(getattr(self.model, "intercept_", np.zeros(max(coefficients.shape[0] if coefficients.ndim > 1 else 1, 1))), dtype=float).reshape(-1)
         # sklearn stores exactly one coefficient row for a binary classifier
         # (coef_.shape == (1, n_features), or already 1-D for some linear
         # models), and that row is relative to classes_[1] by convention —
@@ -119,19 +121,41 @@ class SklearnLinearAdapter(SklearnModelAdapterV2):
         # for exactly the negative-class predictions.
         binary_negative_class_predicted = len(classes) == 2 and predicted == classes[0]
         if coefficients.ndim == 1:
-            row = coefficients if not binary_negative_class_predicted else -coefficients
+            raw_row = coefficients
+            raw_intercept = float(intercepts[0]) if intercepts.size else 0.0
         elif coefficients.shape[0] == 1:
-            row = coefficients[0] if not binary_negative_class_predicted else -coefficients[0]
+            raw_row = coefficients[0]
+            raw_intercept = float(intercepts[0]) if intercepts.size else 0.0
         else:
-            row = coefficients[classes.index(predicted)] if predicted in classes else coefficients[0]
+            raw_row = coefficients[class_index]
+            raw_intercept = float(intercepts[class_index]) if intercepts.size > class_index else 0.0
+        row = raw_row if not binary_negative_class_predicted else -raw_row
         names = list(context.feature_names) or _feature_names(self.model, len(values))
         contributions = {name: float(value * weight) for name, value, weight in zip(names, values, row)}
+        # Reconstruction check uses the model's own (unflipped) coefficient
+        # convention throughout, so it verifies x . w + b against the
+        # model's real decision_function output — independent of the
+        # sign flip above, which only affects how contributions are *displayed*.
+        reconstructed_score = float(np.dot(values, raw_row) + raw_intercept)
+        actual_score: float | None = None
+        decision_fn = getattr(self.model, "decision_function", None)
+        if callable(decision_fn):
+            raw_scores = np.asarray(decision_fn(inputs), dtype=float).reshape(-1)
+            actual_score = float(raw_scores[0]) if coefficients.ndim == 1 or coefficients.shape[0] == 1 else float(np.asarray(decision_fn(inputs)).reshape(1, -1)[0][class_index])
+        reconstruction_error = abs(reconstructed_score - actual_score) if actual_score is not None else None
+        linear_terms = [
+            {"feature": name, "value": float(value), "coefficient": float(weight), "contribution": float(value * weight)} for name, value, weight in zip(names, values, row)
+        ]
         return LocalModelEvidence(
             channels={
                 "contributions": contributions,
                 "coefficients": {name: float(weight) for name, weight in zip(names, row)},
                 "intercept": _serializable(getattr(self.model, "intercept_", None)),
                 "contribution_method": "derived_native_linear_term_x_coefficient",
+                "linear_terms": linear_terms,
+                "reconstructed_score": reconstructed_score,
+                "actual_score": actual_score,
+                "reconstruction_error": reconstruction_error,
             },
             descriptors=(
                 EvidenceChannelDescriptor("coefficients", True, "native", "model.coef_"),
@@ -244,12 +268,17 @@ class SklearnEnsembleAdapter(SklearnModelAdapterV2):
         del prediction, context
         estimators = [item for item in np.asarray(getattr(self.model, "estimators_", ()), dtype=object).reshape(-1) if hasattr(item, "predict")]
         votes = [_serializable(item.predict(inputs)) for item in estimators]
-        numeric = np.asarray([np.asarray(item).reshape(-1)[0] for item in votes], dtype=float) if votes else np.asarray([])
-        disagreement = float(np.std(numeric)) if numeric.size else None
+        vote_labels = [np.asarray(item, dtype=object).reshape(-1)[0] for item in votes]
+        classes = list(getattr(self.model, "classes_", ()))
+        reference_class = classes[0] if classes else (vote_labels[0] if vote_labels else None)
+        indicators = np.asarray([1.0 if label == reference_class else 0.0 for label in vote_labels], dtype=float)
+        disagreement = float(np.std(indicators)) if indicators.size else None
         importance = getattr(self.model, "feature_importances_", None)
         channels: dict[str, Any] = {
             "ensemble_votes": votes,
             "ensemble_disagreement": disagreement,
+            "ensemble_disagreement_semantics": "binary_vote_indicator_standard_deviation",
+            "ensemble_disagreement_reference_class": _serializable(reference_class),
             "contribution_method": "native_ensemble_votes",
         }
         if importance is not None:
@@ -464,6 +493,28 @@ class SklearnPipelineAdapter(SklearnModelAdapterV2):
         channels = dict(local.channels)
         channels["pipeline_steps"] = [name for name, _ in self.model.steps]
         channels["feature_provenance"] = {key: list(value) for key, value in schema.feature_provenance.items()}
+        linear_terms = channels.get("linear_terms")
+        if isinstance(linear_terms, list) and linear_terms:
+            raw_names = list(context.feature_names) or list(schema.feature_names)
+            raw_row = _rows(inputs)[0]
+            preprocessor_names = [name for name, _ in self.model.steps[:-1]]
+            transformation_description = " -> ".join(preprocessor_names) if preprocessor_names else "identity"
+            augmented = []
+            for term in linear_terms:
+                sources = schema.feature_provenance.get(term["feature"], ())
+                raw_value = None
+                if len(sources) == 1 and sources[0] in raw_names:
+                    raw_value = float(raw_row[raw_names.index(sources[0])])
+                augmented.append(
+                    {
+                        **term,
+                        "raw_value": raw_value,
+                        "raw_feature": sources[0] if len(sources) == 1 else None,
+                        "transformed_value": term["value"],
+                        "transformation": transformation_description if raw_value is not None else f"{transformation_description} (multi-column transform; raw value not uniquely attributable)",
+                    }
+                )
+            channels["linear_terms"] = augmented
         return LocalModelEvidence(
             channels=channels,
             descriptors=local.descriptors,

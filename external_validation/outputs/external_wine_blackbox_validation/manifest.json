@@ -2,7 +2,7 @@
   "package_name": "external_wine_blackbox_validation",
   "task": "sklearn_wine_classification",
   "scenario_id": "external_wine_classification",
-  "source_commit": "3aa10fe778108a32f87829feacb56bb2f9c2e13a",
+  "source_commit": "97074b57a5522cb1cd7150f288a8b27bd915b357",
   "verifier": "passed",
   "models": [
     "LogisticRegression",
@@ -11,33 +11,28 @@
   "files": [
     {
       "path": "external_validation_report.md",
-      "size_bytes": 983,
-      "sha256": "338d826f7e3a0bdbe95ab20c8a613995807b1b51d19829c9c9b3f1970a0197b2"
+      "size_bytes": 1176,
+      "sha256": "4b07d1a7934f7e9078388770621d1e3c409f5251b1b6413bb4e834a967e1272a"
     },
     {
       "path": "external_wine_summary.json",
-      "size_bytes": 4028,
-      "sha256": "74a3c4a3d0906b754e68e71ee244e7544ed9b1f228b0c6085ce5e228147d5088"
+      "size_bytes": 4354,
+      "sha256": "e8b4eacdab1c5cd3f5ef2fe9497ce4b0ef576b42c4d08d8d38362e2e0b90502a"
     },
     {
       "path": "gradient_boosting/dashboard_data.json",
-      "size_bytes": 29283,
-      "sha256": "31eb9a525d8287ff041c58078c90c41b3875bd16aef681e2ac6edcb9d12cc69f"
+      "size_bytes": 30643,
+      "sha256": "cf48b77950ea2fac5db96ad95d187d74820f80b9a756ca5f6ed54805e9c4001e"
     },
     {
       "path": "gradient_boosting/operator_cards/action.md",
-      "size_bytes": 834,
-      "sha256": "f81090e95e6b25278b0f8993adcc8d880347cb95a9238dad5b439af3e844f5fd"
-    },
-    {
-      "path": "gradient_boosting/operator_cards/alignment.md",
-      "size_bytes": 870,
-      "sha256": "243d42757ff6ed629164ba1f0b6bcf24dce9e379370900aa0ade0bbe04163cb9"
+      "size_bytes": 856,
+      "sha256": "dad276b85abdc829d7d7901d393fef31d4786f7d77c58976ab43659295e4f740"
     },
     {
       "path": "gradient_boosting/operator_cards/diagnostics.md",
-      "size_bytes": 1119,
-      "sha256": "ac070eeb0ebafff9e8244fa7c384744cb9468322f88e3b208b1d852cfba29001"
+      "size_bytes": 1245,
+      "sha256": "4056e3d418bbeaf2401cd6c5871c3580609d711b4f45d82936b5195fc49217c5"
     },
     {
       "path": "gradient_boosting/operator_cards/explanation_object.md",
@@ -50,94 +45,94 @@
       "sha256": "8aefb68e5cb23ae39e05a7f48ac9f8440751a00ee7730c387201e9cc81e0ddd4"
     },
     {
-      "path": "gradient_boosting/operator_cards/proof.md",
-      "size_bytes": 1701,
-      "sha256": "5a9969fb6431a6d430f828f739731fe3bfed56f393f6434b5ee2121fa04af60e"
+      "path": "gradient_boosting/operator_cards/legacy_route_gap.md",
+      "size_bytes": 906,
+      "sha256": "90600d3290ca3f93412091f1558b9e4e0163407d99cfd01a54d5a1bb2b25a901"
     },
     {
-      "path": "gradient_boosting/operator_cards/reduction.md",
-      "size_bytes": 831,
-      "sha256": "5739fc0d0792186ea8fc0d455ec695b93c3d5639d8a4e7df53f647b2ba5230a1"
+      "path": "gradient_boosting/operator_cards/legacy_route_score.md",
+      "size_bytes": 882,
+      "sha256": "250f621ca2a0196edaed7339fdc15e2015d0cf4ef9539d7a9f644baef7420732"
+    },
+    {
+      "path": "gradient_boosting/operator_cards/presentation_summary_loss.md",
+      "size_bytes": 896,
+      "sha256": "fa6965567c2612e3c13377ce599525e2a66bb5f5e86b83e3b2b4205c3966bba7"
+    },
+    {
+      "path": "gradient_boosting/operator_cards/proof.md",
+      "size_bytes": 1856,
+      "sha256": "cef0ec0963bbe6bdd8406e3f93ecbce4396820af3d41827c4ad0b134c4c23ba1"
     },
     {
       "path": "gradient_boosting/operator_cards/representation.md",
-      "size_bytes": 1083,
-      "sha256": "6e2d3e164dc1fcbab35d6122191c674465cbfcd1b21d992d9a6260854c77fc21"
-    },
-    {
-      "path": "gradient_boosting/operator_cards/risk.md",
-      "size_bytes": 720,
-      "sha256": "76ae4c18fe21712f808539558d2dd4de01bdf6b479290615ad59e8177ea5dc2c"
+      "size_bytes": 1106,
+      "sha256": "a5ad91f604d51bee9f4d153269206de8303374b8d7e2799cc63532480fcd56bf"
     },
     {
       "path": "gradient_boosting/operator_dashboard.png",
-      "size_bytes": 290128,
-      "sha256": "c8e328478a5c228b11d2ad999850cd975e5f2d50903e57b4e23476a1dc8dcc23"
+      "size_bytes": 302060,
+      "sha256": "f74126eb1eaa63d90cd6eef61fe8d7d124ae305370a7b8128a345e190b8b626e"
     },
     {
       "path": "gradient_boosting/operator_dashboard_v2.html",
-      "size_bytes": 45628,
-      "sha256": "61e3aba780e76f049b9217732ebe5c60001040c455e3d0e6f4a852fe69fd6b40"
+      "size_bytes": 47332,
+      "sha256": "4f0ceb7ad4d18900eadd1dbafd190dc1b5ee99df3b291235945637d1dee95321"
     },
     {
       "path": "gradient_boosting/operator_dashboard_v2.png",
-      "size_bytes": 437347,
-      "sha256": "f1361ee30c4104ec428cd52af3255d76ee8f86ffa834d63bb57e0bbe8584fe81"
+      "size_bytes": 489314,
+      "sha256": "f5760e246cbf45a3834298fb761e7132dbfdd8f4d3786010fdc57135379d1f72"
     },
     {
       "path": "gradient_boosting/operator_table.csv",
-      "size_bytes": 8009,
-      "sha256": "47f7d5b63cfe86578424348709e583cd536d0c6c942b71a158e16be493a3d5b6"
+      "size_bytes": 8490,
+      "sha256": "9b546557443ae1302bb523191e46b6a7c344a824cdab961ccb8454d9098d7f9c"
     },
     {
       "path": "gradient_boosting/operator_trace.json",
-      "size_bytes": 29206,
-      "sha256": "98acbe275de0dfec582b2d4cbc80b9143ee2cafa407ea07212dd6d1ed8a6c95a"
+      "size_bytes": 30566,
+      "sha256": "55db922dffd0dfc906175756677285573ecf26881fe2793d9978cb406039392b"
     },
     {
       "path": "gradient_boosting/proof_trace.json",
-      "size_bytes": 32014,
-      "sha256": "158701650b660955486089b5e0966a1c2315c5972d12fcc8092155bc69f32218"
+      "size_bytes": 33486,
+      "sha256": "15c9b02e687d1bfcbb06c90c68cccaf09315c616fea9e7f6fb8531c7eff5d5ce"
     },
     {
       "path": "gradient_boosting/route.json",
-      "size_bytes": 29010,
-      "sha256": "be283a9ddd0c10d23177d5e30e67b87445a4a459f68b19ccfdc970b94634235e"
+      "size_bytes": 30317,
+      "sha256": "991e3f8c3d2c6f1537333b22dc468edd62e782de7bc64593c759e988ee5e1d9f"
     },
     {
       "path": "gradient_boosting/summary.json",
-      "size_bytes": 1685,
-      "sha256": "6d34fc34f3e011b1c3bcd7f51e1c5b12d002d51535c2f4fcf4935bde627e7ba1"
+      "size_bytes": 1844,
+      "sha256": "fb8193f4bfdcb67e5c2a1d90745403e9941ad0554fe747f6134d37518345b7e3"
     },
     {
       "path": "gradient_boosting/verifier_report.json",
-      "size_bytes": 773,
-      "sha256": "b019503513955ca963722227d9aa2cd1f1defdbcc17cff2304967abf35801f1d"
+      "size_bytes": 826,
+      "sha256": "80bb4ca0c4681287a7c6b8ff640ccfc01b8b741ad157defabac526d1f3134b08"
     },
     {
       "path": "import_provenance.json",
-      "size_bytes": 704,
-      "sha256": "3663ded224f9721a47e6bd2d1113c31b339aefb91f84bdd417343e9df1e2c7e3"
+      "size_bytes": 703,
+      "sha256": "0c8d26bdc0d7f75ec22cae85f0848d97017ac91439d9b236b206ff73e9d1305d"
     },
     {
       "path": "logistic_regression/dashboard_data.json",
-      "size_bytes": 30166,
-      "sha256": "37c3b8db0a0d276aaadf59c8f595733dd7cde55465ba767b1e1a321bc24181a5"
+      "size_bytes": 31526,
+      "sha256": "d633145ac0458c817a1595201e85e47d48b9fd5dec305fd16086590464dd3466"
     },
     {
       "path": "logistic_regression/operator_cards/action.md",
-      "size_bytes": 834,
-      "sha256": "732ba138a3f619c0b937b464f0a86be24430830eeb303b26e717604291202f31"
-    },
-    {
-      "path": "logistic_regression/operator_cards/alignment.md",
-      "size_bytes": 870,
-      "sha256": "d1cc678368dec9239295df1f9fdb91184f3025d85268c82c58fbde6ba9b5f2fd"
+      "size_bytes": 856,
+      "sha256": "1fbb200ea05347ad6b35808af5bf16b0aa545dfa2ffdbdf9b93674278d878e38"
     },
     {
       "path": "logistic_regression/operator_cards/diagnostics.md",
-      "size_bytes": 1119,
-      "sha256": "c5aa90f9b069bb5de92b8892949203e9543d1a6405b54ea840b09fc32eebe84b"
+      "size_bytes": 1245,
+      "sha256": "e3422e74c00c212cd8b29a5635d57eb081d20b77b0071eae568f220ddee45a5f"
     },
     {
       "path": "logistic_regression/operator_cards/explanation_object.md",
@@ -150,69 +145,74 @@
       "sha256": "5242519f7cf00c580cf3cd67fb21b88a49eeec713793572142656ab5433ed67c"
     },
     {
-      "path": "logistic_regression/operator_cards/proof.md",
-      "size_bytes": 1693,
-      "sha256": "970f9be0c210c55a92fc6e38027cca9a618f066afdd6acc47906a3132dada21f"
+      "path": "logistic_regression/operator_cards/legacy_route_gap.md",
+      "size_bytes": 906,
+      "sha256": "3a01d3be23cc866120141f028668e7c99002a79e015f22575652db761f65d7c0"
     },
     {
-      "path": "logistic_regression/operator_cards/reduction.md",
-      "size_bytes": 934,
-      "sha256": "f91490100c520872d32e57adf38d73407c49da08a05583b903a26e4aa85ca9b6"
+      "path": "logistic_regression/operator_cards/legacy_route_score.md",
+      "size_bytes": 882,
+      "sha256": "8095899b22db5e1d1d9726cc294858bcbc49dca156eee6f444980d3c5cdacbbe"
+    },
+    {
+      "path": "logistic_regression/operator_cards/presentation_summary_loss.md",
+      "size_bytes": 999,
+      "sha256": "bcf16d8de86295e5001a1ac6bf1da8f9ce547d1dd9f3b0d45ab362e1629c7f02"
+    },
+    {
+      "path": "logistic_regression/operator_cards/proof.md",
+      "size_bytes": 1848,
+      "sha256": "fb49fefbe4e7278ea6899ecdf57da2cf6062618281c60b97ea1c94a57b46a459"
     },
     {
       "path": "logistic_regression/operator_cards/representation.md",
-      "size_bytes": 1085,
-      "sha256": "5e52d037dce80bd5f9bd38dbddcdbad7da3267a120768dec42c28920e122d8d9"
-    },
-    {
-      "path": "logistic_regression/operator_cards/risk.md",
-      "size_bytes": 720,
-      "sha256": "8fe293abc1d0577fdcde113a99eb0b60cb7ad49ec2786eaf541675b324e8820a"
+      "size_bytes": 1108,
+      "sha256": "e03df48d18bc30962136b6eb3bcc8ef6403df1b3e94270858443046d4cfd140b"
     },
     {
       "path": "logistic_regression/operator_dashboard.png",
-      "size_bytes": 291661,
-      "sha256": "8273cdd8a87cf95a93fa9ca1ece2ba2d2a5dd8c3f6d2bcde8565e16cf133f2e4"
+      "size_bytes": 303640,
+      "sha256": "2b0e0f8cfda4a5337076103792d57b2c7b7839979a6b89ee12b26af849012de2"
     },
     {
       "path": "logistic_regression/operator_dashboard_v2.html",
-      "size_bytes": 47126,
-      "sha256": "baff0b29d95cb4b1282b547ac5c0ac59841a82295c7e1bbf3667c8d89ccde286"
+      "size_bytes": 48830,
+      "sha256": "54b40d6c813474ee0052da63bd57159a89b32d2d995e4864a14e84c3e9b36b14"
     },
     {
       "path": "logistic_regression/operator_dashboard_v2.png",
-      "size_bytes": 438641,
-      "sha256": "377030b59a419cdfefdc5ce1d1f36658f5a5921717ec5e7cc42391099032a281"
+      "size_bytes": 491519,
+      "sha256": "d6b70c534bbc3ab4a7c876e849043dd5c10f21694b40328c1cdb8a62a12944cc"
     },
     {
       "path": "logistic_regression/operator_table.csv",
-      "size_bytes": 8351,
-      "sha256": "0ebf913189bddd7c774123ef43c30e2153f93e51252a0a13ef7d1f3c4fb6cedb"
+      "size_bytes": 8831,
+      "sha256": "a0b584f162d841bbfddb835e4c53258142fad6c9aa2cdb829e964aa2e5f91158"
     },
     {
       "path": "logistic_regression/operator_trace.json",
-      "size_bytes": 30089,
-      "sha256": "6170c9c48ecdef08cce0237c2d81d43764713e898eb164026bbd258e34f39a35"
+      "size_bytes": 31449,
+      "sha256": "d504628af18c8c2a3c487454507e921294dbf42955b4082814c714b6b90b3e55"
     },
     {
       "path": "logistic_regression/proof_trace.json",
-      "size_bytes": 32967,
-      "sha256": "586761855f055e19fac7eda4b47d191dc96382edc9e027e073b4cb4f1b515f2b"
+      "size_bytes": 34439,
+      "sha256": "3167c2f1d1f3edbdfedee6e7bc3aac29065079fa549d5868d465547624439ee0"
     },
     {
       "path": "logistic_regression/route.json",
-      "size_bytes": 29893,
-      "sha256": "31c2a71b12ada13501faa0d41877cf774f118b99ccbac32da44d57ed8e5c19e3"
+      "size_bytes": 31200,
+      "sha256": "28a5bed936cb1966cc710d0bb35508c90f1607c69144e46c108f52447ba97713"
     },
     {
       "path": "logistic_regression/summary.json",
-      "size_bytes": 1691,
-      "sha256": "5f2c44261080f088302ae32f659e292c247ee530ed9e3aea21fd6cb58a6c1ec1"
+      "size_bytes": 1850,
+      "sha256": "2608913c6214c1e98e2d301701b87b0704fc5f504d4ecb5e8332347466f80106"
     },
     {
       "path": "logistic_regression/verifier_report.json",
-      "size_bytes": 773,
-      "sha256": "b019503513955ca963722227d9aa2cd1f1defdbcc17cff2304967abf35801f1d"
+      "size_bytes": 826,
+      "sha256": "80bb4ca0c4681287a7c6b8ff640ccfc01b8b741ad157defabac526d1f3134b08"
     }
   ]
 }

@@ -21,6 +21,7 @@ def _jsonable(value: Any) -> Any:
 
 _RAW_TEXT_REDACTED = "[raw text omitted by default; pass include_raw=True to include it]"
 _RAW_IMAGE_REDACTED = "[raw image bytes omitted by default; pass include_raw=True to include them]"
+_RAW_ATTRIBUTION_ARRAY_REDACTED = "[full attribution array omitted by default; pass include_raw=True to include it]"
 
 
 def _redact_raw_text(payload: dict[str, Any]) -> dict[str, Any]:
@@ -47,6 +48,12 @@ def _redact_raw_text(payload: dict[str, Any]) -> dict[str, Any]:
             layers["image_representations"] = [
                 {**item, "image_png_base64": _RAW_IMAGE_REDACTED} if isinstance(item, dict) else item for item in images
             ]
+        attribution_maps = layers.get("attribution_maps")
+        if isinstance(attribution_maps, list):
+            layers["attribution_maps"] = [
+                {**item, "attribution_array": _RAW_ATTRIBUTION_ARRAY_REDACTED, "attribution_png_base64": _RAW_IMAGE_REDACTED} if isinstance(item, dict) else item
+                for item in attribution_maps
+            ]
     visual_spec = payload.get("visual_spec")
     if isinstance(visual_spec, dict):
         representation = visual_spec.get("object_representation")
@@ -60,6 +67,7 @@ def _redact_raw_text(payload: dict[str, Any]) -> dict[str, Any]:
             visual_spec["object_representation"] = {
                 **representation,
                 "image_png_base64": _RAW_IMAGE_REDACTED,
+                **({"attribution_overlay_png_base64": _RAW_IMAGE_REDACTED} if representation.get("attribution_overlay_png_base64") else {}),
             }
     return payload
 
@@ -81,6 +89,7 @@ class ExplanationViewModel:
     explanation_graph: Mapping[str, Any] = field(default_factory=dict)
     human_explanations: Mapping[str, Any] = field(default_factory=dict)
     quality_metrics: Mapping[str, float | None] = field(default_factory=dict)
+    quality_status: Mapping[str, Mapping[str, str]] = field(default_factory=dict)
     explanation_level: Mapping[str, Any] = field(default_factory=dict)
     visual_spec: Mapping[str, Any] = field(default_factory=dict)
     schema_version: str = "2.0"
@@ -118,6 +127,7 @@ class ExplanationViewModel:
             explanation_graph=dict(payload.get("explanation_graph", {})),
             human_explanations=dict(payload.get("human_explanations", {})),
             quality_metrics=dict(payload.get("quality_metrics", {})),
+            quality_status=dict(payload.get("quality_status", {})),
             explanation_level=dict(payload.get("explanation_level", {})),
             visual_spec=dict(payload.get("visual_spec", {})),
             schema_version=str(payload.get("schema_version", "2.0")),

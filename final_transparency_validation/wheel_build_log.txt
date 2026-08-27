@@ -1,0 +1,1384 @@
+* Creating isolated environment: venv+pip...
+* Installing packages in isolated environment:
+  - setuptools>=68
+  - wheel
+* Getting build dependencies for wheel...
+running egg_info
+creating fuzzyxai_operator.egg-info
+writing fuzzyxai_operator.egg-info/PKG-INFO
+writing dependency_links to fuzzyxai_operator.egg-info/dependency_links.txt
+writing entry points to fuzzyxai_operator.egg-info/entry_points.txt
+writing requirements to fuzzyxai_operator.egg-info/requires.txt
+writing top-level names to fuzzyxai_operator.egg-info/top_level.txt
+writing manifest file 'fuzzyxai_operator.egg-info/SOURCES.txt'
+reading manifest file 'fuzzyxai_operator.egg-info/SOURCES.txt'
+writing manifest file 'fuzzyxai_operator.egg-info/SOURCES.txt'
+* Building wheel...
+running bdist_wheel
+running build
+running build_py
+creating build/lib/fuzzyxai
+copying fuzzyxai/__init__.py -> build/lib/fuzzyxai
+copying fuzzyxai/adapter_conformance.py -> build/lib/fuzzyxai
+copying fuzzyxai/api.py -> build/lib/fuzzyxai
+copying fuzzyxai/cli.py -> build/lib/fuzzyxai
+copying fuzzyxai/explanation_quality.py -> build/lib/fuzzyxai
+copying fuzzyxai/export_tables.py -> build/lib/fuzzyxai
+copying fuzzyxai/pipeline.py -> build/lib/fuzzyxai
+copying fuzzyxai/planner.py -> build/lib/fuzzyxai
+copying fuzzyxai/run_scenario.py -> build/lib/fuzzyxai
+copying fuzzyxai/scientific_alignment.py -> build/lib/fuzzyxai
+copying fuzzyxai/runtime.py -> build/lib/fuzzyxai
+copying fuzzyxai/system_semantics.py -> build/lib/fuzzyxai
+creating build/lib/fuzzyxai/adapters
+copying fuzzyxai/adapters/__init__.py -> build/lib/fuzzyxai/adapters
+copying fuzzyxai/adapters/base.py -> build/lib/fuzzyxai/adapters
+copying fuzzyxai/adapters/beacon_xai.py -> build/lib/fuzzyxai/adapters
+copying fuzzyxai/adapters/contracts_v2.py -> build/lib/fuzzyxai/adapters
+copying fuzzyxai/adapters/counterevidence.py -> build/lib/fuzzyxai/adapters
+copying fuzzyxai/adapters/gd_anfis_shap.py -> build/lib/fuzzyxai/adapters
+copying fuzzyxai/adapters/geo.py -> build/lib/fuzzyxai/adapters
+copying fuzzyxai/adapters/geospatial_route.py -> build/lib/fuzzyxai/adapters
+copying fuzzyxai/adapters/gis_integro.py -> build/lib/fuzzyxai/adapters
+copying fuzzyxai/adapters/iris_biometric.py -> build/lib/fuzzyxai/adapters
+copying fuzzyxai/adapters/medical_image_to_explanation.py -> build/lib/fuzzyxai/adapters
+copying fuzzyxai/adapters/mlflow_tabular.py -> build/lib/fuzzyxai/adapters
+copying fuzzyxai/adapters/model_registry.py -> build/lib/fuzzyxai/adapters
+copying fuzzyxai/adapters/model_v2.py -> build/lib/fuzzyxai/adapters
+copying fuzzyxai/adapters/optional_v2.py -> build/lib/fuzzyxai/adapters
+copying fuzzyxai/adapters/registry.py -> build/lib/fuzzyxai/adapters
+copying fuzzyxai/adapters/rule_attribution.py -> build/lib/fuzzyxai/adapters
+copying fuzzyxai/adapters/signal.py -> build/lib/fuzzyxai/adapters
+copying fuzzyxai/adapters/signal_quality.py -> build/lib/fuzzyxai/adapters
+copying fuzzyxai/adapters/tabular.py -> build/lib/fuzzyxai/adapters
+copying fuzzyxai/adapters/tabular_classification.py -> build/lib/fuzzyxai/adapters
+copying fuzzyxai/adapters/tabular_to_explanation.py -> build/lib/fuzzyxai/adapters
+copying fuzzyxai/adapters/text_to_explanation.py -> build/lib/fuzzyxai/adapters
+copying fuzzyxai/adapters/model.py -> build/lib/fuzzyxai/adapters
+copying fuzzyxai/adapters/sklearn_v2.py -> build/lib/fuzzyxai/adapters
+copying fuzzyxai/adapters/system_source.py -> build/lib/fuzzyxai/adapters
+creating build/lib/fuzzyxai/audit
+copying fuzzyxai/audit/__init__.py -> build/lib/fuzzyxai/audit
+copying fuzzyxai/audit/build_full_delivery.py -> build/lib/fuzzyxai/audit
+copying fuzzyxai/audit/build_package.py -> build/lib/fuzzyxai/audit
+copying fuzzyxai/audit/common.py -> build/lib/fuzzyxai/audit
+copying fuzzyxai/audit/dataset_audit.py -> build/lib/fuzzyxai/audit
+copying fuzzyxai/audit/docx_chapters.py -> build/lib/fuzzyxai/audit
+copying fuzzyxai/audit/docx_format.py -> build/lib/fuzzyxai/audit
+copying fuzzyxai/audit/docx_render_gate.py -> build/lib/fuzzyxai/audit
+copying fuzzyxai/audit/final_audit.py -> build/lib/fuzzyxai/audit
+copying fuzzyxai/audit/final_delivery_report.py -> build/lib/fuzzyxai/audit
+copying fuzzyxai/audit/formula_references.py -> build/lib/fuzzyxai/audit
+copying fuzzyxai/audit/fresh_clone_gate.py -> build/lib/fuzzyxai/audit
+copying fuzzyxai/audit/grep_stale_terms.py -> build/lib/fuzzyxai/audit
+copying fuzzyxai/audit/inventory.py -> build/lib/fuzzyxai/audit
+copying fuzzyxai/audit/operators_manifest.py -> build/lib/fuzzyxai/audit
+copying fuzzyxai/audit/package_self_contained.py -> build/lib/fuzzyxai/audit
+copying fuzzyxai/audit/practice_demo.py -> build/lib/fuzzyxai/audit
+copying fuzzyxai/audit/proof_qc.py -> build/lib/fuzzyxai/audit
+copying fuzzyxai/audit/real_validation.py -> build/lib/fuzzyxai/audit
+copying fuzzyxai/audit/screenshot_qc.py -> build/lib/fuzzyxai/audit
+copying fuzzyxai/audit/studio_server_smoke.py -> build/lib/fuzzyxai/audit
+copying fuzzyxai/audit/studio_smoke.py -> build/lib/fuzzyxai/audit
+copying fuzzyxai/audit/training_audit.py -> build/lib/fuzzyxai/audit
+creating build/lib/fuzzyxai/audit_h10
+copying fuzzyxai/audit_h10/__init__.py -> build/lib/fuzzyxai/audit_h10
+copying fuzzyxai/audit_h10/auditor.py -> build/lib/fuzzyxai/audit_h10
+copying fuzzyxai/audit_h10/diagnostic_cut.py -> build/lib/fuzzyxai/audit_h10
+copying fuzzyxai/audit_h10/family_classifier.py -> build/lib/fuzzyxai/audit_h10
+copying fuzzyxai/audit_h10/features.py -> build/lib/fuzzyxai/audit_h10
+copying fuzzyxai/audit_h10/gold_benchmark.py -> build/lib/fuzzyxai/audit_h10
+copying fuzzyxai/audit_h10/models.py -> build/lib/fuzzyxai/audit_h10
+copying fuzzyxai/audit_h10/open_set.py -> build/lib/fuzzyxai/audit_h10
+copying fuzzyxai/audit_h10/recertification.py -> build/lib/fuzzyxai/audit_h10
+copying fuzzyxai/audit_h10/repair_planner.py -> build/lib/fuzzyxai/audit_h10
+copying fuzzyxai/audit_h10/route_validity.py -> build/lib/fuzzyxai/audit_h10
+copying fuzzyxai/audit_h10/source_localizer.py -> build/lib/fuzzyxai/audit_h10
+copying fuzzyxai/audit_h10/structural_inference.py -> build/lib/fuzzyxai/audit_h10
+copying fuzzyxai/audit_h10/taxonomy.py -> build/lib/fuzzyxai/audit_h10
+copying fuzzyxai/audit_h10/trace.py -> build/lib/fuzzyxai/audit_h10
+creating build/lib/fuzzyxai/calibration
+copying fuzzyxai/calibration/__init__.py -> build/lib/fuzzyxai/calibration
+copying fuzzyxai/calibration/cross_validation.py -> build/lib/fuzzyxai/calibration
+copying fuzzyxai/calibration/dataset.py -> build/lib/fuzzyxai/calibration
+copying fuzzyxai/calibration/weight_calibration.py -> build/lib/fuzzyxai/calibration
+creating build/lib/fuzzyxai/category
+copying fuzzyxai/category/__init__.py -> build/lib/fuzzyxai/category
+copying fuzzyxai/category/certified_path.py -> build/lib/fuzzyxai/category
+copying fuzzyxai/category/context_topos.py -> build/lib/fuzzyxai/category
+copying fuzzyxai/category/diagnostic_completion.py -> build/lib/fuzzyxai/category
+copying fuzzyxai/category/expl_category.py -> build/lib/fuzzyxai/category
+copying fuzzyxai/category/morphism.py -> build/lib/fuzzyxai/category
+copying fuzzyxai/category/presheaf.py -> build/lib/fuzzyxai/category
+copying fuzzyxai/category/subpresheaf.py -> build/lib/fuzzyxai/category
+copying fuzzyxai/category/yoneda.py -> build/lib/fuzzyxai/category
+creating build/lib/fuzzyxai/config
+copying fuzzyxai/config/__init__.py -> build/lib/fuzzyxai/config
+copying fuzzyxai/config/defaults.py -> build/lib/fuzzyxai/config
+creating build/lib/fuzzyxai/core
+copying fuzzyxai/core/__init__.py -> build/lib/fuzzyxai/core
+copying fuzzyxai/core/adapters.py -> build/lib/fuzzyxai/core
+copying fuzzyxai/core/alignment.py -> build/lib/fuzzyxai/core
+copying fuzzyxai/core/alignment_synthesis.py -> build/lib/fuzzyxai/core
+copying fuzzyxai/core/composition.py -> build/lib/fuzzyxai/core
+copying fuzzyxai/core/diagnostics.py -> build/lib/fuzzyxai/core
+copying fuzzyxai/core/errors.py -> build/lib/fuzzyxai/core
+copying fuzzyxai/core/explanation.py -> build/lib/fuzzyxai/core
+copying fuzzyxai/core/explanation_object.py -> build/lib/fuzzyxai/core
+copying fuzzyxai/core/external_tabular_route.py -> build/lib/fuzzyxai/core
+copying fuzzyxai/core/git_info.py -> build/lib/fuzzyxai/core
+copying fuzzyxai/core/mlflow_route.py -> build/lib/fuzzyxai/core
+copying fuzzyxai/core/paths.py -> build/lib/fuzzyxai/core
+copying fuzzyxai/core/plan_builder.py -> build/lib/fuzzyxai/core
+copying fuzzyxai/core/proof_package.py -> build/lib/fuzzyxai/core
+copying fuzzyxai/core/reduction.py -> build/lib/fuzzyxai/core
+copying fuzzyxai/core/risk_observer.py -> build/lib/fuzzyxai/core
+copying fuzzyxai/core/route.py -> build/lib/fuzzyxai/core
+copying fuzzyxai/core/scenario_engine.py -> build/lib/fuzzyxai/core
+copying fuzzyxai/core/scenario_registry.py -> build/lib/fuzzyxai/core
+copying fuzzyxai/core/system_operator.py -> build/lib/fuzzyxai/core
+copying fuzzyxai/core/thresholds.py -> build/lib/fuzzyxai/core
+copying fuzzyxai/core/trust_evaluator.py -> build/lib/fuzzyxai/core
+copying fuzzyxai/core/types.py -> build/lib/fuzzyxai/core
+copying fuzzyxai/core/explain_plan.py -> build/lib/fuzzyxai/core
+creating build/lib/fuzzyxai/data
+copying fuzzyxai/data/__init__.py -> build/lib/fuzzyxai/data
+copying fuzzyxai/data/breast_cancer_adapter.py -> build/lib/fuzzyxai/data
+copying fuzzyxai/data/cit_registry.py -> build/lib/fuzzyxai/data
+copying fuzzyxai/data/citr_loader.py -> build/lib/fuzzyxai/data
+copying fuzzyxai/data/dataset_loader.py -> build/lib/fuzzyxai/data
+copying fuzzyxai/data/dataset_record.py -> build/lib/fuzzyxai/data
+copying fuzzyxai/data/loader.py -> build/lib/fuzzyxai/data
+copying fuzzyxai/data/loaders.py -> build/lib/fuzzyxai/data
+copying fuzzyxai/data/preprocess.py -> build/lib/fuzzyxai/data
+copying fuzzyxai/data/profile_inference.py -> build/lib/fuzzyxai/data
+copying fuzzyxai/data/registry.py -> build/lib/fuzzyxai/data
+copying fuzzyxai/data/rikord_loader.py -> build/lib/fuzzyxai/data
+copying fuzzyxai/data/ruccod_loader.py -> build/lib/fuzzyxai/data
+copying fuzzyxai/data/validators.py -> build/lib/fuzzyxai/data
+creating build/lib/fuzzyxai/datasets
+copying fuzzyxai/datasets/__init__.py -> build/lib/fuzzyxai/datasets
+copying fuzzyxai/datasets/registry.py -> build/lib/fuzzyxai/datasets
+copying fuzzyxai/datasets/registry_mosmed_doctor_analysis.py -> build/lib/fuzzyxai/datasets
+copying fuzzyxai/datasets/registry_programs.py -> build/lib/fuzzyxai/datasets
+copying fuzzyxai/datasets/registry_steel_ir.py -> build/lib/fuzzyxai/datasets
+creating build/lib/fuzzyxai/demo
+copying fuzzyxai/demo/__init__.py -> build/lib/fuzzyxai/demo
+copying fuzzyxai/demo/synthetic.py -> build/lib/fuzzyxai/demo
+creating build/lib/fuzzyxai/diagnostics
+copying fuzzyxai/diagnostics/__init__.py -> build/lib/fuzzyxai/diagnostics
+copying fuzzyxai/diagnostics/approximate_solver.py -> build/lib/fuzzyxai/diagnostics
+copying fuzzyxai/diagnostics/causes.py -> build/lib/fuzzyxai/diagnostics
+copying fuzzyxai/diagnostics/compat.py -> build/lib/fuzzyxai/diagnostics
+copying fuzzyxai/diagnostics/contract_registry.py -> build/lib/fuzzyxai/diagnostics
+copying fuzzyxai/diagnostics/contracts.py -> build/lib/fuzzyxai/diagnostics
+copying fuzzyxai/diagnostics/cut_verification.py -> build/lib/fuzzyxai/diagnostics
+copying fuzzyxai/diagnostics/exact_solver.py -> build/lib/fuzzyxai/diagnostics
+copying fuzzyxai/diagnostics/minimal_cut.py -> build/lib/fuzzyxai/diagnostics
+copying fuzzyxai/diagnostics/recertification.py -> build/lib/fuzzyxai/diagnostics
+copying fuzzyxai/diagnostics/renderers.py -> build/lib/fuzzyxai/diagnostics
+copying fuzzyxai/diagnostics/repair_executor.py -> build/lib/fuzzyxai/diagnostics
+copying fuzzyxai/diagnostics/repair_planner.py -> build/lib/fuzzyxai/diagnostics
+copying fuzzyxai/diagnostics/repair_registry.py -> build/lib/fuzzyxai/diagnostics
+copying fuzzyxai/diagnostics/reporter.py -> build/lib/fuzzyxai/diagnostics
+copying fuzzyxai/diagnostics/route_graph.py -> build/lib/fuzzyxai/diagnostics
+copying fuzzyxai/diagnostics/service.py -> build/lib/fuzzyxai/diagnostics
+copying fuzzyxai/diagnostics/validator.py -> build/lib/fuzzyxai/diagnostics
+creating build/lib/fuzzyxai/ecosystem
+copying fuzzyxai/ecosystem/__init__.py -> build/lib/fuzzyxai/ecosystem
+copying fuzzyxai/ecosystem/registry.py -> build/lib/fuzzyxai/ecosystem
+creating build/lib/fuzzyxai/evaluate
+copying fuzzyxai/evaluate/__init__.py -> build/lib/fuzzyxai/evaluate
+copying fuzzyxai/evaluate/common.py -> build/lib/fuzzyxai/evaluate
+copying fuzzyxai/evaluate/eval_beacon.py -> build/lib/fuzzyxai/evaluate
+copying fuzzyxai/evaluate/eval_ecg.py -> build/lib/fuzzyxai/evaluate
+copying fuzzyxai/evaluate/eval_gd_anfis_shap.py -> build/lib/fuzzyxai/evaluate
+copying fuzzyxai/evaluate/eval_gis.py -> build/lib/fuzzyxai/evaluate
+copying fuzzyxai/evaluate/eval_iris.py -> build/lib/fuzzyxai/evaluate
+copying fuzzyxai/evaluate/evaluate_all.py -> build/lib/fuzzyxai/evaluate
+creating build/lib/fuzzyxai/evidence
+copying fuzzyxai/evidence/data_quality.py -> build/lib/fuzzyxai/evidence
+copying fuzzyxai/evidence/text_highlighting.py -> build/lib/fuzzyxai/evidence
+copying fuzzyxai/evidence/image_representation.py -> build/lib/fuzzyxai/evidence
+copying fuzzyxai/evidence/fuzzy_rules.py -> build/lib/fuzzyxai/evidence
+copying fuzzyxai/evidence/counterfactual.py -> build/lib/fuzzyxai/evidence
+copying fuzzyxai/evidence/rules.py -> build/lib/fuzzyxai/evidence
+copying fuzzyxai/evidence/training.py -> build/lib/fuzzyxai/evidence
+copying fuzzyxai/evidence/model_internals.py -> build/lib/fuzzyxai/evidence
+copying fuzzyxai/evidence/contracts.py -> build/lib/fuzzyxai/evidence
+copying fuzzyxai/evidence/similarity.py -> build/lib/fuzzyxai/evidence
+copying fuzzyxai/evidence/concepts.py -> build/lib/fuzzyxai/evidence
+copying fuzzyxai/evidence/__init__.py -> build/lib/fuzzyxai/evidence
+copying fuzzyxai/evidence/attribution_map.py -> build/lib/fuzzyxai/evidence
+copying fuzzyxai/evidence/claims.py -> build/lib/fuzzyxai/evidence
+copying fuzzyxai/evidence/metrics.py -> build/lib/fuzzyxai/evidence
+copying fuzzyxai/evidence/human.py -> build/lib/fuzzyxai/evidence
+copying fuzzyxai/evidence/validation.py -> build/lib/fuzzyxai/evidence
+copying fuzzyxai/evidence/graph.py -> build/lib/fuzzyxai/evidence
+creating build/lib/fuzzyxai/evidence_path
+copying fuzzyxai/evidence_path/__init__.py -> build/lib/fuzzyxai/evidence_path
+copying fuzzyxai/evidence_path/batch.py -> build/lib/fuzzyxai/evidence_path
+copying fuzzyxai/evidence_path/digest.py -> build/lib/fuzzyxai/evidence_path
+creating build/lib/fuzzyxai/examples
+copying fuzzyxai/examples/__init__.py -> build/lib/fuzzyxai/examples
+copying fuzzyxai/examples/beacon_xai.py -> build/lib/fuzzyxai/examples
+copying fuzzyxai/examples/gd_anfis_shap.py -> build/lib/fuzzyxai/examples
+copying fuzzyxai/examples/gis_integro.py -> build/lib/fuzzyxai/examples
+copying fuzzyxai/examples/hybrid_xiris.py -> build/lib/fuzzyxai/examples
+copying fuzzyxai/examples/medical_ecg_signal.py -> build/lib/fuzzyxai/examples
+creating build/lib/fuzzyxai/explain
+copying fuzzyxai/explain/__init__.py -> build/lib/fuzzyxai/explain
+copying fuzzyxai/explain/operator_narrative.py -> build/lib/fuzzyxai/explain
+copying fuzzyxai/explain/plain_language.py -> build/lib/fuzzyxai/explain
+creating build/lib/fuzzyxai/external_adapters
+copying fuzzyxai/external_adapters/__init__.py -> build/lib/fuzzyxai/external_adapters
+copying fuzzyxai/external_adapters/base.py -> build/lib/fuzzyxai/external_adapters
+copying fuzzyxai/external_adapters/manifest.py -> build/lib/fuzzyxai/external_adapters
+creating build/lib/fuzzyxai/gold_repository
+copying fuzzyxai/gold_repository/__init__.py -> build/lib/fuzzyxai/gold_repository
+copying fuzzyxai/gold_repository/scorer.py -> build/lib/fuzzyxai/gold_repository
+creating build/lib/fuzzyxai/hierarchy
+copying fuzzyxai/hierarchy/__init__.py -> build/lib/fuzzyxai/hierarchy
+copying fuzzyxai/hierarchy/base.py -> build/lib/fuzzyxai/hierarchy
+copying fuzzyxai/hierarchy/f0.py -> build/lib/fuzzyxai/hierarchy
+copying fuzzyxai/hierarchy/hesitant.py -> build/lib/fuzzyxai/hierarchy
+copying fuzzyxai/hierarchy/interval.py -> build/lib/fuzzyxai/hierarchy
+copying fuzzyxai/hierarchy/meta_reducer.py -> build/lib/fuzzyxai/hierarchy
+copying fuzzyxai/hierarchy/multilevel.py -> build/lib/fuzzyxai/hierarchy
+copying fuzzyxai/hierarchy/neutrosophic.py -> build/lib/fuzzyxai/hierarchy
+copying fuzzyxai/hierarchy/reductions.py -> build/lib/fuzzyxai/hierarchy
+copying fuzzyxai/hierarchy/source_annotation.py -> build/lib/fuzzyxai/hierarchy
+creating build/lib/fuzzyxai/hott
+copying fuzzyxai/hott/__init__.py -> build/lib/fuzzyxai/hott
+copying fuzzyxai/hott/drift_path.py -> build/lib/fuzzyxai/hott
+copying fuzzyxai/hott/path_certificates.py -> build/lib/fuzzyxai/hott
+copying fuzzyxai/hott/path_type.py -> build/lib/fuzzyxai/hott
+copying fuzzyxai/hott/rupture_type.py -> build/lib/fuzzyxai/hott
+creating build/lib/fuzzyxai/incidents
+copying fuzzyxai/incidents/__init__.py -> build/lib/fuzzyxai/incidents
+copying fuzzyxai/incidents/audit.py -> build/lib/fuzzyxai/incidents
+copying fuzzyxai/incidents/formal_operations.py -> build/lib/fuzzyxai/incidents
+copying fuzzyxai/incidents/repository_importer.py -> build/lib/fuzzyxai/incidents
+creating build/lib/fuzzyxai/ml_vertical
+copying fuzzyxai/ml_vertical/__init__.py -> build/lib/fuzzyxai/ml_vertical
+copying fuzzyxai/ml_vertical/api.py -> build/lib/fuzzyxai/ml_vertical
+copying fuzzyxai/ml_vertical/comparative.py -> build/lib/fuzzyxai/ml_vertical
+copying fuzzyxai/ml_vertical/contracts.py -> build/lib/fuzzyxai/ml_vertical
+copying fuzzyxai/ml_vertical/math.py -> build/lib/fuzzyxai/ml_vertical
+copying fuzzyxai/ml_vertical/model.py -> build/lib/fuzzyxai/ml_vertical
+copying fuzzyxai/ml_vertical/pipeline.py -> build/lib/fuzzyxai/ml_vertical
+copying fuzzyxai/ml_vertical/service.py -> build/lib/fuzzyxai/ml_vertical
+copying fuzzyxai/ml_vertical/tracking.py -> build/lib/fuzzyxai/ml_vertical
+creating build/lib/fuzzyxai/multimodal
+copying fuzzyxai/multimodal/__init__.py -> build/lib/fuzzyxai/multimodal
+copying fuzzyxai/multimodal/routes.py -> build/lib/fuzzyxai/multimodal
+creating build/lib/fuzzyxai/operators
+copying fuzzyxai/operators/__init__.py -> build/lib/fuzzyxai/operators
+copying fuzzyxai/operators/actions.py -> build/lib/fuzzyxai/operators
+copying fuzzyxai/operators/alignment.py -> build/lib/fuzzyxai/operators
+copying fuzzyxai/operators/base.py -> build/lib/fuzzyxai/operators
+copying fuzzyxai/operators/composition.py -> build/lib/fuzzyxai/operators
+copying fuzzyxai/operators/contracts.py -> build/lib/fuzzyxai/operators
+copying fuzzyxai/operators/diagnostics.py -> build/lib/fuzzyxai/operators
+copying fuzzyxai/operators/reduction.py -> build/lib/fuzzyxai/operators
+copying fuzzyxai/operators/registry.py -> build/lib/fuzzyxai/operators
+copying fuzzyxai/operators/representation.py -> build/lib/fuzzyxai/operators
+copying fuzzyxai/operators/risk.py -> build/lib/fuzzyxai/operators
+creating build/lib/fuzzyxai/pipelines
+copying fuzzyxai/pipelines/__init__.py -> build/lib/fuzzyxai/pipelines
+copying fuzzyxai/pipelines/dataset_observer_pipeline.py -> build/lib/fuzzyxai/pipelines
+copying fuzzyxai/pipelines/practical.py -> build/lib/fuzzyxai/pipelines
+copying fuzzyxai/pipelines/practical_api.py -> build/lib/fuzzyxai/pipelines
+copying fuzzyxai/pipelines/practical_tracking.py -> build/lib/fuzzyxai/pipelines
+copying fuzzyxai/pipelines/registry.py -> build/lib/fuzzyxai/pipelines
+creating build/lib/fuzzyxai/practical_controller
+copying fuzzyxai/practical_controller/__init__.py -> build/lib/fuzzyxai/practical_controller
+copying fuzzyxai/practical_controller/benchmarks.py -> build/lib/fuzzyxai/practical_controller
+copying fuzzyxai/practical_controller/calibration.py -> build/lib/fuzzyxai/practical_controller
+copying fuzzyxai/practical_controller/canonical.py -> build/lib/fuzzyxai/practical_controller
+copying fuzzyxai/practical_controller/contracts.py -> build/lib/fuzzyxai/practical_controller
+copying fuzzyxai/practical_controller/deployment.py -> build/lib/fuzzyxai/practical_controller
+copying fuzzyxai/practical_controller/guards.py -> build/lib/fuzzyxai/practical_controller
+copying fuzzyxai/practical_controller/optimizer.py -> build/lib/fuzzyxai/practical_controller
+copying fuzzyxai/practical_controller/risk.py -> build/lib/fuzzyxai/practical_controller
+copying fuzzyxai/practical_controller/runtime.py -> build/lib/fuzzyxai/practical_controller
+copying fuzzyxai/practical_controller/training.py -> build/lib/fuzzyxai/practical_controller
+creating build/lib/fuzzyxai/practice
+copying fuzzyxai/practice/__init__.py -> build/lib/fuzzyxai/practice
+copying fuzzyxai/practice/fixtures.py -> build/lib/fuzzyxai/practice
+creating build/lib/fuzzyxai/proof
+copying fuzzyxai/proof/__init__.py -> build/lib/fuzzyxai/proof
+copying fuzzyxai/proof/trace.py -> build/lib/fuzzyxai/proof
+copying fuzzyxai/proof/verifier.py -> build/lib/fuzzyxai/proof
+creating build/lib/fuzzyxai/realdata
+copying fuzzyxai/realdata/__init__.py -> build/lib/fuzzyxai/realdata
+copying fuzzyxai/realdata/fetch_real_artifacts.py -> build/lib/fuzzyxai/realdata
+creating build/lib/fuzzyxai/repair
+copying fuzzyxai/repair/__init__.py -> build/lib/fuzzyxai/repair
+copying fuzzyxai/repair/baselines.py -> build/lib/fuzzyxai/repair
+copying fuzzyxai/repair/cost_models.py -> build/lib/fuzzyxai/repair
+copying fuzzyxai/repair/cost_sensitivity.py -> build/lib/fuzzyxai/repair
+creating build/lib/fuzzyxai/reporting
+copying fuzzyxai/reporting/__init__.py -> build/lib/fuzzyxai/reporting
+copying fuzzyxai/reporting/session_report.py -> build/lib/fuzzyxai/reporting
+creating build/lib/fuzzyxai/repository_diagnostics
+copying fuzzyxai/repository_diagnostics/__init__.py -> build/lib/fuzzyxai/repository_diagnostics
+copying fuzzyxai/repository_diagnostics/active_evidence.py -> build/lib/fuzzyxai/repository_diagnostics
+copying fuzzyxai/repository_diagnostics/auditor.py -> build/lib/fuzzyxai/repository_diagnostics
+copying fuzzyxai/repository_diagnostics/auditor_v2.py -> build/lib/fuzzyxai/repository_diagnostics
+copying fuzzyxai/repository_diagnostics/calibrated_confirmation.py -> build/lib/fuzzyxai/repository_diagnostics
+copying fuzzyxai/repository_diagnostics/contract_inference.py -> build/lib/fuzzyxai/repository_diagnostics
+copying fuzzyxai/repository_diagnostics/contract_inference_v2.py -> build/lib/fuzzyxai/repository_diagnostics
+copying fuzzyxai/repository_diagnostics/evidence_requests.py -> build/lib/fuzzyxai/repository_diagnostics
+copying fuzzyxai/repository_diagnostics/executed_slice.py -> build/lib/fuzzyxai/repository_diagnostics
+copying fuzzyxai/repository_diagnostics/graph.py -> build/lib/fuzzyxai/repository_diagnostics
+copying fuzzyxai/repository_diagnostics/guided_diagnosis.py -> build/lib/fuzzyxai/repository_diagnostics
+copying fuzzyxai/repository_diagnostics/guided_retrieval.py -> build/lib/fuzzyxai/repository_diagnostics
+copying fuzzyxai/repository_diagnostics/importer.py -> build/lib/fuzzyxai/repository_diagnostics
+copying fuzzyxai/repository_diagnostics/importer_v2.py -> build/lib/fuzzyxai/repository_diagnostics
+copying fuzzyxai/repository_diagnostics/incident_router.py -> build/lib/fuzzyxai/repository_diagnostics
+copying fuzzyxai/repository_diagnostics/pair_verification.py -> build/lib/fuzzyxai/repository_diagnostics
+copying fuzzyxai/repository_diagnostics/practical_recovery.py -> build/lib/fuzzyxai/repository_diagnostics
+copying fuzzyxai/repository_diagnostics/recovery.py -> build/lib/fuzzyxai/repository_diagnostics
+copying fuzzyxai/repository_diagnostics/repair_validation.py -> build/lib/fuzzyxai/repository_diagnostics
+copying fuzzyxai/repository_diagnostics/reporting.py -> build/lib/fuzzyxai/repository_diagnostics
+copying fuzzyxai/repository_diagnostics/retrieval.py -> build/lib/fuzzyxai/repository_diagnostics
+copying fuzzyxai/repository_diagnostics/runtime_events.py -> build/lib/fuzzyxai/repository_diagnostics
+creating build/lib/fuzzyxai/risk
+copying fuzzyxai/risk/__init__.py -> build/lib/fuzzyxai/risk
+copying fuzzyxai/risk/context_acceptance.py -> build/lib/fuzzyxai/risk
+copying fuzzyxai/risk/decision_policy.py -> build/lib/fuzzyxai/risk
+copying fuzzyxai/risk/metrics.py -> build/lib/fuzzyxai/risk
+copying fuzzyxai/risk/observer_pipeline.py -> build/lib/fuzzyxai/risk
+copying fuzzyxai/risk/proxy_policy.py -> build/lib/fuzzyxai/risk
+copying fuzzyxai/risk/reduction_graph.py -> build/lib/fuzzyxai/risk
+copying fuzzyxai/risk/representation_selection.py -> build/lib/fuzzyxai/risk
+copying fuzzyxai/risk/risk_aware_model.py -> build/lib/fuzzyxai/risk
+copying fuzzyxai/risk/risk_function.py -> build/lib/fuzzyxai/risk
+copying fuzzyxai/risk/risk_observer.py -> build/lib/fuzzyxai/risk
+copying fuzzyxai/risk/risk_observer_config.py -> build/lib/fuzzyxai/risk
+copying fuzzyxai/risk/uncertainty.py -> build/lib/fuzzyxai/risk
+creating build/lib/fuzzyxai/robustness
+copying fuzzyxai/robustness/__init__.py -> build/lib/fuzzyxai/robustness
+copying fuzzyxai/robustness/cut_stability.py -> build/lib/fuzzyxai/robustness
+creating build/lib/fuzzyxai/roles
+copying fuzzyxai/roles/__init__.py -> build/lib/fuzzyxai/roles
+copying fuzzyxai/roles/interfaces.py -> build/lib/fuzzyxai/roles
+creating build/lib/fuzzyxai/rules
+copying fuzzyxai/rules/__init__.py -> build/lib/fuzzyxai/rules
+copying fuzzyxai/rules/lofo_f1.py -> build/lib/fuzzyxai/rules
+creating build/lib/fuzzyxai/schemas
+copying fuzzyxai/schemas/__init__.py -> build/lib/fuzzyxai/schemas
+copying fuzzyxai/schemas/validate.py -> build/lib/fuzzyxai/schemas
+creating build/lib/fuzzyxai/sdk
+copying fuzzyxai/sdk/__init__.py -> build/lib/fuzzyxai/sdk
+copying fuzzyxai/sdk/base_adapter.py -> build/lib/fuzzyxai/sdk
+copying fuzzyxai/sdk/contracts.py -> build/lib/fuzzyxai/sdk
+creating build/lib/fuzzyxai/selection
+copying fuzzyxai/selection/__init__.py -> build/lib/fuzzyxai/selection
+copying fuzzyxai/selection/choice_diagnostic.py -> build/lib/fuzzyxai/selection
+copying fuzzyxai/selection/compatibility.py -> build/lib/fuzzyxai/selection
+copying fuzzyxai/selection/pareto_selector.py -> build/lib/fuzzyxai/selection
+copying fuzzyxai/selection/profile_builder.py -> build/lib/fuzzyxai/selection
+creating build/lib/fuzzyxai/selective_observer
+copying fuzzyxai/selective_observer/__init__.py -> build/lib/fuzzyxai/selective_observer
+copying fuzzyxai/selective_observer/baselines.py -> build/lib/fuzzyxai/selective_observer
+copying fuzzyxai/selective_observer/contracts.py -> build/lib/fuzzyxai/selective_observer
+copying fuzzyxai/selective_observer/controller.py -> build/lib/fuzzyxai/selective_observer
+copying fuzzyxai/selective_observer/route_validity.py -> build/lib/fuzzyxai/selective_observer
+copying fuzzyxai/selective_observer/rule_validation.py -> build/lib/fuzzyxai/selective_observer
+creating build/lib/fuzzyxai/studio
+copying fuzzyxai/studio/__init__.py -> build/lib/fuzzyxai/studio
+copying fuzzyxai/studio/charts.py -> build/lib/fuzzyxai/studio
+copying fuzzyxai/studio/demo_runner.py -> build/lib/fuzzyxai/studio
+copying fuzzyxai/studio/explainplan_editor.py -> build/lib/fuzzyxai/studio
+copying fuzzyxai/studio/operator_scenarios.py -> build/lib/fuzzyxai/studio
+copying fuzzyxai/studio/operators.py -> build/lib/fuzzyxai/studio
+copying fuzzyxai/studio/report_export.py -> build/lib/fuzzyxai/studio
+copying fuzzyxai/studio/scenario_presets.py -> build/lib/fuzzyxai/studio
+copying fuzzyxai/studio/state.py -> build/lib/fuzzyxai/studio
+copying fuzzyxai/studio/widgets.py -> build/lib/fuzzyxai/studio
+creating build/lib/fuzzyxai/text
+copying fuzzyxai/text/__init__.py -> build/lib/fuzzyxai/text
+copying fuzzyxai/text/explanation_generator.py -> build/lib/fuzzyxai/text
+creating build/lib/fuzzyxai/train
+copying fuzzyxai/train/__init__.py -> build/lib/fuzzyxai/train
+copying fuzzyxai/train/common.py -> build/lib/fuzzyxai/train
+copying fuzzyxai/train/train_all.py -> build/lib/fuzzyxai/train
+copying fuzzyxai/train/train_beacon_counterevidence.py -> build/lib/fuzzyxai/train
+copying fuzzyxai/train/train_ecg_quality.py -> build/lib/fuzzyxai/train
+copying fuzzyxai/train/train_gd_anfis_shap.py -> build/lib/fuzzyxai/train
+copying fuzzyxai/train/train_gis_route.py -> build/lib/fuzzyxai/train
+copying fuzzyxai/train/train_iris_quality.py -> build/lib/fuzzyxai/train
+creating build/lib/fuzzyxai/trust
+copying fuzzyxai/trust/__init__.py -> build/lib/fuzzyxai/trust
+copying fuzzyxai/trust/trust_evaluator.py -> build/lib/fuzzyxai/trust
+creating build/lib/fuzzyxai/visual
+copying fuzzyxai/visual/__init__.py -> build/lib/fuzzyxai/visual
+copying fuzzyxai/visual/composition_graph.py -> build/lib/fuzzyxai/visual
+copying fuzzyxai/visual/interactive_graph.py -> build/lib/fuzzyxai/visual
+copying fuzzyxai/visual/representation_plots.py -> build/lib/fuzzyxai/visual
+creating build/lib/fuzzyxai/visualization
+copying fuzzyxai/visualization/__init__.py -> build/lib/fuzzyxai/visualization
+copying fuzzyxai/visualization/action_boundary.py -> build/lib/fuzzyxai/visualization
+copying fuzzyxai/visualization/coverage_curve.py -> build/lib/fuzzyxai/visualization
+copying fuzzyxai/visualization/explanation_dashboard.py -> build/lib/fuzzyxai/visualization
+copying fuzzyxai/visualization/export.py -> build/lib/fuzzyxai/visualization
+copying fuzzyxai/visualization/gamma_delta_map.py -> build/lib/fuzzyxai/visualization
+copying fuzzyxai/visualization/operator_dashboard.py -> build/lib/fuzzyxai/visualization
+copying fuzzyxai/visualization/operator_state.py -> build/lib/fuzzyxai/visualization
+copying fuzzyxai/visualization/proof_matrix.py -> build/lib/fuzzyxai/visualization
+copying fuzzyxai/visualization/representation_atlas.py -> build/lib/fuzzyxai/visualization
+copying fuzzyxai/visualization/risk_waterfall.py -> build/lib/fuzzyxai/visualization
+copying fuzzyxai/visualization/route_artifacts.py -> build/lib/fuzzyxai/visualization
+copying fuzzyxai/visualization/route_sankey.py -> build/lib/fuzzyxai/visualization
+copying fuzzyxai/visualization/shap_like.py -> build/lib/fuzzyxai/visualization
+copying fuzzyxai/visualization/trace_heatmap.py -> build/lib/fuzzyxai/visualization
+copying fuzzyxai/visualization/traceability.py -> build/lib/fuzzyxai/visualization
+copying fuzzyxai/visualization/training.py -> build/lib/fuzzyxai/visualization
+copying fuzzyxai/visualization/utils.py -> build/lib/fuzzyxai/visualization
+copying fuzzyxai/visualization/text_highlight.py -> build/lib/fuzzyxai/visualization
+copying fuzzyxai/visualization/view_model.py -> build/lib/fuzzyxai/visualization
+copying fuzzyxai/visualization/plotly_renderer.py -> build/lib/fuzzyxai/visualization
+copying fuzzyxai/visualization/spec.py -> build/lib/fuzzyxai/visualization
+copying fuzzyxai/visualization/matplotlib_renderer.py -> build/lib/fuzzyxai/visualization
+creating build/lib/fuzzyxai/viz
+copying fuzzyxai/viz/__init__.py -> build/lib/fuzzyxai/viz
+copying fuzzyxai/viz/export.py -> build/lib/fuzzyxai/viz
+copying fuzzyxai/viz/matplotlib_dashboard.py -> build/lib/fuzzyxai/viz
+copying fuzzyxai/viz/operator_state.py -> build/lib/fuzzyxai/viz
+copying fuzzyxai/viz/route_builder.py -> build/lib/fuzzyxai/viz
+copying fuzzyxai/viz/traceability.py -> build/lib/fuzzyxai/viz
+creating build/lib/fuzzyxai/verbalization
+copying fuzzyxai/verbalization/guards.py -> build/lib/fuzzyxai/verbalization
+copying fuzzyxai/verbalization/contracts.py -> build/lib/fuzzyxai/verbalization
+copying fuzzyxai/verbalization/__init__.py -> build/lib/fuzzyxai/verbalization
+copying fuzzyxai/verbalization/__main__.py -> build/lib/fuzzyxai/verbalization
+copying fuzzyxai/verbalization/verbalizer.py -> build/lib/fuzzyxai/verbalization
+copying fuzzyxai/verbalization/atomic_claims.py -> build/lib/fuzzyxai/verbalization
+creating build/lib/fuzzyxai/sdk/examples
+copying fuzzyxai/sdk/examples/medical_image_adapter.py -> build/lib/fuzzyxai/sdk/examples
+copying fuzzyxai/sdk/examples/simple_tabular_adapter.py -> build/lib/fuzzyxai/sdk/examples
+creating build/lib/fuzzyxai/verbalization/backends
+copying fuzzyxai/verbalization/backends/ollama.py -> build/lib/fuzzyxai/verbalization/backends
+copying fuzzyxai/verbalization/backends/__init__.py -> build/lib/fuzzyxai/verbalization/backends
+running egg_info
+writing fuzzyxai_operator.egg-info/PKG-INFO
+writing dependency_links to fuzzyxai_operator.egg-info/dependency_links.txt
+writing entry points to fuzzyxai_operator.egg-info/entry_points.txt
+writing requirements to fuzzyxai_operator.egg-info/requires.txt
+writing top-level names to fuzzyxai_operator.egg-info/top_level.txt
+reading manifest file 'fuzzyxai_operator.egg-info/SOURCES.txt'
+writing manifest file 'fuzzyxai_operator.egg-info/SOURCES.txt'
+copying fuzzyxai/schemas/adapter_validation_report.schema.json -> build/lib/fuzzyxai/schemas
+copying fuzzyxai/schemas/classification_payload.schema.json -> build/lib/fuzzyxai/schemas
+copying fuzzyxai/schemas/explanation_view_model.schema.json -> build/lib/fuzzyxai/schemas
+copying fuzzyxai/schemas/explanation_visual_spec.schema.json -> build/lib/fuzzyxai/schemas
+copying fuzzyxai/schemas/human_explanation.schema.json -> build/lib/fuzzyxai/schemas
+copying fuzzyxai/schemas/image_payload.schema.json -> build/lib/fuzzyxai/schemas
+copying fuzzyxai/schemas/operator_trace.schema.json -> build/lib/fuzzyxai/schemas
+copying fuzzyxai/schemas/proof_trace.schema.json -> build/lib/fuzzyxai/schemas
+copying fuzzyxai/schemas/regression_payload.schema.json -> build/lib/fuzzyxai/schemas
+copying fuzzyxai/schemas/route.schema.json -> build/lib/fuzzyxai/schemas
+copying fuzzyxai/schemas/signal_payload.schema.json -> build/lib/fuzzyxai/schemas
+installing to build/bdist.linux-x86_64/wheel
+running install
+running install_lib
+creating build/bdist.linux-x86_64/wheel
+creating build/bdist.linux-x86_64/wheel/fuzzyxai
+copying build/lib/fuzzyxai/__init__.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai
+copying build/lib/fuzzyxai/adapter_conformance.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai
+copying build/lib/fuzzyxai/api.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai
+copying build/lib/fuzzyxai/cli.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai
+copying build/lib/fuzzyxai/explanation_quality.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai
+copying build/lib/fuzzyxai/export_tables.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai
+copying build/lib/fuzzyxai/pipeline.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai
+copying build/lib/fuzzyxai/planner.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai
+copying build/lib/fuzzyxai/run_scenario.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai
+copying build/lib/fuzzyxai/scientific_alignment.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai
+copying build/lib/fuzzyxai/runtime.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai
+copying build/lib/fuzzyxai/system_semantics.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai
+creating build/bdist.linux-x86_64/wheel/fuzzyxai/adapters
+copying build/lib/fuzzyxai/adapters/__init__.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/adapters
+copying build/lib/fuzzyxai/adapters/base.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/adapters
+copying build/lib/fuzzyxai/adapters/beacon_xai.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/adapters
+copying build/lib/fuzzyxai/adapters/contracts_v2.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/adapters
+copying build/lib/fuzzyxai/adapters/counterevidence.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/adapters
+copying build/lib/fuzzyxai/adapters/gd_anfis_shap.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/adapters
+copying build/lib/fuzzyxai/adapters/geo.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/adapters
+copying build/lib/fuzzyxai/adapters/geospatial_route.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/adapters
+copying build/lib/fuzzyxai/adapters/gis_integro.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/adapters
+copying build/lib/fuzzyxai/adapters/iris_biometric.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/adapters
+copying build/lib/fuzzyxai/adapters/medical_image_to_explanation.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/adapters
+copying build/lib/fuzzyxai/adapters/mlflow_tabular.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/adapters
+copying build/lib/fuzzyxai/adapters/model_registry.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/adapters
+copying build/lib/fuzzyxai/adapters/model_v2.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/adapters
+copying build/lib/fuzzyxai/adapters/optional_v2.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/adapters
+copying build/lib/fuzzyxai/adapters/registry.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/adapters
+copying build/lib/fuzzyxai/adapters/rule_attribution.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/adapters
+copying build/lib/fuzzyxai/adapters/signal.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/adapters
+copying build/lib/fuzzyxai/adapters/signal_quality.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/adapters
+copying build/lib/fuzzyxai/adapters/tabular.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/adapters
+copying build/lib/fuzzyxai/adapters/tabular_classification.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/adapters
+copying build/lib/fuzzyxai/adapters/tabular_to_explanation.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/adapters
+copying build/lib/fuzzyxai/adapters/text_to_explanation.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/adapters
+copying build/lib/fuzzyxai/adapters/model.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/adapters
+copying build/lib/fuzzyxai/adapters/sklearn_v2.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/adapters
+copying build/lib/fuzzyxai/adapters/system_source.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/adapters
+creating build/bdist.linux-x86_64/wheel/fuzzyxai/audit
+copying build/lib/fuzzyxai/audit/__init__.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/audit
+copying build/lib/fuzzyxai/audit/build_full_delivery.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/audit
+copying build/lib/fuzzyxai/audit/build_package.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/audit
+copying build/lib/fuzzyxai/audit/common.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/audit
+copying build/lib/fuzzyxai/audit/dataset_audit.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/audit
+copying build/lib/fuzzyxai/audit/docx_chapters.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/audit
+copying build/lib/fuzzyxai/audit/docx_format.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/audit
+copying build/lib/fuzzyxai/audit/docx_render_gate.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/audit
+copying build/lib/fuzzyxai/audit/final_audit.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/audit
+copying build/lib/fuzzyxai/audit/final_delivery_report.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/audit
+copying build/lib/fuzzyxai/audit/formula_references.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/audit
+copying build/lib/fuzzyxai/audit/fresh_clone_gate.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/audit
+copying build/lib/fuzzyxai/audit/grep_stale_terms.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/audit
+copying build/lib/fuzzyxai/audit/inventory.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/audit
+copying build/lib/fuzzyxai/audit/operators_manifest.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/audit
+copying build/lib/fuzzyxai/audit/package_self_contained.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/audit
+copying build/lib/fuzzyxai/audit/practice_demo.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/audit
+copying build/lib/fuzzyxai/audit/proof_qc.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/audit
+copying build/lib/fuzzyxai/audit/real_validation.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/audit
+copying build/lib/fuzzyxai/audit/screenshot_qc.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/audit
+copying build/lib/fuzzyxai/audit/studio_server_smoke.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/audit
+copying build/lib/fuzzyxai/audit/studio_smoke.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/audit
+copying build/lib/fuzzyxai/audit/training_audit.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/audit
+creating build/bdist.linux-x86_64/wheel/fuzzyxai/audit_h10
+copying build/lib/fuzzyxai/audit_h10/__init__.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/audit_h10
+copying build/lib/fuzzyxai/audit_h10/auditor.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/audit_h10
+copying build/lib/fuzzyxai/audit_h10/diagnostic_cut.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/audit_h10
+copying build/lib/fuzzyxai/audit_h10/family_classifier.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/audit_h10
+copying build/lib/fuzzyxai/audit_h10/features.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/audit_h10
+copying build/lib/fuzzyxai/audit_h10/gold_benchmark.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/audit_h10
+copying build/lib/fuzzyxai/audit_h10/models.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/audit_h10
+copying build/lib/fuzzyxai/audit_h10/open_set.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/audit_h10
+copying build/lib/fuzzyxai/audit_h10/recertification.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/audit_h10
+copying build/lib/fuzzyxai/audit_h10/repair_planner.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/audit_h10
+copying build/lib/fuzzyxai/audit_h10/route_validity.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/audit_h10
+copying build/lib/fuzzyxai/audit_h10/source_localizer.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/audit_h10
+copying build/lib/fuzzyxai/audit_h10/structural_inference.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/audit_h10
+copying build/lib/fuzzyxai/audit_h10/taxonomy.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/audit_h10
+copying build/lib/fuzzyxai/audit_h10/trace.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/audit_h10
+creating build/bdist.linux-x86_64/wheel/fuzzyxai/calibration
+copying build/lib/fuzzyxai/calibration/__init__.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/calibration
+copying build/lib/fuzzyxai/calibration/cross_validation.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/calibration
+copying build/lib/fuzzyxai/calibration/dataset.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/calibration
+copying build/lib/fuzzyxai/calibration/weight_calibration.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/calibration
+creating build/bdist.linux-x86_64/wheel/fuzzyxai/category
+copying build/lib/fuzzyxai/category/__init__.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/category
+copying build/lib/fuzzyxai/category/certified_path.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/category
+copying build/lib/fuzzyxai/category/context_topos.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/category
+copying build/lib/fuzzyxai/category/diagnostic_completion.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/category
+copying build/lib/fuzzyxai/category/expl_category.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/category
+copying build/lib/fuzzyxai/category/morphism.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/category
+copying build/lib/fuzzyxai/category/presheaf.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/category
+copying build/lib/fuzzyxai/category/subpresheaf.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/category
+copying build/lib/fuzzyxai/category/yoneda.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/category
+creating build/bdist.linux-x86_64/wheel/fuzzyxai/config
+copying build/lib/fuzzyxai/config/__init__.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/config
+copying build/lib/fuzzyxai/config/defaults.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/config
+creating build/bdist.linux-x86_64/wheel/fuzzyxai/core
+copying build/lib/fuzzyxai/core/__init__.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/core
+copying build/lib/fuzzyxai/core/adapters.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/core
+copying build/lib/fuzzyxai/core/alignment.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/core
+copying build/lib/fuzzyxai/core/alignment_synthesis.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/core
+copying build/lib/fuzzyxai/core/composition.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/core
+copying build/lib/fuzzyxai/core/diagnostics.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/core
+copying build/lib/fuzzyxai/core/errors.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/core
+copying build/lib/fuzzyxai/core/explanation.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/core
+copying build/lib/fuzzyxai/core/explanation_object.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/core
+copying build/lib/fuzzyxai/core/external_tabular_route.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/core
+copying build/lib/fuzzyxai/core/git_info.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/core
+copying build/lib/fuzzyxai/core/mlflow_route.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/core
+copying build/lib/fuzzyxai/core/paths.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/core
+copying build/lib/fuzzyxai/core/plan_builder.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/core
+copying build/lib/fuzzyxai/core/proof_package.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/core
+copying build/lib/fuzzyxai/core/reduction.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/core
+copying build/lib/fuzzyxai/core/risk_observer.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/core
+copying build/lib/fuzzyxai/core/route.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/core
+copying build/lib/fuzzyxai/core/scenario_engine.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/core
+copying build/lib/fuzzyxai/core/scenario_registry.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/core
+copying build/lib/fuzzyxai/core/system_operator.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/core
+copying build/lib/fuzzyxai/core/thresholds.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/core
+copying build/lib/fuzzyxai/core/trust_evaluator.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/core
+copying build/lib/fuzzyxai/core/types.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/core
+copying build/lib/fuzzyxai/core/explain_plan.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/core
+creating build/bdist.linux-x86_64/wheel/fuzzyxai/data
+copying build/lib/fuzzyxai/data/__init__.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/data
+copying build/lib/fuzzyxai/data/breast_cancer_adapter.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/data
+copying build/lib/fuzzyxai/data/cit_registry.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/data
+copying build/lib/fuzzyxai/data/citr_loader.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/data
+copying build/lib/fuzzyxai/data/dataset_loader.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/data
+copying build/lib/fuzzyxai/data/dataset_record.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/data
+copying build/lib/fuzzyxai/data/loader.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/data
+copying build/lib/fuzzyxai/data/loaders.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/data
+copying build/lib/fuzzyxai/data/preprocess.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/data
+copying build/lib/fuzzyxai/data/profile_inference.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/data
+copying build/lib/fuzzyxai/data/registry.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/data
+copying build/lib/fuzzyxai/data/rikord_loader.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/data
+copying build/lib/fuzzyxai/data/ruccod_loader.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/data
+copying build/lib/fuzzyxai/data/validators.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/data
+creating build/bdist.linux-x86_64/wheel/fuzzyxai/datasets
+copying build/lib/fuzzyxai/datasets/__init__.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/datasets
+copying build/lib/fuzzyxai/datasets/registry.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/datasets
+copying build/lib/fuzzyxai/datasets/registry_mosmed_doctor_analysis.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/datasets
+copying build/lib/fuzzyxai/datasets/registry_programs.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/datasets
+copying build/lib/fuzzyxai/datasets/registry_steel_ir.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/datasets
+creating build/bdist.linux-x86_64/wheel/fuzzyxai/demo
+copying build/lib/fuzzyxai/demo/__init__.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/demo
+copying build/lib/fuzzyxai/demo/synthetic.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/demo
+creating build/bdist.linux-x86_64/wheel/fuzzyxai/diagnostics
+copying build/lib/fuzzyxai/diagnostics/__init__.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/diagnostics
+copying build/lib/fuzzyxai/diagnostics/approximate_solver.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/diagnostics
+copying build/lib/fuzzyxai/diagnostics/causes.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/diagnostics
+copying build/lib/fuzzyxai/diagnostics/compat.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/diagnostics
+copying build/lib/fuzzyxai/diagnostics/contract_registry.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/diagnostics
+copying build/lib/fuzzyxai/diagnostics/contracts.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/diagnostics
+copying build/lib/fuzzyxai/diagnostics/cut_verification.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/diagnostics
+copying build/lib/fuzzyxai/diagnostics/exact_solver.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/diagnostics
+copying build/lib/fuzzyxai/diagnostics/minimal_cut.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/diagnostics
+copying build/lib/fuzzyxai/diagnostics/recertification.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/diagnostics
+copying build/lib/fuzzyxai/diagnostics/renderers.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/diagnostics
+copying build/lib/fuzzyxai/diagnostics/repair_executor.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/diagnostics
+copying build/lib/fuzzyxai/diagnostics/repair_planner.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/diagnostics
+copying build/lib/fuzzyxai/diagnostics/repair_registry.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/diagnostics
+copying build/lib/fuzzyxai/diagnostics/reporter.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/diagnostics
+copying build/lib/fuzzyxai/diagnostics/route_graph.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/diagnostics
+copying build/lib/fuzzyxai/diagnostics/service.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/diagnostics
+copying build/lib/fuzzyxai/diagnostics/validator.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/diagnostics
+creating build/bdist.linux-x86_64/wheel/fuzzyxai/ecosystem
+copying build/lib/fuzzyxai/ecosystem/__init__.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/ecosystem
+copying build/lib/fuzzyxai/ecosystem/registry.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/ecosystem
+creating build/bdist.linux-x86_64/wheel/fuzzyxai/evaluate
+copying build/lib/fuzzyxai/evaluate/__init__.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/evaluate
+copying build/lib/fuzzyxai/evaluate/common.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/evaluate
+copying build/lib/fuzzyxai/evaluate/eval_beacon.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/evaluate
+copying build/lib/fuzzyxai/evaluate/eval_ecg.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/evaluate
+copying build/lib/fuzzyxai/evaluate/eval_gd_anfis_shap.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/evaluate
+copying build/lib/fuzzyxai/evaluate/eval_gis.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/evaluate
+copying build/lib/fuzzyxai/evaluate/eval_iris.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/evaluate
+copying build/lib/fuzzyxai/evaluate/evaluate_all.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/evaluate
+creating build/bdist.linux-x86_64/wheel/fuzzyxai/evidence
+copying build/lib/fuzzyxai/evidence/data_quality.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/evidence
+copying build/lib/fuzzyxai/evidence/text_highlighting.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/evidence
+copying build/lib/fuzzyxai/evidence/image_representation.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/evidence
+copying build/lib/fuzzyxai/evidence/fuzzy_rules.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/evidence
+copying build/lib/fuzzyxai/evidence/counterfactual.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/evidence
+copying build/lib/fuzzyxai/evidence/rules.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/evidence
+copying build/lib/fuzzyxai/evidence/training.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/evidence
+copying build/lib/fuzzyxai/evidence/model_internals.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/evidence
+copying build/lib/fuzzyxai/evidence/contracts.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/evidence
+copying build/lib/fuzzyxai/evidence/similarity.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/evidence
+copying build/lib/fuzzyxai/evidence/concepts.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/evidence
+copying build/lib/fuzzyxai/evidence/__init__.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/evidence
+copying build/lib/fuzzyxai/evidence/attribution_map.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/evidence
+copying build/lib/fuzzyxai/evidence/claims.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/evidence
+copying build/lib/fuzzyxai/evidence/metrics.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/evidence
+copying build/lib/fuzzyxai/evidence/human.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/evidence
+copying build/lib/fuzzyxai/evidence/validation.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/evidence
+copying build/lib/fuzzyxai/evidence/graph.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/evidence
+creating build/bdist.linux-x86_64/wheel/fuzzyxai/evidence_path
+copying build/lib/fuzzyxai/evidence_path/__init__.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/evidence_path
+copying build/lib/fuzzyxai/evidence_path/batch.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/evidence_path
+copying build/lib/fuzzyxai/evidence_path/digest.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/evidence_path
+creating build/bdist.linux-x86_64/wheel/fuzzyxai/examples
+copying build/lib/fuzzyxai/examples/__init__.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/examples
+copying build/lib/fuzzyxai/examples/beacon_xai.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/examples
+copying build/lib/fuzzyxai/examples/gd_anfis_shap.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/examples
+copying build/lib/fuzzyxai/examples/gis_integro.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/examples
+copying build/lib/fuzzyxai/examples/hybrid_xiris.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/examples
+copying build/lib/fuzzyxai/examples/medical_ecg_signal.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/examples
+creating build/bdist.linux-x86_64/wheel/fuzzyxai/explain
+copying build/lib/fuzzyxai/explain/__init__.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/explain
+copying build/lib/fuzzyxai/explain/operator_narrative.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/explain
+copying build/lib/fuzzyxai/explain/plain_language.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/explain
+creating build/bdist.linux-x86_64/wheel/fuzzyxai/external_adapters
+copying build/lib/fuzzyxai/external_adapters/__init__.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/external_adapters
+copying build/lib/fuzzyxai/external_adapters/base.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/external_adapters
+copying build/lib/fuzzyxai/external_adapters/manifest.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/external_adapters
+creating build/bdist.linux-x86_64/wheel/fuzzyxai/gold_repository
+copying build/lib/fuzzyxai/gold_repository/__init__.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/gold_repository
+copying build/lib/fuzzyxai/gold_repository/scorer.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/gold_repository
+creating build/bdist.linux-x86_64/wheel/fuzzyxai/hierarchy
+copying build/lib/fuzzyxai/hierarchy/__init__.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/hierarchy
+copying build/lib/fuzzyxai/hierarchy/base.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/hierarchy
+copying build/lib/fuzzyxai/hierarchy/f0.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/hierarchy
+copying build/lib/fuzzyxai/hierarchy/hesitant.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/hierarchy
+copying build/lib/fuzzyxai/hierarchy/interval.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/hierarchy
+copying build/lib/fuzzyxai/hierarchy/meta_reducer.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/hierarchy
+copying build/lib/fuzzyxai/hierarchy/multilevel.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/hierarchy
+copying build/lib/fuzzyxai/hierarchy/neutrosophic.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/hierarchy
+copying build/lib/fuzzyxai/hierarchy/reductions.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/hierarchy
+copying build/lib/fuzzyxai/hierarchy/source_annotation.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/hierarchy
+creating build/bdist.linux-x86_64/wheel/fuzzyxai/hott
+copying build/lib/fuzzyxai/hott/__init__.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/hott
+copying build/lib/fuzzyxai/hott/drift_path.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/hott
+copying build/lib/fuzzyxai/hott/path_certificates.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/hott
+copying build/lib/fuzzyxai/hott/path_type.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/hott
+copying build/lib/fuzzyxai/hott/rupture_type.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/hott
+creating build/bdist.linux-x86_64/wheel/fuzzyxai/incidents
+copying build/lib/fuzzyxai/incidents/__init__.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/incidents
+copying build/lib/fuzzyxai/incidents/audit.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/incidents
+copying build/lib/fuzzyxai/incidents/formal_operations.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/incidents
+copying build/lib/fuzzyxai/incidents/repository_importer.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/incidents
+creating build/bdist.linux-x86_64/wheel/fuzzyxai/ml_vertical
+copying build/lib/fuzzyxai/ml_vertical/__init__.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/ml_vertical
+copying build/lib/fuzzyxai/ml_vertical/api.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/ml_vertical
+copying build/lib/fuzzyxai/ml_vertical/comparative.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/ml_vertical
+copying build/lib/fuzzyxai/ml_vertical/contracts.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/ml_vertical
+copying build/lib/fuzzyxai/ml_vertical/math.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/ml_vertical
+copying build/lib/fuzzyxai/ml_vertical/model.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/ml_vertical
+copying build/lib/fuzzyxai/ml_vertical/pipeline.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/ml_vertical
+copying build/lib/fuzzyxai/ml_vertical/service.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/ml_vertical
+copying build/lib/fuzzyxai/ml_vertical/tracking.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/ml_vertical
+creating build/bdist.linux-x86_64/wheel/fuzzyxai/multimodal
+copying build/lib/fuzzyxai/multimodal/__init__.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/multimodal
+copying build/lib/fuzzyxai/multimodal/routes.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/multimodal
+creating build/bdist.linux-x86_64/wheel/fuzzyxai/operators
+copying build/lib/fuzzyxai/operators/__init__.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/operators
+copying build/lib/fuzzyxai/operators/actions.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/operators
+copying build/lib/fuzzyxai/operators/alignment.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/operators
+copying build/lib/fuzzyxai/operators/base.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/operators
+copying build/lib/fuzzyxai/operators/composition.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/operators
+copying build/lib/fuzzyxai/operators/contracts.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/operators
+copying build/lib/fuzzyxai/operators/diagnostics.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/operators
+copying build/lib/fuzzyxai/operators/reduction.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/operators
+copying build/lib/fuzzyxai/operators/registry.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/operators
+copying build/lib/fuzzyxai/operators/representation.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/operators
+copying build/lib/fuzzyxai/operators/risk.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/operators
+creating build/bdist.linux-x86_64/wheel/fuzzyxai/pipelines
+copying build/lib/fuzzyxai/pipelines/__init__.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/pipelines
+copying build/lib/fuzzyxai/pipelines/dataset_observer_pipeline.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/pipelines
+copying build/lib/fuzzyxai/pipelines/practical.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/pipelines
+copying build/lib/fuzzyxai/pipelines/practical_api.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/pipelines
+copying build/lib/fuzzyxai/pipelines/practical_tracking.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/pipelines
+copying build/lib/fuzzyxai/pipelines/registry.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/pipelines
+creating build/bdist.linux-x86_64/wheel/fuzzyxai/practical_controller
+copying build/lib/fuzzyxai/practical_controller/__init__.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/practical_controller
+copying build/lib/fuzzyxai/practical_controller/benchmarks.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/practical_controller
+copying build/lib/fuzzyxai/practical_controller/calibration.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/practical_controller
+copying build/lib/fuzzyxai/practical_controller/canonical.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/practical_controller
+copying build/lib/fuzzyxai/practical_controller/contracts.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/practical_controller
+copying build/lib/fuzzyxai/practical_controller/deployment.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/practical_controller
+copying build/lib/fuzzyxai/practical_controller/guards.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/practical_controller
+copying build/lib/fuzzyxai/practical_controller/optimizer.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/practical_controller
+copying build/lib/fuzzyxai/practical_controller/risk.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/practical_controller
+copying build/lib/fuzzyxai/practical_controller/runtime.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/practical_controller
+copying build/lib/fuzzyxai/practical_controller/training.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/practical_controller
+creating build/bdist.linux-x86_64/wheel/fuzzyxai/practice
+copying build/lib/fuzzyxai/practice/__init__.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/practice
+copying build/lib/fuzzyxai/practice/fixtures.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/practice
+creating build/bdist.linux-x86_64/wheel/fuzzyxai/proof
+copying build/lib/fuzzyxai/proof/__init__.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/proof
+copying build/lib/fuzzyxai/proof/trace.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/proof
+copying build/lib/fuzzyxai/proof/verifier.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/proof
+creating build/bdist.linux-x86_64/wheel/fuzzyxai/realdata
+copying build/lib/fuzzyxai/realdata/__init__.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/realdata
+copying build/lib/fuzzyxai/realdata/fetch_real_artifacts.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/realdata
+creating build/bdist.linux-x86_64/wheel/fuzzyxai/repair
+copying build/lib/fuzzyxai/repair/__init__.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/repair
+copying build/lib/fuzzyxai/repair/baselines.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/repair
+copying build/lib/fuzzyxai/repair/cost_models.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/repair
+copying build/lib/fuzzyxai/repair/cost_sensitivity.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/repair
+creating build/bdist.linux-x86_64/wheel/fuzzyxai/reporting
+copying build/lib/fuzzyxai/reporting/__init__.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/reporting
+copying build/lib/fuzzyxai/reporting/session_report.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/reporting
+creating build/bdist.linux-x86_64/wheel/fuzzyxai/repository_diagnostics
+copying build/lib/fuzzyxai/repository_diagnostics/__init__.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/repository_diagnostics
+copying build/lib/fuzzyxai/repository_diagnostics/active_evidence.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/repository_diagnostics
+copying build/lib/fuzzyxai/repository_diagnostics/auditor.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/repository_diagnostics
+copying build/lib/fuzzyxai/repository_diagnostics/auditor_v2.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/repository_diagnostics
+copying build/lib/fuzzyxai/repository_diagnostics/calibrated_confirmation.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/repository_diagnostics
+copying build/lib/fuzzyxai/repository_diagnostics/contract_inference.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/repository_diagnostics
+copying build/lib/fuzzyxai/repository_diagnostics/contract_inference_v2.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/repository_diagnostics
+copying build/lib/fuzzyxai/repository_diagnostics/evidence_requests.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/repository_diagnostics
+copying build/lib/fuzzyxai/repository_diagnostics/executed_slice.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/repository_diagnostics
+copying build/lib/fuzzyxai/repository_diagnostics/graph.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/repository_diagnostics
+copying build/lib/fuzzyxai/repository_diagnostics/guided_diagnosis.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/repository_diagnostics
+copying build/lib/fuzzyxai/repository_diagnostics/guided_retrieval.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/repository_diagnostics
+copying build/lib/fuzzyxai/repository_diagnostics/importer.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/repository_diagnostics
+copying build/lib/fuzzyxai/repository_diagnostics/importer_v2.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/repository_diagnostics
+copying build/lib/fuzzyxai/repository_diagnostics/incident_router.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/repository_diagnostics
+copying build/lib/fuzzyxai/repository_diagnostics/pair_verification.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/repository_diagnostics
+copying build/lib/fuzzyxai/repository_diagnostics/practical_recovery.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/repository_diagnostics
+copying build/lib/fuzzyxai/repository_diagnostics/recovery.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/repository_diagnostics
+copying build/lib/fuzzyxai/repository_diagnostics/repair_validation.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/repository_diagnostics
+copying build/lib/fuzzyxai/repository_diagnostics/reporting.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/repository_diagnostics
+copying build/lib/fuzzyxai/repository_diagnostics/retrieval.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/repository_diagnostics
+copying build/lib/fuzzyxai/repository_diagnostics/runtime_events.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/repository_diagnostics
+creating build/bdist.linux-x86_64/wheel/fuzzyxai/risk
+copying build/lib/fuzzyxai/risk/__init__.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/risk
+copying build/lib/fuzzyxai/risk/context_acceptance.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/risk
+copying build/lib/fuzzyxai/risk/decision_policy.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/risk
+copying build/lib/fuzzyxai/risk/metrics.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/risk
+copying build/lib/fuzzyxai/risk/observer_pipeline.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/risk
+copying build/lib/fuzzyxai/risk/proxy_policy.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/risk
+copying build/lib/fuzzyxai/risk/reduction_graph.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/risk
+copying build/lib/fuzzyxai/risk/representation_selection.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/risk
+copying build/lib/fuzzyxai/risk/risk_aware_model.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/risk
+copying build/lib/fuzzyxai/risk/risk_function.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/risk
+copying build/lib/fuzzyxai/risk/risk_observer.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/risk
+copying build/lib/fuzzyxai/risk/risk_observer_config.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/risk
+copying build/lib/fuzzyxai/risk/uncertainty.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/risk
+creating build/bdist.linux-x86_64/wheel/fuzzyxai/robustness
+copying build/lib/fuzzyxai/robustness/__init__.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/robustness
+copying build/lib/fuzzyxai/robustness/cut_stability.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/robustness
+creating build/bdist.linux-x86_64/wheel/fuzzyxai/roles
+copying build/lib/fuzzyxai/roles/__init__.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/roles
+copying build/lib/fuzzyxai/roles/interfaces.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/roles
+creating build/bdist.linux-x86_64/wheel/fuzzyxai/rules
+copying build/lib/fuzzyxai/rules/__init__.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/rules
+copying build/lib/fuzzyxai/rules/lofo_f1.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/rules
+creating build/bdist.linux-x86_64/wheel/fuzzyxai/schemas
+copying build/lib/fuzzyxai/schemas/__init__.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/schemas
+copying build/lib/fuzzyxai/schemas/validate.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/schemas
+copying build/lib/fuzzyxai/schemas/adapter_validation_report.schema.json -> build/bdist.linux-x86_64/wheel/./fuzzyxai/schemas
+copying build/lib/fuzzyxai/schemas/classification_payload.schema.json -> build/bdist.linux-x86_64/wheel/./fuzzyxai/schemas
+copying build/lib/fuzzyxai/schemas/explanation_view_model.schema.json -> build/bdist.linux-x86_64/wheel/./fuzzyxai/schemas
+copying build/lib/fuzzyxai/schemas/explanation_visual_spec.schema.json -> build/bdist.linux-x86_64/wheel/./fuzzyxai/schemas
+copying build/lib/fuzzyxai/schemas/human_explanation.schema.json -> build/bdist.linux-x86_64/wheel/./fuzzyxai/schemas
+copying build/lib/fuzzyxai/schemas/image_payload.schema.json -> build/bdist.linux-x86_64/wheel/./fuzzyxai/schemas
+copying build/lib/fuzzyxai/schemas/operator_trace.schema.json -> build/bdist.linux-x86_64/wheel/./fuzzyxai/schemas
+copying build/lib/fuzzyxai/schemas/proof_trace.schema.json -> build/bdist.linux-x86_64/wheel/./fuzzyxai/schemas
+copying build/lib/fuzzyxai/schemas/regression_payload.schema.json -> build/bdist.linux-x86_64/wheel/./fuzzyxai/schemas
+copying build/lib/fuzzyxai/schemas/route.schema.json -> build/bdist.linux-x86_64/wheel/./fuzzyxai/schemas
+copying build/lib/fuzzyxai/schemas/signal_payload.schema.json -> build/bdist.linux-x86_64/wheel/./fuzzyxai/schemas
+creating build/bdist.linux-x86_64/wheel/fuzzyxai/sdk
+copying build/lib/fuzzyxai/sdk/__init__.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/sdk
+copying build/lib/fuzzyxai/sdk/base_adapter.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/sdk
+copying build/lib/fuzzyxai/sdk/contracts.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/sdk
+creating build/bdist.linux-x86_64/wheel/fuzzyxai/sdk/examples
+copying build/lib/fuzzyxai/sdk/examples/medical_image_adapter.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/sdk/examples
+copying build/lib/fuzzyxai/sdk/examples/simple_tabular_adapter.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/sdk/examples
+creating build/bdist.linux-x86_64/wheel/fuzzyxai/selection
+copying build/lib/fuzzyxai/selection/__init__.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/selection
+copying build/lib/fuzzyxai/selection/choice_diagnostic.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/selection
+copying build/lib/fuzzyxai/selection/compatibility.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/selection
+copying build/lib/fuzzyxai/selection/pareto_selector.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/selection
+copying build/lib/fuzzyxai/selection/profile_builder.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/selection
+creating build/bdist.linux-x86_64/wheel/fuzzyxai/selective_observer
+copying build/lib/fuzzyxai/selective_observer/__init__.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/selective_observer
+copying build/lib/fuzzyxai/selective_observer/baselines.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/selective_observer
+copying build/lib/fuzzyxai/selective_observer/contracts.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/selective_observer
+copying build/lib/fuzzyxai/selective_observer/controller.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/selective_observer
+copying build/lib/fuzzyxai/selective_observer/route_validity.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/selective_observer
+copying build/lib/fuzzyxai/selective_observer/rule_validation.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/selective_observer
+creating build/bdist.linux-x86_64/wheel/fuzzyxai/studio
+copying build/lib/fuzzyxai/studio/__init__.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/studio
+copying build/lib/fuzzyxai/studio/charts.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/studio
+copying build/lib/fuzzyxai/studio/demo_runner.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/studio
+copying build/lib/fuzzyxai/studio/explainplan_editor.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/studio
+copying build/lib/fuzzyxai/studio/operator_scenarios.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/studio
+copying build/lib/fuzzyxai/studio/operators.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/studio
+copying build/lib/fuzzyxai/studio/report_export.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/studio
+copying build/lib/fuzzyxai/studio/scenario_presets.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/studio
+copying build/lib/fuzzyxai/studio/state.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/studio
+copying build/lib/fuzzyxai/studio/widgets.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/studio
+creating build/bdist.linux-x86_64/wheel/fuzzyxai/text
+copying build/lib/fuzzyxai/text/__init__.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/text
+copying build/lib/fuzzyxai/text/explanation_generator.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/text
+creating build/bdist.linux-x86_64/wheel/fuzzyxai/train
+copying build/lib/fuzzyxai/train/__init__.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/train
+copying build/lib/fuzzyxai/train/common.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/train
+copying build/lib/fuzzyxai/train/train_all.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/train
+copying build/lib/fuzzyxai/train/train_beacon_counterevidence.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/train
+copying build/lib/fuzzyxai/train/train_ecg_quality.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/train
+copying build/lib/fuzzyxai/train/train_gd_anfis_shap.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/train
+copying build/lib/fuzzyxai/train/train_gis_route.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/train
+copying build/lib/fuzzyxai/train/train_iris_quality.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/train
+creating build/bdist.linux-x86_64/wheel/fuzzyxai/trust
+copying build/lib/fuzzyxai/trust/__init__.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/trust
+copying build/lib/fuzzyxai/trust/trust_evaluator.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/trust
+creating build/bdist.linux-x86_64/wheel/fuzzyxai/visual
+copying build/lib/fuzzyxai/visual/__init__.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/visual
+copying build/lib/fuzzyxai/visual/composition_graph.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/visual
+copying build/lib/fuzzyxai/visual/interactive_graph.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/visual
+copying build/lib/fuzzyxai/visual/representation_plots.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/visual
+creating build/bdist.linux-x86_64/wheel/fuzzyxai/visualization
+copying build/lib/fuzzyxai/visualization/__init__.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/visualization
+copying build/lib/fuzzyxai/visualization/action_boundary.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/visualization
+copying build/lib/fuzzyxai/visualization/coverage_curve.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/visualization
+copying build/lib/fuzzyxai/visualization/explanation_dashboard.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/visualization
+copying build/lib/fuzzyxai/visualization/export.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/visualization
+copying build/lib/fuzzyxai/visualization/gamma_delta_map.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/visualization
+copying build/lib/fuzzyxai/visualization/operator_dashboard.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/visualization
+copying build/lib/fuzzyxai/visualization/operator_state.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/visualization
+copying build/lib/fuzzyxai/visualization/proof_matrix.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/visualization
+copying build/lib/fuzzyxai/visualization/representation_atlas.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/visualization
+copying build/lib/fuzzyxai/visualization/risk_waterfall.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/visualization
+copying build/lib/fuzzyxai/visualization/route_artifacts.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/visualization
+copying build/lib/fuzzyxai/visualization/route_sankey.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/visualization
+copying build/lib/fuzzyxai/visualization/shap_like.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/visualization
+copying build/lib/fuzzyxai/visualization/trace_heatmap.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/visualization
+copying build/lib/fuzzyxai/visualization/traceability.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/visualization
+copying build/lib/fuzzyxai/visualization/training.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/visualization
+copying build/lib/fuzzyxai/visualization/utils.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/visualization
+copying build/lib/fuzzyxai/visualization/text_highlight.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/visualization
+copying build/lib/fuzzyxai/visualization/view_model.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/visualization
+copying build/lib/fuzzyxai/visualization/plotly_renderer.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/visualization
+copying build/lib/fuzzyxai/visualization/spec.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/visualization
+copying build/lib/fuzzyxai/visualization/matplotlib_renderer.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/visualization
+creating build/bdist.linux-x86_64/wheel/fuzzyxai/viz
+copying build/lib/fuzzyxai/viz/__init__.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/viz
+copying build/lib/fuzzyxai/viz/export.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/viz
+copying build/lib/fuzzyxai/viz/matplotlib_dashboard.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/viz
+copying build/lib/fuzzyxai/viz/operator_state.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/viz
+copying build/lib/fuzzyxai/viz/route_builder.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/viz
+copying build/lib/fuzzyxai/viz/traceability.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/viz
+creating build/bdist.linux-x86_64/wheel/fuzzyxai/verbalization
+copying build/lib/fuzzyxai/verbalization/guards.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/verbalization
+copying build/lib/fuzzyxai/verbalization/contracts.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/verbalization
+copying build/lib/fuzzyxai/verbalization/__init__.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/verbalization
+copying build/lib/fuzzyxai/verbalization/__main__.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/verbalization
+copying build/lib/fuzzyxai/verbalization/verbalizer.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/verbalization
+copying build/lib/fuzzyxai/verbalization/atomic_claims.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/verbalization
+creating build/bdist.linux-x86_64/wheel/fuzzyxai/verbalization/backends
+copying build/lib/fuzzyxai/verbalization/backends/ollama.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/verbalization/backends
+copying build/lib/fuzzyxai/verbalization/backends/__init__.py -> build/bdist.linux-x86_64/wheel/./fuzzyxai/verbalization/backends
+running install_data
+creating build/bdist.linux-x86_64/wheel/fuzzyxai_operator-1.4.0a2.data/data
+creating build/bdist.linux-x86_64/wheel/fuzzyxai_operator-1.4.0a2.data/data/share/fuzzyxai/matlab/+fuzzyxai
+copying matlab/+fuzzyxai/dashboard.m -> build/bdist.linux-x86_64/wheel/fuzzyxai_operator-1.4.0a2.data/data/share/fuzzyxai/matlab/+fuzzyxai
+copying matlab/+fuzzyxai/dataProfile.m -> build/bdist.linux-x86_64/wheel/fuzzyxai_operator-1.4.0a2.data/data/share/fuzzyxai/matlab/+fuzzyxai
+copying matlab/+fuzzyxai/explanationStory.m -> build/bdist.linux-x86_64/wheel/fuzzyxai_operator-1.4.0a2.data/data/share/fuzzyxai/matlab/+fuzzyxai
+copying matlab/+fuzzyxai/loadResult.m -> build/bdist.linux-x86_64/wheel/fuzzyxai_operator-1.4.0a2.data/data/share/fuzzyxai/matlab/+fuzzyxai
+copying matlab/+fuzzyxai/membershipPlot.m -> build/bdist.linux-x86_64/wheel/fuzzyxai_operator-1.4.0a2.data/data/share/fuzzyxai/matlab/+fuzzyxai
+copying matlab/+fuzzyxai/provenancePlot.m -> build/bdist.linux-x86_64/wheel/fuzzyxai_operator-1.4.0a2.data/data/share/fuzzyxai/matlab/+fuzzyxai
+copying matlab/+fuzzyxai/rulePlot.m -> build/bdist.linux-x86_64/wheel/fuzzyxai_operator-1.4.0a2.data/data/share/fuzzyxai/matlab/+fuzzyxai
+copying matlab/+fuzzyxai/similarCasesPlot.m -> build/bdist.linux-x86_64/wheel/fuzzyxai_operator-1.4.0a2.data/data/share/fuzzyxai/matlab/+fuzzyxai
+copying matlab/+fuzzyxai/trainingTrajectory.m -> build/bdist.linux-x86_64/wheel/fuzzyxai_operator-1.4.0a2.data/data/share/fuzzyxai/matlab/+fuzzyxai
+copying matlab/+fuzzyxai/validateResult.m -> build/bdist.linux-x86_64/wheel/fuzzyxai_operator-1.4.0a2.data/data/share/fuzzyxai/matlab/+fuzzyxai
+copying operators_manifest.yaml -> build/bdist.linux-x86_64/wheel/fuzzyxai_operator-1.4.0a2.data/data/share/fuzzyxai
+running install_egg_info
+Copying fuzzyxai_operator.egg-info to build/bdist.linux-x86_64/wheel/./fuzzyxai_operator-1.4.0a2-py3.14.egg-info
+running install_scripts
+creating build/bdist.linux-x86_64/wheel/fuzzyxai_operator-1.4.0a2.dist-info/WHEEL
+creating '/home/lebedeffson/Code/fuzzy-xai-operator/framework/fuzzyxai/dist/.tmp-fksx6y06/fuzzyxai_operator-1.4.0a2-py3-none-any.whl' and adding 'build/bdist.linux-x86_64/wheel' to it
+adding 'fuzzyxai/__init__.py'
+adding 'fuzzyxai/adapter_conformance.py'
+adding 'fuzzyxai/api.py'
+adding 'fuzzyxai/cli.py'
+adding 'fuzzyxai/explanation_quality.py'
+adding 'fuzzyxai/export_tables.py'
+adding 'fuzzyxai/pipeline.py'
+adding 'fuzzyxai/planner.py'
+adding 'fuzzyxai/run_scenario.py'
+adding 'fuzzyxai/runtime.py'
+adding 'fuzzyxai/scientific_alignment.py'
+adding 'fuzzyxai/system_semantics.py'
+adding 'fuzzyxai/adapters/__init__.py'
+adding 'fuzzyxai/adapters/base.py'
+adding 'fuzzyxai/adapters/beacon_xai.py'
+adding 'fuzzyxai/adapters/contracts_v2.py'
+adding 'fuzzyxai/adapters/counterevidence.py'
+adding 'fuzzyxai/adapters/gd_anfis_shap.py'
+adding 'fuzzyxai/adapters/geo.py'
+adding 'fuzzyxai/adapters/geospatial_route.py'
+adding 'fuzzyxai/adapters/gis_integro.py'
+adding 'fuzzyxai/adapters/iris_biometric.py'
+adding 'fuzzyxai/adapters/medical_image_to_explanation.py'
+adding 'fuzzyxai/adapters/mlflow_tabular.py'
+adding 'fuzzyxai/adapters/model.py'
+adding 'fuzzyxai/adapters/model_registry.py'
+adding 'fuzzyxai/adapters/model_v2.py'
+adding 'fuzzyxai/adapters/optional_v2.py'
+adding 'fuzzyxai/adapters/registry.py'
+adding 'fuzzyxai/adapters/rule_attribution.py'
+adding 'fuzzyxai/adapters/signal.py'
+adding 'fuzzyxai/adapters/signal_quality.py'
+adding 'fuzzyxai/adapters/sklearn_v2.py'
+adding 'fuzzyxai/adapters/system_source.py'
+adding 'fuzzyxai/adapters/tabular.py'
+adding 'fuzzyxai/adapters/tabular_classification.py'
+adding 'fuzzyxai/adapters/tabular_to_explanation.py'
+adding 'fuzzyxai/adapters/text_to_explanation.py'
+adding 'fuzzyxai/audit/__init__.py'
+adding 'fuzzyxai/audit/build_full_delivery.py'
+adding 'fuzzyxai/audit/build_package.py'
+adding 'fuzzyxai/audit/common.py'
+adding 'fuzzyxai/audit/dataset_audit.py'
+adding 'fuzzyxai/audit/docx_chapters.py'
+adding 'fuzzyxai/audit/docx_format.py'
+adding 'fuzzyxai/audit/docx_render_gate.py'
+adding 'fuzzyxai/audit/final_audit.py'
+adding 'fuzzyxai/audit/final_delivery_report.py'
+adding 'fuzzyxai/audit/formula_references.py'
+adding 'fuzzyxai/audit/fresh_clone_gate.py'
+adding 'fuzzyxai/audit/grep_stale_terms.py'
+adding 'fuzzyxai/audit/inventory.py'
+adding 'fuzzyxai/audit/operators_manifest.py'
+adding 'fuzzyxai/audit/package_self_contained.py'
+adding 'fuzzyxai/audit/practice_demo.py'
+adding 'fuzzyxai/audit/proof_qc.py'
+adding 'fuzzyxai/audit/real_validation.py'
+adding 'fuzzyxai/audit/screenshot_qc.py'
+adding 'fuzzyxai/audit/studio_server_smoke.py'
+adding 'fuzzyxai/audit/studio_smoke.py'
+adding 'fuzzyxai/audit/training_audit.py'
+adding 'fuzzyxai/audit_h10/__init__.py'
+adding 'fuzzyxai/audit_h10/auditor.py'
+adding 'fuzzyxai/audit_h10/diagnostic_cut.py'
+adding 'fuzzyxai/audit_h10/family_classifier.py'
+adding 'fuzzyxai/audit_h10/features.py'
+adding 'fuzzyxai/audit_h10/gold_benchmark.py'
+adding 'fuzzyxai/audit_h10/models.py'
+adding 'fuzzyxai/audit_h10/open_set.py'
+adding 'fuzzyxai/audit_h10/recertification.py'
+adding 'fuzzyxai/audit_h10/repair_planner.py'
+adding 'fuzzyxai/audit_h10/route_validity.py'
+adding 'fuzzyxai/audit_h10/source_localizer.py'
+adding 'fuzzyxai/audit_h10/structural_inference.py'
+adding 'fuzzyxai/audit_h10/taxonomy.py'
+adding 'fuzzyxai/audit_h10/trace.py'
+adding 'fuzzyxai/calibration/__init__.py'
+adding 'fuzzyxai/calibration/cross_validation.py'
+adding 'fuzzyxai/calibration/dataset.py'
+adding 'fuzzyxai/calibration/weight_calibration.py'
+adding 'fuzzyxai/category/__init__.py'
+adding 'fuzzyxai/category/certified_path.py'
+adding 'fuzzyxai/category/context_topos.py'
+adding 'fuzzyxai/category/diagnostic_completion.py'
+adding 'fuzzyxai/category/expl_category.py'
+adding 'fuzzyxai/category/morphism.py'
+adding 'fuzzyxai/category/presheaf.py'
+adding 'fuzzyxai/category/subpresheaf.py'
+adding 'fuzzyxai/category/yoneda.py'
+adding 'fuzzyxai/config/__init__.py'
+adding 'fuzzyxai/config/defaults.py'
+adding 'fuzzyxai/core/__init__.py'
+adding 'fuzzyxai/core/adapters.py'
+adding 'fuzzyxai/core/alignment.py'
+adding 'fuzzyxai/core/alignment_synthesis.py'
+adding 'fuzzyxai/core/composition.py'
+adding 'fuzzyxai/core/diagnostics.py'
+adding 'fuzzyxai/core/errors.py'
+adding 'fuzzyxai/core/explain_plan.py'
+adding 'fuzzyxai/core/explanation.py'
+adding 'fuzzyxai/core/explanation_object.py'
+adding 'fuzzyxai/core/external_tabular_route.py'
+adding 'fuzzyxai/core/git_info.py'
+adding 'fuzzyxai/core/mlflow_route.py'
+adding 'fuzzyxai/core/paths.py'
+adding 'fuzzyxai/core/plan_builder.py'
+adding 'fuzzyxai/core/proof_package.py'
+adding 'fuzzyxai/core/reduction.py'
+adding 'fuzzyxai/core/risk_observer.py'
+adding 'fuzzyxai/core/route.py'
+adding 'fuzzyxai/core/scenario_engine.py'
+adding 'fuzzyxai/core/scenario_registry.py'
+adding 'fuzzyxai/core/system_operator.py'
+adding 'fuzzyxai/core/thresholds.py'
+adding 'fuzzyxai/core/trust_evaluator.py'
+adding 'fuzzyxai/core/types.py'
+adding 'fuzzyxai/data/__init__.py'
+adding 'fuzzyxai/data/breast_cancer_adapter.py'
+adding 'fuzzyxai/data/cit_registry.py'
+adding 'fuzzyxai/data/citr_loader.py'
+adding 'fuzzyxai/data/dataset_loader.py'
+adding 'fuzzyxai/data/dataset_record.py'
+adding 'fuzzyxai/data/loader.py'
+adding 'fuzzyxai/data/loaders.py'
+adding 'fuzzyxai/data/preprocess.py'
+adding 'fuzzyxai/data/profile_inference.py'
+adding 'fuzzyxai/data/registry.py'
+adding 'fuzzyxai/data/rikord_loader.py'
+adding 'fuzzyxai/data/ruccod_loader.py'
+adding 'fuzzyxai/data/validators.py'
+adding 'fuzzyxai/datasets/__init__.py'
+adding 'fuzzyxai/datasets/registry.py'
+adding 'fuzzyxai/datasets/registry_mosmed_doctor_analysis.py'
+adding 'fuzzyxai/datasets/registry_programs.py'
+adding 'fuzzyxai/datasets/registry_steel_ir.py'
+adding 'fuzzyxai/demo/__init__.py'
+adding 'fuzzyxai/demo/synthetic.py'
+adding 'fuzzyxai/diagnostics/__init__.py'
+adding 'fuzzyxai/diagnostics/approximate_solver.py'
+adding 'fuzzyxai/diagnostics/causes.py'
+adding 'fuzzyxai/diagnostics/compat.py'
+adding 'fuzzyxai/diagnostics/contract_registry.py'
+adding 'fuzzyxai/diagnostics/contracts.py'
+adding 'fuzzyxai/diagnostics/cut_verification.py'
+adding 'fuzzyxai/diagnostics/exact_solver.py'
+adding 'fuzzyxai/diagnostics/minimal_cut.py'
+adding 'fuzzyxai/diagnostics/recertification.py'
+adding 'fuzzyxai/diagnostics/renderers.py'
+adding 'fuzzyxai/diagnostics/repair_executor.py'
+adding 'fuzzyxai/diagnostics/repair_planner.py'
+adding 'fuzzyxai/diagnostics/repair_registry.py'
+adding 'fuzzyxai/diagnostics/reporter.py'
+adding 'fuzzyxai/diagnostics/route_graph.py'
+adding 'fuzzyxai/diagnostics/service.py'
+adding 'fuzzyxai/diagnostics/validator.py'
+adding 'fuzzyxai/ecosystem/__init__.py'
+adding 'fuzzyxai/ecosystem/registry.py'
+adding 'fuzzyxai/evaluate/__init__.py'
+adding 'fuzzyxai/evaluate/common.py'
+adding 'fuzzyxai/evaluate/eval_beacon.py'
+adding 'fuzzyxai/evaluate/eval_ecg.py'
+adding 'fuzzyxai/evaluate/eval_gd_anfis_shap.py'
+adding 'fuzzyxai/evaluate/eval_gis.py'
+adding 'fuzzyxai/evaluate/eval_iris.py'
+adding 'fuzzyxai/evaluate/evaluate_all.py'
+adding 'fuzzyxai/evidence/__init__.py'
+adding 'fuzzyxai/evidence/attribution_map.py'
+adding 'fuzzyxai/evidence/claims.py'
+adding 'fuzzyxai/evidence/concepts.py'
+adding 'fuzzyxai/evidence/contracts.py'
+adding 'fuzzyxai/evidence/counterfactual.py'
+adding 'fuzzyxai/evidence/data_quality.py'
+adding 'fuzzyxai/evidence/fuzzy_rules.py'
+adding 'fuzzyxai/evidence/graph.py'
+adding 'fuzzyxai/evidence/human.py'
+adding 'fuzzyxai/evidence/image_representation.py'
+adding 'fuzzyxai/evidence/metrics.py'
+adding 'fuzzyxai/evidence/model_internals.py'
+adding 'fuzzyxai/evidence/rules.py'
+adding 'fuzzyxai/evidence/similarity.py'
+adding 'fuzzyxai/evidence/text_highlighting.py'
+adding 'fuzzyxai/evidence/training.py'
+adding 'fuzzyxai/evidence/validation.py'
+adding 'fuzzyxai/evidence_path/__init__.py'
+adding 'fuzzyxai/evidence_path/batch.py'
+adding 'fuzzyxai/evidence_path/digest.py'
+adding 'fuzzyxai/examples/__init__.py'
+adding 'fuzzyxai/examples/beacon_xai.py'
+adding 'fuzzyxai/examples/gd_anfis_shap.py'
+adding 'fuzzyxai/examples/gis_integro.py'
+adding 'fuzzyxai/examples/hybrid_xiris.py'
+adding 'fuzzyxai/examples/medical_ecg_signal.py'
+adding 'fuzzyxai/explain/__init__.py'
+adding 'fuzzyxai/explain/operator_narrative.py'
+adding 'fuzzyxai/explain/plain_language.py'
+adding 'fuzzyxai/external_adapters/__init__.py'
+adding 'fuzzyxai/external_adapters/base.py'
+adding 'fuzzyxai/external_adapters/manifest.py'
+adding 'fuzzyxai/gold_repository/__init__.py'
+adding 'fuzzyxai/gold_repository/scorer.py'
+adding 'fuzzyxai/hierarchy/__init__.py'
+adding 'fuzzyxai/hierarchy/base.py'
+adding 'fuzzyxai/hierarchy/f0.py'
+adding 'fuzzyxai/hierarchy/hesitant.py'
+adding 'fuzzyxai/hierarchy/interval.py'
+adding 'fuzzyxai/hierarchy/meta_reducer.py'
+adding 'fuzzyxai/hierarchy/multilevel.py'
+adding 'fuzzyxai/hierarchy/neutrosophic.py'
+adding 'fuzzyxai/hierarchy/reductions.py'
+adding 'fuzzyxai/hierarchy/source_annotation.py'
+adding 'fuzzyxai/hott/__init__.py'
+adding 'fuzzyxai/hott/drift_path.py'
+adding 'fuzzyxai/hott/path_certificates.py'
+adding 'fuzzyxai/hott/path_type.py'
+adding 'fuzzyxai/hott/rupture_type.py'
+adding 'fuzzyxai/incidents/__init__.py'
+adding 'fuzzyxai/incidents/audit.py'
+adding 'fuzzyxai/incidents/formal_operations.py'
+adding 'fuzzyxai/incidents/repository_importer.py'
+adding 'fuzzyxai/ml_vertical/__init__.py'
+adding 'fuzzyxai/ml_vertical/api.py'
+adding 'fuzzyxai/ml_vertical/comparative.py'
+adding 'fuzzyxai/ml_vertical/contracts.py'
+adding 'fuzzyxai/ml_vertical/math.py'
+adding 'fuzzyxai/ml_vertical/model.py'
+adding 'fuzzyxai/ml_vertical/pipeline.py'
+adding 'fuzzyxai/ml_vertical/service.py'
+adding 'fuzzyxai/ml_vertical/tracking.py'
+adding 'fuzzyxai/multimodal/__init__.py'
+adding 'fuzzyxai/multimodal/routes.py'
+adding 'fuzzyxai/operators/__init__.py'
+adding 'fuzzyxai/operators/actions.py'
+adding 'fuzzyxai/operators/alignment.py'
+adding 'fuzzyxai/operators/base.py'
+adding 'fuzzyxai/operators/composition.py'
+adding 'fuzzyxai/operators/contracts.py'
+adding 'fuzzyxai/operators/diagnostics.py'
+adding 'fuzzyxai/operators/reduction.py'
+adding 'fuzzyxai/operators/registry.py'
+adding 'fuzzyxai/operators/representation.py'
+adding 'fuzzyxai/operators/risk.py'
+adding 'fuzzyxai/pipelines/__init__.py'
+adding 'fuzzyxai/pipelines/dataset_observer_pipeline.py'
+adding 'fuzzyxai/pipelines/practical.py'
+adding 'fuzzyxai/pipelines/practical_api.py'
+adding 'fuzzyxai/pipelines/practical_tracking.py'
+adding 'fuzzyxai/pipelines/registry.py'
+adding 'fuzzyxai/practical_controller/__init__.py'
+adding 'fuzzyxai/practical_controller/benchmarks.py'
+adding 'fuzzyxai/practical_controller/calibration.py'
+adding 'fuzzyxai/practical_controller/canonical.py'
+adding 'fuzzyxai/practical_controller/contracts.py'
+adding 'fuzzyxai/practical_controller/deployment.py'
+adding 'fuzzyxai/practical_controller/guards.py'
+adding 'fuzzyxai/practical_controller/optimizer.py'
+adding 'fuzzyxai/practical_controller/risk.py'
+adding 'fuzzyxai/practical_controller/runtime.py'
+adding 'fuzzyxai/practical_controller/training.py'
+adding 'fuzzyxai/practice/__init__.py'
+adding 'fuzzyxai/practice/fixtures.py'
+adding 'fuzzyxai/proof/__init__.py'
+adding 'fuzzyxai/proof/trace.py'
+adding 'fuzzyxai/proof/verifier.py'
+adding 'fuzzyxai/realdata/__init__.py'
+adding 'fuzzyxai/realdata/fetch_real_artifacts.py'
+adding 'fuzzyxai/repair/__init__.py'
+adding 'fuzzyxai/repair/baselines.py'
+adding 'fuzzyxai/repair/cost_models.py'
+adding 'fuzzyxai/repair/cost_sensitivity.py'
+adding 'fuzzyxai/reporting/__init__.py'
+adding 'fuzzyxai/reporting/session_report.py'
+adding 'fuzzyxai/repository_diagnostics/__init__.py'
+adding 'fuzzyxai/repository_diagnostics/active_evidence.py'
+adding 'fuzzyxai/repository_diagnostics/auditor.py'
+adding 'fuzzyxai/repository_diagnostics/auditor_v2.py'
+adding 'fuzzyxai/repository_diagnostics/calibrated_confirmation.py'
+adding 'fuzzyxai/repository_diagnostics/contract_inference.py'
+adding 'fuzzyxai/repository_diagnostics/contract_inference_v2.py'
+adding 'fuzzyxai/repository_diagnostics/evidence_requests.py'
+adding 'fuzzyxai/repository_diagnostics/executed_slice.py'
+adding 'fuzzyxai/repository_diagnostics/graph.py'
+adding 'fuzzyxai/repository_diagnostics/guided_diagnosis.py'
+adding 'fuzzyxai/repository_diagnostics/guided_retrieval.py'
+adding 'fuzzyxai/repository_diagnostics/importer.py'
+adding 'fuzzyxai/repository_diagnostics/importer_v2.py'
+adding 'fuzzyxai/repository_diagnostics/incident_router.py'
+adding 'fuzzyxai/repository_diagnostics/pair_verification.py'
+adding 'fuzzyxai/repository_diagnostics/practical_recovery.py'
+adding 'fuzzyxai/repository_diagnostics/recovery.py'
+adding 'fuzzyxai/repository_diagnostics/repair_validation.py'
+adding 'fuzzyxai/repository_diagnostics/reporting.py'
+adding 'fuzzyxai/repository_diagnostics/retrieval.py'
+adding 'fuzzyxai/repository_diagnostics/runtime_events.py'
+adding 'fuzzyxai/risk/__init__.py'
+adding 'fuzzyxai/risk/context_acceptance.py'
+adding 'fuzzyxai/risk/decision_policy.py'
+adding 'fuzzyxai/risk/metrics.py'
+adding 'fuzzyxai/risk/observer_pipeline.py'
+adding 'fuzzyxai/risk/proxy_policy.py'
+adding 'fuzzyxai/risk/reduction_graph.py'
+adding 'fuzzyxai/risk/representation_selection.py'
+adding 'fuzzyxai/risk/risk_aware_model.py'
+adding 'fuzzyxai/risk/risk_function.py'
+adding 'fuzzyxai/risk/risk_observer.py'
+adding 'fuzzyxai/risk/risk_observer_config.py'
+adding 'fuzzyxai/risk/uncertainty.py'
+adding 'fuzzyxai/robustness/__init__.py'
+adding 'fuzzyxai/robustness/cut_stability.py'
+adding 'fuzzyxai/roles/__init__.py'
+adding 'fuzzyxai/roles/interfaces.py'
+adding 'fuzzyxai/rules/__init__.py'
+adding 'fuzzyxai/rules/lofo_f1.py'
+adding 'fuzzyxai/schemas/__init__.py'
+adding 'fuzzyxai/schemas/adapter_validation_report.schema.json'
+adding 'fuzzyxai/schemas/classification_payload.schema.json'
+adding 'fuzzyxai/schemas/explanation_view_model.schema.json'
+adding 'fuzzyxai/schemas/explanation_visual_spec.schema.json'
+adding 'fuzzyxai/schemas/human_explanation.schema.json'
+adding 'fuzzyxai/schemas/image_payload.schema.json'
+adding 'fuzzyxai/schemas/operator_trace.schema.json'
+adding 'fuzzyxai/schemas/proof_trace.schema.json'
+adding 'fuzzyxai/schemas/regression_payload.schema.json'
+adding 'fuzzyxai/schemas/route.schema.json'
+adding 'fuzzyxai/schemas/signal_payload.schema.json'
+adding 'fuzzyxai/schemas/validate.py'
+adding 'fuzzyxai/sdk/__init__.py'
+adding 'fuzzyxai/sdk/base_adapter.py'
+adding 'fuzzyxai/sdk/contracts.py'
+adding 'fuzzyxai/sdk/examples/medical_image_adapter.py'
+adding 'fuzzyxai/sdk/examples/simple_tabular_adapter.py'
+adding 'fuzzyxai/selection/__init__.py'
+adding 'fuzzyxai/selection/choice_diagnostic.py'
+adding 'fuzzyxai/selection/compatibility.py'
+adding 'fuzzyxai/selection/pareto_selector.py'
+adding 'fuzzyxai/selection/profile_builder.py'
+adding 'fuzzyxai/selective_observer/__init__.py'
+adding 'fuzzyxai/selective_observer/baselines.py'
+adding 'fuzzyxai/selective_observer/contracts.py'
+adding 'fuzzyxai/selective_observer/controller.py'
+adding 'fuzzyxai/selective_observer/route_validity.py'
+adding 'fuzzyxai/selective_observer/rule_validation.py'
+adding 'fuzzyxai/studio/__init__.py'
+adding 'fuzzyxai/studio/charts.py'
+adding 'fuzzyxai/studio/demo_runner.py'
+adding 'fuzzyxai/studio/explainplan_editor.py'
+adding 'fuzzyxai/studio/operator_scenarios.py'
+adding 'fuzzyxai/studio/operators.py'
+adding 'fuzzyxai/studio/report_export.py'
+adding 'fuzzyxai/studio/scenario_presets.py'
+adding 'fuzzyxai/studio/state.py'
+adding 'fuzzyxai/studio/widgets.py'
+adding 'fuzzyxai/text/__init__.py'
+adding 'fuzzyxai/text/explanation_generator.py'
+adding 'fuzzyxai/train/__init__.py'
+adding 'fuzzyxai/train/common.py'
+adding 'fuzzyxai/train/train_all.py'
+adding 'fuzzyxai/train/train_beacon_counterevidence.py'
+adding 'fuzzyxai/train/train_ecg_quality.py'
+adding 'fuzzyxai/train/train_gd_anfis_shap.py'
+adding 'fuzzyxai/train/train_gis_route.py'
+adding 'fuzzyxai/train/train_iris_quality.py'
+adding 'fuzzyxai/trust/__init__.py'
+adding 'fuzzyxai/trust/trust_evaluator.py'
+adding 'fuzzyxai/verbalization/__init__.py'
+adding 'fuzzyxai/verbalization/__main__.py'
+adding 'fuzzyxai/verbalization/atomic_claims.py'
+adding 'fuzzyxai/verbalization/contracts.py'
+adding 'fuzzyxai/verbalization/guards.py'
+adding 'fuzzyxai/verbalization/verbalizer.py'
+adding 'fuzzyxai/verbalization/backends/__init__.py'
+adding 'fuzzyxai/verbalization/backends/ollama.py'
+adding 'fuzzyxai/visual/__init__.py'
+adding 'fuzzyxai/visual/composition_graph.py'
+adding 'fuzzyxai/visual/interactive_graph.py'
+adding 'fuzzyxai/visual/representation_plots.py'
+adding 'fuzzyxai/visualization/__init__.py'
+adding 'fuzzyxai/visualization/action_boundary.py'
+adding 'fuzzyxai/visualization/coverage_curve.py'
+adding 'fuzzyxai/visualization/explanation_dashboard.py'
+adding 'fuzzyxai/visualization/export.py'
+adding 'fuzzyxai/visualization/gamma_delta_map.py'
+adding 'fuzzyxai/visualization/matplotlib_renderer.py'
+adding 'fuzzyxai/visualization/operator_dashboard.py'
+adding 'fuzzyxai/visualization/operator_state.py'
+adding 'fuzzyxai/visualization/plotly_renderer.py'
+adding 'fuzzyxai/visualization/proof_matrix.py'
+adding 'fuzzyxai/visualization/representation_atlas.py'
+adding 'fuzzyxai/visualization/risk_waterfall.py'
+adding 'fuzzyxai/visualization/route_artifacts.py'
+adding 'fuzzyxai/visualization/route_sankey.py'
+adding 'fuzzyxai/visualization/shap_like.py'
+adding 'fuzzyxai/visualization/spec.py'
+adding 'fuzzyxai/visualization/text_highlight.py'
+adding 'fuzzyxai/visualization/trace_heatmap.py'
+adding 'fuzzyxai/visualization/traceability.py'
+adding 'fuzzyxai/visualization/training.py'
+adding 'fuzzyxai/visualization/utils.py'
+adding 'fuzzyxai/visualization/view_model.py'
+adding 'fuzzyxai/viz/__init__.py'
+adding 'fuzzyxai/viz/export.py'
+adding 'fuzzyxai/viz/matplotlib_dashboard.py'
+adding 'fuzzyxai/viz/operator_state.py'
+adding 'fuzzyxai/viz/route_builder.py'
+adding 'fuzzyxai/viz/traceability.py'
+adding 'fuzzyxai_operator-1.4.0a2.data/data/share/fuzzyxai/operators_manifest.yaml'
+adding 'fuzzyxai_operator-1.4.0a2.data/data/share/fuzzyxai/matlab/+fuzzyxai/dashboard.m'
+adding 'fuzzyxai_operator-1.4.0a2.data/data/share/fuzzyxai/matlab/+fuzzyxai/dataProfile.m'
+adding 'fuzzyxai_operator-1.4.0a2.data/data/share/fuzzyxai/matlab/+fuzzyxai/explanationStory.m'
+adding 'fuzzyxai_operator-1.4.0a2.data/data/share/fuzzyxai/matlab/+fuzzyxai/loadResult.m'
+adding 'fuzzyxai_operator-1.4.0a2.data/data/share/fuzzyxai/matlab/+fuzzyxai/membershipPlot.m'
+adding 'fuzzyxai_operator-1.4.0a2.data/data/share/fuzzyxai/matlab/+fuzzyxai/provenancePlot.m'
+adding 'fuzzyxai_operator-1.4.0a2.data/data/share/fuzzyxai/matlab/+fuzzyxai/rulePlot.m'
+adding 'fuzzyxai_operator-1.4.0a2.data/data/share/fuzzyxai/matlab/+fuzzyxai/similarCasesPlot.m'
+adding 'fuzzyxai_operator-1.4.0a2.data/data/share/fuzzyxai/matlab/+fuzzyxai/trainingTrajectory.m'
+adding 'fuzzyxai_operator-1.4.0a2.data/data/share/fuzzyxai/matlab/+fuzzyxai/validateResult.m'
+adding 'fuzzyxai_operator-1.4.0a2.dist-info/METADATA'
+adding 'fuzzyxai_operator-1.4.0a2.dist-info/WHEEL'
+adding 'fuzzyxai_operator-1.4.0a2.dist-info/entry_points.txt'
+adding 'fuzzyxai_operator-1.4.0a2.dist-info/top_level.txt'
+adding 'fuzzyxai_operator-1.4.0a2.dist-info/RECORD'
+removing build/bdist.linux-x86_64/wheel
+Successfully built fuzzyxai_operator-1.4.0a2-py3-none-any.whl

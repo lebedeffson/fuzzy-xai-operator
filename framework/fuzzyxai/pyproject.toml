@@ -14,7 +14,6 @@ dependencies = [
   "scikit-learn>=1.2",
   "plotly>=5.0",
   "matplotlib>=3.7",
-  "nicegui>=1.4",
   "PyYAML>=6.0",
 ]
 
@@ -28,6 +27,7 @@ tensorflow = ["tensorflow>=2.14"]
 onnx = ["onnx>=1.15", "onnxruntime>=1.16"]
 images = ["pillow>=10.0"]
 evidence = ["pyarrow>=16.0"]
+ui = ["nicegui>=1.4"]
 all-models = [
     "xgboost>=1.7",
     "lightgbm>=4.0",
@@ -75,9 +75,18 @@ fuzzyxai = "fuzzyxai.cli:main"
 
 [tool.setuptools.packages.find]
 include = ["fuzzyxai*"]
+exclude = [
+  "fuzzyxai.ai_pre_review*",
+  "fuzzyxai.ai_pre_review_final*",
+  "fuzzyxai.final_closure*",
+  "fuzzyxai.q1_final*",
+  "fuzzyxai.q1_validation*",
+  "fuzzyxai.strong_confirmatory*",
+]
 
 [tool.setuptools.package-data]
 fuzzyxai = ["schemas/*.json"]
 
 [tool.setuptools.data-files]
 "share/fuzzyxai/matlab/+fuzzyxai" = ["matlab/+fuzzyxai/*.m"]
+"share/fuzzyxai" = ["operators_manifest.yaml"]

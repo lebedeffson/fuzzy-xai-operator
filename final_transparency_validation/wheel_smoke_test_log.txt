@@ -1,0 +1,1 @@
+{'manifest': 'PASS', 'operators': 41, 'local_action': 'insufficient_evidence', 'rf_system_action': 'accept', 'rf_system_rho': 0.020793474310472078, 'non_rf_provider': 'native_class_probabilities', 'non_rf_action': 'accept', 'nicegui_installed': False, 'research_packages_installed': False}

@@ -7,7 +7,7 @@
     "scenario_id": "external_wine_classification",
     "scenario_title_ru": "Research validation: tabular_classification",
     "title": "External Research Validation FuzzyXAI OperatorRoute",
-    "created_at": "2026-08-25T16:21:58.467367+00:00",
+    "created_at": "2026-08-27T21:12:08.827010+00:00",
     "nodes": [
       {
         "node_id": "input_artifact",
@@ -136,7 +136,7 @@
         "next_node_ids": [
           "explanation_object"
         ],
-        "source_commit": "3aa10fe778108a32f87829feacb56bb2f9c2e13a",
+        "source_commit": "97074b57a5522cb1cd7150f288a8b27bd915b357",
         "details": {
           "applications_used": false
         }
@@ -216,7 +216,7 @@
         "next_node_ids": [
           "representation"
         ],
-        "source_commit": "3aa10fe778108a32f87829feacb56bb2f9c2e13a",
+        "source_commit": "97074b57a5522cb1cd7150f288a8b27bd915b357",
         "details": {}
       },
       {
@@ -240,8 +240,8 @@
           "explanation_object"
         ],
         "output_refs": [
-          "alignment",
-          "reduction"
+          "legacy_route_gap",
+          "presentation_summary_loss"
         ],
         "input_values": {
           "source_type": "tabular",
@@ -278,39 +278,39 @@
         "status_reason_ru": "Выбран класс F0.",
         "interpretation_ru": "Базовое представление достаточно для одной уверенности и top-k объяснения.",
         "next_node_ids": [
-          "alignment",
-          "reduction"
+          "legacy_route_gap",
+          "presentation_summary_loss"
         ],
-        "source_commit": "3aa10fe778108a32f87829feacb56bb2f9c2e13a",
+        "source_commit": "97074b57a5522cb1cd7150f288a8b27bd915b357",
         "details": {}
       },
       {
-        "node_id": "alignment",
-        "title": "Согласование T_ij",
+        "node_id": "legacy_route_gap",
+        "title": "Legacy route gap (не Gamma)",
         "input_summary": "предыдущее состояние маршрута",
         "output_summary": "выход оператора",
-        "value": "gamma=0.310276",
+        "value": "legacy_route_gap=0.310276",
         "threshold": "",
         "status": "passed",
-        "explanation": "gamma=max(1-p, quality_penalty, conflict_component, interval_width).",
-        "formula_ref": "gamma",
-        "trace_ref": "alignment",
+        "explanation": "Legacy max-gap proxy; T_ij не выполнялся, поэтому это не Gamma.",
+        "formula_ref": "legacy route gap",
+        "trace_ref": "legacy_route_gap",
         "value_source": "computed",
         "raw": {
           "uncertainty": 0.310276,
           "quality_penalty": 0.0,
           "conflict_component": 0.0,
           "interval_width": 0.0,
-          "gamma": 0.310276,
+          "legacy_route_gap": 0.310276,
           "value_source": "computed"
         },
-        "title_ru": "Согласование T_ij",
-        "operator_type": "alignment",
+        "title_ru": "Legacy route gap (не Gamma)",
+        "operator_type": "legacy_metric",
         "input_refs": [
           "representation"
         ],
         "output_refs": [
-          "risk"
+          "legacy_route_score"
         ],
         "input_values": {
           "class_probability": 0.689724,
@@ -320,11 +320,11 @@
           "interval_width": 0.0
         },
         "output_values": {
-          "gamma": 0.310276
+          "legacy_route_gap": 0.310276
         },
-        "formula_id": "external_tabular_gamma",
-        "formula_text": "gamma = max(1 - class_probability, quality_penalty, conflict_component, interval_width)",
-        "formula_latex": "\\gamma=\\max(1-p,q,c,w)",
+        "formula_id": "legacy_external_tabular_route_gap",
+        "formula_text": "legacy_route_gap = max(1 - class_probability, quality_penalty, conflict_component, interval_width)",
+        "formula_latex": null,
         "components": {
           "uncertainty": 0.310276,
           "quality_penalty": 0.0,
@@ -338,35 +338,35 @@
         "status_reason_ru": "Рассогласование ненулевое, потому что вероятность класса меньше 1.",
         "interpretation_ru": "Уверенность модели неполная; это ограничивает автоматическое доверие.",
         "next_node_ids": [
-          "risk"
+          "legacy_route_score"
         ],
-        "source_commit": "3aa10fe778108a32f87829feacb56bb2f9c2e13a",
+        "source_commit": "97074b57a5522cb1cd7150f288a8b27bd915b357",
         "details": {}
       },
       {
-        "node_id": "reduction",
-        "title": "Потери представления",
+        "node_id": "presentation_summary_loss",
+        "title": "Потеря top-k представления (не Delta)",
         "input_summary": "предыдущее состояние маршрута",
         "output_summary": "выход оператора",
-        "value": "Delta=0.373128",
+        "value": "presentation_omission_loss=0.373128",
         "threshold": "",
         "status": "warning",
-        "explanation": "Delta=1-sum(feature_importance) для переданного набора важностей.",
-        "formula_ref": "Delta",
-        "trace_ref": "reduction",
+        "explanation": "Feature omission при top-k summary; это не dissertation Delta.",
+        "formula_ref": "presentation omission",
+        "trace_ref": "presentation_summary_loss",
         "value_source": "computed",
         "raw": {
-          "delta": 0.373128,
+          "presentation_omission_loss": 0.373128,
           "importance_sum": 0.626872,
           "value_source": "computed"
         },
-        "title_ru": "Потери представления",
-        "operator_type": "reduction",
+        "title_ru": "Потеря top-k представления (не Delta)",
+        "operator_type": "legacy_presentation_metric",
         "input_refs": [
           "representation"
         ],
         "output_refs": [
-          "risk"
+          "legacy_route_score"
         ],
         "input_values": {
           "selected_features": [
@@ -386,12 +386,12 @@
           "top_k": 5
         },
         "output_values": {
-          "delta": 0.373128,
+          "presentation_omission_loss": 0.373128,
           "top_k_importance_sum": 0.626872
         },
-        "formula_id": "external_tabular_delta",
-        "formula_text": "delta = 1 - sum(top_k_feature_importance)",
-        "formula_latex": "\\Delta=1-\\sum importance_{top-k}",
+        "formula_id": "legacy_external_tabular_presentation_omission",
+        "formula_text": "presentation_omission_loss = 1 - sum(top_k_feature_importance)",
+        "formula_latex": null,
         "components": {
           "selected_features": [
             "alcohol",
@@ -407,57 +407,57 @@
           "delta_warning": 0.35
         },
         "status_reason_ru": "Часть объяснения потеряна при top-k редукции.",
-        "interpretation_ru": "Delta показывает, какая доля атрибутивного объяснения не попала в сокращённый набор признаков.",
+        "interpretation_ru": "Метрика показывает долю атрибутивного summary вне top-k и не является потерей uncertainty representation.",
         "next_node_ids": [
-          "risk"
+          "legacy_route_score"
         ],
-        "source_commit": "3aa10fe778108a32f87829feacb56bb2f9c2e13a",
+        "source_commit": "97074b57a5522cb1cd7150f288a8b27bd915b357",
         "details": {}
       },
       {
-        "node_id": "risk",
-        "title": "Риск rho",
+        "node_id": "legacy_route_score",
+        "title": "Legacy route score (не rho)",
         "input_summary": "предыдущее состояние маршрута",
         "output_summary": "выход оператора",
-        "value": "rho=0.373128",
+        "value": "legacy_route_score=0.373128",
         "threshold": "",
         "status": "warning",
-        "explanation": "rho=max(gamma, Delta, quality_component, conflict_component).",
-        "formula_ref": "rho",
-        "trace_ref": "risk",
+        "explanation": "Legacy max-score; не пятикомпонентная dissertation rho.",
+        "formula_ref": "legacy route score",
+        "trace_ref": "legacy_route_score",
         "value_source": "computed",
         "raw": {
-          "rho": 0.373128,
+          "legacy_route_score": 0.373128,
           "theta_accept": 0.35,
           "theta_warning": 0.6,
           "value_source": "computed"
         },
-        "title_ru": "Риск rho",
-        "operator_type": "risk",
+        "title_ru": "Legacy route score (не rho)",
+        "operator_type": "legacy_metric",
         "input_refs": [
-          "alignment",
-          "reduction"
+          "legacy_route_gap",
+          "presentation_summary_loss"
         ],
         "output_refs": [
           "diagnostics"
         ],
         "input_values": {
-          "gamma": 0.310276,
-          "delta": 0.373128,
+          "legacy_route_gap": 0.310276,
+          "presentation_omission_loss": 0.373128,
           "quality_component": 0.0,
           "conflict_component": 0.0
         },
         "output_values": {
-          "rho": 0.373128,
+          "legacy_route_score": 0.373128,
           "risk_zone": "lower_confidence",
-          "dominant_component": "delta"
+          "dominant_component": "presentation_omission"
         },
-        "formula_id": "external_tabular_rho",
-        "formula_text": "rho = max(gamma, delta, quality_component, conflict_component)",
-        "formula_latex": "\\rho=\\max(\\gamma,\\Delta)",
+        "formula_id": "legacy_external_tabular_route_score",
+        "formula_text": "legacy_route_score = max(route_gap, presentation_omission, quality, conflict)",
+        "formula_latex": null,
         "components": {
-          "gamma": 0.310276,
-          "delta": 0.373128,
+          "legacy_route_gap": 0.310276,
+          "presentation_omission_loss": 0.373128,
           "quality_component": 0.0,
           "conflict_component": 0.0,
           "calculation": "max(0.310276, 0.373128, 0.0, 0.0) = 0.373128"
@@ -466,12 +466,12 @@
           "theta_accept": 0.35,
           "theta_warning": 0.6
         },
-        "status_reason_ru": "rho попал в зону lower_confidence.",
-        "interpretation_ru": "Основной вклад в риск: delta.",
+        "status_reason_ru": "Legacy route score попал в зону lower_confidence.",
+        "interpretation_ru": "Основной вклад в legacy score: presentation_omission.",
         "next_node_ids": [
           "diagnostics"
         ],
-        "source_commit": "3aa10fe778108a32f87829feacb56bb2f9c2e13a",
+        "source_commit": "97074b57a5522cb1cd7150f288a8b27bd915b357",
         "details": {}
       },
       {
@@ -502,18 +502,18 @@
         "title_ru": "Диагностика D",
         "operator_type": "diagnostics",
         "input_refs": [
-          "risk"
+          "legacy_route_score"
         ],
         "output_refs": [
           "action"
         ],
         "input_values": {
-          "rho": 0.373128,
+          "legacy_route_score": 0.373128,
           "risk_zone": "lower_confidence",
-          "gamma": 0.310276,
-          "delta": 0.373128,
+          "legacy_route_gap": 0.310276,
+          "presentation_omission_loss": 0.373128,
           "task_type": "tabular_classification",
-          "dominant_component": "delta"
+          "dominant_component": "presentation_omission"
         },
         "output_values": {
           "diagnostic_id": "D_external_tabular_uncertainty",
@@ -526,10 +526,10 @@
         "formula_latex": null,
         "components": {
           "reason_components": {
-            "gamma": 0.310276,
-            "delta": 0.373128,
-            "rho": 0.373128,
-            "dominant_component": "delta",
+            "legacy_route_gap": 0.310276,
+            "presentation_omission_loss": 0.373128,
+            "legacy_route_score": 0.373128,
+            "dominant_component": "presentation_omission",
             "task_type": "tabular_classification"
           }
         },
@@ -539,7 +539,7 @@
         "next_node_ids": [
           "action"
         ],
-        "source_commit": "3aa10fe778108a32f87829feacb56bb2f9c2e13a",
+        "source_commit": "97074b57a5522cb1cd7150f288a8b27bd915b357",
         "details": {}
       },
       {
@@ -567,7 +567,7 @@
           "proof"
         ],
         "input_values": {
-          "rho": 0.373128,
+          "legacy_route_score": 0.373128,
           "diagnostic_id": "D_external_tabular_uncertainty",
           "risk_zone": "lower_confidence"
         },
@@ -576,10 +576,10 @@
           "action_title_ru": "понизить доверие"
         },
         "formula_id": "action-policy",
-        "formula_text": "if rho < 0.35: accept; elif rho < 0.60: lower_confidence; else: audit",
+        "formula_text": "legacy compatibility mapping; not canonical P19 action policy",
         "formula_latex": null,
         "components": {
-          "rho": 0.373128,
+          "legacy_route_score": 0.373128,
           "diagnostic_id": "D_external_tabular_uncertainty",
           "alternative_actions": [
             "accept",
@@ -596,7 +596,7 @@
         "next_node_ids": [
           "proof"
         ],
-        "source_commit": "3aa10fe778108a32f87829feacb56bb2f9c2e13a",
+        "source_commit": "97074b57a5522cb1cd7150f288a8b27bd915b357",
         "details": {}
       },
       {
@@ -632,13 +632,14 @@
             "quality_penalty": 0.0,
             "uncertainty_component": 0.310276,
             "quality_component": 0.0,
-            "reduction_component": 0.373128,
+            "presentation_omission_component": 0.373128,
             "conflict_component": 0.0,
             "interval_component": 0.0,
-            "gamma": 0.310276,
-            "delta": 0.373128,
-            "rho": 0.373128,
-            "risk_dominant_component": "delta",
+            "legacy_route_gap": 0.310276,
+            "presentation_omission_loss": 0.373128,
+            "legacy_route_score": 0.373128,
+            "scientific_contract": "legacy_external_route_metrics_not_P19_Gamma_Delta_rho",
+            "risk_dominant_component": "presentation_omission",
             "diagnostic_id": "D_external_tabular_uncertainty",
             "action_id": "lower_confidence",
             "action": "lower_confidence"
@@ -657,20 +658,20 @@
         },
         "output_values": {
           "verification_status": "PASS",
-          "source_commit": "3aa10fe778108a32f87829feacb56bb2f9c2e13a"
+          "source_commit": "97074b57a5522cb1cd7150f288a8b27bd915b357"
         },
         "formula_id": "proof-trace",
         "formula_text": "proof_trace = hashable route + computed_result + diagnostics + action + source_commit",
         "formula_latex": null,
         "components": {
           "scenario_id": "external_wine_classification",
-          "source_commit": "3aa10fe778108a32f87829feacb56bb2f9c2e13a"
+          "source_commit": "97074b57a5522cb1cd7150f288a8b27bd915b357"
         },
         "thresholds": {},
         "status_reason_ru": "Proof trace содержит значения маршрута и source_commit.",
         "interpretation_ru": "Доказательный след связывает route, значения операторов, диагностику и действие.",
         "next_node_ids": [],
-        "source_commit": "3aa10fe778108a32f87829feacb56bb2f9c2e13a",
+        "source_commit": "97074b57a5522cb1cd7150f288a8b27bd915b357",
         "details": {}
       }
     ],
@@ -710,7 +711,7 @@
       {
         "edge_id": "edge_representation_alignment",
         "source_node_id": "representation",
-        "target_node_id": "alignment",
+        "target_node_id": "legacy_route_gap",
         "passed_values": {
           "class_probability": 0.689724,
           "quality_metrics": {
@@ -726,12 +727,12 @@
             "test_size": 63
           }
         },
-        "explanation_ru": "Вероятность, качество и контекст переданы в оператор согласования."
+        "explanation_ru": "Входы переданы в legacy gap metric; T_ij не выполнялся."
       },
       {
         "edge_id": "edge_representation_reduction",
         "source_node_id": "representation",
-        "target_node_id": "reduction",
+        "target_node_id": "presentation_summary_loss",
         "passed_values": {
           "feature_importance": {
             "alcohol": 0.166384,
@@ -742,35 +743,35 @@
           },
           "top_k": 5
         },
-        "explanation_ru": "Top-k атрибуции переданы в оператор редукции."
+        "explanation_ru": "Top-k атрибуции переданы в presentation omission metric, не Delta."
       },
       {
         "edge_id": "edge_alignment_risk",
-        "source_node_id": "alignment",
-        "target_node_id": "risk",
+        "source_node_id": "legacy_route_gap",
+        "target_node_id": "legacy_route_score",
         "passed_values": {
-          "gamma": 0.310276
+          "legacy_route_gap": 0.310276
         },
-        "explanation_ru": "Рассогласование передано в наблюдатель риска."
+        "explanation_ru": "Legacy gap передан в compatibility score."
       },
       {
         "edge_id": "edge_reduction_risk",
-        "source_node_id": "reduction",
-        "target_node_id": "risk",
+        "source_node_id": "presentation_summary_loss",
+        "target_node_id": "legacy_route_score",
         "passed_values": {
-          "delta": 0.373128
+          "presentation_omission_loss": 0.373128
         },
-        "explanation_ru": "Потери редукции переданы в наблюдатель риска."
+        "explanation_ru": "Presentation omission передан в compatibility score."
       },
       {
         "edge_id": "edge_risk_diagnostics",
-        "source_node_id": "risk",
+        "source_node_id": "legacy_route_score",
         "target_node_id": "diagnostics",
         "passed_values": {
-          "rho": 0.373128,
+          "legacy_route_score": 0.373128,
           "risk_zone": "lower_confidence"
         },
-        "explanation_ru": "Риск переведён в диагностическое состояние."
+        "explanation_ru": "Legacy score переведён в диагностическое состояние."
       },
       {
         "edge_id": "edge_diagnostics_action",
@@ -799,13 +800,14 @@
             "quality_penalty": 0.0,
             "uncertainty_component": 0.310276,
             "quality_component": 0.0,
-            "reduction_component": 0.373128,
+            "presentation_omission_component": 0.373128,
             "conflict_component": 0.0,
             "interval_component": 0.0,
-            "gamma": 0.310276,
-            "delta": 0.373128,
-            "rho": 0.373128,
-            "risk_dominant_component": "delta",
+            "legacy_route_gap": 0.310276,
+            "presentation_omission_loss": 0.373128,
+            "legacy_route_score": 0.373128,
+            "scientific_contract": "legacy_external_route_metrics_not_P19_Gamma_Delta_rho",
+            "risk_dominant_component": "presentation_omission",
             "diagnostic_id": "D_external_tabular_uncertainty",
             "action_id": "lower_confidence",
             "action": "lower_confidence"
@@ -825,13 +827,14 @@
       "quality_penalty": 0.0,
       "uncertainty_component": 0.310276,
       "quality_component": 0.0,
-      "reduction_component": 0.373128,
+      "presentation_omission_component": 0.373128,
       "conflict_component": 0.0,
       "interval_component": 0.0,
-      "gamma": 0.310276,
-      "delta": 0.373128,
-      "rho": 0.373128,
-      "risk_dominant_component": "delta",
+      "legacy_route_gap": 0.310276,
+      "presentation_omission_loss": 0.373128,
+      "legacy_route_score": 0.373128,
+      "scientific_contract": "legacy_external_route_metrics_not_P19_Gamma_Delta_rho",
+      "risk_dominant_component": "presentation_omission",
       "diagnostic_id": "D_external_tabular_uncertainty",
       "action_id": "lower_confidence",
       "action": "lower_confidence"
@@ -850,7 +853,7 @@
     "final_action_id": "lower_confidence",
     "final_diagnostic_id": "D_external_tabular_uncertainty",
     "verifier_status": "PASS",
-    "source_commit": "3aa10fe778108a32f87829feacb56bb2f9c2e13a",
+    "source_commit": "97074b57a5522cb1cd7150f288a8b27bd915b357",
     "proof_ref": "proof_trace.json",
     "dashboard_ref": "operator_dashboard_v2.png",
     "verification_summary": {
@@ -869,13 +872,14 @@
     "quality_penalty": 0.0,
     "uncertainty_component": 0.310276,
     "quality_component": 0.0,
-    "reduction_component": 0.373128,
+    "presentation_omission_component": 0.373128,
     "conflict_component": 0.0,
     "interval_component": 0.0,
-    "gamma": 0.310276,
-    "delta": 0.373128,
-    "rho": 0.373128,
-    "risk_dominant_component": "delta",
+    "legacy_route_gap": 0.310276,
+    "presentation_omission_loss": 0.373128,
+    "legacy_route_score": 0.373128,
+    "scientific_contract": "legacy_external_route_metrics_not_P19_Gamma_Delta_rho",
+    "risk_dominant_component": "presentation_omission",
     "diagnostic_id": "D_external_tabular_uncertainty",
     "action_id": "lower_confidence",
     "action": "lower_confidence"
@@ -892,5 +896,5 @@
   ],
   "final_action": "lower_confidence",
   "verifier_status": "PASS",
-  "source_commit": "3aa10fe778108a32f87829feacb56bb2f9c2e13a"
+  "source_commit": "97074b57a5522cb1cd7150f288a8b27bd915b357"
 }

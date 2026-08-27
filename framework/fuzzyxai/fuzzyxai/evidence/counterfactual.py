@@ -51,7 +51,13 @@ def find_tabular_counterfactuals(
                         changed_regions=[],
                         changed_rules=[],
                         minimality=round(distance, 6),
-                        plausibility=1.0,
+                        # Not measured — quantile distance from the reference
+                        # distribution is a minimality signal, not a
+                        # plausibility check (see the limitation text right
+                        # below: "quantile search tests association, not
+                        # causal feasibility"). Hardcoding 1.0 here directly
+                        # contradicted that disclosed limitation.
+                        plausibility=None,
                         stability=None,
                         expected_effect=None,
                         observed_effect=None if observed is None else round(observed, 6),

@@ -24,7 +24,6 @@ from .utils import (
     status_color,
 )
 
-
 COMPONENTS = [
     ("uncertainty", "uncertainty_component"),
     ("reduction", "reduction_component"),
@@ -153,19 +152,21 @@ def _computed_from_trace(trace: str | Path | dict[str, Any]) -> tuple[dict[str, 
 
 
 def local_risk_evidence_data(trace: str | Path | dict[str, Any], *, aggregation: str = "max") -> dict[str, Any]:
+    """Render a legacy compatibility score, never canonical P19 rho."""
     data, computed = _computed_from_trace(trace)
     components = {name: as_float(computed.get(column), 0.0) for name, column in COMPONENTS}
     if not components["uncertainty"]:
         components["uncertainty"] = as_float(computed.get("gamma"), 0.0)
     if not components["reduction"]:
         components["reduction"] = as_float(computed.get("delta"), 0.0)
-    rho = aggregate_risk(components, aggregation)
+    legacy_route_score = aggregate_risk(components, aggregation)
     dominant = max(components, key=components.get)
     return {
-        "aggregation": aggregation,
+        "legacy_aggregation": aggregation,
         "components": components,
-        "rho": round(rho, 6),
-        "trace_rho": computed.get("rho"),
+        "legacy_route_score": round(legacy_route_score, 6),
+        "trace_legacy_route_score": computed.get("legacy_route_score"),
+        "scientific_contract": "legacy_visual_metric_not_P19_rho",
         "dominant_component": dominant,
         "action_id": computed.get("action_id"),
         "diagnostic_id": computed.get("diagnostic_id"),
@@ -190,7 +191,7 @@ def render_local_risk_evidence_bridge(
     labels = list(components)
     values = [components[label] for label in labels]
     dominant = evidence["dominant_component"]
-    rho = float(evidence["rho"])
+    legacy_route_score = float(evidence["legacy_route_score"])
     try:
         import matplotlib.pyplot as plt
     except Exception as exc:  # pragma: no cover
@@ -205,14 +206,14 @@ def render_local_risk_evidence_bridge(
             bar.set_edgecolor("#16202a")
             bar.set_linewidth(2.4)
         ax.text(value + 0.012, bar.get_y() + bar.get_height() / 2, f"{value:.3f}", va="center", fontsize=9)
-    ax.axvline(rho, color="#b71c1c", linewidth=2.6, label=f"rho=max(...)= {rho:.3f}")
+    ax.axvline(legacy_route_score, color="#b71c1c", linewidth=2.6, label=f"legacy route score={legacy_route_score:.3f} (not rho)")
     for threshold, name in [(thresholds["accept"], "accept"), (thresholds["warning"], "audit"), (thresholds["audit"], "critical")]:
         ax.axvline(threshold, color=status_color(name if name != "critical" else "block"), linewidth=1, linestyle="--", alpha=0.7)
     ax.set_xlim(0, 1)
     ax.set_yticks(y)
     ax.set_yticklabels(labels)
-    ax.set_xlabel("operator risk evidence")
-    ax.set_title(f"Local Risk Evidence Bridge: dominant={dominant}, action={evidence.get('action_id')}", weight="bold")
+    ax.set_xlabel("legacy compatibility evidence")
+    ax.set_title(f"Legacy Local Evidence Bridge: dominant={dominant}, action={evidence.get('action_id')}", weight="bold")
     ax.legend(loc="lower right")
     add_footer(fig, footer_text(source_commit=evidence.get("source_commit"), route_id=evidence.get("route_id"), verifier="passed"))
     outputs = save_figure_all(fig, out_png)
@@ -230,31 +231,16 @@ def render_gamma_delta_action_map_v2(
     thresholds = _plan_thresholds(plan)
     try:
         import matplotlib.pyplot as plt
-        import numpy as np
-        from matplotlib.colors import ListedColormap
     except Exception as exc:  # pragma: no cover
-        raise RuntimeError("matplotlib and numpy are required") from exc
+        raise RuntimeError("matplotlib is required") from exc
 
-    grid = np.linspace(0, 1, 201)
-    zone = np.zeros((len(grid), len(grid)))
-    for i, delta in enumerate(grid):
-        for j, gamma in enumerate(grid):
-            rho = max(gamma, delta)
-            if rho < thresholds["accept"]:
-                zone[i, j] = 0
-            elif rho < thresholds["warning"]:
-                zone[i, j] = 1
-            elif rho < thresholds["audit"]:
-                zone[i, j] = 2
-            else:
-                zone[i, j] = 3
-    cmap = ListedColormap(["#e6f4ea", "#fff4d6", "#ffe4d6", "#f8d7da"])
     fig, ax = plt.subplots(figsize=(10.5, 8))
     apply_visual_style(fig, ax)
-    ax.imshow(zone, extent=[0, 1, 0, 1], origin="lower", cmap=cmap, alpha=0.85, aspect="auto")
-    for threshold in (thresholds["accept"], thresholds["warning"], thresholds["audit"]):
-        ax.axvline(threshold, color="white", linewidth=1.3)
-        ax.axhline(threshold, color="white", linewidth=1.3)
+    ax.set_facecolor("#f6f8fa")
+    for threshold in (thresholds["gamma_warning"],):
+        ax.axvline(threshold, color="#718096", linewidth=1.3, linestyle="--")
+    for threshold in (thresholds["delta_warning"],):
+        ax.axhline(threshold, color="#718096", linewidth=1.3, linestyle="--")
     for row in rows:
         gamma = as_float(row.get("gamma"))
         delta = as_float(row.get("delta"))
@@ -275,7 +261,7 @@ def render_gamma_delta_action_map_v2(
     ax.set_ylim(0, 1)
     ax.set_xlabel("gamma")
     ax.set_ylabel("delta")
-    ax.set_title("Gamma-Delta Action Map v2: rho=max(gamma, delta)", weight="bold")
+    ax.set_title("Gamma-Delta diagnostic plane (no rho aggregation)", weight="bold")
     add_footer(fig, footer_text(source_commit=rows[0].get("source_commit") if rows else None, verifier="passed"))
     outputs = save_figure_all(fig, out_png)
     plt.close(fig)

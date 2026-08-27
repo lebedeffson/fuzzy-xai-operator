@@ -255,6 +255,10 @@ class TabularRowSpec:
     raw_value: str
     contribution: float | None
     direction: str  # "supports" | "contradicts" | "unknown"
+    # P18 item 9: the reader-facing feature name (from ExplainPlan
+    # .domain_language.features when registered) -- `feature` above stays
+    # the raw internal identifier for machine/audit use.
+    feature_label: str = ""
 
 
 @dataclass(frozen=True)
@@ -294,6 +298,8 @@ class ObjectRepresentationSpec:
     image_artifact_sha256: str = ""
     image_png_base64: str = ""
     image_regions: tuple[ImageRegionSpec, ...] = ()
+    attribution_overlay_png_base64: str = ""
+    attribution_method: str | None = None
 
 
 @dataclass(frozen=True)
@@ -456,6 +462,7 @@ def visual_spec_from_dict(payload: Mapping[str, Any]) -> ExplanationVisualSpec:
             raw_value=str(item.get("raw_value", "")),
             contribution=_number(item.get("contribution")),
             direction=str(item.get("direction", "unknown")),
+            feature_label=str(item.get("feature_label", "")),
         )
 
     object_representation = (
@@ -489,6 +496,8 @@ def visual_spec_from_dict(payload: Mapping[str, Any]) -> ExplanationVisualSpec:
                 )
                 for region in object_representation_payload.get("image_regions", ())
             ),
+            attribution_overlay_png_base64=str(object_representation_payload.get("attribution_overlay_png_base64", "")),
+            attribution_method=object_representation_payload.get("attribution_method"),
         )
         if isinstance(object_representation_payload, Mapping)
         else None
@@ -570,9 +579,19 @@ def build_visual_spec(
     action: str,
     contributions: Mapping[str, float] | None = None,
     explanation_level: Mapping[str, Any] | None = None,
+    domain_language: Mapping[str, Any] | None = None,
 ) -> ExplanationVisualSpec:
     contributions = dict(contributions or {})
     level = dict(explanation_level or {})
+    feature_labels = dict((domain_language or {}).get("features", {}))
+
+    def feature_label(name: str) -> str:
+        # P18 item 9: reader-facing feature name for the object
+        # representation view, falling back to the raw identifier only when
+        # no domain_language.features entry was registered for it.
+        entry = feature_labels.get(name, {})
+        label = str(entry.get("label", "")).strip() if isinstance(entry, Mapping) else ""
+        return label or name
     claim_types = {claim.claim_type for claim in claims}
 
     def stage(stage_id: str, title: str, types: set[str]) -> StoryStageSpec:
@@ -712,7 +731,17 @@ def build_visual_spec(
     directional_types = {"feature_contribution", "image_region", "fuzzy_rule"}
     supports = tuple(
         sorted(
-            (_claim_item(claim) for claim in claims if claim.claim_type in support_types and claim.evidence_status == "supported" and claim.effect != "adverse"),
+            (
+                _claim_item(claim)
+                for claim in claims
+                if claim.claim_type in support_types
+                and claim.evidence_status == "supported"
+                # class_concept is "neutral" for every class the model did
+                # not predict (see claims.py) — global background knowledge
+                # about an unrelated class must not read as supporting
+                # evidence for this prediction.
+                and (claim.effect == "favorable" if claim.claim_type == "class_concept" else claim.effect != "adverse")
+            ),
             key=lambda item: -(item.strength or 0.0),
         )
     )
@@ -841,6 +870,8 @@ def build_visual_spec(
                 )
                 for region in image.regions
             ),
+            attribution_overlay_png_base64=(evidence.attribution_maps[0].attribution_png_base64 if evidence.attribution_maps else ""),
+            attribution_method=(evidence.attribution_maps[0].method if evidence.attribution_maps else None),
         )
     elif evidence.data:
         # No raw text was supplied (or it wasn't a supported type) — fall
@@ -857,6 +888,7 @@ def build_visual_spec(
                 raw_value=_text(raw_by_feature.get(name)),
                 contribution=_number(contributions.get(name)),
                 direction="unknown" if contributions.get(name) is None else ("supports" if contributions[name] >= 0 else "contradicts"),
+                feature_label=feature_label(name),
             )
             for name in item.feature_names
         )

@@ -6,9 +6,10 @@ import csv
 import json
 import re
 import subprocess
-import sys
 from pathlib import Path
 from typing import Any
+
+from fuzzyxai.core.git_info import get_source_commit
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "reports" / "release" / "current"
@@ -313,15 +314,31 @@ def validate_external_framework() -> tuple[dict[str, Any], list[str]]:
                 errors.append(f"external {item.get('model_key')} action expected lower_confidence, got {item.get('action')}")
             if item.get("diagnostic") != "D_external_tabular_uncertainty":
                 errors.append(f"external {item.get('model_key')} diagnostic expected D_external_tabular_uncertainty, got {item.get('diagnostic')}")
-            for key in ("gamma", "delta", "rho"):
+            for key in (
+                "legacy_route_gap",
+                "presentation_omission_loss",
+                "legacy_route_score",
+            ):
                 value = float(computed.get(key, 0.0))
                 if value <= 0.0:
                     errors.append(f"external {item.get('model_key')} {key} is zero")
-            gamma = float(computed.get("gamma", 0.0))
-            delta = float(computed.get("delta", 0.0))
-            rho = float(computed.get("rho", 0.0))
-            if not (0.10 <= gamma <= 0.60 and 0.05 <= delta <= 0.60 and 0.10 <= rho <= 0.70):
-                errors.append(f"external {item.get('model_key')} values out of range: gamma={gamma}, delta={delta}, rho={rho}")
+            route_gap = float(computed.get("legacy_route_gap", 0.0))
+            presentation_loss = float(computed.get("presentation_omission_loss", 0.0))
+            legacy_score = float(computed.get("legacy_route_score", 0.0))
+            if not (
+                0.10 <= route_gap <= 0.60
+                and 0.05 <= presentation_loss <= 0.60
+                and 0.10 <= legacy_score <= 0.70
+            ):
+                errors.append(
+                    f"external {item.get('model_key')} legacy values out of range: "
+                    f"route_gap={route_gap}, presentation_loss={presentation_loss}, "
+                    f"legacy_score={legacy_score}"
+                )
+            if {"gamma", "delta", "rho"} & set(computed):
+                errors.append(
+                    f"external {item.get('model_key')} exports legacy values under P19 names"
+                )
     traceability = []
     for model_key in EXTERNAL_MODEL_KEYS:
         base = EXTERNAL_PACKAGE_DIR / model_key
@@ -780,11 +797,11 @@ def risks_text() -> str:
 
 def main() -> int:
     OUT.mkdir(parents=True, exist_ok=True)
-    branch = run(["git", "rev-parse", "--abbrev-ref", "HEAD"]) or "unknown"
-    commit = run(["git", "rev-parse", "--short", "HEAD"]) or "unknown"
-    tag = run(["git", "describe", "--tags", "--exact-match"]) or None
-    git_status = run(["git", "status", "--short"])
-    diff_summary = run(["git", "diff", "--stat"])
+    branch = "not_evaluated_without_VCS"
+    commit = get_source_commit()[:12]
+    tag = None
+    git_status = ""
+    diff_summary = ""
 
     rows, key_rows, manifest = validate_scenarios()
     external, external_errors = validate_external_framework()
@@ -845,6 +862,7 @@ def main() -> int:
         "applications_choose_actions_directly": apps_bad,
         "dirty_worktree": bool(git_status.strip()),
         "dirty_source_files": bool(dirty_sources),
+        "working_tree_status": "not_evaluated_without_VCS",
         "warnings": warnings,
         "errors": errors,
         "next_step": "external payload schemas and adapter contracts",

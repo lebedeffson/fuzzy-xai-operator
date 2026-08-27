@@ -1,0 +1,450 @@
+============================= test session starts ==============================
+platform linux -- Python 3.14.7, pytest-9.0.2, pluggy-1.6.0
+rootdir: /home/lebedeffson/Code/fuzzy-xai-operator
+configfile: pytest.ini
+testpaths: tests
+plugins: anyio-4.12.1, zarr-3.2.1
+collected 1270 items / 2 skipped
+
+tests/ai_pre_review/test_pipeline.py ......                              [  0%]
+tests/ai_pre_review_final/test_final_blinding.py ..........              [  1%]
+tests/audit/test_beacon_levels.py .                                      [  1%]
+tests/audit/test_explainplan_hash.py ...                                 [  1%]
+tests/audit/test_exported_chapter_tables.py ....                         [  1%]
+tests/audit/test_final_audit_gate.py .......                             [  2%]
+tests/audit/test_gd_anfis_shap_math.py .                                 [  2%]
+tests/audit/test_gis_integro_math.py .                                   [  2%]
+tests/audit/test_hybrid_batch_consistency.py ..                          [  2%]
+tests/audit/test_hybrid_engine_math.py ......                            [  3%]
+tests/audit/test_proof_package_tamper.py ..........                      [  4%]
+tests/audit/test_scenario_evidence_levels.py .                           [  4%]
+tests/audit/test_single_source_of_truth.py ....                          [  4%]
+tests/audit/test_studio_ui_semantics.py .                                [  4%]
+tests/chapter4_v13/test_chapter4_v13.py .............                    [  5%]
+tests/chapter_revision/test_claim_hierarchy.py ..                        [  5%]
+tests/chapter_revision/test_h9_latency.py .                              [  5%]
+tests/cross_pipeline_v1/test_interfaces.py ..........                    [  6%]
+tests/cross_pipeline_v1/test_modes_and_repair.py ..........              [  7%]
+tests/cross_pipeline_v1/test_pipelines.py ...................            [  8%]
+tests/cross_pipeline_v1/test_release_outputs.py .........                [  9%]
+tests/diagnostics/test_branch_coverage.py ...........                    [ 10%]
+tests/diagnostics/test_cli_diagnostics.py ..                             [ 10%]
+tests/diagnostics/test_diagnostic_invariants.py ........                 [ 11%]
+tests/diagnostics/test_diagnostic_service.py .......                     [ 11%]
+tests/diagnostics/test_integration_and_performance.py ........           [ 12%]
+tests/diagnostics/test_minimal_cut.py .....                              [ 12%]
+tests/external_ml_pipeline_v1/test_external_fixtures.py .......          [ 13%]
+tests/external_ml_pipeline_v1/test_modes_and_repair.py ................  [ 14%]
+tests/external_ml_pipeline_v1/test_protocol_boundaries.py ..             [ 14%]
+tests/external_ml_pipeline_v1/test_release_outputs.py ...........        [ 15%]
+tests/final_closure/test_final_closure.py ............                   [ 16%]
+tests/h10/test_baseline_independence.py .                                [ 16%]
+tests/h10/test_h10_core.py ....                                          [ 16%]
+tests/h10/test_replay_clean_stream.py .                                  [ 17%]
+tests/h10/test_taxonomy.py .                                             [ 17%]
+tests/h10/test_v19_oracle_independence.py .....                          [ 17%]
+tests/h10/test_vault.py ..                                               [ 17%]
+tests/h10_c3/test_cost_scale_invariance.py ............                  [ 18%]
+tests/h10_c4/test_bootstrap_pairing.py ..                                [ 18%]
+tests/h10_c4/test_cost_models.py .                                       [ 18%]
+tests/h10_c4/test_cost_sensitivity.py .                                  [ 18%]
+tests/h10_c4/test_development_calibration_lock.py .                      [ 18%]
+tests/h10_c4/test_equal_cost_cuts.py .                                   [ 19%]
+tests/h10_c4/test_family_and_cost_model_outputs.py ..                    [ 19%]
+tests/h10_c4/test_first_valid_baseline.py .                              [ 19%]
+tests/h10_c4/test_full_recertification.py .                              [ 19%]
+tests/h10_c4/test_global_cut_execution.py .                              [ 19%]
+tests/h10_c4/test_local_greedy_baseline.py .                             [ 19%]
+tests/h10_c4/test_manuscript_claim_lint.py ..                            [ 19%]
+tests/h10_c4/test_release_archive_modes.py ..                            [ 19%]
+tests/h10_c4/test_repair_all_baseline.py .                               [ 19%]
+tests/h10_c4/test_rollback_accounting.py .                               [ 20%]
+tests/h10_c4/test_secondary_violations.py .                              [ 20%]
+tests/h10_c5/test_natural_incidents.py ....s.                            [ 20%]
+tests/h10_c5_pilot/test_h10_c5_pilot.py ..                               [ 20%]
+tests/h10_c5b/test_experiment_runner.py .....                            [ 21%]
+tests/h10_c5b/test_held_out_scoring_controller.py ...                    [ 21%]
+tests/h10_c5b/test_independent_gold.py ..                                [ 21%]
+tests/h10_c5b/test_recovery_execution.py .                               [ 21%]
+tests/h10_c5b/test_release_packaging.py .                                [ 21%]
+tests/h10_c5b/test_repository_importer.py ...                            [ 21%]
+tests/h10_c5b/test_runtime_collection.py ...................             [ 23%]
+tests/h10_c5b/test_runtime_image_builder.py .....                        [ 23%]
+tests/h10_c5b/test_runtime_operations.py ..................              [ 25%]
+tests/h10_c5b/test_source_preparation.py ..                              [ 25%]
+tests/h10_c5b/test_structural_distinction.py .........                   [ 26%]
+tests/h10_c5c/test_contract_inference.py ...                             [ 26%]
+tests/h10_c5c/test_development_data_collection.py ..............         [ 27%]
+tests/h10_c5c/test_evidence_retrieval.py ..                              [ 27%]
+tests/h10_c5c/test_global_retrieval_distinction.py .....                 [ 27%]
+tests/h10_c5c/test_importer_parse_states.py ..                           [ 28%]
+tests/h10_c5c/test_posthoc_oracle_decomposition.py .....                 [ 28%]
+tests/h10_c5c/test_practical_loop.py ........                            [ 29%]
+tests/h10_c5c/test_protocol_and_posthoc.py .....                         [ 29%]
+tests/h10_c5c/test_runtime_events.py ........                            [ 30%]
+tests/h10_c6/test_cut_robustness.py ....                                 [ 30%]
+tests/h10_c6_noise/test_h10_c6_noise.py ...                              [ 30%]
+tests/h10_c7/test_calibrated_confirmation.py ....................        [ 32%]
+tests/h10_c7/test_contract_active_repair.py .........                    [ 32%]
+tests/h10_c7/test_guided_retrieval.py ............                       [ 33%]
+tests/h10_c7/test_h10_c7a_budget.py .....                                [ 34%]
+tests/h10_c7/test_model_weight_lock.py ..                                [ 34%]
+tests/h10_c7/test_open_replay.py .....                                   [ 34%]
+tests/h10_c7/test_pair_verification_audit.py .....                       [ 35%]
+tests/h10_c7/test_r10_causal_retrieval.py ..................             [ 36%]
+tests/h10_c7/test_r10m_retrieval.py ....                                 [ 37%]
+tests/h10_c7/test_r9_retrieval.py ...........                            [ 37%]
+tests/h10_c7/test_tournament_boundary.py ......                          [ 38%]
+tests/h10_c7r/test_h10_c7r_operations.py ............                    [ 39%]
+tests/h10_c7r/test_h10_c7r_protocol.py ......                            [ 39%]
+tests/h10_gold/test_gold_oracle.py ......                                [ 40%]
+tests/h10_gold/test_independence_and_gates.py .......                    [ 40%]
+tests/h10_gold/test_methods.py ..                                        [ 40%]
+tests/h9_e2e_v2/test_evidence_path.py ......                             [ 41%]
+tests/integration/test_mlflow_adapter.py ..                              [ 41%]
+tests/ml_pipeline_v2/test_pipeline_contracts.py .................        [ 42%]
+tests/ml_pipeline_v2/test_pipeline_integration.py ...                    [ 43%]
+tests/ml_pipeline_v2/test_ui_contract.py .                               [ 43%]
+tests/ml_pipeline_v2_comparative/test_mode_boundaries.py ............... [ 44%]
+                                                                         [ 44%]
+tests/ml_pipeline_v2_comparative/test_statistics.py ...                  [ 44%]
+tests/ml_vertical_v1/test_api.py ...                                     [ 44%]
+tests/ml_vertical_v1/test_tracking.py s                                  [ 44%]
+tests/ml_vertical_v1/test_ui_entrypoint.py .                             [ 45%]
+tests/ml_vertical_v1/test_vertical.py .....................              [ 46%]
+tests/multimodal/test_interpretable_routes.py ...                        [ 46%]
+tests/operators/test_composition_failure_modes.py ..                     [ 47%]
+tests/operators/test_composition_postconditions.py .                     [ 47%]
+tests/operators/test_composition_preconditions.py .                      [ 47%]
+tests/operators/test_contract_compatibility.py .                         [ 47%]
+tests/operators/test_operator_composition.py .                           [ 47%]
+tests/operators/test_shap_lime_route_composition.py .....                [ 47%]
+tests/optional/test_boosting_adapters.py s.s                             [ 48%]
+tests/optional/test_onnx_adapter.py s                                    [ 48%]
+tests/optional/test_tensorflow_adapter.py s                              [ 48%]
+tests/optional/test_torch_adapter.py ...                                 [ 48%]
+tests/practical_controller/test_practical_closure_scripts.py ...         [ 48%]
+tests/practical_controller/test_practical_controller.py .........        [ 49%]
+tests/q1_final/test_explainers.py ..                                     [ 49%]
+tests/q1_final/test_external_scorers.py ....                             [ 49%]
+tests/q1_final/test_final_contracts.py .....                             [ 50%]
+tests/q1_final/test_final_hypotheses.py ...                              [ 50%]
+tests/q1_final/test_merge_real_benchmarks.py .                           [ 50%]
+tests/q1_final/test_no_predictive_claim.py .                             [ 50%]
+tests/q1_final/test_rule_ablation_protocol.py ...                        [ 50%]
+tests/roles/test_role_boundaries.py ..                                   [ 51%]
+tests/selective_observer/test_controller.py ....                         [ 51%]
+tests/selective_observer/test_protocol_boundary.py ...                   [ 51%]
+tests/selective_observer/test_route_validity.py ..                       [ 51%]
+tests/selective_observer/test_rule_validation.py ...                     [ 51%]
+tests/strong_confirmatory/test_strong_confirmatory.py .....              [ 52%]
+tests/test_alignment_synthesis.py ...                                    [ 52%]
+tests/test_api_examples.py ..                                            [ 52%]
+tests/test_atomic_claim_provenance.py ...                                [ 52%]
+tests/test_beacon_xai_adapter.py .                                       [ 53%]
+tests/test_calibrated_observer_report_consistency.py ...                 [ 53%]
+tests/test_calibration_visual.py ..                                      [ 53%]
+tests/test_certified_path_category.py .....                              [ 53%]
+tests/test_chain_loss_bound.py ...                                       [ 54%]
+tests/test_chapter2_3_final_evidence.py .                                [ 54%]
+tests/test_chapter2_breast_cancer_demo_smoke.py .                        [ 54%]
+tests/test_chapter2_chapter3_artifacts.py ...                            [ 54%]
+tests/test_chapter3_critical_ruptures.py .                               [ 54%]
+tests/test_chapter5_experiments_smoke.py .                               [ 54%]
+tests/test_chapter5_source_pending_scope.py .                            [ 54%]
+tests/test_chapter5_web_demo_smoke.py .                                  [ 54%]
+tests/test_characteristic_morphism_auto.py .                             [ 54%]
+tests/test_chi_auto_truth_values.py .                                    [ 54%]
+tests/test_composition.py ..                                             [ 55%]
+tests/test_composition_well_defined.py ....                              [ 55%]
+tests/test_context_restriction_functoriality.py .                        [ 55%]
+tests/test_context_topos_smoke.py .                                      [ 55%]
+tests/test_contribution_sign_semantics.py .....                          [ 55%]
+tests/test_critical_rupture_blocks.py .                                  [ 56%]
+tests/test_cross_model_semantic_validation.py .......ss.                 [ 56%]
+tests/test_dataset_benchmark.py ...                                      [ 57%]
+tests/test_dataset_data_layer.py ......                                  [ 57%]
+tests/test_dataset_loader_preprocess_benchmark.py ...                    [ 57%]
+tests/test_dataset_modes_check.py .                                      [ 57%]
+tests/test_dataset_observer_demo_samples.py .                            [ 57%]
+tests/test_dataset_observer_pipeline.py .                                [ 58%]
+tests/test_dataset_observer_pipeline_correctness.py ...                  [ 58%]
+tests/test_dataset_observer_representation_integration.py ...            [ 58%]
+tests/test_dataset_quality_hardening.py .....                            [ 58%]
+tests/test_dataset_registry.py .                                         [ 58%]
+tests/test_decision_policy.py ...                                        [ 59%]
+tests/test_defense_demo.py .......                                       [ 59%]
+tests/test_defense_presets.py ...                                        [ 60%]
+tests/test_diagnostic_completion.py .                                    [ 60%]
+tests/test_dissertation_artifacts.py .                                   [ 60%]
+tests/test_ecosystem_evidence.py ....                                    [ 60%]
+tests/test_empirical_validation_gate.py ....                             [ 60%]
+tests/test_equal_guardrail_baselines_block.py .                          [ 60%]
+tests/test_evidence_first_framework.py .............                     [ 61%]
+tests/test_expected_cost_optimality.py ...                               [ 62%]
+tests/test_expl_category_laws.py ..                                      [ 62%]
+tests/test_explain_plan_contract.py ....                                 [ 62%]
+tests/test_explainplan_changes_action.py .                               [ 62%]
+tests/test_explanation_experience.py .....                               [ 63%]
+tests/test_explanation_output_layer_smoke.py ......                      [ 63%]
+tests/test_explanation_path_types.py ..                                  [ 63%]
+tests/test_export_chapter5_latex_smoke.py .                              [ 63%]
+tests/test_export_detail_levels.py ..............                        [ 64%]
+tests/test_external_release_gates.py ....                                [ 65%]
+tests/test_finite_category_laws.py ....                                  [ 65%]
+tests/test_framework_external_usage.py .                                 [ 65%]
+tests/test_framework_release_contract.py .......                         [ 66%]
+tests/test_full_empirical_contracts.py .......                           [ 66%]
+tests/test_full_observer_pipeline.py ..                                  [ 66%]
+tests/test_full_pipeline_demo.py .                                       [ 66%]
+tests/test_full_pipeline_experiment_smoke.py .                           [ 67%]
+tests/test_fuzzy_rule_evidence.py ..........                             [ 67%]
+tests/test_fuzzyxai_experiments_package.py ...                           [ 68%]
+tests/test_fuzzyxai_studio_core.py ...                                   [ 68%]
+tests/test_fuzzyxai_studio_demo_readiness.py .......                     [ 68%]
+tests/test_gd_anfis_shap_adapter.py .                                    [ 68%]
+tests/test_generate_figures_smoke.py .                                   [ 68%]
+tests/test_gis_integro_adapter.py .                                      [ 69%]
+tests/test_hott_certified_paths.py ...                                   [ 69%]
+tests/test_hott_path_rupture.py .                                        [ 69%]
+tests/test_human_explanation_layer.py .......                            [ 69%]
+tests/test_human_explanation_quality.py .......                          [ 70%]
+tests/test_hybrid_xiris_blocking_case.py .                               [ 70%]
+tests/test_image_object_representation.py .............                  [ 71%]
+tests/test_integration_consistency_p14.py ..............                 [ 72%]
+tests/test_integration_effort_report.py .                                [ 72%]
+tests/test_layered_demo_smoke.py .                                       [ 72%]
+tests/test_lofo_f1_rule_pruning.py ....                                  [ 73%]
+tests/test_model_validation_report_merge.py ....                         [ 73%]
+tests/test_multilevel_reduction_termination.py ....                      [ 73%]
+tests/test_object_representation_export.py .....                         [ 74%]
+tests/test_observer_no_cyclic_dependency.py ...                          [ 74%]
+tests/test_ollama_backend_transport.py ............                      [ 75%]
+tests/test_operational_coverage_minimality.py .....                      [ 75%]
+tests/test_operator_comparison_benchmark.py ..                           [ 75%]
+tests/test_operator_trace.py ..                                          [ 76%]
+tests/test_p15_attribution_map.py ......                                 [ 76%]
+tests/test_p15_automatic_operator_layer.py ...........                   [ 77%]
+tests/test_p15_correctness_fixes.py ..............                       [ 78%]
+tests/test_p15_full_report.py ........                                   [ 79%]
+tests/test_p15_model_internals.py .........                              [ 79%]
+tests/test_p15_observation_context.py ......                             [ 80%]
+tests/test_p15_provenance_graph.py .....                                 [ 80%]
+tests/test_p15_quality_status.py ....                                    [ 81%]
+tests/test_p16_membership_policy.py ......                               [ 81%]
+tests/test_p17_semantic_closure.py ........                              [ 82%]
+tests/test_p19_global_consistency.py ....................                [ 83%]
+tests/test_p19_package_hygiene.py ....                                   [ 84%]
+tests/test_p19_system_semantics.py ........                              [ 84%]
+tests/test_presheaf_functoriality.py .                                   [ 84%]
+tests/test_public_framework_api.py ......                                [ 85%]
+tests/test_q1_validation_contracts.py ...........                        [ 86%]
+tests/test_real_data_loaders_and_adapters.py ..                          [ 86%]
+tests/test_real_reduction_example.py .                                   [ 86%]
+tests/test_realistic_image_case.py .......                               [ 86%]
+tests/test_reduction_approximation_theorem.py .....                      [ 87%]
+tests/test_reduction_graph.py .....                                      [ 87%]
+tests/test_reductions.py ...                                             [ 87%]
+tests/test_registry_registration_flow.py .                               [ 87%]
+tests/test_report_export_contains_required_fields.py .                   [ 88%]
+tests/test_risk_aware_benchmark.py ..                                    [ 88%]
+tests/test_risk_aware_model.py ..                                        [ 88%]
+tests/test_risk_context_acceptance.py .                                  [ 88%]
+tests/test_risk_function.py ....                                         [ 88%]
+tests/test_risk_metrics.py ..                                            [ 88%]
+tests/test_risk_observer_thresholds.py ..                                [ 89%]
+tests/test_risk_uncertainty.py ....                                      [ 89%]
+tests/test_sdk_contracts.py ..                                           [ 89%]
+tests/test_selector.py .                                                 [ 89%]
+tests/test_semantic_disagreement_pseudometric.py ...                     [ 89%]
+tests/test_sieve_subobject_classifier.py .                               [ 89%]
+tests/test_similarity_reference_corpus.py .............                  [ 90%]
+tests/test_slm_verbalizer.py .....................s                      [ 92%]
+tests/test_sprint_report.py .                                            [ 92%]
+tests/test_studio_operator_engine.py ..........                          [ 93%]
+tests/test_subobject_classifier.py .                                     [ 93%]
+tests/test_subpresheaf.py .                                              [ 93%]
+tests/test_synthetic_rupture_guardrails.py .....                         [ 94%]
+tests/test_temporal_drift_paths.py ..                                    [ 94%]
+tests/test_text_highlight_evidence.py ........................           [ 96%]
+tests/test_text_highlight_rendering.py .........                         [ 96%]
+tests/test_thesis_practice_tables.py .                                   [ 96%]
+tests/test_thesis_validation_demo.py ..                                  [ 97%]
+tests/test_trust.py ..                                                   [ 97%]
+tests/test_unified_demo_smoke.py .                                       [ 97%]
+tests/test_unified_full_demo_real_data_smoke.py .                        [ 97%]
+tests/test_universal_model_adapters.py ...................               [ 98%]
+tests/test_v3_pipeline.py ...                                            [ 99%]
+tests/test_v6_gui_support.py ..                                          [ 99%]
+tests/test_v8_synthetic_gui_support.py ...                               [ 99%]
+tests/test_verbalization_doctor_cli.py ...                               [ 99%]
+tests/test_yoneda.py ..                                                  [ 99%]
+tests/test_yoneda_representable.py .                                     [100%]
+
+=============================== warnings summary ===============================
+tests/external_ml_pipeline_v1/test_external_fixtures.py::test_external_model_artifacts_are_real_estimators
+  /home/lebedeffson/Code/venv/lib/python3.14/site-packages/sklearn/base.py:442: InconsistentVersionWarning: Trying to unpickle estimator StandardScaler from version 1.9.0 when using version 1.7.2. This might lead to breaking code or invalid results. Use at your own risk. For more info please refer to:
+  https://scikit-learn.org/stable/model_persistence.html#security-maintainability-limitations
+    warnings.warn(
+
+tests/external_ml_pipeline_v1/test_external_fixtures.py::test_external_model_artifacts_are_real_estimators
+  /home/lebedeffson/Code/venv/lib/python3.14/site-packages/sklearn/base.py:442: InconsistentVersionWarning: Trying to unpickle estimator OneHotEncoder from version 1.9.0 when using version 1.7.2. This might lead to breaking code or invalid results. Use at your own risk. For more info please refer to:
+  https://scikit-learn.org/stable/model_persistence.html#security-maintainability-limitations
+    warnings.warn(
+
+tests/external_ml_pipeline_v1/test_external_fixtures.py::test_external_model_artifacts_are_real_estimators
+  /home/lebedeffson/Code/venv/lib/python3.14/site-packages/sklearn/base.py:442: InconsistentVersionWarning: Trying to unpickle estimator ColumnTransformer from version 1.9.0 when using version 1.7.2. This might lead to breaking code or invalid results. Use at your own risk. For more info please refer to:
+  https://scikit-learn.org/stable/model_persistence.html#security-maintainability-limitations
+    warnings.warn(
+
+tests/external_ml_pipeline_v1/test_external_fixtures.py::test_external_model_artifacts_are_real_estimators
+  /home/lebedeffson/Code/venv/lib/python3.14/site-packages/sklearn/base.py:442: InconsistentVersionWarning: Trying to unpickle estimator LogisticRegression from version 1.9.0 when using version 1.7.2. This might lead to breaking code or invalid results. Use at your own risk. For more info please refer to:
+  https://scikit-learn.org/stable/model_persistence.html#security-maintainability-limitations
+    warnings.warn(
+
+tests/external_ml_pipeline_v1/test_external_fixtures.py::test_external_model_artifacts_are_real_estimators
+  /home/lebedeffson/Code/venv/lib/python3.14/site-packages/sklearn/base.py:442: InconsistentVersionWarning: Trying to unpickle estimator Pipeline from version 1.9.0 when using version 1.7.2. This might lead to breaking code or invalid results. Use at your own risk. For more info please refer to:
+  https://scikit-learn.org/stable/model_persistence.html#security-maintainability-limitations
+    warnings.warn(
+
+tests/external_ml_pipeline_v1/test_external_fixtures.py::test_external_model_artifacts_are_real_estimators
+  /home/lebedeffson/Code/venv/lib/python3.14/site-packages/sklearn/base.py:442: InconsistentVersionWarning: Trying to unpickle estimator DecisionTreeClassifier from version 1.9.0 when using version 1.7.2. This might lead to breaking code or invalid results. Use at your own risk. For more info please refer to:
+  https://scikit-learn.org/stable/model_persistence.html#security-maintainability-limitations
+    warnings.warn(
+
+tests/external_ml_pipeline_v1/test_external_fixtures.py::test_external_model_artifacts_are_real_estimators
+  /home/lebedeffson/Code/venv/lib/python3.14/site-packages/sklearn/base.py:442: InconsistentVersionWarning: Trying to unpickle estimator RandomForestClassifier from version 1.9.0 when using version 1.7.2. This might lead to breaking code or invalid results. Use at your own risk. For more info please refer to:
+  https://scikit-learn.org/stable/model_persistence.html#security-maintainability-limitations
+    warnings.warn(
+
+tests/external_ml_pipeline_v1/test_external_fixtures.py::test_external_model_artifacts_are_real_estimators
+  /home/lebedeffson/Code/venv/lib/python3.14/site-packages/sklearn/base.py:442: InconsistentVersionWarning: Trying to unpickle estimator ElasticNet from version 1.9.0 when using version 1.7.2. This might lead to breaking code or invalid results. Use at your own risk. For more info please refer to:
+  https://scikit-learn.org/stable/model_persistence.html#security-maintainability-limitations
+    warnings.warn(
+
+tests/optional/test_boosting_adapters.py: 6 warnings
+tests/test_cross_model_semantic_validation.py: 7 warnings
+  /home/lebedeffson/Code/venv/lib/python3.14/site-packages/sklearn/utils/validation.py:2749: UserWarning: X does not have valid feature names, but LGBMClassifier was fitted with feature names
+    warnings.warn(
+
+tests/test_atomic_claim_provenance.py: 3 warnings
+tests/test_cross_model_semantic_validation.py: 1 warning
+tests/test_explanation_output_layer_smoke.py: 4 warnings
+tests/test_export_detail_levels.py: 12 warnings
+tests/test_human_explanation_quality.py: 7 warnings
+tests/test_integration_consistency_p14.py: 3 warnings
+tests/test_object_representation_export.py: 5 warnings
+tests/test_p15_attribution_map.py: 1 warning
+tests/test_p15_automatic_operator_layer.py: 8 warnings
+tests/test_p15_correctness_fixes.py: 7 warnings
+tests/test_p15_observation_context.py: 6 warnings
+tests/test_similarity_reference_corpus.py: 13 warnings
+  /home/lebedeffson/Code/venv/lib/python3.14/site-packages/sklearn/linear_model/_logistic.py:473: ConvergenceWarning: lbfgs failed to converge after 2000 iteration(s) (status=1):
+  STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT
+  
+  Increase the number of iterations to improve the convergence (max_iter=2000).
+  You might also want to scale the data as shown in:
+      https://scikit-learn.org/stable/modules/preprocessing.html
+  Please also refer to the documentation for alternative solver options:
+      https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
+    n_iter_i = _check_optimize_result(
+
+tests/test_chapter5_web_demo_smoke.py: 2 warnings
+tests/test_dataset_quality_hardening.py: 42 warnings
+tests/test_defense_presets.py: 6 warnings
+tests/test_explainplan_changes_action.py: 2 warnings
+tests/test_fuzzyxai_studio_core.py: 6 warnings
+tests/test_operator_trace.py: 4 warnings
+tests/test_real_reduction_example.py: 3 warnings
+tests/test_report_export_contains_required_fields.py: 2 warnings
+tests/test_thesis_practice_tables.py: 338 warnings
+tests/test_universal_model_adapters.py: 4 warnings
+  /home/lebedeffson/Code/venv/lib/python3.14/site-packages/sklearn/utils/validation.py:2749: UserWarning: X does not have valid feature names, but RandomForestClassifier was fitted with feature names
+    warnings.warn(
+
+tests/test_p15_model_internals.py: 14 warnings
+tests/test_p15_provenance_graph.py: 28 warnings
+tests/test_p17_semantic_closure.py: 21 warnings
+tests/test_universal_model_adapters.py: 7 warnings
+  /home/lebedeffson/Code/venv/lib/python3.14/site-packages/sklearn/utils/validation.py:2749: UserWarning: X does not have valid feature names, but StandardScaler was fitted with feature names
+    warnings.warn(
+
+tests/test_real_reduction_example.py: 1 warning
+tests/test_universal_model_adapters.py: 24 warnings
+  /home/lebedeffson/Code/venv/lib/python3.14/site-packages/sklearn/utils/validation.py:2749: UserWarning: X does not have valid feature names, but LogisticRegression was fitted with feature names
+    warnings.warn(
+
+tests/test_universal_model_adapters.py::test_sklearn_family_resolution_and_explanation[<lambda>-SklearnLinearAdapter1]
+tests/test_universal_model_adapters.py::test_sklearn_family_resolution_and_explanation[<lambda>-SklearnLinearAdapter1]
+tests/test_universal_model_adapters.py::test_sklearn_family_resolution_and_explanation[<lambda>-SklearnLinearAdapter1]
+tests/test_universal_model_adapters.py::test_sklearn_family_resolution_and_explanation[<lambda>-SklearnLinearAdapter1]
+tests/test_universal_model_adapters.py::test_sklearn_family_resolution_and_explanation[<lambda>-SklearnLinearAdapter1]
+  /home/lebedeffson/Code/venv/lib/python3.14/site-packages/sklearn/utils/validation.py:2749: UserWarning: X does not have valid feature names, but RidgeClassifier was fitted with feature names
+    warnings.warn(
+
+tests/test_universal_model_adapters.py::test_sklearn_family_resolution_and_explanation[<lambda>-SklearnTreeAdapter]
+tests/test_universal_model_adapters.py::test_sklearn_family_resolution_and_explanation[<lambda>-SklearnTreeAdapter]
+tests/test_universal_model_adapters.py::test_sklearn_family_resolution_and_explanation[<lambda>-SklearnTreeAdapter]
+tests/test_universal_model_adapters.py::test_sklearn_family_resolution_and_explanation[<lambda>-SklearnTreeAdapter]
+tests/test_universal_model_adapters.py::test_batch_global_why_not_and_model_comparison
+tests/test_universal_model_adapters.py::test_batch_global_why_not_and_model_comparison
+tests/test_universal_model_adapters.py::test_batch_global_why_not_and_model_comparison
+tests/test_universal_model_adapters.py::test_batch_global_why_not_and_model_comparison
+  /home/lebedeffson/Code/venv/lib/python3.14/site-packages/sklearn/utils/validation.py:2749: UserWarning: X does not have valid feature names, but DecisionTreeClassifier was fitted with feature names
+    warnings.warn(
+
+tests/test_universal_model_adapters.py::test_sklearn_family_resolution_and_explanation[<lambda>-SklearnEnsembleAdapter1]
+tests/test_universal_model_adapters.py::test_sklearn_family_resolution_and_explanation[<lambda>-SklearnEnsembleAdapter1]
+tests/test_universal_model_adapters.py::test_sklearn_family_resolution_and_explanation[<lambda>-SklearnEnsembleAdapter1]
+tests/test_universal_model_adapters.py::test_sklearn_family_resolution_and_explanation[<lambda>-SklearnEnsembleAdapter1]
+  /home/lebedeffson/Code/venv/lib/python3.14/site-packages/sklearn/utils/validation.py:2749: UserWarning: X does not have valid feature names, but ExtraTreesClassifier was fitted with feature names
+    warnings.warn(
+
+tests/test_universal_model_adapters.py::test_sklearn_family_resolution_and_explanation[<lambda>-SklearnEnsembleAdapter2]
+tests/test_universal_model_adapters.py::test_sklearn_family_resolution_and_explanation[<lambda>-SklearnEnsembleAdapter2]
+tests/test_universal_model_adapters.py::test_sklearn_family_resolution_and_explanation[<lambda>-SklearnEnsembleAdapter2]
+tests/test_universal_model_adapters.py::test_sklearn_family_resolution_and_explanation[<lambda>-SklearnEnsembleAdapter2]
+tests/test_universal_model_adapters.py::test_sklearn_family_resolution_and_explanation[<lambda>-SklearnEnsembleAdapter2]
+tests/test_universal_model_adapters.py::test_sklearn_family_resolution_and_explanation[<lambda>-SklearnEnsembleAdapter2]
+  /home/lebedeffson/Code/venv/lib/python3.14/site-packages/sklearn/utils/validation.py:2749: UserWarning: X does not have valid feature names, but GradientBoostingClassifier was fitted with feature names
+    warnings.warn(
+
+tests/test_universal_model_adapters.py::test_sklearn_family_resolution_and_explanation[<lambda>-SklearnSVMAdapter0]
+tests/test_universal_model_adapters.py::test_sklearn_family_resolution_and_explanation[<lambda>-SklearnSVMAdapter0]
+tests/test_universal_model_adapters.py::test_sklearn_family_resolution_and_explanation[<lambda>-SklearnSVMAdapter0]
+tests/test_universal_model_adapters.py::test_sklearn_family_resolution_and_explanation[<lambda>-SklearnSVMAdapter0]
+tests/test_universal_model_adapters.py::test_decision_score_is_not_labeled_probability
+tests/test_universal_model_adapters.py::test_decision_score_is_not_labeled_probability
+tests/test_universal_model_adapters.py::test_decision_score_is_not_labeled_probability
+tests/test_universal_model_adapters.py::test_decision_score_is_not_labeled_probability
+  /home/lebedeffson/Code/venv/lib/python3.14/site-packages/sklearn/utils/validation.py:2749: UserWarning: X does not have valid feature names, but LinearSVC was fitted with feature names
+    warnings.warn(
+
+tests/test_universal_model_adapters.py::test_sklearn_family_resolution_and_explanation[<lambda>-SklearnSVMAdapter1]
+tests/test_universal_model_adapters.py::test_sklearn_family_resolution_and_explanation[<lambda>-SklearnSVMAdapter1]
+tests/test_universal_model_adapters.py::test_sklearn_family_resolution_and_explanation[<lambda>-SklearnSVMAdapter1]
+tests/test_universal_model_adapters.py::test_sklearn_family_resolution_and_explanation[<lambda>-SklearnSVMAdapter1]
+tests/test_universal_model_adapters.py::test_sklearn_family_resolution_and_explanation[<lambda>-SklearnSVMAdapter1]
+tests/test_universal_model_adapters.py::test_sklearn_family_resolution_and_explanation[<lambda>-SklearnSVMAdapter1]
+tests/test_universal_model_adapters.py::test_sklearn_family_resolution_and_explanation[<lambda>-SklearnSVMAdapter1]
+tests/test_universal_model_adapters.py::test_nonlinear_svm_surrogate_has_measured_fidelity
+  /home/lebedeffson/Code/venv/lib/python3.14/site-packages/sklearn/utils/validation.py:2749: UserWarning: X does not have valid feature names, but SVC was fitted with feature names
+    warnings.warn(
+
+tests/test_universal_model_adapters.py::test_sklearn_family_resolution_and_explanation[<lambda>-SklearnKNNAdapter]
+tests/test_universal_model_adapters.py::test_sklearn_family_resolution_and_explanation[<lambda>-SklearnKNNAdapter]
+tests/test_universal_model_adapters.py::test_sklearn_family_resolution_and_explanation[<lambda>-SklearnKNNAdapter]
+tests/test_universal_model_adapters.py::test_sklearn_family_resolution_and_explanation[<lambda>-SklearnKNNAdapter]
+tests/test_universal_model_adapters.py::test_sklearn_family_resolution_and_explanation[<lambda>-SklearnKNNAdapter]
+  /home/lebedeffson/Code/venv/lib/python3.14/site-packages/sklearn/utils/validation.py:2749: UserWarning: X does not have valid feature names, but KNeighborsClassifier was fitted with feature names
+    warnings.warn(
+
+tests/test_universal_model_adapters.py::test_sklearn_family_resolution_and_explanation[<lambda>-SklearnNaiveBayesAdapter]
+tests/test_universal_model_adapters.py::test_sklearn_family_resolution_and_explanation[<lambda>-SklearnNaiveBayesAdapter]
+tests/test_universal_model_adapters.py::test_sklearn_family_resolution_and_explanation[<lambda>-SklearnNaiveBayesAdapter]
+tests/test_universal_model_adapters.py::test_sklearn_family_resolution_and_explanation[<lambda>-SklearnNaiveBayesAdapter]
+  /home/lebedeffson/Code/venv/lib/python3.14/site-packages/sklearn/utils/validation.py:2749: UserWarning: X does not have valid feature names, but GaussianNB was fitted with feature names
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+========== 1261 passed, 11 skipped, 643 warnings in 288.12s (0:04:48) ==========

@@ -83,9 +83,10 @@ def test_framework_external_usage_from_tmp(tmp_path: Path) -> None:
         assert item["verifier"] == "passed"
         assert item["action"] == "lower_confidence"
         assert item["diagnostic"] == "D_external_tabular_uncertainty"
-        assert 0.10 <= computed["gamma"] <= 0.60
-        assert 0.05 <= computed["delta"] <= 0.60
-        assert 0.10 <= computed["rho"] <= 0.70
+        assert 0.10 <= computed["legacy_route_gap"] <= 0.60
+        assert 0.05 <= computed["presentation_omission_loss"] <= 0.60
+        assert 0.10 <= computed["legacy_route_score"] <= 0.70
+        assert not ({"gamma", "delta", "rho"} & set(computed))
         assert route["source_commit"]
         assert proof["source_commit"]
         assert item["route"] == f"{model_key}/route.json"

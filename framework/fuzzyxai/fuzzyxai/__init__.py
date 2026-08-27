@@ -138,7 +138,9 @@ from .proof.verifier import verify_proof_trace
 from .visualization.route_artifacts import save_route_json
 from .visualization.operator_dashboard import render_dashboard
 from .examples import list_examples, load_example
-from .runtime import ExplanationInspection, FuzzyXAI, InspectionResult, ModelExplanationResult
+from .runtime import ExplanationInspection, FuzzyXAI, InspectionResult, ModelExplanationResult, ObservationContext
+from .scientific_alignment import AlignmentTransform
+from .system_semantics import SystemEvidence, SystemObservation, SystemSourceEvidence
 from .diagnostics import (
     DiagnosticCut,
     DiagnosticIssue,
@@ -312,6 +314,11 @@ __all__ += [
 
 __all__ += [
     "FuzzyXAI",
+    "ObservationContext",
+    "SystemObservation",
+    "SystemEvidence",
+    "SystemSourceEvidence",
+    "AlignmentTransform",
     "ModelExplanationResult",
     "ExplanationInspection",
     "InspectionResult",

@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import pytest
-
 from fuzzyxai.risk import (
     choose_min_expected_cost,
     compute_application_risk,
@@ -30,10 +29,9 @@ def test_risk_policy_delegates_to_application_risk():
     assert policy.risk_score(0.8, 0.4, 0.7, 0.2, ['D_RD']) == pytest.approx(direct)
 
 
-def test_risk_weights_are_normalized_to_simplex():
-    weights = normalize_risk_weights({'predicted_risk': 2, 'uncertainty': 2, 'diagnostic': 0})
-    assert sum(weights.values()) == pytest.approx(1.0)
-    assert all(v >= 0 for v in weights.values())
+def test_risk_weights_are_not_silently_normalized_to_simplex():
+    with pytest.raises(ValueError, match="must sum to one"):
+        normalize_risk_weights({'predicted_risk': 2, 'uncertainty': 2, 'diagnostic': 0})
 
 
 def test_expected_cost_policy_never_worse_than_accept_by_own_cost():

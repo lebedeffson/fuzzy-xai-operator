@@ -160,8 +160,8 @@ def _run_one(model_key: str) -> dict[str, Any]:
     shutil.copy2(dashboard_path, package_dashboard)
     write_traceability_artifacts(route, trace, verification, model_dir)
     computed = route.computed_result
-    if computed.get("gamma", 0.0) <= 0 or computed.get("delta", 0.0) <= 0 or computed.get("rho", 0.0) <= 0:
-        raise SystemExit(f"{model_key}: expected non-zero gamma/delta/rho, got {computed}")
+    if computed.get("legacy_route_gap", 0.0) <= 0 or computed.get("presentation_omission_loss", 0.0) <= 0 or computed.get("legacy_route_score", 0.0) <= 0:
+        raise SystemExit(f"{model_key}: expected non-zero declared legacy metrics, got {computed}")
     if route.final_action != "lower_confidence":
         raise SystemExit(f"{model_key}: expected lower_confidence, got {route.final_action}")
 
@@ -198,12 +198,12 @@ def _write_report(aggregate: dict[str, Any]) -> Path:
     for item in aggregate["validations"]:
         computed = item["computed_result"]
         rows.append(
-            "| {model} | {p:.6f} | {gamma:.6f} | {delta:.6f} | {rho:.6f} | {action} | {diagnostic} |".format(
+            "| {model} | {p:.6f} | {gap:.6f} | {omission:.6f} | {score:.6f} | {action} | {diagnostic} |".format(
                 model=item["model_name"],
                 p=float(computed["class_probability"]),
-                gamma=float(computed["gamma"]),
-                delta=float(computed["delta"]),
-                rho=float(computed["rho"]),
+                gap=float(computed["legacy_route_gap"]),
+                omission=float(computed["presentation_omission_loss"]),
+                score=float(computed["legacy_route_score"]),
                 action=item["action"],
                 diagnostic=item["diagnostic"],
             )
@@ -221,15 +221,15 @@ def _write_report(aggregate: dict[str, Any]) -> Path:
             "The package was generated from an installed `fuzzyxai` framework import and does not use `applications/scenarios`.",
             "Both checks use moderate-confidence wine-classification objects and top-k feature importances, so operator values are non-zero.",
             "",
-            "| Model | p | gamma | delta | rho | action | diagnostic |",
+            "| Model | p | legacy route gap | presentation omission | legacy route score | action | diagnostic |",
             "|---|---:|---:|---:|---:|---|---|",
             *rows,
             "",
             "Formulas:",
             "",
-            "- `gamma = max(1 - class_probability, quality_penalty)`",
-            "- `delta = 1 - sum(top_k_feature_importance)`",
-            "- `rho = max(gamma, delta)`",
+            "- `legacy_route_gap = max(1 - class_probability, quality_penalty, conflict, interval)`; no T_ij, therefore not Gamma",
+            "- `presentation_omission_loss = 1 - sum(top_k_feature_importance)`; not dissertation Delta",
+            "- `legacy_route_score = max(legacy route metrics)`; not dissertation rho",
             "",
         ]
     )

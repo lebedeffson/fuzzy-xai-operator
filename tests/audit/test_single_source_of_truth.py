@@ -43,13 +43,15 @@ def test_studio_trace_matches_engine_result() -> None:
 
     assert operators["alignment"]["gamma_ij"] == pytest.approx(engine["gamma"])
     assert operators["reduction"]["delta"] == pytest.approx(engine["delta"])
-    assert operators["risk_observer"]["rho"] == pytest.approx(engine["rho"])
+    assert operators["risk_observer"]["legacy_risk_score"] == pytest.approx(
+        engine["legacy_risk_score"]
+    )
     assert operators["action"]["action"] == engine["action"]
 
 
 def test_expected_result_is_not_engine_input() -> None:
     scenario = _scenario()
-    scenario["expected_result"]["rho"] = 0.123
+    scenario["expected_result"]["legacy_risk_score"] = 0.123
     result = compute_hybrid_xiris()
 
     assert result.rho == pytest.approx(0.800)

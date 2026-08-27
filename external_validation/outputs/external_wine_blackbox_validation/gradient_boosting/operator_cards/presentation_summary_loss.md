@@ -1,4 +1,4 @@
-# Потери представления
+# Потеря top-k представления (не Delta)
 
 ## Input
 - `selected_features` = `["proline", "color_intensity"]`
@@ -6,7 +6,7 @@
 - `top_k` = `2`
 
 ## Formula
-delta = 1 - sum(top_k_feature_importance)
+presentation_omission_loss = 1 - sum(top_k_feature_importance)
 
 ## Components
 - `selected_features` = `["proline", "color_intensity"]`
@@ -14,7 +14,7 @@ delta = 1 - sum(top_k_feature_importance)
 - `calculation` = `"1 - 0.570156 = 0.429844"`
 
 ## Output
-- `delta` = `0.429844`
+- `presentation_omission_loss` = `0.429844`
 - `top_k_importance_sum` = `0.570156`
 
 ## Thresholds
@@ -24,7 +24,7 @@ delta = 1 - sum(top_k_feature_importance)
 warning: Часть объяснения потеряна при top-k редукции.
 
 ## Interpretation
-Delta показывает, какая доля атрибутивного объяснения не попала в сокращённый набор признаков.
+Метрика показывает долю атрибутивного summary вне top-k и не является потерей uncertainty representation.
 
 ## Next
-risk
+legacy_route_score

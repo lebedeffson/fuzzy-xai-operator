@@ -133,8 +133,11 @@ def test_explanation_levels_and_channel_disclosure() -> None:
     assert partial.explanation_level == "E1"
     assert "training_history" in partial.missing_channels
     full = _full_result()
-    assert full.explanation_level == "E5"
-    assert {"alignment", "reduction", "risk", "counterfactuals"} <= set(full.available_channels)
+    # P19: declarative disagreement components without an executed T_ij do
+    # not certify Gamma, so this rich local explanation honestly stops at E4.
+    assert full.explanation_level == "E4"
+    assert {"reduction", "risk", "counterfactuals"} <= set(full.available_channels)
+    assert "alignment" not in full.available_channels
     assert "rules" in full.native_channels
     assert "rules" not in full.surrogate_channels
 
@@ -155,7 +158,7 @@ def test_result_overview_story_inspect_and_audit() -> None:
     assert result.inspect("action").target_id == "action"
     assert "R31" in result.summary(audience="ml_engineer", detail="full")
     audit = result.audit()
-    assert audit["explanation_level"]["level"] == "E5"
+    assert audit["explanation_level"]["level"] == "E4"
     assert audit["trace"]["model_fingerprint"]
 
 

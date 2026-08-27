@@ -17,7 +17,8 @@ def test_hybrid_reduction_loss() -> None:
 def test_hybrid_reduction_component() -> None:
     result = compute_hybrid_xiris()
     risk = next(item for item in result.operator_values if item["node_id"] == "risk_observer")
-    assert risk["computed"]["rho"] == pytest.approx(0.800)
+    assert risk["computed"]["legacy_risk_score"] == pytest.approx(0.800)
+    assert risk["computed"]["scientific_contract"] == "legacy_not_P19_rho"
 
 
 def test_hybrid_risk_decomposition() -> None:

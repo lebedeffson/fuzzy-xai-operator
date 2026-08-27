@@ -180,14 +180,14 @@
     {
       "node_id": "risk_observer",
       "node_type": "risk_observer",
-      "title": "Risk Observer",
+      "title": "Legacy Risk Observer",
       "status": "warning",
       "operator": {
         "operator_id": "risk_observer",
         "operator_name": "Риск-ориентированный наблюдатель",
         "source_chapter": "3",
-        "formula_latex": "\\rho=w_p\\rho_{pred}+w_u u_M+w_I(1-I_{pre})+w_\\Delta\\Delta_M+w_R\\chi_R",
-        "description": "Вычисляет риск, учитывает χ_R и χ_R^crit, выбирает допустимое действие."
+        "formula_latex": "legacy\\_score=\\sum_k w_k c_k/\\sum_k w_k",
+        "description": "Вычисляет pre-P19 compatibility score; это не каноническая пятикомпонентная rho."
       },
       "inputs": {
         "rho_pred": 0.67,
@@ -196,10 +196,11 @@
         "chi_R_crit": 0
       },
       "computed": {
-        "rho": 0.41,
         "chi_R": 0,
         "chi_R_crit": 0,
-        "chi_Auto": 0
+        "chi_Auto": 0,
+        "legacy_risk_score": 0.41,
+        "scientific_contract": "legacy_not_P19_rho"
       },
       "output": {
         "final_action": "audit_report"
@@ -220,7 +221,7 @@
         "description": "Преобразует риск и диагностический статус в действие."
       },
       "inputs": {
-        "rho": 0.41,
+        "legacy_risk_score": 0.41,
         "chi_R_crit": 0
       },
       "computed": {
@@ -342,10 +343,11 @@
       "operator_id": "risk_observer",
       "status": "passed",
       "computed": {
-        "rho": 0.41,
         "chi_R": 0,
         "chi_R_crit": 0,
-        "chi_Auto": 0
+        "chi_Auto": 0,
+        "legacy_risk_score": 0.41,
+        "scientific_contract": "legacy_not_P19_rho"
       },
       "diagnostic": {
         "has_rupture": false,

@@ -15,7 +15,12 @@ def _package() -> dict:
 @pytest.mark.parametrize(
     ("node", "field", "value", "expected"),
     [
-        ("risk_observer", "rho", 0.74, "inconsistent:risk_observer.rho"),
+        (
+            "risk_observer",
+            "legacy_risk_score",
+            0.74,
+            "inconsistent:risk_observer.legacy_risk_score",
+        ),
         ("reduction", "delta", 0.08, "inconsistent:reduction.delta"),
         ("alignment", "gamma_ij", 0.35, "inconsistent:alignment.gamma"),
     ],

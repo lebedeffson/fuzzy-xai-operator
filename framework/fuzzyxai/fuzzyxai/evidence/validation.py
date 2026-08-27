@@ -133,8 +133,12 @@ def comparison_statement(
         policy = "medium_sample_tail"
         limitations = ("reference sample is too small for a precise population percentile claim",)
     else:
-        upper = max(0.0, 100.0 - percentile)
-        text = f"Значение находится в верхних {max(1, round(upper))}% распределения среди {size} объектов ({reference_label})."
+        # P18 item 8: state the percentile itself, not its complement — "the
+        # value is in the top 75%" reads as if 75% describes how exclusive
+        # the group is, when it actually means the value beats only 25% of
+        # the sample. Naming the real percentile directly avoids that.
+        percentile_rank = max(1, min(99, round(percentile)))
+        text = f"Значение соответствует {percentile_rank}-му перцентилю распределения среди {size} объектов ({reference_label}): оно выше, чем у {percentile_rank}% из них."
         policy = "large_sample_percentile"
         limitations = ()
     return ComparisonStatement(
@@ -178,8 +182,10 @@ def comparison_from_percentile(
         policy = "medium_sample_tail"
         limitations = ("reference sample is too small for a precise population percentile claim",)
     else:
-        upper = max(0.0, 100.0 - percentile)
-        text = f"Значение находится в верхних {max(1, round(upper))}% распределения среди {sample_size} объектов ({reference_label})."
+        # P18 item 8: same fix as comparison_statement() above — name the
+        # real percentile, not its confusing complement.
+        percentile_rank = max(1, min(99, round(percentile)))
+        text = f"Значение соответствует {percentile_rank}-му перцентилю распределения среди {sample_size} объектов ({reference_label}): оно выше, чем у {percentile_rank}% из них."
         policy = "large_sample_percentile"
         limitations = ()
     return ComparisonStatement(

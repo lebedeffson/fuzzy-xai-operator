@@ -58,7 +58,7 @@ _TYPE_WEIGHT = {
 }
 
 _ACTION_TEXT = {
-    "accept": ("Использовать с обычным контролем", "Доступные данные не выявили ограничения, требующие отдельной проверки."),
+    "accept": ("Кандидатное действие: принять", "Зарегистрированная политика маршрута разрешает кандидатное действие accept; это не является самостоятельным доказательством предметной корректности или безопасности."),
     "review": ("Проверить специалистом", "Результат недостаточно надёжен для автоматического решения."),
     "audit": ("Провести дополнительную проверку", "Перед применением результата необходимо проверить доказательный след."),
     "audit_report": ("Провести дополнительную проверку", "Перед применением результата необходимо проверить доказательный след."),
@@ -141,6 +141,16 @@ def _domain_entry(section: Mapping[str, Any], key: str) -> Mapping[str, Any]:
     if value is None:
         value = next((item for candidate, item in section.items() if str(candidate) == str(key)), {})
     return value if isinstance(value, Mapping) else {}
+
+
+def _feature_label(domain: Mapping[str, Any], name: str) -> str:
+    """P18 item 7: the reader-facing feature name, never the raw internal
+    (often English) column name — falls back to the raw name only when no
+    domain_language.features entry was registered for it."""
+
+    entry = _domain_entry(_domain_section(domain, "features"), name)
+    label = str(entry.get("label", "")).strip()
+    return label or str(name)
 
 
 def _prediction_value(subject: str) -> str:
@@ -308,10 +318,25 @@ def _feature_reason(
     effect_text = str(entry.get("effect_text", default_effect))
     technical_statement = claim.statement.lower()
     if "linear_term" in technical_statement or "coefficient" in technical_statement:
-        # Precise about what was actually computed: value * coefficient (a
-        # term), not just "the coefficient" — the coefficient alone doesn't
-        # depend on this object, the term does.
-        source_text = "Вклад рассчитан как произведение значения этого показателя на измеренный коэффициент модели."
+        # P17: precise about what was ACTUALLY multiplied. For a bare
+        # linear model the shown value is what the model used, so "value ×
+        # coefficient" is accurate. But behind a preprocessing step
+        # (StandardScaler etc.) the model multiplied the TRANSFORMED value,
+        # not the raw one shown here — saying "value of this indicator"
+        # without qualification was misleading. Look up the real
+        # raw/transformed pair (P15.1's linear_terms) to state which one.
+        term = next(
+            (item for internals in evidence.model_internals for item in (internals.linear_terms or ()) if item.get("feature") == claim.subject_id),
+            None,
+        )
+        if term is not None and term.get("raw_value") is not None and term.get("transformed_value") is not None and abs(float(term["raw_value"]) - float(term["transformed_value"])) > 1e-9:
+            source_text = (
+                f"Вклад рассчитан как произведение ПРЕОБРАЗОВАННОГО значения ({term['transformed_value']:.4f}, "
+                f"получено из исходного {term['raw_value']:.4f} через {term.get('transformation', 'преобразование признаков')}) "
+                "на измеренный коэффициент модели."
+            )
+        else:
+            source_text = "Вклад рассчитан как произведение значения этого показателя на измеренный коэффициент модели."
     elif "tree_path" in technical_statement:
         source_text = "Объект прошёл по ветви дерева, где этот показатель сравнивался с обученным порогом."
     elif "gaussian_log_likelihood" in technical_statement:
@@ -519,6 +544,66 @@ def _fuzzy_rule_reason(
     return ReasonStatement(title, explanation, claim_refs, evidence_refs, subject_label, direction, comparison)
 
 
+def _decision_path_reason(claim: ExplanationClaim, evidence: ExplanationEvidence, domain: Mapping[str, Any]) -> ReasonStatement:
+    """P15.3: the literal node-by-node path this object took through the
+    tree — not a dump of every extracted rule from the whole tree."""
+
+    internals = next((item for item in evidence.model_internals if item.object_id == claim.subject_id and item.decision_path), None)
+    claim_refs, evidence_refs = _refs((claim,))
+    if internals is None or not internals.decision_path:
+        return ReasonStatement("Путь по дереву решений", _clean_internal_identifiers(claim.statement), claim_refs, evidence_refs, "путь по дереву", "supports", "путь измерен моделью")
+    steps = []
+    for step in internals.decision_path:
+        feature_entry = _domain_entry(_domain_section(domain, "features"), str(step.get("feature")))
+        feature_label = str(feature_entry.get("label", str(step.get("feature")).replace("_", " ")))
+        comparator = "не превышало" if step.get("operator") == "<=" else "превышало"
+        steps.append(f"«{feature_label}» ({step.get('value'):.3f}) {comparator} порог {step.get('threshold'):.3f}, объект перешёл в узел {step.get('child')}")
+    explanation = "Путь объекта по дереву решений: " + "; ".join(steps) + "."
+    if internals.leaf_samples is not None:
+        explanation += f" Итоговый лист содержит {internals.leaf_samples} обучающих примеров, использованных для оценки класса."
+    title = "Путь по дереву решений"
+    comparison = f"пройдено узлов: {len(internals.decision_path)}"
+    return ReasonStatement(title, explanation, claim_refs, evidence_refs, "путь по дереву", "supports", comparison)
+
+
+def _ensemble_votes_reason(claim: ExplanationClaim, evidence: ExplanationEvidence) -> ReasonStatement:
+    """P15.3 (ensemble case): real vote counts/disagreement, not global
+    importance passed off as a local reason."""
+
+    internals = next((item for item in evidence.model_internals if item.object_id == claim.subject_id and item.ensemble_votes is not None), None)
+    claim_refs, evidence_refs = _refs((claim,))
+    if internals is None or internals.ensemble_votes is None:
+        return ReasonStatement("Голосование ансамбля", _clean_internal_identifiers(claim.statement), claim_refs, evidence_refs, "голосование ансамбля", "supports", "голоса измерены моделью")
+    votes = internals.ensemble_votes
+    from collections import Counter
+
+    tally = Counter(str(vote[0]) if isinstance(vote, (list, tuple)) and vote else str(vote) for vote in votes)
+    tally_text = ", ".join(f"{count} за класс {label}" for label, count in tally.most_common())
+    explanation = f"{len(votes)} базовых моделей ансамбля проголосовали: {tally_text}."
+    if internals.ensemble_disagreement is not None:
+        explanation += f" Расхождение голосов: {internals.ensemble_disagreement:.3f}."
+    direction: ReasonEffectDirection = "supports" if (internals.ensemble_disagreement or 0.0) <= 0.3 else "mixed"
+    comparison = f"расхождение голосов: {internals.ensemble_disagreement:.3f}" if internals.ensemble_disagreement is not None else "расхождение не измерено"
+    return ReasonStatement("Голосование ансамбля", explanation, claim_refs, evidence_refs, "голосование ансамбля", direction, comparison)
+
+
+_TECHNICAL_DETAIL_TITLES = {
+    "linear_reconstruction": "Разложение линейной оценки",
+    "attribution_map": "Карта атрибуции по пикселям",
+}
+
+
+def _technical_detail(claim: ExplanationClaim) -> HumanStatement:
+    """P15.1/P15.2: the full statement text (raw -> transformed ->
+    coefficient -> contribution chain, or attribution-map completeness
+    summary), exposed as-is rather than collapsed into a single metric
+    number the way the generic technical_metrics loop does."""
+
+    claim_refs, evidence_refs = _refs((claim,))
+    title = _TECHNICAL_DETAIL_TITLES.get(claim.claim_type, "Технические сведения")
+    return HumanStatement(title, claim.statement, claim_refs, evidence_refs)
+
+
 def _similar_statement(
     claim: ExplanationClaim,
     evidence: ExplanationEvidence,
@@ -603,10 +688,25 @@ def _similar_statement(
             extra_parts.append(f"Место по близости: {case.reference_rank} из {case.reference_count}.")
         matched_top = list(case.matched_features)[:3]
         different_top = list(case.different_features)[:3]
+        # P18 item 7: reader-facing feature names, never the raw internal
+        # (often English) column name.
         if matched_top:
-            extra_parts.append(f"Наиболее близкие характеристики: {', '.join(matched_top)}.")
+            extra_parts.append(f"Наиболее близкие характеристики: {', '.join(_feature_label(domain, name) for name in matched_top)}.")
         if different_top:
-            extra_parts.append(f"Наиболее заметные различия: {', '.join(different_top)}.")
+            extra_parts.append(f"Наиболее заметные различия: {', '.join(_feature_label(domain, name) for name in different_top)}.")
+        # P17: name the actual compared numbers, not just feature names —
+        # "our object 14.87 vs train_195 14.61" is what a reader needs to
+        # judge the comparison, not a bare list of feature labels.
+        comparison_rows = [
+            (name, case.query_values[name], case.reference_values[name])
+            for name in (*different_top, *matched_top[:1])
+            if name in case.query_values and name in case.reference_values
+        ]
+        if comparison_rows:
+            comparison_text = "; ".join(
+                f"{_feature_label(domain, name)}: наш объект {query_value:.3g}, {reference_label} {reference_value:.3g}" for name, query_value, reference_value in comparison_rows
+            )
+            extra_parts.append(f"Значения для сравнения — {comparison_text}.")
         if case.reference_label is not None and str(case.reference_label).strip():
             extra_parts.append(f"Эталонный объект {reference_label} имеет метку класса {case.reference_label}.")
         if extra_parts:
@@ -636,14 +736,26 @@ def _training_concern(claims: Sequence[ExplanationClaim], evidence: ExplanationE
         if str(object_id).startswith("case_")
         else f"объект №{object_id}"
     )
-    if event is not None:
-        explanation = (
-            f"Модель сначала научилась правильно распознавать {object_label}. "
-            f"После {event}-го этапа обучения она снова начала ошибаться и стала хуже различать редкие случаи этого типа."
-        )
-    else:
-        explanation = "Во время обучения модель стала хуже распознавать редкую группу, хотя общая метрика не показывала эту проблему."
     subgroup = next((item for item in evidence.subgroups if item.averaged), None)
+    if event is not None:
+        # A single object's forgetting event only proves that *this* object
+        # was forgotten — it does not by itself show a rare subgroup got
+        # worse. That broader claim is only added below, and only when
+        # SubgroupAveragingEvidence actually measured it.
+        if label_loss_event is not None:
+            explanation = (
+                f"Модель сначала научилась правильно распознавать {object_label}. "
+                f"После {event}-го этапа обучения она снова начала ошибаться на этом объекте."
+            )
+        else:
+            explanation = (
+                f"На {event}-м этапе зафиксировано событие забывания по критерию "
+                f"резкого снижения уверенности; класс при этом оставался предсказан правильно."
+            )
+    elif subgroup is not None:
+        explanation = "Во время обучения модель стала хуже распознавать редкую группу, хотя общая метрика не показывала эту проблему."
+    else:
+        explanation = "Во время обучения зафиксировано событие забывания, но недостаточно данных, чтобы связать его с конкретной подгруппой."
     if subgroup and subgroup.global_metric_change > 0 and subgroup.subgroup_metric_change < 0:
         decrease = abs(subgroup.subgroup_metric_change) * 100
         explanation += (
@@ -655,7 +767,11 @@ def _training_concern(claims: Sequence[ExplanationClaim], evidence: ExplanationE
         if disappeared:
             explanation += f" Ослабленные правила: {', '.join(disappeared)}."
     claim_refs, evidence_refs = _refs(claims)
-    return ConcernStatement("Редкий тип стал распознаваться хуже", explanation, claim_refs, evidence_refs)
+    # The "rare type/subgroup" title is only licensed when subgroup evidence
+    # actually measured it — a single object's forgetting event only earns
+    # the narrower, per-object title.
+    title = "Редкий тип стал распознаваться хуже" if subgroup is not None else "Объект забыт в процессе обучения"
+    return ConcernStatement(title, explanation, claim_refs, evidence_refs)
 
 
 def _generic_concern(claim: ExplanationClaim, technical: bool) -> ConcernStatement:
@@ -704,7 +820,13 @@ def _change_statement(
 
     def class_label(value: Any) -> str:
         entry = _domain_entry(_domain_section(domain, "classes"), str(value))
-        return str(entry.get("label", "другой результат"))
+        # Without domain_language both sides used to fall back to the exact
+        # same generic string ("другой результат"), producing the nonsense
+        # "меняет прогноз с «другой результат» на «другой результат»". The
+        # technical class id makes each side distinguishable, exactly like
+        # _decision_statement's own "Технический результат: {class_id}"
+        # fallback for when no domain label is configured.
+        return str(entry.get("label", f"технический класс {value}"))
 
     before = class_label(item.source_prediction)
     after = class_label(item.target_prediction)
@@ -838,7 +960,11 @@ def compose_human_explanation(
             rule_reason = _rule_reason(claim, evidence, domain, technical)
             if rule_reason is not None:
                 supports.append(rule_reason)
-        elif claim.claim_type == "class_concept":
+        elif claim.claim_type == "class_concept" and claim.effect == "favorable":
+            # Only the predicted class's own concept is presented as
+            # supporting context (see claims.py) — a concept for a class the
+            # model did not predict is global background knowledge, not
+            # evidence about this object, so it is simply not surfaced here.
             supports.append(_concept_reason(claim, evidence, domain, technical))
         elif claim.claim_type == "image_region":
             region_reason = _image_region_reason(claim, technical)
@@ -854,6 +980,10 @@ def compose_human_explanation(
                 supports.append(rule_reason_stmt)
             else:
                 contradicts.append(ConcernStatement(rule_reason_stmt.title, rule_reason_stmt.explanation, rule_reason_stmt.claim_refs, rule_reason_stmt.evidence_refs))
+        elif claim.claim_type == "decision_path":
+            supports.append(_decision_path_reason(claim, evidence, domain))
+        elif claim.claim_type == "ensemble_votes":
+            supports.append(_ensemble_votes_reason(claim, evidence))
         elif claim.claim_type == "similar_case":
             similar = _similar_statement(claim, evidence, domain, technical)
             similar_details.append(similar)
@@ -964,6 +1094,9 @@ def compose_human_explanation(
 
     technical_metrics: list[HumanStatement] = []
     for claim in ranked:
+        if claim.claim_type in {"linear_reconstruction", "attribution_map"}:
+            technical_metrics.append(_technical_detail(claim))
+            continue
         if claim.metric_value is None:
             continue
         claim_refs, evidence_refs = _refs((claim,))

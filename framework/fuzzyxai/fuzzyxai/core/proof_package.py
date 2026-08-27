@@ -1,12 +1,13 @@
 from __future__ import annotations
 
 import json
-import subprocess
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from hashlib import sha256
 from pathlib import Path
 from typing import Any
+
+from .git_info import find_repo_root, get_source_commit
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -41,16 +42,22 @@ def _stable_hash(payload: Any) -> str:
 
 
 def _code_version() -> str:
-    try:
-        return subprocess.check_output(["git", "rev-parse", "--short", "HEAD"], text=True, stderr=subprocess.DEVNULL).strip()
-    except Exception:
-        return _packaged_metadata().get("source_commit", "unknown")
+    commit = get_source_commit()
+    if commit != "unknown":
+        return commit[:12]
+    return str(_packaged_metadata().get("source_commit", "unknown"))
 
 
 def _branch() -> str:
     try:
-        branch = subprocess.check_output(["git", "branch", "--show-current"], text=True, stderr=subprocess.DEVNULL).strip()
-        return branch or f"detached:{_code_version()}"
+        metadata = find_repo_root(Path(__file__)) / ".git"
+        if metadata.is_file():
+            pointer = metadata.read_text(encoding="utf-8").strip()
+            metadata = (metadata.parent / pointer.split(":", 1)[1].strip()).resolve()
+        head = (metadata / "HEAD").read_text(encoding="utf-8").strip()
+        if head.startswith("ref: refs/heads/"):
+            return head.removeprefix("ref: refs/heads/")
+        return f"detached:{_code_version()}"
     except Exception:
         packaged = _packaged_metadata()
         branch = packaged.get("audit_branch")
@@ -59,32 +66,16 @@ def _branch() -> str:
         return f"detached:{packaged.get('source_commit', _code_version())}"
 
 
-def _dirty_paths() -> list[str]:
-    try:
-        out = subprocess.check_output(["git", "status", "--short"], text=True, stderr=subprocess.DEVNULL)
-    except Exception:
-        return []
-    return [line[3:].strip().strip('"') for line in out.splitlines() if line.strip()]
-
-
 def _release_metadata() -> dict[str, Any]:
-    ignored_prefixes = (
-        "reports/",
-        "visual_artifacts_latest.zip",
-        "fuzzyxai_final_audit_package.zip",
-        "fuzzyxai_doctoral_runtime_release.zip",
-    )
-    paths = _dirty_paths()
-    ignored = [path for path in paths if path.startswith(ignored_prefixes) or path in ignored_prefixes or (path.endswith(".docx") and "/" not in path)]
-    unignored = [path for path in paths if path not in ignored]
     commit = _code_version()
     return {
         "source_commit": commit,
         "artifact_commit": commit,
         "audit_branch": _branch(),
-        "working_tree_clean": not paths,
-        "working_tree_dirty_ignored_paths": ignored,
-        "working_tree_dirty_unignored_paths": unignored,
+        "working_tree_clean": None,
+        "working_tree_status": "not_evaluated_without_VCS",
+        "working_tree_dirty_ignored_paths": [],
+        "working_tree_dirty_unignored_paths": [],
     }
 
 
@@ -161,7 +152,11 @@ def verify_proof_package(package: dict[str, Any], require_current_code_version: 
     checks = [
         ("alignment.gamma", computed.get("gamma"), operators.get("alignment", {}).get("computed", {}).get("gamma_ij")),
         ("reduction.delta", computed.get("delta"), operators.get("reduction", {}).get("computed", {}).get("delta")),
-        ("risk_observer.rho", computed.get("rho"), operators.get("risk_observer", {}).get("computed", {}).get("rho")),
+        (
+            "risk_observer.legacy_risk_score",
+            computed.get("legacy_risk_score"),
+            operators.get("risk_observer", {}).get("computed", {}).get("legacy_risk_score"),
+        ),
         ("action.action", computed.get("action"), operators.get("action", {}).get("computed", {}).get("action")),
     ]
     for label, expected, actual in checks:

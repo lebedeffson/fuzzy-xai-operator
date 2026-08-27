@@ -35,7 +35,11 @@ class ReductionOperatorResult:
 
 @dataclass(frozen=True)
 class RiskInput:
-    """Typed input for the risk observer from chapter 3."""
+    """Typed input for strict P19 rho.
+
+    Components are exactly ``rho_p``, ``u_M``, ``one_minus_I_pre``, ``Delta``
+    and ``chi_R``. Weights use those same keys and must sum to one.
+    """
 
     components: Mapping[str, float]
     weights: Mapping[str, float]

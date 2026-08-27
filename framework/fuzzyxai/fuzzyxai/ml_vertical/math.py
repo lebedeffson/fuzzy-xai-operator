@@ -8,6 +8,8 @@ from .contracts import ReductionArtifact, RepresentationArtifact, UncertaintyPro
 
 def triangular(x: float, a: float, b: float, c: float) -> float:
     x = min(1.0, max(0.0, float(x)))
+    if (a == b and x == a) or (b == c and x == c):
+        return 1.0
     if x == b:
         return 1.0
     if x <= a or x >= c:

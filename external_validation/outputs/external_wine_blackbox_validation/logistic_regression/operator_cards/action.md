@@ -1,15 +1,15 @@
 # Действие
 
 ## Input
-- `rho` = `0.373128`
+- `legacy_route_score` = `0.373128`
 - `diagnostic_id` = `"D_external_tabular_uncertainty"`
 - `risk_zone` = `"lower_confidence"`
 
 ## Formula
-if rho < 0.35: accept; elif rho < 0.60: lower_confidence; else: audit
+legacy compatibility mapping; not canonical P19 action policy
 
 ## Components
-- `rho` = `0.373128`
+- `legacy_route_score` = `0.373128`
 - `diagnostic_id` = `"D_external_tabular_uncertainty"`
 - `alternative_actions` = `["accept", "lower_confidence", "audit"]`
 

@@ -1,0 +1,40 @@
+wheel: fuzzyxai_operator-1.4.0a2-py3-none-any.whl
+wheel_size_bytes: 872576
+archive_entries: 459
+package_files: 443
+package_directories: 53
+experiment_files: 39
+operators_manifest: ['fuzzyxai_operator-1.4.0a2.data/data/share/fuzzyxai/operators_manifest.yaml']
+excluded_research_leaks: []
+requires_dist:
+- numpy>=1.24
+- pandas>=1.5
+- scikit-learn>=1.2
+- plotly>=5.0
+- matplotlib>=3.7
+- PyYAML>=6.0
+- scikit-learn>=1.2; extra == "sklearn"
+- xgboost>=1.7; extra == "xgboost"
+- lightgbm>=4.0; extra == "lightgbm"
+- catboost>=1.2; extra == "catboost"
+- torch>=2.1; extra == "torch"
+- tensorflow>=2.14; extra == "tensorflow"
+- onnx>=1.15; extra == "onnx"
+- onnxruntime>=1.16; extra == "onnx"
+- pillow>=10.0; extra == "images"
+- pyarrow>=16.0; extra == "evidence"
+- nicegui>=1.4; extra == "ui"
+- xgboost>=1.7; extra == "all-models"
+- lightgbm>=4.0; extra == "all-models"
+- catboost>=1.2; extra == "all-models"
+- torch>=2.1; extra == "all-models"
+- tensorflow>=2.14; extra == "all-models"
+- onnx>=1.15; extra == "all-models"
+- onnxruntime>=1.16; extra == "all-models"
+- pillow>=10.0; extra == "all-models"
+- pytest>=7.0; extra == "dev"
+- coverage>=7.0; extra == "dev"
+- playwright>=1.40; extra == "dev"
+- build>=1.2; extra == "dev"
+- ruff>=0.5; extra == "dev"
+- mypy>=1.10; extra == "dev"

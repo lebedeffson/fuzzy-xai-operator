@@ -49,7 +49,9 @@ def test_hybrid_engine_computes_block_from_inputs() -> None:
 
     assert result.gamma == pytest.approx(scenario["expected_result"]["gamma"])
     assert result.delta == pytest.approx(scenario["expected_result"]["delta"])
-    assert result.rho == pytest.approx(scenario["expected_result"]["rho"])
+    assert result.legacy_risk_score == pytest.approx(
+        scenario["expected_result"]["legacy_risk_score"]
+    )
     assert result.chi_r_crit == 1
     assert result.action == scenario["expected_result"]["action"]
     assert result.occurrences == ["alignment", "risk_observer", "action"]
@@ -65,11 +67,13 @@ def test_proof_package_build_and_verify() -> None:
     assert verification.valid
     assert verification.errors == []
     assert package["final_action"] == "block"
-    assert package["computed_result"]["rho"] == pytest.approx(0.800)
+    assert package["computed_result"]["legacy_risk_score"] == pytest.approx(0.800)
     values = {item["node_id"]: item["computed"] for item in package["operator_values"]}
     assert values["alignment"]["gamma_ij"] == pytest.approx(package["computed_result"]["gamma"])
     assert values["reduction"]["delta"] == pytest.approx(package["computed_result"]["delta"])
-    assert values["risk_observer"]["rho"] == pytest.approx(package["computed_result"]["rho"])
+    assert values["risk_observer"]["legacy_risk_score"] == pytest.approx(
+        package["computed_result"]["legacy_risk_score"]
+    )
     assert values["action"]["action"] == package["computed_result"]["action"]
 
 
@@ -86,12 +90,17 @@ def test_proof_package_verifier_rejects_inconsistent_operator_trace() -> None:
 
 def test_engine_does_not_read_expected_result() -> None:
     scenario = next(s for s in load_scenarios() if s["scenario_id"] == "hybrid_xiris")
-    scenario["expected_result"] = {"gamma": 999, "delta": 999, "rho": 999, "action": "accept"}
+    scenario["expected_result"] = {
+        "gamma": 999,
+        "delta": 999,
+        "legacy_risk_score": 999,
+        "action": "accept",
+    }
     result = compute_hybrid_xiris()
 
     assert result.gamma == pytest.approx(0.351)
     assert result.delta == pytest.approx(0.106811)
-    assert result.rho == pytest.approx(0.800)
+    assert result.legacy_risk_score == pytest.approx(0.800)
     assert result.action == "block"
 
 
@@ -122,4 +131,4 @@ def test_exported_tables_include_explainplan_and_risk_decomposition(tmp_path: Pa
     risk = (tmp_path / "table_5_6_risk_decomposition.csv").read_text(encoding="utf-8")
     assert "alignment,w_d_mu,0.25" in explainplan
     assert "risk,w_source_conflict,0.2" in explainplan
-    assert "total,rho,,0.8" in risk
+    assert "total,legacy_risk_score,,0.8" in risk

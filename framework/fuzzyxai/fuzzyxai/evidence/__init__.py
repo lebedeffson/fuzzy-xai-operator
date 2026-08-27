@@ -1,8 +1,10 @@
+from .attribution_map import KNOWN_ATTRIBUTION_CHANNELS, build_attribution_map, find_attribution_regions
 from .claims import build_explanation_claims, determine_explanation_level
 from .concepts import build_class_concepts
 from .contracts import (
     ActionStatement,
     AtomicClaim,
+    AttributionMapEvidence,
     AudienceProfile,
     ChangeStatement,
     ClassConcept,
@@ -30,6 +32,7 @@ from .contracts import (
     ImageRegion,
     ImageRepresentationEvidence,
     LearnedRule,
+    ModelInternalsEvidence,
     ReasonEffectDirection,
     ReasonStatement,
     ReliabilityStatement,
@@ -48,7 +51,8 @@ from .fuzzy_rules import collect_fuzzy_rule_activations
 from .graph import build_explanation_graph
 from .human import compose_human_explanation, explanation_to_text
 from .image_representation import find_image_regions, is_image_like
-from .metrics import evaluate_explanation_quality
+from .metrics import evaluate_explanation_quality, evaluate_explanation_quality_status
+from .model_internals import collect_model_internals
 from .rules import evaluate_rule_ablation, extract_rules, rank_rules, rule_complexity
 from .similarity import compare_region_masks, find_similar_tabular_cases, select_explanatory_cases
 from .text_highlighting import find_text_highlight_spans
@@ -56,8 +60,10 @@ from .training import TrainingRunAnalysis, build_object_trace, detect_subgroup_a
 from .validation import comparison_from_percentile, comparison_statement, validate_domain_language
 
 __all__ = [
+    "KNOWN_ATTRIBUTION_CHANNELS",
     "ActionStatement",
     "AtomicClaim",
+    "AttributionMapEvidence",
     "AudienceProfile",
     "ChangeStatement",
     "ClassConcept",
@@ -85,6 +91,7 @@ __all__ = [
     "ImageRegion",
     "ImageRepresentationEvidence",
     "LearnedRule",
+    "ModelInternalsEvidence",
     "ReasonEffectDirection",
     "ReasonStatement",
     "ReliabilityStatement",
@@ -97,12 +104,14 @@ __all__ = [
     "TrainingCheckpointEvidence",
     "TrainingObjectTrace",
     "TrainingRunAnalysis",
+    "build_attribution_map",
     "build_class_concepts",
     "build_explanation_claims",
     "build_explanation_graph",
     "build_object_trace",
     "collect_data_evidence",
     "collect_fuzzy_rule_activations",
+    "collect_model_internals",
     "compare_region_masks",
     "comparison_from_percentile",
     "comparison_statement",
@@ -110,9 +119,11 @@ __all__ = [
     "detect_subgroup_averaging",
     "determine_explanation_level",
     "evaluate_explanation_quality",
+    "evaluate_explanation_quality_status",
     "evaluate_rule_ablation",
     "explanation_to_text",
     "extract_rules",
+    "find_attribution_regions",
     "find_forgetting_events",
     "find_image_regions",
     "find_similar_tabular_cases",
