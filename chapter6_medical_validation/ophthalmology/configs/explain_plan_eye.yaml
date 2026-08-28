@@ -1,0 +1,93 @@
+plan_id: ch6_eye_technical_demo
+plan_version: 1.0.0
+dataset_scope: [aptos2019_labeled_train, idrid_official]
+modality: fundus_rgb
+required_sources: [input_identity, preprocessing_trace, model_checkpoint, full_probabilities, grad_cam, technical_trace]
+optional_sources: [integrated_gradients, lesion_masks, training_history]
+not_applicable_rules: [native_fuzzy_rules]
+beta: {repr: 0.30, rules: 0.25, activations: 0.15, uncertainty: 0.20, trace: 0.10}
+lambda: {H: 0.20, C: 0.20, O: 0.20, K: 0.20, U: 0.20}
+eta: {model: 0.70, rules: 0.00, trace: 0.30}
+i_min: 0.50
+activation_threshold: 0.05
+gamma_warning: 0.25
+gamma_critical: 0.60
+delta_warning: 0.25
+delta_critical: 0.60
+rho_accept: 0.35
+rho_warning: 0.60
+rho_audit: 0.75
+rho_critical: 0.85
+representation_policy: technical_probability_coordinate
+action_policy: risk_zone
+uncertainty_policy:
+  method: entropy
+  source: five-class model probability vector
+uncertainty_representation_policy:
+  method: vote_probability_plus_minus_dispersion
+  scale: 1.0
+  clip: [0.0, 1.0]
+  source: declared heuristic interval; not calibrated prediction interval
+reduction_policy:
+  applicable: false
+  method: none
+  source: full spatial attribution Pi/iota unsupported by frozen P19 public contract
+alignment_policy:
+  applicable: true
+  source: CH6-EYE registered five-grade probability to technical risk membership transform
+  transform:
+    transform_id: ch6_eye_grade_probability_to_technical_risk_v1
+    source_interface: dr_grade_probability
+    target_interface: technical_risk
+    term_mapping:
+      dr_grade_probability:class:0: risk:low
+      dr_grade_probability:class:1: risk:low
+      dr_grade_probability:class:2: risk:medium
+      dr_grade_probability:class:3: risk:high
+      dr_grade_probability:class:4: risk:high
+    rule_mapping:
+      source_class_0: target_low
+      source_class_1: target_low
+      source_class_2: target_medium
+      source_class_3: target_high
+      source_class_4: target_high
+    representation_mapping: risk_membership_partition
+    uncertainty_mapping: identity
+    trace_mapping: identity
+    parameters:
+      triangles: {low: [0.0, 0.0, 0.5], medium: [0.0, 0.5, 1.0], high: [0.5, 1.0, 1.0]}
+      registered_coordinate: probability_of_grade_4
+    source_refs: [configs/explain_plan_eye.yaml]
+    limitations: [Technical risk coordinate is P(grade 4), not a clinical risk score or referable-DR probability.]
+membership_policies:
+  system_risk:
+    variable: technical_risk
+    universe: [0.0, 1.0]
+    origin: preset
+    version: ch6-eye-v1
+    calibration_reference: technical demonstration only
+    terms:
+      - {label: low, function: triangular, parameters: [0.0, 0.0, 0.5]}
+      - {label: medium, function: triangular, parameters: [0.0, 0.5, 1.0]}
+      - {label: high, function: triangular, parameters: [0.5, 1.0, 1.0]}
+metadata:
+  system_risk_weights: {w_p: 0.30, w_u: 0.25, w_I: 0.20, w_Delta: 0.00, w_R: 0.25}
+  system_risk_thresholds: {theta_1: 0.35, theta_2: 0.60, theta_3: 0.75, theta_4: 0.85}
+  system_action_policy: {theta_2_to_theta_3: request_more_data, theta_3_to_theta_4: defer_to_human}
+  system_target_consequents: {low: technical_low, medium: technical_medium, high: technical_high}
+  declared_coordinate: probability_of_grade_4
+  clinical_thresholds: false
+domain_language:
+  classes:
+    "0": {label: отсутствие признаков DR}
+    "1": {label: лёгкая стадия DR}
+    "2": {label: умеренная стадия DR}
+    "3": {label: тяжёлая стадия DR}
+    "4": {label: пролиферативная стадия DR}
+  features: {}
+  actions:
+    accept: {label: технический маршрут принят}
+    lower_confidence: {label: понизить доверие}
+    request_more_data: {label: запросить дополнительные сведения}
+    defer_to_human: {label: передать специалисту}
+    block: {label: заблокировать автоматическое применение}

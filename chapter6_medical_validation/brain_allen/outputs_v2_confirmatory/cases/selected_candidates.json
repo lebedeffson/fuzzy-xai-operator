@@ -1,0 +1,62 @@
+{
+  "protocol_id": "brain_v2_confirmatory",
+  "selection_policy": "frozen canonical calibrated test predictions and factual metadata only",
+  "canonical_run_id": "brain-v2-inceptionv3-seed-2027",
+  "cases": {
+    "BRAIN_V2_A": {
+      "prepared_index": 1515,
+      "object_id": "allen-v2-section-178-r320-c320",
+      "label": 1,
+      "prediction": 1,
+      "confidence": 0.9999999999976474,
+      "margin": 0.999999999995295,
+      "correct": true,
+      "gray_fraction": 0.88916015625,
+      "hpf_fraction": 0.844482421875
+    },
+    "BRAIN_V2_B": {
+      "prepared_index": 459,
+      "object_id": "allen-v2-section-234-r448-c256",
+      "label": 0,
+      "prediction": 0,
+      "confidence": 1.0,
+      "margin": 1.0,
+      "correct": true,
+      "gray_fraction": 0.976806640625,
+      "hpf_fraction": 0.0
+    },
+    "BRAIN_V2_C": {
+      "prepared_index": 1108,
+      "object_id": "allen-v2-section-82-r288-c128",
+      "label": 1,
+      "prediction": 0,
+      "confidence": 0.7606332317321558,
+      "margin": 0.5212664634643116,
+      "correct": false,
+      "gray_fraction": 0.99365234375,
+      "hpf_fraction": 0.9033203125
+    },
+    "BRAIN_V2_D": {
+      "prepared_index": 1148,
+      "object_id": "allen-v2-section-93-r256-c192",
+      "label": 1,
+      "prediction": 0,
+      "confidence": 0.9972606917167679,
+      "margin": 0.9945213834335358,
+      "correct": false,
+      "gray_fraction": 0.7607421875,
+      "hpf_fraction": 0.7431640625
+    },
+    "BRAIN_V2_E": {
+      "prepared_index": 1274,
+      "object_id": "allen-v2-section-189-r352-c320",
+      "label": 1,
+      "prediction": 1,
+      "confidence": 0.9991431960185921,
+      "margin": 0.9982863920371842,
+      "correct": true,
+      "gray_fraction": 0.70068359375,
+      "hpf_fraction": 0.596923828125
+    }
+  }
+}

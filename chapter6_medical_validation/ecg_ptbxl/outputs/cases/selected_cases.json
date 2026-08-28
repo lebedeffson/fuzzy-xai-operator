@@ -1,0 +1,173 @@
+{
+  "selection_policy": "deterministic over frozen canonical test predictions; ECG_F is maximum among the predefined natural selected-case pool",
+  "cases": {
+    "ECG_A": {
+      "prepared_index": 473,
+      "ecg_id": 504,
+      "label": 0,
+      "prediction": 0,
+      "p_abnormal": 0.0035237123571644656,
+      "confidence": 0.9964762876428355,
+      "correct": true,
+      "technical_quality_score": 0.9381047714381048,
+      "object_id": "ptbxl-504",
+      "probabilities": [
+        0.9964762330055237,
+        0.0035237513948231936
+      ],
+      "xai_diagnostic_disagreement": 0.39605811451244743,
+      "gamma": 0.10919692091115461,
+      "u_M": 0.025341469911081545,
+      "Delta_status": "not_applied",
+      "i_pre": 0.8854385625913441,
+      "rho": 0.03729992576042618,
+      "candidate_action": "accept",
+      "critical_override": false,
+      "action": "accept"
+    },
+    "ECG_B": {
+      "prepared_index": 166,
+      "ecg_id": 180,
+      "label": 1,
+      "prediction": 1,
+      "p_abnormal": 1.0,
+      "confidence": 1.0,
+      "correct": true,
+      "technical_quality_score": 0.9877377377377378,
+      "object_id": "ptbxl-180",
+      "probabilities": [
+        3.0418193906820755e-18,
+        1.0
+      ],
+      "xai_diagnostic_disagreement": 0.5,
+      "gamma": 0.10000000000000005,
+      "u_M": 1.3275208081128774e-16,
+      "Delta_status": "not_applied",
+      "i_pre": 0.8962481423065096,
+      "rho": 0.32593796442337264,
+      "candidate_action": "accept",
+      "critical_override": false,
+      "action": "accept"
+    },
+    "ECG_D": {
+      "prepared_index": 3910,
+      "ecg_id": 4079,
+      "label": 0,
+      "prediction": 1,
+      "p_abnormal": 0.9993675236610865,
+      "confidence": 0.9993675236610865,
+      "correct": false,
+      "technical_quality_score": 0.9315148481815149,
+      "object_id": "ptbxl-4079",
+      "probabilities": [
+        0.0006327336304821074,
+        0.9993672966957092
+      ],
+      "xai_diagnostic_disagreement": 0.3348353374127725,
+      "gamma": 0.10212208674685527,
+      "u_M": 0.005727039274667323,
+      "Delta_status": "not_applied",
+      "i_pre": 0.8938980989920028,
+      "rho": 0.3280537669510114,
+      "candidate_action": "accept",
+      "critical_override": false,
+      "action": "accept"
+    },
+    "ECG_E": {
+      "prepared_index": 7587,
+      "ecg_id": 7895,
+      "label": 1,
+      "prediction": 0,
+      "p_abnormal": 0.02153079198627608,
+      "confidence": 0.978469208013724,
+      "correct": false,
+      "technical_quality_score": 0.9636302969636303,
+      "object_id": "ptbxl-7895",
+      "probabilities": [
+        0.9784671068191528,
+        0.021532846614718437
+      ],
+      "xai_diagnostic_disagreement": 0.4327465415389536,
+      "gamma": 0.13924670162568026,
+      "u_M": 0.11247198580914719,
+      "Delta_status": "not_applied",
+      "i_pre": 0.8492489461475138,
+      "rho": 0.07788921349109165,
+      "candidate_action": "accept",
+      "critical_override": false,
+      "action": "accept"
+    },
+    "ECG_C": {
+      "prepared_index": 15849,
+      "ecg_id": 16534,
+      "label": 0,
+      "prediction": 1,
+      "p_abnormal": 0.5000509301476168,
+      "confidence": 0.5000509301476168,
+      "correct": false,
+      "technical_quality_score": 0.8640306973640307,
+      "object_id": "ptbxl-16534",
+      "probabilities": [
+        0.4998699724674225,
+        0.5001300573348999
+      ],
+      "xai_diagnostic_disagreement": 0.27113127181680496,
+      "gamma": 0.566545279093649,
+      "u_M": 0.7499999634038033,
+      "Delta_status": "not_applied",
+      "i_pre": 0.7711607618726914,
+      "rho": 0.43224881128192705,
+      "candidate_action": "lower_confidence",
+      "critical_override": false,
+      "action": "lower_confidence"
+    },
+    "ECG_G": {
+      "prepared_index": 14168,
+      "ecg_id": 14771,
+      "label": 0,
+      "prediction": 1,
+      "p_abnormal": 0.6418292125087873,
+      "confidence": 0.6418292125087873,
+      "correct": false,
+      "technical_quality_score": 0.7540874207540874,
+      "object_id": "ptbxl-14771",
+      "probabilities": [
+        0.3582947850227356,
+        0.6417052149772644
+      ],
+      "xai_diagnostic_disagreement": 0.2909087878457708,
+      "gamma": 0.4167860528824922,
+      "u_M": 0.7059439671531809,
+      "Delta_status": "not_applied",
+      "i_pre": 0.6992248896928531,
+      "rho": 0.4794885322159203,
+      "candidate_action": "lower_confidence",
+      "critical_override": false,
+      "action": "lower_confidence"
+    },
+    "ECG_F": {
+      "prepared_index": 166,
+      "ecg_id": 180,
+      "label": 1,
+      "prediction": 1,
+      "p_abnormal": 1.0,
+      "confidence": 1.0,
+      "correct": true,
+      "technical_quality_score": 0.9877377377377378,
+      "object_id": "ptbxl-180",
+      "probabilities": [
+        3.0418193906820755e-18,
+        1.0
+      ],
+      "xai_diagnostic_disagreement": 0.5,
+      "gamma": 0.10000000000000005,
+      "u_M": 1.3275208081128774e-16,
+      "Delta_status": "not_applied",
+      "i_pre": 0.8962481423065096,
+      "rho": 0.32593796442337264,
+      "candidate_action": "accept",
+      "critical_override": false,
+      "action": "accept"
+    }
+  }
+}

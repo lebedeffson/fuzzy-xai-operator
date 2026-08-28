@@ -1,0 +1,40 @@
+{
+  "BRAIN_G_preprocessing_mismatch": {
+    "rho": 0.28631315019272163,
+    "candidate_action": "accept",
+    "critical_override": true,
+    "final_action": "block",
+    "diagnostics": [
+      {
+        "code": "controlled_preprocessing_version_mismatch",
+        "reason": "critical structural rupture overrides numeric action",
+        "severity": "critical",
+        "rupture_present": true,
+        "critical_rupture": true,
+        "source_refs": [
+          "allen-section-106-r256-c64",
+          "expected:allen_nissl_preprocess_v1"
+        ]
+      }
+    ]
+  },
+  "BRAIN_H_checkpoint_mismatch": {
+    "rho": 0.28631315019272163,
+    "candidate_action": "accept",
+    "critical_override": true,
+    "final_action": "block",
+    "diagnostics": [
+      {
+        "code": "controlled_checkpoint_mismatch",
+        "reason": "critical structural rupture overrides numeric action",
+        "severity": "critical",
+        "rupture_present": true,
+        "critical_rupture": true,
+        "source_refs": [
+          "allen-section-106-r256-c64",
+          "31f94b4a9cd4584a7c52e57f829c90247f31ccd08e861ab53f08690ee9fee54e"
+        ]
+      }
+    ]
+  }
+}

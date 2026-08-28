@@ -1,0 +1,32 @@
+{
+  "semantics": "registered common-grid diagnostic; not canonical Gamma",
+  "T_IG": "signed 12x1000 -> sums in 12x20 -> signed L1 normalization",
+  "T_OCC": "signed 12x20 -> signed L1 normalization",
+  "normalized_l1_disagreement": 0.4327465415389536,
+  "signed_correlation": {
+    "value": 0.6587850945205507,
+    "status": "measured"
+  },
+  "ig_faithfulness": {
+    "target": 0,
+    "original_probability": 0.9784671068191528,
+    "masked_fraction": 0.1,
+    "masked_cells": 24,
+    "replacement": "zero standardized train-mean baseline",
+    "top_drop": 0.06746631860733032,
+    "random_drop_mean": 0.013046562671661377,
+    "random_drop_std": 0.01000444365303927,
+    "random_repeats": 20
+  },
+  "occlusion_faithfulness": {
+    "target": 0,
+    "original_probability": 0.9784671068191528,
+    "masked_fraction": 0.1,
+    "masked_cells": 24,
+    "replacement": "zero standardized train-mean baseline",
+    "top_drop": 0.10512304306030273,
+    "random_drop_mean": 0.01143873631954193,
+    "random_drop_std": 0.010263282404052665,
+    "random_repeats": 20
+  }
+}

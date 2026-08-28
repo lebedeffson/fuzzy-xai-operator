@@ -1,0 +1,95 @@
+{
+  "training_run_id": "ecg-resnet1d-seed-2026",
+  "model_fingerprint": "c636723940deb479a8061ebd816e5cbaeb9db4439dfe4d64dc168888800e977c",
+  "checkpoint_sha256": "9c1442b9ac7f01feef38ef57e70318bb2524b6b687f9f0a822f7fc7758571f4b",
+  "final_checkpoint_ref": "best.pt:epoch:10;sha256:9c1442b9ac7f01feef38ef57e70318bb2524b6b687f9f0a822f7fc7758571f4b",
+  "training_method": "AdamW ECGResNet1D; per-epoch measured fixed validation probe",
+  "epoch_source": "measured on fixed validation object after each completed epoch",
+  "first_learned_epoch": null,
+  "forgetting_events": [],
+  "forgetting_details": [],
+  "stability": 1.0,
+  "loss_status": "measured",
+  "history": [
+    {
+      "epoch": 1,
+      "predicted_class": 0,
+      "confidence": 0.7717135415442232,
+      "correct": false,
+      "loss": 1.477154041897747,
+      "loss_status": "measured_object_negative_log_likelihood"
+    },
+    {
+      "epoch": 2,
+      "predicted_class": 0,
+      "confidence": 0.9454338928264088,
+      "correct": false,
+      "loss": 2.9083423367113443,
+      "loss_status": "measured_object_negative_log_likelihood"
+    },
+    {
+      "epoch": 3,
+      "predicted_class": 0,
+      "confidence": 0.8836413247816377,
+      "correct": false,
+      "loss": 2.1510778306179343,
+      "loss_status": "measured_object_negative_log_likelihood"
+    },
+    {
+      "epoch": 4,
+      "predicted_class": 0,
+      "confidence": 0.8144927143235942,
+      "correct": false,
+      "loss": 1.6846611218223353,
+      "loss_status": "measured_object_negative_log_likelihood"
+    },
+    {
+      "epoch": 5,
+      "predicted_class": 0,
+      "confidence": 0.7841090954253677,
+      "correct": false,
+      "loss": 1.5329820703032415,
+      "loss_status": "measured_object_negative_log_likelihood"
+    },
+    {
+      "epoch": 6,
+      "predicted_class": 0,
+      "confidence": 0.9628359162547565,
+      "correct": false,
+      "loss": 3.2924124748086783,
+      "loss_status": "measured_object_negative_log_likelihood"
+    },
+    {
+      "epoch": 7,
+      "predicted_class": 0,
+      "confidence": 0.7809642396939385,
+      "correct": false,
+      "loss": 1.5185202734270713,
+      "loss_status": "measured_object_negative_log_likelihood"
+    },
+    {
+      "epoch": 8,
+      "predicted_class": 0,
+      "confidence": 0.9868482748216116,
+      "correct": false,
+      "loss": 4.331202336690443,
+      "loss_status": "measured_object_negative_log_likelihood"
+    },
+    {
+      "epoch": 9,
+      "predicted_class": 0,
+      "confidence": 0.9739439619665314,
+      "correct": false,
+      "loss": 3.647505751327487,
+      "loss_status": "measured_object_negative_log_likelihood"
+    },
+    {
+      "epoch": 10,
+      "predicted_class": 0,
+      "confidence": 0.9257492936537856,
+      "correct": false,
+      "loss": 2.6003079882642477,
+      "loss_status": "measured_object_negative_log_likelihood"
+    }
+  ]
+}

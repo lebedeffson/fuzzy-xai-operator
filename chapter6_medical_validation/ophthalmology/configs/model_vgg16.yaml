@@ -1,0 +1,11 @@
+model_id: vgg16_dr5_imagenet
+architecture: vgg16
+num_classes: 5
+pretrained_initialization: imagenet
+seeds: [2026, 2027, 2028]
+epochs: 20
+batch_size: 16
+loss: weighted_cross_entropy_train_only
+optimizer: {name: adamw, learning_rate: 0.0001, weight_decay: 0.0001}
+selection: {primary: lowest_validation_loss, tie_breaker: highest_validation_qwk}
+grad_cam_target_layer: features.28

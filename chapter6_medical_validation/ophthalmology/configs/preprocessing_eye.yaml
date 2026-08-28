@@ -1,0 +1,14 @@
+version: eye_preprocess_v1
+image_size: [224, 224]
+crop_black_border: true
+black_threshold: 8
+clahe: {enabled: true, clip_limit: 2.0, grid_size: [8, 8], color_space: LAB_L_channel}
+normalization:
+  mean: [0.485, 0.456, 0.406]
+  std: [0.229, 0.224, 0.225]
+train_augmentation:
+  horizontal_flip_probability: 0.5
+  rotation_degrees: 10
+  brightness_contrast_limit: 0.1
+validation_augmentation: none
+test_augmentation: none

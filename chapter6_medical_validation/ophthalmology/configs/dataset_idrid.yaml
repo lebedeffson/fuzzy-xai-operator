@@ -1,0 +1,27 @@
+dataset_id: idrid_official
+source_url: https://idrid.grand-challenge.org/Data/
+download_backend: official_ieee_dataport_link
+license_note: CC BY 4.0 is stated on the official Grand Challenge data page
+redistribution: raw_files_not_in_repository
+grading:
+  expected_total: 516
+  official_counts: {train: 413, test: 103}
+  labels: [0, 1, 2, 3, 4]
+  train_csv: eyes/idrid/grading/train_labels.csv
+  test_csv: eyes/idrid/grading/test_labels.csv
+  train_images: eyes/idrid/grading/train_images
+  test_images: eyes/idrid/grading/test_images
+  split:
+    method: stratified_official_train_only
+    seed: 2026
+    validation_fraction: 0.20
+    final_test: official_test_untouched
+segmentation:
+  expected_total: 81
+  official_counts: {train: 54, test: 27}
+  train_images: eyes/idrid/segmentation/train_images
+  test_images: eyes/idrid/segmentation/test_images
+  train_masks: eyes/idrid/segmentation/train_masks
+  test_masks: eyes/idrid/segmentation/test_masks
+  lesion_types: [microaneurysms, haemorrhages, hard_exudates, soft_exudates, optic_disc]
+  classifier_input: false

@@ -1,0 +1,32 @@
+{
+  "mode": "strict",
+  "model_id": "Qwen/Qwen2.5-0.5B-Instruct",
+  "revision": "7ae557604adf67be50417f59c2c2f167def9a775",
+  "generation": {
+    "do_sample": false,
+    "max_new_tokens": 256
+  },
+  "prompt_profile_sha256": "156b4d182b27e626a7b5054c1466632a062b1dfbf6a94f911fc22ed1fbfe3d88",
+  "source_result": "chapter6_medical_validation/ecg_ptbxl/outputs/cases/ptbxl-14771/result.json",
+  "status": "generated",
+  "guard_checks": [
+    "valid_json",
+    "known_claim_ids"
+  ],
+  "fallback_reason": null,
+  "source_claim_ids": [
+    "decision-0",
+    "concern-0",
+    "concern-1",
+    "reliability-0",
+    "action-0"
+  ],
+  "metrics": {
+    "P_fact": 1.0,
+    "H": 0,
+    "P_num": 1.0,
+    "P_action": 1.0,
+    "P_lim": 1.0
+  },
+  "text": "- Модель определила: ABNORMAL.\n- Не все проверки подтверждены: Для части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено.\n- Причины прогноза не раскрыты: Доступен итог модели, но нет подтверждённых данных о конкретных признаках, правилах или примерах, которые его поддержали.\n- Доверие ограничивают: не все проверки подтверждены, причины прогноза не раскрыты. Не хватает данных для проверок: model internals, model rules or concepts. Эти ограничения не позволяют использовать результат автоматически.\n- Передать результат предметному специалисту и проверить исходные данные, основные причины и ограничения модели."
+}

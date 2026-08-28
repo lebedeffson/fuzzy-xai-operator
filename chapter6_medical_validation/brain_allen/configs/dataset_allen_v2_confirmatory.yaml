@@ -1,0 +1,32 @@
+# Pre-registered confirmatory sampling protocol; created before any v2 test run.
+protocol_id: brain_v2_confirmatory
+dataset_name: Allen Mouse Brain Atlas CCF
+dataset_version: CCF_2017
+resolution_um: 25
+official_root: https://download.alleninstitute.org/informatics-archive/current-release/mouse_ccf/
+nissl_file: ara_nissl_25.nrrd
+annotation_file: annotation_25.nrrd
+ontology_file: structure_graph.json
+orientation: verify_from_nrrd_header
+coronal_axis: 1
+positive_structure_acronym: HPF
+gray_matter_acronym: grey
+# Smaller patches increase independent section/block coverage; they do not use v1 metrics.
+patch_size: 64
+stride: 32
+positive_min_hpf_fraction: 0.40
+positive_min_gray_tissue_fraction: 0.70
+negative_max_hpf_fraction: 0.01
+negative_min_gray_tissue_fraction: 0.70
+# A hard negative is real gray matter within this in-section distance of HPF,
+# while remaining outside the HPF mask itself.
+hard_negative_max_distance_voxels: 128
+section_block_size: 4
+boundary_exclusion_slices: 1
+split_seed: 2026
+split_fractions: {train: 0.70, validation: 0.15, test: 0.15}
+max_patches_per_class: 1500
+selection: balanced_random_within_class_after_block_safe_assignment
+limitations:
+  - single-atlas section-block generalization, not subject-level generalization
+  - hard negatives are anatomical sampling controls, not disease negatives

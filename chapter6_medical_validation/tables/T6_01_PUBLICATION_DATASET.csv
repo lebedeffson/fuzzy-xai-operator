@@ -1,0 +1,4 @@
+domain,relation_to_Averkin_work,dataset,dataset_role,replication_or_continuation
+eyes,continuation; official access pending,IDRiD,primary,continuation
+ECG,independent validation,PTB-XL 1.0.3,open validation,independent
+brain,open atlas continuation,Allen CCF 2017,open continuation,continuation

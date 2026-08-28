@@ -1,0 +1,66 @@
+plan_id: ch6_brain_allen_technical_demo
+plan_version: 1.0.0
+dataset_scope: [allen-ccf-2017-25um]
+required_sources: [patch_identity, atlas_hash, preprocessing_trace, checkpoint, probability, grad_cam, training_provenance]
+optional_sources: [integrated_gradients, anatomical_annotation]
+not_applicable_rules: [native_fuzzy_rules, clinical_prediction_risk]
+beta: {repr: 0.30, rules: 0.00, activations: 0.25, uncertainty: 0.30, trace: 0.15}
+lambda: {H: 0.20, C: 0.20, O: 0.20, K: 0.20, U: 0.20}
+eta: {model: 0.75, rules: 0.00, trace: 0.25}
+i_min: 0.50
+activation_threshold: 0.05
+gamma_warning: 0.25
+gamma_critical: 0.60
+delta_warning: 0.25
+delta_critical: 0.60
+rho_accept: 0.35
+rho_warning: 0.60
+rho_audit: 0.75
+rho_critical: 0.85
+representation_policy: binary_class_probability
+action_policy: risk_zone
+uncertainty_policy: {method: entropy, source: binary class probability vector}
+uncertainty_representation_policy:
+  method: vote_probability_plus_minus_dispersion
+  scale: 1.0
+  clip: [0.0, 1.0]
+  source: declared heuristic entropy-width interval; not calibrated prediction interval
+reduction_policy: {applicable: false, method: none, source: spatial Pi/iota unavailable in frozen public contract}
+alignment_policy:
+  applicable: true
+  source: binary class probability to technical-confidence interface
+  transform:
+    transform_id: ch6_brain_probability_to_technical_state_v1
+    source_interface: brain_binary_probability
+    target_interface: technical_risk
+    term_mapping: {"brain_binary_probability:class:0": "risk:low", "brain_binary_probability:class:1": "risk:high"}
+    rule_mapping: {source_class_0: target_low, source_class_1: target_high}
+    representation_mapping: risk_membership_partition
+    uncertainty_mapping: identity
+    trace_mapping: identity
+    parameters:
+      registered_coordinate: probability_of_HPF
+      risk_weight: 0
+      triangles: {low: [0.0, 0.0, 0.5], medium: [0.0, 0.5, 1.0], high: [0.5, 1.0, 1.0]}
+    source_refs: [configs/explain_plan_brain.yaml]
+    limitations: [HPF probability is a structural class probability and has no clinical-risk meaning.]
+membership_policies:
+  system_risk:
+    variable: technical_risk
+    universe: [0.0, 1.0]
+    origin: preset
+    version: ch6-brain-v1
+    calibration_reference: technical demonstration only
+    terms:
+      - {label: low, function: triangular, parameters: [0.0, 0.0, 0.5]}
+      - {label: medium, function: triangular, parameters: [0.0, 0.5, 1.0]}
+      - {label: high, function: triangular, parameters: [0.5, 1.0, 1.0]}
+metadata:
+  system_risk_weights: {w_p: 0.00, w_u: 0.40, w_I: 0.35, w_Delta: 0.00, w_R: 0.25}
+  system_risk_thresholds: {theta_1: 0.35, theta_2: 0.60, theta_3: 0.75, theta_4: 0.85}
+  system_action_policy: {theta_2_to_theta_3: request_more_data, theta_3_to_theta_4: defer_to_human}
+  system_target_consequents: {low: technical_low, medium: technical_medium, high: technical_high}
+domain_language:
+  classes: {"0": {label: другая структура серого вещества}, "1": {label: гиппокампальная формация}}
+  features: {}
+  actions: {accept: {label: технический маршрут принят}, lower_confidence: {label: понизить доверие}, request_more_data: {label: запросить сведения}, defer_to_human: {label: передать специалисту}, block: {label: заблокировать}}

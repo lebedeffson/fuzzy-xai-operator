@@ -1,0 +1,647 @@
+{
+  "detail": "standard",
+  "prediction": {
+    "value": [
+      0
+    ],
+    "score": 0.9189099669456482,
+    "probabilities": [
+      [
+        0.9189099669456482,
+        0.0810900405049324
+      ]
+    ]
+  },
+  "action": "accept",
+  "claims": [
+    {
+      "claim_id": "C-001",
+      "claim_type": "prediction",
+      "scope": "object",
+      "subject_id": "[0]",
+      "statement": "Модель сформировала прогноз [0] с максимальным модельным баллом 0.919.",
+      "short_statement": "Прогноз: [0]",
+      "evidence_status": "supported",
+      "effect": "neutral",
+      "severity": "info",
+      "strength": 0.9189099669456482,
+      "evidence_refs": [
+        "prediction"
+      ],
+      "confidence_interval": null,
+      "counter_evidence_refs": [],
+      "limitations": [],
+      "applicability": null,
+      "metric_name": "model_score",
+      "metric_value": 0.9189099669456482,
+      "metric_unit": null,
+      "comparison_baseline": null,
+      "native": null,
+      "surrogate": null,
+      "status": "supported"
+    },
+    {
+      "claim_id": "C-002",
+      "claim_type": "data_quality",
+      "scope": "object",
+      "subject_id": "ptbxl-8",
+      "statement": "Качество доступных входных данных объекта ptbxl-8 равно 1.000.",
+      "short_statement": "Качество данных: 1.000",
+      "evidence_status": "supported",
+      "effect": "favorable",
+      "severity": "info",
+      "strength": 1.0,
+      "evidence_refs": [
+        "data:ptbxl-8"
+      ],
+      "confidence_interval": null,
+      "counter_evidence_refs": [],
+      "limitations": [],
+      "applicability": null,
+      "metric_name": "data_quality",
+      "metric_value": 1.0,
+      "metric_unit": null,
+      "comparison_baseline": null,
+      "native": null,
+      "surrogate": null,
+      "status": "supported"
+    },
+    {
+      "claim_id": "C-003",
+      "claim_type": "data_quality",
+      "scope": "object",
+      "subject_id": "ptbxl-8",
+      "statement": "Качество доступных входных данных объекта ptbxl-8 равно 1.000.",
+      "short_statement": "Качество данных: 1.000",
+      "evidence_status": "supported",
+      "effect": "favorable",
+      "severity": "info",
+      "strength": 1.0,
+      "evidence_refs": [
+        "data:ptbxl-8"
+      ],
+      "confidence_interval": null,
+      "counter_evidence_refs": [],
+      "limitations": [],
+      "applicability": null,
+      "metric_name": "data_quality",
+      "metric_value": 1.0,
+      "metric_unit": null,
+      "comparison_baseline": null,
+      "native": null,
+      "surrogate": null,
+      "status": "supported"
+    },
+    {
+      "claim_id": "C-004",
+      "claim_type": "data_quality",
+      "scope": "object",
+      "subject_id": "ptbxl-8:technical_quality",
+      "statement": "Качество доступных входных данных объекта ptbxl-8:technical_quality равно 1.000.",
+      "short_statement": "Качество данных: 1.000",
+      "evidence_status": "supported",
+      "effect": "favorable",
+      "severity": "info",
+      "strength": 1.0,
+      "evidence_refs": [
+        "data:ptbxl-8:technical_quality"
+      ],
+      "confidence_interval": null,
+      "counter_evidence_refs": [],
+      "limitations": [],
+      "applicability": null,
+      "metric_name": "data_quality",
+      "metric_value": 1.0,
+      "metric_unit": null,
+      "comparison_baseline": null,
+      "native": null,
+      "surrogate": null,
+      "status": "supported"
+    },
+    {
+      "claim_id": "C-005",
+      "claim_type": "training_trace",
+      "scope": "object",
+      "subject_id": "ptbxl-8",
+      "statement": "Для объекта ptbxl-8 зарегистрирована измеренная траектория обучения из 10 эпох.",
+      "short_statement": "Зарегистрирована траектория обучения",
+      "evidence_status": "supported",
+      "effect": "neutral",
+      "severity": "info",
+      "strength": null,
+      "evidence_refs": [
+        "training:ptbxl-8"
+      ],
+      "confidence_interval": null,
+      "counter_evidence_refs": [],
+      "limitations": [],
+      "applicability": "training_history_available",
+      "metric_name": null,
+      "metric_value": null,
+      "metric_unit": null,
+      "comparison_baseline": null,
+      "native": null,
+      "surrogate": null,
+      "status": "supported"
+    },
+    {
+      "claim_id": "C-006",
+      "claim_type": "attribution_map",
+      "scope": "object",
+      "subject_id": "ptbxl-8",
+      "statement": "Метод integrated_gradients вычислил полную карту атрибуции по пикселям (форма (1, 12, 1000)). Сумма положительного вклада +14.8911, отрицательного -12.5185, диапазон [-0.0622, 0.0535]. Baseline: all-zero input tensor; target=0; проверка полноты в пространстве logit: остаток 0.009631.",
+      "short_statement": "Карта атрибуции (integrated_gradients): сумма +2.3726",
+      "evidence_status": "supported",
+      "effect": "favorable",
+      "severity": "info",
+      "strength": null,
+      "evidence_refs": [
+        "attribution_map:ptbxl-8"
+      ],
+      "confidence_interval": null,
+      "counter_evidence_refs": [],
+      "limitations": [
+        "Attribution reflects this model's own gradient behavior, not domain causality."
+      ],
+      "applicability": null,
+      "metric_name": "completeness_error",
+      "metric_value": 0.009630680084228516,
+      "metric_unit": null,
+      "comparison_baseline": null,
+      "native": null,
+      "surrogate": null,
+      "status": "supported"
+    },
+    {
+      "claim_id": "C-007",
+      "claim_type": "attribution_map",
+      "scope": "object",
+      "subject_id": "ptbxl-8",
+      "statement": "Метод temporal_occlusion вычислил полную карту атрибуции по пикселям (форма (12, 1000)). Сумма положительного вклада +32.5459, отрицательного -13.1139, диапазон [-0.0128, 0.0205]. Проверка полноты не выполнена: причина не указана.",
+      "short_statement": "Карта атрибуции (temporal_occlusion): сумма +19.4320",
+      "evidence_status": "supported",
+      "effect": "favorable",
+      "severity": "info",
+      "strength": null,
+      "evidence_refs": [
+        "attribution_map:ptbxl-8"
+      ],
+      "confidence_interval": null,
+      "counter_evidence_refs": [],
+      "limitations": [
+        "Attribution reflects this model's own gradient behavior, not domain causality."
+      ],
+      "applicability": null,
+      "metric_name": null,
+      "metric_value": null,
+      "metric_unit": null,
+      "comparison_baseline": null,
+      "native": null,
+      "surrogate": null,
+      "status": "supported"
+    },
+    {
+      "claim_id": "C-008",
+      "claim_type": "missing_channel",
+      "scope": "model",
+      "subject_id": "model_internals",
+      "statement": "Канал evidence «model_internals» недоступен; связанные с ним утверждения не формируются.",
+      "short_statement": "Нет evidence: model_internals",
+      "evidence_status": "insufficient_evidence",
+      "effect": "unknown",
+      "severity": "warning",
+      "strength": null,
+      "evidence_refs": [
+        "trace:missing_evidence"
+      ],
+      "confidence_interval": null,
+      "counter_evidence_refs": [],
+      "limitations": [
+        "Канал evidence «model_internals» отсутствует."
+      ],
+      "applicability": null,
+      "metric_name": null,
+      "metric_value": null,
+      "metric_unit": null,
+      "comparison_baseline": null,
+      "native": null,
+      "surrogate": null,
+      "status": "insufficient_evidence"
+    },
+    {
+      "claim_id": "C-009",
+      "claim_type": "missing_channel",
+      "scope": "model",
+      "subject_id": "model_rules_or_concepts",
+      "statement": "Канал evidence «model_rules_or_concepts» недоступен; связанные с ним утверждения не формируются.",
+      "short_statement": "Нет evidence: model_rules_or_concepts",
+      "evidence_status": "insufficient_evidence",
+      "effect": "unknown",
+      "severity": "warning",
+      "strength": null,
+      "evidence_refs": [
+        "trace:missing_evidence"
+      ],
+      "confidence_interval": null,
+      "counter_evidence_refs": [],
+      "limitations": [
+        "Канал evidence «model_rules_or_concepts» отсутствует."
+      ],
+      "applicability": null,
+      "metric_name": null,
+      "metric_value": null,
+      "metric_unit": null,
+      "comparison_baseline": null,
+      "native": null,
+      "surrogate": null,
+      "status": "insufficient_evidence"
+    },
+    {
+      "claim_id": "C-010",
+      "claim_type": "recommended_action",
+      "scope": "object",
+      "subject_id": "[0]",
+      "statement": "На основании доступных claims рекомендовано действие accept.",
+      "short_statement": "Действие: accept",
+      "evidence_status": "supported",
+      "effect": "favorable",
+      "severity": "info",
+      "strength": null,
+      "evidence_refs": [
+        "prediction"
+      ],
+      "confidence_interval": null,
+      "counter_evidence_refs": [],
+      "limitations": [],
+      "applicability": "accept",
+      "metric_name": null,
+      "metric_value": null,
+      "metric_unit": null,
+      "comparison_baseline": null,
+      "native": null,
+      "surrogate": null,
+      "status": "supported"
+    }
+  ],
+  "human_explanation": {
+    "audience": "domain_user",
+    "language": "ru",
+    "decision": {
+      "title": "NORMAL",
+      "explanation": "Модель определила: NORMAL.",
+      "claim_refs": [
+        "C-001"
+      ],
+      "evidence_refs": [
+        "prediction"
+      ],
+      "domain_language_status": "available"
+    },
+    "main_reasons": [],
+    "concerns": [
+      {
+        "title": "Не все проверки подтверждены",
+        "explanation": "Для части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено.",
+        "claim_refs": [
+          "C-008"
+        ],
+        "evidence_refs": [
+          "trace:missing_evidence"
+        ]
+      },
+      {
+        "title": "Причины прогноза не раскрыты",
+        "explanation": "Доступен итог модели, но нет подтверждённых данных о конкретных признаках, правилах или примерах, которые его поддержали.",
+        "claim_refs": [
+          "C-001"
+        ],
+        "evidence_refs": [
+          "prediction"
+        ]
+      }
+    ],
+    "reliability": {
+      "title": "Достаточно для контролируемого применения",
+      "explanation": "Доверие ограничивают: не все проверки подтверждены, причины прогноза не раскрыты. Не хватает данных для проверок: model internals, model rules or concepts. Существенных противоречий для контролируемого применения не обнаружено.",
+      "claim_refs": [
+        "C-010",
+        "C-008",
+        "C-001",
+        "C-002",
+        "C-003",
+        "C-004",
+        "C-009"
+      ],
+      "evidence_refs": [
+        "prediction",
+        "trace:missing_evidence",
+        "data:ptbxl-8",
+        "data:ptbxl-8:technical_quality"
+      ],
+      "supported_by": [],
+      "limited_by": [
+        "Не все проверки подтверждены",
+        "Причины прогноза не раскрыты"
+      ],
+      "missing_evidence": [
+        "model internals",
+        "model rules or concepts"
+      ],
+      "conclusion": "Существенных противоречий для контролируемого применения не обнаружено."
+    },
+    "recommended_action": {
+      "title": "технический маршрут принят",
+      "explanation": "Зарегистрированная политика маршрута разрешает кандидатное действие accept; это не является самостоятельным доказательством предметной корректности или безопасности.",
+      "claim_refs": [
+        "C-010"
+      ],
+      "evidence_refs": [
+        "prediction"
+      ],
+      "action": "accept"
+    },
+    "what_would_change_result": [],
+    "details": {
+      "supports": [],
+      "contradicts": [],
+      "limitations": [
+        {
+          "title": "Не все проверки подтверждены",
+          "explanation": "Для части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено.",
+          "claim_refs": [
+            "C-008"
+          ],
+          "evidence_refs": [
+            "trace:missing_evidence"
+          ]
+        },
+        {
+          "title": "Причины прогноза не раскрыты",
+          "explanation": "Доступен итог модели, но нет подтверждённых данных о конкретных признаках, правилах или примерах, которые его поддержали.",
+          "claim_refs": [
+            "C-001"
+          ],
+          "evidence_refs": [
+            "prediction"
+          ]
+        }
+      ],
+      "training": [
+        {
+          "title": "Проверенная траектория обучения",
+          "explanation": "Запуск ecg-resnet1d-seed-2026; объект не был правильно классифицирован ни на одной из зарегистрированных эпох; событий забывания не зарегистрировано; устойчивость 1.000. Траектория привязана к best.pt:epoch:10;sha256:9c1442b9ac7f01feef38ef57e70318bb2524b6b687f9f0a822f7fc7758571f4b.",
+          "claim_refs": [
+            "C-005"
+          ],
+          "evidence_refs": [
+            "training:ptbxl-8"
+          ]
+        }
+      ],
+      "similar_cases": [],
+      "technical_metrics": [
+        {
+          "title": "model_score",
+          "explanation": "0.919",
+          "claim_refs": [
+            "C-001"
+          ],
+          "evidence_refs": [
+            "prediction"
+          ]
+        },
+        {
+          "title": "data_quality",
+          "explanation": "1.000",
+          "claim_refs": [
+            "C-002"
+          ],
+          "evidence_refs": [
+            "data:ptbxl-8"
+          ]
+        },
+        {
+          "title": "data_quality",
+          "explanation": "1.000",
+          "claim_refs": [
+            "C-003"
+          ],
+          "evidence_refs": [
+            "data:ptbxl-8"
+          ]
+        },
+        {
+          "title": "data_quality",
+          "explanation": "1.000",
+          "claim_refs": [
+            "C-004"
+          ],
+          "evidence_refs": [
+            "data:ptbxl-8:technical_quality"
+          ]
+        },
+        {
+          "title": "Карта атрибуции по пикселям",
+          "explanation": "Метод integrated_gradients вычислил полную карту атрибуции по пикселям (форма (1, 12, 1000)). Сумма положительного вклада +14.8911, отрицательного -12.5185, диапазон [-0.0622, 0.0535]. Baseline: all-zero input tensor; target=0; проверка полноты в пространстве logit: остаток 0.009631.",
+          "claim_refs": [
+            "C-006"
+          ],
+          "evidence_refs": [
+            "attribution_map:ptbxl-8"
+          ]
+        },
+        {
+          "title": "Карта атрибуции по пикселям",
+          "explanation": "Метод temporal_occlusion вычислил полную карту атрибуции по пикселям (форма (12, 1000)). Сумма положительного вклада +32.5459, отрицательного -13.1139, диапазон [-0.0128, 0.0205]. Проверка полноты не выполнена: причина не указана.",
+          "claim_refs": [
+            "C-007"
+          ],
+          "evidence_refs": [
+            "attribution_map:ptbxl-8"
+          ]
+        }
+      ]
+    },
+    "level": "user",
+    "summary": "## Решение\nМодель определила: NORMAL.\n\n## Что вызывает сомнение\n**Не все проверки подтверждены.** Для части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено.\n**Причины прогноза не раскрыты.** Доступен итог модели, но нет подтверждённых данных о конкретных признаках, правилах или примерах, которые его поддержали.\n\n## Насколько можно доверять\nДоверие ограничивают: не все проверки подтверждены, причины прогноза не раскрыты. Не хватает данных для проверок: model internals, model rules or concepts. Существенных противоречий для контролируемого применения не обнаружено.\n\n## Что делать\nЗарегистрированная политика маршрута разрешает кандидатное действие accept; это не является самостоятельным доказательством предметной корректности или безопасности.\n",
+    "model_observed": [
+      "Модель определила: NORMAL."
+    ],
+    "lost_or_averaged": [
+      "Для части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено.",
+      "Доступен итог модели, но нет подтверждённых данных о конкретных признаках, правилах или примерах, которые его поддержали."
+    ],
+    "similar_cases": [],
+    "decision_changes": [],
+    "trust": [
+      "Доверие ограничивают: не все проверки подтверждены, причины прогноза не раскрыты. Не хватает данных для проверок: model internals, model rules or concepts. Существенных противоречий для контролируемого применения не обнаружено.",
+      "Зарегистрированная политика маршрута разрешает кандидатное действие accept; это не является самостоятельным доказательством предметной корректности или безопасности."
+    ],
+    "limitations": [
+      "Для части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено.",
+      "Доступен итог модели, но нет подтверждённых данных о конкретных признаках, правилах или примерах, которые его поддержали."
+    ],
+    "evidence_trace": [],
+    "claim_refs": {
+      "decision": [
+        "C-001"
+      ],
+      "main_reasons": [],
+      "concerns": [
+        "C-008",
+        "C-001"
+      ],
+      "reliability": [
+        "C-010",
+        "C-008",
+        "C-001",
+        "C-002",
+        "C-003",
+        "C-004",
+        "C-009"
+      ],
+      "recommended_action": [
+        "C-010"
+      ],
+      "changes": []
+    }
+  },
+  "similar_cases": [],
+  "object_representation": {
+    "object_id": "ptbxl-8",
+    "modality": "image",
+    "raw_excerpt": "",
+    "spans": [],
+    "unmapped_features": [],
+    "suppressed_matches": [],
+    "highlighted_html": "",
+    "tabular_rows": [],
+    "tabular_rows_original_order": [],
+    "limitations": [
+      "no region masks were supplied; per-pixel attribution was not measured, not omitted by mistake"
+    ],
+    "image_width": 1000,
+    "image_height": 12,
+    "image_channels": 1,
+    "image_artifact_sha256": "ebe27eef1889402ec467b67516803025f0cb8a69df0d903f1a653348b3015b41",
+    "image_png_base64": "[raw image bytes omitted by default; pass include_raw=True to include them]",
+    "image_regions": [],
+    "attribution_overlay_png_base64": "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LddFk8StYQEAAMIt17do5dawOTVhwgT17t1bXbp0UTwe15w5c9S7d289++yzuS6aJG4NCwAAEErBrWE/+qhp3hr2wAO5NexOPPbYY7rtttv09ttv57oodHMCAAAA9iXDhw+XCUn2hmACAAAgzJpit5+mtr27sWXLFj3//PNau3atfvazn+nTTz/Vsccem+tiSWLMBAAAQLjleuwCYyZyatGiRerRo4fuv/9+/eIXv5AkLVu2TGPGjMlxyXwEEwAAAGGW60o9wUROjR8/Xr/73e/0j3/8Q5GI36mof//+Wrx4cY5L5iOYAAAAAELqo48+0pAhQyQpGCfRvHlz1dXV5bBU9QgmAAAAwizXGQIyEznVuXNnvfvuuxnTli5dGprnTDAAGwAAIMyaYuW6qW3vLlx33XU644wzdPXVVyuRSOiBBx7Q7bffrl//+te5LpokggkAAAAgtM466ywVFRXpvvvuU5cuXfTUU09pypQpOv3003NdNEnioXUAAABhFDy0bsWKJvfgtsrKShV368ZD6/YBjJkAAAAIs1yPXWDMRE7NnDlzhzET77zzjmbNmpWjEmUimAAAAAizXFfqCSZyauLEidp///0zpu2///668cYbc1SiTAQTAAAAQEht3rxZrVu3zpjWunVrffbZZzkqUSaCCQAAgDDLdYaAzEROdevWTa+++mrGtNdee01dunTJUYkycTcnAACAMGuKleumtr27cM0112jYsGEaP368evToof/+97+66667NHny5FwXTRLBBAAAABBaI0aMUGFhoe6//349+uij6tKlix588EGdeeaZuS6aJHFrWAAAgDAKbg27Zk2Tuz1qZWWlijt25Naw+wDGTAAAAIRZrscuMGYipz5/W1hJqqmp0WWXXZaD0uyIYAIAACDMcl2pJ5jIqdNOO01LliwJ/l64cKEOPfRQbd26NXeFaoAxEwAAAEBIzZgxQ2eccYYeeeQRzZs3TzNmzNA999yj4cOH57pokggmAAAAwq0pttQ3te3dhYEDB2r27NkaPHiwevbsqffee0+lpaW5LlaAbk4AAABhluvuRnRzyqnKykodfvjhevzxx/Xxxx/rrbfeUmVlpSorK3NdNElkJgAAAMKtKVaum9r27kJJSYlMan94nqfBgwdLkowxchwnl0WTRDABAAAAhNaKFStyXYRdIpgAAAAIMzITTVqX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ssv2aFtef/31nT5QpzFt27YN1jtt2jQdf/zxwd9lZWXyPE+DBw9WaWmp/ve//+n999/Xu+++q1/+8pfBZxQXFwfLpD8nbfbs2Ro9erS2bt2qyy67TIMHD86oUO6u3Ltafty4cfrvf/+rDz74QO+//74+/PBDXXnllRnLr1mzRtXV1br55pt14YUXKpm6VWerVq305JNPqrKyUk8//bQeeOABzZ49e4/325fl/vvv1+9//3s988wz2rRpk4YOHaozzjhD8Xh8p8s8+uijGfs7bdu2bVq6dKn+97//6ZVXXtFDDz0UHNeu66qsrEyrV6/WJ598oubNm+vCCy/M+NzdHYcNTZ48WU76AXwpF1xwgTZv3qz33ntPK1asUCKR2OlAxc+78847g/V27txZf/3rX1VVVaVNmzbt0fIA9lxw2+Mm9sK+gWAC+6QLL7xQDz74oCTpscce05lnnplx7+np06dr1KhROumkk2RZlo477jidfvrp+tOf/rTbz3788cd14oknaujQoYpEIvrhD3+o4447To8++mgwT01NjWKx2E4/47777tN9992323V5nqcrr7xSt956627n3VNvvfWW/vOf/+j2229X8+bN1apVK11//fV7XPE+6aSTdMYZZygSieiSSy5Ru3bt9Oyzz+5xuXe2vOu6euSRRzRp0iS1atVKrVu31q233qqZM2dmPncmJZlMqmXLlsFtfU877TQdeOCBMsaoT58+GjFihF555ZW930Ff0NSpU3XLLbeoR48eikQiuuKKK1RTU6M33nhjrz/LdV3ddtttat68uXr27KmxY8fqj3/8oyQ/o3HaaacpPz9fRUVFuuGGG/Taa69l7KvdHYdp5eXluvfee3X99dcH0zZu3KgnnnhCU6dOVUlJiQoKCnTLLbfo8ccf3yHoAJBbua7UE0xgVxiAjX1S165d1bFjR/3jH//QtGnT9Mgjj+iJJ54I3l+5cqUWLFigGTNmBNOSyeQe9btcs2ZNRlcQSerevbvWrFkT/L1u3Tq1bdv2C2/HrFmzVFxcrNNPP32H9+6///6MLisNu3XtysqVK7V161a1bNkymOZ53h5XELt06bLD32vXrt3jcu9s+Y0bNyoej2fs2+7du6uuri6jNbtLly5yHEeJREJTp04N7q/9wgsv6Oabb9ZHH32kRCKhuro6nXbaaRnrOv7444PgI5lMKhLJPMVdd911jT45Ne25555TSUmJbNvWAQccoNtuu22He4mvXLlSZ599dv2zSyTF4/GM42NP5efnZxxHDff1xo0bNW7cOL322mtB16O6ujpt27ZNxcXFkvb8OLzhhhs0ZsyYjPukr1y5Uq7rqlu3bhnzWpaV8WTXLl26BN9BPB7XgQceuMfbtyf7EwCwbyMzgX3WJZdcoiuuuEJFRUXq0aNHxnudOnXSuHHjtHXr1uBVVVWl+++/f7ef27Fjxx36c69cuVIdO9Y/A+Ctt97St7/97S9U/u3bt2vChAnBOIfPu/TSSzPK37lz5z363E6dOqlt27YZy1ZUVGR0r9mVTz75JOPvVatWaf/9658rsLty72z5Nm3aKBaLZezblStXKi8vL+hnn16+qqpKH3zwgX72s5/prbfeUjwe19ChQ3XxxRdr7dq1qqio0CWXXKLP3z/itddeC7b589kUSZo0aVLGfvm8QYMGaevWrdq4caN+9KMf6Zxzztlhnk6dOmnOnDkZn7N9+3aNGDGi0f2xK7W1tdqwYcMO+0ryA5/t27dr6dKlqqys1N///ndJytjmPTkO3377bS1YsEBlZWU7bIdlWVq3bl3GttTW1mZ835988knw3p5k2xrak/0JYPdynSEgMxFOgwYN0kknnaThw4fntBwEE9hnDRo0SH369MnoupF28cUXa8aMGXr55ZflOI7q6uq0aNGiXQ6UTRs+fLheeeUV/eUvf1EymdSTTz6pv//97zrrrLMkSR9++KGee+65L1wxmjp1qk499dRd9nPPxpFHHqlOnTppwoQJ2rZtmzzP0yeffKK//vWve7T8ggUL9NxzzymZTOrBBx/Up59+qkGDBu1xuXe2vGVZ+slPfqIbbrhBmzdvDsajnHPOORm36kuzbVue52njxo2qq6tTbW2tWrVqpby8PL3xxhtf6XgJy7JUUlLSaDZnzJgxuummm7R8+XJJfsboL3/5i7Zt25bVeq677jrV1NRo+fLlmjp1qkaOHBl8bvPmzVVSUqLPPvtMN998c8aye3ocTpgwQbfeequaNWuWMb20tFRDhgzR2LFjg8xQeXm5nnrqqb3ejt3Z1f4EsHu5rtQTTORW9+7dG3298MILmjFjxk4b974udHPCPsuyLD300EONvvftb39bjz76qCZMmKBly5bJsiz16dNHv/3tb3f7uQcccICefPJJXXfddTrnnHPUvXt3PfXUU+revbtWrVql3r17y3Ecffe73w2Wqamp0SWXXKJvfetbOv7444O7IzUc2Px527Zt0y9+8Yu93Ords21bzz77rK655hr16tVLlZWV6ty5sy6++OI9Wv4nP/mJHnzwQQ0fPlzdunXTX/7yF+233357XO5dLX/XXXeprKxMBx98sCRp8ODBuuOOOzKWT2eACgsLdcEFF2jgwIGyLEtTp07VRRddpKqqKp144okaPny4Vq9evVf7ZndeeOGFYP0tW7Zs9PgaO3asbNvW0KFDtXr1arVo0ULHHXecTjrppL1eX4sWLdSnTx91795druvqoosu0nnnnSdJuvnmm3Xeeedpv/32U8eOHVVWVhbcrWxPj0NJ6ty5cxAIf97DDz+siRMn6sgjj9Rnn32mdu3aafjw4frBD36w19vSmD3ZnwB2rylWrpva9u5KeXl5xrhNyc9Sjxw5coeuxbnAcyaAvbBy5UqNGjWq0YG/o0aN0qhRo3TiiSd+7eX6sowaNUolJSU73EL161q+KXnllVc0ZMiQRrtb7c43/TgE4Es/Z2Lduqb3rIXKykp16MBzJiSpqKio0XGTO5v+dSMzAeyFSCSiNm3aNPpey5YtM+4oBXxVOA6BpoXMRNOWSCQ0a9YsRaNRtW3bVn369MnoMZBrBBPAXujYsaPmzJnT6Hu57rOIpoPjEGhaCCaatoMOOki33367ampqVF5eru3bt+u0005TIpHIddEk0c0JAAAglNLdnFavbnpdfSorK9WpE92cGrNs2TJNnjxZDz30kF5++WXl5eWpX79+OSsPmQkAAABgH9GrVy89+OCDMsZoxowZatWqFcEEAAAAGkc3JzTmgQceyHURJBFMAAAAhBrBBBYtWqRXXnlFmzZtUsMRCmEYJ8dD6wAAAICQmjp1qk4++WQtXrxYU6dO1YoVKzR9+nSVl5fnumiSCCYAAABCLddPouYJ2Ll155136q9//aueeuopNWvWTE899ZTmzJkTmtuAczcnAACAEErfzWnFiqZ3R6PKykp168bdnKTMh9O1atVKmzZtkiS1bt1an332WS6LJokxEwAAAKFH02/TVVpaqnXr1qlDhw7q2rWrXnnlFbVp00aWFY4ORuEoBQAAAIAdXHrppXrjjTckSWVlZfre976nb3/72xozZkyOS+ajmxMAAEAIpbs5ffxxhVq0aFpdfbZtq1T37nRzaszq1atVVVWlXr165bookujmBAAAEGpNcUByU9vevdGpU6dcFyEDwQQAAAAQUpZlyRjT6HuO43zNpdkRwQQAAECIkZlo2po1a6aFCxfmuhg7RTABAAAQYgQTTZtt2zrssMNyXYydIpgAAAAIMYKJpq2urk5XXXWVYrGYWrZsqQMPPFAnn3yyCgsLc100SdwaFgAAAAitn/zkJ9q0aZNWrFihF198UWPGjFGXLl20aNGiXBdNEpkJAACAUCMz0bTNmDFjh2mTJ0/WT3/6U73++us5KFEmggkAAIAQI5jA511xxRVyXTfXxZBEMAEAABBqBBNNWyKRUDQazZgWiUR03HHH5ahEmRgzAQAAAITUmWeeqXg8HvydTCZ13XXXaciQIbkrVAMEEwAAACGWzkw0tRd8paWlOu2001RTU6P33ntPffv21Xvvvae3334710WTRDABAAAQarmu1BNM5NZDDz2kgw46SH379tVJJ52kMWPG6LnnnlP79u1zXTRJBBMAAABAqN1333067bTT1LlzZ/3oRz/KdXEyMAAbAAAgxJpiS31T295d+cEPfiBjjDzP0/Lly9WvXz/17t1bkvTkk0/muHQEEwAAAKFGMNG09enTp9F/hwXBBAAAQIgRTDRtEydOzHURdokxEwAAAECILVy4UP/5z3/keZ4mT56s6667Tp999lmuiyWJzAQAAECokZlo2n72s59p6tSpsixLI0eO1AcffCBjjD788EM99dRTuS4ewQQAAECYEUw0bTNnztQ777yjRCKhQw45RFu2bJExRt26dct10SQRTAAAAAChVV1drR49ekiSWrRooaKiIknKeCp2LhFMAAAAhBiZiabNcRw988wz8jwv+LfrunIcJ9dFkyQZz+PrAgAACJvKykoVFxdr6dIKtWhRlOvifK22bavU4YcXq6KiImiJb6q6du0qY0yj761YseJrLs2OyEwAAACEHE2/TdfKlStzXYRd4tawAAAAALJCZgIAACDEGDOBMCOYAAAACDGCCYQZ3ZwAAABCLB1MNLXXV2Xz5s0aOXKkioqKVFJSotGjR6uqqmqXy9TW1mrMmDFq1aqVCgsLNWzYMK1fvz54/91339WIESPUqVMnNWvWTL169dJdd9311W1EiBBMAAAAoMkYOXKk/vWvf+mll17Ss88+q7///e+66KKLdrnMlVdeqWeeeUZz5szRq6++qnXr1mno0KHB+0uWLFHbtm01a9Ys/etf/9INN9yg6667Tvfee+9XvTk5x61hAQAAQih9a9jFiytUWNi0bo9aVVWpo44q1urVqzNuDZuXl6e8vLysP3fZsmU6+OCD9eabb+qII46QJM2bN0/f//73tWbNGnXo0GGHZSoqKtSmTRvNnj1bP/zhDyVJH374oXr16qVFixbp6KOPbnRdY8aM0bJly7RgwYKsy7svIDMBAAAQYrnubpTLbk6dOnVScXFx8Jo0adIX2peLFi1SSUlJEEhI0oABA2RZlt54441Gl1myZIkSiYQGDBgQTOvZs6c6d+6sRYsW7XRdFRUVatmy5Rcq776AAdgAAAAIpcYyE19EeXm52rZtmzEtEomoZcuWKi8v3+kysVhMJSUlGdPbtWu302UWLlyoxx9/XM8999wXKu++gMwEAABAiOU6Q5DLzERRUVHGa2fBxLXXXitjzC5fH3744dfyfX3wwQc688wzNXHiRH3ve9/7WtaZS2QmAAAAQuyrvrtRGO3t9l511VUaNWrULufp3r27SktLtWHDhozpyWRSmzdvVmlpaaPLlZaWKh6Pa+vWrRnZifXr1++wzL///W+dfPLJuuiiizRhwoS924h9FMEEAABAiBFM7F6bNm3Upk2b3c7Xv39/bd26VUuWLFHfvn0lSQsWLJDruurXr1+jy/Tt21fRaFTz58/XsGHDJEnLly/XqlWr1L9//2C+f/3rXzrppJN03nnn6Ve/+tXebcA+jG5OAAAAaBJ69eqlU089VRdeeKEWL16s119/XWPHjtVZZ50V3Mlp7dq16tmzpxYvXixJKi4u1ujRo1VWVqaXX35ZS5Ys0fnnn6/+/fsHd3L64IMP9N3vflff+973VFZWpvLycpWXl2vjxo0529avC5kJAACAECMz8eV65JFHNHbsWJ188smyLEvDhg3T3XffHbyfSCS0fPlybd++PZg2ZcqUYN66ujoNHDhQ9913X/D+n//8Z23cuFGzZs3SrFmzguldunTRypUrv7qNCQGeMwEAABBC6edM/OMfTfM5E8cdV6yKioqMuzkhfOjmBAAAACArdHMCAAAIMbo5IcwIJgAAAEKMYAJhRjABAAAQYgQTCDPGTAAAAADICpkJAACAECMzgTAjmAAAAAgxggmE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ys/PV9u2bTVmzJivajNCg25OAAAAIUY3py/XyJEj9emnn+qll15SIpHQ+eefr4suukizZ8/e6TJXXnmlnnvuOc2ZM0fFxcUaO3ashg4dqtdffz2YZ/Lkybrjjjt0++23q1+/fqqurtbKlSu/ug0JCeN5Te3wBAAACL/KykoVFxdrwoQK5ecX5bo4X6va2kr98pfFqqioUFHRl7fty5Yt08EHH6w333xTRxxxhCRp3rx5+v73v681a9aoQ4cOOyxTUVGhNm3aaPbs2frhD38oSfrwww/Vq1cvLVq0SEcffbS2bNmi/fffX88884xOPvnkL628+wK6OQEAACCUKisrM151dXVf6PMWLVqkkpKSIJCQpAEDBsiyLL3xxhuNLrNkyRIlEgkNGDAgmNazZ0917txZixYtkiS99NJLcl1Xa9euVa9evdSxY0f9+Mc/1urVq79QefcFBBMAAAAhluuxC7kcM9GpUycVFxcHr0mTJn2hfVleXq62bdtmTItEImrZsqXKy8t3ukwsFlNJSUnG9Hbt2gXLfPzxx3JdV7feeqvuvPNO/fnPf9bmzZt1yimnKB6Pf6Eyhx1jJgAAAEKsKY+ZWL16dUY3p7y8vEbnv/baa3Xbbbft8jOXLVv2pZXv81zXVSKR0N13363vfe97kqRHH31UpaWlevnllzVw4MCvbN25RjABAAAQYk05mCgqKtqjMRNXXXWVRo0atct5unfvrtLSUm3YsCFjejKZ1ObNm1VaWtrocqWlpYrH49q6dWtGdmL9+vXBMu3bt5ckHXzwwcH7bdq0UevWrbVq1ardln9fRjABAACAfVqbNm3Upk2b3c7Xv39/bd26VUuWLFHfvn0lSQsWLJDruurXr1+jy/Tt21fRaFTz58/XsGHDJEnLly/XqlWr1L9/f0nSscceG0zv2LGjJP8WtJs2bVKXLl2+8PaFGWMmAAAAQizXYxdyOWbiy9arVy+deuqpuvDCC7V48WK9/vrrGjt2rM4666zgTk5r165Vz549tXjxYklScXGxRo8erbKyMr388stasmSJzj//fPXv319HH320JOnAAw/UmWeeqXHjxmnhwoX64IMPdN5556lnz5767ne/+9VsTEiQmQAAAAi5ptbN6av0yCOPaOzYsTr55JNlWZaGDRumu+++O3g/kUho+fLl2r59ezBtypQpwbx1dXUaOHCg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+vvf/6799ttPbdq00eGHH67p06dr2LBhKigo0HPPPae+ffvu0Wfef//9uvTSS2Xb9k7nad68uWpqapRIJHa7rsWLF2vLli3ab7/99Ne//jXIpBxzzDF68skn1bt3b+Xn56u2tlbl5eXq2rWr2rdvr8mTJ0tSMGZib8v4eRdccIF+85vfqHXr1ju817VrV51yyinq06ePrrzySh166KFq3779LstfVVWldu3ayRij9957Tx9//HHwef3799ecOXM0duzYoJtTw+zE7hhjVFRUpEQioby8vIz33n//fRUVFek73/mO/vnPf+70M77szMThhx+u559/XhdccIG2bt2qf/zjH0EG4P3331ezZs2CMQKf9/LLL+80eDn22GP15z//Wccff3wwlmblypVBV6ud7f81a9bomWee0dSpU1VQUKDZs2dr1KhRikajGjt2rI4++ujgM3b1+22ooKBAq1atkiRt27Yt6EL3t7/9Tdu2bZPkBx99+vTRY489FowJ2bRpkzzPU5s2bfZml4YCwQQAAA20aNFCEydO1PTp01VTUyNjTMbAyfz8/B26seyJlStX6rbbblMksuOlt6amRsccc4w6dOjwhcu/t7p27aoXX3xRU6dOVTQa1fXXXy9jjI466iitXLlS48aNyxgUvSc6d+4cdBP7vGnTpmnmzJlKJBK66KKLVFBQsNt1HXLIIbr11lszBtBK0llnnaU//vGPuvzyy4PW5uHDh++0QrqnZWzMli1bVFlZqRYtWuxyvjZt2ujiiy/WpEmTgq4wOyv/6NGjdffdd2vWrFn61re+pZ49ewafc8kll2jatGm66KKLZNu2DjrooKD7zK6sW7dO48ePl+u6ysvL0zXXXKPnn38+Y56VK1dq2rRpe7ztX5YxY8borrvu0oUXXihJ+slPfqJevXpp+fLlwe2Q0120Nm/eLGOM+vXrp48++kgzZ85U27Ztg/fXrl2ryZMn6w9/+INOPvlkVVZWBvvVcRwNHDgwCAQa2/+u6+r222/X2LFjdxg3kpeXpyuvvFK//e1vdc8990ja/e83Xa5YLBZ8T5dddpl+8YtfqKCgQH369Mnojnbttddq+vTpwb7Iz8/X+PHj98lgglvDAgDQRO3s7j9h8vm7F+XKq6++qjVr1mjkyJF7tVxYyh9m7777rt59992MOzdJ/r477LDD9O677+qwww4L7tyUdtVVV+32LlTs/68emQkAAIDdOOGEE3JdhG+szp07Nzqw+vjjj1dJSYmKiooa7eL1+TENyA0yEwAAAACysuPwfgAAAADYAwQTAAAAALJCMAEAAAAgKwQTAAAAALJCMAEAAAAgKwQTAAAAALJCMAEAAAAgKwQTAAAAALJCMAEAAAAgKwQTAAAAALJCMAEAAAAgKwQTAAAAALJCMAEAAAAgKwQTAAAAALJCMAEAAAAgKwQTAAAAALJCMAEAAAAgKwQTAAAAALJCMAEAAAAgKwQTAAAAALJCMAEAAAAgKwQTAAAAALJCMAEAAAAgKwQTAAAAALJCMAEAAAAgKwQTAAAAALJCMAEAAAAgKwQTAAAAALLy/wHJiZxvm4u24gAAAABJRU5ErkJggg==",
+    "attribution_method": "integrated_gradients"
+  },
+  "uncertainty": {
+    "faithfulness": null,
+    "fidelity": null,
+    "stability": null,
+    "coverage": null,
+    "consistency": null,
+    "calibration": null,
+    "sparsity": null,
+    "rule_complexity": null,
+    "counterfactual_validity": null,
+    "prototype_representativeness": null,
+    "trace_completeness": 0.3333333333333333,
+    "reconstruction_error": null
+  },
+  "limitations": [
+    {
+      "claim_id": "C-008",
+      "statement": "Нет evidence: model_internals",
+      "evidence_status": "insufficient_evidence",
+      "effect": "unknown",
+      "severity": "warning",
+      "strength": null,
+      "evidence_refs": [
+        "trace:missing_evidence"
+      ],
+      "limitations": [
+        "Канал evidence «model_internals» отсутствует."
+      ],
+      "native": null,
+      "surrogate": null
+    },
+    {
+      "claim_id": "C-009",
+      "statement": "Нет evidence: model_rules_or_concepts",
+      "evidence_status": "insufficient_evidence",
+      "effect": "unknown",
+      "severity": "warning",
+      "strength": null,
+      "evidence_refs": [
+        "trace:missing_evidence"
+      ],
+      "limitations": [
+        "Канал evidence «model_rules_or_concepts» отсутствует."
+      ],
+      "native": null,
+      "surrogate": null
+    }
+  ],
+  "provenance": {
+    "adapter_id": "torch_temperature_scaled_ch6",
+    "model_type": "ECGResNet1D",
+    "model_fingerprint": "c636723940deb479a8061ebd816e5cbaeb9db4439dfe4d64dc168888800e977c",
+    "object_ids": [
+      "ptbxl-8"
+    ],
+    "dataset_version": "ptb-xl-1.0.3-records100",
+    "generated_at": "2026-08-28T13:47:24.498578+00:00",
+    "input_sha256": "c0a9468f7442dfc262e96a9862c1b556e4deab16ae071e84437f1c6b0f7ed8ce"
+  },
+  "visual_metadata": {
+    "schema_version": "1.1",
+    "overview": {
+      "prediction": {
+        "prediction": "[0]",
+        "score": 0.9189099669456482,
+        "model_type": "ECGResNet1D",
+        "adapter_id": "torch_temperature_scaled_ch6"
+      },
+      "action": "accept",
+      "explanation_level": {
+        "level": "E4",
+        "rationale": "Доступна наблюдаемая история обучения и forgetting evidence.",
+        "available_channels": [
+          "prediction",
+          "call_trace",
+          "data_profile",
+          "image_representation",
+          "training_history",
+          "alignment",
+          "risk"
+        ],
+        "missing_channels": [
+          "class_concepts",
+          "counterfactuals",
+          "local_contributions",
+          "similar_cases"
+        ],
+        "native_channels": [
+          "prediction",
+          "call_trace",
+          "data_profile",
+          "image_representation",
+          "training_history",
+          "alignment",
+          "risk"
+        ],
+        "surrogate_channels": []
+      },
+      "claim_counts": {
+        "total": 10,
+        "supported": 8,
+        "contested": 0,
+        "insufficient_evidence": 2,
+        "not_applicable": 0
+      },
+      "available_claim_types": [
+        "attribution_map",
+        "data_quality",
+        "missing_channel",
+        "prediction",
+        "recommended_action",
+        "training_trace"
+      ]
+    }
+  }
+}

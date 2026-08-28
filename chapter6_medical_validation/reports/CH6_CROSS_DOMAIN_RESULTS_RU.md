@@ -1,0 +1,3 @@
+# Глава 6 — cross-domain result
+
+Один public contract `FuzzyXAI.wrap(...).explain_one(...)` использован на PTB-XL 12-lead ECG и Allen CCF 2017 Nissl patches (`brain_v2_confirmatory`). Во всех фактически выполненных routes prediction, native XAI, typed evidence, system evidence, audit и directed provenance получены из public result. Общими остаются semantic invariants; domain-specific остаются preprocessing, adapter, native XAI, ExplainPlan language и factual observation context. IDRiD не включён в assertion of completed three-domain empirical validation, потому что official data access is missing. Raw rho values не сравниваются между ExplainPlans как единая physical scale.

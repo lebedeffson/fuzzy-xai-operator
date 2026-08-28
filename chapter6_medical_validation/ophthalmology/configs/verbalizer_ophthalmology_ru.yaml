@@ -1,0 +1,14 @@
+profile_id: ch6_eye_strict_ru_v1
+mode: strict
+audience: ophthalmologist_fundus_specialist
+allowed_terms:
+  [диабетическая ретинопатия, стадия 0, стадия 1, стадия 2, стадия 3, стадия 4,
+   отсутствие признаков DR, лёгкая, умеренная, тяжёлая, пролиферативная,
+   микроаневризма, кровоизлияние, твёрдый экссудат, мягкий экссудат,
+   область изображения, карта атрибуции, вероятность модели, неопределённость,
+   неполнота объяснительного маршрута]
+forbidden_phrases:
+  [пациент страдает, необходимо лечение, назначить лечение, клинически подтверждено,
+   является причиной]
+allowed_actions: [reorder_registered_claims, apply_registered_templates]
+backend_policy: deterministic_fallback_when_unavailable

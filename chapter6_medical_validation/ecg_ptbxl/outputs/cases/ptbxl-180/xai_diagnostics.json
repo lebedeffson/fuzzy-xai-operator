@@ -1,0 +1,33 @@
+{
+  "semantics": "registered common-grid diagnostic; not canonical Gamma",
+  "T_IG": "signed 12x1000 -> sums in 12x20 -> signed L1 normalization",
+  "T_OCC": "signed 12x20 -> signed L1 normalization",
+  "normalized_l1_disagreement": 0.5,
+  "signed_correlation": {
+    "value": null,
+    "status": "not_applicable",
+    "reason": "correlation is undefined because at least one common-grid attribution map is constant"
+  },
+  "ig_faithfulness": {
+    "target": 1,
+    "original_probability": 1.0,
+    "masked_fraction": 0.1,
+    "masked_cells": 24,
+    "replacement": "zero standardized train-mean baseline",
+    "top_drop": 0.0,
+    "random_drop_mean": 0.0,
+    "random_drop_std": 0.0,
+    "random_repeats": 20
+  },
+  "occlusion_faithfulness": {
+    "target": 1,
+    "original_probability": 1.0,
+    "masked_fraction": 0.1,
+    "masked_cells": 24,
+    "replacement": "zero standardized train-mean baseline",
+    "top_drop": 0.0,
+    "random_drop_mean": 0.0,
+    "random_drop_std": 0.0,
+    "random_repeats": 20
+  }
+}

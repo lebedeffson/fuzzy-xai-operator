@@ -1,0 +1,9 @@
+version: allen_nissl_preprocess_v1
+input_size: [299, 299]
+channels: repeat_grayscale_three_times
+intensity_scale: train_only_percentile_99_5
+clip: [0.0, 1.0]
+normalization: {mean: [0.5, 0.5, 0.5], std: [0.5, 0.5, 0.5], semantics: frozen_symmetric_transform_used_by_all_three_runs}
+train_augmentation: {horizontal_flip_probability: 0.5, rotation_degrees: 5.0}
+validation_augmentation: none
+test_augmentation: none

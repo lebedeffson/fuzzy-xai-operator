@@ -1,0 +1,72 @@
+## 1. Что анализировалось
+- Объект: ptbxl-16534
+- Версия данных: ptb-xl-1.0.3-records100
+- Входной hash: 3b5aa7287ffa493c861d88f1a31280e1a87b8d9c853d6d9b861a55c2210fcfd0
+
+## 2. Какая модель использовалась
+- Модель: ECGResNet1D (адаптер torch_temperature_scaled_ch6)
+- Отпечаток модели (fingerprint): c636723940deb479a8061ebd816e5cbaeb9db4439dfe4d64dc168888800e977c
+
+## 3. Какой прогноз получен
+- Модель определила: ABNORMAL.
+- Модельный балл: 0.5001
+
+## 4. Как именно эта архитектура сформировала данный прогноз
+- Карта атрибуции (integrated_gradients): диапазон [-0.017258739098906517, 0.08473343402147293].
+- IG completeness: target class=1; baseline=all-zero input tensor; output space=logit; absolute residual=0.002575621008872986; relative residual=0.002447545610064199. Меньший residual означает более точное выполнение completeness identity в указанном output space.
+- Карта атрибуции (temporal_occlusion): диапазон [-0.039504945278167725, 0.0904003381729126].
+
+## 7. Насколько объект похож на данные, использованные как эталон
+- Technical evidence; not a clinical diagnosis.
+- Technical quality evidence is not a medical finding.
+
+## 11. Какие источники объяснения согласованы или конфликтуют (Γ)
+- Γ = 0.5665 — измеренное рассогласование двух объяснительных объектов по компонентам {d_mu = 0.0000; d_R = 1.0000; d_alpha = 0.6665; d_u = 0.9997; d_tau = 0.6667; d_L = 0.3333} (веса заданы в ExplainPlan.beta).
+- d_L = 0.3333 измерено только как диагностическая компонента и не входит в aggregate Γ при текущем ExplainPlan.beta.
+- Сертифицировано (Γ ≤ gamma_max=0.6): да.
+
+## 12. Выполнялось ли упрощение представления и какая потеря Δ возникла
+- Упрощение не выполнялось: нет операции редукции для этого типа модели.
+
+## 13. Из каких компонент получено ρ
+- ρ = 0.4322, из слагаемых: {rho_p = 0.5001; u_M = 0.7500; one_minus_I_pre = 0.2288; Delta = 0.0000; chi_R = 0.0000}.
+
+## 14. Какое действие разрешено
+- **понизить доверие:** Передать результат предметному специалисту и проверить исходные данные, основные причины и ограничения модели.
+
+## 15. Откуда происходит каждое существенное утверждение
+- Не все проверки подтверждены: claims C-007; evidence trace:missing_evidence
+- Причины прогноза не раскрыты: claims C-001; evidence prediction
+
+## 17. Какие каналы неприменимы к данной архитектуре
+- rules
+- reduction
+
+## 18. Какие ограничения имеет объяснение
+- Не все проверки подтверждены: Для части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено.
+- Причины прогноза не раскрыты: Доступен итог модели, но нет подтверждённых данных о конкретных признаках, правилах или примерах, которые его поддержали.
+- Дополнительная проверка не выполнена — faithfulness: no perturbation-based faithfulness check was supplied
+- Дополнительная проверка не выполнена — fidelity: no surrogate fidelity measurement was supplied
+- Дополнительная проверка не выполнена — stability: no repeated-perturbation stability check was supplied
+- Дополнительная проверка не выполнена — coverage: no class concept exposed a measured primary_rule_coverage
+- Дополнительная проверка не выполнена — consistency: no cross-explainer consistency check was supplied
+- Дополнительная проверка не выполнена — calibration: calibration requires a separate held-out calibration/validation set, which was not supplied
+- Дополнительная проверка не выполнена — sparsity: no numeric local contributions were available
+- Дополнительная проверка не выполнена — rule_complexity: no rules were extracted for this model
+- Дополнительная проверка не выполнена — counterfactual_validity: no counterfactuals were generated
+- Дополнительная проверка не выполнена — prototype_representativeness: no class concept exposed a measured intra_class_variability
+- Дополнительная проверка не выполнена — reconstruction_error: no model family with a computable reconstruction chain (e.g. linear) was present, and none was supplied
+- Необязательный канал не предоставлен: class_concepts.
+- Необязательный канал не предоставлен: counterfactuals.
+- Необязательный канал не предоставлен: local_contributions.
+- Необязательный канал не предоставлен: similar_cases.
+- Необязательный канал не предоставлен: training_history.
+
+## 19. Системный операторный маршрут
+- E_model построен из фактического source evidence (native_class_probabilities); T_ij=ch6_ecg_probability_to_technical_risk_v1 применён к этому объекту.
+- Γ = 0.566545; компоненты: d_mu=0.000000; d_R=1.000000; d_alpha=0.666493; d_u=0.999740; d_tau=0.666667; d_L=0.333333
+- d_L=0.333333 — diagnostic-only и не входит в aggregate Γ при текущем ExplainPlan.beta.
+- U_model=0.999999951205071, U_rules=None, U_trace=0.0; u_M=0.7499999634038033 (measured).
+- Редукция не применялась по ExplainPlan; Delta=0 по явно объявленной not_applied semantics.
+- I_pre(E_pre)=0.771161; ρ=0.43224881128192705; status=complete; candidate=lower_confidence; action=lower_confidence.
+- Причина кандидатного действия: rho is between theta_1 and theta_2. Итоговая причина: rho is between theta_1 and theta_2.

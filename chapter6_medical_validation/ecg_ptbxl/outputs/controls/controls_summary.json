@@ -1,0 +1,60 @@
+{
+  "ECG_H_missing_provenance": {
+    "rho": 0.18729992576042617,
+    "candidate_action": "accept",
+    "critical_override": true,
+    "final_action": "block",
+    "diagnostics": [
+      {
+        "code": "controlled_missing_waveform_provenance",
+        "reason": "critical structural rupture overrides numeric action",
+        "severity": "critical",
+        "rupture_present": true,
+        "critical_rupture": true,
+        "source_refs": [
+          "ptbxl-504",
+          "waveform_hash_required"
+        ]
+      }
+    ]
+  },
+  "ECG_I_checkpoint_mismatch": {
+    "rho": 0.18729992576042617,
+    "candidate_action": "accept",
+    "critical_override": true,
+    "final_action": "block",
+    "diagnostics": [
+      {
+        "code": "controlled_checkpoint_mismatch",
+        "reason": "critical structural rupture overrides numeric action",
+        "severity": "critical",
+        "rupture_present": true,
+        "critical_rupture": true,
+        "source_refs": [
+          "ptbxl-504",
+          "9c1442b9ac7f01feef38ef57e70318bb2524b6b687f9f0a822f7fc7758571f4b"
+        ]
+      }
+    ]
+  },
+  "ECG_J_attribution_target_mismatch": {
+    "rho": 0.18729992576042617,
+    "candidate_action": "accept",
+    "critical_override": true,
+    "final_action": "block",
+    "diagnostics": [
+      {
+        "code": "controlled_attribution_target_mismatch",
+        "reason": "critical structural rupture overrides numeric action",
+        "severity": "critical",
+        "rupture_present": true,
+        "critical_rupture": true,
+        "source_refs": [
+          "ptbxl-504",
+          "prediction_target:0",
+          "registered_mismatch_target:1"
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,304 @@
+{
+  "run_id": "ecg-resnet1d-seed-2028",
+  "seed": 2028,
+  "best_epoch": 9,
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 0.375295203264433,
+      "validation_loss": 0.3734791331431445,
+      "validation_auroc": 0.9234374511976218
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.3025495582864485,
+      "validation_loss": 0.3242989226299174,
+      "validation_auroc": 0.9372445051967069
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.2902673023347636,
+      "validation_loss": 0.4022633959265316,
+      "validation_auroc": 0.9410788793412299
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.27494950911015953,
+      "validation_loss": 0.3606138466035618,
+      "validation_auroc": 0.9430429166965221
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.26696525798499127,
+      "validation_loss": 0.376944875015932,
+      "validation_auroc": 0.9416952820846356
+    },
+    {
+      "epoch": 6,
+      "train_loss": 0.25757651656638575,
+      "validation_loss": 0.33019835984005647,
+      "validation_auroc": 0.9472621980682986
+    },
+    {
+      "epoch": 7,
+      "train_loss": 0.2530908992954793,
+      "validation_loss": 0.39110207294716554,
+      "validation_auroc": 0.9424917368961597
+    },
+    {
+      "epoch": 8,
+      "train_loss": 0.24824148871516452,
+      "validation_loss": 0.325047468437868,
+      "validation_auroc": 0.9399535539154893
+    },
+    {
+      "epoch": 9,
+      "train_loss": 0.2482550243157467,
+      "validation_loss": 0.30985742632080526,
+      "validation_auroc": 0.947388969422382
+    },
+    {
+      "epoch": 10,
+      "train_loss": 0.23857524046916087,
+      "validation_loss": 0.32835252320065217,
+      "validation_auroc": 0.9416778280576241
+    },
+    {
+      "epoch": 11,
+      "train_loss": 0.2357698757457369,
+      "validation_loss": 0.3394487403771457,
+      "validation_auroc": 0.9418679850887491
+    },
+    {
+      "epoch": 12,
+      "train_loss": 0.22806719343625861,
+      "validation_loss": 0.31050343373242545,
+      "validation_auroc": 0.9464583941927696
+    },
+    {
+      "epoch": 13,
+      "train_loss": 0.22427455330168017,
+      "validation_loss": 0.3278165389509762,
+      "validation_auroc": 0.9452696830899875
+    },
+    {
+      "epoch": 14,
+      "train_loss": 0.22019558769600991,
+      "validation_loss": 0.34699147063143115,
+      "validation_auroc": 0.9429951477804908
+    },
+    {
+      "epoch": 15,
+      "train_loss": 0.21374738756709427,
+      "validation_loss": 0.3388192899086896,
+      "validation_auroc": 0.9408712682830933
+    },
+    {
+      "epoch": 16,
+      "train_loss": 0.21209635056612144,
+      "validation_loss": 0.36386516251984763,
+      "validation_auroc": 0.9372693082877233
+    }
+  ],
+  "training_probe": {
+    "object_id": "ptbxl-8",
+    "prepared_index": 7,
+    "ecg_id": 8,
+    "truth": 1,
+    "history_through_final_checkpoint": [
+      {
+        "epoch": 1,
+        "predicted_class": 0,
+        "confidence": 0.7568282610817727,
+        "correct": false,
+        "loss": 1.413987340748435,
+        "loss_status": "measured_object_negative_log_likelihood"
+      },
+      {
+        "epoch": 2,
+        "predicted_class": 0,
+        "confidence": 0.9482404326807579,
+        "correct": false,
+        "loss": 2.961145988189923,
+        "loss_status": "measured_object_negative_log_likelihood"
+      },
+      {
+        "epoch": 3,
+        "predicted_class": 0,
+        "confidence": 0.9399635209434457,
+        "correct": false,
+        "loss": 2.812802917231692,
+        "loss_status": "measured_object_negative_log_likelihood"
+      },
+      {
+        "epoch": 4,
+        "predicted_class": 0,
+        "confidence": 0.994909582040712,
+        "correct": false,
+        "loss": 5.280395337981829,
+        "loss_status": "measured_object_negative_log_likelihood"
+      },
+      {
+        "epoch": 5,
+        "predicted_class": 0,
+        "confidence": 0.9620041431375645,
+        "correct": false,
+        "loss": 3.270278155135857,
+        "loss_status": "measured_object_negative_log_likelihood"
+      },
+      {
+        "epoch": 6,
+        "predicted_class": 0,
+        "confidence": 0.9549652212163465,
+        "correct": false,
+        "loss": 3.1003202258567857,
+        "loss_status": "measured_object_negative_log_likelihood"
+      },
+      {
+        "epoch": 7,
+        "predicted_class": 0,
+        "confidence": 0.9722495443566876,
+        "correct": false,
+        "loss": 3.5845030193456693,
+        "loss_status": "measured_object_negative_log_likelihood"
+      },
+      {
+        "epoch": 8,
+        "predicted_class": 0,
+        "confidence": 0.964868236337929,
+        "correct": false,
+        "loss": 3.3486496100912198,
+        "loss_status": "measured_object_negative_log_likelihood"
+      },
+      {
+        "epoch": 9,
+        "predicted_class": 0,
+        "confidence": 0.9654145993896678,
+        "correct": false,
+        "loss": 3.364323633641687,
+        "loss_status": "measured_object_negative_log_likelihood"
+      }
+    ],
+    "epoch_source": "measured on fixed validation object after each completed epoch",
+    "final_checkpoint_ref": "best.pt:epoch:9"
+  },
+  "checkpoint_sha256": "c5c5d832ba5eb1fc2c96ad39e1efb7fdeca0637c7d138c3949a5c4763fdc7f79",
+  "calibration": {
+    "status": "fitted_validation_only",
+    "temperature": 1.3674010622402912,
+    "uncalibrated_nll": 0.3053924744087644,
+    "calibrated_nll": 0.29297453056392586
+  },
+  "validation_metrics_uncalibrated": {
+    "n": 2105,
+    "accuracy": 0.872209026128266,
+    "balanced_accuracy": 0.875746159654741,
+    "f1": 0.8825840244434745,
+    "precision": 0.9190909090909091,
+    "recall_sensitivity": 0.8488664987405542,
+    "specificity": 0.9026258205689278,
+    "auroc": 0.947388969422382,
+    "auprc": 0.9626322104377373,
+    "confusion_matrix": [
+      [
+        825,
+        89
+      ],
+      [
+        180,
+        1011
+      ]
+    ],
+    "nll": 0.3053924744087602,
+    "brier": 0.09280838791135265,
+    "ece_15_bin": 0.033950542670471553,
+    "tp": 1011,
+    "tn": 825,
+    "fp": 89,
+    "fn": 180
+  },
+  "validation_metrics_calibrated": {
+    "n": 2105,
+    "accuracy": 0.872209026128266,
+    "balanced_accuracy": 0.875746159654741,
+    "f1": 0.8825840244434745,
+    "precision": 0.9190909090909091,
+    "recall_sensitivity": 0.8488664987405542,
+    "specificity": 0.9026258205689278,
+    "auroc": 0.9473889694223819,
+    "auprc": 0.9626322104377373,
+    "confusion_matrix": [
+      [
+        825,
+        89
+      ],
+      [
+        180,
+        1011
+      ]
+    ],
+    "nll": 0.29297453056392586,
+    "brier": 0.09127088227169676,
+    "ece_15_bin": 0.008556364858812261,
+    "tp": 1011,
+    "tn": 825,
+    "fp": 89,
+    "fn": 180
+  },
+  "test_metrics_uncalibrated": {
+    "n": 2107,
+    "accuracy": 0.8647365923113431,
+    "balanced_accuracy": 0.8693276077222345,
+    "f1": 0.8750548005260851,
+    "precision": 0.9189686924493554,
+    "recall_sensitivity": 0.8351464435146444,
+    "specificity": 0.9035087719298246,
+    "auroc": 0.9426411216325331,
+    "auprc": 0.9604123054232474,
+    "confusion_matrix": [
+      [
+        824,
+        88
+      ],
+      [
+        197,
+        998
+      ]
+    ],
+    "nll": 0.318730685725839,
+    "brier": 0.09844662693505227,
+    "ece_15_bin": 0.035713416150721156,
+    "tp": 998,
+    "tn": 824,
+    "fp": 88,
+    "fn": 197
+  },
+  "test_metrics_calibrated": {
+    "n": 2107,
+    "accuracy": 0.8647365923113431,
+    "balanced_accuracy": 0.8693276077222345,
+    "f1": 0.8750548005260851,
+    "precision": 0.9189686924493554,
+    "recall_sensitivity": 0.8351464435146444,
+    "specificity": 0.9035087719298246,
+    "auroc": 0.9426411216325331,
+    "auprc": 0.9604123054232474,
+    "confusion_matrix": [
+      [
+        824,
+        88
+      ],
+      [
+        197,
+        998
+      ]
+    ],
+    "nll": 0.30582572957763277,
+    "brier": 0.09670448793315936,
+    "ece_15_bin": 0.014591395599553811,
+    "tp": 998,
+    "tn": 824,
+    "fp": 88,
+    "fn": 197
+  }
+}

@@ -1,0 +1,134 @@
+{
+  "selection_policy": "deterministic over frozen canonical test predictions",
+  "cases": {
+    "BRAIN_A": {
+      "object_id": "allen-section-106-r256-c64",
+      "prepared_index": 47,
+      "label": 1,
+      "prediction": 1,
+      "probabilities": [
+        9.094427033468063e-43,
+        1.0
+      ],
+      "confidence": 1.0,
+      "top1_top2_margin": 1.0,
+      "correct": true,
+      "technical_quality_score": 0.838134765625,
+      "technical_quality_semantics": "min(gray_fraction, patch_std/(0.10*training_scale))",
+      "gamma": 0.09999999999999999,
+      "u_M": 9.525816086830597e-41,
+      "Delta_status": "not_applied",
+      "i_pre": 0.8962481423065096,
+      "rho": 0.03631315019272163,
+      "candidate_action": "accept",
+      "critical": false,
+      "action": "accept",
+      "xai_diagnostic_disagreement": 0.436360993646254,
+      "xai_disagreement_semantics": "diagnostic normalized-L1 map distance; not FuzzyXAI Gamma"
+    },
+    "BRAIN_B": {
+      "object_id": "allen-section-210-r384-c192",
+      "prepared_index": 33,
+      "label": 0,
+      "prediction": 0,
+      "probabilities": [
+        1.0,
+        0.0
+      ],
+      "confidence": 1.0,
+      "top1_top2_margin": 1.0,
+      "correct": true,
+      "technical_quality_score": 0.7810845549041314,
+      "technical_quality_semantics": "min(gray_fraction, patch_std/(0.10*training_scale))",
+      "gamma": 0.09999999999999999,
+      "u_M": 0.0,
+      "Delta_status": "not_applied",
+      "i_pre": 0.8962481423065096,
+      "rho": 0.03631315019272163,
+      "candidate_action": "accept",
+      "critical": false,
+      "action": "accept",
+      "xai_diagnostic_disagreement": 0.34870610032983057,
+      "xai_disagreement_semantics": "diagnostic normalized-L1 map distance; not FuzzyXAI Gamma"
+    },
+    "BRAIN_C": {
+      "object_id": "allen-section-210-r384-c192",
+      "prepared_index": 33,
+      "label": 0,
+      "prediction": 0,
+      "probabilities": [
+        1.0,
+        0.0
+      ],
+      "confidence": 1.0,
+      "top1_top2_margin": 1.0,
+      "correct": true,
+      "technical_quality_score": 0.7810845549041314,
+      "technical_quality_semantics": "min(gray_fraction, patch_std/(0.10*training_scale))",
+      "gamma": 0.09999999999999999,
+      "u_M": 0.0,
+      "Delta_status": "not_applied",
+      "i_pre": 0.8962481423065096,
+      "rho": 0.03631315019272163,
+      "candidate_action": "accept",
+      "critical": false,
+      "action": "accept",
+      "xai_diagnostic_disagreement": 0.34870610032983057,
+      "xai_disagreement_semantics": "diagnostic normalized-L1 map distance; not FuzzyXAI Gamma"
+    },
+    "BRAIN_D": {
+      "status": "not_available",
+      "reason": "canonical test predictions contain no errors"
+    },
+    "BRAIN_E": {
+      "object_id": "allen-section-106-r256-c256",
+      "prepared_index": 51,
+      "label": 1,
+      "prediction": 1,
+      "probabilities": [
+        2.355693989239956e-28,
+        1.0
+      ],
+      "confidence": 1.0,
+      "top1_top2_margin": 1.0,
+      "correct": true,
+      "technical_quality_score": 0.837890625,
+      "technical_quality_semantics": "min(gray_fraction, patch_std/(0.10*training_scale))",
+      "gamma": 0.09999999999999999,
+      "u_M": 1.6215036983492482e-26,
+      "Delta_status": "not_applied",
+      "i_pre": 0.8962481423065096,
+      "rho": 0.03631315019272163,
+      "candidate_action": "accept",
+      "critical": false,
+      "action": "accept",
+      "xai_diagnostic_disagreement": 0.4984030127190247,
+      "xai_disagreement_semantics": "diagnostic normalized-L1 map distance; not FuzzyXAI Gamma"
+    },
+    "BRAIN_F": {
+      "object_id": "allen-section-69-r128-c192",
+      "prepared_index": 37,
+      "label": 0,
+      "prediction": 0,
+      "probabilities": [
+        1.0,
+        0.0
+      ],
+      "confidence": 1.0,
+      "top1_top2_margin": 1.0,
+      "correct": true,
+      "technical_quality_score": 0.7112789732050235,
+      "technical_quality_semantics": "min(gray_fraction, patch_std/(0.10*training_scale))",
+      "gamma": 0.09999999999999999,
+      "u_M": 0.0,
+      "Delta_status": "not_applied",
+      "i_pre": 0.8962481423065096,
+      "rho": 0.03631315019272163,
+      "candidate_action": "accept",
+      "critical": false,
+      "action": "accept",
+      "xai_diagnostic_disagreement": 0.3353267419649746,
+      "xai_disagreement_semantics": "diagnostic normalized-L1 map distance; not FuzzyXAI Gamma"
+    }
+  }
+}

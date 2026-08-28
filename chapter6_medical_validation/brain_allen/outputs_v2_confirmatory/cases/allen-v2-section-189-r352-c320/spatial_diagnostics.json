@@ -1,0 +1,25 @@
+{
+  "grad_cam": {
+    "semantics": "spatial_correspondence_not_causality_or_Gamma",
+    "attribution_energy_inside_lesion_union": 0.9704428431978981,
+    "pointing_game_inside": true,
+    "max_point": [
+      0,
+      93
+    ],
+    "top_10_iou": 0.1675379916427755,
+    "top_20_iou": 0.3324356672651107
+  },
+  "positive_ig": {
+    "semantics": "spatial_correspondence_not_causality_or_Gamma",
+    "attribution_energy_inside_lesion_union": 0.6579398015410851,
+    "pointing_game_inside": true,
+    "max_point": [
+      227,
+      215
+    ],
+    "top_10_iou": 0.10893979034296189,
+    "top_20_iou": 0.20540714297798907
+  },
+  "semantics": "anatomical_spatial_diagnostic_not_Gamma_or_causality"
+}

@@ -1,0 +1,5 @@
+| domain | architecture | input_shape | output | training_seeds |
+| --- | --- | --- | --- | --- |
+| eyes | VGG16/EfficientNetB0 scaffold | not executed | MISSING_DATA | not executed |
+| ECG | ECGResNet1D | 12×1000 | NORMAL/ABNORMAL | 2026, 2027, 2028 |
+| brain | InceptionV3 | 3×299×299 | OTHER/HPF | 2026, 2027, 2028 |

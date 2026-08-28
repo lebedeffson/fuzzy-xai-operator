@@ -1,0 +1,16 @@
+dataset_id: aptos2019_labeled_train
+source_url: https://www.kaggle.com/competitions/aptos2019-blindness-detection/data
+access: authenticated_competition_rules
+redistribution: prohibited_by_this_bundle
+expected_count: 3662
+label_column: diagnosis
+id_column: id_code
+labels: [0, 1, 2, 3, 4]
+relative_csv: aptos2019/train.csv
+relative_images: aptos2019/train_images
+image_extension: .png
+split:
+  method: stratified_image_level
+  patient_identifier_status: not_available_in_declared_csv
+  seed: 2026
+  counts: {train: 2564, validation: 549, internal_test: 549}

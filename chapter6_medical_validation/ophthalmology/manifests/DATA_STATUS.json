@@ -1,0 +1,16 @@
+{
+  "status": "MISSING_DATA",
+  "checked_inputs": [
+    "FUZZYXAI_CH6_DATA_ROOT",
+    "local APTOS 2019 directories",
+    "local IDRiD directories",
+    "Kaggle API credentials"
+  ],
+  "missing": [
+    "APTOS 2019 labeled train images and train.csv",
+    "IDRiD grading images/labels",
+    "IDRiD segmentation images/masks"
+  ],
+  "consequence": "No model metrics, explanation metrics, selected cases, checkpoints, or chapter-result claims were generated.",
+  "resolution": "Place licensed datasets under FUZZYXAI_CH6_DATA_ROOT using DATA_ACCESS.md, then run prepare_datasets.py."
+}

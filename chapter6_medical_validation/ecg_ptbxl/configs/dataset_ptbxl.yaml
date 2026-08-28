@@ -1,0 +1,15 @@
+dataset_name: PTB-XL
+dataset_version: 1.0.3
+official_source: https://physionet.org/files/ptb-xl/1.0.3/
+doi: 10.13026/kfzx-aw45
+license_file: LICENSE.txt
+signal_root: records100
+sample_rate_hz: 100
+samples_per_lead: 1000
+lead_order: [I, II, III, aVR, aVL, aVF, V1, V2, V3, V4, V5, V6]
+folds: {train: [1, 2, 3, 4, 5, 6, 7, 8], validation: [9], test: [10]}
+label_policy:
+  normal_only: NORM
+  abnormal: [MI, STTC, CD, HYP]
+  mixed_norm_abnormal: exclude_ambiguous
+  no_diagnostic: exclude

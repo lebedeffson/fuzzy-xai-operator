@@ -1,0 +1,73 @@
+## 1. Что анализировалось
+- Объект: allen-section-107-r256-c64
+- Версия данных: allen-ccf-2017-25um
+- Входной hash: a61b0bda092c7f31af54b0f368709ef13aab29e23b80a381d99a10f8826c004e
+
+## 2. Какая модель использовалась
+- Модель: Inception3 (адаптер torch_temperature_scaled_ch6)
+- Отпечаток модели (fingerprint): 85d800dfb66adb779d6ee693b1afe0a2c7fbe8bfe55de1463fa1a5f608069fc8
+
+## 3. Какой прогноз получен
+- Модель определила: гиппокампальная формация.
+- Модельный балл: 1.0
+
+## 4. Как именно эта архитектура сформировала данный прогноз
+- Карта атрибуции (integrated_gradients): диапазон [-0.5192686021327972, 0.6617996357381344].
+- IG completeness: target class=1; baseline=all-zero input tensor; output space=logit; absolute residual=0.9389529228210449; relative residual=0.08356514552404677. Меньший residual означает более точное выполнение completeness identity в указанном output space.
+- Карта атрибуции (grad_cam): диапазон [0.0, 0.14924003183841705].
+
+## 7. Насколько объект похож на данные, использованные как эталон
+- Technical evidence; not a clinical diagnosis.
+- Technical quality evidence is not a medical finding.
+
+## 11. Какие источники объяснения согласованы или конфликтуют (Γ)
+- Γ = 0.1000 — измеренное рассогласование двух объяснительных объектов по компонентам {d_mu = 0.0000; d_R = 0.0000; d_alpha = 0.0000; d_u = 0.0000; d_tau = 0.6667; d_L = 0.3333} (веса заданы в ExplainPlan.beta).
+- d_L = 0.3333 измерено только как диагностическая компонента и не входит в aggregate Γ при текущем ExplainPlan.beta.
+- Сертифицировано (Γ ≤ gamma_max=0.6): да.
+
+## 12. Выполнялось ли упрощение представления и какая потеря Δ возникла
+- Упрощение не выполнялось: нет операции редукции для этого типа модели.
+
+## 13. Из каких компонент получено ρ
+- ρ = 0.0363, из слагаемых: {rho_p = 1.0000; u_M = 0.0000; one_minus_I_pre = 0.1038; Delta = 0.0000; chi_R = 0.0000}.
+
+## 14. Какое действие разрешено
+- **технический маршрут принят:** Зарегистрированная политика маршрута разрешает кандидатное действие accept; это не является самостоятельным доказательством предметной корректности или безопасности.
+
+## 15. Откуда происходит каждое существенное утверждение
+- Не все проверки подтверждены: claims C-007; evidence trace:missing_evidence
+- Причины прогноза не раскрыты: claims C-001; evidence prediction
+
+## 17. Какие каналы неприменимы к данной архитектуре
+- rules
+- reduction
+
+## 18. Какие ограничения имеет объяснение
+- Не все проверки подтверждены: Для части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено.
+- Причины прогноза не раскрыты: Доступен итог модели, но нет подтверждённых данных о конкретных признаках, правилах или примерах, которые его поддержали.
+- Дополнительная проверка не выполнена — faithfulness: no perturbation-based faithfulness check was supplied
+- Дополнительная проверка не выполнена — fidelity: no surrogate fidelity measurement was supplied
+- Дополнительная проверка не выполнена — stability: no repeated-perturbation stability check was supplied
+- Дополнительная проверка не выполнена — coverage: no class concept exposed a measured primary_rule_coverage
+- Дополнительная проверка не выполнена — consistency: no cross-explainer consistency check was supplied
+- Дополнительная проверка не выполнена — calibration: calibration requires a separate held-out calibration/validation set, which was not supplied
+- Дополнительная проверка не выполнена — sparsity: no numeric local contributions were available
+- Дополнительная проверка не выполнена — rule_complexity: no rules were extracted for this model
+- Дополнительная проверка не выполнена — counterfactual_validity: no counterfactuals were generated
+- Дополнительная проверка не выполнена — prototype_representativeness: no class concept exposed a measured intra_class_variability
+- Дополнительная проверка не выполнена — reconstruction_error: no model family with a computable reconstruction chain (e.g. linear) was present, and none was supplied
+- Необязательный канал не предоставлен: class_concepts.
+- Необязательный канал не предоставлен: counterfactuals.
+- Необязательный канал не предоставлен: local_contributions.
+- Необязательный канал не предоставлен: similar_cases.
+- Необязательный канал не предоставлен: training_history.
+
+## 19. Системный операторный маршрут
+- E_model построен из фактического source evidence (native_class_probabilities); T_ij=ch6_brain_probability_to_technical_state_v1 применён к этому объекту.
+- Γ = 0.100000; компоненты: d_mu=0.000000; d_R=0.000000; d_alpha=0.000000; d_u=0.000000; d_tau=0.666667; d_L=0.333333
+- d_L=0.333333 — diagnostic-only и не входит в aggregate Γ при текущем ExplainPlan.beta.
+- U_model=8.51495458558345e-34, U_rules=None, U_trace=0.0; u_M=6.386215939187588e-34 (measured).
+- Редукция не применялась по ExplainPlan; Delta=0 по явно объявленной not_applied semantics.
+- I_pre(E_pre)=0.896248; ρ=0.03631315019272163; status=complete; candidate=accept; action=accept.
+- Причина кандидатного действия: rho is below theta_1. Итоговая причина: rho is below theta_1.
+- По зарегистрированной демонстрационной политике ExplainPlan числовой риск находится ниже theta_1, поэтому кандидатное действие — accept. Это заключение относится к внутренней политике маршрута и не является доказательством предметной корректности или безопасности.
