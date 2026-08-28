@@ -1,0 +1,84 @@
+# PAPILA spatial correspondence diagnostics
+
+Source table is a registered diagnostic only; it is neither canonical system Gamma nor causal validation.
+
+| selection_id | cohort | physical_case_id | method | expert_mask_source | structure | energy | pointing | top10_overlap | top20_overlap | semantics |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| EYE_A | binary | RET038OS | lime_positive_support | expert1 | disc | 0.40349867342068413 | True | 0.30682656826568266 | 0.4111763772027306 | spatial correspondence diagnostic; not Gamma or causal proof |
+| EYE_A | binary | RET038OS | lime_positive_support | expert1 | cup | 0.049135548350005255 | True | 0.206678180771445 | 0.1013265594129269 | spatial correspondence diagnostic; not Gamma or causal proof |
+| EYE_A | binary | RET038OS | lime_positive_support | expert1 | rim | 0.35436312507067885 | False | 0.2415560358135227 | 0.3554056924384027 | spatial correspondence diagnostic; not Gamma or causal proof |
+| EYE_A | binary | RET038OS | grad_cam | expert1 | disc | 0.7903823295218709 | True | 0.30634586838198913 | 0.5244955091566547 | spatial correspondence diagnostic; not Gamma or causal proof |
+| EYE_A | binary | RET038OS | grad_cam | expert1 | cup | 0.07368282008322574 | False | 0.10255951315553964 | 0.0968501619075655 | spatial correspondence diagnostic; not Gamma or causal proof |
+| EYE_A | binary | RET038OS | grad_cam | expert1 | rim | 0.7166995094386452 | True | 0.2807872299506379 | 0.47119063033370606 | spatial correspondence diagnostic; not Gamma or causal proof |
+| EYE_B | binary | RET098OS | lime_positive_support | expert1 | disc | 0.3041851616831773 | True | 0.21830688469196888 | 0.20396435007061803 | spatial correspondence diagnostic; not Gamma or causal proof |
+| EYE_B | binary | RET098OS | lime_positive_support | expert1 | cup | 0.09196900478428449 | False | 0.15708519690193085 | 0.10513251076878148 | spatial correspondence diagnostic; not Gamma or causal proof |
+| EYE_B | binary | RET098OS | lime_positive_support | expert1 | rim | 0.21221615689889278 | True | 0.16689655172413792 | 0.16155202821869488 | spatial correspondence diagnostic; not Gamma or causal proof |
+| EYE_B | binary | RET098OS | grad_cam | expert1 | disc | 0.7923287062493439 | True | 0.29861940793840436 | 0.5010685717774929 | spatial correspondence diagnostic; not Gamma or causal proof |
+| EYE_B | binary | RET098OS | grad_cam | expert1 | cup | 0.38983795117116454 | True | 0.32567406030017265 | 0.27748914061834595 | spatial correspondence diagnostic; not Gamma or causal proof |
+| EYE_B | binary | RET098OS | grad_cam | expert1 | rim | 0.4024907550781794 | False | 0.1630426125049781 | 0.3372410032715376 | spatial correspondence diagnostic; not Gamma or causal proof |
+| EYE_C | binary | RET119OS | lime_positive_support | expert1 | disc | 0.995417081536676 | True | 0.3439094387755102 | 0.3439094387755102 | spatial correspondence diagnostic; not Gamma or causal proof |
+| EYE_C | binary | RET119OS | lime_positive_support | expert1 | cup | 0.009103182709662438 | False | 0.07162786989795919 | 0.07162786989795919 | spatial correspondence diagnostic; not Gamma or causal proof |
+| EYE_C | binary | RET119OS | lime_positive_support | expert1 | rim | 0.9863138988270135 | True | 0.272281568877551 | 0.272281568877551 | spatial correspondence diagnostic; not Gamma or causal proof |
+| EYE_C | binary | RET119OS | grad_cam | expert1 | disc | 0.9622887057527417 | True | 0.28158803222094364 | 0.3439094387755102 | spatial correspondence diagnostic; not Gamma or causal proof |
+| EYE_C | binary | RET119OS | grad_cam | expert1 | cup | 0.16933712722906433 | False | 0.12663526949241236 | 0.07162786989795919 | spatial correspondence diagnostic; not Gamma or causal proof |
+| EYE_C | binary | RET119OS | grad_cam | expert1 | rim | 0.7929515785236774 | True | 0.26609732953775245 | 0.272281568877551 | spatial correspondence diagnostic; not Gamma or causal proof |
+| EYE_D | binary | RET170OD | lime_positive_support | expert1 | disc | 0.4071151647502296 | False | 0.21117307407590188 | 0.35695586276581087 | spatial correspondence diagnostic; not Gamma or causal proof |
+| EYE_D | binary | RET170OD | lime_positive_support | expert1 | cup | 0.013954625584178329 | False | 0.028083234647267807 | 0.04154916337657454 | spatial correspondence diagnostic; not Gamma or causal proof |
+| EYE_D | binary | RET170OD | lime_positive_support | expert1 | rim | 0.39316053916605126 | False | 0.20763289413902772 | 0.33943042370919196 | spatial correspondence diagnostic; not Gamma or causal proof |
+| EYE_D | binary | RET170OD | grad_cam | expert1 | disc | 0.9495489996609843 | True | 0.26292900183390094 | 0.4627053091566628 | spatial correspondence diagnostic; not Gamma or causal proof |
+| EYE_D | binary | RET170OD | grad_cam | expert1 | cup | 0.024504257661671455 | False | 0.006605963220853419 | 0.038292896813797134 | spatial correspondence diagnostic; not Gamma or causal proof |
+| EYE_D | binary | RET170OD | grad_cam | expert1 | rim | 0.9250447419993127 | True | 0.2692141390119987 | 0.4480743826846865 | spatial correspondence diagnostic; not Gamma or causal proof |
+| EYE_E | binary | RET265OS | lime_positive_support | expert1 | disc | 0.38700308457452004 | True | 0.22057643976257954 | 0.33358895705521474 | spatial correspondence diagnostic; not Gamma or causal proof |
+| EYE_E | binary | RET265OS | lime_positive_support | expert1 | cup | 0.07973180248985079 | True | 0.1858779179353342 | 0.16414877639367434 | spatial correspondence diagnostic; not Gamma or causal proof |
+| EYE_E | binary | RET265OS | lime_positive_support | expert1 | rim | 0.30727128208466925 | False | 0.1676198337362184 | 0.25898477157360406 | spatial correspondence diagnostic; not Gamma or causal proof |
+| EYE_E | binary | RET265OS | grad_cam | expert1 | disc | 0.8131839591562924 | True | 0.2685640796242451 | 0.49015705679862304 | spatial correspondence diagnostic; not Gamma or causal proof |
+| EYE_E | binary | RET265OS | grad_cam | expert1 | cup | 0.17610086789524848 | False | 0.16101083032490976 | 0.2250680176376771 | spatial correspondence diagnostic; not Gamma or causal proof |
+| EYE_E | binary | RET265OS | grad_cam | expert1 | rim | 0.6370830912610439 | True | 0.2308318207423171 | 0.3736434971339529 | spatial correspondence diagnostic; not Gamma or causal proof |
+| EYE_G | binary | RET033OD | lime_positive_support | expert1 | disc | 0.3764874067763291 | True | 0.3375835883486343 | 0.39079149526688806 | spatial correspondence diagnostic; not Gamma or causal proof |
+| EYE_G | binary | RET033OD | lime_positive_support | expert1 | cup | 0.06654406128478907 | False | 0.3046461758398856 | 0.1871886742986979 | spatial correspondence diagnostic; not Gamma or causal proof |
+| EYE_G | binary | RET033OD | lime_positive_support | expert1 | rim | 0.30994334549154 | True | 0.23027384893168823 | 0.29978597901550347 | spatial correspondence diagnostic; not Gamma or causal proof |
+| EYE_G | binary | RET033OD | grad_cam | expert1 | disc | 0.8918888976921038 | True | 0.284483247349623 | 0.568966494699246 | spatial correspondence diagnostic; not Gamma or causal proof |
+| EYE_G | binary | RET033OD | grad_cam | expert1 | cup | 0.3228587851085519 | True | 0.5495358969501799 | 0.31506576325229174 | spatial correspondence diagnostic; not Gamma or causal proof |
+| EYE_G | binary | RET033OD | grad_cam | expert1 | rim | 0.5690301125835519 | False | 0.12182069283001497 | 0.38970463178184706 | spatial correspondence diagnostic; not Gamma or causal proof |
+| EYE_H | binary | RET135OS | lime_positive_support | expert1 | disc | 0.30216344284696006 | True | 0.0396553202435051 | 0.07598751089166425 | spatial correspondence diagnostic; not Gamma or causal proof |
+| EYE_H | binary | RET135OS | lime_positive_support | expert1 | cup | 0.009773650655987232 | False | 0.0 | 0.0 | spatial correspondence diagnostic; not Gamma or causal proof |
+| EYE_H | binary | RET135OS | lime_positive_support | expert1 | rim | 0.2923897921909729 | True | 0.04044776772049499 | 0.077269538893196 | spatial correspondence diagnostic; not Gamma or causal proof |
+| EYE_H | binary | RET135OS | grad_cam | expert1 | disc | 0.49520075484271686 | True | 0.2344306982595932 | 0.3372343413538058 | spatial correspondence diagnostic; not Gamma or causal proof |
+| EYE_H | binary | RET135OS | grad_cam | expert1 | cup | 0.015321707982286221 | False | 0.02778299230336024 | 0.03870520688972481 | spatial correspondence diagnostic; not Gamma or causal proof |
+| EYE_H | binary | RET135OS | grad_cam | expert1 | rim | 0.47987904686043065 | True | 0.23040443331379548 | 0.31991923365890307 | spatial correspondence diagnostic; not Gamma or causal proof |
+| EYE_F | binary | RET135OD | lime_positive_support | expert1 | disc | 0.8207296632239018 | True | 0.23571934081488222 | 0.3776307397959184 | spatial correspondence diagnostic; not Gamma or causal proof |
+| EYE_F | binary | RET135OD | lime_positive_support | expert1 | cup | 0.0 | False | 0.0 | 0.00661670918367347 | spatial correspondence diagnostic; not Gamma or causal proof |
+| EYE_F | binary | RET135OD | lime_positive_support | expert1 | rim | 0.8207296632239018 | True | 0.23974293059125965 | 0.3710140306122449 | spatial correspondence diagnostic; not Gamma or causal proof |
+| EYE_F | binary | RET135OD | grad_cam | expert1 | disc | 0.5808835027583407 | True | 0.3776307397959184 | 0.3776307397959184 | spatial correspondence diagnostic; not Gamma or causal proof |
+| EYE_F | binary | RET135OD | grad_cam | expert1 | cup | 0.0 | False | 0.00661670918367347 | 0.00661670918367347 | spatial correspondence diagnostic; not Gamma or causal proof |
+| EYE_F | binary | RET135OD | grad_cam | expert1 | rim | 0.5808835027583407 | True | 0.3710140306122449 | 0.3710140306122449 | spatial correspondence diagnostic; not Gamma or causal proof |
+| SUSPECT_A | suspect | RET009OD | lime_positive_support | expert1 | disc |  | False | 0.39090401785714285 | 0.39090401785714285 | spatial correspondence diagnostic; not Gamma or causal proof |
+| SUSPECT_A | suspect | RET009OD | lime_positive_support | expert1 | cup |  | False | 0.09414859693877552 | 0.09414859693877552 | spatial correspondence diagnostic; not Gamma or causal proof |
+| SUSPECT_A | suspect | RET009OD | lime_positive_support | expert1 | rim |  | False | 0.2967554209183674 | 0.2967554209183674 | spatial correspondence diagnostic; not Gamma or causal proof |
+| SUSPECT_A | suspect | RET009OD | grad_cam | expert1 | disc |  | False | 0.39090401785714285 | 0.39090401785714285 | spatial correspondence diagnostic; not Gamma or causal proof |
+| SUSPECT_A | suspect | RET009OD | grad_cam | expert1 | cup |  | False | 0.09414859693877552 | 0.09414859693877552 | spatial correspondence diagnostic; not Gamma or causal proof |
+| SUSPECT_A | suspect | RET009OD | grad_cam | expert1 | rim |  | False | 0.2967554209183674 | 0.2967554209183674 | spatial correspondence diagnostic; not Gamma or causal proof |
+| SUSPECT_B | suspect | RET092OD | lime_positive_support | expert1 | disc | 0.3986963548915148 | True | 0.26988265971316816 | 0.3267751047043927 | spatial correspondence diagnostic; not Gamma or causal proof |
+| SUSPECT_B | suspect | RET092OD | lime_positive_support | expert1 | cup | 0.13800219797915123 | False | 0.3973491647107552 | 0.2633400878081729 | spatial correspondence diagnostic; not Gamma or causal proof |
+| SUSPECT_B | suspect | RET092OD | lime_positive_support | expert1 | rim | 0.26069415691236353 | True | 0.117606645431266 | 0.18756855575868372 | spatial correspondence diagnostic; not Gamma or causal proof |
+| SUSPECT_B | suspect | RET092OD | grad_cam | expert1 | disc | 0.7142230201370614 | True | 0.24497602192281343 | 0.36562643180776866 | spatial correspondence diagnostic; not Gamma or causal proof |
+| SUSPECT_B | suspect | RET092OD | grad_cam | expert1 | cup | 0.2692106559346683 | False | 0.1908988623577947 | 0.23789258660311516 | spatial correspondence diagnostic; not Gamma or causal proof |
+| SUSPECT_B | suspect | RET092OD | grad_cam | expert1 | rim | 0.4450123642023931 | True | 0.19016167870657036 | 0.24467373117679866 | spatial correspondence diagnostic; not Gamma or causal proof |
+| SUSPECT_C | suspect | RET067OD | lime_positive_support | expert1 | disc | 0.4391686669813335 | True | 0.2881139106735636 | 0.4620654396728016 | spatial correspondence diagnostic; not Gamma or causal proof |
+| SUSPECT_C | suspect | RET067OD | lime_positive_support | expert1 | cup | 0.04799889201409325 | False | 0.1276663993584603 | 0.06818571183827309 | spatial correspondence diagnostic; not Gamma or causal proof |
+| SUSPECT_C | suspect | RET067OD | lime_positive_support | expert1 | rim | 0.39116977496724026 | True | 0.25723170803262335 | 0.4425472508591065 | spatial correspondence diagnostic; not Gamma or causal proof |
+| SUSPECT_C | suspect | RET067OD | grad_cam | expert1 | disc | 0.8326297246955005 | True | 0.27960176743665754 | 0.5022078621432418 | spatial correspondence diagnostic; not Gamma or causal proof |
+| SUSPECT_C | suspect | RET067OD | grad_cam | expert1 | cup | 0.12221924497454842 | False | 0.19659634816521893 | 0.1708287732563924 | spatial correspondence diagnostic; not Gamma or causal proof |
+| SUSPECT_C | suspect | RET067OD | grad_cam | expert1 | rim | 0.7104104797209521 | True | 0.22542883634677793 | 0.410078146052277 | spatial correspondence diagnostic; not Gamma or causal proof |
+| SUSPECT_D | suspect | RET009OD | lime_positive_support | expert1 | disc |  | False | 0.39090401785714285 | 0.39090401785714285 | spatial correspondence diagnostic; not Gamma or causal proof |
+| SUSPECT_D | suspect | RET009OD | lime_positive_support | expert1 | cup |  | False | 0.09414859693877552 | 0.09414859693877552 | spatial correspondence diagnostic; not Gamma or causal proof |
+| SUSPECT_D | suspect | RET009OD | lime_positive_support | expert1 | rim |  | False | 0.2967554209183674 | 0.2967554209183674 | spatial correspondence diagnostic; not Gamma or causal proof |
+| SUSPECT_D | suspect | RET009OD | grad_cam | expert1 | disc |  | False | 0.39090401785714285 | 0.39090401785714285 | spatial correspondence diagnostic; not Gamma or causal proof |
+| SUSPECT_D | suspect | RET009OD | grad_cam | expert1 | cup |  | False | 0.09414859693877552 | 0.09414859693877552 | spatial correspondence diagnostic; not Gamma or causal proof |
+| SUSPECT_D | suspect | RET009OD | grad_cam | expert1 | rim |  | False | 0.2967554209183674 | 0.2967554209183674 | spatial correspondence diagnostic; not Gamma or causal proof |
+| SUSPECT_E | suspect | RET093OS | lime_positive_support | expert1 | disc | 0.4818520155639581 | True | 0.23543614507346142 | 0.2784665936473165 | spatial correspondence diagnostic; not Gamma or causal proof |
+| SUSPECT_E | suspect | RET093OS | lime_positive_support | expert1 | cup | 0.19448606149172096 | False | 0.35893111947074846 | 0.320697241496023 | spatial correspondence diagnostic; not Gamma or causal proof |
+| SUSPECT_E | suspect | RET093OS | lime_positive_support | expert1 | rim | 0.2873659540722372 | True | 0.10419415916002066 | 0.11764705882352941 | spatial correspondence diagnostic; not Gamma or causal proof |
+| SUSPECT_E | suspect | RET093OS | grad_cam | expert1 | disc | 1.0 | True | 0.36625079719387754 | 0.36625079719387754 | spatial correspondence diagnostic; not Gamma or causal proof |
+| SUSPECT_E | suspect | RET093OS | grad_cam | expert1 | cup | 0.41933774938070334 | False | 0.09574298469387756 | 0.09574298469387756 | spatial correspondence diagnostic; not Gamma or causal proof |
+| SUSPECT_E | suspect | RET093OS | grad_cam | expert1 | rim | 0.5806622506192967 | True | 0.2705078125 | 0.2705078125 | spatial correspondence diagnostic; not Gamma or causal proof |

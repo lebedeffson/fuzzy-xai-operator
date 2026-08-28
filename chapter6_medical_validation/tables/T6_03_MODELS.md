@@ -1,5 +1,5 @@
-| domain | architecture | input_shape | output | training_seeds |
-| --- | --- | --- | --- | --- |
-| eyes | VGG16/EfficientNetB0 scaffold | not executed | MISSING_DATA | not executed |
-| ECG | ECGResNet1D | 12×1000 | NORMAL/ABNORMAL | 2026, 2027, 2028 |
-| brain | InceptionV3 | 3×299×299 | OTHER/HPF | 2026, 2027, 2028 |
+| domain | model | canonical | selection |
+| --- | --- | --- | --- |
+| PAPILA | ResNet50 | outer fold 5 / seed 2026 | minimum validation loss |
+| PTB-XL | ECGResNet1D | registered run | validation-only |
+| Allen CCF | InceptionV3 | brain_v2_confirmatory | validation-only |

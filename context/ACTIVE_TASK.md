@@ -4,7 +4,7 @@ Milestone:
 Chapter 6 — Medical validation (ophthalmology, ECG, brain)
 
 Current loop:
-CH6-PAPILA.4 — Spatial, faithfulness and integrity-control closure
+CH6-PAPILA.5 — Public-route aggregate, controls and three-domain closure
 
 Problem:
 The frozen two-domain Chapter 6 bundle has no reproducible fundus experiment.
@@ -53,9 +53,18 @@ PAPILA verifier PASS; split freeze PASS; ROI tensor smoke PASS; new PAPILA
 scripts compile under the CH6 overlay; 14 ophthalmology tests passed. CUDA
 ResNet50 initialization is available in the isolated torch/torchvision overlay.
 
+Last result:
+Spatial diagnostics (78 rows), Expert1↔Expert2 variability and frozen
+faithfulness (EYE_A–F; 10% support, 20 random controls) are complete and
+remain diagnostic-only. EYE_F=RET135OD is frozen as a valid finite/non-zero
+native positive-support L1 maximum of 1.0. Public controls_v4, expanded strict
+SLM and a lightweight public route pass for 84 canonical test images plus 68
+suspect images were generated without rerunning LIME/Grad-CAM. The latter
+stores only public SystemEvidence summaries; selected cases retain full maps.
+
 Next step:
-Add spatial/faithfulness diagnostics and controlled faults; only after those
-facts exist may the chapter-wide three-domain projections be updated.
+Run final package/report validation and create the new three-domain reviewer
+bundle. Do not change the frozen PAPILA model, XAI settings or FuzzyXAI core.
 
 Blocked:
 None for PAPILA. IDRiD remains a separate MISSING_DATA line and must not be

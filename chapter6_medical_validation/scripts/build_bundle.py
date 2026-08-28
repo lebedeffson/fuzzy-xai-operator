@@ -56,6 +56,33 @@ def stage_domain(stage: Path, domain: str, output_name: str = "outputs") -> None
         if (cases / name).is_dir(): copy_tree(cases / name, target / output_name / "cases" / name)
 
 
+def stage_papila(stage: Path, data_root: Path) -> None:
+    """Stage reproducible PAPILA metadata and derived evidence, never raw data/checkpoints."""
+    source = data_root / "eyes" / "papila"
+    target = stage / "chapter6_medical_validation" / "ophthalmology" / "papila_artifacts"
+    for path in (
+        source / "selected_cases_eye_v3.json", source / "xai_sweep_fold5.json",
+        source / "xai_sweep_suspect.json", source / "suspect_predictions.json",
+        source / "papila_lightweight_public_route_v1.json",
+        source / "verified" / "papila_cv_folds_seed2026.json",
+        source / "verified" / "papila_eye_labels.csv",
+        source / "controls_v4" / "controls_summary.json",
+    ):
+        if path.is_file(): copy_tree(path, target / path.name)
+    run = source / "runs" / "papila-resnet50-fold5-seed2026-d2caccba5926"
+    for name in ("run.json", "test_predictions.json", "validation_predictions.json"):
+        if (run / name).is_file(): copy_tree(run / name, target / "canonical_run" / name)
+    selected = json.loads((source / "selected_cases_eye_v3.json").read_text(encoding="utf-8"))
+    samples = {row["sample_id"] for group in (selected["cases"], selected["suspect_cases"]) for row in group.values()}
+    for sample in sorted(samples):
+        case = source / "cases_v2" / sample
+        for name in ("result.json", "audit.json", "reader_ru.txt", "audit_ru.txt", "inspect_action.json", "provenance_action.png", "provenance_action.json", "lime.json", "lime_signed_map.npy", "lime_positive_map.npy", "lime_superpixels.npy", "grad_cam_raw.npy", "strict_slm.json"):
+            if (case / name).is_file(): copy_tree(case / name, target / "cases" / sample / name)
+    for control in sorted((source / "controls_v4").glob("CONTROL_*")):
+        for name in ("result.json", "audit.json", "reader_ru.txt", "inspect_action.json", "provenance_action.png"):
+            if (control / name).is_file(): copy_tree(control / name, target / "controls" / control.name / name)
+
+
 def reproducibility() -> dict[str, object]:
     data_root = Path(os.environ["FUZZYXAI_CH6_DATA_ROOT"])
     payload: dict[str, object] = {"environment": environment_facts(), "raw_data_in_bundle": False, "runs": []}
@@ -75,6 +102,13 @@ def reproducibility() -> dict[str, object]:
                 "checkpoint_sha256": run.get("checkpoint_sha256"), "explain_plan_sha256": sha256_file(plan),
                 "result_artifact_paths": [str(path.relative_to(ROOT)) for path in (ROOT / ("ecg_ptbxl" if domain == "ECG" else "brain_allen") / output_name / "cases").glob("*/result.json")],
             })
+    papila = data_root / "eyes" / "papila"
+    payload["papila"] = {
+        "dataset": "PAPILA Figshare 14798004 v2", "raw_data_in_bundle": False,
+        "split_manifest_sha256": hash_if_exists(papila / "verified" / "papila_cv_folds_seed2026.json"),
+        "selected_cases_sha256": hash_if_exists(papila / "selected_cases_eye_v3.json"),
+        "canonical_run_id": "papila-resnet50-fold5-seed2026-d2caccba5926",
+    }
     return payload
 
 
@@ -91,6 +125,7 @@ def main() -> None:
     for name in ("reports", "tables", "figures", "shared", "scripts"):
         copy_tree(ROOT / name, target / name)
     stage_domain(stage, "ophthalmology")
+    stage_papila(stage, Path(os.environ["FUZZYXAI_CH6_DATA_ROOT"]))
     stage_domain(stage, "ecg_ptbxl")
     stage_domain(stage, "brain_allen")
     stage_domain(stage, "brain_allen", "outputs_v2_confirmatory")
@@ -102,11 +137,19 @@ def main() -> None:
         copy_tree(wheel_log, stage / "wheel_smoke_test.log")
     repo = ROOT.parent
     copy_tree(repo / "pyproject.toml", stage / "pyproject.toml")
+    copy_tree(repo / "framework" / "fuzzyxai" / "pyproject.toml", stage / "framework" / "fuzzyxai" / "pyproject.toml")
     copy_tree(repo / "framework" / "fuzzyxai" / "fuzzyxai", stage / "framework" / "fuzzyxai" / "fuzzyxai")
+    if (repo / "final_transparency_validation" / "semantic_audit.md").is_file():
+        copy_tree(repo / "final_transparency_validation" / "semantic_audit.md", stage / "final_transparency_validation" / "semantic_audit.md")
     wheel_dir = repo / "framework" / "fuzzyxai" / "dist"
     for wheel in sorted(wheel_dir.glob("fuzzyxai_operator-*.whl")):
         copy_tree(wheel, stage / "wheel" / wheel.name)
-    copy_tree(repo / "tests" / "test_p15_full_report.py", stage / "tests" / "test_p15_full_report.py")
+    for name in (
+        "test_p15_full_report.py", "test_p19_system_semantics.py",
+        "test_p19_global_consistency.py", "test_p19_package_hygiene.py",
+    ):
+        if (repo / "tests" / name).is_file():
+            copy_tree(repo / "tests" / name, stage / "tests" / name)
     (target / "REPRODUCIBILITY_CH6.json").write_text(json.dumps(reproducibility(), ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     (stage / "README_EXTRACTED_RU.md").write_text(
         "# Проверка архива\n\n"

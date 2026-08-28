@@ -1,10 +1,5 @@
-| property | before_FuzzyXAI | after_FuzzyXAI |
+| domain | before | after |
 | --- | --- | --- |
-| prediction | model output | unchanged |
-| native XAI | optional isolated map | preserved as typed evidence |
-| provenance | not unified | directed ExplanationGraph |
-| alignment | not available | registered T_ij and Γ when plan applies |
-| uncertainty | single model score | U_model/U_rules/U_trace/u_M status |
-| system action | none | strict rho + critical override |
-| missingness | implicit | required/optional/not_applicable |
-| audit | ad hoc | public audit and reader report |
+| PAPILA | prediction, P(glaucoma), LIME, Grad-CAM | same prediction, provenance, system Gamma, uncertainty, I_pre, rho/action, strict verbalization |
+| PTB-XL | prediction and native maps | public system evidence and audit |
+| Allen CCF | prediction and native maps | public system evidence and audit |

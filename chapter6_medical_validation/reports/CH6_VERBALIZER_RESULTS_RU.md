@@ -1,5 +1,27 @@
-# Глава 6 — предметный strict SLM verbalizer
+# Глава 6 — strict SLM verbalizer
 
-Для выполненных ECG и brain-v2 cases использована одна локально закреплённая модель `Qwen/Qwen2.5-0.5B-Instruct@7ae557604adf67be50417f59c2c2f167def9a775` в strict mode. Модель получила только certified claims из public `HumanExplanation`, а не raw ECG/image/model evidence. Выполнено 11 deterministic generations; accepted strict outputs with H=0: 11. Для каждого результата сохранены claim IDs, pinned revision, generation settings и prompt/profile SHA.
+For PAPILA the same pinned local strict backend as ECG and Allen was used: `Qwen/Qwen2.5-0.5B-Instruct@7ae557604adf67be50417f59c2c2f167def9a775`. It receives only certified public HumanExplanation claims, never raw image or model internals. H=0 for every generated accepted output; rejected/fallback status would be retained instead of hidden. The table preserves P_fact, H, P_num, P_action and P_lim rather than judging literary quality.
 
-Проверяются preservation, а не литературная «красота»: P_fact, H (новые assertions), P_num, P_action и P_lim. Strict output может быть rejected/fallback; такие статусы не скрываются. IDRiD не запускался, поскольку data status=MISSING_DATA.
+## EYE_A / RET038OS
+
+Технический certified text:
+
+Модель определила: здоровый глаз.
+
+Strict ophthalmology text:
+
+Модель определила: здоровый глаз.
+
+## EYE_B / RET098OS
+
+Технический certified text:
+
+Модель определила: глаукома.
+
+Strict ophthalmology text:
+
+- Модель определила: глаукома.
+- Не все проверки подтверждены: Для части проверки не хватает подтверждённых данных, поэтому автоматическое применение ограничено.
+- Причины прогноза не раскрыты: Доступен итог модели, но нет подтверждённых данных о конкретных признаках, правилах или примерах, которые его поддержали.
+- Доверие ограничивают: не все проверки подтверждены, причины прогноза не раскрыты. Не хватает данных для проверок: model internals, model rules or concepts. Эти ограничения не позволяют использовать результат автоматически.
+- Передать результат предметному специалисту и проверить исходные данные, основные причины и ограничения модели.

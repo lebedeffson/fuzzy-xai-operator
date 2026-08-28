@@ -1,6 +1,5 @@
-| domain | data_status | model_status | native_xai_status | public_runtime | slm_status | limitations |
-| --- | --- | --- | --- | --- | --- | --- |
-| eyes | official access missing | not executed | not executed | not executed | not executed | no fabricated output |
-| ECG | executed | executed | executed | executed | executed strict | technical, not clinical action |
-| brain_v1_pilot | executed | executed | pilot artifacts retained | pilot only | not rerun | single atlas and small held-out blocks |
-| brain_v2_confirmatory | executed | executed | executed | executed | executed strict | single atlas, section-block generalization |
+| domain | input | model | native_xai | public_route |
+| --- | --- | --- | --- | --- |
+| PAPILA | RGB fundus | ResNet50 | LIME + Grad-CAM | executed |
+| PTB-XL | 12×1000 temporal signal | ECGResNet1D | IG + temporal occlusion | executed |
+| Allen CCF | Nissl image | InceptionV3 | Grad-CAM + IG | executed |
