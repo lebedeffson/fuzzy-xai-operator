@@ -4,50 +4,59 @@ Milestone:
 Chapter 6 — Medical validation (ophthalmology, ECG, brain)
 
 Current loop:
-CH6-CLOSURE.2 — Finalized two-domain medical validation bundle
+CH6-PAPILA.4 — Spatial, faithfulness and integrity-control closure
 
 Problem:
-The frozen CH6 baseline has two completed domains but stale reporting terms;
-the Allen result is a small v1 pilot and IDRiD requires official interactive
-access.
+The frozen two-domain Chapter 6 bundle has no reproducible fundus experiment.
+IDRiD remains unavailable through its interactive gate; PAPILA v2 is now the
+official open third-domain continuation and must be verified before training.
 
 Hypothesis:
-Chapter-facing projections can state system semantics correctly without
-changing P19, and a separate pre-registered section-block v2 cohort can test
-the same public route without using v1 metrics for protocol selection.
+Official Figshare PAPILA metadata, labels and expert-1 contours can support a
+frozen, patient-level healthy-vs-glaucoma protocol without leaking paired eyes
+or treating suspect eyes as supervised binary examples.
 
 Acceptance criterion:
-Reporting separates system Gamma/Delta from native-XAI diagnostics; brain v2
-has an immutable protocol/manifest and three independent seed runs; strict SLM
-uses certified public claims only; IDRiD remains explicit MISSING_DATA until
-official access is supplied.
+The pre-registered fold-5 model provides LIME and Grad-CAM native evidence,
+then a single public FuzzyXAI result for every selected case; spatial and
+faithfulness diagnostics remain diagnostic-only and never become system Gamma.
 
 Last result:
-Reporting QA now emits `system_Gamma` plus scope, keeps native-XAI disagreement
-diagnostic-only, displays Delta as `—` when not applied, corrects PTB-XL to
-Open Access / CC BY 4.0, and records the boundary between route consistency
-and ground-truth correctness. v2 config SHA256:
-09f564706b13b0457ba6cd82f4544a6d8e5a0d770f04fb5500831c9ec70dbcb0.
-Its separate prepared cohort has 1,819 patches (1,231/280/308), with 10 test
-section blocks. Seeds 2026/2027/2028 yielded held-out accuracy 0.9773/0.9838/
-0.9935; the canonical seed 2027 was selected only by minimum validation loss.
-Public v2 cases and controlled integrity faults use the corrected
-pretrained=True replay contract. The same pinned local strict SLM
-Qwen/Qwen2.5-0.5B-Instruct@7ae557604adf67be50417f59c2c2f167def9a775 ran over
-six ECG and five brain-v2 public human layers; every recorded strict output
-has H=0 and preservation metrics 1.0. Full regression: 1262 passed, 11
-skipped, 643 warnings in 276.67 s. Wheel-only local/RF/non-RF smoke passed.
+Official Figshare article 14798004 v2 was downloaded and verified outside the
+repository. Its metadata reports GPL 3.0+. The verifier found 244 patients,
+488 fundus JPEGs, labels healthy=333/glaucoma=87/suspect=68, and 1,963 contour
+files (expert 1=977, expert 2=986). The pre-result split manifest
+`papila_cv_folds_seed2026.json` has SHA256
+`d2caccba592639f7a6f2d5e80b7ebb2473a399f6a987ad3ba356f502b6efa926`, with 210
+clean binary patients and 34 suspect-associated patients excluded wholesale
+from primary CV. Fixed seed 2026 completed all five outer folds: accuracy
+0.7690±0.0343, balanced accuracy 0.5990±0.0718, AUROC 0.6874±0.0637. These are
+limited classifier metrics, not clinical claims. Fold-5 extra seeds 2027 and
+2028 were also saved; seed 2026 is canonical only because it has minimum
+internal validation loss. Public fold-5 outputs exist for `RET028OD` (healthy)
+and `RET014OD` (glaucoma), with LIME + Grad-CAM as separate native evidence and
+strict SLM H=0. This is not yet the complete selected-case/control closure.
+`PAPILA_MODEL_SANITY.md` now freezes the saved model protocol. The
+programmatic selection found A=`RET038OS`, B=`RET098OS`, C=`RET119OS`,
+D=`RET170OD` (FP), E=`RET265OS` (FN), G=`RET033OD`, H=`RET135OS`, and
+F=`RET135OD` by complete fold-5 LIME/Grad-CAM sweep. Suspect predictions come
+from the frozen canonical model only; A/D=`RET009OD`, B=`RET092OD`,
+C=`RET067OD`, E=`RET093OS` by complete suspect sweep. Full public artifacts
+now exist for all 12 distinct selected objects. The sweep distance is a native
+positive-support diagnostic, explicitly not canonical system Gamma.
+EYE_F diagnostic=1.0 was checked before freeze: the LIME positive map and raw
+Grad-CAM map are both finite and non-zero (5,497 and 4,096 non-zero pixels),
+so it is a valid maximum L1-distance result rather than a null-map artifact.
 
 Targeted tests:
-CH6 domain tests: 27 passed, 1 skipped; v1/v2 checkpoint replay: 2 passed;
-scoped compileall and ruff passed. CUDA smoke passed with torch/torchvision
-2.11/0.26 cu128 in isolated overlay.
+PAPILA verifier PASS; split freeze PASS; ROI tensor smoke PASS; new PAPILA
+scripts compile under the CH6 overlay; 14 ophthalmology tests passed. CUDA
+ResNet50 initialization is available in the isolated torch/torchvision overlay.
 
 Next step:
-Await authenticated official IDRiD access for the third empirical domain. Do
-not claim three completed domains before that input is available. The frozen
-baseline bundle remains unchanged; the new final bundle is versioned separately.
+Add spatial/faithfulness diagnostics and controlled faults; only after those
+facts exist may the chapter-wide three-domain projections be updated.
 
 Blocked:
-Ophthalmology final execution requires authenticated official IDRiD access;
-the dataset is not available locally and no unofficial mirror will be used.
+None for PAPILA. IDRiD remains a separate MISSING_DATA line and must not be
+represented as the executed ophthalmology experiment.

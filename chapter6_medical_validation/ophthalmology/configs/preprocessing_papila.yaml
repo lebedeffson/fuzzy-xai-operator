@@ -1,0 +1,11 @@
+roi_source: expert_1_optic_disc_segmentation
+roi_extraction_version: expert1_disc_square_margin_v1
+roi_margin_fraction: 0.20
+image_size: [224, 224]
+mean: [0.485, 0.456, 0.406]
+std: [0.229, 0.224, 0.225]
+horizontal_flip_probability: 0.5
+rotation_degrees: 8.0
+notes:
+  - "Expert-1 disc contours define a deterministic offline experimental ROI only."
+  - "No diagnosis or clinical metadata participates in ROI extraction."

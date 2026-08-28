@@ -1,0 +1,24 @@
+dataset_id: papila_figshare_14798004_v2
+article_id: 14798004
+article_version: 2
+source_api: https://api.figshare.com/v2/articles/14798004
+task: binary_healthy_vs_glaucoma
+labels:
+  healthy: 0
+  glaucoma: 1
+  suspect: 2
+primary_exclusion: exclude_any_patient_with_suspect_eye
+split:
+  method: stratified_group_k_fold_patient_level
+  n_splits: 5
+  seed: 2026
+  canonical_explanation_fold: 5
+  validation_fraction_of_training_patients: 0.15
+  leakage_protection: both_eyes_of_one_patient_share_fold
+roi:
+  source: expert_1_optic_disc_segmentation
+  use: deterministic_roi_only
+  expert_2_use: annotation_variability_diagnostic_only
+clinical_metadata:
+  classifier_input: false
+  permitted_use: contextual_reporting_only

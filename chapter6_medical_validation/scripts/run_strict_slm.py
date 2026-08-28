@@ -78,7 +78,15 @@ def main() -> None:
     parser.add_argument("--model-path", type=Path)
     args = parser.parse_args()
     payload = json.loads(args.result_json.read_text(encoding="utf-8"))
-    explanation = _human(dict(payload["human_explanation"]))
+    # P19 public serialization is audience-indexed.  Retain the legacy field
+    # only for frozen earlier artifacts; no model evidence is reconstructed.
+    human_payload = payload.get("human_explanation")
+    if human_payload is None:
+        human_layers = payload.get("human_explanations", {})
+        if not isinstance(human_layers, dict) or not isinstance(human_layers.get("domain_user"), dict):
+            raise KeyError("public result has neither human_explanation nor human_explanations.domain_user")
+        human_payload = human_layers["domain_user"]
+    explanation = _human(dict(human_payload))
     model_path = args.model_path or default_model_path()
     backend = LocalTransformersBackend(model_path, model_id=PINNED_MODEL_ID, revision=PINNED_REVISION)
     result = SLMVerbalizer(backend, mode="strict").run(explanation, template_text=explanation.user_text, audience=args.audience)

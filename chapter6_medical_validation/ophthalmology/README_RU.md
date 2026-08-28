@@ -1,19 +1,19 @@
-# Глава 6 — офтальмология: диабетическая ретинопатия
+# Глава 6 — офтальмология: PAPILA, глаукома и LIME
 
 Это исследовательский, не устанавливаемый с wheel контур применения
-зафиксированного FuzzyXAI P19 к пятиступенчатой классификации фундус-снимков.
+зафиксированного FuzzyXAI P19 к binary классификации fundus ROI: healthy vs glaucoma.
 Эксперимент является **воспроизводимым продолжением опубликованной постановки
 на открытых данных**, а не точной репликацией исходных весов и не клинической
 валидацией.
 
 ## Текущий статус
 
-- Протокол, конфигурации, loaders, leakage checks, preprocessing, model/XAI
-  helpers, thin evidence adapter и тестовые fixtures подготовлены.
-- Реальный IDRiD в рабочей среде отсутствует; официальный IEEE DataPort route
-  требует интерактивного входа/принятия условий.
-- Финальные split, checkpoints, метрики и medical case artifacts поэтому имеют
-  статус `MISSING_DATA`, а не заполняются синтетическими числами.
+- PAPILA v2 получен из официального Figshare API и верифицирован вне Git:
+  244 пациента, 488 изображений; raw data и clinical metadata не входят в repository или bundle.
+- Primary protocol использует только clean healthy/glaucoma patients в patient-level five-fold CV.
+  Любой suspect-associated patient исключён из primary CV и сохраняется для ambiguity cohort.
+- ResNet50 с expert-1 optic-disc ROI, LIME и Grad-CAM уже имеют real public
+  FuzzyXAI case outputs. См. `CH6_EYE_RESULTS_RU.md`.
 - FuzzyXAI core не изменяется; научные поля после `explain_one()` вычисляет
   только frozen public runtime.
 
@@ -25,33 +25,27 @@
 export FUZZYXAI_CH6_DATA_ROOT=/path/to/ch6-eye-data
 ```
 
-Основной протокол главы 6 использует IDRiD: официальный grading train (413)
-детерминированно делится на train/validation, а официальный grading test (103)
-сохраняется как final test. Pixel-level lesion masks используются только для
-пространственной диагностики XAI и не являются входом классификатора.
-Ожидаемая структура и официальный источник описаны в
-`configs/dataset_idrid.yaml` и `DATA_ACCESS.md`; credentials в репозиторий не
-добавляются. APTOS-конфигурация сохранена только как прежний research scaffold
-и не является primary dataset этого протокола.
+Основной протокол использует PAPILA (official Figshare article 14798004, version 2).
+Expert-1 optic-disc contour используется исключительно как детерминированный offline ROI;
+expert-2 — только diagnostic annotation variability channel. Clinical metadata не classifier input.
+IDRiD и APTOS остаются historical scaffolds, а не исполненными PAPILA results.
 
 После ручного размещения:
 
 ```bash
-python -m chapter6_medical_validation.ophthalmology.scripts.prepare_datasets
-python -m pytest -q chapter6_medical_validation/ophthalmology/tests
+python chapter6_medical_validation/ophthalmology/scripts/download_papila.py --extract
+python chapter6_medical_validation/ophthalmology/scripts/verify_papila.py
+python chapter6_medical_validation/ophthalmology/scripts/freeze_papila_cv.py
 ```
 
-`prepare_datasets` сначала проверяет число объектов, labels, пути и official
-IDRiD split. Только затем он один раз создаёт
-`outputs/manifests/split_aptos_seed2026.json`. Существующий split без флага
-`--verify-only` не перезаписывается.
+Verifier сначала проверяет official payload, label/image linkage, hashes,
+segmentation completeness и dimensions. Затем CV script один раз создаёт
+immutable patient-level manifest; он не перезаписывает отличающийся content.
 
-Дальнейший порядок фиксирован: три запуска `train_classifier` для seeds
-2026/2027/2028, отдельная оценка и validation-only temperature scaling,
-алгоритмический `select_cases`, `generate_native_xai`, затем
-`run_fuzzyxai`. Последний скрипт после публичного `explain_one()` только
-экспортирует `ModelExplanationResult`; Γ, неопределённость, I_pre, strict rho
-и action повторно в experiment code не вычисляются.
+Дальнейший порядок фиксирован: outer folds, internal-validation model selection,
+canonical fold 5 case selection, LIME + Grad-CAM, затем public `explain_one`.
+Case script после публичного вызова экспортирует `ModelExplanationResult`; Gamma,
+uncertainty, I_pre, strict rho и action повторно в experiment code не вычисляются.
 
 CUDA/torchvision runtime исправлен в отдельном overlay-venv; текущий blocker
 относится только к официальному доступу к IDRiD.
