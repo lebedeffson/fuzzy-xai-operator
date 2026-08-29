@@ -63,8 +63,13 @@ suspect images were generated without rerunning LIME/Grad-CAM. The latter
 stores only public SystemEvidence summaries; selected cases retain full maps.
 
 Next step:
-Run final package/report validation and create the new three-domain reviewer
-bundle. Do not change the frozen PAPILA model, XAI settings or FuzzyXAI core.
+Closure verification complete: the full repository regression was rerun at
+closure HEAD
+`89b997adf9d9f00e031f4f6ae87544cefb9e1e0e` and saved to
+`chapter6_medical_validation/bundles/ch6_final_full_regression.log`:
+1262 passed, 11 skipped, 643 warnings in 294.33 s. The three-domain reviewer
+bundle was rebuilt with this log and its SHA256/HEAD metadata. Do not change
+the frozen PAPILA model, XAI settings or FuzzyXAI core.
 
 Blocked:
 None for PAPILA. IDRiD remains a separate MISSING_DATA line and must not be

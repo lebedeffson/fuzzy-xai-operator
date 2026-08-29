@@ -6,6 +6,7 @@ import argparse
 import json
 import os
 import shutil
+import subprocess
 import zipfile
 from pathlib import Path
 
@@ -108,6 +109,27 @@ def reproducibility() -> dict[str, object]:
         "split_manifest_sha256": hash_if_exists(papila / "verified" / "papila_cv_folds_seed2026.json"),
         "selected_cases_sha256": hash_if_exists(papila / "selected_cases_eye_v3.json"),
         "canonical_run_id": "papila-resnet50-fold5-seed2026-d2caccba5926",
+    }
+    regression_log = BUNDLES / "ch6_final_full_regression.log"
+    regression_summary = None
+    if regression_log.is_file():
+        for line in reversed(regression_log.read_text(encoding="utf-8", errors="replace").splitlines()):
+            if " passed" in line and " skipped" in line and " in " in line:
+                regression_summary = line.strip()
+                break
+    head = subprocess.run(
+        ["git", "rev-parse", "HEAD"],
+        cwd=ROOT.parent,
+        text=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.DEVNULL,
+        check=False,
+    ).stdout.strip()
+    payload["final_regression"] = {
+        "head_commit": head or None,
+        "command": "PYTHONPATH=framework/fuzzyxai:. /home/lebedeffson/Code/venv/bin/python -m pytest -q",
+        "summary": regression_summary,
+        "log_sha256": hash_if_exists(regression_log),
     }
     return payload
 
