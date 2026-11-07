@@ -331,6 +331,15 @@ def build_explanation_graph(
             edges.append(ExplanationEdge("system:critical", "system:chi_R", "sets"))
             edges.append(ExplanationEdge("system:critical", "system:critical_override", "activates"))
     add_node("action", "action", _ACTION_LABELS_RU.get(action, action), {"action": action})
+    it2_guard = prediction.get("metadata", {}).get("it2_guard") if isinstance(prediction.get("metadata"), Mapping) else None
+    if isinstance(it2_guard, Mapping):
+        add_node(
+            "it2:guard", "interval_type2",
+            "Интервальная нечёткость второго типа: FOU и политика решения",
+            it2_guard,
+        )
+        edges.append(ExplanationEdge("prediction", "it2:guard", "derived_from"))
+        edges.append(ExplanationEdge("it2:guard", "action", "constrains"))
     node_ids = {node.node_id for node in nodes}
     for claim in claims:
         claim_node = f"claim:{claim.claim_id}"

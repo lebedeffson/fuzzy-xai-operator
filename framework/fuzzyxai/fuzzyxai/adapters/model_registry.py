@@ -9,6 +9,8 @@ from typing import Any, Callable, cast
 from .contracts_v2 import AdapterResolutionReport, TaskType
 from .model import ModelAdapter
 from .model_v2 import CallableAdapterV2, DecisionFunctionAdapter, ModelAdapterV2, NativeRuleAdapterV2, PredictProbaAdapterV2
+from fuzzyxai.interval_type2 import IT2FuzzyLogit
+from .it2_v2 import IntervalType2Adapter
 from .sklearn_v2 import resolve_sklearn_adapter
 
 
@@ -105,6 +107,8 @@ class AdapterRegistry:
             aliases = {
                 "sklearn": "sklearn_exact",
                 "anfis": "native_rules_v2",
+                "it2": "interval_type2_v2",
+                "interval_type2": "interval_type2_v2",
                 "native_rules": "native_rules_v2",
                 "callable": "callable_v2",
                 "predict_proba": "predict_proba_v2",
@@ -174,6 +178,12 @@ def _sklearn_factory(model: Any, *, task: str | TaskType = "auto", output_decode
 
 def default_model_registry() -> AdapterRegistry:
     registry = AdapterRegistry()
+    registry.register(
+        name="interval_type2_v2",
+        adapter_class=IntervalType2Adapter,
+        predicate=lambda model: isinstance(model, IT2FuzzyLogit),
+        priority=600,
+    )
     registry.register(
         name="native_rules_v2",
         adapter_class=NativeRuleAdapterV2,

@@ -1,0 +1,33 @@
+name: FuzzyXAI IT2 native runtime integration
+
+on:
+  push:
+    branches: [chapter6-ophthalmology]
+    paths:
+      - 'framework/fuzzyxai/fuzzyxai/adapters/it2_v2.py'
+      - 'framework/fuzzyxai/fuzzyxai/adapters/model_registry.py'
+      - 'framework/fuzzyxai/fuzzyxai/runtime.py'
+      - 'framework/fuzzyxai/fuzzyxai/evidence/graph.py'
+      - 'framework/fuzzyxai/fuzzyxai/interval_type2.py'
+      - 'framework/fuzzyxai/fuzzyxai/__init__.py'
+      - 'tests/test_it2_runtime_adapter.py'
+      - '.github/workflows/it2-native-runtime.yml'
+  workflow_dispatch:
+
+jobs:
+  integration:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install original framework
+        run: python -m pip install -e ".[dev]"
+      - name: Test real runtime API and independent IT2 receipts
+        run: python -m pytest -q tests/test_it2_runtime_adapter.py tests/test_doctoral_interval_type2.py

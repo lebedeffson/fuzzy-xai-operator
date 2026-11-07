@@ -476,3 +476,6 @@ __all__ += [
     "robust_interval_decision", "make_it2_receipt", "verify_it2_receipt",
     "karnik_mendel_center_of_sets",
 ]
+
+from .adapters.it2_v2 import IntervalType2Adapter
+__all__ += ["IntervalType2Adapter"]

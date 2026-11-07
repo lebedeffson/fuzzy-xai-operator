@@ -1776,6 +1776,91 @@ class FuzzyXAI:
                     "theta_1": self.plan.rho_accept, "theta_2": self.plan.rho_warning,
                     "theta_3": self.plan.rho_audit, "theta_4": self.plan.rho_critical,
                 }))
+        # The IT2 decision is a model-native constraint, NOT a calibrated
+        # confidence bound. It must constrain the public action, including
+        # when a downstream system operator produced a less conservative one.
+        it2_guard: dict[str, Any] | None = None
+        if prediction.adapter_id == "interval_type2_v2":
+            from fuzzyxai.adapters.it2_v2 import IntervalType2Adapter
+            from fuzzyxai.interval_type2 import (
+                content_sha256, make_it2_receipt, verify_it2_receipt,
+            )
+            if not isinstance(self._model_adapter, IntervalType2Adapter):
+                raise ValueError("IT2 prediction metadata requires the native IT2 adapter")
+            threshold = float(self.plan.metadata.get("it2_threshold", 0.5))
+            max_width = float(self.plan.metadata.get("it2_max_width", 0.20))
+            no_provenance = not str(dataset_version).strip() or dataset_version == "unversioned"
+            source_ids = ids
+            all_cases: list[dict[str, Any]] = []
+            if no_provenance:
+                action = "block"
+                required_missing.append("it2_dataset_provenance")
+                diagnostics.append({
+                    "code": "D_it2_source_missing",
+                    "severity": "critical",
+                    "reason": "IT2 inference requires an explicit, versioned data source",
+                })
+                it2_guard = {
+                    "status": "insufficient_provenance",
+                    "action": "block",
+                    "scope": "parameter_FOU_not_predictive_coverage",
+                    "cases": [],
+                }
+            else:
+                inferences_from_adapter = prediction.metadata.get("it2_inference")
+                expected = []
+                for object_id, row in zip(source_ids, rows, strict=True):
+                    receipt = make_it2_receipt(
+                        self._model_adapter.model, row, source_id=str(object_id),
+                        dataset_version=str(dataset_version), threshold=threshold,
+                        max_width=max_width, expected_model_sha256=model_fingerprint,
+                    )
+                    verification = verify_it2_receipt(receipt, trusted_model_sha256=model_fingerprint)
+                    if not verification["valid"]:
+                        raise ValueError(f"IT2 receipt replay failed: {verification['errors']}")
+                    expected.append(receipt["inference"])
+                    all_cases.append({
+                        "object_id": str(object_id),
+                        "dataset_version": str(dataset_version),
+                        "model_sha256": model_fingerprint,
+                        "input_sha256": receipt["input_sha256"],
+                        "receipt_sha256": receipt["receipt_sha256"],
+                        "replay_verified": True,
+                        "probability_lower": receipt["inference"]["probability_lower"],
+                        "probability_upper": receipt["inference"]["probability_upper"],
+                        "probability_midpoint": receipt["inference"]["probability_midpoint"],
+                        "decision": receipt["decision"],
+                    })
+                if content_sha256(inferences_from_adapter) != content_sha256(expected):
+                    raise ValueError("IT2 prediction differs from independently replayed model inference")
+                constrained = {
+                    "accept": 0, "lower_confidence": 1, "audit_report": 2,
+                    "audit": 2, "review": 2, "request_more_data": 2,
+                    "insufficient_evidence": 3, "defer_to_human": 3, "block": 4,
+                }
+                case_actions = [str(case["decision"]["action"]) for case in all_cases]
+                strongest = max(case_actions, key=lambda candidate: constrained[candidate])
+                if constrained[strongest] > constrained.get(action, 2):
+                    action = strongest
+                if any(candidate != "accept" for candidate in case_actions):
+                    diagnostics.append({
+                        "code": "D_it2_policy_constraint",
+                        "severity": "warning" if strongest != "block" else "critical",
+                        "reason": "IT2 parameter-uncertainty interval constrains the automation policy",
+                    })
+                it2_guard = {
+                    "status": "verified",
+                    "action": strongest,
+                    "scope": "parameter_FOU_not_predictive_coverage",
+                    "threshold": threshold,
+                    "max_width": max_width,
+                    "cases": all_cases,
+                }
+            prediction = replace(
+                prediction,
+                metadata={**dict(prediction.metadata), "it2_guard": it2_guard},
+            )
+
         route = [
             {"id": "model", "label": "Model", "status": "passed"},
             {"id": "adapter", "label": prediction.adapter_id, "status": "passed"},
@@ -2100,6 +2185,7 @@ class FuzzyXAI:
                 "chi_r_crit": int(system_evidence.risk.critical_override) if system_evidence is not None else (risk.chi_r_crit if risk else None),
                 "critical_override": bool(system_evidence is not None and system_evidence.risk.critical_override),
                 "action": action,
+                "it2_guard": it2_guard,
                 "status": system_evidence.risk.status if system_evidence is not None else (risk_status if risk is not None else "missing"),
                 "missing_required_components": (
                     [
