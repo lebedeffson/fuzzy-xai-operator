@@ -305,7 +305,18 @@ def build_cross_model_matrix() -> dict:
         write_json(output_dir / f"{scenario_id}.json", payload)
         result.visualize(view="explanation_story", output=output_dir / f"{scenario_id}_story.png")
         capabilities = result.view_model.trace["adapter_capabilities"]
+        # Check the actual adapter prediction against its originating sklearn
+        # model. Do not require fabricated rule explanations for linear models.
+        native_prediction_matches = (
+            bool(np.array_equal(
+                np.asarray(result.prediction.predictions),
+                np.asarray(model.predict(values[0].reshape(1, -1))),
+            ))
+            if scenario_id in {"sklearn_linear", "tree_native_paths"}
+            else None
+        )
         matrix[scenario_id] = {
+            "native_prediction_matches": native_prediction_matches,
             "adapter_id": result.prediction.adapter_id,
             "explanation_level": result.explanation_level,
             "native_channels": list(result.native_channels),
@@ -317,7 +328,11 @@ def build_cross_model_matrix() -> dict:
         }
     write_json(output_dir / "cross_model_matrix.json", matrix)
     assert matrix["black_box_callable"]["explanation_level"] in {"E1", "E3"}
-    assert "rules" in matrix["sklearn_linear"]["surrogate_channels"]
+    assert matrix["sklearn_linear"]["native_prediction_matches"] is True
+    assert matrix["tree_native_paths"]["native_prediction_matches"] is True
+    # Linear coefficients are native evidence; no native rule base exists.
+    # An optional, explicitly labelled surrogate must not be mandatory.
+    assert "rules" not in matrix["sklearn_linear"]["native_channels"]
     assert "rules" in matrix["tree_native_paths"]["native_channels"]
     return matrix
 
