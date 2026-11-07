@@ -10,11 +10,12 @@ from fuzzyxai.it2_conformal import IT2SplitConformal
 
 def test_train_validation_test_are_disjoint_and_conformal_is_replayable(tmp_path):
     result = run_one(17, tmp_path, n_bootstrap=8)
-    assert result["training_n"] + result["calibration_n"] + result["test_n"] == 569
-    assert len(set(result["split_sha256"].values())) == 3
+    assert result["training_n"] + result["calibration_n"] + result["policy_selection_n"] + result["test_n"] == 569
+    assert len(set(result["split_sha256"].values())) == 4
+    assert 0 <= result["policy_target_accept_fraction"] <= 1
     assert result["calibration_n"] >= 50
     assert result["status"] == "measured_on_held_out_rows"
-    for name in ("it2_conformal", "type1_conformal", "it2_conformal_only"):
+    for name in ("it2_conformal", "type1_conformal", "type1_conformal_coverage_matched", "it2_conformal_only"):
         metrics = result[name]
         assert metrics["n_test"] == result["test_n"]
         for key in ("empirical_marginal_coverage", "automatic_accept_fraction"):
@@ -32,6 +33,7 @@ def test_train_validation_test_are_disjoint_and_conformal_is_replayable(tmp_path
     assert len(heldout) == result["test_n"]
     assert len({row["row_id"] for row in heldout}) == len(heldout)
     assert all(row["it2_combined_accept"] in {"0", "1"} for row in heldout)
+    assert all(row["type1_coverage_matched_accept"] in {"0", "1"} for row in heldout)
 
 
 def test_repeated_seed_output_has_sha_manifest_and_is_descriptive(tmp_path):
@@ -39,6 +41,7 @@ def test_repeated_seed_output_has_sha_manifest_and_is_descriptive(tmp_path):
     assert summary["seeds"] == [17, 42]
     aggregate = summary["aggregates_descriptive"]["it2_conformal"]
     assert 0 <= aggregate["empirical_marginal_coverage_mean"] <= 1
+    assert "type1_conformal_coverage_matched" in summary["aggregates_descriptive"]
     assert "std_descriptive" in " ".join(aggregate)
     assert "independent" in summary["independence_warning"]
     manifest = json.loads((tmp_path / "manifest_sha256.json").read_text(encoding="utf-8"))
