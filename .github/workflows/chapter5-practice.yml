@@ -1,6 +1,8 @@
 name: Chapter 5 practical evidence
 
 on:
+  push:
+    branches: [chapter6-ophthalmology]
   workflow_dispatch:
   pull_request:
     paths:

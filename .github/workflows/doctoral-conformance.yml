@@ -1,6 +1,8 @@
 name: FuzzyXAI doctoral chapters 1-4 compliance
 
 on:
+  push:
+    branches: [chapter6-ophthalmology]
   workflow_dispatch:
   pull_request:
     paths:

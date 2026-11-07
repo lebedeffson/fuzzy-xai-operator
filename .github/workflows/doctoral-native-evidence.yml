@@ -1,6 +1,8 @@
 name: FuzzyXAI native fuzzy WDBC evidence
 
 on:
+  push:
+    branches: [chapter6-ophthalmology]
   workflow_dispatch:
   pull_request:
     paths:
