@@ -136,3 +136,24 @@ def test_unversioned_provenance_has_explicit_human_warning():
     assert text["status"] == "insufficient_provenance"
     assert "запрещено" in text["message"]
     assert text["final_action"] == "block"
+
+def test_it2_actual_uncertainty_width_enters_declared_risk_observer():
+    fuzzy = FuzzyXAI.wrap(model())
+    assert fuzzy.plan.uncertainty_policy.method == "it2_parameter_width"
+    assert "uncalibrated" in fuzzy.plan.uncertainty_policy.source
+    result = fuzzy.explain_one([0.4], object_id="width001",
+                               dataset_version="synthetic-fixture-v1")
+    observed = result.view_model.risk["components"].get("uncertainty")
+    expected = model().infer([0.4])["induced_width"]
+    assert observed is not None
+    assert observed == pytest.approx(expected)
+    assert result.view_model.risk["uncertainty_policy"]["method"] == "it2_parameter_width"
+
+
+def test_explicit_uncertainty_policy_is_not_overridden_by_auto_it2():
+    from fuzzyxai.core.explain_plan import ExplainPlan
+    manual = ExplainPlan.default()
+    assert manual.uncertainty_policy.method == "none"
+    fuzzy = FuzzyXAI.wrap(model(), explain_plan=manual)
+    assert fuzzy.plan is manual
+    assert fuzzy.plan.uncertainty_policy.method == "none"

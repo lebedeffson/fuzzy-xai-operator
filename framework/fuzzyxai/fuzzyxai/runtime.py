@@ -21,7 +21,7 @@ from fuzzyxai.adapters.model import ModelAdapter, ModelPrediction
 from fuzzyxai.adapters.model_registry import MODEL_ADAPTER_REGISTRY, resolve_model_adapter_v2
 from fuzzyxai.adapters.model_v2 import ModelAdapterV2
 from fuzzyxai.core.alignment import AlignmentResult
-from fuzzyxai.core.explain_plan import ExplainPlan
+from fuzzyxai.core.explain_plan import ExplainPlan, UncertaintyPolicy
 from fuzzyxai.core.risk_observer import observe_legacy_normalized_risk
 from fuzzyxai.core.route import build_route
 from fuzzyxai.core.types import AdaptedInput, OperatorRoute
@@ -1315,6 +1315,14 @@ class FuzzyXAI:
             adapter=adapter,
             output_decoder=output_decoder,
         )
+        if explain_plan is None and resolved.adapter_id == "interval_type2_v2":
+            # A genuinely present IT2 FOU is the declared model-uncertainty
+            # source; it must not be mislabeled a calibrated prediction interval.
+            explain_plan = ExplainPlan.default()
+            explain_plan.uncertainty_policy = UncertaintyPolicy(
+                method="it2_parameter_width",
+                source="native_IT2_FOU_parameter_induced_width_uncalibrated",
+            )
         return cls(
             plan=explain_plan,
             model_adapter=resolved,
@@ -1727,6 +1735,19 @@ class FuzzyXAI:
                 interval_width = internal_evidence.get("calibrated_interval_width")
                 if isinstance(interval_width, (int, float)):
                     uncertainty_value = max(0.0, min(1.0, float(interval_width)))
+            elif uncertainty_policy.method == "it2_parameter_width":
+                # This is epistemic parameter uncertainty, not calibration.
+                # A non-IT2 model cannot fabricate this measurement.
+                raw_it2 = prediction.metadata.get("it2_inference")
+                if (
+                    prediction.adapter_id == "interval_type2_v2"
+                    and isinstance(raw_it2, list) and raw_it2
+                    and isinstance(raw_it2[0], Mapping)
+                ):
+                    measured_width = raw_it2[0].get("induced_width")
+                    if isinstance(measured_width, (int, float)) and math.isfinite(float(measured_width)):
+                        if 0.0 <= float(measured_width) <= 1.0:
+                            uncertainty_value = float(measured_width)
             if uncertainty_value is not None:
                 candidate_risk_components["uncertainty"] = uncertainty_value
             if pre_interpretability["i_pre"] is not None:

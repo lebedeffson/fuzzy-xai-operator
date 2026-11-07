@@ -99,6 +99,7 @@ _UNCERTAINTY_METHODS = {
     "ensemble_disagreement",
     "ensemble_vote_standard_deviation",
     "calibrated_interval",
+    "it2_parameter_width",
 }
 
 
@@ -123,6 +124,8 @@ class UncertaintyPolicy:
       ``"ensemble_vote_standard_deviation"``; it is not a variance.
     - ``"calibrated_interval"``: half-width of a calibrated prediction
       interval, when the adapter genuinely supplies one.
+    - ``"it2_parameter_width"``: actual induced probability-range width of
+      an interval type-2 model; it is explicitly NOT statistically calibrated.
 
     Declaring a method other than ``"none"`` and then genuinely lacking the
     corresponding signal is a real ``missing_required`` condition -- unlike
