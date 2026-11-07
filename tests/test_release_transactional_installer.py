@@ -6,7 +6,7 @@ from pathlib import Path
 
 import pytest
 
-from test_doctoral_patcher import source_snapshots
+from tests.test_doctoral_patcher import source_snapshots
 import install_fuzzyxai_upgrade as installer
 
 REGISTRY_CONTENT = '''from __future__ import annotations

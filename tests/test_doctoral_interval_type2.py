@@ -105,3 +105,18 @@ def test_manifest_rejects_nan_inf_and_duplicate_features():
             m.infer([nan, 0.5])
     with pytest.raises(ValueError):
         IT2FuzzyLogit(0, 2, (m.features[0], m.features[0]))
+
+def test_it2_public_package_exports():
+    from fuzzyxai import (
+        IT2FuzzyLogit, IT2FeatureRule, IT2Shoulder, MembershipInterval,
+        make_it2_receipt, verify_it2_receipt, robust_interval_decision,
+        karnik_mendel_center_of_sets,
+    )
+    assert IT2FuzzyLogit.__name__ == "IT2FuzzyLogit"
+    assert IT2FeatureRule.__name__ == "IT2FeatureRule"
+    assert IT2Shoulder.__name__ == "IT2Shoulder"
+    assert MembershipInterval.__name__ == "MembershipInterval"
+    assert all(callable(item) for item in (
+        make_it2_receipt, verify_it2_receipt, robust_interval_decision,
+        karnik_mendel_center_of_sets,
+    ))

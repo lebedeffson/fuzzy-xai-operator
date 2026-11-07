@@ -463,3 +463,16 @@ from .doctoral_certification import certify_result, certify_payload, verify_cert
 from .doctoral_batch import certify_batch
 from .doctoral_report import render_doctoral_report
 __all__ += ["certify_result", "certify_payload", "verify_certificate", "project_for_audience", "select_representation", "fuzzy_and", "certify_batch", "render_doctoral_report"]
+
+# Native interval type-2 inference is opt-in and numerically auditable.
+# Its parameter-induced output interval is not a calibrated confidence interval.
+from .interval_type2 import (
+    IT2FuzzyLogit, IT2FeatureRule, IT2Shoulder, MembershipInterval,
+    robust_interval_decision, make_it2_receipt, verify_it2_receipt,
+    karnik_mendel_center_of_sets,
+)
+__all__ += [
+    "IT2FuzzyLogit", "IT2FeatureRule", "IT2Shoulder", "MembershipInterval",
+    "robust_interval_decision", "make_it2_receipt", "verify_it2_receipt",
+    "karnik_mendel_center_of_sets",
+]
