@@ -1974,6 +1974,13 @@ class FuzzyXAI:
         route = [
             {"id": "model", "label": "Model", "status": "passed"},
             {"id": "adapter", "label": prediction.adapter_id, "status": "passed"},
+            *([{
+                "id": "it2_representation",
+                "label": "F_IT2 executed FOU inference",
+                "value_source": "computed",
+                "output_values": {"selected_class": "F_IT2"},
+                "status": "passed" if it2_guard is not None and it2_guard.get("status") == "verified" else "warning",
+            }] if prediction.adapter_id == "interval_type2_v2" else []),
             {"id": "alignment", "label": "T_ij", "status": "passed" if system_evidence is not None else ("passed" if (alignment and alignment.certified) else ("warning" if alignment_expected else "not_applied"))},
             {"id": "reduction", "label": "Delta", "status": (system_evidence.reduction_status if system_evidence is not None else ("passed" if (reduction and reduction.allowed) else ("warning" if reduction_expected else "not_applied")))},
             {"id": "risk", "label": "Risk", "status": "blocked" if action == "block" else ("passed" if (system_evidence is not None or (risk and risk_status == "complete")) else "warning")},
@@ -2250,6 +2257,7 @@ class FuzzyXAI:
                 "contribution_limitations": list(internal_evidence.get("limitations", [])),
             },
             fuzzy={
+                **({"selected_representation": "F_IT2"} if prediction.adapter_id == "interval_type2_v2" else {}),
                 "memberships": dict(evidence.get("memberships", {})),
                 # P16 section 17: whatever membership-function policies are
                 # registered on this ExplainPlan — parameters, origin,

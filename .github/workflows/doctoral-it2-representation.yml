@@ -1,0 +1,32 @@
+name: FuzzyXAI doctoral interval type-2 representation compliance
+
+on:
+  push:
+    branches: [chapter6-ophthalmology]
+    paths:
+      - 'framework/fuzzyxai/fuzzyxai/doctoral_certification.py'
+      - 'framework/fuzzyxai/fuzzyxai/runtime.py'
+      - 'tests/test_doctoral_it2_representation.py'
+      - 'docs/DOCTORAL_IT2_CONFORMANCE_RU.md'
+      - '.github/workflows/doctoral-it2-representation.yml'
+  workflow_dispatch:
+
+jobs:
+  verify-f-it2:
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12"]
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install actual package and test dependencies
+        run: python -m pip install -e ".[dev]"
+      - name: Verify Type-2 FOU, missing receipts, tampering, and real executed class
+        run: |
+          python -m pytest -q tests/test_doctoral_it2_representation.py \
+            tests/test_doctoral_certification.py tests/test_it2_runtime_adapter.py

@@ -28,17 +28,22 @@ ACTIONS = ("accept", "lower_confidence", "request_more_data", "defer_to_human", 
 SOURCE_TYPES = frozenset({"intrinsic", "builtin", "posthoc"})
 OBJECT_TYPES = frozenset({"causal", "data", "representation", "logic", "features"})
 AUDIENCES = frozenset({"end_user", "regulator", "researcher", "developer", "auditor"})
-PROFILE_FLAGS = frozenset({"u_num", "u_ling", "u_int", "u_exp", "u_conf", "u_trace", "u_shift", "u_cf", "u_multi", "u_time", "u_user", "u_src"})
+# u_fou is uncertainty in a *type-2 membership grade*. It is NOT u_int,
+# which denotes an interval-valued type-1 representation.
+_TYPE1_PROFILE_FLAGS = frozenset({"u_num", "u_ling", "u_int", "u_exp", "u_conf", "u_trace", "u_shift", "u_cf", "u_multi", "u_time", "u_user", "u_src"})
+PROFILE_FLAGS = _TYPE1_PROFILE_FLAGS | {"u_fou"}
 CLASS_COVERAGE: dict[str, frozenset[str]] = {
     "F0": frozenset({"u_num", "u_ling"}),
     "F_int": frozenset({"u_num", "u_ling", "u_int"}),
+    "F_IT2": frozenset({"u_num", "u_ling", "u_int", "u_fou"}),
     "F_H": frozenset({"u_num", "u_ling", "u_exp"}),
     "F_N_src": frozenset({"u_num", "u_ling", "u_conf", "u_src"}),
     "FML_user": frozenset({"u_num", "u_ling", "u_int", "u_conf", "u_src", "u_user"}),
-    "FML_audit": PROFILE_FLAGS,
+    # No type-1 class can certify a type-2 footprint merely by renaming it.
+    "FML_audit": _TYPE1_PROFILE_FLAGS,
 }
 # Complexity is a declared reference ordering, NOT a measured runtime claim.
-CLASS_COSTS = {"F0": (1, 1), "F_int": (2, 2), "F_H": (3, 3), "F_N_src": (3, 3), "FML_user": (5, 5), "FML_audit": (8, 8)}
+CLASS_COSTS = {"F0": (1, 1), "F_int": (2, 2), "F_IT2": (4, 4), "F_H": (3, 3), "F_N_src": (3, 3), "FML_user": (5, 5), "FML_audit": (8, 8)}
 _ACTION_RANK = {"accept": 0, "lower_confidence": 1, "request_more_data": 2,
                 "defer_to_human": 3, "review": 3, "audit": 3, "audit_report": 3, "block": 4,
                 "insufficient_evidence": 3}
@@ -529,6 +534,135 @@ def select_representation(profile: Sequence[str], *, audience: str, measured_del
             "cost_basis": "declared_complexity_order_not_measured_runtime"}
 
 
+
+def _validate_interval_type2_representation(
+    representation: Mapping[str, Any],
+    profile: Sequence[str],
+    payload: Mapping[str, Any],
+    policy: GatePolicy,
+    defects: list[Violation],
+) -> dict[str, Any]:
+    """Require independently replayed type-2 FOU evidence for the F_IT2 class.
+
+    A claimed label, already computed action, or in-process self-SHA is NOT a
+    source of Type-2 certification. An auditor explicitly supplies per-object
+    numeric receipts and a separately registered model SHA256; the receipts
+    are retained in the audit certificate for deterministic verification.
+    This is computational replay, not cryptographic author authentication.
+    """
+    guard = _mapping(_mapping(payload.get("risk")).get("it2_guard"))
+    if "u_fou" not in profile:
+        if guard:
+            _add(defects, "D_it2_profile_omits_fou", "representation.profile",
+                 "the native IT2 FOU was measured but excluded from the declared uncertainty profile")
+        return {"status": "not_applicable"}
+    trace = _mapping(payload.get("trace"))
+    if trace.get("adapter_id") != "interval_type2_v2":
+        _add(defects, "D_it2_wrong_adapter", "trace.adapter_id",
+             "F_IT2 requires real native interval-type-2 inference")
+    graph = _mapping(payload.get("explanation_graph"))
+    nodes = {_clean(_mapping(node).get("node_id")) for node in _sequence(graph.get("nodes"))}
+    edges = [(str(_mapping(e).get("source", "")), str(_mapping(e).get("target", "")))
+             for e in _sequence(graph.get("edges"))]
+    if "it2:guard" not in nodes or ("it2:guard", "action") not in edges:
+        _add(defects, "D_it2_graph_witness", "explanation_graph",
+             "the actual type-2 guard must be materialized and connected to the final action", incomplete=True)
+    if guard.get("status") != "verified":
+        _add(defects, "D_it2_not_verified", "risk.it2_guard",
+             "IT2 guard must explicitly verify native numeric inference and source identity", incomplete=True)
+    cases = _sequence(guard.get("cases"))
+    if not cases:
+        _add(defects, "D_it2_cases_missing", "risk.it2_guard.cases",
+             "no per-object type-2 inference was observed", incomplete=True)
+    anchor = representation.get("it2_trusted_model_sha256")
+    if not isinstance(anchor, str) or not _SHA256.fullmatch(anchor):
+        _add(defects, "D_it2_anchor_missing", "representation.it2_trusted_model_sha256",
+             "separately registered SHA256 model fingerprint required for independent replay",
+             incomplete=True)
+        return {"status": "insufficient_evidence", "replayed_cases": 0}
+    declared_fingerprint = _clean(trace.get("model_fingerprint"))
+    if anchor.lower() != declared_fingerprint.lower():
+        _add(defects, "D_it2_anchor_mismatch", "trace.model_fingerprint",
+             "native runtime model fingerprint differs from the independently declared anchor")
+    receipts = _sequence(representation.get("it2_receipts"))
+    if not receipts:
+        _add(defects, "D_it2_receipts_missing", "representation.it2_receipts",
+             "raw numerical IT2 receipts needed for independent FOU recomputation", incomplete=True)
+        return {"status": "insufficient_evidence", "replayed_cases": 0,
+                "anchor_status": "declared_but_not_replayed"}
+    if len(receipts) != len(cases):
+        _add(defects, "D_it2_case_count", "representation.it2_receipts",
+             "number of receipts differs from the actual runtime cases")
+    from .interval_type2 import verify_it2_receipt
+    model = _mapping(payload.get("model"))
+    metadata = _mapping(model.get("metadata"))
+    published_inferences = _sequence(metadata.get("it2_inference"))
+    trace_ids = _sequence(trace.get("object_ids"))
+    if len(cases) != len(trace_ids):
+        _add(defects, "D_it2_trace_count", "trace.object_ids",
+             "runtime Type-2 cases are not one-to-one with original trace identities")
+    if len(published_inferences) != len(cases):
+        _add(defects, "D_it2_prediction_count", "model.metadata.it2_inference",
+             "number of native model outputs differs from the verified interval cases")
+    seen_ids: set[str] = set()
+    accepted = 0
+    for index, supplied in enumerate(receipts):
+        item = _mapping(supplied)
+        if not item:
+            _add(defects, "D_it2_receipt_invalid", f"representation.it2_receipts[{index}]",
+                 "receipt is not a mapping")
+            continue
+        oid = _clean(item.get("source_id"))
+        if not oid or oid in seen_ids:
+            _add(defects, "D_it2_duplicate_identity", f"representation.it2_receipts[{index}]",
+                 "duplicate or absent source identifier")
+            continue
+        seen_ids.add(oid)
+        check = verify_it2_receipt(item, trusted_model_sha256=anchor.lower())
+        if not check.get("valid"):
+            _add(defects, "D_it2_replay_failed", f"representation.it2_receipts[{index}]",
+                 "the independent rule/FOU replay failed: " + str(check.get("errors")))
+            continue
+        if index >= len(cases):
+            _add(defects, "D_it2_unmatched_receipt", f"representation.it2_receipts[{index}]",
+                 "an extra receipt is not present in runtime evidence")
+            continue
+        actual = _mapping(cases[index])
+        actual_inference = _mapping(published_inferences[index]) if index < len(published_inferences) else {}
+        if (
+            item.get("source_id") != actual.get("object_id")
+            or (index < len(trace_ids) and oid != str(trace_ids[index]))
+            or item.get("dataset_version") != trace.get("dataset_version")
+            or item.get("dataset_version") != actual.get("dataset_version")
+            or item.get("model_sha256") != actual.get("model_sha256")
+            or item.get("receipt_sha256") != actual.get("receipt_sha256")
+            or item.get("input_sha256") != actual.get("input_sha256")
+            or not actual.get("replay_verified")
+        ):
+            _add(defects, "D_it2_identity_mismatch", f"representation.it2_receipts[{index}]",
+                 "independently replayed receipt differs from object, model, data or provenance identity")
+            continue
+        evidence_inference = _mapping(item.get("inference"))
+        if (
+            canonical_json(evidence_inference) != canonical_json(actual_inference)
+            or canonical_json(_mapping(item.get("decision"))) != canonical_json(_mapping(actual.get("decision")))
+        ):
+            _add(defects, "D_it2_value_mismatch", f"representation.it2_receipts[{index}]",
+                 "runtime interval inference or its action differs from independently replayed receipt")
+            continue
+        accepted += 1
+    if len(seen_ids) != len(cases):
+        _add(defects, "D_it2_incomplete_batch", "representation.it2_receipts",
+             "not every observed Type-2 case has a unique replayed receipt", incomplete=True)
+    return {
+        "status": "replayed" if accepted == len(cases) and len(receipts) == len(cases) else "incomplete",
+        "replayed_cases": accepted,
+        "total_cases": len(cases),
+        "anchor_status": "matched_declared_model_sha256" if anchor.lower() == declared_fingerprint.lower() else "mismatch",
+        "scope": "type2_parameter_FOU_replay_not_calibration_or_authentication",
+    }
+
+
 def _validate_representation(value: Mapping[str, Any], taxonomy: Mapping[str, str] | None,
                              policy: GatePolicy, diagnostics: Sequence[Any], defects: list[Violation],
                              payload: Mapping[str, Any]) -> dict[str, Any]:
@@ -584,6 +718,9 @@ def _validate_representation(value: Mapping[str, Any], taxonomy: Mapping[str, st
         elif emitted != selected["selected_class"] or any(item != emitted for item in witnessed):
             _add(defects, "D_representation_mismatch", "fuzzy.selected_representation",
                  f"executed class/projection disagrees with the selected {selected['selected_class']!r}")
+    selected["it2_verification"] = _validate_interval_type2_representation(
+        value, profile, payload, policy, defects
+    )
     return selected
 
 
