@@ -40,6 +40,7 @@ _DIAGNOSTIC_LABELS_RU = {
     "D_k_risk_missing": "Оценка риска не была предоставлена",
     "D_it2_policy_constraint": "Интервал нечёткости второго типа ограничивает автоматическое решение",
     "D_it2_source_missing": "Отсутствует проверяемая версия исходных данных для интервального вывода",
+    "D_it2_conformal_set_ambiguous": "Конформное множество меток неоднозначно; требуется дополнительная проверка",
     "D_surrogate_fidelity": "Суррогатное локальное объяснение имеет низкую или неизмеренную точность",
 }
 
@@ -342,6 +343,14 @@ def build_explanation_graph(
         )
         edges.append(ExplanationEdge("prediction", "it2:guard", "derived_from"))
         edges.append(ExplanationEdge("it2:guard", "action", "constrains"))
+        if isinstance(it2_guard.get("conformal"), Mapping):
+            add_node(
+                "it2:conformal", "conformal_prediction_set",
+                "Калибровочное множество меток: дополнительное ограничение",
+                it2_guard["conformal"],
+            )
+            edges.append(ExplanationEdge("it2:guard", "it2:conformal", "derived_from"))
+            edges.append(ExplanationEdge("it2:conformal", "action", "constrains"))
     node_ids = {node.node_id for node in nodes}
     for claim in claims:
         claim_node = f"claim:{claim.claim_id}"

@@ -1,0 +1,31 @@
+name: FuzzyXAI IT2 + split conformal validation
+
+on:
+  push:
+    branches: [chapter6-ophthalmology]
+    paths:
+      - 'framework/fuzzyxai/fuzzyxai/it2_conformal.py'
+      - 'framework/fuzzyxai/fuzzyxai/runtime.py'
+      - 'framework/fuzzyxai/fuzzyxai/evidence/graph.py'
+      - 'framework/fuzzyxai/fuzzyxai/__init__.py'
+      - 'tests/test_it2_conformal.py'
+      - 'docs/IT2_CONFORMAL_RU.md'
+      - '.github/workflows/it2-conformal.yml'
+  workflow_dispatch:
+
+jobs:
+  controlled-calibration:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install actual FuzzyXAI
+        run: python -m pip install -e ".[dev]"
+      - name: Exercise finite-sample quantiles, provenance and conservative runtime policy
+        run: python -m pytest -q tests/test_it2_conformal.py tests/test_it2_runtime_adapter.py

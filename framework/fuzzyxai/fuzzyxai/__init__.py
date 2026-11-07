@@ -479,3 +479,6 @@ __all__ += [
 
 from .adapters.it2_v2 import IntervalType2Adapter
 __all__ += ["IntervalType2Adapter"]
+
+from .it2_conformal import IT2SplitConformal
+__all__ += ["IT2SplitConformal"]

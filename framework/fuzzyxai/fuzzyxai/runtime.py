@@ -432,6 +432,7 @@ class ModelExplanationResult:
             "it2_action": guard_action,
             "final_action": self.action,
             "model_anchor_status": guard.get("model_anchor_status"),
+            "conformal": guard.get("conformal"),
             "intervals": intervals,
             "limitation": (
                 "Это диапазон, обусловленный неопределённостью параметров функций принадлежности, "
@@ -1966,6 +1967,68 @@ class FuzzyXAI:
                     "max_width": max_width,
                     "cases": all_cases,
                 }
+            # Optional split-conformal *label sets*. These are distinct from
+            # the IT2 parameter-FOU probability envelope. Conformal coverage
+            # is marginal only under exchangeability of calibration/test scores.
+            if "it2_conformal" in self.plan.metadata:
+                from fuzzyxai.it2_conformal import IT2SplitConformal
+
+                calibration = IT2SplitConformal.from_dict(
+                    self.plan.metadata["it2_conformal"]
+                )
+                if calibration.model_sha256 != model_fingerprint:
+                    raise ValueError("conformal calibration is bound to a different fitted IT2 model")
+                external_calibration_anchor = self.plan.metadata.get(
+                    "it2_conformal_trusted_sha256"
+                )
+                if external_calibration_anchor is not None:
+                    if not isinstance(external_calibration_anchor, str) or (
+                        external_calibration_anchor.lower() != calibration.receipt_sha256.lower()
+                    ):
+                        raise ValueError("declared conformal calibration receipt anchor mismatch")
+                published_inferences = prediction.metadata.get("it2_inference")
+                if not isinstance(published_inferences, list) or (
+                    len(published_inferences) != len(ids)
+                ):
+                    raise ValueError("conformal calibration requires exact per-object IT2 inference")
+                if it2_guard is None or it2_guard.get("status") != "verified":
+                    # The existing source/provenance guard already blocks.
+                    conformal_info = {
+                        "status": "not_evaluated_insufficient_source_provenance",
+                        "calibration_sha256": calibration.receipt_sha256,
+                        "model_anchor_status": "missing_source_provenance",
+                        "cases": [],
+                    }
+                else:
+                    conformal_cases = [
+                        calibration.predict_set(
+                            float(inference["probability_midpoint"]), object_id=str(object_id)
+                        )
+                        for object_id, inference in zip(ids, published_inferences, strict=True)
+                    ]
+                    if any(case["action"] != "accept" for case in conformal_cases):
+                        if action in {"accept", "lower_confidence"}:
+                            action = "request_more_data"
+                        diagnostics.append({
+                            "code": "D_it2_conformal_set_ambiguous",
+                            "severity": "warning",
+                            "reason": "calibration label set is empty or contains multiple classes",
+                        })
+                    conformal_info = {
+                        "status": "verified_calibration_arithmetic",
+                        "calibration_sha256": calibration.receipt_sha256,
+                        "calibration_dataset_version": calibration.calibration_dataset_version,
+                        "model_anchor_status": (
+                            "matched_declared_calibration_SHA256"
+                            if external_calibration_anchor is not None
+                            else "self_reported_calibration_no_external_authentication"
+                        ),
+                        "alpha": calibration.alpha,
+                        "scope": "marginal_label_set_under_exchangeability_not_type2_FOU",
+                        "cases": conformal_cases,
+                    }
+                it2_guard["conformal"] = conformal_info
+
             prediction = replace(
                 prediction,
                 metadata={**dict(prediction.metadata), "it2_guard": it2_guard},
