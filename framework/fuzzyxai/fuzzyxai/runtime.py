@@ -373,6 +373,72 @@ class ModelExplanationResult:
 
         return tuple(cast("Sequence[Mapping[str, Any]]", self.view_model.visual_spec.get("similar_cases", ())))
 
+    def explain_it2(self, *, audience: str = "domain_user") -> dict[str, Any] | None:
+        """Present previously measured IT2 evidence without new inference.
+
+        The membership-parameter FOU is not a calibrated prediction interval.
+        User/expert/auditor share identical numeric evidence and final action.
+        """
+        if audience not in {"domain_user", "ml_engineer", "researcher", "auditor"}:
+            raise ValueError("unknown IT2 explanation audience")
+        guard = self.view_model.risk.get("it2_guard")
+        if not isinstance(guard, Mapping):
+            return None
+        items = guard.get("cases", ())
+        intervals: list[dict[str, Any]] = []
+        if isinstance(items, (list, tuple)):
+            for case in items:
+                if not isinstance(case, Mapping):
+                    continue
+                lower = case.get("probability_lower")
+                upper = case.get("probability_upper")
+                decision = case.get("decision")
+                intervals.append({
+                    "object_id": case.get("object_id"),
+                    "lower": lower,
+                    "upper": upper,
+                    "point": case.get("probability_midpoint"),
+                    "parameter_width": (float(upper) - float(lower)) if lower is not None and upper is not None else None,
+                    "it2_action": decision.get("action") if isinstance(decision, Mapping) else None,
+                    "replay_verified": bool(case.get("replay_verified", False)),
+                    "receipt_sha256": case.get("receipt_sha256"),
+                })
+        action_labels = {
+            "accept": "интервал не пересекает порог",
+            "request_more_data": "интервал пересекает порог; нужны дополнительные данные",
+            "defer_to_human": "интервал слишком широк; требуется проверка специалистом",
+            "block": "автоматическое решение заблокировано",
+        }
+        guard_action = str(guard.get("action", "block"))
+        status = str(guard.get("status", "unknown"))
+        if status == "insufficient_provenance":
+            message = "Нет подтверждённой версии входных данных; автоматическое решение запрещено."
+        elif len(intervals) == 1:
+            item = intervals[0]
+            message = (
+                f"Интервал результата, обусловленный нечёткостью параметров: "
+                f"[{float(item['lower']):.4f}; {float(item['upper']):.4f}]. "
+                f"Ограничение IT2: {action_labels.get(guard_action, guard_action)}."
+            )
+        else:
+            message = (
+                f"Проверено объектов: {len(intervals)}. "
+                f"Ограничение IT2: {action_labels.get(guard_action, guard_action)}."
+            )
+        return {
+            "audience": audience,
+            "status": status,
+            "message": message,
+            "it2_action": guard_action,
+            "final_action": self.action,
+            "intervals": intervals,
+            "limitation": (
+                "Это диапазон, обусловленный неопределённостью параметров функций принадлежности, "
+                "а не откалиброванный доверительный интервал прогноза; "
+                "он не доказывает клиническую безопасность."
+            ),
+        }
+
     def to_dict(self, *, include_raw: bool = False, detail: str = "audit", audience: str = "domain_user") -> dict[str, Any]:
         """Serialize this result as one of three projections of the *same* canonical data.
 
@@ -475,6 +541,7 @@ class ModelExplanationResult:
             "uncertainty": dict(self.view_model.quality_metrics),
             "limitations": list(limitations),
             "provenance": self._provenance_summary(),
+            **({"it2_explanation": self.explain_it2()} if self.explain_it2() is not None else {}),
         }
 
     def _standard_dict(self, *, include_raw: bool, audience: str) -> dict[str, Any]:
@@ -495,6 +562,7 @@ class ModelExplanationResult:
             "uncertainty": dict(self.view_model.quality_metrics),
             "limitations": list(limitations),
             "provenance": self._provenance_summary(),
+            **({"it2_explanation": self.explain_it2(audience=audience)} if self.explain_it2(audience=audience) is not None else {}),
             "visual_metadata": {
                 "schema_version": self.view_model.visual_spec.get("schema_version"),
                 "overview": self.view_model.visual_spec.get("overview"),

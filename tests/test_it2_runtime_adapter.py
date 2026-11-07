@@ -109,3 +109,30 @@ def test_invalid_observations_rejected_before_audit():
         fuzzy.explain_one([float("nan")], dataset_version="controlled-v1")
     with pytest.raises(ValueError):
         fuzzy.explain_one([0.1, 0.5], dataset_version="controlled-v1")
+
+
+def test_user_explanation_is_a_projection_of_verified_it2_evidence():
+    result = FuzzyXAI.wrap(model()).explain_one(
+        [0.4], object_id="caseA", dataset_version="controlled-v1")
+    user = result.explain_it2(audience="domain_user")
+    auditor = result.explain_it2(audience="auditor")
+    assert user is not None and auditor is not None
+    assert user["intervals"] == auditor["intervals"]
+    assert "не" in user["limitation"]
+    assert "нечёткостью параметров" in user["message"]
+    assert user["it2_action"] == "request_more_data"
+    assert user["final_action"] == result.action
+    compact = result.to_dict(detail="compact")
+    standard = result.to_dict(detail="standard")
+    assert compact["it2_explanation"] == user
+    assert standard["it2_explanation"] == user
+    assert "input_values" not in repr(compact["it2_explanation"])
+
+
+def test_unversioned_provenance_has_explicit_human_warning():
+    result = FuzzyXAI.wrap(model()).explain_one([0.4], object_id="caseB")
+    text = result.explain_it2()
+    assert text is not None
+    assert text["status"] == "insufficient_provenance"
+    assert "запрещено" in text["message"]
+    assert text["final_action"] == "block"
