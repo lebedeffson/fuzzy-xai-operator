@@ -21,6 +21,7 @@ dependencies = [
 
 [project.scripts]
 fuzzyxai = "fuzzyxai.cli:main"
+fuzzyxai-certify = "fuzzyxai.doctoral_cli:main"
 
 [project.optional-dependencies]
 sklearn = ["scikit-learn>=1.2"]

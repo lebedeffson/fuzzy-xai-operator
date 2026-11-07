@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+import math
 from typing import Mapping, Sequence
 
 import numpy as np
@@ -14,15 +15,31 @@ DEFAULT_RISK_WEIGHTS: dict[str, float] = {
 }
 
 
+def _finite_risk_number(value: float, name: str) -> float:
+    if isinstance(value, bool):
+        raise ValueError(f"{name} must be a finite numeric value")
+    try:
+        parsed = float(value)
+    except (TypeError, ValueError, OverflowError) as exc:
+        raise ValueError(f"{name} must be a finite numeric value") from exc
+    if not math.isfinite(parsed):
+        raise ValueError(f"{name} must be finite")
+    return parsed
+
+
 def clip01(value: float) -> float:
-    return max(0.0, min(1.0, float(value)))
+    checked = _finite_risk_number(value, "risk component")
+    return max(0.0, min(1.0, checked))
 
 
 def normalize_risk_weights(weights: Mapping[str, float] | None = None) -> dict[str, float]:
     """Validate five weights; implicit renormalization is forbidden in P19."""
     merged = dict(DEFAULT_RISK_WEIGHTS)
     if weights:
-        merged.update({str(k): max(0.0, float(v)) for k, v in weights.items()})
+        unknown = set(weights) - set(DEFAULT_RISK_WEIGHTS)
+        if unknown:
+            raise ValueError(f"unknown risk component weights: {sorted(unknown)}")
+        merged.update({str(k): _finite_risk_number(v, f"weight:{k}") for k, v in weights.items()})
     if any(value < 0.0 for value in merged.values()):
         raise ValueError("risk weights must be non-negative")
     total = sum(merged.values())
@@ -94,15 +111,19 @@ def expected_action_costs(proba: Sequence[float], cost_matrix: Mapping[str, Sequ
     p = np.asarray(proba, dtype=float).reshape(-1)
     if p.size == 0:
         raise ValueError('proba must contain at least one class probability')
+    if not np.all(np.isfinite(p)) or np.any(p < 0.0):
+        raise ValueError('proba must contain finite non-negative probabilities')
     total = float(p.sum())
-    if total <= 0.0:
-        raise ValueError('proba must have positive sum')
+    if not math.isfinite(total) or total <= 0.0:
+        raise ValueError('proba must have finite positive sum')
     p = p / total
     costs: dict[str, float] = {}
     for action, row in cost_matrix.items():
         c = np.asarray(row, dtype=float).reshape(-1)
         if c.size != p.size:
             raise ValueError(f'cost row for {action!r} has length {c.size}, expected {p.size}')
+        if not np.all(np.isfinite(c)):
+            raise ValueError(f'cost row for {action!r} contains non-finite values')
         costs[str(action)] = float(np.dot(p, c))
     if not costs:
         raise ValueError('cost_matrix must contain at least one action')

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+import math
 from typing import Mapping
 
 
@@ -44,5 +45,10 @@ def compute_gamma_route(p: float, alpha_mean: float, feature_support: float, mod
     """Route disagreement used by the GIS INTEGRO control example."""
     if mode != "model_to_explanations":
         raise ValueError(f"Unsupported route mode: {mode}")
-    gamma = abs(float(p) - float(feature_support))
+    # Chapter 5 GIS protocol: disagreement against BOTH rule and feature evidence.
+    # Never reduce this to |p - s| alone: that silently drops the rule channel.
+    values = (float(p), float(alpha_mean), float(feature_support))
+    if any(not math.isfinite(value) for value in values):
+        raise ValueError("GIS route evidence must be finite")
+    gamma = max(abs(float(p) - float(alpha_mean)), abs(float(p) - float(feature_support)))
     return round(gamma, 6)

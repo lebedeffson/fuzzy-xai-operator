@@ -458,3 +458,8 @@ __all__ += [
     "RouteGraph",
     "RouteGraphBuilder",
 ]
+
+from .doctoral_certification import certify_result, certify_payload, verify_certificate, project_for_audience, select_representation, fuzzy_and
+from .doctoral_batch import certify_batch
+from .doctoral_report import render_doctoral_report
+__all__ += ["certify_result", "certify_payload", "verify_certificate", "project_for_audience", "select_representation", "fuzzy_and", "certify_batch", "render_doctoral_report"]

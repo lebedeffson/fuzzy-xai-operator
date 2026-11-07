@@ -959,6 +959,20 @@ class ModelExplanationResult:
             payload["system_evidence"] = self.system_evidence.audit_dict()
         return payload
 
+    def certify(
+        self,
+        *,
+        taxonomy: Mapping[str, Any],
+        representation: Mapping[str, Any],
+        policy: Mapping[str, Any] | None = None,
+        repair_costs: Mapping[str, float] | None = None,
+    ) -> dict[str, Any]:
+        """Verify chapter 1-4 evidence contracts (not prediction correctness)."""
+        from fuzzyxai.doctoral_certification import certify_result
+
+        return certify_result(self, taxonomy=taxonomy, representation=representation,
+                              policy=policy, repair_costs=repair_costs)
+
     def diagnose(
         self,
         *,
@@ -2162,6 +2176,25 @@ class FuzzyXAI:
             raw_objects=None if raw_object is None else [raw_object],
             **kwargs,
         )
+
+    def explain_one_certified(
+        self,
+        input_object: Any,
+        *,
+        taxonomy: Mapping[str, Any],
+        representation: Mapping[str, Any],
+        certification_policy: Mapping[str, Any] | None = None,
+        **explain_kwargs: Any,
+    ) -> tuple[ModelExplanationResult, dict[str, Any]]:
+        """Explain and independently certify the same object/route.
+
+        A certificate with status!=valid MUST NOT be treated as permission
+        to automate the prediction. The certificate is structural evidence.
+        """
+        result = self.explain_one(input_object, **explain_kwargs)
+        certificate = result.certify(taxonomy=taxonomy, representation=representation,
+                                     policy=certification_policy)
+        return result, certificate
 
     def explain_batch(
         self,

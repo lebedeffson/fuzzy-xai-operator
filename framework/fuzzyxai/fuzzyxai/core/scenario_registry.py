@@ -66,20 +66,44 @@ def build_hybrid_xiris_route(adapted: AdaptedInput) -> OperatorRoute:
 
 
 def build_medical_ecg_signal_route(adapted: AdaptedInput) -> OperatorRoute:
+    from fuzzyxai.ecg_quality import assess_ecg_quality
+
     values = adapted.values
-    diagnostic = {
-        "diagnostic_id": "D_signal_quality",
-        "diagnostic_type": "signal_quality",
-        "source": "noisy_or_missing_signal",
-        "criticality": "medium",
-        "message_ru": "ограничение качества сигнала",
-        "recommended_action": "defer_to_human",
+    quality = assess_ecg_quality(values)
+    action = quality["action"]
+    diagnostic_id = quality["diagnostic_id"]
+    diagnostics = []
+    if diagnostic_id:
+        diagnostics.append({
+            "diagnostic_id": diagnostic_id,
+            "diagnostic_type": "signal_quality",
+            "source": "signal_quality_features",
+            "criticality": "medium" if action == "defer_to_human" else "low",
+            "message_ru": "ECG technical signal-quality limitation",
+            "recommended_action": action,
+        })
+    computed = {
+        "quality_score": float(values["quality_score"]),
+        "missing_fragments": int(values["missing_fragments"]),
+        "quality_reasons": quality["quality_reasons"],
+        "quality_policy": quality["policy_version"],
+        "quality_score_kind": values.get("quality_score_kind", "unverified_input_score"),
+        "clinical_diagnosis": False,
+        "automatic_clinical_accept_allowed": False,
+        "diagnostic_id": diagnostic_id,
+        "action": action,
     }
-    computed = {"quality_score": values["quality_score"], "missing_fragments": values["missing_fragments"], "diagnostic_id": diagnostic["diagnostic_id"], "action": "defer_to_human"}
     nodes = [
-        _node("signal_quality", "Качество сигнала", f"quality={values['quality_score']}; missing={values['missing_fragments']}", "warning", "Контрольный ЭКГ-сценарий не является клинической диагностикой.", {**values, "value_source": "computed"}, "D_signal_quality"),
+        _node(
+            "signal_quality", "ECG signal quality",
+            f"quality={values['quality_score']}; missing={values['missing_fragments']}; action={action}",
+            "warning" if diagnostics else "passed",
+            "Technical input QC only: not an ECG diagnosis or a stenosis prediction.",
+            {**values, "quality_reasons": quality["quality_reasons"], "value_source": "computed"},
+            "D_signal_quality",
+        ),
     ]
-    return _route(adapted.scenario_id, "ECG FuzzyXAI OperatorRoute", values, computed, [diagnostic], nodes)
+    return _route(adapted.scenario_id, "ECG FuzzyXAI OperatorRoute", values, computed, diagnostics, nodes)
 
 
 def build_gd_anfis_shap_route(adapted: AdaptedInput) -> OperatorRoute:

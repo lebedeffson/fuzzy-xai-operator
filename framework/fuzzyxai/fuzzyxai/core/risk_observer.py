@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from collections.abc import Mapping
 from dataclasses import dataclass
+import math
 
 
 @dataclass(frozen=True)
@@ -20,6 +21,26 @@ CANONICAL_RISK_COMPONENTS = (
     "Delta",
     "chi_R",
 )
+
+
+def _finite_number(value: object, name: str) -> float:
+    if isinstance(value, bool):
+        raise ValueError(f"{name} must be a finite number")
+    try:
+        number = float(value)
+    except (TypeError, ValueError, OverflowError) as exc:
+        raise ValueError(f"{name} must be a finite number") from exc
+    if not math.isfinite(number):
+        raise ValueError(f"{name} must be finite")
+    return number
+
+
+def _binary_override(value: object) -> int:
+    if value is True or value is False:
+        return int(value)
+    if value not in (0, 1, 0.0, 1.0):
+        raise ValueError("chi_r_crit must be exactly 0 or 1")
+    return int(value)
 
 
 def compute_risk(components: Mapping[str, float], weights: Mapping[str, float]) -> float:
@@ -51,14 +72,17 @@ def compute_canonical_risk(components: Mapping[str, float], weights: Mapping[str
         )
     if set(weights) != set(CANONICAL_RISK_COMPONENTS):
         raise ValueError("canonical rho weights must match the five canonical components")
-    if any(float(value) < 0 for value in weights.values()):
+    checked_weights = {key: _finite_number(weights[key], f"weight:{key}") for key in CANONICAL_RISK_COMPONENTS}
+    if any(value < 0 for value in checked_weights.values()):
         raise ValueError("canonical rho weights must be non-negative")
-    if abs(sum(float(value) for value in weights.values()) - 1.0) > 1e-9:
+    if abs(sum(checked_weights.values()) - 1.0) > 1e-9:
         raise ValueError("canonical rho weights must sum to one; implicit renormalization is forbidden")
-    return sum(float(weights[key]) * max(0.0, min(1.0, float(components[key]))) for key in CANONICAL_RISK_COMPONENTS)
+    checked_components = {key: _finite_number(components[key], f"risk:{key}") for key in CANONICAL_RISK_COMPONENTS}
+    return sum(checked_weights[key] * max(0.0, min(1.0, checked_components[key])) for key in CANONICAL_RISK_COMPONENTS)
 
 
 def _candidate_action(rho: float, thresholds: Mapping[str, float], action_policy: Mapping[str, str] | None = None) -> tuple[str, str]:
+    _finite_number(rho, "rho")
     theta_1 = float(thresholds["theta_1"])
     theta_2 = float(thresholds["theta_2"])
     theta_3 = float(thresholds["theta_3"])
@@ -82,7 +106,7 @@ def _candidate_action(rho: float, thresholds: Mapping[str, float], action_policy
 
 def compute_action(rho: float, chi_r_crit: int, thresholds: Mapping[str, float], action_policy: Mapping[str, str] | None = None) -> str:
     candidate, _ = _candidate_action(rho, thresholds, action_policy)
-    return "block" if int(chi_r_crit) == 1 else candidate
+    return "block" if _binary_override(chi_r_crit) == 1 else candidate
 
 
 def observe_risk(components: Mapping[str, float], weights: Mapping[str, float], thresholds: Mapping[str, float], chi_r_crit: int, action_policy: Mapping[str, str] | None = None) -> RiskResult:
@@ -90,7 +114,7 @@ def observe_risk(components: Mapping[str, float], weights: Mapping[str, float], 
 
     rho = compute_canonical_risk(components, weights)
     candidate, reason = _candidate_action(rho, thresholds, action_policy)
-    critical = int(chi_r_crit)
+    critical = _binary_override(chi_r_crit)
     return RiskResult(rho=rho, action="block" if critical == 1 else candidate, chi_r_crit=critical, candidate_action=candidate, action_reason="critical structural override has priority" if critical == 1 else reason)
 
 
@@ -101,5 +125,5 @@ def observe_legacy_normalized_risk(components: Mapping[str, float], weights: Map
     legacy_thresholds = dict(thresholds)
     legacy_thresholds.setdefault("theta_4", legacy_thresholds.get("theta_3", 1.0))
     candidate, reason = _candidate_action(score, legacy_thresholds)
-    critical = int(chi_r_crit)
+    critical = _binary_override(chi_r_crit)
     return RiskResult(rho=score, action="block" if critical == 1 else candidate, chi_r_crit=critical, candidate_action=candidate, action_reason="critical structural override has priority" if critical == 1 else reason)
