@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - main
+      - chapter6-ophthalmology
       - feat/research-framework-completion
       - feat/explanation-experience
       - feat/explanation-experience-completion
