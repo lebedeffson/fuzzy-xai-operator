@@ -36,24 +36,30 @@ jobs:
       - name: Install framework
         run: |
           python -m pip install -U pip
-          python -m pip install -e ".[dev]" "ruff==0.15.19"
+          # Full cross-pipeline suite includes the declared REST/ML vertical.
+          python -m pip install -e ".[dev,ml-vertical,images]" "ruff==0.15.19"
       - name: Framework release gate
         run: make framework-release-check
       - name: Full regression suite
         shell: bash
         run: |
           set -euo pipefail
+          failed=0
+          checked=0
           while IFS= read -r test_file; do
+            checked=$((checked + 1))
             echo "RUN: ${test_file}"
             set +e
             python -m pytest -q "${test_file}"
             status=$?
             set -e
             if [ "${status}" -ne 0 ] && [ "${status}" -ne 5 ]; then
-              echo "::error file=${test_file},line=1::Isolated regression file failed"
-              exit 1
+              echo "::error file=${test_file},line=1::Isolated regression file failed with exit ${status}"
+              failed=$((failed + 1))
             fi
           done < <(find tests -type f -name 'test*.py' | LC_ALL=C sort)
+          echo "Regression result: ${checked} test files, ${failed} failing files"
+          test "${failed}" -eq 0
       - name: Public contract quality gates
         run: |
           ruff check framework/fuzzyxai/fuzzyxai/adapters/model.py framework/fuzzyxai/fuzzyxai/evidence framework/fuzzyxai/fuzzyxai/visualization tests/test_explanation_experience.py
