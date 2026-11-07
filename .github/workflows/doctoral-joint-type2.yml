@@ -42,7 +42,7 @@ jobs:
           python -m experiments.doctoral_joint_interval_type2 \
             --out reports/chapter5/joint_type2 \
             --seeds 17 42 73 123 2026 \
-            --bootstrap 16 --max-iter 120
+            --bootstrap 16 --max-iter 300
       - name: Check complete experiment SHA256 manifest
         run: |
           python - <<'PY'
@@ -54,7 +54,14 @@ jobs:
           assert len(obj['files']) >= 30
           for path, expected in obj['files'].items():
               assert hashlib.sha256((root/path).read_bytes()).hexdigest() == expected, path
-          print('MANIFEST PASS:', len(obj['files']), 'files')
+          study = json.loads((root/'summary.json').read_text())
+          failures = [
+              (split['seed'], split['objective_training_only']['optimizer_message'])
+              for split in study['per_split']
+              if not split['objective_training_only']['optimizer_success']
+          ]
+          assert not failures, f'Joint optimizer failed to converge: {failures}'
+          print('MANIFEST AND JOINT OPTIMIZATION PASS:', len(obj['files']), 'files')
           PY
       - name: Upload raw measurements, NOT a clinical claim
         if: always()

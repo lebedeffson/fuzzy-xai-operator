@@ -89,6 +89,15 @@ def test_split_study_keeps_calibration_policy_test_separate_and_replays_receipt(
     assert study['objective_training_only']['final_objective']<=study['objective_training_only']['initial_objective']+1e-8
     assert (tmp_path/'s'/'sample_model_receipt.json').exists()
     assert (tmp_path/'s'/'heldout_and_corruption.csv').exists()
+    import csv
+    with (tmp_path/'s'/'heldout_and_corruption.csv').open(encoding='utf-8') as f:
+        rows = list(csv.DictReader(f))
+    assert len(rows) == 114 * 3 * 2
+    joint = [r for r in rows if r['method'] == 'joint_it2']
+    assert all(r['fou_probability_lower'] and r['fou_probability_upper'] for r in joint)
+    assert all(float(r['fou_probability_lower']) <= float(r['p_malignant'])
+               <= float(r['fou_probability_upper']) for r in joint)
+    assert all(r['blocked_reason'] for r in rows)
 
 
 def test_seed_validation(tmp_path):

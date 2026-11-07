@@ -98,7 +98,7 @@ Brier, эмпирическое marginal set coverage и пообъектные 
 ```bash
 python -m pytest -q tests/test_doctoral_joint_it2.py
 python -m experiments.doctoral_joint_interval_type2 \
-  --out reports/chapter5/joint_type2 --bootstrap 16 --max-iter 120 \
+  --out reports/chapter5/joint_type2 --bootstrap 16 --max-iter 300 \
   --seeds 17 42 73 123 2026
 ```
 
@@ -107,3 +107,7 @@ CI: `.github/workflows/doctoral-joint-type2.yml`, Python 3.11 и 3.12.
 как проверенные; результаты экспериментальной репликации прикладываются
 отдельным манифестом SHA256. Не следует смешивать исходные материалы главы 5
 по ЭКГ с WDBC: это разные предметные наборы.
+
+## Отдельная проверка сходимости и числовых свидетельств
+
+CI теперь требует `optimizer_success=True` для **каждого** из пяти разбиений и отвергает завершение с кодом `TOTAL NO. OF ITERATIONS REACHED LIMIT`. Пообъектный CSV сохраняет `fou_probability_lower`, `fou_probability_upper`, `fou_width`, `fou_crosses_threshold` и `blocked_reason` для независимого анализа принятия решений. Совпадение/расхождение ошибок между методами проверяется по исходным `row_id`, а не только по средним значениям.

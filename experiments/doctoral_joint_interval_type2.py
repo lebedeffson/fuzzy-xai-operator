@@ -58,7 +58,7 @@ class JointIntervalType2Logistic:
     """
 
     def __init__(self, *, n_features: int = 5, n_bootstrap: int = 16,
-                 seed: int = 42, max_iter: int = 120,
+                 seed: int = 42, max_iter: int = 300,
                  robust_weight: float = 0.18, coefficient_l2: float = 0.002,
                  width_prior_weight: float = 4.0, shift_penalty: float = 0.04):
         if isinstance(max_iter, bool) or max_iter < 1:
@@ -287,7 +287,7 @@ def _matched_margin(policy_t1: np.ndarray, policy_t1_sets: list[dict[str, Any]],
         (abs(float(np.mean(eligible & (margins>t))) - target_acceptance), -t)))
 
 
-def run_one(seed: int, root: Path, *, n_bootstrap: int = 16, max_iter: int = 120,
+def run_one(seed: int, root: Path, *, n_bootstrap: int = 16, max_iter: int = 300,
             alpha: float = .1, stress_levels: tuple[float, ...] = (0., .10, .25)) -> dict[str, Any]:
     dataset = load_breast_cancer()
     values = np.asarray(dataset.data, dtype=float)
@@ -360,6 +360,7 @@ def run_one(seed: int, root: Path, *, n_bootstrap: int = 16, max_iter: int = 120
             sets=[conformal.predict_set(float(p),object_id=oid)
                   for p,oid in zip(probs,test_ids)]
             singleton=_singleton(sets,probs)
+            evidence = None
             if name == "type1_matched":
                 accepted=singleton & (np.abs(probs-.5)>margin)
             else:
@@ -376,6 +377,20 @@ def run_one(seed: int, root: Path, *, n_bootstrap: int = 16, max_iter: int = 120
                     "prediction_malignant": int(probs[i]>=.5), "auto_accept": int(accepted[i]),
                     "error_if_auto": int(accepted[i] and ((probs[i]>=.5)!=bool(yte[i]))),
                     "conformal_set": "|".join(map(str,sets[i]["label_set"])),
+                    "fou_probability_lower": float(evidence[i]["probability_lower"]) if evidence is not None else None,
+                    "fou_probability_upper": float(evidence[i]["probability_upper"]) if evidence is not None else None,
+                    "fou_width": float(evidence[i]["induced_width"]) if evidence is not None else None,
+                    "fou_crosses_threshold": int(
+                        evidence[i]["probability_lower"] < .5 <= evidence[i]["probability_upper"]
+                    ) if evidence is not None else None,
+                    "blocked_reason": (
+                        "accepted" if accepted[i] else
+                        "conformal_ambiguous" if not singleton[i] else
+                        "type1_matched_margin" if evidence is None else
+                        "fou_crosses_threshold" if evidence[i]["probability_lower"] < .5 <= evidence[i]["probability_upper"] else
+                        "fou_excessive_width" if evidence[i]["induced_width"] > .15 else
+                        "other_policy_block"
+                    ),
                 })
         results[str(noise)]=run_results
     with (root/"heldout_and_corruption.csv").open("w",newline="",encoding="utf-8") as fh:
@@ -410,7 +425,7 @@ def run_one(seed: int, root: Path, *, n_bootstrap: int = 16, max_iter: int = 120
     return summary
 
 
-def run(root:Path,*,seeds:tuple[int,...]=(17,42,73,123,2026),n_bootstrap:int=16,max_iter:int=120,
+def run(root:Path,*,seeds:tuple[int,...]=(17,42,73,123,2026),n_bootstrap:int=16,max_iter:int=300,
         stress_levels:tuple[float,...]=(0.,.10,.25))->dict[str,Any]:
     if not seeds or len(set(seeds))!=len(seeds):
         raise ValueError("seeds must be unique and nonempty")
@@ -452,7 +467,7 @@ def main()->None:
     p.add_argument("--out",type=Path,default=Path("reports/chapter5/joint_type2"))
     p.add_argument("--seeds",nargs="+",type=int,default=[17,42,73,123,2026])
     p.add_argument("--bootstrap",type=int,default=16)
-    p.add_argument("--max-iter",type=int,default=120)
+    p.add_argument("--max-iter",type=int,default=300)
     a=p.parse_args()
     print(json.dumps(run(a.out,seeds=tuple(a.seeds),n_bootstrap=a.bootstrap,max_iter=a.max_iter),ensure_ascii=False,indent=2))
 
