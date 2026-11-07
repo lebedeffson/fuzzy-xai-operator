@@ -1,0 +1,66 @@
+name: FuzzyXAI joint Type-2 learning + WDBC corruption evidence
+
+on:
+  push:
+    branches: [chapter6-ophthalmology]
+    paths:
+      - 'experiments/doctoral_joint_interval_type2.py'
+      - 'tests/test_doctoral_joint_it2.py'
+      - 'docs/IT2_JOINT_TRAINING_RU.md'
+      - '.github/workflows/doctoral-joint-type2.yml'
+  workflow_dispatch:
+
+jobs:
+  joint-it2-study:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ['3.11', '3.12']
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      PYTHONHASHSEED: '42'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install full project and research dependencies
+        run: |
+          python -m pip install -e '.[dev]'
+          python -m pip check
+      - name: Run joint-optimizer numerical and provenance tests
+        run: |
+          python -m pytest -q tests/test_doctoral_joint_it2.py \
+            tests/test_doctoral_interval_type2.py \
+            tests/test_it2_conformal.py
+      - name: Execute 5 disjoint-within-split WDBC studies and synthetic measurement corruption
+        run: |
+          python -m experiments.doctoral_joint_interval_type2 \
+            --out reports/chapter5/joint_type2 \
+            --seeds 17 42 73 123 2026 \
+            --bootstrap 16 --max-iter 120
+      - name: Check complete experiment SHA256 manifest
+        run: |
+          python - <<'PY'
+          import hashlib, json
+          from pathlib import Path
+          root = Path('reports/chapter5/joint_type2')
+          obj = json.loads((root/'manifest_sha256.json').read_text())
+          assert obj['schema'] == 'sha256-manifest-v1'
+          assert len(obj['files']) >= 30
+          for path, expected in obj['files'].items():
+              assert hashlib.sha256((root/path).read_bytes()).hexdigest() == expected, path
+          print('MANIFEST PASS:', len(obj['files']), 'files')
+          PY
+      - name: Upload raw measurements, NOT a clinical claim
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: fuzzyxai-joint-it2-wdbc-py${{ matrix.python-version }}-${{ github.sha }}
+          path: reports/chapter5/joint_type2/
+          if-no-files-found: warn
+          retention-days: 14
