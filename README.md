@@ -91,6 +91,14 @@ print(result.action)
 print(result.explain_it2())
 ```
 
+An optional [split-conformal LAC safeguard](docs/IT2_CONFORMAL_RU.md) now
+adds label prediction sets from a held-out calibration partition. It can
+**tighten** (but never relax) the existing IT2 automation decision. The
+conformal set and the IT2 FOU are distinct: the former needs exchangeability
+for marginal coverage, while the latter describes uncertain fuzzy membership
+parameters. A reproducible [WDBC held-out comparison](experiments/doctoral_it2_conformal.py)
+measures both the native IT2+conformal and a matched Type-1 conformal baseline.
+
 The interval is induced by **membership-parameter uncertainty**. It is
 **not** a calibrated predictive/clinical confidence interval. When the
 interval crosses the decision boundary or the input source is not versioned,
