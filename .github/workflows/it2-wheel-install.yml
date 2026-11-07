@@ -1,0 +1,64 @@
+name: FuzzyXAI installed-wheel IT2 smoke
+
+on:
+  push:
+    branches: [chapter6-ophthalmology]
+    paths:
+      - 'framework/fuzzyxai/fuzzyxai/interval_type2.py'
+      - 'framework/fuzzyxai/fuzzyxai/adapters/it2_v2.py'
+      - 'framework/fuzzyxai/fuzzyxai/adapters/model_registry.py'
+      - 'framework/fuzzyxai/fuzzyxai/core/explain_plan.py'
+      - 'framework/fuzzyxai/fuzzyxai/runtime.py'
+      - 'framework/fuzzyxai/fuzzyxai/__init__.py'
+      - 'framework/fuzzyxai/fuzzyxai/doctoral_cli.py'
+      - 'pyproject.toml'
+      - '.github/workflows/it2-wheel-install.yml'
+  workflow_dispatch:
+
+jobs:
+  wheel-smoke:
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12"]
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Build distribution from canonical branch checkout
+        run: |
+          python -m pip install --upgrade pip build
+          python -m build --wheel
+      - name: Install wheel into independent environment
+        run: |
+          python -m venv /tmp/fuzzyxai-wheel-venv
+          /tmp/fuzzyxai-wheel-venv/bin/python -m pip install dist/*.whl
+      - name: Exercise installed public API outside repository
+        run: |
+          cd /tmp
+          /tmp/fuzzyxai-wheel-venv/bin/python - <<'PY'
+          from fuzzyxai import FuzzyXAI, IT2FuzzyLogit, IT2FeatureRule, IT2Shoulder
+          model = IT2FuzzyLogit(
+              intercept=0.0, n_input_features=1,
+              features=(IT2FeatureRule(
+                  feature_index=0, feature_name="signal",
+                  low_coefficient=-4.0, high_coefficient=4.0,
+                  membership=IT2Shoulder(
+                      left_min=0.0, left_max=0.2,
+                      right_min=0.6, right_max=0.8,
+                      nominal_left=0.1, nominal_right=0.7,
+                  ),
+              ),),
+          )
+          result = FuzzyXAI.wrap(model).explain_one(
+              [0.4], object_id="wheel-case", dataset_version="controlled-wheel-v1")
+          assert result.adapter_id == "interval_type2_v2"
+          assert result.action != "accept"
+          assert result.explain_it2()["intervals"]
+          assert result.to_dict(detail="compact")["it2_explanation"]["status"] == "verified"
+          print("isolated wheel / Type-2 public API: PASS")
+          PY
+          /tmp/fuzzyxai-wheel-venv/bin/fuzzyxai-certify --help
