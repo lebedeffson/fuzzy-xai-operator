@@ -71,3 +71,28 @@ print(result.to_dict(detail="compact")["it2_explanation"])
 Если пользователь передал собственный `explain_plan`, он остаётся
 неизменным; для аналогичного поведения метод необходимо объявить явно.
 В случае отсутствующего измерения полноценный риск не выдумывается.
+
+## Контроль доверенного источника модели
+
+Численное воспроизведение и SHA256 манифеста **не доказывают, кто обучал
+модель и какие данные использовались**. Для внешне закреплённой версии
+объявите в `ExplainPlan.metadata` независимый отпечаток, полученный из
+реестра экспериментов или подписанного протокола обучения:
+
+```python
+from fuzzyxai import ExplainPlan, FuzzyXAI
+from fuzzyxai.interval_type2 import content_sha256
+
+plan = ExplainPlan.default()
+plan.metadata["it2_expected_model_sha256"] = "<SHA256, заранее сохранённый независимо>"
+fuzzy = FuzzyXAI.wrap(model, explain_plan=plan)
+result = fuzzy.explain_one(
+    [0.4], object_id="case", dataset_version="controlled-v1")
+assert result.explain_it2()["model_anchor_status"] == "matched_declared_external_SHA256"
+```
+
+В приведённом фрагменте необходимо подставить **действительный, отдельно
+зафиксированный** SHA256, а не вычислять его из только что предъявленной
+модели при проверке. Если отпечаток не совпадает, вывод отклоняется. Если
+независимая привязка не задана, в отчёте явно отражается статус
+`in_process_model_only_no_external_authentication`.

@@ -157,3 +157,36 @@ def test_explicit_uncertainty_policy_is_not_overridden_by_auto_it2():
     fuzzy = FuzzyXAI.wrap(model(), explain_plan=manual)
     assert fuzzy.plan is manual
     assert fuzzy.plan.uncertainty_policy.method == "none"
+
+def test_external_model_hash_anchor_enforces_model_identity():
+    from fuzzyxai.core.explain_plan import ExplainPlan
+    true_model = model()
+    plan = ExplainPlan.default()
+    plan.metadata["it2_expected_model_sha256"] = content_sha256(true_model.to_dict())
+    approved = FuzzyXAI.wrap(true_model, explain_plan=plan).explain_one(
+        [0.4], object_id="identity-1", dataset_version="fixture-v1")
+    guard = approved.prediction.metadata["it2_guard"]
+    assert guard["model_anchor_status"] == "matched_declared_external_SHA256"
+    assert all(item["model_anchor_status"] == "matched_declared_external_SHA256" for item in guard["cases"])
+    assert approved.explain_it2()["model_anchor_status"] == "matched_declared_external_SHA256"
+
+    mismatched = FuzzyXAI.wrap(model(high_coefficient=3.0), explain_plan=plan)
+    with pytest.raises(ValueError, match="external anchor"):
+        mismatched.explain_one([0.4], object_id="identity-1", dataset_version="fixture-v1")
+
+
+def test_numeric_replay_does_not_pretend_external_authentication():
+    result = FuzzyXAI.wrap(model()).explain_one(
+        [0.4], object_id="no-external-anchor", dataset_version="controlled-v1")
+    guard = result.prediction.metadata["it2_guard"]
+    assert guard["model_anchor_status"] == "in_process_model_only_no_external_authentication"
+    assert guard["cases"][0]["replay_verified"] is True
+
+
+def test_malformed_external_fingerprint_is_rejected():
+    from fuzzyxai.core.explain_plan import ExplainPlan
+    plan = ExplainPlan.default()
+    plan.metadata["it2_expected_model_sha256"] = "untrusted"
+    with pytest.raises(ValueError, match="SHA256"):
+        FuzzyXAI.wrap(model(), explain_plan=plan).explain_one(
+            [0.4], object_id="bad-sha", dataset_version="fixture-v1")

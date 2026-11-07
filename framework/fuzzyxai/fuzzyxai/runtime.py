@@ -431,6 +431,7 @@ class ModelExplanationResult:
             "message": message,
             "it2_action": guard_action,
             "final_action": self.action,
+            "model_anchor_status": guard.get("model_anchor_status"),
             "intervals": intervals,
             "limitation": (
                 "Это диапазон, обусловленный неопределённостью параметров функций принадлежности, "
@@ -1878,6 +1879,23 @@ class FuzzyXAI:
                 raise ValueError("IT2 prediction metadata requires the native IT2 adapter")
             threshold = float(self.plan.metadata.get("it2_threshold", 0.5))
             max_width = float(self.plan.metadata.get("it2_max_width", 0.20))
+            # Optional independently recorded fingerprint. Without it, we
+            # certify numerical replay only, not who trained/approved the model.
+            external_anchor = self.plan.metadata.get("it2_expected_model_sha256")
+            if external_anchor is not None:
+                if (
+                    not isinstance(external_anchor, str)
+                    or len(external_anchor) != 64
+                    or any(ch not in "0123456789abcdefABCDEF" for ch in external_anchor)
+                ):
+                    raise ValueError("it2_expected_model_sha256 must be a 64-character SHA256 hex digest")
+                if model_fingerprint.lower() != external_anchor.lower():
+                    raise ValueError("IT2 model manifest does not match declared external anchor")
+            anchor_status = (
+                "matched_declared_external_SHA256"
+                if external_anchor is not None
+                else "in_process_model_only_no_external_authentication"
+            )
             no_provenance = not str(dataset_version).strip() or dataset_version == "unversioned"
             source_ids = ids
             all_cases: list[dict[str, Any]] = []
@@ -1893,6 +1911,7 @@ class FuzzyXAI:
                     "status": "insufficient_provenance",
                     "action": "block",
                     "scope": "parameter_FOU_not_predictive_coverage",
+                    "model_anchor_status": anchor_status,
                     "cases": [],
                 }
             else:
@@ -1902,9 +1921,9 @@ class FuzzyXAI:
                     receipt = make_it2_receipt(
                         self._model_adapter.model, row, source_id=str(object_id),
                         dataset_version=str(dataset_version), threshold=threshold,
-                        max_width=max_width, expected_model_sha256=model_fingerprint,
+                        max_width=max_width, expected_model_sha256=external_anchor,
                     )
-                    verification = verify_it2_receipt(receipt, trusted_model_sha256=model_fingerprint)
+                    verification = verify_it2_receipt(receipt, trusted_model_sha256=external_anchor)
                     if not verification["valid"]:
                         raise ValueError(f"IT2 receipt replay failed: {verification['errors']}")
                     expected.append(receipt["inference"])
@@ -1915,6 +1934,7 @@ class FuzzyXAI:
                         "input_sha256": receipt["input_sha256"],
                         "receipt_sha256": receipt["receipt_sha256"],
                         "replay_verified": True,
+                        "model_anchor_status": anchor_status,
                         "probability_lower": receipt["inference"]["probability_lower"],
                         "probability_upper": receipt["inference"]["probability_upper"],
                         "probability_midpoint": receipt["inference"]["probability_midpoint"],
@@ -1941,6 +1961,7 @@ class FuzzyXAI:
                     "status": "verified",
                     "action": strongest,
                     "scope": "parameter_FOU_not_predictive_coverage",
+                    "model_anchor_status": anchor_status,
                     "threshold": threshold,
                     "max_width": max_width,
                     "cases": all_cases,
