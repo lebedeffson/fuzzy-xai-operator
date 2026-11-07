@@ -74,6 +74,34 @@ FuzzyXAI makes those relationships explicit and machine-verifiable.
 | Integration | Python API, REST surfaces, visualizations, MLflow evidence, and adapter SDK |
 | Reproducibility | Protocol locks, deterministic canonical JSON, SHA256 manifests, and source releases |
 
+## Native interval type-2 fuzzy inference (research)
+
+FuzzyXAI now supports **native** interval type-2 (IT2) fuzzy-logit inference,
+not merely a post-hoc fuzzy description. Under the declared IT2 policy,
+lower/upper membership grades induce a logit envelope and a point prediction.
+The real model can be passed to `FuzzyXAI.wrap(it2_model)`; its numerical
+replay, model SHA256, rule activations, action constraints, and human-readable
+uncertainty explanation are available on the ordinary `explain_one()` result.
+
+```python
+result = FuzzyXAI.wrap(it2_model).explain_one(
+    features, object_id="record-001", dataset_version="controlled-v1"
+)
+print(result.action)
+print(result.explain_it2())
+```
+
+The interval is induced by **membership-parameter uncertainty**. It is
+**not** a calibrated predictive/clinical confidence interval. When the
+interval crosses the decision boundary or the input source is not versioned,
+the runtime refuses automatic acceptance. A separately registered model SHA256
+can be used as an external model-identity anchor.
+
+See [the Russian IT2 runtime guide](docs/IT2_RUNTIME_API_RU.md),
+[chapter 1-4 conformance protocol](docs/DOCTORAL_CONFORMANCE_1_TO_4.md),
+and [interval type-2 research limitations](README_IT2_RESEARCH.md).
+No implementation of full generalized type-3 fuzzy inference is claimed.
+
 ## Install
 
 ```bash

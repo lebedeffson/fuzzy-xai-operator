@@ -190,3 +190,23 @@ def test_malformed_external_fingerprint_is_rejected():
     with pytest.raises(ValueError, match="SHA256"):
         FuzzyXAI.wrap(model(), explain_plan=plan).explain_one(
             [0.4], object_id="bad-sha", dataset_version="fixture-v1")
+
+
+def test_type2_audit_export_reopens_and_diagnostic_route_is_usable(tmp_path):
+    import json
+    from fuzzyxai.visualization.view_model import ExplanationViewModel
+
+    result = FuzzyXAI.wrap(model()).explain_one(
+        [0.4], object_id="durable-identity-001",
+        dataset_version="synthetic-protocol-v1",
+    )
+    report = result.diagnose(repair_mode="none")
+    assert isinstance(report.route_status, str)
+    assert report.trace_sha256
+    observed_guard = result.prediction.metadata["it2_guard"]
+    path = tmp_path / "it2_result.json"
+    result.export_json(path)
+    reloaded = ExplanationViewModel.load_json(path)
+    assert reloaded.risk["it2_guard"] == observed_guard
+    assert reloaded.model["metadata"]["model_sha256"] == result.prediction.metadata["model_sha256"]
+    assert json.loads(path.read_text(encoding="utf-8"))["risk"]["it2_guard"]["status"] == "verified"
