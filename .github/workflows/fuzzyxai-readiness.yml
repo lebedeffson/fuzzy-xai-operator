@@ -41,7 +41,7 @@ jobs:
         run: |
           python -m pip install -U pip
           # Full cross-pipeline suite includes the declared REST/ML vertical.
-          python -m pip install -e ".[dev,ml-vertical,images]" "ruff==0.15.19"
+          python -m pip install -e ".[dev,ml-vertical,images,ui]" "ruff==0.15.19"
       - name: Framework release gate
         run: make framework-release-check
       - name: Full regression suite

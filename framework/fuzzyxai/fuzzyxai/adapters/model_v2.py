@@ -41,9 +41,19 @@ def infer_task_type(model: Any, requested: str | TaskType = "auto") -> TaskType:
             return TaskType(requested)
         except ValueError as exc:
             raise ValueError(f"unsupported task type: {requested}") from exc
+    # scikit-learn 1.8+ may expose estimator identity via __sklearn_tags__
+    # rather than a legacy _estimator_type instance attribute. Use the
+    # supported public helper when available, retaining the old fallback
+    # for non-sklearn adapters.
     estimator_type = getattr(model, "_estimator_type", None)
     if estimator_type == "regressor":
         return TaskType.REGRESSION
+    try:
+        from sklearn.base import is_regressor
+        if is_regressor(model):
+            return TaskType.REGRESSION
+    except (ImportError, TypeError, AttributeError):
+        pass
     classes = getattr(model, "classes_", None)
     if classes is not None:
         return TaskType.BINARY_CLASSIFICATION if len(classes) == 2 else TaskType.MULTICLASS_CLASSIFICATION

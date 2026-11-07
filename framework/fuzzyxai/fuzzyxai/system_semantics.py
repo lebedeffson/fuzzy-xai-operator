@@ -452,7 +452,10 @@ def compute_strict_rho(*, rho_p: float | None, u_m: float | None, i_pre: float |
             thresholds=threshold_values,
         )
     complete_components = {key: 0.0 if value is None else float(value) for key, value in components.items()}
-    rho = sum(mapped[key] * _clip01(value) for key, value in complete_components.items())
+    # Compensated sum avoids platform/order-sensitive 0.09000000000000001
+    # instead of 0.09 when converting five decimal-valued risk components.
+    # No change to weights, clamping policy, or risk thresholds.
+    rho = math.fsum(mapped[key] * _clip01(value) for key, value in complete_components.items())
     policy = dict(action_policy) if isinstance(action_policy, Mapping) else {}
     middle_action = str(policy.get("theta_2_to_theta_3", "request_more_data"))
     upper_action = str(policy.get("theta_3_to_theta_4", "defer_to_human"))
