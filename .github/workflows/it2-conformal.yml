@@ -9,6 +9,8 @@ on:
       - 'framework/fuzzyxai/fuzzyxai/evidence/graph.py'
       - 'framework/fuzzyxai/fuzzyxai/__init__.py'
       - 'tests/test_it2_conformal.py'
+      - 'tests/test_it2_conformal_experiment.py'
+      - 'experiments/doctoral_it2_conformal.py'
       - 'docs/IT2_CONFORMAL_RU.md'
       - '.github/workflows/it2-conformal.yml'
   workflow_dispatch:
