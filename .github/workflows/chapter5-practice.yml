@@ -1,0 +1,55 @@
+name: Chapter 5 practical evidence
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'framework/fuzzyxai/fuzzyxai/ecg_quality.py'
+      - 'framework/fuzzyxai/fuzzyxai/adapters/signal_quality.py'
+      - 'framework/fuzzyxai/fuzzyxai/core/scenario_registry.py'
+      - 'experiments/chapter5_ecg_batch.py'
+      - 'experiments/chapter5_evidence_integrity.py'
+      - 'experiments/chapter5_hybrid_counterfactual.py'
+      - 'experiments/chapter5_real_heldout.py'
+      - 'experiments/chapter5_ptbxl_qc.py'
+      - 'experiments/chapter5_figure_pack.py'
+      - 'experiments/chapter5_practical_bundle.py'
+      - 'tests/test_chapter5_*'
+      - '.github/workflows/chapter5-practice.yml'
+
+jobs:
+  chapter5-evidence:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install framework and pytest
+        run: |
+          python -m pip install -e .
+          python -m pip install pytest
+      - name: Test technical quality decisions and evidence integrity
+        run: python -m pytest -q tests/test_chapter5_ecg_quality.py tests/test_chapter5_evidence_integrity.py tests/test_chapter5_hybrid_counterfactual.py tests/test_chapter5_real_heldout.py tests/test_chapter5_ptbxl_qc.py tests/test_chapter5_practical_bundle.py
+      - name: Reproduce ECG technical-control routes
+        run: python -m experiments.chapter5_ecg_batch --csv data/raw/ecg/input_ecg_sample_signal.csv --out reports/chapter5/ecg_quality_batch --source-type fixture
+      - name: Reproduce HYBRID-XIRIS dynamic guardrail grid
+        run: python -m experiments.chapter5_hybrid_counterfactual --out reports/chapter5/hybrid_counterfactual
+      - name: Validate five scenario artifacts
+        run: python -m experiments.chapter5_evidence_integrity --out reports/chapter5/evidence_integrity --recompute
+      - name: Reproduce real held-out WDBC + figure/evidence pack
+        run: python -m experiments.chapter5_practical_bundle --out reports/chapter5/practical_v2
+      # PTB-XL waveforms are not included in the repository and are NOT
+      # downloaded automatically. Metadata/signal stubs are covered by tests.
+      - name: Upload reproducibility artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: chapter5-technical-evidence
+          path: |
+            reports/chapter5/ecg_quality_batch/
+            reports/chapter5/evidence_integrity/
+            reports/chapter5/hybrid_counterfactual/
+            reports/chapter5/practical_v2/
+          retention-days: 30

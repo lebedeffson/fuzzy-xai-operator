@@ -1,0 +1,49 @@
+name: FuzzyXAI interval type-2 evidence
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'framework/fuzzyxai/fuzzyxai/interval_type2.py'
+      - 'experiments/doctoral_interval_type2.py'
+      - 'tests/test_doctoral_interval_type2.py'
+      - '.github/workflows/doctoral-interval-type2.yml'
+
+jobs:
+  interval-type2:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      PYTHONHASHSEED: '42'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install full package
+        run: python -m pip install -e '.[dev]'
+      - name: Run type-2 rule and tamper tests
+        run: python -m pytest -q tests/test_doctoral_interval_type2.py
+      - name: Reproduce exploratory Type-2 heldout experiment
+        run: |
+          python -m experiments.doctoral_interval_type2 \
+            --out reports/chapter5/interval_type2 \
+            --seeds 17 42 73 123 2026 --bootstrap 24
+      - name: Verify evidence checksums
+        run: |
+          python - <<'PY'
+          import hashlib, json
+          from pathlib import Path
+          root = Path('reports/chapter5/interval_type2')
+          manifest = json.loads((root/'manifest_sha256.json').read_text())
+          for name, expected in manifest['files'].items():
+              assert hashlib.sha256((root/name).read_bytes()).hexdigest() == expected, name
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: doctoral-interval-type2-${{ github.sha }}
+          path: reports/chapter5/interval_type2
+          retention-days: 30

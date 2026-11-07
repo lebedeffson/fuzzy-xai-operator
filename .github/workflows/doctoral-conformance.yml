@@ -1,0 +1,68 @@
+name: FuzzyXAI doctoral chapters 1-4 compliance
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'framework/fuzzyxai/fuzzyxai/doctoral_*.py'
+      - 'framework/fuzzyxai/fuzzyxai/runtime.py'
+      - 'framework/fuzzyxai/fuzzyxai/core/risk_observer.py'
+      - 'framework/fuzzyxai/fuzzyxai/risk/risk_function.py'
+      - 'framework/fuzzyxai/fuzzyxai/core/alignment.py'
+      - 'tests/test_doctoral_*.py'
+      - 'tests/test_release_transactional_installer.py'
+      - 'install_fuzzyxai_upgrade.py'
+      - 'apply_doctoral_upgrade.py'
+      - '.github/workflows/doctoral-conformance.yml'
+
+jobs:
+  strict-route-proof:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      PYTHONHASHSEED: '0'
+      OMP_NUM_THREADS: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Ensure eight upstream source edits are already applied
+        run: |
+          python install_fuzzyxai_upgrade.py --check > /tmp/preflight.json
+          python -c 'import json; assert json.load(open("/tmp/preflight.json"))["files_to_update"] == 0'
+      - name: Install the real framework and its test dependencies
+        run: python -m pip install -e '.[dev]'
+      - name: Run chapter 1-4 unit, integrity, package and real-model integration tests
+        run: |
+          python -m pytest -q \
+            tests/test_doctoral_certification.py \
+            tests/test_doctoral_product_surface.py \
+            tests/test_doctoral_patcher.py \
+            tests/test_doctoral_runtime_integration.py \
+            tests/test_doctoral_v5_security.py \
+            tests/test_release_transactional_installer.py
+      - name: Run key existing API and provenance regressions
+        run: |
+          python -m pytest -q \
+            tests/test_universal_model_adapters.py \
+            tests/test_chapter5_experiments_smoke.py
+      - name: Replay control proof and render human-facing report
+        run: |
+          python examples/doctoral_certification/make_control_example.py
+          fuzzyxai-certify certify \
+            --input examples/doctoral_certification/view_model.json \
+            --taxonomy examples/doctoral_certification/taxonomy.json \
+            --representation examples/doctoral_certification/representation.json \
+            --policy examples/doctoral_certification/policy.json \
+            --html --out-dir /tmp/doctoral-artifacts
+          fuzzyxai-certify verify --receipt /tmp/doctoral-artifacts/certificate.json
+      - name: Store exact receipts for review
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: doctoral-ch1-ch4-${{ github.sha }}
+          path: /tmp/doctoral-artifacts
+          retention-days: 14

@@ -1,0 +1,47 @@
+{
+  "goal": "Довести программную реализацию FuzzyXAI до проверяемого соответствия главам 1-4 и провести честную исследовательскую апробацию главы 5",
+  "base_repository": "lebedeffson/fuzzy-xai-operator",
+  "base_commit_inspected": "aae7aa717bff913240cbb0026807cd1ccfa67160",
+  "milestone": "v6 interval type-2 research overlay for latest existing branch",
+  "status": "it2_isolated_tests_and_five_split_experiment_verified; remote_write_denied_403",
+  "completed_local": [
+    "структурный сертификатор математических операторов глав 1-4 (47 таксономических методов)",
+    "исправления семи потенциальных ложных valid и контроль обязательных политик",
+    "транзакционный установщик восьми upstream изменений с rollback и idempotence",
+    "нативно-нечеткая логистическая модель с обучением на функциях принадлежности и независимой реконструкцией logits",
+    "пять стратифицированных исследовательских WDBC-разбиений с тремя предикторами и контрольными деградациями",
+    "таблицы, оригинальные графики из обученной модели, пообъектные сертификаты, SHA256 manifest",
+    "114 passed focused isolated tests 2026-11-07 in this worktree; full base repo absent"
+  ],
+  "validation": {
+    "isolated_tests_passed": 114,
+    "main_metrics_fuzzy_auc_mean": 0.9885632269,
+    "main_metrics_logistic_auc_mean": 0.99543902086,
+    "main_metrics_random_forest_auc_mean": 0.986814979,
+    "split_seeds": [
+      17,
+      42,
+      73,
+      123,
+      2026
+    ],
+    "tests_with_full_checkout_not_executed": [
+      "tests/test_doctoral_runtime_integration.py",
+      "selected tests/test_chapter5_*.py",
+      "original pytest full suite"
+    ],
+    "external_domain_validation": "not conducted"
+  },
+  "not_completed": [
+    "GitHub write/branch PR: integration returned HTTP 403",
+    "full original repo checkout and original full regression/CI suite",
+    "actual PTB-XL WFDB recordings and external clinical ECG validation",
+    "full GIS, biometric, medical-image source models comparative evaluation",
+    "production site DubnaXAI deployment validation",
+    "independent expert semantic evaluation of explanation fidelity"
+  ],
+  "resume_exact_action": "Use an authorized checkout of chapter6-ophthalmology; extract overlay, preflight and reconcile 8 source edits, run full pytest and IT2 heldout reproduction, then commit and push after review.",
+  "write_access_status": "Both create_branch and create_file in chapter6-ophthalmology returned GitHub 403; no remote commit or PR.",
+  "target_existing_branch": "chapter6-ophthalmology",
+  "target_branch_observed_head": "8e45ba8ca9ab2e1217e12d98a3ec9a06d7cd413a"
+}

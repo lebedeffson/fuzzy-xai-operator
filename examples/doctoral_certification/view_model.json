@@ -1,0 +1,243 @@
+{
+  "trace": {
+    "adapter_id": "control/artificial-rule-adapter",
+    "input_sha256": "17f8454cc502920ef29db9ccf086eb7df8706daaa0f49a43917e038657cce0fb",
+    "explain_plan_sha256": "49243bbf19a654a95e24addedcef962e6ecd3dff8741193aa4f0acfbe03f837a",
+    "model_fingerprint": "1e8956c55787006436ee26fca34fbe80d084c94a6cb46a38f999abd116859cd1",
+    "dataset_version": "control-fixture-v1",
+    "object_ids": [
+      "synthetic-1"
+    ],
+    "generated_at": "2026-11-07T16:00:00+00:00",
+    "result_origin": "controlled_fixture"
+  },
+  "explanation_graph": {
+    "nodes": [
+      {
+        "node_id": "dataset:root",
+        "node_type": "dataset",
+        "payload": {
+          "dataset_version": "control-fixture-v1"
+        }
+      },
+      {
+        "node_id": "model_artifact:root",
+        "node_type": "model_artifact",
+        "payload": {
+          "model_fingerprint": "1e8956c55787006436ee26fca34fbe80d084c94a6cb46a38f999abd116859cd1"
+        }
+      },
+      {
+        "node_id": "data:synthetic-1",
+        "node_type": "data",
+        "evidence_refs": []
+      },
+      {
+        "node_id": "prediction",
+        "node_type": "prediction",
+        "evidence_refs": []
+      },
+      {
+        "node_id": "rule:R1",
+        "node_type": "rule",
+        "evidence_refs": [
+          "source:R1"
+        ]
+      },
+      {
+        "node_id": "claim:C1",
+        "node_type": "claim",
+        "evidence_refs": []
+      },
+      {
+        "node_id": "action",
+        "node_type": "action",
+        "payload": {
+          "action": "accept"
+        },
+        "evidence_refs": []
+      }
+    ],
+    "edges": [
+      {
+        "source": "dataset:root",
+        "target": "data:synthetic-1",
+        "relation": "derived_from"
+      },
+      {
+        "source": "model_artifact:root",
+        "target": "prediction",
+        "relation": "produces"
+      },
+      {
+        "source": "data:synthetic-1",
+        "target": "prediction",
+        "relation": "derived_from"
+      },
+      {
+        "source": "prediction",
+        "target": "rule:R1",
+        "relation": "derived_from"
+      },
+      {
+        "source": "rule:R1",
+        "target": "claim:C1",
+        "relation": "explains"
+      },
+      {
+        "source": "claim:C1",
+        "target": "action",
+        "relation": "derived_from"
+      }
+    ],
+    "missing_evidence": []
+  },
+  "claims": [
+    {
+      "claim_id": "C1",
+      "claim_type": "rule",
+      "evidence_status": "supported",
+      "statement": "Rule R1 activated on a synthetic control input",
+      "evidence_refs": [
+        "rule:R1"
+      ]
+    }
+  ],
+  "layers": {
+    "rules": [
+      {
+        "rule_id": "R1",
+        "source_objects": [
+          "synthetic-1"
+        ],
+        "native": true
+      }
+    ],
+    "fuzzy_rule_activations": [
+      {
+        "object_id": "synthetic-1",
+        "rule_id": "R1",
+        "activation_strength": 0.8,
+        "terms": [
+          {
+            "feature": "risk",
+            "term": "high",
+            "membership_degree": 0.8,
+            "feature_value": 0.9
+          },
+          {
+            "feature": "context",
+            "term": "valid",
+            "membership_degree": 0.9,
+            "feature_value": 0.1
+          }
+        ]
+      }
+    ]
+  },
+  "fuzzy": {
+    "selected_representation": "F_int",
+    "memberships": {
+      "synthetic-1": {
+        "high": 0.8
+      }
+    },
+    "membership_policies": {
+      "risk": {
+        "origin": "expert",
+        "version": "v1",
+        "terms": [
+          {
+            "label": "high",
+            "function": "triangular",
+            "parameters": [
+              0.5,
+              1.0,
+              1.0
+            ]
+          }
+        ]
+      },
+      "context": {
+        "origin": "expert",
+        "version": "v1",
+        "terms": [
+          {
+            "label": "valid",
+            "function": "triangular",
+            "parameters": [
+              0.0,
+              0.0,
+              1.0
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "disagreement": {
+    "alignment_policy": {
+      "applicable": true
+    },
+    "alignment_status": "measured",
+    "components": {
+      "rule": 0.1
+    },
+    "beta": {
+      "rule": 1.0
+    },
+    "gamma": 0.1,
+    "gamma_max": 0.3,
+    "reduction_policy": {
+      "applicable": true
+    },
+    "reduction_status": "measured",
+    "delta": 0.05,
+    "pre_interpretability": 0.9
+  },
+  "risk": {
+    "components": {
+      "rho_p": 0.1,
+      "u_M": 0.15,
+      "one_minus_I_pre": 0.1,
+      "Delta": 0.05,
+      "chi_R": 0
+    },
+    "risk_weights": {
+      "rho_p": 0.3,
+      "u_M": 0.2,
+      "one_minus_I_pre": 0.2,
+      "Delta": 0.2,
+      "chi_R": 0.1
+    },
+    "rho": 0.09,
+    "chi_r_crit": 0,
+    "status": "complete",
+    "action": "accept",
+    "risk_thresholds": {
+      "theta_1": 0.2,
+      "theta_2": 0.4,
+      "theta_3": 0.6,
+      "theta_4": 0.8
+    }
+  },
+  "route": [
+    {
+      "node_id": "representation_selection",
+      "operator_type": "representation_selection",
+      "value_source": "computed",
+      "input_refs": [
+        "rule:R1"
+      ],
+      "output_values": {
+        "selected_class": "F_int"
+      }
+    }
+  ],
+  "diagnostics": [],
+  "explanation_level": {
+    "available_channels": [
+      "native_rule"
+    ]
+  }
+}

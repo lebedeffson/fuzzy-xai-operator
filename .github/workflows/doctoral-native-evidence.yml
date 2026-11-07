@@ -1,0 +1,67 @@
+name: FuzzyXAI native fuzzy WDBC evidence
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'experiments/doctoral_native_fuzzy*.py'
+      - 'experiments/doctoral_native_repeated.py'
+      - 'framework/fuzzyxai/fuzzyxai/doctoral_certification.py'
+      - 'tests/test_doctoral_native*.py'
+      - 'tests/test_doctoral_v5_security.py'
+      - 'install_fuzzyxai_upgrade.py'
+      - '.github/workflows/doctoral-native-evidence.yml'
+
+jobs:
+  native-rule-validation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    env:
+      PYTHONHASHSEED: '42'
+      OPENBLAS_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Validate installed patch anchors (all 8 original source files)
+        run: |
+          python install_fuzzyxai_upgrade.py --check > /tmp/doctoral-preflight.json
+          python -c 'import json; assert json.load(open("/tmp/doctoral-preflight.json"))["files_to_update"] == 0'
+      - name: Install actual FuzzyXAI package
+        run: python -m pip install -e '.[dev]'
+      - name: Run adversarial, real-data, and transactional regression tests
+        run: |
+          python -m pytest -q \
+            tests/test_doctoral_certification.py \
+            tests/test_doctoral_product_surface.py \
+            tests/test_doctoral_v5_security.py \
+            tests/test_release_transactional_installer.py \
+            tests/test_doctoral_native_fuzzy.py \
+            tests/test_doctoral_native_repeated.py \
+            tests/test_doctoral_runtime_integration.py
+      - name: Reproduce split-heldout native rule experiment
+        run: |
+          python -m experiments.doctoral_native_repeated \
+            --out reports/chapter5/native_fuzzy_repeated \
+            --seeds 17 42 73 123 2026
+      - name: Verify all publication evidence hashes
+        run: |
+          python - <<'PY'
+          import hashlib,json
+          from pathlib import Path
+          root=Path('reports/chapter5/native_fuzzy_repeated')
+          data=json.loads((root/'manifest_sha256.json').read_text())
+          for rel, expected in data['files'].items():
+              assert hashlib.sha256((root/rel).read_bytes()).hexdigest()==expected,rel
+          assert data['schema']=='sha256-manifest-v1'
+          PY
+      - name: Upload observed evidence (not clinical validation)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: fuzzyxai-native-fuzzy-wdbc-${{ github.sha }}
+          path: reports/chapter5/native_fuzzy_repeated/
+          retention-days: 30

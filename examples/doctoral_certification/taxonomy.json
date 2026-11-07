@@ -1,0 +1,7 @@
+{
+  "method_id": "synthetic_rule_control",
+  "source": "intrinsic",
+  "object": "logic",
+  "audience": "auditor",
+  "canonical_configuration": "single transparent rule on artificial input"
+}
