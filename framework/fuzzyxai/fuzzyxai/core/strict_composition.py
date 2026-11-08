@@ -12,7 +12,7 @@ from typing import Callable, Mapping
 
 from .composition import probabilistic_t_conorm
 from .diagnostics import DiagnosticState
-from .explanation_object import ExplanationObject
+from .explanation_object import ExplanationObject, Rule
 from .trust_evaluator import jaccard_distance, trace_distance
 
 
@@ -22,6 +22,7 @@ class RegisteredAlignment:
     target_event: str
     transform: str  # "identity" or "complement"
     term_map: Mapping[str, str] | None = None
+    term_variable: str | None = None  # required for rewriting rule conditions
     probability_tolerance: float = 1e-9
 
 
@@ -118,12 +119,11 @@ def compose_with_registered_alignment(
     for field in ("sample_id", "model_fingerprint", "feature_schema"):
         if li[field] != ri[field]:
             return _refuse("incompatible interface identities", field=field, left=li[field], right=ri[field])
+    for obj, contract in ((left, li), (right, ri)):
+        if str(obj.trace.id) != str(contract["sample_id"]) or not obj.trace.checksum:
+            return _refuse("declared interface and trace identity disagree")
     if not _rules_well_defined(left) or not _rules_well_defined(right):
         return _refuse("conflicting rule IDs within one input")
-    seen = {r.name: r.signature() for r in left.rules}
-    for rule in right.rules:
-        if rule.name in seen and seen[rule.name] != rule.signature():
-            return _refuse("rule identifier has incompatible signatures", rule_id=rule.name)
     if alignment is None:
         if li["event_id"] != ri["event_id"]:
             return _refuse("no registered event mapping")
@@ -144,15 +144,41 @@ def compose_with_registered_alignment(
     expected = float(p) if alignment.transform == "identity" else 1 - float(p)
     if abs(expected - float(q)) > alignment.probability_tolerance:
         return _refuse("probability incompatible with registered event mapping", expected=expected, observed=q)
+    normalized_rules = list(left.rules)
+    aligned_left = left
     if left.terms != right.terms:
         if alignment.term_map is None:
             return _refuse("linguistic term mapping absent")
         translated = [alignment.term_map.get(t) for t in left.terms]
         if None in translated or len(set(translated)) != len(translated) or set(translated) != right.terms:
             return _refuse("linguistic mapping incomplete or non-bijective")
+        if alignment.term_variable is None:
+            if any(value in left.terms for rule in left.rules for value in rule.conditions.values()):
+                return _refuse("cannot rename rule terms without a registered linguistic variable")
+        else:
+            normalized_rules = []
+            for rule in left.rules:
+                terms = dict(rule.conditions)
+                if alignment.term_variable in terms:
+                    label = terms[alignment.term_variable]
+                    if label not in left.terms:
+                        return _refuse("source rule uses an undeclared term", rule_id=rule.name)
+                    terms[alignment.term_variable] = alignment.term_map[label]
+                if any(value in left.terms for key, value in terms.items() if key != alignment.term_variable):
+                    return _refuse("ambiguous term label in an unmapped rule variable", rule_id=rule.name)
+                normalized_rules.append(Rule(rule.name, terms, rule.conclusion))
+            for rule in right.rules:
+                label = rule.conditions.get(alignment.term_variable)
+                if label is not None and label not in right.terms:
+                    return _refuse("target rule uses a term outside its vocabulary", rule_id=rule.name)
+        aligned_left = left.copy_with(terms=set(right.terms), rules=normalized_rules)
+    seen = {r.name: r.signature() for r in normalized_rules}
+    for rule in right.rules:
+        if rule.name in seen and seen[rule.name] != rule.signature():
+            return _refuse("rule identifier has incompatible signatures", rule_id=rule.name)
     try:
         gamma = conditional_explanation_distance(
-            left, right, weights, activation_vocabulary, representation_pseudometric
+            aligned_left, right, weights, activation_vocabulary, representation_pseudometric
         )
     except (TypeError, ValueError) as error:
         return _refuse("metric prerequisites unmet", error=str(error))
@@ -162,7 +188,7 @@ def compose_with_registered_alignment(
             return _refuse("invalid registered distance threshold")
         if gamma > threshold:
             return _refuse("explanation disagreement exceeds threshold", gamma=gamma, threshold=threshold)
-    merged = list(left.rules)
+    merged = list(normalized_rules)
     for rule in right.rules:
         if rule.name not in seen:
             merged.append(rule)
@@ -183,6 +209,13 @@ def compose_with_registered_alignment(
             "left_trace": left.trace.as_dict(),
             "right_trace": right.trace.as_dict(),
             "semantic_truth": "UNVERIFIED_EXTERNAL",
+            "registered_alignment": {
+                "transform": alignment.transform,
+                "source_event": alignment.source_event,
+                "target_event": alignment.target_event,
+                "term_variable": alignment.term_variable,
+                "term_map": dict(alignment.term_map or {}),
+            },
             "metric_scope": "fixed-activation-vocabulary and registered representation pseudometric",
         },
     )
