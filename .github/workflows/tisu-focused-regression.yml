@@ -3,8 +3,10 @@ on:
   pull_request:
     paths:
       - "framework/fuzzyxai/fuzzyxai/core/composition.py"
+      - "framework/fuzzyxai/fuzzyxai/core/strict_composition.py"
       - "framework/fuzzyxai/fuzzyxai/core/trust_evaluator.py"
       - "framework/fuzzyxai/tests/test_tisu_core_safety_regression.py"
+      - "framework/fuzzyxai/tests/test_tisu_strict_composition.py"
       - ".github/workflows/tisu-focused-regression.yml"
   workflow_dispatch:
 jobs:
@@ -29,6 +31,7 @@ jobs:
         run: |
           python -m pytest -q \
             framework/fuzzyxai/tests/test_tisu_core_safety_regression.py \
+            framework/fuzzyxai/tests/test_tisu_strict_composition.py \
             framework/fuzzyxai/tests/test_composition.py \
             framework/fuzzyxai/tests/test_composition_well_defined.py \
             framework/fuzzyxai/tests/test_semantic_disagreement_pseudometric.py
