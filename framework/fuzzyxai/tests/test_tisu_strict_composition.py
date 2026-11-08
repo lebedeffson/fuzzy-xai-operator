@@ -82,8 +82,12 @@ def test_declared_renaming_can_compose():
     transform = RegisteredAlignment(
         "disease", "disease", "identity",
         term_map={"low": "low-risk", "medium": "middle-risk", "high": "high-risk"},
+        term_variable="risk",
     )
-    assert getattr(_compose(a, b, transform), "code", None) != "D_ij"
+    out = _compose(a, b, transform)
+    assert getattr(out, "code", None) != "D_ij"
+    assert out.rules[0].conditions["risk"] == "high-risk"
+    assert out.metadata["registered_alignment"]["term_variable"] == "risk"
 
 
 def test_nonbijective_term_mapping_is_rejected():
@@ -126,3 +130,46 @@ def test_unregistered_representation_distance_rejected():
     weights = dict(WEIGHTS, repr=0.3)
     value = compose_with_registered_alignment(_obj(), _obj(), weights, VOCAB)
     _reject(value)
+
+
+def test_term_renaming_rejected_if_variable_not_declared():
+    a, b = _obj(), _obj()
+    b.terms = {"low-risk", "middle-risk", "high-risk"}
+    result = _compose(a, b, RegisteredAlignment(
+        "disease", "disease", "identity",
+        term_map={"low": "low-risk", "medium": "middle-risk", "high": "high-risk"},
+    ))
+    _reject(result)
+
+
+def test_registered_rule_renaming_collision_detected_after_translation():
+    a, b = _obj(), _obj()
+    b.terms = {"low-risk", "middle-risk", "high-risk"}
+    b.rules = [Rule("r_high", {"risk": "middle-risk"}, "check")]
+    result = _compose(a, b, RegisteredAlignment(
+        "disease", "disease", "identity",
+        term_map={"low": "low-risk", "medium": "middle-risk", "high": "high-risk"},
+        term_variable="risk",
+    ))
+    _reject(result)
+
+
+def test_interface_trace_identity_mismatch_rejected():
+    a = _obj()
+    a.metadata["interface"]["sample_id"] = "different-but-declared"
+    b = _obj()
+    b.metadata["interface"]["sample_id"] = "different-but-declared"
+    _reject(_compose(a, b))
+
+
+def test_non_registered_rule_condition_cannot_be_renamed_implicitly():
+    a, b = _obj(), _obj()
+    a.rules = [Rule("r_high", {"other": "high"}, "check")]
+    b.rules = []
+    b.terms = {"low-risk", "middle-risk", "high-risk"}
+    result = _compose(a, b, RegisteredAlignment(
+        "disease", "disease", "identity",
+        term_map={"low": "low-risk", "medium": "middle-risk", "high": "high-risk"},
+        term_variable="risk",
+    ))
+    _reject(result)
