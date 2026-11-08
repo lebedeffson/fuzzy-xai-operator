@@ -23,8 +23,9 @@ def _obj(**changes):
     )
     contract = {
         "sample_id": "sample-1", "model_fingerprint": "model-v1",
+        "model_version": "v1",
         "feature_schema": "schema-v1", "event_id": "disease",
-        "probability": 0.7, "provenance_ref": "source-hash",
+        "probability": 0.7, "provenance_ref": "hash",
     }
     contract.update(changes)
     obj.metadata["interface"] = contract
@@ -48,8 +49,17 @@ def test_matching_declarations_compose():
 def test_opposite_events_require_explicit_transform():
     a, b = _obj(), _obj(event_id="healthy", probability=0.3)
     _reject(_compose(a, b))
-    result = _compose(a, b, RegisteredAlignment("disease", "healthy", "complement"))
+    _reject(_compose(a, b, RegisteredAlignment("disease", "healthy", "complement")))
+    b.rules = [Rule("r_high", {"risk": "high"}, "unchecked")]
+    transform = RegisteredAlignment(
+        "disease", "healthy", "complement",
+        term_map={"low": "low", "medium": "medium", "high": "high"},
+        term_variable="risk",
+        conclusion_map={"check": "unchecked"},
+    )
+    result = _compose(a, b, transform)
     assert getattr(result, "code", None) != "D_ij"
+    assert result.rules[0].conclusion == "unchecked"
 
 
 def test_wrong_complement_is_rejected():
@@ -174,3 +184,31 @@ def test_non_registered_rule_condition_cannot_be_renamed_implicitly():
         term_variable="risk",
     ))
     _reject(result)
+
+
+def test_trace_version_and_hash_must_match_interface():
+    _reject(_compose(_obj(model_version="other"), _obj(model_version="other")))
+    _reject(_compose(_obj(provenance_ref="other"), _obj(provenance_ref="other")))
+
+
+def test_complement_without_conclusion_mapping_is_refused():
+    _reject(_compose(
+        _obj(), _obj(event_id="healthy", probability=0.3),
+        RegisteredAlignment(
+            "disease", "healthy", "complement",
+            term_map={"low": "low", "medium": "medium", "high": "high"},
+            term_variable="risk",
+        ),
+    ))
+
+
+def test_relabel_conclusion_for_opposite_event_cannot_be_guessed():
+    a, b = _obj(), _obj(event_id="healthy", probability=0.3)
+    _reject(_compose(
+        a, b,
+        RegisteredAlignment(
+            "disease", "healthy", "complement",
+            term_map={"low": "low", "medium": "medium", "high": "high"},
+            term_variable="risk", conclusion_map={"different": "check"},
+        ),
+    ))
