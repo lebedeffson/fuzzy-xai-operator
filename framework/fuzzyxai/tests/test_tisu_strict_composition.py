@@ -78,6 +78,7 @@ def test_conflicting_rule_identifier_is_rejected():
 def test_declared_renaming_can_compose():
     a, b = _obj(), _obj()
     b.terms = {"low-risk", "middle-risk", "high-risk"}
+    b.rules = [Rule("r_high", {"risk": "high-risk"}, "check")]
     _reject(_compose(a, b))
     transform = RegisteredAlignment(
         "disease", "disease", "identity",
