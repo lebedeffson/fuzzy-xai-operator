@@ -23,6 +23,7 @@ class RegisteredAlignment:
     transform: str  # "identity" or "complement"
     term_map: Mapping[str, str] | None = None
     term_variable: str | None = None  # required for rewriting rule conditions
+    conclusion_map: Mapping[str, str] | None = None  # explicit for event complementation
     probability_tolerance: float = 1e-9
 
 
@@ -35,7 +36,7 @@ def _interface(obj: ExplanationObject) -> Mapping[str, object] | None:
     if not isinstance(value, dict):
         return None
     required = (
-        "sample_id", "model_fingerprint", "feature_schema",
+        "sample_id", "model_fingerprint", "model_version", "feature_schema",
         "event_id", "probability", "provenance_ref",
     )
     if any(value.get(key) in (None, "") for key in required):
@@ -120,7 +121,10 @@ def compose_with_registered_alignment(
         if li[field] != ri[field]:
             return _refuse("incompatible interface identities", field=field, left=li[field], right=ri[field])
     for obj, contract in ((left, li), (right, ri)):
-        if str(obj.trace.id) != str(contract["sample_id"]) or not obj.trace.checksum:
+        if (str(obj.trace.id) != str(contract["sample_id"])
+                or str(obj.trace.version) != str(contract["model_version"])
+                or not obj.trace.checksum
+                or str(obj.trace.checksum) != str(contract["provenance_ref"])):
             return _refuse("declared interface and trace identity disagree")
     if not _rules_well_defined(left) or not _rules_well_defined(right):
         return _refuse("conflicting rule IDs within one input")
@@ -146,12 +150,19 @@ def compose_with_registered_alignment(
         return _refuse("probability incompatible with registered event mapping", expected=expected, observed=q)
     normalized_rules = list(left.rules)
     aligned_left = left
-    if left.terms != right.terms:
-        if alignment.term_map is None:
+    must_translate = (
+        left.terms != right.terms or alignment.transform == "complement"
+        or alignment.term_map is not None
+    )
+    if must_translate:
+        mapping = alignment.term_map
+        if mapping is None:
             return _refuse("linguistic term mapping absent")
-        translated = [alignment.term_map.get(t) for t in left.terms]
-        if None in translated or len(set(translated)) != len(translated) or set(translated) != right.terms:
+        if (set(mapping) != left.terms or len(set(mapping.values())) != len(mapping)
+                or set(mapping.values()) != right.terms):
             return _refuse("linguistic mapping incomplete or non-bijective")
+        if alignment.transform == "complement" and left.rules and alignment.conclusion_map is None:
+            return _refuse("complemented rule conclusions require an explicit mapping")
         if alignment.term_variable is None:
             if any(value in left.terms for rule in left.rules for value in rule.conditions.values()):
                 return _refuse("cannot rename rule terms without a registered linguistic variable")
@@ -163,10 +174,18 @@ def compose_with_registered_alignment(
                     label = terms[alignment.term_variable]
                     if label not in left.terms:
                         return _refuse("source rule uses an undeclared term", rule_id=rule.name)
-                    terms[alignment.term_variable] = alignment.term_map[label]
+                    terms[alignment.term_variable] = mapping[label]
                 if any(value in left.terms for key, value in terms.items() if key != alignment.term_variable):
                     return _refuse("ambiguous term label in an unmapped rule variable", rule_id=rule.name)
-                normalized_rules.append(Rule(rule.name, terms, rule.conclusion))
+                conclusion = rule.conclusion
+                if alignment.transform == "complement":
+                    if conclusion not in alignment.conclusion_map:
+                        return _refuse("rule conclusion has no registered complement", rule_id=rule.name)
+                    conclusion = alignment.conclusion_map[conclusion]
+                normalized_rules.append(Rule(rule.name, terms, conclusion))
+        if alignment.transform == "complement" and alignment.term_variable is None and left.rules:
+            return _refuse("complemented rule conditions need a registered variable")
+        if alignment.term_variable is not None:
             for rule in right.rules:
                 label = rule.conditions.get(alignment.term_variable)
                 if label is not None and label not in right.terms:
@@ -215,6 +234,7 @@ def compose_with_registered_alignment(
                 "target_event": alignment.target_event,
                 "term_variable": alignment.term_variable,
                 "term_map": dict(alignment.term_map or {}),
+                "conclusion_map": dict(alignment.conclusion_map or {}),
             },
             "metric_scope": "fixed-activation-vocabulary and registered representation pseudometric",
         },
