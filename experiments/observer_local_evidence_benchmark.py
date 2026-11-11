@@ -22,7 +22,7 @@ from fuzzyxai.practical_controller import (
     evaluate_hard_guard,
 )
 from fuzzyxai.selective_observer.evidence_identity import LocalExplanationEvidence
-from fuzzyxai.selective_observer.local_effects import LocalEffectEvidence, SUPPORTED_PROTOCOL
+from fuzzyxai.selective_observer.local_effects import collect_linear_reference_effects
 from sklearn.datasets import load_breast_cancer, load_digits, load_wine
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
@@ -73,23 +73,14 @@ def _model_evidence(name: str, model: object, item: np.ndarray, object_id: str, 
             return (1.0 if target_index == 1 else -1.0) * float(model_scores[0])
         return float(model_scores[0, target_index])
 
-    original_logit = target_logit(item)
-    reference = np.asarray(scaler.mean_, dtype=float)
-    reference_logit = target_logit(reference)
-    observed_effects = []
-    for feature_index in range(len(axis)):
-        counterfactual = item.copy()
-        counterfactual[feature_index] = reference[feature_index]
-        observed_effects.append(original_logit - target_logit(counterfactual))
-    effects = LocalEffectEvidence(
-        protocol=SUPPORTED_PROTOCOL,
+    effects = collect_linear_reference_effects(
         object_id=object_id,
         model_version=model_version,
         target_class=str(prediction),
         feature_names=axis,
-        effect_on_score=tuple(float(x) for x in observed_effects),
-        reference_score=reference_logit,
-        explained_score=original_logit,
+        input_values=tuple(float(x) for x in item),
+        reference_values=tuple(float(x) for x in scaler.mean_),
+        target_logit=lambda values: target_logit(np.asarray(values, dtype=float)),
     )
     prediction_artifact = PredictionArtifact(
         object_id=object_id,
