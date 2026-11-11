@@ -1,4 +1,5 @@
 """Additive model-score evidence: positive and adversarial regression tests."""
+
 from __future__ import annotations
 
 import hashlib
