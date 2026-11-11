@@ -35,6 +35,8 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Install framework and test dependencies
         run: python -m pip install -e ".[dev]"
+      - name: Validate public operator manifest
+        run: python -m fuzzyxai.audit.operators_manifest > observer_manifest_validation.json
       - name: Test evidence bindings, OOF isolation and practical routes
         run: |
           python -m pytest -q \
