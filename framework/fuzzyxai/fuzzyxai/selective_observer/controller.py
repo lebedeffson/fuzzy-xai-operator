@@ -4,16 +4,16 @@ from __future__ import annotations
 
 import hashlib
 import json
+from collections.abc import Sequence
 from dataclasses import asdict
-from typing import Sequence
 
 import numpy as np
 
 from .contracts import (
+    FEATURE_NAMES,
     ConfirmatoryExample,
     ConfirmatoryProtocolLock,
     DevelopmentExample,
-    FEATURE_NAMES,
     PolicyMetrics,
     SelectiveAction,
     SelectiveControllerSpec,
