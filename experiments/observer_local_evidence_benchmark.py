@@ -22,6 +22,7 @@ from fuzzyxai.practical_controller import (
     evaluate_hard_guard,
 )
 from fuzzyxai.selective_observer.evidence_identity import LocalExplanationEvidence
+from fuzzyxai.selective_observer.local_effects import LocalEffectEvidence, SUPPORTED_PROTOCOL
 from sklearn.datasets import load_breast_cancer, load_digits, load_wine
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
@@ -65,6 +66,31 @@ def _model_evidence(name: str, model: object, item: np.ndarray, object_id: str, 
         "intercept": float(intercept),
     }
     digest = _digest(source)
+
+    def target_logit(raw_values: np.ndarray) -> float:
+        model_scores = np.asarray(model.decision_function(raw_values.reshape(1, -1)), dtype=float)
+        if len(classes) == 2:
+            return (1.0 if target_index == 1 else -1.0) * float(model_scores[0])
+        return float(model_scores[0, target_index])
+
+    original_logit = target_logit(item)
+    reference = np.asarray(scaler.mean_, dtype=float)
+    reference_logit = target_logit(reference)
+    observed_effects = []
+    for feature_index in range(len(axis)):
+        counterfactual = item.copy()
+        counterfactual[feature_index] = reference[feature_index]
+        observed_effects.append(original_logit - target_logit(counterfactual))
+    effects = LocalEffectEvidence(
+        protocol=SUPPORTED_PROTOCOL,
+        object_id=object_id,
+        model_version=model_version,
+        target_class=str(prediction),
+        feature_names=axis,
+        effect_on_score=tuple(float(x) for x in observed_effects),
+        reference_score=reference_logit,
+        explained_score=original_logit,
+    )
     prediction_artifact = PredictionArtifact(
         object_id=object_id,
         prediction=str(prediction),
@@ -98,6 +124,7 @@ def _model_evidence(name: str, model: object, item: np.ndarray, object_id: str, 
         schema_version="local-logit-v1",
         artifact_sha256=digest,
         observed_provenance_channels=("prediction", "attribution", "provenance"),
+        observed_local_effects=effects,
     )
     context = DeploymentContext(
         expected_model_version=model_version,
@@ -113,6 +140,7 @@ def _model_evidence(name: str, model: object, item: np.ndarray, object_id: str, 
         maximum_reduction_loss=0.1,
         policy_version="observer-benchmark-v1",
         require_local_evidence=True,
+        require_local_effect_verification=True,
     )
     return prediction_artifact, expl, route, context, oracle_error
 
@@ -177,6 +205,12 @@ def run_benchmark(*, n_per_dataset: int = 12, seed: int = 42) -> dict[str, objec
                 observed = evaluate_hard_guard(
                     prediction, replace(explanation, local_evidence=local), route, context
                 )
+                structural_only = evaluate_hard_guard(
+                    prediction,
+                    replace(explanation, local_evidence=local),
+                    replace(route, observed_local_effects=None),
+                    replace(context, require_local_effect_verification=False),
+                )
                 identity_baseline_accepts = (
                     local.object_id == prediction.object_id
                     and local.model_version == prediction.model_version
@@ -188,6 +222,7 @@ def run_benchmark(*, n_per_dataset: int = 12, seed: int = 42) -> dict[str, objec
                         "fault_family": fault_family,
                         "object_id": prediction.object_id,
                         "status": observed.status.value,
+                        "structural_only_status": structural_only.status.value,
                         "baseline_accepts": identity_baseline_accepts,
                     }
                 )
@@ -201,6 +236,7 @@ def run_benchmark(*, n_per_dataset: int = 12, seed: int = 42) -> dict[str, objec
             "review_required": sum(row["status"] == HardGuardStatus.REVIEW_REQUIRED.value for row in group),
             "accepted_structurally": sum(row["status"] == HardGuardStatus.CERTIFIED.value for row in group),
             "identity_baseline_accepted": sum(bool(row["baseline_accepts"]) for row in group),
+            "structural_only_accepted": sum(row["structural_only_status"] == HardGuardStatus.CERTIFIED.value for row in group),
         }
 
     return {
@@ -211,7 +247,7 @@ def run_benchmark(*, n_per_dataset: int = 12, seed: int = 42) -> dict[str, objec
         "n_rows": len(rows),
         "maximum_clean_logit_reconstruction_error": largest_oracle_residual,
         "by_family": grouped,
-        "interpretation_limit": "only declared identity, scope, axis and shape checked; silent value permutation is a negative control",
+        "interpretation_limit": "independent linear-logit model-effect checks only; interactions and arbitrary nonlinear explainers unsupported",
         "claim_allowed": False,
     }
 
