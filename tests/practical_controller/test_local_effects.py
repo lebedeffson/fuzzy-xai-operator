@@ -11,9 +11,14 @@ from fuzzyxai.practical_controller import (
     ExplanationArtifact,
     HardGuardStatus,
     PredictionArtifact,
+    PracticalPolicy,
+    ReviewBudget,
     RouteArtifacts,
+    assess_action,
+    cost_profile,
     evaluate_hard_guard,
 )
+from fuzzyxai.selective_observer import SelectiveAction
 from fuzzyxai.selective_observer.evidence_identity import LocalEvidenceStatus, LocalExplanationEvidence
 from fuzzyxai.selective_observer.local_effects import (
     SUPPORTED_PROTOCOL,
@@ -156,3 +161,38 @@ def test_unsupported_protocol_is_insufficient_not_fake_certification() -> None:
 def test_invalid_tolerance_cannot_disable_fidelity_check(tolerance: float) -> None:
     with pytest.raises(ValueError, match="tolerance"):
         verify_additive_local_effects(_local(), _effects(), absolute_tolerance=tolerance)
+
+
+
+def test_effect_check_reaches_public_action_and_cannot_be_overridden_by_budget() -> None:
+    prediction, explanation, route, context = _artifacts()
+    policy = PracticalPolicy(
+        schema_version="1.0",
+        policy_version="policy-v1",
+        predictive_weights=(1.0,) * 8,
+        predictive_intercept=-5.0,
+        route_weights=(1.0,) * 10,
+        route_intercept=-5.0,
+        accept_max_risk=0.2,
+        short_review_max_risk=0.6,
+        full_review_max_risk=0.9,
+        calibration_method="temperature",
+        calibration_parameters=(1.0,),
+        development_sha256="a" * 64,
+        selected_without_test=True,
+    )
+    swapped = replace(explanation, local_evidence=replace(_local(), contributions=(-0.1, 0.2)))
+    blocked = assess_action(
+        prediction, swapped, route, context, ReviewBudget(0.05),
+        cost_profile("review_expensive"), policy=policy,
+    )
+    assert blocked.hard_guard_status is HardGuardStatus.BLOCKED
+    assert blocked.action is SelectiveAction.BLOCK
+    assert "LOCAL_EFFECTS_INCOMPATIBLE" in blocked.reason_codes
+
+    missing = assess_action(
+        prediction, explanation, replace(route, observed_local_effects=None),
+        context, ReviewBudget(0.05), cost_profile("review_expensive"), policy=policy,
+    )
+    assert missing.hard_guard_status is HardGuardStatus.REVIEW_REQUIRED
+    assert missing.action is not SelectiveAction.ACCEPT
