@@ -40,6 +40,7 @@ jobs:
             tests/practical_controller/test_observer_shap_class_semantics.py \
             tests/practical_controller/test_observer_shap_reference_rebase.py \
             tests/practical_controller/test_observer_exact_shapley.py \
+            tests/practical_controller/test_observer_nonlinear_benchmark.py \
             tests/practical_controller/test_practical_controller.py \
             tests/selective_observer/test_oof_fold_isolation.py \
             tests/selective_observer/test_controller.py \
@@ -51,6 +52,12 @@ jobs:
         with:
           name: observer-benchmark-${{ matrix.python-version }}
           path: observer_benchmark_report.json
+      - name: Generate nonlinear Shapley developmental benchmark
+        run: python experiments/observer_nonlinear_shap_benchmark.py > observer_nonlinear_benchmark_report.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: observer-nonlinear-benchmark-${{ matrix.python-version }}
+          path: observer_nonlinear_benchmark_report.json
       - name: Ruff on changed observer and tests
         run: |
           ruff check \
@@ -66,5 +73,7 @@ jobs:
             tests/practical_controller/test_observer_shap_class_semantics.py \
             tests/practical_controller/test_observer_shap_reference_rebase.py \
             tests/practical_controller/test_observer_exact_shapley.py \
+            tests/practical_controller/test_observer_nonlinear_benchmark.py \
             experiments/observer_local_evidence_benchmark.py \
+            experiments/observer_nonlinear_shap_benchmark.py \
             tests/selective_observer/test_oof_fold_isolation.py
