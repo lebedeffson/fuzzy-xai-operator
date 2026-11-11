@@ -37,6 +37,8 @@ jobs:
             tests/practical_controller/test_local_effects.py \
             tests/practical_controller/test_observer_real_models.py \
             tests/practical_controller/test_observer_native_shap.py \
+            tests/practical_controller/test_observer_shap_class_semantics.py \
+            tests/practical_controller/test_observer_shap_class_semantics.py \
             tests/practical_controller/test_practical_controller.py \
             tests/selective_observer/test_oof_fold_isolation.py \
             tests/selective_observer/test_controller.py \

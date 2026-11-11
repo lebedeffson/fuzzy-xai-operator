@@ -62,3 +62,10 @@ Check standard readiness/full integration separately; keep PR as draft
 and no merge or scientific claim until the required checks have passed.
 Do not opportunistically modify protected scores, H10/Q1 records,
 article chapters, or unrelated framework modules.
+
+## Additional class-conditional compatibility audit (Nov 12)
+
+- Independently probed native `shap.LinearExplainer` with `Independent` maskers on Breast Cancer binary targets 0/1 and Wine/Digits multiclass targets 0/2 and 0/9. Both backgrounds (50 and 100 samples) have matching class-target logit attribution and true source-model single-feature effects (offline sklearn/shap sanity check, residuals ~1e-15).
+- Added executable targeted regression for all six target/dataset cases and two background sizes: correctly selected target must CERTIFY; independently rehashed incorrect-class vector must BLOCK, while structural-only baseline remains CERTIFIED.
+- The offline calculation is **not** a substitute for current-PR integration CI. New CI on this commit must pass before updating the review claim. This is a compatibility test for SHAP LinearExplainer only, not an arbitrary SHAP/LIME result.
+- Current-tip Actions were queued (run 43096416081) when checked; no new green claim. Preserve read-only protected protocol and chapter files.
