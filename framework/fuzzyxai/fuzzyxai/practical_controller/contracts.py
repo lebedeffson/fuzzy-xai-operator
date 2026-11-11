@@ -10,7 +10,6 @@ from enum import Enum
 from fuzzyxai.selective_observer import SelectiveAction
 from fuzzyxai.selective_observer.evidence_identity import LocalExplanationEvidence
 
-
 SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
 
 
