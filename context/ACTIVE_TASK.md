@@ -69,3 +69,9 @@ article chapters, or unrelated framework modules.
 - Added executable targeted regression for all six target/dataset cases and two background sizes: correctly selected target must CERTIFY; independently rehashed incorrect-class vector must BLOCK, while structural-only baseline remains CERTIFIED.
 - The offline calculation is **not** a substitute for current-PR integration CI. New CI on this commit must pass before updating the review claim. This is a compatibility test for SHAP LinearExplainer only, not an arbitrary SHAP/LIME result.
 - Current-tip Actions were queued (run 43096416081) when checked; no new green claim. Preserve read-only protected protocol and chapter files.
+
+## Baseline-scope repair at commit following b665d77d
+
+- GitHub observer workflow 43105867008 reported 3 failed/88 passed: two benchmark regressions and the older native SHAP baseline expected CERTIFIED after removing source-model effects, but left `require_reference_binding=True`. This yielded REVIEW for missing model-effect reference evidence. Strict production verifier behaved correctly.
+- Repaired the explicitly weaker baseline *in the experiment and its comparison test* by disabling `require_reference_binding` together with `require_local_effect_verification`. Strict/full guard and strict reference checks remain unchanged. Strong comparison still independently checks sum reconstruction; do not describe reduced baseline as verifying an independently bound reference.
+- Re-run and inspect current-tip 3.11/3.12 GitHub CI; no new PASS claim before completion.

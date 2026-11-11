@@ -101,6 +101,7 @@ def test_native_shap_linear_explainer_is_accepted_and_zero_sum_fault_blocked() -
                 clean_context,
                 expected_artifact_sha256=new_digest,
                 require_local_effect_verification=False,
+                require_reference_binding=False,
             ),
         )
         assert structural_only.status is HardGuardStatus.CERTIFIED

@@ -323,7 +323,11 @@ def run_benchmark(
                     prediction,
                     variant_explanation,
                     replace(variant_route, observed_local_effects=None),
-                    replace(variant_context, require_local_effect_verification=False),
+                    replace(
+                        variant_context,
+                        require_local_effect_verification=False,
+                        require_reference_binding=False,
+                    ),
                 )
                 verified_hash = (
                     local.source_sha256 == variant_explanation.canonical_sha256
