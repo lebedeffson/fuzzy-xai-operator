@@ -12,7 +12,6 @@ from dataclasses import replace
 import numpy as np
 import pytest
 import shap
-from experiments.observer_local_evidence_benchmark import _canonical_local_digest, _model_evidence
 from fuzzyxai.practical_controller import HardGuardStatus, evaluate_hard_guard
 from fuzzyxai.selective_observer.local_effects import (
     ReferenceRebaseStatus,
@@ -23,6 +22,8 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
+
+from experiments.observer_local_evidence_benchmark import _canonical_local_digest, _model_evidence
 
 
 @pytest.mark.parametrize(
