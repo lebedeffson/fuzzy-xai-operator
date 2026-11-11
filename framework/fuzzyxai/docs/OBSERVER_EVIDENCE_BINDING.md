@@ -185,3 +185,41 @@ linear-logit attributions. It also verifies that a consistently
 rehashed but misdeclared reference is blocked. This is a **binary
 logistic/linear-additive** validation, not evidence that arbitrary
 SHAP/LIME configurations are faithful.
+
+
+## Conditional linear-reference rebasing (experimental)
+
+The public SDK `fuzzyxai.selective_observer.propose_linear_reference_rebase`
+returns a **candidate**, never a certified or silently modified artifact.
+
+For one fixed target-class linear-additive logit
+`f_t(x)=b_t+sum_j w_j*x_j`, local contributions at reference
+`r` are `phi_j(x;r)=w_j*(x_j-r_j)`. If the background changes from
+`r0` to `r1`, the only justified algebraic transformation is
+
+`phi_j(x;r1)=phi_j(x;r0)+w_j*(r0_j-r1_j)`.
+
+The API requires actual input vector, old/new ordered reference vectors,
+source attribution record, and **signed raw-space coefficients** from the
+target-class model. Before returning a proposal, it verifies the input hash,
+old reference hash, axis, finite values, and that the original attributions
+match the raw-space linear contributions under `r0`. Contradictions yield
+`incompatible`; missing required evidence yields `insufficient_evidence`.
+
+A proposal is not automatically applied, hashed or permitted for action.
+The caller must create a new explanation artifact with a **new canonical
+source digest**, collect source-model responses against the **new** background,
+and pass the usual strict identity + reference + response guards. Reusing
+old source-model responses with a rebased explanation must be blocked.
+
+Native SHAP LinearExplainer compatibility regression now includes the
+target classes 0/1 on Breast Cancer, 0/2 on Wine, and 0/9 on Digits,
+where independent-masker background sizes 50 and 100 produce distinct
+attributions. This test demonstrates a mathematically exact reference
+transformation for a fixed linear target logit, not general SHAP repair.
+For nonlinear models, feature interactions, conditional expectations or
+ambiguous baseline choices, this transformation is **not valid** and
+should not be advertised or used.
+
+Any measured speedup of batch inference or user-benefit improvement remains
+outside the validated protocol.
