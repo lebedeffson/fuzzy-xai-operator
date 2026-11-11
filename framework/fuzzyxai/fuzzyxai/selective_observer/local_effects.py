@@ -16,7 +16,6 @@ from .evidence_identity import (
     LocalExplanationEvidence,
 )
 
-
 SUPPORTED_PROTOCOL = "linear_logit_single_feature_reference_v1"
 
 
