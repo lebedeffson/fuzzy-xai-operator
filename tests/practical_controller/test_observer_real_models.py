@@ -52,3 +52,27 @@ def test_observer_contract_detects_declared_faults_on_three_fitted_models() -> N
     assert families["missing_input_binding"]["review_required"] == 15
     assert families["missing_input_binding"]["hash_verified"] == 15
     assert report["claim_allowed"] is False
+
+
+
+def test_exploratory_cross_seed_stability_and_model_fingerprints() -> None:
+    # This checks deterministic implementation stability, not independent
+    # confirmatory validation; the same three datasets are reused.
+    first = run_benchmark(n_per_dataset=3, seed=11)
+    second = run_benchmark(n_per_dataset=3, seed=27)
+    assert first["n_rows"] == second["n_rows"] == 3 * 3 * 14
+    assert first["model_fingerprints"] != second["model_fingerprints"]
+    assert set(first["model_fingerprints"]) == {"breast_cancer", "wine", "digits"}
+    assert all(len(value) == 64 for value in first["model_fingerprints"].values())
+    for report in (first, second):
+        assert report["maximum_clean_logit_reconstruction_error"] < 1e-8
+        assert report["by_family"]["clean"]["accepted_structurally"] == 9
+        assert report["by_family"]["stale_input_same_object"]["blocked"] == 9
+        for family in (
+            "silent_value_permutation",
+            "randomized_zero_sum_0.0001",
+            "randomized_zero_sum_0.01",
+            "randomized_zero_sum_0.1",
+        ):
+            assert report["by_family"][family]["blocked"] == 9
+            assert report["by_family"][family]["structural_plus_sum_accepted"] == 9

@@ -136,3 +136,18 @@ overhead, not mathematical complexity. Runtime speed depends on the
 source model and hardware, so no general speedup is claimed without
 independent measurements. The built-in sklearn benchmark uses this
 batched collector and records both model call and score-row counts.
+
+
+## Fitted-model identity and reproducibility metadata
+
+The experiment now records full SHA256 fingerprints over actual fitted
+LogisticRegression coefficients/intercepts, class axis, and StandardScaler
+means/scales. These model digests are included in the model-version
+declaration; the random seed alone is **not** the identity of a trained
+model. The JSON also includes Python, NumPy and scikit-learn versions,
+sample counts and feature dimensions. These fingerprints identify the
+reported fitted state; they do not authenticate a remotely supplied model.
+
+Additional seeded runs on the same three datasets test implementation
+stability. They are exploratory and must not be described as independent
+external validation.

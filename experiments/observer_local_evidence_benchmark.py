@@ -10,9 +10,11 @@ from __future__ import annotations
 
 import hashlib
 import json
+import sys
 from dataclasses import replace
 
 import numpy as np
+import sklearn
 from fuzzyxai.practical_controller import (
     DeploymentContext,
     ExplanationArtifact,
@@ -49,6 +51,23 @@ def _canonical_local_digest(local: LocalExplanationEvidence) -> str:
     })
 
 
+def _fitted_model_sha256(model: object) -> str:
+    """Hash actual fitted sklearn coefficients and scaler, not a seed label."""
+
+    scaler = model.named_steps["standardscaler"]
+    classifier = model.named_steps["logisticregression"]
+    return _digest(
+        {
+            "estimator": "LogisticRegression",
+            "scaler_mean": np.asarray(scaler.mean_, dtype=float).tolist(),
+            "scaler_scale": np.asarray(scaler.scale_, dtype=float).tolist(),
+            "classes": np.asarray(classifier.classes_).tolist(),
+            "coefficients": np.asarray(classifier.coef_, dtype=float).tolist(),
+            "intercept": np.asarray(classifier.intercept_, dtype=float).tolist(),
+        }
+    )
+
+
 def _model_evidence(name: str, model: object, item: np.ndarray, object_id: str, axis: tuple[str, ...], seed: int):
     """Return the actual target-class linear logit decomposition."""
     scaler = model.named_steps["standardscaler"]
@@ -69,7 +88,7 @@ def _model_evidence(name: str, model: object, item: np.ndarray, object_id: str, 
     contributions = tuple(float(x) for x in weights * values)
     oracle_error = abs(float(intercept + sum(contributions) - raw_logit))
     probabilities = tuple(float(x) for x in logistic.predict_proba(values.reshape(1, -1))[0])
-    model_version = f"logreg-{name}-seed{seed}"
+    model_version = f"logreg-{name}-seed{seed}-{_fitted_model_sha256(model)[:16]}"
     input_digest = hash_numeric_input(axis, tuple(float(x) for x in item))
     source = {
         "object_id": object_id,
@@ -212,6 +231,8 @@ def run_benchmark(
         "digits": load_digits(),
     }
     rows: list[dict[str, object]] = []
+    model_fingerprints: dict[str, str] = {}
+    dataset_metadata: dict[str, dict[str, int]] = {}
     rng = np.random.default_rng(seed + 8192)
     largest_oracle_residual = 0.0
     for dataset_name, ds in datasets.items():
@@ -222,6 +243,13 @@ def run_benchmark(
         )
         model = make_pipeline(StandardScaler(), LogisticRegression(max_iter=1500, random_state=seed))
         model.fit(features[train], labels[train])
+        model_fingerprints[dataset_name] = _fitted_model_sha256(model)
+        dataset_metadata[dataset_name] = {
+            "n_train": len(train),
+            "n_test": len(test),
+            "n_features": features.shape[1],
+            "n_classes": len(model.named_steps["logisticregression"].classes_),
+        }
         axis = tuple(str(s) for s in getattr(ds, "feature_names", [f"f{i}" for i in range(features.shape[1])]))
         classes = tuple(str(label) for label in model.named_steps["logisticregression"].classes_)
         if n_per_dataset > len(test):
@@ -343,6 +371,9 @@ def run_benchmark(
         "maximum_clean_logit_reconstruction_error": largest_oracle_residual,
         "by_family": grouped,
         "by_dataset": by_dataset,
+        "model_fingerprints": model_fingerprints,
+        "dataset_metadata": dataset_metadata,
+        "environment": {"python": sys.version.split()[0], "numpy": np.__version__, "sklearn": sklearn.__version__},
         "model_probe_cost_per_example": {
             name: {"source_model_calls": 1, "model_score_rows": len(ds.feature_names) + 2}
             for name, ds in datasets.items()
