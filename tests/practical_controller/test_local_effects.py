@@ -301,3 +301,25 @@ def test_batched_probe_rejects_truncated_or_nonfinite_model_outputs() -> None:
         collect_linear_reference_effects_batched(
             **params, target_logits=lambda rows: (float("nan"),) * len(rows)
         )
+
+
+
+def test_interacting_nonlinear_model_cannot_pass_additive_reconstruction() -> None:
+    # For f(x)=x0*x1 with x=(1,1), reference=(0,0), replacing either
+    # feature decreases the score by 1, but the total score difference is
+    # only 1. The observer must not certify this as a linear explanation.
+    effects = collect_linear_reference_effects(
+        object_id="obj-1",
+        model_version="model-v1",
+        target_class="positive",
+        feature_names=("a", "b"),
+        input_values=(1.0, 1.0),
+        reference_values=(0.0, 0.0),
+        target_logit=lambda values: float(values[0] * values[1]),
+    )
+    assert effects.effect_on_score == (1.0, 1.0)
+    result = verify_additive_local_effects(
+        replace(_local(), contributions=(1.0, 1.0)), effects
+    )
+    assert result.status is LocalEvidenceStatus.INCOMPATIBLE
+    assert "score_reconstruction_mismatch" in result.contradictions

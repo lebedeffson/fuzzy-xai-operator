@@ -151,3 +151,14 @@ reported fitted state; they do not authenticate a remotely supplied model.
 Additional seeded runs on the same three datasets test implementation
 stability. They are exploratory and must not be described as independent
 external validation.
+
+
+## Nonadditive negative control
+
+A direct interaction model f(x)=x0*x1 at x=(1,1) with reference (0,0)
+has model-observed single-feature effects (1,1), while the total score
+change is 1. The additive gate must reject this inconsistent
+decomposition rather than certifying it. This test demonstrates detection
+of one specified interaction, not general automatic recognition of every
+nonlinear model. In particular, a locally zero or carefully balanced
+interaction may remain invisible to the specified probes.
