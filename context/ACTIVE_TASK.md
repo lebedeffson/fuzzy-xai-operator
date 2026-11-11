@@ -1,112 +1,91 @@
-# Active task: FuzzyXAI evidence-first observer — scientific engineering
+# Active task: FuzzyXAI Observer — exact source-bound explanation checks
 
 Branch: research/observer-evidence-binding-20261111
-Draft review: https://github.com/lebedeffson/fuzzy-xai-operator/pull/4
+Draft PR: https://github.com/lebedeffson/fuzzy-xai-operator/pull/4
 Protected base: research/tisu-core-safety-20261108
-All locked/scored source evidence and publications are untouched.
+Never modify locked/scored dissertation evidence or publication chapters.
 
-## Objective
+## Parent objective
 
-Strengthen source-bound local-explanation checking before revising the four articles
-or any dissertation chapter. Distinguish incompatible declarations (BLOCK)
-from missing evidence (REVIEW), and numeric validity from semantic fidelity.
+Increase practical and mathematically defensible observer coverage before
+revising four articles. Fail closed: contradictions BLOCK; missing or
+unsupported evidence REVIEW; neither state is model-quality/causal truth.
 
-## Implemented
+## Validated earlier scope
 
-- Opt-in object/model/target/local-scope/ordered-feature-axis attribution binding;
-- canonical numeric input identity across prediction/explanation/model probes;
-- SHA256 fingerprinting of actual fitted logistic model/scaler state;
-- source-model linear-additive target-logit per-feature response checks;
-- vectorized single-call model probes on d+2 rows, plus sequential parity tests;
-- strict background/reference identity between explainer and source-model probes;
-- original public practical controller propagation of REVIEW/BLOCK ahead of budgets;
-- grouped OOF model normalization fitted within training folds only;
-- deliberate rehashed source-fault, stale-input, background-substitution, zero-sum,
-  nonlinear interaction and genuine native SHAP LinearExplainer test coverage;
-- reproducibility metadata (seed, Python/sklearn/NumPy versions and dataset stats).
+Local evidence identity, input SHA256, background/reference SHA256, linear
+additive logit responses, SHAP LinearExplainer class semantics, carefully
+guarded candidate-only linear reference rebasing, and train-fold-only OOF
+scaling were already added. GitHub Actions 43108180566 passed 98 tests
+and Ruff on Python 3.11 and 3.12. The older 576-case, 36-heldout-object,
+developmental linear mutation benchmark is NOT independent external evidence.
 
-## Verified baseline and current uncertainty
+## New capability: bounded exact empirical-interventional Shapley
 
-Verified GitHub observer Actions run 43094340021 at commit d7f5b40f:
-70 pytest + Ruff passed on Python 3.11 and 3.12. Downloaded artifact
-13890656129: 36 held-out source objects, 504 developer-generated cases;
-36 clean accepted, all 144 same-sum corruptions blocked by per-feature model
-oracle while the strong structure+sum baseline accepted all 144; 36 stale-input
-blocks and 36 missing-input reviews; max clean logit residual ~4.66e-15.
-These cases are correlated, do not represent independent natural errors.
+- New module fuzzyxai.selective_observer.exact_shapley (public SDK exports).
+- Defined v(S) = mean_{r in B} f_target(x_S, r_notS), using the exact
+  background rows and the SAME selected scalar model output for every mask.
+- Enumerates all coalitions and computes the standard Shapley weights.
+- A trusted adapter must supply actual deterministic model calls; SHA256
+  declarations do not authenticate underlying model bytes or explainers.
+- Strict 1..8 input-feature and 8192 model-score-row caps; invalid model
+  outputs, inconsistent dimensions or non-deterministic repeated inputs
+  cause explicit exceptions, not fabricated measurements.
+- ExactShapleyEvidence is bound to LocalExplanationEvidence by object,
+  model, target class, ordered feature axis, input vector SHA256 and
+  SHA256 of the COMPLETE finite numeric empirical background matrix.
+- A different/missing background is distinguished from an ordinary
+  reference mean. For nonlinear interactions equal marginal means can
+  coexist with different explanation values.
+- New opt-in practical-controller guard: require_exact_shapley_verification.
+  Contradictory declared/local effects BLOCK; missing evidence/unsupported
+  protocols REVIEW before budget allocation; old linear gate remains separate.
+- Analytic counterexample: f(x0,x1)=x0*x1, x=(1,1), B={(0,0)} has exact
+  Shapley (0.5, 0.5) while independent one-feature drops give (1, 1).
+  The earlier linear-additive oracle would wrongly reject valid SHAP here.
+- Tests cover native SHAP ExactExplainer, a fitted nonlinear random forest,
+  equal-mean/different-joint-background negative control, NP float32
+  inputs, cost boundaries, rehashed zero-sum errors, stale inputs,
+  missing/incorrect backgrounds, invalid scores, and public action gating.
 
-Added after the verified artifact: actual model fingerprints, extra random-seed
-stability, native SHAP, reference-background matching and 2 new reference-fault
-families (expected benchmark case count 36 * 16 = 576, NOT YET VERIFIED).
-The latest tip's scoped Actions run 43096160084 was queued when recorded;
-do not claim it passed before observing the actual result.
+## Nonlinear model benchmark — recorded evidence
 
-Standalone independent SHAP sanity check (not the GitHub test): with default
-masker sub-sampling, using the full-train reference caused ~0.238 maximum
-feature discrepancy and ~0.269 sum discrepancy, whereas matching the real
-all-train masker reference gave ~5e-15 discrepancy. This motivated an
-explicit background SHA256 binding, not merely increasing tolerance.
+GitHub run 43111380695 generated artifacts:
+- 13896821884: Python 3.11, NumPy 2.4.6, scikit-learn 1.9.1, SHAP 0.51.0;
+- 13895274744: Python 3.12, NumPy 2.5.4, scikit-learn 1.9.1, SHAP 0.51.0.
+Both real JSON reports were downloaded and inspected.
+Three trained nonlinear classifiers (DecisionTree/RandomForest),
+Breast Cancer, Wine, Digits, with 4 selected raw numeric features each.
+36 held-out objects, 216 correlated scenarios, 6 scenarios/object.
+Counts agree on both environments:
+- 36/36 clean native SHAP explanations CERTIFIED;
+- 72/72 rehashed zero-sum attribution corruptions BLOCKED, while
+  structure-plus-sum baseline accepts all 72;
+- 36/36 wrong background digests BLOCKED, while structure+sum accepts 36;
+- 36/36 missing background digests REVIEW, 36/36 stale inputs BLOCKED;
+- native SHAP ExactExplainer vs independently evaluated source model
+  coalition formula max absolute discrepancy 1.1102230246251565e-16.
+These are deliberately created faults; model families, dataset selectors,
+masker size and scoring channel all belong to this developmental design.
+NOT 216 independent observations, unknown incident detection, or external
+scientific efficacy. Independent data/protocol evaluation is still needed.
 
-Previous selective observer formative gate and chapter-4 smoke were green.
-Broader practical/H10 workflows have longstanding unrelated Ruff failures.
-The complete framework readiness workflow had earlier missing test/UI optional
-dependencies; its install configuration now includes dev, ui, FastAPI, HTTPX.
-No all-green full-release claim is made without a completed current run.
+## CI and current work
 
-## Next executable action
+The same 43111380695 run executed 117 passing pytest tests on both Python
+versions. Its Ruff gate flagged B023 in the nonlinear benchmark:
+the nested source scorer referenced an outer model loop variable.
+Fixed by binding the actual fitted estimator as a default callback argument
+in later commit 807e11e44054e07f5ce59e64aa57af5eb98dcad3.
+Added explicit public assess_action fail-closed regression under exhausted
+review budget at commit 3469fded4bd9f68c6a9adb6fa81a8562a24b0bbf.
+CI for the latest code has NOT yet been checked as green.
 
-Inspect Actions for latest SHA, especially observer regression 43096160084
-(and any newer current-tip run). Fix actual pytest/Ruff failures without
-weakening checks. Verify and download the new 576-case JSON report.
-Check standard readiness/full integration separately; keep PR as draft
-and no merge or scientific claim until the required checks have passed.
-Do not opportunistically modify protected scores, H10/Q1 records,
-article chapters, or unrelated framework modules.
+## Exact next action
 
-## Additional class-conditional compatibility audit (Nov 12)
-
-- Independently probed native `shap.LinearExplainer` with `Independent` maskers on Breast Cancer binary targets 0/1 and Wine/Digits multiclass targets 0/2 and 0/9. Both backgrounds (50 and 100 samples) have matching class-target logit attribution and true source-model single-feature effects (offline sklearn/shap sanity check, residuals ~1e-15).
-- Added executable targeted regression for all six target/dataset cases and two background sizes: correctly selected target must CERTIFY; independently rehashed incorrect-class vector must BLOCK, while structural-only baseline remains CERTIFIED.
-- The offline calculation is **not** a substitute for current-PR integration CI. New CI on this commit must pass before updating the review claim. This is a compatibility test for SHAP LinearExplainer only, not an arbitrary SHAP/LIME result.
-- Current-tip Actions were queued (run 43096416081) when checked; no new green claim. Preserve read-only protected protocol and chapter files.
-
-## Baseline-scope repair at commit following b665d77d
-
-- GitHub observer workflow 43105867008 reported 3 failed/88 passed: two benchmark regressions and the older native SHAP baseline expected CERTIFIED after removing source-model effects, but left `require_reference_binding=True`. This yielded REVIEW for missing model-effect reference evidence. Strict production verifier behaved correctly.
-- Repaired the explicitly weaker baseline *in the experiment and its comparison test* by disabling `require_reference_binding` together with `require_local_effect_verification`. Strict/full guard and strict reference checks remain unchanged. Strong comparison still independently checks sum reconstruction; do not describe reduced baseline as verifying an independently bound reference.
-- Re-run and inspect current-tip 3.11/3.12 GitHub CI; no new PASS claim before completion.
-
-## Verified observer milestone (Nov 12, after SHAP-class and baseline repair)
-
-- Commit 2d4f845b129ccc446f72f7de36e6da2d9b1c8964, Actions run 43106307484: Python 3.11 and 3.12 both passed 91 scoped pytest tests, benchmark generation, and Ruff.
-- Downloaded benchmark artifacts 13894551490 (3.11), 13893738070 (3.12): 36 held-out objects, 576 controlled cases, 36/36 clean accepted.
-- Four same-sum attribution corruption families: 144/144 rejected by source-model feature-response checks but accepted by the deliberately weaker structural-plus-logit-sum baseline; all were rehashed consistently.
-- Wrong background: 36/36 blocked; missing background: 36/36 REVIEW. Maximum clean logit discrepancy ~4.66e-15 on Python 3.11 and ~4.88e-15 on Python 3.12.
-- Native SHAP LinearExplainer regression (12 dataset/target/background combinations): binary target 0/1, Wine target 0/2, Digits target 0/9, masker sizes 50 and 100. Correct target certified; wrong-class rehashed attributions blocked. These are only linear-logit compatibility checks.
-- Independent offline background sanity check: masker 50 versus 100 changes some per-feature contributions by ~0.1266 (Breast Cancer), up to ~0.1594 (Wine), up to ~0.2491 (Digits). Matching each real masker reference resolves the difference.
-- NumPy versions differ (3.11: 2.4.6; 3.12: 2.5.4); resulting fitted model fingerprints differ. Behavior counts coincide. This is a reproducibility boundary, not identical byte-level training.
-- Strict gate was never weakened to make CI pass. Failures came from an intentionally weaker baseline that disabled model effects but still required the independent model-effect reference. The baseline explicitly disables both requirements; production verifier remains strict.
-- Scoped CI PASS does not equal release-wide PASS; H10 workflows include unrelated failures. No changes to locked scores, H10/Q1 protocols, articles or dissertation chapters.
-
-## Exact continuation
-
-- Verify scope CI on the documentation/state-only child commit, keep PR #4 draft.
-- Next research milestone is a genuinely independent unknown-fault protocol and other XAI semantics; do not interpret 576 developer-generated, correlated cases as an external estimate of detector recall.
-
-## Conditional SHAP background rebasing (new exploratory functionality)
-
-- Added propose_linear_reference_rebase: with independently supplied signed raw-space coefficients and verified old local vector/input/background hashes, compute the *candidate* for a different reference as phi_new[j] = phi_old[j] + w_raw[j]*(r_old[j]-r_new[j]).
-- The proposal API returns candidate/incompatible/insufficient_evidence and never updates source hashes or bypasses guards. It explicitly requires independent full source-model probing and a new canonical digest before acceptance.
-- New genuine SHAP LinearExplainer tests for binary class 0/1, Wine 0/2 and Digits 0/9 demonstrate old-reference proposals remain BLOCK with stale probes, then become CERTIFIED after independent new-reference effects. Also test wrong coefficients, missing hash, and input-hash mismatch.
-- Separate offline feasibility check: 50->100 background rebasing residuals 5.55e-17 to 2.22e-16 across six cases; this is limited to additive linear target logits. Not an automatic SHAP repair for non-linear models.
-- New code requires fresh scoped CI validation; do not cite previous 91-test run as evidence for this child commit.
-
-## Verified native SHAP reference rebasing milestone
-
-- Code commit 5e21b385fa866fbf2339b2b6771de4588985c5cd: targeted Actions run 43108180566 passed on Python 3.11 and 3.12 (98 pytest checks, Ruff, benchmark generation and artifact upload for each).
-- Public SDK exports ReferenceRebaseStatus, LinearReferenceRebaseProposal, propose_linear_reference_rebase. A candidate is not a recertification or automatic fix.
-- New tests use genuine SHAP LinearExplainer on six binary/multiclass target cases, masker 50->100: original reference matches declared attributions; proposed shift matches genuine new-reference SHAP; old source-model probe blocks reused candidate; new independent model probe and a canonical rehash certify it.
-- Independent offline mathematical sanity on six targets: new-reference vector matches native SHAP to 5.55e-17..2.22e-16. This is a known identity for additive linear logits, not new general SHAP theory.
-- 576-case developmental benchmark remains the existing dataset-specific controlled mutation study; new rebase test results must not be conflated with its counts.
-- Broader full repo H10/practical workflows remain separately gated; no full-release pass, no PR merge, no edits to protected scientific artifacts.
-- Next research acceptance: preregister an independent fault-generation protocol on unexamined models/explainers and record any misses; add nonlinear verification only with a sound declared semantic contract.
+Inspect newest Observer evidence-binding regression for the branch head,
+fix actual pytest/Ruff errors without weakening scientific gates. Confirm
+JSON artifact count and provenance; then update PR with the verified code
+SHA and tests. Keep PR draft and no merge. Next external research task
+is an independently defined unknown-fault protocol. Avoid code claiming
+general SHAP/LIME/causal faithfulness from this exact empirical game.
