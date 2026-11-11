@@ -97,3 +97,59 @@ general SHAP/LIME/causal faithfulness from this exact empirical game.
 - Final-code SHA 3c6dacd7543a4c31fbc38a2bf6702ec3601bf853 scope CI runs 43112582904 and 43112592007 were queued at this checkpoint; DO NOT mark that commit fully validated without observing completion.
 - Changes after the code fix were to this context and framework/fuzzyxai/docs/OBSERVER_EVIDENCE_BINDING.md, not to runtime semantics. Full repo readiness remains separate and is NOT certified.
 - Next executable action: check both Python jobs for final-code SHA, fix any real failures, then freeze a developmental benchmark receipt; leave PR #4 draft and preserve all locked protocol/publication material.
+
+
+## Transfer and semantic-compatibility experiment (new work, pending CI)
+
+**Scientific hypothesis:** An exact empirical interventional-Shapley oracle
+must NOT block honest conditional/approximate explanations simply because
+they disagree with the exact interventional game. Nor should a complete
+source identity for an explanation omit the model's output score channel.
+Earlier checks over linear models and a fixed interventional game did not
+measure genuine alternate-background admissions or sub-tolerance misses.
+
+Changes:
+- LocalExplanationEvidence now optionally declares attribution_protocol
+  and score_channel. Canonical source digest includes both.
+- Strict exact-Shapley gate requires an explicit exact interventional
+  protocol declaration and matching source score channel. A different or
+  missing explanation-game declaration results in REVIEW, not false BLOCK
+  based only on different attribution values. Contradictory object/class/
+  input/background/score-space identity still BLOCKs.
+- Separate, developer-fixed transfer protocol committed FIRST at
+  experiments/observer_transfer_protocol_v1.json (commit 24b08fe7543a).
+  This is not independently preregistered or blind.
+- New datasets: Iris classification, Diabetes scalar regression,
+  Linnerud first regression target; novel fitted model families HGB,
+  ExtraTrees and k-nearest-neighbor regression. Seed 173; 5 held-out
+  objects/task; two disjoint six-row training backgrounds per task.
+- Separate native SHAP ExactExplainer vs exhaustive source-model score
+  probes, with 9 scenarios/source object: two truly valid explanations
+  including changed background, explicit 0.05 zero-sum corruption, a
+  deliberately *sub-tolerance* 1e-8 perturbation, a valid donor's
+  explanation rebalanced to match total score, background and score
+  channel identity faults, an honestly unsupported approximate method,
+  and missing background. Strong baseline checks complete provenance and
+  efficiency, but not Shapley per-feature values.
+- Report records case-level outcomes, numerical fault opportunities,
+  per-family and per-task counts, true background shift, environment,
+  fitted-model fingerprints, and the SHA256 of the separately committed
+  protocol. Any misses, false blocks or inability to distinguish donor
+  attributions must be reported, not silently tuned away.
+- Latest code source: experiments/observer_transfer_evaluation.py,
+  tests/practical_controller/test_observer_transfer_evaluation.py;
+  CI adds 3.11/3.12 targeted regression and an archived JSON receipt.
+  Source commits 0073f241, 8b23f8fc, 551b1d2f, 7001542c.
+- **No latest-tip result is yet confirmed.** Earlier 118-test 3.11/3.12
+  success only proves the previous nonlinear exact protocol. No result
+  is to be attributed to new transfer models until actual Actions JSON
+  has been inspected.
+
+## Exact next executable action after this checkpoint
+
+Inspect newest Observer evidence-binding regression Actions at current
+branch SHA; fix exact pytest/Ruff failures without loosening checks or
+optimizing on held-out outcomes. Download and inspect genuine transfer
+JSON artifacts on both Python versions; report all controls and misses,
+including below-tolerance false admissions. Only then consider updating
+draft PR scientific claims. Never modify protected H10/Q1 scores or articles.
