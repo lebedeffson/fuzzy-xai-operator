@@ -8,6 +8,7 @@ faithfulness certificate for nonlinear, interacting, or model-agnostic XAI.
 from __future__ import annotations
 
 import math
+from collections.abc import Callable, Sequence
 from dataclasses import dataclass
 
 from .evidence_identity import (
@@ -135,4 +136,64 @@ def verify_additive_local_effects(
         status=status,
         missing_fields=tuple(dict.fromkeys(missing)),
         contradictions=tuple(dict.fromkeys(contradictions)),
+    )
+
+
+def collect_linear_reference_effects(
+    *,
+    object_id: str,
+    model_version: str,
+    target_class: str,
+    feature_names: tuple[str, ...],
+    input_values: Sequence[float],
+    reference_values: Sequence[float],
+    target_logit: Callable[[tuple[float, ...]], float],
+) -> LocalEffectEvidence:
+    """Probe a caller-supplied trusted target-logit function feature by feature.
+
+    Only reference replacement is performed. The caller must select the
+    correct target class and connect this callable to the source model;
+    this helper cannot authenticate the callable or source-model bytes.
+    """
+
+    width = len(feature_names)
+    if not object_id or not model_version or not target_class:
+        raise ValueError("source identity and target class are required")
+    if not width or any(not isinstance(x, str) or not x.strip() for x in feature_names):
+        raise ValueError("feature axis must be nonempty")
+    if len(set(feature_names)) != width:
+        raise ValueError("feature names must be unique")
+    if len(input_values) != width or len(reference_values) != width:
+        raise ValueError("reference and input widths must equal feature axis")
+    if any(
+        isinstance(x, bool) or not isinstance(x, (float, int)) or not math.isfinite(x)
+        for x in (*input_values, *reference_values)
+    ):
+        raise ValueError("reference and input values must be finite")
+
+    observed = tuple(float(x) for x in input_values)
+    reference = tuple(float(x) for x in reference_values)
+
+    def evaluate(values: tuple[float, ...]) -> float:
+        result = target_logit(values)
+        if isinstance(result, bool) or not isinstance(result, (float, int)) or not math.isfinite(result):
+            raise ValueError("target-logit function must return a finite scalar")
+        return float(result)
+
+    original_score = evaluate(observed)
+    baseline_score = evaluate(reference)
+    contributions: list[float] = []
+    for index in range(width):
+        changed = list(observed)
+        changed[index] = reference[index]
+        contributions.append(original_score - evaluate(tuple(changed)))
+    return LocalEffectEvidence(
+        protocol=SUPPORTED_PROTOCOL,
+        object_id=object_id,
+        model_version=model_version,
+        target_class=target_class,
+        feature_names=feature_names,
+        effect_on_score=tuple(contributions),
+        reference_score=baseline_score,
+        explained_score=original_score,
     )
