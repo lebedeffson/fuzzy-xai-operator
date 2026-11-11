@@ -31,6 +31,13 @@ from .controller import (
     predict_risk,
     risk_coverage_curve,
 )
+from .evidence_identity import (
+    LocalEvidenceObservation,
+    LocalEvidenceStatus,
+    LocalExplanationEvidence,
+    observe_local_explanation,
+)
+from .local_effects import LocalEffectEvidence, SUPPORTED_PROTOCOL, verify_additive_local_effects
 from .route_validity import evaluate_action_contract, evaluate_predictive_increment
 from .rule_validation import (
     evaluate_confirmatory_ablation,
@@ -44,6 +51,11 @@ from .rule_validation import (
 __all__ = [
     "ConfirmatoryExample",
     "ConfirmatoryProtocolLock",
+    "LocalEvidenceObservation",
+    "LocalEvidenceStatus",
+    "LocalExplanationEvidence",
+    "LocalEffectEvidence",
+    "SUPPORTED_PROTOCOL",
     "DevelopmentExample",
     "PolicyMetrics",
     "PredictiveRouteExample",
@@ -63,6 +75,8 @@ __all__ = [
     "evaluate_confirmatory_policy",
     "evaluate_planted_rule_recovery",
     "evaluate_predictive_increment",
+    "observe_local_explanation",
+    "verify_additive_local_effects",
     "explainer_disagreement_policy",
     "fit_selective_controller",
     "inject_planted_rule",
