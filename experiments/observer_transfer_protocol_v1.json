@@ -1,0 +1,110 @@
+{
+  "schema_version": "observer-transfer-developmental-v1",
+  "purpose": "new datasets and model families with genuine alternative-background negatives and known tolerance misses",
+  "design_status": "developer_specified_before_first_execution_not_independently_preregistered",
+  "seed": 173,
+  "n_test_objects_per_task": 5,
+  "test_fraction": 0.3,
+  "background_rows_per_variant": 6,
+  "alternative_background": "disjoint training rows 6:12 versus primary 0:6",
+  "tasks": [
+    {
+      "name": "iris_hgb",
+      "dataset": "sklearn.load_iris",
+      "feature_indices": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "model": "HistGradientBoostingClassifier(max_iter=32,max_leaf_nodes=7,random_state=173)",
+      "score_channel": "predict_proba",
+      "target_channel": "predicted_class_probability"
+    },
+    {
+      "name": "diabetes_etr",
+      "dataset": "sklearn.load_diabetes",
+      "feature_indices": [
+        0,
+        2,
+        5,
+        8
+      ],
+      "model": "ExtraTreesRegressor(n_estimators=32,max_depth=7,random_state=173)",
+      "score_channel": "predict",
+      "target_channel": "scalar_regression_output"
+    },
+    {
+      "name": "linnerud_knn",
+      "dataset": "sklearn.load_linnerud",
+      "feature_indices": [
+        0,
+        1,
+        2
+      ],
+      "model": "KNeighborsRegressor(n_neighbors=3)",
+      "score_channel": "predict",
+      "target_channel": "first_regression_target"
+    }
+  ],
+  "fault_families": [
+    {
+      "id": "clean_primary",
+      "truth": "valid",
+      "expected": "certified"
+    },
+    {
+      "id": "clean_alternate_background",
+      "truth": "valid",
+      "expected": "certified"
+    },
+    {
+      "id": "zero_sum_0_05",
+      "truth": "invalid_exact",
+      "expected": "incompatible"
+    },
+    {
+      "id": "zero_sum_subthreshold_1e_8",
+      "truth": "invalid_exact_but_below_tolerance",
+      "expected": "certified_tolerance_limit"
+    },
+    {
+      "id": "donor_attribution",
+      "truth": "invalid_exact_potential_coincidence",
+      "expected": "measure_not_assert"
+    },
+    {
+      "id": "wrong_background_sha",
+      "truth": "identity_conflict",
+      "expected": "incompatible"
+    },
+    {
+      "id": "wrong_score_channel",
+      "truth": "identity_conflict",
+      "expected": "incompatible"
+    },
+    {
+      "id": "approximation_protocol",
+      "truth": "different_explanation_game",
+      "expected": "insufficient_evidence"
+    },
+    {
+      "id": "missing_background_sha",
+      "truth": "missing_provenance",
+      "expected": "insufficient_evidence"
+    }
+  ],
+  "absolute_comparison_tolerance": 0.000001,
+  "baselines": [
+    "complete_identity_axis_scope_protocol_score_channel_background_input_plus_efficiency_without_component_oracle",
+    "exact_interventional_shapley_component_oracle"
+  ],
+  "independence_limit": "all variants share source objects and the designer; no external blind annotations or independent error generator",
+  "non_claims": [
+    "general XAI reliability",
+    "production unknown-fault detection",
+    "causality",
+    "statistically independent ninefold variants"
+  ],
+  "locked_scored_artifacts_modified": false
+}
