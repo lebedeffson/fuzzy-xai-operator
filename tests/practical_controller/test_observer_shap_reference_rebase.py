@@ -26,6 +26,7 @@ from sklearn.preprocessing import StandardScaler
 from experiments.observer_local_evidence_benchmark import _canonical_local_digest, _model_evidence
 
 
+
 @pytest.mark.parametrize(
     ("name", "loader", "target_index"),
     [
