@@ -29,8 +29,10 @@ Construct LocalExplanationEvidence, attach it to
 ExplanationArtifact.local_evidence, and add ordered feature_names to
 PredictionArtifact. Enable DeploymentContext(require_local_evidence=True).
 
-For the optional additive model-response gate, construct
-LocalEffectEvidence from actual calls to the source model and attach it
+For the optional additive model-response gate, collect
+LocalEffectEvidence using collect_linear_reference_effects with a trusted
+source-model target-logit callable (one original, one all-reference, and
+one per-feature reference-perturbation call), then attach it
 to RouteArtifacts.observed_local_effects. Enable
 DeploymentContext(require_local_effect_verification=True).
 
