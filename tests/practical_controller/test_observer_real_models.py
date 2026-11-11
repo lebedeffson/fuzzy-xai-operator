@@ -1,4 +1,5 @@
 """End-to-end seeded observer exercise with fitted models and held-out inputs."""
+
 from __future__ import annotations
 
 from experiments.observer_local_evidence_benchmark import run_benchmark
