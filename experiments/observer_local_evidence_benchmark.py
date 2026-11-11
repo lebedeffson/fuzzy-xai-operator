@@ -22,7 +22,7 @@ from fuzzyxai.practical_controller import (
     evaluate_hard_guard,
 )
 from fuzzyxai.selective_observer.evidence_identity import LocalExplanationEvidence
-from fuzzyxai.selective_observer.local_effects import collect_linear_reference_effects
+from fuzzyxai.selective_observer.local_effects import collect_linear_reference_effects, hash_numeric_input
 from sklearn.datasets import load_breast_cancer, load_digits, load_wine
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
@@ -45,6 +45,7 @@ def _canonical_local_digest(local: LocalExplanationEvidence) -> str:
         "scope": local.scope,
         "feature_names": local.feature_names,
         "contributions": local.contributions,
+        "input_sha256": local.input_sha256,
     })
 
 
@@ -69,11 +70,13 @@ def _model_evidence(name: str, model: object, item: np.ndarray, object_id: str, 
     oracle_error = abs(float(intercept + sum(contributions) - raw_logit))
     probabilities = tuple(float(x) for x in logistic.predict_proba(values.reshape(1, -1))[0])
     model_version = f"logreg-{name}-seed{seed}"
+    input_digest = hash_numeric_input(axis, tuple(float(x) for x in item))
     source = {
         "object_id": object_id,
         "target_class": str(prediction),
         "model_version": model_version,
         "scope": "local",
+        "input_sha256": input_digest,
         "feature_names": axis,
         "contributions": contributions,
     }
@@ -101,6 +104,7 @@ def _model_evidence(name: str, model: object, item: np.ndarray, object_id: str, 
         probabilities=probabilities,
         model_version=model_version,
         feature_names=axis,
+        input_sha256=input_digest,
     )
     local = LocalExplanationEvidence(
         object_id=object_id,
@@ -110,6 +114,7 @@ def _model_evidence(name: str, model: object, item: np.ndarray, object_id: str, 
         feature_names=axis,
         contributions=contributions,
         source_sha256=digest,
+        input_sha256=input_digest,
     )
     expl = ExplanationArtifact(
         canonical_sha256=digest,
@@ -144,6 +149,7 @@ def _model_evidence(name: str, model: object, item: np.ndarray, object_id: str, 
         policy_version="observer-benchmark-v1",
         require_local_evidence=True,
         require_local_effect_verification=True,
+        require_input_binding=True,
     )
     return prediction_artifact, expl, route, context, oracle_error
 
@@ -173,6 +179,8 @@ def _faults(
         "global_attribution_as_local": replace(valid, scope="global"),
         "missing_target": replace(valid, target_class=None),
         "source_digest_substitution": replace(valid, source_sha256="f" * 64),
+        "stale_input_same_object": replace(valid, input_sha256="f" * 64),
+        "missing_input_binding": replace(valid, input_sha256=None),
         # Deliberately invisible to the structural observer: this is a
         # negative control that motivates independent faithfulness checks.
         "silent_value_permutation": replace(valid, contributions=tuple(swapped_values)),

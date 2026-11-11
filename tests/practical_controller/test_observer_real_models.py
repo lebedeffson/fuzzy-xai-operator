@@ -7,7 +7,7 @@ from experiments.observer_local_evidence_benchmark import run_benchmark
 
 def test_observer_contract_detects_declared_faults_on_three_fitted_models() -> None:
     report = run_benchmark(n_per_dataset=5, seed=42)
-    assert report["n_rows"] == 3 * 5 * 12
+    assert report["n_rows"] == 3 * 5 * 14
     assert report["maximum_clean_logit_reconstruction_error"] < 1e-8
 
     families = report["by_family"]
@@ -46,4 +46,9 @@ def test_observer_contract_detects_declared_faults_on_three_fitted_models() -> N
 
     assert all(report["by_dataset"][name]["clean"]["n"] == 5 for name in ("breast_cancer", "wine", "digits"))
     assert families["source_digest_substitution"]["hash_verified"] == 0
+    assert families["stale_input_same_object"]["blocked"] == 15
+    assert families["stale_input_same_object"]["hash_verified"] == 15
+    assert families["stale_input_same_object"]["identity_baseline_accepted"] == 15
+    assert families["missing_input_binding"]["review_required"] == 15
+    assert families["missing_input_binding"]["hash_verified"] == 15
     assert report["claim_allowed"] is False

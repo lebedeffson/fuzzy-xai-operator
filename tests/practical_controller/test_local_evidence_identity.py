@@ -23,6 +23,7 @@ from fuzzyxai.selective_observer.evidence_identity import (
     LocalExplanationEvidence,
     observe_local_explanation,
 )
+from fuzzyxai.selective_observer.local_effects import hash_numeric_input
 
 DIGEST = hashlib.sha256(b"source").hexdigest()
 AXIS = ("age", "pressure", "temperature")
@@ -179,3 +180,35 @@ def test_observer_makes_no_predictive_correctness_claim() -> None:
     assert result.status is LocalEvidenceStatus.CERTIFIED
     assert result.certified
     assert not hasattr(result, "predictive_accuracy")
+
+
+
+def test_same_object_and_model_cannot_reuse_explanation_for_different_input() -> None:
+    actual = hash_numeric_input(AXIS, (1.0, 2.0, 3.0))
+    stale = hash_numeric_input(AXIS, (1.0, 2.0, 4.0))
+    assessment = evaluate_hard_guard(
+        replace(prediction(), input_sha256=actual),
+        explanation(replace(local(), input_sha256=stale)),
+        route(),
+        replace(context(), require_input_binding=True),
+    )
+    assert assessment.status is HardGuardStatus.BLOCKED
+    assert "LOCAL_INPUT:explanation_input_sha256_mismatch" in assessment.reason_codes
+
+
+def test_input_binding_requires_evidence_but_accepts_matching_record() -> None:
+    digest = hash_numeric_input(AXIS, (1.0, 2.0, 3.0))
+    current_prediction = replace(prediction(), input_sha256=digest)
+    clean = evaluate_hard_guard(
+        current_prediction,
+        explanation(replace(local(), input_sha256=digest)),
+        route(),
+        replace(context(), require_input_binding=True),
+    )
+    assert clean.status is HardGuardStatus.CERTIFIED
+    missing = evaluate_hard_guard(
+        current_prediction, explanation(local()), route(),
+        replace(context(), require_input_binding=True),
+    )
+    assert missing.status is HardGuardStatus.REVIEW_REQUIRED
+    assert "LOCAL_INPUT:explanation_input_sha256" in missing.missing_evidence

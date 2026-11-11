@@ -24,6 +24,7 @@ from fuzzyxai.selective_observer.local_effects import (
     SUPPORTED_PROTOCOL,
     LocalEffectEvidence,
     collect_linear_reference_effects,
+    hash_numeric_input,
     verify_additive_local_effects,
 )
 
@@ -220,6 +221,7 @@ def test_effect_collector_probes_model_for_each_reference_replacement() -> None:
     assert measured.reference_score == pytest.approx(0.5)
     assert measured.explained_score == pytest.approx(0.6)
     assert len(calls) == 4
+    assert measured.input_sha256 == hash_numeric_input(("a", "b"), (1.0, 1.0))
     assert verify_additive_local_effects(_local(), measured).status is LocalEvidenceStatus.CERTIFIED
 
 
@@ -234,3 +236,17 @@ def test_effect_collector_rejects_nonfinite_model_observations() -> None:
             reference_values=(0.0, 0.0),
             target_logit=lambda _values: float("nan"),
         )
+
+
+
+def test_numeric_input_hash_rejects_invalid_values_and_axis() -> None:
+    assert hash_numeric_input(("a", "b"), (1.0, 2.0)) == hash_numeric_input(
+        ("a", "b"), (1, 2)
+    )
+    assert hash_numeric_input(("a", "b"), (1.0, 2.0)) != hash_numeric_input(
+        ("b", "a"), (1.0, 2.0)
+    )
+    with pytest.raises(ValueError, match="finite"):
+        hash_numeric_input(("a", "b"), (float("nan"), 2.0))
+    with pytest.raises(ValueError, match="feature axis"):
+        hash_numeric_input(("a", "b"), (1.0,))

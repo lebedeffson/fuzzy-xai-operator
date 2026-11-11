@@ -101,3 +101,21 @@ fixed generator, with deltas 0.0001, 0.01 and 0.1. These are still
 developer-defined mutation families, not natural failures or independent
 external incidents. Report all dataset-by-family outcomes and explain that
 samples within one fitted model are correlated.
+
+
+## Optional input-content binding
+
+Object identifiers may be reused for a different feature vector.
+With DeploymentContext(require_input_binding=True), the guard requires
+matching SHA256 hashes of the *ordered numeric feature input*: from the
+prediction, local explanation, and source-model effect probes when present.
+The hash_numeric_input helper uses deterministic encoding for finite
+tabular numeric vectors. The new benchmark includes stale-input reuse
+with the **same object ID, target, model version and feature axis**,
+plus a separate missing-input-hash scenario.
+
+A mismatched input hash blocks; a missing required hash asks for review.
+A digest is a declaration and is not an authenticated signature. The
+prediction and explainer adapters must compute their hashes from actual
+data, not copy the hash out of each other's output. Non-numeric inputs
+require another canonicalization protocol.
