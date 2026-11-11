@@ -227,3 +227,58 @@ def collect_linear_reference_effects(
         explained_score=original_score,
         input_sha256=hash_numeric_input(feature_names, observed),
     )
+
+
+
+def collect_linear_reference_effects_batched(
+    *,
+    object_id: str,
+    model_version: str,
+    target_class: str,
+    feature_names: tuple[str, ...],
+    input_values: Sequence[float],
+    reference_values: Sequence[float],
+    target_logits: Callable[[tuple[tuple[float, ...], ...]], Sequence[float]],
+) -> LocalEffectEvidence:
+    """Evaluate all d+2 reference probes in a single source-model call.
+
+    The computational number of score evaluations is still O(d); only the
+    Python-level inference-call count is reduced. This protocol is valid
+    solely for linear-additive target logits and trusted source adapters.
+    """
+
+    if not object_id or not model_version or not target_class:
+        raise ValueError("source identity and target class are required")
+    input_digest = hash_numeric_input(feature_names, input_values)
+    hash_numeric_input(feature_names, reference_values)
+    observed = tuple(float(x) for x in input_values)
+    reference = tuple(float(x) for x in reference_values)
+    probe_rows: list[tuple[float, ...]] = [observed, reference]
+    for feature_index in range(len(feature_names)):
+        changed = list(observed)
+        changed[feature_index] = reference[feature_index]
+        probe_rows.append(tuple(changed))
+
+    scores = tuple(target_logits(tuple(probe_rows)))
+    if len(scores) != len(probe_rows):
+        raise ValueError("batched model must produce exactly one score per probe row")
+    if any(
+        isinstance(score, bool)
+        or not isinstance(score, (float, int))
+        or not math.isfinite(score)
+        for score in scores
+    ):
+        raise ValueError("batched target-logit function must return finite numeric scores")
+    original_score = float(scores[0])
+    reference_score = float(scores[1])
+    return LocalEffectEvidence(
+        protocol=SUPPORTED_PROTOCOL,
+        object_id=object_id,
+        model_version=model_version,
+        target_class=target_class,
+        feature_names=feature_names,
+        effect_on_score=tuple(original_score - float(score) for score in scores[2:]),
+        reference_score=reference_score,
+        explained_score=original_score,
+        input_sha256=input_digest,
+    )

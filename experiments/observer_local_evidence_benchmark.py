@@ -22,7 +22,7 @@ from fuzzyxai.practical_controller import (
     evaluate_hard_guard,
 )
 from fuzzyxai.selective_observer.evidence_identity import LocalExplanationEvidence
-from fuzzyxai.selective_observer.local_effects import collect_linear_reference_effects, hash_numeric_input
+from fuzzyxai.selective_observer.local_effects import collect_linear_reference_effects_batched, hash_numeric_input
 from sklearn.datasets import load_breast_cancer, load_digits, load_wine
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
@@ -82,20 +82,21 @@ def _model_evidence(name: str, model: object, item: np.ndarray, object_id: str, 
     }
     digest = _digest(source)
 
-    def target_logit(raw_values: np.ndarray) -> float:
-        model_scores = np.asarray(model.decision_function(raw_values.reshape(1, -1)), dtype=float)
+    def target_logits_batch(rows: tuple[tuple[float, ...], ...]) -> tuple[float, ...]:
+        model_scores = np.asarray(model.decision_function(np.asarray(rows, dtype=float)), dtype=float)
         if len(classes) == 2:
-            return (1.0 if target_index == 1 else -1.0) * float(model_scores[0])
-        return float(model_scores[0, target_index])
+            sign = 1.0 if target_index == 1 else -1.0
+            return tuple(sign * float(value) for value in model_scores)
+        return tuple(float(value) for value in model_scores[:, target_index])
 
-    effects = collect_linear_reference_effects(
+    effects = collect_linear_reference_effects_batched(
         object_id=object_id,
         model_version=model_version,
         target_class=str(prediction),
         feature_names=axis,
         input_values=tuple(float(x) for x in item),
         reference_values=tuple(float(x) for x in scaler.mean_),
-        target_logit=lambda values: target_logit(np.asarray(values, dtype=float)),
+        target_logits=target_logits_batch,
     )
     prediction_artifact = PredictionArtifact(
         object_id=object_id,
@@ -342,6 +343,10 @@ def run_benchmark(
         "maximum_clean_logit_reconstruction_error": largest_oracle_residual,
         "by_family": grouped,
         "by_dataset": by_dataset,
+        "model_probe_cost_per_example": {
+            name: {"source_model_calls": 1, "model_score_rows": len(ds.feature_names) + 2}
+            for name, ds in datasets.items()
+        },
         "interpretation_limit": "developmental seeded fault injection; per-object cases correlated; canonical hashes are correctly recomputed for erroneous outputs, but provenance trust is not independently established; nonlinear and interacting explainers unsupported",
         "claim_allowed": False,
     }

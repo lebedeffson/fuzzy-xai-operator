@@ -119,3 +119,20 @@ A digest is a declaration and is not an authenticated signature. The
 prediction and explainer adapters must compute their hashes from actual
 data, not copy the hash out of each other's output. Non-numeric inputs
 require another canonicalization protocol.
+
+
+## Vectorized source-model probing
+
+For a d-feature linear-additive target-logit model, the sequential
+collector needs d+2 Python-level model invocations (the original input,
+the all-reference input and one replacement per feature). The new
+collect_linear_reference_effects_batched API sends the same d+2 input rows
+to a vectorized source-model adapter in **one call**. It checks the output
+length, finite scores and input-content hash and produces the exact same
+typed LocalEffectEvidence.
+
+The algorithm still evaluates O(d) score rows: batching reduces call
+overhead, not mathematical complexity. Runtime speed depends on the
+source model and hardware, so no general speedup is claimed without
+independent measurements. The built-in sklearn benchmark uses this
+batched collector and records both model call and score-row counts.

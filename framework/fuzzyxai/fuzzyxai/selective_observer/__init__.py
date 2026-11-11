@@ -42,6 +42,7 @@ from .local_effects import (
     SUPPORTED_PROTOCOL,
     LocalEffectEvidence,
     collect_linear_reference_effects,
+    collect_linear_reference_effects_batched,
     hash_numeric_input,
     verify_additive_local_effects,
 )
@@ -74,6 +75,7 @@ __all__ = [
     "SelectiveControllerSpec",
     "SelectiveRiskFeatures",
     "collect_linear_reference_effects",
+    "collect_linear_reference_effects_batched",
     "compare_preregistered_baselines",
     "confidence_threshold_policy",
     "cost_review_points",

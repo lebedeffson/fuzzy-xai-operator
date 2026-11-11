@@ -24,6 +24,7 @@ from fuzzyxai.selective_observer.local_effects import (
     SUPPORTED_PROTOCOL,
     LocalEffectEvidence,
     collect_linear_reference_effects,
+    collect_linear_reference_effects_batched,
     hash_numeric_input,
     verify_additive_local_effects,
 )
@@ -250,3 +251,53 @@ def test_numeric_input_hash_rejects_invalid_values_and_axis() -> None:
         hash_numeric_input(("a", "b"), (float("nan"), 2.0))
     with pytest.raises(ValueError, match="feature axis"):
         hash_numeric_input(("a", "b"), (1.0,))
+
+
+
+def test_batched_source_probe_matches_sequential_with_one_model_call() -> None:
+    calls: list[tuple[tuple[float, ...], ...]] = []
+
+    def target_logit(values: tuple[float, ...]) -> float:
+        return 0.5 + 0.2 * values[0] - 0.1 * values[1]
+
+    def batched(rows: tuple[tuple[float, ...], ...]) -> tuple[float, ...]:
+        calls.append(rows)
+        return tuple(target_logit(row) for row in rows)
+
+    kwargs = {
+        "object_id": "obj-1",
+        "model_version": "model-v1",
+        "target_class": "positive",
+        "feature_names": ("a", "b"),
+        "input_values": (1.0, 1.0),
+        "reference_values": (0.0, 0.0),
+    }
+    sequential = collect_linear_reference_effects(
+        **kwargs, target_logit=target_logit
+    )
+    batch = collect_linear_reference_effects_batched(
+        **kwargs, target_logits=batched
+    )
+    assert len(calls) == 1
+    assert len(calls[0]) == 4
+    assert batch == sequential
+    assert verify_additive_local_effects(_local(), batch).status is LocalEvidenceStatus.CERTIFIED
+
+
+def test_batched_probe_rejects_truncated_or_nonfinite_model_outputs() -> None:
+    params = {
+        "object_id": "obj-1",
+        "model_version": "model-v1",
+        "target_class": "positive",
+        "feature_names": ("a", "b"),
+        "input_values": (1.0, 1.0),
+        "reference_values": (0.0, 0.0),
+    }
+    with pytest.raises(ValueError, match="one score per probe"):
+        collect_linear_reference_effects_batched(
+            **params, target_logits=lambda _rows: (0.1,)
+        )
+    with pytest.raises(ValueError, match="finite numeric"):
+        collect_linear_reference_effects_batched(
+            **params, target_logits=lambda rows: (float("nan"),) * len(rows)
+        )
