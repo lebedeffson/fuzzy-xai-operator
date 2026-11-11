@@ -37,7 +37,7 @@ from .evidence_identity import (
     LocalExplanationEvidence,
     observe_local_explanation,
 )
-from .local_effects import LocalEffectEvidence, SUPPORTED_PROTOCOL, verify_additive_local_effects
+from .local_effects import SUPPORTED_PROTOCOL, LocalEffectEvidence, collect_linear_reference_effects, verify_additive_local_effects
 from .route_validity import evaluate_action_contract, evaluate_predictive_increment
 from .rule_validation import (
     evaluate_confirmatory_ablation,
@@ -51,21 +51,22 @@ from .rule_validation import (
 __all__ = [
     "ConfirmatoryExample",
     "ConfirmatoryProtocolLock",
+    "DevelopmentExample",
+    "LocalEffectEvidence",
     "LocalEvidenceObservation",
     "LocalEvidenceStatus",
     "LocalExplanationEvidence",
-    "LocalEffectEvidence",
-    "SUPPORTED_PROTOCOL",
-    "DevelopmentExample",
     "PolicyMetrics",
     "PredictiveRouteExample",
     "ResearchPartition",
     "RouteContractRecord",
     "RuleAblationObservation",
     "RuleProfile",
+    "SUPPORTED_PROTOCOL",
     "SelectiveAction",
     "SelectiveControllerSpec",
     "SelectiveRiskFeatures",
+    "collect_linear_reference_effects",
     "compare_preregistered_baselines",
     "confidence_threshold_policy",
     "cost_review_points",
@@ -75,13 +76,12 @@ __all__ = [
     "evaluate_confirmatory_policy",
     "evaluate_planted_rule_recovery",
     "evaluate_predictive_increment",
-    "observe_local_explanation",
-    "verify_additive_local_effects",
     "explainer_disagreement_policy",
     "fit_selective_controller",
     "inject_planted_rule",
     "matched_controls",
     "matched_coverage_outcome",
+    "observe_local_explanation",
     "policy_metrics",
     "predict_risk",
     "risk_coverage_curve",
@@ -89,4 +89,5 @@ __all__ = [
     "select_candidate_rules",
     "selective_risk_control_policy",
     "uncertainty_policy",
+    "verify_additive_local_effects",
 ]

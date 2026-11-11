@@ -1,11 +1,9 @@
-#!/usr/bin/env python3
 """Fail closed if the formative package claims confirmation or contains fake external records."""
 
 from __future__ import annotations
 
 import json
 from pathlib import Path
-
 
 ROOT = Path(__file__).resolve().parents[2]
 STUDY = ROOT / "study/selective_observer"

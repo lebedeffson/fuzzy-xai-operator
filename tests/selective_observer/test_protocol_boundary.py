@@ -4,7 +4,6 @@ import json
 from pathlib import Path
 
 import pytest
-
 from fuzzyxai.selective_observer import ConfirmatoryProtocolLock
 
 

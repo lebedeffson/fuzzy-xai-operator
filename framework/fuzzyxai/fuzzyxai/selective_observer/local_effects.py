@@ -121,9 +121,8 @@ def verify_additive_local_effects(
         delta = [float(x) - float(y) for x, y in zip(declared, observed_effects, strict=True)]
         if any(abs(d) > absolute_tolerance for d in delta):
             contradictions.append("feature_effect_mismatch")
-        if baseline is not None and actual is not None:
-            if abs(sum(declared) - (actual - baseline)) > absolute_tolerance:
-                contradictions.append("score_reconstruction_mismatch")
+        if baseline is not None and actual is not None and abs(sum(declared) - (actual - baseline)) > absolute_tolerance:
+            contradictions.append("score_reconstruction_mismatch")
 
     status = (
         LocalEvidenceStatus.INCOMPATIBLE

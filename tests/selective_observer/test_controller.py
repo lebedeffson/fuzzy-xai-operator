@@ -1,11 +1,9 @@
 from __future__ import annotations
 
 import numpy as np
-
-from fuzzyxai.selective_observer import ConfirmatoryProtocolLock
-
 from fuzzyxai.selective_observer import (
     ConfirmatoryExample,
+    ConfirmatoryProtocolLock,
     DevelopmentExample,
     ResearchPartition,
     SelectiveAction,
