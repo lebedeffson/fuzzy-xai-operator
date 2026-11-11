@@ -6,7 +6,6 @@ from pathlib import Path
 import pytest
 from fuzzyxai.selective_observer import ConfirmatoryProtocolLock
 
-
 ROOT = Path(__file__).resolve().parents[2]
 STUDY = ROOT / "study/selective_observer"
 

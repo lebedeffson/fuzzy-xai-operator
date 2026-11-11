@@ -49,6 +49,7 @@ from .rule_validation import (
 )
 
 __all__ = [
+    "SUPPORTED_PROTOCOL",
     "ConfirmatoryExample",
     "ConfirmatoryProtocolLock",
     "DevelopmentExample",
@@ -62,7 +63,6 @@ __all__ = [
     "RouteContractRecord",
     "RuleAblationObservation",
     "RuleProfile",
-    "SUPPORTED_PROTOCOL",
     "SelectiveAction",
     "SelectiveControllerSpec",
     "SelectiveRiskFeatures",
