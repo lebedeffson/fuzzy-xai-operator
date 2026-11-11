@@ -10,7 +10,6 @@ import hashlib
 from dataclasses import replace
 
 import pytest
-
 from fuzzyxai.practical_controller import (
     DeploymentContext,
     ExplanationArtifact,
@@ -24,7 +23,6 @@ from fuzzyxai.selective_observer.evidence_identity import (
     LocalExplanationEvidence,
     observe_local_explanation,
 )
-
 
 DIGEST = hashlib.sha256(b"source").hexdigest()
 AXIS = ("age", "pressure", "temperature")
