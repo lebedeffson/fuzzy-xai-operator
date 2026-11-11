@@ -75,3 +75,20 @@ article chapters, or unrelated framework modules.
 - GitHub observer workflow 43105867008 reported 3 failed/88 passed: two benchmark regressions and the older native SHAP baseline expected CERTIFIED after removing source-model effects, but left `require_reference_binding=True`. This yielded REVIEW for missing model-effect reference evidence. Strict production verifier behaved correctly.
 - Repaired the explicitly weaker baseline *in the experiment and its comparison test* by disabling `require_reference_binding` together with `require_local_effect_verification`. Strict/full guard and strict reference checks remain unchanged. Strong comparison still independently checks sum reconstruction; do not describe reduced baseline as verifying an independently bound reference.
 - Re-run and inspect current-tip 3.11/3.12 GitHub CI; no new PASS claim before completion.
+
+## Verified observer milestone (Nov 12, after SHAP-class and baseline repair)
+
+- Commit 2d4f845b129ccc446f72f7de36e6da2d9b1c8964, Actions run 43106307484: Python 3.11 and 3.12 both passed 91 scoped pytest tests, benchmark generation, and Ruff.
+- Downloaded benchmark artifacts 13894551490 (3.11), 13893738070 (3.12): 36 held-out objects, 576 controlled cases, 36/36 clean accepted.
+- Four same-sum attribution corruption families: 144/144 rejected by source-model feature-response checks but accepted by the deliberately weaker structural-plus-logit-sum baseline; all were rehashed consistently.
+- Wrong background: 36/36 blocked; missing background: 36/36 REVIEW. Maximum clean logit discrepancy ~4.66e-15 on Python 3.11 and ~4.88e-15 on Python 3.12.
+- Native SHAP LinearExplainer regression (12 dataset/target/background combinations): binary target 0/1, Wine target 0/2, Digits target 0/9, masker sizes 50 and 100. Correct target certified; wrong-class rehashed attributions blocked. These are only linear-logit compatibility checks.
+- Independent offline background sanity check: masker 50 versus 100 changes some per-feature contributions by ~0.1266 (Breast Cancer), up to ~0.1594 (Wine), up to ~0.2491 (Digits). Matching each real masker reference resolves the difference.
+- NumPy versions differ (3.11: 2.4.6; 3.12: 2.5.4); resulting fitted model fingerprints differ. Behavior counts coincide. This is a reproducibility boundary, not identical byte-level training.
+- Strict gate was never weakened to make CI pass. Failures came from an intentionally weaker baseline that disabled model effects but still required the independent model-effect reference. The baseline explicitly disables both requirements; production verifier remains strict.
+- Scoped CI PASS does not equal release-wide PASS; H10 workflows include unrelated failures. No changes to locked scores, H10/Q1 protocols, articles or dissertation chapters.
+
+## Exact continuation
+
+- Verify scope CI on the documentation/state-only child commit, keep PR #4 draft.
+- Next research milestone is a genuinely independent unknown-fault protocol and other XAI semantics; do not interpret 576 developer-generated, correlated cases as an external estimate of detector recall.
