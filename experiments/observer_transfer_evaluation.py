@@ -334,13 +334,45 @@ def run_transfer(*, per_task: int | None = None) -> dict[str, object]:
             "insufficient_evidence": sum(r["outcome"] == "insufficient_evidence" for r in group),
             "baseline_certified": sum(r["baseline"] == "certified" for r in group),
             "max_component_error": max(r["distance"] for r in group),
+            "numeric_mismatches_above_tolerance": sum(
+                r["distance"] > TOLERANCE for r in group
+            ),
+            "numeric_mismatches_incorrectly_certified": sum(
+                r["distance"] > TOLERANCE and r["outcome"] == "certified"
+                for r in group
+            ),
         }
     return {
         "phase": "developer_specified_out_of_family_transfer",
         "protocol_sha256": hashlib.sha256(protocol_bytes).hexdigest(),
         "n_distinct_test_objects": len(rows) // len(protocol["fault_families"]),
         "n_dependent_variants": len(rows),
+        "numeric_tolerance": TOLERANCE,
+        "cases": rows,
         "by_family": families,
+        "by_task": {
+            name: {
+                "n_source_objects": len({
+                    row["object_id"] for row in rows if row["dataset_model"] == name
+                }),
+                "clean_primary_certified": sum(
+                    row["dataset_model"] == name
+                    and row["fault"] == "clean_primary"
+                    and row["outcome"] == "certified" for row in rows
+                ),
+                "valid_alternative_certified": sum(
+                    row["dataset_model"] == name
+                    and row["fault"] == "clean_alternate_background"
+                    and row["outcome"] == "certified" for row in rows
+                ),
+                "known_above_tolerance_faults_blocked": sum(
+                    row["dataset_model"] == name
+                    and row["fault"] == "zero_sum_0_05"
+                    and row["outcome"] == "incompatible" for row in rows
+                ),
+            }
+            for name in models
+        },
         "largest_clean_native_vs_oracle_error": largest_native_gap,
         "largest_valid_background_change_in_attribution": max_background_shift,
         "model_evidence": models,
