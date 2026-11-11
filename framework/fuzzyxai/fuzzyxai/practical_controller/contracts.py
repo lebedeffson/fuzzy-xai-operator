@@ -9,6 +9,7 @@ from enum import Enum
 
 from fuzzyxai.selective_observer import SelectiveAction
 from fuzzyxai.selective_observer.evidence_identity import LocalExplanationEvidence
+from fuzzyxai.selective_observer.local_effects import LocalEffectEvidence
 
 SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
 
@@ -113,6 +114,7 @@ class RouteArtifacts:
     forbidden_rule_conflict: bool = False
     critical_data_quality_fault: bool = False
     natural_failure: str | None = None
+    observed_local_effects: LocalEffectEvidence | None = None
 
     def __post_init__(self) -> None:
         if not self.preprocessing_version or not self.schema_version:
@@ -138,6 +140,7 @@ class DeploymentContext:
     mode: DeploymentMode = DeploymentMode.ACTIVE
     monitoring_hooks: tuple[str, ...] = ()
     require_local_evidence: bool = False
+    require_local_effect_verification: bool = False
     expected_explanation_target: str | None = None
 
     def __post_init__(self) -> None:
