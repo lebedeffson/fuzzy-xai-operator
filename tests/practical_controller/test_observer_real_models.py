@@ -28,5 +28,6 @@ def test_observer_contract_detects_declared_faults_on_three_fitted_models() -> N
     assert families["missing_target"]["review_required"] == 15
     # This negative result is intentional: a shape/identity contract cannot
     # certify the semantics of the attribution values it was handed.
-    assert families["silent_value_permutation"]["accepted_structurally"] == 15
+    assert families["silent_value_permutation"]["blocked"] == 15
+    assert families["silent_value_permutation"]["structural_only_accepted"] == 15
     assert report["claim_allowed"] is False
