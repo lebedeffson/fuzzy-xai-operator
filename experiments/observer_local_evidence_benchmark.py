@@ -36,7 +36,7 @@ def _digest(value: object) -> str:
     ).hexdigest()
 
 
-def _model_evidence(name: str, model: object, item: np.ndarray, object_id: str, axis: tuple[str, ...]):
+def _model_evidence(name: str, model: object, item: np.ndarray, object_id: str, axis: tuple[str, ...], seed: int):
     """Return the actual target-class linear logit decomposition."""
     scaler = model.named_steps["standardscaler"]
     logistic = model.named_steps["logisticregression"]
@@ -56,7 +56,7 @@ def _model_evidence(name: str, model: object, item: np.ndarray, object_id: str, 
     contributions = tuple(float(x) for x in weights * values)
     oracle_error = abs(float(intercept + sum(contributions) - raw_logit))
     probabilities = tuple(float(x) for x in logistic.predict_proba(values.reshape(1, -1))[0])
-    model_version = f"logreg-{name}-seed42"
+    model_version = f"logreg-{name}-seed{seed}"
     source = {
         "object_id": object_id,
         "target": str(prediction),
@@ -186,7 +186,7 @@ def run_benchmark(*, n_per_dataset: int = 12, seed: int = 42) -> dict[str, objec
             raise ValueError("n_per_dataset exceeds size of test partition")
         for index in test[:n_per_dataset]:
             prediction, explanation, route, context, oracle_error = _model_evidence(
-                dataset_name, model, features[index], f"{dataset_name}-{index}", axis
+                dataset_name, model, features[index], f"{dataset_name}-{index}", axis, seed
             )
             largest_oracle_residual = max(largest_oracle_residual, oracle_error)
             valid = explanation.local_evidence
