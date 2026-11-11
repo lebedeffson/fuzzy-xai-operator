@@ -41,6 +41,7 @@ jobs:
             tests/practical_controller/test_observer_shap_reference_rebase.py \
             tests/practical_controller/test_observer_exact_shapley.py \
             tests/practical_controller/test_observer_nonlinear_benchmark.py \
+            tests/practical_controller/test_observer_transfer_evaluation.py \
             tests/practical_controller/test_practical_controller.py \
             tests/selective_observer/test_oof_fold_isolation.py \
             tests/selective_observer/test_controller.py \
@@ -58,6 +59,12 @@ jobs:
         with:
           name: observer-nonlinear-benchmark-${{ matrix.python-version }}
           path: observer_nonlinear_benchmark_report.json
+      - name: Generate prespecified transfer benchmark
+        run: python -m experiments.observer_transfer_evaluation > observer_transfer_report.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: observer-transfer-${{ matrix.python-version }}
+          path: observer_transfer_report.json
       - name: Ruff on changed observer and tests
         run: |
           ruff check \
@@ -74,6 +81,8 @@ jobs:
             tests/practical_controller/test_observer_shap_reference_rebase.py \
             tests/practical_controller/test_observer_exact_shapley.py \
             tests/practical_controller/test_observer_nonlinear_benchmark.py \
+            tests/practical_controller/test_observer_transfer_evaluation.py \
             experiments/observer_local_evidence_benchmark.py \
             experiments/observer_nonlinear_shap_benchmark.py \
+            experiments/observer_transfer_evaluation.py \
             tests/selective_observer/test_oof_fold_isolation.py
