@@ -8,6 +8,7 @@ from enum import Enum
 from typing import Mapping, Sequence
 
 from fuzzyxai.selective_observer import SelectiveAction
+from fuzzyxai.selective_observer.evidence_identity import LocalExplanationEvidence
 
 
 SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
@@ -45,6 +46,7 @@ class PredictionArtifact:
     model_disagreement: float = 0.0
     shift_score: float = 0.0
     rare_group: bool = False
+    feature_names: tuple[str, ...] | None = None
 
     def __post_init__(self) -> None:
         if not self.object_id or not self.prediction or not self.model_version:
@@ -79,6 +81,7 @@ class ExplanationArtifact:
     representation_loss: float = 0.0
     rule_redundancy: float = 0.0
     conflict_severity: float = 0.0
+    local_evidence: LocalExplanationEvidence | None = None
 
     def __post_init__(self) -> None:
         if not SHA256_RE.fullmatch(self.canonical_sha256):
@@ -135,6 +138,8 @@ class DeploymentContext:
     policy_version: str
     mode: DeploymentMode = DeploymentMode.ACTIVE
     monitoring_hooks: tuple[str, ...] = ()
+    require_local_evidence: bool = False
+    expected_explanation_target: str | None = None
 
     def __post_init__(self) -> None:
         versions = (
