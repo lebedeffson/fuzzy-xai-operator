@@ -34,6 +34,7 @@ jobs:
         run: |
           python -m pytest -q \
             tests/practical_controller/test_local_evidence_identity.py \
+            tests/practical_controller/test_local_effects.py \
             tests/practical_controller/test_observer_real_models.py \
             tests/practical_controller/test_practical_controller.py \
             tests/selective_observer/test_oof_fold_isolation.py \
@@ -46,6 +47,7 @@ jobs:
             framework/fuzzyxai/fuzzyxai/practical_controller/contracts.py \
             framework/fuzzyxai/fuzzyxai/practical_controller/guards.py \
             framework/fuzzyxai/fuzzyxai/selective_observer/evidence_identity.py \
+            framework/fuzzyxai/fuzzyxai/selective_observer/local_effects.py \
             framework/fuzzyxai/fuzzyxai/selective_observer/controller.py \
             tests/practical_controller/test_local_evidence_identity.py \
             tests/practical_controller/test_observer_real_models.py \
