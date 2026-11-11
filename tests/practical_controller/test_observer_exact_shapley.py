@@ -38,7 +38,6 @@ from sklearn.model_selection import train_test_split
 
 from experiments.observer_local_evidence_benchmark import _canonical_local_digest
 
-
 AXIS = ("x0", "x1", "x2")
 SAMPLE = (1.5, 0.8, 2.0)
 BACKGROUND = (
