@@ -48,6 +48,7 @@ def _canonical_local_digest(local: LocalExplanationEvidence) -> str:
         "feature_names": local.feature_names,
         "contributions": local.contributions,
         "input_sha256": local.input_sha256,
+        "reference_sha256": local.reference_sha256,
     })
 
 
@@ -68,7 +69,16 @@ def _fitted_model_sha256(model: object) -> str:
     )
 
 
-def _model_evidence(name: str, model: object, item: np.ndarray, object_id: str, axis: tuple[str, ...], seed: int):
+def _model_evidence(
+    name: str,
+    model: object,
+    item: np.ndarray,
+    object_id: str,
+    axis: tuple[str, ...],
+    seed: int,
+    *,
+    reference_values: np.ndarray | None = None,
+):
     """Return the actual target-class linear logit decomposition."""
     scaler = model.named_steps["standardscaler"]
     logistic = model.named_steps["logisticregression"]
@@ -85,17 +95,26 @@ def _model_evidence(name: str, model: object, item: np.ndarray, object_id: str, 
         weights = logistic.coef_[target_index]
         intercept = logistic.intercept_[target_index]
         raw_logit = float(logistic.decision_function(values.reshape(1, -1))[0, target_index])
-    contributions = tuple(float(x) for x in weights * values)
-    oracle_error = abs(float(intercept + sum(contributions) - raw_logit))
+    reference = np.asarray(
+        scaler.mean_ if reference_values is None else reference_values, dtype=float
+    )
+    reference_z = np.asarray(
+        scaler.transform(reference.reshape(1, -1))[0], dtype=float
+    )
+    contributions = tuple(float(x) for x in weights * (values - reference_z))
+    baseline_logit = float(intercept + np.dot(weights, reference_z))
+    oracle_error = abs(float(baseline_logit + sum(contributions) - raw_logit))
     probabilities = tuple(float(x) for x in logistic.predict_proba(values.reshape(1, -1))[0])
     model_version = f"logreg-{name}-seed{seed}-{_fitted_model_sha256(model)[:16]}"
     input_digest = hash_numeric_input(axis, tuple(float(x) for x in item))
+    reference_digest = hash_numeric_input(axis, tuple(float(x) for x in reference))
     source = {
         "object_id": object_id,
         "target_class": str(prediction),
         "model_version": model_version,
         "scope": "local",
         "input_sha256": input_digest,
+        "reference_sha256": reference_digest,
         "feature_names": axis,
         "contributions": contributions,
     }
@@ -114,7 +133,7 @@ def _model_evidence(name: str, model: object, item: np.ndarray, object_id: str, 
         target_class=str(prediction),
         feature_names=axis,
         input_values=tuple(float(x) for x in item),
-        reference_values=tuple(float(x) for x in scaler.mean_),
+        reference_values=tuple(float(x) for x in reference),
         target_logits=target_logits_batch,
     )
     prediction_artifact = PredictionArtifact(
@@ -135,6 +154,7 @@ def _model_evidence(name: str, model: object, item: np.ndarray, object_id: str, 
         contributions=contributions,
         source_sha256=digest,
         input_sha256=input_digest,
+        reference_sha256=reference_digest,
     )
     expl = ExplanationArtifact(
         canonical_sha256=digest,
@@ -170,6 +190,7 @@ def _model_evidence(name: str, model: object, item: np.ndarray, object_id: str, 
         require_local_evidence=True,
         require_local_effect_verification=True,
         require_input_binding=True,
+        require_reference_binding=True,
     )
     return prediction_artifact, expl, route, context, oracle_error
 
@@ -201,6 +222,8 @@ def _faults(
         "source_digest_substitution": replace(valid, source_sha256="f" * 64),
         "stale_input_same_object": replace(valid, input_sha256="f" * 64),
         "missing_input_binding": replace(valid, input_sha256=None),
+        "wrong_reference_identity": replace(valid, reference_sha256="f" * 64),
+        "missing_reference_binding": replace(valid, reference_sha256=None),
         # Deliberately invisible to the structural observer: this is a
         # negative control that motivates independent faithfulness checks.
         "silent_value_permutation": replace(valid, contributions=tuple(swapped_values)),

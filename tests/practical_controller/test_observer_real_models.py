@@ -7,7 +7,7 @@ from experiments.observer_local_evidence_benchmark import run_benchmark
 
 def test_observer_contract_detects_declared_faults_on_three_fitted_models() -> None:
     report = run_benchmark(n_per_dataset=5, seed=42)
-    assert report["n_rows"] == 3 * 5 * 14
+    assert report["n_rows"] == 3 * 5 * 16
     assert report["maximum_clean_logit_reconstruction_error"] < 1e-8
 
     families = report["by_family"]
@@ -51,6 +51,10 @@ def test_observer_contract_detects_declared_faults_on_three_fitted_models() -> N
     assert families["stale_input_same_object"]["identity_baseline_accepted"] == 15
     assert families["missing_input_binding"]["review_required"] == 15
     assert families["missing_input_binding"]["hash_verified"] == 15
+    assert families["wrong_reference_identity"]["blocked"] == 15
+    assert families["wrong_reference_identity"]["hash_verified"] == 15
+    assert families["missing_reference_binding"]["review_required"] == 15
+    assert families["missing_reference_binding"]["hash_verified"] == 15
     assert report["claim_allowed"] is False
 
 
@@ -60,7 +64,7 @@ def test_exploratory_cross_seed_stability_and_model_fingerprints() -> None:
     # confirmatory validation; the same three datasets are reused.
     first = run_benchmark(n_per_dataset=3, seed=11)
     second = run_benchmark(n_per_dataset=3, seed=27)
-    assert first["n_rows"] == second["n_rows"] == 3 * 3 * 14
+    assert first["n_rows"] == second["n_rows"] == 3 * 3 * 16
     assert first["model_fingerprints"] != second["model_fingerprints"]
     assert set(first["model_fingerprints"]) == {"breast_cancer", "wine", "digits"}
     assert all(len(value) == 64 for value in first["model_fingerprints"].values())

@@ -223,6 +223,7 @@ def test_effect_collector_probes_model_for_each_reference_replacement() -> None:
     assert measured.explained_score == pytest.approx(0.6)
     assert len(calls) == 4
     assert measured.input_sha256 == hash_numeric_input(("a", "b"), (1.0, 1.0))
+    assert measured.reference_sha256 == hash_numeric_input(("a", "b"), (0.0, 0.0))
     assert verify_additive_local_effects(_local(), measured).status is LocalEvidenceStatus.CERTIFIED
 
 

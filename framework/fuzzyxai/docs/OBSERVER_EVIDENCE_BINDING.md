@@ -162,3 +162,26 @@ decomposition rather than certifying it. This test demonstrates detection
 of one specified interaction, not general automatic recognition of every
 nonlinear model. In particular, a locally zero or carefully balanced
 interaction may remain invisible to the specified probes.
+
+
+## Explainability background/reference identity
+
+A legitimate explainer can use a different background reference from
+the model's training mean. For example, SHAP's default Independent
+masker may sample 100 background rows. Comparing correct SHAP values to
+model probes taken at an **incorrect reference** yields a false
+rejection, even when object, model and target class agree.
+
+The optional require_reference_binding=True contract now compares the
+background/reference SHA256 declared by the explainer with the SHA256
+computed from the actual model-probe reference. Different references
+block with LOCAL_REFERENCE:reference_sha256_mismatch; absent required
+references request review. The canonical local record digest also
+includes this background identity.
+
+The actual native SHAP LinearExplainer regression uses the masker
+background mean as its reference and tests genuine class-specific
+linear-logit attributions. It also verifies that a consistently
+rehashed but misdeclared reference is blocked. This is a **binary
+logistic/linear-additive** validation, not evidence that arbitrary
+SHAP/LIME configurations are faithful.

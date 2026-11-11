@@ -41,8 +41,13 @@ def test_native_shap_linear_explainer_is_accepted_and_zero_sum_fault_blocked() -
     assert len(positive) == 3
     samples = candidates[positive]
 
-    native_explainer = shap.LinearExplainer(model, background)
+    # SHAP's default Independent masker samples 100 background rows:
+    # the source-model probe must use exactly THAT reference mean.
+    masker = shap.maskers.Independent(background)
+    native_explainer = shap.LinearExplainer(model, masker)
     native = np.asarray(native_explainer(samples).values, dtype=float)
+    reference_z = np.asarray(masker.data, dtype=float).mean(axis=0)
+    reference_raw = scaler.inverse_transform(reference_z.reshape(1, -1))[0]
     assert native.shape == (3, X.shape[1])
     assert np.isfinite(native).all()
     feature_axis = tuple(str(s) for s in dataset.feature_names)
@@ -55,6 +60,7 @@ def test_native_shap_linear_explainer_is_accepted_and_zero_sum_fault_blocked() -
             f"shap-{source_row}",
             feature_axis,
             42,
+            reference_values=reference_raw,
         )
         assert prediction.prediction == "1"
         original = explanation.local_evidence
@@ -98,3 +104,46 @@ def test_native_shap_linear_explainer_is_accepted_and_zero_sum_fault_blocked() -
             ),
         )
         assert structural_only.status is HardGuardStatus.CERTIFIED
+
+
+
+def test_native_shap_incorrect_background_is_explicitly_blocked() -> None:
+    from fuzzyxai.selective_observer.local_effects import hash_numeric_input
+
+    dataset = load_breast_cancer()
+    X = np.asarray(dataset.data, dtype=float)
+    y = np.asarray(dataset.target, dtype=int)
+    train, heldout = train_test_split(
+        np.arange(len(y)), test_size=0.25, stratify=y, random_state=42
+    )
+    pipeline = make_pipeline(
+        StandardScaler(), LogisticRegression(max_iter=1500, random_state=42)
+    )
+    pipeline.fit(X[train], y[train])
+    scaler = pipeline.named_steps["standardscaler"]
+    masker = shap.maskers.Independent(scaler.transform(X[train]))
+    reference_raw = scaler.inverse_transform(
+        np.asarray(masker.data, dtype=float).mean(axis=0).reshape(1, -1)
+    )[0]
+    feature_axis = tuple(str(s) for s in dataset.feature_names)
+    positive = np.where(pipeline.predict(X[heldout]) == 1)[0][0]
+    index = heldout[positive]
+    prediction, explanation, route, context, _ = _model_evidence(
+        "native_shap_background", pipeline, X[index], f"shap-bg-{index}",
+        feature_axis, 42, reference_values=reference_raw,
+    )
+    original = explanation.local_evidence
+    assert original is not None
+    wrong_ref = hash_numeric_input(feature_axis, tuple(float(x) for x in scaler.mean_))
+    assert wrong_ref != original.reference_sha256
+    invalid_local = replace(original, reference_sha256=wrong_ref)
+    digest = _canonical_local_digest(invalid_local)
+    invalid_local = replace(invalid_local, source_sha256=digest)
+    result = evaluate_hard_guard(
+        prediction,
+        replace(explanation, local_evidence=invalid_local, canonical_sha256=digest),
+        replace(route, artifact_sha256=digest),
+        replace(context, expected_artifact_sha256=digest),
+    )
+    assert result.status is HardGuardStatus.BLOCKED
+    assert "LOCAL_REFERENCE:reference_sha256_mismatch" in result.reason_codes
