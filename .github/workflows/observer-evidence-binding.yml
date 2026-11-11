@@ -36,6 +36,7 @@ jobs:
             tests/practical_controller/test_local_evidence_identity.py \
             tests/practical_controller/test_local_effects.py \
             tests/practical_controller/test_observer_real_models.py \
+            tests/practical_controller/test_observer_native_shap.py \
             tests/practical_controller/test_practical_controller.py \
             tests/selective_observer/test_oof_fold_isolation.py \
             tests/selective_observer/test_controller.py \
@@ -57,5 +58,6 @@ jobs:
             framework/fuzzyxai/fuzzyxai/selective_observer/controller.py \
             tests/practical_controller/test_local_evidence_identity.py \
             tests/practical_controller/test_observer_real_models.py \
+            tests/practical_controller/test_observer_native_shap.py \
             experiments/observer_local_evidence_benchmark.py \
             tests/selective_observer/test_oof_fold_isolation.py
