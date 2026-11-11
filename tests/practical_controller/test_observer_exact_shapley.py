@@ -81,6 +81,7 @@ def _clean():
         model_version="nonlinear-model-1",
         target_class="regression_output",
         scope="local",
+        attribution_protocol="exact_empirical_interventional_shapley_v1",
         feature_names=AXIS,
         contributions=measured.attributions,
         source_sha256=None,
@@ -267,6 +268,7 @@ def test_interactions_require_nonadditive_protocol() -> None:
         model_version="f-v1",
         target_class="score",
         scope="local",
+        attribution_protocol="exact_empirical_interventional_shapley_v1",
         feature_names=names,
         contributions=exact.attributions,
         input_sha256=exact.input_sha256,
@@ -466,3 +468,33 @@ def test_public_action_fails_closed_even_when_review_budget_is_exhausted() -> No
     )
     assert missing.hard_guard_status is HardGuardStatus.REVIEW_REQUIRED
     assert missing.action is not SelectiveAction.ACCEPT
+
+
+@pytest.mark.parametrize("protocol", [None, "conditional_shapley", "permutation_approximation"])
+def test_unsupported_explanation_game_is_review_not_false_block(protocol: str | None) -> None:
+    pred, expl, route, ctx = _clean()
+    assert expl.local_evidence is not None
+    wrong = replace(
+        expl.local_evidence,
+        attribution_protocol=protocol,
+        # Another game is not disproven by this exact interventional oracle.
+        contributions=(99.0, -55.0, 2.0),
+    )
+    sample = _with_local(pred, expl, route, ctx, wrong)
+    result = evaluate_hard_guard(*sample)
+    assert result.status is HardGuardStatus.REVIEW_REQUIRED
+    assert "EXACT_SHAPLEY_INSUFFICIENT_EVIDENCE" in result.reason_codes
+    assert "EXACT_SHAPLEY:shapley_attribution_mismatch" not in result.reason_codes
+
+
+def test_wrong_target_still_blocks_even_for_unsupported_game() -> None:
+    pred, expl, route, ctx = _clean()
+    assert expl.local_evidence is not None
+    wrong = replace(
+        expl.local_evidence,
+        attribution_protocol="conditional_shapley",
+        target_class="wrong_target",
+    )
+    result = evaluate_hard_guard(*_with_local(pred, expl, route, ctx, wrong))
+    assert result.status is HardGuardStatus.BLOCKED
+    assert "LOCAL_EXPLANATION_INCOMPATIBLE" in result.reason_codes

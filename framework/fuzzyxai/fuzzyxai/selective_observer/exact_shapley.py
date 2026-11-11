@@ -215,6 +215,16 @@ def verify_exact_interventional_shapley(
         missing.append("exact_shapley_protocol")
     elif evidence.protocol != EXACT_INTERVENTIONAL_PROTOCOL:
         missing.append("supported_exact_shapley_protocol")
+    # An exact interventional oracle cannot treat disagreement with a
+    # differently defined, conditional or approximate method as a fault.
+    # Unsupported games require REVIEW; identity conflicts still BLOCK.
+    compatible_game = evidence.protocol == EXACT_INTERVENTIONAL_PROTOCOL
+    if not explanation.attribution_protocol:
+        missing.append("explanation_attribution_protocol")
+        compatible_game = False
+    elif explanation.attribution_protocol != EXACT_INTERVENTIONAL_PROTOCOL:
+        missing.append("supported_explanation_attribution_protocol")
+        compatible_game = False
     for field in ("object_id", "model_version", "target_class"):
         actual = getattr(evidence, field)
         expected = getattr(explanation, field)
@@ -288,7 +298,7 @@ def verify_exact_interventional_shapley(
         for value in (*claimed, *measured)
     ):
         contradictions.append("invalid_attribution_values")
-    else:
+    elif compatible_game:
         if any(abs(float(a) - float(b)) > absolute_tolerance for a, b in zip(claimed, measured, strict=True)):
             contradictions.append("shapley_attribution_mismatch")
         if baseline is not None and explained is not None and abs(

@@ -41,6 +41,7 @@ class LocalExplanationEvidence:
     input_sha256: str | None = None
     reference_sha256: str | None = None
     background_sha256: str | None = None
+    attribution_protocol: str | None = None
 
 
 @dataclass(frozen=True)

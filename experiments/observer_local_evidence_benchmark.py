@@ -50,6 +50,7 @@ def _canonical_local_digest(local: LocalExplanationEvidence) -> str:
         "input_sha256": local.input_sha256,
         "reference_sha256": local.reference_sha256,
         "background_sha256": local.background_sha256,
+        "attribution_protocol": local.attribution_protocol,
     })
 
 

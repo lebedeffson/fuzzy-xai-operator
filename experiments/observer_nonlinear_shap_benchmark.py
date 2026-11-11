@@ -68,6 +68,7 @@ def _make_artifacts(
         model_version=version,
         target_class=target_label,
         scope="local",
+        attribution_protocol="exact_empirical_interventional_shapley_v1",
         feature_names=names,
         contributions=contributions,
         input_sha256=oracle.input_sha256,
