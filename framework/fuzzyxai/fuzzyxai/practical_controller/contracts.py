@@ -3,9 +3,9 @@
 from __future__ import annotations
 
 import re
+from collections.abc import Mapping, Sequence
 from dataclasses import asdict, dataclass, field
 from enum import Enum
-from typing import Mapping, Sequence
 
 from fuzzyxai.selective_observer import SelectiveAction
 from fuzzyxai.selective_observer.evidence_identity import LocalExplanationEvidence
