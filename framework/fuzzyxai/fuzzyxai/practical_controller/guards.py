@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from fuzzyxai.selective_observer.evidence_identity import LocalEvidenceStatus, observe_local_explanation
+from fuzzyxai.selective_observer.local_effects import verify_additive_local_effects
 
 from .contracts import (
     DeploymentContext,
@@ -26,6 +27,7 @@ BLOCKING_CHECKS = {
     "BROKEN_TRANSFORMATION",
     "CORRUPTED_AUDIT_HASH",
     "LOCAL_EXPLANATION_INCOMPATIBLE",
+    "LOCAL_EFFECTS_INCOMPATIBLE",
     "EXPLANATION_TARGET_MISMATCH",
 }
 
@@ -54,7 +56,7 @@ def evaluate_hard_guard(
         reasons.append("MISSING_MANDATORY_PROVENANCE")
     if explanation.representation_loss > context.maximum_reduction_loss:
         reasons.append("EXCESSIVE_REDUCTION_LOSS")
-    if context.require_local_evidence or explanation.local_evidence is not None:
+    if context.require_local_evidence or context.require_local_effect_verification or explanation.local_evidence is not None:
         observation = observe_local_explanation(
             explanation.local_evidence,
             expected_object_id=prediction.object_id,
@@ -69,6 +71,17 @@ def evaluate_hard_guard(
         elif observation.status is LocalEvidenceStatus.INSUFFICIENT_EVIDENCE:
             reasons.append("LOCAL_EXPLANATION_INSUFFICIENT_EVIDENCE")
             missing.extend(f"LOCAL_EVIDENCE:{field}" for field in observation.missing_fields)
+    if context.require_local_effect_verification or route.observed_local_effects is not None:
+        effect_observation = verify_additive_local_effects(
+            explanation.local_evidence,
+            route.observed_local_effects,
+        )
+        if effect_observation.status is LocalEvidenceStatus.INCOMPATIBLE:
+            reasons.append("LOCAL_EFFECTS_INCOMPATIBLE")
+            reasons.extend(f"LOCAL_EFFECT:{code}" for code in effect_observation.contradictions)
+        elif effect_observation.status is LocalEvidenceStatus.INSUFFICIENT_EVIDENCE:
+            reasons.append("LOCAL_EFFECTS_INSUFFICIENT_EVIDENCE")
+            missing.extend(f"LOCAL_EFFECT:{field}" for field in effect_observation.missing_fields)
     if context.expected_explanation_target is not None and context.expected_explanation_target != prediction.prediction:
         reasons.append("EXPLANATION_TARGET_MISMATCH")
     if route.forbidden_rule_conflict:
