@@ -31,6 +31,13 @@ from .controller import (
     predict_risk,
     risk_coverage_curve,
 )
+from .exact_shapley import (
+    EXACT_INTERVENTIONAL_PROTOCOL,
+    ExactShapleyEvidence,
+    collect_exact_interventional_shapley,
+    hash_empirical_background,
+    verify_exact_interventional_shapley,
+)
 from .evidence_identity import (
     LocalEvidenceObservation,
     LocalEvidenceStatus,
@@ -62,6 +69,8 @@ from .rule_validation import (
 
 __all__ = [
     "SUPPORTED_PROTOCOL",
+    "EXACT_INTERVENTIONAL_PROTOCOL",
+    "ExactShapleyEvidence",
     "ConfirmatoryExample",
     "ConfirmatoryProtocolLock",
     "DevelopmentExample",
@@ -80,6 +89,7 @@ __all__ = [
     "SelectiveAction",
     "SelectiveControllerSpec",
     "SelectiveRiskFeatures",
+    "collect_exact_interventional_shapley",
     "collect_linear_reference_effects",
     "collect_linear_reference_effects_batched",
     "compare_preregistered_baselines",
@@ -93,6 +103,7 @@ __all__ = [
     "evaluate_predictive_increment",
     "explainer_disagreement_policy",
     "fit_selective_controller",
+    "hash_empirical_background",
     "hash_numeric_input",
     "inject_planted_rule",
     "matched_controls",
@@ -109,4 +120,5 @@ __all__ = [
     "selective_risk_control_policy",
     "uncertainty_policy",
     "verify_additive_local_effects",
+    "verify_exact_interventional_shapley",
 ]

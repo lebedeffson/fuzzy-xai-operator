@@ -9,6 +9,7 @@ from enum import Enum
 
 from fuzzyxai.selective_observer import SelectiveAction
 from fuzzyxai.selective_observer.evidence_identity import LocalExplanationEvidence
+from fuzzyxai.selective_observer.exact_shapley import ExactShapleyEvidence
 from fuzzyxai.selective_observer.local_effects import LocalEffectEvidence
 
 SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
@@ -116,6 +117,7 @@ class RouteArtifacts:
     critical_data_quality_fault: bool = False
     natural_failure: str | None = None
     observed_local_effects: LocalEffectEvidence | None = None
+    observed_exact_shapley: ExactShapleyEvidence | None = None
 
     def __post_init__(self) -> None:
         if not self.preprocessing_version or not self.schema_version:
@@ -144,6 +146,7 @@ class DeploymentContext:
     require_local_effect_verification: bool = False
     require_input_binding: bool = False
     require_reference_binding: bool = False
+    require_exact_shapley_verification: bool = False
     expected_explanation_target: str | None = None
 
     def __post_init__(self) -> None:

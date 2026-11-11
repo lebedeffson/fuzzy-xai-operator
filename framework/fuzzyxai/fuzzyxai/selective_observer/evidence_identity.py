@@ -40,6 +40,7 @@ class LocalExplanationEvidence:
     source_sha256: str | None = None
     input_sha256: str | None = None
     reference_sha256: str | None = None
+    background_sha256: str | None = None
 
 
 @dataclass(frozen=True)

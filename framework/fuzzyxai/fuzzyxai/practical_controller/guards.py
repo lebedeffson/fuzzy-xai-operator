@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from fuzzyxai.selective_observer.evidence_identity import LocalEvidenceStatus, observe_input_binding, observe_local_explanation, observe_reference_binding
+from fuzzyxai.selective_observer.exact_shapley import verify_exact_interventional_shapley
 from fuzzyxai.selective_observer.local_effects import verify_additive_local_effects
 
 from .contracts import (
@@ -30,6 +31,7 @@ BLOCKING_CHECKS = {
     "LOCAL_EFFECTS_INCOMPATIBLE",
     "LOCAL_INPUT_INCOMPATIBLE",
     "LOCAL_REFERENCE_INCOMPATIBLE",
+    "EXACT_SHAPLEY_INCOMPATIBLE",
     "EXPLANATION_TARGET_MISMATCH",
 }
 
@@ -58,7 +60,7 @@ def evaluate_hard_guard(
         reasons.append("MISSING_MANDATORY_PROVENANCE")
     if explanation.representation_loss > context.maximum_reduction_loss:
         reasons.append("EXCESSIVE_REDUCTION_LOSS")
-    if context.require_local_evidence or context.require_local_effect_verification or explanation.local_evidence is not None:
+    if context.require_local_evidence or context.require_local_effect_verification or context.require_exact_shapley_verification or explanation.local_evidence is not None:
         observation = observe_local_explanation(
             explanation.local_evidence,
             expected_object_id=prediction.object_id,
@@ -135,6 +137,21 @@ def evaluate_hard_guard(
             reasons.append("LOCAL_REFERENCE_INSUFFICIENT_EVIDENCE")
             missing.extend(
                 f"LOCAL_REFERENCE:{field}" for field in observation.missing_fields
+            )
+    if context.require_exact_shapley_verification or route.observed_exact_shapley is not None:
+        shapley_observation = verify_exact_interventional_shapley(
+            explanation.local_evidence,
+            route.observed_exact_shapley,
+        )
+        if shapley_observation.status is LocalEvidenceStatus.INCOMPATIBLE:
+            reasons.append("EXACT_SHAPLEY_INCOMPATIBLE")
+            reasons.extend(
+                f"EXACT_SHAPLEY:{code}" for code in shapley_observation.contradictions
+            )
+        elif shapley_observation.status is LocalEvidenceStatus.INSUFFICIENT_EVIDENCE:
+            reasons.append("EXACT_SHAPLEY_INSUFFICIENT_EVIDENCE")
+            missing.extend(
+                f"EXACT_SHAPLEY:{field}" for field in shapley_observation.missing_fields
             )
     if context.expected_explanation_target is not None and context.expected_explanation_target != prediction.prediction:
         reasons.append("EXPLANATION_TARGET_MISMATCH")
