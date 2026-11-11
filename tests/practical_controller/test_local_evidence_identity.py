@@ -3,6 +3,7 @@
 No planted labels, prediction correctness, or explanation faithfulness are
 inferred from a successful structural check.
 """
+
 from __future__ import annotations
 
 import hashlib
@@ -23,6 +24,7 @@ from fuzzyxai.selective_observer.evidence_identity import (
     LocalExplanationEvidence,
     observe_local_explanation,
 )
+
 
 DIGEST = hashlib.sha256(b"source").hexdigest()
 AXIS = ("age", "pressure", "temperature")
