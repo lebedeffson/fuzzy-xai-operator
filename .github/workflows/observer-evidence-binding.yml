@@ -1,0 +1,50 @@
+name: Observer evidence-binding regression
+
+on:
+  push:
+    branches:
+      - research/observer-evidence-binding-20261111
+  pull_request:
+    paths:
+      - "framework/fuzzyxai/fuzzyxai/practical_controller/**"
+      - "framework/fuzzyxai/fuzzyxai/selective_observer/**"
+      - "tests/practical_controller/**"
+      - "tests/selective_observer/**"
+      - ".github/workflows/observer-evidence-binding.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  observer-regression:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install framework and test dependencies
+        run: python -m pip install -e ".[dev]"
+      - name: Test evidence bindings, OOF isolation and practical routes
+        run: |
+          python -m pytest -q \
+            tests/practical_controller/test_local_evidence_identity.py \
+            tests/practical_controller/test_practical_controller.py \
+            tests/selective_observer/test_oof_fold_isolation.py \
+            tests/selective_observer/test_controller.py \
+            tests/selective_observer/test_route_validity.py \
+            tests/operators
+      - name: Ruff on changed observer and tests
+        run: |
+          ruff check \
+            framework/fuzzyxai/fuzzyxai/practical_controller/contracts.py \
+            framework/fuzzyxai/fuzzyxai/practical_controller/guards.py \
+            framework/fuzzyxai/fuzzyxai/selective_observer/evidence_identity.py \
+            framework/fuzzyxai/fuzzyxai/selective_observer/controller.py \
+            tests/practical_controller/test_local_evidence_identity.py \
+            tests/selective_observer/test_oof_fold_isolation.py
