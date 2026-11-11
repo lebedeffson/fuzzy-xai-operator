@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from fuzzyxai.selective_observer.evidence_identity import LocalEvidenceStatus, observe_local_explanation
+
 from .contracts import (
     DeploymentContext,
     ExplanationArtifact,
@@ -24,6 +26,8 @@ BLOCKING_CHECKS = {
     "CRITICAL_DATA_QUALITY_FAULT",
     "BROKEN_TRANSFORMATION",
     "CORRUPTED_AUDIT_HASH",
+    "LOCAL_EXPLANATION_INCOMPATIBLE",
+    "EXPLANATION_TARGET_MISMATCH",
 }
 
 
@@ -51,6 +55,23 @@ def evaluate_hard_guard(
         reasons.append("MISSING_MANDATORY_PROVENANCE")
     if explanation.representation_loss > context.maximum_reduction_loss:
         reasons.append("EXCESSIVE_REDUCTION_LOSS")
+    if context.require_local_evidence or explanation.local_evidence is not None:
+        observation = observe_local_explanation(
+            explanation.local_evidence,
+            expected_object_id=prediction.object_id,
+            expected_model_version=prediction.model_version,
+            expected_target_class=prediction.prediction,
+            expected_feature_names=prediction.feature_names,
+            expected_source_sha256=explanation.canonical_sha256,
+        )
+        if observation.status is LocalEvidenceStatus.INCOMPATIBLE:
+            reasons.append("LOCAL_EXPLANATION_INCOMPATIBLE")
+            reasons.extend(f"LOCAL_EVIDENCE:{code}" for code in observation.contradictions)
+        elif observation.status is LocalEvidenceStatus.INSUFFICIENT_EVIDENCE:
+            reasons.append("LOCAL_EXPLANATION_INSUFFICIENT_EVIDENCE")
+            missing.extend(f"LOCAL_EVIDENCE:{field}" for field in observation.missing_fields)
+    if context.expected_explanation_target is not None and context.expected_explanation_target != prediction.prediction:
+        reasons.append("EXPLANATION_TARGET_MISMATCH")
     if route.forbidden_rule_conflict:
         reasons.append("FORBIDDEN_RULE_CONFLICT")
     if route.critical_data_quality_fault:
