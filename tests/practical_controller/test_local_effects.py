@@ -23,8 +23,8 @@ from fuzzyxai.selective_observer.evidence_identity import LocalEvidenceStatus, L
 from fuzzyxai.selective_observer.local_effects import (
     SUPPORTED_PROTOCOL,
     LocalEffectEvidence,
-    verify_additive_local_effects,
     collect_linear_reference_effects,
+    verify_additive_local_effects,
 )
 
 DIGEST = hashlib.sha256(b"fixed-source-evidence").hexdigest()
