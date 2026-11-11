@@ -78,3 +78,26 @@ a StandardScaler fitted only on each fold's training groups. The final
 development model still normalizes using all development data.
 
 Complete CI and release smoke checks are required before merge.
+
+
+## Stronger baselines and rehashed wrong explanations
+
+The benchmark also measures a **structural plus logit-sum reconstruction**
+baseline. A zero-sum transfer between two distinct feature contributions
+preserves the overall target-logit reconstruction, and thus may pass this
+otherwise sensible baseline. The full verifier checks the individual
+model responses for each feature.
+
+For every synthetic *wrong explainer output*, the benchmark recomputes a
+consistent SHA256 over the **actual declared incorrect contributions**,
+and updates the enclosing artifact identities. A separate digest-mismatch
+case is retained. This explicitly models an explainer that emitted and
+hashed a wrong but well-formed result; a byte-integrity checker cannot
+detect that semantic error. It does **not** model corruption in transit
+against a separately trusted immutable digest.
+
+Zero-sum transfers are randomized after model fitting using a separate
+fixed generator, with deltas 0.0001, 0.01 and 0.1. These are still
+developer-defined mutation families, not natural failures or independent
+external incidents. Report all dataset-by-family outcomes and explain that
+samples within one fitted model are correlated.

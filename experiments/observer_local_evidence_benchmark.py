@@ -36,6 +36,18 @@ def _digest(value: object) -> str:
     ).hexdigest()
 
 
+def _canonical_local_digest(local: LocalExplanationEvidence) -> str:
+    """Hash the actual declared local record, including its contributions."""
+    return _digest({
+        "object_id": local.object_id,
+        "model_version": local.model_version,
+        "target_class": local.target_class,
+        "scope": local.scope,
+        "feature_names": local.feature_names,
+        "contributions": local.contributions,
+    })
+
+
 def _model_evidence(name: str, model: object, item: np.ndarray, object_id: str, axis: tuple[str, ...], seed: int):
     """Return the actual target-class linear logit decomposition."""
     scaler = model.named_steps["standardscaler"]
@@ -59,11 +71,11 @@ def _model_evidence(name: str, model: object, item: np.ndarray, object_id: str, 
     model_version = f"logreg-{name}-seed{seed}"
     source = {
         "object_id": object_id,
-        "target": str(prediction),
+        "target_class": str(prediction),
         "model_version": model_version,
+        "scope": "local",
         "feature_names": axis,
         "contributions": contributions,
-        "intercept": float(intercept),
     }
     digest = _digest(source)
 
@@ -136,7 +148,13 @@ def _model_evidence(name: str, model: object, item: np.ndarray, object_id: str, 
     return prediction_artifact, expl, route, context, oracle_error
 
 
-def _faults(valid: LocalExplanationEvidence, *, classes: tuple[str, ...]):
+def _faults(
+    valid: LocalExplanationEvidence,
+    *,
+    classes: tuple[str, ...],
+    rng: np.random.Generator,
+    randomized_zero_sum_deltas: tuple[float, ...],
+) -> dict[str, LocalExplanationEvidence]:
     axis = valid.feature_names
     contributions = valid.contributions
     assert axis is not None and contributions is not None and len(axis) >= 2
@@ -147,7 +165,7 @@ def _faults(valid: LocalExplanationEvidence, *, classes: tuple[str, ...]):
     first = int(np.argmax(swapped_values))
     second = int(np.argmin(swapped_values))
     swapped_values[first], swapped_values[second] = swapped_values[second], swapped_values[first]
-    return {
+    mutations = {
         "object_substitution": replace(valid, object_id=f"{valid.object_id}-other"),
         "target_substitution": replace(valid, target_class=alternate),
         "feature_order_substitution": replace(valid, feature_names=tuple(swapped_axis)),
@@ -159,18 +177,33 @@ def _faults(valid: LocalExplanationEvidence, *, classes: tuple[str, ...]):
         # negative control that motivates independent faithfulness checks.
         "silent_value_permutation": replace(valid, contributions=tuple(swapped_values)),
     }
+    for delta in randomized_zero_sum_deltas:
+        left, right = rng.choice(len(contributions), size=2, replace=False)
+        changed = list(contributions)
+        changed[int(left)] += delta
+        changed[int(right)] -= delta
+        mutations[f"randomized_zero_sum_{delta:g}"] = replace(valid, contributions=tuple(changed))
+    return mutations
 
 
-def run_benchmark(*, n_per_dataset: int = 12, seed: int = 42) -> dict[str, object]:
+def run_benchmark(
+    *,
+    n_per_dataset: int = 12,
+    seed: int = 42,
+    randomized_zero_sum_deltas: tuple[float, ...] = (1e-4, 1e-2, 0.1),
+) -> dict[str, object]:
     """Train on disjoint data and evaluate clean vs corrupted *test* artifacts."""
     if n_per_dataset <= 0:
         raise ValueError("n_per_dataset must be positive")
+    if any(not np.isfinite(delta) or delta <= 1e-6 for delta in randomized_zero_sum_deltas):
+        raise ValueError("randomized deltas must exceed the fixed verification tolerance")
     datasets = {
         "breast_cancer": load_breast_cancer(),
         "wine": load_wine(),
         "digits": load_digits(),
     }
     rows: list[dict[str, object]] = []
+    rng = np.random.default_rng(seed + 8192)
     largest_oracle_residual = 0.0
     for dataset_name, ds in datasets.items():
         features = np.asarray(ds.data, dtype=float)
@@ -188,24 +221,68 @@ def run_benchmark(*, n_per_dataset: int = 12, seed: int = 42) -> dict[str, objec
             prediction, explanation, route, context, oracle_error = _model_evidence(
                 dataset_name, model, features[index], f"{dataset_name}-{index}", axis, seed
             )
-            largest_oracle_residual = max(largest_oracle_residual, oracle_error)
+            observed_effects = route.observed_local_effects
+            assert observed_effects is not None and observed_effects.effect_on_score is not None
+            assert explanation.local_evidence is not None and explanation.local_evidence.contributions is not None
+            max_effect_residual = max(
+                abs(float(x) - float(y))
+                for x, y in zip(explanation.local_evidence.contributions, observed_effects.effect_on_score, strict=True)
+            )
+            largest_oracle_residual = max(largest_oracle_residual, oracle_error, max_effect_residual)
             valid = explanation.local_evidence
             assert valid is not None
-            variants = {"clean": valid, **_faults(valid, classes=classes)}
+            variants = {
+                "clean": valid,
+                **_faults(
+                    valid,
+                    classes=classes,
+                    rng=rng,
+                    randomized_zero_sum_deltas=randomized_zero_sum_deltas,
+                ),
+            }
             for fault_family, local in variants.items():
+                if fault_family != "source_digest_substitution":
+                    # Simulate a consistently (re)hashed, but semantically
+                    # WRONG explainer output rather than in-transit corruption.
+                    # This makes a SHA256 integrity check an honest baseline.
+                    digest = _canonical_local_digest(local)
+                    local = replace(local, source_sha256=digest)
+                    variant_explanation = replace(
+                        explanation, canonical_sha256=digest, local_evidence=local
+                    )
+                    variant_route = replace(route, artifact_sha256=digest)
+                    variant_context = replace(context, expected_artifact_sha256=digest)
+                else:
+                    variant_explanation = replace(explanation, local_evidence=local)
+                    variant_route = route
+                    variant_context = context
                 observed = evaluate_hard_guard(
-                    prediction, replace(explanation, local_evidence=local), route, context
+                    prediction, variant_explanation, variant_route, variant_context
                 )
                 structural_only = evaluate_hard_guard(
                     prediction,
-                    replace(explanation, local_evidence=local),
-                    replace(route, observed_local_effects=None),
-                    replace(context, require_local_effect_verification=False),
+                    variant_explanation,
+                    replace(variant_route, observed_local_effects=None),
+                    replace(variant_context, require_local_effect_verification=False),
+                )
+                verified_hash = (
+                    local.source_sha256 == variant_explanation.canonical_sha256
+                    and variant_explanation.canonical_sha256 == _canonical_local_digest(local)
+                )
+                sum_only_accepted = (
+                    structural_only.status is HardGuardStatus.CERTIFIED
+                    and local.contributions is not None
+                    and observed_effects.reference_score is not None
+                    and observed_effects.explained_score is not None
+                    and abs(
+                        sum(local.contributions)
+                        - (observed_effects.explained_score - observed_effects.reference_score)
+                    ) <= 1e-6
                 )
                 identity_baseline_accepts = (
                     local.object_id == prediction.object_id
                     and local.model_version == prediction.model_version
-                    and local.source_sha256 == explanation.canonical_sha256
+                    and verified_hash
                 )
                 rows.append(
                     {
@@ -215,30 +292,49 @@ def run_benchmark(*, n_per_dataset: int = 12, seed: int = 42) -> dict[str, objec
                         "status": observed.status.value,
                         "structural_only_status": structural_only.status.value,
                         "baseline_accepts": identity_baseline_accepts,
+                        "verified_hash": verified_hash,
+                        "structural_plus_sum_accepted": sum_only_accepted,
                     }
                 )
 
-    grouped = {}
-    for family in sorted({str(row["fault_family"]) for row in rows}):
-        group = [row for row in rows if row["fault_family"] == family]
-        grouped[family] = {
+    def summarize(group: list[dict[str, object]]) -> dict[str, int]:
+        return {
             "n": len(group),
             "blocked": sum(row["status"] == HardGuardStatus.BLOCKED.value for row in group),
             "review_required": sum(row["status"] == HardGuardStatus.REVIEW_REQUIRED.value for row in group),
             "accepted_structurally": sum(row["status"] == HardGuardStatus.CERTIFIED.value for row in group),
             "identity_baseline_accepted": sum(bool(row["baseline_accepts"]) for row in group),
+            "hash_verified": sum(bool(row["verified_hash"]) for row in group),
             "structural_only_accepted": sum(row["structural_only_status"] == HardGuardStatus.CERTIFIED.value for row in group),
+            "structural_plus_sum_accepted": sum(bool(row["structural_plus_sum_accepted"]) for row in group),
         }
+
+    families = sorted({str(row["fault_family"]) for row in rows})
+    grouped = {
+        family: summarize([row for row in rows if row["fault_family"] == family])
+        for family in families
+    }
+    by_dataset = {
+        name: {
+            family: summarize([
+                row for row in rows if row["dataset"] == name and row["fault_family"] == family
+            ])
+            for family in families
+        }
+        for name in datasets
+    }
 
     return {
         "protocol": "three sklearn datasets / stratified train-test / seeded corruptions",
         "phase": "developmental_fault_injection",
         "n_per_dataset": n_per_dataset,
         "seed": seed,
+        "randomized_zero_sum_deltas": randomized_zero_sum_deltas,
         "n_rows": len(rows),
         "maximum_clean_logit_reconstruction_error": largest_oracle_residual,
         "by_family": grouped,
-        "interpretation_limit": "independent linear-logit model-effect checks only; interactions and arbitrary nonlinear explainers unsupported",
+        "by_dataset": by_dataset,
+        "interpretation_limit": "developmental seeded fault injection; per-object cases correlated; canonical hashes are correctly recomputed for erroneous outputs, but provenance trust is not independently established; nonlinear and interacting explainers unsupported",
         "claim_allowed": False,
     }
 

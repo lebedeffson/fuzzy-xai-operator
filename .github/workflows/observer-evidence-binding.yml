@@ -41,6 +41,12 @@ jobs:
             tests/selective_observer/test_controller.py \
             tests/selective_observer/test_route_validity.py \
             tests/operators
+      - name: Generate reproducible developmental benchmark
+        run: python experiments/observer_local_evidence_benchmark.py > observer_benchmark_report.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: observer-benchmark-${{ matrix.python-version }}
+          path: observer_benchmark_report.json
       - name: Ruff on changed observer and tests
         run: |
           ruff check \
