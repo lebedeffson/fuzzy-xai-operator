@@ -13,13 +13,14 @@ from dataclasses import replace
 
 import numpy as np
 import shap
-from experiments.observer_local_evidence_benchmark import _canonical_local_digest, _model_evidence
 from fuzzyxai.practical_controller import HardGuardStatus, evaluate_hard_guard
 from sklearn.datasets import load_breast_cancer
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
+
+from experiments.observer_local_evidence_benchmark import _canonical_local_digest, _model_evidence
 
 
 def test_native_shap_linear_explainer_is_accepted_and_zero_sum_fault_blocked() -> None:
