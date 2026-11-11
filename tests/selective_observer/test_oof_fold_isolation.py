@@ -1,13 +1,13 @@
 """Ensure validation-fold statistics cannot enter group-OOF controller training."""
+
 from __future__ import annotations
 
 import numpy as np
+from fuzzyxai.selective_observer.controller import _oof_probabilities
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import StratifiedGroupKFold
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
-
-from fuzzyxai.selective_observer.controller import _oof_probabilities
 
 
 def test_grouped_oof_fits_scaler_inside_each_training_fold() -> None:
