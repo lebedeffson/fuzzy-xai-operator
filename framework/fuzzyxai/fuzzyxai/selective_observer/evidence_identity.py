@@ -39,6 +39,7 @@ class LocalExplanationEvidence:
     contributions: tuple[float, ...] | None = None
     source_sha256: str | None = None
     input_sha256: str | None = None
+    reference_sha256: str | None = None
 
 
 @dataclass(frozen=True)
@@ -178,6 +179,44 @@ def observe_input_binding(
     if expected is not None and observed is not None and expected != observed:
         contradictions.append("model_effect_input_sha256_mismatch")
 
+    status = (
+        LocalEvidenceStatus.INCOMPATIBLE
+        if contradictions
+        else LocalEvidenceStatus.INSUFFICIENT_EVIDENCE
+        if missing
+        else LocalEvidenceStatus.CERTIFIED
+    )
+    return LocalEvidenceObservation(
+        status=status,
+        missing_fields=tuple(dict.fromkeys(missing)),
+        contradictions=tuple(dict.fromkeys(contradictions)),
+    )
+
+
+
+def observe_reference_binding(
+    *,
+    explanation_reference_sha256: str | None,
+    model_effect_reference_sha256: str | None,
+) -> LocalEvidenceObservation:
+    """Compare exact declared reference vectors; do not authenticate sources."""
+
+    missing: list[str] = []
+    contradictions: list[str] = []
+
+    def checked(name: str, digest: str | None) -> str | None:
+        if not digest:
+            missing.append(name)
+            return None
+        if not _SHA256.fullmatch(digest):
+            contradictions.append(f"invalid_{name}")
+            return None
+        return digest
+
+    declared = checked("explanation_reference_sha256", explanation_reference_sha256)
+    measured = checked("model_effect_reference_sha256", model_effect_reference_sha256)
+    if declared is not None and measured is not None and declared != measured:
+        contradictions.append("reference_sha256_mismatch")
     status = (
         LocalEvidenceStatus.INCOMPATIBLE
         if contradictions

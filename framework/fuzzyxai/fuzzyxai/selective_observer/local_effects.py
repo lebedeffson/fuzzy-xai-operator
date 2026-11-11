@@ -70,6 +70,7 @@ class LocalEffectEvidence:
     reference_score: float | None = None
     explained_score: float | None = None
     input_sha256: str | None = None
+    reference_sha256: str | None = None
 
 
 def verify_additive_local_effects(
@@ -226,6 +227,7 @@ def collect_linear_reference_effects(
         reference_score=baseline_score,
         explained_score=original_score,
         input_sha256=hash_numeric_input(feature_names, observed),
+        reference_sha256=hash_numeric_input(feature_names, reference),
     )
 
 
@@ -281,4 +283,5 @@ def collect_linear_reference_effects_batched(
         reference_score=reference_score,
         explained_score=original_score,
         input_sha256=input_digest,
+        reference_sha256=hash_numeric_input(feature_names, reference),
     )

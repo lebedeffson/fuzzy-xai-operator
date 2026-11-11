@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from fuzzyxai.selective_observer.evidence_identity import LocalEvidenceStatus, observe_input_binding, observe_local_explanation
+from fuzzyxai.selective_observer.evidence_identity import LocalEvidenceStatus, observe_input_binding, observe_local_explanation, observe_reference_binding
 from fuzzyxai.selective_observer.local_effects import verify_additive_local_effects
 
 from .contracts import (
@@ -29,6 +29,7 @@ BLOCKING_CHECKS = {
     "LOCAL_EXPLANATION_INCOMPATIBLE",
     "LOCAL_EFFECTS_INCOMPATIBLE",
     "LOCAL_INPUT_INCOMPATIBLE",
+    "LOCAL_REFERENCE_INCOMPATIBLE",
     "EXPLANATION_TARGET_MISMATCH",
 }
 
@@ -108,6 +109,33 @@ def evaluate_hard_guard(
         elif input_observation.status is LocalEvidenceStatus.INSUFFICIENT_EVIDENCE:
             reasons.append("LOCAL_INPUT_INSUFFICIENT_EVIDENCE")
             missing.extend(f"LOCAL_INPUT:{field}" for field in input_observation.missing_fields)
+    observed_effects = route.observed_local_effects
+    if context.require_reference_binding or (
+        local is not None
+        and local.reference_sha256 is not None
+        and observed_effects is not None
+        and observed_effects.reference_sha256 is not None
+    ):
+        observation = observe_reference_binding(
+            explanation_reference_sha256=(
+                local.reference_sha256 if local is not None else None
+            ),
+            model_effect_reference_sha256=(
+                observed_effects.reference_sha256
+                if observed_effects is not None
+                else None
+            ),
+        )
+        if observation.status is LocalEvidenceStatus.INCOMPATIBLE:
+            reasons.append("LOCAL_REFERENCE_INCOMPATIBLE")
+            reasons.extend(
+                f"LOCAL_REFERENCE:{code}" for code in observation.contradictions
+            )
+        elif observation.status is LocalEvidenceStatus.INSUFFICIENT_EVIDENCE:
+            reasons.append("LOCAL_REFERENCE_INSUFFICIENT_EVIDENCE")
+            missing.extend(
+                f"LOCAL_REFERENCE:{field}" for field in observation.missing_fields
+            )
     if context.expected_explanation_target is not None and context.expected_explanation_target != prediction.prediction:
         reasons.append("EXPLANATION_TARGET_MISMATCH")
     if route.forbidden_rule_conflict:

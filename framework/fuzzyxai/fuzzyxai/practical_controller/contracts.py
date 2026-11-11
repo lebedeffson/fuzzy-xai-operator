@@ -143,6 +143,7 @@ class DeploymentContext:
     require_local_evidence: bool = False
     require_local_effect_verification: bool = False
     require_input_binding: bool = False
+    require_reference_binding: bool = False
     expected_explanation_target: str | None = None
 
     def __post_init__(self) -> None:

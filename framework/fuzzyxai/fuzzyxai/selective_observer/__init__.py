@@ -37,6 +37,7 @@ from .evidence_identity import (
     LocalExplanationEvidence,
     observe_input_binding,
     observe_local_explanation,
+    observe_reference_binding,
 )
 from .local_effects import (
     SUPPORTED_PROTOCOL,
@@ -93,6 +94,7 @@ __all__ = [
     "matched_coverage_outcome",
     "observe_input_binding",
     "observe_local_explanation",
+    "observe_reference_binding",
     "policy_metrics",
     "predict_risk",
     "risk_coverage_curve",
