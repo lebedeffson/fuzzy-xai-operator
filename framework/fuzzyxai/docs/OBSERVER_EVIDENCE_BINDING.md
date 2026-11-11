@@ -223,3 +223,93 @@ should not be advertised or used.
 
 Any measured speedup of batch inference or user-benefit improvement remains
 outside the validated protocol.
+
+
+## Exact empirical-interventional Shapley protocol (bounded nonlinear audit)
+
+A separate opt-in protocol verifies instance-specific SHAP attributions
+against independent calls to a source model **for one explicitly defined
+empirical marginal replacement game**. It is not the earlier linear
+single-feature-drop oracle and it does not apply to all SHAP variants.
+
+For a fixed source-model scalar output f_t, a numeric input x with d
+named features and an empirical background B of m finite feature vectors,
+define
+
+    v_t(S; x, B) = (1/m) * sum_{b in B} f_t(x_S, b_{not S}).
+
+For each feature j, the reference contribution is the classical Shapley
+value
+
+    phi_j = sum_{S subset [d]\{j}} |S|! (d-|S|-1)! / d!
+                * (v_t(S union {j}) - v_t(S)).
+
+This is an existing mathematical identity, not a newly invented
+attribution algorithm. It covers **nonlinear interactions** relative to
+the specified game; individual one-feature response differences are
+generally NOT its Shapley contributions. For example, f(x)=x0*x1 at
+(1,1) with background {(0,0)} has Shapley=(0.5,0.5), even though the two
+single-feature drops are (1,1).
+
+### Integration and fail-closed behavior
+
+Call fuzzyxai.selective_observer.collect_exact_interventional_shapley
+with the source object, model version, one fixed scalar target output,
+ordered numeric input axis, the full background rows, and a trusted
+batch target_scores callable. It returns typed ExactShapleyEvidence
+containing per-feature contributions, v(empty), v(full), observed input
+SHA256, full-background SHA256, number of background rows and number of
+source-model scores.
+
+The corresponding local explanation must carry the same input_sha256,
+background_sha256, object/model/target identity, axis and contributions;
+its source digest must be freshly computed by the trusted adapter.
+Attach the oracle to RouteArtifacts.observed_exact_shapley and enable
+DeploymentContext(require_exact_shapley_verification=True).
+
+- Any measured identity/background/value conflict yields
+  HardGuardStatus.BLOCKED and precise EXACT_SHAPLEY:* reason codes.
+- Absent required evidence or unsupported explanation game yields
+  HardGuardStatus.REVIEW_REQUIRED; it is not silently certified.
+- The existing linear-additive gate remains a distinct optional
+  protocol and must not be substituted for a nonlinear Shapley game.
+- The independent source adapter must authenticate model bytes and the
+  selected score channel. The observer cannot prove that a declared
+  callback ran the claimed source model merely because two hashes agree.
+
+The exhaustive oracle evaluates 2**d * m score rows with a single
+vectorized adapter invocation. Production limits: 1 <= d <= 8, at
+most 8192 scored rows. This does not scale to unrestricted feature
+counts, conditional distributions, causal attributions, stochastic
+models or other attribution games.
+
+Two background samples with the same feature-wise mean can give
+different Shapley contributions to interacting models: the full
+empirical background is therefore hashed, not only its mean.
+
+### Developmental nonlinear comparison
+
+Run: python -m experiments.observer_nonlinear_shap_benchmark
+
+The experiment fits DecisionTree/RandomForest classifiers on Breast
+Cancer, Wine and Digits with four selected raw numeric features and a
+fixed eight-row background per dataset. It checks real SHAP
+ExactExplainer contributions against independently enumerated
+source-model coalition values.
+
+Actual GitHub Actions artifacts from run 43111380695 (Python 3.11 and
+3.12) contain 36 held-out objects, 216 controlled variants, 36/36 clean
+certifications, 72/72 rehashed zero-sum corruption blocks, 36/36
+wrong-background blocks, 36/36 stale-input blocks, and 36/36
+missing-background review states. Structural-plus-score-sum admits all
+72 zero-sum corruptions and all 36 wrong-background declarations.
+Maximum source-vs-native numerical discrepancy: ~1.11e-16. The same
+outcome counts were observed in both Python versions.
+
+**Scientific limit:** the same characteristic game is evaluated by
+native SHAP and our separate enumerator. Deliberately injected faults
+remain correlated within each object; these records are not independent
+natural incidents. Predictive accuracy, general explainer fidelity,
+calibration, user comprehension and causal validity are unmeasured.
+The next research step is independently specified held-out faults,
+scoring-channel semantics and multiple background sampling strategies.
