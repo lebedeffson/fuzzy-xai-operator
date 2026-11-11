@@ -89,3 +89,11 @@ JSON artifact count and provenance; then update PR with the verified code
 SHA and tests. Keep PR draft and no merge. Next external research task
 is an independently defined unknown-fault protocol. Avoid code claiming
 general SHAP/LIME/causal faithfulness from this exact empirical game.
+
+## Latest end-to-end action regression checkpoint
+
+- Actions run 43112095660 at code 807e11e44054e07f5ce59e64aa57af5eb98dcad3 completed successfully on Python 3.11 and 3.12: 117 pytest passed, Ruff passed, benchmark JSON uploaded.
+- Public assess_action regression added next: 118 pytest passed in run 43112270083 on both versions; its Ruff found only import order in test_observer_exact_shapley.py. The requested import order was fixed in commit 3c6dacd7543a4c31fbc38a2bf6702ec3601bf853.
+- Final-code SHA 3c6dacd7543a4c31fbc38a2bf6702ec3601bf853 scope CI runs 43112582904 and 43112592007 were queued at this checkpoint; DO NOT mark that commit fully validated without observing completion.
+- Changes after the code fix were to this context and framework/fuzzyxai/docs/OBSERVER_EVIDENCE_BINDING.md, not to runtime semantics. Full repo readiness remains separate and is NOT certified.
+- Next executable action: check both Python jobs for final-code SHA, fix any real failures, then freeze a developmental benchmark receipt; leave PR #4 draft and preserve all locked protocol/publication material.
