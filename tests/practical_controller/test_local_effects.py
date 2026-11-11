@@ -24,6 +24,7 @@ from fuzzyxai.selective_observer.local_effects import (
     SUPPORTED_PROTOCOL,
     LocalEffectEvidence,
     verify_additive_local_effects,
+    collect_linear_reference_effects,
 )
 
 DIGEST = hashlib.sha256(b"fixed-source-evidence").hexdigest()
@@ -196,3 +197,40 @@ def test_effect_check_reaches_public_action_and_cannot_be_overridden_by_budget()
     )
     assert missing.hard_guard_status is HardGuardStatus.REVIEW_REQUIRED
     assert missing.action is not SelectiveAction.ACCEPT
+
+
+
+def test_effect_collector_probes_model_for_each_reference_replacement() -> None:
+    calls: list[tuple[float, ...]] = []
+
+    def target_logit(values: tuple[float, ...]) -> float:
+        calls.append(values)
+        return 0.5 + values[0] * 0.2 - values[1] * 0.1
+
+    measured = collect_linear_reference_effects(
+        object_id="obj-1",
+        model_version="model-v1",
+        target_class="positive",
+        feature_names=("a", "b"),
+        input_values=(1.0, 1.0),
+        reference_values=(0.0, 0.0),
+        target_logit=target_logit,
+    )
+    assert measured.effect_on_score == pytest.approx((0.2, -0.1))
+    assert measured.reference_score == pytest.approx(0.5)
+    assert measured.explained_score == pytest.approx(0.6)
+    assert len(calls) == 4
+    assert verify_additive_local_effects(_local(), measured).status is LocalEvidenceStatus.CERTIFIED
+
+
+def test_effect_collector_rejects_nonfinite_model_observations() -> None:
+    with pytest.raises(ValueError, match="finite scalar"):
+        collect_linear_reference_effects(
+            object_id="obj-1",
+            model_version="model-v1",
+            target_class="positive",
+            feature_names=("a", "b"),
+            input_values=(1.0, 1.0),
+            reference_values=(0.0, 0.0),
+            target_logit=lambda _values: float("nan"),
+        )
