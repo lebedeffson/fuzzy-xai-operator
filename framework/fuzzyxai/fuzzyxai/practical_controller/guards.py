@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 from fuzzyxai.selective_observer.evidence_identity import LocalEvidenceStatus, observe_local_explanation
-
 from .contracts import (
     DeploymentContext,
     ExplanationArtifact,
