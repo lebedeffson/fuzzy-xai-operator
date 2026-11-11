@@ -92,3 +92,11 @@ article chapters, or unrelated framework modules.
 
 - Verify scope CI on the documentation/state-only child commit, keep PR #4 draft.
 - Next research milestone is a genuinely independent unknown-fault protocol and other XAI semantics; do not interpret 576 developer-generated, correlated cases as an external estimate of detector recall.
+
+## Conditional SHAP background rebasing (new exploratory functionality)
+
+- Added propose_linear_reference_rebase: with independently supplied signed raw-space coefficients and verified old local vector/input/background hashes, compute the *candidate* for a different reference as phi_new[j] = phi_old[j] + w_raw[j]*(r_old[j]-r_new[j]).
+- The proposal API returns candidate/incompatible/insufficient_evidence and never updates source hashes or bypasses guards. It explicitly requires independent full source-model probing and a new canonical digest before acceptance.
+- New genuine SHAP LinearExplainer tests for binary class 0/1, Wine 0/2 and Digits 0/9 demonstrate old-reference proposals remain BLOCK with stale probes, then become CERTIFIED after independent new-reference effects. Also test wrong coefficients, missing hash, and input-hash mismatch.
+- Separate offline feasibility check: 50->100 background rebasing residuals 5.55e-17 to 2.22e-16 across six cases; this is limited to additive linear target logits. Not an automatic SHAP repair for non-linear models.
+- New code requires fresh scoped CI validation; do not cite previous 91-test run as evidence for this child commit.

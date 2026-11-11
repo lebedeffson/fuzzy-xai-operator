@@ -12,6 +12,7 @@ import json
 import math
 from collections.abc import Callable, Sequence
 from dataclasses import dataclass
+from enum import Enum
 
 from .evidence_identity import (
     LocalEvidenceObservation,
@@ -284,4 +285,141 @@ def collect_linear_reference_effects_batched(
         explained_score=original_score,
         input_sha256=input_digest,
         reference_sha256=hash_numeric_input(feature_names, reference),
+    )
+
+
+class ReferenceRebaseStatus(str, Enum):
+    """A proposal is not a recertified explanation."""
+
+    CANDIDATE = "candidate"
+    INCOMPATIBLE = "incompatible"
+    INSUFFICIENT_EVIDENCE = "insufficient_evidence"
+
+
+@dataclass(frozen=True)
+class LinearReferenceRebaseProposal:
+    status: ReferenceRebaseStatus
+    contributions: tuple[float, ...] | None
+    new_reference_sha256: str | None
+    original_max_residual: float | None
+    missing_fields: tuple[str, ...]
+    contradictions: tuple[str, ...]
+
+
+def propose_linear_reference_rebase(
+    evidence: LocalExplanationEvidence | None,
+    *,
+    feature_names: tuple[str, ...],
+    input_values: Sequence[float] | None,
+    original_reference: Sequence[float] | None,
+    proposed_reference: Sequence[float] | None,
+    signed_raw_coefficients: Sequence[float] | None,
+    absolute_tolerance: float = 1e-6,
+) -> LinearReferenceRebaseProposal:
+    """Propose a change of reference for a *known additive target logit*.
+
+    For f_t(x)=b_t+sum_j w_j*x_j, the local contribution at reference r is
+    phi_j(x;r)=w_j*(x_j-r_j). Rebase from r0 to r1 using
+    phi_j(x;r1)=phi_j(x;r0)+w_j*(r0_j-r1_j).
+
+    The adapter must supply independently verified target-class coefficients
+    expressed in the original feature coordinate system. The candidate
+    remains UNTRUSTED until source-model effects are collected at the new
+    reference, the canonical explanation record is rehashed, and the full
+    practical-controller guard certifies it. This helper cannot authenticate
+    model bytes or silently repair an already-issued explanation.
+    """
+
+    if not math.isfinite(absolute_tolerance) or absolute_tolerance < 0:
+        raise ValueError("absolute_tolerance must be finite and nonnegative")
+
+    missing: list[str] = []
+    contradictions: list[str] = []
+    if evidence is None:
+        return LinearReferenceRebaseProposal(
+            ReferenceRebaseStatus.INSUFFICIENT_EVIDENCE, None, None, None,
+            ("local_explanation_evidence",), (),
+        )
+
+    width = len(feature_names)
+    if not width or any(not isinstance(name, str) or not name.strip() for name in feature_names) or len(set(feature_names)) != width:
+        contradictions.append("invalid_feature_axis")
+    if evidence.feature_names is None:
+        missing.append("evidence_feature_axis")
+    elif evidence.feature_names != feature_names:
+        contradictions.append("feature_axis_mismatch")
+    if evidence.scope is None:
+        missing.append("scope")
+    elif evidence.scope != "local":
+        contradictions.append("non_local_scope")
+    for field in ("object_id", "model_version", "target_class"):
+        if not getattr(evidence, field):
+            missing.append(field)
+
+    def vector(value: Sequence[float] | None, field: str) -> tuple[float, ...] | None:
+        if value is None:
+            missing.append(field)
+            return None
+        if len(value) != width:
+            contradictions.append(f"{field}_width_mismatch")
+            return None
+        if any(isinstance(x, bool) or not isinstance(x, (int, float)) or not math.isfinite(x) for x in value):
+            contradictions.append(f"invalid_{field}")
+            return None
+        return tuple(float(x) for x in value)
+
+    x = vector(input_values, "input_values")
+    r0 = vector(original_reference, "original_reference")
+    r1 = vector(proposed_reference, "proposed_reference")
+    w = vector(signed_raw_coefficients, "signed_raw_coefficients")
+    original = vector(evidence.contributions, "contributions")
+
+    if x is not None:
+        if not evidence.input_sha256:
+            missing.append("input_sha256")
+        elif evidence.input_sha256 != hash_numeric_input(feature_names, x):
+            contradictions.append("input_sha256_mismatch")
+    if r0 is not None:
+        if not evidence.reference_sha256:
+            missing.append("reference_sha256")
+        elif evidence.reference_sha256 != hash_numeric_input(feature_names, r0):
+            contradictions.append("reference_sha256_mismatch")
+
+    residual = None
+    if all(value is not None for value in (x, r0, w, original)):
+        assert x is not None and r0 is not None and w is not None and original is not None
+        residual = max(
+            abs(actual - coeff * (value - ref))
+            for actual, coeff, value, ref in zip(original, w, x, r0, strict=True)
+        )
+        if residual > absolute_tolerance:
+            contradictions.append("original_contribution_mismatch")
+
+    status = (
+        ReferenceRebaseStatus.INCOMPATIBLE if contradictions
+        else ReferenceRebaseStatus.INSUFFICIENT_EVIDENCE if missing
+        else ReferenceRebaseStatus.CANDIDATE
+    )
+    if status is not ReferenceRebaseStatus.CANDIDATE:
+        return LinearReferenceRebaseProposal(
+            status, None, None, residual,
+            tuple(dict.fromkeys(missing)), tuple(dict.fromkeys(contradictions)),
+        )
+    assert original is not None and w is not None and r0 is not None and r1 is not None
+    rebased = tuple(
+        contribution + coeff * (old - new)
+        for contribution, coeff, old, new in zip(original, w, r0, r1, strict=True)
+    )
+    if not all(math.isfinite(item) for item in rebased):
+        return LinearReferenceRebaseProposal(
+            ReferenceRebaseStatus.INCOMPATIBLE, None, None, residual, (),
+            ("nonfinite_rebased_contributions",),
+        )
+    return LinearReferenceRebaseProposal(
+        ReferenceRebaseStatus.CANDIDATE,
+        rebased,
+        hash_numeric_input(feature_names, r1),
+        residual,
+        (),
+        (),
     )
