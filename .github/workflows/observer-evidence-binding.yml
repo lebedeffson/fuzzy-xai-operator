@@ -16,6 +16,11 @@ on:
 permissions:
   contents: read
 
+# Keep the newest branch/PR regression, not a backlog of obsolete commits.
+concurrency:
+  group: observer-evidence-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
+
 jobs:
   observer-regression:
     runs-on: ubuntu-latest
