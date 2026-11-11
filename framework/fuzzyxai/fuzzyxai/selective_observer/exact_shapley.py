@@ -60,12 +60,17 @@ def hash_empirical_background(
         raise ValueError("feature axis must contain nonblank names")
     if len(background_rows) == 0:
         raise ValueError("background must contain at least one row")
-    rows = tuple(
-        _finite_vector(row, width=len(feature_names), label="background row")
+    # Empirical interventional Shapley depends on the *multiset* of
+    # background rows, not their arbitrary traversal order. Duplicate rows
+    # remain significant as empirical weights. Normalize signed zero too.
+    rows = tuple(sorted(
+        tuple(0.0 if value == 0.0 else value for value in
+              _finite_vector(row, width=len(feature_names), label="background row"))
         for row in background_rows
-    )
+    ))
     payload = {
-        "schema": EXACT_INTERVENTIONAL_PROTOCOL,
+        "schema": "empirical-background-multiset-v2",
+        "game_protocol": EXACT_INTERVENTIONAL_PROTOCOL,
         "feature_names": feature_names,
         "rows": rows,
     }

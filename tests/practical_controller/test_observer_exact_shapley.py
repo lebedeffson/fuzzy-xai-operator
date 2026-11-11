@@ -358,6 +358,25 @@ def test_equal_feature_means_do_not_make_nonlinear_backgrounds_equivalent() -> N
     assert first.explained_score == pytest.approx(second.explained_score)
 
 
+def test_background_hash_respects_multiset_not_arbitrary_row_order() -> None:
+    axis = ("x0", "x1")
+    background = ((-1.0, 0.0), (0.0, 1.0), (-1.0, 0.0))
+    reordered = (background[2], background[0], background[1])
+    assert hash_empirical_background(axis, background) == hash_empirical_background(
+        axis, reordered
+    )
+    # Same two unique rows but different multiplicities are different
+    # empirical measures and must retain distinct hashes.
+    other_weights = (background[0], background[1], background[1])
+    assert hash_empirical_background(axis, background) != hash_empirical_background(
+        axis, other_weights
+    )
+    # Signed zero is the same scalar in the model, despite JSON encoding.
+    assert hash_empirical_background(axis, ((-0.0, 1.0),)) == hash_empirical_background(
+        axis, ((0.0, 1.0),)
+    )
+
+
 def test_collector_rejects_excessive_cost_and_invalid_model_callback() -> None:
     with pytest.raises(ValueError, match="1..8 features"):
         collect_exact_interventional_shapley(

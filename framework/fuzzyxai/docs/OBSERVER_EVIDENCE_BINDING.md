@@ -313,3 +313,19 @@ natural incidents. Predictive accuracy, general explainer fidelity,
 calibration, user comprehension and causal validity are unmeasured.
 The next research step is independently specified held-out faults,
 scoring-channel semantics and multiple background sampling strategies.
+
+
+### Empirical background identity is a multiset
+
+A legitimate reordering of the same empirical background rows does not
+change the interventional Shapley game. Hashing an *ordered* background
+matrix would therefore create false provenance blocks. The experimental
+exact-Shapley background hash now canonically sorts finite numeric rows
+and normalizes signed zero, while retaining duplicates as empirical
+weights. Two permutations of the same multiset hash equally; different
+multiplicities and different joint distributions do not.
+
+This intentionally uses the explicit
+empirical-background-multiset-v2 hash schema. Previously issued
+ordered-background hashes should be regenerated and reverified before
+reuse. No recorded locked/scored artifact is silently rewritten.
