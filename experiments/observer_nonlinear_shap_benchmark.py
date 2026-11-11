@@ -161,8 +161,8 @@ def run_benchmark(*, n_per_dataset: int = 12, seed: int = 2026) -> dict[str, obj
             target_index = int(np.argmax(probabilities))
             target_label = str(estimator.classes_[target_index])
 
-            def target_model(matrix, chosen=target_index):
-                return estimator.predict_proba(np.asarray(matrix, dtype=float))[:, chosen]
+            def target_model(matrix, chosen=target_index, fitted=estimator):
+                return fitted.predict_proba(np.asarray(matrix, dtype=float))[:, chosen]
 
             def scorer(batch):
                 return tuple(
