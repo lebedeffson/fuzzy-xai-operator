@@ -38,6 +38,7 @@ class LocalExplanationEvidence:
     feature_names: tuple[str, ...] | None = None
     contributions: tuple[float, ...] | None = None
     source_sha256: str | None = None
+    input_sha256: str | None = None
 
 
 @dataclass(frozen=True)
@@ -124,6 +125,58 @@ def observe_local_explanation(
         contradictions.append("invalid_contribution_values")
     elif actual_valid and len(values) != len(evidence.feature_names):
         contradictions.append("contribution_width_mismatch")
+
+    status = (
+        LocalEvidenceStatus.INCOMPATIBLE
+        if contradictions
+        else LocalEvidenceStatus.INSUFFICIENT_EVIDENCE
+        if missing
+        else LocalEvidenceStatus.CERTIFIED
+    )
+    return LocalEvidenceObservation(
+        status=status,
+        missing_fields=tuple(dict.fromkeys(missing)),
+        contradictions=tuple(dict.fromkeys(contradictions)),
+    )
+
+
+
+def observe_input_binding(
+    *,
+    prediction_input_sha256: str | None,
+    explanation_input_sha256: str | None,
+    model_effect_input_sha256: str | None,
+    expect_model_effects: bool,
+) -> LocalEvidenceObservation:
+    """Compare input hashes from different route stages, without using labels.
+
+    The hash covers ordered feature names as well as feature values.
+    This structural check does not authenticate the source adapter.
+    """
+
+    missing: list[str] = []
+    contradictions: list[str] = []
+
+    def checked(name: str, digest: str | None) -> str | None:
+        if not digest:
+            missing.append(name)
+            return None
+        if not _SHA256.fullmatch(digest):
+            contradictions.append(f"invalid_{name}")
+            return None
+        return digest
+
+    expected = checked("prediction_input_sha256", prediction_input_sha256)
+    local = checked("explanation_input_sha256", explanation_input_sha256)
+    observed = (
+        checked("model_effect_input_sha256", model_effect_input_sha256)
+        if expect_model_effects or model_effect_input_sha256 is not None
+        else None
+    )
+    if expected is not None and local is not None and expected != local:
+        contradictions.append("explanation_input_sha256_mismatch")
+    if expected is not None and observed is not None and expected != observed:
+        contradictions.append("model_effect_input_sha256_mismatch")
 
     status = (
         LocalEvidenceStatus.INCOMPATIBLE

@@ -7,6 +7,8 @@ faithfulness certificate for nonlinear, interacting, or model-agnostic XAI.
 
 from __future__ import annotations
 
+import hashlib
+import json
 import math
 from collections.abc import Callable, Sequence
 from dataclasses import dataclass
@@ -18,6 +20,33 @@ from .evidence_identity import (
 )
 
 SUPPORTED_PROTOCOL = "linear_logit_single_feature_reference_v1"
+
+
+def hash_numeric_input(feature_names: tuple[str, ...], values: Sequence[float]) -> str:
+    """Canonical digest of ordered finite numeric features, not a signature."""
+
+    if not feature_names or len(feature_names) != len(values):
+        raise ValueError("input vector must match nonempty feature axis")
+    if len(set(feature_names)) != len(feature_names) or any(
+        not isinstance(name, str) or not name.strip() for name in feature_names
+    ):
+        raise ValueError("input feature names must be unique and nonempty")
+    if any(
+        isinstance(value, bool)
+        or not isinstance(value, (int, float))
+        or not math.isfinite(value)
+        for value in values
+    ):
+        raise ValueError("input values must be finite numeric scalars")
+    payload = {
+        "schema": "numeric-tabular-input-v1",
+        "feature_names": feature_names,
+        "values": tuple(float(value) for value in values),
+    }
+    canonical = json.dumps(
+        payload, sort_keys=True, separators=(",", ":"), ensure_ascii=True, allow_nan=False
+    )
+    return hashlib.sha256(canonical.encode("utf-8")).hexdigest()
 
 
 @dataclass(frozen=True)
@@ -40,6 +69,7 @@ class LocalEffectEvidence:
     effect_on_score: tuple[float, ...] | None = None
     reference_score: float | None = None
     explained_score: float | None = None
+    input_sha256: str | None = None
 
 
 def verify_additive_local_effects(
@@ -195,4 +225,5 @@ def collect_linear_reference_effects(
         effect_on_score=tuple(contributions),
         reference_score=baseline_score,
         explained_score=original_score,
+        input_sha256=hash_numeric_input(feature_names, observed),
     )

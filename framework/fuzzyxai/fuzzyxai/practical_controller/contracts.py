@@ -47,6 +47,7 @@ class PredictionArtifact:
     shift_score: float = 0.0
     rare_group: bool = False
     feature_names: tuple[str, ...] | None = None
+    input_sha256: str | None = None
 
     def __post_init__(self) -> None:
         if not self.object_id or not self.prediction or not self.model_version:
@@ -141,6 +142,7 @@ class DeploymentContext:
     monitoring_hooks: tuple[str, ...] = ()
     require_local_evidence: bool = False
     require_local_effect_verification: bool = False
+    require_input_binding: bool = False
     expected_explanation_target: str | None = None
 
     def __post_init__(self) -> None:

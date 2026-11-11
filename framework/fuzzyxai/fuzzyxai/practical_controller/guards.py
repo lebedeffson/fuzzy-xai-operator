@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from fuzzyxai.selective_observer.evidence_identity import LocalEvidenceStatus, observe_local_explanation
+from fuzzyxai.selective_observer.evidence_identity import LocalEvidenceStatus, observe_input_binding, observe_local_explanation
 from fuzzyxai.selective_observer.local_effects import verify_additive_local_effects
 
 from .contracts import (
@@ -28,6 +28,7 @@ BLOCKING_CHECKS = {
     "CORRUPTED_AUDIT_HASH",
     "LOCAL_EXPLANATION_INCOMPATIBLE",
     "LOCAL_EFFECTS_INCOMPATIBLE",
+    "LOCAL_INPUT_INCOMPATIBLE",
     "EXPLANATION_TARGET_MISMATCH",
 }
 
@@ -82,6 +83,31 @@ def evaluate_hard_guard(
         elif effect_observation.status is LocalEvidenceStatus.INSUFFICIENT_EVIDENCE:
             reasons.append("LOCAL_EFFECTS_INSUFFICIENT_EVIDENCE")
             missing.extend(f"LOCAL_EFFECT:{field}" for field in effect_observation.missing_fields)
+    local = explanation.local_evidence
+    if context.require_input_binding or (
+        prediction.input_sha256 is not None
+        and local is not None
+        and local.input_sha256 is not None
+    ):
+        input_observation = observe_input_binding(
+            prediction_input_sha256=prediction.input_sha256,
+            explanation_input_sha256=local.input_sha256 if local is not None else None,
+            model_effect_input_sha256=(
+                route.observed_local_effects.input_sha256
+                if route.observed_local_effects is not None
+                else None
+            ),
+            expect_model_effects=(
+                context.require_local_effect_verification
+                or route.observed_local_effects is not None
+            ),
+        )
+        if input_observation.status is LocalEvidenceStatus.INCOMPATIBLE:
+            reasons.append("LOCAL_INPUT_INCOMPATIBLE")
+            reasons.extend(f"LOCAL_INPUT:{code}" for code in input_observation.contradictions)
+        elif input_observation.status is LocalEvidenceStatus.INSUFFICIENT_EVIDENCE:
+            reasons.append("LOCAL_INPUT_INSUFFICIENT_EVIDENCE")
+            missing.extend(f"LOCAL_INPUT:{field}" for field in input_observation.missing_fields)
     if context.expected_explanation_target is not None and context.expected_explanation_target != prediction.prediction:
         reasons.append("EXPLANATION_TARGET_MISMATCH")
     if route.forbidden_rule_conflict:

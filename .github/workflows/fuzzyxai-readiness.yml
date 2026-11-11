@@ -37,7 +37,7 @@ jobs:
           python -m pip install -U pip
           # The cross-pipeline REST interface tests import FastAPI/TestClient.
           # Keep these test-only packages out of the base runtime dependency set.
-          python -m pip install -e ".[dev]" "ruff==0.15.19" "fastapi>=0.115" "httpx>=0.27"
+          python -m pip install -e ".[dev,ui]" "ruff==0.15.19" "fastapi>=0.115" "httpx>=0.27"
       - name: Framework release gate
         run: make framework-release-check
       - name: Full regression suite

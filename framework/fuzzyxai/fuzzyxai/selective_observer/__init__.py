@@ -35,9 +35,16 @@ from .evidence_identity import (
     LocalEvidenceObservation,
     LocalEvidenceStatus,
     LocalExplanationEvidence,
+    observe_input_binding,
     observe_local_explanation,
 )
-from .local_effects import SUPPORTED_PROTOCOL, LocalEffectEvidence, collect_linear_reference_effects, verify_additive_local_effects
+from .local_effects import (
+    SUPPORTED_PROTOCOL,
+    LocalEffectEvidence,
+    collect_linear_reference_effects,
+    hash_numeric_input,
+    verify_additive_local_effects,
+)
 from .route_validity import evaluate_action_contract, evaluate_predictive_increment
 from .rule_validation import (
     evaluate_confirmatory_ablation,
@@ -78,9 +85,11 @@ __all__ = [
     "evaluate_predictive_increment",
     "explainer_disagreement_policy",
     "fit_selective_controller",
+    "hash_numeric_input",
     "inject_planted_rule",
     "matched_controls",
     "matched_coverage_outcome",
+    "observe_input_binding",
     "observe_local_explanation",
     "policy_metrics",
     "predict_risk",
