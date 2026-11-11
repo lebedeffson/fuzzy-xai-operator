@@ -42,6 +42,7 @@ class LocalExplanationEvidence:
     reference_sha256: str | None = None
     background_sha256: str | None = None
     attribution_protocol: str | None = None
+    score_channel: str | None = None
 
 
 @dataclass(frozen=True)

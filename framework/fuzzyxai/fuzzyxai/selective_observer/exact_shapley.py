@@ -84,6 +84,7 @@ class ExactShapleyEvidence:
     object_id: str | None = None
     model_version: str | None = None
     target_class: str | None = None
+    score_channel: str | None = None
     feature_names: tuple[str, ...] | None = None
     attributions: tuple[float, ...] | None = None
     baseline_score: float | None = None
@@ -100,6 +101,7 @@ def collect_exact_interventional_shapley(
     model_version: str,
     target_class: str,
     feature_names: tuple[str, ...],
+    score_channel: str | None = None,
     input_values: Sequence[float],
     background_rows: Sequence[Sequence[float]],
     target_scores: Callable[[tuple[tuple[float, ...], ...]], Sequence[float]],
@@ -174,6 +176,7 @@ def collect_exact_interventional_shapley(
         object_id=object_id,
         model_version=model_version,
         target_class=target_class,
+        score_channel=score_channel,
         feature_names=feature_names,
         attributions=tuple(shapley_values),
         baseline_score=values[0],
@@ -225,7 +228,7 @@ def verify_exact_interventional_shapley(
     elif explanation.attribution_protocol != EXACT_INTERVENTIONAL_PROTOCOL:
         missing.append("supported_explanation_attribution_protocol")
         compatible_game = False
-    for field in ("object_id", "model_version", "target_class"):
+    for field in ("object_id", "model_version", "target_class", "score_channel"):
         actual = getattr(evidence, field)
         expected = getattr(explanation, field)
         if not actual or not expected:

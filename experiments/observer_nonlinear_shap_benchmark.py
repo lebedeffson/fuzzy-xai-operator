@@ -69,6 +69,7 @@ def _make_artifacts(
         target_class=target_label,
         scope="local",
         attribution_protocol="exact_empirical_interventional_shapley_v1",
+        score_channel=oracle.score_channel,
         feature_names=names,
         contributions=contributions,
         input_sha256=oracle.input_sha256,
@@ -179,6 +180,7 @@ def run_benchmark(*, n_per_dataset: int = 12, seed: int = 2026) -> dict[str, obj
                 object_id=f"{name}-{sample_index}",
                 model_version=model_version,
                 target_class=target_label,
+                score_channel="predict_proba",
                 feature_names=names,
                 input_values=tuple(float(v) for v in item),
                 background_rows=tuple(

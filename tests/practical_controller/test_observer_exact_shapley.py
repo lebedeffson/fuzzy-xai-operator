@@ -71,6 +71,7 @@ def _clean():
         object_id="obj",
         model_version="nonlinear-model-1",
         target_class="regression_output",
+        score_channel="scalar_model_output",
         feature_names=AXIS,
         input_values=SAMPLE,
         background_rows=BACKGROUND,
@@ -82,6 +83,7 @@ def _clean():
         target_class="regression_output",
         scope="local",
         attribution_protocol="exact_empirical_interventional_shapley_v1",
+        score_channel="scalar_model_output",
         feature_names=AXIS,
         contributions=measured.attributions,
         source_sha256=None,
@@ -257,6 +259,7 @@ def test_interactions_require_nonadditive_protocol() -> None:
         object_id="interaction",
         model_version="f-v1",
         target_class="score",
+        score_channel="scalar_model_output",
         feature_names=names,
         input_values=(1.0, 1.0),
         background_rows=((0.0, 0.0),),
@@ -269,6 +272,7 @@ def test_interactions_require_nonadditive_protocol() -> None:
         target_class="score",
         scope="local",
         attribution_protocol="exact_empirical_interventional_shapley_v1",
+        score_channel="scalar_model_output",
         feature_names=names,
         contributions=exact.attributions,
         input_sha256=exact.input_sha256,
@@ -498,3 +502,16 @@ def test_wrong_target_still_blocks_even_for_unsupported_game() -> None:
     result = evaluate_hard_guard(*_with_local(pred, expl, route, ctx, wrong))
     assert result.status is HardGuardStatus.BLOCKED
     assert "LOCAL_EXPLANATION_INCOMPATIBLE" in result.reason_codes
+
+
+
+@pytest.mark.parametrize("channel", [None, "log_odds", "wrong_probability_class"])
+def test_score_channel_missing_or_conflicting_never_certifies(channel: str | None) -> None:
+    pred, expl, route, ctx = _clean()
+    assert expl.local_evidence is not None
+    changed = replace(expl.local_evidence, score_channel=channel)
+    assessed = evaluate_hard_guard(*_with_local(pred, expl, route, ctx, changed))
+    expected = HardGuardStatus.REVIEW_REQUIRED if channel is None else HardGuardStatus.BLOCKED
+    assert assessed.status is expected
+    if channel is not None:
+        assert "EXACT_SHAPLEY:score_channel_mismatch" in assessed.reason_codes
