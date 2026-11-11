@@ -100,3 +100,13 @@ article chapters, or unrelated framework modules.
 - New genuine SHAP LinearExplainer tests for binary class 0/1, Wine 0/2 and Digits 0/9 demonstrate old-reference proposals remain BLOCK with stale probes, then become CERTIFIED after independent new-reference effects. Also test wrong coefficients, missing hash, and input-hash mismatch.
 - Separate offline feasibility check: 50->100 background rebasing residuals 5.55e-17 to 2.22e-16 across six cases; this is limited to additive linear target logits. Not an automatic SHAP repair for non-linear models.
 - New code requires fresh scoped CI validation; do not cite previous 91-test run as evidence for this child commit.
+
+## Verified native SHAP reference rebasing milestone
+
+- Code commit 5e21b385fa866fbf2339b2b6771de4588985c5cd: targeted Actions run 43108180566 passed on Python 3.11 and 3.12 (98 pytest checks, Ruff, benchmark generation and artifact upload for each).
+- Public SDK exports ReferenceRebaseStatus, LinearReferenceRebaseProposal, propose_linear_reference_rebase. A candidate is not a recertification or automatic fix.
+- New tests use genuine SHAP LinearExplainer on six binary/multiclass target cases, masker 50->100: original reference matches declared attributions; proposed shift matches genuine new-reference SHAP; old source-model probe blocks reused candidate; new independent model probe and a canonical rehash certify it.
+- Independent offline mathematical sanity on six targets: new-reference vector matches native SHAP to 5.55e-17..2.22e-16. This is a known identity for additive linear logits, not new general SHAP theory.
+- 576-case developmental benchmark remains the existing dataset-specific controlled mutation study; new rebase test results must not be conflated with its counts.
+- Broader full repo H10/practical workflows remain separately gated; no full-release pass, no PR merge, no edits to protected scientific artifacts.
+- Next research acceptance: preregister an independent fault-generation protocol on unexamined models/explainers and record any misses; add nonlinear verification only with a sound declared semantic contract.
