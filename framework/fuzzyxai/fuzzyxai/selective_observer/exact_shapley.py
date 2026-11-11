@@ -18,6 +18,7 @@ import math
 import re
 from collections.abc import Callable, Sequence
 from dataclasses import dataclass
+from numbers import Real
 
 from .evidence_identity import (
     LocalEvidenceObservation,
@@ -39,7 +40,7 @@ def _finite_vector(
         raise ValueError(f"{label} has wrong feature width")
     if any(
         isinstance(item, bool)
-        or not isinstance(item, (float, int))
+        or not isinstance(item, Real)
         or not math.isfinite(item)
         for item in values
     ):
@@ -57,7 +58,7 @@ def hash_empirical_background(
         raise ValueError("feature axis must be unique and nonempty")
     if any(not isinstance(name, str) or not name.strip() for name in feature_names):
         raise ValueError("feature axis must contain nonblank names")
-    if not background_rows:
+    if len(background_rows) == 0:
         raise ValueError("background must contain at least one row")
     rows = tuple(
         _finite_vector(row, width=len(feature_names), label="background row")
@@ -142,7 +143,7 @@ def collect_exact_interventional_shapley(
         raise ValueError("source model returned the wrong score count")
     if any(
         isinstance(score, bool)
-        or not isinstance(score, (float, int))
+        or not isinstance(score, Real)
         or not math.isfinite(score)
         for score in raw_scores
     ):
@@ -245,7 +246,7 @@ def verify_exact_interventional_shapley(
         if value is None:
             missing.append(name)
             return None
-        if isinstance(value, bool) or not isinstance(value, (float, int)) or not math.isfinite(value):
+        if isinstance(value, bool) or not isinstance(value, Real) or not math.isfinite(value):
             contradictions.append(f"invalid_{name}")
             return None
         return float(value)
@@ -282,7 +283,7 @@ def verify_exact_interventional_shapley(
         contradictions.append("attribution_width_mismatch")
     elif any(
         isinstance(value, bool)
-        or not isinstance(value, (int, float))
+        or not isinstance(value, Real)
         or not math.isfinite(value)
         for value in (*claimed, *measured)
     ):

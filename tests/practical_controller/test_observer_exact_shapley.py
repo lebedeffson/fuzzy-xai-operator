@@ -284,6 +284,31 @@ def test_interactions_require_nonadditive_protocol() -> None:
     ).status is LocalEvidenceStatus.INCOMPATIBLE
 
 
+def test_numpy_background_and_float32_inputs_have_stable_canonical_identity() -> None:
+    background = np.asarray(BACKGROUND, dtype=np.float32)
+    observed = np.asarray(SAMPLE, dtype=np.float32)
+    direct = collect_exact_interventional_shapley(
+        object_id="float32",
+        model_version="numpy-input-v1",
+        target_class="score",
+        feature_names=AXIS,
+        input_values=observed,
+        background_rows=background,
+        target_scores=_scorer,
+    )
+    normalized = collect_exact_interventional_shapley(
+        object_id="float32",
+        model_version="numpy-input-v1",
+        target_class="score",
+        feature_names=AXIS,
+        input_values=tuple(float(v) for v in observed),
+        background_rows=tuple(tuple(float(v) for v in row) for row in background),
+        target_scores=_scorer,
+    )
+    assert direct == normalized
+    assert direct.background_sha256 == hash_empirical_background(AXIS, background)
+
+
 def test_exact_background_hash_checks_whole_distribution_not_mean() -> None:
     first = ((-1.0, 0.0), (1.0, 0.0))
     second = ((0.0, -1.0), (0.0, 1.0))
