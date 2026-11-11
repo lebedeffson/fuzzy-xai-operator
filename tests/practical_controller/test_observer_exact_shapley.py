@@ -17,12 +17,17 @@ from fuzzyxai.practical_controller import (
     ExplanationArtifact,
     HardGuardStatus,
     PredictionArtifact,
+    PracticalPolicy,
+    ReviewBudget,
     RouteArtifacts,
+    assess_action,
+    cost_profile,
     evaluate_hard_guard,
 )
 from fuzzyxai.selective_observer import (
     LocalEvidenceStatus,
     LocalExplanationEvidence,
+    SelectiveAction,
     collect_exact_interventional_shapley,
     hash_empirical_background,
     verify_exact_interventional_shapley,
@@ -418,3 +423,46 @@ def test_real_fitted_nonlinear_forest_matches_shap_exact_explainer() -> None:
     )(source.reshape(1, -1))
     np.testing.assert_allclose(actual.attributions, native.values[0], rtol=0, atol=1e-7)
     assert actual.score_evaluations == 48
+
+
+def test_public_action_fails_closed_even_when_review_budget_is_exhausted() -> None:
+    pred, expl, route, ctx = _clean()
+    assert expl.local_evidence is not None
+    values = list(expl.local_evidence.contributions)
+    values[0] += 0.12
+    values[1] -= 0.12
+    corrupted = _with_local(
+        pred, expl, route, ctx,
+        replace(expl.local_evidence, contributions=tuple(values)),
+    )
+    policy = PracticalPolicy(
+        schema_version="1.0",
+        policy_version="exact-shapley-test-v1",
+        predictive_weights=(1.0,) * 8,
+        predictive_intercept=-5.0,
+        route_weights=(1.0,) * 10,
+        route_intercept=-5.0,
+        accept_max_risk=0.2,
+        short_review_max_risk=0.6,
+        full_review_max_risk=0.9,
+        calibration_method="temperature",
+        calibration_parameters=(1.0,),
+        development_sha256="a" * 64,
+        selected_without_test=True,
+    )
+    exhausted = ReviewBudget(0.05, current_review_fraction=0.05)
+    blocked = assess_action(
+        *corrupted,
+        exhausted,
+        cost_profile("review_expensive"),
+        policy=policy,
+    )
+    assert blocked.hard_guard_status is HardGuardStatus.BLOCKED
+    assert blocked.action is SelectiveAction.BLOCK
+    assert "EXACT_SHAPLEY_INCOMPATIBLE" in blocked.reason_codes
+    missing = assess_action(
+        pred, expl, replace(route, observed_exact_shapley=None), ctx,
+        exhausted, cost_profile("review_expensive"), policy=policy,
+    )
+    assert missing.hard_guard_status is HardGuardStatus.REVIEW_REQUIRED
+    assert missing.action is not SelectiveAction.ACCEPT
