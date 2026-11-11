@@ -53,7 +53,7 @@ jobs:
           name: observer-benchmark-${{ matrix.python-version }}
           path: observer_benchmark_report.json
       - name: Generate nonlinear Shapley developmental benchmark
-        run: python experiments/observer_nonlinear_shap_benchmark.py > observer_nonlinear_benchmark_report.json
+        run: python -m experiments.observer_nonlinear_shap_benchmark > observer_nonlinear_benchmark_report.json
       - uses: actions/upload-artifact@v4
         with:
           name: observer-nonlinear-benchmark-${{ matrix.python-version }}
