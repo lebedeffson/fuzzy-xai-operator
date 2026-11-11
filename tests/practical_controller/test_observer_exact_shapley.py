@@ -21,8 +21,6 @@ from fuzzyxai.practical_controller import (
     evaluate_hard_guard,
 )
 from fuzzyxai.selective_observer import (
-    EXACT_INTERVENTIONAL_PROTOCOL,
-    ExactShapleyEvidence,
     LocalEvidenceStatus,
     LocalExplanationEvidence,
     collect_exact_interventional_shapley,
@@ -236,7 +234,7 @@ def test_required_missing_shapley_or_unsupported_game_requires_review() -> None:
     ],
 )
 def test_oracle_contract_invalid_evidence_never_certifies(change, expected_code) -> None:
-    pred, expl, route, ctx = _clean()
+    _pred, expl, route, _ctx = _clean()
     assert route.observed_exact_shapley is not None
     broken = replace(route.observed_exact_shapley, **change)
     observation = verify_exact_interventional_shapley(expl.local_evidence, broken)
@@ -292,6 +290,37 @@ def test_exact_background_hash_checks_whole_distribution_not_mean() -> None:
     second = ((0.0, -1.0), (0.0, 1.0))
     assert hash_empirical_background(("a", "b"), first) != hash_empirical_background(("a", "b"), second)
     assert hash_numeric_input(("a", "b"), (0.0, 0.0)) == hash_numeric_input(("a", "b"), (0.0, 0.0))
+
+
+def test_equal_feature_means_do_not_make_nonlinear_backgrounds_equivalent() -> None:
+    # Independent marginals have the same means, but opposite dependence:
+    # positive and negative product backgrounds yield different game values.
+    names = ("x0", "x1")
+    positive = ((-1.0, -1.0), (1.0, 1.0))
+    negative = ((-1.0, 1.0), (1.0, -1.0))
+    assert np.allclose(np.mean(positive, axis=0), np.mean(negative, axis=0))
+    assert hash_empirical_background(names, positive) != hash_empirical_background(
+        names, negative
+    )
+    spec = {
+        "object_id": "same-means",
+        "model_version": "interaction-v1",
+        "target_class": "output",
+        "feature_names": names,
+        "input_values": (1.5, 0.5),
+        "target_scores": lambda rows: tuple(float(a * b) for a, b in rows),
+    }
+    first = collect_exact_interventional_shapley(
+        **spec, background_rows=positive
+    )
+    second = collect_exact_interventional_shapley(
+        **spec, background_rows=negative
+    )
+    assert first.baseline_score == pytest.approx(1.0)
+    assert second.baseline_score == pytest.approx(-1.0)
+    assert first.attributions == pytest.approx((-0.125, -0.125))
+    assert second.attributions == pytest.approx((0.875, 0.875))
+    assert first.explained_score == pytest.approx(second.explained_score)
 
 
 def test_collector_rejects_excessive_cost_and_invalid_model_callback() -> None:
