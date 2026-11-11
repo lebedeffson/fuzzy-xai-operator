@@ -1,39 +1,41 @@
-# Active task
+# Active task: observer evidence binding (developmental research)
 
-Milestone:
-P19 — System Operator Closure
+Branch: `research/observer-evidence-binding-20261111`
+Review: https://github.com/lebedeffson/fuzzy-xai-operator/pull/4
+Base: `research/tisu-core-safety-20261108` (locked study artifacts untouched)
 
-Current loop:
-P19.2.1 — Final semantic micro-fix
+## Objective
 
-Problem:
-RF uncertainty depends on numeric class encoding; RF source evidence conflates
-hard-vote proportion with model probability; chi_R and chi_R_critical are
-collapsed; the public view may mark zero-weight missing risk inputs required.
+Improve the actual FuzzyXAI observer before revising any publication or
+dissertation chapters. The observer must distinguish missing evidence from
+incompatible evidence and must not certify a local explanation intended for
+another sample, model, target or ordered feature axis. It must not mistake
+shape validity for explanation faithfulness.
 
-Acceptance criterion:
-Vote uncertainty is label-invariant; probability and vote proportion remain
-separate typed signals; non-critical rupture contributes to rho without forcing
-block; missing-required projection respects positive weights; targeted and one
-full regression, wheel smoke and cache-free final ZIP pass.
+## Implemented
 
-Last result:
-P19.2 baseline is closed and provides typed generic source evidence, strict
-five-component rho, four action thresholds and wheel-only public API smoke.
+- Typed local evidence status and identity/shape checks;
+- opt-in practical guard integration ahead of budget allocation;
+- independent linear-additive score-response verification from a trusted
+  target-logit callable, including feature-wise reference probes;
+- structural-only and source-response baseline comparisons;
+- grouped OOF scaler moved inside each training fold;
+- adversarial and held-out sklearn Breast Cancer/Wine/Digits tests;
+- explicit scientific limitations and 3.11/3.12 focused GitHub CI.
 
-Targeted tests:
-57 passed, 87 warnings: P19 system/global/package, universal adapters and
-public output layer. Added 0/1, -1/+1 and string-label RF invariance checks;
-probability-vs-vote separation; non-critical and critical rupture routes; and
-public zero-weight missing-component audit projection.
-Full regression: 1261 passed, 11 skipped, 643 warnings in 288.12 s.
-Fresh wheel-only smoke: PASS, 41 operators, local + RF + non-RF routes.
+## Validation
 
-Next step:
-P19.2.1 acceptance met; stop before P20.
+Earlier scoped identity/OOF revision at commit `376a9fd1` passed focused
+Python 3.11 and 3.12 pytest and Ruff in GitHub Actions
+(`43084123056`, `43084130742`).
+Later additive-effect and real-model changes are **not yet fully CI-certified**:
+GitHub Actions jobs were queued when this state was written.
+No full regression or new confirmatory scientific claim is asserted.
 
-Final bundle:
-`final_transparency_validation/P19_FINAL_SCIENTIFIC_REVIEW.zip`
+## Next executable action
 
-Blocked:
-none
+Inspect the newest `Observer evidence-binding regression` workflow on this
+branch. Fix the exact failures, rerun; then inspect the relevant full
+framework/practical controller checks. Reproduce and retain the real-model
+per-fault counts. Only then mark the draft PR ready for review.
+Do not modify protected dissertation, Q1/H10 records, or chapters.
