@@ -1,3 +1,55 @@
+# Active engineering scope: witnessed sklearn fit-input provenance
+
+Date: 2026-11-12
+Branch: research/ml-observed-fit-events-20261112
+Draft PR: https://github.com/lebedeffson/fuzzy-xai-operator/pull/6
+Base: research/ml-lifecycle-observer-readonly-20261112 (draft PR #5)
+
+## Goal
+Strengthen read-only observation of **data, training and model output**
+without making FuzzyXAI an optimizer, retrainer, repair agent, quality
+oracle or decision maker.
+
+## Implemented
+- Optional FitRecorder.fit wrapper forwards an explicitly requested sklearn
+  fit exactly once; records successful model/preprocessor fit input IDs,
+  finite numeric row SHA256 and batch digest. Observer itself never fits.
+- MLRunEvidence.fit_records and audit_fit_trace inspect real recorded fit
+  overlap with evaluation IDs, raw feature content mismatches when source
+  values are independently available, and disagreements with manual
+  fit-ID metadata. Invalid/missing/unsupported evidence remains problem
+  or UNKNOWN; not fabricated successful authentication.
+- Ten focused tests, plus a four-model (Iris, Breast Cancer, Diabetes,
+  Iris KMeans) five-scenario developmental comparison (20 correlated
+  cases). Prespecified protocol lives in
+  experiments/ml_fit_source_witness_protocol_v1.json.
+- Explicit negative control: shuffled training labels are not validated
+  by a witness of feature rows; no claim of target-label provenance.
+- Documentation: framework/fuzzyxai/docs/ML_FIT_PROVENANCE.md.
+- Scoped Actions workflow: .github/workflows/observed-fit-provenance.yml
+  includes existing observer, public API and import-cycle regression on
+  Python 3.11/3.12, benchmark JSON artifacts and Ruff.
+- No protected/scored studies, dissertation chapters or articles changed;
+  no PR merge.
+
+## Evidence state / blocker
+The source and tests were committed to this branch; **no successful CI
+receipt yet for PR #6**. GitHub Actions run 43275031318 on source head
+f11c15186b28 has both Python jobs queued without assigned runners at
+last check. This is external queue availability, NOT proof of passing or
+failing tests. Existing PR #5 scoped tests are green on both versions
+but cannot be substituted for new PR #6 tests.
+
+## Exact continuation
+Inspect latest Witnessed fit provenance regression workflow on this branch
+and read failed job logs if any. Fix failures without weakening tests.
+Download both bench JSON artifacts; compare protocol hash, 20-case counts,
+per-scenario detection and negative controls; update PR #6 with factual
+results. Leave PR draft and unmerged. Independent external provenance
+and authenticated label/source data remain open research limits.
+
+---
+
 # Scoped objective completed: read-only ML lifecycle observer
 
 Branch: research/ml-lifecycle-observer-readonly-20261112
