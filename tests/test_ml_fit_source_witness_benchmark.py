@@ -11,6 +11,8 @@ def test_witness_comparison_is_reproducible_and_honest_about_strong_metadata() -
     assert report["cases"] == 20
     assert len(report["protocol_sha256"]) == 64
     assert all(row["estimator"] == row["protocol_estimator"] for row in report["records"])
+    assert all(row["solver"] == "newton-cholesky" for row in report["records"] if row["estimator"] == "LogisticRegression")
+    assert all(row["training_converged"] is True for row in report["records"] if row["estimator"] == "LogisticRegression")
     by_dataset = {}
     for row in report["records"]:
         by_dataset.setdefault(row["dataset"], set()).add(row["estimator"])
