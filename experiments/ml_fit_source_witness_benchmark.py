@@ -82,7 +82,6 @@ def run_benchmark() -> dict[str, Any]:
         for scenario in protocol["scenarios"]:
             name_of_case = scenario["name"]
             recorder = FitRecorder()
-            observed_fit_ids: tuple[str, ...]
             declared_fit_ids: tuple[str, ...]
             fitted = _estimator(name, seed)
 
