@@ -34,5 +34,3 @@ def test_witness_comparison_is_reproducible_and_honest_about_strong_metadata() -
     # Training was intentionally contaminated in some scenarios; no claims
     # about generalization performance of those estimators may be made.
     assert "independent" not in report["phase"]
-    assert all("training" in item or "observer" in item or "source" in item
-               for item in ("training data", "observer", "source"))
