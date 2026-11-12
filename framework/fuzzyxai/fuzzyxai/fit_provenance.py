@@ -85,7 +85,9 @@ def _target_matrix(raw: Any, expected_rows: int) -> np.ndarray | None:
             return None
         if native.dtype.kind == "f" and native.dtype.itemsize > 8:
             return None
-        if native.dtype.kind in "iu" and (
+        if native.dtype.kind == "u" and np.any(native > 2**53):
+            return None
+        if native.dtype.kind == "i" and (
             np.any(native > 2**53) or np.any(native < -(2**53))
         ):
             return None
