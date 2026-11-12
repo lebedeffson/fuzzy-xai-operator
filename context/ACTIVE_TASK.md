@@ -1,52 +1,63 @@
-# Active engineering scope: witnessed sklearn fit-input provenance
+# Scoped fit-source provenance implementation verified
 
 Date: 2026-11-12
 Branch: research/ml-observed-fit-events-20261112
 Draft PR: https://github.com/lebedeffson/fuzzy-xai-operator/pull/6
 Base: research/ml-lifecycle-observer-readonly-20261112 (draft PR #5)
 
-## Goal
-Strengthen read-only observation of **data, training and model output**
-without making FuzzyXAI an optimizer, retrainer, repair agent, quality
-oracle or decision maker.
+## Scope
+Read-only FuzzyXAI diagnostics for supplied data, actual caller-initiated
+fit calls and model outputs. No autonomous model training, automated repair
+or unknown-result certification. Existing FuzzyXAI public API unchanged.
 
 ## Implemented
-- Optional FitRecorder.fit wrapper forwards an explicitly requested sklearn
-  fit exactly once; records successful model/preprocessor fit input IDs,
-  finite numeric row SHA256 and batch digest. Observer itself never fits.
-- MLRunEvidence.fit_records and audit_fit_trace inspect real recorded fit
-  overlap with evaluation IDs, raw feature content mismatches when source
-  values are independently available, and disagreements with manual
-  fit-ID metadata. Invalid/missing/unsupported evidence remains problem
-  or UNKNOWN; not fabricated successful authentication.
-- Ten focused tests, plus a four-model (Iris, Breast Cancer, Diabetes,
-  Iris KMeans) five-scenario developmental comparison (20 correlated
-  cases). Prespecified protocol lives in
-  experiments/ml_fit_source_witness_protocol_v1.json.
-- Explicit negative control: shuffled training labels are not validated
-  by a witness of feature rows; no claim of target-label provenance.
-- Documentation: framework/fuzzyxai/docs/ML_FIT_PROVENANCE.md.
-- Scoped Actions workflow: .github/workflows/observed-fit-provenance.yml
-  includes existing observer, public API and import-cycle regression on
-  Python 3.11/3.12, benchmark JSON artifacts and Ruff.
-- No protected/scored studies, dissertation chapters or articles changed;
-  no PR merge.
+- Optional FitRecorder.fit forwards exactly one explicitly requested sklearn
+  fit and records a successful call's row IDs, canonical numeric input
+  fingerprints, role, feature space and batch digest.
+- MLRunEvidence.fit_records / audit_fit_trace detect witnessed fit vs test
+  overlap, raw source-content mismatch and contradictions with separately
+  declared fit metadata. Missing/uninstrumented evidence is UNKNOWN.
+- Frozen developer protocol: experiments/ml_fit_source_witness_protocol_v1.json
+  SHA256 dc7cdfb78d3a2ff3540ba67152042bcc3966ff5f0021d042fa48f7c9a264e93b.
+  Four model/dataset tasks x five deliberately engineered scenarios, 20
+  correlated rows. Negative label-shuffle and no-witness controls retained.
+- The initial experiment accidentally fitted tree/RF models rather than the
+  protocol's LogisticRegression and LinearRegression, detected during code
+  review and repaired WITHOUT rewriting the prior protocol. A first pass
+  with raw LBFGS LogisticRegression also hit the Breast Cancer iteration
+  ceiling. The final benchmark uses the declared model families, with
+  convergent LogisticRegression(newton-cholesky, max_iter=800).
+- Baseline fit-ID comparison catches 4/4 truthful fit/test overlaps, while
+  source witness catches 8/8 deliberate cases with misleading fit IDs or
+  fit metadata that baseline missed. 4 clean controls have no detection,
+  4 uninstrumented fit controls are UNKNOWN (not OK).
 
-## Evidence state / blocker
-The source and tests were committed to this branch; **no successful CI
-receipt yet for PR #6**. GitHub Actions run 43275031318 on source head
-f11c15186b28 has both Python jobs queued without assigned runners at
-last check. This is external queue availability, NOT proof of passing or
-failing tests. Existing PR #5 scoped tests are green on both versions
-but cannot be substituted for new PR #6 tests.
+## Exact verification
+Semantic source SHA: f1fe1528cfc1e2bbf141eb60066bd84364cd1395.
+GitHub Actions 43278096157: 37 pytest tests and Ruff passed on each
+Python 3.11 and 3.12, including public API and existing ML observer
+regression. Two saved benchmark JSON artifacts were downloaded and checked:
+13971931839 (Python 3.11, NumPy 2.4.6) and
+13971807226 (Python 3.12, NumPy 2.5.4);
+scikit-learn 1.9.1 in both. Both reports had the same original protocol
+SHA, exact estimator families, all observed LogisticRegression converged,
+same 20 per-scenario records and detections. Note: doc/context updates
+after semantic source SHA are documentation-only commits.
 
-## Exact continuation
-Inspect latest Witnessed fit provenance regression workflow on this branch
-and read failed job logs if any. Fix failures without weakening tests.
-Download both bench JSON artifacts; compare protocol hash, 20-case counts,
-per-scenario detection and negative controls; update PR #6 with factual
-results. Leave PR draft and unmerged. Independent external provenance
-and authenticated label/source data remain open research limits.
+## Scientific limitations
+Developer-built interventions are not blind real-world incident detection.
+Four datasets are not a population of independent failures. Source row ID
+and source data are caller-supplied and not cryptographically authenticated
+by external trust. Unwrapped fit calls and target-label authenticity cannot
+be certified. No evidence of superior general predictive quality, XAI
+faithfulness, causal validity, LLM/RAG/CV generality or automatic repair.
+No protected/scored study artifacts, article or dissertation chapters edited.
+
+## State
+This scoped implementation and the targeted acceptance checks are complete.
+PR #6 intentionally remains draft and unmerged, stacked atop draft PR #5.
+A later separate integration review / release may assess the whole project;
+do not treat targeted green CI as whole-repository release approval.
 
 ---
 
