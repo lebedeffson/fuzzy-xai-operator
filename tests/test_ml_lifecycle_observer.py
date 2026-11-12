@@ -34,6 +34,8 @@ def _example() -> MLRunEvidence:
         train_features=dataset.data[train],
         evaluation_features=dataset.data[evaluation],
         train_targets=dataset.target[train],
+        train_feature_names=tuple(str(x) for x in dataset.feature_names),
+        evaluation_feature_names=tuple(str(x) for x in dataset.feature_names),
         evaluation_targets=dataset.target[evaluation],
         predictions=fitted.predict(dataset.data[evaluation]),
         probabilities=fitted.predict_proba(dataset.data[evaluation]),
@@ -52,6 +54,7 @@ def test_classification_scores_without_train_or_prediction_mutation() -> None:
     original_x = np.asarray(example.evaluation_features).copy()
     report = observe_ml_run(example)
     assert _status(report, "split_isolation") == "ok"
+    assert _status(report, "ordered_feature_schema") == "ok"
     assert _status(report, "model_fit_isolation") == "ok"
     assert _status(report, "preprocessor_fit_isolation") == "ok"
     assert _status(report, "class_mapping") == "ok"
@@ -142,3 +145,19 @@ def test_unsupported_task_cannot_claim_validity() -> None:
         assert "supported" in str(exc)
     else:
         raise AssertionError("Unsupported task should not be silently accepted")
+
+
+
+def test_feature_order_swap_is_observable_even_with_equal_column_count() -> None:
+    example = _example()
+    assert example.evaluation_feature_names is not None
+    swapped_names = list(example.evaluation_feature_names)
+    swapped_names[0], swapped_names[1] = swapped_names[1], swapped_names[0]
+    report = observe_ml_run(replace(example, evaluation_feature_names=tuple(swapped_names)))
+    assert _status(report, "feature_width") == "ok"
+    assert _status(report, "ordered_feature_schema") == "problem"
+
+
+def test_unknown_feature_schema_is_not_reported_as_verified() -> None:
+    report = observe_ml_run(replace(_example(), train_feature_names=None))
+    assert _status(report, "ordered_feature_schema") == "unknown"
