@@ -13,7 +13,8 @@ from typing import Any, Literal
 
 import numpy as np
 
-from .fit_provenance import _hashes, _matrix, _parse_records as _fit_records
+from .fit_provenance import _hashes, _matrix
+from .fit_provenance import _parse_records as _fit_records
 from .output_provenance import _parse_records as _output_records
 
 _SHA = re.compile(r"^[0-9a-f]{64}$")
@@ -116,7 +117,7 @@ class TransformRecorder:
 
 def _parse(raw: Any) -> tuple[TransformCallRecord, ...]:
     if not isinstance(raw, (tuple, list)):
-        raise ValueError("Expected transform trace array")
+        raise TypeError("Expected transform trace array")
     found = []
     for value in raw:
         try:
@@ -174,7 +175,7 @@ def audit_transform_chain(
         return (TransformCheck("transform_trace", "problem", "Transforms contradict declared absence of preprocessing"),)
     try:
         records = _parse(raw)
-    except ValueError:
+    except (TypeError, ValueError):
         return (TransformCheck("transform_trace", "problem", "Invalid transform trace"),)
     checks: list[TransformCheck] = []
     by_split: dict[str, TransformCallRecord] = {}
