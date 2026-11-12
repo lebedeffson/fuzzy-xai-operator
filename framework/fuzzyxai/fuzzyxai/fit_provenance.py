@@ -10,6 +10,7 @@ unwrapped calls are invisible and callers can still lie about row IDs.
 from __future__ import annotations
 
 import hashlib
+import hmac
 import re
 from dataclasses import asdict, dataclass
 from typing import Any, Literal
@@ -30,6 +31,8 @@ class FitCallRecord:
     n_features: int
     row_sha256: tuple[str, ...]
     batch_sha256: str
+    target_status: Literal["none", "witnessed", "unavailable"] | None = None
+    target_batch_hmac: str | None = None
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)
@@ -67,10 +70,47 @@ def _hashes(m: np.ndarray) -> tuple[tuple[str, ...], str]:
     return row_sha256, batch
 
 
+
+def _target_matrix(raw: Any, expected_rows: int) -> np.ndarray | None:
+    """Only finite numeric 1-D/2-D supervised targets are supported.
+
+    Unsupported targets are not coerced into fabricated numeric evidence.
+    Raw targets are never placed in a fit record.
+    """
+    try:
+        target = np.asarray(raw, dtype="<f8")
+    except (ValueError, TypeError, OverflowError):
+        return None
+    if target.ndim == 1:
+        target = target.reshape(-1, 1)
+    if target.ndim != 2 or target.shape[0] != expected_rows or target.shape[1] < 1:
+        return None
+    if not np.isfinite(target).all():
+        return None
+    output = np.array(target, dtype="<f8", order="C", copy=True)
+    output[output == 0.0] = 0.0
+    return output
+
+
+def _target_commitment(matrix: np.ndarray, key: bytes) -> str:
+    """Domain-separated HMAC of the ordered target batch, not a per-label hash."""
+    prefix = (
+        b"FXAI-TARGETS-V1"
+        + len(matrix).to_bytes(8, "big")
+        + matrix.shape[1].to_bytes(8, "big")
+    )
+    return hmac.new(key, prefix + matrix.tobytes(), hashlib.sha256).hexdigest()
+
+
 class FitRecorder:
     """A transparent explicit fit-call wrapper; no global hooks/monkeypatching."""
 
-    def __init__(self) -> None:
+    def __init__(self, *, target_hmac_key: bytes | None = None) -> None:
+        if target_hmac_key is not None and (
+            not isinstance(target_hmac_key, bytes) or len(target_hmac_key) < 16
+        ):
+            raise ValueError("target_hmac_key must contain at least 16 secret bytes")
+        self._target_hmac_key = target_hmac_key
         self._records: list[FitCallRecord] = []
 
     @property
@@ -103,6 +143,15 @@ class FitRecorder:
         if len(ids) != len(m) or any(not isinstance(v, str) or not v for v in ids):
             raise ValueError("row_ids must contain one nonempty source ID per fitted row")
         hashed, batch = _hashes(m)
+        target_status: Literal["none", "witnessed", "unavailable"] = "none"
+        target_batch_hmac: str | None = None
+        if y is not None:
+            target_status = "unavailable"
+            if self._target_hmac_key is not None:
+                targets = _target_matrix(y, len(m))
+                if targets is not None:
+                    target_batch_hmac = _target_commitment(targets, self._target_hmac_key)
+                    target_status = "witnessed"
         if y is None:
             result = estimator.fit(X, **fit_kwargs)
         else:
@@ -116,6 +165,8 @@ class FitRecorder:
                 n_features=int(m.shape[1]),
                 row_sha256=hashed,
                 batch_sha256=batch,
+                target_status=target_status,
+                target_batch_hmac=target_batch_hmac,
             )
         )
         return result
@@ -148,6 +199,13 @@ def _parse_records(raw: Any) -> tuple[FitCallRecord, ...]:
             calculated = hashlib.sha256(payload + b"".join(bytes.fromhex(v) for v in record.row_sha256)).hexdigest()
             if calculated != record.batch_sha256:
                 raise ValueError("fit batch digest is inconsistent with row digest claims")
+            if record.target_status not in (None, "none", "witnessed", "unavailable"):
+                raise ValueError("invalid target witness status")
+            if record.target_status == "witnessed":
+                if not isinstance(record.target_batch_hmac, str) or not _SHA256.fullmatch(record.target_batch_hmac):
+                    raise ValueError("missing or invalid target batch HMAC")
+            elif record.target_batch_hmac is not None:
+                raise ValueError("target digest without a witnessed target state")
         except (TypeError, KeyError, ValueError, AttributeError, OverflowError) as exc:
             raise ValueError("invalid or internally inconsistent fit trace record") from exc
         output.append(record)
@@ -164,6 +222,9 @@ def audit_fit_trace(
     model_fit_ids: tuple[str, ...] | None = None,
     preprocessor_fit_ids: tuple[str, ...] | None = None,
     preprocessor_applied: bool | None = None,
+    train_targets: Any | None = None,
+    evaluation_targets: Any | None = None,
+    target_hmac_key: bytes | None = None,
 ) -> tuple[FitTraceCheck, ...]:
     """Evaluate optional fit witnesses without invoking or modifying a model.
 
@@ -260,4 +321,66 @@ def audit_fit_trace(
                     unmatched,
                 )
             )
+
+
+    # A reference label is meaningful only when accompanied by a row ID.
+    # Witnesses contain HMACs of full numeric target batches, not raw labels
+    # or small per-class digests that could reveal binary targets.
+    targets_by_id: dict[str, np.ndarray] = {}
+    target_reference_conflict = False
+    for declared_ids, target_values in (
+        (train_ids, train_targets),
+        (evaluation_ids, evaluation_targets),
+    ):
+        if declared_ids is None or target_values is None:
+            continue
+        if not isinstance(declared_ids, (tuple, list)):
+            target_reference_conflict = True
+            continue
+        converted = _target_matrix(target_values, len(declared_ids))
+        if converted is None or len(set(declared_ids)) != len(declared_ids):
+            target_reference_conflict = True
+            continue
+        for row_id, target_row in zip(declared_ids, converted):
+            if not isinstance(row_id, str) or not row_id:
+                target_reference_conflict = True
+                continue
+            if row_id in targets_by_id and not np.array_equal(targets_by_id[row_id], target_row):
+                target_reference_conflict = True
+            targets_by_id[row_id] = target_row
+
+    target_records = tuple(r for r in records if r.role == "model")
+    if not target_records:
+        checks.append(FitTraceCheck("fit_trace_model_targets", "unknown", "No instrumented model fit was observed"))
+    elif all(record.target_status == "none" for record in target_records):
+        checks.append(FitTraceCheck("fit_trace_model_targets", "not_applicable", "No targets were supplied to witnessed fits"))
+    elif target_hmac_key is None:
+        checks.append(FitTraceCheck("fit_trace_model_targets", "unknown", "An independent target HMAC key is needed to check label provenance"))
+    elif not isinstance(target_hmac_key, bytes) or len(target_hmac_key) < 16:
+        checks.append(FitTraceCheck("fit_trace_model_targets", "problem", "Invalid target HMAC key"))
+    elif target_reference_conflict:
+        checks.append(FitTraceCheck("fit_trace_model_targets", "unknown", "Declared source targets are inconsistent or unsupported"))
+    else:
+        mismatch = 0
+        unknown = 0
+        checked = 0
+        for record in target_records:
+            if record.target_status != "witnessed":
+                unknown += 1
+                continue
+            if any(row_id not in targets_by_id for row_id in record.row_ids):
+                unknown += 1
+                continue
+            expected_targets = np.stack([targets_by_id[row_id] for row_id in record.row_ids])
+            witness = _target_commitment(expected_targets, target_hmac_key)
+            if not hmac.compare_digest(witness, record.target_batch_hmac or ""):
+                mismatch += 1
+            checked += 1
+        if mismatch:
+            checks.append(FitTraceCheck("fit_trace_model_targets", "problem", "Witnessed target batch contradicts declared source targets", mismatch))
+        elif unknown or not checked:
+            checks.append(FitTraceCheck("fit_trace_model_targets", "unknown", "Some targets or witness records cannot be verified against source labels", unknown))
+        else:
+            checks.append(FitTraceCheck("fit_trace_model_targets", "ok", "Observed numeric target batch agrees with declared source values; label truth is not authenticated", checked))
+
     return tuple(checks)
