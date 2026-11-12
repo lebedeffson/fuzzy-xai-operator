@@ -302,6 +302,7 @@ def observe_ml_run(evidence: MLRunEvidence, *, target_hmac_key: bytes | None = N
         predictions=evidence.predictions,
         probabilities=evidence.probabilities,
         probability_classes=evidence.probability_classes,
+        task=evidence.task,
     ):
         note("output", witnessed.code, witnessed.status, witnessed.detail, witnessed.observed)
 
