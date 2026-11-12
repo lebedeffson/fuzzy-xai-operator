@@ -1,3 +1,63 @@
+# Scoped objective completed: read-only ML lifecycle observer
+
+Branch: research/ml-lifecycle-observer-readonly-20261112
+Draft PR: https://github.com/lebedeffson/fuzzy-xai-operator/pull/5
+Base (draft PR #4): research/observer-evidence-binding-20261111
+
+## Implemented
+
+Evidence-only numeric tabular classification/regression/clustering checks
+for **data, training, and model output**. Python API MLRunEvidence +
+observe_ml_run and read-only JSON CLI. No fit/predict/repair/auto-action.
+
+Measured channels: feature shape and order, finite values, train/evaluation
+source IDs, model/preprocessor fit IDs, no-preprocessor not_applicable,
+data duplicate-row warnings, descriptive mean shift, training loss trace
+availability, output probability geometry and task-appropriate metrics.
+Unknown evidence remains UNKNOWN, not success. Clean Iris has repeated
+numeric rows that legitimately lead to a warning, not a hard block.
+
+Independent developmental model pipelines (outside observer): 4 sklearn
+datasets (Breast Cancer, Wine, Diabetes, Iris). Fixed protocol file committed
+before running: experiments/ml_lifecycle_development_protocol_v1.json,
+SHA256 0957fb3b51eee3d2c3ebba3c2f1a4ffd4f6fb125c78787b2e4e36947a2966395.
+33 scenario rows, strong numeric and ID/schema baselines. Training/fit
+provenance errors were also detected by the strong baseline. Additional
+duplicate-content/mean-shift warnings are not universal scientific novelty.
+Unobserved label-source permutation and natural exact duplicates are negative
+controls. No independent blinded real-incident sensitivity is established.
+
+## Verification
+
+At semantic code commit 605404d9b5e2d67c0081f5c231e1a178166251bf:
+GitHub Actions 43240790172: Python 3.11 and 3.12 each 26 pytest tests
+passed and Ruff passed, including public FuzzyXAI API and no-cycle imports.
+Archived JSON artifacts 13955300710 (3.11) / 13955325739 (3.12)
+downloaded and independently compared: 4 models, 33 cases, same protocol
+hash, identical per-scenario results and metrics. No full-repository
+release readiness is asserted.
+
+Integration revealed a stale test demanding 41 operators after PR #4 added
+framework.exact_interventional_shapley_observer as the 42nd; assertion was
+corrected and strengthened on PR #4 at 12177d85 and synchronized into PR #5
+without deleting or skipping the test.
+
+The actual code, protocol and measured comparisons are in the draft PR;
+no main-branch merge, model weights changes, or protected study results /
+paper and dissertation edits were performed.
+
+## Next independent research criterion
+
+If publication-level effectiveness is claimed: run external datasets,
+actual instrumented provenance, prespecified fault cases by an independent
+source, measure false alarms/coverage and compare to mature data and
+model-checking tools. Unsupported ML modalities (NLP, CV, LLM/RAG)
+require explicit dedicated evidence adapters. No claim of universal
+accuracy, causality or safety should be made until established.
+
+
+---
+
 # Active task: FuzzyXAI Observer — exact source-bound explanation checks
 
 Branch: research/observer-evidence-binding-20261111

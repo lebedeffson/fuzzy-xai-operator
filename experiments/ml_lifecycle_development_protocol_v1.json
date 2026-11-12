@@ -1,0 +1,113 @@
+{
+  "id": "ml-lifecycle-development-v1",
+  "locked_before_benchmark_results": true,
+  "research_question": "Which observable ML lifecycle issues are detected beyond plain sklearn numeric validation and evaluation metrics?",
+  "seed": 6072,
+  "datasets": [
+    {
+      "name": "breast_cancer",
+      "task": "classification",
+      "model": "LogisticRegression+StandardScaler",
+      "test_fraction": 0.25
+    },
+    {
+      "name": "wine",
+      "task": "classification",
+      "model": "RandomForestClassifier",
+      "test_fraction": 0.25
+    },
+    {
+      "name": "diabetes",
+      "task": "regression",
+      "model": "RandomForestRegressor",
+      "test_fraction": 0.25
+    },
+    {
+      "name": "iris",
+      "task": "clustering",
+      "model": "KMeans",
+      "test_fraction": 0.25
+    }
+  ],
+  "scenarios": [
+    {
+      "name": "clean",
+      "category": "control",
+      "expected_observer": "no introduced issue",
+      "ground_truth_scope": "No contamination introduced by the experiment"
+    },
+    {
+      "name": "preprocessor_fit_includes_evaluation",
+      "category": "actual_training_provenance",
+      "expected_observer": "preprocessor_fit_isolation:problem",
+      "scope": "Only the scaled classifier"
+    },
+    {
+      "name": "model_fit_includes_evaluation",
+      "category": "actual_training_provenance",
+      "expected_observer": "model_fit_isolation:problem",
+      "scope": "supervised classifier/regressor only"
+    },
+    {
+      "name": "split_row_id_overlap",
+      "category": "declared_metadata_conflict",
+      "expected_observer": "split_isolation:problem"
+    },
+    {
+      "name": "feature_columns_permuted",
+      "category": "observed_input_mapping",
+      "expected_observer": "ordered_feature_schema:problem"
+    },
+    {
+      "name": "copied_numeric_row_new_id",
+      "category": "investigation_signal",
+      "expected_observer": "cross_split_duplicate_rows:warning"
+    },
+    {
+      "name": "numeric_mean_shift",
+      "category": "investigation_signal",
+      "expected_observer": "mean_shift:warning",
+      "effect": "No statistical guarantee; threshold descriptive"
+    },
+    {
+      "name": "invalid_probability_rows",
+      "category": "output_corruption",
+      "expected_observer": "probabilities:problem",
+      "scope": "classification only"
+    },
+    {
+      "name": "missing_source_identifiers",
+      "category": "missing_evidence",
+      "expected_observer": "split_isolation:unknown"
+    },
+    {
+      "name": "evaluation_labels_permuted",
+      "category": "unobservable_semantic_fault",
+      "expected_observer": "no semantic-fault detection expected",
+      "scope": "supervised only"
+    }
+  ],
+  "baselines": [
+    {
+      "name": "numeric_and_metric",
+      "description": "sklearn check_array, feature width, output dimensions/finite values and ordinary metrics; cannot validate provenance"
+    },
+    {
+      "name": "numeric_plus_ids_schema",
+      "description": "numeric baseline plus train/evaluation IDs, fit IDs and ordered feature schema, but no numeric row-level duplicate scan"
+    },
+    {
+      "name": "fuzzyxai_ml_observer",
+      "description": "read-only structural, source-declaration and observational diagnostics"
+    }
+  ],
+  "analysis_constraints": [
+    "Datasets are limited to sklearn datasets and deliberately introduced faults.",
+    "Cross-split exact numerical duplicates are warnings, not verified data leakage.",
+    "Missing evidence and not-applicable are separate from factual problems.",
+    "No training, repair, or decision is performed by the observer itself.",
+    "An experiment fitting faulty models may access evaluation labels solely to demonstrate contamination; performance on those models is invalid as generalization evidence.",
+    "The unit of independent evidence is pipeline/dataset; scenarios within a pipeline are dependent.",
+    "Record negative controls and all cases, not only detected positive injected faults."
+  ]
+}
