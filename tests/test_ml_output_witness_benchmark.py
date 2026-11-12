@@ -20,7 +20,7 @@ def test_output_witness_benchmark_with_equally_privileged_baseline() -> None:
     }
     expected = {
         "clean": (4, 0, 0, 0, 0),
-        "reordered_prediction_values": (4, 0, 4, 4, 0),
+        "reordered_prediction_values": (4, 2, 4, 4, 0),
         "reordered_report_features": (4, 0, 4, 4, 0),
         "reordered_report_ids": (4, 0, 4, 4, 0),
         "missing_output_record": (4, 0, 0, 0, 4),
@@ -34,6 +34,9 @@ def test_output_witness_benchmark_with_equally_privileged_baseline() -> None:
         assert actual["observed_problem"] == observed, (case, actual)
         assert actual["missing_unknown"] == unknown, (case, actual)
 
+    # Ordinary numeric/probability consistency is already a strong baseline:
+    # it detects classifier prediction/probability disagreement, so we must
+    # not credit the output witness as uniquely discovering those two cases.
     for record in result["records"]:
         checks = record["checks"]
         if record["case"] == "reordered_prediction_values":
