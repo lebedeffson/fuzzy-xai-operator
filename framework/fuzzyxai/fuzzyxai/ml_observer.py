@@ -82,7 +82,7 @@ def observe_ml_run(evidence: MLRunEvidence) -> MLObservation:
     findings: list[MLCheck] = []
     metrics: dict[str, float | int] = {}
 
-    def note(stage: Stage, code: str, status: CheckStatus, detail: str, observed: float | int | str | None = None) -> None:
+    def note(stage: Stage, code: str, status: CheckStatus, detail: str, observed: float | str | None = None) -> None:
         findings.append(MLCheck(stage, code, status, detail, observed))
 
     def matrix(value: Any | None, name: str) -> np.ndarray | None:
