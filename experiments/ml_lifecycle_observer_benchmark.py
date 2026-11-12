@@ -11,7 +11,7 @@ from __future__ import annotations
 import hashlib
 import json
 import platform
-from dataclasses import asdict, replace
+from dataclasses import replace
 from pathlib import Path
 from typing import Any
 
