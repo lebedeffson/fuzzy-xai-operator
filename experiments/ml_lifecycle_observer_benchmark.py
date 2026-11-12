@@ -165,6 +165,7 @@ def _build_evidence(
         evaluation_ids=test_ids,
         model_fit_ids=model_fit_ids,
         preprocessor_fit_ids=preprocessor_fit_ids,
+        preprocessor_applied=scaler is not None,
         model_version=f"{name}-seed{seed}",
         random_seed=seed,
     )
