@@ -19,6 +19,7 @@ import numpy as np
 from sklearn.metrics import accuracy_score, f1_score, mean_absolute_error, r2_score
 
 from .fit_provenance import audit_fit_trace
+from .output_provenance import audit_output_calls
 
 Task = Literal["classification", "regression", "clustering"]
 Stage = Literal["data", "training", "output"]
@@ -44,6 +45,7 @@ class MLRunEvidence:
     preprocessor_fit_ids: tuple[str, ...] | None = None
     preprocessor_applied: bool | None = None
     fit_records: Any | None = None
+    output_records: Any | None = None
     train_loss: tuple[float, ...] | None = None
     validation_loss: tuple[float, ...] | None = None
     model_version: str | None = None
@@ -292,6 +294,16 @@ def observe_ml_run(evidence: MLRunEvidence, *, target_hmac_key: bytes | None = N
         note("output", "prediction_binding", "unknown", "Without evaluation features, sample alignment cannot be verified")
     elif y_pred is not None:
         note("output", "prediction_binding", "ok", "Prediction count matches evaluation feature rows; row ordering is declared, not authenticated")
+
+    for witnessed in audit_output_calls(
+        evidence.output_records,
+        evaluation_features=evidence.evaluation_features,
+        evaluation_ids=evidence.evaluation_ids,
+        predictions=evidence.predictions,
+        probabilities=evidence.probabilities,
+        probability_classes=evidence.probability_classes,
+    ):
+        note("output", witnessed.code, witnessed.status, witnessed.detail, witnessed.observed)
 
     if evidence.task == "classification":
         train_y = vector(evidence.train_targets, "data", "train_targets", len(x_train) if x_train is not None else None)
