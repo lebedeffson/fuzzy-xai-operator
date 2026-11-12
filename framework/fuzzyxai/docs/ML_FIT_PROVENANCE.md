@@ -191,3 +191,46 @@ are still sklearn sample datasets and the faults are developer-created.
 The strongest oracle comparator that sees both actual fit y and source
 reference y can detect the same contradictions by direct equality.
 No novel diagnostic advantage is claimed over that comparator.
+
+
+## Verified target-source consistency extension (12 November 2026)
+
+The post-development dataset protocol was committed **before** running the
+experiment: experiments/ml_target_witness_postdev_protocol_v1.json,
+SHA256 e05a5a7ef52596fa6a88637cc9e262d9722ac1d5ac4eeb5f26e8978726a26ea8.
+It uses Wine (classification), Digits (classification) and Linnerud
+(multi-target regression) with 6 controlled variants per dataset:
+18 **correlated** scenario observations.
+
+The source at semantic SHA f286750871e036b8387985c00bddad24b45e41f9
+passed GitHub Actions workflow 43285240892:
+**60 pytest tests and Ruff on Python 3.11, and 60 pytest tests
+and Ruff on Python 3.12**. The two real benchmark artifacts
+(target-witness-benchmark-3.11 / target-witness-benchmark-3.12,
+IDs 13973294606 / 13974871693) were downloaded and compared.
+Results, protocol hash, source case records and limits match; the
+environments use scikit-learn 1.9.1 and NumPy 2.4.6 / 2.5.4 respectively.
+
+| Prespecified case | N | Target-witness check | ID/feature check | Privileged direct y comparison |
+| --- | ---: | --- | ---: | ---: |
+| Correct labels | 3 | 3 OK | 0 alerts | 0 alerts |
+| Permuted training labels | 3 | 3 PROBLEM | 0 alerts | 3 alerts |
+| One changed training target | 3 | 3 PROBLEM | 0 alerts | 3 alerts |
+| No private target HMAC witness | 3 | 3 UNKNOWN | 0 alerts | N/A |
+| No source target reference | 3 | 3 UNKNOWN | 0 alerts | N/A |
+| Contradictory reference targets | 3 | 3 PROBLEM | 0 alerts | 3 alerts |
+
+The class-histogram / target-mean comparator also missed every
+permutation (3/3); it detected each single-target change (3/3).
+A comparator that sees the full observed y and source y achieves
+the same detection as the HMAC verifier, hence **no universal
+superiority or novel statistical detector is claimed**.
+
+The witness only tests *consistency between separately supplied labels
+and the caller-initiated fit*. It does NOT determine which labels are
+true, independently attest dataset origin, validate fairness, or
+support arbitrary class-label types. Linnerud here verifies the
+2-D training-target witness; the existing general ML observer's
+output-metric check is still limited to 1-D regression targets.
+No unseen-incident sensitivity or externally blinded evaluation
+is established.
