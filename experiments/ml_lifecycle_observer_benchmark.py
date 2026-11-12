@@ -22,6 +22,7 @@ from sklearn.cluster import KMeans
 from sklearn.datasets import load_breast_cancer, load_diabetes, load_iris, load_wine
 from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
 from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score, f1_score, mean_absolute_error, r2_score
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.utils.validation import check_array
@@ -67,6 +68,32 @@ def _baseline_numeric(evidence: MLRunEvidence) -> set[str]:
         except (TypeError, ValueError):
             problems.add("probabilities")
     return problems
+
+
+
+
+def _baseline_label_metrics(evidence: MLRunEvidence) -> dict[str, float]:
+    """Independently recompute ordinary sklearn evaluation metrics."""
+
+    if evidence.task == "clustering" or evidence.evaluation_targets is None or evidence.predictions is None:
+        return {}
+    truth, predicted = np.asarray(evidence.evaluation_targets), np.asarray(evidence.predictions)
+    if truth.ndim != 1 or predicted.ndim != 1 or len(truth) != len(predicted) or not len(truth):
+        return {}
+    if evidence.task == "classification":
+        return {
+            "accuracy": float(accuracy_score(truth, predicted)),
+            "macro_f1": float(f1_score(truth, predicted, average="macro", zero_division=0)),
+        }
+    observed = np.asarray(truth, dtype=float)
+    values = np.asarray(predicted, dtype=float)
+    output = {
+        "mae": float(mean_absolute_error(observed, values)),
+        "rmse": float(np.sqrt(np.mean((observed - values) ** 2))),
+    }
+    if len(observed) >= 2 and np.var(observed) > 0.0:
+        output["r2"] = float(r2_score(observed, values))
+    return output
 
 
 def _baseline_provenance(evidence: MLRunEvidence) -> set[str]:
@@ -295,6 +322,7 @@ def run_benchmark() -> dict[str, Any]:
                     "target_check": intended_code,
                     "target_status": _code_status(report, intended_code) if intended_code is not None else None,
                     "plain_sklearn_flags": sorted(_baseline_numeric(evidence)),
+                    "baseline_sklearn_metrics": _baseline_label_metrics(evidence),
                     "metadata_baseline_flags": sorted(_baseline_provenance(evidence)),
                     "observer_flags": [
                         {"code": check.code, "status": check.status}
