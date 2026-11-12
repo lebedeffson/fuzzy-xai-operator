@@ -9,6 +9,17 @@ def test_witness_comparison_is_reproducible_and_honest_about_strong_metadata() -
     report = run_benchmark()
     assert report["datasets"] == 4
     assert report["cases"] == 20
+    assert len(report["protocol_sha256"]) == 64
+    assert all(row["estimator"] == row["protocol_estimator"] for row in report["records"])
+    by_dataset = {}
+    for row in report["records"]:
+        by_dataset.setdefault(row["dataset"], set()).add(row["estimator"])
+    assert by_dataset == {
+        "iris": {"LogisticRegression"},
+        "breast_cancer": {"LogisticRegression"},
+        "diabetes": {"LinearRegression"},
+        "iris_clustering": {"KMeans"},
+    }
     assert report["phase"] == "developer_constructed_developmental_not_confirmatory"
     grouped = report["by_scenario"]
 
