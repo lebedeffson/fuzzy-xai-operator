@@ -92,10 +92,11 @@ def _target_matrix(raw: Any, expected_rows: int) -> np.ndarray | None:
     return output
 
 
-def _target_commitment(matrix: np.ndarray, key: bytes) -> str:
-    """Domain-separated HMAC of the ordered target batch, not a per-label hash."""
+def _target_commitment(matrix: np.ndarray, key: bytes, feature_batch_sha256: str) -> str:
+    """HMAC of the ordered target batch, bound to its exact feature batch."""
     prefix = (
         b"FXAI-TARGETS-V1"
+        + bytes.fromhex(feature_batch_sha256)
         + len(matrix).to_bytes(8, "big")
         + matrix.shape[1].to_bytes(8, "big")
     )
@@ -150,7 +151,7 @@ class FitRecorder:
             if self._target_hmac_key is not None:
                 targets = _target_matrix(y, len(m))
                 if targets is not None:
-                    target_batch_hmac = _target_commitment(targets, self._target_hmac_key)
+                    target_batch_hmac = _target_commitment(targets, self._target_hmac_key, batch)
                     target_status = "witnessed"
         if y is None:
             result = estimator.fit(X, **fit_kwargs)
@@ -372,7 +373,7 @@ def audit_fit_trace(
                 unknown += 1
                 continue
             expected_targets = np.stack([targets_by_id[row_id] for row_id in record.row_ids])
-            witness = _target_commitment(expected_targets, target_hmac_key)
+            witness = _target_commitment(expected_targets, target_hmac_key, record.batch_sha256)
             if not hmac.compare_digest(witness, record.target_batch_hmac or ""):
                 mismatch += 1
             checked += 1
