@@ -208,3 +208,17 @@ def test_duplicate_scan_not_applicable_to_missing_numeric_matrices() -> None:
     sample = _example()
     report = observe_ml_run(replace(sample, evaluation_features=None))
     assert _status(report, "cross_split_duplicate_rows") == "unknown"
+
+
+
+def test_declared_pipeline_without_preprocessor_is_not_marked_missing() -> None:
+    item = replace(_example(), preprocessor_applied=False, preprocessor_fit_ids=None)
+    report = observe_ml_run(item)
+    assert _status(report, "preprocessor_fit_isolation") == "not_applicable"
+    assert _status(report, "preprocessor_fit_ids") == "not_applicable"
+
+
+def test_declared_absence_of_preprocessor_conflicts_with_fit_evidence() -> None:
+    item = replace(_example(), preprocessor_applied=False)
+    report = observe_ml_run(item)
+    assert _status(report, "preprocessor_fit_isolation") == "problem"
