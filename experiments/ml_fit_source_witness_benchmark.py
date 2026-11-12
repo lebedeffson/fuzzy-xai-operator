@@ -54,7 +54,7 @@ def _load_data(name: str, task: str, seed: int) -> tuple[np.ndarray, np.ndarray,
 def _estimator(estimator_name: str, seed: int) -> Any:
     """Use the literal estimator type fixed in the committed protocol."""
     if estimator_name == "LogisticRegression":
-        return LogisticRegression(max_iter=2500, random_state=seed)
+        return LogisticRegression(max_iter=800, solver="newton-cholesky", random_state=seed)
     if estimator_name == "LinearRegression":
         return LinearRegression()
     if estimator_name == "KMeans":
@@ -149,6 +149,8 @@ def run_benchmark() -> dict[str, Any]:
                     "task": task,
                     "estimator": type(fitted).__name__,
                     "protocol_estimator": estimator_name,
+                    "solver": getattr(fitted, "solver", None),
+                    "training_converged": bool(np.all(fitted.n_iter_ < fitted.max_iter)) if hasattr(fitted, "n_iter_") else None,
                     "scenario": name_of_case,
                     "metadata_baseline_detected": metadata_detected,
                     "witness_detected": detected,
