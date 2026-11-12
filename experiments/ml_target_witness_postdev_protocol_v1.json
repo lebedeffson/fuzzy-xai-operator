@@ -1,0 +1,90 @@
+{
+  "id": "ml-target-hmac-extension-postdev-20261112",
+  "protocol_phase": "developer_held_out_dataset_types_not_independent_blind_study",
+  "objective": "Verify that optional protected numeric target witnesses expose training-label mismatches that feature-only source witnesses and declared fit IDs cannot detect",
+  "original_dev_protocol": "experiments/ml_fit_source_witness_protocol_v1.json",
+  "numeric_target_requirement": "1D/2D finite numeric targets only; nonnumeric types remain unknown",
+  "datasets": [
+    {
+      "name": "wine",
+      "task": "classification",
+      "estimator": "DecisionTreeClassifier",
+      "source": "sklearn.datasets.load_wine"
+    },
+    {
+      "name": "digits",
+      "task": "classification",
+      "estimator": "DecisionTreeClassifier",
+      "source": "sklearn.datasets.load_digits"
+    },
+    {
+      "name": "linnerud",
+      "task": "regression",
+      "estimator": "Ridge",
+      "source": "sklearn.datasets.load_linnerud"
+    }
+  ],
+  "seed": 917,
+  "split": "random_state=917, test_size=0.25, stratify for classification",
+  "scenarios": [
+    {
+      "name": "clean",
+      "expected": "ok",
+      "why": "actual fit target sequence matches independently supplied reference sequence"
+    },
+    {
+      "name": "permuted_training_targets",
+      "expected": "problem",
+      "why": "fit X and IDs match but paired targets were permuted; class counts, means and histogram stay unchanged"
+    },
+    {
+      "name": "single_modified_target",
+      "expected": "problem",
+      "why": "a single training target was changed while X and fit IDs remain identical"
+    },
+    {
+      "name": "no_target_witness",
+      "expected": "unknown",
+      "why": "caller fit with no secret key, so target digest must be absent"
+    },
+    {
+      "name": "no_target_reference",
+      "expected": "unknown",
+      "why": "no independently supplied training-target reference to compare"
+    },
+    {
+      "name": "corrupted_reference_targets",
+      "expected": "problem",
+      "why": "independent reference label values were changed; mismatch proves disagreement but not which side is accurate"
+    }
+  ],
+  "baselines": [
+    {
+      "name": "metadata_only",
+      "description": "Train/eval IDs, declared model_fit_ids and X content row digests only; label pairing unobserved"
+    },
+    {
+      "name": "label_distribution",
+      "description": "Class counts or aggregate target mean, which are unchanged by permutation"
+    },
+    {
+      "name": "direct_source_comparator",
+      "description": "Equally instrumented comparator with actual source y values can identify same mismatches; HMAC not claimed novel over it"
+    }
+  ],
+  "target_security": {
+    "type": "HMAC-SHA256 of complete ordered numeric target batch, no raw labels or per-class hashes serialized",
+    "key_minimum_bytes": 16,
+    "key_storage": "secret bytes supplied separately to recorder and verifier, never stored in JSON evidence",
+    "warning": "Threat model excludes a compromised/colluding recorder and source reference; no external attestation"
+  },
+  "analysis": [
+    "Only source-consistency disagreement is measured, not ground truth correctness",
+    "All scenarios within one dataset share data, so 18 cases are not independent environments",
+    "No unknown real incidents, external blinded curators or preregistration",
+    "Previous witnessed-fit study used Iris, Breast Cancer and Diabetes; Wine, Digits, Linnerud are new to the fit witness experiment but not externally sourced",
+    "Negative controls without reference or HMAC must remain UNKNOWN",
+    "Classification target permutations preserve class counts; histograms cannot identify row-label pairing",
+    "No model repair, training initiated by the observer, or automatic policy decisions"
+  ]
+}
