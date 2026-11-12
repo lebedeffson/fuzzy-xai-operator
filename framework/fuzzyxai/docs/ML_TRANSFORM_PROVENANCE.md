@@ -108,3 +108,44 @@ comparator that sees the same fit, transform and inference arrays.
 These are 24 correlated developer-constructed scenarios and are
 NOT independent real-world fault-sensitivity estimates. Equal-access
 direct comparison can discover the same injected discrepancies.
+
+
+## Verified developmental test results, 12 November 2026
+
+Developer protocol committed before benchmark implementation:
+experiments/ml_transform_chain_protocol_v1.json
+SHA256 a2bc62868e2b1984e45cf9cbad22e317341109ddb495dc8e5383d3a9079dbdaa.
+
+GitHub Actions [run 43298398664](https://github.com/lebedeffson/fuzzy-xai-operator/actions/runs/43298398664)
+completed successfully at **semantic source commit
+386e8c334a871519271d5c9478b20c04e1ed3dac**:
+Python 3.11: 93 pytest tests and Ruff passed;
+Python 3.12: 93 pytest tests and Ruff passed.
+The first run 43297775428 also had 93 passing tests on each version,
+but Ruff found two formatting/type issues. The fixes changed only import
+grouping and exception classification, with the original protocol intact.
+
+Both real workflow-result artifacts were downloaded and verified:
+- ml-transform-chain-3.11: artifact ID 13980416621,
+  Python 3.11.18 / NumPy 2.4.6 / scikit-learn 1.9.1;
+- ml-transform-chain-3.12: artifact ID 13979489922,
+  Python 3.12.16 / NumPy 2.5.4 / scikit-learn 1.9.1.
+
+All 24 per-scenario records, the protocol SHA256, comparison outcomes and
+limit statements match across the two environments.
+
+| Controlled scenario | N | Metadata/ID baseline alerts | Source-bound transform witness problems | Equally privileged direct comparison |
+| --- | ---: | ---: | ---: | ---: |
+| Clean training and inference | 4 | 0 | 0 | 0 |
+| Transformed model fit values substituted | 4 | 0 | 4 | 4 |
+| Transformed inference input substituted | 4 | 0 | 4 | 4 |
+| Raw evaluation values changed in report | 4 | 0 | 4 | 4 |
+| No transform witness | 4 | 0 | 0; 4 UNKNOWN | 0 |
+| Preprocessor trained on evaluation samples | 4 | 4 | 4 | 4 |
+
+This is **not** an estimate of real-world false negative rates or universal
+fault detection: the faults were deliberately constructed, and the six
+cases within each dataset are correlated. The four preprocessing-leakage
+events are already identifiable from honest preprocessor-fit source IDs;
+they must not be credited as unique to FuzzyXAI. A strong equal-access
+comparator matches all injected corruption detections.
