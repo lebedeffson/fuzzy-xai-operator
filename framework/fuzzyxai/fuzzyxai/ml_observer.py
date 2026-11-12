@@ -71,7 +71,7 @@ class MLObservation:
         return asdict(self)
 
 
-def observe_ml_run(evidence: MLRunEvidence) -> MLObservation:
+def observe_ml_run(evidence: MLRunEvidence, *, target_hmac_key: bytes | None = None) -> MLObservation:
     """Inspect evidence without mutating arrays, models or stored artifacts.
 
     'ok' means only that a *specific declared check* passed.  No overall
@@ -234,6 +234,9 @@ def observe_ml_run(evidence: MLRunEvidence) -> MLObservation:
         model_fit_ids=evidence.model_fit_ids,
         preprocessor_fit_ids=evidence.preprocessor_fit_ids,
         preprocessor_applied=evidence.preprocessor_applied,
+        train_targets=evidence.train_targets,
+        evaluation_targets=evidence.evaluation_targets,
+        target_hmac_key=target_hmac_key,
     ):
         note("training", observed.code, observed.status, observed.detail, observed.observed)
 

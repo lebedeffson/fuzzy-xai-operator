@@ -136,3 +136,101 @@ source-content checks, as expected.
 The defensible contribution is **observing explicit caller-initiated
 training inputs and detecting contradictions between fit-value content,
 declared identity and manual metadata** without modifying the model.
+
+
+## Optional protected supervised-target witness
+
+The original recorder logs numeric input features X and source IDs but
+cannot detect permutations of supervised targets y. For explicitly
+initiated fits, a caller may now provide a private HMAC key to record an
+ordered numeric target-batch commitment. The commitment is **bound to the
+SHA256 of the corresponding ordered feature batch** to prevent replaying
+a label digest on a different set of fitted feature values.
+
+Example: use an approved secret source rather than generating a new key
+for every audit. Keep the key out of JSON evidence, source control, CLI
+arguments, logs and published research files.
+
+    recorder = FitRecorder(target_hmac_key=secret_key)
+    fitted = recorder.fit(
+        estimator, X_train, y_train,
+        role="model", row_ids=tuple(train_ids),
+    )
+    evidence = MLRunEvidence(
+        task="classification", model_family=type(fitted).__name__,
+        train_features=X_train, evaluation_features=X_test,
+        train_targets=reference_y_train,
+        train_ids=tuple(train_ids), evaluation_ids=tuple(test_ids),
+        preprocessor_applied=False,
+        fit_records=[entry.to_dict() for entry in recorder.records],
+    )
+    result = observe_ml_run(evidence, target_hmac_key=secret_key)
+    # Inspect the result's fit_trace_model_targets status.
+
+The key must be a bytes object of at least 16 secret bytes. The
+recorder stores **only the HMAC of the complete numeric target batch**,
+not the labels or per-class hashes. The observer needs a separately
+provided source row-ID-to-target mapping and the same secret key.
+Without either, it reports UNKNOWN, never a fabricated success. When
+no targets were supplied to any witnessed model fit, this channel is
+NOT_APPLICABLE. Numeric 1-D and multi-target 2-D arrays are supported;
+non-numeric class labels are currently UNKNOWN.
+
+Passing the same reference labels to both producer and verifier is a
+consistency test, **not proof that labels are correct**. A mismatch
+shows contradictory supplied evidence; neither observer nor HMAC can
+decide which side contains the true labels. The caller controls IDs,
+source arrays and the recorder. This code does not provide independent
+attestation, an immutable provenance store, privacy guarantees for a
+compromised secret, or universal supervised-label verification.
+
+A post-development comparison uses Wine, Digits and Linnerud data:
+experiments/ml_target_witness_postdev_protocol_v1.json. These are
+datasets not used in the fit-witness four-pipeline experiment, but
+are still sklearn sample datasets and the faults are developer-created.
+The strongest oracle comparator that sees both actual fit y and source
+reference y can detect the same contradictions by direct equality.
+No novel diagnostic advantage is claimed over that comparator.
+
+
+## Verified target-source consistency extension (12 November 2026)
+
+The post-development dataset protocol was committed **before** running the
+experiment: experiments/ml_target_witness_postdev_protocol_v1.json,
+SHA256 e05a5a7ef52596fa6a88637cc9e262d9722ac1d5ac4eeb5f26e8978726a26ea8.
+It uses Wine (classification), Digits (classification) and Linnerud
+(multi-target regression) with 6 controlled variants per dataset:
+18 **correlated** scenario observations.
+
+The source at semantic SHA f286750871e036b8387985c00bddad24b45e41f9
+passed GitHub Actions workflow 43285240892:
+**60 pytest tests and Ruff on Python 3.11, and 60 pytest tests
+and Ruff on Python 3.12**. The two real benchmark artifacts
+(target-witness-benchmark-3.11 / target-witness-benchmark-3.12,
+IDs 13973294606 / 13974871693) were downloaded and compared.
+Results, protocol hash, source case records and limits match; the
+environments use scikit-learn 1.9.1 and NumPy 2.4.6 / 2.5.4 respectively.
+
+| Prespecified case | N | Target-witness check | ID/feature check | Privileged direct y comparison |
+| --- | ---: | --- | ---: | ---: |
+| Correct labels | 3 | 3 OK | 0 alerts | 0 alerts |
+| Permuted training labels | 3 | 3 PROBLEM | 0 alerts | 3 alerts |
+| One changed training target | 3 | 3 PROBLEM | 0 alerts | 3 alerts |
+| No private target HMAC witness | 3 | 3 UNKNOWN | 0 alerts | N/A |
+| No source target reference | 3 | 3 UNKNOWN | 0 alerts | N/A |
+| Contradictory reference targets | 3 | 3 PROBLEM | 0 alerts | 3 alerts |
+
+The class-histogram / target-mean comparator also missed every
+permutation (3/3); it detected each single-target change (3/3).
+A comparator that sees the full observed y and source y achieves
+the same detection as the HMAC verifier, hence **no universal
+superiority or novel statistical detector is claimed**.
+
+The witness only tests *consistency between separately supplied labels
+and the caller-initiated fit*. It does NOT determine which labels are
+true, independently attest dataset origin, validate fairness, or
+support arbitrary class-label types. Linnerud here verifies the
+2-D training-target witness; the existing general ML observer's
+output-metric check is still limited to 1-D regression targets.
+No unseen-incident sensitivity or externally blinded evaluation
+is established.

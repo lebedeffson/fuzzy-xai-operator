@@ -1,3 +1,78 @@
+# Scoped capability verified: target-value fit provenance
+
+Date: 2026-11-12
+Branch: research/ml-target-witness-20261112
+Draft PR: https://github.com/lebedeffson/fuzzy-xai-operator/pull/7
+Base: research/ml-observed-fit-events-20261112 (draft PR #6)
+
+## Research/engineering problem
+The existing feature-row fit witness could not distinguish correct
+target labels y from a row-paired permutation of y if fit IDs and
+feature-content hashes remained unchanged. The observer must still
+remain read-only: no automatic training, corrections or operational
+decision policy.
+
+## Implemented
+- An optional private-key HMAC-SHA256 of the complete ordered finite
+  numeric 1-D/2-D target batch, bound to the corresponding exact
+  feature-batch digest and collected only after successful explicit
+  caller-initiated fit.
+- No raw target values, per-class hashes or key serialized. The caller
+  provides the same key separately to observe_ml_run for verification
+  against independently supplied source row-to-target values.
+- Fit records are backward-compatible. Missing key/reference,
+  nonnumeric labels and unsafe large integer conversion yield UNKNOWN,
+  no targets in an observed fit yield NOT_APPLICABLE. A disagreement
+  yields PROBLEM but cannot tell which label source is correct.
+- Negative tests: target shuffles, single modifications, missing sources
+  and keys, malformed/replayed HMAC, numeric strings vs numeric class IDs,
+  large integer precision, valid uint64 classes and unsupervised fit.
+- Post-development dataset protocol committed before experiment:
+  experiments/ml_target_witness_postdev_protocol_v1.json SHA256
+  e05a5a7ef52596fa6a88637cc9e262d9722ac1d5ac4eeb5f26e8978726a26ea8.
+  Wine, Digits, Linnerud: 3 datasets x 6 controlled cases = 18 correlated
+  scenario rows; these were not in the prior fit-study set, but are
+  sklearn datasets, not externally blinded sources.
+- Comparative baseline: IDs and feature hashes; class histograms/target
+  means; an equally privileged direct source-vs-fit target comparison
+  that detects the same known mismatches. No unique model-quality or
+  universal-novelty claim.
+
+## Exact verification
+Semantic source SHA f286750871e036b8387985c00bddad24b45e41f9.
+GitHub Actions run 43285240892 completed SUCCESS:
+Python 3.11: 60 pytest tests + Ruff PASS.
+Python 3.12: 60 pytest tests + Ruff PASS.
+Uploaded artifacts 13973294606 (3.11, NumPy 2.4.6) and
+13974871693 (3.12, NumPy 2.5.4), sklearn 1.9.1 in both.
+Both ZIP/JSONs downloaded and compared. Protocol digest and 18 source
+scenario records are identical. Clean 3/3 OK; permuted labels 3/3
+PROBLEM; single target modification 3/3 PROBLEM; no key and no
+reference each 3/3 UNKNOWN; wrong reference 3/3 PROBLEM. The
+privileged direct comparator catches all 9 observed contradictions
+and demonstrates no advantage at equal access to evidence.
+
+## Limitations
+This checks source consistency, not independently established label
+truth, complete unwrapped training, causal validity, predictive accuracy,
+fairness, LLM/RAG/CV generality, or security against compromised local
+recorders. HMAC key custody is an external requirement. The base
+observer's 1-D regression metric check does not yet establish support for
+multi-target evaluation metrics, although this new fit witness supports
+2-D target inputs. Results are developer-created, not externally
+blinded incident sensitivity. No protected scored/dissertation reports
+or articles were changed. PR #7 remains draft/unmerged and stacked on
+draft PRs #6/#5/#4; full-repository release approval not claimed.
+
+## Next independent acceptance criterion
+For a publication-level generality claim, use independently curated
+source references and real mislabeled/contaminated fit events on new
+datasets, separate from design and fixture authors. Compare against
+established data-provenance tooling with equal evidence availability,
+report alerts and false positives, and preserve unknown controls.
+
+---
+
 # Scoped fit-source provenance implementation verified
 
 Date: 2026-11-12
