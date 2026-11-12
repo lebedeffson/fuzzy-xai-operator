@@ -179,6 +179,7 @@ def test_regression_model_output_witness() -> None:
     ))
     assert _status(report, "output_trace_predict_values") == "ok"
     assert _status(report, "output_trace_predict_inputs") == "ok"
+    assert _status(report, "output_trace_predict_proba") == "not_applicable"
     assert report.metrics["mae"] > 0
 
 
