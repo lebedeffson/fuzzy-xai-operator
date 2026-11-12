@@ -86,3 +86,60 @@ row swaps and probability-column permutations that preserve structural
 properties. A baseline with direct access to actual model-output call
 inputs and values can detect the same defects. This is not a blinded study
 of real-world incident sensitivity or evidence of general superiority.
+
+
+## Verified developmental results (12 November 2026)
+
+The protocol was committed before implementing the benchmark at
+experiments/ml_output_witness_development_protocol_v1.json.
+Its SHA256 is
+1520580a0b640c258ee5204244cfe54a388fdea4ce1614caf45f982c82d7e79a.
+
+An initial CI run at commit 74dd16c4 failed only one benchmark assertion:
+the plain numeric comparator cast integer class predictions to float and
+then compared strings such as "1.0" against canonical class names "1".
+This mistakenly flagged two clean classifiers. The baseline was repaired
+to compare actual numeric labels with numeric class values; the
+prespecified protocol was NOT altered. The test was also corrected to
+give the ordinary classifier probability/argmax consistency check credit
+for the two real swapped-prediction violations it detects.
+
+GitHub Actions run 43293095587 at tested source commit
+0c56781b77387f8e01622a070979ac16d811e5a9 completed successfully:
+**Python 3.11: 79 pytest PASS + Ruff PASS;
+Python 3.12: 79 pytest PASS + Ruff PASS**.
+Both archived JSON artifacts were downloaded and opened:
+- ml-output-witness-3.11, artifact ID 13977288753,
+  Python 3.11.18, NumPy 2.4.6, scikit-learn 1.9.1;
+- ml-output-witness-3.12, artifact ID 13979275683,
+  Python 3.12.16, NumPy 2.5.4, scikit-learn 1.9.1.
+
+Protocol SHA256, all 22 case records, per-scenario counts,
+comparison baseline outcomes and scientific limits match exactly.
+The JSON byte hashes differ only because version/environment data
+differ; results are semantically identical.
+
+| Scenario | Cases | Ordinary numeric baseline | Output witness | Equally privileged direct comparator |
+| --- | ---: | ---: | ---: | ---: |
+| Clean | 4 | 0 | 0 | 0 |
+| Swapped predictions | 4 | 2 | 4 | 4 |
+| Reordered evaluation feature rows | 4 | 0 | 4 | 4 |
+| Reordered evaluation row IDs | 4 | 0 | 4 | 4 |
+| Missing output call witness | 4 | 0 | 4 UNKNOWN, no claimed detection | 0 |
+| Probability columns swapped together with class names | 2 | 0 | 2 | 2 |
+
+The 22 cases are controlled modifications of only four real sklearn
+model/dataset pipelines. They are correlated and developer-constructed,
+not independent real-world incidents. The measured advantage relative to
+ordinary shape/finite/probability checks comes from additional source
+evidence. **An equally privileged direct comparison can flag every
+altered output that the witness detects.** No universal model-fault
+detection, prediction-accuracy improvement, label-truth verification,
+model identity attestation, or generality to LLM/CV/RAG is established.
+
+A complete real caller-initiated path is covered by
+tests/test_ml_observer_end_to_end.py: feature data, actual fit and target
+witnesses, explicit predict/predict_proba, persisted JSON evidence,
+read-only audit and separate injected corruption of targets versus outputs.
+All previous observer/fit/target and public API regression tests remain in
+the same 79-test matrix.
