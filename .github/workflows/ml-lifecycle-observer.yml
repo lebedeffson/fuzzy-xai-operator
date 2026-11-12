@@ -8,6 +8,9 @@ on:
     paths:
       - "framework/fuzzyxai/fuzzyxai/ml_observer.py"
       - "tests/test_ml_lifecycle_observer.py"
+      - "tests/test_ml_lifecycle_benchmark.py"
+      - "experiments/ml_lifecycle_observer_benchmark.py"
+      - "experiments/ml_lifecycle_development_protocol_v1.json"
       - ".github/workflows/ml-lifecycle-observer.yml"
   workflow_dispatch:
 
@@ -33,6 +36,14 @@ jobs:
       - name: Install framework development dependencies
         run: python -m pip install -e ".[dev]"
       - name: Test read-only ML lifecycle observer
-        run: python -m pytest -q tests/test_ml_lifecycle_observer.py
-      - name: Lint audit code and tests
-        run: ruff check framework/fuzzyxai/fuzzyxai/ml_observer.py tests/test_ml_lifecycle_observer.py
+        run: python -m pytest -q tests/test_ml_lifecycle_observer.py tests/test_ml_lifecycle_benchmark.py
+      - name: Run predeclared real-pipeline developmental comparison
+        run: python -m experiments.ml_lifecycle_observer_benchmark > ml_lifecycle_benchmark.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ml-lifecycle-benchmark-${{ matrix.python-version }}
+          path: ml_lifecycle_benchmark.json
+      - name: Lint audit code, benchmark and tests
+        run: |
+          ruff check framework/fuzzyxai/fuzzyxai/ml_observer.py tests/test_ml_lifecycle_observer.py \
+            experiments/ml_lifecycle_observer_benchmark.py tests/test_ml_lifecycle_benchmark.py
