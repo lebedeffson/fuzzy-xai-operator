@@ -1,25 +1,57 @@
 # Current scoped task: read-only ML lifecycle observer
 
-User objective (2026-11-12): FuzzyXAI should simply observe and check
-**data, model training and output**, without fixing models, retraining,
-inventing explanations or choosing operational actions.
+Branch: research/ml-lifecycle-observer-readonly-20261112
+Draft PR: https://github.com/lebedeffson/fuzzy-xai-operator/pull/5
+Base (still draft PR #4): research/observer-evidence-binding-20261111
 
-- Branch: research/ml-lifecycle-observer-readonly-20261112
-- Draft PR: https://github.com/lebedeffson/fuzzy-xai-operator/pull/5
-- New module: framework/fuzzyxai/fuzzyxai/ml_observer.py
-- Usage: python -m fuzzyxai.ml_observer collected_run.json --output observation.json
-- Numeric tabular classification, regression, clustering are supported;
-  other AI modalities require adapters rather than fabricated checks.
-- No model fit/predict, repair, state mutation, or automatic decision.
-- Explicit "unknown" for missing source evidence; no general quality score.
-- Tests: tests/test_ml_lifecycle_observer.py; Python 3.11/3.12 scoped CI
-  under .github/workflows/ml-lifecycle-observer.yml.
-- At this checkpoint 11 scoped tests passed on both versions at prior
-  code state (Actions 43233813218) but Ruff had a type-union lint error.
-  This was corrected; final PR head CI remains pending verification.
-- Next action: validate latest CI at PR head, fix exact failures without
-  weakening checks; keep draft, no merge. Previous observer research remains
-  below and is not reinterpreted as universal accuracy evidence.
+## Parent objective
+
+Build a useful **read-only** inspector of model data, fitting evidence and
+outputs. Never call fit/predict/repair or fabricate provenance, metrics or
+quality guarantees. Observational records may be incomplete; distinguish
+unknown from not_applicable and from a measured contradiction.
+
+## Implemented
+
+- Typed MLRunEvidence/observe_ml_run plus read-only JSON CLI.
+- Classification/regression/clustering numeric-tabular checks: ordered schema,
+  finite inputs, class balance, split overlap, actual fit-ID declarations,
+  honest no-preprocessor N/A status, loss-history availability, class-probability
+  geometry, score/label mapping and standard measured performance metrics.
+- Cross-split exact numeric-feature duplicates under *new IDs* cause WARN only;
+  independently repeated records may be legitimate (Iris clean warning).
+- Descriptive mean-shift heuristic; no drift or causal guarantee.
+- Fixed protocol in experiments/ml_lifecycle_development_protocol_v1.json
+  (SHA256 0957fb3b51eee3d2c3ebba3c2f1a4ffd4f6fb125c78787b2e4e36947a2966395)
+  and four newly trained sklearn pipelines: Breast Cancer logistic, Wine RF,
+  Diabetes RF regression, Iris KMeans. 33 correlated scenarios spanning real
+  model/preprocessor contamination and downstream controlled faults.
+- Competent numeric and numeric+ID/schema baselines; no claim that
+  standard ID/schema checks are novel to FuzzyXAI.
+- Negative controls: 1 clean Iris duplicate-row warning, and 3 label-map
+  perturbations not detectable semantically from these artifacts.
+- Earlier run 43238897913 at source 7088b2dc6 succeeded on Python 3.11/3.12:
+  17 focused tests per version and Ruff; archived JSON reports agree.
+
+## Integration status
+
+Extra public API integration test exposed a stale **base-branch** assertion
+that 41 operators exist, whereas PR #4 legitimately added the 42nd:
+framework.exact_interventional_shapley_observer. Both Python jobs in
+43239856603 had 25 passing tests and that one stale manifest-count failure.
+The upstream assertion was fixed and strengthened on the PR #4 branch at
+commit 12177d85a5a2c1ce4b933753321453ec65a9fe29. This is not a new
+observer behavioral defect.
+
+## Exact next executable action
+
+Inspect fresh PR #5 CI on current head after base update. Require focused
+tests, integration tests and Ruff green on both Python versions, inspect
+actual per-version benchmark artifacts (cases, counts, protocol hash), then
+update PR #5 body with factual receipt. Do not merge PR #4 or #5, change
+locked publication/dissertation experiments or generalize controlled
+fault-injection outcomes into universal fault detection.
+
 
 ---
 
