@@ -67,7 +67,10 @@ def _baseline(evidence: MLRunEvidence) -> bool:
     """Ordinary numeric schema, finite, ID uniqueness, probability geometry."""
     try:
         X = check_array(evidence.evaluation_features, dtype=float)
-        predicted = np.asarray(evidence.predictions, dtype=float)
+        native_prediction = np.asarray(evidence.predictions)
+        if native_prediction.dtype.kind not in "biuf":
+            return True
+        predicted = np.asarray(native_prediction, dtype=float)
         if predicted.ndim != 1 or len(predicted) != len(X) or not np.isfinite(predicted).all():
             return True
         if evidence.evaluation_ids is not None and (
@@ -85,9 +88,14 @@ def _baseline(evidence: MLRunEvidence) -> bool:
             ):
                 return True
             classes = evidence.probability_classes
-            if classes is not None and len(classes) == p.shape[1]:
-                from_probabilities = np.asarray(classes)[p.argmax(axis=1)]
-                if not np.array_equal(from_probabilities, predicted.astype(str)):
+            if classes is not None:
+                if len(classes) != p.shape[1] or len(set(classes)) != len(classes):
+                    return True
+                numeric_classes = np.asarray(classes, dtype=float)
+                if not np.isfinite(numeric_classes).all():
+                    return True
+                from_probabilities = numeric_classes[p.argmax(axis=1)]
+                if not np.array_equal(from_probabilities, predicted):
                     return True
     except (TypeError, ValueError):
         return True
