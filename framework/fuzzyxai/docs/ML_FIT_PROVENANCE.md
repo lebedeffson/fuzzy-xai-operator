@@ -93,3 +93,46 @@ The new check does not claim novelty over a system that already observes
 authenticated fit events and source content. Results are correlated
 developer-created fault injections, NOT independent blind accuracy
 measurements, proofs of model quality, or unknown-fault detection.
+
+
+## Measured developmental comparison, 12 November 2026
+
+The original protocol file was committed before the benchmark was run:
+experiments/ml_fit_source_witness_protocol_v1.json, SHA256
+dc7cdfb78d3a2ff3540ba67152042bcc3966ff5f0021d042fa48f7c9a264e93b.
+The first benchmark implementation mistakenly used tree/RandomForest
+estimators instead of the declared LogisticRegression and LinearRegression.
+**Those original results were not accepted as protocol-compliant.**
+The benchmark was repaired to instantiate the protocol's exact estimator
+types. For unscaled LogisticRegression, solver=newton-cholesky and
+max_iter=800 were used after an LBFGS convergence warning was observed.
+This is a developmental solver choice, not a preregistered comparison
+of optimizers.
+
+Corrected source commit f1fe1528cfc1e2bbf141eb60066bd84364cd1395
+passed [GitHub Actions 43278096157](https://github.com/lebedeffson/fuzzy-xai-operator/actions/runs/43278096157)
+on Python 3.11 (scikit-learn 1.9.1, NumPy 2.4.6) and Python 3.12
+(scikit-learn 1.9.1, NumPy 2.5.4): **37 tests and Ruff passed
+in each environment**. Both archived benchmark JSON files were downloaded
+and compared; they agree by dataset, scenario, status and protocol hash.
+All recorded LogisticRegression fits converged.
+
+| Scenario | Cases | Manual fit-ID baseline alerts | Witness alerts |
+|---|---:|---:|---:|
+| Only train inputs, honest IDs | 4 | 0 | 0 |
+| Evaluation data included, honest fit IDs | 4 | 4 | 4 |
+| Evaluation values disguised under train IDs | 4 | 0 | 4 (raw content mismatch) |
+| Evaluation fit witnessed, manual report hides its IDs | 4 | 0 | 4 |
+| No instrumented fit record | 4 | 0 | 0; 4 unknown |
+
+These are 20 developer-created scenarios on four model/dataset pipelines,
+not 20 statistically independent environments. This is a software
+fault-injection result, not estimated sensitivity to real-world unknown
+leakage. The caller can forge both source IDs and data; hashes are not
+external attestations. A witness does not authenticate supervised target
+labels. The shuffled-label negative control still passes structural
+source-content checks, as expected.
+
+The defensible contribution is **observing explicit caller-initiated
+training inputs and detecting contradictions between fit-value content,
+declared identity and manual metadata** without modifying the model.
