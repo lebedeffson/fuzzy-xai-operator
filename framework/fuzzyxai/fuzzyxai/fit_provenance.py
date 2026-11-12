@@ -78,7 +78,18 @@ def _target_matrix(raw: Any, expected_rows: int) -> np.ndarray | None:
     Raw targets are never placed in a fit record.
     """
     try:
-        target = np.asarray(raw, dtype="<f8")
+        native = np.asarray(raw)
+        # Numeric *strings* and arbitrary object labels have distinct
+        # semantics; converting them silently could falsely certify a run.
+        if native.dtype.kind not in "biuf":
+            return None
+        if native.dtype.kind == "f" and native.dtype.itemsize > 8:
+            return None
+        if native.dtype.kind in "iu" and (
+            np.any(native > 2**53) or np.any(native < -(2**53))
+        ):
+            return None
+        target = np.asarray(native, dtype="<f8")
     except (ValueError, TypeError, OverflowError):
         return None
     if target.ndim == 1:
