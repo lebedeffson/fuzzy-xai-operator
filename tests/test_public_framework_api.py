@@ -168,7 +168,8 @@ def test_untransformed_structural_evidence_is_insufficient_not_a_fake_gamma() ->
 def test_operator_manifest_is_complete_and_resolvable() -> None:
     report = validate_manifest()
     assert report["status"] == "PASS", report["errors"]
-    assert report["operator_count"] == 41
+    assert report["operator_count"] == 42
+    assert "framework.exact_interventional_shapley_observer" in report["operator_ids"]
     assert {
         "h10_c5.natural_incident_route_audit",
         "h10_c6.cut_robustness",
