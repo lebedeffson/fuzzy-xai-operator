@@ -126,7 +126,7 @@ def test_real_preprocessor_leak_is_recorded_even_with_clean_manual_metadata() ->
 
 
 def test_false_row_ids_do_not_hide_mismatched_raw_fit_content() -> None:
-    x, test_x, y, test_y, tr_ids, te_ids = _split()
+    x, test_x, _y, test_y, tr_ids, te_ids = _split()
     recorder = FitRecorder()
     subset = test_x
     mislabeled_ids = tr_ids[:len(test_x)]
