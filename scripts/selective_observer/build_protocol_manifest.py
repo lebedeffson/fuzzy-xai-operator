@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Hash the two-stage protocol without pretending that the draft is preregistered."""
 
 from __future__ import annotations
@@ -6,7 +5,6 @@ from __future__ import annotations
 import hashlib
 import json
 from pathlib import Path
-
 
 ROOT = Path(__file__).resolve().parents[2]
 STUDY = ROOT / "study/selective_observer"

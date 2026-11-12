@@ -2,6 +2,10 @@
 
 from __future__ import annotations
 
+from fuzzyxai.selective_observer.evidence_identity import LocalEvidenceStatus, observe_input_binding, observe_local_explanation, observe_reference_binding
+from fuzzyxai.selective_observer.exact_shapley import verify_exact_interventional_shapley
+from fuzzyxai.selective_observer.local_effects import verify_additive_local_effects
+
 from .contracts import (
     DeploymentContext,
     ExplanationArtifact,
@@ -10,7 +14,6 @@ from .contracts import (
     PredictionArtifact,
     RouteArtifacts,
 )
-
 
 BLOCKING_CHECKS = {
     "MODEL_VERSION_MISMATCH",
@@ -24,6 +27,12 @@ BLOCKING_CHECKS = {
     "CRITICAL_DATA_QUALITY_FAULT",
     "BROKEN_TRANSFORMATION",
     "CORRUPTED_AUDIT_HASH",
+    "LOCAL_EXPLANATION_INCOMPATIBLE",
+    "LOCAL_EFFECTS_INCOMPATIBLE",
+    "LOCAL_INPUT_INCOMPATIBLE",
+    "LOCAL_REFERENCE_INCOMPATIBLE",
+    "EXACT_SHAPLEY_INCOMPATIBLE",
+    "EXPLANATION_TARGET_MISMATCH",
 }
 
 
@@ -51,6 +60,101 @@ def evaluate_hard_guard(
         reasons.append("MISSING_MANDATORY_PROVENANCE")
     if explanation.representation_loss > context.maximum_reduction_loss:
         reasons.append("EXCESSIVE_REDUCTION_LOSS")
+    if context.require_local_evidence or context.require_local_effect_verification or context.require_exact_shapley_verification or explanation.local_evidence is not None:
+        observation = observe_local_explanation(
+            explanation.local_evidence,
+            expected_object_id=prediction.object_id,
+            expected_model_version=prediction.model_version,
+            expected_target_class=prediction.prediction,
+            expected_feature_names=prediction.feature_names,
+            expected_source_sha256=explanation.canonical_sha256,
+        )
+        if observation.status is LocalEvidenceStatus.INCOMPATIBLE:
+            reasons.append("LOCAL_EXPLANATION_INCOMPATIBLE")
+            reasons.extend(f"LOCAL_EVIDENCE:{code}" for code in observation.contradictions)
+        elif observation.status is LocalEvidenceStatus.INSUFFICIENT_EVIDENCE:
+            reasons.append("LOCAL_EXPLANATION_INSUFFICIENT_EVIDENCE")
+            missing.extend(f"LOCAL_EVIDENCE:{field}" for field in observation.missing_fields)
+    if context.require_local_effect_verification or route.observed_local_effects is not None:
+        effect_observation = verify_additive_local_effects(
+            explanation.local_evidence,
+            route.observed_local_effects,
+        )
+        if effect_observation.status is LocalEvidenceStatus.INCOMPATIBLE:
+            reasons.append("LOCAL_EFFECTS_INCOMPATIBLE")
+            reasons.extend(f"LOCAL_EFFECT:{code}" for code in effect_observation.contradictions)
+        elif effect_observation.status is LocalEvidenceStatus.INSUFFICIENT_EVIDENCE:
+            reasons.append("LOCAL_EFFECTS_INSUFFICIENT_EVIDENCE")
+            missing.extend(f"LOCAL_EFFECT:{field}" for field in effect_observation.missing_fields)
+    local = explanation.local_evidence
+    if context.require_input_binding or (
+        prediction.input_sha256 is not None
+        and local is not None
+        and local.input_sha256 is not None
+    ):
+        input_observation = observe_input_binding(
+            prediction_input_sha256=prediction.input_sha256,
+            explanation_input_sha256=local.input_sha256 if local is not None else None,
+            model_effect_input_sha256=(
+                route.observed_local_effects.input_sha256
+                if route.observed_local_effects is not None
+                else None
+            ),
+            expect_model_effects=(
+                context.require_local_effect_verification
+                or route.observed_local_effects is not None
+            ),
+        )
+        if input_observation.status is LocalEvidenceStatus.INCOMPATIBLE:
+            reasons.append("LOCAL_INPUT_INCOMPATIBLE")
+            reasons.extend(f"LOCAL_INPUT:{code}" for code in input_observation.contradictions)
+        elif input_observation.status is LocalEvidenceStatus.INSUFFICIENT_EVIDENCE:
+            reasons.append("LOCAL_INPUT_INSUFFICIENT_EVIDENCE")
+            missing.extend(f"LOCAL_INPUT:{field}" for field in input_observation.missing_fields)
+    observed_effects = route.observed_local_effects
+    if context.require_reference_binding or (
+        local is not None
+        and local.reference_sha256 is not None
+        and observed_effects is not None
+        and observed_effects.reference_sha256 is not None
+    ):
+        observation = observe_reference_binding(
+            explanation_reference_sha256=(
+                local.reference_sha256 if local is not None else None
+            ),
+            model_effect_reference_sha256=(
+                observed_effects.reference_sha256
+                if observed_effects is not None
+                else None
+            ),
+        )
+        if observation.status is LocalEvidenceStatus.INCOMPATIBLE:
+            reasons.append("LOCAL_REFERENCE_INCOMPATIBLE")
+            reasons.extend(
+                f"LOCAL_REFERENCE:{code}" for code in observation.contradictions
+            )
+        elif observation.status is LocalEvidenceStatus.INSUFFICIENT_EVIDENCE:
+            reasons.append("LOCAL_REFERENCE_INSUFFICIENT_EVIDENCE")
+            missing.extend(
+                f"LOCAL_REFERENCE:{field}" for field in observation.missing_fields
+            )
+    if context.require_exact_shapley_verification or route.observed_exact_shapley is not None:
+        shapley_observation = verify_exact_interventional_shapley(
+            explanation.local_evidence,
+            route.observed_exact_shapley,
+        )
+        if shapley_observation.status is LocalEvidenceStatus.INCOMPATIBLE:
+            reasons.append("EXACT_SHAPLEY_INCOMPATIBLE")
+            reasons.extend(
+                f"EXACT_SHAPLEY:{code}" for code in shapley_observation.contradictions
+            )
+        elif shapley_observation.status is LocalEvidenceStatus.INSUFFICIENT_EVIDENCE:
+            reasons.append("EXACT_SHAPLEY_INSUFFICIENT_EVIDENCE")
+            missing.extend(
+                f"EXACT_SHAPLEY:{field}" for field in shapley_observation.missing_fields
+            )
+    if context.expected_explanation_target is not None and context.expected_explanation_target != prediction.prediction:
+        reasons.append("EXPLANATION_TARGET_MISMATCH")
     if route.forbidden_rule_conflict:
         reasons.append("FORBIDDEN_RULE_CONFLICT")
     if route.critical_data_quality_fault:

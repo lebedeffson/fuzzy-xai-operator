@@ -1,0 +1,95 @@
+name: Observer evidence-binding regression
+
+on:
+  push:
+    branches:
+      - research/observer-evidence-binding-20261111
+  pull_request:
+    paths:
+      - "framework/fuzzyxai/fuzzyxai/practical_controller/**"
+      - "framework/fuzzyxai/fuzzyxai/selective_observer/**"
+      - "tests/practical_controller/**"
+      - "tests/selective_observer/**"
+      - ".github/workflows/observer-evidence-binding.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# Keep the newest branch/PR regression, not a backlog of obsolete commits.
+concurrency:
+  group: observer-evidence-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  observer-regression:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install framework and test dependencies
+        run: python -m pip install -e ".[dev]"
+      - name: Validate public operator manifest
+        run: python -m fuzzyxai.audit.operators_manifest > observer_manifest_validation.json
+      - name: Test evidence bindings, OOF isolation and practical routes
+        run: |
+          python -m pytest -q \
+            tests/practical_controller/test_local_evidence_identity.py \
+            tests/practical_controller/test_local_effects.py \
+            tests/practical_controller/test_observer_real_models.py \
+            tests/practical_controller/test_observer_native_shap.py \
+            tests/practical_controller/test_observer_shap_class_semantics.py \
+            tests/practical_controller/test_observer_shap_reference_rebase.py \
+            tests/practical_controller/test_observer_exact_shapley.py \
+            tests/practical_controller/test_observer_nonlinear_benchmark.py \
+            tests/practical_controller/test_observer_transfer_evaluation.py \
+            tests/practical_controller/test_practical_controller.py \
+            tests/selective_observer/test_oof_fold_isolation.py \
+            tests/selective_observer/test_controller.py \
+            tests/selective_observer/test_route_validity.py \
+            tests/operators
+      - name: Generate reproducible developmental benchmark
+        run: python experiments/observer_local_evidence_benchmark.py > observer_benchmark_report.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: observer-benchmark-${{ matrix.python-version }}
+          path: observer_benchmark_report.json
+      - name: Generate nonlinear Shapley developmental benchmark
+        run: python -m experiments.observer_nonlinear_shap_benchmark > observer_nonlinear_benchmark_report.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: observer-nonlinear-benchmark-${{ matrix.python-version }}
+          path: observer_nonlinear_benchmark_report.json
+      - name: Generate prespecified transfer benchmark
+        run: python -m experiments.observer_transfer_evaluation > observer_transfer_report.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: observer-transfer-${{ matrix.python-version }}
+          path: observer_transfer_report.json
+      - name: Ruff on changed observer and tests
+        run: |
+          ruff check \
+            framework/fuzzyxai/fuzzyxai/practical_controller/contracts.py \
+            framework/fuzzyxai/fuzzyxai/practical_controller/guards.py \
+            framework/fuzzyxai/fuzzyxai/selective_observer/evidence_identity.py \
+            framework/fuzzyxai/fuzzyxai/selective_observer/local_effects.py \
+            framework/fuzzyxai/fuzzyxai/selective_observer/exact_shapley.py \
+            framework/fuzzyxai/fuzzyxai/selective_observer/controller.py \
+            tests/practical_controller/test_local_evidence_identity.py \
+            tests/practical_controller/test_observer_real_models.py \
+            tests/practical_controller/test_observer_native_shap.py \
+            tests/practical_controller/test_observer_shap_class_semantics.py \
+            tests/practical_controller/test_observer_shap_reference_rebase.py \
+            tests/practical_controller/test_observer_exact_shapley.py \
+            tests/practical_controller/test_observer_nonlinear_benchmark.py \
+            tests/practical_controller/test_observer_transfer_evaluation.py \
+            experiments/observer_local_evidence_benchmark.py \
+            experiments/observer_nonlinear_shap_benchmark.py \
+            experiments/observer_transfer_evaluation.py \
+            tests/selective_observer/test_oof_fold_isolation.py

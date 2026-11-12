@@ -3,10 +3,9 @@
 from __future__ import annotations
 
 import re
+from collections.abc import Sequence
 from dataclasses import asdict, dataclass
 from enum import Enum
-from typing import Sequence
-
 
 SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
 COMMIT_RE = re.compile(r"^[0-9a-f]{40}$")

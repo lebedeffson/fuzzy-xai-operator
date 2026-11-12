@@ -4,16 +4,16 @@ from __future__ import annotations
 
 import hashlib
 import json
+from collections.abc import Sequence
 from dataclasses import asdict
-from typing import Sequence
 
 import numpy as np
 
 from .contracts import (
+    FEATURE_NAMES,
     ConfirmatoryExample,
     ConfirmatoryProtocolLock,
     DevelopmentExample,
-    FEATURE_NAMES,
     PolicyMetrics,
     SelectiveAction,
     SelectiveControllerSpec,
@@ -40,7 +40,7 @@ def fit_selective_controller(
     scales[scales <= 1e-12] = 1.0
     normalized = (matrix - means) / scales
     groups = np.asarray([example.group_id for example in examples])
-    oof_risk = _oof_probabilities(normalized, labels, groups, folds=folds, seed=seed)
+    oof_risk = _oof_probabilities(matrix, labels, groups, folds=folds, seed=seed)
     coefficients, intercept = _fit_logistic(normalized, labels, seed=seed)
 
     baseline_accept = matrix[:, 0] <= 1.0 - baseline_confidence_threshold
@@ -198,6 +198,8 @@ def _oof_probabilities(
 ) -> np.ndarray:
     from sklearn.linear_model import LogisticRegression
     from sklearn.model_selection import StratifiedGroupKFold
+    from sklearn.pipeline import make_pipeline
+    from sklearn.preprocessing import StandardScaler
 
     counts = np.bincount(labels)
     effective_folds = min(folds, int(counts.min()), len(np.unique(groups)))
@@ -206,7 +208,12 @@ def _oof_probabilities(
     splitter = StratifiedGroupKFold(n_splits=effective_folds, shuffle=True, random_state=seed)
     result: np.ndarray = np.zeros(len(labels), dtype=float)
     for train, validation in splitter.split(matrix, labels, groups):
-        model = LogisticRegression(max_iter=1000, class_weight="balanced", random_state=seed)
+        if len(np.unique(labels[train])) != 2:
+            raise ValueError("grouped OOF training fold contains only one outcome class")
+        model = make_pipeline(
+            StandardScaler(),
+            LogisticRegression(max_iter=1000, class_weight="balanced", random_state=seed),
+        )
         model.fit(matrix[train], labels[train])
         result[validation] = model.predict_proba(matrix[validation])[:, 1]
     return result

@@ -64,6 +64,14 @@ operators:
     tests: [tests/h10_c4/test_global_cut_execution.py, tests/h10_c4/test_full_recertification.py, tests/h10_c4/test_cost_sensitivity.py]
     artifacts: [results/h10_c4/H10_C4_FINAL_STATUS.json, reports/h10_c4/OPERATIONAL_UTILITY_REPORT.md]
     visualization: []
+  - id: framework.exact_interventional_shapley_observer
+    dissertation_ref: "exploratory instance-bound XAI evidence, non-confirmatory"
+    callable: fuzzyxai.selective_observer:collect_exact_interventional_shapley
+    input_schema: OrderedNumericInstanceEmpiricalBackgroundAndTrustedScalarModelCallback
+    output_schema: ExactShapleyEvidence
+    tests: [tests/practical_controller/test_observer_exact_shapley.py, tests/practical_controller/test_observer_transfer_evaluation.py]
+    artifacts: [framework/fuzzyxai/docs/OBSERVER_EVIDENCE_BINDING.md]
+    visualization: []
   - id: framework.diagnostic_service
     dissertation_ref: "diagnostic framework v21 exploratory implementation"
     callable: fuzzyxai.diagnostics:DiagnosticService

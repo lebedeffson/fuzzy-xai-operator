@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import pytest
-
 from fuzzyxai.selective_observer import ConfirmatoryProtocolLock
 
 
