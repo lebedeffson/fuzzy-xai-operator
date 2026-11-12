@@ -40,6 +40,7 @@ class MLRunEvidence:
     evaluation_ids: tuple[str, ...] | None = None
     model_fit_ids: tuple[str, ...] | None = None
     preprocessor_fit_ids: tuple[str, ...] | None = None
+    preprocessor_applied: bool | None = None
     train_loss: tuple[float, ...] | None = None
     validation_loss: tuple[float, ...] | None = None
     model_version: str | None = None
@@ -202,6 +203,13 @@ def observe_ml_run(evidence: MLRunEvidence) -> MLObservation:
         note("training", "split_isolation", "unknown", "Cannot establish split separation without both row-ID lists")
 
     for field_name, fit_raw in (("model_fit", evidence.model_fit_ids), ("preprocessor_fit", evidence.preprocessor_fit_ids)):
+        if field_name == "preprocessor_fit" and evidence.preprocessor_applied is False:
+            if fit_raw is None:
+                note("training", "preprocessor_fit_ids", "not_applicable", "The declared pipeline has no fitted preprocessor")
+                note("training", "preprocessor_fit_isolation", "not_applicable", "No preprocessor fit was declared; the claim is not authenticated")
+            else:
+                note("training", "preprocessor_fit_isolation", "problem", "A pipeline declared no preprocessor but supplies preprocessor fit IDs")
+            continue
         fit_ids = ids(field_name + "_ids", fit_raw, None)
         if fit_ids is None or eval_ids is None:
             note("training", field_name + "_isolation", "unknown", "Cannot inspect fit/evaluation overlap")
