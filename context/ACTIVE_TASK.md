@@ -1,3 +1,73 @@
+# Verified scope: single-step numeric preprocessing evidence
+
+Date: 2026-11-12
+Branch: research/ml-transform-chain-20261112
+Draft PR: https://github.com/lebedeffson/fuzzy-xai-operator/pull/9
+Base: research/ml-output-call-witness-20261112 (draft PR #8)
+
+## Parent purpose and limits
+FuzzyXAI here is a read-only observer of data, training and model output
+for numeric tabular ML. The observer itself NEVER trains, calls transform,
+predicts, repairs, claims full run authenticity or autonomously acts.
+
+## Implementation
+- Optional TransformRecorder.transform forwards ONE explicitly requested
+  transformer call and records ordered raw source row-ID/content SHA256,
+  numeric transformed output SHA256, width and declared transformer type/tag.
+- MLRunEvidence.transform_records feeds audit_transform_chain: raw train/eval
+  source binding, preprocessor fit input/type agreement, transformed model
+  fit and inference input links, with explicit UNKNOWN for missing, duplicate,
+  unsupported, sparse/multi-stage, or unselected batch witnesses.
+- Existing fit_trace_model_content/output_trace_predict_inputs remain UNKNOWN
+  for transformed features; new specific transform_model_fit_link and
+  transform_predict_link report the supported cross-stage checks.
+- Numeric-only 1-step StandardScaler path. Actual transformer object identity
+  and whether all execution paths were instrumented are NOT authenticated.
+- Tests include real sklearn StandardScaler -> fit -> predict/proba, no
+  automatic model calls, erroneous model-fit and inference transform values,
+  raw evaluation report modifications, fit-on-test leakage, forged digest,
+  repeated/missing events, unavailable string output, target mismatch and
+  reopen from JSON.
+- Frozen developmental protocol (committed before benchmark):
+  experiments/ml_transform_chain_protocol_v1.json SHA256
+  a2bc62868e2b1984e45cf9cbad22e317341109ddb495dc8e5383d3a9079dbdaa.
+  Four sklearn pipelines x six known correlated scenarios = 24 cases.
+  Not an independent blind study.
+
+## Exact verified evidence
+Semantic source SHA 386e8c334a871519271d5c9478b20c04e1ed3dac.
+GitHub Actions 43298398664 SUCCESS:
+  Python 3.11: 93 pytest PASS + Ruff PASS.
+  Python 3.12: 93 pytest PASS + Ruff PASS.
+Archived results 13980416621 (Python 3.11) and
+13979489922 (Python 3.12) downloaded; all 24 per-case records,
+protocol SHA, comparison counts and declared limits MATCH.
+Clean 4/4 no false problems. Added transform evidence found 12/12
+developer-controlled fit/inference/source content substitutions; baseline
+ID checks found none of these. Both new observer and equal-access
+comparator caught all 16/16 injected inconsistencies, including four
+preprocessing fit-on-test events that standard fit-ID checks ALSO caught.
+Missing transform events 4/4 -> UNKNOWN, not a false acceptance.
+
+Docs: framework/fuzzyxai/docs/ML_TRANSFORM_PROVENANCE.md.
+
+## Scientific/release boundary
+The 24 cases share four datasets and were designed by the developers.
+No general unknown-incident sensitivity, model quality guarantee,
+transform/model identity attestation, data origin or universal ML claim.
+The current code/CI are a scoped check: do not assert the full-repository
+release suite is green. Existing protected scientific experiments,
+dissertation chapters and four articles were not edited.
+PR #9 remains DRAFT and UNMERGED, stacked on earlier draft observer PRs.
+
+## Next meaningful independent research acceptance criterion
+Use externally sourced, independently prepared fit/input/output traces
+(including unscripted real preprocessing failures), compare to tools with
+equivalent access, report clean false alarms and UNKNOWN rates. Do not add
+autonomous repair or claim standards-complete model provenance.
+
+---
+
 # Scoped capability verified: observed model output provenance
 
 Date: 2026-11-12

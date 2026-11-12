@@ -20,6 +20,7 @@ from sklearn.metrics import accuracy_score, f1_score, mean_absolute_error, r2_sc
 
 from .fit_provenance import audit_fit_trace
 from .output_provenance import audit_output_calls
+from .transform_provenance import audit_transform_chain
 
 Task = Literal["classification", "regression", "clustering"]
 Stage = Literal["data", "training", "output"]
@@ -46,6 +47,7 @@ class MLRunEvidence:
     preprocessor_applied: bool | None = None
     fit_records: Any | None = None
     output_records: Any | None = None
+    transform_records: Any | None = None
     train_loss: tuple[float, ...] | None = None
     validation_loss: tuple[float, ...] | None = None
     model_version: str | None = None
@@ -241,6 +243,22 @@ def observe_ml_run(evidence: MLRunEvidence, *, target_hmac_key: bytes | None = N
         target_hmac_key=target_hmac_key,
     ):
         note("training", observed.code, observed.status, observed.detail, observed.observed)
+
+    for transformed in audit_transform_chain(
+        evidence.transform_records,
+        train_features=evidence.train_features,
+        evaluation_features=evidence.evaluation_features,
+        train_ids=evidence.train_ids,
+        evaluation_ids=evidence.evaluation_ids,
+        fit_records=evidence.fit_records,
+        output_records=evidence.output_records,
+        preprocessor_applied=evidence.preprocessor_applied,
+        task=evidence.task,
+    ):
+        note("training" if transformed.code in (
+            "transform_train_input", "transform_preprocessor_fit_link",
+            "transform_model_fit_link", "transform_identity", "transform_trace",
+        ) else "output", transformed.code, transformed.status, transformed.detail)
 
     if evidence.model_version is None or evidence.random_seed is None:
         note("training", "run_identity", "unknown", "Version and seed are both needed for a minimal run identity; they do not guarantee reproducibility")
