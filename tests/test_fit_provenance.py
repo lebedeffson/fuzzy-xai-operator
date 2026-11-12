@@ -7,7 +7,7 @@ the caller-facing recorder, then inspect the immutable recorded evidence.
 from __future__ import annotations
 
 import json
-from dataclasses import asdict, replace
+from dataclasses import asdict
 
 import numpy as np
 import pytest
@@ -128,9 +128,9 @@ def test_real_preprocessor_leak_is_recorded_even_with_clean_manual_metadata() ->
 def test_false_row_ids_do_not_hide_mismatched_raw_fit_content() -> None:
     x, test_x, y, test_y, tr_ids, te_ids = _split()
     recorder = FitRecorder()
-    subset = test_x[:9]
-    mislabeled_ids = tr_ids[:9]
-    labels = test_y[:9]
+    subset = test_x
+    mislabeled_ids = tr_ids[:len(test_x)]
+    labels = test_y
     # A genuine fit call on evaluation feature values, but caller supplied
     # training IDs. Ordinary ID provenance alone cannot discover the mismatch.
     recorder.fit(LogisticRegression(max_iter=700), subset, labels, row_ids=mislabeled_ids, role="model")
