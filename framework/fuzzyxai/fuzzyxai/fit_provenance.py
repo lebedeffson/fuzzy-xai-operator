@@ -123,7 +123,7 @@ class FitRecorder:
 
 def _parse_records(raw: Any) -> tuple[FitCallRecord, ...]:
     if not isinstance(raw, (tuple, list)):
-        raise ValueError("fit trace must be an array of records")
+        raise TypeError("fit trace must be an array of records")
     output = []
     for item in raw:
         try:
@@ -179,7 +179,7 @@ def audit_fit_trace(
         )
     try:
         records = _parse_records(raw)
-    except ValueError:
+    except (TypeError, ValueError):
         return (FitTraceCheck("fit_trace", "problem", "Malformed or internally inconsistent fit records"),)
 
     checks: list[FitTraceCheck] = []
@@ -235,7 +235,7 @@ def audit_fit_trace(
 
         declared_ids = model_fit_ids if role == "model" else preprocessor_fit_ids
         if declared_ids is not None:
-            witnessed_ids = set(v for record in records_for_role for v in record.row_ids)
+            witnessed_ids = {v for record in records_for_role for v in record.row_ids}
             checks.append(
                 FitTraceCheck(
                     f"{code_prefix}_declarations",
