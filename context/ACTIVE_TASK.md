@@ -1,3 +1,95 @@
+# Scoped capability verified: observed model output provenance
+
+Date: 2026-11-12
+Branch: research/ml-output-call-witness-20261112
+Draft PR: https://github.com/lebedeffson/fuzzy-xai-operator/pull/8
+Base: research/ml-target-witness-20261112 (draft PR #7)
+
+## Parent objective
+FuzzyXAI is a read-only **observation/check** layer for supplied ML data,
+explicitly witnessed fit/target evidence and caller-invoked predictions.
+It must NEVER autonomously train, infer, repair, decide, or claim to
+certify unobservable data or model quality.
+
+## Implemented
+- Explicit OutputRecorder.predict and OutputRecorder.predict_proba forward
+  the caller-requested estimator call once, return its unmodified value,
+  and record ordered numeric input hashes, row IDs, output shape/content
+  hash and class-column order hash. A failed model call creates no
+  successful witness. The observer itself never calls the model.
+- MLRunEvidence.output_records and audit_output_calls compare source ID
+  ordering, numeric input content, reported predict/proba values and
+  declared probability class mapping to observed call evidence.
+- Missing witnesses, unselected repeated batches, transformed inputs
+  without a verified transform chain, string-class output and unsupported
+  modalities remain UNKNOWN, not falsely OK. Probability checks for
+  regression/clustering with no such channel are NOT_APPLICABLE.
+- tests/test_ml_observer_end_to_end.py jointly verifies dataset, actual
+  fit, target HMAC, caller-invoked output, read-only reporting,
+  serialization and source-target vs output fault attribution.
+- Four sklearn pipelines: Iris DecisionTree, Wine RandomForest, Diabetes
+  LinearRegression, Iris KMeans. Frozen protocol:
+  experiments/ml_output_witness_development_protocol_v1.json
+  SHA256 1520580a0b640c258ee5204244cfe54a388fdea4ce1614caf45f982c82d7e79a.
+  22 correlated developer-controlled scenarios, ordinary numeric and
+  equally privileged direct-output baselines. No independent blind claim.
+- An initial benchmark test failed (78 passed, 1 failure) because the
+  ordinary baseline converted numeric class predictions to float then
+  compared string '1.0' to class '1'. The numeric baseline implementation
+  was corrected; the frozen protocol was not changed. The test now
+  properly credits the ordinary baseline with detecting both classifier
+  prediction/probability mismatches.
+
+## Verified scientific/code evidence
+Semantic source commit 0c56781b77387f8e01622a070979ac16d811e5a9.
+GitHub Actions run 43293095587 SUCCESS:
+  Python 3.11.18 / NumPy 2.4.6 / sklearn 1.9.1:
+  79 pytest tests passed and Ruff passed.
+  Python 3.12.16 / NumPy 2.5.4 / sklearn 1.9.1:
+  79 pytest tests passed and Ruff passed.
+
+Both real benchmark JSON artifacts were downloaded and byte-extracted
+(13977288753 for Python 3.11; 13979275683 for Python 3.12).
+The original protocol digest, 22 full per-case source records, counts,
+strong baseline outcomes and scientific limitations match identically
+on both environments. JSON bytes differ only in environment versions.
+
+Comparison (ordinary baseline / FuzzyXAI witness / equally privileged):
+  clean 4 cases: 0/0/0 alerts
+  swapped predictions 4: 2/4/4 alerts
+  swapped eval feature rows 4: 0/4/4 alerts
+  swapped eval row IDs 4: 0/4/4 alerts
+  swapped probabilities and reported column labels 2: 0/2/2 alerts
+  absent output witness 4: ordinary 0; FuzzyXAI UNKNOWN 4/4.
+Thus 14/14 known output faults detected by FuzzyXAI and the equally
+privileged comparator; only 2/14 found by plain numeric validators.
+These 14 cases are NOT independent unknown faults or general sensitivity.
+
+Primary technical docs: framework/fuzzyxai/docs/ML_OUTPUT_PROVENANCE.md.
+Reproducible outputs and checksums bundled as
+/mnt/data/fuzzyxai_ml_output_verified_2026-11-12.zip
+(only locally generated evidence bundle; not committed to GitHub).
+
+## Integrity limits
+Source input IDs, hashes and model identity are caller-produced, NOT
+externally authenticated. A compromised caller can forge complete
+records. A correct witness can be produced by an incorrect or biased
+model. String labels, transformed features without transform witness,
+arbitrary LLM/RAG/CV inputs, streamed/selected multi-batch inference,
+and unknown real incidents are outside demonstrated support. The
+general ML observer is still not a multioutput-regression quality oracle.
+No autonomous repair, model fit or inference was added to the observer.
+
+## State/next precise step
+PR #8 remains intentionally DRAFT and unmerged, stacked over draft PRs
+#7, #6, #5 and #4. Scoped CI and results verified, but the unrelated
+full-project release suite and independent real-incident validation are
+not established. Do not merge/claim universal detection merely from
+the green scoped tests. Any future publication-generalization phase
+needs independent test sources and comparator with equal input evidence.
+
+---
+
 # Scoped capability verified: target-value fit provenance
 
 Date: 2026-11-12

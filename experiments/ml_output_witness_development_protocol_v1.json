@@ -1,0 +1,85 @@
+{
+  "id": "ml-output-call-provenance-development-v1",
+  "phase": "developer_designed_controlled_faults_not_external_blind_validation",
+  "seed": 543,
+  "hypothesis": "Observed inference-call fingerprints bind numeric reports to actual input rows and output values even when ordinary dimension, ID uniqueness and probability-sum checks pass.",
+  "datasets": [
+    {
+      "name": "iris",
+      "task": "classification",
+      "model": "DecisionTreeClassifier",
+      "source": "sklearn.datasets.load_iris"
+    },
+    {
+      "name": "wine",
+      "task": "classification",
+      "model": "RandomForestClassifier",
+      "source": "sklearn.datasets.load_wine"
+    },
+    {
+      "name": "diabetes",
+      "task": "regression",
+      "model": "LinearRegression",
+      "source": "sklearn.datasets.load_diabetes"
+    },
+    {
+      "name": "iris_clustering",
+      "task": "clustering",
+      "model": "KMeans",
+      "source": "sklearn.datasets.load_iris"
+    }
+  ],
+  "scenarios": [
+    {
+      "name": "clean",
+      "applicable": "all",
+      "expect": "no output witness problems"
+    },
+    {
+      "name": "reordered_prediction_values",
+      "applicable": "all",
+      "expect": "output_trace_predict_values=problem"
+    },
+    {
+      "name": "reordered_report_features",
+      "applicable": "all",
+      "expect": "output_trace_predict_inputs=problem"
+    },
+    {
+      "name": "reordered_report_ids",
+      "applicable": "all",
+      "expect": "output_trace_predict_row_ids=problem"
+    },
+    {
+      "name": "missing_output_record",
+      "applicable": "all",
+      "expect": "output_trace=unknown"
+    },
+    {
+      "name": "permuted_probability_columns_with_consistent_class_map",
+      "applicable": "classification",
+      "expect": "output_trace_predict_proba_values=problem; output_trace_predict_proba_classes=problem"
+    }
+  ],
+  "comparators": [
+    {
+      "name": "ordinary_validation",
+      "description": "check_array/finite, shape, unique evaluation IDs, valid probability normalization and class-to-argmax relationship; does not call model or inspect recorded outputs"
+    },
+    {
+      "name": "privileged_direct_comparison",
+      "description": "one-to-one equality of reported values, input rows, and IDs to the actual inference call, plus original estimator class order; has the same trusted access as output witness"
+    }
+  ],
+  "guardrails": [
+    "All output calls are explicit benchmark pipeline calls, not initiated by the observer.",
+    "No model repairs, refits, automatic acceptance or quality certification.",
+    "Hashes are internally consistent fingerprints, not independent proof of origin or estimator identity.",
+    "A correct record may correspond to a badly trained or incorrect model.",
+    "Each dataset shares scenarios; n cases are correlated and not independent real-world incidents.",
+    "A comparator with equally privileged access to actual inference output can detect the same mismatches.",
+    "Full-batch input matching is required; transformed features and unselected multiple records are reported unknown.",
+    "Numeric outputs only: string class predictions are unknown until a typed adapter supports them.",
+    "No unseen incident detection sensitivity or publication superiority claims."
+  ]
+}
