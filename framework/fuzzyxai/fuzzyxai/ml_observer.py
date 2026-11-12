@@ -18,6 +18,8 @@ from typing import Any, Literal
 import numpy as np
 from sklearn.metrics import accuracy_score, f1_score, mean_absolute_error, r2_score
 
+from .fit_provenance import audit_fit_trace
+
 Task = Literal["classification", "regression", "clustering"]
 Stage = Literal["data", "training", "output"]
 CheckStatus = Literal["ok", "warning", "problem", "unknown", "not_applicable"]
@@ -41,6 +43,7 @@ class MLRunEvidence:
     model_fit_ids: tuple[str, ...] | None = None
     preprocessor_fit_ids: tuple[str, ...] | None = None
     preprocessor_applied: bool | None = None
+    fit_records: Any | None = None
     train_loss: tuple[float, ...] | None = None
     validation_loss: tuple[float, ...] | None = None
     model_version: str | None = None
@@ -221,6 +224,18 @@ def observe_ml_run(evidence: MLRunEvidence) -> MLObservation:
             note("training", field_name + "_isolation", "warning", "Fit IDs include rows outside the declared training partition")
         else:
             note("training", field_name + "_isolation", "ok", "No overlap in declared IDs; actual fit calls cannot be authenticated")
+
+    for observed in audit_fit_trace(
+        evidence.fit_records,
+        train_features=evidence.train_features,
+        evaluation_features=evidence.evaluation_features,
+        train_ids=evidence.train_ids,
+        evaluation_ids=evidence.evaluation_ids,
+        model_fit_ids=evidence.model_fit_ids,
+        preprocessor_fit_ids=evidence.preprocessor_fit_ids,
+        preprocessor_applied=evidence.preprocessor_applied,
+    ):
+        note("training", observed.code, observed.status, observed.detail, observed.observed)
 
     if evidence.model_version is None or evidence.random_seed is None:
         note("training", "run_identity", "unknown", "Version and seed are both needed for a minimal run identity; they do not guarantee reproducibility")
