@@ -1,0 +1,83 @@
+{
+  "id": "ml-single-transform-chain-development-20261112",
+  "phase": "developer_constructed_single_preprocessor_not_independent_blind_study",
+  "seed": 6081,
+  "objective": "Observe a real StandardScaler fit/transform source chain and detect train/inference batch substitutions without autonomous model operations.",
+  "scope": "one dense numeric transformer and one full batch per split, sklearn; multiple stages, sparse or string outputs unsupported",
+  "pipelines": [
+    {
+      "name": "breast_cancer",
+      "task": "classification",
+      "preprocessor": "StandardScaler",
+      "estimator": "LogisticRegression",
+      "data": "sklearn.datasets.load_breast_cancer"
+    },
+    {
+      "name": "wine",
+      "task": "classification",
+      "preprocessor": "StandardScaler",
+      "estimator": "LogisticRegression",
+      "data": "sklearn.datasets.load_wine"
+    },
+    {
+      "name": "diabetes",
+      "task": "regression",
+      "preprocessor": "StandardScaler",
+      "estimator": "Ridge",
+      "data": "sklearn.datasets.load_diabetes"
+    },
+    {
+      "name": "iris_clustering",
+      "task": "clustering",
+      "preprocessor": "StandardScaler",
+      "estimator": "KMeans",
+      "data": "sklearn.datasets.load_iris"
+    }
+  ],
+  "scenarios": [
+    {
+      "name": "clean",
+      "expected": "train and evaluation inputs, fit, model fit and inference chain all ok"
+    },
+    {
+      "name": "changed_transformed_model_fit",
+      "expected": "transform_model_fit_link problem"
+    },
+    {
+      "name": "changed_transformed_inference",
+      "expected": "transform_predict_link problem"
+    },
+    {
+      "name": "changed_declared_raw_evaluation",
+      "expected": "transform_evaluation_input problem"
+    },
+    {
+      "name": "missing_transform_witness",
+      "expected": "transform_trace unknown"
+    },
+    {
+      "name": "preprocessor_fit_on_evaluation",
+      "expected": "existing fit_trace_preprocessor_isolation problem and transform_preprocessor_fit_link problem"
+    }
+  ],
+  "comparators": [
+    {
+      "name": "metadata_only",
+      "description": "Fit row IDs, evaluation row IDs and shape/finite checks; no transform or verified value provenance"
+    },
+    {
+      "name": "equal_privileged_direct",
+      "description": "Direct equality comparison of trusted raw source, true scaler fit data, scaler.transform output, actual model.fit input, and actual predict input"
+    }
+  ],
+  "guardrails": [
+    "All fit, transform and predict calls are explicitly initiated by the developer experiment, never by the observer.",
+    "Known injected changes are correlated within model datasets, not independent real-world failures.",
+    "No model fitness/accuracy claim is made about data-contaminated model fits.",
+    "Caller-declared transformer tags and hashes do not authenticate real model identity, training state or end-to-end execution.",
+    "No support claim for several chained transformers, feature selection with row-count changes, sparse representations, NLP/CV/LLM input types.",
+    "Without witnessed transformation, transformed fit and output input integrity remain UNKNOWN.",
+    "Equally instrumented direct comparison catches the same injected inconsistencies; no universality or unique novelty is claimed.",
+    "No automatic repair, training, inference, policy actions or changes to existing scored scientific studies."
+  ]
+}
