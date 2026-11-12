@@ -5,6 +5,9 @@ Assertions deliberately verify *observable contracts*, not model correctness.
 
 from __future__ import annotations
 
+import json
+import subprocess
+import sys
 from dataclasses import replace
 
 import numpy as np
@@ -161,3 +164,30 @@ def test_feature_order_swap_is_observable_even_with_equal_column_count() -> None
 def test_unknown_feature_schema_is_not_reported_as_verified() -> None:
     report = observe_ml_run(replace(_example(), train_feature_names=None))
     assert _status(report, "ordered_feature_schema") == "unknown"
+
+
+
+def test_json_cli_reads_evidence_and_writes_report_without_model_execution(tmp_path) -> None:
+    payload = tmp_path / "evidence.json"
+    output = tmp_path / "report.json"
+    payload.write_text(
+        json.dumps({
+            "task": "regression",
+            "model_family": "externally_fitted_linear",
+            "evaluation_features": [[1.0], [2.0]],
+            "predictions": [1.2, 2.3],
+            "evaluation_targets": [1.0, 2.0],
+        }),
+        encoding="utf-8",
+    )
+    subprocess.run(
+        [sys.executable, "-m", "fuzzyxai.ml_observer", str(payload), "--output", str(output)],
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    result = json.loads(output.read_text(encoding="utf-8"))
+    assert result["task"] == "regression"
+    assert result["metrics"]["mae"] > 0
+    assert result["overall_status"] == "incomplete_evidence"
+    assert result["checks"]
