@@ -9,6 +9,9 @@ on:
       - "framework/fuzzyxai/fuzzyxai/output_provenance.py"
       - "framework/fuzzyxai/fuzzyxai/ml_observer.py"
       - "tests/test_ml_output_provenance.py"
+      - "tests/test_ml_output_witness_benchmark.py"
+      - "experiments/ml_output_witness_development_benchmark.py"
+      - "experiments/ml_output_witness_development_protocol_v1.json"
       - ".github/workflows/ml-output-witness.yml"
   workflow_dispatch:
 
@@ -37,6 +40,7 @@ jobs:
         run: |
           python -m pytest -q \
             tests/test_ml_output_provenance.py \
+            tests/test_ml_output_witness_benchmark.py \
             tests/test_ml_target_fit_witness.py \
             tests/test_ml_target_fit_benchmark.py \
             tests/test_fit_provenance.py \
@@ -45,8 +49,17 @@ jobs:
             tests/test_ml_lifecycle_benchmark.py \
             tests/test_public_framework_api.py \
             tests/test_observer_no_cyclic_dependency.py
+      - name: Reproduce output-witness development comparison
+        run: python -m experiments.ml_output_witness_development_benchmark > ml_output_witness_result.json
+      - name: Upload real numeric output witness result
+        uses: actions/upload-artifact@v4
+        with:
+          name: ml-output-witness-${{ matrix.python-version }}
+          path: ml_output_witness_result.json
       - name: Lint read-only observer
         run: |
           ruff check framework/fuzzyxai/fuzzyxai/output_provenance.py \
             framework/fuzzyxai/fuzzyxai/ml_observer.py \
-            tests/test_ml_output_provenance.py
+            tests/test_ml_output_provenance.py \
+            tests/test_ml_output_witness_benchmark.py \
+            experiments/ml_output_witness_development_benchmark.py
