@@ -254,3 +254,22 @@ def test_large_integer_labels_cannot_collapse_under_float64_canonicalization() -
         train_targets=unusual, target_hmac_key=TEST_HMAC_KEY,
     )
     assert {item.code: item.status for item in result}["fit_trace_model_targets"] == "unknown"
+
+
+
+def test_valid_uint64_numeric_targets_remain_supported() -> None:
+    class PermissiveEstimator:
+        def fit(self, X, y):
+            return self
+
+    x, ev, source, _, train_ids, eval_ids = _dataset("wine")
+    values = source.astype(np.uint64)
+    recorder = FitRecorder(target_hmac_key=TEST_HMAC_KEY)
+    recorder.fit(PermissiveEstimator(), x, values, row_ids=train_ids, role="model")
+    assert recorder.records[0].target_status == "witnessed"
+    result = audit_fit_trace(
+        recorder.records, train_features=x, evaluation_features=ev,
+        train_ids=train_ids, evaluation_ids=eval_ids,
+        train_targets=values, target_hmac_key=TEST_HMAC_KEY,
+    )
+    assert {entry.code: entry.status for entry in result}["fit_trace_model_targets"] == "ok"
