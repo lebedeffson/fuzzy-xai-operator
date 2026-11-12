@@ -17,7 +17,7 @@ from typing import Any
 
 import numpy as np
 import sklearn
-from fuzzyxai.ml_observer import MLRunEvidence, MLObservation, observe_ml_run
+from fuzzyxai.ml_observer import MLObservation, MLRunEvidence, observe_ml_run
 from sklearn.cluster import KMeans
 from sklearn.datasets import load_breast_cancer, load_diabetes, load_iris, load_wine
 from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
@@ -26,7 +26,6 @@ from sklearn.metrics import accuracy_score, f1_score, mean_absolute_error, r2_sc
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.utils.validation import check_array
-
 
 PROTOCOL_FILE = Path(__file__).with_name("ml_lifecycle_development_protocol_v1.json")
 
@@ -50,9 +49,8 @@ def _baseline_numeric(evidence: MLRunEvidence) -> set[str]:
     eval_data = matrices.get("evaluation_features")
     if train is not None and eval_data is not None and train.shape[1] != eval_data.shape[1]:
         problems.add("feature_width")
-    if evidence.predictions is not None and eval_data is not None:
-        if len(evidence.predictions) != len(eval_data):
-            problems.add("predictions")
+    if evidence.predictions is not None and eval_data is not None and len(evidence.predictions) != len(eval_data):
+        problems.add("predictions")
     if evidence.task == "classification" and evidence.probabilities is not None:
         try:
             probabilities = np.asarray(evidence.probabilities, dtype=float)
@@ -100,9 +98,8 @@ def _baseline_provenance(evidence: MLRunEvidence) -> set[str]:
     """Competent contract baseline: numeric checks plus all declared IDs/schema."""
 
     problems = _baseline_numeric(evidence)
-    if evidence.train_ids is not None and evidence.evaluation_ids is not None:
-        if set(evidence.train_ids) & set(evidence.evaluation_ids):
-            problems.add("split_isolation")
+    if evidence.train_ids is not None and evidence.evaluation_ids is not None and set(evidence.train_ids) & set(evidence.evaluation_ids):
+        problems.add("split_isolation")
     if evidence.evaluation_ids is not None:
         for code, fit_ids in (
             ("model_fit_isolation", evidence.model_fit_ids),
@@ -110,9 +107,12 @@ def _baseline_provenance(evidence: MLRunEvidence) -> set[str]:
         ):
             if fit_ids is not None and set(evidence.evaluation_ids) & set(fit_ids):
                 problems.add(code)
-    if evidence.train_feature_names is not None and evidence.evaluation_feature_names is not None:
-        if evidence.train_feature_names != evidence.evaluation_feature_names:
-            problems.add("ordered_feature_schema")
+    if (
+        evidence.train_feature_names is not None
+        and evidence.evaluation_feature_names is not None
+        and evidence.train_feature_names != evidence.evaluation_feature_names
+    ):
+        problems.add("ordered_feature_schema")
     return problems
 
 
