@@ -26,6 +26,8 @@ class MLRunEvidence:
     train_features: Any | None = None
     evaluation_features: Any | None = None
     train_targets: Any | None = None
+    train_feature_names: tuple[str, ...] | None = None
+    evaluation_feature_names: tuple[str, ...] | None = None
     evaluation_targets: Any | None = None
     predictions: Any | None = None
     probabilities: Any | None = None
@@ -131,6 +133,19 @@ def observe_ml_run(evidence: MLRunEvidence) -> MLObservation:
     else:
         note("data", "feature_width", "unknown", "Cannot compare training and evaluation schemas")
         note("data", "mean_shift", "unknown", "Cannot compare train and evaluation means")
+
+    if evidence.train_feature_names is None or evidence.evaluation_feature_names is None:
+        note("data", "ordered_feature_schema", "unknown", "Both ordered feature-name lists are needed to verify feature semantics")
+    else:
+        tr_names = evidence.train_feature_names
+        ev_names = evidence.evaluation_feature_names
+        valid_train = bool(tr_names) and len(tr_names) == len(set(tr_names)) and all(isinstance(v, str) and v.strip() for v in tr_names)
+        valid_eval = bool(ev_names) and len(ev_names) == len(set(ev_names)) and all(isinstance(v, str) and v.strip() for v in ev_names)
+        valid_width = (x_train is None or len(tr_names) == x_train.shape[1]) and (x_eval is None or len(ev_names) == x_eval.shape[1])
+        if not valid_train or not valid_eval or not valid_width or tr_names != ev_names:
+            note("data", "ordered_feature_schema", "problem", "Ordered feature names are invalid or differ across train/evaluation")
+        else:
+            note("data", "ordered_feature_schema", "ok", "Declared feature names and order agree; transformed schema is not independently authenticated")
 
     def ids(name: str, raw: tuple[str, ...] | None, n: int | None) -> set[str] | None:
         if raw is None:
