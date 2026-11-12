@@ -8,7 +8,10 @@ text, generative systems, and other modalities need explicit adapters.
 
 from __future__ import annotations
 
+import argparse
+import json
 from dataclasses import asdict, dataclass, field
+from pathlib import Path
 from typing import Any, Literal
 
 import numpy as np
@@ -322,3 +325,26 @@ def observe_ml_run(evidence: MLRunEvidence) -> MLObservation:
     counts = {name: sum(f.status == name for f in findings) for name in ("problem", "warning", "unknown")}
     overall = "observed_with_problems" if counts["problem"] else "observed_with_warnings" if counts["warning"] else "incomplete_evidence" if counts["unknown"] else "checks_completed"
     return MLObservation(evidence.task, evidence.model_family, overall, tuple(findings), metrics)
+
+
+
+def main() -> None:
+    """CLI for already-collected JSON evidence; does not fit or query a model."""
+
+    parser = argparse.ArgumentParser(description="Read-only ML lifecycle inspection: data, training, output")
+    parser.add_argument("evidence", type=Path, help="Path to a JSON object with MLRunEvidence fields")
+    parser.add_argument("--output", type=Path, help="Optional destination for the JSON report")
+    args = parser.parse_args()
+    document = json.loads(args.evidence.read_text(encoding="utf-8"))
+    if not isinstance(document, dict):
+        parser.error("evidence JSON must be an object")
+    report = observe_ml_run(MLRunEvidence(**document))
+    serialized = json.dumps(report.to_dict(), indent=2, ensure_ascii=False, allow_nan=False)
+    if args.output is None:
+        print(serialized)
+    else:
+        args.output.write_text(serialized + "\n", encoding="utf-8")
+
+
+if __name__ == "__main__":
+    main()
