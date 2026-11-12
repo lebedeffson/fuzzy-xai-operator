@@ -9,11 +9,11 @@ from dataclasses import replace
 
 import numpy as np
 from fuzzyxai.ml_observer import MLRunEvidence, observe_ml_run
-from sklearn.datasets import load_breast_cancer, load_diabetes, load_iris
+from sklearn.cluster import KMeans
+from sklearn.datasets import load_diabetes, load_iris
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
-from sklearn.cluster import KMeans
 
 
 def _status(report, code: str) -> str:
