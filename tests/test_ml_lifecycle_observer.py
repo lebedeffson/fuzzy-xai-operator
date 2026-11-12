@@ -191,3 +191,20 @@ def test_json_cli_reads_evidence_and_writes_report_without_model_execution(tmp_p
     assert result["metrics"]["mae"] > 0
     assert result["overall_status"] == "incomplete_evidence"
     assert result["checks"]
+
+
+
+def test_exact_duplicate_data_values_detected_even_with_new_row_ids() -> None:
+    sample = _example()
+    copied = np.asarray(sample.evaluation_features).copy()
+    copied[0] = np.asarray(sample.train_features)[0]
+    report = observe_ml_run(replace(sample, evaluation_features=copied))
+    assert _status(report, "split_isolation") == "ok"
+    assert _status(report, "cross_split_duplicate_rows") == "warning"
+    assert report.metrics["cross_split_duplicate_rows"] >= 1
+
+
+def test_duplicate_scan_not_applicable_to_missing_numeric_matrices() -> None:
+    sample = _example()
+    report = observe_ml_run(replace(sample, evaluation_features=None))
+    assert _status(report, "cross_split_duplicate_rows") == "unknown"
