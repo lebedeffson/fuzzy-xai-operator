@@ -185,3 +185,37 @@ def test_json_cli_cannot_verify_label_hmac_without_a_key() -> None:
     roundtrip = json.loads(json.dumps(asdict(evidence), default=lambda x: x.tolist()))
     report = observe_ml_run(MLRunEvidence(**roundtrip))
     assert _code(report, "fit_trace_model_targets") == "unknown"
+
+
+
+def test_target_hmac_cannot_be_replayed_onto_different_feature_batch() -> None:
+    x, eval_x, train_y, eval_y, train_ids, eval_ids = _dataset("wine")
+    original = FitRecorder(target_hmac_key=TEST_HMAC_KEY)
+    changed = FitRecorder(target_hmac_key=TEST_HMAC_KEY)
+    original.fit(DecisionTreeClassifier(random_state=917), x, train_y, role="model", row_ids=train_ids)
+    shifted = x.copy()
+    shifted[:, 0] = shifted[:, 0] + 0.125
+    changed.fit(DecisionTreeClassifier(random_state=917), shifted, train_y, role="model", row_ids=train_ids)
+    assert original.records[0].batch_sha256 != changed.records[0].batch_sha256
+    assert original.records[0].target_batch_hmac != changed.records[0].target_batch_hmac
+
+    swapped_evidence = changed.records[0].to_dict()
+    swapped_evidence["target_batch_hmac"] = original.records[0].target_batch_hmac
+    report = observe_ml_run(
+        MLRunEvidence(
+            task="classification",
+            model_family="DecisionTreeClassifier",
+            train_features=shifted,
+            evaluation_features=eval_x,
+            train_targets=train_y,
+            evaluation_targets=eval_y,
+            train_ids=train_ids,
+            evaluation_ids=eval_ids,
+            model_fit_ids=train_ids,
+            preprocessor_applied=False,
+            fit_records=[swapped_evidence],
+        ),
+        target_hmac_key=TEST_HMAC_KEY,
+    )
+    assert _code(report, "fit_trace_model_content") == "ok"
+    assert _code(report, "fit_trace_model_targets") == "problem"
