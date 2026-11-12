@@ -1,3 +1,28 @@
+# Current scoped task: read-only ML lifecycle observer
+
+User objective (2026-11-12): FuzzyXAI should simply observe and check
+**data, model training and output**, without fixing models, retraining,
+inventing explanations or choosing operational actions.
+
+- Branch: research/ml-lifecycle-observer-readonly-20261112
+- Draft PR: https://github.com/lebedeffson/fuzzy-xai-operator/pull/5
+- New module: framework/fuzzyxai/fuzzyxai/ml_observer.py
+- Usage: python -m fuzzyxai.ml_observer collected_run.json --output observation.json
+- Numeric tabular classification, regression, clustering are supported;
+  other AI modalities require adapters rather than fabricated checks.
+- No model fit/predict, repair, state mutation, or automatic decision.
+- Explicit "unknown" for missing source evidence; no general quality score.
+- Tests: tests/test_ml_lifecycle_observer.py; Python 3.11/3.12 scoped CI
+  under .github/workflows/ml-lifecycle-observer.yml.
+- At this checkpoint 11 scoped tests passed on both versions at prior
+  code state (Actions 43233813218) but Ruff had a type-union lint error.
+  This was corrected; final PR head CI remains pending verification.
+- Next action: validate latest CI at PR head, fix exact failures without
+  weakening checks; keep draft, no merge. Previous observer research remains
+  below and is not reinterpreted as universal accuracy evidence.
+
+---
+
 # Active task: FuzzyXAI Observer — exact source-bound explanation checks
 
 Branch: research/observer-evidence-binding-20261111
