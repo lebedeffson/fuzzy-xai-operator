@@ -1,56 +1,59 @@
-# Current scoped task: read-only ML lifecycle observer
+# Scoped objective completed: read-only ML lifecycle observer
 
 Branch: research/ml-lifecycle-observer-readonly-20261112
 Draft PR: https://github.com/lebedeffson/fuzzy-xai-operator/pull/5
-Base (still draft PR #4): research/observer-evidence-binding-20261111
-
-## Parent objective
-
-Build a useful **read-only** inspector of model data, fitting evidence and
-outputs. Never call fit/predict/repair or fabricate provenance, metrics or
-quality guarantees. Observational records may be incomplete; distinguish
-unknown from not_applicable and from a measured contradiction.
+Base (draft PR #4): research/observer-evidence-binding-20261111
 
 ## Implemented
 
-- Typed MLRunEvidence/observe_ml_run plus read-only JSON CLI.
-- Classification/regression/clustering numeric-tabular checks: ordered schema,
-  finite inputs, class balance, split overlap, actual fit-ID declarations,
-  honest no-preprocessor N/A status, loss-history availability, class-probability
-  geometry, score/label mapping and standard measured performance metrics.
-- Cross-split exact numeric-feature duplicates under *new IDs* cause WARN only;
-  independently repeated records may be legitimate (Iris clean warning).
-- Descriptive mean-shift heuristic; no drift or causal guarantee.
-- Fixed protocol in experiments/ml_lifecycle_development_protocol_v1.json
-  (SHA256 0957fb3b51eee3d2c3ebba3c2f1a4ffd4f6fb125c78787b2e4e36947a2966395)
-  and four newly trained sklearn pipelines: Breast Cancer logistic, Wine RF,
-  Diabetes RF regression, Iris KMeans. 33 correlated scenarios spanning real
-  model/preprocessor contamination and downstream controlled faults.
-- Competent numeric and numeric+ID/schema baselines; no claim that
-  standard ID/schema checks are novel to FuzzyXAI.
-- Negative controls: 1 clean Iris duplicate-row warning, and 3 label-map
-  perturbations not detectable semantically from these artifacts.
-- Earlier run 43238897913 at source 7088b2dc6 succeeded on Python 3.11/3.12:
-  17 focused tests per version and Ruff; archived JSON reports agree.
+Evidence-only numeric tabular classification/regression/clustering checks
+for **data, training, and model output**. Python API MLRunEvidence +
+observe_ml_run and read-only JSON CLI. No fit/predict/repair/auto-action.
 
-## Integration status
+Measured channels: feature shape and order, finite values, train/evaluation
+source IDs, model/preprocessor fit IDs, no-preprocessor not_applicable,
+data duplicate-row warnings, descriptive mean shift, training loss trace
+availability, output probability geometry and task-appropriate metrics.
+Unknown evidence remains UNKNOWN, not success. Clean Iris has repeated
+numeric rows that legitimately lead to a warning, not a hard block.
 
-Extra public API integration test exposed a stale **base-branch** assertion
-that 41 operators exist, whereas PR #4 legitimately added the 42nd:
-framework.exact_interventional_shapley_observer. Both Python jobs in
-43239856603 had 25 passing tests and that one stale manifest-count failure.
-The upstream assertion was fixed and strengthened on the PR #4 branch at
-commit 12177d85a5a2c1ce4b933753321453ec65a9fe29. This is not a new
-observer behavioral defect.
+Independent developmental model pipelines (outside observer): 4 sklearn
+datasets (Breast Cancer, Wine, Diabetes, Iris). Fixed protocol file committed
+before running: experiments/ml_lifecycle_development_protocol_v1.json,
+SHA256 0957fb3b51eee3d2c3ebba3c2f1a4ffd4f6fb125c78787b2e4e36947a2966395.
+33 scenario rows, strong numeric and ID/schema baselines. Training/fit
+provenance errors were also detected by the strong baseline. Additional
+duplicate-content/mean-shift warnings are not universal scientific novelty.
+Unobserved label-source permutation and natural exact duplicates are negative
+controls. No independent blinded real-incident sensitivity is established.
 
-## Exact next executable action
+## Verification
 
-Inspect fresh PR #5 CI on current head after base update. Require focused
-tests, integration tests and Ruff green on both Python versions, inspect
-actual per-version benchmark artifacts (cases, counts, protocol hash), then
-update PR #5 body with factual receipt. Do not merge PR #4 or #5, change
-locked publication/dissertation experiments or generalize controlled
-fault-injection outcomes into universal fault detection.
+At semantic code commit 605404d9b5e2d67c0081f5c231e1a178166251bf:
+GitHub Actions 43240790172: Python 3.11 and 3.12 each 26 pytest tests
+passed and Ruff passed, including public FuzzyXAI API and no-cycle imports.
+Archived JSON artifacts 13955300710 (3.11) / 13955325739 (3.12)
+downloaded and independently compared: 4 models, 33 cases, same protocol
+hash, identical per-scenario results and metrics. No full-repository
+release readiness is asserted.
+
+Integration revealed a stale test demanding 41 operators after PR #4 added
+framework.exact_interventional_shapley_observer as the 42nd; assertion was
+corrected and strengthened on PR #4 at 12177d85 and synchronized into PR #5
+without deleting or skipping the test.
+
+The actual code, protocol and measured comparisons are in the draft PR;
+no main-branch merge, model weights changes, or protected study results /
+paper and dissertation edits were performed.
+
+## Next independent research criterion
+
+If publication-level effectiveness is claimed: run external datasets,
+actual instrumented provenance, prespecified fault cases by an independent
+source, measure false alarms/coverage and compare to mature data and
+model-checking tools. Unsupported ML modalities (NLP, CV, LLM/RAG)
+require explicit dedicated evidence adapters. No claim of universal
+accuracy, causality or safety should be made until established.
 
 
 ---
