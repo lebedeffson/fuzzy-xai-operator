@@ -20,9 +20,8 @@ from fuzzyxai.fit_provenance import FitRecorder
 from fuzzyxai.ml_observer import MLRunEvidence, observe_ml_run
 from sklearn.cluster import KMeans
 from sklearn.datasets import load_breast_cancer, load_diabetes, load_iris
-from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
+from sklearn.linear_model import LinearRegression, LogisticRegression
 from sklearn.model_selection import train_test_split
-from sklearn.tree import DecisionTreeClassifier
 
 PROTOCOL_PATH = Path(__file__).with_name("ml_fit_source_witness_protocol_v1.json")
 
@@ -52,14 +51,15 @@ def _load_data(name: str, task: str, seed: int) -> tuple[np.ndarray, np.ndarray,
     )
 
 
-def _estimator(name: str, seed: int) -> Any:
-    if name == "iris":
-        return DecisionTreeClassifier(random_state=seed)
-    if name == "breast_cancer":
-        return RandomForestClassifier(n_estimators=12, random_state=seed)
-    if name == "diabetes":
-        return RandomForestRegressor(n_estimators=12, random_state=seed)
-    return KMeans(n_clusters=3, random_state=seed, n_init=10)
+def _estimator(estimator_name: str, seed: int) -> Any:
+    """Use the literal estimator type fixed in the committed protocol."""
+    if estimator_name == "LogisticRegression":
+        return LogisticRegression(max_iter=2500, random_state=seed)
+    if estimator_name == "LinearRegression":
+        return LinearRegression()
+    if estimator_name == "KMeans":
+        return KMeans(n_clusters=3, random_state=seed, n_init=10)
+    raise ValueError(f"Unsupported protocol estimator: {estimator_name}")
 
 
 def _status(report: Any, code: str) -> str:
@@ -78,12 +78,13 @@ def run_benchmark() -> dict[str, Any]:
     for descriptor in protocol["datasets"]:
         name = descriptor["name"]
         task = descriptor["task"]
+        estimator_name = descriptor["estimator"]
         x_train, x_eval, y_train, y_eval, train_ids, eval_ids = _load_data(name, task, seed)
         for scenario in protocol["scenarios"]:
             name_of_case = scenario["name"]
             recorder = FitRecorder()
             declared_fit_ids: tuple[str, ...]
-            fitted = _estimator(name, seed)
+            fitted = _estimator(estimator_name, seed)
 
             if name_of_case == "clean":
                 fitted = recorder.fit(
@@ -123,7 +124,7 @@ def run_benchmark() -> dict[str, Any]:
 
             evidence = MLRunEvidence(
                 task=task,
-                model_family=descriptor["estimator"],
+                model_family=type(fitted).__name__,
                 train_features=x_train,
                 evaluation_features=x_eval,
                 train_targets=y_train,
@@ -146,6 +147,8 @@ def run_benchmark() -> dict[str, Any]:
                 {
                     "dataset": name,
                     "task": task,
+                    "estimator": type(fitted).__name__,
+                    "protocol_estimator": estimator_name,
                     "scenario": name_of_case,
                     "metadata_baseline_detected": metadata_detected,
                     "witness_detected": detected,
