@@ -49,11 +49,12 @@ pipeline/scenario observations** were produced (some scenarios do not
 apply to every task). These observations are correlated within a dataset,
 not 33 independently sampled real-world failures.
 
-Before source changes to optional no-preprocessor semantics, Actions run
-43237798661 produced identical outcomes on Python 3.11 and 3.12 for the
-following scenarios (scientific interpretation is unchanged). All 15
-targeted tests passed, but that run's Ruff lint failed due to formatting;
-do not treat it as a release-quality CI receipt.
+At code commit 605404d9b5e2d67c0081f5c231e1a178166251bf,
+Actions run 43240790172 completed with **26 pytest tests and Ruff passed**
+on both Python 3.11 and 3.12. The archived JSON artifacts were separately
+downloaded and inspected: the protocol hash, per-scenario outcomes and
+ordinary sklearn metrics agree across both Python environments. This is a
+scoped CI receipt, not a claim that every unrelated repository job passes.
 
 | Scenario | Cases | Numeric-only baseline alerts | Numeric+ID/schema baseline alerts | Observer alerts |
 | --- | ---: | ---: | ---: | ---: |
