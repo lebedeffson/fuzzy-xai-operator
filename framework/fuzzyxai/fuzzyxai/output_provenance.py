@@ -214,6 +214,7 @@ def audit_output_calls(
     predictions: Any | None = None,
     probabilities: Any | None = None,
     probability_classes: tuple[str, ...] | None = None,
+    task: str | None = None,
 ) -> tuple[OutputTraceCheck, ...]:
     """Compare recorded calls with a report without performing inference.
 
@@ -237,6 +238,12 @@ def audit_output_calls(
     for kind, supplied in (("predict", predictions), ("predict_proba", probabilities)):
         prefix = f"output_trace_{kind}"
         matching = [record for record in records if record.kind == kind]
+        if kind == "predict_proba" and task in ("regression", "clustering"):
+            if not matching and supplied is None:
+                findings.append(OutputTraceCheck(prefix, "not_applicable", "Classification probabilities are not required for this task"))
+            else:
+                findings.append(OutputTraceCheck(prefix, "warning", "Probability evidence is outside the declared task adapter"))
+            continue
         if not matching:
             findings.append(OutputTraceCheck(prefix, "unknown", "No matching recorded model-output call"))
             continue
