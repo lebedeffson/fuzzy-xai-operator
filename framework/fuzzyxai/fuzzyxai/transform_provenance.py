@@ -11,6 +11,8 @@ import re
 from dataclasses import asdict, dataclass
 from typing import Any, Literal
 
+import numpy as np
+
 from .fit_provenance import _hashes, _matrix, _parse_records as _fit_records
 from .output_provenance import _parse_records as _output_records
 
@@ -74,6 +76,9 @@ class TransformRecorder:
             raise ValueError("Unsupported split or feature space")
         if not isinstance(transformer_tag, str) or not transformer_tag:
             raise ValueError("A nonempty transformer tag is required")
+        raw = np.asarray(X)
+        if raw.dtype.kind not in "biuf":
+            raise ValueError("Transform witness only supports numeric source values")
         source = _matrix(X)
         ids = tuple(row_ids)
         if len(ids) != len(source) or len(set(ids)) != len(ids) or any(not isinstance(v, str) or not v for v in ids):
@@ -81,6 +86,9 @@ class TransformRecorder:
         input_rows, input_batch = _hashes(source)
         result = transformer.transform(X, **kwargs)  # caller explicitly initiates this call
         try:
+            native = np.asarray(result)
+            if native.dtype.kind not in "biuf":
+                raise ValueError("Transform result is not numeric")
             output = _matrix(result)
             if len(output) != len(source):
                 raise ValueError("Row counts differ")
