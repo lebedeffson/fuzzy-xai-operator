@@ -1,0 +1,77 @@
+{
+  "protocol_id": "ml-fit-call-source-provenance-development-v1",
+  "phase": "developer_constructed_developmental_not_confirmatory",
+  "hypothesis": "A source-bound witness of the actual fit call detects mismatches between data used for fitting and declared fit IDs that a metadata-only overlap checker may miss.",
+  "seed": 73,
+  "datasets": [
+    {
+      "name": "iris",
+      "task": "classification",
+      "estimator": "LogisticRegression"
+    },
+    {
+      "name": "breast_cancer",
+      "task": "classification",
+      "estimator": "LogisticRegression"
+    },
+    {
+      "name": "diabetes",
+      "task": "regression",
+      "estimator": "LinearRegression"
+    },
+    {
+      "name": "iris_clustering",
+      "task": "clustering",
+      "estimator": "KMeans"
+    }
+  ],
+  "scenarios": [
+    {
+      "name": "clean",
+      "description": "Estimator actually fit only train rows using correct train IDs.",
+      "expected_witness": "ok",
+      "metadata_baseline": "no_alert"
+    },
+    {
+      "name": "fit_evaluation_truthful_ids",
+      "description": "Estimator fit on train+evaluation rows with their true IDs; metadata supplied correctly includes evaluation IDs.",
+      "expected_witness": "problem",
+      "metadata_baseline": "alert"
+    },
+    {
+      "name": "fit_evaluation_false_ids",
+      "description": "Estimator fit on evaluation values only, but row IDs are drawn from the train partition and no eval overlap is declared.",
+      "expected_witness": "content_problem",
+      "metadata_baseline": "no_alert"
+    },
+    {
+      "name": "fit_evaluation_true_trace_false_metadata",
+      "description": "Estimator fit on evaluation values, trace has real evaluation IDs, but separate manual fit ID declaration claims only train.",
+      "expected_witness": "problem",
+      "metadata_baseline": "no_alert"
+    },
+    {
+      "name": "without_witness",
+      "description": "Estimator trained directly outside the recorder, no source witness available.",
+      "expected_witness": "unknown",
+      "metadata_baseline": "no_alert"
+    }
+  ],
+  "metrics": [
+    "verified_targeted_witness_detections",
+    "metadata_only_baseline_detections",
+    "false_alarm_rate_among_clean_controls",
+    "unknown_fraction_due_to_absent_witness",
+    "fit_input_content_fingerprint_consistency"
+  ],
+  "guardrails": [
+    "Models may be fitted on evaluation data only in intentionally broken experiment branches; their scores must not be reported as generalization results.",
+    "A caller can forge both row IDs and numeric data. Witnesses are local snapshots, not independent third-party attestations.",
+    "Missing witness evidence must be UNKNOWN, not OK.",
+    "An internally consistent hash does not establish legitimate source origin.",
+    "Scenarios within the same dataset share samples and are correlated.",
+    "No observer component may train, repair, or change a model automatically.",
+    "The recorder forwards a caller explicitly initiated fit call and records it; that is distinct from autonomous observer training.",
+    "Do not claim novel detection relative to a baseline with equally rich authenticated fit traces."
+  ]
+}
