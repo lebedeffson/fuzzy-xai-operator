@@ -201,3 +201,26 @@ def test_source_buffers_do_not_change_during_observation() -> None:
                     train_ids=tr_ids, evaluation_ids=te_ids)
     np.testing.assert_array_equal(x, original_x)
     np.testing.assert_array_equal(test_x, original_eval)
+
+
+
+def test_shuffled_training_labels_are_not_certified_as_correct_by_feature_hashes() -> None:
+    """Negative control: a feature witness does not authenticate training labels."""
+    train, evaluation, labels, _, train_ids, evaluation_ids = _split()
+    recorder = FitRecorder()
+    recorder.fit(
+        LogisticRegression(max_iter=700, random_state=71), train, np.roll(labels, 1),
+        row_ids=train_ids, role="model",
+    )
+    result = audit_fit_trace(
+        recorder.records,
+        train_features=train,
+        evaluation_features=evaluation,
+        train_ids=train_ids,
+        evaluation_ids=evaluation_ids,
+    )
+    statuses = {item.code: item.status for item in result}
+    assert statuses["fit_trace_model_isolation"] == "ok"
+    assert statuses["fit_trace_model_content"] == "ok"
+    # This is NOT a pass of supervised target/label validity, since no
+    # independently sourced training targets are authenticated by this trace.
