@@ -52,7 +52,7 @@ jobs:
       - name: Upload developmental experiment results
         uses: actions/upload-artifact@v4
         with:
-          name: target-witness-benchmark-__PYTHON__
+          name: target-witness-benchmark-${{ matrix.python-version }}
           path: target_witness_benchmark.json
       - name: Ruff
         run: |
