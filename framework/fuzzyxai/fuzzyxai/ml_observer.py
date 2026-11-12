@@ -9,6 +9,7 @@ text, generative systems, and other modalities need explicit adapters.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
@@ -136,6 +137,31 @@ def observe_ml_run(evidence: MLRunEvidence) -> MLObservation:
     else:
         note("data", "feature_width", "unknown", "Cannot compare training and evaluation schemas")
         note("data", "mean_shift", "unknown", "Cannot compare train and evaluation means")
+
+    # A duplicated numeric input may be a legitimate repeated observation.
+    # It is therefore only an investigation signal, not proof of leakage.
+    # Unlike row-ID comparison, this can catch byte-identical examples
+    # copied into another split under newly assigned identifiers.
+    if x_train is None or x_eval is None or x_train.shape[1] != x_eval.shape[1]:
+        note("data", "cross_split_duplicate_rows", "unknown", "Both compatible numeric matrices are required")
+    elif x_train.size + x_eval.size > 8_000_000:
+        note("data", "cross_split_duplicate_rows", "unknown", "Exact duplicate scan exceeds the configured 8M-value limit")
+    else:
+        def row_digest(row: np.ndarray) -> bytes:
+            raw = np.ascontiguousarray(row, dtype="<f8")
+            return hashlib.sha256(raw.tobytes()).digest()
+
+        train_signatures = {row_digest(row) for row in x_train}
+        duplicates = sum(row_digest(row) in train_signatures for row in x_eval)
+        metrics["cross_split_duplicate_rows"] = int(duplicates)
+        note(
+            "data",
+            "cross_split_duplicate_rows",
+            "warning" if duplicates else "ok",
+            "Exact numeric rows appear in both partitions (possibly legitimate repeats, not proven leakage)"
+            if duplicates else "No identical numeric rows found across partitions",
+            duplicates,
+        )
 
     if evidence.train_feature_names is None or evidence.evaluation_feature_names is None:
         note("data", "ordered_feature_schema", "unknown", "Both ordered feature-name lists are needed to verify feature semantics")
