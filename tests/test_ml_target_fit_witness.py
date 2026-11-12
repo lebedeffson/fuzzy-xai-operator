@@ -219,3 +219,38 @@ def test_target_hmac_cannot_be_replayed_onto_different_feature_batch() -> None:
     )
     assert _code(report, "fit_trace_model_content") == "ok"
     assert _code(report, "fit_trace_model_targets") == "problem"
+
+
+
+def test_numeric_string_labels_are_not_coerced_into_numeric_target_certificate() -> None:
+    x, ev, y, _, train_ids, eval_ids = _dataset("wine")
+    text_values = np.asarray([str(int(v)) for v in y], dtype=str)
+    recorder = FitRecorder(target_hmac_key=TEST_HMAC_KEY)
+    recorder.fit(DecisionTreeClassifier(random_state=917), x, text_values, role="model", row_ids=train_ids)
+    assert recorder.records[0].target_status == "unavailable"
+    observations = audit_fit_trace(
+        recorder.records,
+        train_features=x, evaluation_features=ev,
+        train_ids=train_ids, evaluation_ids=eval_ids,
+        train_targets=y,
+        target_hmac_key=TEST_HMAC_KEY,
+    )
+    assert {entry.code: entry.status for entry in observations}["fit_trace_model_targets"] == "unknown"
+
+
+def test_large_integer_labels_cannot_collapse_under_float64_canonicalization() -> None:
+    class PermissiveEstimator:
+        def fit(self, X, y):
+            return self
+
+    x, ev, _, _, train_ids, eval_ids = _dataset("wine")
+    unusual = np.full(len(x), 2**53 + 1, dtype=np.int64)
+    rec = FitRecorder(target_hmac_key=TEST_HMAC_KEY)
+    rec.fit(PermissiveEstimator(), x, unusual, row_ids=train_ids, role="model")
+    assert rec.records[0].target_status == "unavailable"
+    result = audit_fit_trace(
+        rec.records, train_features=x, evaluation_features=ev,
+        train_ids=train_ids, evaluation_ids=eval_ids,
+        train_targets=unusual, target_hmac_key=TEST_HMAC_KEY,
+    )
+    assert {item.code: item.status for item in result}["fit_trace_model_targets"] == "unknown"
