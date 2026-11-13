@@ -77,6 +77,10 @@ def _dataset(descriptor: dict[str, Any], seed: int, fraction: float):
     data = DATASETS[descriptor["dataset"]]()
     X = np.asarray(data.data, dtype=float)
     y = None if descriptor["task"] == "clustering" else np.asarray(data.target)
+    # Current ML output metrics support one regression target; the target
+    # HMAC witness separately supports multi-output fits.
+    if descriptor["dataset"] == "linnerud":
+        y = np.asarray(y, dtype=float)[:, 0]
     indices = np.arange(len(X))
     train, test = train_test_split(
         indices, test_size=fraction, random_state=seed,
