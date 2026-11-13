@@ -1,0 +1,59 @@
+name: ML cross-transform-family transfer
+
+on:
+  push:
+    branches:
+      - research/ml-transform-family-transfer-20261112
+  pull_request:
+    paths:
+      - "experiments/ml_transform_family_transfer_protocol_v1.json"
+      - "experiments/ml_transform_family_transfer_benchmark.py"
+      - "tests/test_ml_transform_family_transfer.py"
+      - ".github/workflows/ml-transform-family-transfer.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ml-family-transfer-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  evaluate:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install scikit-learn and development tests
+        run: python -m pip install -e ".[dev]"
+      - name: Test new transfer and predecessor evidence chains
+        run: |
+          python -m pytest -q \
+            tests/test_ml_transform_family_transfer.py \
+            tests/test_ml_transform_chain.py \
+            tests/test_ml_transform_chain_benchmark.py \
+            tests/test_ml_output_provenance.py \
+            tests/test_ml_observer_end_to_end.py \
+            tests/test_ml_target_fit_witness.py \
+            tests/test_fit_provenance.py \
+            tests/test_public_framework_api.py \
+            tests/test_observer_no_cyclic_dependency.py
+      - name: Reproduce transfer protocol and write JSON
+        run: python -m experiments.ml_transform_family_transfer_benchmark > ml_transform_family_transfer_result.json
+      - name: Archive per-version transfer results
+        uses: actions/upload-artifact@v4
+        with:
+          name: ml-transform-family-transfer-${{ matrix.python-version }}
+          path: ml_transform_family_transfer_result.json
+      - name: Ruff
+        run: |
+          ruff check \
+            experiments/ml_transform_family_transfer_benchmark.py \
+            tests/test_ml_transform_family_transfer.py
