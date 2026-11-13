@@ -21,8 +21,12 @@ from fuzzyxai.output_provenance import OutputRecorder
 from fuzzyxai.transform_provenance import TransformRecorder
 from sklearn.cluster import KMeans
 from sklearn.datasets import (
-    load_breast_cancer, load_diabetes, load_digits, load_iris,
-    load_linnerud, load_wine,
+    load_breast_cancer,
+    load_diabetes,
+    load_digits,
+    load_iris,
+    load_linnerud,
+    load_wine,
 )
 from sklearn.decomposition import PCA
 from sklearn.ensemble import RandomForestClassifier
@@ -31,8 +35,13 @@ from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes import GaussianNB
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.preprocessing import (
-    MaxAbsScaler, MinMaxScaler, PowerTransformer, QuantileTransformer,
-    RobustScaler, SplineTransformer, StandardScaler,
+    MaxAbsScaler,
+    MinMaxScaler,
+    PowerTransformer,
+    QuantileTransformer,
+    RobustScaler,
+    SplineTransformer,
+    StandardScaler,
 )
 from sklearn.svm import SVC
 
