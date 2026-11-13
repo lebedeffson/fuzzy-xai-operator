@@ -1,0 +1,11 @@
+@prefix ex: <https://example.org/fuzzyxai/review-registry#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ex:PolicyComparisonShape a sh:NodeShape ;
+    sh:targetClass ex:PolicyComparison ;
+    sh:property [ sh:path ex:dataset ; sh:minCount 1 ; sh:maxCount 1 ; sh:nodeKind sh:IRI ] ;
+    sh:property [ sh:path ex:estimator ; sh:minCount 1 ; sh:maxCount 1 ; sh:nodeKind sh:IRI ] ;
+    sh:property [ sh:path ex:sourceRecord ; sh:minCount 1 ; sh:maxCount 1 ; sh:nodeKind sh:IRI ] ;
+    sh:property [ sh:path ex:baselineCost ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:decimal ] ;
+    sh:property [ sh:path ex:candidateCost ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:decimal ] .
