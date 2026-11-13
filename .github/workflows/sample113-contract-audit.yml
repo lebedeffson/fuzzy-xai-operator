@@ -1,0 +1,35 @@
+name: Chapter 2 sample113 declared plan audit
+
+on:
+  push:
+    branches:
+      - research/manuscript-shacl-independent-20261113
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  forensic:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install focused audit dependencies
+        run: python -m pip install pytest PyYAML
+      - name: Assert archived contract discrepancies are not silently accepted
+        run: python -m pytest -q tests/test_paper_chapter2_contract.py
+      - name: Reconstruct provenance conformance report (expected FAIL)
+        run: |
+          python -m experiments.paper_chapter2.audit_sample113 > sample113_provenance_audit.json
+          python -c 'import json; r=json.load(open("sample113_provenance_audit.json")); assert r["contract_conformant"] is False and r["checks"]["hash_matches_stated_yaml"] is True'
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sample113-contract-audit-${{ matrix.python-version }}
+          path: sample113_provenance_audit.json
