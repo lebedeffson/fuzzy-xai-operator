@@ -32,10 +32,13 @@ def _executor_weights(source: str) -> dict[str, float]:
                 or not any(isinstance(target, ast.Name) and target.id == "u_m" for target in assignment.targets)
             ):
                 continue
-            if not isinstance(assignment.value, ast.Call) or not assignment.value.args:
-                raise ValueError("Unexpected aggregation call in generator")
+            expression = assignment.value
+            # Generator uses float(np.clip(weighted_sum, 0, 1)):
+            # peel the wrappers instead of mistaking a Call for a summand.
+            while isinstance(expression, ast.Call) and expression.args:
+                expression = expression.args[0]
             pairs = {}
-            for term in _addends(assignment.value.args[0]):
+            for term in _addends(expression):
                 if not isinstance(term, ast.BinOp) or not isinstance(term.op, ast.Mult):
                     raise ValueError("Unexpected term in uncertainty aggregation")
                 lhs, rhs = term.left, term.right
