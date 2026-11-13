@@ -26,10 +26,16 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Recompute all unweighted published Figure 3 metrics
         run: python experiments/paper_sanse/recheck_figure3.py > sanse_figure3_result.json
+      - name: Verify expected top-1 self-retrieval vs inverse mean group size
+        run: |
+          python experiments/paper_sanse/retrieval_metric_audit.py > sanse_retrieval_metric_audit.json
+          python -c 'import json; j=json.load(open("sanse_retrieval_metric_audit.json")); assert round(j["two_axes"]["correct_mean_uniform_top1_success"]*100,1)==29.8; assert round(j["three_axes"]["correct_mean_uniform_top1_success"]*100,1)==51.1'
       - name: Verify scope, 47 rows, exact source-object MI, negative control and tie sensitivity
         run: |
           python -c "import json; r=json.load(open('sanse_figure3_result.json')); assert r['n_entries']==47; assert abs(r['mutual_information_bits']['source_obj']-.1633)<.00005; assert r['collision_pairs']['source+obj+audience']==45; assert r['loo_audience_tie_rule_sensitivity']=={'abstain':15,'alphabetical':17,'global':23}; assert r['negative_control_50000']['observed_gain']==35"
       - uses: actions/upload-artifact@v4
         with:
           name: sanse-figure3-${{ matrix.python-version }}
-          path: sanse_figure3_result.json
+          path: |
+            sanse_figure3_result.json
+            sanse_retrieval_metric_audit.json
