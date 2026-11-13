@@ -1,3 +1,71 @@
+# Verified transfer assessment: changed preprocessing families
+
+Date: 2026-11-13
+Branch: research/ml-transform-family-transfer-20261112
+Draft PR: https://github.com/lebedeffson/fuzzy-xai-operator/pull/10
+Base: research/ml-transform-chain-20261112 (draft PR #9)
+
+## Question and scope
+Does the *unchanged* read-only source/fit/transform/inference witness remain
+internally consistent across diverse dense numeric single-transform
+sklearn models, including a real feature-width change, without false
+alarms on legitimate shift or retraining? Test fixed known faults and
+compare metadata-only and equal-access direct array baselines.
+
+## Implementation, protocol, checks
+- Fixed protocol was committed first:
+  experiments/ml_transform_family_transfer_protocol_v1.json
+  SHA256 ae6269821ac371225ef973c122e3cdcddf5fffb6a6dc6581c4e11b42dacd3859.
+- Eight pipelines, six sklearn datasets: PCA, RobustScaler,
+  QuantileTransformer, SplineTransformer, MinMaxScaler, PowerTransformer,
+  MaxAbsScaler, StandardScaler. Different dimensions included: Digits
+  64->12 PCA and Diabetes 10->40 SplineTransformer.
+- experiments/ml_transform_family_transfer_benchmark.py runs 64
+  developer-defined correlated cases: 24 clean/legitimate change,
+  32 injected mismatches (fit input, inference input, raw source, and
+  preprocessor fit on evaluation), 8 missing transform traces.
+- tests/test_ml_transform_family_transfer.py freezes all declared
+  per-scenario comparator counts and separate stage-specific statuses;
+  predecessor trace/public API tests remain in the CI matrix.
+- No observer runtime change and no automatic fit/transform/predict/repair.
+
+## Verified
+Runtime source SHA 2075b876e08a675a8f596b1ba708dfeb0f276817.
+GitHub Actions run 43378583969 SUCCESS:
+- Python 3.11.18: 76 scoped pytest PASS + Ruff PASS.
+- Python 3.12.16: 76 scoped pytest PASS + Ruff PASS.
+- Actual JSON artifacts 14014524457 and 14015018769 downloaded.
+  All 64 records, protocol hash, per-scenario results, limitations MATCH
+  between Python 3.11 and 3.12.
+- 32/32 known injected link/scope inconsistencies detected by
+  FuzzyXAI **and** equally privileged direct comparison.
+  Metadata-only ID checks: 8/32.
+  24 valid controlled cases: 0 false alerts in predefined transform/scope
+  checks. Missing transform witness: 8/8 UNKNOWN (not PASS).
+- Initial build had only Ruff import style and set-iteration errors;
+  both corrected, with no experimental protocol or detection semantic
+  changes. Final CI passed.
+- Publication-grade bounded documentation:
+  framework/fuzzyxai/docs/ML_TRANSFORM_FAMILY_TRANSFER.md.
+- Both original CI JSONs and SHA256 bundled locally:
+  /mnt/data/fuzzyxai_transform_family_transfer_verified_2026-11-13.zip.
+
+## Limits/next criterion
+Six datasets reused in eight pipelines and 64 constructed scenarios;
+NOT independent real-world incidents, independent blinding, or model
+quality/performance certification. Observer is caller-instrumented, not
+trusted origin/weight attestation. The equal-access direct comparator
+catches the same 32 faults, so no novel detector superiority claim.
+This is scoped CI, not full release suite. No locked dissertation/paper
+files changed. PR remains draft/unmerged and stacked on #9.
+
+Next research question: evaluate externally prepared, genuinely occurring
+preprocessing mistakes with *independently sourced* fit/inference
+evidence, and report false alarms, misses, abstention/coverage and equal
+access baselines. Do not claim that milestone has been achieved.
+
+---
+
 # Verified scope: single-step numeric preprocessing evidence
 
 Date: 2026-11-12
