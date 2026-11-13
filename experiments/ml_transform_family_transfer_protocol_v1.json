@@ -1,0 +1,193 @@
+{
+  "schema_version": "ml-transform-family-transfer-development-v1",
+  "phase": "developer_specified_cross_transform_family_transfer_not_independent_blind_incident_study",
+  "protocol_date": "2026-11-12",
+  "seed": 3817,
+  "alternative_seed": 3829,
+  "evaluation_fraction": 0.25,
+  "claim": "Does a read-only, caller-instrumented provenance checker generalize from StandardScaler to other single-step dense numerical sklearn transformers, without false alarms on legitimate drift/retraining?",
+  "pipelines": [
+    {
+      "name": "digits_pca_knn",
+      "dataset": "digits",
+      "task": "classification",
+      "transformer": "PCA",
+      "transformer_args": {
+        "n_components": 12,
+        "svd_solver": "randomized",
+        "random_state": 3817
+      },
+      "estimator": "KNeighborsClassifier",
+      "estimator_args": {
+        "n_neighbors": 5
+      }
+    },
+    {
+      "name": "wine_robust_svc",
+      "dataset": "wine",
+      "task": "classification",
+      "transformer": "RobustScaler",
+      "transformer_args": {},
+      "estimator": "SVC",
+      "estimator_args": {
+        "C": 1.2,
+        "probability": true,
+        "random_state": 3817
+      }
+    },
+    {
+      "name": "breast_cancer_quantile_logreg",
+      "dataset": "breast_cancer",
+      "task": "classification",
+      "transformer": "QuantileTransformer",
+      "transformer_args": {
+        "n_quantiles": 64,
+        "output_distribution": "normal",
+        "random_state": 3817
+      },
+      "estimator": "LogisticRegression",
+      "estimator_args": {
+        "max_iter": 300,
+        "random_state": 3817
+      }
+    },
+    {
+      "name": "diabetes_spline_ridge",
+      "dataset": "diabetes",
+      "task": "regression",
+      "transformer": "SplineTransformer",
+      "transformer_args": {
+        "n_knots": 4,
+        "degree": 2,
+        "include_bias": false
+      },
+      "estimator": "Ridge",
+      "estimator_args": {
+        "alpha": 5
+      }
+    },
+    {
+      "name": "linnerud_minmax_ridge",
+      "dataset": "linnerud",
+      "task": "regression",
+      "transformer": "MinMaxScaler",
+      "transformer_args": {},
+      "estimator": "Ridge",
+      "estimator_args": {
+        "alpha": 1
+      }
+    },
+    {
+      "name": "iris_power_rf",
+      "dataset": "iris",
+      "task": "classification",
+      "transformer": "PowerTransformer",
+      "transformer_args": {
+        "standardize": true
+      },
+      "estimator": "RandomForestClassifier",
+      "estimator_args": {
+        "n_estimators": 24,
+        "max_depth": 5,
+        "random_state": 3817
+      }
+    },
+    {
+      "name": "digits_maxabs_gaussiannb",
+      "dataset": "digits",
+      "task": "classification",
+      "transformer": "MaxAbsScaler",
+      "transformer_args": {},
+      "estimator": "GaussianNB",
+      "estimator_args": {}
+    },
+    {
+      "name": "iris_standard_kmeans",
+      "dataset": "iris",
+      "task": "clustering",
+      "transformer": "StandardScaler",
+      "transformer_args": {},
+      "estimator": "KMeans",
+      "estimator_args": {
+        "n_clusters": 3,
+        "n_init": 10,
+        "random_state": 3817
+      }
+    }
+  ],
+  "scenarios": [
+    {
+      "name": "clean",
+      "truth": "valid",
+      "description": "Unmodified observed fit-transform-inference evidence"
+    },
+    {
+      "name": "valid_shifted_evaluation",
+      "truth": "valid",
+      "description": "Evaluation features legitimately shift; transform, prediction and all references use exactly the shifted values"
+    },
+    {
+      "name": "valid_retrained",
+      "truth": "valid",
+      "description": "Fresh train/test split, re-fit preprocessor and model, re-observe full chain with consistent source identities"
+    },
+    {
+      "name": "changed_model_fit_values",
+      "truth": "invalid",
+      "description": "Model is genuinely fitted to transformed X plus 0.12, not the recorded transform output"
+    },
+    {
+      "name": "changed_inference_values",
+      "truth": "invalid",
+      "description": "Model receives transformed eval X plus 0.125, not the recorded transform output"
+    },
+    {
+      "name": "changed_reported_raw_evaluation",
+      "truth": "invalid",
+      "description": "Reported raw eval features differ at one value from the actual transform input"
+    },
+    {
+      "name": "preprocessor_fit_on_evaluation",
+      "truth": "invalid",
+      "description": "Preprocessor was genuinely fitted using train and evaluation samples, which violate split contract"
+    },
+    {
+      "name": "missing_transform_witness",
+      "truth": "unverifiable",
+      "description": "Transform trace withheld while other available execution evidence remains"
+    }
+  ],
+  "baselines": [
+    {
+      "name": "metadata_and_schema",
+      "access": "declared train/test IDs, preprocessor fit IDs, numeric finite/shape; no actual value-level transform evidence"
+    },
+    {
+      "name": "equal_evidence_direct",
+      "access": "same actual source feature batches, fitted transformer rows, transformed outputs, actual model-fit and inference inputs as recorder; direct numerical equality without hashing"
+    },
+    {
+      "name": "fuzzyxai_observer",
+      "access": "same caller-initiated witnessed fit, transform and inference calls; never autonomously calls fit/transform/predict"
+    }
+  ],
+  "fixed_decision_rules": [
+    "Only transform-chain and preprocessor fit-scope checks count for the main comparison; unrelated prediction quality is not a provenance violation.",
+    "For valid scenarios, any PROBLEM in a counted check is a false alarm.",
+    "For known invalid scenarios, at least one PROBLEM in the declared relevant check set is a detected contract fault.",
+    "For missing_transform_witness the transform_trace status must be UNKNOWN and counts as unavailable coverage, not a true negative nor a missed corruption.",
+    "Count cases descriptively per pipeline; the eight pipelines include repeated underlying datasets and cannot be treated as independent clinical domains.",
+    "The equal-evidence direct baseline is permitted the same source/fit/transform/inference arrays and class of trust as the witness."
+  ],
+  "invariants": [
+    "Frozen protocol before benchmark source and all measured outputs.",
+    "No change to any locked, scored or dissertation study artifact.",
+    "No automatic model fit, transform, prediction, acceptance, repair or retraining by observe_ml_run.",
+    "Only caller-instrumented dense numeric one-step feature transformation is claimed.",
+    "The source truth here is developer-known instrumented execution, not externally blinded naturally occurring incidents.",
+    "Clean drift and clean re-training must not be called errors merely because values or model parameters change coherently.",
+    "A compromised source and recorder can forge a coherent record, and model quality/causality are not established by agreement.",
+    "A direct comparator with equal access may be as accurate or better; do not claim superior detection without measured differences.",
+    "No unrestricted model family/domain generalization, CV, text, multimodal, sparse or multi-stage support claimed."
+  ]
+}
