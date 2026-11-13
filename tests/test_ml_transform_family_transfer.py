@@ -21,12 +21,12 @@ def test_transfer_declared_pipelines_and_fault_classes() -> None:
         "developer_specified_cross_transform_family_transfer_not_independent_blind_incident_study"
     )
     assert Counter(r["pipeline"] for r in study["records"]) == {
-        name: 8 for name in {
+        name: 8 for name in (
             "digits_pca_knn", "wine_robust_svc",
             "breast_cancer_quantile_logreg", "diabetes_spline_ridge",
             "linnerud_minmax_ridge", "iris_power_rf",
             "digits_maxabs_gaussiannb", "iris_standard_kmeans",
-        }
+        )
     }
     totals = study["by_scenario"]
     for name in ("clean", "valid_shifted_evaluation", "valid_retrained"):
