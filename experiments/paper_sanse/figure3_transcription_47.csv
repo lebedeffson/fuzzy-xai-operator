@@ -1,0 +1,48 @@
+method,source,obj,audience,source_locator
+Линейные модели,internal,features,auditor,Figure 3: row internal; column features
+"GAM, EBM",internal,features,auditor,Figure 3: row internal; column features
+Скоринговые системы,internal,features,auditor,Figure 3: row internal; column features
+"Прецеденты, kNN",internal,data,user,Figure 3: row internal; column data
+Деревья решений,internal,logic,auditor,Figure 3: row internal; column logic
+Списки правил,internal,logic,auditor,Figure 3: row internal; column logic
+Нечёткие правила,internal,logic,auditor,Figure 3: row internal; column logic
+ANFIS,internal,logic,auditor,Figure 3: row internal; column logic
+Байесовские сети,internal,causal,researcher,Figure 3: row internal; column causal
+Внимание,embedded,features,user,Figure 3: row embedded; column features
+ProtoPNet,embedded,representations,user,Figure 3: row embedded; column representations
+CBM,embedded,representations,user,Figure 3: row embedded; column representations
+SENN,embedded,representations,user,Figure 3: row embedded; column representations
+DkNN,embedded,data,developer,Figure 3: row embedded; column data
+RAG с источниками,embedded,data,user,Figure 3: row embedded; column data
+Обоснования (e-SNLI),embedded,logic,user,Figure 3: row embedded; column logic
+Цепочка рассуждений,embedded,logic,user,Figure 3: row embedded; column logic
+Нейросимвольный вывод,embedded,logic,auditor,Figure 3: row embedded; column logic
+Граф знаний,embedded,logic,user,Figure 3: row embedded; column logic
+Причинные представления,embedded,causal,researcher,Figure 3: row embedded; column causal
+LIME,posthoc,features,user,Figure 3: row posthoc; column features
+SHAP,posthoc,features,user,Figure 3: row posthoc; column features
+Контрфакты,posthoc,features,user,Figure 3: row posthoc; column features
+Обжалование (recourse),posthoc,features,user,Figure 3: row posthoc; column features
+Grad-CAM,posthoc,features,user,Figure 3: row posthoc; column features
+Градиентные карты,posthoc,features,developer,Figure 3: row posthoc; column features
+Integrated Gradients,posthoc,features,developer,Figure 3: row posthoc; column features
+"LRP, DeepLIFT",posthoc,features,developer,Figure 3: row posthoc; column features
+"Окклюзия, RISE",posthoc,features,developer,Figure 3: row posthoc; column features
+Перестановочная важность,posthoc,features,auditor,Figure 3: row posthoc; column features
+"PDP, ICE, ALE",posthoc,features,auditor,Figure 3: row posthoc; column features
+GNNExplainer,posthoc,features,developer,Figure 3: row posthoc; column features
+Лингвистические резюме,posthoc,features,user,Figure 3: row posthoc; column features
+TCAV,posthoc,representations,researcher,Figure 3: row posthoc; column representations
+Network Dissection,posthoc,representations,researcher,Figure 3: row posthoc; column representations
+Зонды (probing),posthoc,representations,developer,Figure 3: row posthoc; column representations
+Визуализация активаций,posthoc,representations,developer,Figure 3: row posthoc; column representations
+Функции влияния,posthoc,data,developer,Figure 3: row posthoc; column data
+Data Shapley,posthoc,data,developer,Figure 3: row posthoc; column data
+Примеры и контрпримеры,posthoc,data,user,Figure 3: row posthoc; column data
+Datasheets,posthoc,data,regulator,Figure 3: row posthoc; column data
+Аргументация,posthoc,logic,user,Figure 3: row posthoc; column logic
+Anchors,posthoc,logic,user,Figure 3: row posthoc; column logic
+Извлечение правил,posthoc,logic,auditor,Figure 3: row posthoc; column logic
+Схемы (circuits),posthoc,logic,researcher,Figure 3: row posthoc; column logic
+Model Cards,posthoc,logic,regulator,Figure 3: row posthoc; column logic
+Структурные причинные,posthoc,causal,researcher,Figure 3: row posthoc; column causal
