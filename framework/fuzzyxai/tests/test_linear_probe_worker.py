@@ -30,6 +30,7 @@ from fuzzyxai.selective_observer.local_effects import (
     LocalEffectEvidence,
     hash_numeric_input,
 )
+
 SOURCE_KEY = b"test-only-origin-source-key-secure-32"
 EFFECT_KEY = b"test-only-separate-probe-key-secure-32"
 PRODUCER_ID = "separately-invoked-logit-probe"
