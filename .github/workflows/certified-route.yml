@@ -82,6 +82,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: certified-route-evidence-${{ matrix.python-version }}
+          include-hidden-files: true
           path: |
             certified_route_results/summary.json
             certified_route_results/case_results.csv
