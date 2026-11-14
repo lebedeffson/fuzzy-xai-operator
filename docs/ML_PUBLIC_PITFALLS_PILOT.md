@@ -117,10 +117,13 @@ for leakage. The third row matters because predictive metrics would not
 reliably reveal this misuse. This is an example-level result, not a
 statistical effect-size estimate across independent incidents.
 
-Python 3.11 and 3.12 use different NumPy patch versions, but the registered
-case labels, all observer/baseline decisions, all per-case metrics and both
-aggregate tables match exactly. Their complete JSON files differ in
-environment metadata only.
+Python 3.11 and 3.12 use different NumPy patch versions. The case labels,
+all observer/baseline decisions and aggregate counts are identical. Numerical
+model metrics agree at the displayed precision, **not bit-for-bit**:
+the diabetes/Ridge clean and withheld-witness runs give
+MSE 2842.834633538595 (3.11) versus 2842.834633538591 (3.12),
+an absolute difference of about 4e-12. Thus the JSON outputs differ
+in both environment metadata and those two floating-point observations.
 
 ### What the result does not establish
 
