@@ -6,6 +6,8 @@ on:
     paths:
       - 'framework/fuzzyxai/fuzzyxai/core/certified_route.py'
       - 'framework/fuzzyxai/tests/test_certified_route.py'
+      - 'framework/fuzzyxai/tests/test_linear_probe_worker.py'
+      - 'framework/fuzzyxai/fuzzyxai/core/linear_probe_worker.py'
       - 'experiments/certified_route_benchmark.py'
       - 'experiments/certified_route_demo.py'
       - 'experiments/attested_response_benchmark.py'
@@ -15,6 +17,8 @@ on:
     paths:
       - 'framework/fuzzyxai/fuzzyxai/core/certified_route.py'
       - 'framework/fuzzyxai/tests/test_certified_route.py'
+      - 'framework/fuzzyxai/tests/test_linear_probe_worker.py'
+      - 'framework/fuzzyxai/fuzzyxai/core/linear_probe_worker.py'
       - 'experiments/certified_route_benchmark.py'
       - 'experiments/certified_route_demo.py'
       - 'experiments/attested_response_benchmark.py'
@@ -42,11 +46,11 @@ jobs:
         run: python -m pip install -e '.[dev]'
       - name: Verify real SDK integration
         run: |
-          python -m pytest -q -ra framework/fuzzyxai/tests/test_certified_route.py
+          python -m pytest -q -ra framework/fuzzyxai/tests/test_certified_route.py framework/fuzzyxai/tests/test_linear_probe_worker.py
           python -m pytest -q framework/fuzzyxai/tests/test_composition.py framework/fuzzyxai/tests/test_tisu_core_safety_regression.py
       - name: Lint edited source
         run: |
-          ruff check framework/fuzzyxai/fuzzyxai/core/certified_route.py framework/fuzzyxai/tests/test_certified_route.py experiments/certified_route_demo.py experiments/certified_route_benchmark.py experiments/attested_response_benchmark.py
+          ruff check framework/fuzzyxai/fuzzyxai/core/certified_route.py framework/fuzzyxai/fuzzyxai/core/linear_probe_worker.py framework/fuzzyxai/tests/test_certified_route.py framework/fuzzyxai/tests/test_linear_probe_worker.py experiments/certified_route_demo.py experiments/certified_route_benchmark.py experiments/attested_response_benchmark.py
       - name: Run frozen developmental benchmark and demo
         run: |
           python experiments/certified_route_benchmark.py --output-dir certified_route_results > certified_route_stdout.json

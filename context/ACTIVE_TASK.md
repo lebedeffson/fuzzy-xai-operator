@@ -1,3 +1,9 @@
+# Certified Route v8: subprocess evidence producer (2026-11-14)
+
+Scoped to PR #12. New `fuzzyxai.core.linear_probe_worker` loads only safe JSON fitted StandardScaler/LogisticRegression binary parameters; computes local target-logit probes itself, enforces exact model SHA, ordered input SHA, event/version and signed probability agreement (1e-8), and signs from a restricted file key. JSON stdin/stdout, one request per subprocess. Worker cannot validate original HMAC (source key not present); the full route verifier must independently authenticate it. Local isolated test-support execution: 35 pytest PASS (25 existing + 10 new subprocess cases); actual upstream CI required before merge. No locked/scored scientific files modified. Caveats: subprocess is same-host test, not production auth separation; symmetric HMAC verifier can also sign; experiments remain developmental and matched-info baseline ties. Known repository-wide CI defects predate this PR on base `f041bbf3` and remain separate.
+
+---
+
 # Active task — Certified Route signed witness hardening (2026-11-14)
 
 Scope: PR #12 `research/signed-certified-route-20261114` stacked onto `research/manuscript-shacl-independent-20261113`. Frozen dissertation protocols, scored results and manuscript chapters 1–4 are out of scope.
