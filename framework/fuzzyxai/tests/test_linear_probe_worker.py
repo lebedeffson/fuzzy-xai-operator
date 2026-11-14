@@ -202,6 +202,7 @@ def test_worker_produces_own_model_response_and_separate_signed_certificate(sign
 @pytest.mark.parametrize("mutation", [
     "model_sha", "input_hash", "input_value", "signed_probability",
     "model_version", "wrong_class", "unknown_extra_field", "nonfinite_input",
+    "unapproved_reference",
 ])
 def test_worker_fails_closed_for_model_and_source_mismatches(signed_fixture, mutation):
     manifest, keyfile, request, origin, _fitted, _local = signed_fixture
@@ -222,6 +223,8 @@ def test_worker_fails_closed_for_model_and_source_mismatches(signed_fixture, mut
         request["model_effects"] = {"effect_on_score": [0.0, 0.0]}
     elif mutation == "nonfinite_input":
         request["input_values"][0] = float("nan")
+    elif mutation == "unapproved_reference":
+        request["reference_values"][0] += 0.15
     code, response, raw = _run_worker(manifest, keyfile, request)
     assert code == 3
     assert response["status"] == "insufficient_evidence"

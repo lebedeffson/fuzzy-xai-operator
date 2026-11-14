@@ -152,6 +152,8 @@ def make_signed_response(
         raise ValueError("source prediction does not match the trusted model")
     x = _finite_array(record["input_values"], width=len(model.feature_names))
     reference = _finite_array(record["reference_values"], width=len(model.feature_names))
+    if reference != model.mean:
+        raise ValueError("reference vector must equal the trusted training-mean reference")
     if hash_numeric_input(model.feature_names, x) != anchor.source_sha256:
         raise ValueError("input bytes do not match signed prediction")
     # Only the positive-class logit convention is supported. Bind signed
