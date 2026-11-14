@@ -16,6 +16,7 @@ from pathlib import Path
 
 import numpy as np
 import sklearn
+from certified_route_benchmark import BETA, SEEDS, _datasets, _model_hash, _stage
 from fuzzyxai.core.certified_route import (
     SignedPrediction,
     certify_route_with_attested_local_effects,
@@ -34,7 +35,6 @@ from sklearn.model_selection import train_test_split
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 
-from certified_route_benchmark import BETA, SEEDS, _datasets, _model_hash, _stage
 
 MODEL_KEY = b"development-prediction-signing-key-not-production"
 PROBE_KEY = b"development-probe-signing-key-not-production"
@@ -146,7 +146,7 @@ def run(output_dir: Path) -> dict:
                     object_id=object_id, model_version=version,
                     target_class="positive", feature_names=names,
                     input_values=raw_row, reference_values=reference,
-                    target_logits=lambda batch: tuple(
+                    target_logits=lambda batch, model=model: tuple(
                         float(value) for value in model.decision_function(
                             np.asarray(batch, dtype=float)
                         )

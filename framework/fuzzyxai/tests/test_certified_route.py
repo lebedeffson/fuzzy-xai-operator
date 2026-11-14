@@ -387,7 +387,8 @@ def test_independent_signed_model_response_detects_coherent_two_sided_spoof():
     )
     from fuzzyxai.selective_observer.evidence_identity import LocalExplanationEvidence
     from fuzzyxai.selective_observer.local_effects import (
-        LocalEffectEvidence, SUPPORTED_PROTOCOL,
+        SUPPORTED_PROTOCOL,
+        LocalEffectEvidence,
     )
 
     producer_key = b"independent-adapter-demo-key-rotate"
@@ -455,7 +456,7 @@ def test_independent_signed_model_response_detects_coherent_two_sided_spoof():
 
 def test_effect_signer_rejects_invalid_nonfinite_evidence():
     from fuzzyxai.core.certified_route import sign_local_effect_witness
-    from fuzzyxai.selective_observer.local_effects import LocalEffectEvidence, SUPPORTED_PROTOCOL
+    from fuzzyxai.selective_observer.local_effects import SUPPORTED_PROTOCOL, LocalEffectEvidence
 
     a = receipt()
     invalid = LocalEffectEvidence(
