@@ -1,0 +1,65 @@
+name: ML sklearn public-pitfall pilot
+
+on:
+  pull_request:
+    paths:
+      - "experiments/ml_public_pitfalls_protocol_v1.json"
+      - "experiments/ml_public_pitfalls_replay.py"
+      - "tests/test_ml_public_pitfalls_replay.py"
+      - "docs/ML_PUBLIC_PITFALLS_PILOT.md"
+      - ".github/workflows/ml-public-pitfalls.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ml-public-pitfalls-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  reproduce:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install existing framework, sklearn and test tools
+        run: python -m pip install -e ".[dev]"
+      - name: Verify recorded sklearn examples and observer regression
+        run: |
+          python -m pytest -q tests/test_ml_public_pitfalls_replay.py
+          python -m pytest -q tests/test_ml_transform_chain.py tests/test_ml_observer_end_to_end.py
+      - name: Lint code without changing a scientific gate
+        run: ruff check experiments/ml_public_pitfalls_replay.py tests/test_ml_public_pitfalls_replay.py
+      - name: Produce full protocol-bound results
+        run: python -m experiments.ml_public_pitfalls_replay > ml_public_pitfalls_result.json
+      - name: Verify case inventory and honest unknown reporting
+        run: |
+          python - <<'PY'
+          import json
+          p = json.load(open("experiments/ml_public_pitfalls_protocol_v1.json"))
+          r = json.load(open("ml_public_pitfalls_result.json"))
+          assert p["phase"] == r["phase"]
+          assert r["n_cases"] == 9
+          assert r["truth_counts"] == {"valid": 3, "invalid": 3, "unverifiable": 3}
+          assert all(s["observer"] == "abstain" and s["equal_evidence_direct"] == "abstain"
+                     for s in r["records"] if s["truth"] == "unverifiable")
+          assert all(s["scenario"] != "documented_error" or isinstance(s["hit_designated_rule"], bool)
+                     for s in r["records"])
+          PY
+      - name: Attach exact input protocol, code and results
+        uses: actions/upload-artifact@v4
+        with:
+          name: ml-public-pitfalls-${{ matrix.python-version }}
+          path: |
+            experiments/ml_public_pitfalls_protocol_v1.json
+            experiments/ml_public_pitfalls_replay.py
+            tests/test_ml_public_pitfalls_replay.py
+            ml_public_pitfalls_result.json
+            docs/ML_PUBLIC_PITFALLS_PILOT.md

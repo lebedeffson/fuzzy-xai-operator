@@ -1,0 +1,104 @@
+{
+  "schema_version": "fuzzyxai-public-sklearn-pitfalls-pilot-v1",
+  "registered_date": "2026-11-14",
+  "phase": "public_documentation_scenario_replay_not_blinded_natural_incident_validation",
+  "claim": "Can an unchanged caller-instrumented FuzzyXAI ML observer detect externally published sklearn preprocessing anti-patterns without false alerts on correct examples, while abstaining when transform evidence is missing?",
+  "source": {
+    "title": "scikit-learn 1.9.1 Common pitfalls and recommended practices",
+    "url": "https://scikit-learn.org/stable/common_pitfalls.html",
+    "source_version": "1.9.1",
+    "source_type": "independently authored library documentation containing deliberately incorrect and correct examples, not naturally observed production incidents"
+  },
+  "reproducers": [
+    {
+      "id": "inconsistent_scaler",
+      "source_section": "12.1 Inconsistent preprocessing",
+      "source_behavior": "Scale training features but pass unscaled test data to a fitted estimator",
+      "model": "StandardScaler + LinearRegression",
+      "dataset": "sklearn.datasets.make_regression",
+      "n_samples": 100,
+      "n_features": 1,
+      "seed": 42,
+      "test_fraction": 0.4,
+      "deviation": "Caller-instrumented equivalent of sklearn documented scalar regression example, preserving fit/transform/predict calls"
+    },
+    {
+      "id": "feature_selection_leak",
+      "source_section": "12.2.2 Data leakage during pre-processing",
+      "source_behavior": "SelectKBest sees the entire dataset and targets prior to holdout split",
+      "model": "SelectKBest(k=25) + HistGradientBoostingClassifier",
+      "dataset": "random normal features with independent random binary labels",
+      "n_samples": 200,
+      "n_features": 10000,
+      "seed": 42,
+      "test_fraction": 0.25,
+      "deviation": "Regression of the documentation anti-pattern with explicitly recorded feature-selection fit IDs and supervised labels"
+    },
+    {
+      "id": "pre_split_scaler",
+      "source_section": "12.2.1 How to avoid data leakage",
+      "source_behavior": "Compute scaler statistics on train+holdout, then fit estimator on train",
+      "model": "StandardScaler + Ridge",
+      "dataset": "sklearn.datasets.load_diabetes",
+      "n_samples": "all available",
+      "n_features": 10,
+      "seed": 42,
+      "test_fraction": 0.25,
+      "deviation": "Specific train+holdout scaler adaptation of source's general leakage rule"
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "correct",
+      "truth": "valid",
+      "description": "Published correct train-only fit/transform path"
+    },
+    {
+      "id": "documented_error",
+      "truth": "invalid",
+      "description": "Published anti-pattern executed, rather than hash/metadata tampering"
+    },
+    {
+      "id": "missing_transform_record",
+      "truth": "unverifiable",
+      "description": "Valid execution while withholding the transform witness as an abstention control"
+    }
+  ],
+  "fixed_checks": {
+    "inconsistent_scaler": "transform_predict_link",
+    "feature_selection_leak": "transform_preprocessor_fit_link",
+    "pre_split_scaler": "transform_preprocessor_fit_link"
+  },
+  "comparators": {
+    "observer": "read-only FuzzyXAI with caller-observed fit/transform/model-output records",
+    "equal_evidence_direct": "direct comparisons on the SAME actual fit input arrays, transform outputs, model fit/prediction arrays and train/eval source row IDs as available to the recorder",
+    "metadata_only": "declared row-ID overlap and preprocessor-fit overlap, no value-level fitted/transform/output array comparison"
+  },
+  "decision_rules": [
+    "For invalid cases, require PROBLEM in fixed_checks[id], not just any generic warning",
+    "For valid cases, count any PROBLEM among the enumerated transform-chain and split-isolation checks as false alert",
+    "For missing-transform cases, require explicit UNKNOWN for transform_trace; missing must never count as OK nor as an invalid-case detection",
+    "The direct comparator has the same inputs as the observer; do not claim superiority if tied",
+    "Prediction MSE/accuracy is descriptive, never a surrogate label for contract violations",
+    "Use exactly the listed fixed seeds, dataset configurations, and wrong/correct examples; do not adapt after observing results",
+    "Report cases descriptively and per source example; 9 observations are neither independent faults nor a population estimate",
+    "An external published anti-pattern is NOT an actual production incident; call this independent-source scenario replay, NOT blinded external validation",
+    "Caller-supplied row IDs, signing keys and model identity are not independently authenticated by this study",
+    "Out-of-scope resampling and cross-run leakage must remain unassessed, not silently certified"
+  ],
+  "anticipated_counts": {
+    "families": 3,
+    "executions": 9,
+    "valid": 3,
+    "invalid": 3,
+    "unverifiable": 3
+  },
+  "known_limits": [
+    "Single-transform dense numeric sklearn only; the observer does not invoke model operations autonomously",
+    "No externally blinded case selection or unknown real incidents",
+    "Author-authored integrations wrap the documented scenarios and can introduce implementation bias",
+    "The study is a developer-controlled adaptation of external examples, not an independent replication of exact upstream source commits",
+    "Same-evidence direct comparator is expected to be as capable as the hash-based observer",
+    "No causal correctness or performance-superiority claim"
+  ]
+}
