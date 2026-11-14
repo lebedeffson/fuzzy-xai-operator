@@ -12,6 +12,10 @@ from dataclasses import asdict, replace
 
 import numpy as np
 import pytest
+from sklearn.linear_model import LogisticRegression
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import StandardScaler
+
 from fuzzyxai.core.certified_route import (
     RouteStatus,
     SignedLocalEffectWitness,
@@ -26,10 +30,6 @@ from fuzzyxai.selective_observer.local_effects import (
     LocalEffectEvidence,
     hash_numeric_input,
 )
-from sklearn.linear_model import LogisticRegression
-from sklearn.pipeline import make_pipeline
-from sklearn.preprocessing import StandardScaler
-
 SOURCE_KEY = b"test-only-origin-source-key-secure-32"
 EFFECT_KEY = b"test-only-separate-probe-key-secure-32"
 PRODUCER_ID = "separately-invoked-logit-probe"
@@ -155,8 +155,7 @@ def _run_worker(manifest, keyfile, request, *, key_env=True):
         [sys.executable, "-m", "fuzzyxai.core.linear_probe_worker",
          "--manifest", str(manifest)],
         input=json.dumps(request), encoding="utf-8",
-        stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-        env=env, check=False, timeout=15,
+        capture_output=True, env=env, check=False, timeout=15,
     )
     return proc.returncode, json.loads(proc.stdout), proc.stdout
 
