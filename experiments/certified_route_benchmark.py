@@ -9,27 +9,31 @@ from __future__ import annotations
 
 import argparse
 import csv
-from dataclasses import replace
 import hashlib
-import hmac
 import json
-from pathlib import Path
 import platform
+from dataclasses import replace
+from itertools import pairwise
+from pathlib import Path
 
 import numpy as np
 import sklearn
+from fuzzyxai.core.certified_route import (
+    RouteStatus,
+    SignedPrediction,
+    certify_branching_route,
+    certify_route,
+    sign_prediction,
+    verify_prediction,
+)
+from fuzzyxai.core.composition import compose
+from fuzzyxai.core.diagnostics import DiagnosticState
+from fuzzyxai.core.explanation_object import ExplanationObject, Rule, Trace
 from sklearn.datasets import load_breast_cancer, load_digits, load_wine
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
-
-from fuzzyxai.core.certified_route import (
-    SignedPrediction, RouteStatus, certify_route, certify_branching_route, sign_prediction, verify_prediction,
-)
-from fuzzyxai.core.composition import compose
-from fuzzyxai.core.diagnostics import DiagnosticState
-from fuzzyxai.core.explanation_object import ExplanationObject, Rule, Trace
 
 # Fixed development protocol, not a hidden confirmatory study.
 SEEDS = (17, 31, 53)
@@ -153,7 +157,7 @@ def _mutate(anchor, case):
 
 def _baseline_pairwise(steps) -> str:
     # Existing compose without a source anchor. This is deliberately weaker.
-    for left, right in zip(steps, steps[1:]):
+    for left, right in pairwise(steps):
         output = compose(left, right, BETA)
         if isinstance(output, DiagnosticState):
             return RouteStatus.REJECTED.value
@@ -242,8 +246,6 @@ def run(output_dir: Path) -> dict:
                     complement_event_id="negative",
                 ), secret=TEST_KEY)
                 if example_order == 0:
-                    base_nodes = {name: _stage(anchor, i) for i, name in enumerate(
-                        ("root", "a", "b", "merge"))}
                     forks = [("root", "a"), ("root", "b"),
                              ("a", "merge"), ("b", "merge")]
                     for graph_case in ("clean_fork_merge", "conflicting_branch",

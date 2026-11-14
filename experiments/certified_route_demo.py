@@ -5,22 +5,23 @@ separate trust domains in deployment. No clinical validation is implied.
 """
 from __future__ import annotations
 
-from dataclasses import asdict
-from hashlib import sha256
 import argparse
 import json
+from dataclasses import asdict
+from hashlib import sha256
 from pathlib import Path
 
 import numpy as np
+from fuzzyxai.core.certified_route import (
+    SignedPrediction,
+    certify_json_document,
+    sign_prediction,
+)
 from sklearn.datasets import load_breast_cancer
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
-
-from fuzzyxai.core.certified_route import (
-    SignedPrediction, sign_prediction, certify_json_document,
-)
 
 DEMO_KEY = b"FuzzyXAI-DEMO-KEY-DO-NOT-USE-IN-PRODUCTION"
 

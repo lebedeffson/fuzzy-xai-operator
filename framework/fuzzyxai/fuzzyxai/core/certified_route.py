@@ -8,14 +8,15 @@ a compromised signer.  Transitions v1 cover identity and binary complement.
 
 from __future__ import annotations
 
-from dataclasses import dataclass, fields, replace
-from enum import Enum
-from hashlib import sha256
 import hmac
 import json
 import math
 import re
-from typing import Any, Mapping, Sequence
+from collections.abc import Mapping, Sequence
+from dataclasses import dataclass, fields, replace
+from enum import Enum
+from hashlib import sha256
+from typing import Any
 
 from .composition import compose
 from .diagnostics import DiagnosticState
@@ -321,7 +322,8 @@ def certify_route_with_local_effects(
     try:
         from fuzzyxai.selective_observer.evidence_identity import LocalEvidenceStatus
         from fuzzyxai.selective_observer.local_effects import (
-            SUPPORTED_PROTOCOL, verify_additive_local_effects,
+            SUPPORTED_PROTOCOL,
+            verify_additive_local_effects,
         )
     except ImportError:
         return _issue(RouteStatus.INSUFFICIENT, -1, "RESPONSE_VERIFIER_UNAVAILABLE",
@@ -432,7 +434,7 @@ def certify_json_document(document: Mapping[str, Any], *, verification_secret: b
     for i, record in enumerate(items):
         try:
             if not isinstance(record, dict):
-                raise ValueError("stage must be object")
+                raise TypeError("stage must be object")
             rep = record["representation"]
             if not isinstance(rep, dict) or rep.get("type") != "scalar":
                 raise ValueError("only scalar representation permitted in JSON v1")

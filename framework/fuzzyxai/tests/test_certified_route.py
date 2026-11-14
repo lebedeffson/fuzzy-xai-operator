@@ -1,13 +1,16 @@
 """Contract tests for independently anchored, sequential XAI composition."""
 
-from dataclasses import replace
 import hashlib
+from dataclasses import replace
 
 import pytest
 
 from fuzzyxai.core.certified_route import (
-    RouteStatus, SignedPrediction, sign_prediction, verify_prediction,
+    RouteStatus,
+    SignedPrediction,
     certify_route,
+    sign_prediction,
+    verify_prediction,
 )
 from fuzzyxai.core.explanation_object import ExplanationObject, Rule, Trace
 
@@ -189,9 +192,9 @@ def test_source_reference_does_not_accidentally_accept_invalid_shape():
 def test_full_route_with_independently_measured_additive_effects():
     # Current repo's real SDK module is used in CI. Older research ZIPs do not
     # include the verifier, so their local copy runs the semantic suite only.
-    from fuzzyxai.selective_observer import local_effects as verifier
-    from fuzzyxai.selective_observer import evidence_identity as identities
     from fuzzyxai.core.certified_route import certify_route_with_local_effects
+    from fuzzyxai.selective_observer import evidence_identity as identities
+    from fuzzyxai.selective_observer import local_effects as verifier
 
     a = receipt()
     source = hashlib.sha256(b"local attributions").hexdigest()
@@ -233,6 +236,7 @@ def test_full_route_with_independently_measured_additive_effects():
 def test_json_cli_round_trip_with_externally_signed_witness(tmp_path, monkeypatch):
     import json
     from dataclasses import asdict
+
     from fuzzyxai.core.certified_route import certify_json_document, main
 
     a = receipt()
@@ -264,8 +268,8 @@ def test_branching_dag_uses_all_paths_and_requires_terminal_unanimity():
     a = receipt()
     nodes = {k: stage(a, number=i) for i, k in enumerate(("root", "left", "right", "merge"))}
     edges = [("root", "left"), ("root", "right"), ("left", "merge"), ("right", "merge")]
-    params = dict(nodes=nodes, edges=edges, root_id="root", terminal_ids=["merge"],
-                  signed_prediction=a, verification_secret=SECRET, beta=BETA)
+    params = {"nodes": nodes, "edges": edges, "root_id": "root", "terminal_ids": ["merge"],
+              "signed_prediction": a, "verification_secret": SECRET, "beta": BETA}
     assert certify_branching_route(**params).status == RouteStatus.CERTIFIED
     nodes["right"].metadata["risk"] = 0.33
     result = certify_branching_route(**params)
@@ -277,8 +281,8 @@ def test_branching_dag_rejects_cycles_abstains_on_incomplete_sinks():
     from fuzzyxai.core.certified_route import certify_branching_route
     a = receipt()
     nodes = {k: stage(a, number=i) for i, k in enumerate(("root", "left", "right"))}
-    kwargs = dict(nodes=nodes, root_id="root", signed_prediction=a,
-                  verification_secret=SECRET, beta=BETA)
+    kwargs = {"nodes": nodes, "root_id": "root", "signed_prediction": a,
+              "verification_secret": SECRET, "beta": BETA}
     assert certify_branching_route(edges=[("root", "left"), ("root", "right")],
                                   terminal_ids=["left", "right"], **kwargs).status == RouteStatus.CERTIFIED
     assert certify_branching_route(edges=[("root", "left"), ("root", "right")],
@@ -304,13 +308,14 @@ def test_branching_dag_path_explosion_abstains_not_implicitly_accepts():
 def test_real_sklearn_model_sdk_response_binding():
     """Exercise the actual upstream score-response collector on a fitted model."""
     import numpy as np
-    from sklearn.linear_model import LogisticRegression
     from fuzzyxai.core.certified_route import certify_route_with_local_effects
     from fuzzyxai.selective_observer.evidence_identity import LocalExplanationEvidence
     from fuzzyxai.selective_observer.local_effects import (
-        SUPPORTED_PROTOCOL, collect_linear_reference_effects_batched,
+        SUPPORTED_PROTOCOL,
+        collect_linear_reference_effects_batched,
         hash_numeric_input,
     )
+    from sklearn.linear_model import LogisticRegression
 
     X = np.asarray([[0, 0], [0, 1], [1, 0], [1, 1], [2, 1], [1, 2]], dtype=float)
     y = np.asarray([0, 0, 0, 1, 1, 1], dtype=int)
