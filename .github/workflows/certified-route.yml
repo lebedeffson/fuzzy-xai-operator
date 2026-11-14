@@ -92,3 +92,12 @@ jobs:
             certified_route_attested_results/summary.json
             certified_route_attested_results/case_results.csv
             certified_route_attested_stdout.json
+            framework/fuzzyxai/fuzzyxai/core/certified_route.py
+            framework/fuzzyxai/fuzzyxai/core/linear_probe_worker.py
+            framework/fuzzyxai/tests/test_certified_route.py
+            framework/fuzzyxai/tests/test_linear_probe_worker.py
+            experiments/certified_route_demo.py
+            experiments/certified_route_benchmark.py
+            experiments/attested_response_benchmark.py
+            docs/CERTIFIED_ROUTE_RU.md
+            .github/workflows/certified-route.yml
