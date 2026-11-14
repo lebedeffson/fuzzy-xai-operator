@@ -202,28 +202,69 @@ def _load_signing_key(path: Path) -> bytes:
     return secret
 
 
+def _decode_request(payload: bytes) -> dict[str, Any]:
+    if len(payload) > _MAX_JSON:
+        raise ValueError("request too large")
+    return json.loads(
+        payload,
+        parse_constant=lambda _: (_ for _ in ()).throw(ValueError("non-finite JSON")),
+    )
+
+
+def _handle_request(model: LinearBinaryModel, payload: bytes, secret: bytes) -> tuple[dict[str, Any], int]:
+    try:
+        request = _decode_request(payload)
+        return make_signed_response(model, request, secret), 0
+    except (UnicodeError, TypeError, KeyError, ValueError, OverflowError, json.JSONDecodeError):
+        return {"status": "insufficient_evidence", "code": "MODEL_PROBE_UNAVAILABLE"}, 3
+
+
+def _output(response: dict[str, Any]) -> None:
+    sys.stdout.write(json.dumps(response, sort_keys=True, allow_nan=False) + "\n")
+    sys.stdout.flush()
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="FuzzyXAI signed linear response worker")
     parser.add_argument("--manifest", required=True, type=Path)
     parser.add_argument("--key-file-env", default="FUZZYXAI_PROBE_KEY_FILE")
+    parser.add_argument("--stream", action="store_true", help="NDJSON requests; one response per line")
+    parser.add_argument("--max-requests", type=int, default=10000)
     args = parser.parse_args(argv)
     try:
+        if not 1 <= args.max_requests <= 100000:
+            raise ValueError("invalid request limit")
         key_file = os.environ.get(args.key_file_env)
         if not key_file:
             raise ValueError("signing key not configured")
         secret = _load_signing_key(Path(key_file))
         model = _load_model(args.manifest)
-        payload = sys.stdin.buffer.read(_MAX_JSON + 1)
-        if len(payload) > _MAX_JSON:
-            raise ValueError("request too large")
-        request = json.loads(payload, parse_constant=lambda _: (_ for _ in ()).throw(ValueError("non-finite JSON")))
-        response = make_signed_response(model, request, secret)
-        status = 0
     except (OSError, UnicodeError, TypeError, KeyError, ValueError, OverflowError, json.JSONDecodeError):
-        response = {"status": "insufficient_evidence", "code": "MODEL_PROBE_UNAVAILABLE"}
-        status = 3
-    sys.stdout.write(json.dumps(response, sort_keys=True, allow_nan=False) + "\n")
-    return status
+        _output({"status": "insufficient_evidence", "code": "MODEL_PROBE_UNAVAILABLE"})
+        return 3
+    if not args.stream:
+        response, status = _handle_request(model, sys.stdin.buffer.read(_MAX_JSON + 1), secret)
+        _output(response)
+        return status
+    # Long-lived local process; the model and signer key are loaded once.
+    # Every message is bounded, failures abstain and never contaminate others.
+    for _ in range(args.max_requests):
+        payload = sys.stdin.buffer.readline(_MAX_JSON + 1)
+        if not payload:
+            break
+        if len(payload) > _MAX_JSON:
+            # Consume an oversized line in bounded chunks rather than parsing a tail.
+            if not payload.endswith(b"\n"):
+                while True:
+                    chunk = sys.stdin.buffer.readline(_MAX_JSON + 1)
+                    if not chunk or chunk.endswith(b"\n"):
+                        break
+            _output({"status": "insufficient_evidence", "code": "MODEL_PROBE_UNAVAILABLE"})
+            continue
+        response, _status = _handle_request(model, payload, secret)
+        _output(response)
+    # The stream transport exits successfully; clients check EACH response.
+    return 0
 
 
 if __name__ == "__main__":

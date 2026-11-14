@@ -238,3 +238,28 @@ def test_worker_refuses_missing_or_open_signing_key(signed_fixture):
     keyfile.chmod(0o644)
     if os.name == "posix":
         assert _run_worker(manifest, keyfile, request)[0] == 3
+
+
+def test_worker_stream_handles_multiple_responses_without_signing_invalid_input(signed_fixture):
+    manifest, keyfile, request, _origin, _fitted, _local = signed_fixture
+    changed = json.loads(json.dumps(request))
+    changed["reference_values"][0] += 0.2
+    requests = (request, changed, request)
+    env = dict(os.environ)
+    env["FUZZYXAI_PROBE_KEY_FILE"] = str(keyfile)
+    env.pop("FUZZYXAI_REFERENCE_KEY", None)
+    result = subprocess.run(
+        [sys.executable, "-m", "fuzzyxai.core.linear_probe_worker",
+         "--manifest", str(manifest), "--stream", "--max-requests", "3"],
+        input="".join(json.dumps(item) + "\n" for item in requests),
+        text=True, capture_output=True, env=env, check=False, timeout=15,
+    )
+    records = [json.loads(line) for line in result.stdout.splitlines()]
+    assert result.returncode == 0
+    assert len(records) == 3
+    assert [item["status"] for item in records] == [
+        "signed_model_response", "insufficient_evidence", "signed_model_response",
+    ]
+    assert records[0] == records[2]
+    assert "signed_effect_witness" not in records[1]
+    assert SOURCE_KEY.decode() not in result.stdout and EFFECT_KEY.decode() not in result.stdout
