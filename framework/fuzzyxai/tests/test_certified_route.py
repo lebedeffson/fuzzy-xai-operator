@@ -354,7 +354,7 @@ def test_real_sklearn_model_sdk_response_binding():
         )
 
     good = check_effect(local)
-    assert good.status is RouteStatus.CERTIFIED
+    assert good.status is RouteStatus.CERTIFIED, good.to_dict()
     assert good.scope == "signed_source_semantic_route_and_independent_linear_response_v1"
     forged = replace(local, contributions=(contributions[0] + 0.1, contributions[1] - 0.1))
     assert check_effect(forged).status is RouteStatus.REJECTED
