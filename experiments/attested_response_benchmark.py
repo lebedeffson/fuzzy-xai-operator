@@ -35,7 +35,6 @@ from sklearn.model_selection import train_test_split
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 
-
 MODEL_KEY = b"development-prediction-signing-key-not-production"
 PROBE_KEY = b"development-probe-signing-key-not-production"
 CASES = (
