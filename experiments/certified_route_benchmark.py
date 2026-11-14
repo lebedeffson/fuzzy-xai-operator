@@ -172,7 +172,7 @@ def _manual_equal_evidence(reference, steps) -> str:
         return RouteStatus.INSUFFICIENT.value
     if verify_prediction(reference, secret=TEST_KEY) is not RouteStatus.CERTIFIED:
         return RouteStatus.REJECTED.value
-    old_ev, old_p = reference.event_id, reference.score
+    old_ev = reference.event_id
     ids = {}
     for i, item in enumerate(steps):
         contract = item.metadata.get("semantic_contract")
@@ -196,17 +196,19 @@ def _manual_equal_evidence(reference, steps) -> str:
         if ev == old_ev:
             if t is not None:
                 return RouteStatus.REJECTED.value
-            expected = old_p
+            expected = (reference.score if ev == reference.event_id
+                        else 1.0 - reference.score)
         else:
             if i == 0 or not isinstance(t, dict) or t != {
                 "kind": "complement", "from_event": old_ev, "to_event": ev}:
                 return RouteStatus.REJECTED.value
             if reference.complement_event_id is None or {old_ev, ev} != {reference.event_id, reference.complement_event_id}:
                 return RouteStatus.REJECTED.value
-            expected = 1.0 - old_p
+            expected = (reference.score if ev == reference.event_id
+                        else 1.0 - reference.score)
         if abs(p - expected) > TOL:
             return RouteStatus.REJECTED.value
-        old_p, old_ev = p, ev
+        old_ev = ev
         for rule in item.rules:
             if rule.name in ids and ids[rule.name] != rule.signature():
                 return RouteStatus.REJECTED.value

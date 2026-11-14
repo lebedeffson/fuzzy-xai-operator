@@ -109,6 +109,92 @@ def verify_prediction(record: SignedPrediction | None, *, secret: bytes | None) 
     return RouteStatus.CERTIFIED if hmac.compare_digest(digest, record.signature) else RouteStatus.REJECTED
 
 
+_EFFECT_WITNESS_FIELDS = (
+    "protocol", "object_id", "model_version", "target_class", "feature_names",
+    "effect_on_score", "reference_score", "explained_score",
+    "input_sha256", "reference_sha256",
+)
+
+
+def _local_effect_digest(model_effects: Any) -> str:
+    """Digest the exact SDK response. A digest is not evidence of actual execution."""
+    payload = {field: getattr(model_effects, field) for field in _EFFECT_WITNESS_FIELDS}
+    return sha256(_canonical(payload)).hexdigest()
+
+
+@dataclass(frozen=True)
+class SignedLocalEffectWitness:
+    """HMAC receipt for a separately attested model-response record."""
+
+    source_signature: str
+    effects_sha256: str
+    producer_id: str
+    signature: str = ""
+
+    def payload(self) -> dict[str, str]:
+        return {
+            "source_signature": self.source_signature,
+            "effects_sha256": self.effects_sha256,
+            "producer_id": self.producer_id,
+        }
+
+    def valid_shape(self) -> bool:
+        return (
+            isinstance(self.source_signature, str)
+            and bool(_HEX64.fullmatch(self.source_signature))
+            and isinstance(self.effects_sha256, str)
+            and bool(_HEX64.fullmatch(self.effects_sha256))
+            and isinstance(self.producer_id, str)
+            and bool(self.producer_id.strip())
+        )
+
+
+def sign_local_effect_witness(
+    source_model_effects: Any, *, source_signature: str,
+    producer_id: str, secret: bytes,
+) -> SignedLocalEffectWitness:
+    """Call only inside a trusted independent model-response producer."""
+    if not isinstance(secret, bytes) or len(secret) < 16:
+        raise ValueError("HMAC key must be bytes with at least 16 bytes")
+    try:
+        digest = _local_effect_digest(source_model_effects)
+    except (AttributeError, TypeError, ValueError, OverflowError) as exc:
+        raise ValueError("model-response evidence is not canonically serializable") from exc
+    receipt = SignedLocalEffectWitness(
+        source_signature=source_signature, effects_sha256=digest,
+        producer_id=producer_id,
+    )
+    if not receipt.valid_shape():
+        raise ValueError("invalid local model-effect witness")
+    tag = hmac.new(secret, _canonical(receipt.payload()), sha256).hexdigest()
+    return replace(receipt, signature=tag)
+
+
+def verify_local_effect_witness(
+    receipt: SignedLocalEffectWitness | None, *,
+    source_model_effects: Any, source_signature: str,
+    secret: bytes | None,
+) -> RouteStatus:
+    """Authenticate the probe record and bind it to the signed prediction."""
+    if receipt is None or not isinstance(receipt, SignedLocalEffectWitness) or not receipt.valid_shape():
+        return RouteStatus.INSUFFICIENT
+    if not isinstance(secret, bytes) or len(secret) < 16:
+        return RouteStatus.INSUFFICIENT
+    if not isinstance(receipt.signature, str) or not _HEX64.fullmatch(receipt.signature):
+        return RouteStatus.INSUFFICIENT if not receipt.signature else RouteStatus.REJECTED
+    if receipt.source_signature != source_signature:
+        return RouteStatus.REJECTED
+    expected = hmac.new(secret, _canonical(receipt.payload()), sha256).hexdigest()
+    if not hmac.compare_digest(expected, receipt.signature):
+        return RouteStatus.REJECTED
+    try:
+        response_digest = _local_effect_digest(source_model_effects)
+    except (AttributeError, TypeError, ValueError, OverflowError):
+        return RouteStatus.INSUFFICIENT
+    return (RouteStatus.CERTIFIED if hmac.compare_digest(receipt.effects_sha256, response_digest)
+            else RouteStatus.REJECTED)
+
+
 @dataclass(frozen=True)
 class RouteFinding:
     stage: int
@@ -213,7 +299,6 @@ def certify_route(
     assert signed_prediction is not None
 
     prev_event = signed_prediction.event_id
-    prev_score = signed_prediction.score
     gammas: list[float] = []
     for index, stage in enumerate(stages):
         if not isinstance(stage, ExplanationObject):
@@ -246,7 +331,8 @@ def certify_route(
         if event == prev_event:
             if transition is not None:
                 return _issue(RouteStatus.REJECTED, index, "UNEXPECTED_TRANSITION", "event unchanged but transition declared", signed_prediction, gammas)
-            expected = prev_score
+            expected = (signed_prediction.score if event == signed_prediction.event_id
+                        else 1.0 - signed_prediction.score)
         else:
             if index == 0 or not isinstance(transition, Mapping) or (
                 transition.get("kind") != "complement" or
@@ -258,10 +344,11 @@ def certify_route(
             complement = signed_prediction.complement_event_id
             if complement is None or {prev_event, event} != {signed_prediction.event_id, complement}:
                 return _issue(RouteStatus.REJECTED, index, "COMPLEMENT_NOT_AUTHORIZED", "binary complement pair absent from signed origin", signed_prediction, gammas)
-            expected = 1.0 - prev_score
+            expected = (signed_prediction.score if event == signed_prediction.event_id
+                        else 1.0 - signed_prediction.score)
         if abs(p - expected) > score_tolerance:
             return _issue(RouteStatus.REJECTED, index, "SCORE_MISMATCH", "score disagrees with signed source and declared mapping", signed_prediction, gammas)
-        prev_event, prev_score = event, p
+        prev_event = event
         if index:
             pair = compose(stages[index - 1], stage, beta)
             if isinstance(pair, DiagnosticState):
@@ -311,6 +398,10 @@ def certify_route_with_local_effects(
     The observer never trains or executes the source model itself. Non-linear
     SHAP/LIME/interaction attributions are deliberately NOT certified here.
     """
+    if (isinstance(absolute_tolerance, bool)
+            or not isinstance(absolute_tolerance, (float, int))
+            or not math.isfinite(absolute_tolerance) or absolute_tolerance < 0):
+        raise ValueError("absolute_tolerance must be finite and nonnegative")
     result = certify_route(
         stages, signed_prediction=signed_prediction,
         verification_secret=verification_secret, beta=beta,
@@ -386,6 +477,7 @@ def certify_route_with_local_effects(
             "reference_sha256": source_model_effects.reference_sha256,
         },
         "declared_contributions": local_evidence.contributions,
+        "absolute_tolerance": float(absolute_tolerance),
     }
     try:
         fingerprint = sha256(_canonical(evidence_record)).hexdigest()
@@ -394,7 +486,59 @@ def certify_route_with_local_effects(
                       "response evidence not serializable", signed_prediction, result.edge_gamma)
     return replace(
         result, route_fingerprint=fingerprint,
-        scope="signed_source_semantic_route_and_independent_linear_response_v1",
+        scope="signed_source_semantic_route_and_declared_linear_response_v1",
+    )
+
+
+def certify_route_with_attested_local_effects(
+    stages: Sequence[ExplanationObject], *,
+    signed_prediction: SignedPrediction | None,
+    verification_secret: bytes | None,
+    beta: Mapping[str, float],
+    local_evidence: Any,
+    source_model_effects: Any,
+    signed_effect_witness: SignedLocalEffectWitness | None,
+    effects_verification_secret: bytes | None,
+    absolute_tolerance: float = 1e-6,
+    score_tolerance: float = 1e-8,
+    gamma_limit: float = 1.0,
+) -> RouteCertificate:
+    """Authenticate a separate model-response receipt before certification.
+
+    Successful verification attests reported linear response evidence, not
+    causal faithfulness or actual execution by a compromised producer.
+    """
+    base = certify_route_with_local_effects(
+        stages, signed_prediction=signed_prediction,
+        verification_secret=verification_secret, beta=beta,
+        local_evidence=local_evidence, source_model_effects=source_model_effects,
+        absolute_tolerance=absolute_tolerance,
+        score_tolerance=score_tolerance, gamma_limit=gamma_limit,
+    )
+    if base.status is not RouteStatus.CERTIFIED:
+        return base
+    assert signed_prediction is not None
+    witnessed = verify_local_effect_witness(
+        signed_effect_witness, source_model_effects=source_model_effects,
+        source_signature=signed_prediction.signature,
+        secret=effects_verification_secret,
+    )
+    if witnessed is not RouteStatus.CERTIFIED:
+        return _issue(
+            witnessed, -1, "EFFECT_WITNESS_UNVERIFIED",
+            "separate model-response receipt absent or invalid",
+            signed_prediction, base.edge_gamma,
+        )
+    assert signed_effect_witness is not None
+    fingerprint = sha256(_canonical({
+        "contract": "dual_attested_linear_response_v1",
+        "base_route": base.route_fingerprint,
+        "effect_witness": signed_effect_witness.payload(),
+        "effect_signature": signed_effect_witness.signature,
+    })).hexdigest()
+    return replace(
+        base, route_fingerprint=fingerprint,
+        scope="signed_prediction_and_independently_attested_linear_response_v1",
     )
 
 

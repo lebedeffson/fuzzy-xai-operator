@@ -360,8 +360,111 @@ def test_real_sklearn_model_sdk_response_binding():
 
     good = check_effect(local)
     assert good.status is RouteStatus.CERTIFIED, good.to_dict()
-    assert good.scope == "signed_source_semantic_route_and_independent_linear_response_v1"
+    assert good.scope == "signed_source_semantic_route_and_declared_linear_response_v1"
     forged = replace(local, contributions=(contributions[0] + 0.1, contributions[1] - 0.1))
     assert check_effect(forged).status is RouteStatus.REJECTED
     assert check_effect(replace(local, reference_sha256="f" * 64)).status is RouteStatus.REJECTED
     assert check_effect(replace(local, input_sha256="f" * 64)).status is RouteStatus.REJECTED
+
+
+
+def test_signed_origin_tolerance_cannot_drift_across_stages():
+    a = receipt(0.72)
+    first = stage(a, p=0.729, number=0)
+    second = stage(a, p=0.738, number=1)
+    result = check(a, [first, second], score_tolerance=0.01)
+    assert result.status is RouteStatus.REJECTED
+    assert result.findings[0].code == "SCORE_MISMATCH"
+    assert result.findings[0].stage == 1
+
+
+def test_independent_signed_model_response_detects_coherent_two_sided_spoof():
+    from fuzzyxai.core.certified_route import (
+        certify_route_with_attested_local_effects,
+        certify_route_with_local_effects,
+        sign_local_effect_witness,
+        verify_local_effect_witness,
+    )
+    from fuzzyxai.selective_observer.evidence_identity import LocalExplanationEvidence
+    from fuzzyxai.selective_observer.local_effects import (
+        LocalEffectEvidence, SUPPORTED_PROTOCOL,
+    )
+
+    producer_key = b"independent-adapter-demo-key-rotate"
+    a = receipt()
+    input_hash = a.source_sha256
+    ref_hash = hashlib.sha256(b"trusted independent reference").hexdigest()
+    local = LocalExplanationEvidence(
+        object_id=a.object_id, model_version=a.model_version,
+        target_class=a.event_id, scope="local", feature_names=("a", "b"),
+        contributions=(0.2, 0.3),
+        source_sha256=hashlib.sha256(b"attribution claims").hexdigest(),
+        input_sha256=input_hash, reference_sha256=ref_hash,
+        attribution_protocol=SUPPORTED_PROTOCOL, score_channel="target_logit",
+    )
+    effects = LocalEffectEvidence(
+        protocol=SUPPORTED_PROTOCOL, object_id=a.object_id,
+        model_version=a.model_version, target_class=a.event_id,
+        feature_names=("a", "b"), effect_on_score=(0.2, 0.3),
+        reference_score=0.6, explained_score=1.1,
+        input_sha256=input_hash, reference_sha256=ref_hash,
+    )
+    witness = sign_local_effect_witness(
+        effects, source_signature=a.signature,
+        producer_id="external-model-prober-v1", secret=producer_key,
+    )
+    route = [stage(a), stage(a, number=1)]
+
+    def weak(l, e, **kwargs):
+        return certify_route_with_local_effects(
+            route, signed_prediction=a, verification_secret=SECRET,
+            beta=BETA, local_evidence=l, source_model_effects=e, **kwargs,
+        )
+
+    def strong(l, e, *, signed=witness, key=producer_key):
+        return certify_route_with_attested_local_effects(
+            route, signed_prediction=a, verification_secret=SECRET,
+            beta=BETA, local_evidence=l, source_model_effects=e,
+            signed_effect_witness=signed, effects_verification_secret=key,
+        )
+
+    good = strong(local, effects)
+    assert good.status is RouteStatus.CERTIFIED
+    assert good.scope == "signed_prediction_and_independently_attested_linear_response_v1"
+    assert good.route_fingerprint != weak(local, effects).route_fingerprint
+    assert verify_local_effect_witness(
+        witness, source_model_effects=effects,
+        source_signature=a.signature, secret=producer_key,
+    ) is RouteStatus.CERTIFIED
+    forged_local = replace(local, contributions=(0.3, 0.2))
+    forged_effects = replace(effects, effect_on_score=(0.3, 0.2))
+    assert weak(forged_local, forged_effects).status is RouteStatus.CERTIFIED
+    assert strong(forged_local, forged_effects).status is RouteStatus.REJECTED
+    assert strong(local, effects, signed=None).status is RouteStatus.INSUFFICIENT
+    assert strong(local, effects, key=None).status is RouteStatus.INSUFFICIENT
+    assert strong(local, effects, signed=replace(witness, producer_id="forged")).status is RouteStatus.REJECTED
+    other_receipt = sign_local_effect_witness(
+        effects, source_signature="f" * 64,
+        producer_id="external-model-prober-v1", secret=producer_key,
+    )
+    assert strong(local, effects, signed=other_receipt).status is RouteStatus.REJECTED
+    assert weak(local, effects, absolute_tolerance=1e-6).route_fingerprint != weak(
+        local, effects, absolute_tolerance=1e-4,
+    ).route_fingerprint
+
+
+def test_effect_signer_rejects_invalid_nonfinite_evidence():
+    from fuzzyxai.core.certified_route import sign_local_effect_witness
+    from fuzzyxai.selective_observer.local_effects import LocalEffectEvidence, SUPPORTED_PROTOCOL
+
+    a = receipt()
+    invalid = LocalEffectEvidence(
+        protocol=SUPPORTED_PROTOCOL, object_id=a.object_id,
+        model_version=a.model_version, target_class=a.event_id,
+        feature_names=("a",), effect_on_score=(float("nan"),),
+        reference_score=0.0, explained_score=1.0,
+    )
+    with pytest.raises(ValueError, match="serializable"):
+        sign_local_effect_witness(
+            invalid, source_signature=a.signature, producer_id="test", secret=SECRET,
+        )
