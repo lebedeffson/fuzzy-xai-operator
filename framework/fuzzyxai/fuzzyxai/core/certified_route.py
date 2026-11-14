@@ -278,9 +278,9 @@ def certify_route(
     ``semantic_transition``. Arbitrary calibration/normalization is unsupported
     and is not silently interpreted as a valid identity transition.
     """
-    if not isinstance(score_tolerance, (float, int)) or not math.isfinite(score_tolerance) or score_tolerance < 0:
+    if isinstance(score_tolerance, bool) or not isinstance(score_tolerance, (float, int)) or not math.isfinite(score_tolerance) or score_tolerance < 0:
         raise ValueError("score_tolerance must be finite and nonnegative")
-    if not isinstance(gamma_limit, (float, int)) or not math.isfinite(gamma_limit) or not 0 <= gamma_limit <= 1:
+    if isinstance(gamma_limit, bool) or not isinstance(gamma_limit, (float, int)) or not math.isfinite(gamma_limit) or not 0 <= gamma_limit <= 1:
         raise ValueError("gamma_limit must be in [0,1]")
     if not isinstance(beta, Mapping) or any(
         not isinstance(k, str) or not k.strip()

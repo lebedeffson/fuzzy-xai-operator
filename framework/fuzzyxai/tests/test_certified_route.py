@@ -468,3 +468,19 @@ def test_effect_signer_rejects_invalid_nonfinite_evidence():
         sign_local_effect_witness(
             invalid, source_signature=a.signature, producer_id="test", secret=SECRET,
         )
+
+
+def test_boolean_policy_thresholds_cannot_bypass_score_validation():
+    a = receipt(0.72)
+    stages = [stage(a), stage(a, number=1)]
+    with pytest.raises(ValueError, match="score_tolerance"):
+        check(a, stages, score_tolerance=True)
+    with pytest.raises(ValueError, match="gamma_limit"):
+        check(a, stages, gamma_limit=True)
+    with pytest.raises(ValueError, match="absolute_tolerance"):
+        from fuzzyxai.core.certified_route import certify_route_with_local_effects
+        certify_route_with_local_effects(
+            stages, signed_prediction=a, verification_secret=SECRET,
+            beta=BETA, local_evidence=None, source_model_effects=None,
+            absolute_tolerance=True,
+        )
