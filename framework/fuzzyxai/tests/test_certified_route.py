@@ -427,6 +427,7 @@ def test_independent_signed_model_response_detects_coherent_two_sided_spoof():
             route, signed_prediction=a, verification_secret=SECRET,
             beta=BETA, local_evidence=l, source_model_effects=e,
             signed_effect_witness=signed, effects_verification_secret=key,
+            expected_effect_producer_id="external-model-prober-v1",
         )
 
     good = strong(local, effects)
@@ -443,6 +444,11 @@ def test_independent_signed_model_response_detects_coherent_two_sided_spoof():
     assert strong(forged_local, forged_effects).status is RouteStatus.REJECTED
     assert strong(local, effects, signed=None).status is RouteStatus.INSUFFICIENT
     assert strong(local, effects, key=None).status is RouteStatus.INSUFFICIENT
+    assert strong(local, effects, key=SECRET).status is RouteStatus.INSUFFICIENT
+    wrong_but_valid = sign_local_effect_witness(
+        effects, source_signature=a.signature, producer_id="other-prober", secret=producer_key,
+    )
+    assert strong(local, effects, signed=wrong_but_valid).status is RouteStatus.REJECTED
     assert strong(local, effects, signed=replace(witness, producer_id="forged")).status is RouteStatus.REJECTED
     other_receipt = sign_local_effect_witness(
         effects, source_signature="f" * 64,

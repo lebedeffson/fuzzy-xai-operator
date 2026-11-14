@@ -81,7 +81,8 @@ def _manual_equal_evidence(local, probed, witness, origin):
         return "rejected"
     if witness is None:
         return "insufficient_evidence"
-    if witness.source_signature != origin.signature:
+    if (witness.source_signature != origin.signature
+            or witness.producer_id != "independent-sklearn-prober"):
         return "rejected"
     if not isinstance(witness.signature, str) or len(witness.signature) != 64:
         return "rejected"
@@ -221,6 +222,7 @@ def run(output_dir: Path) -> dict:
                         local_evidence=loc, source_model_effects=response,
                         signed_effect_witness=receipt,
                         effects_verification_secret=PROBE_KEY,
+                        expected_effect_producer_id="independent-sklearn-prober",
                     )
                     manual = _manual_equal_evidence(
                         loc, response, receipt, origin,

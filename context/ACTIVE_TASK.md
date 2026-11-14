@@ -1,3 +1,13 @@
+# Active task — Certified Route signed witness hardening (2026-11-14)
+
+Scope: PR #12 `research/signed-certified-route-20261114` stacked onto `research/manuscript-shacl-independent-20261113`. Frozen dissertation protocols, scored results and manuscript chapters 1–4 are out of scope.
+
+Evidence: GitHub Actions run 43626845780 passed Python 3.11 and 3.12 before this signer policy hardening. CI artifacts 14126217837 and 14126836326 have byte-identical baseline CSV (19,890 dependent cases), attested CSV (9,180 dependent cases), and graph CSV. Both equal-evidence comparators tie the operator. Current hardening requires distinct HMAC signing keys and optional pinned producer identity. Recheck focused GitHub CI on the new HEAD before release.
+
+Limits: both demo signers still run in one process, so independent operational key custody, upstream execution authenticity and blinded field validation remain unproven. General repo CI also has inherited failures in H10, final closure and practical controller; do not weaken scientific locks or gates. PR is not a production release.
+
+---
+
 # Verified transfer assessment: changed preprocessing families
 
 Date: 2026-11-13

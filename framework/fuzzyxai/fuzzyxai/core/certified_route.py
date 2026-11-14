@@ -173,7 +173,7 @@ def sign_local_effect_witness(
 def verify_local_effect_witness(
     receipt: SignedLocalEffectWitness | None, *,
     source_model_effects: Any, source_signature: str,
-    secret: bytes | None,
+    secret: bytes | None, expected_producer_id: str | None = None,
 ) -> RouteStatus:
     """Authenticate the probe record and bind it to the signed prediction."""
     if receipt is None or not isinstance(receipt, SignedLocalEffectWitness) or not receipt.valid_shape():
@@ -187,6 +187,11 @@ def verify_local_effect_witness(
     expected = hmac.new(secret, _canonical(receipt.payload()), sha256).hexdigest()
     if not hmac.compare_digest(expected, receipt.signature):
         return RouteStatus.REJECTED
+    if expected_producer_id is not None:
+        if not isinstance(expected_producer_id, str) or not expected_producer_id.strip():
+            return RouteStatus.INSUFFICIENT
+        if receipt.producer_id != expected_producer_id:
+            return RouteStatus.REJECTED
     try:
         response_digest = _local_effect_digest(source_model_effects)
     except (AttributeError, TypeError, ValueError, OverflowError):
@@ -499,6 +504,7 @@ def certify_route_with_attested_local_effects(
     source_model_effects: Any,
     signed_effect_witness: SignedLocalEffectWitness | None,
     effects_verification_secret: bytes | None,
+    expected_effect_producer_id: str | None = None,
     absolute_tolerance: float = 1e-6,
     score_tolerance: float = 1e-8,
     gamma_limit: float = 1.0,
@@ -518,10 +524,17 @@ def certify_route_with_attested_local_effects(
     if base.status is not RouteStatus.CERTIFIED:
         return base
     assert signed_prediction is not None
+    if (isinstance(verification_secret, bytes)
+            and isinstance(effects_verification_secret, bytes)
+            and hmac.compare_digest(verification_secret, effects_verification_secret)):
+        return _issue(RouteStatus.INSUFFICIENT, -1, "EFFECT_SIGNER_KEY_REUSED",
+                      "independent model-response signer must have a distinct key",
+                      signed_prediction, base.edge_gamma)
     witnessed = verify_local_effect_witness(
         signed_effect_witness, source_model_effects=source_model_effects,
         source_signature=signed_prediction.signature,
         secret=effects_verification_secret,
+        expected_producer_id=expected_effect_producer_id,
     )
     if witnessed is not RouteStatus.CERTIFIED:
         return _issue(
