@@ -38,10 +38,10 @@ def receipt(score: float = 0.72) -> SignedPrediction:
     ), secret=SECRET)
 
 
-def stage(a: SignedPrediction, *, event: str = "malignant", p: float | None = None,
+def stage(a: SignedPrediction, *, event: str | None = None, p: float | None = None,
           number: int = 0, **change):
     contract = {
-        "object_id": a.object_id, "event_id": event, "model_version": a.model_version,
+        "object_id": a.object_id, "event_id": a.event_id if event is None else event, "model_version": a.model_version,
         "unit": a.unit, "source_sha256": a.source_sha256,
         "model_sha256": a.model_sha256,
     }
