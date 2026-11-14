@@ -166,7 +166,6 @@ def _run_one(example: dict[str, Any], scenario: str) -> dict[str, Any]:
         direct_alert = (
             bool(set(fit_ids) & set(eval_ids))
             or not np.array_equal(fit_x, train_x)
-            or not np.array_equal(transformed_train, transformed_train)
             or not np.array_equal(actual_input, transformed_eval)
         )
         direct = "alert" if direct_alert else "no_alert"
