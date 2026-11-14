@@ -9,6 +9,8 @@ on:
       - 'framework/fuzzyxai/tests/test_certified_route.py'
       - 'experiments/certified_route_benchmark.py'
       - 'experiments/certified_route_demo.py'
+      - 'experiments/attested_response_benchmark.py'
+      - 'docs/CERTIFIED_ROUTE_RU.md'
       - '.github/workflows/certified-route.yml'
   workflow_dispatch:
 permissions:
@@ -36,11 +38,12 @@ jobs:
           python -m pytest -q framework/fuzzyxai/tests/test_composition.py framework/fuzzyxai/tests/test_tisu_core_safety_regression.py
       - name: Lint edited source
         run: |
-          ruff check framework/fuzzyxai/fuzzyxai/core/certified_route.py framework/fuzzyxai/tests/test_certified_route.py experiments/certified_route_demo.py experiments/certified_route_benchmark.py
+          ruff check framework/fuzzyxai/fuzzyxai/core/certified_route.py framework/fuzzyxai/tests/test_certified_route.py experiments/certified_route_demo.py experiments/certified_route_benchmark.py experiments/attested_response_benchmark.py
       - name: Run frozen developmental benchmark and demo
         run: |
           python experiments/certified_route_benchmark.py --output-dir certified_route_results > certified_route_stdout.json
           python experiments/certified_route_demo.py --output-dir certified_route_demo > certified_route_demo_stdout.json
+          python experiments/attested_response_benchmark.py --output-dir certified_route_attested_results > certified_route_attested_stdout.json
       - name: Assert evidence gates
         run: |
           python - <<'PY'
@@ -50,6 +53,17 @@ jobs:
           assert r['status'] == 'DEVELOPMENT_ONLY_NONBLINDED'
           assert all(c['equal_evidence_matches'] == c['n'] for c in r['by_case'])
           assert all(sum(c['full'].values()) == c['n'] for c in r['by_case'])
+          a = json.load(open('certified_route_attested_results/summary.json'))
+          assert (a['models'], a['n_predictions'], a['n_correlated_trials']) == (9, 1530, 9180)
+          assert a['status'] == 'DEVELOPMENT_ONLY_NONBLINDED'
+          assert all(c['equal_evidence_matches'] == c['n'] == 1530 for c in a['by_case'])
+          by_case = {c['case']: c for c in a['by_case']}
+          assert by_case['clean']['strong_certified'] == 1530
+          assert by_case['two_sided_coherent_probe_spoof']['strong_rejected'] == 1530
+          assert by_case['two_sided_coherent_probe_spoof']['weak_certified'] == 1530
+          assert by_case['unsigned_probe']['strong_insufficient'] == 1530
+          assert all(by_case[k]['strong_rejected'] == 1530 for k in (
+              'forged_probe_signature', 'wrong_prediction_binding', 'attribution_only_spoof'))
           d = json.load(open('certified_route_demo/certificates.json'))
           assert [d[x]['status'] for x in ('clean', 'coherent_semantic_spoof', 'missing_witness')] == ['certified', 'rejected', 'insufficient_evidence']
           PY
@@ -63,3 +77,6 @@ jobs:
             certified_route_demo/certificates.json
             certified_route_stdout.json
             certified_route_demo_stdout.json
+            certified_route_attested_results/summary.json
+            certified_route_attested_results/case_results.csv
+            certified_route_attested_stdout.json
