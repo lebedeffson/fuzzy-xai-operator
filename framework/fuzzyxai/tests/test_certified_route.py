@@ -14,7 +14,6 @@ from fuzzyxai.core.certified_route import (
 )
 from fuzzyxai.core.explanation_object import ExplanationObject, Rule, Trace
 
-
 SECRET = b"research-demo-only-rotate-key-2026"
 BETA = {
     "repr": 0.2, "rules": 0.2, "activations": 0.2,
@@ -308,6 +307,8 @@ def test_branching_dag_path_explosion_abstains_not_implicitly_accepts():
 def test_real_sklearn_model_sdk_response_binding():
     """Exercise the actual upstream score-response collector on a fitted model."""
     import numpy as np
+    from sklearn.linear_model import LogisticRegression
+
     from fuzzyxai.core.certified_route import certify_route_with_local_effects
     from fuzzyxai.selective_observer.evidence_identity import LocalExplanationEvidence
     from fuzzyxai.selective_observer.local_effects import (
@@ -315,7 +316,6 @@ def test_real_sklearn_model_sdk_response_binding():
         collect_linear_reference_effects_batched,
         hash_numeric_input,
     )
-    from sklearn.linear_model import LogisticRegression
 
     X = np.asarray([[0, 0], [0, 1], [1, 0], [1, 1], [2, 1], [1, 2]], dtype=float)
     y = np.asarray([0, 0, 0, 1, 1, 1], dtype=int)
