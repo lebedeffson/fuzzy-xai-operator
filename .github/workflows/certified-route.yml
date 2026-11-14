@@ -2,7 +2,15 @@ name: Certified Route integration
 on:
   push:
     branches:
-      - research/signed-certified-route-20261114
+      - main
+    paths:
+      - 'framework/fuzzyxai/fuzzyxai/core/certified_route.py'
+      - 'framework/fuzzyxai/tests/test_certified_route.py'
+      - 'experiments/certified_route_benchmark.py'
+      - 'experiments/certified_route_demo.py'
+      - 'experiments/attested_response_benchmark.py'
+      - 'docs/CERTIFIED_ROUTE_RU.md'
+      - '.github/workflows/certified-route.yml'
   pull_request:
     paths:
       - 'framework/fuzzyxai/fuzzyxai/core/certified_route.py'
