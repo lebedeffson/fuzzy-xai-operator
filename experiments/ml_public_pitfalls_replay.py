@@ -17,6 +17,10 @@ from typing import Any
 
 import numpy as np
 import sklearn
+from fuzzyxai.fit_provenance import FitRecorder
+from fuzzyxai.ml_observer import MLRunEvidence, observe_ml_run
+from fuzzyxai.output_provenance import OutputRecorder
+from fuzzyxai.transform_provenance import TransformRecorder
 from sklearn.datasets import load_diabetes, make_regression
 from sklearn.ensemble import HistGradientBoostingClassifier
 from sklearn.feature_selection import SelectKBest
@@ -24,11 +28,6 @@ from sklearn.linear_model import LinearRegression, Ridge
 from sklearn.metrics import accuracy_score, mean_squared_error
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
-
-from fuzzyxai.fit_provenance import FitRecorder
-from fuzzyxai.ml_observer import MLRunEvidence, observe_ml_run
-from fuzzyxai.output_provenance import OutputRecorder
-from fuzzyxai.transform_provenance import TransformRecorder
 
 PROTOCOL = Path(__file__).with_name("ml_public_pitfalls_protocol_v1.json")
 KEY = b"external-pattern-pilot-key-not-for-deployment"
