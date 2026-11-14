@@ -50,13 +50,39 @@ EFFECT_FIELDS = (
 )
 
 
-def _manual_equal_evidence(weak_status, witness, probed, source_signature):
-    """Direct independent comparator with access to identical evidence."""
-    if weak_status != "certified":
-        return weak_status
+def _manual_equal_evidence(local, probed, witness, origin):
+    """Separate rules for the locked positive-route cases.
+
+    Does not consult the Certified Route result or intermediate weak outcome.
+    It is limited to this experimental protocol, not a general route auditor.
+    """
+    if (local.object_id != origin.object_id
+            or probed.object_id != origin.object_id
+            or local.model_version != origin.model_version
+            or probed.model_version != origin.model_version
+            or local.target_class != origin.event_id
+            or probed.target_class != origin.event_id
+            or local.scope != "local"
+            or probed.protocol != SUPPORTED_PROTOCOL
+            or local.feature_names != probed.feature_names
+            or local.input_sha256 != origin.source_sha256
+            or probed.input_sha256 != origin.source_sha256
+            or local.reference_sha256 != probed.reference_sha256):
+        return "rejected"
+    local_effects = local.contributions
+    observed_effects = probed.effect_on_score
+    if (local_effects is None or observed_effects is None
+            or len(local_effects) != len(observed_effects)
+            or len(local_effects) != len(local.feature_names)):
+        return "insufficient_evidence"
+    if (any(abs(float(a) - float(b)) > 1e-6
+            for a, b in zip(local_effects, observed_effects, strict=True))
+            or abs(sum(local_effects) -
+                   (probed.explained_score - probed.reference_score)) > 1e-6):
+        return "rejected"
     if witness is None:
         return "insufficient_evidence"
-    if witness.source_signature != source_signature:
+    if witness.source_signature != origin.signature:
         return "rejected"
     if not isinstance(witness.signature, str) or len(witness.signature) != 64:
         return "rejected"
@@ -74,7 +100,6 @@ def _manual_equal_evidence(weak_status, witness, probed, source_signature):
     ).encode()
     digest = hashlib.sha256(data).hexdigest()
     return "certified" if hmac.compare_digest(digest, witness.effects_sha256) else "rejected"
-
 
 def _fault(case, local, response, witness):
     if case == "two_sided_coherent_probe_spoof":
@@ -199,7 +224,7 @@ def run(output_dir: Path) -> dict:
                         effects_verification_secret=PROBE_KEY,
                     )
                     manual = _manual_equal_evidence(
-                        weak.status.value, receipt, response, origin.signature,
+                        loc, response, receipt, origin,
                     )
                     expected = (
                         "certified" if case == "clean"
