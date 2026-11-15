@@ -195,12 +195,32 @@ def run(output_dir: Path):
                     (new_anchor, new_stages, new_local, new_effects, None),
                     (changed_anchor, new_stages, new_local, new_effects, new_witness),
                 )
-                expected_fixed = (fresh, fresh, fresh, input_changed)
-                for scenario, expected, faulty, repaired in zip(
-                    SCENARIOS, EXPECTED, observed, expected_fixed, strict=True
-                ):
+                for scenario, expected, faulty in zip(SCENARIOS, EXPECTED, observed, strict=True):
                     verdict = certified(faulty)
+                    anchor, stages, local, effects, witness = faulty
+                    new_row = changed if scenario == "changed_input" else row
+                    before_target = new_source.score_evaluations
+                    if verdict.findings[0].code == "REFERENCE_MISMATCH":
+                        repaired = rebuild_under_anchor(new_source, new_row, anchor)
+                    elif verdict.findings[0].code == "LOCAL_EFFECT_MISMATCH":
+                        coef = new_source.logistic.coef_[0] / scaler.scale_
+                        local = replace(local, contributions=tuple(float(v) for v in coef * (row - scaler.mean_)))
+                        repaired = (anchor, stages, local, effects, witness)
+                    elif verdict.findings[0].code == "EFFECT_WITNESS_UNVERIFIED":
+                        witness = sign_local_effect_witness(
+                            effects, source_signature=anchor.signature,
+                            producer_id=PRODUCER, secret=EFFECT_KEY,
+                        )
+                        repaired = (anchor, stages, local, effects, witness)
+                    else:
+                        raise AssertionError(f"Unregistered recovery diagnostic: {verdict.to_dict()}")
+                    targeted_score_evals = new_source.score_evaluations - before_target
                     after = certified(repaired)
+                    before_full = new_source.score_evaluations
+                    full_replayed = snapshot(new_source, new_row, row_id)
+                    full_score_evals = new_source.score_evaluations - before_full
+                    assert certified(full_replayed).status is RouteStatus.CERTIFIED
+                    assert after.route_fingerprint == certified(full_replayed).route_fingerprint
                     assert verdict.status.value == expected, (dataset, seed, row_id, scenario, verdict.to_dict())
                     assert after.status is RouteStatus.CERTIFIED
                     assert equal_evidence_direct(faulty) == verdict.status.value
