@@ -56,10 +56,12 @@ class ModelSource:
         return hashlib.sha256(json.dumps(payload, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
 
     def probability(self, row: np.ndarray) -> float:
+        self.score_evaluations += 1
         z = self.scaler.transform(np.asarray(row, dtype=float).reshape(1, -1))
         return float(self.logistic.predict_proba(z)[0, 1])
 
     def target_logits(self, rows: tuple[tuple[float, ...], ...]) -> tuple[float, ...]:
+        self.score_evaluations += len(rows)
         return tuple(float(v) for v in self.logistic.decision_function(
             self.scaler.transform(np.asarray(rows, dtype=float))
         ))
