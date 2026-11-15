@@ -31,13 +31,6 @@ from .controller import (
     predict_risk,
     risk_coverage_curve,
 )
-from .exact_shapley import (
-    EXACT_INTERVENTIONAL_PROTOCOL,
-    ExactShapleyEvidence,
-    collect_exact_interventional_shapley,
-    hash_empirical_background,
-    verify_exact_interventional_shapley,
-)
 from .evidence_identity import (
     LocalEvidenceObservation,
     LocalEvidenceStatus,
@@ -46,10 +39,17 @@ from .evidence_identity import (
     observe_local_explanation,
     observe_reference_binding,
 )
+from .exact_shapley import (
+    EXACT_INTERVENTIONAL_PROTOCOL,
+    ExactShapleyEvidence,
+    collect_exact_interventional_shapley,
+    hash_empirical_background,
+    verify_exact_interventional_shapley,
+)
 from .local_effects import (
     SUPPORTED_PROTOCOL,
-    LocalEffectEvidence,
     LinearReferenceRebaseProposal,
+    LocalEffectEvidence,
     ReferenceRebaseStatus,
     collect_linear_reference_effects,
     collect_linear_reference_effects_batched,
@@ -68,24 +68,24 @@ from .rule_validation import (
 )
 
 __all__ = [
-    "SUPPORTED_PROTOCOL",
-    "EXACT_INTERVENTIONAL_PROTOCOL",
-    "ExactShapleyEvidence",
     "ConfirmatoryExample",
     "ConfirmatoryProtocolLock",
     "DevelopmentExample",
-    "LocalEffectEvidence",
+    "EXACT_INTERVENTIONAL_PROTOCOL",
+    "ExactShapleyEvidence",
     "LinearReferenceRebaseProposal",
+    "LocalEffectEvidence",
     "LocalEvidenceObservation",
     "LocalEvidenceStatus",
     "LocalExplanationEvidence",
     "PolicyMetrics",
     "PredictiveRouteExample",
-    "ResearchPartition",
     "ReferenceRebaseStatus",
+    "ResearchPartition",
     "RouteContractRecord",
     "RuleAblationObservation",
     "RuleProfile",
+    "SUPPORTED_PROTOCOL",
     "SelectiveAction",
     "SelectiveControllerSpec",
     "SelectiveRiskFeatures",
@@ -112,8 +112,8 @@ __all__ = [
     "observe_local_explanation",
     "observe_reference_binding",
     "policy_metrics",
-    "propose_linear_reference_rebase",
     "predict_risk",
+    "propose_linear_reference_rebase",
     "risk_coverage_curve",
     "rule_priority",
     "select_candidate_rules",
