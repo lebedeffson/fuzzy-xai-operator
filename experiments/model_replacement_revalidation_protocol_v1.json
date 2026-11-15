@@ -1,0 +1,20 @@
+{
+  "protocol_id": "fuzzyxai-model-replacement-revalidation-v1",
+  "status": "developmental_predeclared_controlled_model_change_not_independent_validation",
+  "scope": "Revalidate scalar explanation routes after a real fitted model replacement; not a test of SHAP/LIME fidelity or diagnosis",
+  "datasets": ["breast_cancer", "wine_class_2", "digits_ge_5"],
+  "random_seeds": [17, 31, 53],
+  "test_fraction": 0.2,
+  "original_model": "StandardScaler -> LogisticRegression(max_iter=1200,C=1.0,random_state=seed)",
+  "replacement_model": "StandardScaler -> RandomForestClassifier(n_estimators=64,max_depth=8,random_state=seed,n_jobs=1)",
+  "scenarios": ["original_clean", "stale_route_after_real_model_replacement", "recomputed_route_after_model_replacement", "missing_prediction_witness"],
+  "expected_statuses": ["certified", "rejected", "certified", "insufficient_evidence"],
+  "comparison": "Use _manual_equal_evidence with same signed evidence, score tolerance and semantic metadata as the route verifier",
+  "unit_of_analysis": "Nine fitted model pairs, with test predictions nested by model; four correlated cases per prediction",
+  "limitations": [
+    "Controlled model changes are developer-known, not independently blinded production faults",
+    "Signing keys and synthetic scalar route stages are provided by the same experiment process",
+    "No claim of predictive validity, XAI faithfulness, clinical safety, cost reduction or advantage over same-evidence rules",
+    "Call timings include only route validation, not fitting, inference, explaining, I/O, or human work"
+  ]
+}
