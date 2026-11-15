@@ -44,6 +44,7 @@ class ModelSource:
     name: str
     seed: int
     family: str
+    score_evaluations: int = 0
 
     @property
     def identity(self) -> str:
