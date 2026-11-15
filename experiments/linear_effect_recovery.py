@@ -80,6 +80,15 @@ def snapshot(source: ModelSource, row: np.ndarray, row_id: int):
         trace_checksum=hashlib.sha256((model_version + object_id).encode()).hexdigest(),
         complement_event_id="negative",
     ), secret=TEST_KEY)
+    return rebuild_under_anchor(source, row, anchor)
+
+
+def rebuild_under_anchor(source: ModelSource, row: np.ndarray, anchor: SignedPrediction):
+    """Regenerate fitted-model local responses while keeping an already signed predictor receipt."""
+    row = np.asarray(row, dtype=float)
+    feature_names = tuple(f"feature_{j}" for j in range(len(row)))
+    object_id = anchor.object_id
+    model_version = anchor.model_version
     stages = tuple(_stage(anchor, j) for j in range(3))
     reference = np.asarray(source.scaler.mean_, dtype=float)
     effects = collect_linear_reference_effects_batched(
