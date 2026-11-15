@@ -27,3 +27,11 @@ operators:
     tests: [tests/h10_c5_pilot/test_h10_c5_pilot.py]
     artifacts: [results/h10_c5_pilot/H10_C5_PILOT_PROTOCOL_LOCK.json, results/h10_c5_pilot/H10_C5_PILOT_FINAL_STATUS.json]
     visualization: []
+  - id: framework.exact_interventional_shapley_observer
+    dissertation_ref: "exploratory instance-bound XAI evidence, non-confirmatory"
+    callable: fuzzyxai.selective_observer:collect_exact_interventional_shapley
+    input_schema: OrderedNumericInstanceEmpiricalBackgroundAndTrustedScalarModelCallback
+    output_schema: ExactShapleyEvidence
+    tests: [tests/practical_controller/test_observer_exact_shapley.py, tests/practical_controller/test_observer_transfer_evaluation.py]
+    artifacts: [framework/fuzzyxai/docs/OBSERVER_EVIDENCE_BINDING.md]
+    visualization: []
