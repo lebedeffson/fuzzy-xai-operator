@@ -68,10 +68,11 @@ from .rule_validation import (
 )
 
 __all__ = [
+    "EXACT_INTERVENTIONAL_PROTOCOL",
+    "SUPPORTED_PROTOCOL",
     "ConfirmatoryExample",
     "ConfirmatoryProtocolLock",
     "DevelopmentExample",
-    "EXACT_INTERVENTIONAL_PROTOCOL",
     "ExactShapleyEvidence",
     "LinearReferenceRebaseProposal",
     "LocalEffectEvidence",
@@ -85,7 +86,6 @@ __all__ = [
     "RouteContractRecord",
     "RuleAblationObservation",
     "RuleProfile",
-    "SUPPORTED_PROTOCOL",
     "SelectiveAction",
     "SelectiveControllerSpec",
     "SelectiveRiskFeatures",
