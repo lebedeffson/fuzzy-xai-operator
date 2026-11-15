@@ -29,7 +29,7 @@ jobs:
       - name: Run controlled model replacement protocol
         run: python experiments/model_replacement_revalidation.py --output-dir model_replacement_results
       - name: Replay fitted linear effects and selective recovery
-        run: python experiments/linear_effect_recovery.py --output-dir full_cycle_recovery_results
+        run: python -m experiments.linear_effect_recovery --output-dir full_cycle_recovery_results
       - name: Check evidence and limitations
         run: |
           python - <<'PY'
