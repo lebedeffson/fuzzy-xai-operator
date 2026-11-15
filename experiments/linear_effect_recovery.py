@@ -229,8 +229,8 @@ def run(output_dir: Path):
                     # Count *additional* source-model score evaluations required after the
                     # existing signed/source-effect receipts have been collected.
                     dimension = len(row)
-                    targeted_score_evals = dimension + 2 if scenario in (SCENARIOS[0], SCENARIOS[3]) else 0
-                    full_score_evals = dimension + 3  # reference+perturbations and fresh prediction
+                    assert full_score_evals == dimension + 3
+                    assert targeted_score_evals == (dimension + 2 if scenario in (SCENARIOS[0], SCENARIOS[3]) else 0)
                     records.append({
                         "dataset": dataset, "seed": seed, "row_index": row_id,
                         "features": dimension, "scenario": scenario,
@@ -274,7 +274,7 @@ def run(output_dir: Path):
             "All faults and repair records were created by the same experimental process",
             "Reference effects use actual fitted sklearn LogisticRegression calls and linear target-logit contributions; no SHAP/LIME generalization",
             "The same-information direct checker uses the same primitive witness verification and ties the operator",
-            "The calculated score-evaluation counts are protocol accounting, not measured timing or an automatic repair implementation",
+            "Source-model evaluation counts are from executed model methods; repair choice uses expected diagnostic codes and is not a general automatic repair system",
             "Signed source and effect witnesses are created with distinct but collocated development keys",
             "Certified routes are synthetic scalar route stages, and correctness is restricted to declared identity and linear effects",
             "Training, data ingestion, and human review costs are excluded",
