@@ -1,6 +1,8 @@
 PYTHON ?= python
 CONFIRMATORY_PYTHON ?= .venv-confirmatory/bin/python
-PYTHONPATH := .
+# Research workflow scripts import source-only packages deliberately excluded from the wheel.
+# Keep the source package root importable without changing release packaging.
+PYTHONPATH := .:framework/fuzzyxai
 PORT ?= 8085
 DATASET ?= breast_cancer
 BASELINE_ACCESS ?= native
