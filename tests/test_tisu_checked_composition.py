@@ -143,3 +143,32 @@ def test_malformed_membership_interface_fails_closed_without_exception():
     left, right, origin = build_pair(12, 0.70)
     right.metadata['term_specs']['high'] = [[0.0, 0.0], [1.0]]
     assert result_status(compose_checked(left, right, BETA, origin=origin)) == 'REJECT'
+
+
+def test_mutated_nonfinite_or_invalid_fields_are_not_accepted():
+    from math import nan
+    from fuzzyxai.core.explanation_object import Rule
+
+    a, b, origin = build_pair(12, 0.70)
+    b.reduction_loss = nan
+    assert result_status(compose_checked(a, b, BETA, origin=origin)) == 'REJECT'
+
+    a, b, origin = build_pair(12, 0.70)
+    b.activations['risk_rule'] = nan
+    assert result_status(compose_checked(a, b, BETA, origin=origin)) == 'REJECT'
+
+    a, b, origin = build_pair(12, 0.70)
+    b.rules = [Rule({'invalid': 'name'}, {'risk': 'high'}, 'expert_review')]
+    assert result_status(compose_checked(a, b, BETA, origin=origin)) == 'UNKNOWN'
+
+
+def test_nonbinary_event_is_not_mislabeled_as_supported():
+    from dataclasses import replace as dataclass_replace
+
+    a, b, origin = build_pair(12, 0.70)
+    origin = dataclass_replace(origin, target_event='fraud')
+    a.metadata['target_event'] = 'fraud'
+    b.metadata['target_event'] = 'fraud'
+    a.metadata['fuzzy_event'] = 'fraud'
+    b.metadata['fuzzy_event'] = 'fraud'
+    assert result_status(compose_checked(a, b, BETA, origin=origin)) == 'REJECT'
