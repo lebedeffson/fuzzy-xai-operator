@@ -139,7 +139,7 @@ def _record_fields(obj: ExplanationObject) -> tuple[str, str, str, str, float, s
     if any(obj.metadata.get(n) is None or obj.metadata.get(n) == '' for n in names):
         return _diag('D_k_incomplete', 'incomplete explanation interface', incomplete=True)
     t = obj.trace
-    if any(not str(getattr(t, k, '')).strip() for k in ('id', 'version', 'timestamp', 'source', 'checksum')):
+    if any(not isinstance(getattr(t, k, None), str) or not getattr(t, k).strip() for k in ('id', 'version', 'timestamp', 'source', 'checksum')):
         return _diag('D_k_trace', 'missing trace field', incomplete=True)
     if obj.metadata['scale'] != 'probability':
         return _diag('D_ij', 'unsupported score scale')
