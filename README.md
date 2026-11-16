@@ -91,6 +91,12 @@ finite probes alone cannot prove its behavior between those points.
 
 The opt-in operator was merged into `main` via
 [PR #19](https://github.com/lebedeffson/fuzzy-xai-operator/pull/19).
+It is intentionally **not** listed in the frozen doctoral
+`framework/fuzzyxai/operators_manifest.yaml` because the H10-C5b method
+lock protects that file byte-for-byte. Use the public
+`fuzzyxai.compose_checked` API and the separate research CI for this
+unsealed TISU extension; do not treat it as a completed dissertation
+confirmatory protocol.
 Both controlled suites are available in `benchmarks/`: the predeclared
 20-scenario RF experiment (2,860 repeated constructed cases) and a post-hoc
 12-scenario LogisticRegression stress check (1,716 repeated constructed cases)
