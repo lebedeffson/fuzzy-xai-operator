@@ -241,27 +241,27 @@ def compose_checked(
     (malignant/benign), a shared scalar risk domain, exact rule signatures, and
     an F0-compatible distance over the same canonical term.
     """
-    l = _record_fields(left)
-    if isinstance(l, DiagnosticState):
-        return l
+    left_fields = _record_fields(left)
+    if isinstance(left_fields, DiagnosticState):
+        return left_fields
     r = _record_fields(right)
     if isinstance(r, DiagnosticState):
         return r
     if origin is None and policy.require_origin_record:
         return _diag('D_k_trace', 'independent origin record unavailable', incomplete=True)
-    if l[0] != r[0]:
+    if left_fields[0] != r[0]:
         return _diag('D_ij', 'sample identifier mismatch')
-    if l[1:3] != r[1:3]:
+    if left_fields[1:3] != r[1:3]:
         return _diag('D_ij', 'model identity/version mismatch')
     if origin is not None:
-        if l[0] != origin.sample_id or l[1] != origin.model_id or l[2] != origin.model_version:
+        if left_fields[0] != origin.sample_id or left_fields[1] != origin.model_id or left_fields[2] != origin.model_version:
             return _diag('D_ij', 'provenance differs from independent origin record')
         canonical_event = origin.target_event
     else:
-        canonical_event = l[3]
+        canonical_event = left_fields[3]
     if canonical_event not in {'malignant', 'benign'}:
         return _diag('D_ij', 'unsupported canonical binary event')
-    left_score = _to_event(l, canonical_event)
+    left_score = _to_event(left_fields, canonical_event)
     right_score = _to_event(r, canonical_event)
     if isinstance(left_score, DiagnosticState):
         return left_score
@@ -319,7 +319,7 @@ def compose_checked(
         # Persist executed transformation evidence, not just its label.
         result.metadata = {
             **result.metadata,
-            'sample_id': l[0], 'model_id': l[1], 'model_version': l[2],
+            'sample_id': left_fields[0], 'model_id': left_fields[1], 'model_version': left_fields[2],
             'target_event': canonical_event, 'probability': right_score,
             'mapping': 'identity', 'scale': 'probability',
             'term_specs': right.metadata.get('term_specs'),
@@ -327,7 +327,7 @@ def compose_checked(
             'fuzzy_event': canonical_event,
             'representation_term': right.metadata.get('representation_term'),
             'executed_alignment': {
-                'left_source_event': l[3], 'left_source_mapping': l[5],
+                'left_source_event': left_fields[3], 'left_source_mapping': left_fields[5],
                 'left_canonical_probability': left_score,
                 'right_source_event': r[3], 'right_source_mapping': r[5],
                 'right_canonical_probability': right_score,
