@@ -1,6 +1,18 @@
 name: TISU typed F0 composition
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/tisu-typed-f0.yml"
+      - "benchmarks/tisu_composition_validation.py"
+      - "benchmarks/tisu_independent_stress.py"
+      - "framework/fuzzyxai/fuzzyxai/core/composition_checked.py"
+      - "framework/fuzzyxai/fuzzyxai/__init__.py"
+      - "framework/fuzzyxai/operators_manifest.yaml"
+      - "tests/test_tisu_checked_composition.py"
+      - "tests/test_public_framework_api.py"
+      - "pyproject.toml"
   pull_request:
     paths:
       - ".github/workflows/tisu-typed-f0.yml"
