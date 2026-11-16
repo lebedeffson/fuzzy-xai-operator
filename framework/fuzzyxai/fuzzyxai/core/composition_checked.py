@@ -50,8 +50,9 @@ class MembershipSpec:
 
     @classmethod
     def from_json(cls, raw: object) -> 'MembershipSpec':
-        if not isinstance(raw, list):
-            raise ValueError('expected list of breakpoints')
+        if (not isinstance(raw, list) or len(raw) < 2
+                or any(not isinstance(pair, (list, tuple)) or len(pair) != 2 for pair in raw)):
+            raise ValueError('expected at least two [x, membership] breakpoints')
         return cls(tuple((float(x), float(y)) for x, y in raw))
 
     def distance(self, other: 'MembershipSpec') -> float:
@@ -157,13 +158,22 @@ def _validate_fuzzy_frame(
         return _diag('D_k_incomplete', 'canonical fuzzy frame or representation term missing', incomplete=True)
     if frame != canonical_event:
         return _diag('D_ij', 'fuzzy representation is not in canonical event frame')
-    if rep_term not in specs:
+    if not isinstance(rep_term, str) or rep_term not in specs:
         return _diag('D_ij', 'representation term is not declared')
     if not isinstance(obj.representation, F0):
         return _diag('D_ij', 'only scalar F0 representation is supported')
     spec = specs[rep_term]
-    # This is a binding check of the exported piecewise-linear policy, not a
-    # mathematical proof about an arbitrary callable between sampled points.
+    # A finite probe set CANNOT certify an arbitrary Python callable: a narrow
+    # spike between probes would otherwise be silently accepted. Require an
+    # explicit binding to the exact piecewise-linear MembershipSpec.value.
+    # For a generic F0 callable the available evidence is insufficient.
+    fn = obj.representation.mu
+    bound_spec = getattr(fn, '__self__', None)
+    if not (type(bound_spec) is MembershipSpec
+            and getattr(fn, '__func__', None) is MembershipSpec.value
+            and bound_spec.knots == spec.knots):
+        return _diag('D_k_incomplete', 'F0 callable lacks a verifiable piecewise-linear binding', incomplete=True)
+    # Additional deterministic probes verify the declared interface path.
     knots = [x for x, _ in spec.knots]
     probes = knots + [(knots[i] + knots[i+1]) / 2 for i in range(len(knots)-1)]
     if any(abs(obj.representation.membership(x) - spec.value(x)) > 1e-9 for x in probes):
