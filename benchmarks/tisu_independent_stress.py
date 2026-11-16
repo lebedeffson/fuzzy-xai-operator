@@ -74,7 +74,11 @@ def intervene(kind, left, right, origin, p, rng):
             (center + 0.001, 0.0), (0.5, 0.0), (0.75, 1.0), (1.0, 1.0),
         )
         changed = MembershipSpec(knots)
-        right.metadata["term_specs"]["high"] = changed.to_json()
+        # copy_with() shallow-copies metadata: never mutate the shared nested
+        # term-spec dictionary on the left/reference explanation.
+        right.metadata["term_specs"] = {
+            **right.metadata["term_specs"], "high": changed.to_json(),
+        }
         right.representation = F0(changed.value, "high-risk")
         right.activations["risk_rule"] = changed.value(p)
     elif kind == "missing_fuzzy_coordinate":
