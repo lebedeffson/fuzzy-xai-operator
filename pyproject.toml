@@ -68,6 +68,8 @@ dev = [
     # and Starlette's httpx-backed TestClient during pytest collection.
     "fastapi>=0.115",
     "httpx>=0.27",
+    # UI projection is imported by cross_pipeline_v1 full-regression tests.
+    "nicegui>=1.4",
 ]
 
 [tool.ruff]
