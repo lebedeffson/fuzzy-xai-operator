@@ -44,7 +44,7 @@ evidence (UNKNOWN)**: only a direct `MembershipSpec.value` binding establishes
 the declared piecewise-linear form. The sup-norm check on knot unions is
 exact only under that assumption.
 
-Local verification: 94 focused checks passed; a smoke test exercised
+Local verification: 95 focused checks passed; a smoke test exercised
 RandomForestClassifier and LogisticRegression predictions. CI review and
 wheel-only import smoke must still be checked before merger. The validated
 scope is scalar binary F0 and unary risk rules, not all FuzzyXAI model or
