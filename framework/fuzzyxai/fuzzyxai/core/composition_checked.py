@@ -5,6 +5,7 @@ authenticated signature. Generic compose() keeps its backward-compatible API.
 """
 from __future__ import annotations
 
+from copy import deepcopy
 from dataclasses import dataclass
 from bisect import bisect_right
 from math import isfinite
@@ -322,7 +323,7 @@ def compose_checked(
             'sample_id': left_fields[0], 'model_id': left_fields[1], 'model_version': left_fields[2],
             'target_event': canonical_event, 'probability': right_score,
             'mapping': 'identity', 'scale': 'probability',
-            'term_specs': right.metadata.get('term_specs'),
+            'term_specs': deepcopy(right.metadata.get('term_specs')),
             'checked_contract': 'typed-f0-v2',
             'fuzzy_event': canonical_event,
             'representation_term': right.metadata.get('representation_term'),
