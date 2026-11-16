@@ -46,7 +46,7 @@ Do not modify the locked dissertation experiments or replace generic
 `compose` defaults.
 
 Local pre-publication evidence:
-- 94 focused unit/parametrized checks passed, including four held-out samples
+- 95 focused unit/parametrized checks passed, including four held-out samples
   from RandomForestClassifier and LogisticRegression.
 - 143 held-out Random Forest predictions × 20 **predefined synthetic fault
   types** = 2,860 controlled checks.
