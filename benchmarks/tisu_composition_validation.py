@@ -11,7 +11,6 @@ import csv
 import hashlib
 import json
 import platform
-import sys
 from collections import Counter, defaultdict
 from dataclasses import replace
 from pathlib import Path
@@ -324,11 +323,15 @@ def run(*, out_dir: Path | None = None) -> dict:
     }
     (OUT/'experiment_report.json').write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding='utf-8')
     with (OUT/'all_cases.csv').open('w',encoding='utf-8',newline='') as f:
-        writer=csv.DictWriter(f,fieldnames=list(records[0]));writer.writeheader();writer.writerows(records)
+        writer = csv.DictWriter(f, fieldnames=list(records[0]))
+        writer.writeheader()
+        writer.writerows(records)
     with (OUT/'scenario_summary.csv').open('w',encoding='utf-8',newline='') as f:
         fields=['scenario','expected','n','numeric','upstream','typed_only','checked']
-        writer=csv.DictWriter(f,fieldnames=fields);writer.writeheader()
-        for row in scenario_rows:writer.writerow({k:row[k] for k in fields})
+        writer = csv.DictWriter(f, fieldnames=fields)
+        writer.writeheader()
+        for row in scenario_rows:
+            writer.writerow({k: row[k] for k in fields})
     print(json.dumps({'model':model_metrics,'example':canonical,'totals':totals,
                       'pairwise_without_anchor':pairwise_status,'n_scenarios':len(SCENARIOS)},
                      ensure_ascii=False,indent=2))
