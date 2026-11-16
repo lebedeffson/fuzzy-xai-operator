@@ -13,11 +13,8 @@ import json
 import platform
 import sys
 from collections import Counter, defaultdict
-from dataclasses import dataclass, replace
+from dataclasses import replace
 from pathlib import Path
-
-ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / 'framework' / 'fuzzyxai'))
 
 import numpy as np
 import sklearn
@@ -33,6 +30,7 @@ from fuzzyxai.core.composition_checked import (
 from fuzzyxai.core.explanation_object import ExplanationObject, Rule, Trace
 from fuzzyxai.hierarchy.f0 import F0
 
+ROOT = Path(__file__).resolve().parents[1]
 OUT = Path('tisu_validation_outputs')
 BETA = {
     'repr': 0.20, 'rules': 0.20, 'activations': 0.20,
