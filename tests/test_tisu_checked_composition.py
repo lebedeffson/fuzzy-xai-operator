@@ -201,3 +201,28 @@ def test_null_trace_fields_return_unknown_instead_of_string_none():
     left, right, origin = build_pair(12, 0.70)
     right.trace = replace(right.trace, source=None)
     assert result_status(compose_checked(left, right, BETA, origin=origin)) == 'UNKNOWN'
+
+
+@pytest.mark.parametrize('beta,expected', [
+    ({'repr': 0.8, 'rules': 0.8, 'gamma_max': 0.25}, 'REJECT'),
+    ({'repr': float('nan'), 'rules': 1.0}, 'REJECT'),
+    ({'repr': -0.1, 'rules': 1.1}, 'REJECT'),
+    ({'repr': 1.0, 'gamma_max': float('inf')}, 'REJECT'),
+    ({'repr': 1.0, 'unsupported_component': 0.0}, 'REJECT'),
+    (None, 'UNKNOWN'),
+])
+def test_invalid_gamma_coefficients_fail_closed(beta, expected):
+    a, b, origin = build_pair(12, 0.70)
+    assert result_status(compose_checked(a, b, beta, origin=origin)) == expected
+
+
+def test_malformed_mutable_collections_fail_closed():
+    a, b, origin = build_pair(12, 0.70)
+    b.rules = None
+    assert result_status(compose_checked(a, b, BETA, origin=origin)) == 'UNKNOWN'
+    a, b, origin = build_pair(12, 0.70)
+    b.terms = {'high', None}
+    assert result_status(compose_checked(a, b, BETA, origin=origin)) == 'UNKNOWN'
+    a, b, origin = build_pair(12, 0.70)
+    b.trace = replace(b.trace, params=None)
+    assert result_status(compose_checked(a, b, BETA, origin=origin)) == 'UNKNOWN'
