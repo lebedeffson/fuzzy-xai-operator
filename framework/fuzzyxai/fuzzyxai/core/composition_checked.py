@@ -110,6 +110,12 @@ def _record_fields(obj: ExplanationObject) -> tuple[str, str, str, str, float, s
     # physical domain before trusting its uncertainty, loss, rules or metadata.
     if not isinstance(obj.metadata, Mapping):
         return _diag('D_k_incomplete', 'explanation metadata is unavailable', incomplete=True)
+    if not isinstance(obj.rules, (list, tuple)):
+        return _diag('D_k_incomplete', 'rule collection is unavailable', incomplete=True)
+    if not isinstance(obj.terms, (set, frozenset)) or any(
+        not isinstance(term, str) or not term for term in obj.terms
+    ):
+        return _diag('D_k_incomplete', 'term vocabulary is invalid', incomplete=True)
     for field in ('uncertainty', 'reduction_loss'):
         try:
             value = float(getattr(obj, field))
@@ -142,6 +148,8 @@ def _record_fields(obj: ExplanationObject) -> tuple[str, str, str, str, float, s
     t = obj.trace
     if any(not isinstance(getattr(t, k, None), str) or not getattr(t, k).strip() for k in ('id', 'version', 'timestamp', 'source', 'checksum')):
         return _diag('D_k_trace', 'missing trace field', incomplete=True)
+    if not isinstance(getattr(t, 'params', None), Mapping):
+        return _diag('D_k_trace', 'trace parameters are not a mapping', incomplete=True)
     if obj.metadata['scale'] != 'probability':
         return _diag('D_ij', 'unsupported score scale')
     try:
@@ -228,6 +236,27 @@ def _validate_fuzzy_frame(
     return None
 
 
+def _validate_beta(beta: Mapping[str, float]) -> DiagnosticState | None:
+    """A gamma weighted score requires explicit, finite convex weights."""
+    if not isinstance(beta, Mapping):
+        return _diag('D_k_incomplete', 'composition weights unavailable', incomplete=True)
+    allowed = {'repr', 'rules', 'activations', 'uncertainty', 'trace', 'reduction', 'gamma_max'}
+    if set(beta) - allowed:
+        return _diag('D_ij', 'unknown composition weight component')
+    try:
+        weights = [float(v) for k, v in beta.items() if k != 'gamma_max']
+        gamma_max = float(beta['gamma_max']) if 'gamma_max' in beta else None
+    except (ValueError, TypeError, OverflowError):
+        return _diag('D_ij', 'invalid composition weight type')
+    if not weights or any(not isfinite(v) or not 0 <= v <= 1 for v in weights):
+        return _diag('D_ij', 'invalid composition weight')
+    if abs(sum(weights) - 1.0) > 1e-9:
+        return _diag('D_ij', 'composition weights must sum to one')
+    if gamma_max is not None and (not isfinite(gamma_max) or not 0 <= gamma_max <= 1):
+        return _diag('D_ij', 'gamma_max outside [0,1]')
+    return None
+
+
 def compose_checked(
     left: ExplanationObject,
     right: ExplanationObject,
@@ -242,6 +271,9 @@ def compose_checked(
     (malignant/benign), a shared scalar risk domain, exact rule signatures, and
     an F0-compatible distance over the same canonical term.
     """
+    beta_issue = _validate_beta(beta)
+    if beta_issue is not None:
+        return beta_issue
     left_fields = _record_fields(left)
     if isinstance(left_fields, DiagnosticState):
         return left_fields
