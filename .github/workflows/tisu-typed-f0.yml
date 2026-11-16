@@ -51,7 +51,7 @@ jobs:
           python -m ruff check framework/fuzzyxai/fuzzyxai/core/composition_checked.py benchmarks/tisu_composition_validation.py tests/test_tisu_checked_composition.py benchmarks/tisu_independent_stress.py
       - name: Check API, manifest and legacy compose compatibility
         run: |
-          python -m pytest -q tests/test_tisu_checked_composition.py tests/test_composition.py tests/test_public_framework_api.py::test_operator_manifest_is_complete_and_resolvable
+          python -m pytest -q tests/test_tisu_checked_composition.py tests/test_composition.py tests/test_public_framework_api.py::test_operator_manifest_is_complete_and_resolvable tests/h10_c5b/test_runtime_operations.py::test_method_lock_matches_frozen_scientific_files tests/h10_c5b/test_runtime_operations.py::test_development_freeze_rejects_failed_leakage_audit
       - name: Rerun the held-out controlled intervention matrix
         run: |
           python benchmarks/tisu_composition_validation.py --out-dir /tmp/tisu-validation
