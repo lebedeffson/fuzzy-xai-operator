@@ -13,10 +13,12 @@ def trace_distance(a: Mapping, b: Mapping) -> float:
     return sum(1 for f in fields if a.get(f) != b.get(f)) / len(fields)
 
 def activation_distance(a: ExplanationObject, b: ExplanationObject) -> float:
+    # L-infinity on the union with missing activations interpreted as zero.
+    # Unlike a pairwise-varying mean, this obeys the triangle inequality.
     keys = set(a.activations) | set(b.activations)
     if not keys:
         return 0.0
-    return sum(abs(a.activations.get(k, 0.0) - b.activations.get(k, 0.0)) for k in keys) / len(keys)
+    return max(abs(a.activations.get(k, 0.0) - b.activations.get(k, 0.0)) for k in keys)
 
 def representation_distance(a: ExplanationObject, b: ExplanationObject) -> float:
     try:
@@ -31,7 +33,7 @@ def semantic_disagreement(a: ExplanationObject, b: ExplanationObject, beta: Mapp
         beta.get('activations', 0) * activation_distance(a, b) +
         beta.get('uncertainty', 0) * abs(a.uncertainty - b.uncertainty) +
         beta.get('trace', 0) * trace_distance(a.trace.as_dict(), b.trace.as_dict()) +
-        beta.get('reduction', 0) * min(1.0, a.reduction_loss + b.reduction_loss)
+        beta.get('reduction', 0) * abs(a.reduction_loss - b.reduction_loss)
     )
     return max(0.0, min(1.0, float(d)))
 

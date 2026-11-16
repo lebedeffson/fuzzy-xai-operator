@@ -11,6 +11,22 @@ def probabilistic_t_conorm(*values: float) -> float:
     return 1.0 - product
 
 def compose(left: ExplanationObject, right: ExplanationObject, beta: Mapping[str, float], allow_missing_terms: bool = False) -> Union[ExplanationObject, DiagnosticState]:
+    # Rule IDs are unique only together with their full signatures.
+    # Failing closed prevents the previous name-only merge from silently
+    # discarding a contradictory conclusion.
+    signatures = {}
+    for rule in list(left.rules) + list(right.rules):
+        signature = rule.signature()
+        if rule.name in signatures and signatures[rule.name] != signature:
+            return DiagnosticState(
+                'D_ij', 'rule identifier maps to conflicting signatures',
+                'critical', {
+                    'rule_id': rule.name,
+                    'first_signature': signatures[rule.name],
+                    'second_signature': signature,
+                },
+            )
+        signatures[rule.name] = signature
     common = left.terms & right.terms
     if not common and not allow_missing_terms:
         return DiagnosticState('D_ij', 'no common linguistic terms for composition', 'critical', {
