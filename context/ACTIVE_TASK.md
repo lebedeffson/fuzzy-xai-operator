@@ -41,7 +41,8 @@ none
 ## Research branch: TISU typed F0 composition (2026-11-16)
 
 Scope: opt-in `compose_checked` in the core SDK, controlled intervention
-benchmark, focused tests, manifest registration, and public contract notes.
+benchmark, focused tests, and public contract notes. It is NOT added to the
+immutable doctoral H10-C5b canonical operator manifest.
 Do not modify the locked dissertation experiments or replace generic
 `compose` defaults.
 
@@ -72,6 +73,19 @@ Unrelated baseline CI debt observed before PR #19:
   or are external to the typed F0 interface. Locked dissertation study files
   must remain unchanged.
 
-Next step for this follow-up: correct dev test dependencies, preserve a push
-validation path for main, and verify that the focused suite remains green.
+This follow-up restores the protected `framework/fuzzyxai/operators_manifest.yaml`
+to the locked H10-C5b bytes (frozen SHA-256
+`479fa55460426a1726f57a5ed5f745b0ad2e872eeefb21470dd2e3e865133949`)
+and restores the doctoral-manifest test expectation of 41 entries.
+The typed-F0 `compose_checked` stays public and opt-in, validated through
+its independent test/benchmark/CI workflow, but is not a dissertation-sealed
+operator manifest entry. This is deliberate: a new experimental method must
+not silently mutate a frozen scientific protocol.
+
+Dev dependencies for the full regression include the FastAPI/httpx TestClient
+and NiceGUI UI projection imported by cross_pipeline_v1. Keep the dedicated
+TISU validation on main pushes.
+
+Next: validate method lock and targeted TISU suite together; retain all
+dissertation locked artifacts unchanged.
 Do not mix unrelated baseline workflow failures into TISU scientific evidence.
