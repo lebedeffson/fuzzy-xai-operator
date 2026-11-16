@@ -186,3 +186,18 @@ def test_numeric_complement_is_executed_before_composition_with_provenance():
     assert transform['right_source_mapping'] == 'complement'
     assert transform['right_canonical_probability'] == pytest.approx(0.70)
     assert result.metadata['probability'] == pytest.approx(0.70)
+
+
+def test_verified_result_does_not_alias_mutable_input_term_data():
+    left, right, origin = build_pair(12, 0.70)
+    result = compose_checked(left, right, BETA, origin=origin)
+    assert result_status(result) == 'ACCEPT'
+    original = result.metadata['term_specs']['high'][2][1]
+    right.metadata['term_specs']['high'][2][1] = 0.123456
+    assert result.metadata['term_specs']['high'][2][1] == original
+
+
+def test_null_trace_fields_return_unknown_instead_of_string_none():
+    left, right, origin = build_pair(12, 0.70)
+    right.trace = replace(right.trace, source=None)
+    assert result_status(compose_checked(left, right, BETA, origin=origin)) == 'UNKNOWN'
