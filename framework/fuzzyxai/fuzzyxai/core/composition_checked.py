@@ -12,7 +12,7 @@ from typing import Mapping
 
 from .composition import compose
 from .diagnostics import DiagnosticState
-from .explanation_object import ExplanationObject
+from .explanation_object import ExplanationObject, Rule
 from fuzzyxai.hierarchy.f0 import F0
 
 
@@ -105,6 +105,35 @@ def result_status(value: ExplanationObject | DiagnosticState) -> str:
 
 
 def _record_fields(obj: ExplanationObject) -> tuple[str, str, str, str, float, str] | DiagnosticState:
+    # The upstream ExplanationObject is mutable after construction. Recheck the
+    # physical domain before trusting its uncertainty, loss, rules or metadata.
+    if not isinstance(obj.metadata, Mapping):
+        return _diag('D_k_incomplete', 'explanation metadata is unavailable', incomplete=True)
+    for field in ('uncertainty', 'reduction_loss'):
+        try:
+            value = float(getattr(obj, field))
+        except (TypeError, ValueError, AttributeError):
+            return _diag('D_ij', f'invalid {field}')
+        if not isfinite(value) or not 0 <= value <= 1:
+            return _diag('D_ij', f'{field} outside [0,1]')
+    for rule in obj.rules:
+        if (not isinstance(rule, Rule) or not isinstance(rule.name, str)
+                or not rule.name or not isinstance(rule.conclusion, str)
+                or not rule.conclusion or not isinstance(rule.conditions, Mapping)
+                or any(not isinstance(k, str) or not isinstance(v, str)
+                       for k, v in rule.conditions.items())):
+            return _diag('D_k_incomplete', 'invalid rule signature', incomplete=True)
+    if not isinstance(obj.activations, Mapping):
+        return _diag('D_k_incomplete', 'rule activations are unavailable', incomplete=True)
+    for rule_id, activation in obj.activations.items():
+        if not isinstance(rule_id, str):
+            return _diag('D_ij', 'invalid activation identifier')
+        try:
+            value = float(activation)
+        except (TypeError, ValueError):
+            return _diag('D_ij', 'invalid rule activation')
+        if not isfinite(value) or not 0 <= value <= 1:
+            return _diag('D_ij', 'rule activation outside [0,1]')
     # Metadata has no validation in the upstream ExplanationObject class.
     names = ('sample_id', 'model_id', 'model_version', 'target_event', 'probability', 'scale', 'mapping')
     if any(obj.metadata.get(n) is None or obj.metadata.get(n) == '' for n in names):
@@ -230,6 +259,8 @@ def compose_checked(
         canonical_event = origin.target_event
     else:
         canonical_event = l[3]
+    if canonical_event not in {'malignant', 'benign'}:
+        return _diag('D_ij', 'unsupported canonical binary event')
     left_score = _to_event(l, canonical_event)
     right_score = _to_event(r, canonical_event)
     if isinstance(left_score, DiagnosticState):
