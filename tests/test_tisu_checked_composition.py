@@ -1,14 +1,10 @@
 from __future__ import annotations
 
-import sys
 from dataclasses import replace
-from pathlib import Path
 
 import pytest
 
-ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT))
-from benchmarks.tisu_composition_validation import BETA, POLICY, SCENARIOS, TYPED_ONLY, build_pair, inject, term_specs, as_f0
+from benchmarks.tisu_composition_validation import BETA, POLICY, SCENARIOS, TYPED_ONLY, build_pair, inject
 from fuzzyxai.core.composition import compose
 from fuzzyxai.core.composition_checked import (
     CompositionPolicy, MembershipSpec, compose_checked, result_status,
