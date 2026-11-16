@@ -64,7 +64,9 @@ FuzzyXAI makes those relationships explicit and machine-verifiable.
 probability explanations with explicitly declared piecewise-linear F0 terms**.
 It checks sample/model identity, event orientation, an independent origin record,
 rule signatures, declared membership functions, and their binding to rule
-activations before delegating to legacy `compose()`. The original `compose()`
+activations before delegating to legacy `compose()`. The declared event
+transformation is executed on non-mutating canonical copies before computing
+Gamma; the output carries the source event and mapping as `executed_alignment`. The original `compose()`
 API is unchanged.
 
 Use `fuzzyxai.compose_checked(left, right, beta, origin=OriginRecord(...),
