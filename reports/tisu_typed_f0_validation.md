@@ -39,8 +39,10 @@ checks. A deliberately narrow membership perturbation occurs between nodes of
 the existing 101-point F0 grid; piecewise-linear knot-union comparison
 identifies it. The method assumes honestly declared canonical event metadata
 and an externally provided origin record. Neither record is authenticated,
-and arbitrary callable membership functions are **not** formally certified
-between probe points.
+and arbitrary callable membership functions are **rejected as insufficient
+evidence (UNKNOWN)**: only a direct `MembershipSpec.value` binding establishes
+the declared piecewise-linear form. The sup-norm check on knot unions is
+exact only under that assumption.
 
 Local verification: 90 focused checks passed; a smoke test exercised
 RandomForestClassifier and LogisticRegression predictions. CI review and
