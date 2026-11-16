@@ -82,8 +82,10 @@ integrity must be guaranteed by the caller. Numeric complement mapping
 does not automatically transform fuzzy membership functions or rules; these
 must already use the declared canonical `fuzzy_event`. Non-F0 classes,
 general multiclass problems, and arbitrary custom rule semantics remain out of
-scope. The callable F0 representation is checked at declared knots and
-midpoints, not formally verified between them.
+scope. The F0 callable must be directly bound to the declared
+`MembershipSpec.value` for exact piecewise-linear certification. An arbitrary
+callable, even one matching the declared knots and midpoints, yields `UNKNOWN`;
+finite probes alone cannot prove its behavior between those points.
 
 Run the controlled benchmark from the repository root:
 
