@@ -172,3 +172,17 @@ def test_nonbinary_event_is_not_mislabeled_as_supported():
     a.metadata['fuzzy_event'] = 'fraud'
     b.metadata['fuzzy_event'] = 'fraud'
     assert result_status(compose_checked(a, b, BETA, origin=origin)) == 'REJECT'
+
+
+def test_numeric_complement_is_executed_before_composition_with_provenance():
+    a, b, origin = build_pair(12, 0.70)
+    a, b, origin = inject('valid_complement', a, b, origin)
+    original = dict(b.metadata)
+    result = compose_checked(a, b, BETA, origin=origin)
+    assert result_status(result) == 'ACCEPT'
+    assert b.metadata == original  # transformed copy, never mutate caller
+    transform = result.metadata['executed_alignment']
+    assert transform['right_source_event'] == 'benign'
+    assert transform['right_source_mapping'] == 'complement'
+    assert transform['right_canonical_probability'] == pytest.approx(0.70)
+    assert result.metadata['probability'] == pytest.approx(0.70)
