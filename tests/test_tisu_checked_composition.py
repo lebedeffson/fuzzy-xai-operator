@@ -125,3 +125,25 @@ def test_policy_thresholds_are_fixed_in_advance():
     assert POLICY.require_origin_record
     assert POLICY.verify_membership
     assert not TYPED_ONLY.verify_membership
+
+
+def test_non_certified_callable_is_unknown_even_if_it_matches_every_probe():
+    from fuzzyxai.hierarchy.f0 import F0
+
+    left, right, origin = build_pair(12, 0.70)
+    baseline = right.representation.mu
+    # Sub-grid perturbation cannot be excluded by a finite number of probes.
+    right.representation = F0(
+        lambda x: 0.55 if abs(x - 0.333333333) < 1e-9 else baseline(x),
+        'high-risk',
+    )
+    assert result_status(compose_checked(left, right, BETA, origin=origin)) == 'UNKNOWN'
+
+
+def test_malformed_membership_interface_fails_closed_without_exception():
+    left, right, origin = build_pair(12, 0.70)
+    right.metadata['representation_term'] = {'malformed': 'value'}
+    assert result_status(compose_checked(left, right, BETA, origin=origin)) == 'REJECT'
+    left, right, origin = build_pair(12, 0.70)
+    right.metadata['term_specs']['high'] = [[0.0, 0.0], [1.0]]
+    assert result_status(compose_checked(left, right, BETA, origin=origin)) == 'REJECT'
