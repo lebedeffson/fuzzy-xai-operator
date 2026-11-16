@@ -58,6 +58,51 @@ finite, or an artifact exists. They often cannot prove that:
 
 FuzzyXAI makes those relationships explicit and machine-verifiable.
 
+## Typed F0 composition (research opt-in)
+
+`compose_checked()` is a separate, opt-in compatibility gate for **binary
+probability explanations with explicitly declared piecewise-linear F0 terms**.
+It checks sample/model identity, event orientation, an independent origin record,
+rule signatures, declared membership functions, and their binding to rule
+activations before delegating to legacy `compose()`. The declared event
+transformation is executed on non-mutating canonical copies before computing
+Gamma; the output carries the source event and mapping as `executed_alignment`. The original `compose()`
+API is unchanged.
+
+Use `fuzzyxai.compose_checked(left, right, beta, origin=OriginRecord(...),
+policy=CompositionPolicy())`. Each explanation must declare in
+`metadata`: `sample_id`, `model_id`, `model_version`, `target_event`,
+`probability`, `scale="probability"`, `mapping="identity"|"complement"`,
+`fuzzy_event` (canonical event for membership/rules),
+`representation_term`, and `term_specs` (piecewise-linear knots).
+Missing necessary evidence returns a diagnostic with `UNKNOWN` rather than an
+invented result. Contradictions produce `REJECT`. Only a compatible
+`ExplanationObject` yields `ACCEPT`.
+
+The `OriginRecord` is **not an authenticated record**: its independence and
+integrity must be guaranteed by the caller. Numeric complement mapping
+does not automatically transform fuzzy membership functions or rules; these
+must already use the declared canonical `fuzzy_event`. Non-F0 classes, unrelated binary events (the current proof-of-concept
+recognizes only malignant/benign), general multiclass problems, and arbitrary
+custom rule semantics remain out of scope. The F0 callable must be directly bound to the declared
+`MembershipSpec.value` for exact piecewise-linear certification. An arbitrary
+callable, even one matching the declared knots and midpoints, yields `UNKNOWN`;
+finite probes alone cannot prove its behavior between those points.
+
+Run the controlled benchmark from the repository root:
+
+```bash
+python benchmarks/tisu_composition_validation.py --out-dir tisu_validation_outputs
+python -m pytest -q tests/test_tisu_checked_composition.py
+```
+
+The 20 injected scenarios on 143 held-out Breast Cancer Wisconsin predictions
+measure contract conformance on **constructed faults**, not clinical reliability
+or unseen-fault generalization. A simple typed interface without the
+membership check is included as an ablation. The numerical difference between
+that ablation and the checked operator does **not** establish a general
+performance advantage for fuzzy logic.
+
 ## Core Capabilities
 
 | Capability | What the framework provides |

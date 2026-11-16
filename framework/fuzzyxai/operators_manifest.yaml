@@ -1,5 +1,13 @@
 schema_version: "1.0"
 operators:
+  - id: ch2.typed_f0_composition
+    dissertation_ref: "TISU research extension, typed F0 explanatory composition"
+    callable: fuzzyxai.core.composition_checked:compose_checked
+    input_schema: ExplanationPairWithCanonicalEventMembershipPolicyAndOriginRecord
+    output_schema: ExplanationObjectOrDiagnosticState
+    tests: [tests/test_tisu_checked_composition.py]
+    artifacts: [reports/tisu_typed_f0_validation.md]
+    visualization: [operator_route]
   - id: h10_c5b.repository_grounded_route_audit
     dissertation_ref: "H10-C5b prospective repository-grounded transfer"
     callable: fuzzyxai.experiments.h10_c5b:run

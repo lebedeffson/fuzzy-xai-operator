@@ -1,6 +1,9 @@
 from .core.explanation_object import ExplanationObject, Rule, Trace
 from .core.explain_plan import ExplainPlan
 from .core.composition import compose
+from .core.composition_checked import (
+    MembershipSpec, OriginRecord, CompositionPolicy, compose_checked, result_status,
+)
 from .core.trust_evaluator import semantic_disagreement, interpretability_loss, interpretability_index
 from .core.system_operator import SystemOperator
 from .hierarchy.f0 import F0
@@ -14,6 +17,7 @@ from .selection.pareto_selector import Candidate, select_minimal_sufficient, par
 
 __all__ = [
     'ExplanationObject','Rule','Trace','ExplainPlan','compose',
+    'MembershipSpec','OriginRecord','CompositionPolicy','compose_checked','result_status',
     'semantic_disagreement','interpretability_loss','interpretability_index','SystemOperator',
     'F0','IntervalFS','HesitantFS','NeutrosophicFS','MultiLevelFS',
     'reduce_to_f0','reduction_loss','build_profile','Candidate','select_minimal_sufficient','pareto_front'

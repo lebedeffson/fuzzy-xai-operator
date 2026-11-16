@@ -37,3 +37,24 @@ Final bundle:
 
 Blocked:
 none
+
+## Research branch: TISU typed F0 composition (2026-11-16)
+
+Scope: opt-in `compose_checked` in the core SDK, controlled intervention
+benchmark, focused tests, manifest registration, and public contract notes.
+Do not modify the locked dissertation experiments or replace generic
+`compose` defaults.
+
+Local pre-publication evidence:
+- 95 focused unit/parametrized checks passed, including four held-out samples
+  from RandomForestClassifier and LogisticRegression.
+- 143 held-out Random Forest predictions × 20 **predefined synthetic fault
+  types** = 2,860 controlled checks.
+- `compose_checked`: 2,860 / 2,860 expected statuses in these controlled
+  tests only. The typed-only (without membership validation) ablation:
+  2,438 / 2,860. No claim about unknown faults or field performance.
+- The independent prediction record is supplied externally and is NOT signed;
+  end-to-end authentic provenance is not certified.
+- F0 scalar binary event contracts only; `compose()` remains unchanged.
+
+Review gate: review PR CI / public SDK smoke before merging to main.
