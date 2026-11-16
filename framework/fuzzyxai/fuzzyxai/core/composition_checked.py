@@ -302,9 +302,21 @@ def compose_checked(
         d_mu = max(ls[name].distance(rs[name]) for name in left.terms)
         if d_mu > policy.max_membership_distance + 1e-12:
             return _diag('D_ij', 'membership functions differ beyond declared tolerance')
-    result = compose(left, right, beta, allow_missing_terms=False)
+    # Execute the declared event transformation on BOTH explanation objects
+    # before computing gamma. Their F0/rule channels have already been checked
+    # to be expressed in this same canonical frame; no unsupported nonlinear
+    # transformation is inferred from numeric complementation alone.
+    aligned_left = left.copy_with(metadata={
+        **left.metadata, 'target_event': canonical_event,
+        'probability': left_score, 'mapping': 'identity',
+    })
+    aligned_right = right.copy_with(metadata={
+        **right.metadata, 'target_event': canonical_event,
+        'probability': right_score, 'mapping': 'identity',
+    })
+    result = compose(aligned_left, aligned_right, beta, allow_missing_terms=False)
     if not isinstance(result, DiagnosticState):
-        # Keep the original shared provenance and mapping for downstream checks.
+        # Persist executed transformation evidence, not just its label.
         result.metadata = {
             **result.metadata,
             'sample_id': l[0], 'model_id': l[1], 'model_version': l[2],
@@ -314,5 +326,13 @@ def compose_checked(
             'checked_contract': 'typed-f0-v2',
             'fuzzy_event': canonical_event,
             'representation_term': right.metadata.get('representation_term'),
+            'executed_alignment': {
+                'left_source_event': l[3], 'left_source_mapping': l[5],
+                'left_canonical_probability': left_score,
+                'right_source_event': r[3], 'right_source_mapping': r[5],
+                'right_canonical_probability': right_score,
+                'canonical_event': canonical_event,
+                'membership_in_canonical_frame': bool(policy.verify_membership),
+            },
         }
     return result
