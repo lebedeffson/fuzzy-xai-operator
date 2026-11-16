@@ -89,6 +89,14 @@ custom rule semantics remain out of scope. The F0 callable must be directly boun
 callable, even one matching the declared knots and midpoints, yields `UNKNOWN`;
 finite probes alone cannot prove its behavior between those points.
 
+The opt-in operator was merged into `main` via
+[PR #19](https://github.com/lebedeffson/fuzzy-xai-operator/pull/19).
+Both controlled suites are available in `benchmarks/`: the predeclared
+20-scenario RF experiment (2,860 repeated constructed cases) and a post-hoc
+12-scenario LogisticRegression stress check (1,716 repeated constructed cases)
+on another stratified split of the **same** dataset. Neither estimates
+real-world unknown-fault detection or clinical reliability.
+
 Run the controlled benchmark from the repository root:
 
 ```bash
