@@ -6,6 +6,7 @@ from dataclasses import replace
 from typing import Any, Callable, Mapping
 
 import numpy as np
+from sklearn.base import BaseEstimator, is_regressor
 
 from .contracts_v2 import (
     AdapterConformanceReport,
@@ -42,7 +43,12 @@ def infer_task_type(model: Any, requested: str | TaskType = "auto") -> TaskType:
         except ValueError as exc:
             raise ValueError(f"unsupported task type: {requested}") from exc
     estimator_type = getattr(model, "_estimator_type", None)
-    if estimator_type == "regressor":
+    # sklearn >=1.6 exposes estimator kind through public tags; the
+    # legacy private _estimator_type can be absent even for LinearRegression.
+    # Avoid calling sklearn tag machinery on arbitrary non-sklearn models.
+    if estimator_type == "regressor" or (
+        isinstance(model, BaseEstimator) and is_regressor(model)
+    ):
         return TaskType.REGRESSION
     classes = getattr(model, "classes_", None)
     if classes is not None:

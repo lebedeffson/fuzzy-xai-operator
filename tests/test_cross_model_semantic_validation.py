@@ -239,3 +239,27 @@ def test_10_similarity_stays_non_causal_across_model_families() -> None:
     human = result.explain_for(audience="domain_user")
     for statement in human.details.similar_cases:
         assert "потому что" not in statement.explanation.lower()
+
+
+def test_11_auto_task_uses_public_sklearn_regressor_tags() -> None:
+    """Modern sklearn regressors may not expose private _estimator_type."""
+    from fuzzyxai.adapters.contracts_v2 import TaskType
+    from fuzzyxai.adapters.model_v2 import infer_task_type
+    from sklearn.base import is_regressor
+    from sklearn.linear_model import Ridge
+    from sklearn.pipeline import make_pipeline
+    from sklearn.preprocessing import StandardScaler
+
+    regressor = LinearRegression()
+    pipeline = make_pipeline(StandardScaler(), Ridge())
+    assert is_regressor(regressor)
+    assert is_regressor(pipeline)
+    assert infer_task_type(regressor) is TaskType.REGRESSION
+    assert infer_task_type(pipeline) is TaskType.REGRESSION
+    assert infer_task_type(LogisticRegression()) is TaskType.BINARY_CLASSIFICATION
+    assert infer_task_type(regressor, requested="classification") is TaskType.BINARY_CLASSIFICATION
+
+    class LegacyCustomRegressor:
+        _estimator_type = "regressor"
+
+    assert infer_task_type(LegacyCustomRegressor()) is TaskType.REGRESSION
