@@ -1,0 +1,162 @@
+name: ECG PTB-XL independent evidence replay
+on:
+  push:
+    branches: [research/ecg-replay-audit-20261124]
+  pull_request:
+    branches: [chapter6-ophthalmology]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  audited-replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install exact audit dependencies
+        run: python -m pip install numpy scikit-learn matplotlib pandas wfdb
+      - name: Recompute archived metrics and attribution distances
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json
+          import numpy as np
+          from sklearn.metrics import roc_auc_score, f1_score, precision_score, recall_score, accuracy_score, brier_score_loss, log_loss
+          root=Path("chapter6_medical_validation/ecg_ptbxl/outputs")
+          load=lambda p:json.loads(p.read_text(encoding="utf-8"))
+          runs=[load(p) for p in sorted((root/"runs").glob("*/run.json"))]
+          assert len(runs)==3
+          run=min(runs,key=lambda r:(min(v["validation_loss"] for v in r["history"]),-max(v["validation_auroc"] for v in r["history"]),r["seed"]))
+          assert run["seed"]==2026
+          rows=load(root/"cases/case_summaries.json")
+          assert len(rows)==2107 and len({x["ecg_id"] for x in rows})==2107
+          y=np.array([x["label"] for x in rows],dtype=int)
+          p=np.array([x["p_abnormal"] for x in rows],dtype=float)
+          pred=np.array([x["prediction"] for x in rows],dtype=int)
+          q=np.array([x["technical_quality_score"] for x in rows],dtype=float)
+          conf=np.maximum(p,1-p)
+          assert np.array_equal(pred,(p>=.5).astype(int))
+          assert all(x["correct"]==bool(a==b) for x,a,b in zip(rows,y,pred))
+          assert np.allclose(conf,[x["confidence"] for x in rows],atol=1e-5)
+          n=len(y);tp=int(((y==1)&(pred==1)).sum());tn=int(((y==0)&(pred==0)).sum());fp=int(((y==0)&(pred==1)).sum());fn=int(((y==1)&(pred==0)).sum())
+          m=run["test_metrics_calibrated"]
+          assert [tn,fp,fn,tp]==[812,100,183,1012]
+          computed={"accuracy":accuracy_score(y,pred),"precision":precision_score(y,pred),"recall_sensitivity":recall_score(y,pred),"f1":f1_score(y,pred),"auroc":roc_auc_score(y,p),"nll":log_loss(y,p,labels=[0,1]),"brier":brier_score_loss(y,p)}
+          for k,v in computed.items():assert abs(v-m[k])<1e-8,(k,v,m[k])
+          ece=sum(abs(float((conf[(conf>=i/15)&(conf<((i+1)/15) if i<14 else conf<=1)] - (pred==y)[(conf>=i/15)&(conf<((i+1)/15) if i<14 else conf<=1)]).sum())) for i in range(15))/n
+          assert abs(ece-m["ece_15_bin"])<1e-8
+          mask=(conf>=.9)&(q>=.9)
+          assert int(mask.sum())==1007 and int((mask&(pred!=y)).sum())==21 and int((mask&(y==1)&(pred==0)).sum())==18
+          selected=load(root/"cases/selected_cases.json")["cases"]
+          assert len(selected)==7 and len({x["ecg_id"] for x in selected.values()})==6
+          evidence=[]
+          for id_value in sorted({x["ecg_id"] for x in selected.values()}):
+              d=root/"cases"/f"ptbxl-{id_value}"
+              ig=np.load(d/"integrated_gradients_signed.npy",allow_pickle=False)
+              occ=np.load(d/"temporal_occlusion_signed.npy",allow_pickle=False)
+              diag=load(d/"xai_diagnostics.json")
+              assert ig.shape==(12,1000) and occ.shape==(12,20)
+              a=ig.astype(float).reshape(12,20,50).sum(2)
+              a=a/(np.abs(a).sum() or 1)
+              b=occ.astype(float)
+              b=b/(np.abs(b).sum() or 1)
+              dist=float(np.abs(a-b).sum()/2)
+              assert abs(dist-diag["normalized_l1_disagreement"])<1e-10,(id_value,dist)
+              record=next(r for r in rows if r["ecg_id"]==id_value)
+              assert diag["ig_faithfulness"]["target"]==record["prediction"]
+              assert diag["occlusion_faithfulness"]["target"]==record["prediction"]
+              corr=None if np.std(a)==0 or np.std(b)==0 else float(np.corrcoef(a.ravel(),b.ravel())[0,1])
+              assert (corr is None and diag["signed_correlation"]["value"] is None) or (corr is not None and abs(corr-diag["signed_correlation"]["value"])<1e-10)
+              evidence.append({"ecg_id":id_value,"diagnostic_D_XAI":dist,"correlation":corr,"target_valid":True})
+          d=root/"cases/ptbxl-504"
+          ig=np.load(d/"integrated_gradients_signed.npy",allow_pickle=False).reshape(12,20,50).sum(2).astype(float)
+          a=ig/(np.abs(ig).sum() or 1)
+          oc=np.load(d/"temporal_occlusion_signed.npy",allow_pickle=False)
+          mutated=oc.copy();mutated[0,0]+=1
+          b=mutated/(np.abs(mutated).sum() or 1)
+          assert abs(float(np.abs(a-b).sum()/2)-load(d/"xai_diagnostics.json")["normalized_l1_disagreement"])>1e-6
+          controls=load(root/"controls/controls_summary.json")
+          assert len(controls)==3 and all(x["critical_override"] and x["candidate_action"]=="accept" and x["final_action"]=="block" for x in controls.values())
+          summary={"status":"pass","scope":"replay of archived predictions/XAI, not neural-network retraining or independent FuzzyXAI detection","test_records":n,"matrix":{"tn":tn,"fp":fp,"fn":fn,"tp":tp},"metrics":computed,"ece15":ece,"high_quality_high_confidence":{"n":int(mask.sum()),"errors":int((mask&(pred!=y)).sum())},"distinct_ecg":len(evidence),"xai_pairs":evidence,"standalone_array_tamper_detected":True,"controls_prelabelled":3,"best_pt_found":bool(list(root.glob("runs/*/best.pt")))}
+          Path("ecg_audit_out").mkdir(exist_ok=True)
+          Path("ecg_audit_out/archived_replay.json").write_text(json.dumps(summary,indent=2)+"\n")
+          print(json.dumps(summary,indent=2))
+          PY
+      - name: Verify official PTB-XL provenance and render real ECGs
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json,ast,csv,hashlib
+          from urllib.request import urlopen,Request
+          import numpy as np
+          import wfdb
+          import matplotlib
+          matplotlib.use("Agg")
+          import matplotlib.pyplot as plt
+          from chapter6_medical_validation.ecg_ptbxl.src.data import load_metadata,derive_primary_records,assert_patient_disjoint
+          base="https://physionet.org/files/ptb-xl/1.0.3/"
+          wd=Path("ecg_audit_out/physionet")
+          wd.mkdir(parents=True,exist_ok=True)
+          def get(relative):
+              path=wd/relative
+              path.parent.mkdir(parents=True,exist_ok=True)
+              if not path.exists():
+                  with urlopen(Request(base+relative,headers={"User-Agent":"ECG-research-evidence-replay"}),timeout=90) as response:
+                      path.write_bytes(response.read())
+              return path
+          for name in ("ptbxl_database.csv","scp_statements.csv"):get(name)
+          db,scp=load_metadata(wd)
+          records=derive_primary_records(db,scp)
+          assert_patient_disjoint(records)
+          included=[x for x in records if x.included]
+          assert len(records)==21799 and len(included)==20943
+          counts={"train":sum(1 for x in included if x.fold<=8),"validation":sum(1 for x in included if x.fold==9),"test":sum(1 for x in included if x.fold==10)}
+          assert counts["test"]==2107 and counts["validation"]==2105
+          row_by_id={x.ecg_id:x for x in included}
+          ids=(504,180,4079,7895,16534,14771)
+          report=[]
+          archive=Path("chapter6_medical_validation/ecg_ptbxl/outputs/cases")
+          def h(b):return hashlib.sha256(b).hexdigest()
+          for id_value in ids:
+              rec=row_by_id[id_value]
+              assert rec.fold==10
+              dat,hea=get(rec.filename_lr+".dat"),get(rec.filename_lr+".hea")
+              values={".dat":h(dat.read_bytes()),".hea":h(hea.read_bytes())}
+              identity=h(json.dumps(values,sort_keys=True,separators=(",",":"),ensure_ascii=False).encode())
+              ref=json.loads((archive/f"ptbxl-{id_value}"/"result.json").read_text())
+              expected=ref["provenance"]["input_sha256"]
+              assert identity==expected,(id_value,identity,expected)
+              report.append({"ecg_id":id_value,"path":rec.filename_lr,"source_sha256":identity,"passed":True})
+          fig,axes=plt.subplots(3,2,figsize=(12,10),width_ratios=(1.35,1))
+          leads=["I","II","III","aVR","aVL","aVF","V1","V2","V3","V4","V5","V6"]
+          for row,id_value in enumerate((504,4079,7895)):
+              rec=row_by_id[id_value]
+              sig,fields=wfdb.rdsamp(str(wd/rec.filename_lr))
+              assert sig.shape==(1000,12) and fields["fs"]==100
+              xx=np.arange(1000)/100
+              axes[row,0].plot(xx,sig[:,1],linewidth=.8,color="black")
+              axes[row,0].set(title=f"PTB-XL {id_value}, lead II",xlabel="Time, s",ylabel="Amplitude, mV",xlim=(0,10))
+              axes[row,0].grid(alpha=.15)
+              ig=np.load(archive/f"ptbxl-{id_value}"/"integrated_gradients_signed.npy",allow_pickle=False)
+              a=ig.reshape(12,20,50).sum(2)
+              mx=float(np.abs(a).max()) or 1.0
+              im=axes[row,1].imshow(a,aspect="auto",cmap="coolwarm",vmin=-mx,vmax=mx,extent=(0,10,12,0))
+              axes[row,1].set(title="Archived signed IG, same ECG",xlabel="Time, s",yticks=np.arange(12)+.5,yticklabels=leads)
+              fig.colorbar(im,ax=axes[row,1],fraction=.03,pad=.03)
+          fig.tight_layout()
+          fig.savefig("ecg_audit_out/official_ptbxl_waveforms_and_ig.png",dpi=160,bbox_inches="tight")
+          plt.close(fig)
+          summary={"status":"pass","source":base,"original_rows":len(records),"selected_cohort":len(included),"fold_counts":counts,"patient_disjoint":True,"provenance_matches":report,"note":"real WFDB samples + archived attribution; not a replay of learned network"}
+          Path("ecg_audit_out/official_waveform_replay.json").write_text(json.dumps(summary,indent=2)+"\n")
+          print(json.dumps(summary,indent=2))
+          PY
+      - name: Save auditable outputs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ecg-ptbxl-evidence-replay
+          path: ecg_audit_out/
+          retention-days: 30
