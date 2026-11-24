@@ -107,7 +107,8 @@ jobs:
                   with urlopen(Request(base+relative,headers={"User-Agent":"ECG-research-evidence-replay"}),timeout=90) as response:
                       path.write_bytes(response.read())
               return path
-          for name in ("ptbxl_database.csv","scp_statements.csv"):get(name)
+          for name in ("ptbxl_database.csv","scp_statements.csv","SHA256SUMS.txt"):get(name)
+          expected_checksums={line.split(maxsplit=1)[1].lstrip("* "):line.split(maxsplit=1)[0] for line in (wd/"SHA256SUMS.txt").read_text().splitlines() if len(line.split(maxsplit=1))==2}
           db,scp=load_metadata(wd)
           records=derive_primary_records(db,scp)
           assert_patient_disjoint(records)
@@ -129,7 +130,8 @@ jobs:
               ref=json.loads((archive/f"ptbxl-{id_value}"/"result.json").read_text())
               expected=ref["provenance"]["input_sha256"]
               assert int(ref["provenance"]["object_ids"][0].split("-")[-1])==id_value
-              report.append({"ecg_id":id_value,"path":rec.filename_lr,"official_file_pair_sha256":identity,"record_id_match":True,"model_input_sha256_not_equivalent":expected})
+              assert all(expected_checksums.get(rec.filename_lr+ext)==digest for ext,digest in values.items()),("official checksum mismatch",id_value)
+              report.append({"ecg_id":id_value,"path":rec.filename_lr,"official_file_pair_sha256":identity,"record_id_match":True,"official_checksum_match":True,"model_input_sha256_not_equivalent":expected})
           fig,axes=plt.subplots(3,2,figsize=(12,10),width_ratios=(1.35,1))
           leads=["I","II","III","aVR","aVL","aVF","V1","V2","V3","V4","V5","V6"]
           for row,id_value in enumerate((504,4079,7895)):
