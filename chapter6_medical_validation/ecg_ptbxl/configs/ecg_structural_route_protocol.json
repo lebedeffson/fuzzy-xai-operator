@@ -1,0 +1,51 @@
+{
+  "title": "ECG explanation-route integrity, localization and recovery under unchanged predictions",
+  "source_run": 45779528570,
+  "reference_commit": "171235020dca142eda2189ed473ff95f4c69e4d8",
+  "scope": "technical route integrity on real PTB-XL signals with controlled explanation-stage corruptions; no diagnostic truth or physician assessment",
+  "cohort": {
+    "split": "fold 10",
+    "selection": "sort by SHA256('20261126:'+ecg_id), one recording per patient, by frozen predicted class and confidence >=0.9; 16 high confidence and 8 other per predicted class",
+    "n": 48,
+    "labels_used_for_selection": false
+  },
+  "reference": "verified actual checkpoint, data preparation, raw samples, independent fixed-target IG and temporal occlusion on standardized tensors",
+  "map_tolerance": {
+    "metric": "L1 difference / (L1 reference + 1e-6)",
+    "limit": 0.001,
+    "scope": "same method, target, baseline and grid only; IG versus occlusion disagreement is diagnostic not defect ground truth"
+  },
+  "scenarios": [
+    "clean_native",
+    "clean_independent_serialization",
+    "stale_other_ecg_ig",
+    "concealed_other_ecg_ig",
+    "wrong_target",
+    "concealed_wrong_target",
+    "lead_permutation",
+    "concealed_lead_permutation",
+    "wrong_checkpoint_explanation",
+    "wrong_preprocessing_explanation",
+    "missing_normalization_trace",
+    "self_consistent_map_scaling",
+    "missing_map",
+    "stale_other_ecg_occlusion",
+    "compound_ig_occ",
+    "checksum_mismatch"
+  ],
+  "methods": [
+    "confidence below .9",
+    "independent direct same-information checks",
+    "FuzzyXAI DiagnosticService + native system operator"
+  ],
+  "repairs": "registered verified independent artifacts, restore only diagnosed explanation node with explicit sandbox approval; rebuild graph from actual repaired arrays and revalidate via RouteRecertifier; negative unavailable-source control",
+  "outcomes": [
+    "TP/FP/FN/TN on injected technical defects",
+    "exact source-node localization",
+    "block or restore original clean action",
+    "repair and recertification",
+    "number of artifacts restored vs full rebuild",
+    "same-information direct-rule comparator"
+  ],
+  "limitations": "controlled interventions on 48 distinct real patients, not prevalence estimates or clinical validation; paired conditions are not independent samples; no superiority over equal-information rules assumed"
+}
