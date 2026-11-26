@@ -1,0 +1,123 @@
+name: ECGResNet1D independent full retraining
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/ecg-full-retrain-20261126]
+    paths:
+      - '.github/workflows/ecg-full-retrain-independent.yml'
+permissions:
+  contents: read
+concurrency:
+  group: ecg-retrain-independent-${{ github.ref }}
+  cancel-in-progress: false
+env:
+  ECG_NUM_THREADS: '4'
+  OMP_NUM_THREADS: '4'
+  MKL_NUM_THREADS: '4'
+  PYTHONUNBUFFERED: '1'
+  FUZZYXAI_CH6_DATA_ROOT: ${{ runner.temp }}/ptbxl-data
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install data dependencies
+        run: python -m pip install numpy==1.26.4 pandas==2.2.3 wfdb==4.2.0
+      - name: Download official PTB-XL 1.0.3 archive
+        run: |
+          curl -fL --retry 3 --retry-delay 5 --connect-timeout 30 --max-time 2400 'https://physionet.org/content/ptb-xl/get-zip/1.0.3/' -o "$RUNNER_TEMP/ptbxl.zip"
+          ls -lh "$RUNNER_TEMP/ptbxl.zip"
+      - name: Verify all 100 Hz waveforms, patient split, and normalize on train only
+        run: python -m chapter6_medical_validation.ecg_ptbxl.scripts.prepare_retrain_independent --zip "$RUNNER_TEMP/ptbxl.zip" --data-root "$FUZZYXAI_CH6_DATA_ROOT"
+      - name: Upload verified intermediate dataset for the training jobs
+        uses: actions/upload-artifact@v4
+        with:
+          name: ptbxl-prepared-verified
+          path: ${{ env.FUZZYXAI_CH6_DATA_ROOT }}/ecg/ptb-xl-1.0.3/prepared/
+          retention-days: 1
+          compression-level: 3
+          if-no-files-found: error
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: |
+          python -m pip install numpy==1.26.4 pandas==2.2.3 scikit-learn==1.6.1 wfdb==4.2.0 pytest
+          python -m pip install torch==2.6.0 --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install -e .
+      - run: |
+          python -m compileall -q chapter6_medical_validation/ecg_ptbxl/scripts
+          python -m pytest -q chapter6_medical_validation/ecg_ptbxl/tests/test_retrain_independent.py
+  train:
+    needs: [prepare, smoke]
+    runs-on: ubuntu-latest
+    timeout-minutes: 355
+    strategy:
+      fail-fast: false
+      matrix:
+        seed: [2026, 2027, 2028]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: |
+          python -m pip install numpy==1.26.4 pandas==2.2.3 scikit-learn==1.6.1 PyYAML==6.0.2
+          python -m pip install torch==2.6.0 --index-url https://download.pytorch.org/whl/cpu
+      - uses: actions/download-artifact@v4
+        with:
+          name: ptbxl-prepared-verified
+          path: ${{ env.FUZZYXAI_CH6_DATA_ROOT }}/ecg/ptb-xl-1.0.3/prepared/
+      - name: Full training using original architecture, epochs and early stopping
+        run: python -m chapter6_medical_validation.ecg_ptbxl.scripts.retrain_independent --seed ${{ matrix.seed }} --output-dir "$RUNNER_TEMP/ecg-runs"
+      - name: Preserve new weights, run history and independent predictions
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ecg-retrained-${{ matrix.seed }}
+          path: ${{ runner.temp }}/ecg-runs/
+          if-no-files-found: warn
+          retention-days: 90
+  evaluate:
+    needs: train
+    runs-on: ubuntu-latest
+    timeout-minutes: 355
+    strategy:
+      fail-fast: false
+      matrix:
+        mode: [xai, review]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: |
+          python -m pip install numpy==1.26.4 pandas==2.2.3 scikit-learn==1.6.1 wfdb==4.2.0 matplotlib==3.9.4 PyYAML==6.0.2
+          python -m pip install torch==2.6.0 --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install -e .
+      - uses: actions/download-artifact@v4
+        with:
+          name: ptbxl-prepared-verified
+          path: ${{ env.FUZZYXAI_CH6_DATA_ROOT }}/ecg/ptb-xl-1.0.3/prepared/
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: ecg-retrained-*
+          path: ${{ runner.temp }}/ecg-runs
+          merge-multiple: true
+      - name: Independently compute explanation maps or public route review metrics
+        run: python -m chapter6_medical_validation.ecg_ptbxl.scripts.evaluate_retrain_independent --data-root "$FUZZYXAI_CH6_DATA_ROOT" --runs "$RUNNER_TEMP/ecg-runs" --out "$RUNNER_TEMP/ecg-eval" --mode ${{ matrix.mode }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ecg-independent-${{ matrix.mode }}
+          path: ${{ runner.temp }}/ecg-eval/
+          if-no-files-found: warn
+          retention-days: 90
