@@ -1,0 +1,89 @@
+name: ECG structural explanation-route integrity
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/ecg-structural-route-20261126]
+    paths:
+      - '.github/workflows/ecg-structural-route.yml'
+permissions:
+  contents: read
+  actions: read
+env:
+  ECG_NUM_THREADS: '4'
+  OMP_NUM_THREADS: '4'
+  MKL_NUM_THREADS: '4'
+  PYTHONUNBUFFERED: '1'
+  DATA_ROOT: ${{ github.workspace }}/.ptbxl-data
+jobs:
+  integrity:
+    runs-on: ubuntu-latest
+    timeout-minutes: 100
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install experiment dependencies
+        run: |
+          python -m pip install numpy==1.26.4 pandas==2.2.3 scikit-learn==1.6.1 wfdb==4.2.0 matplotlib==3.9.4 PyYAML==6.0.2 pytest
+          python -m pip install torch==2.6.0 --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install -e .
+      - name: Verify experiment adapter and sandbox recovery
+        run: |
+          python -m compileall -q chapter6_medical_validation/ecg_ptbxl/scripts
+          python -m pytest -q chapter6_medical_validation/ecg_ptbxl/tests/test_retrain_independent.py
+          python - <<'PY'
+          import numpy as np
+          from fuzzyxai.diagnostics import ActionableRepairPlanner, DiagnosticService
+          from fuzzyxai.diagnostics.repair_registry import ContractRepairProvider, RepairProviderRegistry
+          from chapter6_medical_validation.ecg_ptbxl.scripts.evaluate_ecg_structural_route import (
+              META_FIELDS,NODES,SHAPES,packet_item,graph_from_packet,repair_packet,direct_check,renew_digest
+          )
+          import copy
+          reference = {name:packet_item({k: 'registered' for k in META_FIELDS},np.ones(SHAPES[name])) for name in NODES}
+          registry = RepairProviderRegistry(providers=[ContractRepairProvider(
+              'ecg.restore_verified_artifact',frozenset(),frozenset({'explainer'}),
+              'restore_verified_ecg_explanation','restore',1.0,False)])
+          service = DiagnosticService(repair_planner=ActionableRepairPlanner(registry))
+          assert service.validator.validate(graph_from_packet(reference, reference, 'valid')).valid
+          p = copy.deepcopy(reference)
+          p['ig']['values'] *= 2; renew_digest(p['ig'])
+          p['occlusion']['meta'].pop('target')
+          assert direct_check(p, reference) == ['ig','occlusion']
+          g = graph_from_packet(p, reference, 'faulted')
+          r = service.diagnose(route=g,repair_mode='plan')
+          assert {n for issue in r.issues for n in issue.source_nodes} == {'ig','occlusion'}
+          print('PLAN', r.repair_plan)
+          a, repaired, recert, ops = repair_packet(service,g,r,p,reference)
+          assert recert.status == 'full_success' and service.validator.validate(a).valid, recert
+          assert sorted(ops) == ['ig','occlusion'] and direct_check(repaired,reference)==[]
+          a, repaired, recert, ops = repair_packet(service,g,r,p,reference,unavailable=('occlusion',))
+          assert recert.status != 'full_success' and not service.validator.validate(a).valid
+          print('STRUCTURAL UNIT CONTROLS PASS; not clinical data')
+          PY
+      - name: Restore verified waveform cohort
+        uses: actions/download-artifact@v4
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: 45779528570
+          name: ptbxl-prepared-verified
+          path: ${{ env.DATA_ROOT }}/ecg/ptb-xl-1.0.3/prepared/
+      - name: Restore frozen ECG checkpoints
+        uses: actions/download-artifact@v4
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: 45779528570
+          pattern: ecg-retrained-*
+          path: ${{ runner.temp }}/ecg-runs
+          merge-multiple: true
+      - name: Actual-waveform structural diagnosis and recovery
+        run: |
+          python -m chapter6_medical_validation.ecg_ptbxl.scripts.evaluate_ecg_structural_route --data-root "$DATA_ROOT" --runs "$RUNNER_TEMP/ecg-runs" --out "$RUNNER_TEMP/ecg-structural"
+      - name: Archive evidence and outcomes
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ecg-structural-route
+          path: ${{ runner.temp }}/ecg-structural/
+          retention-days: 90
+          if-no-files-found: warn
