@@ -15,7 +15,7 @@ env:
   OMP_NUM_THREADS: '4'
   MKL_NUM_THREADS: '4'
   PYTHONUNBUFFERED: '1'
-  FUZZYXAI_CH6_DATA_ROOT: ${{ runner.temp }}/ptbxl-data
+  FUZZYXAI_CH6_DATA_ROOT: ${{ github.workspace }}/.ptbxl-data
 jobs:
   prepare:
     runs-on: ubuntu-latest
